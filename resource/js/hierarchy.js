@@ -195,7 +195,7 @@ function createObjectsFromNarrowers(narrowerResponse) {
 }
 
 /* 
- * Gives you the ONKI default jsTree configuration.
+ * Gives you the Skosmos default jsTree configuration.
  */
 function getTreeConfiguration(root) {
   var childResponse = false;
