@@ -126,9 +126,9 @@ class WebController extends Controller
    */
   public function guessLanguage($vocab_id=null)
   {
-    // 1. select language based on ONKI_LANGUAGE cookie
-    if (isset($_COOKIE['ONKI_LANGUAGE']))
-      return $_COOKIE['ONKI_LANGUAGE'];
+    // 1. select language based on SKOSMOS_LANGUAGE cookie
+    if (isset($_COOKIE['SKOSMOS_LANGUAGE']))
+      return $_COOKIE['SKOSMOS_LANGUAGE'];
 
     // 2. if vocabulary given, select based on the default language of the vocabulary
     if ($vocab_id) {
@@ -285,7 +285,7 @@ class WebController extends Controller
     $to = FEEDBACK_ADDRESS;
     if ($fromVocab != null)
       $message = 'Feedback from vocab: ' . strtoupper($fromVocab) . "<br />" . $message;
-    $subject = "ONKI-light feedback";
+    $subject = "Skosmos feedback";
     $headers = "MIME-Version: 1.0″ . '\r\n";
     $headers .= "Content-type: text/html; charset=UTF-8" . "\r\n";
     $headers .= "From: $fromName <$fromEmail>" . "\r\n" . 'X-Mailer: PHP/' . phpversion();
@@ -294,7 +294,7 @@ class WebController extends Controller
   }
 
   /**
-   * Invokes the about page for the ONKI Light service.
+   * Invokes the about page for the Skosmos service.
    * @param string $lang language parameter eg. 'fi' for Finnish.
    */
   public function invokeAboutPage($lang = 'en')
