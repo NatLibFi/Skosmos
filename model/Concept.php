@@ -182,7 +182,7 @@ class Concept extends VocabularyDataObject
       }
     }
 
-    // sorting the properties to a order preferred in the ONKI concept page.
+    // sorting the properties to a order preferred in the Skosmos concept page.
     $properties = $this->arbitrarySort($properties);
 
     // clean up: remove unwanted properties
@@ -316,7 +316,7 @@ class Concept extends VocabularyDataObject
         unset($properties[$prop]);
     }
 
-    // sorting the properties to a order preferred in the ONKI concept page.
+    // sorting the properties to a order preferred in the Skosmos concept page.
     $properties = $this->arbitrarySort($properties);
 
     $propertyValues = array();
