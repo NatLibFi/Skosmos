@@ -2,18 +2,18 @@
 {% if lang == 'fi' %}
 
 <h4>Tietoja sanastoselaimesta</h4>
-<p>ONKI Light on web-pohjainen sanasto ja ontologiaselain.</p>
-<a href="http://code.google.com/p/onki-light/">ONKI Light Google Code -repositorio</a>
+<p>Skosmos on web-pohjainen sanasto ja ontologiaselain.</p>
+<a href="http://code.google.com/p/onki-light/"> Skosmos GitHub-repositorio</a>
 {% elseif lang == 'sv' %}
 
 <h4>Information</h4>
-<p>ONKI Light är en ontologibrowser.</p>
-<a href="http://code.google.com/p/onki-light/">ONKI Light på Google Code</a>
+<p>Skosmos är en ontologibrowser.</p>
+<a href="http://code.google.com/p/onki-light/">Skosmos på GitHub</a>
 
 {% elseif lang == 'en' %}
 
 <h4>About</h4>
-<p>ONKI Light is a web based open source ontology browser.</p>
-<a href="http://code.google.com/p/onki-light/">ONKI Light Google Code -repository</a>
+<p>Skosmos is a web based open source ontology browser.</p>
+<a href="http://code.google.com/p/onki-light/">Skosmos GitHub -repository</a>
 
 {% endif %}
