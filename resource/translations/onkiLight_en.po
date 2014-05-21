@@ -1,0 +1,927 @@
+# English translation of ONKI Light
+# Copyright SeCo 2012 (C)
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ONKI Light\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-05-21 12:36+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Henri Ylikotila <henri.ylikotila@helsinki.fi>\n"
+"Language-Team: ONKI Team <onki-posti@helsinki.fi>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-SearchPath-0: view\n"
+"X-Poedit-SearchPath-1: controller\n"
+"X-Poedit-SearchPath-2: model\n"
+
+#: controller/WebController.php:199
+#: controller/WebController.php:448
+#: controller/WebController.php:585
+msgid "language_changed_message"
+msgstr "The language you had chosen was not supported by the ontology. That is why you are not seeing this page in English."
+
+#: controller/Controller.php:58
+msgid "in_this_language"
+msgstr "in English"
+
+#: /tmp/cache/537c73badff2f/97/fc/fe9ee9e79eac96aeebd68e420383.php:42
+msgid "404 Error: The page %requested_page% cannot be found."
+msgstr "404 Error: The page %requested_page% cannot be found."
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:157
+#: /tmp/cache/537c73badff2f/64/b0/1fed2b7871473f4385aa3ea67142.php:46
+msgid "About"
+msgstr "About"
+
+#: /tmp/cache/537c73badff2f/9b/ab/ae70f1ef370d0c5debac44a5d54f.php:47
+msgid "All"
+msgstr "All"
+
+#: /tmp/cache/537c73badff2f/1e/99/74447de48d79a50416955251e104.php:228
+msgid "Alpha-nav"
+msgstr "Alphabetical"
+
+#: /tmp/cache/537c73badff2f/5a/40/5dfb9870017ad10a424ef3d496d0.php:155
+msgid "Alternate terms"
+msgstr "Alternate terms"
+
+#: /tmp/cache/537c73badff2f/5a/40/5dfb9870017ad10a424ef3d496d0.php:141
+msgid "Concept counts by language"
+msgstr "Concept counts by language"
+
+#: /tmp/cache/537c73badff2f/5a/40/5dfb9870017ad10a424ef3d496d0.php:147
+msgid "Concept language"
+msgstr "Language"
+
+#: /tmp/cache/537c73badff2f/5a/40/5dfb9870017ad10a424ef3d496d0.php:127
+msgid "Concepts"
+msgstr "Concepts"
+
+#: /tmp/cache/537c73badff2f/7d/37/1bb159eade92e1211ed0dafe5b12.php:71
+msgid "Contact us!"
+msgstr "Contact us!"
+
+#: /tmp/cache/537c73badff2f/9b/ab/ae70f1ef370d0c5debac44a5d54f.php:35
+msgid "Displaying the first"
+msgstr "Displaying the first"
+
+#: /tmp/cache/537c73badff2f/5a/40/5dfb9870017ad10a424ef3d496d0.php:214
+msgid "Download"
+msgstr "Download"
+
+#: /tmp/cache/537c73badff2f/7d/37/1bb159eade92e1211ed0dafe5b12.php:126
+msgid "E-mail:"
+msgstr "E-mail:"
+
+#: /tmp/cache/537c73badff2f/7d/37/1bb159eade92e1211ed0dafe5b12.php:130
+msgid "Enter your e-mail address"
+msgstr "Enter your e-mail address"
+
+#: /tmp/cache/537c73badff2f/7d/37/1bb159eade92e1211ed0dafe5b12.php:122
+msgid "Enter your name"
+msgstr "Enter your name"
+
+#: /tmp/cache/537c73badff2f/6c/c2/116e4eedd7311501f4433bc5287e.php:91
+msgid "Error: Requested vocabulary \"%vocab_id%\" not found!"
+msgstr "Error: Requested vocabulary \"%vocab_id%\" not found!"
+
+#: /tmp/cache/537c73badff2f/1e/99/74447de48d79a50416955251e104.php:416
+msgid "Error: the vocabulary does not contain terms beginning with \"%letter%\"!"
+msgstr "The vocabulary does not contain terms beginning with \"%letter%\"!"
+
+#: /tmp/cache/537c73badff2f/7d/37/1bb159eade92e1211ed0dafe5b12.php:34
+#: /tmp/cache/537c73badff2f/7d/37/1bb159eade92e1211ed0dafe5b12.php:54
+msgid "Feedback"
+msgstr "Feedback"
+
+#: /tmp/cache/537c73badff2f/7d/37/1bb159eade92e1211ed0dafe5b12.php:65
+msgid "Feedback has been sent!"
+msgstr "Feedback has been sent!"
+
+#: /tmp/cache/537c73badff2f/43/08/7c7dfa02af3dda30b6dab06908e0.php:36
+msgid "Group index"
+msgstr "Group index"
+
+#: /tmp/cache/537c73badff2f/1e/99/74447de48d79a50416955251e104.php:260
+msgid "Group-nav"
+msgstr "Group index"
+
+#: /tmp/cache/537c73badff2f/5a/40/5dfb9870017ad10a424ef3d496d0.php:159
+msgid "Hidden terms"
+msgstr "Hidden terms"
+
+#: /tmp/cache/537c73badff2f/1e/99/74447de48d79a50416955251e104.php:242
+msgid "Hier-nav"
+msgstr "Hierarchy"
+
+#: /tmp/cache/537c73badff2f/bb/38/04c50e1460d9c064ae7df13a27ae.php:145
+msgid "Language literal"
+msgstr "In English"
+
+#: /tmp/cache/537c73badff2f/9b/ab/ae70f1ef370d0c5debac44a5d54f.php:31
+msgid "Loading"
+msgstr "Loading"
+
+#: /tmp/cache/537c73badff2f/9b/ab/ae70f1ef370d0c5debac44a5d54f.php:27
+msgid "Loading more items"
+msgstr "Loading more items"
+
+#: /tmp/cache/537c73badff2f/7d/37/1bb159eade92e1211ed0dafe5b12.php:134
+msgid "Message:"
+msgstr "Message:"
+
+#: /tmp/cache/537c73badff2f/7d/37/1bb159eade92e1211ed0dafe5b12.php:118
+msgid "Name:"
+msgstr "Name:"
+
+#: /tmp/cache/537c73badff2f/9b/ab/ae70f1ef370d0c5debac44a5d54f.php:23
+msgid "No results"
+msgstr "No results"
+
+#: /tmp/cache/537c73badff2f/29/3b/ef6ded62aeb5d8f31efa19ce2117.php:32
+msgid "No vocabularies on the server!"
+msgstr "No vocabularies on the server!"
+
+#: /tmp/cache/537c73badff2f/7d/37/1bb159eade92e1211ed0dafe5b12.php:83
+msgid "Not to a specific vocabulary"
+msgstr "Not to a specific vocabulary"
+
+#: /tmp/cache/537c73badff2f/5a/40/5dfb9870017ad10a424ef3d496d0.php:151
+msgid "Preferred terms"
+msgstr "Preferred terms"
+
+#: /tmp/cache/537c73badff2f/64/b0/1fed2b7871473f4385aa3ea67142.php:63
+msgid "SKOSmos layout designed by Hahmo"
+msgstr "SKOSmos layout designed by Hahmo"
+
+#: /tmp/cache/537c73badff2f/bb/38/04c50e1460d9c064ae7df13a27ae.php:197
+msgid "Search"
+msgstr "Search"
+
+#: /tmp/cache/537c73badff2f/bb/38/04c50e1460d9c064ae7df13a27ae.php:185
+msgid "Search language: any"
+msgstr "Any language"
+
+#: /tmp/cache/537c73badff2f/bb/38/04c50e1460d9c064ae7df13a27ae.php:80
+msgid "Search within this vocabulary:"
+msgstr "Search within this vocabulary"
+
+#: /tmp/cache/537c73badff2f/7d/37/1bb159eade92e1211ed0dafe5b12.php:139
+msgid "Send feedback"
+msgstr "Send feedback"
+
+#: /tmp/cache/537c73badff2f/d5/c6/eaee0760e4d054fa72e35e3c6d13.php:37
+msgid "The search provided no results."
+msgstr "The search provided no results."
+
+#: /tmp/cache/537c73badff2f/9b/ab/ae70f1ef370d0c5debac44a5d54f.php:59
+msgid "Value is required and can not be empty"
+msgstr "Value is required and can not be empty"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:159
+msgid "Vocabularies"
+msgstr "Finnish Thesaurus and Ontology Service"
+
+#: /tmp/cache/537c73badff2f/29/3b/ef6ded62aeb5d8f31efa19ce2117.php:39
+msgid "Vocabularies on the server"
+msgstr "Available vocabularies and ontologies"
+
+#: /tmp/cache/537c73badff2f/5a/40/5dfb9870017ad10a424ef3d496d0.php:58
+msgid "Vocabulary information"
+msgstr "Vocabulary information"
+
+#: /tmp/cache/537c73badff2f/07/37/699cc0f7270e411a620f8d8c60a6.php:53
+msgid "concepts within the group"
+msgstr "Concepts within the group"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:95
+msgid "dc11:creator"
+msgstr "Creator"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:97
+msgid "dc11:description"
+msgstr "Description"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:99
+msgid "dc11:license"
+msgstr "License"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:91
+msgid "dc11:publisher"
+msgstr "Publisher"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:93
+msgid "dc11:relation"
+msgstr "Relation"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:87
+msgid "dc11:source"
+msgstr "Source"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:135
+msgid "dc11:source_help"
+msgstr "Source for the description of the concept."
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:89
+msgid "dc11:title"
+msgstr "Title"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:71
+msgid "dc:contributor"
+msgstr "Contributor"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:69
+msgid "dc:creator"
+msgstr "Creator"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:79
+msgid "dc:date"
+msgstr "Date"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:67
+msgid "dc:description"
+msgstr "Description"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:85
+msgid "dc:isReplacedBy"
+msgstr "Replaced by concept"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:83
+msgid "dc:language"
+msgstr "Language"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:75
+msgid "dc:license"
+msgstr "License"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:77
+msgid "dc:publisher"
+msgstr "Publisher"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:81
+msgid "dc:relation"
+msgstr "Relation"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:73
+msgid "dc:rights"
+msgstr "Rights"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:65
+msgid "dc:subject"
+msgstr "Subject"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:63
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:111
+msgid "dc:title"
+msgstr "Title"
+
+#: /tmp/cache/537c73badff2f/d5/c6/eaee0760e4d054fa72e35e3c6d13.php:120
+msgid "deprecated"
+msgstr "This concept has been deprecated. Do not use this concept for annotation!"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:153
+msgid "en"
+msgstr "in English"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:149
+msgid "fi"
+msgstr "in Finnish"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:147
+msgid "foaf:homepage"
+msgstr "Homepage"
+
+#: /tmp/cache/537c73badff2f/d5/c6/eaee0760e4d054fa72e35e3c6d13.php:330
+msgid "foreign prefLabel help"
+msgstr "Terms for the concept in other languages."
+
+#: /tmp/cache/537c73badff2f/9b/ab/ae70f1ef370d0c5debac44a5d54f.php:51
+msgid "from all"
+msgstr "from all"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:59
+msgid "isothes:ConceptGroup"
+msgstr "Concept group"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:61
+msgid "isothes:ThesaurusArray"
+msgstr "Array of sibling concepts"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:155
+msgid "la"
+msgstr "in Latin"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:113
+msgid "onki:memberOf"
+msgstr "Belongs to group"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:145
+msgid "onki:memberOf_help"
+msgstr "Group which the concept belongs to."
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:109
+msgid "owl:sameAs"
+msgstr "Equivalent concepts"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:107
+msgid "owl:versionInfo"
+msgstr "Version"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:101
+msgid "rdf:type"
+msgstr "Concept type"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:133
+msgid "rdf:type_help"
+msgstr "Concept type"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:105
+msgid "rdfs:comment"
+msgstr "Description"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:103
+msgid "rdfs:label"
+msgstr "Label"
+
+#: /tmp/cache/537c73badff2f/9b/ab/ae70f1ef370d0c5debac44a5d54f.php:43
+msgid "results displayed"
+msgstr "results displayed"
+
+#: /tmp/cache/537c73badff2f/d5/c6/eaee0760e4d054fa72e35e3c6d13.php:26
+msgid "results for"
+msgstr "results for"
+
+#: /tmp/cache/537c73badff2f/9b/ab/ae70f1ef370d0c5debac44a5d54f.php:39
+msgid "results:"
+msgstr "results:"
+
+#: /tmp/cache/537c73badff2f/9b/ab/ae70f1ef370d0c5debac44a5d54f.php:55
+msgid "selected"
+msgstr "selected"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:21
+msgid "skos:Collection"
+msgstr "Collection"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:19
+msgid "skos:Concept"
+msgstr "Concept"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:37
+msgid "skos:altLabel"
+msgstr "Alternative label"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:125
+msgid "skos:altLabel_help"
+msgstr "Alternative terms for the concept."
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:27
+msgid "skos:broadMatch"
+msgstr "skos:broadMatch"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:141
+msgid "skos:broadMatch_help"
+msgstr "Matching broader concept in another vocabulary."
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:23
+msgid "skos:broader"
+msgstr "Broader concept"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:117
+msgid "skos:broader_help"
+msgstr "Broader concept"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:43
+msgid "skos:closeMatch"
+msgstr "Closely matching concept"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:139
+msgid "skos:closeMatch_help"
+msgstr "Closely matching concept in another vocabulary."
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:57
+msgid "skos:definition"
+msgstr "Definition"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:131
+msgid "skos:definition_help"
+msgstr "A complete explanation of the intended meaning of a concept"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:41
+msgid "skos:exactMatch"
+msgstr "Exact match"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:137
+msgid "skos:exactMatch_help"
+msgstr "Exactly matching concepts in another vocabulary."
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:51
+msgid "skos:hasTopConcept"
+msgstr "Has top concept"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:39
+msgid "skos:hiddenLabel"
+msgstr "Hidden concepts"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:47
+msgid "skos:inScheme"
+msgstr "Concept scheme"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:45
+msgid "skos:member"
+msgstr "Group members"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:127
+msgid "skos:member_help"
+msgstr "Members of the group"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:29
+msgid "skos:narrowMatch"
+msgstr "Narrower matching concepts"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:143
+msgid "skos:narrowMatch_help"
+msgstr "Matching narrower concept in another vocabulary."
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:25
+msgid "skos:narrower"
+msgstr "Narrower concepts"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:119
+msgid "skos:narrower_help"
+msgstr "Narrower concepts."
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:53
+msgid "skos:note"
+msgstr "Note"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:121
+msgid "skos:note_help"
+msgstr "Notes"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:35
+msgid "skos:prefLabel"
+msgstr "Preferred term"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:31
+msgid "skos:related"
+msgstr "Related concepts"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:33
+msgid "skos:relatedMatch"
+msgstr "Related concepts in other vocabularies"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:129
+msgid "skos:related_help"
+msgstr "Concepts related to this concept."
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:55
+msgid "skos:scopeNote"
+msgstr "Scope note"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:123
+msgid "skos:scopeNote_help"
+msgstr "Notes about the usage and scope of the concept."
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:49
+msgid "skos:topConceptOf"
+msgstr "Belongs to vocabulary"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:115
+msgid "skosext:partOf"
+msgstr "Is part of"
+
+#: /tmp/cache/537c73badff2f/00/77/60cbac7fd76713d5540e9dba269c.php:151
+msgid "sv"
+msgstr "in Swedish"
+
+#: /tmp/cache/537c73badff2f/5a/40/5dfb9870017ad10a424ef3d496d0.php:216
+msgid "this vocabulary as SKOS/RDF"
+msgstr "this vocabulary as SKOS/RDF"
+
+#: /tmp/cache/537c73bb5c231/e8/aa/9e859d808fe631752fb4cef2d308.php:102
+msgid "About page"
+msgstr "About"
+
+#: /tmp/cache/537c73bb5c231/bb/df/b7541e21be699f08ce41d883a209.php:35
+msgid "Alphabetical index"
+msgstr "Alphabetical index"
+
+#: /tmp/cache/537c73bb5c231/43/d1/01a35fc3eeed9d81c3e443d7bb4b.php:646
+msgid "Download this concept in SKOS format:"
+msgstr "Download this concept in SKOS format:"
+
+#: /tmp/cache/537c73bb5c231/43/d1/01a35fc3eeed9d81c3e443d7bb4b.php:846
+msgid "Error: term \"%term%\" not found in vocabulary!"
+msgstr "Error: term \"%term%\" not found in vocabulary!"
+
+#: /tmp/cache/537c73bb5c231/e8/aa/9e859d808fe631752fb4cef2d308.php:90
+msgid "Vocabularies-nav"
+msgstr "Vocabularies"
+
+#: /tmp/cache/537c73bb5c231/43/d1/01a35fc3eeed9d81c3e443d7bb4b.php:558
+msgid "foreign prefLabels"
+msgstr "In other languages"
+
+#: /tmp/cache/537c73bb5c231/43/d1/01a35fc3eeed9d81c3e443d7bb4b.php:620
+msgid "replaced"
+msgstr "replaced"
+
+#: /tmp/cache/537c73bb5c231/43/d1/01a35fc3eeed9d81c3e443d7bb4b.php:93
+msgid "results"
+msgstr "results:"
+
+#: /tmp/cache/537c73bb5c231/43/d1/01a35fc3eeed9d81c3e443d7bb4b.php:297
+msgid "skos:prefLabel_help"
+msgstr "Preferred term for the concept."
+
+#~ msgid "Search from all vocabularies:"
+#~ msgstr "Search from all vocabularies"
+
+#~ msgid "Groups"
+#~ msgstr "Groups"
+
+#~ msgid "Collections"
+#~ msgstr "Collections"
+
+#~ msgid "Concepts: "
+#~ msgstr "Concepts: "
+
+#~ msgid "Vocabulary statistics"
+#~ msgstr "Vocabulary statistics"
+
+#~ msgid "ONKI: Feedback"
+#~ msgstr "ONKI: Feedback"
+
+#~ msgid "To the top"
+#~ msgstr "To the top"
+
+#~ msgid "All downloadable ontologies are marked with this icon."
+#~ msgstr "All downloadable ontologies are marked with this icon."
+
+#~ msgid "Download ontologies"
+#~ msgstr "Download ontologies"
+
+#~ msgid "Finnish Ontology Library Service\tONKI"
+#~ msgstr "Finnish Ontology Library Service Finto"
+
+#~ msgid "Follow ONKI on Twitter!"
+#~ msgstr "Follow ONKI on Twitter!"
+
+#~ msgid ""
+#~ "Please begin by selecting an ontology or a vocabulary for browsing. You "
+#~ "can also search from all or specific ontologies and vocabularies by using "
+#~ "the search at the right."
+#~ msgstr ""
+#~ "Please begin by selecting an ontology or a vocabulary for browsing. You "
+#~ "can also search from all or specific ontologies and vocabularies by using "
+#~ "the search at the right."
+
+#~ msgid "Search information faster"
+#~ msgstr "Search information faster"
+
+#~ msgid "Select your search targets beforehand."
+#~ msgstr "Select your search targets beforehand."
+
+#~ msgid "Feedback and comments"
+#~ msgstr " please share your experiences!"
+
+#~ msgid ""
+#~ "If you encounter any problems or have improvement ideas, please contact "
+#~ "the ONKI team. We are also very much interested in your success stories "
+#~ "in using ONKI - please share your experiences!"
+#~ msgstr ""
+#~ "If you encounter any problems or have improvement ideas, please contact "
+#~ "the Finto team. We are also very much interested in your success stories "
+#~ "in using Finto -"
+
+#~ msgid "Links"
+#~ msgstr "Links"
+
+#~ msgid ""
+#~ "ONKI Light is an ontology browser provided by the National library of "
+#~ "Finland."
+#~ msgstr ""
+#~ "Finto is a Finnish service for the publication and utilization of "
+#~ "vocabularies, ontologies and classifications. It provides a user "
+#~ "interface for browsing the vocabularies and open interfaces for utilizing "
+#~ "them in other applications."
+
+#~ msgid "ONKI-project wiki"
+#~ msgstr ""
+#~ "Finto is being developed as a joint project between the National Library "
+#~ "of Finland, the Ministry of Finance, and the Ministry of Education and "
+#~ "Culture."
+
+#~ msgid "SeCo"
+#~ msgstr "SeCo Website"
+
+#~ msgid "The National Library"
+#~ msgstr "The National Library of Finland"
+
+#~ msgid ""
+#~ "We hope you like the ONKI service and enjoy using it for your purposes!"
+#~ msgstr ""
+#~ "The current service is based on the FinnONTO research project by the "
+#~ "Aalto University and the University of Helsinki between 2003 and 2012."
+
+#~ msgid "Wikipage"
+#~ msgstr "Project Wiki"
+
+#~ msgid "About ONKI"
+#~ msgstr "About Finto"
+
+#~ msgid "And more, please ask."
+#~ msgstr "And more, please ask."
+
+#~ msgid "Building the future of the Semantic Web and beyond."
+#~ msgstr "Building the future of the Semantic Web and beyond."
+
+#~ msgid "Co-operation in projects."
+#~ msgstr "Co-operation in projects."
+
+#~ msgid "For the latest semantic news, follow us on"
+#~ msgstr "For the latest semantic news, follow us on"
+
+#~ msgid "How can we help you?"
+#~ msgstr "How can we help you?"
+
+#~ msgid "Information systems specialist"
+#~ msgstr "Information systems specialist"
+
+#~ msgid "Live presentations about ONKI: what it is? how to use it?"
+#~ msgstr "Live presentations about ONKI: what it is? how to use it?"
+
+#~ msgid "Online technical support for using ONKI."
+#~ msgstr "Online technical support for using ONKI."
+
+#~ msgid "Project manager"
+#~ msgstr "Project manager"
+
+#~ msgid "Support for creating and publishing ontologies."
+#~ msgstr "Support for creating and publishing ontologies."
+
+#~ msgid "The ONKI Light Team"
+#~ msgstr "The ONKI Light Team"
+
+#~ msgid ""
+#~ "The ONKI-light browser is provided as a part of the ONKI Living Lab - an "
+#~ "open lab for testing the latest semantic web technologies in practice, "
+#~ "with real users like you. Currently, over 10 000 people are using ONKI "
+#~ "each month."
+#~ msgstr ""
+#~ "The ONKI-light browser is provided as a part of the ONKI Living Lab - an "
+#~ "open lab for testing the latest semantic web technologies in practice, "
+#~ "with real users like you. Currently, over 10 000 people are using ONKI "
+#~ "each month."
+
+#~ msgid "Twitter"
+#~ msgstr "Twitter"
+
+#~ msgid "and"
+#~ msgstr "and"
+
+#~ msgid "backend servers"
+#~ msgstr "backend servers"
+
+#~ msgid "browser frontend development, ui design"
+#~ msgstr "browser frontend development, ui design"
+
+#~ msgid "fan us on Facebook!"
+#~ msgstr "fan us on Facebook!"
+
+#~ msgid "professor, head of research group"
+#~ msgstr "professor, head of research group"
+
+#~ msgid "publishing of ontologies, widgets, etc."
+#~ msgstr "publishing of ontologies, widgets, etc."
+
+#~ msgid "foreignhelp"
+#~ msgstr "Labels:"
+
+#~ msgid "in_all_languages"
+#~ msgstr "in any language"
+
+#, fuzzy
+#~ msgid "Lang"
+#~ msgstr "In English"
+
+#~ msgid "Search from all vocabularies: "
+#~ msgstr "Search from all vocabularies:"
+
+#~ msgid "Hierarchy"
+#~ msgstr "Hierarchy"
+
+#~ msgid ""
+#~ "The hierarchy display shows how the concept fits into a wider context "
+#~ "through its superordinate concepts."
+#~ msgstr ""
+#~ "The hierarchy display shows how the concept fits into a wider context "
+#~ "through its superordinate concepts."
+
+#~ msgid "Which vocabulary is your comment related to?"
+#~ msgstr "Which vocabulary is your comment related to?"
+
+#~ msgid "Terms: "
+#~ msgstr "Terms: "
+
+#~ msgid "Ontologiat ja sanastot"
+#~ msgstr "Ontologies and vocabularies"
+
+#~ msgid "lang not supported"
+#~ msgstr ""
+#~ "The language you had chosen is not supported by the current vocabulary. "
+#~ "Therefore you are seeing this page in English."
+
+#~ msgid "Tietoja sanastosta"
+#~ msgstr "About this vocabulary"
+
+#~ msgid "Virhe:  404: Sivua"
+#~ msgstr "404 Error: The page"
+
+#~ msgid "Virhe: Pyydettyä sanastoa"
+#~ msgstr "Error: The vocabulary"
+
+#~ msgid "Virhe: Sanastosta ei löytynyt pyytämääsi käsitettä"
+#~ msgstr "Error: The vocabulary does not contain the concept"
+
+#~ msgid "ei löytynyt palvelimelta!"
+#~ msgstr "was not found on the server!"
+
+#~ msgid "Ryhmän sisältämät käsitteet"
+#~ msgstr "Concepts within the group"
+
+#~ msgid "Ryhmät"
+#~ msgstr "Groups"
+
+#~ msgid "Lisätietoja"
+#~ msgstr "About"
+
+#~ msgid "Palaute"
+#~ msgstr "Feedback"
+
+#, fuzzy
+#~ msgid "Search in all vocabularies: "
+#~ msgstr "Search from all vocabularies:"
+
+#~ msgid "Ei sanastoja ONKI-palvelimella!"
+#~ msgstr "No vocabularies found on the ONKI-server!"
+
+#~ msgid "Hae kaikista sanastoista: "
+#~ msgstr "Search from all vocabularies: "
+
+#~ msgid "Sanastot ONKI-palvelimella"
+#~ msgstr "Vocabularies on the ONKI-server"
+
+#~ msgid "Sivun alkuun"
+#~ msgstr "To the top"
+
+#~ msgid "Hae"
+#~ msgstr "Search"
+
+#~ msgid "kaikilla kielillä"
+#~ msgstr "all languages"
+
+#~ msgid "suomeksi"
+#~ msgstr "in english"
+
+#~ msgid "Nimi:"
+#~ msgstr "Name:"
+
+#~ msgid "Sähköpostiosoite:"
+#~ msgstr "Email:"
+
+#~ msgid "Lähetä palautetta"
+#~ msgstr "Send feedback"
+
+#~ msgid "Palaute lähetetty!"
+#~ msgstr "Feedback sent. Thank you for your feedback!"
+
+#~ msgid "Syötä nimesi"
+#~ msgstr "Name:"
+
+#~ msgid "Syötä sähköpostiosoitteesi"
+#~ msgstr "Email:"
+
+#~ msgid "Viesti:"
+#~ msgstr "Message:"
+
+#~ msgid "Lataa tämä käsite SKOS-muodossa:"
+#~ msgstr "Download this concept in SKOS-form: "
+
+#~ msgid "Lataa tämä sanasto SKOS-muodossa:"
+#~ msgstr "Download this vocabulary in SKOS-format:"
+
+#~ msgid "Korvatut termit"
+#~ msgstr "Replaced concepts:"
+
+#~ msgid "Käsitteitä: "
+#~ msgstr "Concepts: "
+
+#~ msgid "Piilotermit"
+#~ msgstr "Hidden Concepts:"
+
+#~ msgid "Päätermit"
+#~ msgstr "Main concepts:"
+
+#~ msgid "Tilastotietoa sanastosta"
+#~ msgstr "Vocabulary statistics"
+
+#~ msgid "Hae kaikista sanastoista:"
+#~ msgstr "Search from all vocabularies: "
+
+#~ msgid "Hae tästä sanastosta:"
+#~ msgstr "Search from this vocabulary:"
+
+#~ msgid "Aakkosellinen hakemisto"
+#~ msgstr "Alphabetical directory"
+
+#~ msgid "Ei tiettyyn ontologiaan"
+#~ msgstr "Not to a specific vocabulary"
+
+#~ msgid "Mihin ontologiaan kommenttisi liittyy?"
+#~ msgstr "What ontology is your comment related to?"
+
+#~ msgid "Ryhmähakemisto"
+#~ msgstr "Group index"
+
+#~ msgid "Edellinen"
+#~ msgstr "Previous"
+
+#~ msgid "Seuraava"
+#~ msgstr "Next"
+
+#~ msgid "onki:replacelabels"
+#~ msgstr "Replaces concepts:"
+
+#~ msgid "rdfs:subClassOf"
+#~ msgstr "Is sub class of:"
+
+#~ msgid "Alakohtainen hakemisto"
+#~ msgstr "Domain specific directory"
+
+#~ msgid "Hierarkkinen hakemisto"
+#~ msgstr "Hierarchical directory"
+
+#~ msgid "Käyttöohjeet"
+#~ msgstr "Instructions"
+
+#~ msgid "Näytetään tulokset"
+#~ msgstr "Displaying results"
+
+#~ msgid "Hakutulokset:"
+#~ msgstr "Search results:"
+
+#~ msgid "kpl"
+#~ msgstr "pcs"
+
+#~ msgid "skos:members"
+#~ msgstr "Group members:"
+
+#~ msgid "suomi"
+#~ msgstr "Finnish"
+
+#~ msgid "ruotsi"
+#~ msgstr "Swedish"
+
+#~ msgid "englanti"
+#~ msgstr "English"
+
+#~ msgid "http://www.w3.org/2004/02/skos/core#Concept"
+#~ msgstr "Concept"
+
+#~ msgid "http://www.w3.org/2004/02/skos/core#Collection"
+#~ msgstr "Collection"
+
+#~ msgid "ysa_meta:GeographicalConcept"
+#~ msgstr "Geographical concept"
+
+#~ msgid "View the instructions"
+#~ msgstr "View the instructions"
+
+#~ msgid "Choose ontologies and vocabularies for browsing"
+#~ msgstr "Choose ontologies and vocabularies for browsing"
+
+#~ msgid "Further information about the service"
+#~ msgstr "Further information about the service"
+
+#~ msgid "Give feedback for the service"
+#~ msgstr "Give feedback for the service"
+
+#~ msgid "skosext:broaderGeneric"
+#~ msgstr "Broader generic concept:"
+
+#~ msgid "skos:narrowerGeneric"
+#~ msgstr "Narrower concept:"
+
+#~ msgid "skos:narrowerPartitive"
+#~ msgstr "Narrower concept:"
+
+#~ msgid "skos:broaderPartitive"
+#~ msgstr "Broader concept:"

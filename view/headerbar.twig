@@ -1,0 +1,58 @@
+{% if vocab_id is defined %}
+<div class="header-left">
+  {% if path_fix|length > 5 %}
+  <h1><a href="{{ path_fix }}{% if vocab_id %}{{ vocab_id  }}/{% endif %}{{lang}}/">{{ vocab.title }}</a></h1>
+  {% else %}
+    {% if vocab.title is defined %}
+    <h1>{{ vocab.title }}</h1>
+    {% else %}
+    <h1>{{ vocab_id|trans }}</h1>
+    {% endif %}
+  {% endif %}
+</div>
+{% endif %}
+<div class="header-float">
+{% if vocab_id != 'About' and vocab_id != 'Feedback' %}
+  {% if not front_page and global_search is not defined %}<p class="search-vocab-text">{% trans "Search within this vocabulary:" %}</p>{% endif %}
+  {% if vocab_list is defined %}
+    <select class="multiselect" multiple="multiple">
+    {% for vocabClassName,vocabArray in vocab_list %}
+      {% for vocab in vocabArray %}
+      <option value="{{ vocab.id }}">{{ vocab.id }}</option>
+      {% endfor %}
+    {% endfor %}
+    </select>
+  {% endif %}
+  <form class="navbar-form" role="search" name="text-search" action="{{ path_fix }}{% if vocab_id is defined %}{{ vocab_id }}/{% endif %}{{ lang }}/search">
+
+    <input style="display: none" name="lang" value="{{ lang }}" id="lang-input">
+    <div class="input-group">
+      <div class="input-group-btn">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="lang-dropdown-toggle">{% trans "Language literal" %}</button>
+        <ul class="dropdown-menu">
+        {% if vocab is defined %}
+          {% for langcode in vocab.languages %}
+          <li><a href="#" class="lang-button" hreflang="{{ langcode }}">{% trans langcode %}</a></li>
+          {% endfor %}
+        {% else %}
+          <li><a href="#" class="lang-button" hreflang="{{ lang }}">{% trans lang %}</a></li>
+        {% endif %}
+          <li><a href="#" class="lang-button-all" hreflang="">{% trans "Search language: any" %}</a></li>
+        </ul>
+      </div><!-- /btn-group -->
+      <input id="search-field" type="text" class="form-control" name="q" value="{{ term }}">
+      <div class="input-group-btn">
+        <button id="search-all-button" type="submit" class="btn btn-primary">{% trans "Search" %}</button>
+      </div>
+    </div>
+    <div id="search-from-all-vocabularies-radio-buttons">
+      <input type="radio" name="all" id="all-languages-false" value="0"
+      onClick="createCookie('ONKI_SEARCH_ALL', this.value , 365);" />
+      <input type="radio"
+      id="all-languages-true" name="all" value="1"
+      onClick="createCookie('ONKI_SEARCH_ALL', this.value , 365);" />
+    </div>
+    {% if front_page or global_search %}<input id="selected-vocabs" type="text" name="vocabs">{% endif %}
+  </form>
+{% endif %}
+</div>

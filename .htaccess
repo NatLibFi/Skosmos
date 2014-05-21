@@ -1,0 +1,9 @@
+Options +FollowSymlinks -MultiViews -Indexes
+
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^rest/v1/(.*)$ rest.php/$1 [L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php/$1 [L] 

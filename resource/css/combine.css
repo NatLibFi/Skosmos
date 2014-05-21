@@ -1,0 +1,839 @@
+@charset "utf-8";
+@import 'fira.css';
+@import '../../vendor/components/jqueryui/themes/cupertino/jquery-ui.min.css';
+
+@media print { /* Quick style sheet for printing. */
+	body * {
+		visibility: hidden;
+	}
+
+	/* Everything under the print class elements will be printed. */
+	.print,.print * {
+		visibility: visible;
+	}
+
+	/* Position elements at the beginning of the page. */
+	.print {
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
+}
+
+a:link,a:visited,a:active,a:hover,a:focus {
+	/* Improves link handling by removing focus borders. Sorry keyboard users! */
+	text-decoration: none;
+	border: 0;
+	outline: none;
+}
+
+a:hover {
+	text-decoration: underline;
+	/* All text links have underlining when hovered. */
+}
+
+table {
+	border-spacing: 0;
+  table-layout: fixed; 
+  word-wrap: break-word;
+}
+
+img {
+	border: none;
+}
+
+/* Font definitions
+ *****************************************/
+h1 {
+  font-family: 'Fira Sans' !important;
+  font-size: 27px !important;
+  font-weight: 400 !important;
+}
+
+h2 {
+  font-family: 'Fira Sans Bold' !important;
+  font-style: bold !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+}
+
+a.navigation-font {
+  font-family: 'Fira Sans';
+  font-size: 16px;
+	margin-top: auto;
+	margin-bottom: auto;
+  margin: auto 10px;
+}
+
+.top-row a.navigation-font {
+  color: #394554;
+}
+
+p {
+  font-family: 'Fira Sans';
+  font-size: 16px;
+}
+
+.versal {
+  font-family: 'Fira Sans';
+  font-size: 18px;
+}
+
+.versal-bold {
+  font-family: 'Fira Sans Bold';
+  font-size: 18px;
+}
+
+/* top-bar -- logo, navi and language sel.
+ *****************************************/
+#navigation {
+	height: 50px;
+	min-width: 0px;
+	max-width: 530px;
+	width: auto;
+	overflow: hidden;
+	float: right;
+	line-height: 70px;
+}
+
+#navigation > div > a > img {
+  margin-bottom: 5px;
+}
+
+#navigation .link-bg {
+	height: 60px;
+	float: left;
+}
+
+#language {
+	height: 50px;
+	min-width: 200px;
+	max-width: 350px;
+	width: auto;
+  padding-left: 0px;
+	text-align: right;
+	overflow: hidden;
+	float: right;
+	line-height: 70px;
+}
+
+.language-selection {
+	margin: auto 3px;
+	z-index: 0;
+}
+
+#top-bar-content {
+  background-color: #ffffff;
+  text-align: left;
+  //background: none repeat scroll 0 0 rgba(24, 51, 75, 0.30);
+  box-shadow: 0 0px 12px rgba(0, 0, 0, 0.25);
+  //background-color: #181818;
+  }
+
+/* header-bar -- header, info, search-tab.
+ *****************************************/
+
+#header-bar-content {
+	display: block;
+  background-color: #75889f;
+  height: 50px;
+  max-width: 1020px;
+  margin: 0 auto;
+}
+
+.navbar-inverse {
+  //background: url("../pics/pattern5.png");
+  background-color: rgb(184,192,199) !important; /* Old browsers */
+  background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(229,229,229,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(229,229,229,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* IE10+ */
+  background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* W3C */
+}
+
+#header-bar-page-title {
+	overflow: hidden;
+	text-align: left;
+	line-height: 30px;
+  width: 100px;
+	float: left;
+}
+
+.header-bar-page-title-text {
+  float: left;
+  line-height: 40px;
+  margin-left: 18px;
+}
+
+.header-bar-page-title-text h3 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  line-height: 40px;
+}
+
+/* footer -- the bottom bar of the page.
+ *****************************************/
+#footer {
+  min-height: 10px;
+}
+
+/* search-from-all-vocabularies
+ * on the frontpage below the infobar 
+ *****************************************/
+
+#search-wide * {
+	vertical-align: middle;
+}
+
+#search-wide h3 {
+  float: left; 
+  line-height: 29px;
+  width: 245px;
+}
+
+#center-container {
+  margin: auto;
+}
+
+#right-container {
+  display: block;
+  float: left;
+}
+
+#search-from-vocabulary * {
+	vertical-align: middle;
+}
+
+#search-all-text {
+	width: 260px;
+	text-align: right;
+	float: left;
+}
+
+.search-parameter-highlight {
+	display: inline-block;
+	word-wrap: break-word;
+	margin-left: 4px;
+  max-width: 570px;
+  line-height: 18px;
+}
+
+#search-vocab-parameter {
+	display: block;
+  border: 1px solid #666666;
+  border-radius: 0;
+  box-shadow: 1px 1px 1 #444444 inset;
+  border-right: none;
+  background: none repeat scroll 0 0 rgba(0, 0, 0, 0.20);
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+  padding-left: 8px !important;
+}
+
+.navbar-left {
+  margin: 0px !important;
+}
+
+#search-vocab-parameter::-moz-placeholder {
+  color: #FFFFFF;
+}
+
+.search-vocab-container {
+  float: left;
+	margin: auto;
+}
+
+#search-from-all-vocabularies-radio-buttons {
+	display: none;
+	width: 110px;
+	margin: 0 0 0px 15px;
+}
+
+#lang-dropdown-toggle {
+  background-color: #555555;
+  border-color: #666666;
+  border-right: none;
+  border-radius: 0 !important;
+  color: white;
+  padding-left: 6px !important;
+  padding-right: 6px !important;
+}
+
+.search-all-vocabs {
+	width: 245px;
+	float: left;
+	line-height: 29px;
+}
+
+#search-all-button {
+  background-color: #555555;
+  border-left: none;
+  border-color: #666666;
+  border-radius: 0 !important;
+}
+
+.input-group-btn {
+  width: 50px !important;
+}
+
+/* vocabulary-list
+ *****************************************/
+#vocabulary-list {
+  background-color: #ffffff;
+  max-width: 615px !important;
+  border-top: 2px solid #394554;
+}
+
+.book-logo {
+  float: left;
+  margin: 0 15px 10px -15px;
+}
+
+#vocabulary-list table {
+  margin-bottom: 0px;
+}
+
+#vocabulary-list th, #vocabulary-list td {
+  border-top: none !important;
+  padding: 0 8px !important;
+}
+
+#vocabulary-list th {
+  text-align: right !important;
+  width: 150px !important;
+  max-width: 150px !important;
+}
+
+.vocab-link {
+	font-size: 16px;
+}
+
+/* vocabulary-info
+ *****************************************/
+#vocab-info {
+	font-size: 16px;
+  margin: auto;
+  max-width: 700px;
+}
+
+.vocab-info-literals th {
+	width: 110px;
+}
+
+/* styling classes
+ *****************************************/
+.boxed {
+  border-left: none;
+  border-right: none;
+	background-color: #FFFFFF;
+}
+
+.middle {
+	margin: auto 0 !important;
+}
+
+.spinner { 
+	display:inline-block;
+	width: 25px;
+	height: 25px;
+	margin-left: 5px;
+  vertical-align: middle;
+	background:url("../pics/spinner.gif") no-repeat transparent;
+}
+
+.spinner-text {
+  color: #428BCA;
+  font-size: 16px;
+  line-height: 30px;
+}
+
+/* feedback-form layout
+ *****************************************/
+#feedback-form {
+	display: inline-block;
+  margin-top: 20px;
+	width: 450px;
+	border: 1px solid #DBDBDB;
+	border-radius: 10px;
+	background-color: #FAFAF9;
+  margin-left: 0;
+}
+
+#feedback-form h1 {
+	float: right;
+	font-size: 173px;
+	margin-right: 10px;
+	color: #666666;
+	margin-top: -60px;
+}
+
+#feedback-content {
+	width: 300px;
+	margin: 20px;
+}
+
+#feedback-content #send-feedback {
+	width: auto;
+	margin-top: 15px;
+}
+
+#feedback-fields input {
+	width: 100%;
+}
+
+.feedback-field-label {
+	margin-top: 7px;
+	display: block
+}
+
+#feedback-fields #message {
+	width: 400px;
+	height: 250px;
+	resize: none;
+}
+
+#feedback-label {
+	padding-top: 20px;
+  padding-bottom: 20px;
+  text-align: center;
+  width:100%;
+}
+
+.error {
+	color: red;
+}
+
+/* about-page
+ *****************************************/
+#about-content {
+  margin: 15px 15px;
+}
+
+#about-content p {
+  margin-top: 10px;
+}
+
+#about-developers, #about-help, #about-seco, #about-header-text {
+  margin-top: 10px;
+}
+
+#about-logo {
+  float: right;
+  margin-top: -150px;
+  margin-right: 30px;
+}
+
+#about-organization {
+  margin: 30px auto;
+}
+
+/* concept-info 
+ *****************************************/
+
+.concept-background {
+  display: block;
+  height: 500px;
+  position: absolute;
+}
+
+.concept-info {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.uri-input-box {
+	font-size: 15px;
+}
+
+.preflabel-input-box {
+  background: transparent;
+  border: 0px solid white;
+  min-width: 580px;
+}
+
+.subvalue {
+	margin-left: 15px;
+}
+
+.bottomtext {
+	width: 100%;
+	display: inline-block;
+	float: left;
+	margin-left: 5px;
+}
+
+#vocab-content {
+	margin: auto;
+  position: relative;
+  max-width: 800px;
+}
+
+.download-wrapper {
+  margin: auto;
+  min-width: 450px;
+}
+
+.download-wrapper h4 {
+  display: inline-block;
+}
+
+.deprecated-alert {
+  margin-top: 10px;
+  margin-left: 20px;
+  color: #D95F8A;
+}
+
+.deprecated span, .deprecated h4, .deprecated h3, .deprecated a {
+  color: #A6A6A6 !important;
+}
+
+/* vocabulary search listing
+ *****************************************/
+.search-results-property-table {
+	font-size: 14px;
+	text-align: left;
+	border-collapse: collapse;
+  margin: 0 !important;
+}
+
+.search-results-property-table ul {
+  list-style-type: none;
+  padding: 0px;
+}
+
+.search-results-property-table td {
+  border: 0 !important;
+  padding: 4px !important;
+}
+
+td.col-md-4 {
+  width: 310px !important;
+}
+
+.helper-text {
+  margin-left: 15px !important;
+}
+
+.search-results-property-table p {
+  margin: 0; 
+}
+
+.concept-headers {
+  padding-bottom: 5px;
+	border-bottom: 1px dotted #BFBFBF;
+}
+
+.search-results-property-table tr>td {
+	vertical-align: top;
+}
+
+.concept-appendix {
+ background-color: #EFEFEF;
+}
+
+.result-label {
+	padding-left: 13px;
+}
+
+div.boxed {
+  padding: 0 !important;
+}
+
+span.searchword {
+	color: #D95F8A;
+}
+
+.loading-text {
+	width: 635px;
+	text-align: center;  
+	padding-top: 20px; 
+	float: left;
+	margin: auto;
+}
+
+.result-count-text {
+	text-align: center;
+  display: inline-block;
+  width: 615px;
+}
+
+.propertyvaluelabel {
+  margin-left: 15px;
+}
+
+/* alphabetical vocabulary listing
+ *****************************************/
+.alphabet-header h5 {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.alphabetical-headers {
+  margin: auto;
+  text-align: center;
+}
+
+#alphabetical-menu {
+  background-color: #eaf6f4;
+  margin-right: 20px;
+  max-width: 320px;
+}
+
+#alphabetical-menu .wide {
+  margin-top: 10px;
+}
+
+#alphabetical-menu .highlight {
+	color: black;
+	font-weight: bold;
+}
+
+.alphabetical-search-results {
+  float: left;
+}
+
+.alphabetical-search-results li {
+  list-style-type: none;
+	line-height: 15px;
+	font-size: 14px;
+}
+
+.activated-concept {
+  font-weight: bold;
+  color: #D95F8A !important;
+}
+
+/* group index & contents
+ **********************/
+
+#group-listing-container ul, #group-listing-container li,
+#group-contents-listing-container ul, #group-contents-listing-container li {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+#group-listing-container li {
+	margin-top: 0.8em; }
+
+
+/* content -- the page content area style.
+ *****************************************/
+#maincontent {
+	clear: both;
+	display: block;
+	width: 100%;
+	margin: 0 auto;
+}
+
+/* Autocomplete
+ *********************************/
+.ui-autocomplete {
+  max-height:300px;
+  min-width: 300px;
+  max-width: 300px;
+  overflow-y: auto;
+  border-top-right-radius: 0px !important;
+  border-top-left-radius: 0px !important;
+}
+
+.autocomplete-vocab {
+  float: right;
+}
+
+/* jstree
+ ***************/
+.jstree a { color: #428BCA !important; font-size: 14px !important; white-space: normal !important; display: inline !important; }
+#jstree-leaf-proper { font-weight: bold !important; color: #D95F8A !important; } 
+#jstree-vocablabel { color:#A6A6A6 !important; }
+.jstree li { /*text-indent: -20px;*/ margin-left: 10px !important; vertical-align: top; }
+.jstree-hovered { background: none !important; border: none !important; padding: 1px 2px !important; }
+
+/* hierarchy navigation 
+ **************/
+.jstree-no-icons {
+  margin-left: -5px !important;
+}
+
+/* mouseover symbols
+ ***************/
+.mouseover-help-icon {
+  background-image: url(../pics/question.png);
+  background-repeat: no-repeat;
+  padding-right: 16px;
+  margin-left: 3px;
+}
+
+.centered {
+  text-align: center;
+}
+
+#crumb-container {
+  margin: 15px 15px 0 15px;
+}
+
+.bread-crumb {
+  font-size: 10px !important;
+}
+
+.hidden-breadcrumb {
+  font-size: 10px !important;
+  display: none;
+}
+
+.container {
+  max-width: 1020px !important;
+  padding: 0px !important;
+}
+
+.navbar-inverse, .navbar-form {
+  border-width: 0 !important;
+  margin-top: 0px !important;
+  padding: 0 !important;
+}
+
+.navbar-form {
+  box-shadow: none !important;
+  padding-top: 3px !important;
+}
+
+#wrapper {
+  padding-left: 0;
+}
+
+#page-wrapper {
+  width: 100%;
+  padding: 5px 0px;
+}
+
+/* Edit Below to Customize Widths > 768px */
+@media (min-width:768px) {
+  
+  body {
+    background-color: rgba(213,202,171,0.3);
+  }
+
+  /* Wrappers */
+
+  #page-wrapper {
+    padding: 0;
+  }
+
+  /* Side Nav */
+
+  .side-nav {
+    height: 100%;
+    max-width: 400px;
+    //border-right: 1px solid #DBDBDB;
+    background-color: #eaf6f4;
+    overflow-y: auto;
+  }
+
+  /* Bootstrap Default Overrides - Customized Dropdowns for the Side Nav */
+
+  .side-nav>li.dropdown>ul.dropdown-menu {
+	position: relative;
+	min-width: 30%;
+	margin: 0;
+	padding: 0;
+	border: none;
+	border-radius: 0;
+	background-color: transparent;
+	box-shadow: none;
+	-webkit-box-shadow: none;
+  }
+
+  .side-nav>li.dropdown>ul.dropdown-menu>li>a {
+	color: #999999;
+	padding: 15px 15px 15px 25px;
+  }
+
+  .side-nav>li.dropdown>ul.dropdown-menu>li>a:hover,
+  .side-nav>li.dropdown>ul.dropdown-menu>li>a.active,
+  .side-nav>li.dropdown>ul.dropdown-menu>li>a:focus {
+	color: #fff;
+	background-color: #080808;
+  }
+
+  .side-nav>li>a {
+	width: 30%;
+  }
+
+  .navbar-inverse .navbar-nav>li>a:hover,
+  .navbar-inverse .navbar-nav>li>a:focus {
+	background-color: #080808;
+  }
+
+  .ui-front {
+    z-index: 2000 !important;
+  }
+
+  .search-vocab-text {
+    display: inline-block !important;
+    line-height: 40px;
+    margin-top: 3px;
+    float: left;
+  }
+  
+  .headerbar-left {
+    position: fixed;
+  }
+  
+  .headerbar-right {
+    float: right;
+  }
+  
+  .navbar {
+    border-bottom: 0 !important;
+  }
+
+  .navbar-collapse {
+    padding-left: 0px !important;
+  }
+
+  .pagination > li > a, .pagination > li > span {
+    border: 0 !important;
+    background-color: transparent !important;
+    padding: 4px 8px !important;
+  } 
+  
+  .pagination > li:last-child > a, .pagination > li:last-child > span {
+    border-radius: 0 !important;
+  }
+  
+  .pagination > li:first-child > a {
+    border-radius: 0 !important;
+    margin-left: -1px !important;
+  }
+
+  .pagination { margin: 10px 0 0 0 !important;} 
+
+  .nav-tabs {
+    border-bottom: none !important;
+  }
+
+  .nav-tabs > li > a {
+    background-color: #bbe3de;
+    border-radius: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .nav-tabs > li > a:hover {
+    background-color: #ffffff !important;
+  }
+  
+  .nav-tabs > li.active > a {
+    background-color: #eaf6f4 !important;
+  }
+  
+  .language-selection {
+    margin: auto 11px;
+  }
+
+  .search-vocab-parameter {	
+    width: 250px;
+  }
+
+}

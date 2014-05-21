@@ -1,0 +1,9 @@
+{% extends "light.twig" %}
+{% block title %}: Error page{% endblock %}
+{% block content %}
+<div class="col-lg-10">
+  <div class="alert alert-danger">
+    <h3>{% trans %}404 Error: The page {{ requested_page }} cannot be found.{% endtrans %}</h3>
+  </div>
+</div>
+{% endblock %}

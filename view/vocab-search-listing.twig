@@ -1,0 +1,19 @@
+{% extends "light.twig" %}
+{% set concept_label = '' %}{% for concept in search_results %}{% set concept_label = concept.label %}{% endfor %}
+{% block title %}: {{ vocab_id|upper }}{% if search_results|length == 1 %}: {{ concept_label }}{% elseif term != '' %} '{{ term }}'{% endif %}
+{% endblock %}
+{% block content %}
+<div class="search-result-listing">
+  {% if lang_changed %}
+  <div class="alert alert-danger">
+    <h4>{{ lang_changed }}</h4>
+  </div>
+  {% endif %}
+  {% include 'search-result.twig' %}
+  {% if vocab_id == 'null' and not global_search %}
+  <div class="alert alert-danger">
+    <h4>{% trans %}Error: Requested vocabulary "{{ vocab_id }}" not found!{% endtrans %}</h4>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

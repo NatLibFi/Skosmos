@@ -1,0 +1,41 @@
+<?php
+
+// configuration for easyRDF
+define("VOCABULARIES_FILE", "vocabularies.ttl");
+
+// interface languages available, and the corresponding system locales
+$LANGUAGES = array(
+  'fi' => 'fi_FI.utf8',
+  'sv' => 'sv_SE.utf8',
+  'en' => 'en_GB.utf8'
+);
+
+// default SPARQL endpoint
+define("DEFAULT_ENDPOINT", "http://sparql.onki.fi/onki-light/sparql");
+
+// how many items (maximum) to retrieve in search methods by default
+define("DEFAULT_SEARCH_LIMIT", 100);
+
+// how many items (maximum) to retrieve in transitive property queries
+define("DEFAULT_TRANSITIVE_LIMIT", 1000);
+
+// a default location for Twig template rendering
+define("TEMPLATE_CACHE", "/tmp/skosmos-template-cache");
+
+// default sparql-query extension
+define("DEFAULT_SPARQL_DIALECT", "Generic");
+
+// default email address to send the feedback
+define("FEEDBACK_ADDRESS", "");
+
+// whether or not to log caught exceptions
+define ("LOG_CAUGHT_EXCEPTIONS", FALSE);
+
+# customize the service name
+define("SERVICE_NAME", "Skosmos");
+
+// customize the service logo by pointing to your logo here. 
+define("SERVICE_LOGO", "./resource/pics/logo.png");
+
+// customize the css by adding your own stylesheet
+define("CUSTOM_CSS", "resource/css/stylesheet.css");

@@ -1,0 +1,277 @@
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wv: <http://vocab.org/waiver/terms/norms> .        
+@prefix sd: <http://www.w3.org/ns/sparql-service-description#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix onki: <http://schema.onki.fi/onki#> .
+@prefix : <#> .
+
+
+:ysa a onki:Vocabulary, void:Dataset ;
+	dc:title "Yleinen suomalainen asiasanasto - YSA"@fi,
+		"Allmän tesaurus på finska"@sv,
+		"General Finnish thesaurus"@en ;
+	dc:subject :cat_general ;
+	void:uriSpace "http://www.yso.fi/onto/ysa/";
+	onki:groupClass skos:Collection;
+        onki:language "fi", "sv";
+        onki:defaultLanguage "fi";
+	void:sparqlEndpoint <http://sparql.onki.fi/onki-light/sparql> ;
+	onki:sparqlGraph <http://www.yso.fi/onto/ysa> .
+
+:yso a onki:Vocabulary, void:Dataset ;
+	dc:title "Yleinen suomalainen ontologia - YSO"@fi,
+		"Allmän finsk ontologi"@sv,
+		"General Finnish upper ontology"@en ;
+	dc:subject :cat_general ;
+	void:uriSpace "http://www.yso.fi/onto/yso/";
+        onki:language "fi", "sv", "en";
+        onki:defaultLanguage "fi";
+	void:sparqlEndpoint <http://sparql.onki.fi/onki-light/sparql> ;
+	onki:sparqlGraph <http://www.yso.fi/onto/yso> ;
+	onki:mainConceptScheme <http://www.yso.fi/onto/yso/conceptscheme> .
+
+:tero a onki:Vocabulary, void:Dataset ;
+	dc:title "Terveyden ja hyvinvoinnin ontologia - TERO"@fi,
+		"Ontologi för hälsa och välfärd"@sv,
+		"Finnish Ontology of Health and Welfare"@en ;
+	dc:subject :cat_health ;
+	void:uriSpace "http://www.yso.fi/onto/tero/";
+        onki:language "fi", "sv", "en";
+        onki:defaultLanguage "fi";
+	void:sparqlEndpoint <http://sparql.onki.fi/onki-light/sparql> ;
+	onki:sparqlGraph <http://www.yso.fi/onto/tero> .
+	
+:koko a onki:Vocabulary, void:Dataset ;
+  dc:title "KOKO-ontologia"@fi,
+    "KOKO Ontology"@sv,
+    "KOKO Ontology"@en ;
+  dc:subject :cat_general ;
+  void:uriSpace "http://www.yso.fi/onto/koko/";
+  onki:language "fi", "sv", "en";
+        onki:defaultLanguage "fi";
+  void:sparqlEndpoint <http://sparql.onki.fi/onki-light/sparql> ;
+  onki:sparqlGraph <http://www.yso.fi/onto/koko> .
+
+:allars a onki:Vocabulary, void:Dataset ;
+  dc:title "Allmän tesaurus på svenska - Allärs"@fi,
+    "Allmän tesaurus på svenska - Allärs"@sv,
+    "Allmän tesaurus på svenska - Allärs"@en ;
+  dc:subject :cat_general ;
+  void:uriSpace "http://www.yso.fi/onto/allars/";
+  onki:language "sv";
+  onki:groupClass skos:Collection;
+  void:sparqlEndpoint <http://sparql.onki.fi/onki-light/sparql> ;
+  onki:sparqlGraph <http://www.yso.fi/onto/allars> .
+
+:kauno a onki:Vocabulary, void:Dataset ;
+  dc:title "Kaunokki-ontologia - KAUNO"@fi,
+    "Kaunokki-ontologia - KAUNO"@sv, 
+    "Kaunokki Ontology"@en ;
+  dc:subject :cat_culture ;
+  void:uriSpace "http://www.yso.fi/onto/kauno/";
+  onki:language "fi", "sv", "en";
+        onki:defaultLanguage "fi";
+  void:sparqlEndpoint <http://sparql.onki.fi/onki-light/sparql> ;
+  onki:sparqlGraph <http://www.yso.fi/onto/kauno> .
+
+:afo a onki:Vocabulary, void:Dataset ;
+  dc:title "Viikin tiedekirjaston ontologia - AFO"@fi,
+    "Viikin tiedekirjaston ontologia - AFO"@sv,
+    "AFO Ontology"@en ;
+  dc:subject :cat_general ;
+  void:uriSpace "http://www.yso.fi/onto/afo/";
+  onki:language "fi", "sv", "en";
+        onki:defaultLanguage "fi";
+  void:sparqlEndpoint <http://sparql.onki.fi/onki-light/sparql> ;
+  onki:sparqlGraph <http://www.yso.fi/onto/afo> .
+
+:puho a onki:Vocabulary, void:Dataset ;
+  dc:title "Puolustushallinnon ontologia - PUHO"@fi,
+    "Puolustushallinnon ontologia - PUHO"@sv,
+    "Puolustushallinnon ontologia - PUHO"@en ;
+  dc:subject :cat_public ;
+  void:uriSpace "http://www.yso.fi/onto/puho/";
+  onki:language "fi", "sv", "en";
+        onki:defaultLanguage "fi";
+  void:sparqlEndpoint <http://sparql.onki.fi/onki-light/sparql> ;
+  onki:sparqlGraph <http://www.yso.fi/onto/puho> .
+
+:tao a onki:Vocabulary, void:Dataset ;
+  dc:title "Taideteollisuusalan ontologia - TAO"@fi,
+    "Konstindustriella ontologin - TAO"@sv,
+    "Ontology of Applied Arts - TAO"@en ;
+  dc:subject :cat_general ;
+  void:uriSpace "http://www.yso.fi/onto/tao/";
+  onki:language "fi", "sv", "en";
+        onki:defaultLanguage "fi";
+  void:sparqlEndpoint <http://sparql.onki.fi/onki-light/sparql> ;
+  onki:sparqlGraph <http://www.yso.fi/onto/tao> .
+
+:valo a onki:Vocabulary, void:Dataset ;
+  dc:title "Valokuvausalan ontologia - VALO"@fi , 
+    "Fotografiska ontologin"@sv , 
+    "The Finnish Ontology of Photography VALO"@en ;
+  dc:subject :cat_culture ;
+  void:uriSpace "http://www.yso.fi/onto/valo/";
+  onki:language "fi", "sv", "en";
+        onki:defaultLanguage "fi";
+  void:sparqlEndpoint <http://sparql.onki.fi/onki-light/sparql> ;
+  onki:sparqlGraph <http://www.yso.fi/onto/valo> .
+
+:kulo a onki:Vocabulary, void:Dataset ;
+  dc:title "Kulttuurien tutkimuksen ontologia - KULO"@fi,
+    "Kulttuurien tutkimuksen ontologia - KULO"@sv,
+    "Kulttuurien tutkimuksen ontologia - KULO"@en ;
+  dc:subject :cat_culture ;
+  void:uriSpace "http://www.yso.fi/onto/kulo/";
+  onki:language "fi", "sv", "en";
+        onki:defaultLanguage "fi";
+  void:sparqlEndpoint <http://sparql.onki.fi/onki-light/sparql> ;
+  onki:sparqlGraph <http://www.yso.fi/onto/kulo> .
+
+:musa a onki:Vocabulary, void:Dataset ;
+  dc:title "Musiikin asiasanasto - MUSA/CILLA"@fi,
+    "Specialtesaurus för musik - MUSA/CILLA"@sv,  
+    "Finnish Music Thesaurus - MUSA/CILLA"@en ;
+  dc:subject :cat_culture ;
+  void:uriSpace "http://www.yso.fi/onto/musa/";
+  onki:language "fi", "sv";
+        onki:defaultLanguage "fi";
+  void:sparqlEndpoint <http://sparql.onki.fi/onki-light/sparql> ;
+  onki:sparqlGraph <http://www.yso.fi/onto/musa> .
+
+#:muso a onki:Vocabulary, void:Dataset ;
+#  dc:title "Musiikin ontologia - MUSO"@fi,
+#    "Ontologi för musik"@sv,  
+#    "Ontology for Music"@en ;
+#  dc:subject :cat_culture ;
+#  void:uriSpace "http://www.yso.fi/onto/muso/";
+#  onki:language "fi", "sv";
+#  void:sparqlEndpoint <http://sparql.onki.fi/onki-light/sparql> ;
+#  onki:sparqlGraph <http://www.yso.fi/onto/muso> .
+
+:mero a onki:Vocabulary, void:Dataset ;
+  dc:title "Merenkulkualan ontologia - MERO"@fi,
+    "Merenkulkualan ontologia - MERO"@sv,
+    "Merenkulkualan ontologia - MERO"@en ;
+  dc:subject :cat_business ;
+  void:uriSpace "http://www.yso.fi/onto/mero/";
+  onki:language "fi", "sv", "en";
+        onki:defaultLanguage "fi";
+  void:sparqlEndpoint <http://sparql.onki.fi/onki-light/sparql> ;
+  onki:sparqlGraph <http://www.yso.fi/onto/mero> .
+
+:kto a onki:Vocabulary, void:Dataset ;
+  dc:title "Kielitieteen ontologia - KTO"@fi,"Kielitieteen ontologia - KTO"@sv,"Kielitieteen ontologia - KTO"@en ;
+  dc:subject :cat_culture ;
+  void:uriSpace "http://www.yso.fi/onto/kto/";
+  onki:language "fi", "sv", "en";
+        onki:defaultLanguage "fi";
+  void:sparqlEndpoint <http://sparql.onki.fi/onki-light/sparql> ;
+  onki:sparqlGraph <http://www.yso.fi/onto/kto> .
+
+:kito a onki:Vocabulary, void:Dataset ;
+  dc:title "Kirjallisuudentutkimuksen ontologia - KITO"@fi,"Kirjallisuudentutkimuksen ontologia - KITO"@sv,"Kirjallisuudentutkimuksen ontologia - KITO"@en ;
+  dc:subject :cat_culture ;
+  void:uriSpace "http://www.yso.fi/onto/kito/";
+  onki:language "fi", "sv", "en";
+        onki:defaultLanguage "fi";
+  void:sparqlEndpoint <http://sparql.onki.fi/onki-light/sparql> ;
+  onki:sparqlGraph <http://www.yso.fi/onto/kito> .
+
+:juho a onki:Vocabulary, void:Dataset ;
+  dc:title "Julkishallinnon ontologia - JUHO"@fi, "Julkishallinnon ontologia - JUHO"@sv, "Julkishallinnon ontologia - JUHO"@en ;
+  dc:subject :cat_public ;
+  void:uriSpace "http://www.yso.fi/onto/juho/";
+  onki:language "fi", "sv", "en";
+        onki:defaultLanguage "fi";
+  void:sparqlEndpoint <http://sparql.onki.fi/onki-light/sparql> ;
+  onki:sparqlGraph <http://www.yso.fi/onto/juho> .
+
+:kunnat a onki:Vocabulary, void:Dataset ;
+  dc:title "Kunnat 2011"@fi, "Kunnat 2011"@sv, "Kunnat 2011"@en ;
+  dc:subject :cat_public ;
+  void:uriSpace "http://www.yso.fi/onto/kunnat/";
+  onki:language "fi", "sv";
+        onki:defaultLanguage "fi";
+  void:sparqlEndpoint <http://sparql.onki.fi/onki-light/sparql> ;
+  onki:sparqlGraph <http://www.yso.fi/onto/kunnat> .
+
+:jupo a onki:Vocabulary, void:Dataset ;
+  dc:title "Julkisten palveluiden ontologia JUPO"@fi, "Julkisten palveluiden ontologia JUPO"@sv, "Julkisten palveluiden ontologia JUPO"@en ;
+  dc:subject :cat_public ;
+  void:uriSpace "http://www.yso.fi/onto/jupo/";
+  onki:language "fi", "sv";
+        onki:defaultLanguage "fi";
+  void:sparqlEndpoint <http://sparql.onki.fi/onki-light/sparql> ;
+  onki:sparqlGraph <http://www.yso.fi/onto/jupo> .
+
+:mao a onki:Vocabulary, void:Dataset ;
+  dc:title "Ontology for Museum Domain"@en, "Museoalan ontologia - MAO"@sv, "Museoalan ontologia - MAO"@fi ;
+  dc:subject :cat_general ;
+  void:uriSpace "http://yso.fi/MAO#";
+  onki:language "fi";
+  void:sparqlEndpoint <http://sparql.onki.fi/onki-light/sparql> ;
+  onki:sparqlGraph <http://www.yso.fi/onto/mao> .
+
+# Reegle SPARQL endpoint doesn't work with SPARQL 1.1 constructs on 2012-08-22
+#
+#:reegle a onki:Vocabulary, void:Dataset ;
+#  dc:title "Reegle Thesaurus"@en, "Reegle"@fi, "Reegle"@sv ;
+#  dc:subject :cat_general ;
+#  void:uriSpace "http://reegle.info/glossary/";
+#  void:sparqlEndpoint <http://poolparty.reegle.info/PoolParty/sparql/glossary?content-type=application/xml> ;
+#  onki:sparqlDialect "Generic" .
+
+:scot a onki:Vocabulary, void:Dataset ;
+  dc:title "Schools Online Thesaurus (ScOT)"@en;
+  dc:subject :cat_public ;
+  void:uriSpace "http://vocabulary.curriculum.edu.au/scot/";
+  onki:language "en";
+  void:sparqlEndpoint <http://vocabulary.curriculum.edu.au/PoolParty/sparql/scot?content-type=application/xml> ;
+  onki:sparqlDialect "Generic" .
+
+
+:categories a skos:ConceptScheme;
+	skos:prefLabel "ONKI Vocabulary Categories"@en .
+
+:cat_general a skos:Concept ;
+	skos:topConceptOf :categories ;
+	skos:inScheme :categories ;
+	skos:prefLabel "Yleiskäsitteet"@fi, 
+		"Allmänna begrepp"@sv,
+		"General concepts"@en .
+
+:cat_health a skos:Concept ;
+	skos:topConceptOf :categories ;
+	skos:inScheme :categories ;
+	skos:prefLabel "Terveys"@fi, 
+		"Hälsa"@sv,
+		"Health"@en .
+
+:cat_culture a skos:Concept ;
+	skos:topConceptOf :categories ;
+	skos:inScheme :categories ;
+	skos:prefLabel "Kulttuuri"@fi, 
+		"Kultur"@sv,
+		"Culture"@en .
+
+:cat_public a skos:Concept ;
+	skos:topConceptOf :categories ;
+	skos:inScheme :categories ;
+	skos:prefLabel "Julkishallinto"@fi, 
+		"Allmän Administration"@sv,
+		"Public Administration"@en .
+
+:cat_business a skos:Concept ;
+	skos:topConceptOf :categories ;
+	skos:inScheme :categories ;
+	skos:prefLabel "Liiketoiminta"@fi, 
+		"Business"@sv,
+		"Business"@en .

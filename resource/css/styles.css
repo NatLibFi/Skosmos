@@ -1,0 +1,1130 @@
+@import 'fira.css';
+@import '../../vendor/components/jqueryui/themes/cupertino/jquery-ui.min.css';
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  min-width: 100%;
+  background-color: #d5dbde !important;
+}
+
+ul {
+  list-style: none;
+}
+
+@media print { /* Quick style sheet for printing. */
+	body * {
+		visibility: hidden;
+	}
+
+	/* Everything under the print class elements will be printed. */
+	.print,.print * {
+		visibility: visible;
+	}
+
+	/* Position elements at the beginning of the page. */
+	.print {
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
+}
+
+section {
+  position: relative;
+  width: 95%;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.spinner { 
+	display:inline-block;
+	width: 25px;
+	height: 25px;
+	margin-left: 5px;
+  vertical-align: middle;
+	background:url("../pics/spinner.gif") no-repeat transparent;
+}
+
+/* topbar styles
+ ***************************/
+
+.topbar {
+  height: 50px;
+  margin-bottom: 20px;
+}
+
+.topbar > a {
+  position: absolute;
+}
+
+.topbar-white {
+  background-color: #ffffff;
+}
+
+#service-name {
+  left: 30px;
+  margin: 0;
+  position: absolute;
+  line-height: 50px;
+}
+
+.topbar-white > #language, .topbar-white > #navigation {
+  background: #ffffff;
+}
+
+#language {
+  position: absolute;
+  right: 0;
+	height: 50px;
+	width: auto;
+  padding-left: 0px;
+	text-align: right;
+	overflow: hidden;
+	line-height: 70px;
+}
+
+#navigation {
+  right: 180px;
+  padding-right: 10px;
+  position: absolute;
+	height: 50px;
+	min-width: 0px;
+	max-width: 530px;
+	width: auto;
+	overflow: hidden;
+	float: right;
+	line-height: 70px;
+}
+
+#navigation *, #language * {
+  margin: auto 4px;  
+}
+
+#navigation .link-bg {
+	height: 60px;
+	float: left;
+}
+
+/* headerbar stuff
+ *************************/
+
+#lang-dropdown-toggle .caret, .multiselect span > .caret {
+  border-top-color: #ffffff !important;
+}
+
+.multiselect-container > li.active > a {
+  color: #ffffff !important;
+}
+
+.headerbar {
+  position: relative;
+  width: 95%;
+  height: 50px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.headerbar-coloured {
+  background-color: #b2bac0;
+}
+
+.header-left {
+  float: left;
+}
+
+.header-left > h1 {
+  position: absolute;
+  line-height: 50px;
+  margin: 0 0 0 15px;
+}
+  
+.header-left > h1 > a {
+  display: block;
+  color: #ffffff !important;
+  height: 50px;
+  overflow: hidden;
+}
+
+.header-float {
+  float: right;
+}
+
+.header-float > .btn-group {
+  vertical-align: baseline;
+  float: left;
+}
+
+.headerbar-coloured > .header-float > p {
+  color: #ffffff !important;
+}
+
+.topbar a.navigation-font:hover {
+  text-decoration: underline;
+}
+
+.navbar-form {
+  display: inline-block;
+  padding: 0 !important;
+  margin: 5px 0 !important;
+}
+
+.search-result-listing {
+  background-color: #ffffff;
+}
+
+.search-result-listing > .search-result:last-of-type {
+  margin-bottom: 10px; 
+}
+
+#search-from-all-vocabularies-radio-buttons {
+	display: none;
+}
+
+#search-all-button {
+    background-color: #394554;
+    border: medium none !important;
+    border-radius: 0 !important;
+    height: 40px;
+}
+
+.search-vocab-text {
+    display: inline-block !important;
+    float: left;
+    line-height: 52px;
+    margin-right: 4px;
+}
+
+.search-count {
+  text-align: right;
+}
+
+.search-result-listing .no-results {
+  margin: 15px;
+}
+
+.search-result-listing .search-count {
+  text-align: left;
+  margin-left: 15px;
+}
+
+.search-result-listing .prefLabel {
+  font-size: 14px !important;
+  font-weight: bold !important;
+}
+
+.search-result-listing .search-result {
+  margin: 20px 15px ;
+}
+
+.search-result-listing {
+  padding: 5px 0;
+}
+
+/*
+.search-result-listing .search-result:hover, .search-result a:hover{
+  background-color: #F8F8F8;
+  text-decoration: none;
+}
+
+.search-result-listing .search-result:hover {
+  border: 1px solid #EDEDED;
+}
+*/
+
+.search-result > div > span.uri-input-box {
+  font-size: 12px;
+  color: #006621;
+}
+
+.search-result {
+  border: 1px solid transparent;
+}
+
+#lang-dropdown-toggle, .multiselect {
+    background-color: #394554 !important;
+    border: medium none;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    color: #FFFFFF !important;
+    height: 40px;
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+}
+
+.multiselect {
+  border: 0 !important;
+  margin: 5px 0 !important;
+}
+
+.multiselect span {
+  float: right;
+}
+
+#selected-vocabs {
+  display: none;
+}
+
+.navbar-left > .btn-group {
+  float: left;
+}
+
+#search-field {
+    background-color: #FFFFFF;
+    border: medium none;
+    border-radius: 0;
+    display: block;
+    font-family: Tahoma,Geneva,sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    height: 40px;
+    padding-left: 8px !important;
+}
+
+.input-group {
+  display: table;
+}
+
+.form-control {
+  display: table-cell;
+}
+
+.input-group-btn {
+  width: 50px !important;
+}
+
+/* front page stuff 
+ ***************************/
+.welcome-box, .right-box, #vocabulary-list {
+  vertical-align: top;
+}
+
+.welcome-box {
+  background-color: #ffffff;
+  padding: 15px;
+  display: inline-block;
+}
+
+.welcome-box > h1, .right-box > h1 {
+  margin-top: 0;
+}
+
+.right-box {
+  background-color: #ffffff;
+  width: 240px !important;
+  padding: 15px;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.right-box {
+  display: none;
+}
+.vocabulary-separator {
+  border-bottom: 2px solid #666666 !important;
+}
+
+.book-logo {
+  display: none;
+  float: left;
+}
+  
+#vocabulary-list {
+  background-color: #ffffff !important;
+  display: inline-block;
+}
+
+#vocabulary-list > div > h2:first-of-type {
+  padding-top: 15px;
+}
+
+#vocabulary-list > div > h2 {
+  margin-top: 0 !important;
+  margin-bottom: 0px;
+  padding-left: 10px;
+}
+
+.vocabularies {
+  margin-top: 15px;
+  padding: 0 10px;
+}
+
+.vocabularies > table > tbody > tr > td,  .vocabularies > table > tbody > tr > td > a {
+  padding-left: 0;
+  margin-left: 0;
+}
+
+.vocabularies > table > tbody > tr > td > div {
+  width: 125px;
+}
+
+.vocabularies > table > tbody > tr:last-child > td > div {
+  display: none !important;
+}
+
+/* feedback page
+ ***************************/
+.feedback-logo {
+  position: absolute;
+  min-width: 84px;
+  display: block;
+  left: 200px;
+  border-bottom: 2px solid #394554;
+  padding-top: 80px;
+}
+
+.feedback-box {
+  border-top: 2px solid #394554;
+}
+
+.feedback-box * {
+  border-radius: 0 !important;
+  margin-bottom: 0;
+  box-shadow: none !important;
+}
+
+.feedback-box > div > span {
+  display: block;
+  margin: 15px 0;
+}
+
+.feedback-box input, .feedback-box select, .feedback-box textarea {
+  border: none;
+  color: #00748f !important;
+  margin-bottom: 10px;
+  background-color: #f6f7f8;
+  resize: none;
+}
+::-webkit-input-placeholder { /* WebKit browsers */
+  color: #00748f !important;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  color: #00748f !important;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+  color: #00748f !important;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+  color: #00748f !important;
+}
+
+#send-feedback {
+  background-color: #394554;
+  border: none;
+  float:right;
+  margin: 5px 0 15px 0;
+}
+
+#send-feedback:hover {
+  background-color: #0098ff !important;
+}
+
+/* about page
+ ***************************/
+#about {
+  width: 500px;
+  background-color: #ffffff;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+  border-top: 2px solid #394554;
+}
+
+#about * {
+  margin: 15px;
+}
+
+.special-container {
+  position: absolute;
+  left: 0px;
+  margin-left: 200px;
+  
+}
+
+.credits {
+  display: none;
+  width: 500px;
+  background-color: #83CFC8 !important;
+  border-top: 2px solid #394554;
+}
+
+/* sidebar styles
+ ***************************/
+
+#sidebar {
+  position: absolute;
+  width: 320px;
+  height: 100%;
+}
+
+.sidebar-grey {
+  background-color: #f6f7f8;
+  height: 100%;
+  height: calc(100% - 42px);
+  overflow-y: auto;
+}
+
+.sidebar-grey ul, .sidebar-grey p {
+  padding-left: 0;
+}
+
+#sidebar hr {
+  border: 1px solid #666666 !important;
+  margin-left: 15px;
+  margin-top: 15px;
+  width: 125px;
+}
+
+.fixed {
+  position: fixed !important;
+  height: 95%;
+  height: calc(100% - 2px) !important;
+  top: 2px;
+}
+
+hr {
+  border: 1px solid transparent !important;
+  background: url('../pics/stripe.png') !important;
+  margin-top: 5px !important;
+  margin-bottom: 15px !important;
+}
+
+.alphabetical-search-results li, .group-container > p, .group-container > ul {
+  font-size: 14px;
+  line-height: 15px;
+  list-style-type: none;
+}
+
+#alphabetical-menu {
+  margin: 0 0 0 15px;
+}
+
+.activated-concept, .jstree-clicked {
+  color: #474b4f !important;
+  font-weight: 600 !important;
+  background-color: transparent !important;
+  border: 0 !important;
+}
+
+.group-container {
+  margin: 10px 0 5px 15px;
+}
+
+/* scrollbars
+ ****************************/
+.mCSB_container {
+  margin-right: 15px !important;
+}
+
+.mCSB_scrollTools {
+  opacity: 1 !important;
+  width: 14px !important;
+}
+
+.mCSB_draggerRail {
+  background-color: #b9c1c6 !important;
+  border-radius: 0 !important;
+  width: 14px !important;
+}
+
+.mCSB_dragger {
+  background-color: #474b4f !important;
+  border-radius: 0 !important;
+  width: 14px !important;
+}
+
+.mCSB_dragger_bar {
+  display: none !important;
+}
+
+/* tables
+ ****************************/
+
+th, td {
+  border-top: none !important;
+}
+
+tr {
+  border-image: '../pics/stripe.png' 20 20 repeat;
+}
+
+/* vocabulary
+ ****************************/
+.container {
+  background-color: #ffffff;
+}
+
+/* alerts 
+ ****************************/
+.alert {
+  background-color: #ed0d6c !important;
+  border-radius: 0 !important;
+  border: none !important;
+  color: white !important;
+}
+
+#lang-info * {
+  color: #ffffff;
+}
+
+#lang-info > h1 {
+  float: left;
+  font-size: 48px !important;
+  margin: -12px 15px 0 0;
+}
+
+.errors {
+  color: red;
+}
+
+/* concept
+ ****************************/
+.concept-info {
+  background-color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.concept-info li, .concept-info ul {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+.concept-info div > table > tbody > tr > td:first-child {
+  max-width: 225px;
+  width: 225px;
+}
+
+.concept-info p {
+  margin: 0 !important;
+}
+
+.concept-appendix {
+  background-color: #edf0f2 !important;
+  padding: 15px;
+}
+
+.concept-main {
+  margin: 0 15px 15px 15px;
+  padding-top: 15px;
+}
+
+.concept-main > table, .concept-appendix > table {
+  margin-bottom: 0 !important;
+}
+
+.hidden-breadcrumb {
+  display: none;
+}
+
+.field-label {
+  vertical-align: top !important; 
+}
+
+.foundby {
+  margin-left: 225px;
+}
+
+.preflabel-container, .preflabel-container hr {
+  margin: 10px 0 5px 0 !important;
+}
+
+.preflabel-description {
+  display: inline-block;
+  width: 225px;
+  height: 100%;
+}
+
+.shortened-property {
+  max-height: 24px; 
+  overflow: hidden;
+  position: relative;
+  white-space: nowrap;
+}
+
+.shortened-symbol {
+  display: inline-block;
+  height: 22px; 
+  padding: 1px 0 0 2px;
+  right: 0;
+  position: absolute;
+  background-color: #ffffff;
+}
+
+tr .property-hover {
+  margin-left: 5px;
+  margin-bottom: 2px;
+}
+
+.subvalue {
+  margin-left: 15px;
+}
+
+.property-divider {
+  position: absolute;
+  width: 14%;
+  border-bottom: 2px solid #666666;
+  margin: -20px 0 0 0 !important;
+}
+
+.property-divider hr {
+  border-bottom: 2px solid #3bc2bd !important;
+  width: 125px;
+  position: absolute;
+}
+
+.table th {
+  padding-left: 0 !important;
+}
+
+.search-results-property-table {
+  padding: 0 15px !important;
+}
+
+.search-results-property-table td:last-child {
+  border-bottom: 2px solid #d4edeb;
+}
+
+.search-results-property-table > tbody > tr:last-child > td {
+  border-bottom: 0 !important;
+}
+
+.search-results-property-table td {
+  padding: 5px 0 0 0 !important;
+}
+
+#statistics { max-width: 450px; }
+
+#statistics .property-divider {
+  margin: 0 !important;
+}
+
+#statistics td, #statistics th {
+  padding: 0 !important;
+}
+
+.pagination > li > a, .pagination > li > span {
+  border: 0 !important;
+  background-color: transparent !important;
+  padding: 4px 8px !important;
+} 
+
+.pagination > li:last-child > a, .pagination > li:last-child > span {
+  border-radius: 0 !important;
+}
+
+.pagination > li:first-child > a {
+  border-radius: 0 !important;
+  margin-left: -1px !important;
+}
+
+.pagination { margin: 10px 5px 0 10px !important;} 
+
+.nav-tabs, #groups > a {
+  background-color: #e0e4e7;
+  border-bottom: none !important;
+}
+
+ul.nav-tabs > li {
+  margin-bottom: 0;
+  outline: none;
+}
+
+.nav-tabs > li > a {
+  background-color: #e6e9eb;
+  border-radius: 0 !important;
+  border: 0 !important;
+  text-align: center;
+  margin-right: 0 !important;
+  outline: none;
+}
+
+.nav-tabs > li {
+  width: 33%;
+}
+  
+#alpha {
+  width: 34% !important;
+}
+  
+
+.nav-tabs > li > a:hover {
+  background-color: #ffffff !important;
+}
+
+.nav-tabs > li.active > a {
+  background-color: #f6f7f8 !important;
+}
+
+.content {
+  margin-left: 350px;
+}
+
+/* Autocomplete stuff 
+ *****************************************/
+textarea:focus, input[type="text"]:focus {   
+  box-shadow: 0 0 0;
+  outline: 0 none;
+}
+
+.ui-autocomplete {
+  max-height:300px;
+  overflow-y: auto;
+  background-image: none !important;
+  border-radius: 0px !important;
+}
+
+.ui-state-focus {
+  border-radius: 0 !important;
+  background-image: none !important;
+  background-color: #ffffff !important;
+}
+
+.autocomplete-vocab {
+  float: right;
+}
+
+/* jsTree customization
+ *****************************************/
+.jstree-no-icons {
+  margin-left: -5px !important;
+}
+
+.jstree li {
+  margin-left: 10px !important;
+}
+
+/* Font definitions
+ *****************************************/
+li {
+  font-family: 'Fira Sans' !important;
+  font-size: 14px !important;
+}
+
+h1, .prefLabel {
+  font-family: 'Fira Sans' !important;
+  font-size: 27px !important;
+  font-weight: 400 !important;
+}
+
+h1#service-name {
+  font-size: 27px !important;
+  font-family: 'Fira Sans' !important;
+  font-weight: bold !important;
+}
+
+a {
+  color: #00748f !important;
+}
+
+h2 {
+  font-family: 'Fira Sans' !important;
+  font-style: bold !important;
+  font-size: 16px !important;
+}
+
+a.navigation-font {
+  font-family: 'Fira Sans';
+  font-size: 16px;
+  color: black;
+}
+
+.topbar a.navigation-font {
+  color: #394554 !important;
+}
+
+p {
+  font-family: 'Fira Sans';
+  font-size: 14px;
+  color: #474b4f;
+}
+
+.bread-crumb {
+  font-family: 'Fira Sans';
+  font-size: 14px;
+}
+
+.versal {
+  font-family: 'Fira Sans';
+  font-size: 14px;
+  font-weight: 400 !important;
+  color: #474b4f;
+}
+
+.versal-bold {
+  font-family: 'Fira Sans';
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.replaced {
+  // font-style: italic;
+  text-decoration: line-through;
+}
+
+a:link,a:visited,a:active,a:hover,a:focus {
+	/* Improves link handling by removing focus borders. Sorry keyboard users! */
+	text-decoration: none;
+	border: 0;
+	outline: none;
+}
+
+a:hover {
+	text-decoration: underline;
+	/* All text links have underlining when hovered. */
+}
+  
+#service-logo {
+  display: inline-block;
+  max-width: 450px;
+}
+
+/* Fix for a nasty chromium bug causing the fonts not to render before a redraw.
+ * https://code.google.com/p/chromium/issues/detail?id=336476
+ ************************************/
+
+body {
+  -webkit-animation-delay: 0.1s;
+  -webkit-animation-name: fontfix;
+  -webkit-animation-duration: 0.1s;
+  -webkit-animation-iteration-count: 1;
+  -webkit-animation-timing-function: linear;
+}
+
+@-webkit-keyframes fontfix {
+  from { opacity: 1; }
+  to   { opacity: 1; }
+}
+
+/* mediaquery
+ ***********************************/
+@media (max-width: 400px) {
+  #navi1 {
+    display: none !important;
+  }
+}
+
+@media (max-width: 500px) {
+  #navi4 {
+    display: none !important;
+  }
+}
+
+@media (max-width: 550px) {
+  #navi3 {
+    display: none !important;
+  }
+}
+
+@media (max-width: 640px) {
+  
+  .content {
+    overflow: hidden;
+  }
+  
+  .search-vocab-text{
+    display: none !important;
+  }
+}
+
+@media (max-width: 800px) {
+  section, .headerbar {
+    width: 95% !important;
+  }
+
+  .navbar-form {
+    max-width: 300px !important;
+  }
+  
+  #service-logo {
+    display: none !important;
+  }
+
+  .feedback-logo, .about-logo {
+    left: 10px !important;
+  }
+
+  .feedback-box, #about {
+    margin-left: 120px !important;
+    width: 500px !important;
+  }
+
+  p.search-vocab-text {
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .ui-autocomplete {
+    max-width: 240px !important;
+  }
+  
+  .content {
+    margin-left: 300px;
+  }
+
+  #sidebar {
+    width: 270px !important;
+  }
+  
+  .property-divider {
+    width: 17%;
+  }
+
+  h1 {
+    font-size: 22px !important;
+  }
+
+  #sidebar {
+    display: none;
+  }
+
+  .right-box {
+    display: none;
+  }
+
+  .content {
+    margin: 0 auto;
+  }
+
+  .welcome-box {
+    display: none;
+  }
+
+}
+
+@media (min-width: 800px) {
+  section, .headerbar {
+  }
+  
+  .ui-autocomplete {
+    max-width: 250px !important;
+  }
+ 
+  .nav > li > a {
+    padding: 10px 10px !important;
+  }
+   
+  .input-group {
+    max-width: 300px !important;
+  }
+
+  #navigation > a {
+    margin: auto 10px;
+  }
+
+  #service-logo {
+    position: absolute;
+    display: normal !important;
+  }
+  
+  .feedback-box, #about {
+    width: 500px !important;
+  }
+ 
+  .content {
+    margin-left: 330px;
+  }
+
+  #sidebar {
+    width: 310px !important;
+  }
+  
+  .property-divider {
+    width: 17%;
+  }
+
+  .welcome-box {
+    margin-left: 150px !important;
+    width: 200px !important;
+  }
+
+  #vocabulary-list {
+    position: absolute;
+    left: 375px;
+    width: auto !important;
+  }
+
+  h1 {
+    font-size: 24px !important;
+  }
+
+}
+
+@media (min-width: 1260px) {
+  section, .headerbar {
+    width: 1240px !important;
+  }
+
+  .right-box {
+    display: inline-block;
+  }
+  
+  .feedback-box {
+    width: 600px !important;
+  }
+
+  .ui-autocomplete {
+    max-width: 310px !important;
+  }
+  
+  .content {
+    margin-left: 430px;
+  }
+
+  input#search-field {
+    width: 260px !important;
+  }
+
+  #vocabulary-list {
+    position: relative;
+    left: 20px;
+    display: inline-block;
+    width: 605px !important;
+  }
+  
+  #sidebar {
+    width: 400px !important;
+  }
+  
+  h1 {
+    font-size: 27px !important;
+  }
+  
+  li, .versal, .versal-bold, p, .search-result > .prefLabel{
+    font-size: 16px !important;
+  }
+  
+  .search-result > div > span.uri-input-box {
+    font-size: 14px !important;
+  }
+
+}
+
+@media (min-width: 1520px) {
+  
+  #vocabulary-list {
+    position: relative;
+    display: inline-block;
+    width: 710px !important;
+  }
+
+  .welcome-box {
+    margin-left: 0 !important;
+    width: 240px !important;
+  }
+  
+  #sidebar {
+    width: 400px !important;
+  }
+}
+
+
+<!--[if IE]>
+#vocab-info hr {
+  border: 2px dashed #62729f !important;
+}
+<![endif]-->
+
+

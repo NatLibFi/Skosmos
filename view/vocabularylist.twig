@@ -1,0 +1,25 @@
+<div id="vocabulary-list">
+  <div class="logo-header">
+      <img class="book-logo" src="{{ path_fix }}resource/pics/vocabularies.gif" alt="">
+      {% if vocab_list is not defined or vocab_list|length == 0 %}
+      <h2>{% trans "No vocabularies on the server!" %}</h2>
+      {% else %}
+      {% for word in "Vocabularies on the server"|trans|split(' ') %}<h2>{{ word }}</h2>{% endfor %}
+  </div>
+  <div class="vocabularies">
+      <table class="table">
+      {% for vocabClassName,vocabArray in vocab_list %}
+      <tr>
+        <th>{{ vocabClassName|upper }}</th>
+        <td>
+        {% for vocab in vocabArray %}
+          <a class="navigation-font" href="{{path_fix}}{{ vocab.id }}/{{ lang }}/">{{ vocab.title }}</a><br />
+        {% endfor %}
+        </td>
+      </tr>
+      <tr><th></th><td><div class="vocabulary-separator"></div></td></tr>
+      {% endfor %}
+      </table>
+  </div>
+  {% endif %}
+</div>

@@ -1,0 +1,39 @@
+{% extends "light.twig" %}
+
+{% block title %}: {% trans "Feedback" %}{% endblock %}
+{% block sidebar %}{% endblock %}
+{% block headernav %}{% endblock %}
+{% block content %}
+<div class="feedback-logo">
+  <h1>{% trans "Feedback" %}</h1>
+</div>
+<div class="container feedback-box">
+  <div class="" id="feedback-form">
+    {% if feedback_sent %}
+    <h3>{% trans "Feedback has been sent!" %}</h3>
+    {% else %}
+    <span class="versal">{% trans %}Contact us!{% endtrans %}</span>
+    <div id="feedback-content">
+      <form id="feedback-fields" method="post" action="#">
+        {% if vocabList %}
+        <select class="form-control" name="vocab">
+          <option value="none">{% trans %}Not to a specific vocabulary{% endtrans %}</option>
+            {% for option in vocabList %}
+            <option value="{{ option.id }}"{% if vocab_id == option.id %} selected="selected"{% endif %}>{{ option.title }}</option>
+            {% endfor %}
+        </select>
+        {% endif %}
+
+        <p>{% trans %}Name:{% endtrans %}</p>
+        <input id="name" class="form-control" type ="text" size="40" name="name" placeholder="{% trans %}Enter your name{% endtrans %}">
+        <p>{% trans %}E-mail:{% endtrans %} *</p>
+        <input id="email" class="form-control" type ="text" size="40" name="email" placeholder="{% trans %}Enter your e-mail address{% endtrans %}">
+        <p>{% trans %}Message:{% endtrans %} *</p>
+        <textarea id="message" class="form-control" name="message"></textarea>
+        <button type="submit" class="btn btn-primary" id="send-feedback">{% trans %}Send feedback{% endtrans %}</button>
+      </form>
+    {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

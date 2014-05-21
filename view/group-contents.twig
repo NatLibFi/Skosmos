@@ -1,0 +1,28 @@
+{% extends "light.twig" %}
+
+{% block title %}: {{ vocab_id|upper }}: {{ label }}{% endblock %}
+{#% block headernav %}
+<ul class="nav nav-tabs">
+  <li><a id="hier-trigger" href="#">{% trans "Hier-nav" %}</a></li>
+  <li><a href="{{ path_fix }}{{ vocab_id }}/{{ lang }}/index">{% trans "Alpha-nav" %}</a></li>
+  {% if vocab.groupClassURI %}
+  <li class="active"><a href="{{ path_fix }}{{ vocab_id }}/{{ lang }}/groups">{% trans "Group-nav" %}</a></li>
+  {% else %}
+  {% endif %}
+</ul>
+{% endblock %#}
+{% block sidebar %}
+<div class="sidebar-grey">
+  <div class="group-container">
+    <p>{% if label != '' %}{{ label }}{% else %}{% trans "concepts within the group" %}{% endif %}</p>
+    <ul class="group-contents side-navi">
+      {% for uri, label in contents %}
+      <li><a href="{{ uri | link_url(vocab,lang) }}">{{ label }}</a></li>
+      {% endfor %}
+    </ul>
+  </div
+</div
+{% endblock %}
+
+{% block content %}
+{% endblock %}

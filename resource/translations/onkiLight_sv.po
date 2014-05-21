@@ -1,0 +1,945 @@
+# Finnish translation of ONKI Light
+# Copyright SeCo 2012 (C)
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ONKI Light\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-05-21 12:35+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Henri Ylikotila <henri.ylikotila@helsinki.fi>\n"
+"Language-Team: ONKI Team <onki-posti@helsinki.fi>\n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Swedish\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-SearchPath-0: view\n"
+"X-Poedit-SearchPath-1: controller\n"
+"X-Poedit-SearchPath-2: model\n"
+
+#: controller/WebController.php:199
+#: controller/WebController.php:448
+#: controller/WebController.php:585
+msgid "language_changed_message"
+msgstr "Språket som du valt stöds inte i den här vokabulären. Därför visas sidan inte på svenska."
+
+#: controller/Controller.php:58
+msgid "in_this_language"
+msgstr "på svenska"
+
+#: /tmp/cache/537c736e31c79/97/fc/fe9ee9e79eac96aeebd68e420383.php:42
+msgid "404 Error: The page %requested_page% cannot be found."
+msgstr "Fel 404: Sidan %requested_page% finns inte."
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:157
+#: /tmp/cache/537c736e31c79/64/b0/1fed2b7871473f4385aa3ea67142.php:46
+msgid "About"
+msgstr "Information"
+
+#: /tmp/cache/537c736e31c79/9b/ab/ae70f1ef370d0c5debac44a5d54f.php:47
+msgid "All"
+msgstr "Visar alla"
+
+#: /tmp/cache/537c736e31c79/1e/99/74447de48d79a50416955251e104.php:228
+msgid "Alpha-nav"
+msgstr "Alfabetisk"
+
+#: /tmp/cache/537c736e31c79/5a/40/5dfb9870017ad10a424ef3d496d0.php:155
+msgid "Alternate terms"
+msgstr "Ersatta termer"
+
+#: /tmp/cache/537c736e31c79/5a/40/5dfb9870017ad10a424ef3d496d0.php:141
+msgid "Concept counts by language"
+msgstr "Begrepp på olika språk"
+
+#: /tmp/cache/537c736e31c79/5a/40/5dfb9870017ad10a424ef3d496d0.php:147
+msgid "Concept language"
+msgstr "Språk"
+
+#: /tmp/cache/537c736e31c79/5a/40/5dfb9870017ad10a424ef3d496d0.php:127
+msgid "Concepts"
+msgstr "Begrepp"
+
+#: /tmp/cache/537c736e31c79/7d/37/1bb159eade92e1211ed0dafe5b12.php:71
+msgid "Contact us!"
+msgstr "Ta kontakt!"
+
+#: /tmp/cache/537c736e31c79/9b/ab/ae70f1ef370d0c5debac44a5d54f.php:35
+msgid "Displaying the first"
+msgstr "Visar de första"
+
+#: /tmp/cache/537c736e31c79/5a/40/5dfb9870017ad10a424ef3d496d0.php:214
+msgid "Download"
+msgstr "Ladda ned"
+
+#: /tmp/cache/537c736e31c79/7d/37/1bb159eade92e1211ed0dafe5b12.php:126
+msgid "E-mail:"
+msgstr "E-postadress:"
+
+#: /tmp/cache/537c736e31c79/7d/37/1bb159eade92e1211ed0dafe5b12.php:130
+msgid "Enter your e-mail address"
+msgstr "Skriv din e-postadress"
+
+#: /tmp/cache/537c736e31c79/7d/37/1bb159eade92e1211ed0dafe5b12.php:122
+msgid "Enter your name"
+msgstr "Skriv ditt namn"
+
+#: /tmp/cache/537c736e31c79/6c/c2/116e4eedd7311501f4433bc5287e.php:91
+msgid "Error: Requested vocabulary \"%vocab_id%\" not found!"
+msgstr "Fel: Vokabulären \"%vocab_id%\" finns inte."
+
+#: /tmp/cache/537c736e31c79/1e/99/74447de48d79a50416955251e104.php:416
+msgid "Error: the vocabulary does not contain terms beginning with \"%letter%\"!"
+msgstr "Vokabulären innehåller inga termer som börjar med \"%letter%\"!"
+
+#: /tmp/cache/537c736e31c79/7d/37/1bb159eade92e1211ed0dafe5b12.php:34
+#: /tmp/cache/537c736e31c79/7d/37/1bb159eade92e1211ed0dafe5b12.php:54
+msgid "Feedback"
+msgstr "Respons"
+
+#: /tmp/cache/537c736e31c79/7d/37/1bb159eade92e1211ed0dafe5b12.php:65
+msgid "Feedback has been sent!"
+msgstr "Respons har skickats!"
+
+#: /tmp/cache/537c736e31c79/43/08/7c7dfa02af3dda30b6dab06908e0.php:36
+msgid "Group index"
+msgstr "Gruppindex"
+
+#: /tmp/cache/537c736e31c79/1e/99/74447de48d79a50416955251e104.php:260
+msgid "Group-nav"
+msgstr "Gruppindex"
+
+#: /tmp/cache/537c736e31c79/5a/40/5dfb9870017ad10a424ef3d496d0.php:159
+msgid "Hidden terms"
+msgstr "Dolda termer"
+
+#: /tmp/cache/537c736e31c79/1e/99/74447de48d79a50416955251e104.php:242
+msgid "Hier-nav"
+msgstr "Hierarki"
+
+#: /tmp/cache/537c736e31c79/bb/38/04c50e1460d9c064ae7df13a27ae.php:145
+msgid "Language literal"
+msgstr "På svenska"
+
+#: /tmp/cache/537c736e31c79/9b/ab/ae70f1ef370d0c5debac44a5d54f.php:31
+msgid "Loading"
+msgstr "Laddar"
+
+#: /tmp/cache/537c736e31c79/9b/ab/ae70f1ef370d0c5debac44a5d54f.php:27
+msgid "Loading more items"
+msgstr "Laddar mera resultat"
+
+#: /tmp/cache/537c736e31c79/7d/37/1bb159eade92e1211ed0dafe5b12.php:134
+msgid "Message:"
+msgstr "Meddelande:"
+
+#: /tmp/cache/537c736e31c79/7d/37/1bb159eade92e1211ed0dafe5b12.php:118
+msgid "Name:"
+msgstr "Namn:"
+
+#: /tmp/cache/537c736e31c79/9b/ab/ae70f1ef370d0c5debac44a5d54f.php:23
+msgid "No results"
+msgstr "Inga sökresult"
+
+#: /tmp/cache/537c736e31c79/29/3b/ef6ded62aeb5d8f31efa19ce2117.php:32
+msgid "No vocabularies on the server!"
+msgstr "Inga vokabulärer på servern!"
+
+#: /tmp/cache/537c736e31c79/7d/37/1bb159eade92e1211ed0dafe5b12.php:83
+msgid "Not to a specific vocabulary"
+msgstr "Ingen specifik vokabulär"
+
+#: /tmp/cache/537c736e31c79/5a/40/5dfb9870017ad10a424ef3d496d0.php:151
+msgid "Preferred terms"
+msgstr "Huvudtermer"
+
+#: /tmp/cache/537c736e31c79/64/b0/1fed2b7871473f4385aa3ea67142.php:63
+msgid "SKOSmos layout designed by Hahmo"
+msgstr "SKOSmos layout designed by Hahmo"
+
+#: /tmp/cache/537c736e31c79/bb/38/04c50e1460d9c064ae7df13a27ae.php:197
+msgid "Search"
+msgstr "Sök"
+
+#: /tmp/cache/537c736e31c79/bb/38/04c50e1460d9c064ae7df13a27ae.php:185
+msgid "Search language: any"
+msgstr "På alla språk"
+
+#: /tmp/cache/537c736e31c79/bb/38/04c50e1460d9c064ae7df13a27ae.php:80
+msgid "Search within this vocabulary:"
+msgstr "Sök i denna vokabulär"
+
+#: /tmp/cache/537c736e31c79/7d/37/1bb159eade92e1211ed0dafe5b12.php:139
+msgid "Send feedback"
+msgstr "Sänd respons"
+
+#: /tmp/cache/537c736e31c79/d5/c6/eaee0760e4d054fa72e35e3c6d13.php:37
+msgid "The search provided no results."
+msgstr "Inga sökresultat."
+
+#: /tmp/cache/537c736e31c79/9b/ab/ae70f1ef370d0c5debac44a5d54f.php:59
+msgid "Value is required and can not be empty"
+msgstr "Fältet är obligatoriskt"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:159
+msgid "Vocabularies"
+msgstr "Finländsk tesaurus- och ontologiservice"
+
+#: /tmp/cache/537c736e31c79/29/3b/ef6ded62aeb5d8f31efa19ce2117.php:39
+msgid "Vocabularies on the server"
+msgstr "Tillgängliga tesaurusar och ontologier"
+
+#: /tmp/cache/537c736e31c79/5a/40/5dfb9870017ad10a424ef3d496d0.php:58
+msgid "Vocabulary information"
+msgstr "Information om vokabulären"
+
+#: /tmp/cache/537c736e31c79/07/37/699cc0f7270e411a620f8d8c60a6.php:53
+msgid "concepts within the group"
+msgstr "Begrepp inom gruppen"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:95
+msgid "dc11:creator"
+msgstr "Författare"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:97
+msgid "dc11:description"
+msgstr "Beskrivning"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:99
+msgid "dc11:license"
+msgstr "Licens"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:91
+msgid "dc11:publisher"
+msgstr "Utgivare"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:93
+msgid "dc11:relation"
+msgstr "Relation"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:87
+msgid "dc11:source"
+msgstr "Källa"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:135
+msgid "dc11:source_help"
+msgstr "Källa för begreppets beskrivning."
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:89
+msgid "dc11:title"
+msgstr "Namn"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:71
+msgid "dc:contributor"
+msgstr "Medförfattare"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:69
+msgid "dc:creator"
+msgstr "Författare"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:79
+msgid "dc:date"
+msgstr "Datum"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:67
+msgid "dc:description"
+msgstr "Beskrivning"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:85
+msgid "dc:isReplacedBy"
+msgstr "ersatt av begrepp"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:83
+msgid "dc:language"
+msgstr "Språk"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:75
+msgid "dc:license"
+msgstr "Licens"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:77
+msgid "dc:publisher"
+msgstr "Utgivare"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:81
+msgid "dc:relation"
+msgstr "Relation"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:73
+msgid "dc:rights"
+msgstr "Rättigheter"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:65
+msgid "dc:subject"
+msgstr "Ämnesområde"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:63
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:111
+msgid "dc:title"
+msgstr "Namn"
+
+#: /tmp/cache/537c736e31c79/d5/c6/eaee0760e4d054fa72e35e3c6d13.php:120
+msgid "deprecated"
+msgstr "Begreppet har tagits ur bruk."
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:153
+msgid "en"
+msgstr "på engelska"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:149
+msgid "fi"
+msgstr "på finska"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:147
+msgid "foaf:homepage"
+msgstr "Hemsida"
+
+#: /tmp/cache/537c736e31c79/d5/c6/eaee0760e4d054fa72e35e3c6d13.php:330
+msgid "foreign prefLabel help"
+msgstr "Termer för begreppet på andra språk."
+
+#: /tmp/cache/537c736e31c79/9b/ab/ae70f1ef370d0c5debac44a5d54f.php:51
+msgid "from all"
+msgstr "från alla"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:59
+msgid "isothes:ConceptGroup"
+msgstr "Begreppsgrupp"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:61
+msgid "isothes:ThesaurusArray"
+msgstr "Indelning av syskonbegrepp"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:155
+msgid "la"
+msgstr "på latinska"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:113
+msgid "onki:memberOf"
+msgstr "Hör till gruppen"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:145
+msgid "onki:memberOf_help"
+msgstr "Grupp, som begreppet hör till."
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:109
+msgid "owl:sameAs"
+msgstr "Motsvarande begrepp"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:107
+msgid "owl:versionInfo"
+msgstr "Version"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:101
+msgid "rdf:type"
+msgstr "Typ"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:133
+msgid "rdf:type_help"
+msgstr "Typ"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:105
+msgid "rdfs:comment"
+msgstr "Anmärkning"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:103
+msgid "rdfs:label"
+msgstr "Term"
+
+#: /tmp/cache/537c736e31c79/9b/ab/ae70f1ef370d0c5debac44a5d54f.php:43
+msgid "results displayed"
+msgstr "visade resultat"
+
+#: /tmp/cache/537c736e31c79/d5/c6/eaee0760e4d054fa72e35e3c6d13.php:26
+msgid "results for"
+msgstr "sökresultat för"
+
+#: /tmp/cache/537c736e31c79/9b/ab/ae70f1ef370d0c5debac44a5d54f.php:39
+msgid "results:"
+msgstr "resultat:"
+
+#: /tmp/cache/537c736e31c79/9b/ab/ae70f1ef370d0c5debac44a5d54f.php:55
+msgid "selected"
+msgstr "valda"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:21
+msgid "skos:Collection"
+msgstr "Samling"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:19
+msgid "skos:Concept"
+msgstr "Begrepp"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:37
+msgid "skos:altLabel"
+msgstr "Ersatta termer"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:125
+msgid "skos:altLabel_help"
+msgstr "Begreppets alternativa skrivsätt."
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:27
+msgid "skos:broadMatch"
+msgstr "Vidare motsvarande begrepp"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:141
+msgid "skos:broadMatch_help"
+msgstr "Motsvarande vidare begrepp i en annan vokabulär."
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:23
+msgid "skos:broader"
+msgstr "Överordnat begrepp"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:117
+msgid "skos:broader_help"
+msgstr "Överordnat begrepp"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:43
+msgid "skos:closeMatch"
+msgstr "Nästan motsvarande begrepp"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:139
+msgid "skos:closeMatch_help"
+msgstr "Nästan motsvarande begrepp i en annan vokabulär."
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:57
+msgid "skos:definition"
+msgstr "Definition"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:131
+msgid "skos:definition_help"
+msgstr "Uttömmande beskrivning av begreppets betydelse."
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:41
+msgid "skos:exactMatch"
+msgstr "Motsvarande begrepp"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:137
+msgid "skos:exactMatch_help"
+msgstr "Till sin betydelse samma begrepp."
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:51
+msgid "skos:hasTopConcept"
+msgstr "Har översta begrepp"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:39
+msgid "skos:hiddenLabel"
+msgstr "Dolda begrepp"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:47
+msgid "skos:inScheme"
+msgstr "Begreppets schema"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:45
+msgid "skos:member"
+msgstr "Begrepp som hör till gruppen"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:127
+msgid "skos:member_help"
+msgstr "Begrepp som hör till ämnet."
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:29
+msgid "skos:narrowMatch"
+msgstr "Snäv träff"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:143
+msgid "skos:narrowMatch_help"
+msgstr "Motsvarande snävare begrepp i en annan vokabulär."
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:25
+msgid "skos:narrower"
+msgstr "Underordnade begrepp"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:119
+msgid "skos:narrower_help"
+msgstr "Underordnade begrepp."
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:53
+msgid "skos:note"
+msgstr "Anmärkning"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:121
+msgid "skos:note_help"
+msgstr "Anmärkning om begreppet och dess användning."
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:35
+msgid "skos:prefLabel"
+msgstr "Föredragen term"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:31
+msgid "skos:related"
+msgstr "Relaterade begrepp"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:33
+msgid "skos:relatedMatch"
+msgstr "Relaterade motsvarande begrepp"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:129
+msgid "skos:related_help"
+msgstr "Begrepp nära relaterat till begreppets ämnesområde."
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:55
+msgid "skos:scopeNote"
+msgstr "Användningsanmärkning"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:123
+msgid "skos:scopeNote_help"
+msgstr "Anmärkning om begreppet och dess användning."
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:49
+msgid "skos:topConceptOf"
+msgstr "Hör till vokabulären"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:115
+msgid "skosext:partOf"
+msgstr "Är en del av"
+
+#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:151
+msgid "sv"
+msgstr "på svenska"
+
+#: /tmp/cache/537c736e31c79/5a/40/5dfb9870017ad10a424ef3d496d0.php:216
+msgid "this vocabulary as SKOS/RDF"
+msgstr "denna vokabulär i SKOS/RDF-format "
+
+#: /tmp/cache/537c736ea1080/e8/aa/9e859d808fe631752fb4cef2d308.php:102
+msgid "About page"
+msgstr "Information"
+
+#: /tmp/cache/537c736ea1080/bb/df/b7541e21be699f08ce41d883a209.php:35
+msgid "Alphabetical index"
+msgstr "Alfabetiskt index"
+
+#: /tmp/cache/537c736ea1080/43/d1/01a35fc3eeed9d81c3e443d7bb4b.php:646
+msgid "Download this concept in SKOS format:"
+msgstr "Ladda ned detta begrepp i SKOS-format:"
+
+#: /tmp/cache/537c736ea1080/43/d1/01a35fc3eeed9d81c3e443d7bb4b.php:846
+msgid "Error: term \"%term%\" not found in vocabulary!"
+msgstr "Fel: termen \"%term\" finns inte i vokabulären!"
+
+#: /tmp/cache/537c736ea1080/e8/aa/9e859d808fe631752fb4cef2d308.php:90
+msgid "Vocabularies-nav"
+msgstr "Vokabulärer"
+
+#: /tmp/cache/537c736ea1080/43/d1/01a35fc3eeed9d81c3e443d7bb4b.php:558
+msgid "foreign prefLabels"
+msgstr "Termer på andra språk"
+
+#: /tmp/cache/537c736ea1080/43/d1/01a35fc3eeed9d81c3e443d7bb4b.php:620
+msgid "replaced"
+msgstr "ersatt"
+
+#: /tmp/cache/537c736ea1080/43/d1/01a35fc3eeed9d81c3e443d7bb4b.php:93
+msgid "results"
+msgstr "sökresultat"
+
+#: /tmp/cache/537c736ea1080/43/d1/01a35fc3eeed9d81c3e443d7bb4b.php:297
+msgid "skos:prefLabel_help"
+msgstr "Skrivsätt för den föredragna termen för begreppet."
+
+#~ msgid "Search from all vocabularies:"
+#~ msgstr "Sök i alla vokabulärer:"
+
+#~ msgid "Groups"
+#~ msgstr "Gruppindex"
+
+#~ msgid "Collections"
+#~ msgstr "Grupper"
+
+#~ msgid "Concepts: "
+#~ msgstr "Begrepp:"
+
+#~ msgid "Vocabulary statistics"
+#~ msgstr "Statistik om vokabulären"
+
+#~ msgid "ONKI: Feedback"
+#~ msgstr "Finto: Respons"
+
+#~ msgid "To the top"
+#~ msgstr "Till sidans början"
+
+#~ msgid "All downloadable ontologies are marked with this icon."
+#~ msgstr "Alla nedladdningsbara ontologier är märkta med denna ikon."
+
+#~ msgid "Download ontologies"
+#~ msgstr "Ladda ned ontologier"
+
+#~ msgid "Finnish Ontology Library Service\tONKI"
+#~ msgstr "Finländsk tesaurus- och ontologiservice Finto"
+
+#~ msgid "Follow ONKI on Twitter!"
+#~ msgstr "Följ ONKI på Twitter!"
+
+#~ msgid ""
+#~ "Please begin by selecting an ontology or a vocabulary for browsing. You "
+#~ "can also search from all or specific ontologies and vocabularies by using "
+#~ "the search at the right."
+#~ msgstr ""
+#~ "Börja med att välja en ontologi eller vokabulär att söka i. Du kan också "
+#~ "söka i alla eller i vissa bestämda ontologier eller vokabulärer med hjälp "
+#~ "av sökningen nedan."
+
+#~ msgid "Search information faster"
+#~ msgstr "Sök begrepp snabbare"
+
+#~ msgid "Select your search targets beforehand."
+#~ msgstr "Välj sökalternativ i förväg."
+
+#~ msgid "Feedback and comments"
+#~ msgstr " dela dina erfarenheter med oss och med andra!"
+
+#~ msgid "FinnONTO Results"
+#~ msgstr "FinnONTO"
+
+#~ msgid ""
+#~ "If you encounter any problems or have improvement ideas, please contact "
+#~ "the ONKI team. We are also very much interested in your success stories "
+#~ "in using ONKI - please share your experiences!"
+#~ msgstr ""
+#~ "Ta kontakt med utvecklarna av Finto om du stöter på problem eller om du "
+#~ "har utvecklingsidéer gällande servicen. Vi är också mycket intresserade "
+#~ "av dina framgångar med användningen av Finto -"
+
+#~ msgid "Links"
+#~ msgstr "Länkar"
+
+#~ msgid ""
+#~ "ONKI Light is an ontology browser provided by the National library of "
+#~ "Finland."
+#~ msgstr ""
+#~ "Finto är en finländsk service för publicering och användning av "
+#~ "vokabulärer, ontologier och klassifikationer. Finto erbjuder ett "
+#~ "användargränssnitt för bläddring i vokabulärerna och öppna gränssnitt för "
+#~ "användning i andra applikationer."
+
+#~ msgid "ONKI-project wiki"
+#~ msgstr ""
+#~ "Finto utvecklas i ONKI-projektet, som är ett gemensamt projekt mellan "
+#~ "Nationalbiblioteket, Undervisnings- och kulturministeriet och "
+#~ "Finansministeriet:"
+
+#~ msgid "SeCo"
+#~ msgstr "SeCos hemsidor"
+
+#~ msgid "The National Library"
+#~ msgstr "Nationalbiblioteket"
+
+#~ msgid ""
+#~ "We hope you like the ONKI service and enjoy using it for your purposes!"
+#~ msgstr ""
+#~ "Den nuvarande servicehelheten grundar sig på resultatet av FinnONTO-"
+#~ "projektet som förverkligades i Aalto-universitetet och Helsingfors "
+#~ "universitet under åren 2003-2012:"
+
+#~ msgid "Wikipage"
+#~ msgstr "Projekt Wiki"
+
+#~ msgid "About ONKI"
+#~ msgstr "Information om Finto"
+
+#~ msgid "And more, please ask."
+#~ msgstr "Och annat, fråga!"
+
+#~ msgid "Building the future of the Semantic Web and beyond."
+#~ msgstr "Vi bygger framtiden för semantiska webben."
+
+#~ msgid "Co-operation in projects."
+#~ msgstr "Samarbete i projekt"
+
+#~ msgid "For the latest semantic news, follow us on"
+#~ msgstr "De senaste semantiska nyheterna får du genom att följa oss"
+
+#~ msgid "How can we help you?"
+#~ msgstr "Hur kan vi hjälpa dig?"
+
+#~ msgid "Information systems specialist"
+#~ msgstr "Systemspecialist"
+
+#~ msgid "Live presentations about ONKI: what it is? how to use it?"
+#~ msgstr "Föredrag om ONKI: Vad är det och hur använder man det?"
+
+#~ msgid "Online technical support for using ONKI."
+#~ msgstr "Användarstöd via e-post"
+
+#~ msgid "Project manager"
+#~ msgstr "Projektchef"
+
+#~ msgid "Support for creating and publishing ontologies."
+#~ msgstr "Stöd för att utveckla och publicera ontologier."
+
+#~ msgid "The ONKI Light Team"
+#~ msgstr "ONKI Light-team:"
+
+#~ msgid "Twitter"
+#~ msgstr "på Twitter"
+
+#~ msgid "and"
+#~ msgstr "och"
+
+#~ msgid "backend servers"
+#~ msgstr "backend-servrar"
+
+#~ msgid "browser frontend development, ui design"
+#~ msgstr "frontend-server, användargränssnitt"
+
+#~ msgid "fan us on Facebook!"
+#~ msgstr "gilla oss på Facebook!"
+
+#~ msgid "professor, head of research group"
+#~ msgstr "professor, forskargruppens ledare"
+
+#~ msgid "publishing of ontologies, widgets, etc."
+#~ msgstr "widgets, publicering av ontologier m.m."
+
+#~ msgid ""
+#~ "The ONKI-light browser is provided as a part of the ONKI Living Lab - an "
+#~ "open lab for testing the latest semantic web technologies in practice, "
+#~ "with real users like you. Currently, over 10 000 people are using ONKI "
+#~ "each month."
+#~ msgstr ""
+#~ "ONKI är en del av ONKI Living Lab-verksamheten - en användarorienterad "
+#~ "utvecklingsmiljö, i vilken den semantiska webbens tekniker testas i "
+#~ "praktiken tillsammans med verkliga användare som dig. Mer än 10 000 "
+#~ "personer använder ONKI varje månad."
+
+#~ msgid "foreignhelp"
+#~ msgstr "På andra språk:"
+
+#~ msgid "in_all_languages"
+#~ msgstr "på alla språk"
+
+#~ msgid "Search from all vocabularies: "
+#~ msgstr "Sök i alla vokabulärer:"
+
+#~ msgid "Hierarchy"
+#~ msgstr "Hierarki"
+
+#~ msgid ""
+#~ "The hierarchy display shows how the concept fits into a wider context "
+#~ "through its superordinate concepts."
+#~ msgstr ""
+#~ "Hierarkidisplayen visar hur ett begrepp passar in i den vidare kontexten "
+#~ "genom sina överordnade begrepp."
+
+#~ msgid "Which vocabulary is your comment related to?"
+#~ msgstr "Vilken vokabulär gäller ditt meddelande?"
+
+#~ msgid "Terms: "
+#~ msgstr "Termer: "
+
+#~ msgid "Ontologiat ja sanastot"
+#~ msgstr "Ontologier och vokabulärer"
+
+#~ msgid "lang not supported"
+#~ msgstr ""
+#~ "Språket som du valt stöds inte i den här vokabulären. Därför visas sidan "
+#~ "på svenska."
+
+#~ msgid "Tietoja sanastosta"
+#~ msgstr "Kunskap om vokabulären"
+
+#~ msgid "Virhe:  404: Sivua"
+#~ msgstr "404 Fel: Sidan"
+
+#~ msgid "Virhe: Pyydettyä sanastoa"
+#~ msgstr "Fel: Den begärda vokabulären"
+
+#~ msgid "Virhe: Sanastosta ei löytynyt pyytämääsi käsitettä"
+#~ msgstr "Fel: Inga sökresultat i vokabulären!"
+
+#~ msgid "ei löytynyt palvelimelta!"
+#~ msgstr "kunde inte hittats på servern!"
+
+#~ msgid "Ryhmän sisältämät käsitteet"
+#~ msgstr "Begrepp inom gruppen"
+
+#~ msgid "Ryhmät"
+#~ msgstr "Grupper"
+
+#~ msgid "Lisätietoja"
+#~ msgstr "Tilläggsuppgifter"
+
+#~ msgid "Palaute"
+#~ msgstr "Respons"
+
+#~ msgid "Search in all vocabularies: "
+#~ msgstr "Sök i alla vokabulärer:"
+
+#~ msgid "Ei sanastoja ONKI-palvelimella!"
+#~ msgstr "Inga vokabulärer på ONKI!"
+
+#~ msgid "Hae kaikista sanastoista: "
+#~ msgstr "Sök i alla vokabulärer: "
+
+#~ msgid "Sanastot ONKI-palvelimella"
+#~ msgstr "Vokabulärer på ONKI-servern"
+
+#~ msgid "Sivun alkuun"
+#~ msgstr "Till toppen"
+
+#~ msgid "Hae"
+#~ msgstr "Sök"
+
+#~ msgid "kaikilla kielillä"
+#~ msgstr "på alla språk"
+
+#~ msgid "suomeksi"
+#~ msgstr "på svenska"
+
+#~ msgid "Nimi:"
+#~ msgstr "Namn:"
+
+#~ msgid "Sähköpostiosoite:"
+#~ msgstr "E-postadress:"
+
+#~ msgid "Lähetä palautetta"
+#~ msgstr "Ge feedback"
+
+#~ msgid "Palaute lähetetty!"
+#~ msgstr "Feedback skickat!"
+
+#~ msgid "Syötä nimesi"
+#~ msgstr "Namn:"
+
+#~ msgid "Syötä sähköpostiosoitteesi"
+#~ msgstr "E-postadress:"
+
+#~ msgid "Viesti:"
+#~ msgstr "Meddelande:"
+
+#~ msgid "Lataa tämä käsite SKOS-muodossa:"
+#~ msgstr "Ladda ner detta begrepp i SKOS-format:"
+
+#~ msgid "Lataa tämä sanasto SKOS-muodossa:"
+#~ msgstr "Ladda ner detta vokabulär i SKOS-format:"
+
+#~ msgid "Korvatut termit"
+#~ msgstr "Ersatta termer"
+
+#~ msgid "Käsitteitä: "
+#~ msgstr "Begrepp: "
+
+#~ msgid "Piilotermit"
+#~ msgstr "Dolda termer"
+
+#~ msgid "Päätermit"
+#~ msgstr "Huvudtermer"
+
+#~ msgid "Tilastotietoa sanastosta"
+#~ msgstr "Statistik om vokabulären"
+
+#~ msgid "Hae kaikista sanastoista:"
+#~ msgstr "Sök i alla vokabulärer: "
+
+#~ msgid "Hae tästä sanastosta:"
+#~ msgstr "Sök i denna vokabulär:"
+
+#~ msgid "Ei tiettyyn ontologiaan"
+#~ msgstr "Ingen specifik vokabulär"
+
+#~ msgid "Mihin ontologiaan kommenttisi liittyy?"
+#~ msgstr "Vilken vokabulär gäller ditt meddelande?"
+
+#~ msgid "Aakkosellinen hakemisto"
+#~ msgstr "Alfabetiskt index"
+
+#~ msgid "Ryhmähakemisto"
+#~ msgstr "Gruppindex"
+
+#~ msgid "Edellinen"
+#~ msgstr "Föregående"
+
+#~ msgid "Seuraava"
+#~ msgstr "Nästa"
+
+#, fuzzy
+#~ msgid "onki:replacelabels"
+#~ msgstr "Upprättar begrepper:"
+
+#~ msgid "Alakohtainen hakemisto"
+#~ msgstr "Sektoriella index"
+
+#~ msgid "Hierarkkinen hakemisto"
+#~ msgstr "Hierarkisk index"
+
+#~ msgid "Käyttöohjeet"
+#~ msgstr "Bruksanvisning"
+
+#~ msgid "Näytetään tulokset"
+#~ msgstr "Visas resultater"
+
+#~ msgid "Hakutulokset:"
+#~ msgstr "Sökresult:"
+
+#~ msgid "kpl"
+#~ msgstr "stycke"
+
+#~ msgid "http://www.w3.org/2004/02/skos/core#Concept"
+#~ msgstr "Referensord"
+
+#~ msgid "http://www.w3.org/2004/02/skos/core#Collection"
+#~ msgstr "Kollektion"
+
+#~ msgid "ysa_meta:GeographicalConcept"
+#~ msgstr "Geografisk namn"
+
+#~ msgid "View the instructions"
+#~ msgstr "Plocka bruksanvisning"
+
+#~ msgid "Choose ontologies and vocabularies for browsing"
+#~ msgstr "Välj ontologier och vokabulärer"
+
+#~ msgid "Further information about the service"
+#~ msgstr "Mera information om servicen"
+
+#~ msgid "Give feedback for the service"
+#~ msgstr "Ge feedback för att utveckla servicen!"
+
+#~ msgid "skos:members"
+#~ msgstr "Medlemmar av gruppen:"
+
+#~ msgid "skosext:broaderGeneric"
+#~ msgstr "Bredare generell begrepp:"
+
+#~ msgid "kunnat:aluehallintovirasto"
+#~ msgstr "Regionförvaltningsverket:"
+
+#~ msgid "kunnat:elykeskus"
+#~ msgstr "ELY-centralen:"
+
+#~ msgid "kunnat:kielisuhde"
+#~ msgstr "Språk-tal:"
+
+#~ msgid "kunnat:maakunta"
+#~ msgstr "Provins:"
+
+#~ msgid "kunnat:sairaanhoitopiiri"
+#~ msgstr "Sairaanhoitopiiri:"
+
+#~ msgid "kunnat:seutukunta"
+#~ msgstr "Seutukunta:"
+
+#~ msgid "kunnat:suuralue"
+#~ msgstr "Delområde:"
+
+#~ msgid "kunnat:vaalipiiri"
+#~ msgstr "Valkrets:"
+
+#~ msgid "kunnat:Kunta"
+#~ msgstr "Kommun"
+
+#~ msgid "kunnat:Seutukunta"
+#~ msgstr "Underområde"
+
+#~ msgid "skos:narrowerGeneric"
+#~ msgstr "Koncentrerad begrepp:"
+
+#~ msgid "skos:narrowerPartitive"
+#~ msgstr "Koncentrerad begrepp:"
+
+#~ msgid "about"
+#~ msgstr "Tilläggsuppgifter"
