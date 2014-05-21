@@ -1,14 +1,14 @@
 clear
 
 echo 'writing translations: ...'
-msgfmt onkiLight_en.po
-mv messages.mo en/LC_MESSAGES/onkiLight.mo
+msgfmt skosmos_en.po
+mv messages.mo en/LC_MESSAGES/skosmos.mo
 
-msgfmt onkiLight_fi.po
-mv messages.mo fi/LC_MESSAGES/onkiLight.mo
+msgfmt skosmos_fi.po
+mv messages.mo fi/LC_MESSAGES/skosmos.mo
 
-msgfmt onkiLight_sv.po
-mv messages.mo sv/LC_MESSAGES/onkiLight.mo
+msgfmt skosmos_sv.po
+mv messages.mo sv/LC_MESSAGES/skosmos.mo
 echo 'translations ready ...'
 
 sudo service apache2 restart

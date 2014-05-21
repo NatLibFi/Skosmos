@@ -43,11 +43,11 @@ class Controller
     $this->negotiator = new \Negotiation\FormatNegotiator();
 
     // Specify the location of the translation tables
-    bindtextdomain('onkiLight', 'resource/translations');
-    bind_textdomain_codeset('onkiLight', 'UTF-8');
+    bindtextdomain('skosmos', 'resource/translations');
+    bind_textdomain_codeset('skosmos', 'UTF-8');
 
     // Choose domain for translations
-    textdomain('onkiLight');
+    textdomain('skosmos');
 
     // Build arrays of language information, with 'locale' and 'name' keys
     global $LANGUAGES; // global setting defined in config.inc
