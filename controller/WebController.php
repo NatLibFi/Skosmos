@@ -285,11 +285,12 @@ class WebController extends Controller
     $to = FEEDBACK_ADDRESS;
     if ($fromVocab != null)
       $message = 'Feedback from vocab: ' . strtoupper($fromVocab) . "<br />" . $message;
-    $subject = "ONKI-light feedback";
+    $subject = SERVICE_NAME . " feedback";
     $headers = "MIME-Version: 1.0″ . '\r\n";
     $headers .= "Content-type: text/html; charset=UTF-8" . "\r\n";
     $headers .= "From: $fromName <$fromEmail>" . "\r\n" . 'X-Mailer: PHP/' . phpversion();
-    $params = '-f osma.suominen@aalto.fi';
+    $envelopeSender = FEEDBACK_ENVELOPE_SENDER;
+    $params = empty($envelopeSender) ? '' : "-f $envelopeSender";
     mail($to, $subject, $message, $headers, $params) or die("Failure");
   }
 

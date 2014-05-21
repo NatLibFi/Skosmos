@@ -28,6 +28,9 @@ define("DEFAULT_SPARQL_DIALECT", "Generic");
 // default email address to send the feedback
 define("FEEDBACK_ADDRESS", "");
 
+// email address to set as the envelope sender for feedback messages
+define("FEEDBACK_ENVELOPE_SENDER", "");
+
 // whether or not to log caught exceptions
 define ("LOG_CAUGHT_EXCEPTIONS", FALSE);
 
