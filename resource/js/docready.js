@@ -418,7 +418,7 @@ $(function() { // DOCUMENT READY
 
   // sets the language cookie for 365 days
   function setLangCookie(lang) {
-    createCookie('ONKI_LANGUAGE', lang, 365);
+    createCookie('SKOSMOS_LANGUAGE', lang, 365);
   }
   
   // Event handlers for the language selection links for setting the cookie
@@ -430,7 +430,7 @@ $(function() { // DOCUMENT READY
   });
   
   // Setting the language parameters according to the cookie if found.
-  var search_lang = readCookie('ONKI_SEARCH_LANG');
+  var search_lang = readCookie('SKOSMOS_SEARCH_LANG');
   
   // taking the url parameters given by the controller 
   // into parts used for determining if we are on the search listings
@@ -466,12 +466,12 @@ $(function() { // DOCUMENT READY
       qlang = 'anything';
     $('#lang-dropdown-toggle').html($(this).html() + ' <span class="caret"></span>');
     $('#lang-input').val(qlang);
-    createCookie('ONKI_SEARCH_LANG', qlang, 365);
+    createCookie('SKOSMOS_SEARCH_LANG', qlang, 365);
   });
   
   $('.lang-button-all').on('click', function() {
     qlang = "";
-    createCookie('ONKI_SEARCH_LANG', 'anything', 365);
+    createCookie('SKOSMOS_SEARCH_LANG', 'anything', 365);
     $('#lang-input').val('');
     $('#lang-dropdown-toggle').html($('.lang-button-all').html() + ' <span class="caret"></span>');
   });
