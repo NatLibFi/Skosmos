@@ -14,21 +14,21 @@ ul {
 }
 
 @media print { /* Quick style sheet for printing. */
-	body * {
-		visibility: hidden;
-	}
+  body * {
+    visibility: hidden;
+  }
 
-	/* Everything under the print class elements will be printed. */
-	.print,.print * {
-		visibility: visible;
-	}
+  /* Everything under the print class elements will be printed. */
+  .print,.print * {
+    visibility: visible;
+  }
 
-	/* Position elements at the beginning of the page. */
-	.print {
-		position: absolute;
-		left: 0;
-		top: 0;
-	}
+  /* Position elements at the beginning of the page. */
+  .print {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
 }
 
 section {
@@ -39,12 +39,12 @@ section {
 }
 
 .spinner { 
-	display:inline-block;
-	width: 25px;
-	height: 25px;
-	margin-left: 5px;
+  display:inline-block;
+  width: 25px;
+  height: 25px;
+  margin-left: 5px;
   vertical-align: middle;
-	background:url("../pics/spinner.gif") no-repeat transparent;
+  background:url("../pics/spinner.gif") no-repeat transparent;
 }
 
 /* topbar styles
@@ -77,25 +77,25 @@ section {
 #language {
   position: absolute;
   right: 0;
-	height: 50px;
-	width: auto;
+  height: 50px;
+  width: auto;
   padding-left: 0px;
-	text-align: right;
-	overflow: hidden;
-	line-height: 70px;
+  text-align: right;
+  overflow: hidden;
+  line-height: 70px;
 }
 
 #navigation {
   right: 180px;
   padding-right: 10px;
   position: absolute;
-	height: 50px;
-	min-width: 0px;
-	max-width: 530px;
-	width: auto;
-	overflow: hidden;
-	float: right;
-	line-height: 70px;
+  height: 50px;
+  min-width: 0px;
+  max-width: 530px;
+  width: auto;
+  overflow: hidden;
+  float: right;
+  line-height: 70px;
 }
 
 #navigation *, #language * {
@@ -103,8 +103,8 @@ section {
 }
 
 #navigation .link-bg {
-	height: 60px;
-	float: left;
+  height: 60px;
+  float: left;
 }
 
 /* headerbar stuff
@@ -139,7 +139,7 @@ section {
   line-height: 50px;
   margin: 0 0 0 15px;
 }
-  
+
 .header-left > h1 > a {
   display: block;
   color: #ffffff !important;
@@ -179,21 +179,21 @@ section {
 }
 
 #search-from-all-vocabularies-radio-buttons {
-	display: none;
+  display: none;
 }
 
 #search-all-button {
-    background-color: #394554;
-    border: medium none !important;
-    border-radius: 0 !important;
-    height: 40px;
+  background-color: #394554;
+  border: medium none !important;
+  border-radius: 0 !important;
+  height: 40px;
 }
 
 .search-vocab-text {
-    display: inline-block !important;
-    float: left;
-    line-height: 52px;
-    margin-right: 4px;
+  display: inline-block !important;
+  float: left;
+  line-height: 52px;
+  margin-right: 4px;
 }
 
 .search-count {
@@ -224,14 +224,14 @@ section {
 
 /*
 .search-result-listing .search-result:hover, .search-result a:hover{
-  background-color: #F8F8F8;
-  text-decoration: none;
+background-color: #F8F8F8;
+text-decoration: none;
 }
 
 .search-result-listing .search-result:hover {
-  border: 1px solid #EDEDED;
+border: 1px solid #EDEDED;
 }
-*/
+ */
 
 .search-result > div > span.uri-input-box {
   font-size: 12px;
@@ -243,14 +243,14 @@ section {
 }
 
 #lang-dropdown-toggle, .multiselect {
-    background-color: #394554 !important;
-    border: medium none;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    color: #FFFFFF !important;
-    height: 40px;
-    padding-left: 6px !important;
-    padding-right: 6px !important;
+  background-color: #394554 !important;
+  border: medium none;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: #FFFFFF !important;
+  height: 40px;
+  padding-left: 6px !important;
+  padding-right: 6px !important;
 }
 
 .multiselect {
@@ -271,15 +271,15 @@ section {
 }
 
 #search-field {
-    background-color: #FFFFFF;
-    border: medium none;
-    border-radius: 0;
-    display: block;
-    font-family: Tahoma,Geneva,sans-serif;
-    font-size: 14px;
-    font-weight: bold;
-    height: 40px;
-    padding-left: 8px !important;
+  background-color: #FFFFFF;
+  border: medium none;
+  border-radius: 0;
+  display: block;
+  font-family: Tahoma,Geneva,sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  height: 40px;
+  padding-left: 8px !important;
 }
 
 .input-group {
@@ -330,7 +330,7 @@ section {
   display: none;
   float: left;
 }
-  
+
 #vocabulary-list {
   background-color: #ffffff !important;
   display: inline-block;
@@ -439,7 +439,7 @@ section {
   position: absolute;
   left: 0px;
   margin-left: 200px;
-  
+
 }
 
 .credits {
@@ -743,11 +743,11 @@ ul.nav-tabs > li {
 .nav-tabs > li {
   width: 33%;
 }
-  
+
 #alpha {
   width: 34% !important;
 }
-  
+
 
 .nav-tabs > li > a:hover {
   background-color: #ffffff !important;
@@ -864,17 +864,17 @@ p {
 }
 
 a:link,a:visited,a:active,a:hover,a:focus {
-	/* Improves link handling by removing focus borders. Sorry keyboard users! */
-	text-decoration: none;
-	border: 0;
-	outline: none;
+  /* Improves link handling by removing focus borders. Sorry keyboard users! */
+  text-decoration: none;
+  border: 0;
+  outline: none;
 }
 
 a:hover {
-	text-decoration: underline;
-	/* All text links have underlining when hovered. */
+  text-decoration: underline;
+  /* All text links have underlining when hovered. */
 }
-  
+
 #service-logo {
   display: none;
   max-width: 450px;
@@ -884,7 +884,7 @@ a:hover {
  * https://code.google.com/p/chromium/issues/detail?id=336476
  ************************************/
 
-body {
+body, .versal, h1, h2, p, .versal-bold {
   -webkit-animation-delay: 0.1s;
   -webkit-animation-name: fontfix;
   -webkit-animation-duration: 0.1s;
@@ -918,11 +918,11 @@ body {
 }
 
 @media (max-width: 640px) {
-  
+
   .content {
     overflow: hidden;
   }
-  
+
   .search-vocab-text{
     display: none !important;
   }
@@ -941,7 +941,7 @@ body {
   .navbar-form {
     max-width: 300px !important;
   }
-  
+
   .feedback-logo, .about-logo {
     left: 10px !important;
   }
@@ -960,7 +960,7 @@ body {
   .ui-autocomplete {
     max-width: 240px !important;
   }
-  
+
   .content {
     margin-left: 300px;
   }
@@ -968,7 +968,7 @@ body {
   #sidebar {
     width: 270px !important;
   }
-  
+
   .property-divider {
     width: 17%;
   }
@@ -1004,15 +1004,15 @@ body {
 @media (min-width: 800px) {
   section, .headerbar {
   }
-  
+
   .ui-autocomplete {
     max-width: 250px !important;
   }
- 
+
   .nav > li > a {
     padding: 10px 10px !important;
   }
-   
+
   .input-group {
     max-width: 300px !important;
   }
@@ -1025,11 +1025,11 @@ body {
     position: absolute;
     display: normal !important;
   }
-  
+
   .feedback-box, #about {
     width: 500px !important;
   }
- 
+
   .content {
     margin-left: 330px;
   }
@@ -1037,7 +1037,7 @@ body {
   #sidebar {
     width: 310px !important;
   }
-  
+
   .property-divider {
     width: 17%;
   }
@@ -1067,7 +1067,7 @@ body {
   .right-box {
     display: inline-block;
   }
-  
+
   .feedback-box {
     width: 600px !important;
   }
@@ -1075,7 +1075,7 @@ body {
   .ui-autocomplete {
     max-width: 310px !important;
   }
-  
+
   .content {
     margin-left: 430px;
   }
@@ -1090,19 +1090,19 @@ body {
     display: inline-block;
     width: 605px !important;
   }
-  
+
   #sidebar {
     width: 400px !important;
   }
-  
+
   h1 {
     font-size: 27px !important;
   }
-  
+
   li, .versal, .versal-bold, p, .search-result > .prefLabel{
     font-size: 16px !important;
   }
-  
+
   .search-result > div > span.uri-input-box {
     font-size: 14px !important;
   }
@@ -1110,7 +1110,7 @@ body {
 }
 
 @media (min-width: 1520px) {
-  
+
   #vocabulary-list {
     position: relative;
     display: inline-block;
@@ -1121,7 +1121,7 @@ body {
     margin-left: 0 !important;
     width: 240px !important;
   }
-  
+
   #sidebar {
     width: 400px !important;
   }
