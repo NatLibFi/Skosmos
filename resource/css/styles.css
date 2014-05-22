@@ -926,6 +926,11 @@ body {
   .search-vocab-text{
     display: none !important;
   }
+
+  #service-logo {
+    display: hidden;
+  }
+
 }
 
 @media (max-width: 800px) {
@@ -938,7 +943,7 @@ body {
   }
   
   #service-logo {
-    display: none !important;
+    display: inline !important;
   }
 
   .feedback-logo, .about-logo {
