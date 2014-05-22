@@ -246,6 +246,7 @@ class Model
    * @param integer $offset used for offsetting the result set eg. '20'
    * @param integer $limit upper count for the search results eg. '10'
    * @param string $ui_lang used for determining if the searchresult isn't the same language as the ui.
+   * @return array array with keys 'count' and 'results'
    */
   public function searchConceptsAndInfo($term, $vocids, $lang, $offset = 0, $limit = 20, $ui_lang=null)
   {
@@ -253,7 +254,8 @@ class Model
     if ($vocids === null) $vocids = array();
     if (!is_array($vocids)) $vocids = array($vocids);
 
-    $hits = $this->searchConcepts($term, $vocids, $lang, null, null, null, $offset, $limit);
+    $allhits = $this->searchConcepts($term, $vocids, $lang, null, null, null, 0, 0);
+    $hits = array_slice($allhits, $offset, $limit);
 
     $uris = array();
     foreach ($hits as $hit)
@@ -279,7 +281,7 @@ class Model
         $ret[$idx]->setFoundBy($hit['prefLabel'] . ' (' . $hit['lang'] . ')', 'lang');
     }
 
-    return $ret;
+    return array('count' => sizeof($allhits), 'results' => $ret);
   }
 
   /**
