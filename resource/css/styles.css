@@ -942,10 +942,6 @@ body {
     max-width: 300px !important;
   }
   
-  #service-logo {
-    display: inline !important;
-  }
-
   .feedback-logo, .about-logo {
     left: 10px !important;
   }
@@ -997,6 +993,12 @@ body {
     display: none;
   }
 
+}
+
+@media (min-width: 720px) {
+  #service-logo {
+    display: inline !important;
+  }
 }
 
 @media (min-width: 800px) {
