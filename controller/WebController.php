@@ -286,7 +286,6 @@ class WebController extends Controller
     if ($fromVocab != null)
       $message = 'Feedback from vocab: ' . strtoupper($fromVocab) . "<br />" . $message;
     $subject = SERVICE_NAME . " feedback";
-    $subject = "Skosmos feedback";
     $headers = "MIME-Version: 1.0″ . '\r\n";
     $headers .= "Content-type: text/html; charset=UTF-8" . "\r\n";
     $headers .= "From: $fromName <$fromEmail>" . "\r\n" . 'X-Mailer: PHP/' . phpversion();
