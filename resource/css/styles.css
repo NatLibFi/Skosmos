@@ -928,7 +928,7 @@ body {
   }
 
   #service-logo {
-    display: hidden !important;
+    display: none !important;
   }
 
 }
