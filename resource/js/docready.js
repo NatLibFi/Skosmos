@@ -31,7 +31,7 @@ $(function() { // DOCUMENT READY
       var $property = $($properties[i]);
       if ($property.height() > 24) {
         $property.addClass('shortened-property');
-        var count = $property.children('.versal').length;
+        var count = $property.children('.value').length;
         var uri = $property.siblings('.prefLabel')[0].href;
         var shortened = '<a href="' + uri +'" class="versal shortened-symbol" style="">... (' + count +')</a>';
         $property.append(shortened);

@@ -29,7 +29,7 @@
           {% if propval.SubMembers %} {# if property is a group concept that has sub properties #}
             {% for sub_member in propval.SubMembers %}
               {% if previous != sub_member.label %}
-              <span class="versal">{{ sub_member.label }}</span>{% if not outerLast %}<span class="versal">,</span>{% endif %}
+              <span class="versal value">{{ sub_member.label }}</span>{% if not outerLast %}<span class="versal">,</span>{% endif %}
               {% endif %}
               {% set previous = sub_member.label %}
             {% endfor %}
@@ -38,15 +38,15 @@
               {% spaceless %}
                 {% if propval.label %}
                   {% if propval.exvocab and propval.exvocab != propval.vocab %}{# if the property is located in a another vocabulary #}
-                  <span class="versal">{{ propval.label }}</span>
+                  <span class="versal value">{{ propval.label }}</span>
                   {% else %}
-                  <span class="versal">{{ propval.label|trans }}</span>
+                  <span class="versal value">{{ propval.label|trans }}</span>
                   {% endif %}
                   {% if propval.lang and propval.lang != lang %}<span class="versal"> ({{ propval.lang }})</span>{% endif %}{% if not loop.last %}<span class="versal">,</span>{% endif %}
                 {% endif %}
               {% endspaceless %}
               {% else %} {# Literals (no URI), eg. alternative labels as properties #}
-                  <span class="versal">{{ propval.label }}{% if not loop.last %},{% endif %}</span>
+                  <span class="versal value">{{ propval.label }}{% if not loop.last %},{% endif %}</span>
               {% endif %}
           {% endif %}
       {% endfor %}
@@ -60,7 +60,7 @@
       </span>
       {% for lang,labels in concept.foreignPrefLabels %}
         {% for label in labels %}
-        <span class="versal">{{ label }} ({{ lang }})</span>
+        <span class="versal proplabel">{{ label }} ({{ lang }})</span>
         {% endfor %}{% if loop.last == false %}<span class="versal">,</span>{% endif %}
       {% endfor %}
     </div>
