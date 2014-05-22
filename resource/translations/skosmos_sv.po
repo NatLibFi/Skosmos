@@ -5,9 +5,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ONKI Light\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-21 12:35+0200\n"
+"POT-Creation-Date: 2014-05-22 11:56+0200\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Henri Ylikotila <henri.ylikotila@helsinki.fi>\n"
+"Last-Translator: Osma Suominen <osma.suominen@helsinki.fi>\n"
 "Language-Team: ONKI Team <onki-posti@helsinki.fi>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
@@ -20,526 +20,528 @@ msgstr ""
 "X-Poedit-SearchPath-1: controller\n"
 "X-Poedit-SearchPath-2: model\n"
 
-#: controller/WebController.php:199
-#: controller/WebController.php:448
-#: controller/WebController.php:585
-msgid "language_changed_message"
-msgstr "Språket som du valt stöds inte i den här vokabulären. Därför visas sidan inte på svenska."
-
 #: controller/Controller.php:58
 msgid "in_this_language"
 msgstr "på svenska"
 
-#: /tmp/cache/537c736e31c79/97/fc/fe9ee9e79eac96aeebd68e420383.php:42
+#: controller/WebController.php:200
+#: controller/WebController.php:452
+#: controller/WebController.php:589
+msgid "language_changed_message"
+msgstr "Språket som du valt stöds inte i den här vokabulären. Därför visas sidan inte på svenska."
+
+#: /tmp/cache/537dbbbfcf2fc/c7/6d/f3098cb2d6991a19392e19d5e3f9.php:42
 msgid "404 Error: The page %requested_page% cannot be found."
 msgstr "Fel 404: Sidan %requested_page% finns inte."
 
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:157
-#: /tmp/cache/537c736e31c79/64/b0/1fed2b7871473f4385aa3ea67142.php:46
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:157
+#: /tmp/cache/537dbbbfcf2fc/bd/18/082f84f6ac0787f1638aac1a519c.php:46
 msgid "About"
 msgstr "Information"
 
-#: /tmp/cache/537c736e31c79/9b/ab/ae70f1ef370d0c5debac44a5d54f.php:47
+#: /tmp/cache/537dbbbfcf2fc/0e/21/616815bd3942b86671f42d3ed4b2.php:47
 msgid "All"
 msgstr "Visar alla"
 
-#: /tmp/cache/537c736e31c79/1e/99/74447de48d79a50416955251e104.php:228
+#: /tmp/cache/537dbbbfcf2fc/bd/1b/8ea01a92d3d28ecbc47efa229ca9.php:228
 msgid "Alpha-nav"
 msgstr "Alfabetisk"
 
-#: /tmp/cache/537c736e31c79/5a/40/5dfb9870017ad10a424ef3d496d0.php:155
-msgid "Alternate terms"
-msgstr "Ersatta termer"
-
-#: /tmp/cache/537c736e31c79/5a/40/5dfb9870017ad10a424ef3d496d0.php:141
-msgid "Concept counts by language"
-msgstr "Begrepp på olika språk"
-
-#: /tmp/cache/537c736e31c79/5a/40/5dfb9870017ad10a424ef3d496d0.php:147
-msgid "Concept language"
-msgstr "Språk"
-
-#: /tmp/cache/537c736e31c79/5a/40/5dfb9870017ad10a424ef3d496d0.php:127
-msgid "Concepts"
-msgstr "Begrepp"
-
-#: /tmp/cache/537c736e31c79/7d/37/1bb159eade92e1211ed0dafe5b12.php:71
-msgid "Contact us!"
-msgstr "Ta kontakt!"
-
-#: /tmp/cache/537c736e31c79/9b/ab/ae70f1ef370d0c5debac44a5d54f.php:35
-msgid "Displaying the first"
-msgstr "Visar de första"
-
-#: /tmp/cache/537c736e31c79/5a/40/5dfb9870017ad10a424ef3d496d0.php:214
-msgid "Download"
-msgstr "Ladda ned"
-
-#: /tmp/cache/537c736e31c79/7d/37/1bb159eade92e1211ed0dafe5b12.php:126
-msgid "E-mail:"
-msgstr "E-postadress:"
-
-#: /tmp/cache/537c736e31c79/7d/37/1bb159eade92e1211ed0dafe5b12.php:130
-msgid "Enter your e-mail address"
-msgstr "Skriv din e-postadress"
-
-#: /tmp/cache/537c736e31c79/7d/37/1bb159eade92e1211ed0dafe5b12.php:122
-msgid "Enter your name"
-msgstr "Skriv ditt namn"
-
-#: /tmp/cache/537c736e31c79/6c/c2/116e4eedd7311501f4433bc5287e.php:91
-msgid "Error: Requested vocabulary \"%vocab_id%\" not found!"
-msgstr "Fel: Vokabulären \"%vocab_id%\" finns inte."
-
-#: /tmp/cache/537c736e31c79/1e/99/74447de48d79a50416955251e104.php:416
-msgid "Error: the vocabulary does not contain terms beginning with \"%letter%\"!"
-msgstr "Vokabulären innehåller inga termer som börjar med \"%letter%\"!"
-
-#: /tmp/cache/537c736e31c79/7d/37/1bb159eade92e1211ed0dafe5b12.php:34
-#: /tmp/cache/537c736e31c79/7d/37/1bb159eade92e1211ed0dafe5b12.php:54
-msgid "Feedback"
-msgstr "Respons"
-
-#: /tmp/cache/537c736e31c79/7d/37/1bb159eade92e1211ed0dafe5b12.php:65
-msgid "Feedback has been sent!"
-msgstr "Respons har skickats!"
-
-#: /tmp/cache/537c736e31c79/43/08/7c7dfa02af3dda30b6dab06908e0.php:36
-msgid "Group index"
-msgstr "Gruppindex"
-
-#: /tmp/cache/537c736e31c79/1e/99/74447de48d79a50416955251e104.php:260
-msgid "Group-nav"
-msgstr "Gruppindex"
-
-#: /tmp/cache/537c736e31c79/5a/40/5dfb9870017ad10a424ef3d496d0.php:159
-msgid "Hidden terms"
-msgstr "Dolda termer"
-
-#: /tmp/cache/537c736e31c79/1e/99/74447de48d79a50416955251e104.php:242
-msgid "Hier-nav"
-msgstr "Hierarki"
-
-#: /tmp/cache/537c736e31c79/bb/38/04c50e1460d9c064ae7df13a27ae.php:145
-msgid "Language literal"
-msgstr "På svenska"
-
-#: /tmp/cache/537c736e31c79/9b/ab/ae70f1ef370d0c5debac44a5d54f.php:31
-msgid "Loading"
-msgstr "Laddar"
-
-#: /tmp/cache/537c736e31c79/9b/ab/ae70f1ef370d0c5debac44a5d54f.php:27
-msgid "Loading more items"
-msgstr "Laddar mera resultat"
-
-#: /tmp/cache/537c736e31c79/7d/37/1bb159eade92e1211ed0dafe5b12.php:134
-msgid "Message:"
-msgstr "Meddelande:"
-
-#: /tmp/cache/537c736e31c79/7d/37/1bb159eade92e1211ed0dafe5b12.php:118
-msgid "Name:"
-msgstr "Namn:"
-
-#: /tmp/cache/537c736e31c79/9b/ab/ae70f1ef370d0c5debac44a5d54f.php:23
-msgid "No results"
-msgstr "Inga sökresult"
-
-#: /tmp/cache/537c736e31c79/29/3b/ef6ded62aeb5d8f31efa19ce2117.php:32
-msgid "No vocabularies on the server!"
-msgstr "Inga vokabulärer på servern!"
-
-#: /tmp/cache/537c736e31c79/7d/37/1bb159eade92e1211ed0dafe5b12.php:83
-msgid "Not to a specific vocabulary"
-msgstr "Ingen specifik vokabulär"
-
-#: /tmp/cache/537c736e31c79/5a/40/5dfb9870017ad10a424ef3d496d0.php:151
-msgid "Preferred terms"
-msgstr "Huvudtermer"
-
-#: /tmp/cache/537c736e31c79/64/b0/1fed2b7871473f4385aa3ea67142.php:63
-msgid "SKOSmos layout designed by Hahmo"
-msgstr "SKOSmos layout designed by Hahmo"
-
-#: /tmp/cache/537c736e31c79/bb/38/04c50e1460d9c064ae7df13a27ae.php:197
-msgid "Search"
-msgstr "Sök"
-
-#: /tmp/cache/537c736e31c79/bb/38/04c50e1460d9c064ae7df13a27ae.php:185
-msgid "Search language: any"
-msgstr "På alla språk"
-
-#: /tmp/cache/537c736e31c79/bb/38/04c50e1460d9c064ae7df13a27ae.php:80
-msgid "Search within this vocabulary:"
-msgstr "Sök i denna vokabulär"
-
-#: /tmp/cache/537c736e31c79/7d/37/1bb159eade92e1211ed0dafe5b12.php:139
-msgid "Send feedback"
-msgstr "Sänd respons"
-
-#: /tmp/cache/537c736e31c79/d5/c6/eaee0760e4d054fa72e35e3c6d13.php:37
-msgid "The search provided no results."
-msgstr "Inga sökresultat."
-
-#: /tmp/cache/537c736e31c79/9b/ab/ae70f1ef370d0c5debac44a5d54f.php:59
-msgid "Value is required and can not be empty"
-msgstr "Fältet är obligatoriskt"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:159
-msgid "Vocabularies"
-msgstr "Finländsk tesaurus- och ontologiservice"
-
-#: /tmp/cache/537c736e31c79/29/3b/ef6ded62aeb5d8f31efa19ce2117.php:39
-msgid "Vocabularies on the server"
-msgstr "Tillgängliga tesaurusar och ontologier"
-
-#: /tmp/cache/537c736e31c79/5a/40/5dfb9870017ad10a424ef3d496d0.php:58
-msgid "Vocabulary information"
-msgstr "Information om vokabulären"
-
-#: /tmp/cache/537c736e31c79/07/37/699cc0f7270e411a620f8d8c60a6.php:53
-msgid "concepts within the group"
-msgstr "Begrepp inom gruppen"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:95
-msgid "dc11:creator"
-msgstr "Författare"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:97
-msgid "dc11:description"
-msgstr "Beskrivning"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:99
-msgid "dc11:license"
-msgstr "Licens"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:91
-msgid "dc11:publisher"
-msgstr "Utgivare"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:93
-msgid "dc11:relation"
-msgstr "Relation"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:87
-msgid "dc11:source"
-msgstr "Källa"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:135
-msgid "dc11:source_help"
-msgstr "Källa för begreppets beskrivning."
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:89
-msgid "dc11:title"
-msgstr "Namn"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:71
-msgid "dc:contributor"
-msgstr "Medförfattare"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:69
-msgid "dc:creator"
-msgstr "Författare"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:79
-msgid "dc:date"
-msgstr "Datum"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:67
-msgid "dc:description"
-msgstr "Beskrivning"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:85
-msgid "dc:isReplacedBy"
-msgstr "ersatt av begrepp"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:83
-msgid "dc:language"
-msgstr "Språk"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:75
-msgid "dc:license"
-msgstr "Licens"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:77
-msgid "dc:publisher"
-msgstr "Utgivare"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:81
-msgid "dc:relation"
-msgstr "Relation"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:73
-msgid "dc:rights"
-msgstr "Rättigheter"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:65
-msgid "dc:subject"
-msgstr "Ämnesområde"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:63
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:111
-msgid "dc:title"
-msgstr "Namn"
-
-#: /tmp/cache/537c736e31c79/d5/c6/eaee0760e4d054fa72e35e3c6d13.php:120
-msgid "deprecated"
-msgstr "Begreppet har tagits ur bruk."
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:153
-msgid "en"
-msgstr "på engelska"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:149
-msgid "fi"
-msgstr "på finska"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:147
-msgid "foaf:homepage"
-msgstr "Hemsida"
-
-#: /tmp/cache/537c736e31c79/d5/c6/eaee0760e4d054fa72e35e3c6d13.php:330
-msgid "foreign prefLabel help"
-msgstr "Termer för begreppet på andra språk."
-
-#: /tmp/cache/537c736e31c79/9b/ab/ae70f1ef370d0c5debac44a5d54f.php:51
-msgid "from all"
-msgstr "från alla"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:59
-msgid "isothes:ConceptGroup"
-msgstr "Begreppsgrupp"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:61
-msgid "isothes:ThesaurusArray"
-msgstr "Indelning av syskonbegrepp"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:155
-msgid "la"
-msgstr "på latinska"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:113
-msgid "onki:memberOf"
-msgstr "Hör till gruppen"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:145
-msgid "onki:memberOf_help"
-msgstr "Grupp, som begreppet hör till."
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:109
-msgid "owl:sameAs"
-msgstr "Motsvarande begrepp"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:107
-msgid "owl:versionInfo"
-msgstr "Version"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:101
-msgid "rdf:type"
-msgstr "Typ"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:133
-msgid "rdf:type_help"
-msgstr "Typ"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:105
-msgid "rdfs:comment"
-msgstr "Anmärkning"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:103
-msgid "rdfs:label"
-msgstr "Term"
-
-#: /tmp/cache/537c736e31c79/9b/ab/ae70f1ef370d0c5debac44a5d54f.php:43
-msgid "results displayed"
-msgstr "visade resultat"
-
-#: /tmp/cache/537c736e31c79/d5/c6/eaee0760e4d054fa72e35e3c6d13.php:26
-msgid "results for"
-msgstr "sökresultat för"
-
-#: /tmp/cache/537c736e31c79/9b/ab/ae70f1ef370d0c5debac44a5d54f.php:39
-msgid "results:"
-msgstr "resultat:"
-
-#: /tmp/cache/537c736e31c79/9b/ab/ae70f1ef370d0c5debac44a5d54f.php:55
-msgid "selected"
-msgstr "valda"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:21
-msgid "skos:Collection"
-msgstr "Samling"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:19
-msgid "skos:Concept"
-msgstr "Begrepp"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:37
-msgid "skos:altLabel"
-msgstr "Ersatta termer"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:125
-msgid "skos:altLabel_help"
-msgstr "Begreppets alternativa skrivsätt."
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:27
-msgid "skos:broadMatch"
-msgstr "Vidare motsvarande begrepp"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:141
-msgid "skos:broadMatch_help"
-msgstr "Motsvarande vidare begrepp i en annan vokabulär."
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:23
-msgid "skos:broader"
-msgstr "Överordnat begrepp"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:117
-msgid "skos:broader_help"
-msgstr "Överordnat begrepp"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:43
-msgid "skos:closeMatch"
-msgstr "Nästan motsvarande begrepp"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:139
-msgid "skos:closeMatch_help"
-msgstr "Nästan motsvarande begrepp i en annan vokabulär."
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:57
-msgid "skos:definition"
-msgstr "Definition"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:131
-msgid "skos:definition_help"
-msgstr "Uttömmande beskrivning av begreppets betydelse."
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:41
-msgid "skos:exactMatch"
-msgstr "Motsvarande begrepp"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:137
-msgid "skos:exactMatch_help"
-msgstr "Till sin betydelse samma begrepp."
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:51
-msgid "skos:hasTopConcept"
-msgstr "Har översta begrepp"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:39
-msgid "skos:hiddenLabel"
-msgstr "Dolda begrepp"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:47
-msgid "skos:inScheme"
-msgstr "Begreppets schema"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:45
-msgid "skos:member"
-msgstr "Begrepp som hör till gruppen"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:127
-msgid "skos:member_help"
-msgstr "Begrepp som hör till ämnet."
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:29
-msgid "skos:narrowMatch"
-msgstr "Snäv träff"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:143
-msgid "skos:narrowMatch_help"
-msgstr "Motsvarande snävare begrepp i en annan vokabulär."
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:25
-msgid "skos:narrower"
-msgstr "Underordnade begrepp"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:119
-msgid "skos:narrower_help"
-msgstr "Underordnade begrepp."
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:53
-msgid "skos:note"
-msgstr "Anmärkning"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:121
-msgid "skos:note_help"
-msgstr "Anmärkning om begreppet och dess användning."
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:35
-msgid "skos:prefLabel"
-msgstr "Föredragen term"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:31
-msgid "skos:related"
-msgstr "Relaterade begrepp"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:33
-msgid "skos:relatedMatch"
-msgstr "Relaterade motsvarande begrepp"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:129
-msgid "skos:related_help"
-msgstr "Begrepp nära relaterat till begreppets ämnesområde."
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:55
-msgid "skos:scopeNote"
-msgstr "Användningsanmärkning"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:123
-msgid "skos:scopeNote_help"
-msgstr "Anmärkning om begreppet och dess användning."
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:49
-msgid "skos:topConceptOf"
-msgstr "Hör till vokabulären"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:115
-msgid "skosext:partOf"
-msgstr "Är en del av"
-
-#: /tmp/cache/537c736e31c79/00/77/60cbac7fd76713d5540e9dba269c.php:151
-msgid "sv"
-msgstr "på svenska"
-
-#: /tmp/cache/537c736e31c79/5a/40/5dfb9870017ad10a424ef3d496d0.php:216
-msgid "this vocabulary as SKOS/RDF"
-msgstr "denna vokabulär i SKOS/RDF-format "
-
-#: /tmp/cache/537c736ea1080/e8/aa/9e859d808fe631752fb4cef2d308.php:102
-msgid "About page"
-msgstr "Information"
-
-#: /tmp/cache/537c736ea1080/bb/df/b7541e21be699f08ce41d883a209.php:35
+#: /tmp/cache/537dbbbfcf2fc/dc/b5/da640bf012bce1cbf6448b2bcfdd.php:35
 msgid "Alphabetical index"
 msgstr "Alfabetiskt index"
 
-#: /tmp/cache/537c736ea1080/43/d1/01a35fc3eeed9d81c3e443d7bb4b.php:646
+#: /tmp/cache/537dbbbfcf2fc/65/87/16ff348734bf9f46de7d6a75e06b.php:155
+msgid "Alternate terms"
+msgstr "Ersatta termer"
+
+#: /tmp/cache/537dbbbfcf2fc/65/87/16ff348734bf9f46de7d6a75e06b.php:141
+msgid "Concept counts by language"
+msgstr "Begrepp på olika språk"
+
+#: /tmp/cache/537dbbbfcf2fc/65/87/16ff348734bf9f46de7d6a75e06b.php:147
+msgid "Concept language"
+msgstr "Språk"
+
+#: /tmp/cache/537dbbbfcf2fc/65/87/16ff348734bf9f46de7d6a75e06b.php:127
+msgid "Concepts"
+msgstr "Begrepp"
+
+#: /tmp/cache/537dbbbfcf2fc/31/cf/f203575414177e7630c9c3fb219d.php:71
+msgid "Contact us!"
+msgstr "Ta kontakt!"
+
+#: /tmp/cache/537dbbbfcf2fc/0e/21/616815bd3942b86671f42d3ed4b2.php:35
+msgid "Displaying the first"
+msgstr "Visar de första"
+
+#: /tmp/cache/537dbbbfcf2fc/65/87/16ff348734bf9f46de7d6a75e06b.php:214
+msgid "Download"
+msgstr "Ladda ned"
+
+#: /tmp/cache/537dbbbfcf2fc/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:650
 msgid "Download this concept in SKOS format:"
 msgstr "Ladda ned detta begrepp i SKOS-format:"
 
-#: /tmp/cache/537c736ea1080/43/d1/01a35fc3eeed9d81c3e443d7bb4b.php:846
+#: /tmp/cache/537dbbbfcf2fc/31/cf/f203575414177e7630c9c3fb219d.php:126
+msgid "E-mail:"
+msgstr "E-postadress:"
+
+#: /tmp/cache/537dbbbfcf2fc/31/cf/f203575414177e7630c9c3fb219d.php:130
+msgid "Enter your e-mail address"
+msgstr "Skriv din e-postadress"
+
+#: /tmp/cache/537dbbbfcf2fc/31/cf/f203575414177e7630c9c3fb219d.php:122
+msgid "Enter your name"
+msgstr "Skriv ditt namn"
+
+#: /tmp/cache/537dbbbfcf2fc/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:862
+#: /tmp/cache/537dbbbfcf2fc/c6/7b/5e7ec0913c0ae87db77a0aa6fd76.php:91
+msgid "Error: Requested vocabulary \"%vocab_id%\" not found!"
+msgstr "Fel: Vokabulären \"%vocab_id%\" finns inte."
+
+#: /tmp/cache/537dbbbfcf2fc/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:850
 msgid "Error: term \"%term%\" not found in vocabulary!"
 msgstr "Fel: termen \"%term\" finns inte i vokabulären!"
 
-#: /tmp/cache/537c736ea1080/e8/aa/9e859d808fe631752fb4cef2d308.php:90
-msgid "Vocabularies-nav"
-msgstr "Vokabulärer"
+#: /tmp/cache/537dbbbfcf2fc/bd/1b/8ea01a92d3d28ecbc47efa229ca9.php:416
+msgid "Error: the vocabulary does not contain terms beginning with \"%letter%\"!"
+msgstr "Vokabulären innehåller inga termer som börjar med \"%letter%\"!"
 
-#: /tmp/cache/537c736ea1080/43/d1/01a35fc3eeed9d81c3e443d7bb4b.php:558
+#: /tmp/cache/537dbbbfcf2fc/31/cf/f203575414177e7630c9c3fb219d.php:34
+#: /tmp/cache/537dbbbfcf2fc/31/cf/f203575414177e7630c9c3fb219d.php:54
+msgid "Feedback"
+msgstr "Respons"
+
+#: /tmp/cache/537dbbbfcf2fc/31/cf/f203575414177e7630c9c3fb219d.php:65
+msgid "Feedback has been sent!"
+msgstr "Respons har skickats!"
+
+#: /tmp/cache/537dbbbfcf2fc/da/b9/8bbe0288495cd8be2e8abaf81a40.php:36
+msgid "Group index"
+msgstr "Gruppindex"
+
+#: /tmp/cache/537dbbbfcf2fc/bd/1b/8ea01a92d3d28ecbc47efa229ca9.php:260
+msgid "Group-nav"
+msgstr "Gruppindex"
+
+#: /tmp/cache/537dbbbfcf2fc/65/87/16ff348734bf9f46de7d6a75e06b.php:159
+msgid "Hidden terms"
+msgstr "Dolda termer"
+
+#: /tmp/cache/537dbbbfcf2fc/bd/1b/8ea01a92d3d28ecbc47efa229ca9.php:242
+msgid "Hier-nav"
+msgstr "Hierarki"
+
+#: /tmp/cache/537dbbbfcf2fc/2b/2f/1ce096ed381c7c416eb3bdf53cb7.php:145
+msgid "Language literal"
+msgstr "På svenska"
+
+#: /tmp/cache/537dbbbfcf2fc/0e/21/616815bd3942b86671f42d3ed4b2.php:31
+msgid "Loading"
+msgstr "Laddar"
+
+#: /tmp/cache/537dbbbfcf2fc/0e/21/616815bd3942b86671f42d3ed4b2.php:27
+msgid "Loading more items"
+msgstr "Laddar mera resultat"
+
+#: /tmp/cache/537dbbbfcf2fc/31/cf/f203575414177e7630c9c3fb219d.php:134
+msgid "Message:"
+msgstr "Meddelande:"
+
+#: /tmp/cache/537dbbbfcf2fc/31/cf/f203575414177e7630c9c3fb219d.php:118
+msgid "Name:"
+msgstr "Namn:"
+
+#: /tmp/cache/537dbbbfcf2fc/0e/21/616815bd3942b86671f42d3ed4b2.php:23
+msgid "No results"
+msgstr "Inga sökresultat"
+
+#: /tmp/cache/537dbbbfcf2fc/31/cf/f203575414177e7630c9c3fb219d.php:83
+msgid "Not to a specific vocabulary"
+msgstr "Ingen specifik vokabulär"
+
+#: /tmp/cache/537dbbbfcf2fc/65/87/16ff348734bf9f46de7d6a75e06b.php:151
+msgid "Preferred terms"
+msgstr "Huvudtermer"
+
+#: /tmp/cache/537dbbbfcf2fc/bd/18/082f84f6ac0787f1638aac1a519c.php:63
+msgid "SKOSmos layout designed by Hahmo"
+msgstr "Skosmos layout designed by Hahmo"
+
+#: /tmp/cache/537dbbbfcf2fc/2b/2f/1ce096ed381c7c416eb3bdf53cb7.php:197
+msgid "Search"
+msgstr "Sök"
+
+#: /tmp/cache/537dbbbfcf2fc/2b/2f/1ce096ed381c7c416eb3bdf53cb7.php:185
+msgid "Search language: any"
+msgstr "På alla språk"
+
+#: /tmp/cache/537dbbbfcf2fc/2b/2f/1ce096ed381c7c416eb3bdf53cb7.php:80
+msgid "Search within this vocabulary:"
+msgstr "Sök i denna vokabulär"
+
+#: /tmp/cache/537dbbbfcf2fc/31/cf/f203575414177e7630c9c3fb219d.php:139
+msgid "Send feedback"
+msgstr "Sänd respons"
+
+#: /tmp/cache/537dbbbfcf2fc/0e/21/616815bd3942b86671f42d3ed4b2.php:59
+msgid "Value is required and can not be empty"
+msgstr "Fältet är obligatoriskt"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:159
+msgid "Vocabularies"
+msgstr "Finländsk tesaurus- och ontologiservice"
+
+#: /tmp/cache/537dbbbfcf2fc/65/87/16ff348734bf9f46de7d6a75e06b.php:58
+msgid "Vocabulary information"
+msgstr "Information om vokabulären"
+
+#: /tmp/cache/537dbbbfcf2fc/67/a7/6c625531764646a9d3d092822c7f.php:53
+msgid "concepts within the group"
+msgstr "Begrepp inom gruppen"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:95
+msgid "dc11:creator"
+msgstr "Författare"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:97
+msgid "dc11:description"
+msgstr "Beskrivning"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:99
+msgid "dc11:license"
+msgstr "Licens"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:91
+msgid "dc11:publisher"
+msgstr "Utgivare"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:93
+msgid "dc11:relation"
+msgstr "Relation"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:87
+msgid "dc11:source"
+msgstr "Källa"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:135
+msgid "dc11:source_help"
+msgstr "Källa för begreppets beskrivning."
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:89
+msgid "dc11:title"
+msgstr "Namn"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:71
+msgid "dc:contributor"
+msgstr "Medförfattare"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:69
+msgid "dc:creator"
+msgstr "Författare"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:79
+msgid "dc:date"
+msgstr "Datum"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:67
+msgid "dc:description"
+msgstr "Beskrivning"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:85
+msgid "dc:isReplacedBy"
+msgstr "ersatt av begrepp"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:83
+msgid "dc:language"
+msgstr "Språk"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:75
+msgid "dc:license"
+msgstr "Licens"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:77
+msgid "dc:publisher"
+msgstr "Utgivare"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:81
+msgid "dc:relation"
+msgstr "Relation"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:73
+msgid "dc:rights"
+msgstr "Rättigheter"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:65
+msgid "dc:subject"
+msgstr "Ämnesområde"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:63
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:111
+msgid "dc:title"
+msgstr "Namn"
+
+#: /tmp/cache/537dbbbfcf2fc/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:388
+msgid "deprecated"
+msgstr "Begreppet har tagits ur bruk."
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:153
+msgid "en"
+msgstr "på engelska"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:149
+msgid "fi"
+msgstr "på finska"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:147
+msgid "foaf:homepage"
+msgstr "Hemsida"
+
+#: /tmp/cache/537dbbbfcf2fc/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:567
+msgid "foreign prefLabel help"
+msgstr "Termer för begreppet på andra språk."
+
+#: /tmp/cache/537dbbbfcf2fc/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:562
 msgid "foreign prefLabels"
 msgstr "Termer på andra språk"
 
-#: /tmp/cache/537c736ea1080/43/d1/01a35fc3eeed9d81c3e443d7bb4b.php:620
+#: /tmp/cache/537dbbbfcf2fc/0e/21/616815bd3942b86671f42d3ed4b2.php:51
+msgid "from all"
+msgstr "från alla"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:59
+msgid "isothes:ConceptGroup"
+msgstr "Begreppsgrupp"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:61
+msgid "isothes:ThesaurusArray"
+msgstr "Indelning av syskonbegrepp"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:155
+msgid "la"
+msgstr "på latinska"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:113
+msgid "onki:memberOf"
+msgstr "Hör till gruppen"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:145
+msgid "onki:memberOf_help"
+msgstr "Grupp, som begreppet hör till."
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:109
+msgid "owl:sameAs"
+msgstr "Motsvarande begrepp"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:107
+msgid "owl:versionInfo"
+msgstr "Version"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:101
+msgid "rdf:type"
+msgstr "Typ"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:133
+msgid "rdf:type_help"
+msgstr "Typ"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:105
+msgid "rdfs:comment"
+msgstr "Anmärkning"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:103
+msgid "rdfs:label"
+msgstr "Term"
+
+#: /tmp/cache/537dbbbfcf2fc/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:624
 msgid "replaced"
 msgstr "ersatt"
 
-#: /tmp/cache/537c736ea1080/43/d1/01a35fc3eeed9d81c3e443d7bb4b.php:93
+#: /tmp/cache/537dbbbfcf2fc/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:93
 msgid "results"
 msgstr "sökresultat"
 
-#: /tmp/cache/537c736ea1080/43/d1/01a35fc3eeed9d81c3e443d7bb4b.php:297
+#: /tmp/cache/537dbbbfcf2fc/0e/21/616815bd3942b86671f42d3ed4b2.php:43
+msgid "results displayed"
+msgstr "visade resultat"
+
+#: /tmp/cache/537dbbbfcf2fc/0e/21/616815bd3942b86671f42d3ed4b2.php:39
+msgid "results:"
+msgstr "resultat:"
+
+#: /tmp/cache/537dbbbfcf2fc/0e/21/616815bd3942b86671f42d3ed4b2.php:55
+msgid "selected"
+msgstr "valda"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:21
+msgid "skos:Collection"
+msgstr "Samling"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:19
+msgid "skos:Concept"
+msgstr "Begrepp"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:37
+msgid "skos:altLabel"
+msgstr "Ersatta termer"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:125
+msgid "skos:altLabel_help"
+msgstr "Begreppets alternativa skrivsätt."
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:27
+msgid "skos:broadMatch"
+msgstr "Vidare motsvarande begrepp"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:141
+msgid "skos:broadMatch_help"
+msgstr "Motsvarande vidare begrepp i en annan vokabulär."
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:23
+msgid "skos:broader"
+msgstr "Överordnat begrepp"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:117
+msgid "skos:broader_help"
+msgstr "Överordnat begrepp"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:43
+msgid "skos:closeMatch"
+msgstr "Nästan motsvarande begrepp"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:139
+msgid "skos:closeMatch_help"
+msgstr "Nästan motsvarande begrepp i en annan vokabulär."
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:57
+msgid "skos:definition"
+msgstr "Definition"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:131
+msgid "skos:definition_help"
+msgstr "Uttömmande beskrivning av begreppets betydelse."
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:41
+msgid "skos:exactMatch"
+msgstr "Motsvarande begrepp"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:137
+msgid "skos:exactMatch_help"
+msgstr "Till sin betydelse samma begrepp."
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:51
+msgid "skos:hasTopConcept"
+msgstr "Har översta begrepp"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:39
+msgid "skos:hiddenLabel"
+msgstr "Dolda begrepp"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:47
+msgid "skos:inScheme"
+msgstr "Begreppets schema"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:45
+msgid "skos:member"
+msgstr "Begrepp som hör till gruppen"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:127
+msgid "skos:member_help"
+msgstr "Begrepp som hör till ämnet."
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:29
+msgid "skos:narrowMatch"
+msgstr "Snäv träff"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:143
+msgid "skos:narrowMatch_help"
+msgstr "Motsvarande snävare begrepp i en annan vokabulär."
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:25
+msgid "skos:narrower"
+msgstr "Underordnade begrepp"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:119
+msgid "skos:narrower_help"
+msgstr "Underordnade begrepp."
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:53
+msgid "skos:note"
+msgstr "Anmärkning"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:121
+msgid "skos:note_help"
+msgstr "Anmärkning om begreppet och dess användning."
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:35
+#: /tmp/cache/537dbbbfcf2fc/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:299
+msgid "skos:prefLabel"
+msgstr "Föredragen term"
+
+#: /tmp/cache/537dbbbfcf2fc/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:297
 msgid "skos:prefLabel_help"
 msgstr "Skrivsätt för den föredragna termen för begreppet."
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:31
+msgid "skos:related"
+msgstr "Relaterade begrepp"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:33
+msgid "skos:relatedMatch"
+msgstr "Relaterade motsvarande begrepp"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:129
+msgid "skos:related_help"
+msgstr "Begrepp nära relaterat till begreppets ämnesområde."
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:55
+msgid "skos:scopeNote"
+msgstr "Användningsanmärkning"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:123
+msgid "skos:scopeNote_help"
+msgstr "Anmärkning om begreppet och dess användning."
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:49
+msgid "skos:topConceptOf"
+msgstr "Hör till vokabulären"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:115
+msgid "skosext:partOf"
+msgstr "Är en del av"
+
+#: /tmp/cache/537dbbbfcf2fc/b7/b8/db5433ea968c6a0d09780d91f529.php:151
+msgid "sv"
+msgstr "på svenska"
+
+#: /tmp/cache/537dbbbfcf2fc/65/87/16ff348734bf9f46de7d6a75e06b.php:216
+msgid "this vocabulary as SKOS/RDF"
+msgstr "denna vokabulär i SKOS/RDF-format "
+
+#: /tmp/cache/537dbbc06a437/25/b2/1630247ae697f3da6a5379257431.php:102
+msgid "About page"
+msgstr "Information"
+
+#: /tmp/cache/537dbbc06a437/87/96/ece724ce8233b69bd31df3eb966a.php:32
+msgid "No vocabularies on the server!"
+msgstr "Inga vokabulärer på servern!"
+
+#: /tmp/cache/537dbbc06a437/82/b0/c5f2a0e5959234d2d645cfdeb3e5.php:37
+msgid "The search provided no results."
+msgstr "Inga sökresultat."
+
+#: /tmp/cache/537dbbc06a437/87/96/ece724ce8233b69bd31df3eb966a.php:39
+msgid "Vocabularies on the server"
+msgstr "Tillgängliga tesaurusar och ontologier"
+
+#: /tmp/cache/537dbbc06a437/25/b2/1630247ae697f3da6a5379257431.php:90
+msgid "Vocabularies-nav"
+msgstr "Vokabulärer"
+
+#: /tmp/cache/537dbbc06a437/82/b0/c5f2a0e5959234d2d645cfdeb3e5.php:26
+msgid "results for"
+msgstr "sökresultat för"
 
 #~ msgid "Search from all vocabularies:"
 #~ msgstr "Sök i alla vokabulärer:"
