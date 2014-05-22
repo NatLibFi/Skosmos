@@ -6,4 +6,5 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^rest/v1/(.*)$ rest.php/$1 [L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond $0 !^resource/
 RewriteRule ^(.*)$ index.php/$1 [L] 
