@@ -876,7 +876,7 @@ a:hover {
 }
   
 #service-logo {
-  display: inline-block;
+  display: none;
   max-width: 450px;
 }
 
