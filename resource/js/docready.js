@@ -375,6 +375,7 @@ $(function() { // DOCUMENT READY
 
   $('.property-mouseover').tooltip().on('click', 
       function() {
+        $.each($('.tooltip'), function(index, value) { $(value).siblings('.property-mouseover').tooltip('hide'); });
         if ($(this).siblings('.tooltip').length === 0)
           $(this).tooltip('show');
         else
@@ -392,6 +393,7 @@ $(function() { // DOCUMENT READY
   // Generates property helpers as p elements or removes the helper text if it's clicked again.
   $(document).on('click','.property-click',
       function(event) {
+        $.each($('.tooltip'), function(index, value) { $(value).siblings('.property-mouseover').tooltip('hide'); });
         var $property = $(this);
         if ($property.children('.tooltip').length === 0)
           $property.children('.property-mouseover').tooltip('show');
