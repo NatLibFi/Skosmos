@@ -335,8 +335,9 @@ class WebController extends Controller
     // convert to vocids array to support multi-vocabulary search
     $vocids = $vocabs !== null ? explode(' ', $vocabs) : null;
 
-    $counts = count($this->model->searchConcepts($sterm, $vocids, $search_lang, null, null, null, 0, 0));
-    $search_results = $this->model->searchConceptsAndInfo($sterm, $vocids, $search_lang, $offset);
+    $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocids, $search_lang, $offset);
+    $counts = $count_and_results['count'];
+    $search_results = $count_and_results['results'];
     $uri_parts = $_SERVER['REQUEST_URI'];
     $vocabList = $this->model->getVocabularyList();
 
@@ -388,8 +389,9 @@ class WebController extends Controller
     $term = trim($term); // surrounding whitespace is not considered significant
     $sterm = strpos($term, "*") === FALSE ? $term . "*" : $term; // default to prefix search
     try {
-      $counts = count($this->model->searchConcepts($sterm, $vocab_id, $search_lang, null, null, null, 0, 0));
-      $search_results = $this->model->searchConceptsAndInfo($sterm, $vocab_id, $search_lang, $offset, 20, $lang);
+      $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocab_id, $search_lang, $offset, 20, $lang);
+      $counts = $count_and_results['count'];
+      $search_results = $count_and_results['results'];
     } catch (Exception $e) {
       header("HTTP/1.0 404 Not Found");
       if (LOG_CAUGHT_EXCEPTIONS)
