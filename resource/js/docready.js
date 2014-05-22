@@ -45,7 +45,7 @@ $(function() { // DOCUMENT READY
   // kills the autocomplete after a form submit so we won't have to wait for the ajax to complete.
   $('.navbar-form').submit(
     function(event) {  
-      $('#search-field').autocomplete('option','disabled');
+      $('#search-field').autocomplete('option','disabled', 'true');
     }
   );
 
