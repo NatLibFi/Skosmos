@@ -65,7 +65,7 @@
           <table class="table search-results-property-table{% if concept.type == 'skosext:DeprecatedConcept' %} deprecated{% endif %}">
           {% if concept.type == 'skosext:DeprecatedConcept' %}<h2 class="deprecated-alert">{% trans %}deprecated{% endtrans %}</h2>{% endif %}
           {% for property in concept.properties %} {# loop through ConceptProperty objects #}
-            <tr><td><span class="property-click versal{% if property.type == 'rdf:type' %}-bold{% endif %}" >{{ property.label|upper }}<img class='property-hover' src="{{ path_fix }}resource/pics/info.gif"><span class="versal property-mouseover" title="{{ property.description }}"></span></span></td><td><ul>
+            <tr><td><span class="property-click versal{% if property.type == 'rdf:type' %}-bold{% endif %}" >{{ property.label|upper }}{% if not (property.type in property.description and '_help' in property.description) %}<img class='property-hover' src="{{ path_fix }}resource/pics/info.gif"><span class="versal property-mouseover" title="{{ property.description }}"></span>{% endif %}</span></td><td><ul>
             {% for propval in property.values %} {# loop through ConceptPropertyValue objects #}
                 {% if propval.uri and propval.type != 'rdf:type' %} {# resources with URI #}
                 <li>
