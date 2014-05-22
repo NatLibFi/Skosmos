@@ -25,6 +25,7 @@ $(function() { // DOCUMENT READY
   var vocabSelectionString = readCookie('SKOSMOS_SELECTED') ? readCookie('SKOSMOS_SELECTED') : '';
   $('#selected-vocabs').val(vocabSelectionString);
 
+  // Shortens the properties that don't fit on one row on the search result view.
   function shortenProperties() {
     $properties = $('.property');
     for (var i = 0; i < $properties.length; i++) {
@@ -40,6 +41,14 @@ $(function() { // DOCUMENT READY
   }
 
   shortenProperties();
+
+  // kills the autocomplete after a form submit so we won't have to wait for the ajax to complete.
+  $('.navbar-form').submit(
+    function(event) {  
+      $('#search-field').autocomplete('option','disabled');
+    }
+  );
+
 
   /*
    * Moving the sidenav scrollbar towards the current concept. Aiming the current
