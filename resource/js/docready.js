@@ -442,6 +442,8 @@ $(function() { // DOCUMENT READY
   
   // Setting the language parameters according to the cookie if found.
   var search_lang = readCookie('SKOSMOS_SEARCH_LANG');
+  if (search_lang) 
+    $('#lang-input')[0].value = search_lang;
   
   // taking the url parameters given by the controller 
   // into parts used for determining if we are on the search listings
