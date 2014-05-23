@@ -1064,6 +1064,10 @@ body, .versal, h1, h2, p, .versal-bold {
     width: 1240px !important;
   }
 
+  .welcome-box, .right-box {
+    width: 220px !important;
+  }
+
   .right-box {
     display: inline-block;
   }
@@ -1115,6 +1119,10 @@ body, .versal, h1, h2, p, .versal-bold {
     position: relative;
     display: inline-block;
     width: 710px !important;
+  }
+
+  .right-box {
+    width: 240px !important;
   }
 
   .welcome-box {
