@@ -334,7 +334,8 @@ class WebController extends Controller
     $vocabs = !empty($_GET['vocabs']) ? $_GET['vocabs'] : null; # optional
     // convert to vocids array to support multi-vocabulary search
     $vocids = $vocabs !== null ? explode(' ', $vocabs) : null;
-
+    
+    $this->twig->addGlobal("SearchLanguage", $search_lang);
     $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocids, $search_lang, $offset);
     $counts = $count_and_results['count'];
     $search_results = $count_and_results['results'];
@@ -389,6 +390,7 @@ class WebController extends Controller
     $term = trim($term); // surrounding whitespace is not considered significant
     $sterm = strpos($term, "*") === FALSE ? $term . "*" : $term; // default to prefix search
     try {
+      $this->twig->addGlobal("SearchLanguage", $search_lang);
       $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocab_id, $search_lang, $offset, 20, $lang);
       $counts = $count_and_results['count'];
       $search_results = $count_and_results['results'];

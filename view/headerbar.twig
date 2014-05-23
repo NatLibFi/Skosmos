@@ -24,8 +24,7 @@
     </select>
   {% endif %}
   <form class="navbar-form" role="search" name="text-search" action="{{ path_fix }}{% if vocab_id is defined %}{{ vocab_id }}/{% endif %}{{ lang }}/search">
-
-    <input style="display: none" name="lang" value="{{ lang }}" id="lang-input">
+    <input style="display: none" name="lang" value="{% if SearchLanguage %}{{ SearchLanguage }}{% else %}{{ lang }}{% endif %}" id="lang-input">
     <div class="input-group">
       <div class="input-group-btn">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="lang-dropdown-toggle">{% trans "Language literal" %}</button>
@@ -44,13 +43,6 @@
       <div class="input-group-btn">
         <button id="search-all-button" type="submit" class="btn btn-primary">{% trans "Search" %}</button>
       </div>
-    </div>
-    <div id="search-from-all-vocabularies-radio-buttons">
-      <input type="radio" name="all" id="all-languages-false" value="0"
-      onClick="createCookie('SKOSMOS_SEARCH_ALL', this.value , 365);" />
-      <input type="radio"
-      id="all-languages-true" name="all" value="1"
-      onClick="createCookie('SKOSMOS_SEARCH_ALL', this.value , 365);" />
     </div>
     {% if front_page or global_search %}<input id="selected-vocabs" type="text" name="vocabs">{% endif %}
   </form>
