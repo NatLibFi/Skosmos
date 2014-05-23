@@ -830,6 +830,10 @@ a.navigation-font {
   color: black;
 }
 
+.multiselect span, .multiselect a {
+  font-family: 'Fira Sans';
+}
+
 .topbar a.navigation-font {
   color: #394554 !important;
 }
