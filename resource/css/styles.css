@@ -834,7 +834,7 @@ a.navigation-font {
   color: black;
 }
 
-.multiselect span, .multiselect a {
+.multiselect span, .multiselect a, .dropdown-toggle, #search-all-button {
   font-family: 'Fira Sans';
 }
 
