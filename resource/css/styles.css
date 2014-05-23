@@ -555,6 +555,10 @@ tr {
   background-color: #ffffff;
 }
 
+.download-links {
+  margin-bottom: 10px;
+}
+
 /* alerts 
  ****************************/
 .alert {
