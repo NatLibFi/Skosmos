@@ -910,19 +910,13 @@ body, .versal, h1, h2, p, .versal-bold {
 
 /* mediaquery
  ***********************************/
-@media (max-width: 400px) {
-  #navi1 {
-    display: none !important;
-  }
-}
-
-@media (max-width: 500px) {
+@media (max-width: 390px) {
   #navi4 {
     display: none !important;
   }
 }
 
-@media (max-width: 550px) {
+@media (max-width: 480px) {
   #navi3 {
     display: none !important;
   }
