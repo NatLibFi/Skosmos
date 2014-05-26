@@ -1006,6 +1006,10 @@ body, .versal, h1, h2, p, .versal-bold {
     margin: 0 !important;
   }
 
+  .headerbar {
+    width: 93% !important;
+  }
+
   .content {
     overflow: hidden;
   }
@@ -1112,6 +1116,8 @@ body, .versal, h1, h2, p, .versal-bold {
 
   .right-box {
     display: inline-block;
+    top: 0 !important;
+    left: auto !important;
   }
 
   .feedback-box, #about {
