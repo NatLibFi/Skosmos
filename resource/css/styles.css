@@ -1095,7 +1095,8 @@ body, .versal, h1, h2, p, .versal-bold {
   #vocabulary-list {
     position: absolute;
     left: 375px;
-    width: auto !important;
+    width: auto;
+    width: calc(100% - 375px) !important;
   }
 
   h1 {
