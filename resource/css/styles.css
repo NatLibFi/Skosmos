@@ -347,9 +347,12 @@ border: 1px solid #EDEDED;
 }
 
 .vocabularies {
-  margin-top: 15px;
   padding: 0 10px;
 }
+
+.vocabularies > table > tbody > tr > th {
+  padding: 0 !important;
+} 
 
 .vocabularies > table > tbody > tr > td,  .vocabularies > table > tbody > tr > td > a {
   padding-left: 0;
