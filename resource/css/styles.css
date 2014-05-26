@@ -33,7 +33,7 @@ ul {
 
 section {
   position: relative;
-  width: 95%;
+  width: 93%;
   margin: 0 auto;
   margin-bottom: 20px;
 }
@@ -120,7 +120,7 @@ section {
 
 .headerbar {
   position: relative;
-  width: 95%;
+  width: 93%;
   height: 50px;
   margin: 0 auto;
   margin-bottom: 20px;
@@ -943,7 +943,7 @@ body, .versal, h1, h2, p, .versal-bold {
 
 @media (max-width: 800px) {
   section, .headerbar {
-    width: 95% !important;
+    width: 93% !important;
   }
 
   .navbar-form {
@@ -1069,11 +1069,15 @@ body, .versal, h1, h2, p, .versal-bold {
 
 @media (min-width: 1260px) {
   section, .headerbar {
-    width: 1240px !important;
+    width: 1190px !important;
+  }
+
+  .welcome-box {
+    margin-left: 140px !important;
   }
 
   .welcome-box, .right-box {
-    width: 220px !important;
+    width: 210px !important;
   }
 
   .right-box {
@@ -1089,7 +1093,7 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   .content {
-    margin-left: 430px;
+    margin-left: 425px;
   }
 
   input#search-field {
@@ -1100,7 +1104,7 @@ body, .versal, h1, h2, p, .versal-bold {
     position: relative;
     left: 20px;
     display: inline-block;
-    width: 605px !important;
+    width: 580px !important;
   }
 
   #sidebar {
@@ -1122,6 +1126,10 @@ body, .versal, h1, h2, p, .versal-bold {
 }
 
 @media (min-width: 1520px) {
+  
+  section, .headerbar {
+    width: 1240px !important;
+  }
 
   #vocabulary-list {
     position: relative;
