@@ -946,6 +946,10 @@ body, .versal, h1, h2, p, .versal-bold {
     width: 93% !important;
   }
 
+  .headerbar {
+    margin-bottom: 15px !important;
+  }
+
   .navbar-form {
     max-width: 300px !important;
   }
@@ -998,7 +1002,21 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   .welcome-box {
-    display: none;
+    width: 25% !important;
+    float: left;
+  }
+
+  #vocabulary-list {
+    float: right;
+    width: 71% !important;
+    margin-left: 15px;
+  }
+
+}
+
+@media (max-width: 768px) {
+  .multiselect  {
+    margin: 6px 0 !important;
   }
 
 }
@@ -1009,7 +1027,7 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 }
 
-@media (min-width: 800px) {
+@media (min-width: 801px) {
   section, .headerbar {
   }
 
@@ -1084,7 +1102,7 @@ body, .versal, h1, h2, p, .versal-bold {
     display: inline-block;
   }
 
-  .feedback-box {
+  .feedback-box, #about {
     width: 600px !important;
   }
 
