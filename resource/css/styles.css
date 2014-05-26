@@ -312,7 +312,7 @@ border: 1px solid #EDEDED;
 
 .right-box {
   background-color: #ffffff;
-  width: 240px !important;
+  width: 240px;
   padding: 15px;
   position: absolute;
   right: 0;
@@ -925,22 +925,6 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 }
 
-@media (max-width: 640px) {
-
-  .content {
-    overflow: hidden;
-  }
-
-  .search-vocab-text{
-    display: none !important;
-  }
-
-  #service-logo {
-    display: none !important;
-  }
-
-}
-
 @media (max-width: 800px) {
   section, .headerbar {
     width: 93% !important;
@@ -993,23 +977,45 @@ body, .versal, h1, h2, p, .versal-bold {
     display: none;
   }
 
-  .right-box {
-    display: none;
-  }
-
   .content {
     margin: 0 auto;
   }
 
-  .welcome-box {
-    width: 25% !important;
+  .welcome-box, .right-box {
+    width: 200px !important;
     float: left;
   }
 
   #vocabulary-list {
+    position: relative;
     float: right;
-    width: 71% !important;
+    width: calc(100% - 230px) !important;
     margin-left: 15px;
+  }
+
+}
+
+@media (max-width: 640px) {
+
+  .welcome-box, .right-box {
+    display: none !important;
+  }
+
+  #vocabulary-list {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .content {
+    overflow: hidden;
+  }
+
+  .search-vocab-text{
+    display: none !important;
+  }
+
+  #service-logo {
+    display: none !important;
   }
 
 }
@@ -1021,9 +1027,15 @@ body, .versal, h1, h2, p, .versal-bold {
 
 }
 
-@media (min-width: 720px) {
+@media (min-width: 640px) {
   #service-logo {
     display: inline !important;
+  }
+
+  .right-box {
+    display: inline !important;
+    top: 435px !important;
+    left: 0;
   }
 }
 
@@ -1068,7 +1080,7 @@ body, .versal, h1, h2, p, .versal-bold {
     width: 17%;
   }
 
-  .welcome-box {
+  .welcome-box, .right-box {
     margin-left: 150px !important;
     width: 200px !important;
   }
