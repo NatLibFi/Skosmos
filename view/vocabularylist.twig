@@ -8,16 +8,19 @@
   </div>
   <div class="vocabularies">
       <table class="table">
+      <tr><td><div class="vocabulary-separator"></div></td></tr>
       {% for vocabClassName,vocabArray in vocab_list %}
       <tr>
         <th>{{ vocabClassName|upper }}</th>
+      </tr>
+      <tr>
         <td>
         {% for vocab in vocabArray %}
           <a class="navigation-font" href="{{path_fix}}{{ vocab.id }}/{{ lang }}/">{{ vocab.title }}</a><br />
         {% endfor %}
         </td>
       </tr>
-      <tr><th></th><td><div class="vocabulary-separator"></div></td></tr>
+      <tr><td><div class="vocabulary-separator"></div></td></tr>
       {% endfor %}
       </table>
   </div>
