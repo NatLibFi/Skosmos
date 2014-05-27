@@ -1031,6 +1031,7 @@ body, .versal, h1, h2, p, .versal-bold {
 
   section.frontpage {
     top: 100px;
+    overflow: hidden;
   }
 }
 
