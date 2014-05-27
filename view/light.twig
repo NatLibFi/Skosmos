@@ -16,15 +16,15 @@
 <title>{{ ServiceName }}{% block title %}{% endblock %}</title>
 </head>
 <body>
-  <div class="topbar{% if vocab_id != '' or vocab_id == 'feedback' or vocab_id == 'about' %} topbar-white{% endif %}">
+  <div class="topbar{% if vocab_id != '' or vocab_id == 'feedback' or vocab_id == 'about' %} topbar-white{% else %} frontpage{% endif %}">
     {% include 'topbar.twig' %}
   </div>
   {% block headernav %}
-  <div class="headerbar{% if vocab_id == '' %} frontpage-spacing{% endif %}{% if vocab_id != '' or vocab_id == 'feedback' or vocab_id == 'about' %} headerbar-coloured{% endif %}">
+  <div class="headerbar{% if vocab_id == '' or global_search %} frontpage-spacing{% endif %}{% if vocab_id != '' or vocab_id == 'feedback' or vocab_id == 'about' %} headerbar-coloured{% endif %}">
     {% include 'headerbar.twig' %}
   </div>
   {% endblock %}
-  <section>
+  <section{% if vocab_id == '' or global_search %} class="frontpage"{% endif %}>
     {% if not vocab_id == '' %}
     <div id="sidebar">
     {% block sidebar %}

@@ -887,7 +887,6 @@ a:hover {
 }
 
 #service-logo {
-  display: none;
   max-width: 450px;
 }
 
@@ -910,18 +909,6 @@ body, .versal, h1, h2, p, .versal-bold {
 
 /* mediaquery
  ***********************************/
-@media (max-width: 390px) {
-  #navi4 {
-    display: none !important;
-  }
-}
-
-@media (max-width: 480px) {
-  #navi3 {
-    display: none !important;
-  }
-}
-
 @media (max-width: 800px) {
   section, .headerbar {
     width: 93% !important;
@@ -992,6 +979,52 @@ body, .versal, h1, h2, p, .versal-bold {
 
 }
 
+@media (max-width: 720px) {
+  .topbar {
+    position: relative;
+  }
+  
+  #navi1, #navi3, #navi4 {
+    background-image: none !important;
+    padding-left: 0 !important;
+  }
+  
+  .frontpage #navigation {
+    top: 120px !important;
+    left: 3.5%;
+    width: auto !important;
+  }
+
+  #navigation > a, #language > a {
+    margin: 2px;
+    font-weight: 500;
+  }
+
+  .frontpage #language {
+    top: 120px !important;
+    right: 3.5%;
+    text-align: left;
+  }
+
+  #service-logo {
+    height: 200px !important;
+    position: absolute;
+    right: 3%;
+  }
+
+  .frontpage-spacing {
+    top: 100px !important;
+  }
+
+  .frontpage-spacing .header-float {
+    float: left;
+  }
+
+  section.frontpage {
+    top: 100px;
+  }
+}
+
 @media (max-width: 640px) {
 
   .welcome-box, .right-box {
@@ -1012,10 +1045,6 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   .search-vocab-text{
-    display: none !important;
-  }
-
-  #service-logo {
     display: none !important;
   }
 
