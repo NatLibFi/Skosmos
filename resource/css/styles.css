@@ -990,7 +990,7 @@ body, .versal, h1, h2, p, .versal-bold {
   }
   
   .frontpage #navigation {
-    top: 120px !important;
+    top: 110px !important;
     left: 3.5%;
     width: auto !important;
   }
@@ -1010,7 +1010,7 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   .frontpage #language {
-    top: 120px !important;
+    top: 110px !important;
     right: 3.5%;
     text-align: left;
   }
