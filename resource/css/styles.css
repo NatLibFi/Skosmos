@@ -76,7 +76,7 @@ section {
 
 #language {
   position: absolute;
-  right: 0;
+  right: 3.5%;
   height: 50px;
   width: auto;
   padding-left: 0px;
@@ -86,7 +86,8 @@ section {
 }
 
 #navigation {
-  right: 180px;
+  right: 200px;
+  right: calc(195px + 3%);
   padding-right: 10px;
   position: absolute;
   height: 50px;
