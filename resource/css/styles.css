@@ -996,11 +996,6 @@ body, .versal, h1, h2, p, .versal-bold {
     width: auto !important;
   }
 
-  .multiselect {
-    width: 105px !important;
-    overflow: hidden;
-  }
-
   #search-field {
     max-width: 100px;
   }

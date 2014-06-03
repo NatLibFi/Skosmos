@@ -713,7 +713,7 @@ $(function() { // DOCUMENT READY
       }
     },
     numberDisplayed: 2,
-    buttonWidth: '155px',
+    buttonWidth: 'auto',
     includeSelectAllOption: true,
     selectAllText: all_vocabs,
     onChange: function(element, checked) {
