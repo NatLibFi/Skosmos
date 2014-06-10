@@ -21,7 +21,7 @@ try {
   $controller = new RestController();
 
   if (sizeof($parts) < 2 || $parts[1] == "") {
-    header("Status: 404");
+    header("HTTP/1.0 404 Not Found");
     echo("404 Not Found");
   } elseif ($parts[1] == 'vocabularies') {
     $controller->vocabularies();
@@ -60,11 +60,11 @@ try {
     } elseif ($parts[2] == 'related') {
       $controller->related($vocab);
     } else {
-      header("Status: 404");
+      header("HTTP/1.0 404 Not Found");
       echo("404 Not Found");
     }
   }
 } catch (Exception $e) {
-  header("Status: 500");
+  header("HTTP/1.0 500 Internal Server Error");
   die ('ERROR: ' . $e->getMessage());
 }
