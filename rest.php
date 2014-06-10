@@ -65,5 +65,6 @@ try {
     }
   }
 } catch (Exception $e) {
+  header("Status: 500");
   die ('ERROR: ' . $e->getMessage());
 }
