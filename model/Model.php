@@ -81,14 +81,20 @@ class Model
       $catlabel = $cat->getTitle();
 
       // find all the vocabs in this category
-      $vocs = $cat->getVocabularies();
+      $vocs = array();
+      foreach ($cat->getVocabularies() as $voc) {
+        $vocs[$voc->getTitle()] = $voc;
+      }
+      uksort($vocs, 'strcoll');
 
       if (sizeof($vocs) > 0 && $categories)
         $ret[$catlabel] = $vocs;
       elseif (sizeof($vocs) > 0)
-        $ret = array_merge($vocs, $ret);
+        $ret = array_merge($ret, $vocs);
     }
 
+    if (!$categories)
+      uksort($ret, 'strcoll');
     return $ret;
   }
 
