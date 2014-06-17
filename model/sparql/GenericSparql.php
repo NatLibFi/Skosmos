@@ -398,7 +398,8 @@ EOQ;
    * Query for concepts using a search term.
    * @param string $term search term
    * @param array $vocabs array of Vocabulary objects to search; empty for global search
-   * @param string $lang language code
+   * @param string $lang language code of the returned labels
+   * @param string $search_lang language code used for matching labels (null means any language)
    * @param int $limit maximum number of hits to retrieve; 0 for unlimited
    * @param int $offset offset of results to retrieve; 0 for beginning of list
    * @param string $arrayClass the URI for thesaurus array class, or null if not used
@@ -408,7 +409,7 @@ EOQ;
    * @param boolean $hidden include matches on hidden labels (default: true)
    * @return array query result object
    */
-  public function queryConcepts($term, $vocabs, $lang, $limit, $offset, $arrayClass, $type, $parent=null, $group=null, $hidden=true)
+  public function queryConcepts($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $type, $parent=null, $group=null, $hidden=true)
   {
     $gc = $this->graphClause;
     $limit = ($limit) ? 'LIMIT ' . $limit : '';
@@ -419,8 +420,8 @@ EOQ;
     $extratypes = $arrayClass ? "UNION { ?s rdf:type <$arrayClass> }" : "";
 
     // extra conditions for label language, if specified
-    $labelcond_match = ($lang) ? "&& langMatches(lang(?match), '$lang')" : "";
-    $labelcond_label = ($lang) ? "&& langMatches(lang(?label), '$lang')" : "";
+    $labelcond_match = ($search_lang) ? "&& langMatches(lang(?match), '$search_lang')" : "";
+    $labelcond_label = ($lang) ? "&& langMatches(lang(?label), '$lang')" : "&& langMatches(lang(?label), lang(?match))";
 
     // extra conditions for parent and group, if specified
     $parentcond = ($parent) ? "?s skos:broader+ <$parent> ." : "";
@@ -504,7 +505,7 @@ EOQ;
            FILTER (
                    $filtercond
                    $labelcond_match
-                   && langMatches(lang(?label), lang(?match))
+                   $labelcond_label
                   )
           }
           FILTER NOT EXISTS {?s owl:deprecated true }

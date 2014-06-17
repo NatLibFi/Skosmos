@@ -171,7 +171,8 @@ class Model
    * references as it's search results.
    * @param string $term the term that is looked for eg. 'cat'.
    * @param mixed $vocids vocabulary id eg. 'yso', array of such ids for multi-vocabulary search, or null for global search.
-   * @param string $lang language parameter eg. 'fi' for Finnish.
+   * @param string $lang language code to show labels in, eg. 'fi' for Finnish.
+   * @param string $search_lang language code used for matching, eg. 'fi' for Finnish, null for any language
    * @param string $type limit search to concepts of the given type
    * @param string $parent limit search to concepts which have the given concept as parent in the transitive broader hierarchy
    * @param string $group limit search to concepts which are in the given group
@@ -179,7 +180,7 @@ class Model
    * @param int $limit optional paramater for maximum amount of results.
    * @param boolean $hidden include matches on hidden labels (default: true).
    */
-  public function searchConcepts($term, $vocids, $lang, $type = null, $parent=null, $group=null, $offset = 0, $limit = DEFAULT_SEARCH_LIMIT, $hidden = true)
+  public function searchConcepts($term, $vocids, $lang, $search_lang, $type = null, $parent=null, $group=null, $offset = 0, $limit = DEFAULT_SEARCH_LIMIT, $hidden = true)
   {
     $term = trim($term);
     if ($term == "" || $term == "*")
@@ -205,7 +206,7 @@ class Model
     }
     if (!$type) $type = 'skos:Concept';
 
-    $results = $sparql->queryConcepts($term, $vocabs, $lang, $limit, $offset, $arrayClass, $type, $parent, $group, $hidden);
+    $results = $sparql->queryConcepts($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $type, $parent, $group, $hidden);
     $ret = array();
 
     foreach ($results as $hit) {
@@ -242,19 +243,20 @@ class Model
    * Function for performing a search for concepts and their data fields.
    * @param string $term searchterm eg. 'cat'
    * @param mixed $vocids vocabulary id eg. 'yso', array of such ids for multi-vocabulary search, or null for global search.
-   * @param string $lang eg. 'fi'
+   * @param string $lang language code of returned labels, eg. 'fi'
+   * @param string $search_lang language code used for matching, eg. 'fi', or null for anything
    * @param integer $offset used for offsetting the result set eg. '20'
    * @param integer $limit upper count for the search results eg. '10'
    * @param string $ui_lang used for determining if the searchresult isn't the same language as the ui.
    * @return array array with keys 'count' and 'results'
    */
-  public function searchConceptsAndInfo($term, $vocids, $lang, $offset = 0, $limit = 20, $ui_lang=null)
+  public function searchConceptsAndInfo($term, $vocids, $lang, $search_lang, $offset = 0, $limit = 20)
   {
     // make vocids an array in every case
     if ($vocids === null) $vocids = array();
     if (!is_array($vocids)) $vocids = array($vocids);
 
-    $allhits = $this->searchConcepts($term, $vocids, $lang, null, null, null, 0, 0);
+    $allhits = $this->searchConcepts($term, $vocids, $lang, $search_lang, null, null, null, 0, 0);
     $hits = array_slice($allhits, $offset, $limit);
 
     $uris = array();
@@ -277,7 +279,7 @@ class Model
         $ret[$idx]->setFoundBy($hit['altLabel'], 'alt');
       if (isset($hit['hiddenLabel']) && isset($ret[$idx]))
         $ret[$idx]->setFoundBy($hit['hiddenLabel'], 'hidden');
-      if ($ui_lang && isset($hit['lang']) && $hit['lang'] !== $ui_lang)
+      if ($lang && isset($hit['lang']) && $hit['lang'] !== $lang)
         $ret[$idx]->setFoundBy($hit['prefLabel'] . ' (' . $hit['lang'] . ')', 'lang');
     }
 

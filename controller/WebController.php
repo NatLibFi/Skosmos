@@ -336,7 +336,7 @@ class WebController extends Controller
     $vocids = $vocabs !== null ? explode(' ', $vocabs) : null;
     
     $this->twig->addGlobal("SearchLanguage", $search_lang);
-    $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocids, $search_lang, $offset);
+    $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocids, $lang, $search_lang, $offset);
     $counts = $count_and_results['count'];
     $search_results = $count_and_results['results'];
     $uri_parts = $_SERVER['REQUEST_URI'];
@@ -391,7 +391,7 @@ class WebController extends Controller
     $sterm = strpos($term, "*") === FALSE ? $term . "*" : $term; // default to prefix search
     try {
       $this->twig->addGlobal("SearchLanguage", $search_lang);
-      $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocab_id, $search_lang, $offset, 20, $lang);
+      $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocab_id, $lang, $search_lang, $offset, 20, $lang);
       $counts = $count_and_results['count'];
       $search_results = $count_and_results['results'];
     } catch (Exception $e) {
@@ -455,9 +455,9 @@ class WebController extends Controller
     $lang_msg = $this->verifyVocabularyLanguage($lang, $vocab->getLanguages()) ? null : gettext("language_changed_message");
     $all_at_once = $vocab->getAlphabeticalFull();
     if (!$all_at_once)
-      $search_results = $this->model->searchConcepts($letter . "*", $vocab_id, $lang, null, null, null, 0, 0, false);
+      $search_results = $this->model->searchConcepts($letter . "*", $vocab_id, $lang, $lang, null, null, null, 0, 0, false);
     else
-      $search_results = $this->model->searchConcepts("FullAlphabeticalIndex", $vocab_id, $lang, null, null, null, 0, 0, false);
+      $search_results = $this->model->searchConcepts("FullAlphabeticalIndex", $vocab_id, $lang, $lang, null, null, null, 0, 0, false);
 
     $controller = $this; // for use by anonymous function below
     echo $template
@@ -595,9 +595,9 @@ class WebController extends Controller
 
     $all_at_once = $vocab->getAlphabeticalFull();
     if (!$all_at_once)
-      $search_results = $this->model->searchConcepts($letter . "*", $vocab_id, $lang, null, null, null, 0, 0);
+      $search_results = $this->model->searchConcepts($letter . "*", $vocab_id, $lang, $lang, null, null, null, 0, 0);
     else
-      $search_results = $this->model->searchConcepts("FullAlphabeticalIndex", $vocab_id, $lang, null, null, null, 0, 0);
+      $search_results = $this->model->searchConcepts("FullAlphabeticalIndex", $vocab_id, $lang, $lang, null, null, null, 0, 0);
 
     // load template
     $template = $this->twig->loadTemplate('vocab.twig');

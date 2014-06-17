@@ -177,7 +177,7 @@ class RestController extends Controller
 
     $maxhits = isset($_GET['maxhits']) ? ($_GET['maxhits']) : null; # optional
     $offset = isset($_GET['offset']) ? ($_GET['offset']) : 0; # optional
-    $results = $this->model->searchConcepts($term, $vocids, $lang, $type, $parent, $group, $offset, $maxhits);
+    $results = $this->model->searchConcepts($term, $vocids, $lang, $lang, $type, $parent, $group, $offset, $maxhits);
     // before serializing to JSON, get rid of the Vocabulary object that came with each resource
     foreach ($results as &$res) {
       unset($res['voc']);
@@ -302,7 +302,7 @@ class RestController extends Controller
     $vocab = $this->getVocabulary($vocid);
     if ($label == '') $this->return_error(400, 'Bad Request', 'empty label');
 
-    $results = $this->model->searchConcepts($label, $vocid, $lang);
+    $results = $this->model->searchConcepts($label, $vocid, $lang, $lang);
 
     $hits = array();
     // case 1: exact match on preferred label
