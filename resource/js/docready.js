@@ -453,7 +453,7 @@ $(function() { // DOCUMENT READY
   if (rest_url.indexOf('..') == -1 && rest_url.indexOf('http') == -1) { rest_url = encodeURI(location.protocol + '//' + rest_url); }
   
   // qlang is used in REST queries as a parameter. it is either
-  // - "&lang=<code>" when searching in a specific language
+  // - a language code, e.g. "en", when searching in a specific language
   // - "" when searching in all languages
   var qlang = search_lang;
   
@@ -528,7 +528,7 @@ $(function() { // DOCUMENT READY
       var term = request.term.trim(); // surrounding whitespace is not significant
       term = term.indexOf("*") >= 0 ? term : term + "*";
       var vocabString = $('.multiselect').length ? vocabSelectionString : vocab; 
-      var parameters = $.param({'query' : term, 'vocab' : vocabString, 'lang' : qlang});
+      var parameters = $.param({'query' : term, 'vocab' : vocabString, 'lang' : qlang, 'labellang' : lang});
       $.ajax({
         url : rest_url + 'search',
         data: parameters,
