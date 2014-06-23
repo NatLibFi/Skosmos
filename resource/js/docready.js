@@ -204,7 +204,34 @@ $(function() { // DOCUMENT READY
         return false;
       }
   );
+
+  function loadPage(targetUrl) {
+    $.ajax({
+      url : targetUrl,
+      success : function(data) {
+        $('#jstree-leaf-proper').attr('id', '');
+        $('.activated-concept').removeClass('activated-concept');
+        //clicked.attr('id', 'jstree-leaf-proper');
+        $('.content').empty();
+        var title = $(data).filter('title').text();
+        var response = $('.content', data).html();
+        document.title = title;
+        //if (window.history.pushState)
+          //window.history.pushState({url: targetUrl}, '', encodeURI(targetUrl));
+        $('.content').append(response);
+      }
+    });
+  }
   
+  $(window).on("popstate", function(e) {
+    console.log(e.originalEvent.state);
+    if (e.originalEvent.state !== null) {
+      loadPage(e.originalEvent.state.url);
+    }
+    else if (document.URL.indexOf('groups') === -1)
+      loadPage(document.URL);
+  });
+
   // event handler for clicking the hierarchy concepts
   $(document).on('click', '.jstree-no-icons a',
       function(event) {
@@ -212,9 +239,9 @@ $(function() { // DOCUMENT READY
         var base_path = path_fix.length / 3;
         var clicked = $(this);
         var $content = $('.content');
-        var targetUrl = 'http://' + base_url + vocab + '/' + lang + '/page/';
+        var targetUrl = 'http://' + base_url + vocab + '/' + lang + '/page/?uri=' + event.target.href;
         var parameters = $.param({'uri' : event.target.href, 'base_path' : base_path});
-        $('#hier-trigger').attr('href', targetUrl + '?uri=' + event.target.href);
+        $('#hier-trigger').attr('href', targetUrl);
         $.ajax({
             url : targetUrl,
             data: parameters,
@@ -226,7 +253,7 @@ $(function() { // DOCUMENT READY
               var response = $('.content', data).html();
               document.title = title;
               if (window.history.pushState)
-                window.history.pushState(null, null, encodeURI(targetUrl + '?uri=' + event.target.href));
+                window.history.pushState({url: targetUrl}, '', encodeURI(targetUrl));
               $content.append(response);
             }
         });
