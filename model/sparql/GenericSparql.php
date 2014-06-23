@@ -552,16 +552,13 @@ EOQ;
 
       if (isset($row->plabel)) {
         $hit['matchedPrefLabel'] = $row->plabel->getValue();
-        if ($row->plabel->getLang() != $search_lang)
-          $hit['lang'] = $row->plabel->getLang();
+        $hit['lang'] = $row->plabel->getLang();
       } elseif (isset($row->alabel)) {
         $hit['altLabel'] = $row->alabel->getValue();
-        if ($row->alabel->getLang() != $search_lang)
-          $hit['lang'] = $row->alabel->getLang();
+        $hit['lang'] = $row->alabel->getLang();
       } elseif (isset($row->hlabel)) {
         $hit['hiddenLabel'] = $row->hlabel->getValue();
-        if ($row->hlabel->getLang() != $search_lang)
-          $hit['lang'] = $row->hlabel->getLang();
+        $hit['lang'] = $row->hlabel->getLang();
       }
 
       $ret[] = $hit;
