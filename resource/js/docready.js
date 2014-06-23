@@ -220,6 +220,8 @@ $(function() { // DOCUMENT READY
         var response = $('.content', data).html();
         document.title = title;
         $('.content').append(response);
+        var uri = $('.uri-input-box').text();
+        $('a[href="' + uri + '"]').addClass('jstree-clicked');
       }
     });
   }
