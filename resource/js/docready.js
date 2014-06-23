@@ -489,17 +489,24 @@ $(function() { // DOCUMENT READY
   // setting the focus to the search box on default
   $("#search-field").focus();
 
+  var langPretty;
+
   if (search_lang === 'anything' || !search_lang || (typeof getUrlParams().lang !== 'undefined' && getUrlParams().lang === '')) {
     $('#lang-dropdown-toggle').html($('.lang-button-all').html() + ' <span class="caret"></span>');
     $('#lang-input').val('');
     qlang = "";
+  } else if (!search_lang){
+      langPretty = $('a[hreflang=' + lang + ']').html();
+      search_lang = lang;
+      if (!langPretty)
+        langPretty = $('a[hreflang="anything"]').html();
+      $('#lang-dropdown-toggle').html(langPretty + ' <span class="caret"></span>');
+      qlang = lang;
   } else {
-    var langPretty = $('a[hreflang=' + lang + ']').html();
-    search_lang = lang;
-    if (!langPretty)
-      langPretty = $('a[hreflang="anything"]').html();
-    $('#lang-dropdown-toggle').html(langPretty + ' <span class="caret"></span>');
-    qlang = lang;
+      langPretty = $('a[hreflang=' + search_lang + ']').html();
+      if (!langPretty)
+        langPretty = $('a[hreflang="anything"]').html();
+      $('#lang-dropdown-toggle').html(langPretty + ' <span class="caret"></span>');
   }
   
   $('.lang-button').click(function() {
