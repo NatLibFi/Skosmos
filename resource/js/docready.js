@@ -213,7 +213,8 @@ $(function() { // DOCUMENT READY
       url : targetUrl,
       success : function(data) {
         $('#jstree-leaf-proper').attr('id', '');
-        $('.activated-concept').removeClass('activated-concept jstree-clicked');
+        $('.activated-concept').removeClass('activated-concept');
+        $('.jstree-clicked').removeClass('jstree-clicked'); 
         $('.content').empty();
         var title = $(data).filter('title').text();
         var response = $('.content', data).html();
