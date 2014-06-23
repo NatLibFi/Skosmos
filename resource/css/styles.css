@@ -33,7 +33,7 @@ ul {
 
 section {
   position: relative;
-  width: 93%;
+  width: 95%;
   margin: 0 auto;
   margin-bottom: 20px;
 }
@@ -76,7 +76,7 @@ section {
 
 #language {
   position: absolute;
-  right: 3.5%;
+  right: 2%;
   height: 50px;
   width: auto;
   padding-left: 0px;
@@ -121,7 +121,7 @@ section {
 
 .headerbar {
   position: relative;
-  width: 93%;
+  width: 95%;
   height: 50px;
   margin: 0 auto;
   margin-bottom: 20px;
@@ -912,7 +912,7 @@ body, .versal, h1, h2, p, .versal-bold {
  ***********************************/
 @media (max-width: 800px) {
   section, .headerbar {
-    width: 93% !important;
+    width: 95% !important;
   }
 
   .headerbar {
@@ -1043,7 +1043,7 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   .headerbar {
-    width: 93% !important;
+    width: 95% !important;
   }
 
   .content {
