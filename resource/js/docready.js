@@ -211,7 +211,6 @@ $(function() { // DOCUMENT READY
       success : function(data) {
         $('#jstree-leaf-proper').attr('id', '');
         $('.activated-concept').removeClass('activated-concept jstree-clicked');
-        //clicked.attr('id', 'jstree-leaf-proper');
         $('.content').empty();
         var title = $(data).filter('title').text();
         var response = $('.content', data).html();
@@ -222,7 +221,6 @@ $(function() { // DOCUMENT READY
   }
   
   $(window).on("popstate", function(e) {
-    console.log(e.originalEvent.state);
     if (e.originalEvent.state !== null) {
       loadPage(e.originalEvent.state.url);
     }
