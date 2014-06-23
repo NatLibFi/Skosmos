@@ -226,8 +226,9 @@ $(function() { // DOCUMENT READY
     if (e.originalEvent.state !== null) {
       loadPage(e.originalEvent.state.url);
     }
-    else if (document.URL.indexOf('groups') === -1)
+    else if (document.URL.indexOf('groups') === -1 && document.URL.indexOf('index') === -1)
       loadPage(document.URL);
+     
   });
 
   // event handler for clicking the hierarchy concepts
