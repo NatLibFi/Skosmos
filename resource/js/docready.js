@@ -210,14 +210,12 @@ $(function() { // DOCUMENT READY
       url : targetUrl,
       success : function(data) {
         $('#jstree-leaf-proper').attr('id', '');
-        $('.activated-concept').removeClass('activated-concept');
+        $('.activated-concept').removeClass('activated-concept jstree-clicked');
         //clicked.attr('id', 'jstree-leaf-proper');
         $('.content').empty();
         var title = $(data).filter('title').text();
         var response = $('.content', data).html();
         document.title = title;
-        //if (window.history.pushState)
-          //window.history.pushState({url: targetUrl}, '', encodeURI(targetUrl));
         $('.content').append(response);
       }
     });
