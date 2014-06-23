@@ -206,6 +206,9 @@ $(function() { // DOCUMENT READY
   );
 
   function loadPage(targetUrl) {
+    if (targetUrl.indexOf('index') !== -1 || targetUrl.indexOf('groups') !== -1) {
+      window.location.replace(targetUrl);
+    }
     $.ajax({
       url : targetUrl,
       success : function(data) {
@@ -224,9 +227,8 @@ $(function() { // DOCUMENT READY
     if (e.originalEvent.state !== null) {
       loadPage(e.originalEvent.state.url);
     }
-    else if (document.URL.indexOf('groups') === -1 && document.URL.indexOf('index') === -1)
+    else
       loadPage(document.URL);
-     
   });
 
   // event handler for clicking the hierarchy concepts
