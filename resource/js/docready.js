@@ -71,7 +71,8 @@ $(function() { // DOCUMENT READY
     // Sidenav actions only happen when doing other queries than the autocomplete.
     if (settings.url.indexOf('index') !== -1 || settings.url.indexOf('groups') !== -1 || settings.url.indexOf('hierarchy') !== -1) {
       countAndSetOffset();
-      $(".sidebar-grey").mCustomScrollbar({'scrollInertia': 0});
+      $(".sidebar-grey").mCustomScrollbar({ scrollInertia: 0, callbacks:{
+    whileScrolling: function(){ $(".sidebar-grey").mCustomScrollbar('update'); }}});
       if (settings.url.indexOf('hierarchy') !== -1)
         $(".sidebar-grey").mCustomScrollbar('scrollTo', scrollToConcept());
     }
@@ -776,5 +777,5 @@ $(function() { // DOCUMENT READY
   });
 
   // activating the custom scrollbars
-  $(".sidebar-grey").mCustomScrollbar({'scrollInertia': 0});
+  $(".sidebar-grey").mCustomScrollbar({scrollInertia: 0});
 });
