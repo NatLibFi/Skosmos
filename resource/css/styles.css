@@ -1139,8 +1139,23 @@ body, .versal, h1, h2, p, .versal-bold {
 }
 
 @media (min-width: 1260px) {
-  section, .headerbar {
+  section, .headerbar, .topbar {
     width: 1190px !important;
+  }
+
+  .topbar {
+    position: relative;
+    margin: 0 auto;
+    margin-bottom: 20px;
+  }
+
+  #language { 
+    right: 0;
+  }
+
+  #navigation {
+    position: relative;
+    right: 200px;
   }
 
   .welcome-box {
@@ -1200,7 +1215,7 @@ body, .versal, h1, h2, p, .versal-bold {
 
 @media (min-width: 1520px) {
   
-  section, .headerbar {
+  section, .headerbar, .topbar {
     width: 1240px !important;
   }
 
