@@ -777,5 +777,8 @@ $(function() { // DOCUMENT READY
   });
 
   // activating the custom scrollbars
-  $(".sidebar-grey").mCustomScrollbar({scrollInertia: 0});
+  $(".sidebar-grey").mCustomScrollbar({ 
+    scrollInertia: 0, 
+    callbacks:{ whileScrolling: function(){ $(".sidebar-grey").mCustomScrollbar('update'); }}
+  });
 });
