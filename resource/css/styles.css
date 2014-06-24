@@ -87,8 +87,8 @@ section {
 
 #navigation {
   right: 200px;
-  right: calc(195px + 3%);
-  padding-right: 10px;
+  right: calc(175px + 3%);
+  padding-right: 30px;
   position: absolute;
   height: 50px;
   min-width: 0px;
