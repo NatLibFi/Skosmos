@@ -16,9 +16,11 @@
 <title>{{ ServiceName }}{% block title %}{% endblock %}</title>
 </head>
 <body>
-  <div class="topbar{% if vocab_id != '' or vocab_id == 'feedback' or vocab_id == 'about' %} topbar-white{% else %} frontpage{% endif %}">
-    {% include 'topbar.twig' %}
-  </div>
+  {% if vocab_id != '' or vocab_id == 'feedback' or vocab_id == 'about' %}<div class="topbar-white">{% endif %}
+    <div class="topbar{% if vocab_id != '' or vocab_id == 'feedback' or vocab_id == 'about' %} topbar-white{% else %} frontpage{% endif %}">
+      {% include 'topbar.twig' %}
+    </div>
+  {% if vocab_id != '' or vocab_id == 'feedback' or vocab_id == 'about' %}</div>{% endif %}
   {% block headernav %}
   <div class="headerbar{% if vocab_id == '' or global_search %} frontpage-spacing{% endif %}{% if vocab_id != '' or vocab_id == 'feedback' or vocab_id == 'about' %} headerbar-coloured{% endif %}">
     {% include 'headerbar.twig' %}
