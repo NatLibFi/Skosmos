@@ -568,10 +568,10 @@ EOQ;
   }
 
   /**
-   * Query for a prefLabel of a concept.
+   * Query for a label (skos:prefLabel, rdfs:label, dc:title, dc11:title) of a resource.
    * @param string $uri
    * @param string $lang
-   * @return array array of labels (key: lang, val: label), or null if concept doesn't exist
+   * @return array array of labels (key: lang, val: label), or null if resource doesn't exist
    */
   public function queryLabel($uri, $lang)
   {
@@ -581,16 +581,23 @@ EOQ;
       SELECT *
       WHERE {
           $gc {
-            <$uri> a skos:Concept .
             OPTIONAL {
-            <$uri> skos:prefLabel ?label .
-            $labelcond_label
-          }
+              <$uri> skos:prefLabel ?label .
+              $labelcond_label
+            }
             OPTIONAL {
-            <$uri> rdfs:label ?label .
-            $labelcond_label
+              <$uri> rdfs:label ?label .
+              $labelcond_label
+            }
+            OPTIONAL {
+              <$uri> dc:title ?label .
+              $labelcond_label
+            }
+            OPTIONAL {
+              <$uri> dc11:title ?label .
+              $labelcond_label
+            }
           }
-    }
       }
 EOQ;
     $result = $this->client->query($query);
