@@ -103,6 +103,10 @@ section {
   margin: auto 4px;  
 }
 
+#language-en {
+  margin-right: 0;
+}
+
 #navigation .link-bg {
   height: 60px;
   float: left;
