@@ -493,7 +493,7 @@ EOQ;
     $graph_text = $this->isDefaultEndpoint() ? "$textcond \n $gc {" : "$gc { $textcond \n";
 
     $query = <<<EOQ
-      SELECT DISTINCT ?s ?label ?alabel ?hlabel ?graph (GROUP_CONCAT(?type) as ?types) WHERE {
+      SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph (GROUP_CONCAT(?type) as ?types) WHERE {
         $graph_text
           { ?s rdf:type <$type> } $extratypes
           {
@@ -510,12 +510,13 @@ EOQ;
           }
           FILTER NOT EXISTS {?s owl:deprecated true }
         }
+        BIND(IF(?prop = skos:prefLabel && ?match != ?label, ?match, ?unbound) as ?plabel)
         BIND(IF(?prop = skos:altLabel, ?match, ?unbound) as ?alabel)
         BIND(IF(?prop = skos:hiddenLabel, ?match, ?unbound) as ?hlabel)
         $values_prop
       }
 
-      GROUP BY ?match ?s ?label ?alabel ?hlabel ?graph ?prop
+      GROUP BY ?match ?s ?label ?plabel ?alabel ?hlabel ?graph ?prop
       ORDER BY lcase(str(?match)) lang(?match) $orderextra
       $limit
       $offset
@@ -547,15 +548,18 @@ EOQ;
       $hit['localname'] = $row->s->localName();
 
       $hit['prefLabel'] = $row->label->getValue();
-      if ($row->label->getLang() != $lang) {
-        $hit['lang'] = $row->label->getLang();
-      }
+      $hit['lang'] = $row->label->getLang();
 
-      if (isset($row->alabel))
+      if (isset($row->plabel)) {
+        $hit['matchedPrefLabel'] = $row->plabel->getValue();
+        $hit['lang'] = $row->plabel->getLang();
+      } elseif (isset($row->alabel)) {
         $hit['altLabel'] = $row->alabel->getValue();
-      if (isset($row->hlabel))
+        $hit['lang'] = $row->alabel->getLang();
+      } elseif (isset($row->hlabel)) {
         $hit['hiddenLabel'] = $row->hlabel->getValue();
-
+        $hit['lang'] = $row->hlabel->getLang();
+      }
 
       $ret[] = $hit;
     }
