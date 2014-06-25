@@ -382,7 +382,7 @@ $(function() { // DOCUMENT READY
       function(event) {
         if ($('.alphabet-header').length === 0) {
           var $pagination = $('.pagination');
-          $pagination.after('<div><span class="spinner-text">'+ loading_text + '</span><span class="spinner" /></div>');
+          $pagination.after('<div class="loading-spinner"><span class="spinner-text">'+ loading_text + '</span><span class="spinner" /></div>');
           var base_path = path_fix.length / 3;
           var $content = $('.sidebar-grey');
           var targetUrl = event.target.href;

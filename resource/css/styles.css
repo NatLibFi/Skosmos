@@ -480,7 +480,8 @@ border: 1px solid #EDEDED;
 #sidebar hr {
   border: 1px solid #666666 !important;
   margin-left: 15px;
-  margin-top: 15px;
+  top: 275px;
+  position: fixed;
   width: 125px;
 }
 
@@ -505,7 +506,7 @@ hr {
 }
 
 #alphabetical-menu {
-  margin: 0 0 0 15px;
+  margin: 110px 0 0 15px;
 }
 
 .activated-concept, .jstree-clicked {
@@ -731,7 +732,14 @@ tr .property-hover {
   margin-left: -1px !important;
 }
 
-.pagination { margin: 10px 5px 0 10px !important;} 
+.pagination { 
+  background-color: #EAF6F4;
+  margin: 0 5px 0 10px !important;
+  padding: 10px 0;
+  top: 180px !important;
+  position: fixed;
+  width: 280px;
+} 
 
 .nav-tabs, #groups > a {
   background-color: #e0e4e7;
@@ -878,6 +886,13 @@ p {
   font-size: 14px;
   font-weight: bold;
 }
+  
+.loading-spinner {
+  margin-top: 110px;
+  margin-bottom: -110px;
+  margin-left: 15px;
+}
+
 
 .replaced {
   // font-style: italic;
@@ -1150,6 +1165,13 @@ body, .versal, h1, h2, p, .versal-bold {
 @media (min-width: 1260px) {
   section, .headerbar, .topbar {
     width: 1190px !important;
+  }
+
+  .pagination {
+    width: 375px;
+    top: 183px !important;
+    border-radius: 0 !important;
+    padding: 6px 6px !important;
   }
 
   .topbar {
