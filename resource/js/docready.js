@@ -385,6 +385,7 @@ $(function() { // DOCUMENT READY
           $pagination.after('<div class="loading-spinner"><span class="spinner-text">'+ loading_text + '</span><span class="spinner" /></div>');
           var base_path = path_fix.length / 3;
           var $content = $('.sidebar-grey');
+          $('#alphabetical-menu').empty();
           var targetUrl = event.target.href;
           var parameters = $.param({'base_path' : base_path});
           $.ajax({

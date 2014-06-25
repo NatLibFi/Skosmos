@@ -889,8 +889,10 @@ p {
 }
   
 .loading-spinner {
+  background-color: #EAF6F4;
+  width: 290px;
+  height: 20px;
   margin-top: 110px;
-  margin-bottom: -110px;
   margin-left: 15px;
 }
 
