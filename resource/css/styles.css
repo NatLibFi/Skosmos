@@ -734,11 +734,12 @@ tr .property-hover {
 
 .pagination { 
   background-color: #EAF6F4;
+  border-radius: 0 !important;
   margin: 0 5px 0 10px !important;
   padding: 10px 0;
   top: 180px !important;
   position: fixed;
-  width: 280px;
+  width: 290px;
 } 
 
 .nav-tabs, #groups > a {
@@ -1168,10 +1169,9 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   .pagination {
-    width: 375px;
+    width: 380px;
     top: 183px !important;
-    border-radius: 0 !important;
-    padding: 6px 6px !important;
+    padding: 6px 0 !important;
   }
 
   .topbar {
