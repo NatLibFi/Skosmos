@@ -483,9 +483,16 @@ border: 1px solid #EDEDED;
 
 #sidebar hr {
   border: 1px solid #666666 !important;
-  margin-left: 15px;
-  top: 275px;
+  margin: 0 0 0 15px;
   width: 125px;
+}
+
+.letters {
+  background-color: #EAF6F4;
+}
+
+.letters > hr {
+  margin: 0 0 0 15px !important;
 }
 
 .fixed {
