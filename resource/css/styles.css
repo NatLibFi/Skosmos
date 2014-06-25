@@ -487,14 +487,6 @@ border: 1px solid #EDEDED;
   width: 125px;
 }
 
-.letters {
-  background-color: #EAF6F4;
-}
-
-.letters > hr {
-  margin: 0 0 0 15px !important;
-}
-
 .fixed {
   position: fixed !important;
   height: 95%;
@@ -745,6 +737,7 @@ tr .property-hover {
 .pagination { 
   background-color: #EAF6F4;
   border-radius: 0 !important;
+  border-bottom: 1px solid #999999;
   margin: 0 0 -5px 0 !important;
   width: 310px;
   padding: 0 10px !important;

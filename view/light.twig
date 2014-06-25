@@ -44,7 +44,6 @@
         </ul>
       </div>
       {% if alpha_results %}
-      <div class="letters">
         {% set letters = 'A'..'Z' %} {# it would be nicer to do this according to the actual appearances of letters i.e. only letters with results should be shown #}
         {% set rest = ['Å', 'Ä', 'Ö', '!*'] %}
         <ul class="pagination">
@@ -54,8 +53,6 @@
           {% endfor %}
         {% endfor %}
         </ul>
-        <hr />
-      </div>
       {% endif %}
 
       <div class="sidebar-grey {% if alpha_results %} sidebar-grey-alpha{% endif %}">
