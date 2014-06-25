@@ -782,6 +782,8 @@ $(function() { // DOCUMENT READY
   // activating the custom scrollbars
   $(".sidebar-grey").mCustomScrollbar({ 
     scrollInertia: 0, 
-    callbacks:{ whileScrolling: function(){ $(".sidebar-grey").mCustomScrollbar('update'); }}
+    mouseWheel:{ scrollAmount: 105 },
+    snapAmount: 15
+    //callbacks:{ whileScrolling: function(){ $(".sidebar-grey").mCustomScrollbar('update'); }}
   });
 });
