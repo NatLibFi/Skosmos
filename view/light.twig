@@ -84,7 +84,7 @@
       {% include 'left.inc' ignore missing %}
       {% include 'vocabularylist.twig' %}
     {% endif %}
-    <div class="content">
+    <div class="{% if global_search %}global-{% endif %}content">
     {% block content %}
     {% endblock %}
     </div>

@@ -773,6 +773,11 @@ ul.nav-tabs > li {
   margin-left: 350px;
 }
 
+.global-content {
+  margin-left: 150px;
+  margin-right: 200px;
+}
+
 /* Autocomplete stuff 
  *****************************************/
 textarea:focus, input[type="text"]:focus {   
@@ -966,7 +971,7 @@ body, .versal, h1, h2, p, .versal-bold {
     display: none;
   }
 
-  .content {
+  .content, .global-content {
     margin: 0 auto;
   }
 
@@ -1182,6 +1187,11 @@ body, .versal, h1, h2, p, .versal-bold {
 
   .ui-autocomplete {
     max-width: 310px !important;
+  }
+
+  .global-content {
+    margin-left: 180px;
+    margin-right: 245px;
   }
 
   .content {
