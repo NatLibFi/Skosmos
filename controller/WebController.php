@@ -467,7 +467,7 @@ class WebController extends Controller
                         'lang' => $lang,
                         'vocab_id' => $vocab_id,
                         'vocab' => $vocab,
-                        'search_results' => $search_results,
+                        'alpha_results' => $search_results,
                         'search_letter' => $letter,
                         'letter' => $letter,
                         'parts' => $this->parts,
@@ -612,7 +612,7 @@ class WebController extends Controller
                         'vocab_id' => $vocab_id,
                         'lang_supported' => $lang_support,
                         'request_uri' => $this->request_uri,
-                        'search_results' => $search_results,
+                        'alpha_results' => $search_results,
                         'vocab_stats' => $vocab_stats,
                         'all_letters' => $all_at_once,
                         'lang_changed' => $lang_msg));

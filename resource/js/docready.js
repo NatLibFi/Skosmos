@@ -302,7 +302,7 @@ $(function() { // DOCUMENT READY
         $('.active').removeClass('active');
         var clicked = $(this);
         clicked.parent().addClass('active');
-        var $content = $('.sidebar-grey');
+        var $content = $('#sidebar');
         var targetUrl = event.target.href;
         var parameters = $.param({'base_path' : base_path});
         $.ajax({
@@ -311,7 +311,7 @@ $(function() { // DOCUMENT READY
             success : function(data) {
               $content.empty();
               var title = $(data).filter('title').text();
-              var response = $('.sidebar-grey', data).html();
+              var response = $('#sidebar', data).html();
               $content.append(response);
               $('.nav').scrollTop(0);
               if (window.history.pushState)
@@ -328,9 +328,11 @@ $(function() { // DOCUMENT READY
       function(event) {
         var base_path = path_fix.length / 3;
         $('.active').removeClass('active');
-        var clicked = $(this);
-        clicked.parent().addClass('active');
+        var $clicked = $(this);
+        $clicked.parent().addClass('active');
+        $('.pagination').destroy();
         var $content = $('.sidebar-grey');
+        $content.removeClass('sidebar-grey-alpha');
         var targetUrl = event.target.href;
         var parameters = $.param({'base_path' : base_path});
         $.ajax({
@@ -389,18 +391,18 @@ $(function() { // DOCUMENT READY
           var targetUrl = event.target.href;
           var parameters = $.param({'base_path' : base_path});
           $.ajax({
-              url : targetUrl,
-              data: parameters,
-              success : function(data) {
-                $content.empty();
-                var title = $(data).filter('title').text();
-                var response = $('.sidebar-grey', data).html();
-                $content.append(response);
-                $('.nav').scrollTop(0);
-                if (window.history.pushState)
-                  window.history.pushState(null, null, encodeURI(event.target.href));
-                document.title = title;
-              }
+            url : targetUrl,
+            data: parameters,
+            success : function(data) {
+              $('#sidebar').empty();
+              var title = $(data).filter('title').text();
+              var response = $('#sidebar', data).html();
+              $('#sidebar').append(response);
+              $('.nav').scrollTop(0);
+              if (window.history.pushState)
+                window.history.pushState(null, null, encodeURI(event.target.href));
+              document.title = title;
+            }
           });
         } else {
           var selectedLetter = $(event.target).text().trim();

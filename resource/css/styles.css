@@ -469,8 +469,12 @@ border: 1px solid #EDEDED;
 .sidebar-grey {
   background-color: #f6f7f8;
   height: 100%;
-  height: calc(100% - 126px);
+  height: calc(100% - 42px) !important;
   overflow-y: auto;
+}
+
+.sidebar-grey-alpha {
+  height: calc(100% - 126px) !important;
 }
 
 .sidebar-grey ul, .sidebar-grey p {

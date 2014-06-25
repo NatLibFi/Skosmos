@@ -43,7 +43,7 @@
           {% endif %}
         </ul>
       </div>
-      {% if search_results %}
+      {% if alpha_results %}
         {% set letters = 'A'..'Z' %} {# it would be nicer to do this according to the actual appearances of letters i.e. only letters with results should be shown #}
         {% set rest = ['Å', 'Ä', 'Ö', '!*'] %}
         <ul class="pagination">
@@ -55,13 +55,13 @@
         </ul>
       {% endif %}
 
-      <div class="sidebar-grey">
-        <hr />
+      <div class="sidebar-grey {% if alpha_results %} sidebar-grey-alpha{% endif %}">
+        {% if alpha_results %}<hr />{% endif %}
         <div id="alphabetical-menu">
-          {% if search_results %}
+          {% if alpha_results %}
             {% set previous = '' %}
             <ul class="list-group alphabetical-search-results side-navi">
-              {% for key,value in search_results %}
+              {% for key,value in alpha_results %}
               {% if all_letters == true %}
                 {% set alpha = value.prefLabel|first %}{% if alpha != previous %}<li class="alphabet-header" name="{{ alpha }}"><h5>{{ alpha }}</h5></li>{% set previous = alpha %}{% endif %}
               {% endif %}
