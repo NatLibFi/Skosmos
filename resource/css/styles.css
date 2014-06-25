@@ -469,7 +469,7 @@ border: 1px solid #EDEDED;
 .sidebar-grey {
   background-color: #f6f7f8;
   height: 100%;
-  height: calc(100% - 42px);
+  height: calc(100% - 126px);
   overflow-y: auto;
 }
 
@@ -481,7 +481,6 @@ border: 1px solid #EDEDED;
   border: 1px solid #666666 !important;
   margin-left: 15px;
   top: 275px;
-  position: fixed;
   width: 125px;
 }
 
@@ -506,7 +505,7 @@ hr {
 }
 
 #alphabetical-menu {
-  margin: 110px 0 0 15px;
+  margin: 5px 0 0 15px;
 }
 
 .activated-concept, .jstree-clicked {
@@ -735,11 +734,9 @@ tr .property-hover {
 .pagination { 
   background-color: #EAF6F4;
   border-radius: 0 !important;
-  margin: 0 5px 0 10px !important;
-  padding: 10px 0;
-  top: 180px !important;
-  position: fixed;
-  width: 290px;
+  margin: 0 0 -5px 0 !important;
+  width: 310px;
+  padding: 0 10px !important;
 } 
 
 .nav-tabs, #groups > a {
@@ -889,13 +886,8 @@ p {
 }
   
 .loading-spinner {
-  background-color: #EAF6F4;
-  width: 290px;
-  height: 20px;
-  margin-top: 110px;
   margin-left: 15px;
 }
-
 
 .replaced {
   // font-style: italic;
