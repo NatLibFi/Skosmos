@@ -223,6 +223,8 @@ EOQ;
     }
     $query = <<<EOQ
       CONSTRUCT {
+       ?s ?p ?uri .
+       ?sp ?uri ?op .
        ?uri ?p ?o .
        ?p rdfs:label ?proplabel .
        ?p rdfs:subPropertyOf ?pp .
@@ -237,18 +239,24 @@ EOQ;
        $construct
       } WHERE {
         $gc {
-          ?uri ?p ?o .
-          OPTIONAL { ?p rdfs:label ?proplabel . }
-          OPTIONAL { ?p rdfs:subPropertyOf ?pp . }
-          OPTIONAL { ?uri rdf:type ?type .
-                     ?type rdfs:label ?typelabel . }
-          OPTIONAL { ?o rdf:type ?ot . }
-          OPTIONAL { ?o skos:prefLabel ?opl . }
-          OPTIONAL { ?o rdfs:label ?ol . }
-          OPTIONAL { ?group skos:member ?uri .
-                     ?group skos:prefLabel ?grouplabel .
-                     ?group rdf:type ?grouptype . }
-          $optional
+          { ?s ?p ?uri . }
+          UNION
+          { ?sp ?uri ?op . }
+          UNION
+          {
+            ?uri ?p ?o .
+            OPTIONAL { ?p rdfs:label ?proplabel . }
+            OPTIONAL { ?p rdfs:subPropertyOf ?pp . }
+            OPTIONAL { ?uri rdf:type ?type .
+                       ?type rdfs:label ?typelabel . }
+            OPTIONAL { ?o rdf:type ?ot . }
+            OPTIONAL { ?o skos:prefLabel ?opl . }
+            OPTIONAL { ?o rdfs:label ?ol . }
+            OPTIONAL { ?group skos:member ?uri .
+                       ?group skos:prefLabel ?grouplabel .
+                       ?group rdf:type ?grouptype . }
+            $optional
+          }
         }
       }
       $values
