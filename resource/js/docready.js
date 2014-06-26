@@ -70,11 +70,12 @@ $(function() { // DOCUMENT READY
     //$('.sidebar-grey').mCustomScrollbar('update');
     // Sidenav actions only happen when doing other queries than the autocomplete.
     if (settings.url.indexOf('index') !== -1 || settings.url.indexOf('groups') !== -1 || settings.url.indexOf('hierarchy') !== -1) {
+      var snap = (settings.url.indexOf('hierarchy') !== -1) ? 18 : 15;
       countAndSetOffset();
       $(".sidebar-grey").mCustomScrollbar({ 
         scrollInertia: 0, 
         mouseWheel:{ scrollAmount: 105 },
-        snapAmount: 15,
+        snapAmount: snap,
         snapOffset: 1
       });
       if (settings.url.indexOf('hierarchy') !== -1)
