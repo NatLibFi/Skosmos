@@ -67,12 +67,16 @@ $(function() { // DOCUMENT READY
         return removeThese.join(' ');
       });
     }
-    $('.sidebar-grey').mCustomScrollbar('update');
+    //$('.sidebar-grey').mCustomScrollbar('update');
     // Sidenav actions only happen when doing other queries than the autocomplete.
     if (settings.url.indexOf('index') !== -1 || settings.url.indexOf('groups') !== -1 || settings.url.indexOf('hierarchy') !== -1) {
       countAndSetOffset();
-      $(".sidebar-grey").mCustomScrollbar({ scrollInertia: 0, callbacks:{
-    whileScrolling: function(){ $(".sidebar-grey").mCustomScrollbar('update'); }}});
+      $(".sidebar-grey").mCustomScrollbar({ 
+        scrollInertia: 0, 
+        mouseWheel:{ scrollAmount: 105 },
+        snapAmount: 15,
+        snapOffset: 1
+      });
       if (settings.url.indexOf('hierarchy') !== -1)
         $(".sidebar-grey").mCustomScrollbar('scrollTo', scrollToConcept());
     }
@@ -779,11 +783,15 @@ $(function() { // DOCUMENT READY
     maxHeight: 300 
   });
 
-  // activating the custom scrollbars
-  $(".sidebar-grey").mCustomScrollbar({ 
-    scrollInertia: 0, 
-    mouseWheel:{ scrollAmount: 105 },
-    snapAmount: 15
-    //callbacks:{ whileScrolling: function(){ $(".sidebar-grey").mCustomScrollbar('update'); }}
-  });
+  /*  activating the custom scrollbars only when not on the hierarchy page
+   *  since that goes haywire if it's done before the ajax complete runs
+   */
+  if (document.URL.indexOf('/page/') === -1) {
+    $(".sidebar-grey").mCustomScrollbar({ 
+      scrollInertia: 0, 
+      mouseWheel:{ scrollAmount: 105 },
+      snapAmount: 15,
+      snapOffset: 1
+    });
+  }
 });
