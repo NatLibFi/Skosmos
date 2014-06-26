@@ -6,6 +6,7 @@
 
 function customAutocomplete() {
     $.ui.autocomplete.prototype._renderItem = function (ul, item) {
+        console.log(item);
         var label = item.label;
         var vocab = '';
         if (label.indexOf('@') != -1) {
@@ -13,6 +14,11 @@ function customAutocomplete() {
           item.label = label.substring(0, label.indexOf('@')); 
         }
         var output = item.label + '<span class="autocomplete-vocab">' + vocab + '</span>';
+        
+        if (item.matchedPrefLabel) {
+           output = item.matchedPrefLabel + ' (' + vocab.substring(vocab.indexOf('@')+2,vocab.length) + ') → ' + item.label;
+        }
+
         return $("<li>")
             .append($("<a>").html(output))
             .appendTo(ul);
