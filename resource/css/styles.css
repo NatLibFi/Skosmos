@@ -785,7 +785,7 @@ ul.nav-tabs > li {
 
 .global-content {
   margin-left: 150px;
-  margin-right: 200px;
+  margin-right: 150px;
 }
 
 /* Autocomplete stuff 
@@ -1007,8 +1007,8 @@ body, .versal, h1, h2, p, .versal-bold {
   .topbar {
     position: relative;
   }
-  
-  #navi1, #navi3, #navi4 {
+
+    #navi1, #navi3, #navi4 {
     background-image: none !important;
     padding-left: 0 !important;
   }
@@ -1019,9 +1019,9 @@ body, .versal, h1, h2, p, .versal-bold {
     width: auto !important;
   }
 
-  #search-field {
-    max-width: 100px;
-  }
+  /*#search-field {*/
+    /*max-width: 100px;*/
+  /*}*/
 
   #navigation > a, #language > a {
     margin: 2px;
@@ -1077,6 +1077,26 @@ body, .versal, h1, h2, p, .versal-bold {
     display: none !important;
   }
 
+}
+
+
+
+@media (max-width: 415px) {
+  .btn-group {
+    width: 100%;
+  }
+
+  .btn-group > .btn {
+    width: 100%
+  }
+
+  .navbar-form, .input-group, #search-field {
+    width: 100% !important;
+  }
+  
+  .navbar-form {
+    max-width: none !important;
+  }
 }
 
 @media (max-width: 768px) {
@@ -1159,6 +1179,12 @@ body, .versal, h1, h2, p, .versal-bold {
     font-size: 24px !important;
   }
 
+}
+
+@media (max-width: 900px) {
+  .global-content {
+    margin-right: 0 !important;
+  }
 }
 
 @media (min-width: 1260px) {
