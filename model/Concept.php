@@ -55,6 +55,19 @@ class Concept extends VocabularyDataObject
   {
     return $this->resource->getUri();
   }
+  
+  /**
+   * Returns a boolean value indicating if the concept has been deprecated.
+   * @return boolean 
+   */
+  public function getDeprecated()
+  {
+    foreach ($this->resource->all('rdf:type') as $type)
+      if (strpos($type->getUri(), 'DeprecatedConcept'))
+        return true;
+    return false;
+  }
+   
 
   /**
    * Returns the skos:prefLabels in other languages than the ui language.
