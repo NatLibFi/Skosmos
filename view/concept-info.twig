@@ -20,7 +20,7 @@
           <h2 class="deprecated-alert">{% trans %}deprecated{% endtrans %}</h2>
         </div>
         {% endif %}
-        <div class="concept-info">
+        <div class="concept-info{% if concept.deprecated %} deprecated-concept{% endif %}">
           <div class="concept-main">
           {% if bread_crumbs is defined %}
             {% for path in bread_crumbs %}

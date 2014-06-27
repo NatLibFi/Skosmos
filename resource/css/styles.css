@@ -600,6 +600,10 @@ tr {
   margin-bottom: 20px;
 }
 
+.deprecated-concept * {
+  color: #888888 !important; 
+}
+
 .concept-info li, .concept-info ul {
   list-style: none;
   padding-left: 0;
