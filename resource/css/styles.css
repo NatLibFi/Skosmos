@@ -894,7 +894,7 @@ p {
 }
   
 .loading-spinner {
-  margin-left: 15px;
+  margin: 10px 0 0 15px;
 }
 
 .replaced {
@@ -1007,7 +1007,7 @@ body, .versal, h1, h2, p, .versal-bold {
 
 }
 
-@media (max-width: 720px) {
+@media (max-width: 700px) {
   .topbar {
     position: relative;
   }
@@ -1056,6 +1056,10 @@ body, .versal, h1, h2, p, .versal-bold {
     top: 100px;
     overflow: hidden;
   }
+
+  #navigation {
+    padding-right: 0 !important;
+  }
 }
 
 @media (max-width: 640px) {
@@ -1085,7 +1089,7 @@ body, .versal, h1, h2, p, .versal-bold {
 
 
 
-@media (max-width: 415px) {
+@media (max-width: 500px) {
   .btn-group {
     width: 100%;
   }
