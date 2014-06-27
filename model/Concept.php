@@ -307,9 +307,11 @@ class Concept extends VocabularyDataObject
       $arrayClass = $arrayClassURI !== null ? EasyRdf_Namespace::shorten($arrayClassURI) : null;
       foreach ($reverseResources as $reverseResource) {
         $property = in_array($arrayClass, $reverseResource->types()) ? "onki:memberOfArray" : "onki:memberOf" ;
-        $exvocab = $this->model->guessVocabularyFromURI($reverseResource->getUri())->getId();
+        if($this->model->guessVocabularyFromURI($reverseResource->getUri()))
+          $exvocab =  $this->model->guessVocabularyFromURI($reverseResource->getUri())->getId();
         $reverseUri = $reverseResource->getUri(null);
-        $label = $reverseResource->label($this->lang) ? $reverseResource->label($this->lang) : $reverseResource->label();
+        if ($reverseResource->label())
+          $label = $reverseResource->label($this->lang) ? $reverseResource->label($this->lang) : $reverseResource->label();
         $properties[$property][] = new ConceptPropertyValue($property, $reverseUri, $exvocab, $label->getLang(), $label->getValue());
       }
     }
