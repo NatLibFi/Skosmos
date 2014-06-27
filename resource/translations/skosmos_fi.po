@@ -7,7 +7,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-25 10:04+0200\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Osma Suominen <osma.suominen@helsinki.fi>\n"
+"Last-Translator: Henri Ylikotila <henri.ylikotila@helsinki.fi>\n"
 "Language-Team: ONKI Team <onki-posti@helsinki.fi>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
@@ -299,7 +299,7 @@ msgstr "Nimi"
 
 #: /tmp/cache/53aa7499b0644/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:388
 msgid "deprecated"
-msgstr "Käsite on poistettu käytöstä. Älä käytä tätä käsitettä sisällönkuivailuun!"
+msgstr "Käsite on poistettu käytöstä. Älä käytä tätä käsitettä sisällönkuvailuun!"
 
 #: /tmp/cache/53aa7499b0644/b7/b8/db5433ea968c6a0d09780d91f529.php:157
 msgid "en"
