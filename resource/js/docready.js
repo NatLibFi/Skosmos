@@ -27,6 +27,8 @@ function customAutocomplete() {
 
 $(function() { // DOCUMENT READY 
 
+  var spinner = '<div class="loading-spinner"><span class="spinner-text">'+ loading_text + '</span><span class="spinner" /></div>';
+
   var selectedVocabs = [];
   var vocabSelectionString = readCookie('SKOSMOS_SELECTED') ? readCookie('SKOSMOS_SELECTED') : '';
   $('#selected-vocabs').val(vocabSelectionString);
@@ -102,12 +104,14 @@ $(function() { // DOCUMENT READY
   }
 
   // if we are on the vocab front page initialize the hierarchy view with a top concept.
-  $('#hier-trigger').click(function () {
+  $(document).on('click', '#hier-trigger', function () {
+    var $content = $('.sidebar-grey');
+    $content.empty().prepend(spinner);
     if($('.uri-input-box').length === 0) { // if on the vocabulary front page
       $('.active').removeClass('active');
       $('#hier-trigger').parent().addClass('active');
-      var $content = $('.sidebar-grey');
-      $content.empty();
+      $content.removeClass('sidebar-grey-alpha');
+      $('.pagination').hide();
       $content.append('<div class="hierarchy-bar-tree"></div>');
       invokeParentTree(getTreeConfiguration(true)); 
       $('#hier-trigger').attr('href', '#');
@@ -314,6 +318,7 @@ $(function() { // DOCUMENT READY
         var clicked = $(this);
         clicked.parent().addClass('active');
         var $content = $('#sidebar');
+        $('.sidebar-grey').empty().prepend(spinner);
         var targetUrl = event.target.href;
         var parameters = $.param({'base_path' : base_path});
         $.ajax({
@@ -345,6 +350,7 @@ $(function() { // DOCUMENT READY
         if ($pagination)
           $pagination.hide();
         var $content = $('#sidebar');
+        $('.sidebar-grey').empty().prepend(spinner);
         $content.removeClass('sidebar-grey-alpha');
         var targetUrl = event.target.href;
         var parameters = $.param({'base_path' : base_path});
@@ -372,6 +378,7 @@ $(function() { // DOCUMENT READY
         var base_path = path_fix.length / 3;
         var clicked = $(this);
         var $content = $('#sidebar');
+        $('.sidebar-grey').empty().prepend(spinner);
         var targetUrl = event.target.href;
         var parameters = $.param({'base_path' : base_path});
         $.ajax({
@@ -399,8 +406,7 @@ $(function() { // DOCUMENT READY
           var $pagination = $('.pagination');
           var base_path = path_fix.length / 3;
           var $content = $('.sidebar-grey');
-          $content.empty();
-          $content.append('<div class="loading-spinner"><span class="spinner-text">'+ loading_text + '</span><span class="spinner" /></div>');
+          $content.empty().prepend(spinner);
           var targetUrl = event.target.href;
           var parameters = $.param({'base_path' : base_path});
           $.ajax({

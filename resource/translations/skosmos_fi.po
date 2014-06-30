@@ -150,7 +150,7 @@ msgstr "Ladataan"
 
 #: /tmp/cache/53aa7499b0644/0e/21/616815bd3942b86671f42d3ed4b2.php:27
 msgid "Loading more items"
-msgstr "Ladataan lisää tuloksia"
+msgstr "Ladataan sisältöä"
 
 #: /tmp/cache/53aa7499b0644/31/cf/f203575414177e7630c9c3fb219d.php:134
 msgid "Message:"
