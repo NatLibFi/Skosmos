@@ -739,6 +739,10 @@ tr .property-hover {
   border-radius: 0 !important;
   margin-left: -1px !important;
 }
+  
+.pagination > li > a {
+  width: 26px;
+}
 
 .pagination { 
   background-color: #F6F7F8;
@@ -746,7 +750,7 @@ tr .property-hover {
   border-bottom: 1px solid #999999;
   margin: 0 0 -5px 0 !important;
   width: 310px;
-  padding: 0 10px !important;
+  padding: 0 0 0 10px !important;
 } 
 
 .nav-tabs, #groups > a {
