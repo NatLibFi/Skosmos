@@ -341,7 +341,7 @@ $(function() { // DOCUMENT READY
         $('.active').removeClass('active');
         var $clicked = $(this);
         $clicked.parent().addClass('active');
-        $('.pagination').destroy();
+        $('.pagination').hide();
         var $content = $('.sidebar-grey');
         $content.removeClass('sidebar-grey-alpha');
         var targetUrl = event.target.href;
