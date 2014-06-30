@@ -341,8 +341,10 @@ $(function() { // DOCUMENT READY
         $('.active').removeClass('active');
         var $clicked = $(this);
         $clicked.parent().addClass('active');
-        $('.pagination').hide();
-        var $content = $('.sidebar-grey');
+        var $pagination = $('.pagination');
+        if ($pagination)
+          $pagination.hide();
+        var $content = $('#sidebar');
         $content.removeClass('sidebar-grey-alpha');
         var targetUrl = event.target.href;
         var parameters = $.param({'base_path' : base_path});
@@ -352,7 +354,7 @@ $(function() { // DOCUMENT READY
             success : function(data) {
               $content.empty();
               var title = $(data).filter('title').text();
-              var response = $('.sidebar-grey', data).html();
+              var response = $('#sidebar', data).html();
               $content.append(response);
               $('.nav').scrollTop(0);
               if (window.history.pushState)
@@ -369,7 +371,7 @@ $(function() { // DOCUMENT READY
       function(event) {
         var base_path = path_fix.length / 3;
         var clicked = $(this);
-        var $content = $('.sidebar-grey');
+        var $content = $('#sidebar');
         var targetUrl = event.target.href;
         var parameters = $.param({'base_path' : base_path});
         $.ajax({
@@ -378,7 +380,7 @@ $(function() { // DOCUMENT READY
             success : function(data) {
               $content.empty();
               var title = $(data).filter('title').text();
-              var response = $('.sidebar-grey', data).html();
+              var response = $('#sidebar', data).html();
               $content.append(response);
               $('.nav').scrollTop(0);
               if (window.history.pushState)
