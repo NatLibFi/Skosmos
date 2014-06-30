@@ -350,7 +350,7 @@ $(function() { // DOCUMENT READY
         if ($pagination)
           $pagination.hide();
         var $content = $('#sidebar');
-        $('.sidebar-grey').empty().prepend(spinner);
+        $('.sidebar-grey').empty().removeClass('sidebar-grey-alpha').prepend(spinner);
         $content.removeClass('sidebar-grey-alpha');
         var targetUrl = event.target.href;
         var parameters = $.param({'base_path' : base_path});
