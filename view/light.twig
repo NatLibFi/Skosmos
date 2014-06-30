@@ -15,7 +15,7 @@
 {% include 'footer.inc' ignore missing %}
 <title>{{ ServiceName }}{% block title %}{% endblock %}</title>
 </head>
-<body>
+<body{% if vocab_id == '' and vocab_id != 'feedback' and vocab_id != 'about' %} class="frontpage-logo"{% endif %}>
   {% if vocab_id != '' or vocab_id == 'feedback' or vocab_id == 'about' %}<div class="topbar-white">{% endif %}
     <div class="topbar{% if vocab_id != '' or vocab_id == 'feedback' or vocab_id == 'about' %} topbar-white{% else %} frontpage{% endif %}">
       {% include 'topbar.twig' %}
