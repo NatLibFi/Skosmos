@@ -1202,12 +1202,16 @@ body, .versal, h1, h2, p, .versal-bold {
     width: 1190px !important;
   }
 
-  .pagination {
-    width: 380px;
-    top: 183px !important;
-    padding: 6px 0 !important;
+  .sidebar-grey-alpha {
+    height: calc(100% - 150px) !important;
   }
 
+  .pagination {
+    width: 400px;
+    top: 183px !important;
+    padding: 6px 10px !important;
+  }
+  
   .topbar {
     position: relative;
     margin: 0 auto;
