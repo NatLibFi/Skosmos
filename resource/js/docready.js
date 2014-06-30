@@ -800,5 +800,15 @@ $(function() { // DOCUMENT READY
       snapAmount: 15,
       snapOffset: 1
     });
+  } 
+  if ($('#vocab-info').length == 1) {
+    $('.sidebar-grey').empty().append('<div class="loading-spinner"><span class="spinner-text">'+ loading_text + '</span><span class="spinner" /></div>');
+    $.ajax({
+      url : window.location.pathname + 'index',
+      success : function(data) {
+        $('#sidebar').empty();
+        $('#sidebar').append($(data).find('#sidebar'));
+      }
+    });
   }
 });

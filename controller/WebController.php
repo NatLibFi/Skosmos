@@ -594,10 +594,6 @@ class WebController extends Controller
     }
 
     $all_at_once = $vocab->getAlphabeticalFull();
-    if (!$all_at_once)
-      $search_results = $this->model->searchConcepts($letter . "*", $vocab_id, $lang, $lang, null, null, null, 0, 0);
-    else
-      $search_results = $this->model->searchConcepts("FullAlphabeticalIndex", $vocab_id, $lang, $lang, null, null, null, 0, 0);
 
     // load template
     $template = $this->twig->loadTemplate('vocab.twig');
@@ -612,7 +608,6 @@ class WebController extends Controller
                         'vocab_id' => $vocab_id,
                         'lang_supported' => $lang_support,
                         'request_uri' => $this->request_uri,
-                        'alpha_results' => $search_results,
                         'vocab_stats' => $vocab_stats,
                         'all_letters' => $all_at_once,
                         'lang_changed' => $lang_msg));
