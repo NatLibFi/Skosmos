@@ -741,7 +741,7 @@ tr .property-hover {
 }
   
 .pagination > li > a {
-  width: 26px;
+  width: 25px;
 }
 
 .pagination { 
@@ -1214,6 +1214,10 @@ body, .versal, h1, h2, p, .versal-bold {
     width: 400px;
     top: 183px !important;
     padding: 6px 10px !important;
+  }
+  
+  .pagination > li > a {
+    width: 26px;
   }
   
   .topbar {
