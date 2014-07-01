@@ -678,8 +678,12 @@ tr .property-hover {
   margin-bottom: 2px;
 }
 
-tr > td > .replaced-by {
+tr.replaced-by > td > span {
   color: #474b4f !important;
+}
+
+tr.replaced-by > td > ul > li > a {
+  color: #00748f !important;
 }
 
 .subvalue {
