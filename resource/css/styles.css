@@ -680,10 +680,12 @@ tr .property-hover {
 
 tr.replaced-by > td > span {
   color: #474b4f !important;
+  font-weight: bold !important;
 }
 
 tr.replaced-by > td > ul > li > a {
   color: #00748f !important;
+  font-weight: bold !important;
 }
 
 .subvalue {
