@@ -43,7 +43,7 @@ class Concept extends VocabularyDataObject
   public function __construct($model, $vocab, $resource, $graph)
   {
     parent::__construct($model, $vocab, $resource);
-    $this->order = array("rdf:type", "skos:definition", "skos:broader", "skos:narrower", "skos:related", "skos:altLabel", "onki:memberOf", "skos:note", "skos:scopeNote", "skos:historyNote", "rdfs:comment", "dc11:source", "dc:source", "skos:prefLabel");
+    $this->order = array("rdf:type", "dc:isReplacedBy", "skos:definition", "skos:broader", "skos:narrower", "skos:related", "skos:altLabel", "onki:memberOf", "skos:note", "skos:scopeNote", "skos:historyNote", "rdfs:comment", "dc11:source", "dc:source", "skos:prefLabel");
     $this->graph = $graph;
   }
 
