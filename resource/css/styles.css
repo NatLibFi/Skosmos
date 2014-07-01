@@ -376,6 +376,14 @@ border: 1px solid #EDEDED;
 
 /* feedback page
  ***************************/
+.missing-value {
+  border: 1px solid red !important;
+}
+
+#message {
+  height: 150px;
+}
+
 .feedback-logo {
   position: absolute;
   min-width: 84px;
@@ -393,6 +401,10 @@ border: 1px solid #EDEDED;
   border-radius: 0 !important;
   margin-bottom: 0;
   box-shadow: none !important;
+}
+
+.feedback-box > p {
+  line-height: 50px;
 }
 
 .feedback-box > div > span {

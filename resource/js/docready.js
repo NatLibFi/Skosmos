@@ -677,17 +677,17 @@ $(function() { // DOCUMENT READY
   $("#send-feedback")
   .click(
     function() {
-      $(".error").remove();
+      $('#email').removeClass('missing-value');
+      $('#message').removeClass('missing-value');
       var emailMessageVal = $("#message").val();
       var emailAddress = $("#email").val();
       var requiredFields = true;  
-      $('.errors').remove();
       if (emailAddress === '' || emailAddress.indexOf('@') === -1) {
-        $("#email").before('<span class="errors">' + missing_value + '</span>');
+        $("#email").addClass('missing-value');
         requiredFields = false;
       }
       if (emailMessageVal === '') {
-        $("#message").before('<span class="errors">' + missing_value + '</span>');
+        $("#message").addClass('missing-value');
         requiredFields = false;
       }
       return requiredFields;
