@@ -809,6 +809,10 @@ $(function() { // DOCUMENT READY
       snapOffset: 1
     });
   } 
+
+  /* makes an AJAX query for the alphabetical index contents when landing on 
+   * the vocabulary home page.
+   */
   if ($('#vocab-info').length == 1) {
     $('.sidebar-grey').empty().append('<div class="loading-spinner"><span class="spinner-text">'+ loading_text + '</span><span class="spinner" /></div>');
     $.ajax({
@@ -819,4 +823,5 @@ $(function() { // DOCUMENT READY
       }
     });
   }
+
 });
