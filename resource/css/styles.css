@@ -581,6 +581,17 @@ tr {
   color: white !important;
 }
 
+.alert h2 {
+  margin: 5px 0 5px 0;
+}
+
+.alert-replaced a {
+  color: #ffffff !important;
+  display: inline-block;
+  margin-left: 5px;
+  text-decoration: underline !important;
+}
+
 #lang-info * {
   color: #ffffff;
 }

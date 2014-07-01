@@ -809,6 +809,16 @@ $(function() { // DOCUMENT READY
       snapOffset: 1
     });
   } 
+  
+  /* adding the replaced by concept href to the alert box when possible.
+   */
+  $replaced = $('.replaced-by');
+  if ($replaced.length === 1) {
+    var $replacedSpan = $('.replaced-by span'); 
+    var undoUppercasing = $replacedSpan.text().substr(0,1) + $replacedSpan.text().substr(1).toLowerCase();
+    var html = '<h2 class="alert-replaced">' + undoUppercasing + ':<a href="' + $('.replaced-by a')[0] + '">' + $('.replaced-by a').html() + '</h2>';
+    $('.alert-danger').append(html);
+  } 
 
   /* makes an AJAX query for the alphabetical index contents when landing on 
    * the vocabulary home page.
