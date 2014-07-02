@@ -606,9 +606,7 @@ class WebController extends Controller
                         'vocab_id' => $vocab_id,
                         'lang_supported' => $lang_support,
                         'request_uri' => $this->request_uri,
-                        'alpha_results' => $search_results,
                         'vocab_stats' => $vocab_stats,
-                        'all_letters' => $all_at_once,
                         'lang_changed' => $lang_msg));
   }
 
