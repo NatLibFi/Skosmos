@@ -824,9 +824,11 @@ $(function() { // DOCUMENT READY
    * the vocabulary home page.
    */
   if ($('#vocab-info').length == 1) {
+    // taking into account the possibility that the lang parameter has been changed by the WebController.
+    var urlLangCorrected = window.location.href.substr(0,window.location.href.length - 3) + lang + '/index';
     $('.sidebar-grey').empty().append('<div class="loading-spinner"><span class="spinner-text">'+ loading_text + '</span><span class="spinner" /></div>');
     $.ajax({
-      url : window.location.pathname + 'index',
+      url : urlLangCorrected,
       success : function(data) {
         $('#sidebar').empty();
         $('#sidebar').append($(data).find('#sidebar'));
