@@ -11,7 +11,8 @@ $LANGUAGES = array(
 );
 
 // default SPARQL endpoint
-define("DEFAULT_ENDPOINT", "http://sparql.onki.fi/onki-light/sparql");
+// a local Fuseki server is usually on localhost:3030
+define("DEFAULT_ENDPOINT", "http://localhost:3030/ds/sparql");
 
 // how many items (maximum) to retrieve in search methods by default
 define("DEFAULT_SEARCH_LIMIT", 100);
@@ -22,7 +23,8 @@ define("DEFAULT_TRANSITIVE_LIMIT", 1000);
 // a default location for Twig template rendering
 define("TEMPLATE_CACHE", "/tmp/skosmos-template-cache");
 
-// default sparql-query extension
+// default sparql-query extension, or "Generic" for plain SPARQL 1.1
+// set to "JenaText" instead if you use Fuseki with jena-text index
 define("DEFAULT_SPARQL_DIALECT", "Generic");
 
 // default email address to send the feedback

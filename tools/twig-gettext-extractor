@@ -18,7 +18,7 @@
 
 /**
  * Adapted for ONKI Light by Osma Suominen. Changes:
- * - added dummy implementation of link_url filter used by ONKI Light
+ * - added dummy implementation of link_url filter used by ONKI Light / Skosmos
  * - changed require_once statement below so it finds autoload.php
  */
 
@@ -47,7 +47,7 @@ $twig->addExtension(new Symfony\Bridge\Twig\Extension\FormExtension(
 ));
 // You can add more extensions here.
 
-// Custom filter for ONKI Light templates
+// Custom filter for ONKI Light / Skosmos templates
 $urlFilter = new Twig_SimpleFilter('link_url',
     function($uri, $vocab, $lang,$type='page') {
         return $uri; // dummy implementation
