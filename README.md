@@ -7,23 +7,29 @@ looking for suitable keywords.  Vocabularies are accessed via SPARQL
 endpoints containing SKOS vocabularies.
 
 In addition to a modern web user interface for humans, Skosmos provides a
-REST-style API and Linked Data access to the underlying vocabulary data.
+[REST-style API](https://github.com/NatLibFi/Skosmos/wiki/REST-API) and Linked 
+Data access to the underlying vocabulary data.
 
-Skosmos is used as a basis for the Finto vocabulary service. The latest
-development version is also available at dev.finto.fi.
+Skosmos is used as a basis for the [Finto](http://finto.fi) vocabulary service. 
+The latest development version is also available at 
+[dev.finto.fi](http://dev.finto.fi).
 
 Skosmos is implemented using PHP, with Twig templates and e.g. jQuery and
 jsTree used to build the web interface, and EasyRdf for SPARQL and RDF data
 access.
 
-The code is open source under the MIT license. See Installation in the wiki
-for details on obtaining the source and running your own instance of 
+The code is open source under the MIT license. See 
+[Installation](https://github.com/NatLibFi/Skosmos/wiki/Installation) in the 
+wiki for details on obtaining the source and running your own instance of 
 Skosmos.
 
-For information about current and future versions, see ReleaseNotes and
-Roadmap.
+For information about released versions, see 
+[Release Notes](https://github.com/NatLibFi/Skosmos/wiki/Release-Notes) in 
+the wiki.
 
-Skosmos was formerly known as ONKI Light. 
+Skosmos was formerly known as ONKI Light. See the 
+[old Google Code project page](https://code.google.com/p/onki-light/)
+for historical releases and information.
 
 ## Reporting issues
 
