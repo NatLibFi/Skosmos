@@ -350,7 +350,9 @@ border: 1px solid #EDEDED;
 #vocabulary-list > div > h2 {
   margin-top: 0 !important;
   margin-bottom: 0px;
-  padding-left: 10px;
+  padding-left: 100px;
+  line-height: 20px;
+  width: 15px;
 }
 
 .vocabularies {

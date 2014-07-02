@@ -4,7 +4,7 @@
       {% if vocab_list is not defined or vocab_list|length == 0 %}
       <h2>{% trans "No vocabularies on the server!" %}</h2>
       {% else %}
-      {% for word in "Vocabularies on the server"|trans|split(' ') %}<h2>{{ word }}</h2>{% endfor %}
+      <h2>{% trans "Vocabularies on the server" %}</h2>
   </div>
   <div class="vocabularies">
       <table class="table">
