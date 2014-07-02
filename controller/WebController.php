@@ -78,7 +78,7 @@ class WebController extends Controller
     if (defined('CUSTOM_CSS'))
       $this->twig->addGlobal("ServiceCustomCss", CUSTOM_CSS);
     // setting the list of properties to be displayed in the search results
-    $this->twig->addGlobal("PreferredProperties", array('skos:prefLabel', 'skos:narrower', 'skos:broader', 'onki:memberOf', 'skos:altLabel', 'skos:related'));
+    $this->twig->addGlobal("PreferredProperties", array('skos:prefLabel', 'skos:narrower', 'skos:broader', 'skosmos:memberOf', 'skos:altLabel', 'skos:related'));
 
     // register a Twig filter for generating URLs for vocabulary resources (concepts and groups)
     $controller = $this; // for use by anonymous function below

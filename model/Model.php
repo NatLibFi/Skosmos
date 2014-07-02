@@ -8,7 +8,7 @@
 /**
  * Setting some often needed namespace prefixes
  */
-EasyRdf_Namespace::set('onki', 'http://schema.onki.fi/onki#');
+EasyRdf_Namespace::set('skosmos', 'http://purl.org/net/skosmos#');
 EasyRdf_Namespace::set('void', 'http://rdfs.org/ns/void#');
 EasyRdf_Namespace::set('skosext', 'http://purl.org/finnonto/schema/skosext#');
 EasyRdf_Namespace::set('isothes', 'http://purl.org/iso25964/skos-thes#');
@@ -314,7 +314,7 @@ class Model
   public function getVocabularies()
   {
     if ($this->all_vocabularies == null) { // initialize cache
-      $vocs = $this->graph->allOfType('onki:Vocabulary');
+      $vocs = $this->graph->allOfType('skosmos:Vocabulary');
       $this->all_vocabularies = $this->createDataObjects("Vocabulary", $vocs);
       foreach ($this->all_vocabularies as $voc) {
         // register vocabulary ids as RDF namespace prefixes

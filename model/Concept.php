@@ -43,7 +43,7 @@ class Concept extends VocabularyDataObject
   public function __construct($model, $vocab, $resource, $graph)
   {
     parent::__construct($model, $vocab, $resource);
-    $this->order = array("rdf:type", "dc:isReplacedBy", "skos:definition", "skos:broader", "skos:narrower", "skos:related", "skos:altLabel", "onki:memberOf", "skos:note", "skos:scopeNote", "skos:historyNote", "rdfs:comment", "dc11:source", "dc:source", "skos:prefLabel");
+    $this->order = array("rdf:type", "dc:isReplacedBy", "skos:definition", "skos:broader", "skos:narrower", "skos:related", "skos:altLabel", "skosmos:memberOf", "skos:note", "skos:scopeNote", "skos:historyNote", "rdfs:comment", "dc11:source", "dc:source", "skos:prefLabel");
     $this->graph = $graph;
   }
 
@@ -306,7 +306,7 @@ class Concept extends VocabularyDataObject
       $arrayClassURI = $this->vocab !== null ? $this->vocab->getArrayClassURI() : null;
       $arrayClass = $arrayClassURI !== null ? EasyRdf_Namespace::shorten($arrayClassURI) : null;
       foreach ($reverseResources as $reverseResource) {
-        $property = in_array($arrayClass, $reverseResource->types()) ? "onki:memberOfArray" : "onki:memberOf" ;
+        $property = in_array($arrayClass, $reverseResource->types()) ? "skosmos:memberOfArray" : "skosmos:memberOf" ;
         $exvoc = $this->model->guessVocabularyFromURI($reverseResource->getUri());
         $exvocab = $exvoc ? $exvoc->getId() : null;
         $reverseUri = $reverseResource->getUri(null);
@@ -320,7 +320,7 @@ class Concept extends VocabularyDataObject
       $topProp = new ConceptPropertyValue('skos:narrower', $topConcept['parts'], $topConcept['vocab'], $topConcept['lang'], $topConcept['label'], $exvocab = null);
       $properties['skos:narrower'][] = $topProp;
       foreach ($topConcept['sub_members'] as $subMember) {
-        $topProp->addSubMember('onki:sub', $subMember['label'], $subMember['parts'], $subMember['vocab'], $subMember['lang'], $subMember['external']);
+        $topProp->addSubMember('skosmos:sub', $subMember['label'], $subMember['parts'], $subMember['vocab'], $subMember['lang'], $subMember['external']);
       }
     }
 

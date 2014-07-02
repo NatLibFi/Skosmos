@@ -51,7 +51,7 @@ class Vocabulary extends DataObject
    */
   public function getLanguages()
   {
-    $langs = $this->resource->allLiterals('onki:language');
+    $langs = $this->resource->allLiterals('skosmos:language');
     $ret = array();
     foreach ($langs as $lang) {
       $ret[] = $lang->getValue();
@@ -67,7 +67,7 @@ class Vocabulary extends DataObject
 
   public function getDefaultLanguage()
   {
-    $deflang = $this->resource->getLiteral('onki:defaultLanguage');
+    $deflang = $this->resource->getLiteral('skosmos:defaultLanguage');
     if ($deflang) return $deflang->getValue();
     $langs = $this->getLanguages();
     if (sizeof($langs) > 1)
@@ -93,7 +93,7 @@ class Vocabulary extends DataObject
    */
   public function getGraph()
   {
-    $graph = $this->resource->get('onki:sparqlGraph');
+    $graph = $this->resource->get('skosmos:sparqlGraph');
     if ($graph)
       $graph = $graph->getUri();
 
@@ -109,7 +109,7 @@ class Vocabulary extends DataObject
   {
     $endpoint = $this->getEndpoint();
     $graph = $this->getGraph();
-    $dialect = $this->resource->get('onki:sparqlDialect');
+    $dialect = $this->resource->get('skosmos:sparqlDialect');
     $dialect = $dialect ? $dialect->getValue() : DEFAULT_SPARQL_DIALECT;
 
     return $this->model->getSparqlImplementation($dialect, $endpoint, $graph);
@@ -169,7 +169,7 @@ class Vocabulary extends DataObject
    */
   public function getAlphabeticalFull()
   {
-    $val = $this->resource->getLiteral('onki:fullAlphabeticalIndex');
+    $val = $this->resource->getLiteral('skosmos:fullAlphabeticalIndex');
     if ($val)
       return (boolean) $val->getValue();
     return false;
@@ -265,14 +265,14 @@ class Vocabulary extends DataObject
   }
 
   /**
-   * Return the URI of the default concept scheme of this vocabulary. If the onki:mainConceptScheme property is set in the
+   * Return the URI of the default concept scheme of this vocabulary. If the skosmos:mainConceptScheme property is set in the
    * vocabulary configuration, that will be returned. Otherwise an arbitrary concept scheme will be returned.
    * @return string concept scheme URI
    */
 
   public function getDefaultConceptScheme()
   {
-    $conceptScheme = $this->resource->get("onki:mainConceptScheme");
+    $conceptScheme = $this->resource->get("skosmos:mainConceptScheme");
     if ($conceptScheme) return $conceptScheme->getUri();
 
     // mainConceptScheme not explicitly set, guess it
@@ -348,7 +348,7 @@ class Vocabulary extends DataObject
 
   public function getGroupClassURI()
   {
-    $val = $this->resource->getResource("onki:groupClass");
+    $val = $this->resource->getResource("skosmos:groupClass");
     if ($val)
       return $val->getURI();
     return null;
@@ -362,7 +362,7 @@ class Vocabulary extends DataObject
 
   public function getArrayClassURI()
   {
-    $val = $this->resource->getResource("onki:arrayClass");
+    $val = $this->resource->getResource("skosmos:arrayClass");
     if ($val)
       return $val->getURI();
     return null;
@@ -374,7 +374,7 @@ class Vocabulary extends DataObject
    */
   public function getShowHierarchy()
   {
-    $val = $this->resource->getLiteral("onki:showTopConcepts");
+    $val = $this->resource->getLiteral("skosmos:showTopConcepts");
     if ($val)
       return (boolean) $val->getValue();
     return false;
