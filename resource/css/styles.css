@@ -611,7 +611,7 @@ tr {
 #lang-info > h1 {
   float: left;
   font-size: 48px !important;
-  margin: -12px 15px 0 0;
+  margin: -5px 15px 0 0;
 }
 
 .errors {
