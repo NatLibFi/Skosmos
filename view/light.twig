@@ -35,7 +35,7 @@
         <ul class="nav nav-tabs">
           <li id="alpha"{% if search_results|length != 1 or (term and search_results|length == 1) %} class ="active"{% endif %}><a href="{{ path_fix }}{{ vocab_id }}/{{ lang }}/index">{% trans "Alpha-nav" %}</a></li>
           {% if search_results|length == 1 or vocab.showHierarchy %}
-          <li id="hierarchy"{% if not term %} class ="active"{% endif %}><a href="#" id="hier-trigger">{% trans "Hier-nav" %}</a></li>
+          <li id="hierarchy"{% if search_results|length == 1 and not term %} class ="active"{% endif %}><a href="#" id="hier-trigger">{% trans "Hier-nav" %}</a></li>
           {% endif %}
           {% if vocab.groupClassURI %}
           <li id="groups"><a href="{{ path_fix }}{{ vocab_id }}/{{ lang }}/groups">{% trans "Group-nav" %}</a></li>
