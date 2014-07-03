@@ -458,8 +458,9 @@ $(function() { // DOCUMENT READY
         var $property = $(this);
         if ($property.siblings('.tooltip').length === 0)
           $property.tooltip('show');
-        else
-          $property.tooltip('hide');
+        else {
+          $('.tooltip').remove();
+        }
       }
   );
   
