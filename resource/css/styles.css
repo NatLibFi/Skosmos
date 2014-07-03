@@ -687,6 +687,10 @@ tr {
   background-color: #ffffff;
 }
 
+.property-click {
+  border-bottom: 2px dotted #888888;
+}
+
 tr .property-hover {
   margin-left: 5px;
   margin-bottom: 2px;
