@@ -456,26 +456,26 @@ $(function() { // DOCUMENT READY
       function(event) {
         $.each($('.tooltip'), function(index, value) { $(value).siblings('.property-mouseover').tooltip('hide'); });
         var $property = $(this);
-        if ($property.children('.tooltip').length === 0)
-          $property.children('.property-mouseover').tooltip('show');
+        if ($property.siblings('.tooltip').length === 0)
+          $property.tooltip('show');
         else
-          $property.children('.property-mouseover').tooltip('hide');
+          $property.tooltip('hide');
       }
   );
   
-  $(document).on('mouseenter','.property-hover',
+  $(document).on('mouseenter','.property-click',
     function(event) {
       var $property = $(this);
       if ($property.siblings('.tooltip').length === 0)
-        $property.siblings('.property-mouseover').tooltip('show');
+        $property.tooltip('show');
     }  
   );
   
-  $(document).on('mouseleave','.property-hover',
+  $(document).on('mouseleave','.property-click',
     function(event) {
       var $property = $(this);
       if ($property.siblings('.tooltip').length !== 0)
-        $property.siblings('.property-mouseover').tooltip('hide');
+        $property.children('.property-mouseover').tooltip('hide');
     }  
   );
 

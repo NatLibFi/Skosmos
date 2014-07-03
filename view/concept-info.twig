@@ -66,7 +66,7 @@
           {% endspaceless %}
           <table class="table search-results-property-table{% if concept.type == 'skosext:DeprecatedConcept' %} deprecated{% endif %}">
           {% for property in concept.properties %} {# loop through ConceptProperty objects #}
-            <tr{% if property.type == 'dc:isReplacedBy' %} class="replaced-by"{% endif%}><td><span class="property-click versal{% if property.type == 'rdf:type' %}-bold{% endif %}" >{{ property.label|upper }}{% if not (property.type in property.description and '_help' in property.description) %}<span class="versal property-mouseover" title="{{ property.description }}"></span>{% endif %}</span></td><td><ul>
+            <tr{% if property.type == 'dc:isReplacedBy' %} class="replaced-by"{% endif%}><td><span class="property-click versal{% if property.type == 'rdf:type' %}-bold{% endif %}" {% if not (property.type in property.description and '_help' in property.description) %}title="{{ property.description }}"{% endif %}>{{ property.label|upper }}</span></td><td><ul>
             {% for propval in property.values %} {# loop through ConceptPropertyValue objects #}
                 {% if propval.uri and propval.type != 'rdf:type' %} {# resources with URI #}
                 <li>
@@ -93,7 +93,7 @@
             {% endfor %}
             </ul></td></tr>
           {% endfor %}
-          {% if concept.foreignPrefLabels or concept.foreignAltLabels %}<tr><td><span class="versal property-click">{{ 'foreign prefLabels'|trans|upper }}<span class="versal property-mouseover" title="{% trans "foreign prefLabel help" %}"></span></td><td>
+          {% if concept.foreignPrefLabels or concept.foreignAltLabels %}<tr><td><span class="versal property-click" title="{% trans "foreign prefLabel help" %}" >{{ 'foreign prefLabels'|trans|upper }}</td><td>
               <ul>
               {% for lang,labels in concept.foreignPrefLabels %}
                 {% for label in labels %}
@@ -122,7 +122,7 @@
           <div class="concept-appendix">
             <table class="table search-results-property-table {% if concept.type == 'skosext:DeprecatedConcept' %} deprecated{% endif %}">
             {% for property in concept.mappingProperties %} {# loop through ConceptProperty objects #}
-              <tr><td><span class="versal property-click" >{{ property.label|upper }}<span class="versal property-mouseover" title="{{ property.description }}"></span></span></td><td><ul>
+              <tr><td><span class="versal property-click" title="{{ property.description }}">{{ property.label|upper }}</span></td><td><ul>
               {% for propval in property.values %} {# loop through ConceptPropertyValue objects #}
                   {% if propval.uri %} {# resources with URI #}
                   <li>
