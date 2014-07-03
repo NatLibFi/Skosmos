@@ -46,16 +46,13 @@
             {% endfor %}
           {% endif %}
           {% spaceless %}
-          <table class="preflabel-container">
-            <td class="preflabel-description">
-              <span class="versal" title="{{ 'skos:prefLabel_help'|trans }}">{{ 'skos:prefLabel'|trans|upper }}:</span>
+          <div class="preflabel-container" title="{{ 'skos:prefLabel_help'|trans }}">
             {% if concept.foundBy %} {# hit has been found through an alternative label #}
             <span class="versal">{{ concept.foundBy }} >></span>
             {% if concept.ExVocab is defined %}
             <span class="prefLabel conceptlabel redirected-vocab-id"> @{{ concept.ExVocab }}</span>
             {% endif %}
             <br /><a class="prefLabel foundby" href="{{ concept.uri | link_url(concept.vocab,lang) }}">{{ concept.label }}</a></span>
-            </td>
           {% else %}
           <td>
           <span class="prefLabel
@@ -64,7 +61,7 @@
             {% endif %}
           </td>
           {% endif %}
-          </table>
+          </div>
           <hr />
           {% endspaceless %}
           <table class="table search-results-property-table{% if concept.type == 'skosext:DeprecatedConcept' %} deprecated{% endif %}">
