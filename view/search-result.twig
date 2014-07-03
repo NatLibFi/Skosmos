@@ -21,7 +21,7 @@
     {% if property.type in PreferredProperties %}
     <div class="property">
       <span class="property-click">
-        <img class="property-hover" src="{{ path_fix }}resource/pics/{% if property.type == 'skos:broader' %}broader{% elseif property.type == 'skos:narrower' %}narrower{% elseif property.type == 'skos:altLabel' %}replaced{% elseif property.type == 'skos:related' %}cloud{% elseif property.type == 'onki:memberOf' %}group{% else %}globe{% endif %}.gif"><span class="property-mouseover" title="{{ property.description }}"></span>
+        <img class="property-hover" src="{{ path_fix }}resource/pics/{% if property.type == 'skos:broader' %}broader{% elseif property.type == 'skos:narrower' %}narrower{% elseif property.type == 'skos:altLabel' %}replaced{% elseif property.type == 'skos:related' %}cloud{% elseif property.type == 'skosmos:memberOf' %}group{% else %}globe{% endif %}.gif"><span class="property-mouseover" title="{{ property.description }}"></span>
       </span>
       {% set previous = false %}
       {% for propval in property.values %} {# loop through ConceptPropertyValue objects #}
