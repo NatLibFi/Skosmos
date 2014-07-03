@@ -333,11 +333,6 @@ border: 1px solid #EDEDED;
   border-bottom: 2px solid #666666 !important;
 }
 
-.book-logo {
-  display: none;
-  float: left;
-}
-
 #vocabulary-list {
   background-color: #ffffff !important;
   display: inline-block;
