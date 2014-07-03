@@ -701,15 +701,14 @@ tr {
 }
 
 .help-box img {
-  margin-top: -2px !important;
+  margin-top: -1px !important;
+  border-right: 2px dotted #888888;
+  padding-right: 5px !important;
 }
 
 .help-box p {
   display: inline-block; 
-  height: 15px;
   margin-left: 5px !important;
-  padding-left: 5px !important;
-  border-left: 2px dotted #888888;
 }
 
 tr .property-hover {
