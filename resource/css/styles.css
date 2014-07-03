@@ -646,7 +646,7 @@ tr {
 }
 
 .concept-main > table, .concept-appendix > table {
-  margin-bottom: 0 !important;
+  margin-bottom: 0;
 }
 
 .hidden-breadcrumb {
@@ -748,8 +748,8 @@ tr.replaced-by > td > ul > li > a {
   padding-left: 0 !important;
 }
 
-.search-results-property-table {
-  padding: 0 15px !important;
+.concept-main > .search-results-property-table {
+  margin-bottom: 5px;
 }
 
 .search-results-property-table td:last-child {
