@@ -5,9 +5,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ONKI Light\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-03 09:31+0200\n"
+"POT-Creation-Date: 2014-07-03 16:51+0200\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Osma Suominen <osma.suominen@helsinki.fi>\n"
+"Last-Translator: Henri Ylikotila <henri.ylikotila@helsinki.fi>\n"
 "Language-Team: ONKI Team <onki-posti@helsinki.fi>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
@@ -21,537 +21,543 @@ msgstr ""
 "X-Poedit-SearchPath-1: controller\n"
 "X-Poedit-SearchPath-2: model\n"
 
-#: controller/Controller.php:58
-msgid "in_this_language"
-msgstr "suomeksi"
-
 #: controller/WebController.php:200
 #: controller/WebController.php:455
 #: controller/WebController.php:592
 msgid "language_changed_message"
 msgstr "Valitsemaasi kieltä ei ollut tuettuna tässä sanastossa. Siksi emme näytä sivua suomeksi."
 
-#: /tmp/cache/53b4f8d13d628/c7/6d/f3098cb2d6991a19392e19d5e3f9.php:42
+#: controller/Controller.php:58
+msgid "in_this_language"
+msgstr "suomeksi"
+
+#: /tmp/cache/53b55fcd9d407/c7/6d/f3098cb2d6991a19392e19d5e3f9.php:42
 msgid "404 Error: The page %requested_page% cannot be found."
 msgstr "Virhe 404: Sivua %requested_page% ei löydy."
 
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:163
-#: /tmp/cache/53b4f8d13d628/bd/18/082f84f6ac0787f1638aac1a519c.php:46
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:163
+#: /tmp/cache/53b55fcd9d407/bd/18/082f84f6ac0787f1638aac1a519c.php:46
 msgid "About"
 msgstr "Tietoja"
 
-#: /tmp/cache/53b4f8d13d628/0e/21/616815bd3942b86671f42d3ed4b2.php:39
+#: /tmp/cache/53b55fcd9d407/0e/21/616815bd3942b86671f42d3ed4b2.php:39
 msgid "All"
 msgstr "Näytetään kaikki"
 
-#: /tmp/cache/53b4f8d13d628/da/b9/8bbe0288495cd8be2e8abaf81a40.php:54
-#: /tmp/cache/53b4f8d13d628/bd/1b/8ea01a92d3d28ecbc47efa229ca9.php:260
-#: /tmp/cache/53b4f8d13d628/67/a7/6c625531764646a9d3d092822c7f.php:55
+#: /tmp/cache/53b55fcd9d407/67/a7/6c625531764646a9d3d092822c7f.php:55
+#: /tmp/cache/53b55fcd9d407/bd/1b/8ea01a92d3d28ecbc47efa229ca9.php:261
+#: /tmp/cache/53b55fcd9d407/da/b9/8bbe0288495cd8be2e8abaf81a40.php:54
 msgid "Alpha-nav"
 msgstr "Aakkosellinen"
 
-#: /tmp/cache/53b4f8d13d628/dc/b5/da640bf012bce1cbf6448b2bcfdd.php:35
-msgid "Alphabetical index"
-msgstr "Aakkosellinen hakemisto"
-
-#: /tmp/cache/53b4f8d13d628/65/87/16ff348734bf9f46de7d6a75e06b.php:155
+#: /tmp/cache/53b55fcd9d407/65/87/16ff348734bf9f46de7d6a75e06b.php:155
 msgid "Alternate terms"
 msgstr "Korvatut termit"
 
-#: /tmp/cache/53b4f8d13d628/65/87/16ff348734bf9f46de7d6a75e06b.php:141
+#: /tmp/cache/53b55fcd9d407/65/87/16ff348734bf9f46de7d6a75e06b.php:141
 msgid "Concept counts by language"
 msgstr "Käsitteiden lukumäärät kielittäin"
 
-#: /tmp/cache/53b4f8d13d628/65/87/16ff348734bf9f46de7d6a75e06b.php:147
+#: /tmp/cache/53b55fcd9d407/65/87/16ff348734bf9f46de7d6a75e06b.php:147
 msgid "Concept language"
 msgstr "Kieli"
 
-#: /tmp/cache/53b4f8d13d628/65/87/16ff348734bf9f46de7d6a75e06b.php:127
+#: /tmp/cache/53b55fcd9d407/65/87/16ff348734bf9f46de7d6a75e06b.php:127
 msgid "Concepts"
 msgstr "Käsitteitä"
 
-#: /tmp/cache/53b4f8d13d628/31/cf/f203575414177e7630c9c3fb219d.php:71
+#: /tmp/cache/53b55fcd9d407/31/cf/f203575414177e7630c9c3fb219d.php:71
 msgid "Contact us!"
 msgstr "Ota yhteyttä!"
 
-#: /tmp/cache/53b4f8d13d628/65/87/16ff348734bf9f46de7d6a75e06b.php:214
+#: /tmp/cache/53b55fcd9d407/65/87/16ff348734bf9f46de7d6a75e06b.php:214
 msgid "Download"
 msgstr "Lataa"
 
-#: /tmp/cache/53b4f8d13d628/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:665
-msgid "Download this concept in SKOS format:"
-msgstr "Lataa tämä käsite SKOS-muodossa:"
-
-#: /tmp/cache/53b4f8d13d628/31/cf/f203575414177e7630c9c3fb219d.php:126
+#: /tmp/cache/53b55fcd9d407/31/cf/f203575414177e7630c9c3fb219d.php:126
 msgid "E-mail:"
 msgstr "Sähköpostiosoite:"
 
-#: /tmp/cache/53b4f8d13d628/31/cf/f203575414177e7630c9c3fb219d.php:130
+#: /tmp/cache/53b55fcd9d407/31/cf/f203575414177e7630c9c3fb219d.php:130
 msgid "Enter your e-mail address"
 msgstr "Syötä sähköpostiosoitteesi"
 
-#: /tmp/cache/53b4f8d13d628/31/cf/f203575414177e7630c9c3fb219d.php:122
+#: /tmp/cache/53b55fcd9d407/31/cf/f203575414177e7630c9c3fb219d.php:122
 msgid "Enter your name"
 msgstr "Syötä nimesi"
 
-#: /tmp/cache/53b4f8d13d628/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:877
-#: /tmp/cache/53b4f8d13d628/c6/7b/5e7ec0913c0ae87db77a0aa6fd76.php:91
+#: /tmp/cache/53b55fcd9d407/c6/7b/5e7ec0913c0ae87db77a0aa6fd76.php:91
 msgid "Error: Requested vocabulary \"%vocab_id%\" not found!"
 msgstr "Virhe: Pyydettyä sanastoa \"%vocab_id%\" ei löydy!"
 
-#: /tmp/cache/53b4f8d13d628/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:865
-msgid "Error: term \"%term%\" not found in vocabulary!"
-msgstr "Virhe: termiä \"%term%\" ei löydy sanastosta!"
-
-#: /tmp/cache/53b4f8d13d628/bd/1b/8ea01a92d3d28ecbc47efa229ca9.php:462
+#: /tmp/cache/53b55fcd9d407/bd/1b/8ea01a92d3d28ecbc47efa229ca9.php:467
 msgid "Error: the vocabulary does not contain terms beginning with \"%letter%\"!"
 msgstr "Sanasto ei sisällä termejä jotka alkavat kirjaimella \"%letter%\"!"
 
-#: /tmp/cache/53b4f8d13d628/31/cf/f203575414177e7630c9c3fb219d.php:34
-#: /tmp/cache/53b4f8d13d628/31/cf/f203575414177e7630c9c3fb219d.php:54
+#: /tmp/cache/53b55fcd9d407/31/cf/f203575414177e7630c9c3fb219d.php:34
+#: /tmp/cache/53b55fcd9d407/31/cf/f203575414177e7630c9c3fb219d.php:54
 msgid "Feedback"
 msgstr "Palaute"
 
-#: /tmp/cache/53b4f8d13d628/31/cf/f203575414177e7630c9c3fb219d.php:65
+#: /tmp/cache/53b55fcd9d407/31/cf/f203575414177e7630c9c3fb219d.php:65
 msgid "Feedback has been sent!"
 msgstr "Palaute on lähetetty!"
 
-#: /tmp/cache/53b4f8d13d628/da/b9/8bbe0288495cd8be2e8abaf81a40.php:35
+#: /tmp/cache/53b55fcd9d407/da/b9/8bbe0288495cd8be2e8abaf81a40.php:35
 msgid "Group index"
 msgstr "Ryhmähakemisto"
 
-#: /tmp/cache/53b4f8d13d628/da/b9/8bbe0288495cd8be2e8abaf81a40.php:81
-#: /tmp/cache/53b4f8d13d628/bd/1b/8ea01a92d3d28ecbc47efa229ca9.php:292
-#: /tmp/cache/53b4f8d13d628/67/a7/6c625531764646a9d3d092822c7f.php:82
+#: /tmp/cache/53b55fcd9d407/67/a7/6c625531764646a9d3d092822c7f.php:82
+#: /tmp/cache/53b55fcd9d407/bd/1b/8ea01a92d3d28ecbc47efa229ca9.php:294
+#: /tmp/cache/53b55fcd9d407/da/b9/8bbe0288495cd8be2e8abaf81a40.php:81
 msgid "Group-nav"
 msgstr "Ryhmät"
 
-#: /tmp/cache/53b4f8d13d628/65/87/16ff348734bf9f46de7d6a75e06b.php:159
+#: /tmp/cache/53b55fcd9d407/65/87/16ff348734bf9f46de7d6a75e06b.php:159
 msgid "Hidden terms"
 msgstr "Piilotermit"
 
-#: /tmp/cache/53b4f8d13d628/da/b9/8bbe0288495cd8be2e8abaf81a40.php:63
-#: /tmp/cache/53b4f8d13d628/bd/1b/8ea01a92d3d28ecbc47efa229ca9.php:274
-#: /tmp/cache/53b4f8d13d628/67/a7/6c625531764646a9d3d092822c7f.php:64
+#: /tmp/cache/53b55fcd9d407/67/a7/6c625531764646a9d3d092822c7f.php:64
+#: /tmp/cache/53b55fcd9d407/bd/1b/8ea01a92d3d28ecbc47efa229ca9.php:276
+#: /tmp/cache/53b55fcd9d407/da/b9/8bbe0288495cd8be2e8abaf81a40.php:63
 msgid "Hier-nav"
 msgstr "Hierarkia"
 
-#: /tmp/cache/53b4f8d13d628/2b/2f/1ce096ed381c7c416eb3bdf53cb7.php:150
+#: /tmp/cache/53b55fcd9d407/2b/2f/1ce096ed381c7c416eb3bdf53cb7.php:150
 msgid "Language literal"
 msgstr "suomeksi"
 
-#: /tmp/cache/53b4f8d13d628/0e/21/616815bd3942b86671f42d3ed4b2.php:31
+#: /tmp/cache/53b55fcd9d407/0e/21/616815bd3942b86671f42d3ed4b2.php:31
 msgid "Loading"
 msgstr "Ladataan"
 
-#: /tmp/cache/53b4f8d13d628/0e/21/616815bd3942b86671f42d3ed4b2.php:27
+#: /tmp/cache/53b55fcd9d407/0e/21/616815bd3942b86671f42d3ed4b2.php:27
 msgid "Loading more items"
 msgstr "Ladataan sisältöä"
 
-#: /tmp/cache/53b4f8d13d628/31/cf/f203575414177e7630c9c3fb219d.php:134
+#: /tmp/cache/53b55fcd9d407/31/cf/f203575414177e7630c9c3fb219d.php:134
 msgid "Message:"
 msgstr "Viesti:"
 
-#: /tmp/cache/53b4f8d13d628/31/cf/f203575414177e7630c9c3fb219d.php:118
+#: /tmp/cache/53b55fcd9d407/31/cf/f203575414177e7630c9c3fb219d.php:118
 msgid "Name:"
 msgstr "Nimi:"
 
-#: /tmp/cache/53b4f8d13d628/0e/21/616815bd3942b86671f42d3ed4b2.php:23
+#: /tmp/cache/53b55fcd9d407/0e/21/616815bd3942b86671f42d3ed4b2.php:23
 msgid "No results"
 msgstr "Ei tuloksia"
 
-#: /tmp/cache/53b4f8d13d628/31/cf/f203575414177e7630c9c3fb219d.php:83
-msgid "Not to a specific vocabulary"
-msgstr "Ei tiettyyn sanastoon"
-
-#: /tmp/cache/53b4f8d13d628/65/87/16ff348734bf9f46de7d6a75e06b.php:151
-msgid "Preferred terms"
-msgstr "Päätermit"
-
-#: /tmp/cache/53b4f8d13d628/bd/18/082f84f6ac0787f1638aac1a519c.php:59
-msgid "SKOSmos layout designed by Hahmo"
-msgstr "SKOSmoksen visuaalisesta ulkoasusta vastaa Hahmo"
-
-#: /tmp/cache/53b4f8d13d628/2b/2f/1ce096ed381c7c416eb3bdf53cb7.php:202
-msgid "Search"
-msgstr "Hae"
-
-#: /tmp/cache/53b4f8d13d628/2b/2f/1ce096ed381c7c416eb3bdf53cb7.php:190
-msgid "Search language: any"
-msgstr "kaikilla kielillä"
-
-#: /tmp/cache/53b4f8d13d628/2b/2f/1ce096ed381c7c416eb3bdf53cb7.php:80
-msgid "Search within this vocabulary:"
-msgstr "Hae tästä sanastosta"
-
-#: /tmp/cache/53b4f8d13d628/31/cf/f203575414177e7630c9c3fb219d.php:139
-msgid "Send feedback"
-msgstr "Lähetä palaute"
-
-#: /tmp/cache/53b4f8d13d628/31/cf/f203575414177e7630c9c3fb219d.php:149
-#: /tmp/cache/53b4f8d13d628/0e/21/616815bd3942b86671f42d3ed4b2.php:51
-msgid "Value is required and can not be empty"
-msgstr "Kenttä on pakollinen"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:165
-msgid "Vocabularies"
-msgstr "Suomalainen asiasanasto- ja ontologiapalvelu"
-
-#: /tmp/cache/53b4f8d13d628/65/87/16ff348734bf9f46de7d6a75e06b.php:58
-msgid "Vocabulary information"
-msgstr "Tietoja sanastosta"
-
-#: /tmp/cache/53b4f8d13d628/67/a7/6c625531764646a9d3d092822c7f.php:102
-msgid "concepts within the group"
-msgstr "Ryhmän sisältämät käsitteet"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:89
-msgid "dc11:contributor"
-msgstr "Muu tekijä"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:99
-msgid "dc11:creator"
-msgstr "Tekijä"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:101
-msgid "dc11:description"
-msgstr "Kuvaus"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:103
-msgid "dc11:license"
-msgstr "Lisenssi"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:95
-msgid "dc11:publisher"
-msgstr "Julkaisija"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:97
-msgid "dc11:relation"
-msgstr "Suhde"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:91
-msgid "dc11:source"
-msgstr "Lähde"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:141
-msgid "dc11:source_help"
-msgstr "Käsitteen kuvauksen lähdetieto"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:93
-msgid "dc11:title"
-msgstr "Nimi"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:71
-msgid "dc:contributor"
-msgstr "Muu tekijä"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:69
-msgid "dc:creator"
-msgstr "Tekijä"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:81
-msgid "dc:date"
-msgstr "Päiväys"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:67
-msgid "dc:description"
-msgstr "Kuvaus"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:87
-msgid "dc:isReplacedBy"
-msgstr "Korvaava käsite"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:85
-msgid "dc:language"
-msgstr "Kieli"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:75
-msgid "dc:license"
-msgstr "Lisenssi"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:77
-msgid "dc:publisher"
-msgstr "Julkaisija"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:83
-msgid "dc:relation"
-msgstr "Suhde"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:73
-msgid "dc:rights"
-msgstr "Oikeudet"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:79
-msgid "dc:source"
-msgstr "Lähde"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:65
-msgid "dc:subject"
-msgstr "Aihealue"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:63
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:115
-msgid "dc:title"
-msgstr "Nimi"
-
-#: /tmp/cache/53b4f8d13d628/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:112
-msgid "deprecated"
-msgstr "Käsite on poistettu käytöstä. Älä käytä tätä käsitettä sisällönkuvailuun!"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:159
-msgid "en"
-msgstr "englanniksi"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:155
-msgid "fi"
-msgstr "suomeksi"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:153
-msgid "foaf:homepage"
-msgstr "Kotisivu"
-
-#: /tmp/cache/53b4f8d13d628/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:582
-msgid "foreign prefLabel help"
-msgstr "Käsitteen termit muilla kielillä."
-
-#: /tmp/cache/53b4f8d13d628/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:577
-msgid "foreign prefLabels"
-msgstr "Muunkieliset termit"
-
-#: /tmp/cache/53b4f8d13d628/0e/21/616815bd3942b86671f42d3ed4b2.php:43
-msgid "from all"
-msgstr "kaikista sanastoista"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:59
-msgid "isothes:ConceptGroup"
-msgstr "Käsiteryhmä"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:61
-msgid "isothes:ThesaurusArray"
-msgstr "Sisarkäsitteiden joukko"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:161
-msgid "la"
-msgstr "latinaksi"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:113
-msgid "owl:sameAs"
-msgstr "Vastaavat käsitteet"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:111
-msgid "owl:versionInfo"
-msgstr "Versio"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:105
-msgid "rdf:type"
-msgstr "Tyyppi"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:139
-msgid "rdf:type_help"
-msgstr "Valitun resurssin tyyppi."
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:109
-msgid "rdfs:comment"
-msgstr "Huomautus"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:107
-msgid "rdfs:label"
-msgstr "Termi"
-
-#: /tmp/cache/53b4f8d13d628/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:639
-msgid "replaced"
-msgstr "korvattu"
-
-#: /tmp/cache/53b4f8d13d628/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:93
-msgid "results"
-msgstr " hakutulosta (haku"
-
-#: /tmp/cache/53b4f8d13d628/0e/21/616815bd3942b86671f42d3ed4b2.php:35
-msgid "results displayed"
-msgstr "tulosta"
-
-#: /tmp/cache/53b4f8d13d628/0e/21/616815bd3942b86671f42d3ed4b2.php:47
-msgid "selected"
-msgstr "sanastosta"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:21
-msgid "skos:Collection"
-msgstr "Kokoelma"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:19
-msgid "skos:Concept"
-msgstr "Käsite"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:37
-msgid "skos:altLabel"
-msgstr "Korvatut termit"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:131
-msgid "skos:altLabel_help"
-msgstr "Käsitteeseen ohjaavat termit."
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:27
-msgid "skos:broadMatch"
-msgstr "Vastaava laajempi käsite"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:147
-msgid "skos:broadMatch_help"
-msgstr "Käsitettä vastaava laajempi käsite toisessa sanastossa."
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:23
-msgid "skos:broader"
-msgstr "Yläkäsite"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:123
-msgid "skos:broader_help"
-msgstr "Merkitykseltään laajempi käsite/termi."
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:43
-msgid "skos:closeMatch"
-msgstr "Lähes vastaava käsite"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:145
-msgid "skos:closeMatch_help"
-msgstr "Läheisesti vastaava käsite toisessa sanastossa."
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:57
-msgid "skos:definition"
-msgstr "Määritelmä"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:137
-msgid "skos:definition_help"
-msgstr "Tyhjentävä kuvaus käsitteen merkityksestä."
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:41
-msgid "skos:exactMatch"
-msgstr "Vastaava käsite"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:143
-msgid "skos:exactMatch_help"
-msgstr "Merkitykseltään sama käsite toisessa sanastossa."
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:51
-msgid "skos:hasTopConcept"
-msgstr "Ylätason käsite"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:39
-msgid "skos:hiddenLabel"
-msgstr "Piilokäsitteet"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:47
-msgid "skos:inScheme"
-msgstr "Käsitteen skeema"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:45
-msgid "skos:member"
-msgstr "Ryhmään kuuluvat käsitteet"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:133
-msgid "skos:member_help"
-msgstr "Käsitteet, jotka liittyvät kyseiseen aiheeseen."
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:29
-msgid "skos:narrowMatch"
-msgstr "Vastaava suppeampi käsite"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:149
-msgid "skos:narrowMatch_help"
-msgstr "Käsitettä vastaava suppeampi käsite toisessa sanastossa."
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:25
-msgid "skos:narrower"
-msgstr "Alakäsitteet"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:125
-msgid "skos:narrower_help"
-msgstr "Merkitykseltään rajatummat käsitteet/termit."
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:53
-msgid "skos:note"
-msgstr "Huomautus"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:127
-msgid "skos:note_help"
-msgstr "Huomiota käsitteestä/termistä ja sen käytöstä."
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:35
-#: /tmp/cache/53b4f8d13d628/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:317
-msgid "skos:prefLabel"
-msgstr "Käytettävä termi"
-
-#: /tmp/cache/53b4f8d13d628/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:315
-msgid "skos:prefLabel_help"
-msgstr "Käsitteestä käytettävän termin kirjoitusasu."
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:31
-msgid "skos:related"
-msgstr "Assosiatiiviset käsitteet"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:33
-msgid "skos:relatedMatch"
-msgstr "Assosiatiiviset käsittet"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:135
-msgid "skos:related_help"
-msgstr "Läheisesti käsitteen/termin aiheeseen liittyvä käsite/termi."
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:55
-msgid "skos:scopeNote"
-msgstr "Käyttöhuomautus"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:129
-msgid "skos:scopeNote_help"
-msgstr "Huomiota käsitteestä/termistä ja sen käytöstä."
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:49
-msgid "skos:topConceptOf"
-msgstr "Kuuluu sanastoon"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:121
-msgid "skosext:DeprecatedConcept"
-msgstr "Poistettu käsite"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:119
-msgid "skosext:partOf"
-msgstr "Kuuluu kokonaisuuteen"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:117
-msgid "skosmos:memberOf"
-msgstr "Kuuluu ryhmään"
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:151
-msgid "skosmos:memberOf_help"
-msgstr "Ryhmä, johon käsite kuuluu."
-
-#: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:157
-msgid "sv"
-msgstr "ruotsiksi"
-
-#: /tmp/cache/53b4f8d13d628/65/87/16ff348734bf9f46de7d6a75e06b.php:216
-msgid "this vocabulary as SKOS/RDF"
-msgstr "tämä sanasto SKOS/RDF-muodossa"
-
-#: /tmp/cache/53b4f8d1d1fd4/25/b2/1630247ae697f3da6a5379257431.php:102
-msgid "About page"
-msgstr "Tietoja"
-
-#: /tmp/cache/53b4f8d1d1fd4/87/96/ece724ce8233b69bd31df3eb966a.php:27
+#: /tmp/cache/53b55fcd9d407/87/96/ece724ce8233b69bd31df3eb966a.php:27
 msgid "No vocabularies on the server!"
 msgstr "Ei sanastoja palvelimella!"
 
-#: /tmp/cache/53b4f8d1d1fd4/82/b0/c5f2a0e5959234d2d645cfdeb3e5.php:37
+#: /tmp/cache/53b55fcd9d407/31/cf/f203575414177e7630c9c3fb219d.php:83
+msgid "Not to a specific vocabulary"
+msgstr "Ei tiettyyn sanastoon"
+
+#: /tmp/cache/53b55fcd9d407/65/87/16ff348734bf9f46de7d6a75e06b.php:151
+msgid "Preferred terms"
+msgstr "Päätermit"
+
+#: /tmp/cache/53b55fcd9d407/bd/18/082f84f6ac0787f1638aac1a519c.php:59
+msgid "SKOSmos layout designed by Hahmo"
+msgstr "SKOSmoksen visuaalisesta ulkoasusta vastaa Hahmo"
+
+#: /tmp/cache/53b55fcd9d407/2b/2f/1ce096ed381c7c416eb3bdf53cb7.php:202
+msgid "Search"
+msgstr "Hae"
+
+#: /tmp/cache/53b55fcd9d407/2b/2f/1ce096ed381c7c416eb3bdf53cb7.php:190
+msgid "Search language: any"
+msgstr "kaikilla kielillä"
+
+#: /tmp/cache/53b55fcd9d407/2b/2f/1ce096ed381c7c416eb3bdf53cb7.php:80
+msgid "Search within this vocabulary:"
+msgstr "Hae tästä sanastosta"
+
+#: /tmp/cache/53b55fcd9d407/31/cf/f203575414177e7630c9c3fb219d.php:139
+msgid "Send feedback"
+msgstr "Lähetä palaute"
+
+#: /tmp/cache/53b55fcd9d407/82/b0/c5f2a0e5959234d2d645cfdeb3e5.php:37
 msgid "The search provided no results."
 msgstr "Ei hakutuloksia."
 
-#: /tmp/cache/53b4f8d1d1fd4/87/96/ece724ce8233b69bd31df3eb966a.php:33
+#: /tmp/cache/53b55fcd9d407/0e/21/616815bd3942b86671f42d3ed4b2.php:51
+#: /tmp/cache/53b55fcd9d407/31/cf/f203575414177e7630c9c3fb219d.php:149
+msgid "Value is required and can not be empty"
+msgstr "Kenttä on pakollinen"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:165
+msgid "Vocabularies"
+msgstr "Suomalainen asiasanasto- ja ontologiapalvelu"
+
+#: /tmp/cache/53b55fcd9d407/87/96/ece724ce8233b69bd31df3eb966a.php:33
 msgid "Vocabularies on the server"
 msgstr "Sanastot ja ontologiat"
 
-#: /tmp/cache/53b4f8d1d1fd4/25/b2/1630247ae697f3da6a5379257431.php:90
+#: /tmp/cache/53b55fcd9d407/65/87/16ff348734bf9f46de7d6a75e06b.php:58
+msgid "Vocabulary information"
+msgstr "Tietoja sanastosta"
+
+#: /tmp/cache/53b55fcd9d407/67/a7/6c625531764646a9d3d092822c7f.php:102
+msgid "concepts within the group"
+msgstr "Ryhmän sisältämät käsitteet"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:89
+msgid "dc11:contributor"
+msgstr "Muu tekijä"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:99
+msgid "dc11:creator"
+msgstr "Tekijä"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:101
+msgid "dc11:description"
+msgstr "Kuvaus"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:103
+msgid "dc11:license"
+msgstr "Lisenssi"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:95
+msgid "dc11:publisher"
+msgstr "Julkaisija"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:97
+msgid "dc11:relation"
+msgstr "Suhde"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:91
+msgid "dc11:source"
+msgstr "Lähde"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:141
+msgid "dc11:source_help"
+msgstr "Käsitteen kuvauksen lähdetieto"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:93
+msgid "dc11:title"
+msgstr "Nimi"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:71
+msgid "dc:contributor"
+msgstr "Muu tekijä"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:69
+msgid "dc:creator"
+msgstr "Tekijä"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:81
+msgid "dc:date"
+msgstr "Päiväys"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:67
+msgid "dc:description"
+msgstr "Kuvaus"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:87
+msgid "dc:isReplacedBy"
+msgstr "Korvaava käsite"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:85
+msgid "dc:language"
+msgstr "Kieli"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:75
+msgid "dc:license"
+msgstr "Lisenssi"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:77
+msgid "dc:publisher"
+msgstr "Julkaisija"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:83
+msgid "dc:relation"
+msgstr "Suhde"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:73
+msgid "dc:rights"
+msgstr "Oikeudet"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:79
+msgid "dc:source"
+msgstr "Lähde"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:65
+msgid "dc:subject"
+msgstr "Aihealue"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:63
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:115
+msgid "dc:title"
+msgstr "Nimi"
+
+#: /tmp/cache/53b55fcd9d407/82/b0/c5f2a0e5959234d2d645cfdeb3e5.php:120
+msgid "deprecated"
+msgstr "Käsite on poistettu käytöstä. Älä käytä tätä käsitettä sisällönkuvailuun!"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:159
+msgid "en"
+msgstr "englanniksi"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:155
+msgid "fi"
+msgstr "suomeksi"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:153
+msgid "foaf:homepage"
+msgstr "Kotisivu"
+
+#: /tmp/cache/53b55fcd9d407/82/b0/c5f2a0e5959234d2d645cfdeb3e5.php:330
+msgid "foreign prefLabel help"
+msgstr "Käsitteen termit muilla kielillä."
+
+#: /tmp/cache/53b55fcd9d407/0e/21/616815bd3942b86671f42d3ed4b2.php:43
+msgid "from all"
+msgstr "kaikista sanastoista"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:59
+msgid "isothes:ConceptGroup"
+msgstr "Käsiteryhmä"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:61
+msgid "isothes:ThesaurusArray"
+msgstr "Sisarkäsitteiden joukko"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:161
+msgid "la"
+msgstr "latinaksi"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:113
+msgid "owl:sameAs"
+msgstr "Vastaavat käsitteet"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:111
+msgid "owl:versionInfo"
+msgstr "Versio"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:105
+msgid "rdf:type"
+msgstr "Tyyppi"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:139
+msgid "rdf:type_help"
+msgstr "Valitun resurssin tyyppi."
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:109
+msgid "rdfs:comment"
+msgstr "Huomautus"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:107
+msgid "rdfs:label"
+msgstr "Termi"
+
+#: /tmp/cache/53b55fcd9d407/0e/21/616815bd3942b86671f42d3ed4b2.php:35
+msgid "results displayed"
+msgstr "tulosta"
+
+#: /tmp/cache/53b55fcd9d407/82/b0/c5f2a0e5959234d2d645cfdeb3e5.php:26
+msgid "results for"
+msgstr " tulosta haulle"
+
+#: /tmp/cache/53b55fcd9d407/0e/21/616815bd3942b86671f42d3ed4b2.php:47
+msgid "selected"
+msgstr "sanastosta"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:21
+msgid "skos:Collection"
+msgstr "Kokoelma"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:19
+msgid "skos:Concept"
+msgstr "Käsite"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:37
+msgid "skos:altLabel"
+msgstr "Korvatut termit"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:131
+msgid "skos:altLabel_help"
+msgstr "Käsitteeseen ohjaavat termit."
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:27
+msgid "skos:broadMatch"
+msgstr "Vastaava laajempi käsite"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:147
+msgid "skos:broadMatch_help"
+msgstr "Käsitettä vastaava laajempi käsite toisessa sanastossa."
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:23
+msgid "skos:broader"
+msgstr "Yläkäsite"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:123
+msgid "skos:broader_help"
+msgstr "Merkitykseltään laajempi käsite/termi."
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:43
+msgid "skos:closeMatch"
+msgstr "Lähes vastaava käsite"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:145
+msgid "skos:closeMatch_help"
+msgstr "Läheisesti vastaava käsite toisessa sanastossa."
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:57
+msgid "skos:definition"
+msgstr "Määritelmä"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:137
+msgid "skos:definition_help"
+msgstr "Tyhjentävä kuvaus käsitteen merkityksestä."
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:41
+msgid "skos:exactMatch"
+msgstr "Vastaava käsite"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:143
+msgid "skos:exactMatch_help"
+msgstr "Merkitykseltään sama käsite toisessa sanastossa."
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:51
+msgid "skos:hasTopConcept"
+msgstr "Ylätason käsite"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:39
+msgid "skos:hiddenLabel"
+msgstr "Piilokäsitteet"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:47
+msgid "skos:inScheme"
+msgstr "Käsitteen skeema"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:45
+msgid "skos:member"
+msgstr "Ryhmään kuuluvat käsitteet"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:133
+msgid "skos:member_help"
+msgstr "Käsitteet, jotka liittyvät kyseiseen aiheeseen."
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:29
+msgid "skos:narrowMatch"
+msgstr "Vastaava suppeampi käsite"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:149
+msgid "skos:narrowMatch_help"
+msgstr "Käsitettä vastaava suppeampi käsite toisessa sanastossa."
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:25
+msgid "skos:narrower"
+msgstr "Alakäsitteet"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:125
+msgid "skos:narrower_help"
+msgstr "Merkitykseltään rajatummat käsitteet/termit."
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:53
+msgid "skos:note"
+msgstr "Huomautus"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:127
+msgid "skos:note_help"
+msgstr "Huomiota käsitteestä/termistä ja sen käytöstä."
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:35
+msgid "skos:prefLabel"
+msgstr "Käytettävä termi"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:31
+msgid "skos:related"
+msgstr "Assosiatiiviset käsitteet"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:33
+msgid "skos:relatedMatch"
+msgstr "Assosiatiiviset käsittet"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:135
+msgid "skos:related_help"
+msgstr "Läheisesti käsitteen/termin aiheeseen liittyvä käsite/termi."
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:55
+msgid "skos:scopeNote"
+msgstr "Käyttöhuomautus"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:129
+msgid "skos:scopeNote_help"
+msgstr "Huomiota käsitteestä/termistä ja sen käytöstä."
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:49
+msgid "skos:topConceptOf"
+msgstr "Kuuluu sanastoon"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:121
+msgid "skosext:DeprecatedConcept"
+msgstr "Poistettu käsite"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:119
+msgid "skosext:partOf"
+msgstr "Kuuluu kokonaisuuteen"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:117
+msgid "skosmos:memberOf"
+msgstr "Kuuluu ryhmään"
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:151
+msgid "skosmos:memberOf_help"
+msgstr "Ryhmä, johon käsite kuuluu."
+
+#: /tmp/cache/53b55fcd9d407/b7/b8/db5433ea968c6a0d09780d91f529.php:157
+msgid "sv"
+msgstr "ruotsiksi"
+
+#: /tmp/cache/53b55fcd9d407/65/87/16ff348734bf9f46de7d6a75e06b.php:216
+msgid "this vocabulary as SKOS/RDF"
+msgstr "tämä sanasto SKOS/RDF-muodossa"
+
+#: /tmp/cache/53b55fce21892/25/b2/1630247ae697f3da6a5379257431.php:102
+msgid "About page"
+msgstr "Tietoja"
+
+#: /tmp/cache/53b55fce21892/dc/b5/da640bf012bce1cbf6448b2bcfdd.php:35
+msgid "Alphabetical index"
+msgstr "Aakkosellinen hakemisto"
+
+#: /tmp/cache/53b55fce21892/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:654
+msgid "Download this concept in SKOS format:"
+msgstr "Lataa tämä käsite SKOS-muodossa:"
+
+#: /tmp/cache/53b55fce21892/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:860
+msgid "Error: term \"%term%\" not found in vocabulary!"
+msgstr "Virhe: termiä \"%term%\" ei löydy sanastosta!"
+
+#: /tmp/cache/53b55fce21892/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:701
+msgid "Help"
+msgstr "Ohje"
+
+#: /tmp/cache/53b55fce21892/25/b2/1630247ae697f3da6a5379257431.php:90
 msgid "Vocabularies-nav"
 msgstr "Sanastot"
 
-#: /tmp/cache/53b4f8d1d1fd4/82/b0/c5f2a0e5959234d2d645cfdeb3e5.php:26
-msgid "results for"
-msgstr " tulosta haulle"
+#: /tmp/cache/53b55fce21892/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:571
+msgid "foreign prefLabels"
+msgstr "Muunkieliset termit"
+
+#: /tmp/cache/53b55fce21892/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:696
+msgid "helper_help"
+msgstr "Kun viet kursorin pisteillä alleviivatun tekstin kohdalle, saat ominaisuuteen liittyviä ohjeita."
+
+#: /tmp/cache/53b55fce21892/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:628
+msgid "replaced"
+msgstr "korvattu"
+
+#: /tmp/cache/53b55fce21892/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:93
+msgid "results"
+msgstr " hakutulosta (haku"
+
+#: /tmp/cache/53b55fce21892/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:312
+msgid "skos:prefLabel_help"
+msgstr "Käsitteestä käytettävän termin kirjoitusasu."
 
