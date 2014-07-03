@@ -688,7 +688,28 @@ tr {
 }
 
 .property-click {
-  border-bottom: 2px dotted #888888;
+  border-bottom: 2px dotted #CFCFCF;
+}
+
+.concept-appendix .property-click {
+  border-bottom: 2px dotted #C9C7C7;
+}
+
+.help-box {
+  background-color : #F0F0F0;
+  padding: 2px 4px;
+}
+
+.help-box img {
+  margin-top: -2px !important;
+}
+
+.help-box p {
+  display: inline-block; 
+  height: 15px;
+  margin-left: 5px !important;
+  padding-left: 5px !important;
+  border-left: 2px dotted #888888;
 }
 
 tr .property-hover {
