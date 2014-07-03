@@ -43,7 +43,7 @@
           {% endif %}
         </ul>
       </div>
-      {% if alpha_results or vocab_stats %}
+      {% if alpha_results or vocab_stats or letter or search_results|length > 1 %}
         {% set letters = 'A'..'Z' %} {# it would be nicer to do this according to the actual appearances of letters i.e. only letters with results should be shown #}
         {% set rest = ['Å', 'Ä', 'Ö', '!*'] %}
         <ul class="pagination">
@@ -73,7 +73,7 @@
              </li>
               {% endfor %}
             </ul>
-            {% else %}<span class="header-text-small-font">{% trans %}Error: the vocabulary does not contain terms beginning with "{{ letter }}"!{% endtrans %}</span>
+            {% elseif not search_results %}<span class="header-text-small-font">{% trans %}Error: the vocabulary does not contain terms beginning with "{{ letter }}"!{% endtrans %}</span>
           {% endif %}
         </div>
       </div>
