@@ -698,6 +698,7 @@ tr {
 .help-box {
   background-color : #F0F0F0;
   padding: 2px 4px;
+  border-bottom: none !important;
 }
 
 .help-box img {
