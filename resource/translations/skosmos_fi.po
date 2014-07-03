@@ -517,11 +517,11 @@ msgstr "Kuuluu kokonaisuuteen"
 
 #: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:117
 msgid "skosmos:memberOf"
-msgstr "Ryhmään kuuluvat käsitteet"
+msgstr "Kuuluu ryhmään"
 
 #: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:151
 msgid "skosmos:memberOf_help"
-msgstr "Käsitteet, jotka liittyvät kyseiseen aiheeseen."
+msgstr "Ryhmä, johon käsite kuuluu."
 
 #: /tmp/cache/53b4f8d13d628/b7/b8/db5433ea968c6a0d09780d91f529.php:157
 msgid "sv"

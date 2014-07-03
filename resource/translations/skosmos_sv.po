@@ -516,11 +516,11 @@ msgstr "Är en del av"
 
 #: /tmp/cache/53b4f8ed09fbe/b7/b8/db5433ea968c6a0d09780d91f529.php:117
 msgid "skosmos:memberOf"
-msgstr "på svenska"
+msgstr "Hör till gruppen"
 
 #: /tmp/cache/53b4f8ed09fbe/b7/b8/db5433ea968c6a0d09780d91f529.php:151
 msgid "skosmos:memberOf_help"
-msgstr "Begrepp som hör till ämnet."
+msgstr "Grupp, som begreppet hör till."
 
 #: /tmp/cache/53b4f8ed09fbe/b7/b8/db5433ea968c6a0d09780d91f529.php:157
 msgid "sv"
