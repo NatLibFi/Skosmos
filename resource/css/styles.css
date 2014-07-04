@@ -687,7 +687,7 @@ tr {
   background-color: #ffffff;
 }
 
-.property-click {
+td > .property-click {
   border-bottom: 2px dotted #CFCFCF;
 }
 
