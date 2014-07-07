@@ -79,13 +79,13 @@
         {% if search_results and term %}
         <div class="search-options"><p class="versal-bold">{% trans "Search options" %}:</p>
           <div class="input-group">
-            <span class="versal">{% trans "By type" %}</span><input type="text" class="form-control">
+            <span class="versal">{% trans "By type" %}</span><input type="text" id="type-limit" class="form-control">
           </div>
           <div class="input-group">
-            <span class="versal">{% trans "By group" %}</span><input type="text" class="form-control">
+            <span class="versal">{% trans "By group" %}</span><input type="text" id="group-limit" class="form-control">
           </div>
           <div class="input-group">
-            <span class="versal">{% trans "By parent" %}</span><input type="text" class="form-control">
+            <span class="versal">{% trans "By parent" %}</span><input type="text" id="parent-limit" class="form-control">
           </div>
           <button type="button" class="btn btn-default">{% trans "Limit search" %}</button>
         </div>
