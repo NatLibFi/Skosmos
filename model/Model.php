@@ -253,16 +253,18 @@ class Model
    * @param string $search_lang language code used for matching, eg. 'fi', or null for anything
    * @param integer $offset used for offsetting the result set eg. '20'
    * @param integer $limit upper count for the search results eg. '10'
-   * @param string $ui_lang used for determining if the searchresult isn't the same language as the ui.
+   * @param string $type limit search to concepts of the given type
+   * @param string $parent limit search to concepts which have the given concept as parent in the transitive broader hierarchy
+   * @param string $group limit search to concepts which are in the given group
    * @return array array with keys 'count' and 'results'
    */
-  public function searchConceptsAndInfo($term, $vocids, $lang, $search_lang, $offset = 0, $limit = 20)
+  public function searchConceptsAndInfo($term, $vocids, $lang, $search_lang, $offset = 0, $limit = 20, $type = null, $parent = null, $group = null)
   {
     // make vocids an array in every case
     if ($vocids === null) $vocids = array();
     if (!is_array($vocids)) $vocids = array($vocids);
 
-    $allhits = $this->searchConcepts($term, $vocids, $lang, $search_lang, null, null, null, 0, 0);
+    $allhits = $this->searchConcepts($term, $vocids, $lang, $search_lang, $type, $parent, $group, 0, 0);
     $hits = array_slice($allhits, $offset, $limit);
 
     $uris = array();
