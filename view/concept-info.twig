@@ -54,22 +54,20 @@
             {% endif %}
             <br /><a class="prefLabel foundby" href="{{ concept.uri | link_url(concept.vocab,lang) }}">{{ concept.label }}</a></span>
           {% else %}
-          <td>
           <span class="prefLabel
             {% if lang_count is not defined and rest != 1 %}">{{ concept.label }}</span>{% else %}"></span>
             <a class="prefLabel conceptlabel" href="{% if concept.type == "skos:Collection" %}{{ concept.uri | link_url(concept.vocab, lang, 'groups') }}{% elseif concept.exvocab is defined%}{{ concept.uri | link_url(concept.exvocab,concept.lang) }}{% else %}{{ concept.uri | link_url(concept.vocab,concept.lang) }}{% endif %}">{{ concept.label }}</a>
             {% endif %}
-          </td>
           {% endif %}
           </div>
           <hr />
           {% endspaceless %}
           <table class="table search-results-property-table{% if concept.type == 'skosext:DeprecatedConcept' %} deprecated{% endif %}">
           {% for property in concept.properties %} {# loop through ConceptProperty objects #}
-            <tr{% if property.type == 'dc:isReplacedBy' %} class="replaced-by"{% endif%}><td><span class="property-click versal{% if property.type == 'rdf:type' %}-bold{% endif %}" {% if not (property.type in property.description and '_help' in property.description) %}title="{{ property.description }}"{% endif %}>{{ property.label|upper }}</span></td><td><ul>
+            <tr{% if property.type == 'dc:isReplacedBy' %} class="replaced-by"{% endif%}><td><span class="versal{% if property.type == 'rdf:type' %}-bold{% endif %}{% if not (property.type in property.description and '_help' in property.description) %} property-click" title="{{ property.description }}"{% else %}"{% endif %}>{{ property.label|upper }}</span></td><td><ul>
             {% for propval in property.values %} {# loop through ConceptPropertyValue objects #}
-                {% if propval.uri and propval.type != 'rdf:type' %} {# resources with URI #}
                 <li>
+                {% if propval.uri and propval.type != 'rdf:type' %} {# resources with URI #}
                   {% if propval.label %}
                     {% if propval.exvocab and propval.exvocab != propval.vocab %}{# if the property is located in a another vocabulary #}
                     <a class="versal" href="{% if propval.type == "skosmos:memberOf" %}{{ propval.uri | link_url(propval.vocab, lang, 'groups') }}{% else %}{{ propval.uri | link_url(propval.vocab, propval.lang) }}{% endif %}">{{ propval.label }}</a>
@@ -88,8 +86,9 @@
                   {% endif %}
                 {% elseif property.type == 'rdf:type' %}<p>{{ propval.label|trans }}</p>
                 {% else %} {# Literals (no URI), eg. alternative labels as properties #}
-                    <li><p>{{ propval.label }}</p>
-                {% endif %}</li>
+                  <p>{{ propval.label }}</p>
+                {% endif %}
+                </li>
             {% endfor %}
             </ul></td></tr>
           {% endfor %}
