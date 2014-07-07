@@ -33,6 +33,7 @@
       {% if vocab_id != '' or vocab_id == 'feedback' or vocab_id == 'about' %}
       <div class="sidebar-buttons">
         <ul class="nav nav-tabs">
+        {% if search_results and not term %}
           <li id="alpha"{% if search_results|length != 1 or (term and search_results|length == 1) %} class ="active"{% endif %}><a href="{{ path_fix }}{{ vocab_id }}/{{ lang }}/index">{% trans "Alpha-nav" %}</a></li>
           {% if search_results|length == 1 or vocab.showHierarchy %}
           <li id="hierarchy"{% if search_results|length == 1 and not term %} class ="active"{% endif %}><a href="#" id="hier-trigger">{% trans "Hier-nav" %}</a></li>
@@ -41,9 +42,12 @@
           <li id="groups"><a href="{{ path_fix }}{{ vocab_id }}/{{ lang }}/groups">{% trans "Group-nav" %}</a></li>
           {% else %}
           {% endif %}
+        {% else %}
+          <li id="limit"><p>{% trans "Search options" %}</p></li>
+        {% endif %}
         </ul>
       </div>
-      {% if alpha_results or vocab_stats or letter or term %}
+      {% if alpha_results or vocab_stats or letter %}
         {% set letters = 'A'..'Z' %} {# it would be nicer to do this according to the actual appearances of letters i.e. only letters with results should be shown #}
         {% set rest = ['Å', 'Ä', 'Ö', '!*'] %}
         <ul class="pagination">
@@ -77,7 +81,7 @@
           {% endif %}
         </div>
         {% if search_results and term %}
-        <div class="search-options"><p class="versal-bold">{% trans "Search options" %}:</p>
+        <div class="search-options">
           <div class="input-group">
             <span class="versal">{% trans "By type" %}</span><input type="text" id="type-limit" class="form-control">
           </div>

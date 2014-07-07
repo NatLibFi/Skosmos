@@ -840,13 +840,18 @@ ul.nav-tabs > li {
   outline: none;
 }
 
-.nav-tabs > li > a {
+.nav-tabs > li > a, .nav-tabs > li > p {
   background-color: #e6e9eb;
   border-radius: 0 !important;
   border: 0 !important;
   text-align: center;
-  margin-right: 0 !important;
+  padding: 10px 15px;
+  margin: 0 !important;
   outline: none;
+}
+
+#limit {
+  width: 33%;
 }
 
 .nav-tabs > li {
