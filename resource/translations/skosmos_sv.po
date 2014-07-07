@@ -526,7 +526,7 @@ msgstr "Alfabetiskt index"
 
 #: /tmp/cache/53b65209c7587/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:654
 msgid "Download this concept in SKOS format:"
-msgstr "Ladda ned detta begrepp i SKOS-format:"
+msgstr "Ladda ned detta begrepp:"
 
 #: /tmp/cache/53b65209c7587/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:860
 msgid "Error: term \"%term%\" not found in vocabulary!"

@@ -527,7 +527,7 @@ msgstr "Aakkosellinen hakemisto"
 
 #: /tmp/cache/53b55fce21892/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:654
 msgid "Download this concept in SKOS format:"
-msgstr "Lataa tämä käsite SKOS-muodossa:"
+msgstr "Lataa tämä käsite:"
 
 #: /tmp/cache/53b55fce21892/9b/1c/c4c91cc560a8fc7219b8fe4e6a57.php:860
 msgid "Error: term \"%term%\" not found in vocabulary!"
