@@ -506,6 +506,34 @@ hr {
   margin-bottom: 15px !important;
 }
 
+div#sidebar-grey > div > div > div.search-options {
+  margin-right: 0px !important;
+}
+
+.search-options { 
+  padding-left: 15px;
+}
+  
+.search-options > .input-group * { 
+  border-radius: 0;
+}
+
+.search-options > .btn-default { 
+  border-radius: 0;
+}
+
+div.search-options > .input-group > input.form-control {
+  width: 280px !important;
+}
+
+.search-options div { 
+  padding-bottom: 15px;
+}
+
+div.input-group > .input-group-addon { 
+  min-width: 65px !important;
+}
+
 .alphabetical-search-results li, .group-container > p, .group-container > ul {
   font-size: 14px;
   line-height: 15px;
@@ -1257,6 +1285,10 @@ body, .versal, h1, h2, p, .versal-bold {
 
   .sidebar-grey-alpha {
     height: calc(100% - 150px) !important;
+  }
+
+  div.search-options > .input-group > input.form-control {
+    width: 370px !important;
   }
 
   .pagination {

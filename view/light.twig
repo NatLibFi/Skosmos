@@ -76,6 +76,20 @@
             {% elseif not search_results %}<span class="header-text-small-font">{% trans %}Error: the vocabulary does not contain terms beginning with "{{ letter }}"!{% endtrans %}</span>
           {% endif %}
         </div>
+        {% if search_results and term %}
+        <div class="search-options"><p class="versal-bold">{% trans "Search options" %}:</p>
+          <div class="input-group">
+            <span class="versal">{% trans "By type" %}</span><input type="text" class="form-control">
+          </div>
+          <div class="input-group">
+            <span class="versal">{% trans "By group" %}</span><input type="text" class="form-control">
+          </div>
+          <div class="input-group">
+            <span class="versal">{% trans "By parent" %}</span><input type="text" class="form-control">
+          </div>
+          <button type="button" class="btn btn-default">{% trans "Limit search" %}</button>
+        </div>
+        {% endif %}
       </div>
       {% endif %}
     {% endblock %}
