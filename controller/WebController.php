@@ -322,6 +322,9 @@ class WebController extends Controller
 
     $term = htmlspecialchars(isset($_GET['q']) ? $_GET['q'] : "");
     $search_lang = (isset($_GET['lang'])) ? $_GET['lang'] : $lang;
+    $type = (isset($_GET['type'])) ? $_GET['type'] : null;
+    $group = (isset($_GET['group'])) ? $_GET['group'] : null;
+    $parent = (isset($_GET['parent'])) ? $_GET['parent'] : null;
     $offset = (isset($_GET['offset']) && is_numeric($_GET['offset']) && $_GET['offset'] >= 0) ? $_GET['offset'] : 0;
     if ($offset > 0) {
       $rest = 1;
@@ -336,7 +339,7 @@ class WebController extends Controller
     $vocids = $vocabs !== null ? explode(' ', $vocabs) : null;
     
     $this->twig->addGlobal("SearchLanguage", $search_lang);
-    $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocids, $lang, $search_lang, $offset);
+    $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocids, $lang, $search_lang, $offset, null, $type, $parent, $group);
     $counts = $count_and_results['count'];
     $search_results = $count_and_results['results'];
     $uri_parts = $_SERVER['REQUEST_URI'];
@@ -380,6 +383,9 @@ class WebController extends Controller
     }
     $term = urldecode(isset($_GET['q']) ? $_GET['q'] : "");
     $search_lang = (isset($_GET['lang'])) ? $_GET['lang'] : $lang;
+    $type = (isset($_GET['type'])) ? $_GET['type'] : null;
+    $group = (isset($_GET['group'])) ? $_GET['group'] : null;
+    $parent = (isset($_GET['parent'])) ? $_GET['parent'] : null;
     $offset = (isset($_GET['offset']) && is_numeric($_GET['offset']) && $_GET['offset'] >= 0) ? $_GET['offset'] : 0;
     if ($offset > 0) {
       $rest = 1;
@@ -391,7 +397,7 @@ class WebController extends Controller
     $sterm = strpos($term, "*") === FALSE ? $term . "*" : $term; // default to prefix search
     try {
       $this->twig->addGlobal("SearchLanguage", $search_lang);
-      $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocab_id, $lang, $search_lang, $offset, 20, $lang);
+      $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocab_id, $lang, $search_lang, $offset, 20, $type, $parent, $group);
       $counts = $count_and_results['count'];
       $search_results = $count_and_results['results'];
     } catch (Exception $e) {
