@@ -216,6 +216,14 @@ section {
   margin-left: 15px;
 }
 
+.search-limited {
+  padding-right: 140px !important;
+}
+
+.search-result-listing > button.btn-default {
+  border-radius: 0;
+}
+
 .search-result-listing .prefLabel {
   font-size: 14px !important;
   font-weight: bold !important;
@@ -228,17 +236,6 @@ section {
 .search-result-listing {
   padding: 5px 0;
 }
-
-/*
-.search-result-listing .search-result:hover, .search-result a:hover{
-background-color: #F8F8F8;
-text-decoration: none;
-}
-
-.search-result-listing .search-result:hover {
-border: 1px solid #EDEDED;
-}
- */
 
 .search-result > div > span.uri-input-box {
   font-size: 12px;
@@ -525,6 +522,12 @@ div#sidebar-grey > div > div > div.search-options {
 .search-options > .limit-buttons > .btn-default { 
   border-radius: 0;
   width: 133px;
+}
+  
+.search-result-listing .btn-default {
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }
 
 .search-options > .limit-buttons > .btn-default:first-child { 

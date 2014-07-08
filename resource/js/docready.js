@@ -836,31 +836,36 @@ $(function() { // DOCUMENT READY
     });
   }
 
+  function loadLimitations() {
+    var typeLimit = $('#type-limit').val();
+    var groupLimit = $('#group-limit').val();
+    var parentLimit = $('#parent-limit').val();
+    var parameters = $.param({'type' : typeLimit, 'group' : groupLimit, 'parent': parentLimit});
+    $.ajax({
+        data: parameters,
+        success : function(data) {
+         var targetUrl = this.url;
+          $('.search-result-listing').empty();
+          var title = $(data).filter('title').text();
+          var response = $('.search-result-listing', data).html();
+          document.title = title;
+          if (window.history.pushState)
+            window.history.pushState({url: targetUrl}, '', targetUrl);
+          $('.search-result-listing').append(response);
+        }
+    });
+  }
+
   var searchOptions = $('.search-options');
   if (searchOptions.length === 1) {
-    $(document).on('click', '.search-options .btn:last-child', function() {
+    $(document).on('click', '#remove-limits', function() {
       $('#type-limit').val('');
       $('#parent-limit').val('');
       $('#group-limit').val('');
+      loadLimitations();
     });
     $(document).on('click', '.search-options .btn', function() {
-      var typeLimit = $('#type-limit').val();
-      var groupLimit = $('#group-limit').val();
-      var parentLimit = $('#parent-limit').val();
-      var parameters = $.param({'type' : typeLimit, 'group' : groupLimit, 'parent': parentLimit});
-      $.ajax({
-          data: parameters,
-          success : function(data) {
-           var targetUrl = this.url;
-            $('.search-result-listing').empty();
-            var title = $(data).filter('title').text();
-            var response = $('.search-result-listing', data).html();
-            document.title = title;
-            if (window.history.pushState)
-              window.history.pushState({url: targetUrl}, '', targetUrl);
-            $('.search-result-listing').append(response);
-          }
-      });
+      loadLimitations();
     });
 
   }
