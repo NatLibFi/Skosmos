@@ -427,7 +427,11 @@ class WebController extends Controller
                 'search_count' => $counts,
                 'term' => $term,
                 'lang_count' => $search_lang,
-                'rest' => $rest, 'parts' => $this->parts, 'uri_parts' => $uri_parts,
+                'rest' => $rest, 'parts' => $this->parts, 
+                'uri_parts' => $uri_parts,
+                'limit_parent' => $parent,
+                'limit_type' => $type,
+                'limit_group' => $group,
                 'request_uri' => $this->request_uri
 
     ));

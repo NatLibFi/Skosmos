@@ -518,8 +518,21 @@ div#sidebar-grey > div > div > div.search-options {
   border-radius: 0;
 }
 
-.search-options > .btn-default { 
+.search-options > .limit-buttons {
+  width: 100%;
+}
+
+.search-options > .limit-buttons > .btn-default { 
   border-radius: 0;
+  width: 133px;
+}
+
+.search-options > .limit-buttons > .btn-default:first-child { 
+ margin-right: 5px; 
+}
+
+.search-options > .limit-buttons > .btn-default:last-child { 
+ margin-left: 5px; 
 }
 
 div.search-options > .input-group > input.form-control {
@@ -1294,6 +1307,10 @@ body, .versal, h1, h2, p, .versal-bold {
 
   div.search-options > .input-group > input.form-control {
     width: 370px !important;
+  }
+  
+  .search-options > .limit-buttons > .btn-default { 
+    width: 178px;
   }
 
   .pagination {
