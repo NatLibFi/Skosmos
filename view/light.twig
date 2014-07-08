@@ -83,7 +83,13 @@
         {% if search_results and term %}
         <form class="search-options">
           <div class="input-group">
-            <span class="versal">{% trans "By type" %}</span><input type="text" id="type-limit" class="form-control" value="{{ limit_type }}">
+            <span class="versal">{% trans "By type" %}</span>
+            <select id="type-limit" value="{{ limit-type }}" class="form-control">
+              <option></option>
+              <option>skos:Concept</option>
+              <option>skos:Collection</option>
+              <option>isothes:ThesaurusArray</option>
+            </select>
           </div>
           <div class="input-group">
             <span class="versal">{% trans "By group" %}</span><input type="text" id="group-limit" class="form-control" value="{{ limit_group }}">
