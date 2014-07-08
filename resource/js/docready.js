@@ -837,6 +837,9 @@ $(function() { // DOCUMENT READY
   }
 
   function loadLimitations() {
+    var $loading = $("<div class='search-result'><p>" + loading_text + "&hellip;<span class='spinner'/></p></div>"); 
+    $('.search-result-listing').empty();
+    $('.search-result-listing').append($loading);
     var typeLimit = $('#type-limit').val();
     var groupLimit = $('#group-limit').val();
     var parentLimit = $('#parent-limit').val();
@@ -845,13 +848,13 @@ $(function() { // DOCUMENT READY
         data: parameters,
         success : function(data) {
          var targetUrl = this.url;
-          $('.search-result-listing').empty();
           var title = $(data).filter('title').text();
           var response = $('.search-result-listing', data).html();
           document.title = title;
           if (window.history.pushState)
             window.history.pushState({url: targetUrl}, '', targetUrl);
           $('.search-result-listing').append(response);
+          $loading.detach();
         }
     });
   }
@@ -864,8 +867,9 @@ $(function() { // DOCUMENT READY
       $('#group-limit').val('');
       loadLimitations();
     });
-    $(document).on('click', '.search-options .btn', function() {
+    $(document).on('submit', '.search-options', function() {
       loadLimitations();
+      return false;
     });
 
   }
