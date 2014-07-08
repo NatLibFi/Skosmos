@@ -713,7 +713,7 @@ $(function() { // DOCUMENT READY
   function waypointCallback() {
     var number_of_hits = document.getElementsByClassName("search-result").length;
     if (number_of_hits >= waypoint_results * offcount)
-      $('.content').append($loading);
+      $('.search-result-listing').append($loading);
     var parameters = $.param({'q' : searchTerm, 'vocabs' : vocabSelectionString, 'offset' : offcount * waypoint_results, 'lang' : getUrlParams().lang});
     $.ajax({
       url : window.location.pathname,

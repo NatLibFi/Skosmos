@@ -181,6 +181,10 @@ section {
   background-color: #ffffff;
 }
 
+.search-result-listing > p:last-of-type {
+  margin-left: 15px;
+}
+
 .search-result-listing > .search-result:last-of-type {
   margin-bottom: 10px; 
 }
