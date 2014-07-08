@@ -837,7 +837,7 @@ $(function() { // DOCUMENT READY
   }
 
   function loadLimitations() {
-    $('#alphabetical-menu').empty();
+    $('#alphabetical-menu').detach();
     var $loading = $("<div class='search-result'><p>" + loading_text + "&hellip;<span class='spinner'/></p></div>"); 
     $('.search-result-listing').empty();
     $('.search-result-listing').append($loading);
