@@ -838,6 +838,11 @@ $(function() { // DOCUMENT READY
 
   var searchOptions = $('.search-options');
   if (searchOptions.length === 1) {
+    $(document).on('click', '.search-options .btn:last-child', function() {
+      $('#type-limit').val('');
+      $('#parent-limit').val('');
+      $('#group-limit').val('');
+    });
     $(document).on('click', '.search-options .btn', function() {
       var typeLimit = $('#type-limit').val();
       var groupLimit = $('#group-limit').val();
