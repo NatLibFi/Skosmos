@@ -515,27 +515,14 @@ div#sidebar-grey > div > div > div.search-options {
   border-radius: 0;
 }
 
-.search-options > .limit-buttons {
-  width: 100%;
-}
-
-.search-options > .limit-buttons > .btn-default { 
+.search-options > .btn-default { 
   border-radius: 0;
-  width: 133px;
 }
   
 .search-result-listing .btn-default {
   position: absolute;
   right: 10px;
   top: 10px;
-}
-
-.search-options > .limit-buttons > .btn-default:first-child { 
- margin-right: 5px; 
-}
-
-.search-options > .limit-buttons > .btn-default:last-child { 
- margin-left: 5px; 
 }
 
 div.search-options > .input-group > input.form-control {
@@ -867,6 +854,7 @@ ul.nav-tabs > li {
 }
 
 #limit {
+  margin-top: -1px;
   width: 33%;
 }
 
@@ -1312,10 +1300,6 @@ body, .versal, h1, h2, p, .versal-bold {
     width: 370px !important;
   }
   
-  .search-options > .limit-buttons > .btn-default { 
-    width: 178px;
-  }
-
   .pagination {
     width: 400px;
     top: 183px !important;
