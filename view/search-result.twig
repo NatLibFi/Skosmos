@@ -1,5 +1,6 @@
 {% if term %}
-<div class="search-count"><p>{{ search_count }} {% trans 'results for' %} '{{ term }}' {% if limit_type %}{% trans "limited to type" %} '{{ limit_type }}'{% endif %}{% if limit_parent %} {% trans "limited to parent" %} '{{ limit_parent }}'{% endif %}{% if limit_group %} {% trans "limited to group" %} '{{ limit_group }}'{% endif %}</p></div>
+<div class="search-count{% if limit_type or limit_group or limit_parent %} search-limited{% endif %}"><p>{{ search_count }} {% trans 'results for' %} '{{ term }}'{% if limit_type %}, {% trans "limited to type" %} '{{ limit_type }}'{% endif %}{% if limit_parent %}, {% trans "limited to parent" %} '{{ limit_parent }}'{% endif %}{% if limit_group %}, {% trans "limited to group" %} '{{ limit_group }}'{% endif %}</p>
+</div><button type="button" class="btn btn-default" id="remove-limits">{% trans "Clear limitations" %}</button>
 {% endif %}
 {% if search_results|length == 0 %}<p class="no-results">{% trans 'The search provided no results.' %}</p>{% endif %}
 
