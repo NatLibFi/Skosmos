@@ -68,7 +68,7 @@ msgstr "Tyypin mukaan"
 
 #: /tmp/cache/53bba0b980ec3/bd/1b/8ea01a92d3d28ecbc47efa229ca9.php:517
 msgid "Clear limitations"
-msgstr "Tyhjennä rajoitukset"
+msgstr "Peru rajoitukset"
 
 #: /tmp/cache/53bba0b980ec3/65/87/16ff348734bf9f46de7d6a75e06b.php:141
 msgid "Concept counts by language"
