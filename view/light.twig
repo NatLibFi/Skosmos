@@ -80,7 +80,7 @@
             {% elseif not search_results %}<span class="header-text-small-font">{% trans %}Error: the vocabulary does not contain terms beginning with "{{ letter }}"!{% endtrans %}</span>
           {% endif %}
         </div>
-        {% if search_results and term %}
+        {% if term %}
         <form class="search-options">
           <div class="input-group">
             <span class="versal">{% trans "By type" %}</span>
