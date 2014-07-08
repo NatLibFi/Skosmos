@@ -861,12 +861,6 @@ $(function() { // DOCUMENT READY
 
   var searchOptions = $('.search-options');
   if (searchOptions.length === 1) {
-    // loading autocomplete for the type input
-    $('#type-limit').autocomplete({
-      source: ['skos:Concept', 'skos:Collection', 'isothes:ThesaurusArray'],
-      minLength: 0 
-    });
-
     $(document).on('click', '#remove-limits', function() {
       $('#type-limit').val('');
       $('#parent-limit').val('');
