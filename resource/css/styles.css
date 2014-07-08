@@ -1230,7 +1230,7 @@ body, .versal, h1, h2, p, .versal-bold {
     top: 435px !important;
   }
 
-  .ui-autocomplete {
+  .navbar-form .ui-autocomplete {
     max-width: 250px !important;
   }
 
