@@ -429,7 +429,7 @@ EOQ;
 
     // extra conditions for label language, if specified
     $labelcond_match = ($search_lang) ? "&& langMatches(lang(?match), '$search_lang')" : "";
-    $labelcond_label = ($lang) ? "&& langMatches(lang(?label), '$lang')" : "&& langMatches(lang(?label), lang(?match))";
+    $labelcond_label = ($lang) ? "langMatches(lang(?label), '$lang')" : "langMatches(lang(?label), lang(?match))";
 
     // extra conditions for parent and group, if specified
     $parentcond = ($parent) ? "?s skos:broader+ <$parent> ." : "";
@@ -507,14 +507,20 @@ EOQ;
           {
            $parentcond
            $groupcond
-           ?s skos:prefLabel ?label .
            ?s rdf:type ?type .
            ?s ?prop ?match .
            FILTER (
                    $filtercond
                    $labelcond_match
-                   $labelcond_label
                   )
+           OPTIONAL {
+             ?s skos:prefLabel ?label .
+             FILTER ($labelcond_label)
+           }
+           OPTIONAL { # fallback in case previous OPTIONAL block gives no labels
+             ?s skos:prefLabel ?label .
+             FILTER (langMatches(lang(?label), lang(?match)))
+           }
           }
           FILTER NOT EXISTS {?s owl:deprecated true }
         }
