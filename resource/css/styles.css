@@ -220,8 +220,12 @@ section {
   padding-right: 140px !important;
 }
 
-.search-result-listing > button.btn-default {
+#remove-limits {
   border-radius: 0;
+}
+
+#remove-limits:hover {
+  background-color: #FFFFFF;
 }
 
 .search-result-listing .prefLabel {
