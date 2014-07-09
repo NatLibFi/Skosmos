@@ -843,7 +843,7 @@ $(function() { // DOCUMENT READY
     $('.search-result-listing').append($loading);
     var typeLimit = $('#type-limit').val();
     var groupLimit = $('#group-limit').val();
-    var parentLimit = $('#parent-limit').val();
+    var parentLimit = $('#parent-limit').attr('data-uri');
     var parameters = $.param({'type' : typeLimit, 'group' : groupLimit, 'parent': parentLimit});
     $.ajax({
         data: parameters,
@@ -862,6 +862,61 @@ $(function() { // DOCUMENT READY
 
   var searchOptions = $('.search-options');
   if (searchOptions.length === 1) {
+    $('#parent-limit').autocomplete({
+      source : function(request, response) {
+      // default to prefix search when no wildcards were used
+      var term = request.term.trim(); // surrounding whitespace is not significant
+      term = term.indexOf("*") >= 0 ? term : term + "*";
+      var parameters = $.param({'query' : term, 'vocab' : vocab, 'lang' : qlang, 'labellang' : lang});
+      $.ajax({
+        url : rest_url + 'search',
+        data: parameters,
+        dataType : "json",
+        success : function(data) {
+          if (data.results.length === 0) {
+            response(NoResultsLabel);
+          }
+          else {
+            response($
+              .map(
+                data.results
+                .filter(function(item) {
+                  // either we are performing a local search
+                  // or the concept is native to the vocabulary
+                  return (vocab !== "" || !item.exvocab);
+                }),
+                function(item) {
+                  var name = (item.altLabel ? item.altLabel +
+                    " \u2192 " +
+                    item.prefLabel : item.prefLabel);
+                  if(item.hiddenLabel) 
+                    name =  item.hiddenLabel + " \u2192 " + item.prefLabel;
+                  item.label = name;
+                  if (item.vocab && item.vocab != vocab) // if performing global search include vocabid
+                    item.label += ' @' + item.vocab + ' ';
+                  if (item.exvocab && item.exvocab != vocab)
+                    item.label += ' @' + item.exvocab + ' ';
+                  if (item.lang && item.lang !== lang) // if the label is not in the ui lang
+                    item.label += ' @ ' + item.lang;
+                  return item;
+                }));
+          }
+        }
+      });
+    },
+    delay : autocomplete_delay, 
+    minLength : autocomplete_activation,
+    appendTo: "#header-bar-content",
+
+    select : function(event, ui) { // what happens when autocomplete is clicked
+      $('#parent-limit').attr('data-uri', ui.item.uri); 
+      $('#parent-limit').val(ui.item.label); 
+      event.preventDefault();
+      return false;
+    }
+  }).bind('focus', function() {
+    $('#parent-limit').autocomplete('search'); 
+  });
     $(document).on('click', '#remove-limits', function() {
       $('#type-limit').val('');
       $('#parent-limit').val('');
