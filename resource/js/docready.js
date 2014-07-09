@@ -919,6 +919,7 @@ $(function() { // DOCUMENT READY
   });
     $(document).on('click', '#remove-limits', function() {
       $('#type-limit').val('');
+      $('#parent-limit').attr('data-uri', '');
       $('#parent-limit').val('');
       $('#group-limit').val('');
       loadLimitations();
