@@ -507,7 +507,7 @@ hr {
   margin-bottom: 15px !important;
 }
 
-div#sidebar-grey > div > div > div.search-options {
+div#sidebar-grey > div > div > form.search-options {
   margin-right: 0px !important;
 }
 
@@ -529,11 +529,11 @@ div#sidebar-grey > div > div > div.search-options {
   top: 10px;
 }
 
-div.search-options > .input-group > input.form-control {
+form.search-options > .input-group > input.form-control {
   width: 280px !important;
 }
 
-.search-options div { 
+form.search-options div { 
   padding-bottom: 15px;
 }
 
@@ -1300,7 +1300,7 @@ body, .versal, h1, h2, p, .versal-bold {
     height: calc(100% - 150px) !important;
   }
 
-  div.search-options > .input-group > input.form-control {
+  form.search-options > .input-group > input.form-control {
     width: 370px !important;
   }
   
