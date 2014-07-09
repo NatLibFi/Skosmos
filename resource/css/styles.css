@@ -529,7 +529,7 @@ div#sidebar-grey > div > div > form.search-options {
   top: 10px;
 }
 
-form.search-options > .input-group > input.form-control {
+form.search-options > .input-group > .form-control {
   width: 280px !important;
 }
 
@@ -1300,7 +1300,7 @@ body, .versal, h1, h2, p, .versal-bold {
     height: calc(100% - 150px) !important;
   }
 
-  form.search-options > .input-group > input.form-control {
+  form.search-options > .input-group > .form-control {
     width: 370px !important;
   }
   
