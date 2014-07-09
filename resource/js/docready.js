@@ -567,7 +567,7 @@ $(function() { // DOCUMENT READY
   // calls for another function to highlight search term in the labels.
   if (getUrlParams().q) {
     localSearchHighlight(decodeURI(getUrlParams().q.replace(/\*/g, '')));
-    searchTerm = getUrlParams().q;
+    searchTerm = decodeURI(getUrlParams().q);
   }
   
   var NoResultsLabel = [ {
@@ -695,7 +695,7 @@ $(function() { // DOCUMENT READY
 
   // Initializes the waypoints plug-in used for the search listings.
   var $loading = $("<p>" + loading_text + "&hellip;<span class='spinner'/></p>"); 
-  var $trigger = $('.search-result:nth-last-of-type(4)'); 
+  var $trigger = $('.search-result:nth-last-of-type(6)'); 
   var options = { offset : '100%', continuous: false, triggerOnce: true };
   var offcount = 1;
   var number_of_hits = document.getElementsByClassName("search-result").length;
@@ -714,7 +714,7 @@ $(function() { // DOCUMENT READY
     var number_of_hits = document.getElementsByClassName("search-result").length;
     if (number_of_hits >= waypoint_results * offcount)
       $('.search-result-listing').append($loading);
-    var parameters = $.param({'q' : searchTerm, 'vocabs' : vocabSelectionString, 'offset' : offcount * waypoint_results, 'lang' : getUrlParams().lang});
+    var parameters = $.param({'q' : searchTerm, 'vocabs' : vocabSelectionString, 'offset' : offcount * waypoint_results, 'lang' : decodeURI(getUrlParams().lang)});
     $.ajax({
       url : window.location.pathname,
       data : parameters,
