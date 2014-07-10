@@ -911,12 +911,15 @@ $(function() { // DOCUMENT READY
     select : function(event, ui) { // what happens when autocomplete is clicked
       $('#parent-limit').attr('data-uri', ui.item.uri); 
       $('#parent-limit').val(ui.item.label); 
+      parentLimitReady = true;
       event.preventDefault();
       return false;
     }
   }).bind('focus', function() {
     $('#parent-limit').autocomplete('search'); 
   });
+
+  var parentLimitReady = false;
     $(document).on('click', '#remove-limits', function() {
       $('#type-limit').val('');
       $('#parent-limit').attr('data-uri', '');
@@ -924,8 +927,15 @@ $(function() { // DOCUMENT READY
       $('#group-limit').val('');
       loadLimitations();
     });
+    $('#parent-limit').focus(function() {
+      if($('#parent-limit').attr('data-uri') !== '')
+        parentLimitReady = true;
+      else
+        parentLimitReady = false;
+    });
     $(document).on('submit', '.search-options', function() {
-      loadLimitations();
+      if (parentLimitReady)
+        loadLimitations();
       return false;
     });
 
