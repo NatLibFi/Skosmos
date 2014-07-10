@@ -92,7 +92,13 @@
             </select>
           </div>
           <div class="input-group">
-            <span class="versal">{% trans "By group" %}</span><input type="text" id="group-limit" class="form-control" value="{{ limit_group }}">
+            <span class="versal">{% trans "By group" %}</span>
+            <select id="group-limit" value="{{ limit-group }}" class="form-control">
+              <option></option>
+              {% for group in group_index %}
+                <option>{{ group }}</option>
+              {% endfor %}
+            </select>
           </div>
           <div class="input-group">
             <span class="versal">{% trans "By parent" %}</span><input type="text" id="parent-limit" class="form-control" value="{{ limit_parent }}">

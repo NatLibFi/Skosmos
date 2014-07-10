@@ -381,6 +381,7 @@ class WebController extends Controller
 
       return;
     }
+    $groups = $vocab->listConceptGroups();
     $term = urldecode(isset($_GET['q']) ? $_GET['q'] : "");
     $search_lang = (isset($_GET['lang'])) ? $_GET['lang'] : $lang;
     $type = (isset($_GET['type'])) ? $_GET['type'] : null;
@@ -432,6 +433,7 @@ class WebController extends Controller
                 'limit_parent' => $parent,
                 'limit_type' => $type,
                 'limit_group' => $group,
+                'group_index' => $groups,
                 'request_uri' => $this->request_uri
 
     ));
