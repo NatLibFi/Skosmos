@@ -919,7 +919,7 @@ $(function() { // DOCUMENT READY
     $('#parent-limit').autocomplete('search'); 
   });
 
-  var parentLimitReady = false;
+  var parentLimitReady = true;
     $(document).on('click', '#remove-limits', function() {
       $('#type-limit').val('');
       $('#parent-limit').attr('data-uri', '');

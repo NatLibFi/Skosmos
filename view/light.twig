@@ -95,8 +95,8 @@
             <span class="versal">{% trans "By group" %}</span>
             <select id="group-limit" value="{{ limit-group }}" class="form-control">
               <option></option>
-              {% for group in group_index %}
-                <option>{{ group }}</option>
+              {% for uri,group in group_index %}
+                <option value="{{ uri }}">{{ group }}</option>
               {% endfor %}
             </select>
           </div>
