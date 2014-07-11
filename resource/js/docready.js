@@ -623,6 +623,23 @@ $(function() { // DOCUMENT READY
       $('#search-all-button').attr('disabled', false);
     }
   });
+
+  function onSelection($e, datum) {
+    var localname = datum.localname;
+      if (datum.exvocab) {
+        localname = "?uri=" + datum.uri;
+      }
+      if (datum.label === NoResultsLabel[0].label) {
+        event.preventDefault();
+        return false;
+      }
+      // replaced complex logic with path_fix that should always work.
+      if (datum.type && datum.type.indexOf('Collection') !== -1) {
+        location.href = encodeURI(path_fix + datum.vocab + '/' + lang + '/groups/' + localname);
+      } else {
+        location.href = encodeURI(path_fix + datum.vocab + '/' + lang + '/page/' + localname);
+      }
+  }
   
   var concepts = new Bloodhound({
     remote: rest_url + vocab + '/search?query=%QUERY',
@@ -635,7 +652,6 @@ $(function() { // DOCUMENT READY
   $('#search-field').typeahead(null, {
     name: 'concept',
     displayKey: function(response) {
-      console.log(response); 
       return response.prefLabel;
     },
     minLength: autocomplete_activation,
@@ -681,85 +697,9 @@ $(function() { // DOCUMENT READY
         }
       }); 
     } //concepts.ttAdapter()
+  }).on('typeahead:selected', onSelection).bind('focus', function() {
+    $('#search-field').typeahead('open'); 
   });
-
-  // activates jquery autocomplete for the search fields
-  /*
-  var autoC = $("#search-field").autocomplete({
-    source : function(request, response) {
-      // default to prefix search when no wildcards were used
-      var term = request.term.trim(); // surrounding whitespace is not significant
-      term = term.indexOf("*") >= 0 ? term : term + "*";
-      var vocabString = $('.multiselect').length ? vocabSelectionString : vocab; 
-      var parameters = $.param({'query' : term, 'vocab' : vocabString, 'lang' : qlang, 'labellang' : lang});
-      $.ajax({
-        url : rest_url + 'search',
-        data: parameters,
-        dataType : "json",
-        success : function(data) {
-          if (data.results.length === 0) {
-            response(NoResultsLabel);
-          }
-          else {
-            response($
-              .map(
-                data.results
-                .filter(function(item) {
-                  // either we are performing a local search
-                  // or the concept is native to the vocabulary
-                  return (vocab !== "" || !item.exvocab);
-                }),
-                function(item) {
-                  var name = (item.altLabel ? item.altLabel +
-                    " \u2192 " +
-                    item.prefLabel : item.prefLabel);
-                  if(item.hiddenLabel) 
-                    name =  item.hiddenLabel + " \u2192 " + item.prefLabel;
-                  item.label = name;
-                  if (item.vocab && item.vocab != vocab) // if performing global search include vocabid
-                    item.label += ' @' + item.vocab + ' ';
-                  if (item.exvocab && item.exvocab != vocab)
-                    item.label += ' @' + item.exvocab + ' ';
-                  if (item.lang && item.lang !== lang) // if the label is not in the ui lang
-                    item.label += ' @ ' + item.lang;
-                  return item;
-                }));
-          }
-        }
-      });
-    },
-    delay : autocomplete_delay, // time (in milliseconds)
-    // before autocomplete
-    // activates i.e. sends a
-    // request to the REST
-    // interface
-    minLength : autocomplete_activation,
-    appendTo: "#header-bar-content",
-
-    select : function(event, ui) { // what happens when
-      // user clicks/uses autocomplete
-      var localname = ui.item.localname;
-      if (ui.item.exvocab) {
-        localname = "?uri=" + ui.item.uri;
-      }
-      if (ui.item.label === NoResultsLabel[0].label) {
-        event.preventDefault();
-        return false;
-      }
-      // replaced complex logic with path_fix that should always work.
-      if (ui.item.type && ui.item.type.indexOf('Collection') !== -1) {
-        location.href = encodeURI(path_fix + ui.item.vocab + '/' + lang + '/groups/' + localname);
-      } else {
-        location.href = encodeURI(path_fix + ui.item.vocab + '/' + lang + '/page/' + localname);
-      }
-    },
-    focus : function(event, ui) {
-      return false; // Prevent the widget from inserting the value.
-    }
-  }).bind('focus', function() {
-    $('#search-field').autocomplete('search'); 
-  });
-  */
 
   $("button#send-feedback").button({
     icons : {
