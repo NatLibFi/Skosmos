@@ -614,8 +614,7 @@ $(function() { // DOCUMENT READY
     var empty = false;
     $('#search-field').each(function() {
       if ($(this).val().length === 0) {
-        empty = true;
-      }
+        empty = true; }
     });
 
     if (empty) {
@@ -625,7 +624,67 @@ $(function() { // DOCUMENT READY
     }
   });
   
+  var concepts = new Bloodhound({
+    remote: rest_url + vocab + '/search?query=%QUERY',
+    datumTokenizer: Bloodhound.tokenizers.whitespace,
+    queryTokenizer: Bloodhound.tokenizers.whitespace
+  });
+
+  concepts.initialize();
+
+  $('#search-field').typeahead(null, {
+    name: 'concept',
+    displayKey: function(response) {
+      console.log(response); 
+      return response.prefLabel;
+    },
+    minLength: autocomplete_activation,
+    source: function(query, process) { 
+      // default to prefix search when no wildcards were used
+      var term = query; // surrounding whitespace is not significant
+      term = term.indexOf("*") >= 0 ? term : term + "*";
+      var vocabString = $('.multiselect').length ? vocabSelectionString : vocab; 
+      var parameters = $.param({'query' : term, 'vocab' : vocabString, 'lang' : qlang, 'labellang' : lang});
+      return $.ajax({
+        url : rest_url + 'search',
+        data: parameters,
+        dataType : "json",
+        success : function(data) {
+          if (data.results.length === 0) {
+            process(NoResultsLabel);
+          }
+          else {
+            process($
+              .map(
+                data.results
+                .filter(function(item) {
+                  // either we are performing a local search
+                  // or the concept is native to the vocabulary
+                  return (vocab !== "" || !item.exvocab);
+                }),
+                function(item) {
+                  var name = (item.altLabel ? item.altLabel +
+                    " \u2192 " +
+                    item.prefLabel : item.prefLabel);
+                  if(item.hiddenLabel) 
+                    name =  item.hiddenLabel + " \u2192 " + item.prefLabel;
+                  item.label = name;
+                  if (item.vocab && item.vocab != vocab) // if performing global search include vocabid
+                    item.label += ' @' + item.vocab + ' ';
+                  if (item.exvocab && item.exvocab != vocab)
+                    item.label += ' @' + item.exvocab + ' ';
+                  if (item.lang && item.lang !== lang) // if the label is not in the ui lang
+                    item.label += ' @ ' + item.lang;
+                  return item;
+                }));
+          }
+        }
+      }); 
+    } //concepts.ttAdapter()
+  });
+
   // activates jquery autocomplete for the search fields
+  /*
   var autoC = $("#search-field").autocomplete({
     source : function(request, response) {
       // default to prefix search when no wildcards were used
@@ -700,6 +759,7 @@ $(function() { // DOCUMENT READY
   }).bind('focus', function() {
     $('#search-field').autocomplete('search'); 
   });
+  */
 
   $("button#send-feedback").button({
     icons : {
