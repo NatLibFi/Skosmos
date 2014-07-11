@@ -618,13 +618,15 @@ $(function() { // DOCUMENT READY
   $('#search-field').typeahead(null, {
     name: 'concept',
     displayKey: function(response) {
-      return response.prefLabel;
+      return response.label;
     },
     minLength: autocomplete_activation,
     source: function(query, process) { 
       // default to prefix search when no wildcards were used
       var term = query; // surrounding whitespace is not significant
       term = term.indexOf("*") >= 0 ? term : term + "*";
+      if (term.length < (autocomplete_activation + 1))
+        return false;
       var vocabString = $('.multiselect').length ? vocabSelectionString : vocab; 
       var parameters = $.param({'query' : term, 'vocab' : vocabString, 'lang' : qlang, 'labellang' : lang});
       return $.ajax({
