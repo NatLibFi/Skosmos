@@ -1424,12 +1424,11 @@ body, .versal, h1, h2, p, .versal-bold {
 
 .tt-suggestion.tt-cursor {
   color: #fff;
-  background-color: #FEFEFE;
-  border: 1px solid #75889F;
+  background-color: #75889F;
 }
 
 .tt-cursor > p {
-  margin-left: -1px !important;
+  color: #fff;
 }
 
 .twitter-typeahead > .form-control {
