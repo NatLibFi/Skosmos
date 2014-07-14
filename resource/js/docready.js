@@ -607,15 +607,15 @@ $(function() { // DOCUMENT READY
       }
   }
   
+  var vocabString = $('.multiselect').length ? vocabSelectionString : vocab; 
 
   var concepts = new Bloodhound({
     remote: { 
-      url: rest_url + vocab + '/search?query=%QUERY*' + '&lang=' + qlang,
+      url: rest_url + 'search?query=%QUERY*' + '&vocab=' + vocabString + '&lang=' + qlang + '&labellang=' + lang,
       filter: function(data) {
-        return ($.map(data.results.filter(function(item) {
-          // either we are performing a local search
-          // or the concept is native to the vocabulary
-          return (vocab !== "" || !item.exvocab);
+        return ($.map(data.results.filter(
+          function(item) {
+            return true;
           }),
           function(item) {
             var name = (item.altLabel ? item.altLabel +
@@ -624,7 +624,7 @@ $(function() { // DOCUMENT READY
             if(item.hiddenLabel) 
               name =  item.hiddenLabel + " \u2192 " + item.prefLabel;
             item.label = name;
-            if (item.vocab && item.vocab != vocab) // if performing global search include vocabid
+            if (item.vocab && item.vocab != '???' && item.vocab != vocab) // if performing global search include vocabid
               item.label += ' @' + item.vocab + ' ';
             if (item.exvocab && item.exvocab != vocab)
               item.label += ' @' + item.exvocab + ' ';
