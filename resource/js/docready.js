@@ -644,7 +644,7 @@ $(function() { // DOCUMENT READY
 
   var concepts = new Bloodhound({
     remote: { 
-      url: rest_url + vocab + '/search?query=%QUERY*',
+      url: rest_url + vocab + '/search?query=%QUERY*' + '&lang=' + qlang,
       filter: function(data) {
         return ($.map(data.results.filter(function(item) {
           // either we are performing a local search
@@ -668,6 +668,7 @@ $(function() { // DOCUMENT READY
           }));
       }
     },
+    limit: 1000,
     datumTokenizer: Bloodhound.tokenizers.whitespace,
     queryTokenizer: Bloodhound.tokenizers.whitespace
   });
