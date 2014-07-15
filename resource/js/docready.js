@@ -627,6 +627,7 @@ $(function() { // DOCUMENT READY
             return true;
           }),
           function(item) {
+            console.log(item);
             if (item.lang && item.lang !== lang) // if the label is not in the ui lang
               item.label += ' (' + item.lang + ')';
             if(item.hiddenLabel) 
@@ -634,7 +635,7 @@ $(function() { // DOCUMENT READY
             if(item.altLabel) {
               item.label = '<p class="matched-label">' + item.altLabel;
               if (item.lang && item.lang !== lang)
-                item.label += ' (' + item.lang + ')</p>';
+                item.label += '</p><p class="lang-label">(' + item.lang + ')</p>';
               item.label += "<p class='autocomplete-label'> \u2192 " + item.prefLabel + '</p>';
             }
             if (item.vocab && item.vocab != '???' && item.vocab != vocab) // if performing global search include vocabid
