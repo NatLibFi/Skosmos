@@ -673,11 +673,11 @@ $(function() { // DOCUMENT READY
             if (item.exvocab && item.exvocab != vocab)
               item.label += ' @' + item.exvocab + ' ';
             if (item.lang && item.lang !== lang) // if the label is not in the ui lang
-              item.label += ' @ ' + item.lang;
+              item.label += ' (' + item.lang + ')';
             if (item.matchedPrefLabel) {
               item.label = '<p class="matched-label">' + item.matchedPrefLabel + '</p><p class="autocomplete-label">';
               if (item.lang && item.lang !== lang)
-                item.label += ' @ ' + item.lang;
+                item.label += ' (' + item.lang + ')';
               item.label += " \u2192 " + item.prefLabel + '</p>';
             }
             return item;
