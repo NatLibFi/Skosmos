@@ -611,11 +611,16 @@ $(function() { // DOCUMENT READY
       }
   }
   
-  var vocabString = $('.multiselect').length ? vocabSelectionString : vocab; 
-
   var concepts = new Bloodhound({
     remote: { 
-      url: rest_url + 'search?query=%QUERY*' + '&vocab=' + vocabString + '&lang=' + qlang + '&labellang=' + lang,
+      url: rest_url + 'search?query=%QUERY*',
+      ajax: {
+        beforeSend: function(jqXHR, settings) {
+          var vocabString = $('.multiselect').length ? vocabSelectionString : vocab; 
+          var parameters = $.param({'vocab' : vocabString, 'lang' : qlang, 'labellang' : lang});
+          settings.url = settings.url + '&' + parameters;
+        }
+      },
       filter: function(data) {
         return ($.map(data.results.filter(
           function(item) {
