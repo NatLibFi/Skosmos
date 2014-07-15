@@ -858,22 +858,97 @@ textarea:focus, input[type="text"]:focus {
   outline: 0 none;
 }
 
-.ui-autocomplete {
-  max-height:300px;
-  overflow-y: auto;
-  background-image: none !important;
-  border-radius: 0px !important;
-}
-
-.ui-state-focus {
-  border-radius: 0 !important;
-  background-image: none !important;
-  background-color: #ffffff !important;
-}
-
 .autocomplete-vocab {
   float: right;
 }
+
+/* typeahead.js
+ ***********************************/
+
+.typeahead,
+.tt-query,
+.tt-hint {
+  width: 396px;
+  height: 30px;
+  padding: 2px 12px;
+  font-size: 14px;
+  line-height: 30px;
+  border: 2px solid #ccc;
+  border-radius: 0 !important;
+  outline: none;
+}
+
+.typeahead {
+  background-color: #fff;
+}
+
+.typeahead:focus {
+  border: 2px solid #75889F;
+}
+
+.tt-hint {
+  color: #999
+}
+
+.tt-dropdown-menu {
+  width: 200px;
+  max-height:300px;
+  overflow-y: auto;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0 !important;
+}
+
+.tt-suggestion > p {
+  display: inline-block;
+}
+
+p.autocomplete-label, p.matched-label, p.lang-label {
+  padding-left: 5px !important;
+}
+
+p.matched-label {
+  padding-left: 0 !important;
+}
+
+
+p.matched-label {
+  text-decoration: line-through;
+}
+
+.tt-suggestion {
+  padding: 3px 20px;
+  font-size: 14px !important;
+  line-height: 24px;
+}
+
+.tt-suggestion.tt-cursor {
+  color: #fff;
+  background-color: #75889F;
+}
+
+.tt-cursor > p {
+  color: #fff;
+}
+
+.twitter-typeahead > .form-control {
+  height: 40px;
+  border-radius: 0;
+}
+
+.navbar-form > .input-group > .input-group-btn {
+  vertical-align: top;
+}
+
+.tt-suggestion p {
+  margin: 0;
+}
+
+.gist {
+  font-size: 14px;
+}
+
 
 /* jsTree customization
  *****************************************/
@@ -1305,6 +1380,10 @@ body, .versal, h1, h2, p, .versal-bold {
   .feedback-box, #about {
     width: 600px !important;
   }
+  
+  .tt-dropdown-menu {
+    width: 310px;
+  }
 
   .ui-autocomplete {
     max-width: 310px !important;
@@ -1380,90 +1459,4 @@ body, .versal, h1, h2, p, .versal-bold {
   border: 2px dashed #62729f !important;
 }
 <![endif]-->
-
-// typeahead styles yanked from the examples
-
-.typeahead,
-.tt-query,
-.tt-hint {
-  width: 396px;
-  height: 30px;
-  padding: 8px 12px;
-  font-size: 14px;
-  line-height: 30px;
-  border: 2px solid #ccc;
-  border-radius: 0 !important;
-  outline: none;
-}
-
-.typeahead {
-  background-color: #fff;
-}
-
-.typeahead:focus {
-  border: 2px solid #75889F;
-}
-
-.tt-hint {
-  color: #999
-}
-
-.tt-dropdown-menu {
-  width: 422px;
-  max-height:300px;
-  overflow-y: auto;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 0 !important;
-}
-
-.tt-suggestion > p {
-  display: inline-block;
-}
-
-p.autocomplete-label, p.matched-label, p.lang-label {
-  padding-left: 5px !important;
-}
-
-p.matched-label {
-  padding-left: 0 !important;
-}
-
-
-p.matched-label {
-  text-decoration: line-through;
-}
-
-.tt-suggestion {
-  padding: 3px 20px;
-  font-size: 14px !important;
-  line-height: 24px;
-}
-
-.tt-suggestion.tt-cursor {
-  color: #fff;
-  background-color: #75889F;
-}
-
-.tt-cursor > p {
-  color: #fff;
-}
-
-.twitter-typeahead > .form-control {
-  height: 40px;
-  border-radius: 0;
-}
-
-.navbar-form > .input-group > .input-group-btn {
-  vertical-align: top;
-}
-
-.tt-suggestion p {
-  margin: 0;
-}
-
-.gist {
-  font-size: 14px;
-}
 
