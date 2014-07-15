@@ -1418,8 +1418,11 @@ body, .versal, h1, h2, p, .versal-bold {
   border-radius: 0 !important;
 }
 
-p.autocomplete-label, p.matched-label {
+.tt-suggestion > p {
   display: inline-block;
+}
+
+p.autocomplete-label, p.matched-label {
   padding-left: 5px !important;
 }
 
