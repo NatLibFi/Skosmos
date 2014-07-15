@@ -627,11 +627,12 @@ $(function() { // DOCUMENT READY
             return true;
           }),
           function(item) {
+            console.log(item);
             var name = (item.altLabel ? item.altLabel +
               " \u2192 " +
               item.prefLabel : item.prefLabel);
             if(item.hiddenLabel) 
-              name =  item.hiddenLabel + " \u2192 " + item.prefLabel;
+              name = '<p class="matched-label">' + item.hiddenLabel + "</p>  \u2192 " + item.prefLabel;
             item.label = name;
             if (item.vocab && item.vocab != '???' && item.vocab != vocab) // if performing global search include vocabid
               item.label += ' @' + item.vocab + ' ';
@@ -639,6 +640,12 @@ $(function() { // DOCUMENT READY
               item.label += ' @' + item.exvocab + ' ';
             if (item.lang && item.lang !== lang) // if the label is not in the ui lang
               item.label += ' @ ' + item.lang;
+            if (item.matchedPrefLabel) {
+              item.label = '<p class="matched-label">' + item.matchedPrefLabel + '</p><p class="autocomplete-label">';
+              if (item.lang && item.lang !== lang)
+                item.label += ' @ ' + item.lang;
+              item.label += " \u2192 " + item.prefLabel + '</p>';
+            }
             return item;
           }));
       }
