@@ -550,6 +550,8 @@ $(function() { // DOCUMENT READY
     $('#lang-dropdown-toggle').html($(this).html() + ' <span class="caret"></span>');
     $('#lang-input').val(qlang);
     createCookie('SKOSMOS_SEARCH_LANG', qlang, 365);
+    if (concepts)
+      concepts.clear();
   });
   
   $('.lang-button-all').on('click', function() {
@@ -557,6 +559,8 @@ $(function() { // DOCUMENT READY
     createCookie('SKOSMOS_SEARCH_LANG', 'anything', 365);
     $('#lang-input').val('');
     $('#lang-dropdown-toggle').html($('.lang-button-all').html() + ' <span class="caret"></span>');
+    if (concepts)
+      concepts.clear();
   });
 
   $('.lang-button, .lang-button-all').click(function() {
