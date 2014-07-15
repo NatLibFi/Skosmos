@@ -661,24 +661,25 @@ $(function() { // DOCUMENT READY
             return true;
           }),
           function(item) {
-            console.log(item);
-            var name = (item.altLabel ? item.altLabel +
-              " \u2192 " +
-              item.prefLabel : item.prefLabel);
+            if (item.lang && item.lang !== lang) // if the label is not in the ui lang
+              item.label += ' (' + item.lang + ')';
             if(item.hiddenLabel) 
-              name = '<p class="matched-label">' + item.hiddenLabel + "</p>  \u2192 " + item.prefLabel;
-            item.label = name;
+              item.label = '<p class="matched-label">' + item.hiddenLabel + "</p>  \u2192 " + item.prefLabel;
+            if(item.altLabel) {
+              item.label = '<p class="matched-label">' + item.altLabel;
+              if (item.lang && item.lang !== lang)
+                item.label += ' (' + item.lang + ')</p>';
+              item.label += "<p class='autocomplete-label'> \u2192 " + item.prefLabel + '</p>';
+            }
             if (item.vocab && item.vocab != '???' && item.vocab != vocab) // if performing global search include vocabid
               item.label += ' @' + item.vocab + ' ';
             if (item.exvocab && item.exvocab != vocab)
               item.label += ' @' + item.exvocab + ' ';
-            if (item.lang && item.lang !== lang) // if the label is not in the ui lang
-              item.label += ' (' + item.lang + ')';
             if (item.matchedPrefLabel) {
-              item.label = '<p class="matched-label">' + item.matchedPrefLabel + '</p><p class="autocomplete-label">';
+              item.label = '<p class="matched-label">' + item.matchedPrefLabel + '</p><p class="lang-label">';
               if (item.lang && item.lang !== lang)
-                item.label += ' (' + item.lang + ')';
-              item.label += " \u2192 " + item.prefLabel + '</p>';
+                item.label += ' (' + item.lang + ')</p>';
+              item.label += "<p class='autocomplete-label'> \u2192 " + item.prefLabel + '</p>';
             }
             return item;
           }));
