@@ -1410,6 +1410,8 @@ body, .versal, h1, h2, p, .versal-bold {
 
 .tt-dropdown-menu {
   width: 422px;
+  max-height:300px;
+  overflow-y: auto;
   background-color: #fff;
   border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, 0.2);
