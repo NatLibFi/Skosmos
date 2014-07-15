@@ -1422,7 +1422,7 @@ body, .versal, h1, h2, p, .versal-bold {
   display: inline-block;
 }
 
-p.autocomplete-label, p.matched-label {
+p.autocomplete-label, p.matched-label, p.lang-label {
   padding-left: 5px !important;
 }
 
