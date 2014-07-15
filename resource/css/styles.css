@@ -1099,7 +1099,7 @@ body, .versal, h1, h2, p, .versal-bold {
     overflow: hidden;
   }
 
-  .ui-autocomplete {
+  .tt-dropdown {
     max-width: 240px !important;
   }
 
@@ -1268,8 +1268,8 @@ body, .versal, h1, h2, p, .versal-bold {
     top: 435px !important;
   }
 
-  .ui-autocomplete {
-    max-width: 250px !important;
+  .tt-dropdown {
+    max-width: 250px;
   }
 
   .nav > li > a {
@@ -1383,10 +1383,6 @@ body, .versal, h1, h2, p, .versal-bold {
   
   .tt-dropdown-menu {
     width: 310px;
-  }
-
-  .ui-autocomplete {
-    max-width: 310px !important;
   }
 
   .global-content {
