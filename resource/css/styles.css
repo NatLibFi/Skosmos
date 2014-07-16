@@ -870,7 +870,7 @@ textarea:focus, input[type="text"]:focus {
 .tt-hint {
   width: 396px;
   height: 30px;
-  padding: 2px 12px;
+  padding: 0px 12px;
   font-size: 14px;
   line-height: 30px;
   border: 2px solid #ccc;
@@ -912,15 +912,19 @@ p.matched-label {
   padding-left: 0 !important;
 }
 
-
 p.matched-label {
   text-decoration: line-through;
 }
 
+p.autocomplete-vocab {
+  display: block;
+}
+
 .tt-suggestion {
-  padding: 3px 20px;
+  padding: 0px 20px;
   font-size: 14px !important;
   line-height: 24px;
+  border-bottom: 1px solid #cccccc;
 }
 
 .tt-suggestion.tt-cursor {
