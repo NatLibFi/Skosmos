@@ -32,26 +32,6 @@
 
   })();
 
-function customAutocomplete() {
-    $.ui.autocomplete.prototype._renderItem = function (ul, item) {
-        var label = item.label;
-        var vocab = '';
-        if (label.indexOf('@') != -1) {
-          vocab = label.substring(label.indexOf('@'), label.length);
-          item.label = label.substring(0, label.indexOf('@')); 
-        }
-        var output = item.label + '<span class="autocomplete-vocab">' + vocab + '</span>';
-        
-        if (item.matchedPrefLabel) {
-           output = item.matchedPrefLabel + ' (' + vocab.substring(vocab.indexOf('@')+2,vocab.length) + ') → ' + item.label;
-        }
-
-        return $("<li>")
-            .append($("<a>").html(output))
-            .appendTo(ul);
-    };
-}
-
 $(function() { // DOCUMENT READY 
 
   var spinner = '<div class="loading-spinner"><span class="spinner-text">'+ loading_text + '</span><span class="spinner" /></div>';
@@ -79,8 +59,9 @@ $(function() { // DOCUMENT READY
 
   // kills the autocomplete after a form submit so we won't have to wait for the ajax to complete.
   $('.navbar-form').submit(
-    function(event) {  
-      $('#search-field').autocomplete('option','disabled', 'true');
+    function(event) {
+      $('#search-field').typeahead('destroy');
+      $.ajaxQ.abortAll();
     }
   );
 
@@ -773,8 +754,6 @@ $(function() { // DOCUMENT READY
   }
 
   // activating the custom autocomplete 
-  customAutocomplete(); 
-
   function updateVocabParam() {
     vocabSelectionString = '';
     $vocabs = $('li.active input');
