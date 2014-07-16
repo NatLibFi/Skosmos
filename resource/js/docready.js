@@ -34,7 +34,6 @@
 
 function customAutocomplete() {
     $.ui.autocomplete.prototype._renderItem = function (ul, item) {
-        console.log(item);
         var label = item.label;
         var vocab = '';
         if (label.indexOf('@') != -1) {
