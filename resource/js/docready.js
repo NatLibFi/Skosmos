@@ -4,6 +4,34 @@
  * see LICENSE.txt for more information
  */
 
+ /*
+  * Ajax query queue that keeps track of ongoing queries 
+  * so they can be cancelled if a another event is triggered.
+  */
+ $.ajaxQ = (function(){
+  var id = 0, Q = {};
+
+  $(document).ajaxSend(function(e, jqx){
+    jqx._id = ++id;
+    Q[jqx._id] = jqx;
+  });
+  $(document).ajaxComplete(function(e, jqx){
+    delete Q[jqx._id];
+  });
+
+  return {
+    abortAll: function(){
+      var r = [];
+      $.each(Q, function(i, jqx){
+        r.push(jqx._id);
+        jqx.abort();
+      });
+      return r;
+    }
+  };
+
+  })();
+
 function customAutocomplete() {
     $.ui.autocomplete.prototype._renderItem = function (ul, item) {
         console.log(item);
@@ -253,6 +281,7 @@ $(function() { // DOCUMENT READY
   // event handler for clicking the hierarchy concepts
   $(document).on('click', '.jstree-no-icons a',
       function(event) {
+        $.ajaxQ.abortAll();
         event.preventDefault();
         var base_path = path_fix.length / 3;
         var clicked = $(this);
@@ -282,6 +311,7 @@ $(function() { // DOCUMENT READY
   // event handler for clicking the alphabetical/group index concepts
   $(document).on('click', '.side-navi a',
       function(event) {
+        $.ajaxQ.abortAll();
         var base_path = path_fix.length / 3;
         var clicked = $(this);
         $('.activated-concept').removeClass('activated-concept');
@@ -313,6 +343,7 @@ $(function() { // DOCUMENT READY
   // event handler for clicking the alphabetical index tab 
   $(document).on('click', '.nav-tabs a[href$="index"]',
       function(event) {
+        $.ajaxQ.abortAll();
         var base_path = path_fix.length / 3;
         $('.active').removeClass('active');
         var clicked = $(this);
@@ -342,6 +373,7 @@ $(function() { // DOCUMENT READY
   // event handler for clicking the group index tab 
   $(document).on('click', '.nav-tabs a[href$="groups"]',
       function(event) {
+        $.ajaxQ.abortAll();
         var base_path = path_fix.length / 3;
         $('.active').removeClass('active');
         var $clicked = $(this);
@@ -375,6 +407,7 @@ $(function() { // DOCUMENT READY
   // event handler for clicking groups
   $(document).on('click','.group-index > li > a',
       function(event) {
+        $.ajaxQ.abortAll();
         var base_path = path_fix.length / 3;
         var clicked = $(this);
         var $content = $('#sidebar');
@@ -402,6 +435,7 @@ $(function() { // DOCUMENT READY
   // event handler for the alphabetical index letters
   $(document).on('click','.pagination > li > a',
       function(event) {
+        $.ajaxQ.abortAll();
         if ($('.alphabet-header').length === 0) {
           var $pagination = $('.pagination');
           var base_path = path_fix.length / 3;
