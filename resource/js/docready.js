@@ -642,33 +642,14 @@ $(function() { // DOCUMENT READY
             return true;
           }),
           function(item) {
+            console.log(item);
             item.label = item.prefLabel;
-            /*
-            item.label = '<div class="autocomplete-upper">';
-            if(item.hiddenLabel) 
-              item.label += '<p class="matched-label">' + item.hiddenLabel + "</p>  \u2192 " + item.prefLabel;
-            else if(item.altLabel) {
-              item.label += '<p class="matched-label">' + item.altLabel;
-              if (item.lang && item.lang !== lang)
-                item.label += '</p><p class="lang-label">(' + item.lang + ')</p>';
-              item.label += "<p class='autocomplete-label'> \u2192 " + item.prefLabel + '</p>';
-            } else if (item.matchedPrefLabel) {
-              item.label += '<p class="matched-label">' + item.matchedPrefLabel + '</p><p class="lang-label">';
-              if (item.lang && item.lang !== lang)
-                item.label += ' (' + item.lang + ')</p>';
-              item.label += "<p class='autocomplete-label'> \u2192 " + item.prefLabel + '</p>';
-            }
-            else {
-            item.label = '<p class="autocomplete-label">' + item.prefLabel + '</p>';
-            if (item.lang && item.lang !== lang) // if the label is not in the ui lang
-              item.label += '<p class="lang-label">(' + item.lang + ')</p>';
-            }
-            item.label += '</div>';
-            if (item.vocab && item.vocab != '???' && item.vocab != vocab) // if performing global search include vocabid
-              item.label += '<div class="autocomplete-vocab"><p>' + item.vocab + '</p></div>';
-            if (item.exvocab && item.exvocab != vocab)
-              item.label += '<div class="autocomplete-vocab"><p>' + item.exvocab + '</p></div>';
-            */
+            if (item.matchedPrefLabel)
+              item.matched = item.matchedPrefLabel;
+            if (item.altLabel)
+              item.matched = item.altLabel;
+            if (item.lang && item.lang === lang)
+              delete(item.lang);
             return item;
           }));
       }
@@ -686,9 +667,9 @@ $(function() { // DOCUMENT READY
       displayKey: 'label', 
       templates: {
         suggestion: Handlebars.compile([
-          '<div><p class="matched-label">{{altLabel}}</p>',
-          '{{# if altLabel }}<p> \u2192 </p>{{/if}}',
-          '<p class="autocomplete-label">{{label}}</p></div>',
+          '<div><p class="matched-label">{{matched}}</p>',
+          '{{# if matched }}{{# if lang}}<p>({{lang}})</p>{{/if}}<p>\u2192</p>{{/if}}',
+          '<p class="autocomplete-label">{{label}}{{# if lang}}{{# unless matched }}<p>({{lang}})</p>{{/unless}}{{/if}}</p></div>',
           '<div class="vocab">{{exvocab}}</div>',
         ].join(''))
       },
