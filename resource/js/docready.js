@@ -661,9 +661,9 @@ $(function() { // DOCUMENT READY
             return true;
           }),
           function(item) {
-            console.log(item);
+            item.label = '<p class="autocomplete-label">' + item.prefLabel + '</p>';
             if (item.lang && item.lang !== lang) // if the label is not in the ui lang
-              item.label += ' (' + item.lang + ')';
+              item.label += '<p class="lang-label">(' + item.lang + ')</p>';
             if(item.hiddenLabel) 
               item.label = '<p class="matched-label">' + item.hiddenLabel + "</p>  \u2192 " + item.prefLabel;
             if(item.altLabel) {
