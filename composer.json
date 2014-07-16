@@ -2,6 +2,7 @@
     "require": {
         "components/jquery": "1.11.*",
         "components/jqueryui": "1.10.*",
+        "components/handlebars.js": "v1.3.0",
         "easyrdf/easyrdf": "0.8.*",
         "twig/twig": "1.13.*",
         "twig/extensions": "1.*",
