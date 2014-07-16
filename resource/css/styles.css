@@ -869,10 +869,9 @@ textarea:focus, input[type="text"]:focus {
 .tt-query,
 .tt-hint {
   width: 396px;
-  height: 30px;
-  padding: 0px 12px;
+  height: 40px;
   font-size: 14px;
-  line-height: 30px;
+  line-height: 20px;
   border: 2px solid #ccc;
   border-radius: 0 !important;
   outline: none;
@@ -900,30 +899,15 @@ textarea:focus, input[type="text"]:focus {
   border-radius: 0 !important;
 }
 
-.tt-suggestion > p {
+.tt-suggestion p {
   display: inline-block;
 }
 
-p.autocomplete-label, p.matched-label, p.lang-label {
-  padding-left: 5px !important;
-}
-
-p.matched-label {
-  padding-left: 0 !important;
-}
-
-p.matched-label {
-  text-decoration: line-through;
-}
-
-p.autocomplete-vocab {
-  display: block;
-}
-
 .tt-suggestion {
-  padding: 0px 20px;
+  min-height: 46px;
+  padding: 2px 8px;
   font-size: 14px !important;
-  line-height: 24px;
+  line-height: 20px;
   border-bottom: 1px solid #cccccc;
 }
 
