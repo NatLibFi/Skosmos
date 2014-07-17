@@ -901,6 +901,11 @@ textarea:focus, input[type="text"]:focus {
 
 .tt-suggestion p {
   display: inline-block;
+  padding-right: 2px;
+}
+
+.tt-suggestion p:last-of-type {
+  padding-right: 0;
 }
 
 .tt-suggestion {
