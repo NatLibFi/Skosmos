@@ -611,8 +611,9 @@ $(function() { // DOCUMENT READY
 
   function onSelection($e, datum) {
     var localname = datum.localname;
-      if (datum.exvocab) {
+      if (datum.exvocab && datum.vocab === '???') {
         localname = "?uri=" + datum.uri;
+        datum.vocab = datum.exvocab;
       }
       if (datum.label === NoResultsLabel[0].label) {
         event.preventDefault();
@@ -643,7 +644,6 @@ $(function() { // DOCUMENT READY
             return true;
           }),
           function(item) {
-            console.log(item);
             item.label = item.prefLabel;
             // combining all the matched properties.
             if (item.matchedPrefLabel)
@@ -670,8 +670,8 @@ $(function() { // DOCUMENT READY
       displayKey: 'label', 
       templates: {
         suggestion: Handlebars.compile([
-          '<div><p class="matched-label">{{matched}}</p>',
-          '{{# if matched }}{{# if lang}}<p>({{lang}})</p>{{/if}}<p>\u2192</p>{{/if}}',
+          '{{# if matched }}<div><p class="matched-label">{{matched}}</p>',
+          '{{# if lang}}<p>({{lang}})</p>{{/if}}<p>\u2192</p>{{/if}}',
           '<p class="autocomplete-label">{{label}}{{# if lang}}{{# unless matched }}<p>({{lang}})</p>{{/unless}}{{/if}}</p></div>',
           '<div class="vocab">{{exvocab}}</div>',
         ].join(''))
