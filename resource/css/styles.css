@@ -908,6 +908,11 @@ textarea:focus, input[type="text"]:focus {
   padding-right: 0;
 }
 
+.autocomplete-no-results {
+  line-height: 40px;
+  margin: 0 0 0 6px !important;
+}
+
 .tt-suggestion {
   min-height: 46px;
   padding: 2px 8px;

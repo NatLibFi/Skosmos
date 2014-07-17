@@ -626,6 +626,10 @@ $(function() { // DOCUMENT READY
         location.href = encodeURI(path_fix + datum.vocab + '/' + lang + '/page/' + localname);
       }
   }
+
+  Handlebars.registerHelper('noresults', function() {
+    return noResultsTranslation;
+  });
   
   var concepts = new Bloodhound({
     remote: { 
@@ -669,6 +673,9 @@ $(function() { // DOCUMENT READY
       name: 'concept', 
       displayKey: 'label', 
       templates: {
+        empty: Handlebars.compile([
+          '<div><p class="autocomplete-no-results">{{#noresults}}{{/noresults}}</p></div>'
+        ].join('')),
         suggestion: Handlebars.compile([
           '{{# if matched }}<div><p class="matched-label">{{matched}}</p>',
           '{{# if lang}}<p>({{lang}})</p>{{/if}}<p>\u2192</p>{{/if}}',
