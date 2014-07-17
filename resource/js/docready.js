@@ -684,12 +684,6 @@ $(function() { // DOCUMENT READY
     $('#search-field').typeahead('open'); 
   });
 
-  $("button#send-feedback").button({
-    icons : {
-      primary : "ui-icon-mail-closed"
-    }
-  });
-
   // Some form validation for the feedback form
   $("#send-feedback")
   .click(
