@@ -100,9 +100,9 @@ $(function() { // DOCUMENT READY
     if (settings.url.indexOf('search') !== -1 && $('.tt-suggestion').length > 6)
       $(".tt-dropdown-menu").mCustomScrollbar({ 
         scrollInertia: 0, 
-        mouseWheel:{ scrollAmount: 46 },
-        snapAmount: 46,
-        snapOffset: 1
+        mouseWheel:{ scrollAmount: 50 },
+        snapAmount: 50,
+        snapOffset: 0
       });
   });
 
@@ -687,8 +687,9 @@ $(function() { // DOCUMENT READY
         ].join(''))
       },
       source: concepts.ttAdapter()
-  }).on('typeahead:selected', onSelection).bind('focus', function() {
-    $('#search-field').typeahead('open'); 
+  }).on('typeahead:cursorchanged', function($e) {
+    var cursorPos = $('.tt-cursor')[0].offsetTop;
+    $('.tt-dropdown-menu').mCustomScrollbar("scrollTo", cursorPos);
   });
 
   // Some form validation for the feedback form

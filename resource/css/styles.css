@@ -899,6 +899,10 @@ textarea:focus, input[type="text"]:focus {
   border-radius: 0 !important;
 }
 
+.tt-dropdown-menu.mCustomScrollbar {
+  border-right: 0 !important;
+}
+
 .tt-suggestion p {
   display: inline-block;
   padding-right: 2px;
@@ -914,7 +918,7 @@ textarea:focus, input[type="text"]:focus {
 }
 
 .tt-suggestion {
-  min-height: 46px;
+  min-height: 50px;
   padding: 2px 8px;
   font-size: 14px !important;
   line-height: 20px;
@@ -922,7 +926,6 @@ textarea:focus, input[type="text"]:focus {
 }
 
 .tt-suggestion.tt-cursor {
-  color: #fff;
   background-color: #EEEEEE;
 }
 
