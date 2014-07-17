@@ -636,6 +636,7 @@ $(function() { // DOCUMENT READY
           settings.url = settings.url + '&' + parameters;
         }
       },
+      // changes the response so it can be easily displayed in the handlebars template.
       filter: function(data) {
         return ($.map(data.results.filter(
           function(item) {
@@ -644,17 +645,19 @@ $(function() { // DOCUMENT READY
           function(item) {
             console.log(item);
             item.label = item.prefLabel;
+            // combining all the matched properties.
             if (item.matchedPrefLabel)
               item.matched = item.matchedPrefLabel;
             if (item.altLabel)
               item.matched = item.altLabel;
+            // do not show the label language when it's same as the ui language.
             if (item.lang && item.lang === lang)
               delete(item.lang);
             return item;
           }));
       }
     },
-    limit: 1000,
+    limit: 9999,
     datumTokenizer: Bloodhound.tokenizers.whitespace,
     queryTokenizer: Bloodhound.tokenizers.whitespace
   });
