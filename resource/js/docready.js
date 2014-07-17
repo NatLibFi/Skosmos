@@ -97,7 +97,7 @@ $(function() { // DOCUMENT READY
       if (settings.url.indexOf('hierarchy') !== -1)
         $(".sidebar-grey").mCustomScrollbar('scrollTo', scrollToConcept());
     } 
-    if (settings.url.indexOf('search') !== -1)
+    if (settings.url.indexOf('search') !== -1 && $('.tt-suggestion').length > 6)
       $(".tt-dropdown-menu").mCustomScrollbar({ 
         scrollInertia: 0, 
         mouseWheel:{ scrollAmount: 46 },
