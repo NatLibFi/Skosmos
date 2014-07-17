@@ -923,7 +923,7 @@ textarea:focus, input[type="text"]:focus {
 
 .tt-suggestion.tt-cursor {
   color: #fff;
-  background-color: #75889F;
+  background-color: #EEEEEE;
 }
 
 .tt-cursor > p {
