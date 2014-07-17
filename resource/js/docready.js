@@ -615,10 +615,6 @@ $(function() { // DOCUMENT READY
         localname = "?uri=" + datum.uri;
         datum.vocab = datum.exvocab;
       }
-      if (datum.label === NoResultsLabel[0].label) {
-        event.preventDefault();
-        return false;
-      }
       // replaced complex logic with path_fix that should always work.
       if (datum.type && datum.type.indexOf('Collection') !== -1) {
         location.href = encodeURI(path_fix + datum.vocab + '/' + lang + '/groups/' + localname);
