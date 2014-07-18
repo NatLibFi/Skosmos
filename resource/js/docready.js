@@ -689,6 +689,8 @@ $(function() { // DOCUMENT READY
       source: concepts.ttAdapter()
   }).on('typeahead:cursorchanged', function($e) {
     $('.tt-dropdown-menu').mCustomScrollbar("scrollTo", '.tt-cursor');
+  }).on('typeahead:selected', onSelection).bind('focus', function() {
+    $('#search-field').typeahead('open'); 
   });
 
   // Some form validation for the feedback form
