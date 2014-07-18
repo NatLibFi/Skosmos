@@ -929,10 +929,6 @@ textarea:focus, input[type="text"]:focus {
   background-color: #EEEEEE;
 }
 
-.tt-cursor > p {
-  color: #fff;
-}
-
 .twitter-typeahead > .form-control {
   height: 40px;
   border-radius: 0;
