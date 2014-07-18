@@ -688,8 +688,7 @@ $(function() { // DOCUMENT READY
       },
       source: concepts.ttAdapter()
   }).on('typeahead:cursorchanged', function($e) {
-    var cursorPos = $('.tt-cursor')[0].offsetTop;
-    $('.tt-dropdown-menu').mCustomScrollbar("scrollTo", cursorPos);
+    $('.tt-dropdown-menu').mCustomScrollbar("scrollTo", '.tt-cursor');
   });
 
   // Some form validation for the feedback form
