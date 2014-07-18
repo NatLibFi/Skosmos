@@ -891,7 +891,7 @@ textarea:focus, input[type="text"]:focus {
 
 .tt-dropdown-menu {
   width: 200px;
-  max-height:300px;
+  max-height:302px;
   overflow-y: auto;
   background-color: #fff;
   border: 1px solid #ccc;
