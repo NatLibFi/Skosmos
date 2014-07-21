@@ -174,6 +174,19 @@ class Vocabulary extends DataObject
       return (boolean) $val->getValue();
     return false;
   }
+  
+  /**
+   * Returns a short name for a vocabulary if configured. If that has not been set 
+   * using vocabId as a fallback.
+   * @return string
+   */
+  public function getShortName()
+  {
+    $val = $this->resource->getLiteral('skosmos:shortName');
+    if ($val)
+      return $val->getValue();
+    return $this->getId();
+  }
 
   /**
    * Retrieves all the information about the Vocabulary
