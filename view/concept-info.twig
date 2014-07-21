@@ -1,7 +1,7 @@
 
 {% extends "light.twig" %}
 {% set concept_label = '' %}{% for concept in search_results %}{% set concept_label = concept.label %}{% endfor %}
-{% block title %}{% if search_results|length == 1 %}: {{ vocab_id|upper }}: {{ concept_label }}{% else %}: {{ vocab_id|upper }}{% endif %}
+{% block title %}: {{ vocab.shortName|upper }}{% if search_results|length == 1 %}: {{ concept_label }}{% endif %}
 {% endblock %}
 {% block content %}
   {% if lang_changed %}
