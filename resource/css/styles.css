@@ -364,8 +364,8 @@ ul.vocab-category {
 .vocab-category > ul {
   display: inline-block;
   width: 480px;
-  padding-left: 0 !important;
   float: right;
+  padding-left: 0 !important;
 }
 
 .vocab-category > li > h2 {
@@ -374,7 +374,7 @@ ul.vocab-category {
 
 .vocab-category > li {
   display: inline-block;
-  padding:  0 0 15px 10px;
+  padding:  0 0 15px 0;
   width: 230px;
   float: left;
 }
