@@ -361,6 +361,10 @@ ul.vocab-category {
   display: inline-block;
 }
 
+.vocab-category > ul > li {
+  display: block;
+}
+
 .vocab-category > ul {
   display: inline-block;
   width: 480px;
