@@ -15,6 +15,7 @@
       {% endfor %}
       </ul>
     </ul>
+    {% if not loop.last %}<div class="vocabulary-separator"></div>{% endif %}
     {% endfor %}
   </div>
   {% endif %}

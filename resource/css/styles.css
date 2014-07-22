@@ -334,7 +334,10 @@ border: 1px solid #EDEDED;
   display: none;
 }
 .vocabulary-separator {
+  width: 125px;
+  margin-left: 250px;
   border-bottom: 2px solid #666666 !important;
+  margin-bottom: 10px;
 }
 
 #vocabulary-list {
@@ -360,9 +363,9 @@ ul.vocab-category {
 
 .vocab-category > ul {
   display: inline-block;
-  width: 70%;
+  width: 480px;
+  padding-left: 0 !important;
   float: right;
-  padding-bottom: 10px;
 }
 
 .vocab-category > li > h2 {
@@ -372,7 +375,7 @@ ul.vocab-category {
 .vocab-category > li {
   display: inline-block;
   padding:  0 0 15px 10px;
-  width: 25%;
+  width: 230px;
   float: left;
 }
 
