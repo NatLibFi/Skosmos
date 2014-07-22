@@ -333,6 +333,7 @@ border: 1px solid #EDEDED;
 .right-box {
   display: none;
 }
+
 .vocabulary-separator {
   width: 125px;
   border-bottom: 2px solid #666666 !important;
@@ -374,11 +375,12 @@ ul.vocab-category {
 
 .vocab-category > li > h2 {
   margin-top: 0 !important;
+  margin-bottom: 5px !important;
 }
 
 .vocab-category > li {
   display: inline-block;
-  padding:  0 0 15px 0;
+  padding: 0 !important;
   width: 25%;
   float: left;
 }
