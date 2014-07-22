@@ -348,25 +348,36 @@ border: 1px solid #EDEDED;
   margin-bottom: 0px;
 }
 
+ul.vocab-category {
+  display: inline-block;
+  padding-left: 0 !important;
+  width: 100%;
+}
+
+.vocab-category > ul > li, .vocab-category > li {
+  display: inline-block;
+}
+
+.vocab-category > ul {
+  display: inline-block;
+  width: 70%;
+  float: right;
+  padding-bottom: 10px;
+}
+
+.vocab-category > li > h2 {
+  margin-top: 0 !important;
+}
+
+.vocab-category > li {
+  display: inline-block;
+  padding:  0 0 15px 10px;
+  width: 25%;
+  float: left;
+}
+
 .vocabularies {
   padding: 0 10px;
-}
-
-.vocabularies > table > tbody > tr > th {
-  padding: 0 !important;
-} 
-
-.vocabularies > table > tbody > tr > td,  .vocabularies > table > tbody > tr > td > a {
-  padding-left: 0;
-  margin-left: 0;
-}
-
-.vocabularies > table > tbody > tr > td > div {
-  width: 125px;
-}
-
-.vocabularies > table > tbody > tr:last-child > td > div {
-  display: none !important;
 }
 
 /* feedback page
