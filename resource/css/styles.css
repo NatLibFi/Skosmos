@@ -335,9 +335,9 @@ border: 1px solid #EDEDED;
 }
 .vocabulary-separator {
   width: 125px;
-  margin-left: 250px;
   border-bottom: 2px solid #666666 !important;
   margin-bottom: 10px;
+  margin-left: 28%;
 }
 
 #vocabulary-list {
@@ -367,7 +367,7 @@ ul.vocab-category {
 
 .vocab-category > ul {
   display: inline-block;
-  width: 480px;
+  width: 72%;
   float: right;
   padding-left: 0 !important;
 }
@@ -379,7 +379,7 @@ ul.vocab-category {
 .vocab-category > li {
   display: inline-block;
   padding:  0 0 15px 0;
-  width: 230px;
+  width: 25%;
   float: left;
 }
 
@@ -1152,6 +1152,15 @@ body, .versal, h1, h2, p, .versal-bold {
     float: right;
     width: calc(100% - 220px) !important;
     margin-left: 15px;
+  }
+
+  .vocab-category > ul, .vocab-category > li {
+    left: 0;
+    width: 100%;
+  }
+  
+  .vocabulary-separator {
+    margin-left: 0;
   }
 
 }
