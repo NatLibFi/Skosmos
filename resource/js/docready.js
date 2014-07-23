@@ -110,7 +110,8 @@ $(function() { // DOCUMENT READY
     var containerHeight = $('.sidebar-grey').height();
     var conceptCount = Math.floor((containerHeight * 0.66) / 18);
     var scrollAmount = 18 * conceptCount;
-    return $('#jstree-leaf-proper')[0].offsetTop-scrollAmount;
+    if ($('#jstree-leaf-proper').length)
+      return $('#jstree-leaf-proper')[0].offsetTop-scrollAmount;
   }
 
   // if on the search results page and there is only one result 

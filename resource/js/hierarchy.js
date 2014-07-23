@@ -61,9 +61,11 @@ function createConceptObject(conceptUri, conceptData) {
     attr: {},
     children: []
   };
+  // setting the flag manually if the concept is known to have narrowers, but they aren't included eg. included topconcepts
+  if(conceptData.hasChildren === true) 
+    newNode.state = "closed";
   // if we are at a top concepts page we want to highlight that node and mark it as to be initially opened.
   if (newNode.uri === $('.uri-input-box').html()) { newNode.data.attr.id = 'jstree-leaf-proper'; }
-  
   if (conceptData.narrower /* && !conceptData.narrower[0] */) { // filtering out the ones that don't have labels 
     var childArray = [];
     for (var child in conceptData.narrower) {
@@ -101,6 +103,7 @@ function buildParentTree(uri, parentData) {
 
   var loopIndex = 0, // for adding the last concept as a root if no better candidates have been found.
     currentNode,
+    rootArray = [],
     rootNode;
 
     for(var conceptUri in parentData) {
@@ -116,6 +119,7 @@ function buildParentTree(uri, parentData) {
         branchHelper = currentNode;
       }
       rootNode = currentNode; 
+      rootArray.push(rootNode);
     }
     if (exactMatchFound) { // combining branches if we have met a exact match during the previous iteration.
       currentNode.children.push(branchHelper); 
@@ -132,7 +136,7 @@ function buildParentTree(uri, parentData) {
 
   // Iterating over the nodes to make sure all concepts have their children set.
   appendChildrenToParents();
-  return rootNode;
+  return rootArray;
 }
 
 function vocabRoot(topConcepts) {
