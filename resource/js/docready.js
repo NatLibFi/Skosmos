@@ -4,25 +4,33 @@
  * see LICENSE.txt for more information
  */
 
-function customAutocomplete() {
-    $.ui.autocomplete.prototype._renderItem = function (ul, item) {
-        var label = item.label;
-        var vocab = '';
-        if (label.indexOf('@') != -1) {
-          vocab = label.substring(label.indexOf('@'), label.length);
-          item.label = label.substring(0, label.indexOf('@')); 
-        }
-        var output = item.label + '<span class="autocomplete-vocab">' + vocab + '</span>';
-        
-        if (item.matchedPrefLabel) {
-           output = item.matchedPrefLabel + ' (' + vocab.substring(vocab.indexOf('@')+2,vocab.length) + ') → ' + item.label;
-        }
+ /*
+  * Ajax query queue that keeps track of ongoing queries 
+  * so they can be cancelled if a another event is triggered.
+  */
+ $.ajaxQ = (function(){
+  var id = 0, Q = {};
 
-        return $("<li>")
-            .append($("<a>").html(output))
-            .appendTo(ul);
-    };
-}
+  $(document).ajaxSend(function(e, jqx){
+    jqx._id = ++id;
+    Q[jqx._id] = jqx;
+  });
+  $(document).ajaxComplete(function(e, jqx){
+    delete Q[jqx._id];
+  });
+
+  return {
+    abortAll: function(){
+      var r = [];
+      $.each(Q, function(i, jqx){
+        r.push(jqx._id);
+        jqx.abort();
+      });
+      return r;
+    }
+  };
+
+  })();
 
 $(function() { // DOCUMENT READY 
 
@@ -51,8 +59,9 @@ $(function() { // DOCUMENT READY
 
   // kills the autocomplete after a form submit so we won't have to wait for the ajax to complete.
   $('.navbar-form').submit(
-    function(event) {  
-      $('#search-field').autocomplete('option','disabled', 'true');
+    function(event) {
+      $('#search-field').typeahead('destroy');
+      $.ajaxQ.abortAll();
     }
   );
 
@@ -87,14 +96,22 @@ $(function() { // DOCUMENT READY
       });
       if (settings.url.indexOf('hierarchy') !== -1)
         $(".sidebar-grey").mCustomScrollbar('scrollTo', scrollToConcept());
-    }
+    } 
+    if (settings.url.indexOf('search') !== -1 && $('.tt-suggestion').length > 6)
+      $(".tt-dropdown-menu").mCustomScrollbar({ 
+        scrollInertia: 0, 
+        mouseWheel:{ scrollAmount: 50 },
+        snapAmount: 50,
+        snapOffset: 0
+      });
   });
 
   function scrollToConcept() {
     var containerHeight = $('.sidebar-grey').height();
     var conceptCount = Math.floor((containerHeight * 0.66) / 18);
     var scrollAmount = 18 * conceptCount;
-    return $('#jstree-leaf-proper')[0].offsetTop-scrollAmount;
+    if ($('#jstree-leaf-proper').length)
+      return $('#jstree-leaf-proper')[0].offsetTop-scrollAmount;
   }
 
   // if on the search results page and there is only one result 
@@ -252,6 +269,7 @@ $(function() { // DOCUMENT READY
   // event handler for clicking the hierarchy concepts
   $(document).on('click', '.jstree-no-icons a',
       function(event) {
+        $.ajaxQ.abortAll();
         event.preventDefault();
         var base_path = path_fix.length / 3;
         var clicked = $(this);
@@ -281,6 +299,7 @@ $(function() { // DOCUMENT READY
   // event handler for clicking the alphabetical/group index concepts
   $(document).on('click', '.side-navi a',
       function(event) {
+        $.ajaxQ.abortAll();
         var base_path = path_fix.length / 3;
         var clicked = $(this);
         $('.activated-concept').removeClass('activated-concept');
@@ -312,6 +331,7 @@ $(function() { // DOCUMENT READY
   // event handler for clicking the alphabetical index tab 
   $(document).on('click', '.nav-tabs a[href$="index"]',
       function(event) {
+        $.ajaxQ.abortAll();
         var base_path = path_fix.length / 3;
         $('.active').removeClass('active');
         var clicked = $(this);
@@ -341,6 +361,7 @@ $(function() { // DOCUMENT READY
   // event handler for clicking the group index tab 
   $(document).on('click', '.nav-tabs a[href$="groups"]',
       function(event) {
+        $.ajaxQ.abortAll();
         var base_path = path_fix.length / 3;
         $('.active').removeClass('active');
         var $clicked = $(this);
@@ -374,6 +395,7 @@ $(function() { // DOCUMENT READY
   // event handler for clicking groups
   $(document).on('click','.group-index > li > a',
       function(event) {
+        $.ajaxQ.abortAll();
         var base_path = path_fix.length / 3;
         var clicked = $(this);
         var $content = $('#sidebar');
@@ -401,6 +423,7 @@ $(function() { // DOCUMENT READY
   // event handler for the alphabetical index letters
   $(document).on('click','.pagination > li > a',
       function(event) {
+        $.ajaxQ.abortAll();
         if ($('.alphabet-header').length === 0) {
           var $pagination = $('.pagination');
           var base_path = path_fix.length / 3;
@@ -550,6 +573,8 @@ $(function() { // DOCUMENT READY
     $('#lang-dropdown-toggle').html($(this).html() + ' <span class="caret"></span>');
     $('#lang-input').val(qlang);
     createCookie('SKOSMOS_SEARCH_LANG', qlang, 365);
+    if (concepts)
+      concepts.clear();
   });
   
   $('.lang-button-all').on('click', function() {
@@ -557,6 +582,8 @@ $(function() { // DOCUMENT READY
     createCookie('SKOSMOS_SEARCH_LANG', 'anything', 365);
     $('#lang-input').val('');
     $('#lang-dropdown-toggle').html($('.lang-button-all').html() + ' <span class="caret"></span>');
+    if (concepts)
+      concepts.clear();
   });
 
   $('.lang-button, .lang-button-all').click(function() {
@@ -567,7 +594,7 @@ $(function() { // DOCUMENT READY
   // calls for another function to highlight search term in the labels.
   if (getUrlParams().q) {
     localSearchHighlight(decodeURI(getUrlParams().q.replace(/\*/g, '')));
-    searchTerm = getUrlParams().q;
+    searchTerm = decodeURI(getUrlParams().q);
   }
   
   var NoResultsLabel = [ {
@@ -580,8 +607,7 @@ $(function() { // DOCUMENT READY
     var empty = false;
     $('#search-field').each(function() {
       if ($(this).val().length === 0) {
-        empty = true;
-      }
+        empty = true; }
     });
 
     if (empty) {
@@ -590,87 +616,82 @@ $(function() { // DOCUMENT READY
       $('#search-all-button').attr('disabled', false);
     }
   });
-  
-  // activates jquery autocomplete for the search fields
-  var autoC = $("#search-field").autocomplete({
-    source : function(request, response) {
-      // default to prefix search when no wildcards were used
-      var term = request.term.trim(); // surrounding whitespace is not significant
-      term = term.indexOf("*") >= 0 ? term : term + "*";
-      var vocabString = $('.multiselect').length ? vocabSelectionString : vocab; 
-      var parameters = $.param({'query' : term, 'vocab' : vocabString, 'lang' : qlang, 'labellang' : lang});
-      $.ajax({
-        url : rest_url + 'search',
-        data: parameters,
-        dataType : "json",
-        success : function(data) {
-          if (data.results.length === 0) {
-            response(NoResultsLabel);
-          }
-          else {
-            response($
-              .map(
-                data.results
-                .filter(function(item) {
-                  // either we are performing a local search
-                  // or the concept is native to the vocabulary
-                  return (vocab !== "" || !item.exvocab);
-                }),
-                function(item) {
-                  var name = (item.altLabel ? item.altLabel +
-                    " \u2192 " +
-                    item.prefLabel : item.prefLabel);
-                  if(item.hiddenLabel) 
-                    name =  item.hiddenLabel + " \u2192 " + item.prefLabel;
-                  item.label = name;
-                  if (item.vocab && item.vocab != vocab) // if performing global search include vocabid
-                    item.label += ' @' + item.vocab + ' ';
-                  if (item.exvocab && item.exvocab != vocab)
-                    item.label += ' @' + item.exvocab + ' ';
-                  if (item.lang && item.lang !== lang) // if the label is not in the ui lang
-                    item.label += ' @ ' + item.lang;
-                  return item;
-                }));
-          }
-        }
-      });
-    },
-    delay : autocomplete_delay, // time (in milliseconds)
-    // before autocomplete
-    // activates i.e. sends a
-    // request to the REST
-    // interface
-    minLength : autocomplete_activation,
-    appendTo: "#header-bar-content",
 
-    select : function(event, ui) { // what happens when
-      // user clicks/uses autocomplete
-      var localname = ui.item.localname;
-      if (ui.item.exvocab) {
-        localname = "?uri=" + ui.item.uri;
-      }
-      if (ui.item.label === NoResultsLabel[0].label) {
-        event.preventDefault();
-        return false;
+  function onSelection($e, datum) {
+    var localname = datum.localname;
+      if (datum.exvocab && datum.vocab === '???') {
+        localname = "?uri=" + datum.uri;
+        datum.vocab = datum.exvocab;
       }
       // replaced complex logic with path_fix that should always work.
-      if (ui.item.type && ui.item.type.indexOf('Collection') !== -1) {
-        location.href = encodeURI(path_fix + ui.item.vocab + '/' + lang + '/groups/' + localname);
+      if (datum.type && datum.type.indexOf('Collection') !== -1) {
+        location.href = encodeURI(path_fix + datum.vocab + '/' + lang + '/groups/' + localname);
       } else {
-        location.href = encodeURI(path_fix + ui.item.vocab + '/' + lang + '/page/' + localname);
+        location.href = encodeURI(path_fix + datum.vocab + '/' + lang + '/page/' + localname);
+      }
+  }
+
+  Handlebars.registerHelper('noresults', function() {
+    return noResultsTranslation;
+  });
+  
+  var concepts = new Bloodhound({
+    remote: { 
+      url: rest_url + 'search?query=%QUERY*',
+      ajax: {
+        beforeSend: function(jqXHR, settings) {
+          var vocabString = $('.multiselect').length ? vocabSelectionString : vocab; 
+          var parameters = $.param({'vocab' : vocabString, 'lang' : qlang, 'labellang' : lang});
+          settings.url = settings.url + '&' + parameters;
+        }
+      },
+      // changes the response so it can be easily displayed in the handlebars template.
+      filter: function(data) {
+        return ($.map(data.results.filter(
+          function(item) {
+            return true;
+          }),
+          function(item) {
+            item.label = item.prefLabel;
+            // combining all the matched properties.
+            if (item.matchedPrefLabel)
+              item.matched = item.matchedPrefLabel;
+            if (item.altLabel)
+              item.matched = item.altLabel;
+            // do not show the label language when it's same as the ui language.
+            if (item.lang && item.lang === lang)
+              delete(item.lang);
+            return item;
+          }));
       }
     },
-    focus : function(event, ui) {
-      return false; // Prevent the widget from inserting the value.
-    }
-  }).bind('focus', function() {
-    $('#search-field').autocomplete('search'); 
+    limit: 9999,
+    datumTokenizer: Bloodhound.tokenizers.whitespace,
+    queryTokenizer: Bloodhound.tokenizers.whitespace
   });
 
-  $("button#send-feedback").button({
-    icons : {
-      primary : "ui-icon-mail-closed"
-    }
+  concepts.initialize();
+
+  $('#search-field').typeahead({ hint: false, highlight: true, minLength: autocomplete_activation },
+    {
+      name: 'concept', 
+      displayKey: 'label', 
+      templates: {
+        empty: Handlebars.compile([
+          '<div><p class="autocomplete-no-results">{{#noresults}}{{/noresults}}</p></div>'
+        ].join('')),
+        suggestion: Handlebars.compile([
+          '{{# if matched }}<div><p class="matched-label">{{matched}}</p>',
+          '{{# if lang}}<p>({{lang}})</p>{{/if}}<p>\u2192</p>{{/if}}',
+          '<p class="autocomplete-label">{{label}}{{# if lang}}{{# unless matched }}<p>({{lang}})</p>{{/unless}}{{/if}}</p></div>',
+          '<div class="vocab">{{exvocab}}</div>',
+        ].join(''))
+      },
+      source: concepts.ttAdapter()
+  }).on('typeahead:cursorchanged', function($e) {
+    $('.tt-dropdown-menu').mCustomScrollbar("scrollTo", '.tt-cursor');
+  }).on('typeahead:selected', onSelection).bind('focus', function() {
+    $('#search-field').typeahead('open'); 
   });
 
   // Some form validation for the feedback form
@@ -695,7 +716,7 @@ $(function() { // DOCUMENT READY
 
   // Initializes the waypoints plug-in used for the search listings.
   var $loading = $("<p>" + loading_text + "&hellip;<span class='spinner'/></p>"); 
-  var $trigger = $('.search-result:nth-last-of-type(4)'); 
+  var $trigger = $('.search-result:nth-last-of-type(6)'); 
   var options = { offset : '100%', continuous: false, triggerOnce: true };
   var offcount = 1;
   var number_of_hits = document.getElementsByClassName("search-result").length;
@@ -713,8 +734,8 @@ $(function() { // DOCUMENT READY
   function waypointCallback() {
     var number_of_hits = document.getElementsByClassName("search-result").length;
     if (number_of_hits >= waypoint_results * offcount)
-      $('.content').append($loading);
-    var parameters = $.param({'q' : searchTerm, 'vocabs' : vocabSelectionString, 'offset' : offcount * waypoint_results, 'lang' : getUrlParams().lang});
+      $('.search-result-listing').append($loading);
+    var parameters = $.param({'q' : searchTerm, 'vocabs' : vocabSelectionString, 'offset' : offcount * waypoint_results, 'lang' : decodeURI(getUrlParams().lang)});
     $.ajax({
       url : window.location.pathname,
       data : parameters,
@@ -738,8 +759,6 @@ $(function() { // DOCUMENT READY
   }
 
   // activating the custom autocomplete 
-  customAutocomplete(); 
-
   function updateVocabParam() {
     vocabSelectionString = '';
     $vocabs = $('li.active input');

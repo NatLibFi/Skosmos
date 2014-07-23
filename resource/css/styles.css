@@ -181,6 +181,10 @@ section {
   background-color: #ffffff;
 }
 
+.search-result-listing > p:last-of-type {
+  margin-left: 15px;
+}
+
 .search-result-listing > .search-result:last-of-type {
   margin-bottom: 10px; 
 }
@@ -330,8 +334,12 @@ section {
 .right-box {
   display: none;
 }
+
 .vocabulary-separator {
+  width: 125px;
   border-bottom: 2px solid #666666 !important;
+  margin-bottom: 10px;
+  margin-left: 28%;
 }
 
 #vocabulary-list {
@@ -345,25 +353,41 @@ section {
   margin-bottom: 0px;
 }
 
+ul.vocab-category {
+  display: inline-block;
+  padding-left: 0 !important;
+  width: 100%;
+}
+
+.vocab-category > ul > li, .vocab-category > li {
+  display: inline-block;
+}
+
+.vocab-category > ul > li {
+  display: block;
+}
+
+.vocab-category > ul {
+  display: inline-block;
+  width: 72%;
+  float: right;
+  padding-left: 0 !important;
+}
+
+.vocab-category > li > h2 {
+  margin-top: 0 !important;
+  margin-bottom: 5px !important;
+}
+
+.vocab-category > li {
+  display: inline-block;
+  padding: 0 !important;
+  width: 25%;
+  float: left;
+}
+
 .vocabularies {
   padding: 0 10px;
-}
-
-.vocabularies > table > tbody > tr > th {
-  padding: 0 !important;
-} 
-
-.vocabularies > table > tbody > tr > td,  .vocabularies > table > tbody > tr > td > a {
-  padding-left: 0;
-  margin-left: 0;
-}
-
-.vocabularies > table > tbody > tr > td > div {
-  width: 125px;
-}
-
-.vocabularies > table > tbody > tr:last-child > td > div {
-  display: none !important;
 }
 
 /* feedback page
@@ -895,22 +919,94 @@ textarea:focus, input[type="text"]:focus {
   outline: 0 none;
 }
 
-.ui-autocomplete {
-  max-height:300px;
-  overflow-y: auto;
-  background-image: none !important;
-  border-radius: 0px !important;
-}
-
-.ui-state-focus {
-  border-radius: 0 !important;
-  background-image: none !important;
-  background-color: #ffffff !important;
-}
-
 .autocomplete-vocab {
   float: right;
 }
+
+/* typeahead.js
+ ***********************************/
+
+.typeahead,
+.tt-query,
+.tt-hint {
+  width: 396px;
+  height: 40px;
+  font-size: 14px;
+  line-height: 20px;
+  border: 2px solid #ccc;
+  border-radius: 0 !important;
+  outline: none;
+}
+
+.typeahead {
+  background-color: #fff;
+}
+
+.typeahead:focus {
+  border: 2px solid #75889F;
+}
+
+.tt-hint {
+  color: #999
+}
+
+.tt-dropdown-menu {
+  width: 200px;
+  max-height:302px;
+  overflow-y: auto;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0 !important;
+}
+
+.tt-dropdown-menu.mCustomScrollbar {
+  border-right: 0 !important;
+}
+
+.tt-suggestion p {
+  display: inline-block;
+  padding-right: 2px;
+}
+
+.tt-suggestion p:last-of-type {
+  padding-right: 0;
+}
+
+.autocomplete-no-results {
+  line-height: 40px;
+  margin: 0 0 0 6px !important;
+}
+
+.tt-suggestion {
+  min-height: 50px;
+  padding: 2px 8px;
+  font-size: 14px !important;
+  line-height: 20px;
+  border-bottom: 1px solid #cccccc;
+}
+
+.tt-suggestion.tt-cursor {
+  background-color: #EEEEEE;
+}
+
+.twitter-typeahead > .form-control {
+  height: 40px;
+  border-radius: 0;
+}
+
+.navbar-form > .input-group > .input-group-btn {
+  vertical-align: top;
+}
+
+.tt-suggestion p {
+  margin: 0;
+}
+
+.gist {
+  font-size: 14px;
+}
+
 
 /* jsTree customization
  *****************************************/
@@ -1061,7 +1157,7 @@ body, .versal, h1, h2, p, .versal-bold {
     overflow: hidden;
   }
 
-  .ui-autocomplete {
+  .tt-dropdown {
     max-width: 240px !important;
   }
 
@@ -1099,6 +1195,15 @@ body, .versal, h1, h2, p, .versal-bold {
     float: right;
     width: calc(100% - 220px) !important;
     margin-left: 15px;
+  }
+
+  .vocab-category > ul, .vocab-category > li {
+    left: 0;
+    width: 100%;
+  }
+  
+  .vocabulary-separator {
+    margin-left: 0;
   }
 
 }
@@ -1230,7 +1335,7 @@ body, .versal, h1, h2, p, .versal-bold {
     top: 435px !important;
   }
 
-  .navbar-form .ui-autocomplete {
+  .navbar-form .ui-autocomplete .tt-dropdown {
     max-width: 250px !important;
   }
 
@@ -1346,9 +1451,9 @@ body, .versal, h1, h2, p, .versal-bold {
   .feedback-box, #about {
     width: 600px !important;
   }
-
-  .ui-autocomplete {
-    max-width: 310px !important;
+  
+  .tt-dropdown-menu {
+    width: 310px;
   }
 
   .global-content {
@@ -1421,5 +1526,4 @@ body, .versal, h1, h2, p, .versal-bold {
   border: 2px dashed #62729f !important;
 }
 <![endif]-->
-
 

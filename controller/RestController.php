@@ -661,6 +661,17 @@ class RestController extends Controller
     $results = $this->getVocabulary($vocabId)->getConceptHierarchy($uri);
     if ($results === NULL)
       return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
+    
+    if ($vocab->getShowHierarchy()) {
+      $scheme = isset($_GET['scheme']) ? $_GET['scheme'] : $vocab->getDefaultConceptScheme();
+
+      /* encode the results in a JSON-LD compatible array */
+      $topconcepts = $vocab->getTopConcepts($scheme);
+      foreach ($topconcepts as $uri => $label) {
+        if (!isset($results[$uri]))
+          $results[$uri] = array('uri'=>$uri, 'top'=>$scheme, 'prefLabel'=>$label, 'hasChildren'=> true);
+      }
+    }
 
     $ret = array(
         '@context' => array(

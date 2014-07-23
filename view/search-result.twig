@@ -8,7 +8,7 @@
 <div class="search-result">
   {% spaceless %}
     {% if vocab == '' and concept.vocab is defined %}
-    <span class="prefLabel conceptlabel redirected-vocab-id">{{ concept.vocab }}: </span>
+    <span class="prefLabel conceptlabel redirected-vocab-id">{{ concept.shortName }}: </span>
     {% endif %}
     {% if concept.foundBy %} {# hit has been found through an alt/hidden/another language label #}
     <span class="versal {% if concept.foundByType != 'lang' %}replaced{% endif %}">{{ concept.foundBy }}</span><span> >>&nbsp</span>
