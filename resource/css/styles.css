@@ -1011,6 +1011,34 @@ textarea:focus, input[type="text"]:focus {
   font-size: 14px;
 }
 
+/* jQuery autocomplete
+ *****************************************/
+.ui-autocomplete, .ui-autocomplete * {
+  border-radius: 0;
+  background-color: #fff !important;
+}
+
+.ui-autocomplete {
+  max-height: 300px;
+  max-width: 280px;
+  overflow: auto;
+  border: 2px solid #ccc;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+.ui-menu-item {
+  border-bottom: 1px solid #ccc;
+}
+
+.ui-menu-item:last-of-type {
+  border-bottom: none;
+}
+
+.ui-state-focus {
+  background: none !important;
+  background-color: #EEEEEE !important;
+  border: 1px solid #ccc !important;
+}
 
 /* jsTree customization
  *****************************************/
