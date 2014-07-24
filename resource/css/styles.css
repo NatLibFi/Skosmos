@@ -379,6 +379,10 @@ border: 1px solid #EDEDED;
   height: 150px;
 }
 
+#feedback-fields > input:last-of-type {
+  display: none;
+}
+
 .feedback-logo {
   position: absolute;
   min-width: 84px;
