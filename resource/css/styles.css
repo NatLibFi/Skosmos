@@ -119,7 +119,18 @@ section {
   border-top-color: #ffffff !important;
 }
 
-.multiselect-container > li.active > a {
+.navbar-form .dropdown-menu {
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin-top: 0 !important;
+  top: 40px !important;
+}
+
+.multiselect-container {
+  border-radius: 0 !important;
+}
+
+.multiselect-container > li.active > a, .dropdown-menu > li:hover > a {
   color: #ffffff !important;
 }
 
@@ -267,7 +278,7 @@ section {
 
 .multiselect {
   border: 0 !important;
-  margin: 5px 0 !important;
+  margin: 5px 0 0 0 !important;
 }
 
 .multiselect span {
