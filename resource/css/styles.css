@@ -528,6 +528,10 @@ ul.vocab-category {
   top: 2px;
 }
 
+.search-options > .btn-default:hover {
+  border: 1px solid #ccc;
+}
+
 .btn-active, .btn:active, .btn-default:active {
   -webkit-box-shadow: none !important;
      -moz-box-shadow: none !important;
