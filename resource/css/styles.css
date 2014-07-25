@@ -1015,12 +1015,7 @@ textarea:focus, input[type="text"]:focus {
   font-size: 14px;
 }
 
-.search-options > div.input-group > .twitter-typeahead {
-  width: 280px;
-
-}
-
-.search-options > div.input-group > .twitter-typeahead > .tt-dropdown-menu {
+.search-options > div.input-group > .twitter-typeahead, .search-options > div.input-group > .twitter-typeahead > .tt-dropdown-menu {
   width: 280px;
 }
 
@@ -1535,6 +1530,10 @@ body, .versal, h1, h2, p, .versal-bold {
 
   .search-result > div > span.uri-input-box {
     font-size: 14px !important;
+  }
+
+  .search-options > div.input-group > .twitter-typeahead, .search-options > div.input-group > .twitter-typeahead > .tt-dropdown-menu {
+    width: 370px;
   }
 
 }
