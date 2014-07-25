@@ -561,11 +561,11 @@ form.search-options > .input-group > .form-control {
   width: 280px !important;
 }
 
-form.search-options div:first-child { 
+form.search-options div.input-group:first-child { 
   padding-top: 5px;
 }
 
-form.search-options div { 
+form.search-options div.input-group { 
   padding-bottom: 15px;
 }
 
@@ -1013,6 +1013,15 @@ textarea:focus, input[type="text"]:focus {
 
 .gist {
   font-size: 14px;
+}
+
+.search-options > div.input-group > .twitter-typeahead {
+  width: 280px;
+
+}
+
+.search-options > div.input-group > .twitter-typeahead > .tt-dropdown-menu {
+  width: 280px;
 }
 
 /* jQuery autocomplete

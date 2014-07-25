@@ -83,7 +83,6 @@ $(function() { // DOCUMENT READY
         return removeThese.join(' ');
       });
     }
-    //$('.sidebar-grey').mCustomScrollbar('update');
     // Sidenav actions only happen when doing other queries than the autocomplete.
     if (settings.url.indexOf('index') !== -1 || settings.url.indexOf('groups') !== -1 || settings.url.indexOf('hierarchy') !== -1) {
       var snap = (settings.url.indexOf('hierarchy') !== -1) ? 18 : 15;
@@ -618,16 +617,23 @@ $(function() { // DOCUMENT READY
   });
 
   function onSelection($e, datum) {
-    var localname = datum.localname;
-      if (datum.exvocab && datum.vocab === '???') {
-        localname = "?uri=" + datum.uri;
-        datum.vocab = datum.exvocab;
-      }
-      // replaced complex logic with path_fix that should always work.
-      if (datum.type && datum.type.indexOf('Collection') !== -1) {
-        location.href = encodeURI(path_fix + datum.vocab + '/' + lang + '/groups/' + localname);
+    if ($e.currentTarget.id !== 'parent-limit') {
+      var localname = datum.localname;
+        if (datum.exvocab && datum.vocab === '???') {
+          localname = "?uri=" + datum.uri;
+          datum.vocab = datum.exvocab;
+        }
+        // replaced complex logic with path_fix that should always work.
+        if (datum.type && datum.type.indexOf('Collection') !== -1) {
+          location.href = encodeURI(path_fix + datum.vocab + '/' + lang + '/groups/' + localname);
+        } else {
+          location.href = encodeURI(path_fix + datum.vocab + '/' + lang + '/page/' + localname);
+        }
       } else {
-        location.href = encodeURI(path_fix + datum.vocab + '/' + lang + '/page/' + localname);
+        $('#parent-limit').attr('data-uri', datum.uri); 
+        $('#parent-limit').val(datum.label); 
+        parentLimitReady = true;
+        return false;
       }
   }
 
@@ -820,7 +826,7 @@ $(function() { // DOCUMENT READY
   /*  activating the custom scrollbars only when not on the hierarchy page
    *  since that goes haywire if it's done before the ajax complete runs
    */
-  if (document.URL.indexOf('/page/') === -1) {
+  if (document.URL.indexOf('/page/') === -1 && $('.search-count').length === 0) {
     $(".sidebar-grey").mCustomScrollbar({ 
       scrollInertia: 0, 
       mouseWheel:{ scrollAmount: 105 },
@@ -881,64 +887,7 @@ $(function() { // DOCUMENT READY
 
   var searchOptions = $('.search-options');
   if (searchOptions.length === 1) {
-    $('#parent-limit').autocomplete({
-      source : function(request, response) {
-      // default to prefix search when no wildcards were used
-      var term = request.term.trim(); // surrounding whitespace is not significant
-      term = term.indexOf("*") >= 0 ? term : term + "*";
-      var parameters = $.param({'query' : term, 'vocab' : vocab, 'lang' : qlang, 'labellang' : lang});
-      $.ajax({
-        url : rest_url + 'search',
-        data: parameters,
-        dataType : "json",
-        success : function(data) {
-          if (data.results.length === 0) {
-            response(NoResultsLabel);
-          }
-          else {
-            response($
-              .map(
-                data.results
-                .filter(function(item) {
-                  // either we are performing a local search
-                  // or the concept is native to the vocabulary
-                  return (vocab !== "" || !item.exvocab);
-                }),
-                function(item) {
-                  var name = (item.altLabel ? item.altLabel +
-                    " \u2192 " +
-                    item.prefLabel : item.prefLabel);
-                  if(item.hiddenLabel) 
-                    name =  item.hiddenLabel + " \u2192 " + item.prefLabel;
-                  item.label = name;
-                  if (item.vocab && item.vocab != vocab) // if performing global search include vocabid
-                    item.label += ' @' + item.vocab + ' ';
-                  if (item.exvocab && item.exvocab != vocab)
-                    item.label += ' @' + item.exvocab + ' ';
-                  if (item.lang && item.lang !== lang) // if the label is not in the ui lang
-                    item.label += ' @ ' + item.lang;
-                  return item;
-                }));
-          }
-        }
-      });
-    },
-    delay : autocomplete_delay, 
-    minLength : autocomplete_activation,
-    appendTo: "#header-bar-content",
-
-    select : function(event, ui) { // what happens when autocomplete is clicked
-      $('#parent-limit').attr('data-uri', ui.item.uri); 
-      $('#parent-limit').val(ui.item.label); 
-      parentLimitReady = true;
-      event.preventDefault();
-      return false;
-    }
-  }).bind('focus', function() {
-    $('#parent-limit').autocomplete('search'); 
-  });
-
-  var parentLimitReady = true;
+    var parentLimitReady = true;
     $(document).on('click', '#remove-limits', function() {
       $('#type-limit').val('');
       $('#parent-limit').attr('data-uri', '');
@@ -958,6 +907,26 @@ $(function() { // DOCUMENT READY
       return false;
     });
 
+    $('#parent-limit').typeahead({ hint: false, highlight: true, minLength: autocomplete_activation },{
+        name: 'concept', 
+        displayKey: 'label', 
+        templates: {
+          empty: Handlebars.compile([
+            '<div><p class="autocomplete-no-results">{{#noresults}}{{/noresults}}</p></div>'
+          ].join('')),
+          suggestion: Handlebars.compile([
+            '{{# if matched }}<div><p class="matched-label">{{matched}}</p>',
+            '{{# if lang}}<p>({{lang}})</p>{{/if}}<p>\u2192</p>{{/if}}',
+            '<p class="autocomplete-label">{{label}}{{# if lang}}{{# unless matched }}<p>({{lang}})</p>{{/unless}}{{/if}}</p></div>',
+            '<div class="vocab">{{exvocab}}</div>',
+          ].join(''))
+        },
+        source: concepts.ttAdapter()
+    }).on('typeahead:cursorchanged', function($e) {
+      $('.tt-dropdown-menu').mCustomScrollbar("scrollTo", '.tt-cursor');
+    }).on('typeahead:selected', onSelection).bind('focus', function() {
+      $('#search-field').typeahead('open'); 
+    });
   }
 
 });
