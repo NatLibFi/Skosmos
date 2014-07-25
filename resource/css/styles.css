@@ -528,6 +528,13 @@ ul.vocab-category {
   top: 2px;
 }
 
+.btn-active, .btn:active, .btn-default:active {
+  -webkit-box-shadow: none !important;
+     -moz-box-shadow: none !important;
+       -o-box-shadow: none !important;
+          box-shadow: none !important;
+}
+
 hr {
   border: 1px solid transparent !important;
   background: url('../pics/stripe.png') !important;
