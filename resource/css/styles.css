@@ -130,7 +130,7 @@ section {
   border-radius: 0 !important;
 }
 
-.multiselect-container > li.active > a, .dropdown-menu > li:hover > a {
+.multiselect-container > li.active > a, .multiselect-container > li > a:focus, .dropdown-menu > li:hover > a {
   color: #ffffff !important;
 }
 
