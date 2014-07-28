@@ -646,7 +646,7 @@ $(function() { // DOCUMENT READY
       url: rest_url + 'search?query=%QUERY*',
       ajax: {
         beforeSend: function(jqXHR, settings) {
-          var vocabString = $('.multiselect').length ? vocabSelectionString : vocab; 
+          var vocabString = $('.frontpage').length ? vocabSelectionString : vocab; 
           var parameters = $.param({'vocab' : vocabString, 'lang' : qlang, 'labellang' : lang});
           settings.url = settings.url + '&' + parameters;
         }
