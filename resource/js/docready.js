@@ -826,10 +826,10 @@ $(function() { // DOCUMENT READY
   $('.sidebar-grey .multiselect').multiselect({
     buttonText: function(options) {
       if (options.length === 0 || vocabSelectionString === '')
-        return  '<span>' + ' <b class="caret"></b></span>'; 
+        return  '<span>' + ' </span><b class="caret"></b>'; 
       else {
         if (options.length > this.numberDisplayed) {
-          return '<span>' + options.length + ' ' + n_selected + ' <b class="caret"></b></span>';
+          return '<span>' + options.length + ' ' + n_selected + ' </span><b class="caret"></b>';
         }
         else {
           var selected = '';
@@ -838,7 +838,7 @@ $(function() { // DOCUMENT READY
 
             selected += label + ', ';
           });
-          return '<span>' + selected.substr(0, selected.length - 2) + ' <b class="caret"></b></span>';
+          return '<span>' + selected.substr(0, selected.length - 2) + ' </span><b class="caret"></b>';
         }
       }
     },

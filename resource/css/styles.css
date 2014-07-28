@@ -281,7 +281,7 @@ section {
   margin: 5px 0 0 0 !important;
 }
 
-.multiselect span {
+.multiselect > span {
   float: right;
 }
 
@@ -542,9 +542,9 @@ ul.vocab-category {
 }
 
 .search-options > .input-group > .btn-group > .multiselect {
-  background-color: #A9DCD7 !important;
   background-color: #fff !important;
   border: 1px solid #ccc !important;
+  overflow-y: hidden;
 }
 
 .search-options > .input-group > .btn-group > .multiselect-container {
@@ -553,6 +553,21 @@ ul.vocab-category {
 
 .search-options > .input-group > .btn-group > .multiselect-container > li:first-of-type > * {
   height: 26px;
+}
+
+.search-options .multiselect > span {
+  float: left;
+  width: 252px;
+  overflow: hidden;
+  text-align: left;
+}
+
+.search-options .multiselect > .caret {
+  float: right;
+  position: absolute;
+  right: 5px;
+  top: 16px;
+  display: inline-block;
 }
 
 .fixed {
@@ -1490,8 +1505,12 @@ body, .versal, h1, h2, p, .versal-bold {
     height: calc(100% - 150px) !important;
   }
 
-  form.search-options > .input-group > .form-control {
+  .search-options .multiselect {
     width: 370px !important;
+  }
+  
+  .search-options .multiselect > span {
+    width: 350px !important;
   }
   
   .pagination {
