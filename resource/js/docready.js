@@ -788,7 +788,7 @@ $(function() { // DOCUMENT READY
     $('option[value="' + vocabId + '"]').prop('selected', 'true');
   });
 
-  $('.multiselect').multiselect({
+  $('.headerbar .multiselect').multiselect({
     buttonText: function(options) {
       if (options.length === 0 || vocabSelectionString === '')
         return  '<span>' + all_vocabs + ' <b class="caret"></b></span>'; 
@@ -819,6 +819,32 @@ $(function() { // DOCUMENT READY
         delete selectedVocabs[vocabId];
       } 
       this.vocabSelectionString = updateVocabParam();
+    },
+    maxHeight: 300 
+  });
+  
+  $('.sidebar-grey .multiselect').multiselect({
+    buttonText: function(options) {
+      if (options.length === 0 || vocabSelectionString === '')
+        return  '<span>' + ' <b class="caret"></b></span>'; 
+      else {
+        if (options.length > this.numberDisplayed) {
+          return '<span>' + options.length + ' ' + n_selected + ' <b class="caret"></b></span>';
+        }
+        else {
+          var selected = '';
+          options.each(function() {
+            var label = ($(this).attr('label') !== undefined) ? $(this).attr('label') : $(this).html();
+
+            selected += label + ', ';
+          });
+          return '<span>' + selected.substr(0, selected.length - 2) + ' <b class="caret"></b></span>';
+        }
+      }
+    },
+    numberDisplayed: 2,
+    buttonWidth: 'auto',
+    onChange: function(element, checked) {
     },
     maxHeight: 300 
   });
@@ -890,9 +916,11 @@ $(function() { // DOCUMENT READY
     var parentLimitReady = true;
     $(document).on('click', '#remove-limits', function() {
       $('#type-limit').val('');
+      $('#type-limit').multiselect('refresh');
       $('#parent-limit').attr('data-uri', '');
       $('#parent-limit').val('');
       $('#group-limit').val('');
+      $('#group-limit').multiselect('refresh');
       loadLimitations();
     });
     $('#parent-limit').focus(function() {

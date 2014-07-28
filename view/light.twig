@@ -84,7 +84,7 @@
         <form class="search-options">
           <div class="input-group">
             <span class="versal">{% trans "By type" %}</span>
-            <select id="type-limit" value="{{ limit-type }}" class="form-control">
+            <select id="type-limit" value="{{ limit-type }}" class="form-control multiselect">
               <option></option>
               <option>skos:Concept</option>
               <option>skos:Collection</option>
@@ -93,7 +93,7 @@
           </div>
           <div class="input-group">
             <span class="versal">{% trans "By group" %}</span>
-            <select id="group-limit" value="{{ limit-group }}" class="form-control">
+            <select id="group-limit" value="{{ limit-group }}" class="form-control multiselect">
               <option></option>
               {% for uri,group in group_index %}
                 <option value="{{ uri }}">{{ group }}</option>

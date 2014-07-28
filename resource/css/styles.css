@@ -532,6 +532,29 @@ ul.vocab-category {
   width: 125px;
 }
 
+#sidebar .multiselect > span, #sidebar .multiselect > span > b.caret {
+  color: #474b4f !important;
+  border-top-color: #474b4f !important;
+}
+
+.search-options > .input-group > .btn-group {
+  display: block;
+}
+
+.search-options > .input-group > .btn-group > .multiselect {
+  background-color: #A9DCD7 !important;
+  background-color: #fff !important;
+  border: 1px solid #ccc !important;
+}
+
+.search-options > .input-group > .btn-group > .multiselect-container {
+  top: 44px;
+}
+
+.search-options > .input-group > .btn-group > .multiselect-container > li:first-of-type > * {
+  height: 26px;
+}
+
 .fixed {
   position: fixed !important;
   height: 95%;
@@ -1037,7 +1060,7 @@ textarea:focus, input[type="text"]:focus {
   font-size: 14px;
 }
 
-.search-options > div.input-group > .twitter-typeahead, .search-options > div.input-group > .twitter-typeahead > .tt-dropdown-menu {
+.search-options > div.input-group > .twitter-typeahead, .search-options > div.input-group > .twitter-typeahead > .tt-dropdown-menu, .search-options > .input-group > .btn-group > * {
   width: 280px;
 }
 
