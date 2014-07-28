@@ -473,7 +473,7 @@ $(function() { // DOCUMENT READY
   );
 
   // Generates property helpers as p elements or removes the helper text if it's clicked again.
-  $(document).on('click','.property-click',
+  $(document).on('click','.property-click .property-hover',
       function(event) {
         $.each($('.tooltip'), function(index, value) { $(value).siblings('.property-mouseover').tooltip('hide'); });
         var $property = $(this);
