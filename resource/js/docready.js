@@ -42,15 +42,15 @@ $(function() { // DOCUMENT READY
 
   // Shortens the properties that don't fit on one row on the search result view.
   function shortenProperties() {
-    $properties = $('.property');
+    $properties = $('.property-values');
     for (var i = 0; i < $properties.length; i++) {
       var $property = $($properties[i]);
       if ($property.height() > 24) {
         $property.addClass('shortened-property');
         var count = $property.children('.value').length;
-        var uri = $property.siblings('.prefLabel')[0].href;
+        var uri = $property.parent().siblings('.prefLabel')[0].href;
         var shortened = '<a href="' + uri +'" class="versal shortened-symbol" style="">... (' + count +')</a>';
-        $property.append(shortened);
+        $property.parent().append(shortened);
       }
     }
   }

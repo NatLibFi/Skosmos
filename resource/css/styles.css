@@ -798,11 +798,31 @@ tr {
   height: 100%;
 }
 
+.property {
+  display: block;
+  width: 100%;
+}
+
+.property-values {
+  display: inline-block;
+}
+
 .shortened-property {
-  max-height: 24px; 
+  display: inline-block;
+  height: 18px !important; 
   overflow: hidden;
   position: relative;
   white-space: nowrap;
+  width: 95%;
+  width: calc(100% - 24px);
+}
+
+.property-click {
+  display: inline-block;
+}
+
+.property-click > img {
+  vertical-align: top;
 }
 
 .shortened-symbol {
