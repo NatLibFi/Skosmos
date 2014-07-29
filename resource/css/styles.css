@@ -136,6 +136,8 @@ section {
 
 .multiselect-container > li > a > label {
    padding: 3px 20px 3px 25px !important;
+   word-wrap: break-word;
+   white-space: pre-wrap;
 }
 
 .headerbar {
