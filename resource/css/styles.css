@@ -134,6 +134,10 @@ section {
   color: #ffffff !important;
 }
 
+.multiselect-container > li > a > label {
+   padding: 3px 20px 3px 25px !important;
+}
+
 .headerbar {
   position: relative;
   width: 95%;
@@ -827,8 +831,8 @@ tr {
 
 .shortened-symbol {
   display: inline-block;
-  height: 22px; 
-  padding: 1px 0 0 2px;
+  height: 20px; 
+  padding: 0 0 0 2px;
   right: 0;
   position: absolute;
   background-color: #ffffff;
@@ -1529,8 +1533,8 @@ body, .versal, h1, h2, p, .versal-bold {
     width: 370px !important;
   }
   
-  .search-options .multiselect > span {
-    width: 350px !important;
+  .search-options .multiselect > span, .search-options .multiselect-container {
+    width: 370px !important;
   }
   
   .pagination {
