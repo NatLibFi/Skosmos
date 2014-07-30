@@ -831,11 +831,15 @@ tr {
   vertical-align: top;
 }
 
+.help-box.property-click > img {
+  vertical-align: middle;
+}
+
 .shortened-symbol {
   display: inline-block;
   height: 20px; 
   padding: 0 0 0 2px;
-  right: 0;
+  right: 10px;
   position: absolute;
   background-color: #ffffff;
 }
