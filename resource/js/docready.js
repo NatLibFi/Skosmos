@@ -828,18 +828,13 @@ $(function() { // DOCUMENT READY
       if (options.length === 0)
         return  '<span>' + ' </span><b class="caret"></b>'; 
       else {
-        if (options.length > this.numberDisplayed) {
-          return '<span>' + options.length + ' ' + n_selected + ' </span><b class="caret"></b>';
-        }
-        else {
-          var selected = '';
-          options.each(function() {
-            var label = ($(this).attr('label') !== undefined) ? $(this).attr('label') : $(this).html();
+        var selected = '';
+        options.each(function() {
+          var label = ($(this).attr('label') !== undefined) ? $(this).attr('label') : $(this).html();
 
-            selected += label + ', ';
-          });
-          return '<span>' + selected.substr(0, selected.length - 2) + ' </span><b class="caret"></b>';
-        }
+          selected += label + ', ';
+        });
+        return '<span>' + selected.substr(0, selected.length - 2) + ' </span><b class="caret"></b>';
       }
     },
     numberDisplayed: 2,
