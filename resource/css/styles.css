@@ -811,6 +811,8 @@ tr {
 
 .property-values {
   display: inline-block;
+  width: 95%;
+  width: calc(100% - 24px);
 }
 
 .shortened-property {
@@ -825,6 +827,7 @@ tr {
 
 .property-click {
   display: inline-block;
+  vertical-align: top;
 }
 
 .property-click > img {
