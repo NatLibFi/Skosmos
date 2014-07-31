@@ -514,6 +514,8 @@ $(function() { // DOCUMENT READY
     }); 
   });
   
+  $( ".search-vocab-text" ).tooltip({ placement: 'bottom' });
+  
   // Setting the language parameters according to the cookie if found.
   var search_lang = readCookie('SKOSMOS_SEARCH_LANG');
   if (search_lang) 

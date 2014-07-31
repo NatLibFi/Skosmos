@@ -13,7 +13,8 @@
 {% endif %}
 <div class="header-float">
 {% if vocab_id != 'About' and vocab_id != 'Feedback' %}
-  {% if not front_page and global_search is not defined %}<p class="search-vocab-text">{% trans "Search within this vocabulary:" %}</p>{% endif %}
+  
+  {% if not front_page and global_search is not defined %}<p class="search-vocab-text" title="{% trans "search_example_text" %}">{% trans "Search within this vocabulary:" %}</p>{% endif %}
   {% if vocab_list is defined %}
     <select class="multiselect" multiple="multiple">
     {% for vocabClassName,vocabArray in vocab_list %}
