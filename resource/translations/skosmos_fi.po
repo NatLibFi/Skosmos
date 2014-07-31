@@ -403,7 +403,7 @@ msgstr " tulosta haulle"
 
 #: /tmp/cache/53da23778d21a/2b/2f/1ce096ed381c7c416eb3bdf53cb7.php:82
 msgid "search_example_text"
-msgstr "Voit käyttää hakusanassasi katkaisumerkkiä seuraavaan tapaan: *eläimet*"
+msgstr "Haku tehdään automaattisesti käyttäen etukatkaisua. Halutessasi voit käyttää hakusanassasi katkaisumerkkiä seuraavaan tapaan: *eläimet*, tällöin sekä etu että takakatkaisu on määriteltävä itse."
 
 #: /tmp/cache/53da23778d21a/0e/21/616815bd3942b86671f42d3ed4b2.php:47
 msgid "selected"
