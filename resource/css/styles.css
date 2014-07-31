@@ -225,6 +225,14 @@ section {
   border-bottom: 2px dotted #cfcfcf;
 }
 
+#example {
+  background-color: #fff !important;
+}
+
+#example > button {
+  color: #000 !important;
+}
+
 .search-count {
   text-align: right;
 }
