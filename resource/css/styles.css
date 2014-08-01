@@ -334,11 +334,13 @@ section {
 
 .qtip-skosmos {
   border-radius: 0 !important;
+  margin-top: 2px;
 }
 
 .qtip-skosmos * {
   font-size: 14px;
   font-weight: 400;
+  border: 3px solid #75889F;
 }
 
 /* front page stuff 
