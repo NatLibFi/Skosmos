@@ -455,52 +455,6 @@ $(function() { // DOCUMENT READY
       }
   );
 
-  $('.property-mouseover').tooltip().on('click', 
-      function() {
-        $.each($('.tooltip'), function(index, value) { $(value).siblings('.property-mouseover').tooltip('hide'); });
-        if ($(this).siblings('.tooltip').length === 0)
-          $(this).tooltip('show');
-        else
-          $(this).tooltip('hide');
-        return false;
-      }
-  );
-
-  $(document).on('click', '.tooltip',
-      function(event) { 
-        $(event.target).parent().siblings('.property-mouseover').tooltip('hide'); 
-      }
-  );
-
-  // Generates property helpers as p elements or removes the helper text if it's clicked again.
-  $(document).on('click','.property-click .property-hover',
-      function(event) {
-        $.each($('.tooltip'), function(index, value) { $(value).siblings('.property-mouseover').tooltip('hide'); });
-        var $property = $(this);
-        if ($property.siblings('.tooltip').length === 0)
-          $property.tooltip('show');
-        else {
-          $('.tooltip').remove();
-        }
-      }
-  );
-  
-  $(document).on('mouseenter','.property-click',
-    function(event) {
-      var $property = $(this);
-      if ($property.siblings('.tooltip').length === 0)
-        $property.tooltip('show');
-    }  
-  );
-  
-  $(document).on('mouseleave','.property-click',
-    function(event) {
-      var $property = $(this);
-      if ($property.siblings('.tooltip').length !== 0)
-        $property.children('.property-mouseover').tooltip('hide');
-    }  
-  );
-
   // sets the language cookie for 365 days
   function setLangCookie(lang) {
     createCookie('SKOSMOS_LANGUAGE', lang, 365);
@@ -516,6 +470,11 @@ $(function() { // DOCUMENT READY
   
   $( ".search-vocab-text" ).qtip({ 
     position: { my: 'top center', at: 'bottom center' },
+    style: { classes: 'qtip-tipsy qtip-skosmos' } 
+  });
+  
+  $( ".property-click" ).qtip({ 
+    position: { my: 'top left', at: 'bottom right' },
     style: { classes: 'qtip-tipsy qtip-skosmos' } 
   });
   
