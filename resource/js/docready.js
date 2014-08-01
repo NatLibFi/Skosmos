@@ -658,6 +658,10 @@ $(function() { // DOCUMENT READY
             return true;
           }),
           function(item) {
+            var voc = item.exvocab;
+            var vocabLabel = $('select.multiselect').children('[value="' + voc + '"]').attr('data-label');
+            if (vocabLabel)
+              item.exvocab = vocabLabel;
             item.label = item.prefLabel;
             // combining all the matched properties.
             if (item.matchedPrefLabel)
