@@ -514,7 +514,10 @@ $(function() { // DOCUMENT READY
     }); 
   });
   
-  $( ".search-vocab-text" ).tooltip({ placement: 'bottom' });
+  $( ".search-vocab-text" ).qtip({ 
+    position: { my: 'top center', at: 'bottom center' },
+    style: { classes: 'qtip-tipsy qtip-skosmos' } 
+  });
   
   // Setting the language parameters according to the cookie if found.
   var search_lang = readCookie('SKOSMOS_SEARCH_LANG');

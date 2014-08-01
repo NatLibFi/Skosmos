@@ -332,6 +332,11 @@ section {
   width: 50px !important;
 }
 
+.qtip-skosmos * {
+  font-size: 14px;
+  font-weight: 400;
+}
+
 /* front page stuff 
  ***************************/
 .welcome-box, .right-box, #vocabulary-list {
@@ -1195,7 +1200,7 @@ a.navigation-font {
   color: black;
 }
 
-.multiselect span, .multiselect a, .dropdown-toggle, #search-all-button {
+.multiselect span, .multiselect a, .dropdown-toggle, #search-all-button, .qtip-skosmos * {
   font-family: 'Fira Sans';
 }
 
