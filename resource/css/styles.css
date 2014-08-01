@@ -332,6 +332,10 @@ section {
   width: 50px !important;
 }
 
+.qtip-skosmos {
+  border-radius: 0 !important;
+}
+
 .qtip-skosmos * {
   font-size: 14px;
   font-weight: 400;
