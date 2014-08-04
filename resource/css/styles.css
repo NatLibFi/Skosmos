@@ -623,6 +623,15 @@ div#sidebar-grey > div > div > form.search-options {
   top: 10px;
 }
 
+.search-options .mCSB_container > li > a > .radio { 
+  padding-left: 25px;
+  margin: 0;
+}
+
+.search-options .mCSB_container > li > a > label {
+  font-weight: 400;
+}
+
 form.search-options > .input-group > .form-control {
   width: 280px !important;
 }

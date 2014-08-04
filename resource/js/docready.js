@@ -922,6 +922,7 @@ $(function() { // DOCUMENT READY
       $('#group-limit').multiselect('refresh');
       loadLimitations();
     });
+
     $('#parent-limit').focus(function() {
       if($('#parent-limit').attr('data-uri') !== '')
         parentLimitReady = true;
@@ -933,6 +934,8 @@ $(function() { // DOCUMENT READY
         loadLimitations();
       return false;
     });
+
+    $('.multiselect-container').mCustomScrollbar();
 
     $('#parent-limit').typeahead({ hint: false, highlight: true, minLength: autocomplete_activation },{
         name: 'concept', 
