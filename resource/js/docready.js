@@ -935,7 +935,11 @@ $(function() { // DOCUMENT READY
       return false;
     });
 
-    $('.multiselect-container').mCustomScrollbar();
+    $('.multiselect-container').mCustomScrollbar({ 
+      scrollInertia: 0, 
+      snapAmount: 20,
+      snapOffset: 1
+    });
 
     $('#parent-limit').typeahead({ hint: false, highlight: true, minLength: autocomplete_activation },{
         name: 'concept', 
