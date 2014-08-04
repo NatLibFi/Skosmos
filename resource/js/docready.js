@@ -937,6 +937,7 @@ $(function() { // DOCUMENT READY
 
     $('.multiselect-container').mCustomScrollbar({ 
       scrollInertia: 0, 
+      mouseWheel:{ scrollAmount: 60 },
       snapAmount: 20,
       snapOffset: 1
     });
