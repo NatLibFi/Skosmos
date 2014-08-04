@@ -845,6 +845,10 @@ $(function() { // DOCUMENT READY
     buttonWidth: 'auto',
     onChange: function(element, checked) {
     },
+    onDropdownShown: function(event) { 
+      var $activeChild = $(event.currentTarget).find('.active');
+      $('.multiselect-container').mCustomScrollbar('scrollTo', $activeChild); 
+    },
     maxHeight: 300 
   });
 
