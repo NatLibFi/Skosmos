@@ -1121,6 +1121,14 @@ textarea:focus, input[type="text"]:focus {
   width: 280px;
 }
 
+.vocab, .type {
+  font-size: 12px !important;
+}
+
+.type {
+  float: right;
+}
+
 /* jsTree customization
  *****************************************/
 .jstree-no-icons {
