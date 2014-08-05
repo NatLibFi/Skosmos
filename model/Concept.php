@@ -216,6 +216,13 @@ class Concept extends VocabularyDataObject
 
     $ret = array();
     foreach ($properties as $prop => $values) {
+      // sorting the values by vocabulary name for consistency.
+      $sortedvalues = array();
+      foreach ($values as $value) {
+        $sortedvalues[$value->getExVocab()] = $value; 
+      }
+      ksort($sortedvalues);
+      $values = $sortedvalues;
       $propres = new EasyRdf_Resource($prop, $this->graph);
       $proplabel = $propres->label($this->lang); // current language
       if (!$proplabel) $proplabel = $propres->label(); // any language
