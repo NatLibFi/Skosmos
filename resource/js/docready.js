@@ -975,8 +975,10 @@ $(function() { // DOCUMENT READY
       var uri = $lcsh.attr('href') + ".jsonp?callback=?";
       $.getJSON(uri, function (data) {
         for(var i in data)
-          if (data[i]['@id'] === $lcsh.attr('href'))
+          if (data[i]['@id'] === $lcsh.attr('href')) {
             $lcsh.html(data[i]['http://www.w3.org/2004/02/skos/core#prefLabel'][0]['@value']);
+            $lcsh.after('</a> @ lcsh (' + data[i]['http://www.w3.org/2004/02/skos/core#prefLabel'][0]['@language']+ ')');
+          }
       });
     }
   }
