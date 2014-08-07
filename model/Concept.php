@@ -218,8 +218,28 @@ class Concept extends VocabularyDataObject
     foreach ($properties as $prop => $values) {
       // sorting the values by vocabulary name for consistency.
       $sortedvalues = array();
+      $fixed;
       foreach ($values as $value) {
         $sortedvalues[$value->getExVocab()] = $value; 
+        if (strpos($value->getLabel(), 'http://id.loc.gov/') !== false) {
+          $json = file_get_contents($value->getLabel() . '.json');
+          $response = json_decode($json);
+          foreach ($response as $obj) {
+            $props = get_object_vars($obj);
+            if ($props['@id'] === $value->getLabel()) {
+              $label = get_object_vars($props['http://www.w3.org/2004/02/skos/core#prefLabel'][0]);
+              $fixed = new ConceptPropertyValue(
+                $value->getType(),
+                $value->getUri(),
+                $value->getVocab(),
+                $label['@language'],
+                $label['@value'],
+                $value->getExvocab()
+              );
+            }
+          }
+          $sortedvalues[$value->getExVocab()] = $fixed; 
+        }
       }
       ksort($sortedvalues);
       $values = $sortedvalues;
