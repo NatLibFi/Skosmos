@@ -427,6 +427,27 @@ class Model
     return null;
   }
 
+  public function queryLCSHLabel($value) {
+    $fixed;
+    $json = file_get_contents($value->getLabel() . '.json');
+    $response = json_decode($json);
+    foreach ($response as $obj) {
+      $props = get_object_vars($obj);
+      if ($props['@id'] === $value->getLabel()) {
+        $label = get_object_vars($props['http://www.w3.org/2004/02/skos/core#prefLabel'][0]);
+        $fixed = new ConceptPropertyValue(
+          $value->getType(),
+          $value->getUri(),
+          $value->getVocab(),
+          $label['@language'],
+          $label['@value'],
+          $value->getExvocab() // cannot be set to a arbitrary string that isn't found in the config.
+        );
+      }
+    }
+    return $fixed;
+  }
+
   /**
    * Returns a SPARQL endpoint object.
    * @param string $dialect eg. 'JenaText'.
