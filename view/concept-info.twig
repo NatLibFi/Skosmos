@@ -130,6 +130,8 @@
                       <a class="propertyvalue" href="{{ propval.uri | link_url(propval.exvocab, propval.lang) }}">{{ propval.label }}</a> @ {{ propval.exvocab }}
                       {% elseif propval.exvocab == propval.vocab %}
                         <a class="propertyvalue" href="{{ propval.uri | link_url(propval.exvocab, propval.lang) }}">{{ propval.label }}</a>
+                      {% elseif propval.vocab and not propval.exvocab %}
+                        <a class="propertyvalue" href="{{ propval.uri }}">{{ propval.label }}</a> @ {{ propval.vocab }}
                       {% else %}{# here the concept hasnt been found in any local vocabulary #}
                         <a class="propertyvalue" href="{{ propval.uri }}">{{ propval.label }}</a>
                       {% endif %}

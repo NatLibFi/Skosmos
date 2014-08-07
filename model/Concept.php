@@ -221,8 +221,9 @@ class Concept extends VocabularyDataObject
       $fixed;
       foreach ($values as $value) {
         $sortedvalues[$value->getExVocab()] = $value; 
+        // if there is a lcsh match without a label query the lcsh api for it.
         if (strpos($value->getLabel(), 'http://id.loc.gov/') !== false)
-          $sortedvalues[$value->getExVocab()] = $this->model->queryLCSHLabel($value);; 
+          $sortedvalues[$value->getExVocab()] = $this->model->queryLCSHLabel($value); 
       }
       ksort($sortedvalues);
       $values = $sortedvalues;
