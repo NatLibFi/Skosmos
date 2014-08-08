@@ -431,6 +431,19 @@ class Model
     $fixedPropertyValue;
     $json = file_get_contents($value->getLabel() . '.json');
     $response = json_decode($json);
+
+    // if the response isn't valid json fix the vocab param and return without label.
+    if (!$response) {
+      return new ConceptPropertyValue(
+        $value->getType(),
+        $value->getUri(),
+        "lcsh",
+        $value->getLang(),
+        $value->getLabel(),
+        $value->getExvocab() // cannot be set to a arbitrary string that isn't found in the config.
+      );
+    }
+
     foreach ($response as $obj) {
       $props = get_object_vars($obj);
       if ($props['@id'] === $value->getLabel()) {

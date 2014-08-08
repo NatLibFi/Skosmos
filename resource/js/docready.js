@@ -971,7 +971,7 @@ $(function() { // DOCUMENT READY
   var $appendix = $('.concept-appendix');
   if($appendix.length) {
     var $lcsh = $('.propertyvalue[href^="http://id.loc.gov/authorities/"]');
-    if ($lcsh.length && $lcsh.html() === $lcsh.attr('href')) {
+    if ($lcsh.length && $lcsh.html().indexOf($lcsh.attr('href')) > -1) {
       var uri = $lcsh.attr('href') + ".jsonp?callback=?";
       $.getJSON(uri, function (data) {
         for(var i in data)
