@@ -428,7 +428,6 @@ class Model
   }
 
   public function queryLCSHLabel($value) {
-    $fixedPropertyValue;
     $json = file_get_contents($value->getLabel() . '.json');
     $response = json_decode($json);
 
@@ -456,9 +455,10 @@ class Model
           $label['@value'],
           $value->getExvocab() // cannot be set to a arbitrary string that isn't found in the config.
         );
+       return $fixedPropertyValue;
       }
     }
-    return $fixedPropertyValue;
+    return $value; // if all else fails return the original propertyValue object.
   }
 
   /**
