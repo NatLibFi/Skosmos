@@ -15,9 +15,12 @@ class JenaTextSparql extends GenericSparql
 {
   /**
    * How many results to ask from the jena-text index. jena-text defaults to
-   * 10000, but that is too little in some cases (see Issue 109).
+   * 10000, but that is too little in some cases.
+   * See issue reports:
+   * https://code.google.com/p/onki-light/issues/detail?id=109 (original, set to 1000000000)
+   * https://github.com/NatLibFi/Skosmos/issues/41 (reduced to 100000 because of bad performance)
    */
-  private $MAX_N = 100000000;
+  private $MAX_N = 100000;
 
  /**
    * Make a jena-text query condition that narrows the amount of search
