@@ -433,10 +433,10 @@ EOQ;
     // if search language and UI/display language differ, must also consider case where there is no prefLabel in
     // the display language; in that case, should use the label with the same language as the matched label
     $labelcond_fallback = ($search_lang != $lang) ? 
-           "OPTIONAL { # fallback in case previous OPTIONAL block gives no labels
-             ?s skos:prefLabel ?label .
-             FILTER (langMatches(lang(?label), lang(?match)))
-           }" : "";
+      "OPTIONAL { # fallback in case previous OPTIONAL block gives no labels
+       ?s skos:prefLabel ?label .
+       FILTER (langMatches(lang(?label), lang(?match)))
+       }" : "";
 
     // extra conditions for parent and group, if specified
     $parentcond = ($parent) ? "?s skos:broader+ <$parent> ." : "";
@@ -508,37 +508,38 @@ EOQ;
     $graph_text = $this->isDefaultEndpoint() ? "$textcond \n $gc {" : "$gc { $textcond \n";
 
     $query = <<<EOQ
-      SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph (GROUP_CONCAT(?type) as ?types) WHERE {
-        $graph_text
-          { ?s rdf:type <$type> } $extratypes
-          {
-           $parentcond
-           $groupcond
-           ?s rdf:type ?type .
-           ?s ?prop ?match .
-           FILTER (
-                   $filtercond
-                   $labelcond_match
-                  )
-           OPTIONAL {
-             ?s skos:prefLabel ?label .
-             FILTER ($labelcond_label)
-           }
-           $labelcond_fallback
-          }
-          FILTER NOT EXISTS {?s owl:deprecated true }
-        }
-        BIND(IF(?prop = skos:prefLabel && ?match != ?label, ?match, ?unbound) as ?plabel)
-        BIND(IF(?prop = skos:altLabel, ?match, ?unbound) as ?alabel)
-        BIND(IF(?prop = skos:hiddenLabel, ?match, ?unbound) as ?hlabel)
-        $values_prop
+SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph (GROUP_CONCAT(?type) as ?types)
+WHERE {
+  $graph_text
+    { ?s rdf:type <$type> } $extratypes
+    {
+      $parentcond
+      $groupcond
+      ?s rdf:type ?type .
+      ?s ?prop ?match .
+      FILTER (
+        $filtercond
+        $labelcond_match
+      )
+      OPTIONAL {
+       ?s skos:prefLabel ?label .
+       FILTER ($labelcond_label)
       }
+      $labelcond_fallback
+    }
+    FILTER NOT EXISTS { ?s owl:deprecated true }
+  }
+  BIND(IF(?prop = skos:prefLabel && ?match != ?label, ?match, ?unbound) as ?plabel)
+  BIND(IF(?prop = skos:altLabel, ?match, ?unbound) as ?alabel)
+  BIND(IF(?prop = skos:hiddenLabel, ?match, ?unbound) as ?hlabel)
+  $values_prop
+}
 
-      GROUP BY ?match ?s ?label ?plabel ?alabel ?hlabel ?graph ?prop
-      ORDER BY lcase(str(?match)) lang(?match) $orderextra
-      $limit
-      $offset
-      $values_graph
+GROUP BY ?match ?s ?label ?plabel ?alabel ?hlabel ?graph ?prop
+ORDER BY lcase(str(?match)) lang(?match) $orderextra
+$limit
+$offset
+$values_graph
 EOQ;
 
     $results = $this->client->query($query);
