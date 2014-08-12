@@ -430,6 +430,13 @@ EOQ;
     // extra conditions for label language, if specified
     $labelcond_match = ($search_lang) ? "&& langMatches(lang(?match), '$search_lang')" : "";
     $labelcond_label = ($lang) ? "langMatches(lang(?label), '$lang')" : "langMatches(lang(?label), lang(?match))";
+    // if search language and UI/display language differ, must also consider case where there is no prefLabel in
+    // the display language; in that case, should use the label with the same language as the matched label
+    $labelcond_fallback = ($search_lang != $lang) ? 
+           "OPTIONAL { # fallback in case previous OPTIONAL block gives no labels
+             ?s skos:prefLabel ?label .
+             FILTER (langMatches(lang(?label), lang(?match)))
+           }" : "";
 
     // extra conditions for parent and group, if specified
     $parentcond = ($parent) ? "?s skos:broader+ <$parent> ." : "";
@@ -517,10 +524,7 @@ EOQ;
              ?s skos:prefLabel ?label .
              FILTER ($labelcond_label)
            }
-           OPTIONAL { # fallback in case previous OPTIONAL block gives no labels
-             ?s skos:prefLabel ?label .
-             FILTER (langMatches(lang(?label), lang(?match)))
-           }
+           $labelcond_fallback
           }
           FILTER NOT EXISTS {?s owl:deprecated true }
         }
