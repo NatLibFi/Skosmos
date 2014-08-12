@@ -619,22 +619,22 @@ $(function() { // DOCUMENT READY
   function onSelection($e, datum) {
     if ($e.currentTarget.id !== 'parent-limit') {
       var localname = datum.localname;
-        if (datum.exvocab && datum.vocab === '???') {
-          localname = "?uri=" + datum.uri;
-          datum.vocab = datum.exvocab;
-        }
-        // replaced complex logic with path_fix that should always work.
-        if (datum.type && datum.type.indexOf('Collection') !== -1) {
-          location.href = encodeURI(path_fix + datum.vocab + '/' + lang + '/groups/' + localname);
-        } else {
-          location.href = encodeURI(path_fix + datum.vocab + '/' + lang + '/page/' + localname);
-        }
-      } else {
-        $('#parent-limit').attr('data-uri', datum.uri); 
-        $('#parent-limit').val(datum.label); 
-        parentLimitReady = true;
-        return false;
+      if (datum.exvocab && datum.vocab === '???') {
+        localname = "?uri=" + datum.uri;
+        datum.vocab = datum.exvocab;
       }
+      // replaced complex logic with path_fix that should always work.
+      if (datum.type && datum.type.indexOf('Collection') !== -1) {
+        location.href = encodeURI(path_fix + datum.vocab + '/' + lang + '/groups/' + localname);
+      } else {
+        location.href = encodeURI(path_fix + datum.vocab + '/' + lang + '/page/' + localname);
+      }
+    } else {
+      $('#parent-limit').attr('data-uri', datum.uri); 
+      $('#parent-limit').val(datum.label); 
+      parentLimitReady = true;
+      return false;
+    }
   }
 
   Handlebars.registerHelper('noresults', function() {
@@ -660,8 +660,7 @@ $(function() { // DOCUMENT READY
           function(item) {
             var voc = item.exvocab;
             var vocabLabel = $('select.multiselect').children('[value="' + voc + '"]').attr('data-label');
-            if (vocabLabel)
-              item.exvocab = vocabLabel;
+            item.vocabLabel = (vocabLabel) ? vocabLabel : item.exvocab;
             item.label = item.prefLabel;
             // combining all the matched properties.
             if (item.matchedPrefLabel)
@@ -694,7 +693,7 @@ $(function() { // DOCUMENT READY
           '{{# if matched }}<div><p class="matched-label">{{matched}}</p>',
           '{{# if lang}}<p>({{lang}})</p>{{/if}}<p>\u2192</p>{{/if}}',
           '<p class="autocomplete-label">{{label}}{{# if lang}}{{# unless matched }}<p>({{lang}})</p>{{/unless}}{{/if}}</p></div>',
-          '<div class="vocab">{{exvocab}}</div>',
+          '<div class="vocab">{{vocabLabel}}</div>',
         ].join(''))
       },
       source: concepts.ttAdapter()
