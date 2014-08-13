@@ -546,9 +546,9 @@ class Vocabulary extends DataObject
     $digits = false;
     $specials = false;
     foreach($chars as $char) {
-      if (preg_match('/[[:alpha:]]/u', $char)) {
+      if (preg_match('/\p{L}/u', $char)) {
         $letters[] = $char;
-      } elseif (preg_match('/[[:digit:]]/u', $char)) {
+      } elseif (preg_match('/\d/u', $char)) {
         $digits = true;
       } else {
         $specials = true;
