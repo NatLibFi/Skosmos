@@ -587,6 +587,30 @@ EOQ;
   }
 
   /**
+   * Query for the first characters (letter or otherwise) of the labels in the particular language.
+   * @param string $lang language
+   * @return array array of characters
+   */
+   
+  public function queryFirstCharacters($lang) {
+    $gc = $this->graphClause;
+    $query = <<<EOQ
+      SELECT DISTINCT (substr(ucase(?label), 1, 1) as ?l) WHERE {
+        $gc {
+          ?c skos:prefLabel ?label .
+          FILTER(langMatches(lang(?label), '$lang'))
+        }
+      }
+EOQ;
+    $result = $this->client->query($query);
+    $ret = array();
+    foreach ($result as $row) {
+      $ret[] = $row->l->getValue();
+    } 
+    return $ret;
+  }
+
+  /**
    * Query for a label (skos:prefLabel, rdfs:label, dc:title, dc11:title) of a resource.
    * @param string $uri
    * @param string $lang
