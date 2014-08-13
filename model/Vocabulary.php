@@ -561,5 +561,15 @@ class Vocabulary extends DataObject
       $letters[] = '0-9';
     return $letters;
   }
+  
+  /**
+   * Searches for concepts with a label starting with the specified letter.
+   * Also the special tokens '0-9' (digits), '!*' (special characters) and '*'
+   * (everything) are supported.
+   * @param $letter letter (or special token) to search for
+   */
+  public function searchConceptsAlphabetical($letter) {
+    return $this->getSparql()->queryConceptsAlphabetical($letter, $this->lang);
+  }
 
 }

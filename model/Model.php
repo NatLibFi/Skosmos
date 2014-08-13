@@ -191,8 +191,6 @@ class Model
     $term = trim($term);
     if ($term == "" || $term == "*")
       return array(); // don't even try to search for empty prefix
-    else if ($term == "FullAlphabeticalIndex")
-      $term = "*";
 
     // make vocids an array in every case
     if ($vocids === null) $vocids = array();

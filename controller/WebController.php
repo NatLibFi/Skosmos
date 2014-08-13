@@ -470,9 +470,9 @@ class WebController extends Controller
     $lang_msg = $this->verifyVocabularyLanguage($lang, $vocab->getLanguages()) ? null : gettext("language_changed_message");
     $all_at_once = $vocab->getAlphabeticalFull();
     if (!$all_at_once)
-      $search_results = $this->model->searchConcepts($letter . "*", $vocab_id, $lang, $lang, null, null, null, 0, 0, false);
+      $search_results = $vocab->searchConceptsAlphabetical($letter);
     else
-      $search_results = $this->model->searchConcepts("FullAlphabeticalIndex", $vocab_id, $lang, $lang, null, null, null, 0, 0, false);
+      $search_results = $vocab->searchConceptsAlphabetical('*');
 
     $letters = $vocab->getAlphabet();
     $controller = $this; // for use by anonymous function below

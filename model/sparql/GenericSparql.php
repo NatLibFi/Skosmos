@@ -465,14 +465,6 @@ EOQ;
 
     $use_regex = false;
 
-    if ($term == '0-9*') {
-      $term = '[0-9].*';
-      $use_regex = true;
-    } elseif ($term == '!*') {
-      $term = '[^\\\\p{L}\\\\p{N}].*';
-      $use_regex = true;
-    }
-
     # make text query clause
     $textcond = $use_regex ? '# regex in use' : $this->createTextQueryCondition($term);
 
@@ -578,6 +570,94 @@ EOQ;
       } elseif (isset($row->hlabel)) {
         $hit['hiddenLabel'] = $row->hlabel->getValue();
         $hit['lang'] = $row->hlabel->getLang();
+      }
+
+      $ret[] = $hit;
+    }
+
+    return $ret;
+  }
+
+  /**
+   * Query for concepts with a term starting with the given letter. Also special classes '0-9' (digits),
+   * '*!' (special characters) and '*' (everything) are accepted.
+   * @param $letter the letter (or special class) to search for
+   * @param $lang language of labels
+   */
+  public function queryConceptsAlphabetical($letter, $lang) {
+    $gc = $this->graphClause;
+
+    $use_regex = false;
+
+    if ($letter == '*') {
+      $letter = '.*';
+      $use_regex = true;
+    } elseif ($letter == '0-9') {
+      $letter = '[0-9].*';
+      $use_regex = true;
+    } elseif ($letter == '!*') {
+      $letter = '[^\\\\p{L}\\\\p{N}].*';
+      $use_regex = true;
+    }
+
+    # make VALUES clauses
+    $props = array('skos:prefLabel','skos:altLabel');
+    $values_prop = $this->formatValues('?prop', $props);
+
+    # make text query clause
+    $textcond = $use_regex ? '# regex in use' : $this->createTextQueryCondition($letter . '*');
+    $lcletter = mb_strtolower($letter, 'UTF-8'); // convert to lower case, UTF-8 safe
+    if ($use_regex) {
+      $filtercond = "regex(str(?match), '^$letter$', 'i')";
+    } else {
+      $filtercond = "strstarts(lcase(str(?match)), '$lcletter')" . // avoid matches on both altLabel and prefLabel
+                    " && !(?match != ?label && strstarts(lcase(str(?label)), '$lcletter'))";
+    }
+
+    $query = <<<EOQ
+SELECT DISTINCT ?s ?label ?alabel
+WHERE {
+  $gc {
+    $textcond
+    ?s ?prop ?match .
+    FILTER (
+      $filtercond
+      && langMatches(lang(?match), '$lang')
+    )
+    {
+      ?s skos:prefLabel ?label .
+      FILTER (langMatches(lang(?label), '$lang'))
+    }
+    {
+      ?s rdf:type skos:Concept .
+      FILTER NOT EXISTS { ?s owl:deprecated true }
+    }
+  }
+  BIND(IF(?prop = skos:altLabel, ?match, ?unbound) as ?alabel)
+  $values_prop
+}
+
+GROUP BY ?match ?s ?label ?alabel ?prop
+ORDER BY lcase(str(?match)) lang(?match)
+EOQ;
+
+    $results = $this->client->query($query);
+    $ret = array();
+
+    foreach ($results as $row) {
+      if (!isset($row->s)) continue; // don't break if query returns a single dummy result
+
+      $hit = array();
+      $hit['uri'] = $row->s->getUri();
+
+      $hit['localname'] = $row->s->localName();
+
+      $hit['prefLabel'] = $row->label->getValue();
+      $hit['lang'] = $row->label->getLang();
+
+      if (isset($row->alabel)) {
+        $hit['altLabel'] = $row->alabel->getValue();
+        $hit['lang'] = $row->alabel->getLang();
       }
 
       $ret[] = $hit;
