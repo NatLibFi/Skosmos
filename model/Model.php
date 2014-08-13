@@ -427,38 +427,16 @@ class Model
     return null;
   }
 
-  public function queryLCSHLabel($value) {
-    $json = file_get_contents($value->getLabel() . '.json');
-    $response = json_decode($json);
-
-    // if the response isn't valid json fix the vocab param and return without label.
-    if (!$response) {
-      return new ConceptPropertyValue(
-        $value->getType(),
-        $value->getUri(),
-        "lcsh",
-        $value->getLang(),
-        $value->getLabel(),
-        $value->getExvocab() // cannot be set to a arbitrary string that isn't found in the config.
-      );
+  public function getLabelFromUri($uri) {
+    try {
+      EasyRdf_Format::unregister('json'); 
+      $client = EasyRdf_Graph::newAndLoad($uri);
+      $resource = $client->resource($uri);
+      $label = $resource->get('skos:prefLabel');
+      return $label;
+    } catch (Exception $e) {
     }
-
-    foreach ($response as $obj) {
-      $props = get_object_vars($obj);
-      if ($props['@id'] === $value->getLabel()) {
-        $label = get_object_vars($props['http://www.w3.org/2004/02/skos/core#prefLabel'][0]);
-        $fixedPropertyValue = new ConceptPropertyValue(
-          $value->getType(),
-          $value->getUri(),
-          "lcsh",
-          $label['@language'],
-          $label['@value'],
-          $value->getExvocab() // cannot be set to a arbitrary string that isn't found in the config.
-        );
-       return $fixedPropertyValue;
-      }
-    }
-    return $value; // if all else fails return the original propertyValue object.
+    return null;
   }
 
   /**

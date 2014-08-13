@@ -179,9 +179,16 @@ class Concept extends VocabularyDataObject
             $exvocab = $exvoc->getId();
           }
           if (!$exvoc || !$label) {
-            $label = $val->shorten() ? $val->shorten() : $exuri;
-            $label_lang = $this->lang;
-            $exvocab = null;
+            $response = $this->model->getLabelFromUri($exuri);
+            if ($response) {
+              $label = $response->getValue($lang);
+              $label_lang = $response->getLang();
+            }
+            if (!$label) {
+              $label = $val->shorten() ? $val->shorten() : $exuri;
+              $label_lang = $this->lang;
+              $exvocab = null;
+            }
           }
         } else {
           break;
@@ -221,9 +228,6 @@ class Concept extends VocabularyDataObject
       $fixed;
       foreach ($values as $value) {
         $sortedvalues[$value->getExVocab()] = $value; 
-        // if there is a lcsh match without a label query the lcsh api for it.
-        if (strpos($value->getLabel(), 'http://id.loc.gov/') !== false)
-          $sortedvalues[$value->getExVocab()] = $this->model->queryLCSHLabel($value); 
       }
       ksort($sortedvalues);
       $values = $sortedvalues;
