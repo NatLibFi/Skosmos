@@ -227,7 +227,7 @@ class Concept extends VocabularyDataObject
       $sortedvalues = array();
       $fixed;
       foreach ($values as $value) {
-        $sortedvalues[$value->getExVocab()] = $value; 
+        $sortedvalues[$value->getExVocab() . $value] = $value; 
       }
       ksort($sortedvalues);
       $values = $sortedvalues;
