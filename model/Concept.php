@@ -199,7 +199,13 @@ class Concept extends VocabularyDataObject
           $prop_info['lang'] = $label_lang;
           $prop_info['exvocab'] = $exvocab;
         }
-        if ($prop_info['label'] !== null) {
+        if ($prop_info['label'] !== null && strpos($prop_info['concept_uri'], 'id.loc.gov') !== false) {
+          $properties[$prop_info['prop']][] = new ConceptPropertyValue(
+            $prop_info['prop'], $prop_info['concept_uri'], "lcsh",
+            $prop_info['lang'], $prop_info['label'], $prop_info['exvocab']
+          );
+        }
+        else if ($prop_info['label'] !== null) {
           $properties[$prop_info['prop']][] = new ConceptPropertyValue(
             $prop_info['prop'],
             $prop_info['concept_uri'],
