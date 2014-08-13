@@ -463,34 +463,30 @@ EOQ;
     while (strpos($term, '**') !== false)
       $term = str_replace('**', '*', $term); // removes futile asterisks
 
-    $use_regex = false;
-
     # make text query clause
-    $textcond = $use_regex ? '# regex in use' : $this->createTextQueryCondition($term);
+    $textcond = $this->createTextQueryCondition($term);
 
     # use appropriate matching function depending on query type: =, strstarts, strends or full regex
-    if (!$use_regex && preg_match('/^[^\*]+$/', $term)) { // exact query
+    if (preg_match('/^[^\*]+$/', $term)) { // exact query
       $term = str_replace('\\', '\\\\', $term); // quote slashes
       $term = str_replace('\'', '\\\'', mb_strtolower($term, 'UTF-8')); // make lowercase and escape single quotes
       $filtercond = "lcase(str(?match)) = '$term'";
-    } elseif (!$use_regex && preg_match('/^[^\*]+\*$/', $term)) { // prefix query
+    } elseif (preg_match('/^[^\*]+\*$/', $term)) { // prefix query
       $term = substr($term, 0, -1); // remove the final asterisk
       $term = str_replace('\\', '\\\\', $term); // quote slashes
       $term = str_replace('\'', '\\\'', mb_strtolower($term, 'UTF-8')); // make lowercase and escape single quotes
       $filtercond = "strstarts(lcase(str(?match)), '$term')" . // avoid matches on both altLabel and prefLabel
                     " && !(?match != ?label && strstarts(lcase(str(?label)), '$term'))";
-    } elseif (!$use_regex && preg_match('/^\*[^\*]+$/', $term)) { // suffix query
+    } elseif (preg_match('/^\*[^\*]+$/', $term)) { // suffix query
       $term = substr($term, 1); // remove the preceding asterisk
       $term = str_replace('\\', '\\\\', $term); // quote slashes
       $term = str_replace('\'', '\\\'', mb_strtolower($term, 'UTF-8')); // make lowercase and escape single quotes
       $filtercond = "strends(lcase(str(?match)), '$term')";
     } else { // too complicated - have to use a regex
-      if (!$use_regex) { # not already formatted as a regex
-        # make sure regex metacharacters are not passed through
-        $term = str_replace('\\', '\\\\', preg_quote($term));
-        $term = str_replace('\\\\*', '.*', $term); // convert asterisk to regex syntax
-        $term = str_replace('\'', '\\\'', $term); // ensure single quotes are quoted
-      }
+      # make sure regex metacharacters are not passed through
+      $term = str_replace('\\', '\\\\', preg_quote($term));
+      $term = str_replace('\\\\*', '.*', $term); // convert asterisk to regex syntax
+      $term = str_replace('\'', '\\\'', $term); // ensure single quotes are quoted
       $filtercond = "regex(str(?match), '^$term$', 'i')";
     }
 
