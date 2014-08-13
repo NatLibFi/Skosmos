@@ -596,45 +596,45 @@ EOQ;
       $use_regex = true;
     }
 
-    # make VALUES clauses
-    $props = array('skos:prefLabel','skos:altLabel');
-    $values_prop = $this->formatValues('?prop', $props);
-
     # make text query clause
     $textcond = $use_regex ? '# regex in use' : $this->createTextQueryCondition($letter . '*');
     $lcletter = mb_strtolower($letter, 'UTF-8'); // convert to lower case, UTF-8 safe
     if ($use_regex) {
       $filtercond = "regex(str(?match), '^$letter$', 'i')";
     } else {
-      $filtercond = "strstarts(lcase(str(?match)), '$lcletter')" . // avoid matches on both altLabel and prefLabel
-                    " && !(?match != ?label && strstarts(lcase(str(?label)), '$lcletter'))";
+      $filtercond = "strstarts(lcase(str(?match)), '$lcletter')";
     }
 
     $query = <<<EOQ
-SELECT DISTINCT ?s ?label ?alabel
+SELECT ?s ?label ?alabel
 WHERE {
   $gc {
     $textcond
-    ?s ?prop ?match .
     FILTER (
       $filtercond
       && langMatches(lang(?match), '$lang')
     )
+    ?s a skos:Concept .
+
     {
-      ?s skos:prefLabel ?label .
-      FILTER (langMatches(lang(?label), '$lang'))
+      {
+        ?s skos:prefLabel ?match .
+        BIND(?match as ?label)
+      }
+      UNION
+      {
+        ?s skos:altLabel ?match .
+        ?s skos:prefLabel ?label .
+        FILTER (langMatches(lang(?label), '$lang'))
+        BIND(?match as ?alabel)
+      }
     }
-    {
-      ?s rdf:type skos:Concept .
-      FILTER NOT EXISTS { ?s owl:deprecated true }
-    }
+    FILTER NOT EXISTS { ?s owl:deprecated true }
   }
-  BIND(IF(?prop = skos:altLabel, ?match, ?unbound) as ?alabel)
-  $values_prop
 }
 
 GROUP BY ?match ?s ?label ?alabel ?prop
-ORDER BY lcase(str(?match)) lang(?match)
+ORDER BY lcase(str(?match))
 EOQ;
 
     $results = $this->client->query($query);
