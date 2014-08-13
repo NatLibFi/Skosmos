@@ -534,5 +534,42 @@ class Vocabulary extends DataObject
 
     return $ret;
   }
+  
+  /**
+   * Returns the letters of the alphabet which have been used in this vocabulary.
+   * The returned letters may also include specials such as '0-9' (digits) and '!*' (special characters).
+   * @return array array of letters
+   */
+  public function getAlphabet() {
+    $chars = $this->getSparql()->queryFirstCharacters($this->lang);
+    $letters = array();
+    $digits = false;
+    $specials = false;
+    foreach($chars as $char) {
+      if (preg_match('/\p{L}/u', $char)) {
+        $letters[] = $char;
+      } elseif (preg_match('/\d/u', $char)) {
+        $digits = true;
+      } else {
+        $specials = true;
+      }
+    }
+    usort($letters, 'strcoll');
+    if ($specials)
+      $letters[] = '!*';
+    if ($digits)
+      $letters[] = '0-9';
+    return $letters;
+  }
+  
+  /**
+   * Searches for concepts with a label starting with the specified letter.
+   * Also the special tokens '0-9' (digits), '!*' (special characters) and '*'
+   * (everything) are supported.
+   * @param $letter letter (or special token) to search for
+   */
+  public function searchConceptsAlphabetical($letter) {
+    return $this->getSparql()->queryConceptsAlphabetical($letter, $this->lang);
+  }
 
 }
