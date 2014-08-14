@@ -782,6 +782,10 @@ tr {
   padding: 15px;
 }
 
+.vocab-label {
+  float: right;
+}
+
 .concept-main {
   margin: 0 15px 15px 15px;
   padding-top: 15px;
