@@ -128,10 +128,8 @@
                   {% if propval.label %}
                   <a class="propertyvalue" href="{{ propval.uri | link_url(propval.exvocab, propval.lang) }}">{{ propval.label }}</a> 
                     {% if propval.lang and propval.lang != lang %}<span class="propertyvalue"> ({{ propval.lang }})</span>{% endif %}
-                    {% if propval.exvocab and propval.exvocab != propval.vocab %}
+                    {% if propval.vocabname %}
                     <span>, {{ propval.vocabname }}</span>
-                    {% elseif (propval.vocab and propval.vocab != vocab) and not propval.exvocab %}
-                    <span>, {{ propval.vocab }}</span>
                     {% endif %}
                   {% endif %}
                 {% endif %}</li>

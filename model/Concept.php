@@ -196,9 +196,12 @@ class Concept extends VocabularyDataObject
               $properties[$prop_info['prop']][] = new ConceptPropertyValue(
                 $prop_info['prop'],
                 $prop_info['concept_uri'],
-                $schemeLabel,
+                $prop_info['vocab'],
                 $label_lang,
-                $label
+                $label,
+                null,
+                null,
+                $schemeLabel
               );
             }
             if (!$label) {
