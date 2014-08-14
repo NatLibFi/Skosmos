@@ -113,7 +113,7 @@ class Concept extends VocabularyDataObject
   }
   
   /**
-   * Returns the vocabulary identifier string or null if that is not available.
+   * Returns the vocabulary shortname string or id if that is not available.
    * @return string
    */
   public function getShortName()
@@ -169,6 +169,7 @@ class Concept extends VocabularyDataObject
         $label = null;
         $label_lang = null;
         $exvocab = null;
+        $voclabel = null;
 
         if ($prop === 'skos:exactMatch' || $prop === 'skos:narrowMatch' || $prop === 'skos:broadMatch' || $prop === 'owl:sameAs' || $prop === 'skos:closeMatch') {
           $exuri = $val->getUri();
@@ -177,6 +178,7 @@ class Concept extends VocabularyDataObject
             $label_lang = $exvoc->getDefaultLanguage();
             $label = $this->getExternalLabel($exvoc, $exuri, $label_lang);
             $exvocab = $exvoc->getId();
+            $voclabel = $exvoc->getTitle();
           }
           if (!$exvoc || !$label) {
             $response = $this->model->getResourceFromUri($exuri);
@@ -221,7 +223,9 @@ class Concept extends VocabularyDataObject
             $prop_info['vocab'],
             $prop_info['lang'],
             $prop_info['label'],
-            $prop_info['exvocab']
+            $prop_info['exvocab'],
+            null,
+            $voclabel
           );
         }
       }
@@ -596,13 +600,15 @@ class ConceptPropertyValue
   private $label;
   /** uri of the concept the property value belongs to */
   private $uri;
-  /** vocabulary that the concept belongs to */
+  /** id of the vocabulary the concept belongs to */
   private $vocab;
+  /** vocabulary label */
+  private $vocabName;
   /** if the property is a subProperty of a another property */
   private $parentProperty;
   private $submembers;
 
-  public function __construct($prop, $uri, $vocab, $lang, $label, $exvocab = null, $parent = null)
+  public function __construct($prop, $uri, $vocab, $lang, $label, $exvocab = null, $parent = null, $vocabname = null)
   {
     $this->submembers = array();
     $this->lang = $lang;
@@ -611,6 +617,7 @@ class ConceptPropertyValue
     $this->label = $label;
     $this->uri = $uri;
     $this->vocab = $vocab;
+    $this->vocabName = $vocabname;
     $this->parentProperty = $parent;
   }
 
@@ -654,6 +661,11 @@ class ConceptPropertyValue
   public function getVocab()
   {
     return $this->vocab;
+  }
+  
+  public function getVocabName()
+  {
+    return $this->vocabName;
   }
 
   public function addSubMember($type, $label, $uri, $vocab, $lang, $exvocab = null)
