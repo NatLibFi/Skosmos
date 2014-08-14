@@ -179,10 +179,25 @@ class Concept extends VocabularyDataObject
             $exvocab = $exvoc->getId();
           }
           if (!$exvoc || !$label) {
-            $response = $this->model->getLabelFromUri($exuri);
+            $response = $this->model->getResourceFromUri($exuri);
             if ($response) {
-              $label = $response->getValue($lang);
-              $label_lang = $response->getLang();
+              $pref_label = $response->get('skos:prefLabel');
+              $label = $pref_label->getValue();
+              $label_lang = $pref_label->getLang();
+              $scheme = $response->get('skos:inScheme');
+              $schemeLabel = null;
+              if($scheme) {
+                $schemeResource = $this->model->getResourceFromUri($scheme->getUri());
+                $schemeLabel = $schemeResource->get('rdfs:label')->getValue();
+              }
+              $prop_info = $this->getPropertyParam($val, $prop);
+              $properties[$prop_info['prop']][] = new ConceptPropertyValue(
+                $prop_info['prop'],
+                $prop_info['concept_uri'],
+                $schemeLabel,
+                $label_lang,
+                $label
+              );
             }
             if (!$label) {
               $label = $val->shorten() ? $val->shorten() : $exuri;
@@ -199,13 +214,7 @@ class Concept extends VocabularyDataObject
           $prop_info['lang'] = $label_lang;
           $prop_info['exvocab'] = $exvocab;
         }
-        if ($prop_info['label'] !== null && strpos($prop_info['concept_uri'], 'id.loc.gov') !== false) {
-          $properties[$prop_info['prop']][] = new ConceptPropertyValue(
-            $prop_info['prop'], $prop_info['concept_uri'], "lcsh",
-            $prop_info['lang'], $prop_info['label'], $prop_info['exvocab']
-          );
-        }
-        else if ($prop_info['label'] !== null) {
+        if ($prop_info['label'] !== null) {
           $properties[$prop_info['prop']][] = new ConceptPropertyValue(
             $prop_info['prop'],
             $prop_info['concept_uri'],

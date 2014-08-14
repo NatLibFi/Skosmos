@@ -425,13 +425,12 @@ class Model
     return null;
   }
 
-  public function getLabelFromUri($uri) {
+  public function getResourceFromUri($uri) {
     try {
       EasyRdf_Format::unregister('json'); 
       $client = EasyRdf_Graph::newAndLoad($uri);
       $resource = $client->resource($uri);
-      $label = $resource->get('skos:prefLabel');
-      return $label;
+      return $resource;
     } catch (Exception $e) {
     }
     return null;
