@@ -208,7 +208,6 @@ class Concept extends VocabularyDataObject
                 null,
                 $schemeLabel
               );
-              continue;
             }
             if (!$label) {
               $label = $val->shorten() ? $val->shorten() : $exuri;
