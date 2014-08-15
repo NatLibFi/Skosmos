@@ -49,13 +49,9 @@
         </ul>
       </div>
       {% if alpha_results or vocab_stats or letter %}
-        {% set letters = 'A'..'Z' %} {# it would be nicer to do this according to the actual appearances of letters i.e. only letters with results should be shown #}
-        {% set rest = ['Å', 'Ä', 'Ö', '!*'] %}
         <ul class="pagination">
-        {% for letter in [letters, rest, ['0-9']] %} {# looping through all letters #}
-          {%  for letter2 in letter %}
-            <li{% if search_letter == letter2 %} class="active"{% endif %}><a href="{{ path_fix }}{{ vocab_id }}/{{ lang }}/index/{{ letter2 }}">{{ letter2 }}</a></li>
-          {% endfor %}
+        {% for letter in letters %} {# looping through all letters #}
+          <li{% if search_letter == letter %} class="active"{% endif %}><a href="{{ path_fix }}{{ vocab_id }}/{{ lang }}/index/{{ letter }}">{{ letter }}</a></li>
         {% endfor %}
         </ul>
       {% endif %}

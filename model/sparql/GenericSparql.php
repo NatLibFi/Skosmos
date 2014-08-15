@@ -430,6 +430,13 @@ EOQ;
     // extra conditions for label language, if specified
     $labelcond_match = ($search_lang) ? "&& langMatches(lang(?match), '$search_lang')" : "";
     $labelcond_label = ($lang) ? "langMatches(lang(?label), '$lang')" : "langMatches(lang(?label), lang(?match))";
+    // if search language and UI/display language differ, must also consider case where there is no prefLabel in
+    // the display language; in that case, should use the label with the same language as the matched label
+    $labelcond_fallback = ($search_lang != $lang) ? 
+      "OPTIONAL { # fallback in case previous OPTIONAL block gives no labels
+       ?s skos:prefLabel ?label .
+       FILTER (langMatches(lang(?label), lang(?match)))
+       }" : "";
 
     // extra conditions for parent and group, if specified
     $parentcond = ($parent) ? "?s skos:broader+ <$parent> ." : "";
@@ -456,42 +463,30 @@ EOQ;
     while (strpos($term, '**') !== false)
       $term = str_replace('**', '*', $term); // removes futile asterisks
 
-    $use_regex = false;
-
-    if ($term == '0-9*') {
-      $term = '[0-9].*';
-      $use_regex = true;
-    } elseif ($term == '!*') {
-      $term = '[^\\\\p{L}\\\\p{N}].*';
-      $use_regex = true;
-    }
-
     # make text query clause
-    $textcond = $use_regex ? '# regex in use' : $this->createTextQueryCondition($term);
+    $textcond = $this->createTextQueryCondition($term);
 
     # use appropriate matching function depending on query type: =, strstarts, strends or full regex
-    if (!$use_regex && preg_match('/^[^\*]+$/', $term)) { // exact query
+    if (preg_match('/^[^\*]+$/', $term)) { // exact query
       $term = str_replace('\\', '\\\\', $term); // quote slashes
       $term = str_replace('\'', '\\\'', mb_strtolower($term, 'UTF-8')); // make lowercase and escape single quotes
       $filtercond = "lcase(str(?match)) = '$term'";
-    } elseif (!$use_regex && preg_match('/^[^\*]+\*$/', $term)) { // prefix query
+    } elseif (preg_match('/^[^\*]+\*$/', $term)) { // prefix query
       $term = substr($term, 0, -1); // remove the final asterisk
       $term = str_replace('\\', '\\\\', $term); // quote slashes
       $term = str_replace('\'', '\\\'', mb_strtolower($term, 'UTF-8')); // make lowercase and escape single quotes
       $filtercond = "strstarts(lcase(str(?match)), '$term')" . // avoid matches on both altLabel and prefLabel
                     " && !(?match != ?label && strstarts(lcase(str(?label)), '$term'))";
-    } elseif (!$use_regex && preg_match('/^\*[^\*]+$/', $term)) { // suffix query
+    } elseif (preg_match('/^\*[^\*]+$/', $term)) { // suffix query
       $term = substr($term, 1); // remove the preceding asterisk
       $term = str_replace('\\', '\\\\', $term); // quote slashes
       $term = str_replace('\'', '\\\'', mb_strtolower($term, 'UTF-8')); // make lowercase and escape single quotes
       $filtercond = "strends(lcase(str(?match)), '$term')";
     } else { // too complicated - have to use a regex
-      if (!$use_regex) { # not already formatted as a regex
-        # make sure regex metacharacters are not passed through
-        $term = str_replace('\\', '\\\\', preg_quote($term));
-        $term = str_replace('\\\\*', '.*', $term); // convert asterisk to regex syntax
-        $term = str_replace('\'', '\\\'', $term); // ensure single quotes are quoted
-      }
+      # make sure regex metacharacters are not passed through
+      $term = str_replace('\\', '\\\\', preg_quote($term));
+      $term = str_replace('\\\\*', '.*', $term); // convert asterisk to regex syntax
+      $term = str_replace('\'', '\\\'', $term); // ensure single quotes are quoted
       $filtercond = "regex(str(?match), '^$term$', 'i')";
     }
 
@@ -501,40 +496,38 @@ EOQ;
     $graph_text = $this->isDefaultEndpoint() ? "$textcond \n $gc {" : "$gc { $textcond \n";
 
     $query = <<<EOQ
-      SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph (GROUP_CONCAT(?type) as ?types) WHERE {
-        $graph_text
-          { ?s rdf:type <$type> } $extratypes
-          {
-           $parentcond
-           $groupcond
-           ?s rdf:type ?type .
-           ?s ?prop ?match .
-           FILTER (
-                   $filtercond
-                   $labelcond_match
-                  )
-           OPTIONAL {
-             ?s skos:prefLabel ?label .
-             FILTER ($labelcond_label)
-           }
-           OPTIONAL { # fallback in case previous OPTIONAL block gives no labels
-             ?s skos:prefLabel ?label .
-             FILTER (langMatches(lang(?label), lang(?match)))
-           }
-          }
-          FILTER NOT EXISTS {?s owl:deprecated true }
-        }
-        BIND(IF(?prop = skos:prefLabel && ?match != ?label, ?match, ?unbound) as ?plabel)
-        BIND(IF(?prop = skos:altLabel, ?match, ?unbound) as ?alabel)
-        BIND(IF(?prop = skos:hiddenLabel, ?match, ?unbound) as ?hlabel)
-        $values_prop
+SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph (GROUP_CONCAT(?type) as ?types)
+WHERE {
+  $graph_text
+    { ?s rdf:type <$type> } $extratypes
+    {
+      $parentcond
+      $groupcond
+      ?s rdf:type ?type .
+      ?s ?prop ?match .
+      FILTER (
+        $filtercond
+        $labelcond_match
+      )
+      OPTIONAL {
+       ?s skos:prefLabel ?label .
+       FILTER ($labelcond_label)
       }
+      $labelcond_fallback
+    }
+    FILTER NOT EXISTS { ?s owl:deprecated true }
+  }
+  BIND(IF(?prop = skos:prefLabel && ?match != ?label, ?match, ?unbound) as ?plabel)
+  BIND(IF(?prop = skos:altLabel, ?match, ?unbound) as ?alabel)
+  BIND(IF(?prop = skos:hiddenLabel, ?match, ?unbound) as ?hlabel)
+  $values_prop
+}
 
-      GROUP BY ?match ?s ?label ?plabel ?alabel ?hlabel ?graph ?prop
-      ORDER BY lcase(str(?match)) lang(?match) $orderextra
-      $limit
-      $offset
-      $values_graph
+GROUP BY ?match ?s ?label ?plabel ?alabel ?hlabel ?graph ?prop
+ORDER BY lcase(str(?match)) lang(?match) $orderextra
+$limit
+$offset
+$values_graph
 EOQ;
 
     $results = $this->client->query($query);
@@ -578,6 +571,118 @@ EOQ;
       $ret[] = $hit;
     }
 
+    return $ret;
+  }
+
+  /**
+   * Query for concepts with a term starting with the given letter. Also special classes '0-9' (digits),
+   * '*!' (special characters) and '*' (everything) are accepted.
+   * @param $letter the letter (or special class) to search for
+   * @param $lang language of labels
+   */
+  public function queryConceptsAlphabetical($letter, $lang) {
+    $gc = $this->graphClause;
+
+    $use_regex = false;
+
+    if ($letter == '*') {
+      $letter = '.*';
+      $use_regex = true;
+    } elseif ($letter == '0-9') {
+      $letter = '[0-9].*';
+      $use_regex = true;
+    } elseif ($letter == '!*') {
+      $letter = '[^\\\\p{L}\\\\p{N}].*';
+      $use_regex = true;
+    }
+
+    # make text query clause
+    $textcond = $use_regex ? '# regex in use' : $this->createTextQueryCondition($letter . '*');
+    $lcletter = mb_strtolower($letter, 'UTF-8'); // convert to lower case, UTF-8 safe
+    if ($use_regex) {
+      $filtercond = "regex(str(?match), '^$letter$', 'i')";
+    } else {
+      $filtercond = "strstarts(lcase(str(?match)), '$lcletter')";
+    }
+
+    $query = <<<EOQ
+SELECT ?s ?label ?alabel
+WHERE {
+  $gc {
+    $textcond
+    FILTER (
+      $filtercond
+      && langMatches(lang(?match), '$lang')
+    )
+    ?s a skos:Concept .
+
+    {
+      {
+        ?s skos:prefLabel ?match .
+        BIND(?match as ?label)
+      }
+      UNION
+      {
+        ?s skos:altLabel ?match .
+        ?s skos:prefLabel ?label .
+        FILTER (langMatches(lang(?label), '$lang'))
+        BIND(?match as ?alabel)
+      }
+    }
+    FILTER NOT EXISTS { ?s owl:deprecated true }
+  }
+}
+
+GROUP BY ?match ?s ?label ?alabel ?prop
+ORDER BY lcase(str(?match))
+EOQ;
+
+    $results = $this->client->query($query);
+    $ret = array();
+
+    foreach ($results as $row) {
+      if (!isset($row->s)) continue; // don't break if query returns a single dummy result
+
+      $hit = array();
+      $hit['uri'] = $row->s->getUri();
+
+      $hit['localname'] = $row->s->localName();
+
+      $hit['prefLabel'] = $row->label->getValue();
+      $hit['lang'] = $row->label->getLang();
+
+      if (isset($row->alabel)) {
+        $hit['altLabel'] = $row->alabel->getValue();
+        $hit['lang'] = $row->alabel->getLang();
+      }
+
+      $ret[] = $hit;
+    }
+
+    return $ret;
+  }
+
+  /**
+   * Query for the first characters (letter or otherwise) of the labels in the particular language.
+   * @param string $lang language
+   * @return array array of characters
+   */
+   
+  public function queryFirstCharacters($lang) {
+    $gc = $this->graphClause;
+    $query = <<<EOQ
+      SELECT DISTINCT (substr(ucase(?label), 1, 1) as ?l) WHERE {
+        $gc {
+          ?c skos:prefLabel ?label .
+          FILTER(langMatches(lang(?label), '$lang'))
+        }
+      }
+EOQ;
+    $result = $this->client->query($query);
+    $ret = array();
+    foreach ($result as $row) {
+      $ret[] = $row->l->getValue();
+    } 
     return $ret;
   }
 

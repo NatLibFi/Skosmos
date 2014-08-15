@@ -191,8 +191,6 @@ class Model
     $term = trim($term);
     if ($term == "" || $term == "*")
       return array(); // don't even try to search for empty prefix
-    else if ($term == "FullAlphabeticalIndex")
-      $term = "*";
 
     // make vocids an array in every case
     if ($vocids === null) $vocids = array();
@@ -425,6 +423,28 @@ class Model
 
     // not found
     return null;
+  }
+
+  public function getResourceFromUri($uri) {
+    EasyRdf_Format::unregister('json'); 
+    $resource = null;
+    try {
+      // using apc cache for the resource if available
+      if (function_exists('apc_store') && function_exists('apc_fetch')) {
+        $key = 'fetch: ' . $uri;
+        $this->resource = apc_fetch($key);
+        if ($this->resource === null || $this->resource === FALSE) { // was not found in cache
+          $client = EasyRdf_Graph::newAndLoad($uri);
+          $this->resource = $client->resource($uri);
+          apc_store($key, $resource);
+        }
+      } else { // APC not available, parse on every request
+        $client = EasyRdf_Graph::newAndLoad($uri);
+        $this->resource = $client->resource($uri);
+      }
+    } catch (Exception $e) {
+    }
+    return $this->resource;
   }
 
   /**

@@ -643,6 +643,15 @@ div#sidebar-grey > div > div > form.search-options {
   top: 10px;
 }
 
+.search-options .mCSB_container > li > a > .radio { 
+  padding-left: 25px;
+  margin: 0;
+}
+
+.search-options .mCSB_container > li > a > label {
+  font-weight: 400;
+}
+
 form.search-options > .input-group > .form-control {
   width: 280px !important;
 }
@@ -796,6 +805,21 @@ tr {
 .concept-main {
   margin: 0 15px 15px 15px;
   padding-top: 15px;
+}
+
+.appendix-values.table {
+  background-color: transparent !important;
+  margin-bottom: 0;
+}
+
+.appendix-values.table > tbody > tr > td {
+  padding: 0 !important;
+  border-bottom: 0;
+}
+
+.appendix-vocab-label {
+  font-size: 12px;
+  line-height: 21px;
 }
 
 .concept-main > table, .concept-appendix > table {
@@ -1132,33 +1156,12 @@ textarea:focus, input[type="text"]:focus {
   width: 280px;
 }
 
-/* jQuery autocomplete
- *****************************************/
-.ui-autocomplete, .ui-autocomplete * {
-  border-radius: 0;
-  background-color: #fff !important;
+.vocab, .type {
+  font-size: 12px !important;
 }
 
-.ui-autocomplete {
-  max-height: 300px;
-  max-width: 280px;
-  overflow: auto;
-  border: 2px solid #ccc;
-  border: 2px solid rgba(0, 0, 0, 0.2);
-}
-
-.ui-menu-item {
-  border-bottom: 1px solid #ccc;
-}
-
-.ui-menu-item:last-of-type {
-  border-bottom: none;
-}
-
-.ui-state-focus {
-  background: none !important;
-  background-color: #EEEEEE !important;
-  border: 1px solid #ccc !important;
+.type {
+  float: right;
 }
 
 /* jsTree customization
@@ -1497,7 +1500,15 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   .input-group {
-    max-width: 300px !important;
+    max-width: 350px !important;
+  }
+  
+  .frontpage-logo .input-group {
+    max-width: 450px !important;
+  }
+  
+  .frontpage-logo .tt-dropdown-menu {
+    width: 295px !important;
   }
 
   #navigation > a {
@@ -1647,6 +1658,11 @@ body, .versal, h1, h2, p, .versal-bold {
 
   .search-result > div > span.uri-input-box {
     font-size: 14px !important;
+  }
+  
+  .appendix-vocab-label {
+    font-size: 14px !important;
+    line-height: 23px;
   }
 
   .search-options > div.input-group > .twitter-typeahead, .search-options > div.input-group > .twitter-typeahead > .tt-dropdown-menu {

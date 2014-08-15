@@ -113,7 +113,7 @@ class Concept extends VocabularyDataObject
   }
   
   /**
-   * Returns the vocabulary identifier string or null if that is not available.
+   * Returns the vocabulary shortname string or id if that is not available.
    * @return string
    */
   public function getShortName()
@@ -169,6 +169,7 @@ class Concept extends VocabularyDataObject
         $label = null;
         $label_lang = null;
         $exvocab = null;
+        $voclabel = null;
 
         if ($prop === 'skos:exactMatch' || $prop === 'skos:narrowMatch' || $prop === 'skos:broadMatch' || $prop === 'owl:sameAs' || $prop === 'skos:closeMatch') {
           $exuri = $val->getUri();
@@ -177,11 +178,42 @@ class Concept extends VocabularyDataObject
             $label_lang = $exvoc->getDefaultLanguage();
             $label = $this->getExternalLabel($exvoc, $exuri, $label_lang);
             $exvocab = $exvoc->getId();
+            $voclabel = $exvoc->getTitle();
           }
           if (!$exvoc || !$label) {
-            $label = $val->shorten() ? $val->shorten() : $exuri;
-            $label_lang = $this->lang;
-            $exvocab = null;
+            $response = $this->model->getResourceFromUri($exuri);
+            if ($response) {
+              $pref_label = $response->label();
+              if($pref_label) {
+                $label = $pref_label->getValue();
+                $label_lang = $pref_label->getLang();
+              }
+              $scheme = $response->get('skos:inScheme');
+              $schemeLabel = null;
+              if($scheme) {
+                $schemeResource = $this->model->getResourceFromUri($scheme->getUri());
+                if ($schemeResource)
+                  $schemeLabel = $schemeResource->label();
+                if ($schemeLabel)
+                  $schemeLabel = $schemeLabel->getValue();
+              }
+              $prop_info = $this->getPropertyParam($val, $prop);
+              $properties[$prop_info['prop']][] = new ConceptPropertyValue(
+                $prop_info['prop'],
+                $prop_info['concept_uri'],
+                $prop_info['vocab'],
+                $label_lang,
+                $label,
+                null,
+                null,
+                $schemeLabel
+              );
+            }
+            if (!$label) {
+              $label = $val->shorten() ? $val->shorten() : $exuri;
+              $label_lang = $this->lang;
+              $exvocab = null;
+            }
           }
         } else {
           break;
@@ -192,14 +224,16 @@ class Concept extends VocabularyDataObject
           $prop_info['lang'] = $label_lang;
           $prop_info['exvocab'] = $exvocab;
         }
-        if ($prop_info['label'] !== null) {
+        if ($prop_info['label'] !== null && $voclabel !== null) {
           $properties[$prop_info['prop']][] = new ConceptPropertyValue(
             $prop_info['prop'],
             $prop_info['concept_uri'],
             $prop_info['vocab'],
             $prop_info['lang'],
             $prop_info['label'],
-            $prop_info['exvocab']
+            $prop_info['exvocab'],
+            null,
+            $voclabel
           );
         }
       }
@@ -216,6 +250,14 @@ class Concept extends VocabularyDataObject
 
     $ret = array();
     foreach ($properties as $prop => $values) {
+      // sorting the values by vocabulary name for consistency.
+      $sortedvalues = array();
+      $fixed;
+      foreach ($values as $value) {
+        $sortedvalues[$value->getVocabName() . $value] = $value; 
+      }
+      ksort($sortedvalues);
+      $values = $sortedvalues;
       $propres = new EasyRdf_Resource($prop, $this->graph);
       $proplabel = $propres->label($this->lang); // current language
       if (!$proplabel) $proplabel = $propres->label(); // any language
@@ -566,13 +608,15 @@ class ConceptPropertyValue
   private $label;
   /** uri of the concept the property value belongs to */
   private $uri;
-  /** vocabulary that the concept belongs to */
+  /** id of the vocabulary the concept belongs to */
   private $vocab;
+  /** vocabulary label */
+  private $vocabName;
   /** if the property is a subProperty of a another property */
   private $parentProperty;
   private $submembers;
 
-  public function __construct($prop, $uri, $vocab, $lang, $label, $exvocab = null, $parent = null)
+  public function __construct($prop, $uri, $vocab, $lang, $label, $exvocab = null, $parent = null, $vocabname = null)
   {
     $this->submembers = array();
     $this->lang = $lang;
@@ -581,6 +625,7 @@ class ConceptPropertyValue
     $this->label = $label;
     $this->uri = $uri;
     $this->vocab = $vocab;
+    $this->vocabName = $vocabname;
     $this->parentProperty = $parent;
   }
 
@@ -624,6 +669,11 @@ class ConceptPropertyValue
   public function getVocab()
   {
     return $this->vocab;
+  }
+  
+  public function getVocabName()
+  {
+    return $this->vocabName;
   }
 
   public function addSubMember($type, $label, $uri, $vocab, $lang, $exvocab = null)
