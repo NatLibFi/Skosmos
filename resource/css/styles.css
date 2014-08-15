@@ -797,6 +797,11 @@ tr {
   border-bottom: 0;
 }
 
+.appendix-vocab-label {
+  font-size: 12px;
+  line-height: 21px;
+}
+
 .concept-main > table, .concept-appendix > table {
   margin-bottom: 0;
 }
@@ -1633,6 +1638,11 @@ body, .versal, h1, h2, p, .versal-bold {
 
   .search-result > div > span.uri-input-box {
     font-size: 14px !important;
+  }
+  
+  .appendix-vocab-label {
+    font-size: 14px !important;
+    line-height: 23px;
   }
 
   .search-options > div.input-group > .twitter-typeahead, .search-options > div.input-group > .twitter-typeahead > .tt-dropdown-menu {
