@@ -433,7 +433,7 @@ class Model
       if (function_exists('apc_store') && function_exists('apc_fetch')) {
         $key = 'fetch: ' . $uri;
         $this->resource = apc_fetch($key);
-        if ($this->graph === FALSE) { // was not found in cache
+        if ($this->resource === false) { // was not found in cache
           $client = EasyRdf_Graph::newAndLoad($uri);
           $this->resource = $client->resource($uri);
           apc_store($key, $resource);
