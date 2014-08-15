@@ -183,7 +183,7 @@ class Concept extends VocabularyDataObject
           if (!$exvoc || !$label) {
             $response = $this->model->getResourceFromUri($exuri);
             if ($response) {
-              $pref_label = $response->get('skos:prefLabel');
+              $pref_label = $response->label();
               if($pref_label) {
                 $label = $pref_label->getValue();
                 $label_lang = $pref_label->getLang();
@@ -192,7 +192,8 @@ class Concept extends VocabularyDataObject
               $schemeLabel = null;
               if($scheme) {
                 $schemeResource = $this->model->getResourceFromUri($scheme->getUri());
-                $schemeLabel = $schemeResource->get('rdfs:label');
+                if ($schemeResource)
+                  $schemeLabel = $schemeResource->label();
                 if ($schemeLabel)
                   $schemeLabel = $schemeLabel->getValue();
               }
