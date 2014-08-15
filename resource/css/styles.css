@@ -782,13 +782,19 @@ tr {
   padding: 15px;
 }
 
-.vocab-label {
-  float: right;
-}
-
 .concept-main {
   margin: 0 15px 15px 15px;
   padding-top: 15px;
+}
+
+.appendix-values.table {
+  background-color: transparent !important;
+  margin-bottom: 0;
+}
+
+.appendix-values.table > tbody > tr > td {
+  padding: 0 !important;
+  border-bottom: 0;
 }
 
 .concept-main > table, .concept-appendix > table {
