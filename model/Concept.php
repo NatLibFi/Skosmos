@@ -224,7 +224,7 @@ class Concept extends VocabularyDataObject
           $prop_info['lang'] = $label_lang;
           $prop_info['exvocab'] = $exvocab;
         }
-        if ($prop_info['label'] !== null) {
+        if ($prop_info['label'] !== null && $voclabel !== null) {
           $properties[$prop_info['prop']][] = new ConceptPropertyValue(
             $prop_info['prop'],
             $prop_info['concept_uri'],
@@ -254,7 +254,7 @@ class Concept extends VocabularyDataObject
       $sortedvalues = array();
       $fixed;
       foreach ($values as $value) {
-        $sortedvalues[$value->getExVocab() . $value] = $value; 
+        $sortedvalues[$value->getVocabName() . $value] = $value; 
       }
       ksort($sortedvalues);
       $values = $sortedvalues;
