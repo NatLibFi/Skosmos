@@ -184,13 +184,17 @@ class Concept extends VocabularyDataObject
             $response = $this->model->getResourceFromUri($exuri);
             if ($response) {
               $pref_label = $response->get('skos:prefLabel');
-              $label = $pref_label->getValue();
-              $label_lang = $pref_label->getLang();
+              if($pref_label) {
+                $label = $pref_label->getValue();
+                $label_lang = $pref_label->getLang();
+              }
               $scheme = $response->get('skos:inScheme');
               $schemeLabel = null;
               if($scheme) {
                 $schemeResource = $this->model->getResourceFromUri($scheme->getUri());
-                $schemeLabel = $schemeResource->get('rdfs:label')->getValue();
+                $schemeLabel = $schemeResource->get('rdfs:label');
+                if ($schemeLabel)
+                  $schemeLabel = $schemeLabel->getValue();
               }
               $prop_info = $this->getPropertyParam($val, $prop);
               $properties[$prop_info['prop']][] = new ConceptPropertyValue(
@@ -203,6 +207,7 @@ class Concept extends VocabularyDataObject
                 null,
                 $schemeLabel
               );
+              continue;
             }
             if (!$label) {
               $label = $val->shorten() ? $val->shorten() : $exuri;
