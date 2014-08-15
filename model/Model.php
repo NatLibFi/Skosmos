@@ -426,10 +426,22 @@ class Model
   }
 
   public function getResourceFromUri($uri) {
+    EasyRdf_Format::unregister('json'); 
     try {
-      EasyRdf_Format::unregister('json'); 
-      $client = EasyRdf_Graph::newAndLoad($uri);
-      $resource = $client->resource($uri);
+      $resource;
+      // using apc cache for the resource if available
+      if (function_exists('apc_store') && function_exists('apc_fetch')) {
+        $key = 'fetch: ' . $uri;
+        $this->graph = apc_fetch($key);
+        if ($this->graph === FALSE) { // was not found in cache
+          $client = EasyRdf_Graph::newAndLoad($uri);
+          $resource = $client->resource($uri);
+          apc_store($key, $resource);
+        }
+      } else { // APC not available, parse on every request
+        $client = EasyRdf_Graph::newAndLoad($uri);
+        $resource = $client->resource($uri);
+      }
       return $resource;
     } catch (Exception $e) {
     }
