@@ -218,10 +218,21 @@ section {
 }
 
 .search-vocab-text {
+  margin: 4px;
   display: inline-block !important;
   float: left;
-  text-align: middle;
-  margin: 15px 4px 0 0;
+  text-align: top;
+}
+
+.search-vocab-text > p {
+  color: #fff;
+  margin: 0;
+}
+
+.search-hint {
+  display: inline-block !important;
+  float: left;
+  text-align: bottom;
   border-bottom: 2px dotted #cfcfcf;
 }
 

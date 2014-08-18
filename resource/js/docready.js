@@ -468,7 +468,7 @@ $(function() { // DOCUMENT READY
     }); 
   });
   
-  $( ".search-vocab-text" ).qtip({ 
+  $( ".search-hint" ).qtip({ 
     position: { my: 'top center', at: 'bottom center' },
     style: { classes: 'qtip-tipsy qtip-skosmos' } 
   });
