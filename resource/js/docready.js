@@ -71,6 +71,10 @@ $(function() { // DOCUMENT READY
    * concept at vertical center of the container. Each concept needs 18px height.
    */
   $(document).ajaxComplete(function(event, xhr, settings) {
+    $('.property-click').qtip({ 
+      position: { my: 'top left', at: 'bottom right' },
+      style: { classes: 'qtip-tipsy qtip-skosmos' } 
+    });
     if (settings.url.indexOf('groups') !== -1 || settings.url.indexOf('index') !== -1) {
       $('.sidebar-grey').removeClass(function(index, classes) {
         var elementClasses = classes.split(' ');
@@ -468,12 +472,12 @@ $(function() { // DOCUMENT READY
     }); 
   });
   
-  $( ".search-hint" ).qtip({ 
+  $('.search-hint').qtip({ 
     position: { my: 'top center', at: 'bottom center' },
     style: { classes: 'qtip-tipsy qtip-skosmos' } 
   });
   
-  $( ".property-click" ).qtip({ 
+  $('.property-click').qtip({ 
     position: { my: 'top left', at: 'bottom right' },
     style: { classes: 'qtip-tipsy qtip-skosmos' } 
   });
