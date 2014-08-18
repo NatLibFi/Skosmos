@@ -14,7 +14,7 @@
 <div class="header-float">
 {% if vocab_id != 'About' and vocab_id != 'Feedback' %}
   
-  {% if not front_page and global_search is not defined %}<div class="search-vocab-text"><p>{% trans "Search within this vocabulary:" %}</p><p class="search-hint" title="{% trans "search_example_text" %}">esim. *eläimet{#% trans "search_example_text" %#}</p></div>{% endif %}
+  {% if not front_page and global_search is not defined %}<div class="search-vocab-text"><p>{% trans "Search within this vocabulary:" %}</p><p class="search-hint" title="{% trans "search_example_text" %}">{% trans "short_search_example" %}</p></div>{% endif %}
   {% if vocab_list is defined %}
     <select class="multiselect" multiple="multiple">
     {% for vocabClassName,vocabArray in vocab_list %}

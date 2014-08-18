@@ -218,9 +218,10 @@ section {
 }
 
 .search-vocab-text {
-  margin: 4px;
+  margin: 5px;
   display: inline-block !important;
   float: left;
+  line-height: 18px;
   text-align: top;
 }
 
