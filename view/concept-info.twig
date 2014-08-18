@@ -118,6 +118,7 @@
           <span class="help-box property-click" title="{% trans "helper_help" %}"><img class='property-hover' src="{{ path_fix }}resource/pics/info.gif"><p>{% trans "Help" %}</p></span>
           </div>
           {# umpilisäke #}
+          {% if concept.mappingProperties %}
           <div class="concept-appendix">
             <table class="table search-results-property-table {% if concept.type == 'skosext:DeprecatedConcept' %} deprecated{% endif %}">
             {% for property in concept.mappingProperties %} {# loop through ConceptProperty objects #}
@@ -145,6 +146,7 @@
             {% endfor %}
             </table>
           </div>
+          {% endif %}
         </div>
         {% endfor %}
 
