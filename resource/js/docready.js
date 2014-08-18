@@ -478,7 +478,7 @@ $(function() { // DOCUMENT READY
   });
   
   $('.help-box').qtip({ 
-    position: { my: 'top center', at: 'top right' },
+    position: { my: 'bottom left', at: 'top center' },
     style: { classes: 'qtip-tipsy qtip-skosmos' } 
   });
   
