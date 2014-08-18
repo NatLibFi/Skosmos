@@ -189,6 +189,7 @@ section {
 
 .navbar-form {
   display: inline-block;
+  float: right;
   padding: 0 !important;
   border: 0 !important;
   margin: 5px 0 !important;
@@ -220,7 +221,7 @@ section {
 .search-vocab-text {
   display: inline-block !important;
   float: left;
-  line-height: 52px;
+  line-height: 50px;
   margin-right: 4px;
 }
 
@@ -977,6 +978,10 @@ tr.replaced-by > td > ul > li > a {
   width: 25px;
 }
 
+.pagination > li:last-child > a {
+  width: auto;
+}
+
 .pagination { 
   background-color: #F6F7F8;
   border-radius: 0 !important;
@@ -1037,17 +1042,6 @@ ul.nav-tabs > li {
   margin-right: 150px;
 }
 
-/* Autocomplete stuff 
- *****************************************/
-textarea:focus, input[type="text"]:focus {   
-  box-shadow: 0 0 0;
-  outline: 0 none;
-}
-
-.autocomplete-vocab {
-  float: right;
-}
-
 /* typeahead.js
  ***********************************/
 
@@ -1079,7 +1073,7 @@ textarea:focus, input[type="text"]:focus {
   width: 200px;
   max-height:302px;
   overflow-y: auto;
-  background-color: #fff;
+  background-color: #F9F9F9;
   border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 0 !important;
@@ -1104,6 +1098,7 @@ textarea:focus, input[type="text"]:focus {
 }
 
 .tt-suggestion {
+  cursor: pointer;
   min-height: 50px;
   padding: 2px 8px;
   font-size: 14px !important;
@@ -1142,6 +1137,10 @@ textarea:focus, input[type="text"]:focus {
 
 .type {
   float: right;
+}
+
+.matched-label {
+  text-decoration: line-through;
 }
 
 /* jsTree customization
