@@ -1526,8 +1526,7 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   #vocabulary-list {
-    position: absolute;
-    left: 375px;
+    margin-left: 20px;
     width: auto;
     width: calc(100% - 375px) !important;
   }
@@ -1623,7 +1622,6 @@ body, .versal, h1, h2, p, .versal-bold {
 
   #vocabulary-list {
     position: relative;
-    left: 20px;
     display: inline-block;
     width: 580px !important;
   }
