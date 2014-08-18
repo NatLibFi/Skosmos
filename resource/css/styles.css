@@ -1049,7 +1049,6 @@ ul.nav-tabs > li {
 .tt-query,
 .tt-hint {
   width: 396px;
-  height: 40px;
   font-size: 14px;
   line-height: 20px;
   border: 2px solid #ccc;
@@ -1092,18 +1091,24 @@ ul.nav-tabs > li {
   padding-right: 0;
 }
 
+.tt-suggestion:last-of-type {
+  border-bottom: none;
+}
+
 .autocomplete-no-results {
-  line-height: 40px;
   margin: 0 0 0 6px !important;
 }
 
 .tt-suggestion {
   cursor: pointer;
-  min-height: 50px;
   padding: 2px 8px;
   font-size: 14px !important;
   line-height: 20px;
   border-bottom: 1px solid #cccccc;
+}
+
+.tt-suggestion:last-of-type {
+  border-bottom: none !important;
 }
 
 .tt-suggestion.tt-cursor {
@@ -1111,7 +1116,7 @@ ul.nav-tabs > li {
 }
 
 .twitter-typeahead > .form-control {
-  height: 40px;
+  height: 30px;
   border-radius: 0;
 }
 

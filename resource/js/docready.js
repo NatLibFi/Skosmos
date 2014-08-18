@@ -98,10 +98,7 @@ $(function() { // DOCUMENT READY
     } 
     if (settings.url.indexOf('search') !== -1 && $('.tt-suggestion').length > 6)
       $(".tt-dropdown-menu").mCustomScrollbar({ 
-        scrollInertia: 0, 
-        mouseWheel:{ scrollAmount: 50 },
-        snapAmount: 50,
-        snapOffset: 0
+        scrollInertia: 0
       });
   });
 
@@ -681,6 +678,23 @@ $(function() { // DOCUMENT READY
 
   concepts.initialize();
 
+  var autocompleteTemplate =[
+    '<div class="global-autocomplete">',
+    '{{# if matched }}<p class="matched-label">{{matched}}</p>',
+    '{{# if lang}}<p>({{lang}})</p>{{/if}}<p>\u2192</p>{{/if}}',
+    '<p class="autocomplete-label">{{label}}{{# if lang}}{{# unless matched }}<p>({{lang}})</p>{{/unless}}{{/if}}</p>',
+    '<div class="vocab">{{vocabLabel}}</div></div>',
+  ].join('');
+
+  // more compact template for the autocomplete inside a vocabulary
+  if (vocab.length !== 0) {
+    autocompleteTemplate =[
+    '{{# if matched }}<div><p class="matched-label">{{matched}}</p>',
+    '{{# if lang}}<p>({{lang}})</p>{{/if}}<p>\u2192</p>{{/if}}',
+    '<p class="autocomplete-label">{{label}}{{# if lang}}{{# unless matched }}<p>({{lang}})</p>{{/unless}}{{/if}}</p></div>',
+    ].join('');
+  }
+
   $('#search-field').typeahead({ hint: false, highlight: true, minLength: autocomplete_activation },
     {
       name: 'concept', 
@@ -689,12 +703,7 @@ $(function() { // DOCUMENT READY
         empty: Handlebars.compile([
           '<div><p class="autocomplete-no-results">{{#noresults}}{{/noresults}}</p></div>'
         ].join('')),
-        suggestion: Handlebars.compile([
-          '{{# if matched }}<div><p class="matched-label">{{matched}}</p>',
-          '{{# if lang}}<p>({{lang}})</p>{{/if}}<p>\u2192</p>{{/if}}',
-          '<p class="autocomplete-label">{{label}}{{# if lang}}{{# unless matched }}<p>({{lang}})</p>{{/unless}}{{/if}}</p></div>',
-          '<div class="vocab">{{vocabLabel}}</div>',
-        ].join(''))
+        suggestion: Handlebars.compile(autocompleteTemplate)
       },
       source: concepts.ttAdapter()
   }).on('typeahead:cursorchanged', function($e) {
