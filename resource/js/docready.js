@@ -477,6 +477,11 @@ $(function() { // DOCUMENT READY
     style: { classes: 'qtip-tipsy qtip-skosmos' } 
   });
   
+  $('.help-box').qtip({ 
+    position: { my: 'top center', at: 'top right' },
+    style: { classes: 'qtip-tipsy qtip-skosmos' } 
+  });
+  
   $('.property-click').qtip({ 
     position: { my: 'top left', at: 'bottom right' },
     style: { classes: 'qtip-tipsy qtip-skosmos' } 

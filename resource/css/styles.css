@@ -1009,6 +1009,10 @@ tr.replaced-by > td > ul > li > a {
   width: 25px;
 }
 
+.pagination > li:last-child > a {
+  width: auto;
+}
+
 .pagination { 
   background-color: #F6F7F8;
   border-radius: 0 !important;
