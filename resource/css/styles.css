@@ -177,6 +177,12 @@ section {
 .header-float > .btn-group {
   vertical-align: baseline;
   float: left;
+  margin-left: -150px
+}
+
+.header-float > .btn-group > button {
+  width: 150px;
+  overflow: hidden;
 }
 
 .headerbar-coloured > .header-float > p {
