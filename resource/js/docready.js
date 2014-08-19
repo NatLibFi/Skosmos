@@ -606,6 +606,8 @@ $(function() { // DOCUMENT READY
     return noResultsTranslation;
   });
   
+  var typeLabels;
+
   var concepts = new Bloodhound({
     remote: { 
       url: rest_url + 'search?query=%QUERY*',
@@ -614,6 +616,10 @@ $(function() { // DOCUMENT READY
           var vocabString = $('.frontpage').length ? vocabSelectionString : vocab; 
           var parameters = $.param({'vocab' : vocabString, 'lang' : qlang, 'labellang' : lang});
           settings.url = settings.url + '&' + parameters;
+          if (!typeLabels) {
+            var typeUrl = rest_url + vocabString + '/types';
+            typeLabels = $.getJSON(typeUrl, parameters,function(resp) {console.log(resp);});
+          }
         }
       },
       // changes the response so it can be easily displayed in the handlebars template.
@@ -647,21 +653,12 @@ $(function() { // DOCUMENT READY
   concepts.initialize();
 
   var autocompleteTemplate =[
-    '<div class="global-autocomplete">',
     '{{# if matched }}<p class="matched-label">{{matched}}</p>',
-    '{{# if lang}}<p>({{lang}})</p>{{/if}}<p>\u2192</p>{{/if}}',
+    '{{# if lang}}<p>({{lang}})</p>{{/if}}<span class="versal">\u2192</span>{{/if}}',
     '<p class="autocomplete-label">{{label}}{{# if lang}}{{# unless matched }}<p>({{lang}})</p>{{/unless}}{{/if}}</p>',
-    '<div class="vocab">{{vocabLabel}}</div></div>',
+    '{{# if type }}<span class="concept-type">{{type}}</span>{{/if}}',
+    '<div class="vocab">{{vocabLabel}}</div>',
   ].join('');
-
-  // more compact template for the autocomplete inside a vocabulary
-  if (vocab.length !== 0) {
-    autocompleteTemplate =[
-    '{{# if matched }}<div><p class="matched-label">{{matched}}</p>',
-    '{{# if lang}}<p>({{lang}})</p>{{/if}}<p>\u2192</p>{{/if}}',
-    '<p class="autocomplete-label">{{label}}{{# if lang}}{{# unless matched }}<p>({{lang}})</p>{{/unless}}{{/if}}</p></div>',
-    ].join('');
-  }
 
   $('#search-field').typeahead({ hint: false, highlight: true, minLength: autocomplete_activation },
     {

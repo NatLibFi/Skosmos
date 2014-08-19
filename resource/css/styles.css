@@ -1176,7 +1176,7 @@ ul.nav-tabs > li {
   width: 280px;
 }
 
-.vocab, .type {
+.vocab, .concept-type {
   font-size: 12px !important;
 }
 
@@ -1186,6 +1186,15 @@ ul.nav-tabs > li {
 
 .matched-label {
   text-decoration: line-through;
+}
+
+.tt-suggestion > .concept-type {
+  height: auto;
+  float: right;
+}
+
+.tt-suggestion {
+  overflow: hidden;
 }
 
 /* jsTree customization
