@@ -412,7 +412,7 @@ msgstr "sanastosta"
 
 #: /tmp/cache/53f1a90482d9e/2b/2f/1ce096ed381c7c416eb3bdf53cb7.php:86
 msgid "short_search_example"
-msgstr "esim. kissa"
+msgstr "esim. kissa tai *talous"
 
 #: /tmp/cache/53f1a90482d9e/b7/b8/db5433ea968c6a0d09780d91f529.php:21
 msgid "skos:Collection"

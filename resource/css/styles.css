@@ -222,7 +222,7 @@ section {
   display: inline-block !important;
   float: left;
   line-height: 18px;
-  text-align: top;
+  text-align: right;
 }
 
 .search-vocab-text > p {
@@ -232,7 +232,6 @@ section {
 
 .search-hint {
   display: inline-block !important;
-  float: left;
   text-align: bottom;
   border-bottom: 2px dotted #cfcfcf;
 }

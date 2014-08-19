@@ -402,7 +402,7 @@ msgstr "results for"
 
 #: /tmp/cache/53f1c4a4c808e/2b/2f/1ce096ed381c7c416eb3bdf53cb7.php:84
 msgid "search_example_text"
-msgstr "You can manually insert the truncation symbol (*). For example you could try: *animal or *patent*. If you do not manually insert the truncation symbol the search will automatically be truncated at the end e.g. cat yields the same results as cat*."
+msgstr "For truncation search, please use the symbol * as in *animal or *patent*. For ends of search words, the search will be truncated automatically, even if the truncation symbol is not entered manually: thus, cat will yield the same results as cat*."
 
 #: /tmp/cache/53f1c4a4c808e/0e/21/616815bd3942b86671f42d3ed4b2.php:47
 msgid "selected"
@@ -410,7 +410,7 @@ msgstr "selected"
 
 #: /tmp/cache/53f1c4a4c808e/2b/2f/1ce096ed381c7c416eb3bdf53cb7.php:86
 msgid "short_search_example"
-msgstr "e.g. cat"
+msgstr "e.g. cat or *economy"
 
 #: /tmp/cache/53f1c4a4c808e/b7/b8/db5433ea968c6a0d09780d91f529.php:21
 msgid "skos:Collection"
