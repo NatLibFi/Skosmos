@@ -177,6 +177,12 @@ section {
 .header-float > .btn-group {
   vertical-align: baseline;
   float: left;
+  margin-left: -150px
+}
+
+.header-float > .btn-group > button {
+  width: 150px;
+  overflow: hidden;
 }
 
 .headerbar-coloured > .header-float > p {
@@ -189,6 +195,7 @@ section {
 
 .navbar-form {
   display: inline-block;
+  float: right;
   padding: 0 !important;
   border: 0 !important;
   margin: 5px 0 !important;
@@ -242,6 +249,8 @@ section {
 
 #example > button {
   color: #000 !important;
+  line-height: 50px;
+  margin-right: 4px;
 }
 
 .search-count {
@@ -344,6 +353,7 @@ section {
 }
 
 .qtip-skosmos {
+  background-color: #1E1E1E !important; 
   border-radius: 0 !important;
   margin-top: 2px;
 }
@@ -1072,17 +1082,6 @@ ul.nav-tabs > li {
   margin-right: 150px;
 }
 
-/* Autocomplete stuff 
- *****************************************/
-textarea:focus, input[type="text"]:focus {   
-  box-shadow: 0 0 0;
-  outline: 0 none;
-}
-
-.autocomplete-vocab {
-  float: right;
-}
-
 /* typeahead.js
  ***********************************/
 
@@ -1090,7 +1089,6 @@ textarea:focus, input[type="text"]:focus {
 .tt-query,
 .tt-hint {
   width: 396px;
-  height: 40px;
   font-size: 14px;
   line-height: 20px;
   border: 2px solid #ccc;
@@ -1114,7 +1112,7 @@ textarea:focus, input[type="text"]:focus {
   width: 200px;
   max-height:302px;
   overflow-y: auto;
-  background-color: #fff;
+  background-color: #F9F9F9;
   border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 0 !important;
@@ -1133,17 +1131,24 @@ textarea:focus, input[type="text"]:focus {
   padding-right: 0;
 }
 
+.tt-suggestion:last-of-type {
+  border-bottom: none;
+}
+
 .autocomplete-no-results {
-  line-height: 40px;
   margin: 0 0 0 6px !important;
 }
 
 .tt-suggestion {
-  min-height: 50px;
+  cursor: pointer;
   padding: 2px 8px;
   font-size: 14px !important;
   line-height: 20px;
   border-bottom: 1px solid #cccccc;
+}
+
+.tt-suggestion:last-of-type {
+  border-bottom: none !important;
 }
 
 .tt-suggestion.tt-cursor {
@@ -1151,7 +1156,7 @@ textarea:focus, input[type="text"]:focus {
 }
 
 .twitter-typeahead > .form-control {
-  height: 40px;
+  height: 30px;
   border-radius: 0;
 }
 
@@ -1177,6 +1182,10 @@ textarea:focus, input[type="text"]:focus {
 
 .type {
   float: right;
+}
+
+.matched-label {
+  text-decoration: line-through;
 }
 
 /* jsTree customization
@@ -1557,8 +1566,7 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   #vocabulary-list {
-    position: absolute;
-    left: 375px;
+    margin-left: 20px;
     width: auto;
     width: calc(100% - 375px) !important;
   }
@@ -1654,7 +1662,6 @@ body, .versal, h1, h2, p, .versal-bold {
 
   #vocabulary-list {
     position: relative;
-    left: 20px;
     display: inline-block;
     width: 580px !important;
   }
