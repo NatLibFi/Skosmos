@@ -213,10 +213,9 @@ EOQ;
     } else {
       // add information that can be used to format narrower concepts by
       // the array they belong to ("milk by source animal" use case)
-      $construct = "?uri skos:narrower ?n . ?x skos:member ?n . ?x skos:prefLabel ?xl . ";
+      $construct = "?x skos:member ?o . ?x skos:prefLabel ?xl . ";
       $optional  = "OPTIONAL {
-                      ?uri skos:narrower ?n .
-                      ?x skos:member ?n .
+                      ?x skos:member ?o .
                       ?x a <$arrayClass> .
                       ?x skos:prefLabel ?xl .
                     }";
