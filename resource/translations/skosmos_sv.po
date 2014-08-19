@@ -402,7 +402,7 @@ msgstr "sökresultat för"
 
 #: /tmp/cache/53f2f5ee33cd2/2b/2f/1ce096ed381c7c416eb3bdf53cb7.php:84
 msgid "search_example_text"
-msgstr "Du kan bestämma trunkering manuellt genom att använda asterisk (*). Pröva t.ex.: *djur eller: *patent*. Om du inte använder asterisk görs sökningen med trunkering i slutet."
+msgstr "Du kan bestämma trunkering manuellt genom att använda asterisk (*). Pröva t.ex.: *nät eller: *patent*. Om du inte använder asterisk görs sökningen med trunkering i slutet."
 
 #: /tmp/cache/53f2f5ee33cd2/0e/21/616815bd3942b86671f42d3ed4b2.php:47
 msgid "selected"
@@ -410,7 +410,7 @@ msgstr "valda"
 
 #: /tmp/cache/53f2f5ee33cd2/2b/2f/1ce096ed381c7c416eb3bdf53cb7.php:86
 msgid "short_search_example"
-msgstr "t.ex. katt eller *djur"
+msgstr "t.ex. katt eller *nät"
 
 #: /tmp/cache/53f2f5ee33cd2/b7/b8/db5433ea968c6a0d09780d91f529.php:21
 msgid "skos:Collection"
