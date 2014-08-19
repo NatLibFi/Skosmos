@@ -41,7 +41,7 @@ class JenaTextSparql extends GenericSparql
     $term = str_replace('\'', '\\\'', $term); // ensure single quotes are quoted
     $qwords = array();
     foreach (explode(' ', $term) as $word) {
-      if (preg_match('/^\p{L}[\p{L}_.-]*\*?$/u', $word) == 1)
+      if (preg_match('/^\*?\p{L}[\p{L}_.-]*\*?$/u', $word) == 1)
         $qwords[] = $word;
     }
     if (sizeof($qwords) == 0) return '# no suitable terms - text index disabled';
