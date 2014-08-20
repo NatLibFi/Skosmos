@@ -606,7 +606,7 @@ $(function() { // DOCUMENT READY
     return noResultsTranslation;
   });
   
-  var typeLabels;
+  var typeLabels = {};
 
   var concepts = new Bloodhound({
     remote: { 
@@ -616,9 +616,15 @@ $(function() { // DOCUMENT READY
           var vocabString = $('.frontpage').length ? vocabSelectionString : vocab; 
           var parameters = $.param({'vocab' : vocabString, 'lang' : qlang, 'labellang' : lang});
           settings.url = settings.url + '&' + parameters;
-          if (!typeLabels) {
+          if ($.isEmptyObject(typeLabels)) {
             var typeUrl = rest_url + vocabString + '/types';
-            typeLabels = $.getJSON(typeUrl, parameters,function(resp) {console.log(resp);});
+            var typeJson = $.getJSON(typeUrl, parameters, function(response) {
+              for(var i in response.types) {
+                var type = response.types[i];
+                if (type.label)
+                  typeLabels[type.uri] = type.label;
+              }
+            });
           }
         }
       },
@@ -629,6 +635,7 @@ $(function() { // DOCUMENT READY
             return true;
           }),
           function(item) {
+            //console.log(typeLabels);
             var voc = item.exvocab;
             var vocabLabel = $('select.multiselect').children('[value="' + voc + '"]').attr('data-label');
             item.vocabLabel = (vocabLabel) ? vocabLabel : item.exvocab;
@@ -641,6 +648,15 @@ $(function() { // DOCUMENT READY
             // do not show the label language when it's same as the ui language.
             if (item.lang && item.lang === lang)
               delete(item.lang);
+            if (item.type) {
+              for (var i in item.type) {
+                if (typeLabels[item.type[i]]) {
+                  item.type[i] = typeLabels[item.type[i]];
+                }
+                if (item.type[i] === 'skos:Concept' && item.type.length > 1)
+                  item.type.splice(item.type.indexOf('skos:Concept'), 1);
+              }
+            }
             return item;
           }));
       }
