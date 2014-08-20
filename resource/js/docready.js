@@ -617,8 +617,9 @@ $(function() { // DOCUMENT READY
           var parameters = $.param({'vocab' : vocabString, 'lang' : qlang, 'labellang' : lang});
           settings.url = settings.url + '&' + parameters;
           if ($.isEmptyObject(typeLabels)) {
+            var typeParam = $.param({'vocab' : vocabString, 'lang' : lang });
             var typeUrl = rest_url + vocabString + '/types';
-            var typeJson = $.getJSON(typeUrl, parameters, function(response) {
+            var typeJson = $.getJSON(typeUrl, typeParam, function(response) {
               for(var i in response.types) {
                 var type = response.types[i];
                 if (type.label)
