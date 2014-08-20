@@ -606,7 +606,7 @@ $(function() { // DOCUMENT READY
     return noResultsTranslation;
   });
   
-  var typeLabels = {};
+  var typeLabels = { 'vocabs' : [] };
 
   var concepts = new Bloodhound({
     remote: { 
@@ -616,8 +616,9 @@ $(function() { // DOCUMENT READY
           var vocabString = $('.frontpage').length ? vocabSelectionString : vocab; 
           var parameters = $.param({'vocab' : vocabString, 'lang' : qlang, 'labellang' : lang});
           settings.url = settings.url + '&' + parameters;
-          if ($.isEmptyObject(typeLabels)) {
+          if (typeLabels.vocabs.length === 0 || typeLabels.vocabs.indexOf(vocabString) < 0) {
             var typeParam = $.param({'vocab' : vocabString, 'lang' : lang });
+            typeLabels.vocabs.push(vocabString);
             var typeUrl = rest_url + vocabString + '/types';
             var typeJson = $.getJSON(typeUrl, typeParam, function(response) {
               for(var i in response.types) {
