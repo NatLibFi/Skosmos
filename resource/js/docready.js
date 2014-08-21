@@ -618,7 +618,6 @@ $(function() { // DOCUMENT READY
           settings.url = settings.url + '&' + parameters;
           if (typeLabels.vocabs.length === 0 || typeLabels.vocabs.indexOf(vocabString) < 0) {
             var typeParam = $.param({'vocab' : vocabString, 'lang' : lang });
-            typeLabels.vocabs.push(vocabString);
             var typeUrl = rest_url + vocabString + '/types';
             var typeJson = $.getJSON(typeUrl, typeParam, function(response) {
               for(var i in response.types) {
@@ -626,6 +625,7 @@ $(function() { // DOCUMENT READY
                 if (type.label)
                   typeLabels[type.uri] = type.label;
               }
+              typeLabels.vocabs.push(vocabString);
             });
           }
         }
@@ -637,7 +637,6 @@ $(function() { // DOCUMENT READY
             return true;
           }),
           function(item) {
-            //console.log(typeLabels);
             var voc = item.exvocab;
             var vocabLabel = $('select.multiselect').children('[value="' + voc + '"]').attr('data-label');
             item.vocabLabel = (vocabLabel) ? vocabLabel : item.exvocab;
@@ -651,13 +650,16 @@ $(function() { // DOCUMENT READY
             if (item.lang && item.lang === lang)
               delete(item.lang);
             if (item.type) {
-              for (var i in item.type) {
+              var toBeRemoved;
+              for (var i = 0; i < item.type.length; i++) {
                 if (typeLabels[item.type[i]]) {
                   item.type[i] = typeLabels[item.type[i]];
                 }
-                if (item.type[i] === 'skos:Concept' && item.type.length > 1)
-                  item.type.splice(item.type.indexOf('skos:Concept'), 1);
+                if (item.type[i] === 'skos:Concept' && item.type.length > 1) {
+                  toBeRemoved = item.type.indexOf('skos:Concept');
+                }
               }
+              item.type.splice(toBeRemoved, 1);
             }
             return item;
           }));
