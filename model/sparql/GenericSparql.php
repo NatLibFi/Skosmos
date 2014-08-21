@@ -799,19 +799,28 @@ EOQ;
     $uri = is_array($uri) ? $uri[0] : $uri;
     $gc = $this->graphClause;
     $filter = $anylang ? "" : "FILTER (langMatches(lang(?label), \"$lang\"))";
+    // need to do a SPARQL subquery because LIMIT needs to be applied /after/
+    // the direct relationships have been collapsed into one string
     $query = <<<EOQ
       SELECT *
       WHERE {
+        SELECT ?object ?label (GROUP_CONCAT(?dir) as ?direct)
+        WHERE {
           $gc {
             <$uri> a skos:Concept .
             OPTIONAL {
-            <$uri> $prop* ?object .
+              <$uri> $prop* ?object .
+              OPTIONAL {
+                ?object $prop ?dir .
+              }
+            }
             OPTIONAL {
               ?object skos:prefLabel ?label .
               $filter
             }
           }
         }
+        GROUP BY ?object ?label
       }
       LIMIT $limit
 EOQ;
@@ -827,8 +836,9 @@ EOQ;
       } else {
         $val = array('label'=>null);
       }
-      $direct = $this->queryProperty($row->object->getUri(), $prop, $lang, $anylang);
-      if (sizeof($direct) > 0) $val['direct'] = $direct;
+      if (isset($row->direct) && $row->direct->getValue() != '') {
+        $val['direct'] = explode(' ', $row->direct->getValue());
+      }
       // Preventing labels in a non preferred language overriding the preferred language.
       if (isset($row->label) && $row->label->getLang() === $lang || array_key_exists($row->object->getUri(), $ret) === false)
         $ret[$row->object->getUri()] = $val;

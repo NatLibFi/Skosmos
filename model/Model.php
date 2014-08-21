@@ -151,7 +151,7 @@ class Model
     if(!isset($path))
       $path = array();
     if (isset($bT[$uri]['direct'])) {
-      foreach ($bT[$uri]['direct'] as $broaderUri => $broaderLabel) {
+      foreach ($bT[$uri]['direct'] as $broaderUri) {
         $newpath = array_merge($path, array(new Breadcrumb($uri, $bT[$uri]['label'])));
         if ($uri !== $broaderUri)
           $this->getCrumbs($bT, $broaderUri, $newpath);
