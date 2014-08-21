@@ -540,10 +540,7 @@ class RestController extends Controller
     foreach ($broaders as $buri => $vals) {
       $result = array('uri'=>$buri, 'prefLabel'=>$vals['label']);
       if (isset($vals['direct'])) {
-        $result['broader'] = array();
-        foreach ($vals['direct'] as $duri => $dval) {
-          $result['broader'][] = $duri;
-        }
+        $result['broader'] = $vals['direct'];
       }
       $results[$buri] = $result;
     }
@@ -621,10 +618,7 @@ class RestController extends Controller
     foreach ($narrowers as $nuri => $vals) {
       $result = array('uri'=>$nuri, 'prefLabel'=>$vals['label']);
       if (isset($vals['direct'])) {
-        $result['narrower'] = array();
-        foreach ($vals['direct'] as $duri => $dval) {
-          $result['narrower'][] = $duri;
-        }
+        $result['narrower'] = $vals['direct'];
       }
       $results[$nuri] = $result;
     }

@@ -828,7 +828,12 @@ EOQ;
         $val = array('label'=>null);
       }
       $direct = $this->queryProperty($row->object->getUri(), $prop, $lang, $anylang);
-      if (sizeof($direct) > 0) $val['direct'] = $direct;
+      if (sizeof($direct) > 0) {
+        $val['direct'] = array();
+        foreach ($direct as $duri => $dval) {
+          $val['direct'][] = $duri;
+        }
+      }
       // Preventing labels in a non preferred language overriding the preferred language.
       if (isset($row->label) && $row->label->getLang() === $lang || array_key_exists($row->object->getUri(), $ret) === false)
         $ret[$row->object->getUri()] = $val;
