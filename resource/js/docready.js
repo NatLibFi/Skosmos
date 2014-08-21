@@ -637,9 +637,11 @@ $(function() { // DOCUMENT READY
             return true;
           }),
           function(item) {
+            console.log(item);
             var voc = item.exvocab;
-            var vocabLabel = $('select.multiselect').children('[value="' + voc + '"]').attr('data-label');
-            item.vocabLabel = (vocabLabel) ? vocabLabel : item.exvocab;
+            var vocabLabel = $('select.multiselect').children('[data-voc-shortname="' + voc + '"]').attr('data-label');
+            item.vocabLabel = (vocabLabel) ? vocabLabel : voc;
+            console.log(voc);
             item.label = item.prefLabel;
             // combining all the matched properties.
             if (item.matchedPrefLabel)
@@ -650,7 +652,7 @@ $(function() { // DOCUMENT READY
             if (item.lang && item.lang === lang)
               delete(item.lang);
             if (item.type) {
-              var toBeRemoved;
+              var toBeRemoved = null;
               for (var i = 0; i < item.type.length; i++) {
                 if (typeLabels[item.type[i]]) {
                   item.type[i] = typeLabels[item.type[i]];
@@ -659,7 +661,8 @@ $(function() { // DOCUMENT READY
                   toBeRemoved = item.type.indexOf('skos:Concept');
                 }
               }
-              item.type.splice(toBeRemoved, 1);
+              if (toBeRemoved !== null)
+                item.type.splice(toBeRemoved, 1);
             }
             return item;
           }));
