@@ -623,9 +623,9 @@ $(function() { // DOCUMENT READY
             return true;
           }),
           function(item) {
-            var voc = item.exvocab;
+            var voc = item.vocab;
             var vocabLabel = $('select.multiselect').children('[value="' + voc + '"]').attr('data-label');
-            item.vocabLabel = (vocabLabel) ? vocabLabel : item.exvocab;
+            item.vocabLabel = (vocabLabel) ? vocabLabel : voc;
             item.label = item.prefLabel;
             // combining all the matched properties.
             if (item.matchedPrefLabel)
