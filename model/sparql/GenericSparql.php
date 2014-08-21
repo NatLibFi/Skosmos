@@ -802,9 +802,9 @@ EOQ;
     $query = <<<EOQ
       SELECT *
       WHERE {
-          $gc {
-            <$uri> a skos:Concept .
-            OPTIONAL {
+        $gc {
+          <$uri> a skos:Concept .
+          OPTIONAL {
             <$uri> $prop* ?object .
             OPTIONAL {
               ?object skos:prefLabel ?label .
