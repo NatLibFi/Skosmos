@@ -628,7 +628,6 @@ $(function() { // DOCUMENT READY
               if (vocabString === '' || vocabString.indexOf(' ') >= 0)
                 vocabString = 'all';
               typeLabels.vocabs.push(vocabString);
-              console.log(typeLabels.vocabs);
             });
           }
         }
