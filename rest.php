@@ -27,6 +27,8 @@ try {
     $controller->vocabularies();
   } elseif ($parts[1] == 'search') {
     $controller->search();
+  } elseif ($parts[1] == 'types') {
+    $controller->types();
   } elseif (sizeof($parts) == 2) {
     header("Location: " . $parts[1] . "/");
   } else {

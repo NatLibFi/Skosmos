@@ -617,8 +617,8 @@ $(function() { // DOCUMENT READY
           var parameters = $.param({'vocab' : vocabString, 'lang' : qlang, 'labellang' : lang});
           settings.url = settings.url + '&' + parameters;
           if (typeLabels.vocabs.length === 0 || typeLabels.vocabs.indexOf(vocabString) < 0) {
-            var typeParam = $.param({'vocab' : vocabString, 'lang' : lang });
-            var typeUrl = rest_url + vocabString + '/types';
+            var typeParam = $.param({'lang' : lang });
+            var typeUrl = rest_url + '/types';
             var typeJson = $.getJSON(typeUrl, typeParam, function(response) {
               for(var i in response.types) {
                 var type = response.types[i];
@@ -637,11 +637,9 @@ $(function() { // DOCUMENT READY
             return true;
           }),
           function(item) {
-            console.log(item);
-            var voc = item.exvocab;
-            var vocabLabel = $('select.multiselect').children('[data-voc-shortname="' + voc + '"]').attr('data-label');
+            var voc = item.vocab;
+            var vocabLabel = $('select.multiselect').children('[value="' + voc + '"]').attr('data-label');
             item.vocabLabel = (vocabLabel) ? vocabLabel : voc;
-            console.log(voc);
             item.label = item.prefLabel;
             // combining all the matched properties.
             if (item.matchedPrefLabel)
