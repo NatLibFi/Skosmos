@@ -616,15 +616,17 @@ $(function() { // DOCUMENT READY
           var vocabString = $('.frontpage').length ? vocabSelectionString : vocab; 
           var parameters = $.param({'vocab' : vocabString, 'lang' : qlang, 'labellang' : lang});
           settings.url = settings.url + '&' + parameters;
-          if (typeLabels.vocabs.length === 0 || typeLabels.vocabs.indexOf(vocabString) < 0) {
+          if (typeLabels.vocabs.length === 0 || typeLabels.vocabs.indexOf('all') < 0 && typeLabels.vocabs.indexOf(vocabString) < 0) {
             var typeParam = $.param({'lang' : lang });
-            var typeUrl = rest_url + '/types';
+            var typeUrl = (vocabString.indexOf(' ') >= 0 && vocabString.length > 0) ? rest_url + '/types' : rest_url + vocabString + '/types';
             var typeJson = $.getJSON(typeUrl, typeParam, function(response) {
               for(var i in response.types) {
                 var type = response.types[i];
                 if (type.label)
                   typeLabels[type.uri] = type.label;
               }
+              if (vocabString === '')
+                vocabString = 'all';
               typeLabels.vocabs.push(vocabString);
             });
           }
@@ -810,7 +812,10 @@ $(function() { // DOCUMENT READY
     includeSelectAllOption: true,
     selectAllText: all_vocabs,
     onChange: function(element, checked) {
-      vocabId = element[0].value;
+      if (element)
+        vocabId = element[0].value;
+      else
+        vocabId = '';
       if (checked && selectedVocabs[vocabId] === undefined)
         selectedVocabs[vocabId] = vocabId;
       else if (selectedVocabs[vocabId] !== undefined) {
