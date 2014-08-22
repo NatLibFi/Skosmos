@@ -267,10 +267,11 @@ class Vocabulary extends DataObject
     $result = $this->getSparql()->queryTypes($this->lang);
     foreach ($result as $uri => $values)
       if(empty($values)) {
-        $trans = gettext(EasyRdf_Namespace::shorten($uri));
-        if ($trans) {
-          $result[EasyRdf_Namespace::shorten($uri)] = array('label' => gettext(EasyRdf_Namespace::shorten($uri)));
-        }
+        $shorteneduri = EasyRdf_Namespace::shorten($uri);
+        if ($shorteneduri)
+          $trans = gettext($shorteneduri);
+        if ($trans)
+          $result[$shorteneduri] = array('label' => $trans);
       }
     return $result;
   }
