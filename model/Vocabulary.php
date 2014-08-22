@@ -264,7 +264,15 @@ class Vocabulary extends DataObject
 
   public function getTypes()
   {
-    return $this->getSparql()->queryTypes($this->lang);
+    $result = $this->getSparql()->queryTypes($this->lang);
+    foreach ($result as $uri => $values)
+      if(empty($values)) {
+        $trans = gettext(EasyRdf_Namespace::shorten($uri));
+        if ($trans) {
+          $result[EasyRdf_Namespace::shorten($uri)] = array('label' => gettext(EasyRdf_Namespace::shorten($uri)));
+        }
+      }
+    return $result;
   }
 
   /**
