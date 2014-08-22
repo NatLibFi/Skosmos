@@ -625,9 +625,10 @@ $(function() { // DOCUMENT READY
                 if (type.label)
                   typeLabels[type.uri] = type.label;
               }
-              if (vocabString === '')
+              if (vocabString === '' || vocabString.indexOf(' ') >= 0)
                 vocabString = 'all';
               typeLabels.vocabs.push(vocabString);
+              console.log(typeLabels.vocabs);
             });
           }
         }
