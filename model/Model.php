@@ -173,6 +173,27 @@ class Model
   }
 
   /**
+   * Return all types (RDFS/OWL classes) present in the specified vocabulary or all vocabularies.
+   * @return array Array with URIs (string) as key and array of (label, superclassURI) as value
+   */
+  public function getTypes($vocid=null)
+  {
+    $sparql = (isset($vocid)) ? $this->getVocabulary($vocid)->getSparql() : $this->getDefaultSparql();
+    $result = $sparql->queryTypes($_GET['lang']);
+
+    foreach ($result as $uri => $values)
+      if(empty($values)) {
+        $shorteneduri = EasyRdf_Namespace::shorten($uri);
+        if ($shorteneduri)
+          $trans = gettext($shorteneduri);
+        if ($trans) {
+          $result[$uri] = array('label' => $trans);
+        }
+      }
+    return $result;
+  }
+
+  /**
    * Makes a SPARQL-query to the endpoint that retrieves concept
    * references as it's search results.
    * @param string $term the term that is looked for eg. 'cat'.

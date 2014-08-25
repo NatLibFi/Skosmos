@@ -258,25 +258,6 @@ class Vocabulary extends DataObject
   }
 
   /**
-   * Return all types (RDFS/OWL classes) present in the vocabulary.
-   * @return array Array with URIs (string) as key and array of (label, superclassURI) as value
-   */
-
-  public function getTypes()
-  {
-    $result = $this->getSparql()->queryTypes($this->lang);
-    foreach ($result as $uri => $values)
-      if(empty($values)) {
-        $shorteneduri = EasyRdf_Namespace::shorten($uri);
-        if ($shorteneduri)
-          $trans = gettext($shorteneduri);
-        if ($trans)
-          $result[$shorteneduri] = array('label' => $trans);
-      }
-    return $result;
-  }
-
-  /**
    * Return all concept schemes in the vocabulary.
    * @return array Array with concept scheme URIs (string) as keys and labels (string) as values
    */

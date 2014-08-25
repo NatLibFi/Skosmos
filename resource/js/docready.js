@@ -634,6 +634,7 @@ $(function() { // DOCUMENT READY
       },
       // changes the response so it can be easily displayed in the handlebars template.
       filter: function(data) {
+        var context = data['@context'];
         return ($.map(data.results.filter(
           function(item) {
             return true;
@@ -654,6 +655,10 @@ $(function() { // DOCUMENT READY
             if (item.type) {
               var toBeRemoved = null;
               for (var i = 0; i < item.type.length; i++) {
+                var prefix = item.type[i].substr(0, item.type[i].indexOf(':'));
+                var longuri = context[prefix] + item.type[i].substr(item.type[i].indexOf(':') + 1, item.type[i].length);
+                if (longuri)
+                  item.type[i] = longuri;
                 if (typeLabels[item.type[i]]) {
                   item.type[i] = typeLabels[item.type[i]];
                 }

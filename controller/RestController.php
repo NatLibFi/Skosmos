@@ -262,16 +262,7 @@ class RestController extends Controller
   public function types($vocabId)
   {
     $lang = $this->getAndSetLanguage($vocabId);
-    $queriedtypes = null;
-    if ($vocabId) {
-      $vocab = $this->getVocabulary($vocabId);
-      $types = array();
-      $queriedtypes = $vocab->getTypes($lang);
-    } else {
-      $sparql = $this->model->getDefaultSparql();
-      if(isset($_GET['lang']))
-        $queriedtypes = $sparql->queryTypes($_GET['lang']);
-    }
+    $queriedtypes = $this->model->getTypes($vocabId);
 
     /* encode the results in a JSON-LD compatible array */
     foreach ($queriedtypes as $uri => $typedata) {
