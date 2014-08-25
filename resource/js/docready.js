@@ -855,7 +855,7 @@ $(function() { // DOCUMENT READY
    */
   if ($('#vocab-info').length == 1) {
     // taking into account the possibility that the lang parameter has been changed by the WebController.
-    var urlLangCorrected = window.location.href.substr(0,window.location.href.length - 3) + lang + '/index';
+    var urlLangCorrected = '//' + base_url + vocab + '/' + lang + '/index';
     $('.sidebar-grey').empty().append('<div class="loading-spinner"><span class="spinner-text">'+ loading_text + '</span><span class="spinner" /></div>');
     $.ajax({
       url : urlLangCorrected,
