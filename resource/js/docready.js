@@ -655,15 +655,15 @@ $(function() { // DOCUMENT READY
             if (item.type) {
               var toBeRemoved = null;
               for (var i = 0; i < item.type.length; i++) {
-                var prefix = item.type[i].substr(0, item.type[i].indexOf(':'));
-                var longuri = context[prefix] + item.type[i].substr(item.type[i].indexOf(':') + 1, item.type[i].length);
-                if (longuri)
-                  item.type[i] = longuri;
-                if (typeLabels[item.type[i]]) {
-                  item.type[i] = typeLabels[item.type[i]];
-                }
                 if (item.type[i] === 'skos:Concept' && item.type.length > 1) {
                   toBeRemoved = item.type.indexOf('skos:Concept');
+                }
+                var prefix = item.type[i].substr(0, item.type[i].indexOf(':'));
+                if (prefix !== 'http' && prefix !== undefined && context[prefix] !== undefined) {
+                  item.type[i] = context[prefix] + item.type[i].substr(item.type[i].indexOf(':') + 1, item.type[i].length);
+                }
+                if (typeLabels[item.type[i]] !== undefined) {
+                  item.type[i] = typeLabels[item.type[i]];
                 }
               }
               if (toBeRemoved !== null)
