@@ -605,9 +605,31 @@ $(function() { // DOCUMENT READY
   Handlebars.registerHelper('noresults', function() {
     return noResultsTranslation;
   });
-  
-  var typeLabels = { 'vocabs' : [] };
 
+  var typeLabels = {};
+
+  // iterates the rest types query response into an object for use in the Bloodhound datums.
+  function processTypeJSON(response) {
+    for(var i in response.types) {
+      var type = response.types[i];
+      if (type.label)
+        typeLabels[type.uri] = type.label;
+    }
+  }
+
+  // fetch the json from local storage if it has been already cached there.
+  var typeJSON = lscache.get('types');
+  if (typeJSON) { 
+    processTypeJSON(typeJSON); 
+  } else { // if not then ajax the rest api and cache the results.
+    var typeParam = $.param({'lang' : lang });
+    var typeUrl = rest_url + '/types';
+    var typeJson = $.getJSON(typeUrl, typeParam, function(response) {
+      lscache.set('types', response, 1440);
+      processTypeJSON(response);
+    });
+  }
+  
   var concepts = new Bloodhound({
     remote: { 
       url: rest_url + 'search?query=%QUERY*',
@@ -616,20 +638,6 @@ $(function() { // DOCUMENT READY
           var vocabString = $('.frontpage').length ? vocabSelectionString : vocab; 
           var parameters = $.param({'vocab' : vocabString, 'lang' : qlang, 'labellang' : lang});
           settings.url = settings.url + '&' + parameters;
-          if (typeLabels.vocabs.length === 0 || typeLabels.vocabs.indexOf('all') < 0 && typeLabels.vocabs.indexOf(vocabString) < 0) {
-            var typeParam = $.param({'lang' : lang });
-            var typeUrl = (vocabString.indexOf(' ') >= 0 && vocabString.length > 0) ? rest_url + '/types' : rest_url + vocabString + '/types';
-            var typeJson = $.getJSON(typeUrl, typeParam, function(response) {
-              for(var i in response.types) {
-                var type = response.types[i];
-                if (type.label)
-                  typeLabels[type.uri] = type.label;
-              }
-              if (vocabString === '' || vocabString.indexOf(' ') >= 0)
-                vocabString = 'all';
-              typeLabels.vocabs.push(vocabString);
-            });
-          }
         }
       },
       // changes the response so it can be easily displayed in the handlebars template.
