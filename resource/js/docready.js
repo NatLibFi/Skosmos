@@ -657,6 +657,8 @@ $(function() { // DOCUMENT READY
               item.matched = item.matchedPrefLabel;
             if (item.altLabel)
               item.matched = item.altLabel;
+            if (item.hiddenLabel)
+              item.matched = item.hiddenLabel;
             // do not show the label language when it's same as the ui language.
             if (item.lang && item.lang === lang)
               delete(item.lang);
