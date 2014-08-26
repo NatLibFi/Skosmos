@@ -618,14 +618,14 @@ $(function() { // DOCUMENT READY
   }
 
   // fetch the json from local storage if it has been already cached there.
-  var typeJSON = lscache.get('types');
+  var typeJSON = lscache.get('types:' + lang);
   if (typeJSON) { 
     processTypeJSON(typeJSON); 
   } else { // if not then ajax the rest api and cache the results.
     var typeParam = $.param({'lang' : lang });
     var typeUrl = rest_url + 'types';
     var typeJson = $.getJSON(typeUrl, typeParam, function(response) {
-      lscache.set('types', response, 1440);
+      lscache.set('types:' + lang, response, 1440);
       processTypeJSON(response);
     });
   }
