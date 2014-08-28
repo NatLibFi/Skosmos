@@ -100,7 +100,8 @@ $(function() { // DOCUMENT READY
       if (settings.url.indexOf('hierarchy') !== -1)
         $(".sidebar-grey").mCustomScrollbar('scrollTo', scrollToConcept());
     } 
-    if (settings.url.indexOf('search') !== -1 && $('.tt-dropdown-menu')[0].offsetHeight === 302)
+    var $autocomplete = $('.tt-dropdown-menu');
+    if (settings.url.indexOf('search') !== -1 && $autocomplete.length > 0 && $autocomplete[0].offsetHeight === 302)
       $(".tt-dropdown-menu").mCustomScrollbar({ scrollInertia: 0 });
   });
 
