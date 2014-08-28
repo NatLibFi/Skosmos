@@ -648,9 +648,11 @@ $(function() { // DOCUMENT READY
             return true;
           }),
           function(item) {
-            var voc = item.vocab;
-            var vocabLabel = $('select.multiselect').children('[value="' + voc + '"]').attr('data-label');
-            item.vocabLabel = (vocabLabel) ? vocabLabel : voc;
+            if (item.vocab !== vocab) {
+              var voc = item.vocab;
+              var vocabLabel = $('select.multiselect').children('[value="' + voc + '"]').attr('data-label');
+              item.vocabLabel = (vocabLabel) ? vocabLabel : voc;
+            }
             item.label = item.prefLabel;
             // combining all the matched properties.
             if (item.matchedPrefLabel)
