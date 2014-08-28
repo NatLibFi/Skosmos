@@ -869,7 +869,7 @@ $(function() { // DOCUMENT READY
   /*  activating the custom scrollbars only when not on the hierarchy page
    *  since that goes haywire if it's done before the ajax complete runs
    */
-  if (document.URL.indexOf('/page/') === -1 && $('.search-count').length === 0) {
+  if ($('#vocab-info').length === 0 && document.URL.indexOf('/page/') === -1 && $('.search-count').length === 0) {
     $(".sidebar-grey").mCustomScrollbar({ 
       scrollInertia: 0, 
       mouseWheel:{ scrollAmount: 105 },
