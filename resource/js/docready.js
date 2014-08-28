@@ -95,15 +95,13 @@ $(function() { // DOCUMENT READY
         scrollInertia: 0, 
         mouseWheel:{ scrollAmount: 105 },
         snapAmount: snap,
-        snapOffset: 1
+        snapOffset: 0
       });
       if (settings.url.indexOf('hierarchy') !== -1)
         $(".sidebar-grey").mCustomScrollbar('scrollTo', scrollToConcept());
     } 
-    if (settings.url.indexOf('search') !== -1 && $('.tt-suggestion').length > 6)
-      $(".tt-dropdown-menu").mCustomScrollbar({ 
-        scrollInertia: 0
-      });
+    if (settings.url.indexOf('search') !== -1 && $('.tt-dropdown-menu')[0].offsetHeight === 302)
+      $(".tt-dropdown-menu").mCustomScrollbar({ scrollInertia: 0 });
   });
 
   function scrollToConcept() {
