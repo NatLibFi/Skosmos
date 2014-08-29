@@ -46,9 +46,9 @@ class Model
    */
   public function __construct()
   {
+    if (!file_exists(VOCABULARIES_FILE))
+      throw new Exception(VOCABULARIES_FILE . ' is missing, please provide one.');
     try {
-      if (!file_exists(VOCABULARIES_FILE))
-        throw new Exception(VOCABULARIES_FILE . ' is missing, please provide one.');
       // use APC user cache to store parsed vocabularies.ttl configuration
       if (function_exists('apc_store') && function_exists('apc_fetch')) {
         $key = realpath(VOCABULARIES_FILE) . ", " . filemtime(VOCABULARIES_FILE);

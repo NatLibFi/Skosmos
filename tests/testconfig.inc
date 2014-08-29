@@ -1,3 +1,3 @@
 <?php
 
-define("VOCABULARIES_FILE", "vocabularies.ttl");
+define("VOCABULARIES_FILE", "tests/testvocabularies.ttl");
