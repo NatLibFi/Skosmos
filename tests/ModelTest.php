@@ -25,22 +25,45 @@ class ModelTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @covers \model\Model::__construct
+   * @covers \model\Model::getVocabularyList
    * @depends testConstructorWithConfig
    */
-  public function DonottestGetVocabularyList() {
+  public function testGetVocabularyList() {
     $b = new Model(); 
-    var_dump($b->getVocabularyList(true));
+    $vocabs = $b->getVocabularyList();
+    foreach($vocabs as $vocab)
+      $this->assertInstanceOf('Vocabulary', $vocab);
   }
   
   /**
-   * @covers \model\Model::__construct
+   * @covers \model\Model::getVocabulary
    * @depends testConstructorWithConfig
    */
   public function testGetVocabularyById() {
     $b = new Model(); 
     $vocab = $b->getVocabulary('test');
     $this->assertInstanceOf('Vocabulary', $vocab);
+  }
+
+  /**
+   * @covers \model\Model::__getVocabularyByGraph
+   * @depends testConstructorWithConfig
+   */
+  public function testGetVocabularyByGraphUri() {
+    $b = new Model(); 
+    $vocab = $b->getVocabularyByGraph('http://www.yso.fi/onto/test/');
+    $this->assertInstanceOf('Vocabulary', $vocab);
+  }
+  
+  /**
+   * @covers \model\Model::guessVocabularyFromURI
+   * @depends testConstructorWithConfig
+   */
+  public function testGuessVocabularyFromURI() {
+    $b = new Model();
+    $vocab = $b->guessVocabularyFromURI('http://www.yso.fi/onto/test/T21329');
+    $this->assertInstanceOf('Vocabulary', $vocab);
+    $this->assertEquals('test', $vocab->getId());
   }
 
 }
