@@ -25,3 +25,10 @@
 	skosmos:sparqlGraph <http://www.yso.fi/onto/test/> ;
 	skosmos:mainConceptScheme <http://www.yso.fi/onto/test/> .
 
+:cat_science a skos:Concept ;
+	skos:topConceptOf :categories ;
+	skos:inScheme :categories ;
+	skos:prefLabel "Luonnontieteet ja lääketiede"@fi,
+	"Naturvetenskap och medicin"@sv,
+	"Science and medicine"@en .
+

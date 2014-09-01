@@ -5,7 +5,6 @@ require_once 'model/Model.php';
 class ModelTest extends PHPUnit_Framework_TestCase
 {
   /**
-   * @covers \model\Model::__construct
    * @expectedException \Exception
    * @expectedExceptionMessage Use of undefined constant VOCABULARIES_FILE - assumed 'VOCABULARIES_FILE'
    */
@@ -15,7 +14,6 @@ class ModelTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @covers \model\Model::__construct
    * @depends testConstructorNoVocabulariesConfigFile
    */
   public function testConstructorWithConfig()
@@ -25,7 +23,6 @@ class ModelTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @covers \model\Model::getVocabularyList
    * @depends testConstructorWithConfig
    */
   public function testGetVocabularyList() {
@@ -36,7 +33,18 @@ class ModelTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @covers \model\Model::getVocabulary
+   * @depends testConstructorWithConfig
+   */
+  public function testGetVocabularyCategories() {
+    $b = new Model(); 
+    $vocabs = $b->getVocabularyList();
+    foreach($vocabs as $vocab)
+      var_dump($vocab);
+      //$this->assertInstanceOf('Vocabulary', $vocab);
+  }
+
+  
+  /**
    * @depends testConstructorWithConfig
    */
   public function testGetVocabularyById() {
@@ -44,9 +52,19 @@ class ModelTest extends PHPUnit_Framework_TestCase
     $vocab = $b->getVocabulary('test');
     $this->assertInstanceOf('Vocabulary', $vocab);
   }
+  
+  /**
+   * @depends testConstructorWithConfig
+   * @expectedException \Exception
+   * @expectedExceptionMessage Vocabulary id 'thisshouldnotbefound' not found in configuration 
+   */
+  public function testGetVocabularyByFalseId() {
+    $b = new Model(); 
+    $vocab = $b->getVocabulary('thisshouldnotbefound');
+    $this->assertInstanceOf('Vocabulary', $vocab);
+  }
 
   /**
-   * @covers \model\Model::__getVocabularyByGraph
    * @depends testConstructorWithConfig
    */
   public function testGetVocabularyByGraphUri() {
@@ -56,7 +74,6 @@ class ModelTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @covers \model\Model::guessVocabularyFromURI
    * @depends testConstructorWithConfig
    */
   public function testGuessVocabularyFromURI() {
