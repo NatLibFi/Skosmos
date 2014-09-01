@@ -5,6 +5,7 @@ require_once 'model/Model.php';
 class ModelTest extends PHPUnit_Framework_TestCase
 {
   /**
+   * @
    * @expectedException \Exception
    * @expectedExceptionMessage Use of undefined constant VOCABULARIES_FILE - assumed 'VOCABULARIES_FILE'
    */
@@ -26,8 +27,8 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @depends testConstructorWithConfig
    */
   public function testGetVocabularyList() {
-    $b = new Model(); 
-    $vocabs = $b->getVocabularyList();
+    $model = new Model(); 
+    $vocabs = $model->getVocabularyList();
     foreach($vocabs as $vocab)
       $this->assertInstanceOf('Vocabulary', $vocab);
   }
@@ -36,8 +37,8 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @depends testConstructorWithConfig
    */
   public function testGetVocabularyCategories() {
-    $b = new Model(); 
-    $vocabs = $b->getVocabularyList();
+    $model = new Model(); 
+    $vocabs = $model->getVocabularyList();
     foreach($vocabs as $vocab)
       var_dump($vocab);
       //$this->assertInstanceOf('Vocabulary', $vocab);
@@ -45,11 +46,12 @@ class ModelTest extends PHPUnit_Framework_TestCase
 
   
   /**
+   * @covers Model::getVocabulary
    * @depends testConstructorWithConfig
    */
   public function testGetVocabularyById() {
-    $b = new Model(); 
-    $vocab = $b->getVocabulary('test');
+    $model = new Model(); 
+    $vocab = $model->getVocabulary('test');
     $this->assertInstanceOf('Vocabulary', $vocab);
   }
   
@@ -59,8 +61,8 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @expectedExceptionMessage Vocabulary id 'thisshouldnotbefound' not found in configuration 
    */
   public function testGetVocabularyByFalseId() {
-    $b = new Model(); 
-    $vocab = $b->getVocabulary('thisshouldnotbefound');
+    $model = new Model(); 
+    $vocab = $model->getVocabulary('thisshouldnotbefound');
     $this->assertInstanceOf('Vocabulary', $vocab);
   }
 
@@ -68,8 +70,19 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @depends testConstructorWithConfig
    */
   public function testGetVocabularyByGraphUri() {
-    $b = new Model(); 
-    $vocab = $b->getVocabularyByGraph('http://www.yso.fi/onto/test/');
+    $model = new Model(); 
+    $vocab = $model->getVocabularyByGraph('http://www.yso.fi/onto/test/');
+    $this->assertInstanceOf('Vocabulary', $vocab);
+  }
+  
+  /**
+   * @depends testConstructorWithConfig
+   * @expectedException \Exception
+   * @expectedExceptionMessage no vocabulary found for graph http://no/address and endpoint http://api.dev.finto.fi/sparql
+   */
+  public function testGetVocabularyByInvalidGraphUri() {
+    $model = new Model(); 
+    $vocab = $model->getVocabularyByGraph('http://no/address');
     $this->assertInstanceOf('Vocabulary', $vocab);
   }
   
@@ -77,10 +90,27 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @depends testConstructorWithConfig
    */
   public function testGuessVocabularyFromURI() {
-    $b = new Model();
-    $vocab = $b->guessVocabularyFromURI('http://www.yso.fi/onto/test/T21329');
+    $model = new Model();
+    $vocab = $model->guessVocabularyFromURI('http://www.yso.fi/onto/test/T21329');
     $this->assertInstanceOf('Vocabulary', $vocab);
     $this->assertEquals('test', $vocab->getId());
   }
+  
+  /**
+   * @depends testConstructorWithConfig
+   */
+  public function testGuessVocabularyFromURIThatIsNotFound() {
+    $model = new Model();
+    $vocab = $model->guessVocabularyFromURI('http://doesnot/exist');
+    $this->assertEquals(null, $vocab);
+  }
 
+  /**
+   * @depends testConstructorWithConfig
+   */
+  public function testGetDefaultSparql() {
+    $model = new Model();
+    $sparql = $model->getDefaultSparql();
+    $this->assertInstanceOf('GenericSparql', $sparql);
+  }
 }
