@@ -5,7 +5,7 @@ require_once 'model/Model.php';
 class ModelTest extends PHPUnit_Framework_TestCase
 {
   /**
-   * @
+   * @covers Model::__construct
    * @expectedException \Exception
    * @expectedExceptionMessage Use of undefined constant VOCABULARIES_FILE - assumed 'VOCABULARIES_FILE'
    */
@@ -15,6 +15,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
   }
   
   /**
+   * @covers Model::__construct
    * @depends testConstructorNoVocabulariesConfigFile
    */
   public function testConstructorWithConfig()
@@ -24,6 +25,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
   }
   
   /**
+   * @covers Model::getVocabularyList
    * @depends testConstructorWithConfig
    */
   public function testGetVocabularyList() {
@@ -34,14 +36,14 @@ class ModelTest extends PHPUnit_Framework_TestCase
   }
   
   /**
+   * @covers Model::getVocabularyList
    * @depends testConstructorWithConfig
    */
   public function testGetVocabularyCategories() {
     $model = new Model(); 
     $vocabs = $model->getVocabularyList();
     foreach($vocabs as $vocab)
-      var_dump($vocab);
-      //$this->assertInstanceOf('Vocabulary', $vocab);
+      $this->assertInstanceOf('VocabularyCategory', $vocab);
   }
 
   
@@ -56,6 +58,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
   }
   
   /**
+   * @covers Model::getVocabulary
    * @depends testConstructorWithConfig
    * @expectedException \Exception
    * @expectedExceptionMessage Vocabulary id 'thisshouldnotbefound' not found in configuration 
@@ -67,6 +70,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
   }
 
   /**
+   * @covers Model::getVocabularyByGraph
    * @depends testConstructorWithConfig
    */
   public function testGetVocabularyByGraphUri() {
@@ -76,6 +80,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
   }
   
   /**
+   * @covers Model::getVocabularyByGraph
    * @depends testConstructorWithConfig
    * @expectedException \Exception
    * @expectedExceptionMessage no vocabulary found for graph http://no/address and endpoint http://api.dev.finto.fi/sparql
@@ -87,6 +92,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
   }
   
   /**
+   * @covers Model::guessVocabularyFromURI
    * @depends testConstructorWithConfig
    */
   public function testGuessVocabularyFromURI() {
@@ -97,6 +103,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
   }
   
   /**
+   * @covers Model::guessVocabularyFromURI
    * @depends testConstructorWithConfig
    */
   public function testGuessVocabularyFromURIThatIsNotFound() {
@@ -106,6 +113,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
   }
 
   /**
+   * @covers Model::getDefaultSparql
    * @depends testConstructorWithConfig
    */
   public function testGetDefaultSparql() {
@@ -113,4 +121,19 @@ class ModelTest extends PHPUnit_Framework_TestCase
     $sparql = $model->getDefaultSparql();
     $this->assertInstanceOf('GenericSparql', $sparql);
   }
+  
+  /**
+   * @covers Model::getBreadCrumbs
+   * @covers Model::getCrumbs
+   * @depends testConstructorWithConfig
+   */
+  public function testGetBreadCrumbs() {
+    $model = new Model();
+    $vocabstub = $this->getMock('Vocabulary', array('getConceptTransitiveBroaders'), array(null, null));
+    $vocabstub->method('getConceptTransitiveBroaders')->willReturn(array ( 'http://www.yso.fi/onto/yso/p4762' => array ( 'label' => 'objects', ), 'http://www.yso.fi/onto/yso/p1674' => array ( 'label' => 'physical whole', 'direct' => array ( 0 => 'http://www.yso.fi/onto/yso/p4762', ), ), 'http://www.yso.fi/onto/yso/p14606' => array ( 'label' => 'layers', 'direct' => array ( 0 => 'http://www.yso.fi/onto/yso/p1674', ), ), ));
+    $result = $model->getBreadCrumbs($vocabstub, 'en', 'http://www.yso.fi/onto/yso/p14606');
+    foreach($result['breadcrumbs'][0] as $crumb)    
+      $this->assertInstanceOf('Breadcrumb', $crumb);
+  }
+
 }
