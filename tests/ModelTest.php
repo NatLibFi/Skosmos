@@ -30,22 +30,33 @@ class ModelTest extends PHPUnit_Framework_TestCase
    */
   public function testGetVocabularyList() {
     $model = new Model(); 
-    $vocabs = $model->getVocabularyList();
-    foreach($vocabs as $vocab)
-      $this->assertInstanceOf('Vocabulary', $vocab);
+    $categories = $model->getVocabularyList();
+    foreach($categories as $category)
+      foreach($category as $vocab)
+        $this->assertInstanceOf('Vocabulary', $vocab);
   }
   
   /**
-   * @covers Model::getVocabularyList
+   * @covers Model::getVocabularyCategories
    * @depends testConstructorWithConfig
    */
   public function testGetVocabularyCategories() {
     $model = new Model(); 
-    $vocabs = $model->getVocabularyList();
-    foreach($vocabs as $vocab)
-      $this->assertInstanceOf('VocabularyCategory', $vocab);
+    $categories = $model->getVocabularyCategories();
+    foreach($categories as $category)
+      $this->assertInstanceOf('VocabularyCategory', $category);
   }
-
+  
+  /**
+   * @covers Model::getVocabulariesInCategory
+   * @depends testConstructorWithConfig
+   */
+  public function testGetVocabulariesInCategory() {
+    $model = new Model(); 
+    $category = $model->getVocabulariesInCategory('cat_science');
+    foreach($category as $vocab)
+      $this->assertInstanceOf('Vocabulary', $vocab);
+  }
   
   /**
    * @covers Model::getVocabulary
@@ -103,7 +114,6 @@ class ModelTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @covers Model::guessVocabularyFromURI
    * @depends testConstructorWithConfig
    */
   public function testGuessVocabularyFromURIThatIsNotFound() {
@@ -123,6 +133,16 @@ class ModelTest extends PHPUnit_Framework_TestCase
   }
   
   /**
+   * @covers Model::getSparqlImplementation
+   * @depends testConstructorWithConfig
+   */
+  public function testGetSparqlImplementation() {
+    $model = new Model();
+    $sparql = $model->getSparqlImplementation('JenaText', 'http://api.dev.finto.fi/sparql', 'http://www.yso.fi/onto/test/');
+    $this->assertInstanceOf('JenaTextSparql', $sparql);
+  }
+  
+  /**
    * @covers Model::getBreadCrumbs
    * @covers Model::getCrumbs
    * @depends testConstructorWithConfig
@@ -134,6 +154,19 @@ class ModelTest extends PHPUnit_Framework_TestCase
     $result = $model->getBreadCrumbs($vocabstub, 'en', 'http://www.yso.fi/onto/yso/p14606');
     foreach($result['breadcrumbs'][0] as $crumb)    
       $this->assertInstanceOf('Breadcrumb', $crumb);
+  }
+  
+  /**
+   * @covers Model::getBreadCrumbs
+   * @covers Model::getCrumbs
+   * @depends testConstructorWithConfig
+   */
+  public function testGetBreadCrumbsShortening() {
+    $model = new Model();
+    $vocabstub = $this->getMock('Vocabulary', array('getConceptTransitiveBroaders'), array(null, null));
+    $vocabstub->method('getConceptTransitiveBroaders')->willReturn(array ( 'http://www.yso.fi/onto/yso/p4762' => array ( 'label' => 'objects', ), 'http://www.yso.fi/onto/yso/p13871' => array ( 'label' => 'thai language', 'direct' => array ( 0 => 'http://www.yso.fi/onto/yso/p10834', ), ), 'http://www.yso.fi/onto/yso/p556' => array ( 'label' => 'languages', 'direct' => array ( 0 => 'http://www.yso.fi/onto/yso/p2881', ), ), 'http://www.yso.fi/onto/yso/p8965' => array ( 'label' => 'Sino-Tibetan languages', 'direct' => array ( 0 => 'http://www.yso.fi/onto/yso/p556', ), ), 'http://www.yso.fi/onto/yso/p3358' => array ( 'label' => 'systems', 'direct' => array ( 0 => 'http://www.yso.fi/onto/yso/p4762', ), ), 'http://www.yso.fi/onto/yso/p10834' => array ( 'label' => 'Tai languages', 'direct' => array ( 0 => 'http://www.yso.fi/onto/yso/p8965', ), ), 'http://www.yso.fi/onto/yso/p2881' => array ( 'label' => 'cultural systems', 'direct' => array ( 0 => 'http://www.yso.fi/onto/yso/p3358', ), ), ) );
+    $result = $model->getBreadCrumbs($vocabstub, 'en', 'http://www.yso.fi/onto/yso/p13871');
+    $this->assertEquals(6, sizeof($result['breadcrumbs'][0]));
   }
 
 }
