@@ -158,6 +158,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
   
   /**
    * @covers Model::getBreadCrumbs
+   * @covers Model::combineCrumbs
    * @covers Model::getCrumbs
    * @depends testConstructorWithConfig
    */
