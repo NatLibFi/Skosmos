@@ -1,4 +1,5 @@
 config.inc
 vocabularies.ttl
 vendor
+report
 components
