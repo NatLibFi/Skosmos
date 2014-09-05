@@ -86,7 +86,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    */
   public function testGetVocabularyByGraphUri() {
     $model = new Model(); 
-    $vocab = $model->getVocabularyByGraph('http://www.yso.fi/onto/test/');
+    $vocab = $model->getVocabularyByGraph('http://www.skosmos.skos/onto/test/');
     $this->assertInstanceOf('Vocabulary', $vocab);
   }
   
@@ -149,7 +149,8 @@ class ModelTest extends PHPUnit_Framework_TestCase
    */
   public function testGetBreadCrumbs() {
     $model = new Model();
-    $vocabstub = $this->getMock('Vocabulary', array('getConceptTransitiveBroaders'), array(null, null));
+    $resource = new EasyRdf_Resource('http://www.yso.fi/onto/yso/p14606');
+    $vocabstub = $this->getMock('Vocabulary', array('getConceptTransitiveBroaders'), array($model, $resource));
     $vocabstub->method('getConceptTransitiveBroaders')->willReturn(array ( 'http://www.yso.fi/onto/yso/p4762' => array ( 'label' => 'objects', ), 'http://www.yso.fi/onto/yso/p1674' => array ( 'label' => 'physical whole', 'direct' => array ( 0 => 'http://www.yso.fi/onto/yso/p4762', ), ), 'http://www.yso.fi/onto/yso/p14606' => array ( 'label' => 'layers', 'direct' => array ( 0 => 'http://www.yso.fi/onto/yso/p1674', ), ), ));
     $result = $model->getBreadCrumbs($vocabstub, 'en', 'http://www.yso.fi/onto/yso/p14606');
     foreach($result['breadcrumbs'][0] as $crumb)    
@@ -164,7 +165,8 @@ class ModelTest extends PHPUnit_Framework_TestCase
    */
   public function testGetBreadCrumbsShortening() {
     $model = new Model();
-    $vocabstub = $this->getMock('Vocabulary', array('getConceptTransitiveBroaders'), array(null, null));
+    $resource = new EasyRdf_Resource('http://www.yso.fi/onto/yso/p14606');
+    $vocabstub = $this->getMock('Vocabulary', array('getConceptTransitiveBroaders'), array($model, $resource));
     $vocabstub->method('getConceptTransitiveBroaders')->willReturn(array ( 'http://www.yso.fi/onto/yso/p4762' => array ( 'label' => 'objects', ), 'http://www.yso.fi/onto/yso/p13871' => array ( 'label' => 'thai language', 'direct' => array ( 0 => 'http://www.yso.fi/onto/yso/p10834', ), ), 'http://www.yso.fi/onto/yso/p556' => array ( 'label' => 'languages', 'direct' => array ( 0 => 'http://www.yso.fi/onto/yso/p2881', ), ), 'http://www.yso.fi/onto/yso/p8965' => array ( 'label' => 'Sino-Tibetan languages', 'direct' => array ( 0 => 'http://www.yso.fi/onto/yso/p556', ), ), 'http://www.yso.fi/onto/yso/p3358' => array ( 'label' => 'systems', 'direct' => array ( 0 => 'http://www.yso.fi/onto/yso/p4762', ), ), 'http://www.yso.fi/onto/yso/p10834' => array ( 'label' => 'Tai languages', 'direct' => array ( 0 => 'http://www.yso.fi/onto/yso/p8965', ), ), 'http://www.yso.fi/onto/yso/p2881' => array ( 'label' => 'cultural systems', 'direct' => array ( 0 => 'http://www.yso.fi/onto/yso/p3358', ), ), ) );
     $result = $model->getBreadCrumbs($vocabstub, 'en', 'http://www.yso.fi/onto/yso/p13871');
     $this->assertEquals(6, sizeof($result['breadcrumbs'][0]));
