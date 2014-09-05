@@ -131,7 +131,7 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @covers Vocabulary::getConceptURI
+   * @covers Vocabulary::getAlphabeticalFull
    */
   public function testGetFullAlphabeticalIndex() {
     $vocab = $this->model->getVocabulary('testdiff');
@@ -140,11 +140,29 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @covers Vocabulary::getConceptURI
+   * @covers Vocabulary::getAlphabeticalFull
    */
   public function testGetFullAlphabeticalIndexWhenNotSet() {
     $vocab = $this->model->getVocabulary('test');
     $boolean = $vocab->getAlphabeticalFull();
     $this->assertEquals(false, $boolean);
+  }
+  
+  /**
+   * @covers Vocabulary::getShortName
+   */
+  public function testGetShortName() {
+    $vocab = $this->model->getVocabulary('test');
+    $name = $vocab->getShortName();
+    $this->assertEquals('Test short', $name);
+  }
+  
+  /**
+   * @covers Vocabulary::getShortName
+   */
+  public function testGetShortNameNotDefined() {
+    $vocab = $this->model->getVocabulary('testdiff');
+    $name = $vocab->getShortName();
+    $this->assertEquals('testdiff', $name);
   }
 }
