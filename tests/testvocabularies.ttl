@@ -28,7 +28,6 @@
 	dc:subject :cat_general ;
 	void:uriSpace "http://www.skosmos.skos/onto/testdiff";
 	skosmos:language "fi", "en";
-	skosmos:defaultLanguage "en";
 	void:sparqlEndpoint <http://api.dev.finto.fi/sparql> ;
 	skosmos:sparqlGraph <http://www.yso.fi/onto/testdiff/> ;
 	skosmos:mainConceptScheme <http://www.yso.fi/onto/testdiff/> .
