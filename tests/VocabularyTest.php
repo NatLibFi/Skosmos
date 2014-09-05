@@ -20,5 +20,23 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
     $id = $vocab->getId();
     $this->assertEquals('test', $id);
   }
+  
+  /**
+   * @covers Vocabulary::getTitle
+   */
+  public function testGetTitle() {
+    $vocab = $this->model->getVocabulary('test');
+    $title = $vocab->getTitle();
+    $this->assertEquals('Test ontology', $title);
+  }
+  
+  /**
+   * @covers Vocabulary::getLanguages
+   */
+  public function testGetLanguages() {
+    $vocab = $this->model->getVocabulary('testdiff');
+    $langs = $vocab->getLanguages();
+    $this->assertEquals(2, sizeof($langs));
+  }
 
 }
