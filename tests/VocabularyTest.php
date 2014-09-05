@@ -58,4 +58,93 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
     $lang = $vocab->getDefaultLanguage();
   }
 
+  /**
+   * @covers Vocabulary::getEndpoint
+   */
+  public function testGetEndpoint() {
+    $vocab = $this->model->getVocabulary('testdiff');
+    $endpoint = $vocab->getEndpoint();
+    $this->assertEquals('http://api.dev.finto.fi/sparql', $endpoint);
+  }
+
+  /**
+   * @covers Vocabulary::getGraph
+   */
+  public function testGetGraph() {
+    $vocab = $this->model->getVocabulary('testdiff');
+    $graph = $vocab->getGraph();
+    $this->assertEquals('http://www.yso.fi/onto/testdiff/', $graph);
+  }
+  
+  /**
+   * @covers Vocabulary::getSparql
+   */
+  public function testGetSparql() {
+    $vocab = $this->model->getVocabulary('test');
+    $sparql = $vocab->getSparql();
+    $this->assertInstanceOf('GenericSparql', $sparql);
+  }
+  
+  /**
+   * @covers Vocabulary::getSparql
+   */
+  public function testGetSparqlWithDialect() {
+    $vocab = $this->model->getVocabulary('testdiff');
+    $sparql = $vocab->getSparql();
+    $this->assertInstanceOf('JenaTextSparql', $sparql);
+  }
+  
+  /**
+   * @covers Vocabulary::getUriSpace
+   */
+  public function testGetUriSpace() {
+    $vocab = $this->model->getVocabulary('testdiff');
+    $sparql = $vocab->getUriSpace();
+    $this->assertEquals('http://www.skosmos.skos/onto/testdiff#', $sparql);
+  }
+  
+  /**
+   * @covers Vocabulary::getLocalName
+   */
+  public function testGetLocalName() {
+    $vocab = $this->model->getVocabulary('testdiff');
+    $name = $vocab->getLocalName('http://www.skosmos.skos/onto/testdiff#concept23');
+    $this->assertEquals('concept23', $name);
+  }
+  
+  /**
+   * @covers Vocabulary::getConceptURI
+   */
+  public function testGetConceptURI() {
+    $vocab = $this->model->getVocabulary('testdiff');
+    $name = $vocab->getConceptURI('concept23');
+    $this->assertEquals('http://www.skosmos.skos/onto/testdiff#concept23', $name);
+  }
+  
+  /**
+   * @covers Vocabulary::getConceptURI
+   */
+  public function testGetConceptURIWhenGivenAReadyURI() {
+    $vocab = $this->model->getVocabulary('testdiff');
+    $name = $vocab->getConceptURI('http://www.skosmos.skos/onto/testdiff#concept23');
+    $this->assertEquals('http://www.skosmos.skos/onto/testdiff#concept23', $name);
+  }
+  
+  /**
+   * @covers Vocabulary::getConceptURI
+   */
+  public function testGetFullAlphabeticalIndex() {
+    $vocab = $this->model->getVocabulary('testdiff');
+    $boolean = $vocab->getAlphabeticalFull();
+    $this->assertEquals(true, $boolean);
+  }
+  
+  /**
+   * @covers Vocabulary::getConceptURI
+   */
+  public function testGetFullAlphabeticalIndexWhenNotSet() {
+    $vocab = $this->model->getVocabulary('test');
+    $boolean = $vocab->getAlphabeticalFull();
+    $this->assertEquals(false, $boolean);
+  }
 }
