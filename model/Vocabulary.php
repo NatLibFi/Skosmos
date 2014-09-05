@@ -72,8 +72,6 @@ class Vocabulary extends DataObject
     $langs = $this->getLanguages();
     if (sizeof($langs) > 1)
       trigger_error("Default language for vocabulary '" . $this->getId() . "' unknown, choosing '$langs[0]'.", E_USER_WARNING);
-
-    return $langs[0];
   }
 
   /**
