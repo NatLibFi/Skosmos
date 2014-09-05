@@ -72,8 +72,6 @@ class Vocabulary extends DataObject
     $langs = $this->getLanguages();
     if (sizeof($langs) > 1)
       trigger_error("Default language for vocabulary '" . $this->getId() . "' unknown, choosing '$langs[0]'.", E_USER_WARNING);
-
-    return $langs[0];
   }
 
   /**
@@ -224,7 +222,11 @@ class Vocabulary extends DataObject
       }
       if (!isset($ret[$prop]) || sizeof($ret[$prop]) == 0) { // not found with language tag
         foreach ($cs->allLiterals($prop, null) as $val) {
-          $ret[$prop][] = $val->getValue();
+          $v = $val->getValue();
+          if ($v instanceof DateTime) {
+            $v = $v->format('Y-m-d H:i:s');
+          }
+          $ret[$prop][] = $v;
         }
       }
       foreach ($cs->allResources($prop) as $val) {
