@@ -169,5 +169,27 @@ class ModelTest extends PHPUnit_Framework_TestCase
     $result = $model->getBreadCrumbs($vocabstub, 'en', 'http://www.yso.fi/onto/yso/p13871');
     $this->assertEquals(6, sizeof($result['breadcrumbs'][0]));
   }
+  
+  /**
+   * @covers Model::searchConcepts
+   * @depends testConstructorWithConfig
+   */
+  public function testSearchWithEmptyTerm() {
+    $model = new Model();
+    $result = $model->searchConcepts('', '', '', '');
+    $this->assertEquals(array(), $result);
+  }
+  
+  /**
+   * @covers Model::searchConcepts
+   * @depends testConstructorWithConfig
+   * @expectedException \Exception
+   * @expectedExceptionMessage Missing argument
+   */
+  public function testSearchWithNoParams() {
+    $model = new Model();
+    $result = $model->searchConcepts();
+    $this->assertEquals(array(), $result);
+  }
 
 }
