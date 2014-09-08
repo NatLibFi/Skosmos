@@ -225,15 +225,15 @@ section {
 }
 
 .search-vocab-text {
-  margin: 5px;
+  margin: 15px 5px 5px 5px;
   display: inline-block !important;
   float: left;
-  line-height: 18px;
   text-align: right;
 }
 
 .search-vocab-text > p {
   color: #fff;
+  height: 18px;
   margin: 0;
 }
 
@@ -912,6 +912,10 @@ tr {
   background-color: #ffffff;
 }
 
+.global-content .shortened-symbol {
+  right: 160px;
+}
+
 td > .property-click {
   border-bottom: 2px dotted #CFCFCF;
 }
@@ -1184,7 +1188,7 @@ ul.nav-tabs > li {
   float: right;
 }
 
-.matched-label {
+.replaced-label {
   text-decoration: line-through;
 }
 
@@ -1540,6 +1544,10 @@ body, .versal, h1, h2, p, .versal-bold {
     max-width: 450px !important;
   }
   
+  .tt-dropdown-menu {
+    width: 234px;
+  }
+
   .frontpage-logo .tt-dropdown-menu {
     width: 295px !important;
   }

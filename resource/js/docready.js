@@ -657,9 +657,9 @@ $(function() { // DOCUMENT READY
             if (item.matchedPrefLabel)
               item.matched = item.matchedPrefLabel;
             if (item.altLabel)
-              item.matched = item.altLabel;
+              item.replaced = item.altLabel;
             if (item.hiddenLabel)
-              item.matched = item.hiddenLabel;
+              item.replaced = item.hiddenLabel;
             // do not show the label language when it's same as the ui language.
             if (item.lang && item.lang === lang)
               delete(item.lang);
@@ -692,8 +692,9 @@ $(function() { // DOCUMENT READY
   concepts.initialize();
 
   var autocompleteTemplate =[
-    '{{# if matched }}<p class="matched-label">{{matched}}</p>',
-    '{{# if lang}}<p>({{lang}})</p>{{/if}}<span class="versal">\u2192</span>{{/if}}',
+    '{{# if matched }}<p>{{matched}}</p>{{/if}}',
+    '{{# if replaced }}<p class="replaced-label">{{replaced}}</p>{{/if}}',
+    '{{# if lang}}<p>({{lang}})</p>{{/if}}{{# if matched }}<p> >> </p>{{/if}}{{# if replaced }}<p> >> </p>{{/if}}',
     '<p class="autocomplete-label">{{label}}{{# if lang}}{{# unless matched }}<p>({{lang}})</p>{{/unless}}{{/if}}</p>',
     '{{# if type }}<span class="concept-type">{{type}}</span>{{/if}}',
     '<div class="vocab">{{vocabLabel}}</div>',
