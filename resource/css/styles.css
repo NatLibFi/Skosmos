@@ -225,15 +225,15 @@ section {
 }
 
 .search-vocab-text {
-  margin: 5px;
+  margin: 15px 5px 5px 5px;
   display: inline-block !important;
   float: left;
-  line-height: 18px;
   text-align: right;
 }
 
 .search-vocab-text > p {
   color: #fff;
+  height: 18px;
   margin: 0;
 }
 
