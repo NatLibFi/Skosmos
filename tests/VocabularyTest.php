@@ -1,5 +1,7 @@
 <?php
 
+require_once('model/Model.php');
+
 class VocabularyTest extends PHPUnit_Framework_TestCase
 {
   
@@ -163,4 +165,87 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
     $name = $vocab->getShortName();
     $this->assertEquals('testdiff', $name);
   }
+  
+  /**
+   * @covers Vocabulary::getDefaultConceptScheme
+   */
+  public function testGetDefaultConceptScheme() {
+    $vocab = $this->model->getVocabulary('test');
+    $cs = $vocab->getDefaultConceptScheme();
+    $this->assertEquals('http://www.yso.fi/onto/test/', $cs);
+  }
+  
+  /**
+   * @covers Vocabulary::getDataURL
+   */
+  public function testGetDataURL() {
+    $vocab = $this->model->getVocabulary('test');
+    $url = $vocab->getDataURL();
+    $this->assertEquals('http://skosmos.skos/dump/test/', $url);
+  }
+  
+  /**
+   * @covers Vocabulary::getDataURL
+   */
+  public function testGetDataURLNotSet() {
+    $vocab = $this->model->getVocabulary('testdiff');
+    $url = $vocab->getDataURL();
+    $this->assertEquals(false, $url);
+  }
+  
+  /**
+   * @covers Vocabulary::getGroupClassURI
+   */
+  public function testGetGroupClassURI() {
+    $vocab = $this->model->getVocabulary('test');
+    $uri = $vocab->getGroupClassURI();
+    $this->assertEquals('http://www.w3.org/2004/02/skos/core#Collection', $uri);
+  }
+  
+  /**
+   * @covers Vocabulary::getGroupClassURI
+   */
+  public function testGetGroupClassURINotSet() {
+    $vocab = $this->model->getVocabulary('testdiff');
+    $uri = $vocab->getGroupClassURI();
+    $this->assertEquals(null, $uri);
+  }
+  
+  /**
+   * @covers Vocabulary::getArrayClassURI
+   */
+  public function testGetArrayClassURI() {
+    $vocab = $this->model->getVocabulary('test');
+    $uri = $vocab->getArrayClassURI();
+    $this->assertEquals('http://purl.org/iso25964/skos-thes#ThesaurusArray', $uri);
+  }
+  
+  /**
+   * @covers Vocabulary::getArrayClassURI
+   */
+  public function testGetArrayClassURINotSet() {
+    $vocab = $this->model->getVocabulary('testdiff');
+    $uri = $vocab->getArrayClassURI();
+    $this->assertEquals(null, $uri);
+  }
+  
+  /**
+   * @covers Vocabulary::getShowHierarchy
+   */
+  public function testGetShowHierarchy() {
+    $vocab = $this->model->getVocabulary('test');
+    $uri = $vocab->getShowHierarchy();
+    $this->assertEquals(true, $uri);
+  }
+
+ 
+  /**
+   * @covers Vocabulary::getShowHierarchy
+   */
+  public function testGetShowHierarchyNotSet() {
+    $vocab = $this->model->getVocabulary('testdiff');
+    $uri = $vocab->getShowHierarchy();
+    $this->assertEquals(false, $uri);
+  }
+
 }

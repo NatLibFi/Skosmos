@@ -16,22 +16,26 @@
 :test a skosmos:Vocabulary, void:Dataset ;
 	dc:title "Test ontology"@en ;
 	dc:subject :cat_science ;
-	void:uriSpace "http://www.yso.fi/onto/test/";
-	skosmos:language "en";
-	skosmos:shortName "Test short";
-	skosmos:defaultLanguage "en";
+	void:dataDump <http://skosmos.skos/dump/test/> ;
 	void:sparqlEndpoint <http://api.dev.finto.fi/sparql> ;
-	skosmos:sparqlGraph <http://www.skosmos.skos/onto/test/> ;
-	skosmos:mainConceptScheme <http://www.yso.fi/onto/test/> .
+	void:uriSpace "http://www.yso.fi/onto/test/";
+	skosmos:arrayClass isothes:ThesaurusArray ;
+	skosmos:defaultLanguage "en";
+	skosmos:groupClass skos:Collection;
+	skosmos:language "en";
+	skosmos:mainConceptScheme <http://www.yso.fi/onto/test/> ;
+	skosmos:showTopConcepts "true";
+	skosmos:shortName "Test short";
+	skosmos:sparqlGraph <http://www.skosmos.skos/onto/test/> .
 
 :testdiff a skosmos:Vocabulary, void:Dataset ;
 	dc:title "Test ontology 2"@en ;
 	dc:subject :cat_general ;
 	void:uriSpace "http://www.skosmos.skos/onto/testdiff#";
+	void:sparqlEndpoint <http://api.dev.finto.fi/sparql> ;
 	skosmos:language "fi", "en";
 	skosmos:sparqlDialect "JenaText";
 	skosmos:fullAlphabeticalIndex "true";
-	void:sparqlEndpoint <http://api.dev.finto.fi/sparql> ;
 	skosmos:sparqlGraph <http://www.yso.fi/onto/testdiff/> ;
 	skosmos:mainConceptScheme <http://www.yso.fi/onto/testdiff/> .
 
