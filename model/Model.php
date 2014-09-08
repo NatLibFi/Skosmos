@@ -124,7 +124,7 @@ class Model
       $firstToCombine = true;
       $combinedPath = array();
       foreach ($path as $crumbKey => $crumb) {
-        if ($crumb->prefLabel === '...') {
+        if ($crumb->getPrefLabel() === '...') {
           array_push($combinedPath, $crumb);
           if ($firstToCombine) {
             $firstToCombine = false;
