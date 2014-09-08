@@ -11,13 +11,13 @@
 class Breadcrumb
 {
   /** a label for the term doesn't need to be a prefLabel */
-  public $prefLabel;
+  private $prefLabel;
   /** uri of the concept */
-  public $uri;
+  private $uri;
   /** an array of narrower concepts */
-  public $narrowerConcepts;
+  private $narrowerConcepts;
   /** used for storing the hidden labels */
-  public $hiddenLabel;
+  private $hiddenLabel;
 
   /**
    * Creating a new breadcrumb object requires a uri and a preflabel.
@@ -48,5 +48,33 @@ class Breadcrumb
   public function addNarrower($concept)
   {
     $this->narrowerConcepts[$concept->uri] = $concept;
+  }
+
+  /**
+   * Getter for the prefLabel value
+   */
+  public function getPrefLabel() {
+    return $this->prefLabel;
+  }
+  
+  /**
+   * Getter for the URI value
+   */
+  public function getUri() {
+    return $this->uri;
+  }
+  
+  /**
+   * Getter for the narrower concepts array 
+   */
+  public function getNarrowerConcepts() {
+    return $this->narrowerConcepts;
+  }
+  
+  /**
+   * Getter for the hidden prefLabel value
+   */
+  public function getHiddenLabel() {
+    return $this->hiddenLabel;
   }
 }
