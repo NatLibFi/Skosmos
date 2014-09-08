@@ -912,6 +912,10 @@ tr {
   background-color: #ffffff;
 }
 
+.global-content .shortened-symbol {
+  right: 160px;
+}
+
 td > .property-click {
   border-bottom: 2px dotted #CFCFCF;
 }
