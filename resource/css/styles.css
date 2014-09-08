@@ -1544,6 +1544,10 @@ body, .versal, h1, h2, p, .versal-bold {
     max-width: 450px !important;
   }
   
+  .tt-dropdown-menu {
+    width: 234px;
+  }
+
   .frontpage-logo .tt-dropdown-menu {
     width: 295px !important;
   }
