@@ -1,7 +1,5 @@
 <?php
 
-require_once 'model/Model.php';
-
 class ModelTest extends PHPUnit_Framework_TestCase
 {
   /**

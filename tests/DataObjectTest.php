@@ -1,14 +1,12 @@
 
 <?php
 
-require_once('model/Model.php');
-
-class VocabularyTest extends PHPUnit_Framework_TestCase
+class DataObjectTest extends PHPUnit_Framework_TestCase
 {
 
   /**
-   * @covers \model\Vocabulary::__construct
-   * @uses \model\DataObject
+   * @covers DataObject::__construct
+   * @uses DataObject
    * @expectedException \Exception
    * @expectedExceptionMessage Invalid constructor parameter given to DataObject.
    */
