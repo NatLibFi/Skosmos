@@ -247,5 +247,19 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
     $uri = $vocab->getShowHierarchy();
     $this->assertEquals(false, $uri);
   }
+  
+  /**
+   * @covers Vocabulary::getConceptSchemes
+   */
+  public function testGetConceptSchemes() {
+    $model = new Model();
+    $resource = new EasyRdf_Resource('http://www.yso.fi/onto/yso/');
+    $mock_cs_response = array ( 'http://www.yso.fi/onto/yso/' => array ( 'label' => 'Yleinen suomalainen ontologia YSO', ), 'http://www.yso.fi/onto/yso/aggregateconceptscheme' => array ( ), 'http://www.yso.fi/onto/yso/deprecatedconceptscheme' => array ( ), );
+    $vocabstub = $this->getMock('Vocabulary', array('getSparql'), array($model, $resource));
+    $vocabstub->method('getSparql')->willReturn(null);
+    $uri = $vocab->getDefaultConceptScheme();
+    $this->assertEquals(true, $uri);
+  }
+  
 
 }
