@@ -1669,6 +1669,10 @@ body, .versal, h1, h2, p, .versal-bold {
     margin-right: 245px;
   }
 
+  .global-content .shortened-symbol {
+    right: 255px;
+  }
+
   .content {
     margin-left: 425px;
   }
