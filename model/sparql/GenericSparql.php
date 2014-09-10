@@ -243,16 +243,25 @@ CONSTRUCT {
   UNION
   {
    ?uri ?p ?o .
-   OPTIONAL { ?p rdfs:label ?proplabel . }
-   OPTIONAL { ?p rdfs:subPropertyOf ?pp . }
-   OPTIONAL { ?uri rdf:type ?type .
-              ?type rdfs:label ?typelabel . }
-   OPTIONAL { ?o rdf:type ?ot . }
-   OPTIONAL { ?o skos:prefLabel ?opl . }
-   OPTIONAL { ?o rdfs:label ?ol . }
-   OPTIONAL { ?group skos:member ?uri .
-              ?group skos:prefLabel ?grouplabel .
-              ?group rdf:type ?grouptype . } $optional
+   OPTIONAL {
+     { ?p rdfs:label ?proplabel . } 
+     UNION
+     { ?p rdfs:subPropertyOf ?pp . }
+     UNION
+     { ?uri rdf:type ?type .
+       ?type rdfs:label ?typelabel . }
+     UNION
+     { ?o rdf:type ?ot . }
+     UNION
+     { ?o skos:prefLabel ?opl . }
+     UNION
+     { ?o rdfs:label ?ol . }
+     UNION
+     { ?group skos:member ?uri .
+       ?group skos:prefLabel ?grouplabel .
+       ?group rdf:type ?grouptype . }
+   }
+   $optional
   }
  }
 }
