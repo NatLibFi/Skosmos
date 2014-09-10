@@ -193,12 +193,11 @@ EOQ;
    * Returns information (as a graph) for one or more concept URIs
    * @param mixed $uris concept URI (string) or array of URIs
    * @param string $arrayClass the URI for thesaurus array class, or null if not used
-   * @param string $lang eg. 'en'.
    * @param string $vocid eg. 'yso'.
-   * @param boolean $rest
-   * @return EasyRDF_Graph query result graph
-   */
-  public function queryConceptInfo($uris, $arrayClass = null, $lang = null, $vocid = null, $rest = false)
+   * @param boolean $as_graph whether to return a graph (true) or array of Concepts (false)
+   * @return mixed query result graph (EasyRdf_Graph), or array of Concept objects
+   */ 
+  public function queryConceptInfo($uris, $arrayClass = null, $vocid = null, $as_graph = false)
   {
     $gc = $this->graphClause;
 
@@ -268,7 +267,7 @@ CONSTRUCT {
 $values
 EOQ;
     $result = $this->client->query($query);
-    if ($rest)
+    if ($as_graph)
       return $result;
 
     if ($result->isEmpty())
@@ -1004,7 +1003,7 @@ EOQ;
       }
     }
     // querying the 'leaf' concepts information too.
-    $result = $this->queryConceptInfo($orig_uri, false, $lang); //conceptDAO
+    $result = $this->queryConceptInfo($orig_uri); //conceptDAO
     if (isset($result)) {
       $result = $result[0];
       $ret[$result->getUri()]['prefLabel'] = $result->getLabel();

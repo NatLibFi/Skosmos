@@ -476,7 +476,7 @@ class Vocabulary extends DataObject
       $serialiser = new EasyRdf_Serialiser_RdfXml();
     }
 
-    $result = $sparql->queryConceptInfo($uri, $this->getArrayClassURI(), null, null, true);
+    $result = $sparql->queryConceptInfo($uri, $this->getArrayClassURI(), null, true);
 
     return $serialiser->serialise($result, $retform);
   }
@@ -490,7 +490,7 @@ class Vocabulary extends DataObject
   {
     $sparql = $this->getSparql();
 
-    return $sparql->queryConceptInfo($uri, $this->getArrayClassURI(), $this->lang, $this->getId());
+    return $sparql->queryConceptInfo($uri, $this->getArrayClassURI(), $this->getId());
   }
 
   /**
