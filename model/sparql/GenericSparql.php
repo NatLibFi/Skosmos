@@ -193,11 +193,11 @@ EOQ;
    * Returns information (as a graph) for one or more concept URIs
    * @param mixed $uris concept URI (string) or array of URIs
    * @param string $arrayClass the URI for thesaurus array class, or null if not used
-   * @param string $vocid eg. 'yso'.
+   * @param string $vocabs array of Vocabulary object
    * @param boolean $as_graph whether to return a graph (true) or array of Concepts (false)
    * @return mixed query result graph (EasyRdf_Graph), or array of Concept objects
    */ 
-  public function queryConceptInfo($uris, $arrayClass = null, $vocid = null, $as_graph = false)
+  public function queryConceptInfo($uris, $arrayClass = null, $vocabs = null, $as_graph = false)
   {
     $gc = $this->graphClause;
 
@@ -206,6 +206,7 @@ EOQ;
       $uris = array($uris);
 
     $values = $this->formatValues('?uri', $uris, 'uri');
+    $values_graph = $this->formatValuesGraph($vocabs);
 
     if (!$arrayClass) {
       $construct = $optional = "";
@@ -259,12 +260,12 @@ CONSTRUCT {
      { ?group skos:member ?uri .
        ?group skos:prefLabel ?grouplabel .
        ?group rdf:type ?grouptype . }
-   }
-   $optional
+   } $optional
   }
  }
+ $values
 }
-$values
+$values_graph
 EOQ;
     $result = $this->client->query($query);
     if ($as_graph)
@@ -276,7 +277,7 @@ EOQ;
     $conceptArray = array();
     foreach ($uris as $uri) {
       $conc = $result->resource($uri);
-      $vocab = isset($vocid) ? $this->model->getVocabulary($vocid) : $this->model->guessVocabularyFromUri($uri);
+      $vocab = sizeof($vocabs) == 1 ? $vocabs[0] : $this->model->guessVocabularyFromUri($uri);
       $conceptArray[] = new Concept($this->model, $vocab, $conc, $result);
     }
 
@@ -408,6 +409,23 @@ EOQ;
   }
 
   /**
+   * Generate a VALUES clause for limiting the targeted graphs.
+   * @param array $vocabs array of Vocabulary objects to target
+   * @return string VALUES clause, or "" if not necessary to limit
+   */
+  protected function formatValuesGraph($vocabs) {
+    if ($this->isDefaultEndpoint() && $vocabs != null && sizeof($vocabs) > 0) {
+      $graphs = array();
+      foreach ($vocabs as $voc) {
+        $graphs[] = $voc->getGraph();
+      }
+      return $this->formatValues('?graph', $graphs, 'uri');
+    } else {
+      return "";
+    }
+  }
+
+  /**
    * Query for concepts using a search term.
    * @param string $term search term
    * @param array $vocabs array of Vocabulary objects to search; empty for global search
@@ -471,16 +489,7 @@ EOQ;
     if ($hidden) $props[] = 'skos:hiddenLabel';
     $values_prop = $this->formatValues('?prop', $props);
 
-    if ($this->isDefaultEndpoint() && sizeof($vocabs) > 0) {
-      $graphs = array();
-      foreach ($vocabs as $voc) {
-        $graphs[] = $voc->getGraph();
-      }
-      $values_graph = $this->formatValues('?graph', $graphs, 'uri');
-    } else {
-      $values_graph = "";
-    }
-
+    $values_graph = $this->formatValuesGraph($vocabs);
 
     while (strpos($term, '**') !== false)
       $term = str_replace('**', '*', $term); // removes futile asterisks
