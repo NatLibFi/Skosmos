@@ -286,17 +286,23 @@ class Model
     $hits = array_slice($allhits, $offset, $limit);
 
     $uris = array();
+    $vocabs = array();
+    if ($vocids != null) {
+      foreach ($vocids as $vocid) {
+        $vocabs[] = $this->getVocabulary($vocid);
+      }
+    }
     foreach ($hits as $hit)
       $uris[] = $hit['uri'];
-    if (sizeof($vocids) == 1) {
-      $voc = $this->getVocabulary($vocids[0]);
+    if (sizeof($vocabs) == 1) {
+      $voc = $vocabs[0];
       $sparql = $voc->getSparql();
       $arrayClass = $voc->getArrayClassURI();
     } else {
       $arrayClass = null;
       $sparql = $this->getDefaultSparql();
     }
-    $ret = $sparql->queryConceptInfo($uris, $arrayClass, $lang, sizeof($vocids) == 1 ? $vocids[0] : null);
+    $ret = $sparql->queryConceptInfo($uris, $arrayClass, $vocabs);
 
     // For marking that the concept has been found through an alternative label, hidden
     // label or a label in another language
