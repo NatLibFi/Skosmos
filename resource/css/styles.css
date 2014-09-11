@@ -809,6 +809,11 @@ tr {
   margin-bottom: 0;
 }
 
+.preflabel-desc {
+  vertical-align: top;
+  padding-top: 4px;
+}
+
 .concept-info div > table > tbody > tr > td:first-child {
   max-width: 225px;
   width: 225px;

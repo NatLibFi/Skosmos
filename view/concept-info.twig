@@ -46,20 +46,25 @@
             {% endfor %}
           {% endif %}
           {% spaceless %}
-          <div class="preflabel-container" title="{{ 'skos:prefLabel_help'|trans }}">
+          <table class="preflabel-container" title="{{ 'skos:prefLabel_help'|trans }}"><tr>
+          <td class="preflabel-desc">
+            <span class="versal">{{ 'skos:prefLabel'|trans|upper }}</span>
             {% if concept.foundBy %} {# hit has been found through an alternative label #}
             <span class="versal">{{ concept.foundBy }} >></span>
             {% if concept.ExVocab is defined %}
             <span class="prefLabel conceptlabel redirected-vocab-id"> @{{ concept.ExVocab }}</span>
             {% endif %}
             <br /><a class="prefLabel foundby" href="{{ concept.uri | link_url(concept.vocab,lang) }}">{{ concept.label }}</a></span>
+          </td>
           {% else %}
+          <td>
           <span class="prefLabel
             {% if lang_count is not defined and rest != 1 %}">{{ concept.label }}</span>{% else %}"></span>
             <a class="prefLabel conceptlabel" href="{% if concept.type == "skos:Collection" %}{{ concept.uri | link_url(concept.vocab, lang, 'groups') }}{% elseif concept.exvocab is defined%}{{ concept.uri | link_url(concept.exvocab,concept.lang) }}{% else %}{{ concept.uri | link_url(concept.vocab,concept.lang) }}{% endif %}">{{ concept.label }}</a>
             {% endif %}
+          </td>
           {% endif %}
-          </div>
+          <tr></table>
           <hr />
           {% endspaceless %}
           <table class="table search-results-property-table{% if concept.type == 'skosext:DeprecatedConcept' %} deprecated{% endif %}">
