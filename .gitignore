@@ -2,3 +2,5 @@ config.inc
 vocabularies.ttl
 vendor
 components
+composer.lock
+composer.phar
