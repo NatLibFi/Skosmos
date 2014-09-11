@@ -342,7 +342,7 @@ class WebController extends Controller
     $vocids = $vocabs !== null ? explode(' ', $vocabs) : null;
     
     $this->twig->addGlobal("SearchLanguage", $search_lang);
-    $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocids, $lang, $search_lang, $offset, null, $type, $parent, $group);
+    $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocids, $lang, $search_lang, $offset, 20, $type, $parent, $group);
     $counts = $count_and_results['count'];
     $search_results = $count_and_results['results'];
     $uri_parts = $_SERVER['REQUEST_URI'];

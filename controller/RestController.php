@@ -259,8 +259,10 @@ class RestController extends Controller
    * Loads the vocabulary type metadata. And wraps the result in a json-ld object.
    * @param string $vocabId identifier string for the vocabulary eg. 'yso'.
    */
-  public function types($vocabId)
+  public function types($vocabId = null)
   {
+    if ($vocabId == null && !isset($_GET['lang']))
+      return $this->return_error(400, "Bad Request", "lang parameter missing");
     $lang = $this->getAndSetLanguage($vocabId);
     $queriedtypes = $this->model->getTypes($vocabId);
 
