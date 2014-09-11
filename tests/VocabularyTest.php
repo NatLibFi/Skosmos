@@ -167,15 +167,6 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @covers Vocabulary::getDefaultConceptScheme
-   */
-  public function testGetDefaultConceptScheme() {
-    $vocab = $this->model->getVocabulary('test');
-    $cs = $vocab->getDefaultConceptScheme();
-    $this->assertEquals('http://www.yso.fi/onto/test/', $cs);
-  }
-  
-  /**
    * @covers Vocabulary::getDataURL
    */
   public function testGetDataURL() {
@@ -249,17 +240,30 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @covers Vocabulary::getConceptSchemes
+   * @covers Vocabulary::getDefaultConceptScheme
    */
-  public function testGetConceptSchemes() {
+  public function testGetDefaultConceptScheme() {
+    $vocab = $this->model->getVocabulary('test');
+    $cs = $vocab->getDefaultConceptScheme();
+    $this->assertEquals('http://www.yso.fi/onto/test/', $cs);
+  }
+
+  /**
+   * @covers Vocabulary::getDefaultConceptScheme
+   */
+  public function testGetDefaultConceptSchemeWhenNotSet() {
     $model = new Model();
-    $resource = new EasyRdf_Resource('http://www.yso.fi/onto/yso/');
-    $mock_cs_response = array ( 'http://www.yso.fi/onto/yso/' => array ( 'label' => 'Yleinen suomalainen ontologia YSO', ), 'http://www.yso.fi/onto/yso/aggregateconceptscheme' => array ( ), 'http://www.yso.fi/onto/yso/deprecatedconceptscheme' => array ( ), );
+    $resource = new EasyRdf_Resource('http://www.yso.fi/onto/test/');
+
+    //$sparqlstub = $this->getMock('GenericSparql', array('queryConceptSchemes'), array('http://skosmos.skos/sparql','http://www.yso.fi.onto/yso', $model));
+    //$sparqlstub->method('queryConceptSchemes')->willReturn(array ( 
+      //'http://www.yso.fi/onto/yso/' => array ( 'label' => 'Yleinen suomalainen ontologia YSO', ), 
+      //'http://www.yso.fi/onto/yso/aggregateconceptscheme' => array ( ), 
+      //'http://www.yso.fi/onto/yso/deprecatedconceptscheme' => array ( ), ));
     $vocabstub = $this->getMock('Vocabulary', array('getSparql'), array($model, $resource));
-    $vocabstub->method('getSparql')->willReturn(null);
-    $uri = $vocab->getDefaultConceptScheme();
-    $this->assertEquals(true, $uri);
+    $vocabstub->method('getSparql')->willReturn('lol');
+    $default = $vocabstub->getDefaultConceptScheme();
+    $this->assertEquals('ding', $default);
   }
   
-
 }
