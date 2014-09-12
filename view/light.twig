@@ -88,6 +88,7 @@
               <option>isothes:ThesaurusArray</option>
             </select>
           </div>
+          {% if vocab.groupClassURI %}
           <div class="input-group">
             <span class="versal">{% trans "By group" %}</span>
             <select id="group-limit" value="{{ limit-group }}" class="form-control multiselect">
@@ -97,6 +98,7 @@
               {% endfor %}
             </select>
           </div>
+          {% endif %}
           <div class="input-group">
             <span class="versal">{% trans "By parent" %}</span><input type="text" id="parent-limit" class="form-control" value="{{ limit_parent }}">
           </div>
