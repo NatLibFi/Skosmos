@@ -306,7 +306,7 @@ $(function() { // DOCUMENT READY
         var $content = $('.content');
         var targetUrl = event.target.href;
         var parameters = $.param({'base_path' : base_path});
-        var hierButton = '<li id="hierarchy"><a id="hier-trigger" href="#">Hierarkia</a></li>';
+        var hierButton = '<li id="hierarchy"><a id="hier-trigger" href="#">' + hiertrans + '</a></li>';
         $.ajax({
             url : targetUrl,
             data: parameters,
