@@ -15,16 +15,4 @@ class DataObjectTest extends PHPUnit_Framework_TestCase
     new DataObject(null, null); 
   }
   
-  /**
-   * @covers DataObject::arbitrarySort
-   * @expectedException \Exception
-   */
-  public function testArbitrarySort()
-  {
-    $model = new Model();
-    $resource = new EasyRdf_Resource('http://www.yso.fi/onto/test/');
-    $do = new DataObject($model, $resource); 
-    $do->arbitrarySort();
-  }
-
 }
