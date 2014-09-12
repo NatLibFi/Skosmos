@@ -635,6 +635,11 @@ ul.vocab-category {
           box-shadow: none !important;
 }
 
+.preflabel-spacer {
+  height: 18px !important;
+  background: url('../pics/stripe.png') repeat-x 50% center !important;
+}
+
 hr {
   border: 1px solid transparent !important;
   background: url('../pics/stripe.png') !important;
@@ -863,10 +868,19 @@ tr {
   margin: 10px 0 5px 0 !important;
 }
 
-.preflabel-description {
-  display: inline-block;
-  width: 225px;
-  height: 100%;
+.preflabel-container > td {
+  border: 0 !important;
+}
+
+.preflabel-desc > span {
+  position: relative;
+  top: 11px;
+}
+
+.search-results-property-table td.preflabel-spacer {
+  border-bottom: 1px solid transparent !important;
+  padding: 0 !important;
+  margin-bottom: 10px;
 }
 
 .property {
@@ -936,7 +950,7 @@ td > .property-click {
   padding-right: 5px !important;
 }
 
-.help-box p {
+.help-box > span.versal {
   display: inline-block; 
   margin-left: 5px !important;
 }
@@ -978,6 +992,7 @@ tr.replaced-by > td > ul > li > a {
 }
 
 .concept-main > .search-results-property-table {
+  margin-top: 10px;
   margin-bottom: 5px;
 }
 
