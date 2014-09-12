@@ -814,11 +814,6 @@ tr {
   margin-bottom: 0;
 }
 
-.preflabel-desc {
-  vertical-align: top;
-  padding-top: 4px;
-}
-
 .concept-info div > table > tbody > tr > td:first-child {
   max-width: 225px;
   width: 225px;
@@ -877,16 +872,15 @@ tr {
   border: 0 !important;
 }
 
+.preflabel-desc > span {
+  position: relative;
+  top: 11px;
+}
+
 .search-results-property-table td.preflabel-spacer {
   border-bottom: 1px solid transparent !important;
   padding: 0 !important;
   margin-bottom: 10px;
-}
-
-.preflabel-description {
-  display: inline-block;
-  width: 225px;
-  height: 100%;
 }
 
 .property {
