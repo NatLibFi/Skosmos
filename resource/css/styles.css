@@ -950,7 +950,7 @@ td > .property-click {
   padding-right: 5px !important;
 }
 
-.help-box p {
+.help-box > span.versal {
   display: inline-block; 
   margin-left: 5px !important;
 }
