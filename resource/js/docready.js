@@ -969,12 +969,7 @@ $(function() { // DOCUMENT READY
           empty: Handlebars.compile([
             '<div><p class="autocomplete-no-results">{{#noresults}}{{/noresults}}</p></div>'
           ].join('')),
-          suggestion: Handlebars.compile([
-            '{{# if matched }}<div><p class="matched-label">{{matched}}</p>',
-            '{{# if lang}}<p>({{lang}})</p>{{/if}}<p>\u2192</p>{{/if}}',
-            '<p class="autocomplete-label">{{label}}{{# if lang}}{{# unless matched }}<p>({{lang}})</p>{{/unless}}{{/if}}</p></div>',
-            '<div class="vocab">{{exvocab}}</div>',
-          ].join(''))
+          suggestion: Handlebars.compile(autocompleteTemplate)
         },
         source: concepts.ttAdapter()
     }).on('typeahead:cursorchanged', function($e) {
