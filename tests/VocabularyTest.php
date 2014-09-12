@@ -247,23 +247,5 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
     $cs = $vocab->getDefaultConceptScheme();
     $this->assertEquals('http://www.yso.fi/onto/test/', $cs);
   }
-
-  /**
-   * @covers Vocabulary::getDefaultConceptScheme
-   */
-  public function testGetDefaultConceptSchemeWhenNotSet() {
-    $model = new Model();
-    $resource = new EasyRdf_Resource('http://www.yso.fi/onto/test/');
-
-    //$sparqlstub = $this->getMock('GenericSparql', array('queryConceptSchemes'), array('http://skosmos.skos/sparql','http://www.yso.fi.onto/yso', $model));
-    //$sparqlstub->method('queryConceptSchemes')->willReturn(array ( 
-      //'http://www.yso.fi/onto/yso/' => array ( 'label' => 'Yleinen suomalainen ontologia YSO', ), 
-      //'http://www.yso.fi/onto/yso/aggregateconceptscheme' => array ( ), 
-      //'http://www.yso.fi/onto/yso/deprecatedconceptscheme' => array ( ), ));
-    $vocabstub = $this->getMock('Vocabulary', array('getSparql'), array($model, $resource));
-    $vocabstub->method('getSparql')->willReturn('lol');
-    $default = $vocabstub->getDefaultConceptScheme();
-    $this->assertEquals('ding', $default);
-  }
   
 }
