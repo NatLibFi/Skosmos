@@ -96,7 +96,7 @@
             {% endfor %}
             </ul></td></tr>
           {% endfor %}
-          {% if concept.foreignPrefLabels or concept.foreignAltLabels %}<tr><td><span class="versal property-click" title="{% trans "foreign prefLabel help" %}" >{{ 'foreign prefLabels'|trans|upper }}</td><td>
+          {% if concept.foreignPrefLabels or concept.foreignAltLabels %}<tr><td><span class="versal property-click" title="{% trans "foreign prefLabel help" %}" >{{ 'foreign prefLabels'|trans|upper }}</span></td><td>
               <ul>
               {% for lang,labels in concept.foreignPrefLabels %}
                 {% for label in labels %}
