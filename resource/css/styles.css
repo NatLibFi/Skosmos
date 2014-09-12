@@ -635,6 +635,11 @@ ul.vocab-category {
           box-shadow: none !important;
 }
 
+.preflabel-spacer {
+  height: 18px !important;
+  background: url('../pics/stripe.png') repeat-x 50% center !important;
+}
+
 hr {
   border: 1px solid transparent !important;
   background: url('../pics/stripe.png') !important;
@@ -868,6 +873,16 @@ tr {
   margin: 10px 0 5px 0 !important;
 }
 
+.preflabel-container > td {
+  border: 0 !important;
+}
+
+.search-results-property-table td.preflabel-spacer {
+  border-bottom: 1px solid transparent !important;
+  padding: 0 !important;
+  margin-bottom: 10px;
+}
+
 .preflabel-description {
   display: inline-block;
   width: 225px;
@@ -983,6 +998,7 @@ tr.replaced-by > td > ul > li > a {
 }
 
 .concept-main > .search-results-property-table {
+  margin-top: 10px;
   margin-bottom: 5px;
 }
 

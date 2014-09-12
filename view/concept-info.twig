@@ -46,7 +46,7 @@
             {% endfor %}
           {% endif %}
           {% spaceless %}
-          <table class="preflabel-container" title="{{ 'skos:prefLabel_help'|trans }}"><tr>
+          <table class=" table search-results-property-table{% if concept.type == 'skosext:DeprecatedConcept' %} deprecated{% endif %}"><tr class="preflabel-container">
           <td class="preflabel-desc">
             <span class="versal">{{ 'skos:prefLabel'|trans|upper }}</span>
             {% if concept.foundBy %} {# hit has been found through an alternative label #}
@@ -64,10 +64,9 @@
             {% endif %}
           </td>
           {% endif %}
-          <tr></table>
-          <hr />
+          </tr>
+          <tr><td class="preflabel-spacer" colspan="2"></td></tr>
           {% endspaceless %}
-          <table class="table search-results-property-table{% if concept.type == 'skosext:DeprecatedConcept' %} deprecated{% endif %}">
           {% for property in concept.properties %} {# loop through ConceptProperty objects #}
             <tr{% if property.type == 'dc:isReplacedBy' %} class="replaced-by"{% endif%}><td><span class="versal{% if property.type == 'rdf:type' %}-bold{% endif %}{% if not (property.type in property.description and '_help' in property.description) %} property-click" title="{{ property.description }}"{% else %}"{% endif %}>{{ property.label|upper }}</span></td><td><ul>
             {% for propval in property.values %} {# loop through ConceptPropertyValue objects #}
