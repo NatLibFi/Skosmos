@@ -92,6 +92,7 @@ $(function() { // DOCUMENT READY
       var snap = (settings.url.indexOf('hierarchy') !== -1) ? 18 : 15;
       countAndSetOffset();
       $(".sidebar-grey").mCustomScrollbar({ 
+        alwaysShowScrollbar: 1,
         scrollInertia: 0, 
         mouseWheel:{ scrollAmount: 105 },
         snapAmount: snap,
@@ -102,7 +103,7 @@ $(function() { // DOCUMENT READY
     } 
     var $autocomplete = $('.tt-dropdown-menu');
     if (settings.url.indexOf('search') !== -1 && $autocomplete.length > 0 && $autocomplete[0].offsetHeight === 302)
-      $(".tt-dropdown-menu").mCustomScrollbar({ scrollInertia: 0 });
+      $(".tt-dropdown-menu").mCustomScrollbar({ alwaysShowScrollbar: 1, scrollInertia: 0 });
   });
 
   function scrollToConcept() {
@@ -873,6 +874,7 @@ $(function() { // DOCUMENT READY
    */
   if ($('#vocab-info').length === 0 && document.URL.indexOf('/page/') === -1 && $('.search-count').length === 0) {
     $(".sidebar-grey").mCustomScrollbar({ 
+      alwaysShowScrollbar: 1,
       scrollInertia: 0, 
       mouseWheel:{ scrollAmount: 105 },
       snapAmount: 15,
@@ -956,6 +958,7 @@ $(function() { // DOCUMENT READY
     });
 
     $('.multiselect-container').mCustomScrollbar({ 
+      alwaysShowScrollbar: 1,
       scrollInertia: 0, 
       mouseWheel:{ scrollAmount: 60 },
       snapAmount: 20,
