@@ -79,15 +79,17 @@
         </div>
         {% if term %}
         <form class="search-options">
+          {% if types|length > 1 %}
           <div class="input-group">
             <span class="versal">{% trans "By type" %}</span>
             <select id="type-limit" value="{{ limit-type }}" class="form-control multiselect">
               <option></option>
               {% for uri,type in types %}
-                <option value="{{ uri }}">{{ type.label }}</option>
+                <option value="{{ uri }}">{% if type.label %}{{ type.label }}{% else %}{{ uri|trans }}{% endif %}</option>
               {% endfor %}
             </select>
           </div>
+          {% endif %}
           {% if vocab.groupClassURI %}
           <div class="input-group">
             <span class="versal">{% trans "By group" %}</span>

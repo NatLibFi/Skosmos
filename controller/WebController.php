@@ -374,7 +374,7 @@ class WebController extends Controller
     $this->setLanguageProperties($lang);
     try {
       $vocab = $this->model->getVocabulary($vocab_id);
-      $vocab_types = $this->model->getTypes($vocab_id);
+      $vocab_types = $this->model->getTypes($vocab_id, $lang);
     } catch (Exception $e) {
       header("HTTP/1.0 404 Not Found");
       if (LOG_CAUGHT_EXCEPTIONS)
