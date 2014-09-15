@@ -83,9 +83,9 @@
             <span class="versal">{% trans "By type" %}</span>
             <select id="type-limit" value="{{ limit-type }}" class="form-control multiselect">
               <option></option>
-              <option>skos:Concept</option>
-              <option>skos:Collection</option>
-              <option>isothes:ThesaurusArray</option>
+              {% for uri,type in types %}
+                <option value="{{ uri }}">{{ type.label }}</option>
+              {% endfor %}
             </select>
           </div>
           {% if vocab.groupClassURI %}
