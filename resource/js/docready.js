@@ -288,7 +288,7 @@ $(function() { // DOCUMENT READY
               var response = $('.content', data).html();
               document.title = title;
               if (window.history.pushState)
-                window.history.pushState({url: targetUrl}, '', encodeURI(targetUrl));
+                window.history.pushState({url: targetUrl}, '', targetUrl);
               $content.append(response);
             }
         });
