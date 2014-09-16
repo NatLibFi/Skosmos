@@ -216,6 +216,7 @@ function getTreeConfiguration(root) {
             if (!nodeId) {
               nodeId = node[0].children[1].href;
             }
+            nodeId = decodeURI(nodeId);
             return $.param({'uri' : nodeId, 'lang' : lang});
           } else {
             nodeId = $('.uri-input-box').html(); // using the real uri of the concept from the view.

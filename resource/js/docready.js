@@ -269,7 +269,6 @@ $(function() { // DOCUMENT READY
   // event handler for clicking the hierarchy concepts
   $(document).on('click', '.jstree-no-icons a',
       function(event) {
-        $.ajaxQ.abortAll();
         event.preventDefault();
         var base_path = path_fix.length / 3;
         var clicked = $(this);
