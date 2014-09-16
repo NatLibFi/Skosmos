@@ -115,12 +115,16 @@
     </div>
     {% if vocab_id == '' and vocab_id != 'feedback' and vocab_id != 'about' and not global_search %}
       {% include 'left.inc' ignore missing %}
-      {% include 'vocabularylist.twig' %}
     {% endif %}
-    <div class="{% if global_search %}global-{% endif %}content">
-    {% block content %}
+    {% block error %}
+      {% if vocab_id == '' and vocab_id != 'feedback' and vocab_id != 'about' and not global_search %}
+        {% include 'vocabularylist.twig' %}
+      {% endif %}
+      <div class="{% if global_search %}global-{% endif %}content">
+      {% block content %}
+      {% endblock %}
+      </div>
     {% endblock %}
-    </div>
     {% if vocab_id == '' and not global_search %}
       {% include 'right.inc' ignore missing %}
     {% endif %}

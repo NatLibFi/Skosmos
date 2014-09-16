@@ -240,7 +240,7 @@ section {
 .search-hint {
   display: inline-block !important;
   text-align: bottom;
-  border-bottom: 2px dotted #cfcfcf;
+  border-bottom: 2px dotted #d6d6d6;
 }
 
 #example {
@@ -770,6 +770,12 @@ tr {
   border-radius: 0 !important;
   border: none !important;
   color: white !important;
+}
+
+.frontpage-alert {
+  display: inline-block;
+  margin-left: 20px;
+  width: calc(100% - 375px);
 }
 
 .alert h2 {
@@ -1619,6 +1625,10 @@ body, .versal, h1, h2, p, .versal-bold {
   section, .headerbar, .topbar {
     width: 1190px !important;
   }
+  
+  .frontpage-alert {
+    width: calc(100% - 610px);
+  }
 
   .sidebar-grey-alpha {
     height: calc(100% - 150px) !important;
@@ -1733,6 +1743,10 @@ body, .versal, h1, h2, p, .versal-bold {
   
   section, .headerbar, .topbar {
     width: 1240px !important;
+  }
+  
+  .frontpage-alert {
+    width: calc(100% - 530px);
   }
 
   #vocabulary-list {
