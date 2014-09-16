@@ -774,8 +774,6 @@ tr {
 
 .frontpage-alert {
   display: inline-block;
-  margin-left: 20px;
-  width: calc(100% - 375px);
 }
 
 .alert h2 {
@@ -1547,6 +1545,11 @@ body, .versal, h1, h2, p, .versal-bold {
   
   .right-box {
     top: 435px !important;
+  }
+
+  .frontpage-alert {
+    margin-left: 20px;
+    width: calc(100% - 375px);
   }
 
   .navbar-form .ui-autocomplete .tt-dropdown {
