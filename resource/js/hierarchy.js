@@ -246,6 +246,7 @@ function getTreeConfiguration(root) {
     },
     core: { animation: 0, initially_open: ['#jstree-leaf-proper'], strings: { loading : jstree_loading, new_node : 'New node' } },
     ui: { initially_select: ['#jstree-leaf-proper'] },
+    sort: function(a, b) { return this.get_text(a).toLowerCase() > this.get_text(b).toLowerCase() ? 1 : -1; },
     themes: {}
   };
   jsonData.plugins = ['themes', 'json_data', 'ui', 'sort'];
