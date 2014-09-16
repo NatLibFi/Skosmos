@@ -583,9 +583,8 @@ $(function() { // DOCUMENT READY
   function onSelection($e, datum) {
     if ($e.currentTarget.id !== 'parent-limit') {
       var localname = datum.localname;
-      if (datum.exvocab && datum.vocab === '???') {
+      if (!localname) {
         localname = "?uri=" + datum.uri;
-        datum.vocab = datum.exvocab;
       }
       // replaced complex logic with path_fix that should always work.
       if (datum.type && datum.type.indexOf('Collection') !== -1) {
