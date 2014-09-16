@@ -275,7 +275,7 @@ $(function() { // DOCUMENT READY
         var clicked = $(this);
         var $content = $('.content');
         var targetUrl = 'http://' + base_url + vocab + '/' + lang + '/page/?uri=' + event.target.href;
-        var parameters = $.param({'uri' : event.target.href, 'base_path' : base_path});
+        var parameters = $.param({'base_path' : base_path});
         $('#hier-trigger').attr('href', targetUrl);
         $.ajax({
             url : targetUrl,
@@ -288,7 +288,7 @@ $(function() { // DOCUMENT READY
               var response = $('.content', data).html();
               document.title = title;
               if (window.history.pushState)
-                window.history.pushState({url: targetUrl}, '', encodeURI(targetUrl));
+                window.history.pushState({url: targetUrl}, '', targetUrl);
               $content.append(response);
             }
         });
