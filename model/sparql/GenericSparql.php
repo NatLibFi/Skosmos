@@ -241,6 +241,13 @@ CONSTRUCT {
   UNION
   { ?sp ?uri ?op . }
   UNION
+  { ?uri rdf:type ?type .
+    ?type rdfs:label ?typelabel . }
+  UNION
+  { ?group skos:member ?uri .
+    ?group skos:prefLabel ?grouplabel .
+    ?group rdf:type ?grouptype . }
+  UNION
   {
    ?uri ?p ?o .
    OPTIONAL {
@@ -248,18 +255,11 @@ CONSTRUCT {
      UNION
      { ?p rdfs:subPropertyOf ?pp . }
      UNION
-     { ?uri rdf:type ?type .
-       ?type rdfs:label ?typelabel . }
-     UNION
      { ?o rdf:type ?ot . }
      UNION
      { ?o skos:prefLabel ?opl . }
      UNION
      { ?o rdfs:label ?ol . }
-     UNION
-     { ?group skos:member ?uri .
-       ?group skos:prefLabel ?grouplabel .
-       ?group rdf:type ?grouptype . }
    } $optional
   }
  }
