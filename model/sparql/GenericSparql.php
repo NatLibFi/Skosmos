@@ -962,19 +962,28 @@ EOQ;
     $orig_uri = $uri;
         $gc = $this->graphClause;
     $query = <<<EOQ
-SELECT ?broad ?label ?parent ?member ?children ?childlabel ?grandchildren (SAMPLE(?topcs) AS ?top) WHERE {
+SELECT ?broad ?parent ?member ?children ?grandchildren 
+(SAMPLE(?lab) as ?label) (SAMPLE(?childlab) as ?childlabel) (SAMPLE(?topcs) AS ?top)
+WHERE {
     $gc {
       <$uri> a skos:Concept .
       OPTIONAL {
       <$uri> skos:broader* ?broad .
       OPTIONAL {
-        ?broad skos:prefLabel ?label .
-        FILTER (langMatches(lang(?label), "$lang"))
+        ?broad skos:prefLabel ?lab .
+        FILTER (langMatches(lang(?lab), "$lang"))
+      }
+      OPTIONAL { # fallback - other language case
+        ?broad skos:prefLabel ?lab .
       }
       OPTIONAL { ?broad skos:broader ?parent . }
       OPTIONAL { ?broad skos:narrower ?children .
-        OPTIONAL { ?children skos:prefLabel ?childlabel .
-          FILTER (langMatches(lang(?childlabel), "$lang"))
+        OPTIONAL {
+          ?children skos:prefLabel ?childlab .
+          FILTER (langMatches(lang(?childlab), "$lang"))
+        }
+        OPTIONAL { # fallback - other language case
+          ?children skos:prefLabel ?childlab .
         }
       }
       BIND ( EXISTS { ?children skos:narrower ?a . } AS ?grandchildren )
@@ -982,7 +991,7 @@ SELECT ?broad ?label ?parent ?member ?children ?childlabel ?grandchildren (SAMPL
     }
 }
 }
-GROUP BY ?broad ?label ?parent ?member ?children ?childlabel ?grandchildren
+GROUP BY ?broad ?parent ?member ?children ?grandchildren
 EOQ;
     $result = $this->client->query($query);
     $ret = array();
@@ -1002,9 +1011,18 @@ EOQ;
       if (isset($row->children)) {
         if(!isset($ret[$uri]['narrower']))
           $ret[$uri]['narrower'] = array();
+        
+        $label = null;
+        if (isset($row->childlabel)) {
+          if ($row->childlabel->getLang() == $lang)
+            $label = $row->childlabel->getValue();
+          else
+            $label = $row->childlabel->getValue() . " (" . $row->childlabel->getLang() . ")";
+        }
+        
         $child_arr = array(
           'uri' => $row->children->getUri(),
-          'label' => isset($row->childlabel) ? $row->childlabel->getValue() : null,
+          'label' => $label,
           'hasChildren' => filter_var($row->grandchildren->getValue(), FILTER_VALIDATE_BOOLEAN),
         );
         if(!in_array($child_arr, $ret[$uri]['narrower']))
