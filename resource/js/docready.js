@@ -692,7 +692,7 @@ $(function() { // DOCUMENT READY
 
   var autocompleteTemplate =[
     '{{# if matched }}<p>{{matched}}</p>{{/if}}',
-    '{{# if replaced }}<p class="replaced-label">{{replaced}}</p>{{/if}}',
+    '{{# if replaced }}<p class="replaced">{{replaced}}</p>{{/if}}',
     '{{# if lang}}<p>({{lang}})</p>{{/if}}{{# if matched }}<p> &rarr; </p>{{/if}}{{# if replaced }}<p> &rarr; </p>{{/if}}',
     '<p class="autocomplete-label">{{label}}{{# if lang}}{{# unless matched }}<p>({{lang}})</p>{{/unless}}{{/if}}</p>',
     '{{# if type }}<span class="concept-type">{{type}}</span>{{/if}}',

@@ -1207,10 +1207,6 @@ ul.nav-tabs > li {
   float: right;
 }
 
-.replaced-label {
-  text-decoration: line-through;
-}
-
 .tt-suggestion > .concept-type {
   height: auto;
   float: right;
@@ -1302,8 +1298,7 @@ p {
 }
 
 .replaced {
-  // font-style: italic;
-  text-decoration: line-through;
+  font-style: italic;
 }
 
 a:link,a:visited,a:active,a:hover,a:focus {
