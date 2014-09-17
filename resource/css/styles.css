@@ -1216,6 +1216,10 @@ ul.nav-tabs > li {
   overflow: hidden;
 }
 
+p.autocomplete-label {
+  color: #00748f !important;
+}
+
 /* jsTree customization
  *****************************************/
 .jstree-no-icons {
