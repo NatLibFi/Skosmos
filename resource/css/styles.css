@@ -1627,6 +1627,10 @@ body, .versal, h1, h2, p, .versal-bold {
   section, .headerbar, .topbar {
     width: 1190px !important;
   }
+
+  #service-name {
+    left: 0 !important;
+  }
   
   .frontpage-alert {
     width: calc(100% - 610px);
