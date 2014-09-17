@@ -1,6 +1,6 @@
 {% extends "light.twig" %}
 {% set concept_label = '' %}{% for concept in search_results %}{% set concept_label = concept.label %}{% endfor %}
-{% block title %}: {{ vocab.shortName|upper }}{% if search_results|length == 1 %}: {{ concept_label }}{% elseif term != '' %} '{{ term }}'{% endif %}
+{% block title %}: {{ vocab.shortName }}{% if search_results|length == 1 %}: {{ concept_label }}{% elseif term != '' %} '{{ term }}'{% endif %}
 {% endblock %}
 {% block content %}
 <div class="search-result-listing">
