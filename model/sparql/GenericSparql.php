@@ -577,7 +577,13 @@ EOQ;
         $hit['type'][] = $qnamecache[$typeuri];
       }
 
-      $hit['localname'] = $row->s->localName();
+      foreach ($vocabs as $vocab) { // looping the vocabulary objects and asking these for a localname for the concept.
+        $localname = $vocab->getLocalName($hit['uri']);
+        if ($localname !== $hit['uri']) { // only passing the result forward if the uri didn't boomerang right back.
+          $hit['localname'] = $localname;
+          break; // stopping the search when we find one that returns something valid.
+        }
+      }
 
       $hit['prefLabel'] = $row->label->getValue();
       $hit['lang'] = $row->label->getLang();
