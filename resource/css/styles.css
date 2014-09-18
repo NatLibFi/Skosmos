@@ -112,6 +112,10 @@ section {
   float: left;
 }
 
+#navi4 {
+  cursor: default;
+}
+
 /* headerbar stuff
  *************************/
 
@@ -1259,7 +1263,7 @@ h2 {
   font-size: 16px !important;
 }
 
-a.navigation-font {
+.navigation-font {
   font-family: 'Fira Sans';
   font-size: 16px;
   color: black;
