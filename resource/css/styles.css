@@ -1423,6 +1423,12 @@ body, .versal, h1, h2, p, .versal-bold {
 
 }
 
+@media (max-width: 550px) {
+  #navi4 {
+    display: none;
+  }
+}
+
 @media (max-width: 700px) {
   .topbar {
     position: relative;
@@ -1443,7 +1449,7 @@ body, .versal, h1, h2, p, .versal-bold {
     /*max-width: 100px;*/
   /*}*/
 
-  #navigation > a, #language > a {
+  #navigation > a, #language > a, #navi4 > span {
     margin: 2px;
     font-weight: 500;
   }

@@ -213,6 +213,19 @@ class Concept extends VocabularyDataObject
               $label = $val->shorten() ? $val->shorten() : $exuri;
               $label_lang = $this->lang;
               $exvocab = null;
+              
+              $prop_info = $this->getPropertyParam($val, $prop);
+              $properties[$prop_info['prop']][] = new ConceptPropertyValue(
+                $prop_info['prop'],
+                $prop_info['concept_uri'],
+                $prop_info['vocab'],
+                $label_lang,
+                $label,
+                null,
+                null,
+                null 
+              );
+
             }
           }
         } else {
