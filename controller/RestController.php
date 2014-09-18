@@ -401,11 +401,11 @@ class RestController extends Controller
    * @param string $vocab vocabulary identifier.
    * @return object json-ld formatted concept.
    */
-  public function data($vocab)
+  public function data($vocab=null)
   {
     if (isset($_GET['uri'])) {
       $uri = $_GET['uri'];
-    } else { // whole vocabulary - redirect to download URL
+    } else if ($vocab !== null) { // whole vocabulary - redirect to download URL
       $url = $this->getVocabulary($vocab)->getDataURL();
       if (!$url)
         return $this->return_error('404', 'Not Found', "No download source URL known for vocabulary $vocab");
@@ -413,7 +413,7 @@ class RestController extends Controller
 
       return;
     }
-
+    
     if (isset($_GET['format'])) {
       $format = $_GET['format'];
       if (!in_array($format, explode(' ', self::$SUPPORTED_MIME_TYPES)))
@@ -424,7 +424,8 @@ class RestController extends Controller
       $best = $this->negotiator->getBest($_SERVER['HTTP_ACCEPT'], $priorities);
       $format = $best != null ? $best->getValue() : $priorities[0];
     }
-    $results = $this->getVocabulary($vocab)->getRDF($uri, $format);
+    
+    $results = $this->model->getRDF($vocab, $uri, $format);
 
     if ($format == 'application/ld+json' || $format == 'application/json') {
       // further compact JSON-LD document using a context
