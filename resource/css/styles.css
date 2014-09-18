@@ -1424,7 +1424,7 @@ body, .versal, h1, h2, p, .versal-bold {
     position: relative;
   }
 
-    #navi1, #navi3, #navi4 {
+    #navi1, #navi2, #navi3, #navi4 {
     background-image: none !important;
     padding-left: 0 !important;
   }

@@ -10,11 +10,14 @@
   <a href="{{ path_fix }}{{ lang }}/" id="navi1" class="navigation-font" >
   {% trans "Vocabularies-nav" %}
   </a>
-  <a href="{{ path_fix }}{{ lang }}/about" id="navi3" class="navigation-font">
+  <a href="{{ path_fix }}{{ lang }}/about" id="navi2" class="navigation-font">
   {% trans "About page" %}
   </a>
-  <a href="{{ path_fix }}{% if vocab_id and vocab.title%}{{ vocab_id }}/{% endif %}{{ lang }}/feedback" id="navi4" class="navigation-font">
+  <a href="{{ path_fix }}{% if vocab_id and vocab.title%}{{ vocab_id }}/{% endif %}{{ lang }}/feedback" id="navi3" class="navigation-font">
   {% trans "Feedback" %}
+  </a>
+  <a href="{{ path_fix }}{{ lang }}/about" id="navi4" class="navigation-font">
+  {% trans "Instructions" %}
   </a>
 </div>
 
