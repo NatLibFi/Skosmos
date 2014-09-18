@@ -472,6 +472,11 @@ $(function() { // DOCUMENT READY
     position: { my: 'top center', at: 'bottom center' },
     style: { classes: 'qtip-tipsy qtip-skosmos' } 
   });
+  
+  $('#navi4').qtip({ 
+    position: { my: 'top center', at: 'bottom center' },
+    style: { classes: 'qtip-tipsy qtip-skosmos' } 
+  });
     
   $('.property-click').qtip({ 
     position: { my: 'bottom center', at: 'top center' },
