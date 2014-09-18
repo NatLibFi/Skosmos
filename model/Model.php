@@ -193,6 +193,45 @@ class Model
   }
 
   /**
+   * returns a concept's RDF data in downloadable format
+   * @param string $vocid vocabulary id, or null for global data (from all vocabularies)
+   * @param string $uri concept URI
+   * @param string $format the format in which you want to get the result, currently this function supports
+   * text/turtle, application/rdf+xml and application/json
+   * @return string RDF data in the requested serialization
+   */
+  public function getRDF($vocid, $uri, $format)
+  {
+
+    if ($format == 'text/turtle') {
+      $retform = 'turtle';
+      $serialiser = new EasyRdf_Serialiser_Turtle();
+    } elseif ($format == 'application/ld+json' || $format == 'application/json') {
+      $retform = 'jsonld'; // serve JSON-LD for both JSON-LD and plain JSON requests
+      $serialiser = new EasyRdf_Serialiser_JsonLd();
+    } else {
+      $retform = 'rdfxml';
+      $serialiser = new EasyRdf_Serialiser_RdfXml();
+    }
+
+    if ($vocid !== null) {
+      $vocab = $this->getVocabulary($vocid);
+      $sparql = $vocab->getSparql();
+      $arrayClass = $vocab->getArrayClassURI();
+      $vocabs = array($vocab);
+    } else {
+      $sparql = $this->getDefaultSparql();
+      $arrayClass = null;
+      $vocabs = null;
+    }
+    $result = $sparql->queryConceptInfo($uri, $arrayClass, $vocabs, true);
+
+    return $serialiser->serialise($result, $retform);
+  }
+
+
+
+  /**
    * Makes a SPARQL-query to the endpoint that retrieves concept
    * references as it's search results.
    * @param string $term the term that is looked for eg. 'cat'.

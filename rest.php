@@ -29,6 +29,8 @@ try {
     $controller->search();
   } elseif ($parts[1] == 'types') {
     $controller->types();
+  } elseif ($parts[1] == 'data') {
+    $controller->data();
   } elseif (sizeof($parts) == 2) {
     header("Location: " . $parts[1] . "/");
   } else {

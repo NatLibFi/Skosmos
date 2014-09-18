@@ -229,7 +229,6 @@ CONSTRUCT {
  ?p rdfs:subPropertyOf ?pp .
  ?pp rdfs:label ?plabel .
  ?o rdf:type ?ot .
- ?type rdfs:label ?typelabel .
  ?o skos:prefLabel ?opl .
  ?o rdfs:label ?ol .
  ?group skos:member ?uri .
@@ -240,9 +239,6 @@ CONSTRUCT {
   { ?s ?p ?uri . }
   UNION
   { ?sp ?uri ?op . }
-  UNION
-  { ?uri rdf:type ?type .
-    ?type rdfs:label ?typelabel . }
   UNION
   { ?group skos:member ?uri .
     ?group skos:prefLabel ?grouplabel .

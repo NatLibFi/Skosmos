@@ -456,32 +456,6 @@ class Vocabulary extends DataObject
   }
 
   /**
-   * returns concept's RDF in downloadable format
-   * @param string $uri
-   * @param string $format is the format in which you want to get the result, currently this function supports
-   * text/turtle, application/rdf+xml and application/json
-   */
-  public function getRDF($uri, $format)
-  {
-    $sparql = $this->getSparql();
-
-    if ($format == 'text/turtle') {
-      $retform = 'turtle';
-      $serialiser = new EasyRdf_Serialiser_Turtle();
-    } elseif ($format == 'application/ld+json' || $format == 'application/json') {
-      $retform = 'jsonld'; // serve JSON-LD for both JSON-LD and plain JSON requests
-      $serialiser = new EasyRdf_Serialiser_JsonLd();
-    } else {
-      $retform = 'rdfxml';
-      $serialiser = new EasyRdf_Serialiser_RdfXml();
-    }
-
-    $result = $sparql->queryConceptInfo($uri, $this->getArrayClassURI(), array($this), true);
-
-    return $serialiser->serialise($result, $retform);
-  }
-
-  /**
    * Makes a query into the sparql endpoint for a concept.
    * @param string $uri the full URI of the concept
    * @return array
