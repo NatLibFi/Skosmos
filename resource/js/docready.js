@@ -190,6 +190,7 @@ $(function() { // DOCUMENT READY
   function countAndSetOffset() {
     if ($('#sidebar').length && !$('#sidebar').hasClass('fixed')) {
       var yOffset = window.innerHeight - ( $('#sidebar').offset().top - pageYOffset);
+      console.log(yOffset);
       $('#sidebar').css('height', yOffset);
     }
   }
@@ -907,7 +908,7 @@ $(function() { // DOCUMENT READY
       url : urlLangCorrected,
       success : function(data) {
         $('#sidebar').empty();
-        $('#sidebar').append($(data).find('#sidebar'));
+        $('#sidebar').append($(data).find('#sidebar')[0].innerHTML);
       }
     });
   }
