@@ -589,7 +589,7 @@ class WebController extends Controller
     } catch (Exception $e) {
       header("HTTP/1.0 404 Not Found");
       header("HTTP/1.0 404 Not Found");
-      $template = $this->twig->loadTemplate('concept-info');
+      $template = $this->twig->loadTemplate('concept-info.twig');
       if (LOG_CAUGHT_EXCEPTIONS)
         error_log('Caught exception: ' . $e->getMessage());
       echo $template->render(array('path_fix' => $this->path_fix,
