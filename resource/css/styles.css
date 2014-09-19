@@ -535,11 +535,11 @@ ul.vocab-category {
   border-top: 2px solid #394554;
 }
 
-#about p, #about h4 {
-  margin: 15px;
+.about-content {
+  margin: 0 15px;
 }
 
-#about a {
+.about-content > p > a {
   margin: 0 5px;
 }
 
