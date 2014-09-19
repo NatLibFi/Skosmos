@@ -185,12 +185,17 @@ $(function() { // DOCUMENT READY
       return false;
     }
   );
-  
+
   // Calculates and sets how many vertical pixels the sidebar height should be at the current scroll position.
   function countAndSetOffset() {
+    /* calculates the sidebars content maximum height and sets it as an inline style.
+       the .css() can't set important so using .attr() instead. */
+    $('.sidebar-grey-alpha').attr('style', function() {
+      var pixels = $('.pagination').height() + $('.nav-tabs').height() + 2; // the 2 pixels are for the borders
+      return 'height: calc(100% - ' + pixels + 'px) !important';
+    });
     if ($('#sidebar').length && !$('#sidebar').hasClass('fixed')) {
       var yOffset = window.innerHeight - ( $('#sidebar').offset().top - pageYOffset);
-      console.log(yOffset);
       $('#sidebar').css('height', yOffset);
     }
   }

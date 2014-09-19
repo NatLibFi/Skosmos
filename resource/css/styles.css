@@ -573,10 +573,6 @@ ul.vocab-category {
   overflow-y: auto;
 }
 
-.sidebar-grey-alpha {
-  height: calc(100% - 126px) !important;
-}
-
 .sidebar-grey ul, .sidebar-grey p {
   padding-left: 0;
 }
