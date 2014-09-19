@@ -264,7 +264,7 @@ class RestController extends Controller
     if ($vocabId == null && !isset($_GET['lang']))
       return $this->return_error(400, "Bad Request", "lang parameter missing");
     $lang = $this->getAndSetLanguage($vocabId);
-    $queriedtypes = $this->model->getTypes($vocabId);
+    $queriedtypes = $this->model->getTypes($vocabId, $lang);
 
     /* encode the results in a JSON-LD compatible array */
     foreach ($queriedtypes as $uri => $typedata) {

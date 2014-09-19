@@ -178,7 +178,7 @@ class Model
   public function getTypes($vocid=null, $lang=null)
   {
     $sparql = (isset($vocid)) ? $this->getVocabulary($vocid)->getSparql() : $this->getDefaultSparql();
-    $result = (isset($lang)) ? $sparql->queryTypes($lang) : $sparql->queryTypes($_GET['lang']);
+    $result = $sparql->queryTypes($lang);
 
     foreach ($result as $uri => $values)
       if(empty($values)) {
