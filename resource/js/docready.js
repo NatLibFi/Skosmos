@@ -90,7 +90,6 @@ $(function() { // DOCUMENT READY
     // Sidenav actions only happen when doing other queries than the autocomplete.
     if (settings.url.indexOf('index') !== -1 || settings.url.indexOf('groups') !== -1 || settings.url.indexOf('hierarchy') !== -1) {
       var snap = (settings.url.indexOf('hierarchy') !== -1) ? 18 : 15;
-      countAndSetOffset();
       $(".sidebar-grey").mCustomScrollbar({ 
         alwaysShowScrollbar: 1,
         scrollInertia: 0, 
@@ -98,12 +97,14 @@ $(function() { // DOCUMENT READY
         snapAmount: snap,
         snapOffset: 0
       });
+      countAndSetOffset();  
       if (settings.url.indexOf('hierarchy') !== -1)
         $(".sidebar-grey").mCustomScrollbar('scrollTo', scrollToConcept());
     } 
     var $autocomplete = $('.tt-dropdown-menu');
     if (settings.url.indexOf('search') !== -1 && $autocomplete.length > 0 && $autocomplete[0].offsetHeight === 302)
       $(".tt-dropdown-menu").mCustomScrollbar({ alwaysShowScrollbar: 1, scrollInertia: 0 });
+    countAndSetOffset();
   });
 
   function scrollToConcept() {
@@ -190,8 +191,10 @@ $(function() { // DOCUMENT READY
   function countAndSetOffset() {
     /* calculates the sidebars content maximum height and sets it as an inline style.
        the .css() can't set important so using .attr() instead. */
-    $('.sidebar-grey-alpha').attr('style', function() {
-      var pixels = $('.pagination').height() + $('.nav-tabs').height() + 2; // the 2 pixels are for the borders
+    $('.sidebar-grey').attr('style', function() {
+      var pixels = $('.nav-tabs').height() + 2; // the 2 pixels are for the borders
+      if ($('.pagination').is(':visible'))
+        pixels += $('.pagination').height();
       return 'height: calc(100% - ' + pixels + 'px) !important';
     });
     if ($('#sidebar').length && !$('#sidebar').hasClass('fixed')) {
