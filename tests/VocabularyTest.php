@@ -75,7 +75,7 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   public function testGetGraph() {
     $vocab = $this->model->getVocabulary('testdiff');
     $graph = $vocab->getGraph();
-    $this->assertEquals('http://www.yso.fi/onto/testdiff/', $graph);
+    $this->assertEquals('http://www.skosmos.skos/testdiff/', $graph);
   }
   
   /**
@@ -245,9 +245,18 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
    * @covers Vocabulary::getDefaultConceptScheme
    */
   public function testGetDefaultConceptScheme() {
+    $vocab = $this->model->getVocabulary('testdiff');
+    $cs = $vocab->getDefaultConceptScheme();
+    $this->assertEquals('http://www.skosmos.skos/testdiff#conceptscheme', $cs);
+  }
+  
+  /**
+   * @covers Vocabulary::getDefaultConceptScheme
+   */
+  public function testGetDefaultConceptSchemeNotSet() {
     $vocab = $this->model->getVocabulary('test');
     $cs = $vocab->getDefaultConceptScheme();
-    $this->assertEquals('http://www.skosmos.skos/test/', $cs);
+    $this->assertEquals('http://www.skosmos.skos/test/conceptscheme', $cs);
   }
   
   /**

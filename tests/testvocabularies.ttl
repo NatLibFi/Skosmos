@@ -23,7 +23,6 @@
 	skosmos:defaultLanguage "en";
 	skosmos:groupClass skos:Collection;
 	skosmos:language "en";
-	skosmos:mainConceptScheme <http://www.skosmos.skos/test/> ;
 	skosmos:showTopConcepts "true";
 	skosmos:shortName "Test short";
 	skosmos:sparqlGraph <http://www.skosmos.skos/test/> .
@@ -36,8 +35,8 @@
 	skosmos:language "fi", "en";
 	skosmos:sparqlDialect "JenaText";
 	skosmos:fullAlphabeticalIndex "true";
-	skosmos:sparqlGraph <http://www.yso.fi/onto/testdiff/> ;
-	skosmos:mainConceptScheme <http://www.yso.fi/onto/testdiff/> .
+	skosmos:sparqlGraph <http://www.skosmos.skos/testdiff/> ;
+	skosmos:mainConceptScheme <http://www.skosmos.skos/testdiff#conceptscheme> .
 
 :cat_science a skos:Concept ;
 	skos:topConceptOf :categories ;
