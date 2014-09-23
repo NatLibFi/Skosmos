@@ -64,7 +64,7 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   public function testGetEndpoint() {
     $vocab = $this->model->getVocabulary('testdiff');
     $endpoint = $vocab->getEndpoint();
-    $this->assertEquals('http://api.dev.finto.fi/sparql', $endpoint);
+    $this->assertEquals('http://localhost:3030/ds/sparql', $endpoint);
   }
 
   /**
@@ -245,7 +245,7 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   public function testGetDefaultConceptScheme() {
     $vocab = $this->model->getVocabulary('test');
     $cs = $vocab->getDefaultConceptScheme();
-    $this->assertEquals('http://www.yso.fi/onto/test/', $cs);
+    $this->assertEquals('http://www.skosmos.skos/test/', $cs);
   }
   
   /**
@@ -254,8 +254,8 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   public function testGetConceptSchemesFromFuseki() {
     $vocab = $this->model->getVocabulary('test');
     $cs = $vocab->getConceptSchemes();
-    var_dump($cs); exit();
-    $this->assertEquals('http://www.yso.fi/onto/test/', $cs);
+    var_dump($cs);
+    $this->assertEquals('http://www.skosmos.skos/test/', $cs);
   }
   
 }

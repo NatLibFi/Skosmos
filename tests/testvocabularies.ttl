@@ -23,7 +23,7 @@
 	skosmos:defaultLanguage "en";
 	skosmos:groupClass skos:Collection;
 	skosmos:language "en";
-	skosmos:mainConceptScheme <http://www.yso.fi/onto/test/> ;
+	skosmos:mainConceptScheme <http://www.skosmos.skos/test/> ;
 	skosmos:showTopConcepts "true";
 	skosmos:shortName "Test short";
 	skosmos:sparqlGraph <http://www.skosmos.skos/test/> .

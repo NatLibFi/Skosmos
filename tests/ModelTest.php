@@ -84,7 +84,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    */
   public function testGetVocabularyByGraphUri() {
     $model = new Model(); 
-    $vocab = $model->getVocabularyByGraph('http://www.skosmos.skos/onto/test/');
+    $vocab = $model->getVocabularyByGraph('http://www.skosmos.skos/test/');
     $this->assertInstanceOf('Vocabulary', $vocab);
   }
   
@@ -92,7 +92,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @covers Model::getVocabularyByGraph
    * @depends testConstructorWithConfig
    * @expectedException \Exception
-   * @expectedExceptionMessage no vocabulary found for graph http://no/address and endpoint http://api.dev.finto.fi/sparql
+   * @expectedExceptionMessage no vocabulary found for graph http://no/address and endpoint http://localhost:3030/ds/sparql
    */
   public function testGetVocabularyByInvalidGraphUri() {
     $model = new Model(); 
@@ -106,7 +106,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    */
   public function testGuessVocabularyFromURI() {
     $model = new Model();
-    $vocab = $model->guessVocabularyFromURI('http://www.yso.fi/onto/test/T21329');
+    $vocab = $model->guessVocabularyFromURI('http://www.skosmos.skos/test/T21329');
     $this->assertInstanceOf('Vocabulary', $vocab);
     $this->assertEquals('test', $vocab->getId());
   }

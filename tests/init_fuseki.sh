@@ -5,5 +5,7 @@ if [ ! -f jena-fuseki-1.1.0/fuseki-server ]; then
 fi
 
 cd jena-fuseki-1.1.0
-./fuseki-server --file ../turtle/search.ttl /ds
+./fuseki-server --config ../turtle/assembler.ttl &
+sleep 2
+./s-put http://localhost:3030/ds/data http://www.skosmos.skos/test/ ../turtle/search.ttl
 
