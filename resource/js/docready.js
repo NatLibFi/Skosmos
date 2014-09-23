@@ -88,7 +88,7 @@ $(function() { // DOCUMENT READY
       });
     }
     // Sidenav actions only happen when doing other queries than the autocomplete.
-    if (settings.url.indexOf('index') !== -1 || settings.url.indexOf('groups') !== -1 || settings.url.indexOf('hierarchy') !== -1) {
+    if (settings.url.indexOf('topConcepts') === -1 || settings.url.indexOf('index') === -1 || settings.url.indexOf('groups') !== -1 || settings.url.indexOf('hierarchy') !== -1) {
       var snap = (settings.url.indexOf('hierarchy') !== -1) ? 18 : 15;
       $(".sidebar-grey").mCustomScrollbar({ 
         alwaysShowScrollbar: 1,
@@ -97,7 +97,6 @@ $(function() { // DOCUMENT READY
         snapAmount: snap,
         snapOffset: 0
       });
-      countAndSetOffset();  
       if (settings.url.indexOf('hierarchy') !== -1)
         $(".sidebar-grey").mCustomScrollbar('scrollTo', scrollToConcept());
     } 
@@ -119,25 +118,6 @@ $(function() { // DOCUMENT READY
   if ($('.concept-info').length === 1) { 
     invokeParentTree(getTreeConfiguration()); 
   }
-
-  // if we are on the vocab front page initialize the hierarchy view with a top concept.
-  $(document).on('click', '#hier-trigger', function () {
-    var $content = $('.sidebar-grey');
-    $content.empty().prepend(spinner);
-    if($('.uri-input-box').length === 0) { // if on the vocabulary front page
-      $('.active').removeClass('active');
-      $('#hier-trigger').parent().addClass('active');
-      $content.removeClass('sidebar-grey-alpha');
-      $('.pagination').hide();
-      $content.append('<div class="hierarchy-bar-tree"></div>');
-      invokeParentTree(getTreeConfiguration(true)); 
-      $('#hier-trigger').attr('href', '#');
-      return false;
-    }
-    var uri = $('.uri-input-box').html();
-    var redirectUrl = 'http://' + base_url + vocab + '/' + lang + '/page/' + uri.split('/')[uri.split('/').length-1];
-    window.location.replace(encodeURI(redirectUrl));
-  });
 
   var textColor = $('.search-parameter-highlight').css('color');
   countAndSetOffset();
@@ -365,6 +345,25 @@ $(function() { // DOCUMENT READY
         return false;
       }
   );
+
+  // if we are on the vocab front page initialize the hierarchy view with a top concept.
+  $(document).on('click', '#hier-trigger', 
+    function (event) {
+      var $content = $('#sidebar');
+      if($('.uri-input-box').length === 0) { // if on the vocabulary front page
+        $('.sidebar-grey').remove();
+        $('.active').removeClass('active');
+        $('#hier-trigger').parent().addClass('active');
+        $('.pagination').hide();
+        $content.append('<div class="sidebar-grey"><div class="hierarchy-bar-tree"></div></div>');
+        invokeParentTree(getTreeConfiguration(true)); 
+        $('#hier-trigger').attr('href', '#');
+        return false;
+    }
+    var uri = $('.uri-input-box').html();
+    var redirectUrl = 'http://' + base_url + vocab + '/' + lang + '/page/' + uri.split('/')[uri.split('/').length-1];
+    window.location.replace(encodeURI(redirectUrl));
+  });
   
   // event handler for clicking the group index tab 
   $(document).on('click', '.nav-tabs a[href$="groups"]',
