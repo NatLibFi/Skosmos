@@ -412,6 +412,8 @@ class RestController extends Controller
       header("Location: " . $url);
 
       return;
+    } else {
+      return $this->return_error(400, 'Bad Request', "uri parameter missing");
     }
     
     if (isset($_GET['format'])) {
