@@ -248,4 +248,14 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('http://www.yso.fi/onto/test/', $cs);
   }
   
+  /**
+   * @covers Vocabulary::getConceptSchemes
+   */
+  public function testGetConceptSchemesFromFuseki() {
+    $vocab = $this->model->getVocabulary('test');
+    $cs = $vocab->getConceptSchemes();
+    var_dump($cs); exit();
+    $this->assertEquals('http://www.yso.fi/onto/test/', $cs);
+  }
+  
 }
