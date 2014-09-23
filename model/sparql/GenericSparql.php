@@ -897,6 +897,9 @@ SELECT ?child ?label ?child ?grandchildren WHERE {
         ?child skos:prefLabel ?label .
         FILTER (langMatches(lang(?label), "$lang"))
       }
+      OPTIONAL { # other language case
+        ?child skos:prefLabel ?label .
+      }
       BIND ( EXISTS { ?child skos:narrower ?a . } AS ?grandchildren )
     }
   }
@@ -907,9 +910,18 @@ EOQ;
     foreach ($result as $row) {
       if (!isset($row->child))
         return array(); // existing concept but no children
+        
+      $label = null;
+      if (isset($row->label)) {
+        if ($row->label->getLang() == $lang)
+          $label = $row->label->getValue();
+        else
+          $label = $row->label->getValue() . " (" . $row->label->getLang() . ")";
+      }
+        
       $ret[] = array(
         'uri' => $row->child->getUri(),
-        'prefLabel' => isset($row->label) ? $row->label->getValue() : null,
+        'prefLabel' => $label,
         'hasChildren' => filter_var($row->grandchildren->getValue(), FILTER_VALIDATE_BOOLEAN),
       );
     }
