@@ -59,5 +59,6 @@ test:ta1 a skos:Concept ;
     skos:topConceptOf test:conceptscheme .
 
 test:conceptscheme a skos:ConceptScheme ;
-    rdfs:label "Korkeakoulujen tutkimustiedonkeruussa käytettävä tieteenalaluokitus"@fi .
+    rdfs:label "Test conceptscheme"en ;
+    skos:hasTopConcept test:ta1 .
 

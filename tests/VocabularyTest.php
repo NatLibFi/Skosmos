@@ -9,6 +9,8 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
 
   protected function setUp() {
     require_once 'testconfig.inc';
+    putenv("LC_ALL=en_GB.utf8");
+    setlocale(LC_ALL, 'en_GB.utf8');
     $this->model = new Model();
   }
 
@@ -254,8 +256,10 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   public function testGetConceptSchemesFromFuseki() {
     $vocab = $this->model->getVocabulary('test');
     $cs = $vocab->getConceptSchemes();
-    var_dump($cs);
-    $this->assertEquals('http://www.skosmos.skos/test/', $cs);
+    foreach($cs as $scheme=>$label) {
+      $this->assertEquals('http://www.skosmos.skos/test/conceptscheme', $scheme);
+      $this->assertEquals('Test conceptscheme', $label['label']);
+    }
   }
   
 }
