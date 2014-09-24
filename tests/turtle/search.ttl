@@ -34,6 +34,15 @@ test:ta116 a skos:Concept ;
     skos:inScheme test:conceptscheme ;
     skos:prefLabel "Bass"@en .
 
+test:ta117 a skos:Concept ;
+    skos:broader test:ta1 ;
+    skos:inScheme test:conceptscheme ;
+    skos:prefLabel "3D Bass"@en .
+
+test:ta118 a skos:Concept ;
+    skos:inScheme test:conceptscheme ;
+    skos:prefLabel "-special character example"@en .
+
 test:ta1 a skos:Concept ;
     skos:inScheme test:conceptscheme ;
     skos:narrower test:ta111,
@@ -41,7 +50,8 @@ test:ta1 a skos:Concept ;
         test:ta113,
         test:ta114,
         test:ta115,
-        test:ta116 ;
+        test:ta116,
+        test:ta117 ;
     skos:prefLabel "Fish"@en ;
     skos:topConceptOf test:conceptscheme .
 
