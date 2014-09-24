@@ -1043,12 +1043,6 @@ EOQ;
         $ret[$uri]['broader'][] = $row->parent->getUri();
       }
     }
-    // querying the 'leaf' concepts information too.
-    $result = $this->queryConceptInfo($orig_uri); //conceptDAO
-    if (isset($result)) {
-      $result = $result[0];
-      $ret[$result->getUri()]['prefLabel'] = $result->getLabel();
-    }
     if (sizeof($ret) > 0)
       return $ret; // existing concept, with children
     else
