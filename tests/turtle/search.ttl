@@ -11,34 +11,28 @@
 test:ta111 a skos:Concept ;
     skos:broader test:ta1 ;
     skos:inScheme test:conceptscheme ;
-    skos:prefLabel "Matematiikka"@fi ;
-    skos:scopeNote "Matematiikka, soveltava matematiikka ja todennäköisyyslaskenta"@fi .
+    skos:prefLabel "Tuna"@en .
 
 test:ta112 a skos:Concept ;
     skos:broader test:ta1 ;
     skos:inScheme test:conceptscheme ;
-    skos:prefLabel "Tilastotiede"@fi ;
-    skos:scopeNote "Sisältää tilastollisten menetelmien tutkimuksen, mutta ei soveltavan tilastotieteen tutkimusta, joka luokitellaan kuuluvaksi kulloiseenkin sovellusalueeseen (taloustiede, sosiologia jne.)"@fi .
-
-test:ta113 a skos:Concept ;
-    skos:broader test:ta1 ;
-    skos:inScheme test:conceptscheme ;
-    skos:prefLabel "Tietojenkäsittely ja informaatiotieteet"@fi .
+    skos:prefLabel "Carp"@en ;
+    skos:scopeNote "Sisältää tilastollisten menetelmien tutkimuksen, mutta ei soveltavan tilastotieteen tutkimusta, joka luokitellaan kuuluvaksi kulloiseenkin sovellusalueeseen (taloustiede, sosiologia jne.)"@en .
 
 test:ta114 a skos:Concept ;
     skos:broader test:ta1 ;
     skos:inScheme test:conceptscheme ;
-    skos:prefLabel "Fysiikka"@fi .
+    skos:prefLabel "Buri"@en .
 
 test:ta115 a skos:Concept ;
     skos:broader test:ta1 ;
     skos:inScheme test:conceptscheme ;
-    skos:prefLabel "Avaruustieteet ja tähtitiede"@fi .
+    skos:prefLabel "Eel"@en .
 
 test:ta116 a skos:Concept ;
     skos:broader test:ta1 ;
     skos:inScheme test:conceptscheme ;
-    skos:prefLabel "Kemia"@fi .
+    skos:prefLabel "Bass"@en .
 
 test:ta1 a skos:Concept ;
     skos:inScheme test:conceptscheme ;
@@ -47,18 +41,11 @@ test:ta1 a skos:Concept ;
         test:ta113,
         test:ta114,
         test:ta115,
-        test:ta116,
-        test:ta1171,
-        test:ta1172,
-        test:ta1181,
-        test:ta1182,
-        test:ta1183,
-        test:ta1184,
-        test:ta119 ;
-    skos:prefLabel "LUONNONTIETEET"@fi ;
+        test:ta116 ;
+    skos:prefLabel "Fish"@en ;
     skos:topConceptOf test:conceptscheme .
 
 test:conceptscheme a skos:ConceptScheme ;
-    rdfs:label "Test conceptscheme"en ;
+    rdfs:label "Test conceptscheme"@en ;
     skos:hasTopConcept test:ta1 .
 

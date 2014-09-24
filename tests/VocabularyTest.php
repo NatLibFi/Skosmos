@@ -271,4 +271,17 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
     }
   }
   
+  /**
+   * @covers Vocabulary::getStatistics
+   */
+  public function testGetStatistics() {
+    $vocab = $this->model->getVocabulary('test');
+    $stats = $vocab->getStatistics();
+    $this->assertEquals($stats['concepts'], 6);
+    foreach($stats['terms'] as $lang=>$labels) {
+      $this->assertEquals($labels['skos:prefLabel'], 6);
+    }
+  }
+
+  
 }
