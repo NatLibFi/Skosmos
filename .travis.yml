@@ -6,3 +6,9 @@ php:
   - "5.3"
 install:
   - composer install --no-dev
+before_script:
+  - cd tests
+  - sh ./init_fuseki.sh
+  - cd ..
+after_script:
+  - pkill -f 'java -Xmx1200M -jar'
