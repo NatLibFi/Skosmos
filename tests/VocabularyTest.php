@@ -292,4 +292,22 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
     $this->assertEquals(array("B","C","E","F","T", "!*", "0-9"), $alpha);
   }
 
+  /**
+   * @covers Vocabulary::getInfo
+   */
+  public function testGetInfo() {
+    $vocab = $this->model->getVocabulary('test');
+    $info = $vocab->getInfo();
+    $this->assertEquals(array("dc:title" => array('Test ontology'), "dc:subject" => array('Science and medicine'), "rdf:type" => array('http://www.w3.org/2004/02/skos/core#ConceptScheme')), $info);
+  }
+  
+  /**
+   * @covers Vocabulary::getInfo
+   */
+  public function testGetInfoWithDC11Label() {
+    $vocab = $this->model->getVocabulary('testdiff');
+    $info = $vocab->getInfo();
+    $this->assertEquals(array("dc11:title" => array('Test ontology 2')), $info);
+  }
+
 }
