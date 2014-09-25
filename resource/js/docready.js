@@ -325,6 +325,7 @@ $(function() { // DOCUMENT READY
         var clicked = $(this);
         clicked.parent().addClass('active');
         var $content = $('#sidebar');
+        var $hier = $('#hierarchy');
         $('.sidebar-grey').empty().prepend(spinner);
         var targetUrl = event.target.href;
         var parameters = $.param({'base_path' : base_path});
@@ -336,6 +337,9 @@ $(function() { // DOCUMENT READY
               var title = $(data).filter('title').text();
               var response = $('#sidebar', data).html();
               $content.append(response);
+              if ($('#hierarchy').length === 1)
+                $('#hierarchy').remove();
+              $('#alpha').after($hier);
               $('.nav').scrollTop(0);
               if (window.history.pushState)
                 window.history.pushState(null, null, encodeURI(event.target.href));
@@ -376,6 +380,7 @@ $(function() { // DOCUMENT READY
         var $pagination = $('.pagination');
         if ($pagination)
           $pagination.hide();
+        var $hier = $('#hierarchy');
         var $content = $('#sidebar');
         $('.sidebar-grey').empty().removeClass('sidebar-grey-alpha').prepend(spinner);
         $content.removeClass('sidebar-grey-alpha');
@@ -389,6 +394,9 @@ $(function() { // DOCUMENT READY
               var title = $(data).filter('title').text();
               var response = $('#sidebar', data).html();
               $content.append(response);
+              if ($('#hierarchy').length === 1)
+                $('#hierarchy').remove();
+              $('#alpha').after($hier);
               $('.nav').scrollTop(0);
               if (window.history.pushState)
                 window.history.pushState(null, null, encodeURI(event.target.href));
