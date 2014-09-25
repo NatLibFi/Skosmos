@@ -510,7 +510,7 @@ class Model
 
   private function fetchResourceFromUri($uri) {
     try {
-      $client = EasyRdf_Graph::newAndLoad($uri);
+      $client = EasyRdf_Graph::newAndLoad(EasyRdf_Utils::removeFragmentFromUri($uri));
       return $client->resource($uri);
     } catch (Exception $e) {
       return null;
@@ -522,9 +522,9 @@ class Model
     $resource = null;
     // using apc cache for the resource if available
     if (function_exists('apc_store') && function_exists('apc_fetch')) {
-      $key = 'fetch: ' . $uri;
+      $key = 'fetch: ' . EasyRdf_Utils::removeFragmentFromUri($uri);
        $resource = apc_fetch($key);
-      if ($resource === null || $resource === FALSE) { // was not found in cache
+      if ($resource === null || $resource === FALSE) { // was not found in cache, or previous request failed
         $resource = $this->fetchResourceFromUri($uri);
         apc_store($key, $resource, $this->URI_FETCH_TTL);
       }
