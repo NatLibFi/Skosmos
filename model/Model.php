@@ -40,6 +40,8 @@ class Model
   private $vocabularies_by_urispace = null;
   /** stores the breadcrumbs */
   private $crumbs;
+  /** how long to store retrieved URI information in APC cache */
+  private $URI_FETCH_TTL = 86400; // 1 day
 
   /**
    * Initializes the object with the configuration from the vocabularies.ttl
@@ -517,7 +519,7 @@ class Model
         if ($resource === null || $resource === FALSE) { // was not found in cache
           $client = EasyRdf_Graph::newAndLoad($uri);
           $resource = $client->resource($uri);
-          apc_store($key, $resource);
+          apc_store($key, $resource, $this->URI_FETCH_TTL);
         }
       } else { // APC not available, parse on every request
         $client = EasyRdf_Graph::newAndLoad($uri);
