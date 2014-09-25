@@ -4,7 +4,11 @@
   </logging>
   <testsuites>
     <testsuite name="tests">
-      <directory>tests</directory>
+      <file>tests/ModelTest.php</file>
+      <file>tests/VocabularyTest.php</file>
+      <file>tests/BreadcrumbTest.php</file>
+      <file>tests/DataObjectTest.php</file>
+      <file>tests/ConceptTest.php</file>
     </testsuite>
   </testsuites>
 </phpunit>
