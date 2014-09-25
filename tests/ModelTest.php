@@ -267,4 +267,64 @@ class ModelTest extends PHPUnit_Framework_TestCase
     $this->assertEquals(1, $result['count']);
   }
 
+  /**
+   * @covers Model::getRDF
+   * @depends testConstructorWithConfig
+   */
+  public function testGetRDFWithVocidAndURIasTurtle() {
+    $model = new Model();
+    $result = $model->getRDF('test', 'http://www.skosmos.skos/test/ta116', 'text/turtle');
+    $expected = '@prefix test: <http://www.skosmos.skos/test/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+test:ta116
+  skos:prefLabel "Bass"@en ;
+  skos:inScheme test:conceptscheme ;
+  skos:broader test:ta1 ;
+  a skos:Concept .
+
+test:ta1
+  skos:prefLabel "Fish"@en ;
+  a skos:Concept ;
+  skos:narrower test:ta116 .
+
+test:conceptscheme
+  rdfs:label "Test conceptscheme"@en ;
+  a skos:ConceptScheme .
+
+';
+    $this->assertEquals($expected, $result);
+  }
+  
+  /**
+   * @covers Model::getRDF
+   * @depends testConstructorWithConfig
+   */
+  public function testGetRDFWithURIasTurtle() {
+    $model = new Model();
+    $result = $model->getRDF(null, 'http://www.skosmos.skos/test/ta116', 'text/turtle');
+    $expected = '@prefix test: <http://www.skosmos.skos/test/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+test:ta116
+  skos:prefLabel "Bass"@en ;
+  skos:inScheme test:conceptscheme ;
+  skos:broader test:ta1 ;
+  a skos:Concept .
+
+test:ta1
+  skos:prefLabel "Fish"@en ;
+  a skos:Concept ;
+  skos:narrower test:ta116 .
+
+test:conceptscheme
+  rdfs:label "Test conceptscheme"@en ;
+  a skos:ConceptScheme .
+
+';
+    $this->assertEquals($expected, $result);
+  }
+
 }

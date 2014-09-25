@@ -17,7 +17,8 @@ test:ta112 a skos:Concept ;
     skos:broader test:ta1 ;
     skos:inScheme test:conceptscheme ;
     skos:prefLabel "Carp"@en ;
-    skos:scopeNote "Sisältää tilastollisten menetelmien tutkimuksen, mutta ei soveltavan tilastotieteen tutkimusta, joka luokitellaan kuuluvaksi kulloiseenkin sovellusalueeseen (taloustiede, sosiologia jne.)"@en .
+    skos:altLabel "Golden crucian"@en;
+    skos:scopeNote "Carp are oily freshwater fish"@en .
 
 test:ta114 a skos:Concept ;
     skos:broader test:ta1 ;
