@@ -508,6 +508,11 @@ class Model
     return $res->label(); // desperate check for label in any language; will return null if even this fails
   }
 
+  private function fetchResourceFromUri($uri) {
+    $client = EasyRdf_Graph::newAndLoad($uri);
+    return $client->resource($uri);
+  }
+
   public function getResourceFromUri($uri) {
     EasyRdf_Format::unregister('json'); // prevent parsing errors for sources which return invalid JSON
     $resource = null;
@@ -517,13 +522,11 @@ class Model
         $key = 'fetch: ' . $uri;
         $resource = apc_fetch($key);
         if ($resource === null || $resource === FALSE) { // was not found in cache
-          $client = EasyRdf_Graph::newAndLoad($uri);
-          $resource = $client->resource($uri);
+          $resource = $this->fetchResourceFromUri($uri);
           apc_store($key, $resource, $this->URI_FETCH_TTL);
         }
       } else { // APC not available, parse on every request
-        $client = EasyRdf_Graph::newAndLoad($uri);
-        $resource = $client->resource($uri);
+        $resource = $this->fetchResourceFromUri($uri);
       }
     } catch (Exception $e) {
     }
