@@ -211,5 +211,60 @@ class ModelTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('http://www.skosmos.skos/test/ta116', $result[0]['uri']);
     $this->assertEquals('Bass', $result[0]['prefLabel']);
   }
+  
+  /**
+   * @covers Model::searchConcepts
+   * @depends testConstructorWithConfig
+   */
+  public function testSearchConceptsWithAllVocabsCaseInsensitivity() {
+    $model = new Model();
+    $result = $model->searchConcepts('bass', null, 'en', 'en');
+    $this->assertEquals('http://www.skosmos.skos/test/ta116', $result[0]['uri']);
+    $this->assertEquals('Bass', $result[0]['prefLabel']);
+  }
+  
+  /**
+   * @covers Model::searchConcepts
+   * @depends testConstructorWithConfig
+   */
+  public function testSearchConceptsWithMultipleVocabsCaseInsensitivity() {
+    $model = new Model();
+    $result = $model->searchConcepts('bass', array('test', 'testdiff'), 'en', 'en');
+    $this->assertEquals('http://www.skosmos.skos/test/ta116', $result[0]['uri']);
+    $this->assertEquals('Bass', $result[0]['prefLabel']);
+  }
+  
+  /**
+   * @covers Model::searchConcepts
+   * @depends testConstructorWithConfig
+   * @expectedException \Exception
+   * @expectedExceptionMessage Vocabulary id 'doesnotexist' not found in configuration.
+   */
+  public function testSearchConceptsWithNotExistingVocabID() {
+    $model = new Model();
+    $result = $model->searchConcepts('bass', array('doesnotexist', 'thisdoesnteither'), 'en', 'en');
+  }
+  
+  /**
+   * @covers Model::searchConceptsAndInfo
+   * @depends testConstructorWithConfig
+   * @expectedException \Exception
+   * @expectedExceptionMessage Vocabulary id 'doesnotexist' not found in configuration.
+   */
+  public function testSearchConceptsAndInfoWithNotExistingVocabID() {
+    $model = new Model();
+    $result = $model->searchConceptsAndInfo('bass', array('doesnotexist', 'thisdoesnteither'), 'en', 'en');
+  }
+  
+  /**
+   * @covers Model::searchConceptsAndInfo
+   * @depends testConstructorWithConfig
+   */
+  public function testSearchConceptsAndInfoWithOneVocabCaseInsensitivity() {
+    $model = new Model();
+    $result = $model->searchConceptsAndInfo('bass', 'test', 'en', 'en');
+    $this->assertEquals('http://www.skosmos.skos/test/ta116', $result['results'][0]->getUri());
+    $this->assertEquals(1, $result['count']);
+  }
 
 }
