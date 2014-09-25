@@ -197,6 +197,10 @@ class Concept extends VocabularyDataObject
                 if ($schemeLabel)
                   $schemeLabel = $schemeLabel->getValue();
               }
+              if ($label !== null && $schemeLabel == null) {
+                // got a label for the concept, but not the scheme - use the host name as scheme label
+                $schemeLabel = parse_url($exuri, PHP_URL_HOST);
+              }
               $prop_info = $this->getPropertyParam($val, $prop);
               $properties[$prop_info['prop']][] = new ConceptPropertyValue(
                 $prop_info['prop'],
