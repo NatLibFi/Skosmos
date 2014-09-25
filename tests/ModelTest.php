@@ -191,4 +191,25 @@ class ModelTest extends PHPUnit_Framework_TestCase
     $result = $model->searchConcepts();
   }
 
+  /**
+   * @covers Model::getTypes
+   * @depends testConstructorWithConfig
+   */
+  public function testGetTypesWithoutParams() {
+    $model = new Model();
+    $result = $model->getTypes();
+    $this->assertEquals(array('http://www.w3.org/2004/02/skos/core#Concept' => array('label' => "skos:Concept")), $result);
+  }
+
+  /**
+   * @covers Model::searchConcepts
+   * @depends testConstructorWithConfig
+   */
+  public function testSearchConceptsWithOneVocabCaseInsensitivity() {
+    $model = new Model();
+    $result = $model->searchConcepts('bass', 'test', 'en', 'en');
+    $this->assertEquals('http://www.skosmos.skos/test/ta116', $result[0]['uri']);
+    $this->assertEquals('Bass', $result[0]['prefLabel']);
+  }
+
 }
