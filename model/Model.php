@@ -509,7 +509,7 @@ class Model
   }
 
   public function getResourceFromUri($uri) {
-    EasyRdf_Format::unregister('json'); 
+    EasyRdf_Format::unregister('json'); // prevent parsing errors for sources which return invalid JSON
     $resource = null;
     try {
       // using apc cache for the resource if available
