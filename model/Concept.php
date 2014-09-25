@@ -183,7 +183,7 @@ class Concept extends VocabularyDataObject
           if (!$exvoc || !$label) {
             $response = $this->model->getResourceFromUri($exuri);
             if ($response) {
-              $pref_label = $response->label();
+              $pref_label = $this->model->getResourceLabel($response, $this->lang);
               if($pref_label) {
                 $label = $pref_label->getValue();
                 $label_lang = $pref_label->getLang();
