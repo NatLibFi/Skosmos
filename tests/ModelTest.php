@@ -327,4 +327,49 @@ test:conceptscheme
     $this->assertEquals($expected, $result);
   }
 
+  /**
+   * @covers Model::getRDF
+   * @depends testConstructorWithConfig
+   */
+  public function testGetRDFWithVocidAndURIasJSON() {
+    $model = new Model();
+    $result = $model->getRDF('test', 'http://www.skosmos.skos/test/ta116', 'application/json');
+    $expected = '[{"@id":"http://www.skosmos.skos/test/conceptscheme","http://www.w3.org/2000/01/rdf-schema#label":[{"@value":"Test conceptscheme","@language":"en"}],"@type":["http://www.w3.org/2004/02/skos/core#ConceptScheme"]},{"@id":"http://www.skosmos.skos/test/ta1","http://www.w3.org/2004/02/skos/core#prefLabel":[{"@value":"Fish","@language":"en"}],"@type":["http://www.w3.org/2004/02/skos/core#Concept"],"http://www.w3.org/2004/02/skos/core#narrower":[{"@id":"http://www.skosmos.skos/test/ta116"}]},{"@id":"http://www.skosmos.skos/test/ta116","http://www.w3.org/2004/02/skos/core#prefLabel":[{"@value":"Bass","@language":"en"}],"http://www.w3.org/2004/02/skos/core#inScheme":[{"@id":"http://www.skosmos.skos/test/conceptscheme"}],"http://www.w3.org/2004/02/skos/core#broader":[{"@id":"http://www.skosmos.skos/test/ta1"}],"@type":["http://www.w3.org/2004/02/skos/core#Concept"]},{"@id":"http://www.w3.org/2004/02/skos/core#Concept"},{"@id":"http://www.w3.org/2004/02/skos/core#ConceptScheme"}]';
+    $this->assertEquals($expected, $result);
+  }
+
+  /**
+   * @covers Model::getRDF
+   * @depends testConstructorWithConfig
+   */
+  public function testGetRDFWithVocidAndURIasRDFXML() {
+    $model = new Model();
+    $result = $model->getRDF('test', 'http://www.skosmos.skos/test/ta116', 'application/rdf+xml');
+    $expected = '<?xml version="1.0" encoding="utf-8" ?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+
+  <skos:Concept rdf:about="http://www.skosmos.skos/test/ta116">
+    <skos:prefLabel xml:lang="en">Bass</skos:prefLabel>
+    <skos:inScheme>
+      <skos:ConceptScheme rdf:about="http://www.skosmos.skos/test/conceptscheme">
+        <rdfs:label xml:lang="en">Test conceptscheme</rdfs:label>
+      </skos:ConceptScheme>
+    </skos:inScheme>
+
+    <skos:broader>
+      <skos:Concept rdf:about="http://www.skosmos.skos/test/ta1">
+        <skos:prefLabel xml:lang="en">Fish</skos:prefLabel>
+        <skos:narrower rdf:resource="http://www.skosmos.skos/test/ta116"/>
+      </skos:Concept>
+    </skos:broader>
+
+  </skos:Concept>
+
+</rdf:RDF>
+';
+    $this->assertEquals($expected, $result);
+  }
+
 }
