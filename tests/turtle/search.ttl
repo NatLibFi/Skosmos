@@ -58,6 +58,10 @@ test:ta119 a skos:Concept ;
     skos:inScheme test:conceptscheme ;
     skos:prefLabel "Hauki"@fi .
 
+test:ta120 a skos:Concept ;
+    skos:broader test:ta1 ;
+    skos:inScheme test:conceptscheme .
+
 test:ta1 a skos:Concept ;
     skos:inScheme test:conceptscheme ;
     skos:narrower test:ta111,
@@ -67,7 +71,8 @@ test:ta1 a skos:Concept ;
         test:ta115,
         test:ta116,
         test:ta117,
-        test:ta119 ;
+        test:ta119,
+        test:ta120 ;
     skos:prefLabel "Fish"@en ;
     skos:topConceptOf test:conceptscheme .
 
