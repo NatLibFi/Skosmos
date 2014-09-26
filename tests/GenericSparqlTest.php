@@ -155,5 +155,161 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
     $actual = $this->sparql->queryConceptsAlphabetical('*', 'en');
     $this->assertEquals(9, sizeof($actual));
   }
+
+  /**
+   * @covers GenericSparql::queryConceptInfo
+   * @todo   Implement testQueryConceptInfo().
+   */
+  public function testQueryConceptInfo()
+  {
+    // Remove the following lines when you implement this test.
+    $this->markTestIncomplete(
+      'This test has not been implemented yet.'
+    );
+  }
+
+  /**
+   * @covers GenericSparql::queryTypes
+   * @todo   Implement testQueryTypes().
+   */
+  public function testQueryTypes()
+  {
+    // Remove the following lines when you implement this test.
+    $this->markTestIncomplete(
+      'This test has not been implemented yet.'
+    );
+  }
+
+  /**
+   * @covers GenericSparql::queryConceptScheme
+   * @todo   Implement testQueryConceptScheme().
+   */
+  public function testQueryConceptScheme()
+  {
+    // Remove the following lines when you implement this test.
+    $this->markTestIncomplete(
+      'This test has not been implemented yet.'
+    );
+  }
+
+  /**
+   * @covers GenericSparql::queryConceptSchemes
+   * @todo   Implement testQueryConceptSchemes().
+   */
+  public function testQueryConceptSchemes()
+  {
+    // Remove the following lines when you implement this test.
+    $this->markTestIncomplete(
+      'This test has not been implemented yet.'
+    );
+  }
+
+  /**
+   * @covers GenericSparql::queryConcepts
+   * @todo   Implement testQueryConcepts().
+   */
+  public function testQueryConcepts()
+  {
+    // Remove the following lines when you implement this test.
+    $this->markTestIncomplete(
+      'This test has not been implemented yet.'
+    );
+  }
+
+  /**
+   * @covers GenericSparql::queryLabel
+   * @todo   Implement testQueryLabel().
+   */
+  public function testQueryLabel()
+  {
+    // Remove the following lines when you implement this test.
+    $this->markTestIncomplete(
+      'This test has not been implemented yet.'
+    );
+  }
+
+  /**
+   * @covers GenericSparql::queryProperty
+   * @todo   Implement testQueryProperty().
+   */
+  public function testQueryProperty()
+  {
+    // Remove the following lines when you implement this test.
+    $this->markTestIncomplete(
+      'This test has not been implemented yet.'
+    );
+  }
+
+  /**
+   * @covers GenericSparql::queryTransitiveProperty
+   * @todo   Implement testQueryTransitiveProperty().
+   */
+  public function testQueryTransitiveProperty()
+  {
+    // Remove the following lines when you implement this test.
+    $this->markTestIncomplete(
+      'This test has not been implemented yet.'
+    );
+  }
+
+  /**
+   * @covers GenericSparql::queryChildren
+   * @todo   Implement testQueryChildren().
+   */
+  public function testQueryChildren()
+  {
+    // Remove the following lines when you implement this test.
+    $this->markTestIncomplete(
+      'This test has not been implemented yet.'
+    );
+  }
+
+  /**
+   * @covers GenericSparql::queryTopConcepts
+   * @todo   Implement testQueryTopConcepts().
+   */
+  public function testQueryTopConcepts()
+  {
+    // Remove the following lines when you implement this test.
+    $this->markTestIncomplete(
+      'This test has not been implemented yet.'
+    );
+  }
+
+  /**
+   * @covers GenericSparql::queryParentList
+   * @todo   Implement testQueryParentList().
+   */
+  public function testQueryParentList()
+  {
+    // Remove the following lines when you implement this test.
+    $this->markTestIncomplete(
+      'This test has not been implemented yet.'
+    );
+  }
+
+  /**
+   * @covers GenericSparql::listConceptGroups
+   * @todo   Implement testListConceptGroups().
+   */
+  public function testListConceptGroups()
+  {
+    // Remove the following lines when you implement this test.
+    $this->markTestIncomplete(
+      'This test has not been implemented yet.'
+    );
+  }
+
+  /**
+   * @covers GenericSparql::listConceptGroupContents
+   * @todo   Implement testListConceptGroupContents().
+   */
+  public function testListConceptGroupContents()
+  {
+    // Remove the following lines when you implement this test.
+    $this->markTestIncomplete(
+      'This test has not been implemented yet.'
+    );
+  }
 }
   
