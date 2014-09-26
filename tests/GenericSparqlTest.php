@@ -98,6 +98,62 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
     $actual = $this->sparql->queryLabel('http://www.skosmos.skos/test/ta120', null);
     $this->assertEquals(array(), $actual);
   }
+  
+  /**
+   * @covers GenericSparql::queryConceptsAlphabetical
+   */
+  public function testQueryConceptsAlphabetical() {
+    $actual = $this->sparql->queryConceptsAlphabetical('b', 'en');
+    $expected = array (
+      0 => array (
+        'uri' => 'http://www.skosmos.skos/test/ta116',
+        'localname' => 'ta116',
+        'prefLabel' => 'Bass',
+        'lang' => 'en',
+      ),
+      1 => array (
+        'uri' => 'http://www.skosmos.skos/test/ta114',
+        'localname' => 'ta114',
+        'prefLabel' => 'Buri',
+        'lang' => 'en',
+      ),
+    );
+    $this->assertEquals($expected, $actual);
+  }
+  
+  /**
+   * @covers GenericSparql::queryConceptsAlphabetical
+   */
+  public function testQueryConceptsAlphabeticalNoResults() {
+    $actual = $this->sparql->queryConceptsAlphabetical('x', 'en');
+    $expected = array();
+    $this->assertEquals($expected, $actual);
+  }
 
+  /**
+   * @covers GenericSparql::queryConceptsAlphabetical
+   */
+  public function testQueryConceptsAlphabeticalSpecialChars() {
+    $actual = $this->sparql->queryConceptsAlphabetical('!*', 'en');
+    $this->assertEquals(1, sizeof($actual));
+    $this->assertEquals("-special character example", $actual[0]['prefLabel']);
+  }
+  
+  /**
+   * @covers GenericSparql::queryConceptsAlphabetical
+   */
+  public function testQueryConceptsAlphabeticalNumbers() {
+    $actual = $this->sparql->queryConceptsAlphabetical('0-9', 'en');
+    $this->assertEquals(1, sizeof($actual));
+    $this->assertContains("3D", $actual[0]['prefLabel']);
+  }
+  
+  /**
+   * @covers GenericSparql::queryConceptsAlphabetical
+   */
+  public function testQueryConceptsAlphabeticalFull() {
+    $actual = $this->sparql->queryConceptsAlphabetical('*', 'en');
+    $this->assertEquals(9, sizeof($actual));
+  }
 }
   
