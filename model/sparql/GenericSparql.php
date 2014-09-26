@@ -434,14 +434,33 @@ EOQ;
    * @param string $parent limit search to concepts which have the given concept as parent in the transitive broader hierarchy
    * @param string $group limit search to concepts which are in the given group
    * @param boolean $hidden include matches on hidden labels (default: true)
+   * @param array $fields extra fields to include in the result (array of strings). (default: null = none)
    * @return array query result object
    */
-  public function queryConcepts($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $type, $parent=null, $group=null, $hidden=true)
+  public function queryConcepts($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $type, $parent=null, $group=null, $hidden=true, $fields=null)
   {
     $gc = $this->graphClause;
     $limit = ($limit) ? 'LIMIT ' . $limit : '';
     $offset = ($offset) ? 'OFFSET ' . $offset : '';
     $type = EasyRdf_Namespace::expand($type);
+
+    // extra variable expressions to request
+    $extravars = '';
+    // extra fields to query for
+    $extrafields = '';
+
+    if ($fields !== null && in_array('broader', $fields)) {
+      $extravars = <<<EOV
+(GROUP_CONCAT(?broad) as ?broaders)
+(GROUP_CONCAT(CONCAT('"', REPLACE(?broadlab, '"', '\"'), '"'); separator=',') as ?broaderlabels)
+EOV;
+      $extrafields = <<<EOF
+OPTIONAL {
+  ?s skos:broader ?broad .
+  OPTIONAL { ?broad skos:prefLabel ?broadlab . FILTER(langMatches(lang(?broadlab), '$lang')) }
+}
+EOF;
+    }
 
     // extra types to query, if using thesaurus arrays
     $extratypes = $arrayClass ? "UNION { ?s rdf:type <$arrayClass> }" : "";
@@ -524,6 +543,7 @@ EOQ;
 
     $query = <<<EOQ
 SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph (GROUP_CONCAT(?type) as ?types)
+$extravars
 WHERE {
  $graph_text
   { ?s rdf:type <$type> } $extratypes
@@ -537,7 +557,7 @@ WHERE {
    OPTIONAL {
     ?s skos:prefLabel ?label .
     FILTER ($labelcond_label)
-   } $labelcond_fallback
+   } $labelcond_fallback $extrafields
   }
   FILTER NOT EXISTS { ?s owl:deprecated true }
  }
@@ -571,6 +591,14 @@ EOQ;
           $qnamecache[$typeuri] = $qname != null ? $qname : $typeuri;
         }
         $hit['type'][] = $qnamecache[$typeuri];
+      }
+      
+      if (isset($row->broaders) && isset($row->broaderlabels)) {
+        $broaders = explode(" ", $row->broaders->getValue());
+        $broaderlabels = str_getcsv($row->broaderlabels->getValue());
+        foreach (array_combine($broaders, $broaderlabels) as $uri => $label) {
+          $hit['broader'][] = array('uri' => $uri, 'prefLabel' => $label);
+        }
       }
 
       foreach ($vocabs as $vocab) { // looping the vocabulary objects and asking these for a localname for the concept.
