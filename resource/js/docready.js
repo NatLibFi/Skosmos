@@ -648,12 +648,19 @@ $(function() { // DOCUMENT READY
       processTypeJSON(response);
     });
   }
+
+  var wildcard = '';
   
   var concepts = new Bloodhound({
     remote: { 
-      url: rest_url + 'search?query=%QUERY*',
+      url: rest_url + 'search?query=',
+      replace: function(url, query) {
+        var wildcard = (query.indexOf('*') === -1) ? '*' : '';
+        return url + query + wildcard;
+      },
       ajax: {
         beforeSend: function(jqXHR, settings) {
+          wildcard = ($('#search-field').val().indexOf('*') === -1) ? '*' : '';
           var vocabString = $('.frontpage').length ? vocabSelectionString : vocab; 
           var parameters = $.param({'vocab' : vocabString, 'lang' : qlang, 'labellang' : lang});
           settings.url = settings.url + '&' + parameters;
