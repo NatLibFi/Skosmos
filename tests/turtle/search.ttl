@@ -68,6 +68,11 @@ test:ta121 a skos:Concept ;
     skos:inScheme test:conceptscheme ;
     skos:prefLabel "Crucian carp"@en .
 
+test:ta122 a skos:Concept ;
+    skos:broader test:ta116 ;
+    skos:inScheme test:conceptscheme ;
+    skos:prefLabel "Black sea bass"@en .
+
 test:ta1 a skos:Concept ;
     skos:inScheme test:conceptscheme ;
     skos:narrower test:ta111,

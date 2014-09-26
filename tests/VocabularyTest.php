@@ -277,9 +277,9 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   public function testGetStatistics() {
     $vocab = $this->model->getVocabulary('test');
     $stats = $vocab->getStatistics();
-    $this->assertEquals(11, $stats['concepts']);
+    $this->assertEquals(12, $stats['concepts']);
     foreach($stats['terms'] as $lang=>$labels) {
-      $this->assertEquals(9, $labels['skos:prefLabel']);
+      $this->assertEquals(10, $labels['skos:prefLabel']);
     }
   }
 
