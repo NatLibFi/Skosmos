@@ -724,9 +724,10 @@ EOQ;
     $gc = $this->graphClause;
     $labelcond_label = ($lang) ? "FILTER( langMatches(lang(?label), '$lang') )" : "";
     $query = <<<EOQ
-SELECT *
+SELECT ?label 
 WHERE {
   $gc {
+    <$uri> rdf:type ?type .
     OPTIONAL {
       <$uri> skos:prefLabel ?label .
       $labelcond_label
