@@ -452,7 +452,7 @@ EOQ;
     if ($fields !== null && in_array('broader', $fields)) {
       $extravars = <<<EOV
 (GROUP_CONCAT(?broad) as ?broaders)
-(GROUP_CONCAT(CONCAT('"', REPLACE(?broadlab, '"', '\"'), '"'); separator=',') as ?broaderlabels)
+(GROUP_CONCAT(CONCAT('"', REPLACE(IF(BOUND(?broadlab),?broadlab,''), '"', '\"'), '"'); separator=',') as ?broaderlabels)
 EOV;
       $extrafields = <<<EOF
 OPTIONAL {
@@ -597,7 +597,9 @@ EOQ;
         $broaders = explode(" ", $row->broaders->getValue());
         $broaderlabels = str_getcsv($row->broaderlabels->getValue());
         foreach (array_combine($broaders, $broaderlabels) as $uri => $label) {
-          $hit['broader'][] = array('uri' => $uri, 'prefLabel' => $label);
+          $broader = array('uri' => $uri);
+          if ($label != '') $broader['prefLabel'] = $label;
+          $hit['broader'][] = $broader;
         }
       }
 
