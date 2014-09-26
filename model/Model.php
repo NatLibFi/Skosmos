@@ -490,6 +490,22 @@ class Model
     return null;
   }
 
+  /**
+   * Get the label for a resource, preferring 1. the given language 2. configured languages 3. any language.
+   * @param EasyRdf_Resource $res resource whose label to return
+   * @param string $lang preferred language
+   * @return EasyRdf_Literal label as an EasyRdf_Literal object, or null if not found
+   */
+  public function getResourceLabel($res, $lang) {
+    global $LANGUAGES;
+    $langs = array_merge(array($lang), array_keys($LANGUAGES));
+    foreach ($langs as $l) {
+      $label = $res->label($l);
+      if ($label !== null) return $label;
+    }
+    return $res->label(); // desperate check for label in any language; will return null if even this fails
+  }
+
   public function getResourceFromUri($uri) {
     EasyRdf_Format::unregister('json'); 
     $resource = null;
