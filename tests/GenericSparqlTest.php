@@ -37,7 +37,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    */
   public function testCountConcepts() {
     $actual = $this->sparql->countConcepts();
-    $this->assertEquals(10, $actual);
+    $this->assertEquals(11, $actual);
   }
   
   /**
@@ -45,7 +45,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    */
   public function testCountLangConceptsOneLang() {
     $actual = $this->sparql->countLangConcepts(array('en'));
-    $this->assertEquals(8, $actual['en']['skos:prefLabel']);
+    $this->assertEquals(9, $actual['en']['skos:prefLabel']);
     $this->assertEquals(1, $actual['en']['skos:altLabel']);
   }
   
@@ -54,7 +54,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    */
   public function testCountLangConceptsMultipleLangs() {
     $actual = $this->sparql->countLangConcepts(array('en','fi'));
-    $this->assertEquals(8, $actual['en']['skos:prefLabel']);
+    $this->assertEquals(9, $actual['en']['skos:prefLabel']);
     $this->assertEquals(1, $actual['en']['skos:altLabel']);
     $this->assertEquals(2, $actual['fi']['skos:prefLabel']);
   }
@@ -153,7 +153,230 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    */
   public function testQueryConceptsAlphabeticalFull() {
     $actual = $this->sparql->queryConceptsAlphabetical('*', 'en');
-    $this->assertEquals(9, sizeof($actual));
+    $this->assertEquals(10, sizeof($actual));
+  }
+
+  /**
+   * @covers GenericSparql::queryConceptInfo
+   * @todo   Implement testQueryConceptInfo().
+   */
+  public function testQueryConceptInfo()
+  {
+    // Remove the following lines when you implement this test.
+    $this->markTestIncomplete(
+      'This test has not been implemented yet.'
+    );
+  }
+
+  /**
+   * @covers GenericSparql::queryTypes
+   * @todo   Implement testQueryTypes().
+   */
+  public function testQueryTypes()
+  {
+    // Remove the following lines when you implement this test.
+    $this->markTestIncomplete(
+      'This test has not been implemented yet.'
+    );
+  }
+
+  /**
+   * @covers GenericSparql::queryConceptScheme
+   * @todo   Implement testQueryConceptScheme().
+   */
+  public function testQueryConceptScheme()
+  {
+    // Remove the following lines when you implement this test.
+    $this->markTestIncomplete(
+      'This test has not been implemented yet.'
+    );
+  }
+
+  /**
+   * @covers GenericSparql::queryConceptSchemes
+   * @todo   Implement testQueryConceptSchemes().
+   */
+  public function testQueryConceptSchemes()
+  {
+    // Remove the following lines when you implement this test.
+    $this->markTestIncomplete(
+      'This test has not been implemented yet.'
+    );
+  }
+
+  /**
+   * @covers GenericSparql::queryConcepts
+   * @todo   Implement testQueryConcepts().
+   */
+  public function testQueryConcepts()
+  {
+    // Remove the following lines when you implement this test.
+    $this->markTestIncomplete(
+      'This test has not been implemented yet.'
+    );
+  }
+
+  /**
+   * @covers GenericSparql::queryLabel
+   * @todo   Implement testQueryLabel().
+   */
+  public function testQueryLabel()
+  {
+    // Remove the following lines when you implement this test.
+    $this->markTestIncomplete(
+      'This test has not been implemented yet.'
+    );
+  }
+
+  /**
+   * @covers GenericSparql::queryProperty
+   */
+  public function testQueryPropertyForBroaderThatExists()
+  {
+    $actual = $this->sparql->queryProperty('http://www.skosmos.skos/test/ta116', 'skos:broader', 'en');
+    $expected = array('http://www.skosmos.skos/test/ta1' => array('label' => 'Fish'));
+    $this->assertEquals($expected, $actual);
+  }
+  
+  /**
+   * @covers GenericSparql::queryProperty
+   */
+  public function testQueryPropertyForNarrowerThatDoesntExist()
+  {
+    $actual = $this->sparql->queryProperty('http://www.skosmos.skos/test/ta116', 'skos:narrower', 'en');
+    $expected = array();
+    $this->assertEquals($expected, $actual);
+  }
+  
+  /**
+   * @covers GenericSparql::queryProperty
+   */
+  public function testQueryPropertyForNonexistentConcept()
+  {
+    $actual = $this->sparql->queryProperty('http://notfound', 'skos:narrower', 'en');
+    $this->assertEquals(null, $actual);
+  }
+
+  /**
+   * @covers GenericSparql::queryTransitiveProperty
+   * @todo   Implement testQueryTransitiveProperty().
+   */
+  public function testQueryTransitiveProperty()
+  {
+    // Remove the following lines when you implement this test.
+    $this->markTestIncomplete(
+      'This test has not been implemented yet.'
+    );
+  }
+
+  /**
+   * @covers GenericSparql::queryChildren
+   */
+  public function testQueryChildren()
+  {
+    $actual = $this->sparql->queryChildren('http://www.skosmos.skos/test/ta1', 'en');
+    $expected = array (
+      0 => array (
+        'uri' => 'http://www.skosmos.skos/test/ta111',
+        'prefLabel' => 'Tuna',
+        'hasChildren' => false,
+      ),
+      1 => array (
+        'uri' => 'http://www.skosmos.skos/test/ta112',
+        'prefLabel' => 'Carp',
+        'hasChildren' => true,
+      ),
+      2 => array (
+        'uri' => 'http://www.skosmos.skos/test/ta114',
+        'prefLabel' => 'Buri',
+        'hasChildren' => false,
+      ),
+      3 => array (
+        'uri' => 'http://www.skosmos.skos/test/ta115',
+        'prefLabel' => 'Eel',
+        'hasChildren' => false,
+      ),
+      4 => array (
+        'uri' => 'http://www.skosmos.skos/test/ta116',
+        'prefLabel' => 'Bass',
+        'hasChildren' => false,
+      ),
+      5 => array (
+        'uri' => 'http://www.skosmos.skos/test/ta117',
+        'prefLabel' => '3D Bass',
+        'hasChildren' => false,
+      ),
+      6 => array (
+        'uri' => 'http://www.skosmos.skos/test/ta119',
+        'prefLabel' => 'Hauki (fi)',
+        'hasChildren' => false,
+      ),
+      7 => array (
+        'uri' => 'http://www.skosmos.skos/test/ta120',
+        'prefLabel' => NULL,
+        'hasChildren' => false,
+      ),
+      8 => array (
+        'uri' => 'http://www.skosmos.skos/test/ta113',
+        'prefLabel' => NULL,
+        'hasChildren' => false,
+      ),
+    );
+    $this->assertEquals($expected, $actual);
+  }
+  
+  /**
+   * @covers GenericSparql::queryChildren
+   */
+  public function testQueryChildrenOfNonExistentConcept()
+  {
+    $actual = $this->sparql->queryChildren('http://notfound', 'en');
+    $this->assertEquals(null, $actual);
+  }
+
+  /**
+   * @covers GenericSparql::queryTopConcepts
+   */
+  public function testQueryTopConcepts()
+  {
+    $actual = $this->sparql->queryTopConcepts('http://www.skosmos.skos/test/conceptscheme', 'en');
+    $this->assertEquals(array('http://www.skosmos.skos/test/ta1' => 'Fish'), $actual);
+  }
+
+  /**
+   * @covers GenericSparql::queryParentList
+   * @todo   Implement testQueryParentList().
+   */
+  public function testQueryParentList()
+  {
+    // Remove the following lines when you implement this test.
+    $this->markTestIncomplete(
+      'This test has not been implemented yet.'
+    );
+  }
+
+  /**
+   * @covers GenericSparql::listConceptGroups
+   * @todo   Implement testListConceptGroups().
+   */
+  public function testListConceptGroups()
+  {
+    // Remove the following lines when you implement this test.
+    $this->markTestIncomplete(
+      'This test has not been implemented yet.'
+    );
+  }
+
+  /**
+   * @covers GenericSparql::listConceptGroupContents
+   * @todo   Implement testListConceptGroupContents().
+   */
+  public function testListConceptGroupContents()
+  {
+    // Remove the following lines when you implement this test.
+    $this->markTestIncomplete(
+      'This test has not been implemented yet.'
+    );
   }
 }
   

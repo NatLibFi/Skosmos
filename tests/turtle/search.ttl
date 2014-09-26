@@ -21,6 +21,7 @@ test:ta111 a skos:Concept ;
 test:ta112 a skos:Concept ;
     skosmos:testprop "Test property value" ;
     skos:broader test:ta1 ;
+    skos:narrower test:ta121 ;
     skos:exactMatch test:ta118 ;
     skos:inScheme test:conceptscheme ;
     skos:prefLabel "Carp"@en,
@@ -61,6 +62,11 @@ test:ta119 a skos:Concept ;
 test:ta120 a skos:Concept ;
     skos:broader test:ta1 ;
     skos:inScheme test:conceptscheme .
+
+test:ta121 a skos:Concept ;
+    skos:broader test:ta112 ;
+    skos:inScheme test:conceptscheme ;
+    skos:prefLabel "Crucian carp"@en .
 
 test:ta1 a skos:Concept ;
     skos:inScheme test:conceptscheme ;
