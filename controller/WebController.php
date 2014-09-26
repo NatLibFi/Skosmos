@@ -132,9 +132,12 @@ class WebController extends Controller
 
     // 2. if vocabulary given, select based on the default language of the vocabulary
     if ($vocab_id) {
-      $vocab = $this->model->getVocabulary($vocab_id);
-
-      return $vocab->getDefaultLanguage();
+      try {
+        $vocab = $this->model->getVocabulary($vocab_id);
+        return $vocab->getDefaultLanguage();
+      } catch (Exception $e) {
+        // vocabulary id not found, move on to the next selection method
+      }
     }
 
     // 3. select language based on Accept-Language header
