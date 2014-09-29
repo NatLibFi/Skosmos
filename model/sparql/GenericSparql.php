@@ -607,8 +607,19 @@ EOQ;
    * @param $letter the letter (or special class) to search for
    * @param $lang language of labels
    */
-  public function queryConceptsAlphabetical($letter, $lang) {
+  public function queryConceptsAlphabetical($letter, $lang, $limit=null, $offset=null) {
     $gc = $this->graphClause;
+    $limit = ($limit) ? 'LIMIT ' . $limit : '';
+    $offset = ($offset) ? 'OFFSET ' . $offset : '';
+    
+    // eliminating whitespace and line changes when the conditions aren't needed.
+    $limitandoffset = '';
+    if ($limit && $offset)
+      $limitandoffset = "\n" . $limit . "\n" . $offset;
+    elseif ($limit)
+      $limitandoffset = "\n" . $limit;
+    elseif ($offset)
+      $limitandoffset = "\n" . $offset;
 
     $use_regex = false;
 
@@ -661,7 +672,7 @@ WHERE {
 }
 
 GROUP BY ?match ?s ?label ?alabel ?prop
-ORDER BY lcase(str(?match))
+ORDER BY lcase(str(?match)) $limitandoffset
 EOQ;
 
     $results = $this->client->query($query);

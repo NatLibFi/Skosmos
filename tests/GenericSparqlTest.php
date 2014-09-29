@@ -130,6 +130,50 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   /**
    * @covers GenericSparql::queryConceptsAlphabetical
    */
+  public function testQueryConceptsAlphabeticalLimit() {
+    $actual = $this->sparql->queryConceptsAlphabetical('b', 'en', 2);
+    $expected = array (
+      0 => array (
+        'uri' => 'http://www.skosmos.skos/test/ta116',
+        'localname' => 'ta116',
+        'prefLabel' => 'Bass',
+        'lang' => 'en',
+      ),
+      1 => array (
+        'uri' => 'http://www.skosmos.skos/test/ta122',
+        'localname' => 'ta122',
+        'prefLabel' => 'Black sea bass',
+        'lang' => 'en',
+      ),
+    );
+    $this->assertEquals($expected, $actual);
+  }
+  
+  /**
+   * @covers GenericSparql::queryConceptsAlphabetical
+   */
+  public function testQueryConceptsAlphabeticalLimitAndOffset() {
+    $actual = $this->sparql->queryConceptsAlphabetical('b', 'en', 2, 1);
+    $expected = array (
+      0 => array (
+        'uri' => 'http://www.skosmos.skos/test/ta122',
+        'localname' => 'ta122',
+        'prefLabel' => 'Black sea bass',
+        'lang' => 'en',
+      ),
+      1 => array (
+        'uri' => 'http://www.skosmos.skos/test/ta114',
+        'localname' => 'ta114',
+        'prefLabel' => 'Buri',
+        'lang' => 'en',
+      ),
+    );
+    $this->assertEquals($expected, $actual);
+  }
+  
+  /**
+   * @covers GenericSparql::queryConceptsAlphabetical
+   */
   public function testQueryConceptsAlphabeticalNoResults() {
     $actual = $this->sparql->queryConceptsAlphabetical('x', 'en');
     $expected = array();
@@ -208,14 +252,25 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GenericSparql::queryConcepts
-   * @todo   Implement testQueryConcepts().
    */
   public function testQueryConcepts()
   {
-    // Remove the following lines when you implement this test.
-    $this->markTestIncomplete(
-      'This test has not been implemented yet.'
-    );
+    $voc = $this->model->getVocabulary('test');
+    $actual = $this->sparql->queryConcepts('bass*',array($voc),'en', 'en', 20, 0, null, 'skos:Concept');
+    $this->assertEquals(1, sizeof($actual));
+    $this->assertEquals('Bass', $actual[0]['prefLabel']);
+  }
+  
+  /**
+   * @covers GenericSparql::queryConcepts
+   */
+  public function testQueryConceptsAsteriskBeforeTerm()
+  {
+    $voc = $this->model->getVocabulary('test');
+    $actual = $this->sparql->queryConcepts('*bass',array($voc),'en', 'en', 20, 0, null, 'skos:Concept');
+    $this->assertEquals(3, sizeof($actual));
+    foreach($actual as $match)
+      $this->assertContains('bass', $match['prefLabel'], '',true);
   }
   
   /**
@@ -298,6 +353,38 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
     );
     $this->assertEquals($expected, $actual);
   }
+  
+  /**
+   * @covers GenericSparql::queryTransitiveProperty
+   */
+  public function testQueryTransitivePropertyLongerPath()
+  {
+    $actual = $this->sparql->queryTransitiveProperty('http://www.skosmos.skos/test/ta122', 'skos:broader', 'en', '10');
+    $expected = array(
+      'http://www.skosmos.skos/test/ta122' => 
+        array (
+          'label' => 'Black sea bass',
+          'direct' => 
+          array (
+            0 => 'http://www.skosmos.skos/test/ta116',
+          ),
+        ),
+        'http://www.skosmos.skos/test/ta1' => 
+        array (
+          'label' => 'Fish',
+        ),
+        'http://www.skosmos.skos/test/ta116' => 
+        array (
+          'label' => 'Bass',
+          'direct' => 
+          array (
+            0 => 'http://www.skosmos.skos/test/ta1',
+          ),
+        ),
+    );
+    $this->assertEquals($expected, $actual);
+  }
+
 
   /**
    * @covers GenericSparql::queryChildren
