@@ -224,7 +224,13 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   public function testQueryTypes()
   {
     $actual = $this->sparql->queryTypes('en');
-    $expected = array('http://www.w3.org/2004/02/skos/core#Concept' => array());
+    $expected = array(
+      'http://www.w3.org/2004/02/skos/core#Concept' => array(),
+      'http://www.skosmos.skos/test-meta/TestClass' => array(
+        'superclass' => 'http://www.w3.org/2004/02/skos/core#Concept',
+        'label' => 'Test class'
+      )
+    );
     $this->assertEquals($expected, $actual);
   }
 
