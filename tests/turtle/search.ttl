@@ -57,7 +57,7 @@ test:ta117 a skos:Concept, meta:TestClass ;
 test:ta118 a skos:Concept, meta:TestClass ;
     skos:inScheme test:conceptscheme ;
     skos:exactMatch test:ta112 ;
-    skos:prefLabel "-special character example"@en .
+    skos:prefLabel "-special character \\example\\"@en .
 
 test:ta119 a skos:Concept, meta:TestClass ;
     skos:broader test:ta1 ;
@@ -77,6 +77,11 @@ test:ta122 a skos:Concept, meta:TestClass ;
     skos:broader test:ta116 ;
     skos:inScheme test:conceptscheme ;
     skos:prefLabel "Black sea bass"@en .
+
+test:ta123 a skos:Concept, meta:TestClass ;
+    skos:broader test:ta118, test:ta119 ;
+    skos:inScheme test:conceptscheme ;
+    skos:prefLabel "multiple broaders"@en .
 
 test:ta1 a skos:Concept, meta:TestClass ;
     skos:inScheme test:conceptscheme ;

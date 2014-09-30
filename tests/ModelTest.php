@@ -249,6 +249,24 @@ class ModelTest extends PHPUnit_Framework_TestCase
     $model = new Model();
     $result = $model->searchConcepts('bass', array('doesnotexist', 'thisdoesnteither'), 'en', 'en');
   }
+
+
+  /**
+   * @covers Model::searchConcepts
+   * @depends testConstructorWithConfig
+   */
+  public function testSearchConceptsWithMultipleBroaders() {
+    $model = new Model();
+    $result = $model->searchConcepts('multiple broaders', 'test', 'en', 'en', null, null, null, 0, 10, true, array('broader'));
+    $this->assertEquals('http://www.skosmos.skos/test/ta123', $result[0]['uri']);
+    $this->assertEquals('multiple broaders', $result[0]['prefLabel']);
+    $this->assertCount(2, $result[0]['broader']); // two broader concepts
+    $this->assertEquals('http://www.skosmos.skos/test/ta118', $result[0]['broader'][0]['uri']);
+#   not sure this works right, so disabling
+#    $this->assertEquals('-special character \\example\\', $result[0]['broader'][0]['prefLabel']);
+    $this->assertEquals('http://www.skosmos.skos/test/ta119', $result[0]['broader'][1]['uri']);
+    $this->assertCount(2, $result[0]['type']); // two concept types
+  }
   
   /**
    * @covers Model::searchConceptsAndInfo

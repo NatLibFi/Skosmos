@@ -277,9 +277,9 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   public function testGetStatistics() {
     $vocab = $this->model->getVocabulary('test');
     $stats = $vocab->getStatistics();
-    $this->assertEquals(12, $stats['concepts']);
+    $this->assertEquals(13, $stats['concepts']);
     foreach($stats['terms'] as $lang=>$labels) {
-      $this->assertEquals(10, $labels['skos:prefLabel']);
+      $this->assertEquals(11, $labels['skos:prefLabel']);
     }
   }
 
@@ -289,7 +289,7 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   public function testGetAlphabet() {
     $vocab = $this->model->getVocabulary('test');
     $alpha = $vocab->getAlphabet();
-    $this->assertEquals(array("B","C","E","F","T", "!*", "0-9"), $alpha);
+    $this->assertEquals(array("B","C","E","F","M","T","!*", "0-9"), $alpha);
   }
 
   /**

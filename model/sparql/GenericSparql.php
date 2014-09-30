@@ -450,9 +450,16 @@ EOQ;
     $extrafields = '';
 
     if ($fields !== null && in_array('broader', $fields)) {
+      # This expression creates a CSV row containing pairs of (uri,prefLabel) values.
+      # Note about the backslash profileration caused by several levels of interpretation (PHP and SPARQL):
+      # '\\\\\\\\' is the SPARQL regex '\\', which matches a single backslash
+      # '\\\\\\\\\\\\\\\\' is the replacement string '\\\\', which produces two backslashes
+      # - so the end result of the inner REPLACE is that backslashes will be doubled.
       $extravars = <<<EOV
-(GROUP_CONCAT(?broad) as ?broaders)
-(GROUP_CONCAT(CONCAT('"', REPLACE(IF(BOUND(?broadlab),?broadlab,''), '"', '\"'), '"'); separator=',') as ?broaderlabels)
+(GROUP_CONCAT(DISTINCT CONCAT(
+ '"', STR(?broad), '"', ',',
+ '"', REPLACE(REPLACE(IF(BOUND(?broadlab),?broadlab,''),'\\\\\\\\','\\\\\\\\\\\\\\\\'), '"', '\"'), '"'
+); separator=',') as ?broaders)
 EOV;
       $extrafields = <<<EOF
 OPTIONAL {
@@ -542,7 +549,7 @@ EOF;
     $graph_text = $this->isDefaultEndpoint() ? "$textcond \n $gc {" : "$gc { $textcond \n";
 
     $query = <<<EOQ
-SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph (GROUP_CONCAT(?type) as ?types)
+SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph (GROUP_CONCAT(DISTINCT ?type) as ?types)
 $extravars
 WHERE {
  $graph_text
@@ -593,10 +600,19 @@ EOQ;
         $hit['type'][] = $qnamecache[$typeuri];
       }
       
-      if (isset($row->broaders) && isset($row->broaderlabels)) {
-        $broaders = explode(" ", $row->broaders->getValue());
-        $broaderlabels = str_getcsv($row->broaderlabels->getValue());
-        foreach (array_combine($broaders, $broaderlabels) as $uri => $label) {
+      if (isset($row->broaders)) {
+        $broaders = str_getcsv($row->broaders->getValue());
+        $uris = array();
+        $labels = array();
+        foreach($broaders as $idx => $val) {
+          if ($idx % 2 == 0) {
+            $uris[] = $val;
+          } else {
+            $labels[] = $val;
+          }
+        }
+        
+        foreach (array_combine($uris, $labels) as $uri => $label) {
           $broader = array('uri' => $uri);
           if ($label != '') $broader['prefLabel'] = $label;
           $hit['broader'][] = $broader;
