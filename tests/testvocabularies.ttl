@@ -11,6 +11,7 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix skosmos: <http://purl.org/net/skosmos#> .
 @prefix isothes: <http://purl.org/iso25964/skos-thes#>.
+@prefix meta: <http://www.skosmos.skos/test-meta/> .
 @prefix : <#> .
 
 
