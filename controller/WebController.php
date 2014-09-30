@@ -472,10 +472,20 @@ class WebController extends Controller
       return;
     }
 
-    $lang_msg = $this->verifyVocabularyLanguage($lang, $vocab->getLanguages()) ? null : gettext("language_changed_message");
+    $vocab_stats = $this->model->getVocabulary($vocab_id)->getStatistics();
+    $lang_msg = null;
+    $lang_support = true;
+    $newlang = $this->verifyVocabularyLanguage($lang, $vocab->getLanguages());
+    if ($newlang !== null) {
+      $lang = $newlang;
+      $lang_support = false;
+      // translate this string here and now to avoid the wrong language issue in the template..
+      $lang_msg = gettext("language_changed_message");
+      $this->setLanguageProperties($lang);
+    }
     $all_at_once = $vocab->getAlphabeticalFull();
     if (!$all_at_once)
-      $search_results = $vocab->searchConceptsAlphabetical($letter);
+      $search_results = $vocab->searchConceptsAlphabetical($letter, 150);
     else
       $search_results = $vocab->searchConceptsAlphabetical('*');
 
@@ -487,10 +497,10 @@ class WebController extends Controller
                         'languages' => $this->languages,
                         'lang' => $lang,
                         'vocab_id' => $vocab_id,
+                        'vocab_stats' => $vocab_stats,
                         'vocab' => $vocab,
                         'alpha_results' => $search_results,
                         'search_letter' => $letter,
-                        'letter' => $letter,
                         'letters' => $letters,
                         'parts' => $this->parts,
                         'all_letters' => $all_at_once,
@@ -603,13 +613,13 @@ class WebController extends Controller
     }
 
     $vocab_stats = $this->model->getVocabulary($vocab_id)->getStatistics();
-    $search_results;
-    $limit = 100;
+    $alpha_results;
+    $limit = 150;
     $all_at_once = $vocab->getAlphabeticalFull();
     if (!$all_at_once)
-      $search_results = $vocab->searchConceptsAlphabetical($letter, $limit);
+      $alpha_results = $vocab->searchConceptsAlphabetical($letter, 150);
     else
-      $search_results = $vocab->searchConceptsAlphabetical('*', $limit);
+      $alpha_results = $vocab->searchConceptsAlphabetical('*');
 
     $lang_msg = null;
     $lang_support = true;
@@ -621,6 +631,7 @@ class WebController extends Controller
       $lang_msg = gettext("language_changed_message");
       $this->setLanguageProperties($lang);
     }
+    $letters = $vocab->getAlphabet();
 
     // load template
     $template = $this->twig->loadTemplate('vocab.twig');
@@ -633,6 +644,9 @@ class WebController extends Controller
                         'vocab' => $vocab,
                         'parts' => $this->parts,
                         'vocab_id' => $vocab_id,
+                        'alpha_results' => $alpha_results,
+                        'search_letter' => 'A',
+                        'letters' => $letters,
                         'lang_supported' => $lang_support,
                         'request_uri' => $this->request_uri,
                         'vocab_stats' => $vocab_stats,
