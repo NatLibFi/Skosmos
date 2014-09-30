@@ -536,8 +536,8 @@ class Vocabulary extends DataObject
    * (everything) are supported.
    * @param $letter letter (or special token) to search for
    */
-  public function searchConceptsAlphabetical($letter) {
-    return $this->getSparql()->queryConceptsAlphabetical($letter, $this->lang);
+  public function searchConceptsAlphabetical($letter, $limit) {
+    return $this->getSparql()->queryConceptsAlphabetical($letter, $this->lang, $limit);
   }
 
 }

@@ -603,6 +603,13 @@ class WebController extends Controller
     }
 
     $vocab_stats = $this->model->getVocabulary($vocab_id)->getStatistics();
+    $search_results;
+    $limit = 100;
+    $all_at_once = $vocab->getAlphabeticalFull();
+    if (!$all_at_once)
+      $search_results = $vocab->searchConceptsAlphabetical($letter, $limit);
+    else
+      $search_results = $vocab->searchConceptsAlphabetical('*', $limit);
 
     $lang_msg = null;
     $lang_support = true;

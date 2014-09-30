@@ -208,14 +208,13 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GenericSparql::queryConceptInfo
-   * @todo   Implement testQueryConceptInfo().
    */
   public function testQueryConceptInfo()
   {
-    // Remove the following lines when you implement this test.
-    $this->markTestIncomplete(
-      'This test has not been implemented yet.'
-    );
+    $actual = $this->sparql->queryConceptInfo('http://www.skosmos.skos/test/ta111');
+    $concept = $actual[0];
+    $this->assertInstanceOf('Concept', $concept);
+    $this->assertEquals('Tuna', $concept->getLabel());
   }
 
   /**

@@ -922,7 +922,7 @@ $(function() { // DOCUMENT READY
   /* makes an AJAX query for the alphabetical index contents when landing on 
    * the vocabulary home page.
    */
-  if ($('#vocab-info').length == 1) {
+  if (false && $('#vocab-info').length == 1) {
     // taking into account the possibility that the lang parameter has been changed by the WebController.
     var urlLangCorrected = '//' + base_url + vocab + '/' + lang + '/index';
     $('.sidebar-grey').empty().append('<div class="loading-spinner"><span class="spinner-text">'+ loading_text + '</span><span class="spinner" /></div>');
