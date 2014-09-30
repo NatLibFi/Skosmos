@@ -12,3 +12,4 @@ until $(curl --output /dev/null --silent --head --fail http://localhost:3030); d
   done
 ./s-put http://localhost:3030/ds/data http://www.skosmos.skos/test/ ../turtle/search.ttl
 
+cd ..
