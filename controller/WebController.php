@@ -471,8 +471,10 @@ class WebController extends Controller
 
       return;
     }
-
-    $vocab_stats = $this->model->getVocabulary($vocab_id)->getStatistics();
+    
+    $offset = (isset($_GET['offset']) && is_numeric($_GET['offset']) && $_GET['offset'] >= 0) ? $_GET['offset'] : 0;
+    if ($offset === 0)
+      $vocab_stats = $this->model->getVocabulary($vocab_id)->getStatistics();
     $lang_msg = null;
     $lang_support = true;
     $newlang = $this->verifyVocabularyLanguage($lang, $vocab->getLanguages());
@@ -483,9 +485,10 @@ class WebController extends Controller
       $lang_msg = gettext("language_changed_message");
       $this->setLanguageProperties($lang);
     }
+
     $all_at_once = $vocab->getAlphabeticalFull();
     if (!$all_at_once)
-      $search_results = $vocab->searchConceptsAlphabetical($letter, 150);
+      $search_results = $vocab->searchConceptsAlphabetical($letter, 250, $offset);
     else
       $search_results = $vocab->searchConceptsAlphabetical('*');
 

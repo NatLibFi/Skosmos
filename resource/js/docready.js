@@ -769,16 +769,41 @@ $(function() { // DOCUMENT READY
   var $loading = $("<p>" + loading_text + "&hellip;<span class='spinner'/></p>"); 
   var $trigger = $('.search-result:nth-last-of-type(6)'); 
   var options = { offset : '100%', continuous: false, triggerOnce: true };
+  var alpha_offcount = 1;
   var offcount = 1;
   var number_of_hits = document.getElementsByClassName("search-result").length;
   var $ready = $("<p class='search-count'>" + results + " " + number_of_hits + " " + results_disp +"</p>");
   
+  // search-results waypoint
   if (parts[parts.length-1].indexOf('search') !== -1 && number_of_hits !== 0) { // if we are in the search page with some results
     if (number_of_hits < waypoint_results * offcount) { 
       $('.search-result-listing').append($ready);
     }
     else {
       $trigger.waypoint(function() { waypointCallback(); }, options);
+    }
+  }
+
+  var alpha_complete = false;
+
+  function alphaWaypointCallback() {
+    if (!alpha_complete) {
+      $('.alphabetical-search-results').append($loading);
+      var parameters = $.param({'offset' : alpha_offcount * 250});
+      $.ajax({
+        url : 'http://' + base_url + vocab + '/' + lang + '/index',
+        data : parameters,
+        success : function(data) {
+          $loading.detach();
+          if ($(data).find('.alphabetical-search-results').length === 1) {
+            $('.alphabetical-search-results').append($(data).find('.alphabetical-search-results')[0].innerHTML);
+            alpha_offcount++;
+          } else {
+            alpha_complete = true;
+            return;
+          }
+        }
+      });
     }
   }
 
@@ -895,11 +920,21 @@ $(function() { // DOCUMENT READY
     },
     maxHeight: 300 
   });
+  if ($('#vocab-info').length === 1) {
+    $(".sidebar-grey").mCustomScrollbar({ 
+      alwaysShowScrollbar: 1,
+      scrollInertia: 0, 
+      mouseWheel:{ preventDefault: true, scrollAmount: 105 },
+      snapAmount: 15,
+      snapOffset: 1,
+      callbacks: { alwaysTriggerOffsets: false, onTotalScroll: alphaWaypointCallback, onTotalScrollOffset: 300 }
+    });
+  }
 
   /*  activating the custom scrollbars only when not on the hierarchy page
    *  since that goes haywire if it's done before the ajax complete runs
    */
-  if ($('#vocab-info').length === 0 && document.URL.indexOf('/page/') === -1 && $('.search-count').length === 0) {
+  if ($('#vocab-info').length === -1 && document.URL.indexOf('/page/') === -1 && $('.search-count').length === 0) {
     $(".sidebar-grey").mCustomScrollbar({ 
       alwaysShowScrollbar: 1,
       scrollInertia: 0, 
