@@ -451,14 +451,11 @@ EOQ;
 
     if ($fields !== null && in_array('broader', $fields)) {
       # This expression creates a CSV row containing pairs of (uri,prefLabel) values.
-      # Note about the backslash profileration caused by several levels of interpretation (PHP and SPARQL):
-      # '\\\\\\\\' is the SPARQL regex '\\', which matches a single backslash
-      # '\\\\\\\\\\\\\\\\' is the replacement string '\\\\', which produces two backslashes
-      # - so the end result of the inner REPLACE is that backslashes will be doubled.
+      # The REPLACE is performed for quotes (" -> "") so they don't break the CSV format.
       $extravars = <<<EOV
 (GROUP_CONCAT(DISTINCT CONCAT(
  '"', STR(?broad), '"', ',',
- '"', REPLACE(REPLACE(IF(BOUND(?broadlab),?broadlab,''),'\\\\\\\\','\\\\\\\\\\\\\\\\'), '"', '\"'), '"'
+ '"', REPLACE(IF(BOUND(?broadlab),?broadlab,''), '"', '""'), '"'
 ); separator=',') as ?broaders)
 EOV;
       $extrafields = <<<EOF
@@ -601,7 +598,7 @@ EOQ;
       }
       
       if (isset($row->broaders)) {
-        $broaders = str_getcsv($row->broaders->getValue());
+        $broaders = str_getcsv($row->broaders->getValue(), ',', '"', '"');
         $uris = array();
         $labels = array();
         foreach($broaders as $idx => $val) {

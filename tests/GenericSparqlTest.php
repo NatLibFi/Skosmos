@@ -186,7 +186,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   public function testQueryConceptsAlphabeticalSpecialChars() {
     $actual = $this->sparql->queryConceptsAlphabetical('!*', 'en');
     $this->assertEquals(1, sizeof($actual));
-    $this->assertEquals("-special character \\example\\", $actual[0]['prefLabel']);
+    $this->assertEquals('-"special" character \\example\\', $actual[0]['prefLabel']);
   }
   
   /**
