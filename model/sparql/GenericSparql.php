@@ -513,7 +513,7 @@ EOF;
     while (strpos($term, '**') !== false)
       $term = str_replace('**', '*', $term); // removes futile asterisks
 
-    # make text query clause
+    # make text query clauses
     $textcond = $this->createTextQueryCondition($term);
 
     # use appropriate matching function depending on query type: =, strstarts, strends or full regex
@@ -668,44 +668,49 @@ EOQ;
     }
 
     # make text query clause
-    $textcond = $use_regex ? '# regex in use' : $this->createTextQueryCondition($letter . '*');
+    $textcond_pref = $use_regex ? '# regex in use' : $this->createTextQueryCondition($letter . '*', 'skos:prefLabel');
+    $textcond_alt = $use_regex ? '# regex in use' : $this->createTextQueryCondition($letter . '*', 'skos:altLabel');
     $lcletter = mb_strtolower($letter, 'UTF-8'); // convert to lower case, UTF-8 safe
     if ($use_regex) {
-      $filtercond = "regex(str(?match), '^$letter$', 'i')";
+      $filtercond_label = "regex(str(?label), '^$letter$', 'i')";
+      $filtercond_alabel = "regex(str(?alabel), '^$letter$', 'i')";
     } else {
-      $filtercond = "strstarts(lcase(str(?match)), '$lcletter')";
+      $filtercond_label = "strstarts(lcase(str(?label)), '$lcletter')";
+      $filtercond_alabel = "strstarts(lcase(str(?alabel)), '$lcletter')";
     }
 
     $query = <<<EOQ
 SELECT ?s ?label ?alabel
 WHERE {
   $gc {
-    $textcond
-    FILTER (
-      $filtercond
-      && langMatches(lang(?match), '$lang')
-    )
-    ?s a skos:Concept .
-
     {
+      $textcond_pref
+      ?s skos:prefLabel ?label .
+      FILTER (
+        $filtercond_label
+        && langMatches(lang(?label), '$lang')
+      )
+    }
+    UNION
+    {
+      $textcond_alt
       {
-        ?s skos:prefLabel ?match .
-        BIND(?match as ?label)
+        ?s skos:altLabel ?alabel .
+        FILTER (
+          $filtercond_alabel
+          && langMatches(lang(?alabel), '$lang')
+        )
       }
-      UNION
       {
-        ?s skos:altLabel ?match .
         ?s skos:prefLabel ?label .
         FILTER (langMatches(lang(?label), '$lang'))
-        BIND(?match as ?alabel)
       }
     }
+    ?s a skos:Concept .
     FILTER NOT EXISTS { ?s owl:deprecated true }
   }
 }
-
-GROUP BY ?match ?s ?label ?alabel ?prop
-ORDER BY lcase(str(?match)) $limitandoffset
+ORDER BY LCASE(IF(BOUND(?alabel), STR(?alabel), STR(?label))) $limitandoffset
 EOQ;
 
     $results = $this->client->query($query);

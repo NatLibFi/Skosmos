@@ -27,10 +27,11 @@ class JenaTextSparql extends GenericSparql
    * results in term searches
    *
    * @param string $term search term
+   * @param string $property property to search (e.g. 'skos:prefLabel'), or '' for default
    * @return string SPARQL text search clause
    */
 
-  protected function createTextQueryCondition($term)
+  protected function createTextQueryCondition($term, $property='')
   {
     // construct the lucene search term for jena-text
     $term = str_replace('-', ' ', $term); // split words with hyphens to separate words
@@ -47,6 +48,6 @@ class JenaTextSparql extends GenericSparql
     if (sizeof($qwords) == 0) return '# no suitable terms - text index disabled';
     $term = implode(' ', $qwords);
 
-    return "{ ?s text:query ('$term' $this->MAX_N) }";
+    return "{ ?s text:query ($property '$term' $this->MAX_N) }";
   }
 }
