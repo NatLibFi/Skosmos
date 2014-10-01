@@ -262,7 +262,7 @@ $(function() { // DOCUMENT READY
         var base_path = path_fix.length / 3;
         var clicked = $(this);
         var $content = $('.content');
-        var targetUrl = 'http://' + base_url + vocab + '/' + lang + '/page/?uri=' + event.target.href;
+        var targetUrl = 'http://' + base_url + vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(event.target.href);
         var parameters = $.param({'base_path' : base_path});
         $('#hier-trigger').attr('href', targetUrl);
         $.ajax({
@@ -604,7 +604,7 @@ $(function() { // DOCUMENT READY
   function onSelection($e, datum) {
     if ($e.currentTarget.id !== 'parent-limit') {
       var localname = datum.localname;
-      if (!localname) {
+      if (!localname || encodeURIComponent(localname) != localname) {
         localname = "?uri=" + datum.uri;
       }
       // replaced complex logic with path_fix that should always work.
