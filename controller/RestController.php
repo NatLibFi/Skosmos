@@ -203,7 +203,7 @@ class RestController extends Controller
     );
 
     if ($lang)
-      $ret['@context']['@language'] = $lang;
+      $ret['@context']['@language'] = $labellang;
 
     return $this->return_json($ret);
   }
