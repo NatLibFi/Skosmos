@@ -456,7 +456,7 @@ EOQ;
 (GROUP_CONCAT(DISTINCT CONCAT(
  '"', STR(?broad), '"', ',',
  '"', REPLACE(IF(BOUND(?broadlab),?broadlab,''), '"', '""'), '"'
-); separator=',') as ?broaders)
+); separator='\\n') as ?broaders)
 EOV;
       $extrafields = <<<EOF
 OPTIONAL {
@@ -598,20 +598,10 @@ EOQ;
       }
       
       if (isset($row->broaders)) {
-        $broaders = str_getcsv($row->broaders->getValue(), ',', '"', '"');
-        $uris = array();
-        $labels = array();
-        foreach($broaders as $idx => $val) {
-          if ($idx % 2 == 0) {
-            $uris[] = $val;
-          } else {
-            $labels[] = $val;
-          }
-        }
-        
-        foreach (array_combine($uris, $labels) as $uri => $label) {
-          $broader = array('uri' => $uri);
-          if ($label != '') $broader['prefLabel'] = $label;
+        foreach (explode("\n", $row->broaders->getValue()) as $line) {
+          $brdata = str_getcsv($line, ',', '"', '"');
+          $broader = array('uri' => $brdata[0]);
+          if ($brdata[1] != '') $broader['prefLabel'] = $brdata[1];
           $hit['broader'][] = $broader;
         }
       }
