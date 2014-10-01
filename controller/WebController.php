@@ -95,12 +95,13 @@ class WebController extends Controller
       }
       // case 1: URI within vocabulary namespace: use only local name
       $localname = $vocab->getLocalName($uri);
-      if ($localname != $uri) { // check that the prefix stripping worked
-
+      if ($localname != $uri && $localname == urlencode($localname)) {
+        // check that the prefix stripping worked, and there are no problematic chars in localname
         return $controller->path_fix . "$vocid/$lang/$type/$localname";
       }
 
-      // case 2: URI outside vocabulary namespace; pass the full URI as parameter instead
+      // case 2: URI outside vocabulary namespace, or has problematic chars
+      // pass the full URI as parameter instead
       return $controller->path_fix . "$vocid/$lang/$type/?uri=" . urlencode($uri);
     });
     $this->twig->addFilter($urlFilter);
