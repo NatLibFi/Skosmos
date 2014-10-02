@@ -21,6 +21,7 @@ skosmos:testprop a rdf:Property ;
 test:ta111 a skos:Concept, meta:TestClass ;
     skos:broader test:ta1 ;
     skos:inScheme test:conceptscheme ;
+    owl:deprecated true ;
     skos:prefLabel "Tuna"@en .
 
 test:ta112 a skos:Concept, meta:TestClass ;

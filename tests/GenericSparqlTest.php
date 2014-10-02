@@ -203,7 +203,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    */
   public function testQueryConceptsAlphabeticalFull() {
     $actual = $this->sparql->queryConceptsAlphabetical('*', 'en');
-    $this->assertEquals(12, sizeof($actual));
+    $this->assertEquals(11, sizeof($actual));
   }
 
   /**
