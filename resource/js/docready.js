@@ -440,6 +440,8 @@ $(function() { // DOCUMENT READY
       function(event) {
         $.ajaxQ.abortAll();
         if ($('.alphabet-header').length === 0) {
+          alpha_offcount = 1;
+          alpha_complete = false;
           var $pagination = $('.pagination');
           var base_path = path_fix.length / 3;
           var $content = $('.sidebar-grey');
@@ -769,7 +771,9 @@ $(function() { // DOCUMENT READY
   var $loading = $("<p>" + loading_text + "&hellip;<span class='spinner'/></p>"); 
   var $trigger = $('.search-result:nth-last-of-type(6)'); 
   var options = { offset : '100%', continuous: false, triggerOnce: true };
+  var alpha_complete = false;
   var alpha_offcount = 1;
+  var alpha_letter = '';
   var offcount = 1;
   var number_of_hits = document.getElementsByClassName("search-result").length;
   var $ready = $("<p class='search-count'>" + results + " " + number_of_hits + " " + results_disp +"</p>");
@@ -783,8 +787,6 @@ $(function() { // DOCUMENT READY
       $trigger.waypoint(function() { waypointCallback(); }, options);
     }
   }
-
-  var alpha_complete = false;
 
   function alphaWaypointCallback() {
     if (!alpha_complete) {
