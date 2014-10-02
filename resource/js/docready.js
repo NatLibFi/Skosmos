@@ -86,6 +86,16 @@ $(function() { // DOCUMENT READY
         });
         return removeThese.join(' ');
       });
+      if (settings.url.indexOf('index/' !== -1)) {
+        $(".sidebar-grey").mCustomScrollbar({ 
+          alwaysShowScrollbar: 1,
+          scrollInertia: 0, 
+          mouseWheel:{ preventDefault: true, scrollAmount: 105 },
+          snapAmount: 15,
+          snapOffset: 1,
+          callbacks: { alwaysTriggerOffsets: false, onTotalScroll: alphaWaypointCallback, onTotalScrollOffset: 300 }
+        });
+      }
     }
     // Sidenav actions only happen when doing other queries than the autocomplete.
     if (settings.url.indexOf('topConcepts') === -1 || settings.url.indexOf('index') === -1 || settings.url.indexOf('groups') !== -1 || settings.url.indexOf('hierarchy') !== -1) {
@@ -784,8 +794,6 @@ $(function() { // DOCUMENT READY
   var $trigger = $('.search-result:nth-last-of-type(6)'); 
   var options = { offset : '100%', continuous: false, triggerOnce: true };
   var alpha_complete = false;
-  var alpha_offcount = 1;
-  var alpha_letter = '';
   var offcount = 1;
   var number_of_hits = document.getElementsByClassName("search-result").length;
   var $ready = $("<p class='search-count'>" + results + " " + number_of_hits + " " + results_disp +"</p>");
@@ -802,19 +810,17 @@ $(function() { // DOCUMENT READY
 
   function alphaWaypointCallback() {
     if (!alpha_complete) {
+      alpha_complete = true;
       $('.alphabetical-search-results').append($loading);
-      var parameters = $.param({'offset' : alpha_offcount * 250});
+      var parameters = $.param({'offset' : 250});
+      var letter = '/' + $('.pagination > .active > a')[0].innerHTML;
       $.ajax({
-        url : 'http://' + base_url + vocab + '/' + lang + '/index',
+        url : 'http://' + base_url + vocab + '/' + lang + '/index' + letter,
         data : parameters,
         success : function(data) {
           $loading.detach();
           if ($(data).find('.alphabetical-search-results').length === 1) {
             $('.alphabetical-search-results').append($(data).find('.alphabetical-search-results')[0].innerHTML);
-            alpha_offcount++;
-          } else {
-            alpha_complete = true;
-            return;
           }
         }
       });

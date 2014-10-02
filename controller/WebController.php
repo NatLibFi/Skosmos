@@ -474,8 +474,10 @@ class WebController extends Controller
     }
     
     $offset = (isset($_GET['offset']) && is_numeric($_GET['offset']) && $_GET['offset'] >= 0) ? $_GET['offset'] : 0;
-    if ($offset === 0)
+    $count = ($offset > 0 || !isset($_GET['base_path'])) ? null : 250;
+    if ($offset === 0) {
       $vocab_stats = $this->model->getVocabulary($vocab_id)->getStatistics();
+    }
     $lang_msg = null;
     $lang_support = true;
     $newlang = $this->verifyVocabularyLanguage($lang, $vocab->getLanguages());
@@ -489,7 +491,7 @@ class WebController extends Controller
 
     $all_at_once = $vocab->getAlphabeticalFull();
     if (!$all_at_once)
-      $search_results = $vocab->searchConceptsAlphabetical($letter, 250, $offset);
+      $search_results = $vocab->searchConceptsAlphabetical($letter, $count, $offset);
     else
       $search_results = $vocab->searchConceptsAlphabetical('*');
 
@@ -618,10 +620,9 @@ class WebController extends Controller
 
     $vocab_stats = $this->model->getVocabulary($vocab_id)->getStatistics();
     $alpha_results;
-    $limit = 150;
     $all_at_once = $vocab->getAlphabeticalFull();
     if (!$all_at_once)
-      $alpha_results = $vocab->searchConceptsAlphabetical($letter, 150);
+      $alpha_results = $vocab->searchConceptsAlphabetical($letter, 250);
     else
       $alpha_results = $vocab->searchConceptsAlphabetical('*');
 
