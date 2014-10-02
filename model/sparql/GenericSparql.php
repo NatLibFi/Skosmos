@@ -517,7 +517,7 @@ EOF;
     $textcond_pref = $this->createTextQueryCondition($term, 'skos:prefLabel');
     $textcond_alt = $this->createTextQueryCondition($term, 'skos:altLabel');
     $textcond_hidden = $this->createTextQueryCondition($term, 'skos:hiddenLabel');
-    $textcond = "{ $textcond_pref UNION $textcond_alt UNION $textcond_hidden }";
+    $textcond = "{{ $textcond_pref \n} UNION { $textcond_alt \n} UNION { $textcond_hidden \n}}";
 
     # use appropriate matching function depending on query type: =, strstarts, strends or full regex
     if (preg_match('/^[^\*]+$/', $term)) { // exact query
