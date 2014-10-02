@@ -37,7 +37,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    */
   public function testCountConcepts() {
     $actual = $this->sparql->countConcepts();
-    $this->assertEquals(12, $actual);
+    $this->assertEquals(13, $actual);
   }
   
   /**
@@ -45,7 +45,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    */
   public function testCountLangConceptsOneLang() {
     $actual = $this->sparql->countLangConcepts(array('en'));
-    $this->assertEquals(10, $actual['en']['skos:prefLabel']);
+    $this->assertEquals(11, $actual['en']['skos:prefLabel']);
     $this->assertEquals(1, $actual['en']['skos:altLabel']);
   }
   
@@ -54,7 +54,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    */
   public function testCountLangConceptsMultipleLangs() {
     $actual = $this->sparql->countLangConcepts(array('en','fi'));
-    $this->assertEquals(10, $actual['en']['skos:prefLabel']);
+    $this->assertEquals(11, $actual['en']['skos:prefLabel']);
     $this->assertEquals(1, $actual['en']['skos:altLabel']);
     $this->assertEquals(2, $actual['fi']['skos:prefLabel']);
   }
@@ -64,7 +64,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    */
   public function testQueryFirstCharacters() {
     $actual = $this->sparql->queryFirstCharacters('en');
-    $this->assertEquals(array("T","C","B","E","3","-", "F"), $actual);
+    $this->assertEquals(array("T","C","B","E","3","-","M","F"), $actual);
   }
 
   /**
@@ -186,7 +186,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   public function testQueryConceptsAlphabeticalSpecialChars() {
     $actual = $this->sparql->queryConceptsAlphabetical('!*', 'en');
     $this->assertEquals(1, sizeof($actual));
-    $this->assertEquals("-special character example", $actual[0]['prefLabel']);
+    $this->assertEquals('-"special" character \\example\\', $actual[0]['prefLabel']);
   }
   
   /**
@@ -203,7 +203,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    */
   public function testQueryConceptsAlphabeticalFull() {
     $actual = $this->sparql->queryConceptsAlphabetical('*', 'en');
-    $this->assertEquals(11, sizeof($actual));
+    $this->assertEquals(12, sizeof($actual));
   }
 
   /**
@@ -223,7 +223,13 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   public function testQueryTypes()
   {
     $actual = $this->sparql->queryTypes('en');
-    $expected = array('http://www.w3.org/2004/02/skos/core#Concept' => array());
+    $expected = array(
+      'http://www.w3.org/2004/02/skos/core#Concept' => array(),
+      'http://www.skosmos.skos/test-meta/TestClass' => array(
+        'superclass' => 'http://www.w3.org/2004/02/skos/core#Concept',
+        'label' => 'Test class'
+      )
+    );
     $this->assertEquals($expected, $actual);
   }
 

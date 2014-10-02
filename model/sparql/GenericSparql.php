@@ -434,14 +434,37 @@ EOQ;
    * @param string $parent limit search to concepts which have the given concept as parent in the transitive broader hierarchy
    * @param string $group limit search to concepts which are in the given group
    * @param boolean $hidden include matches on hidden labels (default: true)
+   * @param array $fields extra fields to include in the result (array of strings). (default: null = none)
    * @return array query result object
    */
-  public function queryConcepts($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $type, $parent=null, $group=null, $hidden=true)
+  public function queryConcepts($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $type, $parent=null, $group=null, $hidden=true, $fields=null)
   {
     $gc = $this->graphClause;
     $limit = ($limit) ? 'LIMIT ' . $limit : '';
     $offset = ($offset) ? 'OFFSET ' . $offset : '';
     $type = EasyRdf_Namespace::expand($type);
+
+    // extra variable expressions to request
+    $extravars = '';
+    // extra fields to query for
+    $extrafields = '';
+
+    if ($fields !== null && in_array('broader', $fields)) {
+      # This expression creates a CSV row containing pairs of (uri,prefLabel) values.
+      # The REPLACE is performed for quotes (" -> "") so they don't break the CSV format.
+      $extravars = <<<EOV
+(GROUP_CONCAT(DISTINCT CONCAT(
+ '"', STR(?broad), '"', ',',
+ '"', REPLACE(IF(BOUND(?broadlab),?broadlab,''), '"', '""'), '"'
+); separator='\\n') as ?broaders)
+EOV;
+      $extrafields = <<<EOF
+OPTIONAL {
+  ?s skos:broader ?broad .
+  OPTIONAL { ?broad skos:prefLabel ?broadlab . FILTER(langMatches(lang(?broadlab), '$lang')) }
+}
+EOF;
+    }
 
     // extra types to query, if using thesaurus arrays
     $extratypes = $arrayClass ? "UNION { ?s rdf:type <$arrayClass> }" : "";
@@ -523,7 +546,8 @@ EOQ;
     $graph_text = $this->isDefaultEndpoint() ? "$textcond \n $gc {" : "$gc { $textcond \n";
 
     $query = <<<EOQ
-SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph (GROUP_CONCAT(?type) as ?types)
+SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph (GROUP_CONCAT(DISTINCT ?type) as ?types)
+$extravars
 WHERE {
  $graph_text
   { ?s rdf:type <$type> } $extratypes
@@ -537,7 +561,7 @@ WHERE {
    OPTIONAL {
     ?s skos:prefLabel ?label .
     FILTER ($labelcond_label)
-   } $labelcond_fallback
+   } $labelcond_fallback $extrafields
   }
   FILTER NOT EXISTS { ?s owl:deprecated true }
  }
@@ -571,6 +595,15 @@ EOQ;
           $qnamecache[$typeuri] = $qname != null ? $qname : $typeuri;
         }
         $hit['type'][] = $qnamecache[$typeuri];
+      }
+      
+      if (isset($row->broaders)) {
+        foreach (explode("\n", $row->broaders->getValue()) as $line) {
+          $brdata = str_getcsv($line, ',', '"', '"');
+          $broader = array('uri' => $brdata[0]);
+          if ($brdata[1] != '') $broader['prefLabel'] = $brdata[1];
+          $hit['broader'][] = $broader;
+        }
       }
 
       foreach ($vocabs as $vocab) { // looping the vocabulary objects and asking these for a localname for the concept.

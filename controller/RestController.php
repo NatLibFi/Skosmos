@@ -172,13 +172,14 @@ class RestController extends Controller
     $type = isset($_GET['type']) ? $_GET['type'] : 'skos:Concept';
     $parent = isset($_GET['parent']) ? $_GET['parent'] : null;
     $group = isset($_GET['group']) ? $_GET['group'] : null;
+    $fields = isset($_GET['fields']) ? explode(' ', $_GET['fields']) : null;
 
     // convert to vocids array to support multi-vocabulary search
     $vocids = !empty($vocid) ? explode(' ', $vocid) : null;
 
     $maxhits = isset($_GET['maxhits']) ? ($_GET['maxhits']) : null; # optional
     $offset = isset($_GET['offset']) ? ($_GET['offset']) : 0; # optional
-    $results = $this->model->searchConcepts($term, $vocids, $labellang, $lang, $type, $parent, $group, $offset, $maxhits);
+    $results = $this->model->searchConcepts($term, $vocids, $labellang, $lang, $type, $parent, $group, $offset, $maxhits, true, $fields);
     // before serializing to JSON, get rid of the Vocabulary object that came with each resource
     foreach ($results as &$res) {
       unset($res['voc']);
@@ -197,13 +198,14 @@ class RestController extends Controller
             'prefLabel' => 'skos:prefLabel',
             'altLabel' => 'skos:altLabel',
             'hiddenLabel' => 'skos:hiddenLabel',
+            'broader' => 'skos:broader',
         ),
         'uri' => '',
         'results' => $results,
     );
 
     if ($lang)
-      $ret['@context']['@language'] = $lang;
+      $ret['@context']['@language'] = $labellang;
 
     return $this->return_json($ret);
   }

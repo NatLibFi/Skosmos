@@ -246,8 +246,10 @@ class Model
    * @param int $offset optional parameter for search offset.
    * @param int $limit optional paramater for maximum amount of results.
    * @param boolean $hidden include matches on hidden labels (default: true).
+   * @param array $fields extra fields to include in the result (array of strings). (default: null = none)
+   * @return array search results
    */
-  public function searchConcepts($term, $vocids, $lang, $search_lang, $type = null, $parent=null, $group=null, $offset = 0, $limit = DEFAULT_SEARCH_LIMIT, $hidden = true)
+  public function searchConcepts($term, $vocids, $lang, $search_lang, $type = null, $parent=null, $group=null, $offset = 0, $limit = DEFAULT_SEARCH_LIMIT, $hidden = true, $fields = null)
   {
     $term = trim($term);
     if ($term == "" || $term == "*")
@@ -271,7 +273,7 @@ class Model
     }
     if (!$type) $type = 'skos:Concept';
 
-    $results = $sparql->queryConcepts($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $type, $parent, $group, $hidden);
+    $results = $sparql->queryConcepts($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $type, $parent, $group, $hidden, $fields);
     $ret = array();
 
     foreach ($results as $hit) {
