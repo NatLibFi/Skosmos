@@ -278,6 +278,12 @@ $(function() { // DOCUMENT READY
               if (window.history.pushState)
                 window.history.pushState({url: targetUrl}, '', targetUrl);
               $content.append(response);
+              $.each($('#language > a'), function(index, val) {
+                var btn_lang = $(val).attr('id');
+                btn_lang = (btn_lang.substr(btn_lang.indexOf('-')+1));
+                var url = targetUrl.replace('/' + lang + '/', '/' + btn_lang +'/');
+                $(val).attr('href', url);
+              });
             }
         });
         return false;
@@ -310,6 +316,12 @@ $(function() { // DOCUMENT READY
               if (!$('#hierarchy').length)
                 $('#alpha').after(hierButton);
               $('#hier-trigger').attr('href', event.target.href);
+              $.each($('#language > a'), function(index, val) {
+                var btn_lang = $(val).attr('id');
+                btn_lang = (btn_lang.substr(btn_lang.indexOf('-')+1));
+                var url = encodeURI(event.target.href).replace('/' + lang + '/', '/' + btn_lang +'/');
+                $(val).attr('href', url);
+              });
             }
         });
         return false;

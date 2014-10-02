@@ -21,32 +21,37 @@ class JenaTextSparql extends GenericSparql
    * https://github.com/NatLibFi/Skosmos/issues/41 (reduced to 100000 because of bad performance)
    */
   private $MAX_N = 100000;
+  
+  /*
+   * Characters that need to be quoted for the Lucene query parser.
+   * See http://lucene.apache.org/core/4_10_1/queryparser/org/apache/lucene/queryparser/classic/package-summary.html#Escaping_Special_Characters
+   */
+  private $LUCENE_ESCAPE_CHARS = ' +-&|!(){}[]^"~?:\\/'; /* note: don't include * because we want wildcard expansion
 
  /**
    * Make a jena-text query condition that narrows the amount of search
    * results in term searches
    *
    * @param string $term search term
+   * @param string $property property to search (e.g. 'skos:prefLabel'), or '' for default
    * @return string SPARQL text search clause
    */
 
-  protected function createTextQueryCondition($term)
+  protected function createTextQueryCondition($term, $property='')
   {
     // construct the lucene search term for jena-text
-    $term = str_replace('-', ' ', $term); // split words with hyphens to separate words
-    $term = str_replace(':', ' ', $term); // split words with colons to separate words
-    $term = str_replace('/', ' ', $term); // split words with slashes to separate words
-    $term = str_replace('(', ' ', $term); // split words with parentheses to separate words
-    $term = str_replace(')', ' ', $term); // split words with parentheses to separate words
-    $term = str_replace('\'', '\\\'', $term); // ensure single quotes are quoted
-    $qwords = array();
-    foreach (explode(' ', $term) as $word) {
-      if (preg_match('/^\*?\p{L}[\p{L}_.-]*\*?$/u', $word) == 1)
-        $qwords[] = $word;
+    
+    // 1. Ensure characters with special meaning in Lucene are escaped
+    $lucenemap = array();
+    foreach (str_split($this->LUCENE_ESCAPE_CHARS) as $char) {
+      $lucenemap[$char] = '\\' . $char; // escape with a backslash
     }
-    if (sizeof($qwords) == 0) return '# no suitable terms - text index disabled';
-    $term = implode(' ', $qwords);
+    $term = strtr($term, $lucenemap);
+    
+    // 2. Ensure proper SPARQL quoting
+    $term = str_replace('\\', '\\\\', $term); // escape backslashes
+    $term = str_replace("'", "\\'", $term); // escape single quotes
 
-    return "{ ?s text:query ('$term' $this->MAX_N) }";
+    return "{ ?s text:query ($property '$term' $this->MAX_N) }";
   }
 }
