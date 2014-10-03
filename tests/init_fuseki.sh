@@ -9,7 +9,11 @@ cd jena-fuseki-1.1.0
 until $(curl --output /dev/null --silent --head --fail http://localhost:3030); do
   printf '.'
   sleep 2
-  done
-./s-put http://localhost:3030/ds/data http://www.skosmos.skos/test/ ../test-vocab-data/test.ttl
+done
+
+for fn in ../test-vocab-data/*.ttl; do
+  name=`basename $fn .ttl`
+  ./s-put http://localhost:3030/ds/data http://www.skosmos.skos/$name/ $fn
+done
 
 cd ..

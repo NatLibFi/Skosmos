@@ -1,0 +1,56 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dc11: <http://purl.org/dc/elements/1.1/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix groups: <http://www.skosmos.skos/groups/> .
+@prefix meta: <http://www.skosmos.skos/test-meta/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix skosmos: <http://www.skosmos.skos/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix isothes: <http://purl.org/iso25964/skos-thes#> .
+
+groups:fresh a isothes:ThesaurusArray, skos:Collection ;
+    skos:prefLabel "Freshwater fish"@en ;
+    skos:member groups:ta112 .
+
+groups:salt a isothes:ThesaurusArray, skos:Collection ;
+    skos:prefLabel "Saltwater fish"@en ;
+    skos:member groups:ta111, groups:ta113 .
+
+
+groups:ta111 a skos:Concept ;
+    skos:broader groups:ta1 ;
+    skos:inScheme groups:conceptscheme ;
+    owl:deprecated true ;
+    skos:prefLabel "Tuna"@en .
+
+groups:ta112 a skos:Concept ;
+    skosmos:testprop "Test property value" ;
+    skos:broader groups:ta1 ;
+    skos:inScheme groups:conceptscheme ;
+    skos:prefLabel "Carp"@en,
+        "Karppi"@fi ;
+    skos:altLabel "Golden crucian"@en;
+    skos:scopeNote "Carp are oily freshwater fish"@en .
+
+groups:ta113 a skos:Concept ;
+    skosmos:testprop "Test property value" ;
+    skos:broader groups:ta1 ;
+    skos:inScheme groups:conceptscheme ;
+    skos:prefLabel "Flatfish"@en,
+        "Kampela"@fi .
+
+groups:ta1 a skos:Concept, meta:TestClass ;
+    skos:inScheme groups:conceptscheme ;
+    skos:narrower groups:ta111,
+        groups:ta112,
+        groups:ta113;
+    skos:prefLabel "Grouped fish"@en ;
+    skos:topConceptOf groups:conceptscheme .
+
+groups:conceptscheme a skos:ConceptScheme ;
+    rdfs:label "Test conceptscheme with groups"@en ;
+    skos:hasTopConcept groups:ta1 .
