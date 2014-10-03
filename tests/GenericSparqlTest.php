@@ -203,7 +203,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    */
   public function testQueryConceptsAlphabeticalFull() {
     $actual = $this->sparql->queryConceptsAlphabetical('*', 'en');
-    $this->assertEquals(12, sizeof($actual));
+    $this->assertEquals(11, sizeof($actual));
   }
 
   /**
@@ -548,26 +548,28 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GenericSparql::listConceptGroups
-   * @todo   Implement testListConceptGroups().
    */
   public function testListConceptGroups()
   {
-    // Remove the following lines when you implement this test.
-    $this->markTestIncomplete(
-      'This test has not been implemented yet.'
-    );
-  }
+    $voc = $this->model->getVocabulary('groups');
+    $graph = $voc->getGraph();
+    $sparql = new GenericSparql('http://localhost:3030/ds/sparql', $graph, $this->model);
+    $actual = $sparql->ListConceptGroups('http://www.w3.org/2004/02/skos/core#Collection', 'en');
+    $this->assertEquals('Freshwater fish', $actual['http://www.skosmos.skos/groups/fresh']);
+    $this->assertEquals('Saltwater fish', $actual['http://www.skosmos.skos/groups/salt']);
+}
 
   /**
    * @covers GenericSparql::listConceptGroupContents
-   * @todo   Implement testListConceptGroupContents().
    */
-  public function testListConceptGroupContents()
+  public function testListConceptGroupContentsIncludingDeprecatedConcept()
   {
-    // Remove the following lines when you implement this test.
-    $this->markTestIncomplete(
-      'This test has not been implemented yet.'
-    );
+    $voc = $this->model->getVocabulary('groups');
+    $graph = $voc->getGraph();
+    $sparql = new GenericSparql('http://localhost:3030/ds/sparql', $graph, $this->model);
+    $actual = $sparql->ListConceptGroupContents('http://www.w3.org/2004/02/skos/core#Collection', 'http://www.skosmos.skos/groups/salt', 'en');
+    $this->assertArrayHasKey('http://www.skosmos.skos/groups/ta113', $actual);
+    $this->assertArrayNotHasKey('http://www.skosmos.skos/groups/ta111', $actual);
   }
 }
   

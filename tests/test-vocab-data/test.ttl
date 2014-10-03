@@ -21,6 +21,7 @@ skosmos:testprop a rdf:Property ;
 test:ta111 a skos:Concept, meta:TestClass ;
     skos:broader test:ta1 ;
     skos:inScheme test:conceptscheme ;
+    owl:deprecated true ;
     skos:prefLabel "Tuna"@en .
 
 test:ta112 a skos:Concept, meta:TestClass ;
@@ -79,6 +80,7 @@ test:ta122 a skos:Concept, meta:TestClass ;
     skos:prefLabel "Black sea bass"@en .
 
 test:ta123 a skos:Concept, meta:TestClass ;
+    dct:modified "2014-10-01T16:29:03+00:00"^^xsd:dateTime ;
     skos:broader test:ta118, test:ta119 ;
     skos:inScheme test:conceptscheme ;
     skos:prefLabel "multiple broaders"@en .
@@ -99,5 +101,6 @@ test:ta1 a skos:Concept, meta:TestClass ;
 
 test:conceptscheme a skos:ConceptScheme ;
     rdfs:label "Test conceptscheme"@en ;
+    dct:modified "2014-10-01T16:29:03+00:00"^^xsd:dateTime ;
     skos:hasTopConcept test:ta1 .
 

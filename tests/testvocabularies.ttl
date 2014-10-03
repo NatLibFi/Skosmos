@@ -41,6 +41,14 @@
 	skosmos:sparqlGraph <http://www.skosmos.skos/testdiff/> ;
 	skosmos:mainConceptScheme <http://www.skosmos.skos/testdiff#conceptscheme> .
 
+:groups a skosmos:Vocabulary, void:Dataset ;
+	dc11:title "Group test onto"@en ;
+	dc:subject :cat_general ;
+	void:uriSpace "http://www.skosmos.skos/onto/groups/";
+	void:sparqlEndpoint <http://localhost:3030/ds/sparql> ;
+	skosmos:language "fi", "en";
+	skosmos:sparqlGraph <http://www.skosmos.skos/groups/> .
+
 :cat_science a skos:Concept ;
 	skos:topConceptOf :categories ;
 	skos:inScheme :categories ;

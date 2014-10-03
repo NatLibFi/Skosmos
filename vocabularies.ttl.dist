@@ -21,6 +21,7 @@
 	skosmos:groupClass skos:Collection;
 	skosmos:language "fi";
 	skosmos:shortName "YSA";
+  skosmos:feedbackRecipient "vesa-posti@helsinki.fi" ;
 	void:dataDump <http://api.finto.fi/download/ysa/ysa-skos.ttl> ;
 	void:sparqlEndpoint <http://api.dev.finto.fi/sparql> ;
 	skosmos:sparqlGraph <http://www.yso.fi/onto/ysa/> .

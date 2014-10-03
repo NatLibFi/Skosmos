@@ -256,11 +256,13 @@ class WebController extends Controller
     $feedback_name = (isset($_POST['name'])) ? $_POST['name'] : null;
     $feedback_email = (isset($_POST['email'])) ? $_POST['email'] : null;
     $feedback_vocab = (isset($_POST['vocab'])) ? $_POST['vocab'] : null;
+    if ($vocab)
+      $feedback_vocab_email = $vocab->getFeedbackRecipient(); 
 
     // if the hidden field has been set a value we have found a spam bot 
     // and we do not actually send the message.
     if ($feedback_sent && $_POST['trap'] === '') {
-      $this->sendFeedback($feedback_msg, $feedback_name, $feedback_email, $feedback_vocab);
+      $this->sendFeedback($feedback_msg, $feedback_name, $feedback_email, $feedback_vocab, $feedback_vocab_email);
     }
 
     if ($vocab_id == null)
@@ -287,14 +289,16 @@ class WebController extends Controller
    * @param string $fromEmail senders email adress.
    * @param string $fromVocab which vocabulary is the feedback related to.
    */
-  public function sendFeedback($message, $fromName = null, $fromEmail = null, $fromVocab = null)
+  public function sendFeedback($message, $fromName = null, $fromEmail = null, $fromVocab = null, $toMail = null)
   {
-    $to = FEEDBACK_ADDRESS;
+    $to = ($toMail) ? $toMail : FEEDBACK_ADDRESS;
     if ($fromVocab != null)
       $message = 'Feedback from vocab: ' . strtoupper($fromVocab) . "<br />" . $message;
     $subject = SERVICE_NAME . " feedback";
     $headers = "MIME-Version: 1.0″ . '\r\n";
     $headers .= "Content-type: text/html; charset=UTF-8" . "\r\n";
+    if ($toMail)
+      $headers .= "Cc: " . FEEDBACK_ADDRESS . "\r\n";
     $headers .= "From: $fromName <$fromEmail>" . "\r\n" . 'X-Mailer: PHP/' . phpversion();
     $envelopeSender = FEEDBACK_ENVELOPE_SENDER;
     $params = empty($envelopeSender) ? '' : "-f $envelopeSender";

@@ -187,6 +187,17 @@ class Vocabulary extends DataObject
       return $val->getValue();
     return $this->getId();
   }
+  
+  /**
+   * Get the vocabulary feedback e-mail address and return it.
+   *
+   * @return string e-mail address or null if not defined.
+   */
+  public function getFeedbackRecipient()
+  {
+    $email = $this->resource->get('skosmos:feedbackRecipient');
+    return isset($email) ? $email->getValue() : null;
+  }
 
   /**
    * Retrieves all the information about the Vocabulary
