@@ -1093,6 +1093,7 @@ WHERE {
  $gc {
    <$group> a <$groupClass> .
    <$group> skos:member ?conc .
+   FILTER NOT EXISTS { ?conc owl:deprecated true }
    ?conc skos:prefLabel ?label .
    FILTER (langMatches(lang(?label), '$lang'))
  }
