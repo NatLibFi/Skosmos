@@ -93,7 +93,7 @@ $(function() { // DOCUMENT READY
           mouseWheel:{ preventDefault: true, scrollAmount: 105 },
           snapAmount: 15,
           snapOffset: 1,
-          callbacks: { alwaysTriggerOffsets: false, onTotalScroll: alphaWaypointCallback, onTotalScrollOffset: 500 }
+          callbacks: { alwaysTriggerOffsets: false, onTotalScroll: alphaWaypointCallback, onTotalScrollOffset: 300 }
         });
       }
     }
@@ -977,7 +977,7 @@ $(function() { // DOCUMENT READY
   /* makes an AJAX query for the alphabetical index contents when landing on 
    * the vocabulary home page.
    */
-  if ($('#vocab-info').length == 1) {
+  if ($('#vocab-info').length == 1 && $('.alphabetical-search-results').length === 0) {
     // taking into account the possibility that the lang parameter has been changed by the WebController.
     var urlLangCorrected = '//' + base_url + vocab + '/' + lang + '/index?limit=250';
     $('.sidebar-grey').empty().append('<div class="loading-spinner"><span class="spinner-text">'+ loading_text + '</span><span class="spinner" /></div>');
