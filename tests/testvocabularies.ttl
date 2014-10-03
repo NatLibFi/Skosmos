@@ -47,6 +47,7 @@
 	void:uriSpace "http://www.skosmos.skos/onto/groups/";
 	void:sparqlEndpoint <http://localhost:3030/ds/sparql> ;
 	skosmos:language "fi", "en";
+	skosmos:indexShowClass meta:TestClass;
 	skosmos:sparqlGraph <http://www.skosmos.skos/groups/> .
 
 :cat_science a skos:Concept ;

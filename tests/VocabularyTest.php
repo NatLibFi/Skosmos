@@ -33,6 +33,24 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   }
   
   /**
+   * @covers Vocabulary::getIndexClass
+   */
+  public function testGetIndexClassNotSet() {
+    $vocab = $this->model->getVocabulary('test');
+    $actual = $vocab->getIndexClass();
+    $this->assertEquals(null, $actual);
+  }
+  
+  /**
+   * @covers Vocabulary::getIndexClass
+   */
+  public function testGetIndexClass() {
+    $vocab = $this->model->getVocabulary('groups');
+    $actual = $vocab->getIndexClass();
+    $this->assertEquals('http://www.skosmos.skos/test-meta/TestClass', $actual);
+  }
+  
+  /**
    * @covers Vocabulary::getLanguages
    */
   public function testGetLanguages() {

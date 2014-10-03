@@ -398,6 +398,17 @@ class Vocabulary extends DataObject
     return false;
   }
 
+  /**
+   * Returns a boolean value set in the vocabularies.ttl config.
+   * @return string concept class URI or null 
+   */
+  public function getIndexClass()
+  {
+    $val = $this->resource->getResource("skosmos:indexShowClass");
+    if ($val)
+      return $val->getURI();
+    return null;
+  }
 
   /**
    * Gets the parent concepts of a concept and child concepts for all of those.
