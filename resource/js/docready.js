@@ -941,7 +941,7 @@ $(function() { // DOCUMENT READY
     },
     maxHeight: 300 
   });
-  if ($('#vocab-info').length === 1) {
+  if ($('#groups.active').length === 1 || ( $('#alpha.active').length === 1 && $('.alphabetic-search-results').length === 1) ) {
     $(".sidebar-grey").mCustomScrollbar({ 
       alwaysShowScrollbar: 1,
       scrollInertia: 0, 
