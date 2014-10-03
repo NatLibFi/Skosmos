@@ -407,7 +407,7 @@ test:ta116
     $resultGraph->parse($result, "rdfxml");
     $this->assertTrue($resultGraph->countTriples() > 0);
 
-    $this->markTestIncomplete('Result is not what we expect, need to investigate');
+    $this->markTestIncomplete('Result is not what we expect due to EasyRdf issue https://github.com/njh/easyrdf/issues/209');
 
 /*
 #    $result = $model->getRDF('test', 'http://www.skosmos.skos/test/ta116', 'text/turtle');
