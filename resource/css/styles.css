@@ -746,6 +746,10 @@ div.input-group > .input-group-addon {
   display: none !important;
 }
 
+.sidebar-grey-alpha .mCSB_dragger {
+  height: 50px !important;
+}
+
 /* tables
  ****************************/
 

@@ -478,7 +478,11 @@ class WebController extends Controller
     }
     
     $offset = (isset($_GET['offset']) && is_numeric($_GET['offset']) && $_GET['offset'] >= 0) ? $_GET['offset'] : 0;
-    $count = ($offset > 0 || !isset($_GET['base_path'])) ? null : 250;
+    if (isset($_GET['limit'])) {
+      $count = $_GET['limit'];
+    } else { 
+      $count = ($offset > 0 || !isset($_GET['base_path'])) ? null : 250;
+    }
     if ($offset === 0) {
       $vocab_stats = $this->model->getVocabulary($vocab_id)->getStatistics();
     }
@@ -623,12 +627,6 @@ class WebController extends Controller
     }
 
     $vocab_stats = $this->model->getVocabulary($vocab_id)->getStatistics();
-    $alpha_results;
-    $all_at_once = $vocab->getAlphabeticalFull();
-    if (!$all_at_once)
-      $alpha_results = $vocab->searchConceptsAlphabetical($letter, 250);
-    else
-      $alpha_results = $vocab->searchConceptsAlphabetical('*');
 
     $lang_msg = null;
     $lang_support = true;
@@ -640,7 +638,6 @@ class WebController extends Controller
       $lang_msg = gettext("language_changed_message");
       $this->setLanguageProperties($lang);
     }
-    $letters = $vocab->getAlphabet();
 
     // load template
     $template = $this->twig->loadTemplate('vocab.twig');
@@ -653,9 +650,7 @@ class WebController extends Controller
                         'vocab' => $vocab,
                         'parts' => $this->parts,
                         'vocab_id' => $vocab_id,
-                        'alpha_results' => $alpha_results,
                         'search_letter' => 'A',
-                        'letters' => $letters,
                         'lang_supported' => $lang_support,
                         'request_uri' => $this->request_uri,
                         'vocab_stats' => $vocab_stats,
