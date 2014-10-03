@@ -48,7 +48,7 @@
         {% endif %}
         </ul>
       </div>
-      {% if alpha_results or vocab_stats or search_letter %}
+      {% if letters %}
         <ul class="pagination">
         {% for letter in letters %} {# looping through all letters #}
           <li{% if search_letter == letter %} class="active"{% endif %}><a href="{{ path_fix }}{{ vocab_id }}/{{ lang }}/index/{{ letter }}">{{ letter }}</a></li>

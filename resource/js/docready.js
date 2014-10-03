@@ -809,7 +809,8 @@ $(function() { // DOCUMENT READY
   }
 
   function alphaWaypointCallback() {
-    if (!alpha_complete) {
+    // if the pagination is not visible all concepts are already shown
+    if (!alpha_complete && $('.pagination').length === 1) {      
       alpha_complete = true;
       $('.alphabetical-search-results').append($loading);
       var parameters = $.param({'offset' : 250});
