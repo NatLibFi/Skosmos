@@ -980,7 +980,7 @@ $(function() { // DOCUMENT READY
    */
   if ($('#vocab-info').length == 1 && $('.alphabetical-search-results').length === 0) {
     // taking into account the possibility that the lang parameter has been changed by the WebController.
-    var urlLangCorrected = '//' + base_url + vocab + '/' + lang + '/index?limit=250';
+    var urlLangCorrected = '//' + base_url + vocab + '/' + lang + '/index?limit=250&offset=0';
     $('.sidebar-grey').empty().append('<div class="loading-spinner"><span class="spinner-text">'+ loading_text + '</span><span class="spinner" /></div>');
     $.ajax({
       url : urlLangCorrected,
