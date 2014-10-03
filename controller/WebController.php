@@ -256,7 +256,8 @@ class WebController extends Controller
     $feedback_name = (isset($_POST['name'])) ? $_POST['name'] : null;
     $feedback_email = (isset($_POST['email'])) ? $_POST['email'] : null;
     $feedback_vocab = (isset($_POST['vocab'])) ? $_POST['vocab'] : null;
-    $feedback_vocab_email = $vocab->getFeedbackRecipient(); 
+    if ($vocab)
+      $feedback_vocab_email = $vocab->getFeedbackRecipient(); 
 
     // if the hidden field has been set a value we have found a spam bot 
     // and we do not actually send the message.
