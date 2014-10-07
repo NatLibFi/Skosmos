@@ -643,10 +643,12 @@ EOQ;
    * @param $letter the letter (or special class) to search for
    * @param $lang language of labels
    */
-  public function queryConceptsAlphabetical($letter, $lang, $limit=null, $offset=null) {
+  public function queryConceptsAlphabetical($letter, $lang, $limit=null, $offset=null, $class=null) {
     $gc = $this->graphClause;
     $limit = ($limit) ? 'LIMIT ' . $limit : '';
     $offset = ($offset) ? 'OFFSET ' . $offset : '';
+    $class = ($class) ? $class : 'http://www.w3.org/2004/02/skos/core#Concept';
+    $values = 'VALUES (?type) { (<' . $class . '>) }';
     
     // eliminating whitespace and line changes when the conditions aren't needed.
     $limitandoffset = '';
@@ -709,9 +711,9 @@ WHERE {
         FILTER (langMatches(lang(?label), '$lang'))
       }
     }
-    ?s a skos:Concept .
+    ?s a ?type .
     FILTER NOT EXISTS { ?s owl:deprecated true }
-  }
+  } $values
 }
 ORDER BY LCASE(IF(BOUND(?alabel), STR(?alabel), STR(?label))) $limitandoffset
 EOQ;
