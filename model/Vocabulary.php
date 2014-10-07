@@ -531,7 +531,7 @@ class Vocabulary extends DataObject
    * @return array array of letters
    */
   public function getAlphabet() {
-    $chars = $this->getSparql()->queryFirstCharacters($this->lang);
+    $chars = $this->getSparql()->queryFirstCharacters($this->lang, $this->getIndexClass());
     $letters = array();
     $digits = false;
     $specials = false;

@@ -749,14 +749,18 @@ EOQ;
    * @return array array of characters
    */
    
-  public function queryFirstCharacters($lang) {
+  public function queryFirstCharacters($lang, $class=null) {
     $gc = $this->graphClause;
+    $class = ($class) ? $class : 'http://www.w3.org/2004/02/skos/core#Concept' ;
+    $values = 'VALUES (?type) { (<' . $class . '>) }';
     $query = <<<EOQ
 SELECT DISTINCT (substr(ucase(?label), 1, 1) as ?l) WHERE {
   $gc {
     ?c skos:prefLabel ?label .
+    ?c a ?type
     FILTER(langMatches(lang(?label), '$lang'))
   }
+  $values
 }
 EOQ;
     $result = $this->client->query($query);
