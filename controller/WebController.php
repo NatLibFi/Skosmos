@@ -516,6 +516,7 @@ class WebController extends Controller
                         'alpha_results' => $search_results,
                         'search_letter' => $letter,
                         'letters' => $letters,
+                        'letter' => $letter,
                         'parts' => $this->parts,
                         'all_letters' => $all_at_once,
                         'request_uri' => $this->request_uri,
