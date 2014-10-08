@@ -311,6 +311,15 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   }
 
   /**
+   * @covers Vocabulary::getAlphabet
+   */
+  public function testGetAlphabetIssue107() {
+    $vocab = $this->model->getVocabulary('groups');
+    $alpha = $vocab->getAlphabet();
+    $this->assertEquals(array("G"), $alpha);
+  }
+
+  /**
    * @covers Vocabulary::getInfo
    */
   public function testGetInfo() {
