@@ -698,7 +698,7 @@ EOQ;
   public function queryFirstCharacters($lang) {
     $gc = $this->graphClause;
     $query = <<<EOQ
-SELECT DISTINCT (substr(ucase(?label), 1, 1) as ?l) WHERE {
+SELECT DISTINCT (substr(ucase(str(?label)), 1, 1) as ?l) WHERE {
   $gc {
     ?c skos:prefLabel ?label .
     FILTER(langMatches(lang(?label), '$lang'))
