@@ -680,7 +680,7 @@ $(function() { // DOCUMENT READY
       url: rest_url + 'search?query=',
       replace: function(url, query) {
         var wildcard = (query.indexOf('*') === -1) ? '*' : '';
-        return url + query + wildcard;
+        return url + encodeURIComponent(query) + wildcard;
       },
       ajax: {
         beforeSend: function(jqXHR, settings) {
