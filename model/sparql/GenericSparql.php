@@ -754,7 +754,7 @@ EOQ;
     $class = ($class) ? $class : 'http://www.w3.org/2004/02/skos/core#Concept' ;
     $values = 'VALUES (?type) { (<' . $class . '>) }';
     $query = <<<EOQ
-SELECT DISTINCT (substr(ucase(?label), 1, 1) as ?l) WHERE {
+SELECT DISTINCT (substr(ucase(str(?label)), 1, 1) as ?l) WHERE {
   $gc {
     ?c skos:prefLabel ?label .
     ?c a ?type
