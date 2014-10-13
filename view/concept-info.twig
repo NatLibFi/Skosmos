@@ -76,7 +76,7 @@
                     {% if propval.exvocab and propval.exvocab != propval.vocab %}{# if the property is located in a another vocabulary #}
                     <a class="versal" href="{% if propval.type == "skosmos:memberOf" %}{{ propval.uri | link_url(propval.vocab, lang, 'groups') }}{% else %}{{ propval.uri | link_url(propval.vocab, propval.lang) }}{% endif %}">{{ propval.label }}</a>
                     {% else %}
-                      <a class="versal" href="{{ propval.uri | link_url(propval.vocab, lang) }}">{{ propval.label|trans }}</a>
+                    <a class="versal" href="{% if propval.type == "skosmos:memberOf" %}{{ propval.uri | link_url(propval.vocab, lang, 'groups') }}{% else %}{{ propval.uri | link_url(propval.vocab, propval.lang) }}{% endif %}">{{ propval.label|trans }}</a>
                       {% if propval.lang and propval.lang != lang %}<span class="propertyvalue"> ({{ propval.lang }})</span>{% endif %}
                     {% endif %}
                     {% if propval.SubMembers %}<div class="subvalue"> {# if property is a group concept that has sub properties #}
