@@ -881,7 +881,7 @@ $(function() { // DOCUMENT READY
 
   $('.headerbar .multiselect').multiselect({
     buttonText: function(options) {
-      if (options.length === 0 || vocabSelectionString === '')
+      if (options.length === 0)
         return  '<span>' + all_vocabs + ' <b class="caret"></b></span>'; 
       else {
         if (options.length > this.numberDisplayed) {
