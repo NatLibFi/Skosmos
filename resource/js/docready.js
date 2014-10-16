@@ -832,7 +832,10 @@ $(function() { // DOCUMENT READY
     var number_of_hits = document.getElementsByClassName("search-result").length;
     if (number_of_hits >= waypoint_results * offcount)
       $('.search-result-listing').append($loading);
-    var parameters = $.param({'q' : searchTerm, 'vocabs' : vocabSelectionString, 'offset' : offcount * waypoint_results, 'lang' : decodeURI(getUrlParams().lang)});
+    var typeLimit = $('#type-limit').val();
+    var groupLimit = $('#group-limit').val();
+    var parentLimit = $('#parent-limit').attr('data-uri');
+    var parameters = $.param({'q' : searchTerm, 'vocabs' : vocabSelectionString, 'offset' : offcount * waypoint_results, 'lang' : decodeURI(getUrlParams().lang), 'type' : typeLimit, 'group' : groupLimit, 'parent': parentLimit});
     $.ajax({
       url : window.location.pathname,
       data : parameters,
