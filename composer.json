@@ -9,6 +9,7 @@
         "twitter/bootstrap": "3.2.*",
         "twitter/typeahead.js": "v0.10.5",
         "willdurand/negotiation": "1.3.*",
+        "vakata/jstree": "3.0.*",
         "phpunit/phpunit": "4.2.*",
         "ml/json-ld": "1.*",
         "ext-gettext": "*"

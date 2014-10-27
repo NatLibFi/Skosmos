@@ -1231,12 +1231,72 @@ p.autocomplete-label {
 
 /* jsTree customization
  *****************************************/
-.jstree-no-icons {
-  margin-left: -5px !important;
+.jstree-leaf > .jstree-ocl {
+  width: 13px !important;
 }
 
-.jstree li {
+.jstree-closed > .jstree-ocl {
+  width: 24px !important;
+}
+
+.jstree-clicked, .jstree-hovered {
+  box-shadow: none !important;
+}
+
+.jstree-default .jstree-node {
+    line-height: 18px !important;
+    min-height: 18px !important;
+    min-width: 18px !important;
+}
+
+.jstree-default .jstree-anchor {
+    height: 18px !important;
+    line-height: 18px !important;
+}
+
+.jstree-default .jstree-icon {
+    height: 18px !important;
+    line-height: 18px !important;
+    width: 18px !important;
+}
+
+.jstree-default .jstree-icon:empty {
+    height: 18px !important;
+    line-height: 18px !important;
+    width: 18px !important;
+}
+
+.jstree-default.jstree-rtl .jstree-node {
+    margin-right: 18px !important;
+}
+
+.jstree-default .jstree-wholerow {
+    height: 18px !important;
+}
+
+.jstree-leaf > .jstree-anchor {
+  margin-left: 5px !important;
+}
+
+.jstree-node {
   margin-left: 10px !important;
+}
+
+.jstree-container-ul > .jstree-node {
+  margin-left: 2px !important;
+}
+
+.sidebar-grey .jstree-closed > .jstree-ocl {
+  background-position: -100px -8px !important;
+}
+
+.sidebar-grey .jstree-open > .jstree-ocl {
+  background-position: -132px -8px !important;
+}
+
+.sidebar-grey .jstree-leaf > .jstree-ocl {
+  background-position: -68px -4px !important;
+  width: 13px !important;
 }
 
 /* Font definitions

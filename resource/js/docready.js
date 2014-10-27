@@ -98,7 +98,7 @@ $(function() { // DOCUMENT READY
       }
     }
     // Sidenav actions only happen when doing other queries than the autocomplete.
-    if (settings.url.indexOf('topConcepts') === -1 || settings.url.indexOf('index') === -1 || settings.url.indexOf('groups') !== -1 || settings.url.indexOf('hierarchy') !== -1) {
+    if (settings.url.indexOf('topConcepts') !== -1 || settings.url.indexOf('index') !== -1 || settings.url.indexOf('groups') !== -1 /* || settings.url.indexOf('hierarchy') !== -1 */ ) {
       var snap = (settings.url.indexOf('hierarchy') !== -1) ? 18 : 15;
       $(".sidebar-grey").mCustomScrollbar({ 
         alwaysShowScrollbar: 1,
@@ -107,22 +107,12 @@ $(function() { // DOCUMENT READY
         snapAmount: snap,
         snapOffset: 0
       });
-      if (settings.url.indexOf('hierarchy') !== -1)
-        $(".sidebar-grey").mCustomScrollbar('scrollTo', scrollToConcept());
     } 
     var $autocomplete = $('.tt-dropdown-menu');
     if (settings.url.indexOf('search') !== -1 && $autocomplete.length > 0 && $autocomplete[0].offsetHeight === 302)
       $(".tt-dropdown-menu").mCustomScrollbar({ alwaysShowScrollbar: 1, scrollInertia: 0 });
     countAndSetOffset();
   });
-
-  function scrollToConcept() {
-    var containerHeight = $('.sidebar-grey').height();
-    var conceptCount = Math.floor((containerHeight * 0.66) / 18);
-    var scrollAmount = 18 * conceptCount;
-    if ($('#jstree-leaf-proper').length)
-      return $('#jstree-leaf-proper')[0].offsetTop-scrollAmount;
-  }
 
   // if on the search results page and there is only one result 
   if ($('.concept-info').length === 1) { 

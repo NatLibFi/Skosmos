@@ -25,27 +25,43 @@ function getNode(uri) { return treeIndex[uri]; }
 
 function setNode(node) { treeIndex[node.uri] = node; storeUri(node); }
 
-function storeUri(node) { urlToUri[node.data.attr.href] = node.uri; }
+function storeUri(node) { urlToUri[node.a_attr.href] = node.uri; }
 
 /* 
- * Initializes jsTree with the json formatted data for a concept and it's parents.
- * Also binds a window.location.href redirect to clicking a node.
+ * Forces node to open when it's clicked.
  * @param {Object} tree
  */
 function invokeParentTree(tree) {
-  var treeObject = $('.sidebar-grey');
-  treeObject.jstree(tree).on('loaded.jstree', function() {
-    treeObject.bind('select_node.jstree', function (event, data) {
-      /* 
-       * preventing redirect recursion with the initially_select option and 
-       * at the same time stopping the user from refreshing the current page by clicking the concepts name in the hierarchy.
-       */
-      if (data.rslt.obj[0].children[1].id != 'jstree-leaf-proper') { 
-        data.inst.open_node(data.rslt.obj);
-      }
-    });
+  var $treeObject = $('.sidebar-grey');
+  $treeObject.on('activate_node.jstree', function(event, node) {
+    $treeObject.jstree('open_node', node.node);
+  });
+
+  $treeObject.on('loaded.jstree', function(event, node) {
+    if ($('.mCustomScrollbar').length === 0) {
+      $(".sidebar-grey").mCustomScrollbar({ 
+        alwaysShowScrollbar: 1,
+        scrollInertia: 0, 
+        mouseWheel:{ scrollAmount: 105 },
+        snapAmount: 18,
+        snapOffset: 1
+      });
+    }
+    if ($('#jstree-leaf-proper').length > 0) {
+      $('.sidebar-grey').jstree('select_node', '#jstree-leaf-proper');
+      $('.sidebar-grey').mCustomScrollbar('scrollTo', getLeafOffset());
+    }
   });
 }
+  
+function getLeafOffset() {
+  var containerHeight = $('.sidebar-grey').height();
+  var conceptCount = Math.floor((containerHeight * 0.66) / 18);
+  var scrollAmount = 18 * conceptCount;
+  if ($('#jstree-leaf-proper').length)
+    return $('#jstree-leaf-proper')[0].offsetTop-scrollAmount;
+}
+
 
 /*
  * Creates a concept object from the data returned by a rest query.
@@ -55,39 +71,43 @@ function invokeParentTree(tree) {
 function createConceptObject(conceptUri, conceptData) {
   var prefLabel = conceptData.prefLabel; // the json narrower response has a different structure.
   newNode = { 
-    data: { "title" : prefLabel, "attr" : { "href" : conceptUri } },
+    text: prefLabel, 
+    a_attr: { "href" : conceptUri },
     uri: conceptUri,
     parents: conceptData.broader,
-    attr: {},
+    state: { opened: true },
     children: []
   };
   // setting the flag manually if the concept is known to have narrowers, but they aren't included eg. included topconcepts
-  if(conceptData.hasChildren === true) 
-    newNode.state = "closed";
+  if(conceptData.hasChildren === true) {
+    newNode.children = true;
+    newNode.state.opened = false;
+  }
   // if we are at a top concepts page we want to highlight that node and mark it as to be initially opened.
-  if (newNode.uri === $('.uri-input-box').html()) { newNode.data.attr.id = 'jstree-leaf-proper'; }
-  if (conceptData.narrower /* && !conceptData.narrower[0] */) { // filtering out the ones that don't have labels 
+  if (newNode.uri === $('.uri-input-box').html()) { newNode.li_attr = { id: 'jstree-leaf-proper' }; }
+  if (conceptData.narrower) { // filtering out the ones that don't have labels 
     var childArray = [];
     for (var child in conceptData.narrower) {
       var conceptObject = conceptData.narrower[child];
       var hasChildren = conceptObject.hasChildren; 
       var childObject = {
-        data: { "title" : conceptObject.label, "attr" : { "href" : conceptData.narrower[child].uri } },
+        text: conceptObject.label, 
+        a_attr: { "href" : conceptData.narrower[child].uri },
         uri: conceptData.narrower[child].uri,
         parents: conceptUri,
-        children: [],
-        state: "closed"
+        state: { opened: true }
       };
       if (child === $('.uri-input-box').html()) { childObject.data.attr.id = 'jstree-leaf-proper'; }
       // if the childConcept hasn't got any children the state is not needed.
-      if (hasChildren === false) {
-        delete childObject.state;
+      if (hasChildren) {
+        childObject.children = true;
+        childObject.state.opened = false;
       }
       if(!childArray[childObject.uri])
         childArray.push(childObject);
       storeUri(childObject);
     }
-    newNode.children.push(childArray);
+    newNode.children = childArray;
   }
   
   return newNode;
@@ -144,10 +164,11 @@ function vocabRoot(topConcepts) {
   for (var i = 0; i < topConcepts.length; i++) {
     var conceptData = topConcepts[i];
     var childObject = {
-      data: { "title" : conceptData.label, "attr" : { "href" : conceptData.uri } },
+      text: conceptData.label, 
+      a_attr : { "href" : conceptData.uri },
       uri: conceptData.uri,
       children: [],
-      state: "closed"
+      state: { opened: false } 
     };
     setNode(childObject);
     topArray.push(childObject);
@@ -165,10 +186,10 @@ function appendChildrenToParents() {
       var parentNode = getNode(current.parents[index]);
       if (parentNode !== current)
         if (parentNode && $.inArray(current, parentNode.children) === -1) {
-          for(var sibling in parentNode.children[0]) {
-            if(parentNode.children[0][sibling].uri == current.uri){ 
+          for(var sibling in parentNode.children) {
+            if(parentNode.children[sibling].uri == current.uri){ 
               // if the concept has already been added remove the previous one since this one is more accurate.
-              parentNode.children[0].splice(sibling, 1);
+              parentNode.children.splice(sibling, 1);
             }
           }
           parentNode.children.push(current);
@@ -183,14 +204,15 @@ function createObjectsFromNarrowers(narrowerResponse) {
     var conceptObject = narrowerResponse.narrower[child];
     var hasChildren = conceptObject.hasChildren; 
     var childObject = {
-      data: { "title" : conceptObject.prefLabel, "attr" : { "href" : conceptObject.uri } },
+      text : conceptObject.prefLabel, 
+      a_attr : { "href" : conceptObject.uri },
       uri: conceptObject.uri,
       parents: narrowerResponse.uri,
-      children: [],
-      state: "closed"
+      state: { opened: false, disabled: false, selected: false }
     };
-    if (hasChildren === false) {
-      delete childObject.state;
+    if (hasChildren) {
+      childObject.children = true;
+      childObject.state.opened = false;
     }
     setNode(childObject);
     childArray.push(childObject);
@@ -198,10 +220,52 @@ function createObjectsFromNarrowers(narrowerResponse) {
   return childArray;
 }
 
+
+function getParams(node) {
+  var nodeId;
+  if (node.id === '#')
+    nodeId = $('.uri-input-box').html(); // using the real uri of the concept from the view.
+  else
+    nodeId = node.original.uri;
+  return $.param({'uri' : nodeId, 'lang' : lang});
+}
+
 /* 
  * Gives you the Skosmos default jsTree configuration.
  */
 function getTreeConfiguration(root) {
+  $('.sidebar-grey').empty().jstree({ 
+    'core' : {
+      'animation' : 0,
+      'themes' : { 'icons': false },
+      'data' : 
+        function(node, cb) { 
+          var json_url = (rest_base_url + vocab + '/hierarchy');
+          if (node.id === '#') {
+            nodeId = $('.uri-input-box').html(); // using the real uri of the concept from the view.
+          } else  {
+            nodeId = node.uri;
+            json_url = (rest_base_url + vocab + '/children');
+          }
+          var params = getParams(node); 
+          var jsondata = $.ajax({
+            data: params,
+            url: json_url, 
+            success: function (response) {
+              if (response.broaderTransitive) { // the default hierarchy query that fires when a page loads.
+                cb(buildParentTree(nodeId, response.broaderTransitive));
+              } else if(response.topconcepts) {
+                cb(vocabRoot(response.topconcepts));
+              } else {
+                cb(createObjectsFromNarrowers(response));
+              }
+            }
+          });
+      }
+    },
+    'plugins' : ['sort']
+  });
+  /*
   var childResponse = false;
   var nodeId = '';
   var jsonData = {
@@ -241,7 +305,7 @@ function getTreeConfiguration(root) {
           } else {
             return createObjectsFromNarrowers(response);
           }
-          return (nodeId.indexOf('http') == -1 /* || top_concepts !== '' */) ? ret : ret.children; // or is for the vocabulary top concept hierarchy.
+          return (nodeId.indexOf('http') == -1 ) ? ret : ret.children; // or is for the vocabulary top concept hierarchy.
         },
       },
     },
@@ -259,5 +323,6 @@ function getTreeConfiguration(root) {
   };
   
   return jsonData;
+  */
 }
 
