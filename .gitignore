@@ -3,3 +3,5 @@ vocabularies.ttl
 vendor
 report
 components
+composer.phar
+composer.lock
