@@ -182,9 +182,14 @@ class Vocabulary extends DataObject
    */
   public function getShortName()
   {
+    $val = $this->resource->getLiteral('skosmos:shortName', $this->lang);
+    if ($val)
+      return $val->getValue();
+    // not found with selected language, try any language
     $val = $this->resource->getLiteral('skosmos:shortName');
     if ($val)
       return $val->getValue();
+    // if no shortname exists fall back to the id
     return $this->getId();
   }
   

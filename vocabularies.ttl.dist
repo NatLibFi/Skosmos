@@ -36,7 +36,8 @@
 	skosmos:language "fi", "sv", "en";
 	skosmos:defaultLanguage "fi";
 	skosmos:showTopConcepts "true";
-	skosmos:shortName "YSO";
+	skosmos:shortName "YSO",
+                    "ALLFO"@sv;
 	skosmos:groupClass isothes:ConceptGroup ;
 	skosmos:arrayClass isothes:ThesaurusArray ;
 	void:dataDump <http://api.finto.fi/download/yso/yso-skos.ttl> ;
