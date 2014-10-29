@@ -205,6 +205,7 @@ class WebController extends Controller
       $this->setLanguageProperties($lang);
     }
 
+    $langcodes = $vocab->getShowLangCodes();
     $vocab = $this->model->getVocabulary($vocab_id);
     $uri = $vocab->getConceptURI($uri); // make sure it's a full URI
     $results = $vocab->getConceptInfo($uri);
@@ -217,6 +218,7 @@ class WebController extends Controller
       'languages' => $this->languages,
       'parts' => $this->parts,
       'lang' => $lang,
+      'always_show_langcodes' => $langcodes,
       'request_uri' => $this->request_uri,
       'bread_crumbs' => $crumbs['breadcrumbs'],
       'combined' => $crumbs['combined'],
@@ -400,7 +402,7 @@ class WebController extends Controller
     $group = (isset($_GET['group'])) ? $_GET['group'] : null;
     $parent = (isset($_GET['parent'])) ? $_GET['parent'] : null;
     $offset = (isset($_GET['offset']) && is_numeric($_GET['offset']) && $_GET['offset'] >= 0) ? $_GET['offset'] : 0;
-    $langcodes = $vocab->getShowLangcodes();
+    $langcodes = $vocab->getShowLangCodes();
     if ($offset > 0) {
       $rest = 1;
       $template = $this->twig->loadTemplate('vocab-search-listing.twig');
