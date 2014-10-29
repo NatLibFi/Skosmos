@@ -47,8 +47,8 @@ function invokeParentTree(tree) {
         snapOffset: 1
       });
     }
-    if ($('#jstree-leaf-proper').length > 0) {
-      $('.sidebar-grey').jstree('select_node', '#jstree-leaf-proper');
+    if ($('.jstree-leaf-proper').length > 0) {
+      $('.sidebar-grey').jstree('select_node', $('.jstree-leaf-proper').toArray());
       $('.sidebar-grey').mCustomScrollbar('scrollTo', getLeafOffset());
     }
   });
@@ -58,8 +58,8 @@ function getLeafOffset() {
   var containerHeight = $('.sidebar-grey').height();
   var conceptCount = Math.floor((containerHeight * 0.66) / 18);
   var scrollAmount = 18 * conceptCount;
-  if ($('#jstree-leaf-proper').length)
-    return $('#jstree-leaf-proper')[0].offsetTop-scrollAmount;
+  if ($('.jstree-leaf-proper').length)
+    return $('.jstree-leaf-proper')[0].offsetTop-scrollAmount;
 }
 
 
@@ -84,7 +84,7 @@ function createConceptObject(conceptUri, conceptData) {
     newNode.state.opened = false;
   }
   // if we are at a top concepts page we want to highlight that node and mark it as to be initially opened.
-  if (newNode.uri === $('.uri-input-box').html()) { newNode.li_attr = { id: 'jstree-leaf-proper' }; }
+  if (newNode.uri === $('.uri-input-box').html()) { newNode.li_attr = { class: 'jstree-leaf-proper' }; }
   if (conceptData.narrower) { // filtering out the ones that don't have labels 
     var childArray = [];
     for (var child in conceptData.narrower) {
@@ -97,7 +97,7 @@ function createConceptObject(conceptUri, conceptData) {
         parents: conceptUri,
         state: { opened: true }
       };
-      if (child === $('.uri-input-box').html()) { childObject.data.attr.id = 'jstree-leaf-proper'; }
+      if (child === $('.uri-input-box').html()) { /* childObject.data.attr.id = 'jstree-leaf-proper'; */ }
       // if the childConcept hasn't got any children the state is not needed.
       if (hasChildren) {
         childObject.children = true;
@@ -265,64 +265,5 @@ function getTreeConfiguration(root) {
     },
     'plugins' : ['sort']
   });
-  /*
-  var childResponse = false;
-  var nodeId = '';
-  var jsonData = {
-    json_data: {
-      ajax: {
-        type: 'GET',
-        data: function (node) {
-          if (node == -1 && root)
-            return $.param({'lang' : lang});
-          else if(node != -1) { 
-            nodeId = urlToUri[node[0].children[1].href];
-            if (!nodeId) {
-              nodeId = node[0].children[1].href;
-            }
-            nodeId = decodeURI(nodeId);
-            return $.param({'uri' : nodeId, 'lang' : lang});
-          } else {
-            nodeId = $('.uri-input-box').html(); // using the real uri of the concept from the view.
-            return $.param({'uri' : nodeId, 'lang' : lang});
-          }
-        },
-        url: function (node) { 
-          if (node == -1 && root) {
-            return (rest_base_url + vocab + '/topConcepts');
-          } else if(node != -1) { 
-            return (rest_base_url + vocab + '/children');
-          } else {
-            nodeId = $('.uri-input-box').html(); // using the real uri of the concept from the view.
-            return (rest_base_url + vocab + '/hierarchy');
-          }
-        },
-        success: function (response) {
-          if (response.broaderTransitive) { // the default hierarchy query that fires when a page loads.
-            return buildParentTree(nodeId, response.broaderTransitive); 
-          } else if(response.topconcepts) {
-            return vocabRoot(response.topconcepts);
-          } else {
-            return createObjectsFromNarrowers(response);
-          }
-          return (nodeId.indexOf('http') == -1 ) ? ret : ret.children; // or is for the vocabulary top concept hierarchy.
-        },
-      },
-    },
-    core: { animation: 0, initially_open: ['#jstree-leaf-proper'], strings: { loading : jstree_loading, new_node : 'New node' } },
-    ui: { initially_select: ['#jstree-leaf-proper'] },
-    sort: function(a, b) { return this.get_text(a).toLowerCase() > this.get_text(b).toLowerCase() ? 1 : -1; },
-    themes: {}
-  };
-  jsonData.plugins = ['themes', 'json_data', 'ui', 'sort'];
-  jsonData.themes = {
-    theme: 'default',
-    url: path_fix + 'lib/jsTree/default/style.css',
-    icons: false,
-    dots: true
-  };
-  
-  return jsonData;
-  */
 }
 
