@@ -400,6 +400,7 @@ class WebController extends Controller
     $group = (isset($_GET['group'])) ? $_GET['group'] : null;
     $parent = (isset($_GET['parent'])) ? $_GET['parent'] : null;
     $offset = (isset($_GET['offset']) && is_numeric($_GET['offset']) && $_GET['offset'] >= 0) ? $_GET['offset'] : 0;
+    $langcodes = $vocab->getShowLangcodes();
     if ($offset > 0) {
       $rest = 1;
       $template = $this->twig->loadTemplate('vocab-search-listing.twig');
@@ -447,6 +448,7 @@ class WebController extends Controller
                 'limit_group' => $group,
                 'group_index' => $groups,
                 'types' => $vocab_types,
+                'always_show_langcodes' => $langcodes,
                 'request_uri' => $this->request_uri
 
     ));

@@ -402,6 +402,18 @@ class Vocabulary extends DataObject
       return (boolean) $val->getValue();
     return false;
   }
+  
+  /**
+   * Returns a boolean value set in the vocabularies.ttl config.
+   * @return boolean
+   */
+  public function getShowLangCodes()
+  {
+    $val = $this->resource->getLiteral("skosmos:showLangCodes");
+    if ($val)
+      return (boolean) $val->getValue();
+    return false;
+  }
 
   /**
    * Returns a boolean value set in the vocabularies.ttl config.
