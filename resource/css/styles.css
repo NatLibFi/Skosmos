@@ -1306,10 +1306,14 @@ li {
   font-size: 14px !important;
 }
 
-h1, .prefLabel {
+h1, .prefLabel, .prefLabelLang {
   font-family: 'Fira Sans' !important;
   font-size: 27px !important;
   font-weight: 400 !important;
+}
+
+.prefLabelLang {
+  color: #474b4f;
 }
 
 h1#service-name {
