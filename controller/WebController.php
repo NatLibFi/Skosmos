@@ -218,7 +218,7 @@ class WebController extends Controller
       'languages' => $this->languages,
       'parts' => $this->parts,
       'lang' => $lang,
-      'always_show_langcodes' => $langcodes,
+      'explicit_langcodes' => $langcodes,
       'request_uri' => $this->request_uri,
       'bread_crumbs' => $crumbs['breadcrumbs'],
       'combined' => $crumbs['combined'],
@@ -450,7 +450,7 @@ class WebController extends Controller
                 'limit_group' => $group,
                 'group_index' => $groups,
                 'types' => $vocab_types,
-                'always_show_langcodes' => $langcodes,
+                'explicit_langcodes' => $langcodes,
                 'request_uri' => $this->request_uri
 
     ));

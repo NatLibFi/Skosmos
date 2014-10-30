@@ -409,7 +409,7 @@ class Vocabulary extends DataObject
    */
   public function getShowLangCodes()
   {
-    $val = $this->resource->getLiteral("skosmos:showLangCodes");
+    $val = $this->resource->getLiteral("skosmos:explicitLanguageTags");
     if ($val)
       return (boolean) $val->getValue();
     return false;

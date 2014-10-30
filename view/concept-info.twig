@@ -59,7 +59,7 @@
           {% else %}
           <td>
           <span class="prefLabel
-            {% if lang_count is not defined and rest != 1 %}">{{ concept.label }}</span>{% if always_show_langcodes %}<span class="prefLabelLang"> ({{ concept.lang }})</span>{% endif %}{% else %}"></span>
+            {% if lang_count is not defined and rest != 1 %}">{{ concept.label }}</span>{% if explicit_langcodes %}<span class="prefLabelLang"> ({{ concept.lang }})</span>{% endif %}{% else %}"></span>
             <a class="prefLabel conceptlabel" href="{% if concept.type == "skos:Collection" %}{{ concept.uri | link_url(concept.vocab, lang, 'groups') }}{% elseif concept.exvocab is defined%}{{ concept.uri | link_url(concept.exvocab,concept.lang) }}{% else %}{{ concept.uri | link_url(concept.vocab,concept.lang) }}{% endif %}">{{ concept.label }}</a>
             {% endif %}
           </td>
@@ -77,12 +77,12 @@
                     <a class="versal" href="{% if propval.type == "skosmos:memberOf" %}{{ propval.uri | link_url(propval.vocab, lang, 'groups') }}{% else %}{{ propval.uri | link_url(propval.vocab, propval.lang) }}{% endif %}">{{ propval.label }}</a>
                     {% else %}
                     <a class="versal" href="{% if propval.type == "skosmos:memberOf" %}{{ propval.uri | link_url(propval.vocab, lang, 'groups') }}{% else %}{{ propval.uri | link_url(propval.vocab, propval.lang) }}{% endif %}">{{ propval.label|trans }}</a>
-                      {% if propval.lang and propval.lang != lang %}<span class="propertyvalue"> ({{ propval.lang }})</span>{% endif %}
+                      {% if (propval.lang and propval.lang != lang) or explicit_langcodes %}<span class="versal"> ({{ propval.lang }})</span>{% endif %}
                     {% endif %}
                     {% if propval.SubMembers %}<div class="subvalue"> {# if property is a group concept that has sub properties #}
                       {% for sub_member in propval.SubMembers %}
                         <a class="propertyvalue" href="{{ sub_member.uri | link_url(propval.vocab,lang) }}">{{ sub_member.label }}</a>
-                        {% if sub_member.lang and sub_member.lang != lang %}<span class="propertyvalue"> ({{ sub_member.lang }})</span>{% endif %}
+                        {% if sub_member.lang and (sub_member.lang != lang) or explicit_langcodes %}<span class="propertyvalue"> ({{ sub_member.lang }})</span>{% endif %}
                         <br />
                       {% endfor %}
                       </div>
@@ -90,7 +90,7 @@
                   {% endif %}
                 {% elseif property.type == 'rdf:type' %}<p>{{ propval.label|trans }}</p>
                 {% else %} {# Literals (no URI), eg. alternative labels as properties #}
-                  <p>{{ propval.label }}</p>
+                  <p>{{ propval.label }} {% if propval.lang and (propval.lang != lang) or explicit_langcodes %}({{ propval.lang }}){% endif %}</p>
                 {% endif %}
                 </li>
             {% endfor %}
@@ -133,7 +133,7 @@
                     <tr>
                     <td>
                   <a class="versal" href="{{ propval.uri | link_url(propval.exvocab, propval.lang) }}">{{ propval.label }}</a> 
-                    {% if propval.lang and propval.lang != lang %}<span class="propertyvalue"> ({{ propval.lang }})</span>{% endif %}
+                    {% if propval.lang and (propval.lang != lang) or explicit_langcodes %}<span class="propertyvalue"> ({{ propval.lang }})</span>{% endif %}
                     </td>
                     <td>
                     {% if propval.vocabname %}
