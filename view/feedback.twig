@@ -11,6 +11,7 @@
   <div class="" id="feedback-form">
     {% if feedback_sent %}
     <h3>{% trans "Feedback has been sent!" %}</h3>
+    <p class="feedback-thanks">{% trans "Thank you for your feedback" %}<p>
     {% else %}
     <span class="versal">{% trans %}Contact us!{% endtrans %}</span>
     <div id="feedback-content">
@@ -36,6 +37,6 @@
     {% endif %}
     </div>
   </div>
-  <p>* {% trans %}Value is required and can not be empty{% endtrans %}</p>
+  {% if not feedback_sent %}<p>* {% trans %}Value is required and can not be empty{% endtrans %}</p>{% endif %}
 </div>
 {% endblock %}

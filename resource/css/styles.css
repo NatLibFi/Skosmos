@@ -477,6 +477,7 @@ ul.vocab-category {
 
 .feedback-box {
   border-top: 2px solid #394554;
+  min-height: 140px !important;
 }
 
 .feedback-box * {
@@ -501,6 +502,11 @@ ul.vocab-category {
   background-color: #f6f7f8;
   resize: none;
 }
+
+.feedback-thanks {
+  margin-top: 15px;
+}
+
 ::-webkit-input-placeholder { /* WebKit browsers */
   color: #00748f !important;
 }
