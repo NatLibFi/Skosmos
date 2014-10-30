@@ -304,6 +304,19 @@ class WebController extends Controller
     $headers .= "From: $fromName <$fromEmail>" . "\r\n" . 'X-Mailer: PHP/' . phpversion();
     $envelopeSender = FEEDBACK_ENVELOPE_SENDER;
     $params = empty($envelopeSender) ? '' : "-f $envelopeSender";
+
+    // adding some information about the user for debugging purposes.
+    $agent = $_SERVER['HTTP_USER_AGENT'];
+    $referer = $_SERVER['HTTP_REFERER'];
+    $ip = $_SERVER['REMOTE_ADDR'];
+    $timestamp = date(DATE_RFC2822);
+
+    $message = $message . "<br /><br /> Debugging information:" 
+      . "<br />Timestamp: " . $timestamp 
+      . "<br />User agent: " . $agent 
+      . "<br />IP address: " . $ip 
+      . "<br />Referer: " . $referer;
+    
     mail($to, $subject, $message, $headers, $params) or die("Failure");
   }
 
