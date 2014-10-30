@@ -209,7 +209,7 @@ msgstr "Sänd respons"
 
 #: /tmp/cache/5452237999efc/31/cf/f203575414177e7630c9c3fb219d.php:69
 msgid "Thank you for your feedback"
-msgstr "Tack för din respons. Vi strävar till att svara på alla respons så snabbt som möjligt."
+msgstr "Tack för din respons. Vi försöker svara på alla respons så snabbt som möjligt."
 
 #: /tmp/cache/5452237999efc/82/b0/c5f2a0e5959234d2d645cfdeb3e5.php:81
 msgid "The search provided no results."
