@@ -149,7 +149,7 @@ msgstr "Leave this field blank"
 
 #: /tmp/cache/5452237999efc/bd/1b/8ea01a92d3d28ecbc47efa229ca9.php:568
 msgid "Limit search"
-msgstr "Avgränsa söket"
+msgstr "Begränsa sökningen"
 
 #: /tmp/cache/5452237999efc/0e/21/616815bd3942b86671f42d3ed4b2.php:31
 msgid "Loading"
