@@ -36,6 +36,7 @@
 	skosmos:language "fi", "sv", "en";
 	skosmos:defaultLanguage "fi";
 	skosmos:showTopConcepts "true";
+	skosmos:loadExternalResources "false";
 	skosmos:shortName "YSO",
                     "ALLFO"@sv;
 	skosmos:groupClass isothes:ConceptGroup ;

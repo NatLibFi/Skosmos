@@ -171,7 +171,7 @@ class Vocabulary extends DataObject
   {
     $val = $this->resource->getLiteral('skosmos:fullAlphabeticalIndex');
     if ($val)
-      return (boolean) $val->getValue();
+      return filter_var($val->getValue(), FILTER_VALIDATE_BOOLEAN);
     return false;
   }
   
@@ -399,9 +399,22 @@ class Vocabulary extends DataObject
   {
     $val = $this->resource->getLiteral("skosmos:showTopConcepts");
     if ($val)
-      return (boolean) $val->getValue();
+      return filter_var($val->getValue(), FILTER_VALIDATE_BOOLEAN);
     return false;
   }
+  
+  /**
+   * Returns a boolean value set in the vocabularies.ttl config.
+   * @return boolean defaults to true if fetching hasn't been explicitly denied.
+   */
+  public function getExternalResourcesLoading()
+  {
+    $val = $this->resource->getLiteral("skosmos:loadExternalResources");
+    if ($val)
+      return filter_var($val->getValue(), FILTER_VALIDATE_BOOLEAN);
+    return true;
+  }
+  
   
   /**
    * Returns a boolean value set in the vocabularies.ttl config.
@@ -411,7 +424,7 @@ class Vocabulary extends DataObject
   {
     $val = $this->resource->getLiteral("skosmos:explicitLanguageTags");
     if ($val)
-      return (boolean) $val->getValue();
+      return filter_var($val->getValue(), FILTER_VALIDATE_BOOLEAN);
     return false;
   }
 
