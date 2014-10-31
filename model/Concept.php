@@ -97,8 +97,12 @@ class Concept extends VocabularyDataObject
     if ($this->resource->label($this->lang) !== null)
       return $this->resource->label($this->lang)->getValue();
     // 2. label in any language
-    if ($this->resource->label() !== null)
-      return $this->resource->label()->getValue() . " (" . $this->resource->label()->getLang() . ")";
+    $label = $this->resource->label();
+    // if the label lang code is a subset of the ui lang eg. en-GB
+    if ($label !== null && strpos($label->getLang(), $this->lang . '-') === 0)
+      return $label->getValue();
+    if ($label !== null)
+      return $label->getValue() . " (" . $label->getLang() . ")";
     // empty
     return "";
   }
@@ -525,7 +529,8 @@ class Concept extends VocabularyDataObject
     global $LANGUAGES;
     $labels = array();
     foreach ($this->resource->allLiterals($prop) as $lit) {
-      if ($lit->getLang() != $this->lang)
+      // filtering away subsets of the current language eg. en vs en-GB
+      if ($lit->getLang() != $this->lang && strpos($lit->getLang(), $this->lang . '-') !== 0)
         $labels[$lit->getLang()][] = $lit->getValue();
     }
     // sorting the labels by the language defined in the configuration.

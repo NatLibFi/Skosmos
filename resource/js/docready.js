@@ -703,8 +703,8 @@ $(function() { // DOCUMENT READY
               item.replaced = item.altLabel;
             if (item.hiddenLabel)
               item.replaced = item.hiddenLabel;
-            // do not show the label language when it's same as the ui language.
-            if (item.lang && item.lang === lang)
+            // do not show the label language when it's same or in the same subset as the ui language.
+            if (item.lang && (item.lang === lang || item.lang.indexOf(lang + '-') === 0))
               delete(item.lang);
             if (item.type) {
               var toBeRemoved = null;
