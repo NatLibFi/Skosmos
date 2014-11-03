@@ -181,7 +181,6 @@ section {
 .header-float > .btn-group {
   vertical-align: baseline;
   float: left;
-  margin-left: -150px
 }
 
 .header-float > .btn-group > button {
@@ -1592,7 +1591,7 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   .btn-group > .btn {
-    width: 100%
+    width: 100% !important;
   }
 
   .navbar-form, .input-group, #search-field {
