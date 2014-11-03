@@ -1501,6 +1501,19 @@ body, .versal, h1, h2, p, .versal-bold {
   #navi4 {
     display: none;
   }
+  
+  #navigation {
+    left: 3.5%;
+  }
+  
+  .topbar > a {
+    display: none;
+  }
+  
+  .topbar.frontpage > a {
+    display: inline;
+  }
+  
 }
 
 @media (max-width: 700px) {
@@ -1508,15 +1521,15 @@ body, .versal, h1, h2, p, .versal-bold {
     position: relative;
   }
 
-    #navi1, #navi2, #navi3, #navi4 {
+  #navi1, #navi2, #navi3, #navi4 {
     background-image: none !important;
     padding-left: 0 !important;
   }
-  
+    
   .frontpage #navigation {
     top: 110px !important;
-    left: 3.5%;
     width: auto !important;
+    left: 3.5%;
   }
 
   /*#search-field {*/
