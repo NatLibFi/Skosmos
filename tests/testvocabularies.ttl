@@ -45,11 +45,15 @@
 :groups a skosmos:Vocabulary, void:Dataset ;
 	dc11:title "Group test onto"@en ;
 	dc:subject :cat_general ;
+	void:dataDump <http://skosmos.skos/dump/test/groups.ttl>,
+		<http://skosmos.skos/dump/test/groups> ;
 	void:uriSpace "http://www.skosmos.skos/onto/groups/";
 	void:sparqlEndpoint <http://localhost:3030/ds/sparql> ;
 	skosmos:language "fi", "en";
 	skosmos:indexShowClass meta:TestClass;
 	skosmos:sparqlGraph <http://www.skosmos.skos/groups/> .
+
+<http://skosmos.skos/dump/test/groups> dc:format "application/rdf+xml" .
 
 :cat_science a skos:Concept ;
 	skos:topConceptOf :categories ;

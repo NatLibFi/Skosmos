@@ -353,14 +353,33 @@ class Vocabulary extends DataObject
   }
 
   /**
-   * get the URL from which the vocabulary data can be downloaded
+   * get the URLs from which the vocabulary data can be downloaded
+   * @return array Array with MIME type as key, URL as value
    */
-  public function getDataURL()
+  public function getDataURLs()
   {
-    $val = $this->resource->getResource("void:dataDump");
-    if ($val)
-      return $val->getURI();
-    return false;
+    $ret = array();
+    $urls = $this->resource->allResources("void:dataDump");
+    foreach ($urls as $url) {
+      // first try dc:format and dc11:format
+      $mimetypelit = $url->getLiteral('dc:format');
+      if ($mimetypelit === null)
+        $mimetypelit = $url->getLiteral('dc11:format');
+      // if still not found, guess MIME type using file extension
+      if ($mimetypelit !== null) {
+        $mimetype = $mimetypelit->getValue();
+      } else {
+        $format = EasyRdf_Format::guessFormat(null, $url->getURI());
+        if ($format === null) {
+          trigger_error("Could not guess format for <$url>.", E_USER_WARNING);
+          continue;
+        }
+        $mimetypes = array_keys($format->getMimeTypes());
+        $mimetype = $mimetypes[0];
+      }
+      $ret[$mimetype] = $url->getURI();
+    }
+    return $ret;
   }
 
   /**
