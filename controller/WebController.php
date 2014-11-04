@@ -644,8 +644,6 @@ class WebController extends Controller
       return;
     }
 
-    $vocab_stats = $this->model->getVocabulary($vocab_id)->getStatistics();
-
     $lang_msg = null;
     $lang_support = true;
     $newlang = $this->verifyVocabularyLanguage($lang, $vocab->getLanguages());
@@ -671,7 +669,6 @@ class WebController extends Controller
                         'search_letter' => 'A',
                         'lang_supported' => $lang_support,
                         'request_uri' => $this->request_uri,
-                        'vocab_stats' => $vocab_stats,
                         'lang_changed' => $lang_msg));
   }
 

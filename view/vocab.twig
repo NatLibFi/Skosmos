@@ -44,14 +44,6 @@
         <th class="versal">{% trans "Alternate terms" %}</th>
         <th class="versal">{% trans "Hidden terms" %}</th>
       </tr>
-      {% for lang,stats in vocab_stats['terms'] %}
-      <tr>
-        <td class="versal">{{ lang }}</td>
-        <td class="versal">{{ stats['skos:prefLabel'] }}</td>
-        <td class="versal">{{ stats['skos:altLabel'] }}</td>
-        <td class="versal">{{ stats['skos:hiddenLabel'] }}</td>
-      </tr>
-      {% endfor %}
       <tr><td class="property-divider"></td></tr>
       </table>
     </div>

@@ -258,6 +258,70 @@ class RestController extends Controller
   }
 
   /**
+   * Loads the vocabulary metadata. And wraps the result in a json-ld object.
+   * @param string $vocabId identifier string for the vocabulary eg. 'yso'.
+   */
+  public function vocabularyStatistics($vocabId)
+  {
+    $lang = $this->getAndSetLanguage($vocabId);
+    $vocab = $this->getVocabulary($vocabId);
+    
+    $vocab_stats = $vocab->getStatistics();
+
+    /* encode the results in a JSON-LD compatible array */
+    $ret = array(
+        '@context' => array(
+            'skos' => 'http://www.w3.org/2004/02/skos/core#',
+            'onki' => 'http://schema.onki.fi/onki#',
+            'uri' => '@id',
+            'id' => 'onki:vocabularyIdentifier',
+            '@language' => $lang,
+        ),
+        'uri' => '',
+        'id' => $vocabId,
+        'title' => $vocab->getTitle(),
+        'concepts' => $vocab_stats['concepts'] 
+    );
+
+    return $this->return_json($ret);
+  }
+  
+  /**
+   * Loads the vocabulary metadata. And wraps the result in a json-ld object.
+   * @param string $vocabId identifier string for the vocabulary eg. 'yso'.
+   */
+  public function labelStatistics($vocabId)
+  {
+    $lang = $this->getAndSetLanguage($vocabId);
+    $vocab = $this->getVocabulary($vocabId);
+    
+    $vocab_stats = $vocab->getLabelStatistics();
+
+    /* encode the results in a JSON-LD compatible array */
+    $concept_counts = array();
+    foreach ($vocab_stats['terms'] as $proplang => $properties) {
+      foreach ($properties as $prop => $value)
+        $concept_counts[] = array('prop' => $prop, 'lang' => $proplang, 'count' => $value ); 
+    }
+
+    $ret = array(
+        '@context' => array(
+            'skos' => 'http://www.w3.org/2004/02/skos/core#',
+            'onki' => 'http://schema.onki.fi/onki#',
+            'uri' => '@id',
+            'id' => 'onki:vocabularyIdentifier',
+            '@language' => $lang,
+        ),
+        'uri' => '',
+        'id' => $vocabId,
+        'title' => $vocab->getTitle(),
+        'values' => $concept_counts 
+    );
+
+    return $this->return_json($ret);
+  }
+
+  /**
    * Loads the vocabulary type metadata. And wraps the result in a json-ld object.
    * @param string $vocabId identifier string for the vocabulary eg. 'yso'.
    */

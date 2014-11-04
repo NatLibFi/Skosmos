@@ -346,6 +346,18 @@ class Vocabulary extends DataObject
     $ret = array();
     // find the number of concepts
     $ret['concepts'] = $sparql->countConcepts();
+
+    return $ret;
+  }
+  
+  /**
+   * Counts the statistics of the vocabulary.
+   * @return array of the concept counts in different languages
+   */
+  public function getLabelStatistics()
+  {
+    $sparql = $this->getSparql();
+    $ret = array();
     // count the number of different types of concepts in all languages
     $ret['terms'] = $sparql->countLangConcepts($this->getLanguages());
 
