@@ -226,6 +226,38 @@ $(function() { // DOCUMENT READY
       }
   );
 
+  // ajaxing the concept count and the preflabel counts on the vocabulary front page
+  if ($('#vocab-info').length) {
+    $.ajax({
+      url : rest_base_url + vocab + '/count',
+      success : function(data) {
+        $spinner = $('.vocab-info-literals .spinner');
+        $spinner.after(data.concepts);
+        $spinner.detach();
+      }
+    });
+    
+    $.ajax({
+      url : rest_base_url + vocab + '/labelCount',
+      success : function(data) {
+        var stats = '';
+        for (i = 0; i < data.values.length; i++) {
+          var row = data.values[i];
+          // the preflabel is the first property of a new lang so creating a new tr.
+          if (row.prop === 'skos:prefLabel') {
+            if (i > 0)
+              stats += '</tr>';
+            stats += '<tr><td class="versal">' + row.lang + '</td>';
+          }
+          stats += '<td class="versal">' + row.count + '</td>';
+        }
+        stats += '</tr>';
+        $('#statistics tr:nth-of-type(2)').detach();
+        $('#statistics tr:nth-of-type(1)').after(stats);
+      }
+    });
+  }
+
   function loadPage(targetUrl) {
     if (targetUrl.indexOf('index') !== -1 || targetUrl.indexOf('groups') !== -1) {
       window.location.replace(targetUrl);

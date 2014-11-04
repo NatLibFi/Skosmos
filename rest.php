@@ -65,7 +65,7 @@ try {
       $controller->related($vocab);
     } elseif ($parts[2] == 'count') {
       $controller->vocabularyStatistics($vocab);
-    } elseif ($parts[2] == 'labelStatistics') {
+    } elseif ($parts[2] == 'labelCount') {
       $controller->labelStatistics($vocab);
     } else {
       header("HTTP/1.0 404 Not Found");
