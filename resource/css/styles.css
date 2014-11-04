@@ -1498,9 +1498,6 @@ body, .versal, h1, h2, p, .versal-bold {
 }
 
 @media (max-width: 550px) {
-  #navi4 {
-    display: none;
-  }
   
   #navigation {
     left: 3.5%;
@@ -1596,9 +1593,11 @@ body, .versal, h1, h2, p, .versal-bold {
 
 }
 
-
-
 @media (max-width: 500px) {
+  #navi4 {
+    display: none;
+  }
+
   .btn-group {
     width: 100%;
   }
