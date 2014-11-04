@@ -57,7 +57,15 @@
     </div>
     {% endif %}
     {% if vocab.dataURLs %}
-    <div class="download-links"><span class="versal"><a href="{{ path_fix }}rest/v1/{{ vocab_id }}/data">{% trans "Download" %}</a> {% trans "this vocabulary as SKOS/RDF" %}</span>
+    <div class="download-links">
+      <span class="versal">{% trans %}Download this vocabulary as SKOS/RDF:{% endtrans %}
+        {% if 'application/rdf+xml' in vocab.dataURLs|keys %}
+          <a href="{{ path_fix }}rest/v1/{{ vocab_id }}/data?format=application/rdf%2Bxml">RDF/XML</a>
+        {% endif %}
+        {% if 'text/turtle' in vocab.dataURLs|keys %}
+          <a href="{{ path_fix }}rest/v1/{{ vocab_id }}/data?format=text/turtle">TURTLE</a>
+        {% endif %}
+      </span>
     </div>
     {% endif %}
   </div>
