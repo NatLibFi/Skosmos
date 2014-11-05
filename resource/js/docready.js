@@ -226,8 +226,28 @@ $(function() { // DOCUMENT READY
       }
   );
 
+  /**
+   * Combines the different properties into an object with the language codes as 
+   * keys and an another array of property counts as the value.
+   * @return object
+   */
+  function combineStatistics(input) {
+    var combined = {};
+    for (i = 0; i < input.length; i++) {
+      var property = input[i];
+      if (!combined[property.lang])
+        combined[property.lang] = [property.lang]; 
+      combined[property.lang].push(property.count);
+    }
+    return combined;
+  }
+
   // ajaxing the concept count and the preflabel counts on the vocabulary front page
   if ($('#vocab-info').length) {
+    // adding the spinners      
+    $('.vocab-info-literals tr:nth-last-child(2) th').after('<td class="versal"><span class="spinner" /></td>');
+    $('#statistics tr:nth-of-type(1)').after('<tr><td><span class="spinner" /></td></td></tr>');
+
     $.ajax({
       url : rest_base_url + vocab + '/count',
       success : function(data) {
@@ -240,19 +260,16 @@ $(function() { // DOCUMENT READY
     $.ajax({
       url : rest_base_url + vocab + '/labelCount',
       success : function(data) {
+        $('#statistics tr:nth-of-type(2)').detach(); // removing the spinner
         var stats = '';
-        for (i = 0; i < data.values.length; i++) {
-          var row = data.values[i];
-          // the preflabel is the first property of a new lang so creating a new tr.
-          if (row.prop === 'skos:prefLabel') {
-            if (i > 0)
-              stats += '</tr>';
-            stats += '<tr><td class="versal">' + row.lang + '</td>';
+        var combined = combineStatistics(data.values);
+        $.each(combined, function(lang, values) { // each array contains one language
+          stats += '<tr>';
+          for (var i = 0; i < values.length; i++) { // the array values are placed into tds
+            stats += '<td class="versal">' + values[i] + '</td>';
           }
-          stats += '<td class="versal">' + row.count + '</td>';
-        }
-        stats += '</tr>';
-        $('#statistics tr:nth-of-type(2)').detach();
+          stats += '</tr>';
+        });
         $('#statistics tr:nth-of-type(1)').after(stats);
       }
     });
