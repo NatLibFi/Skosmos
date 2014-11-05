@@ -197,21 +197,34 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @covers Vocabulary::getDataURL
+   * @covers Vocabulary::getDataURLs
    */
-  public function testGetDataURL() {
+  public function testGetDataURLs() {
+    $vocab = $this->model->getVocabulary('groups');
+    $url = $vocab->getDataURLs();
+    ksort($url); // sort by mime type to make order deterministic 
+    $this->assertEquals(array(
+        'application/rdf+xml' => 'http://skosmos.skos/dump/test/groups', 
+        'text/turtle' => 'http://skosmos.skos/dump/test/groups.ttl', 
+      ), $url);
+  }
+
+  /**
+   * @covers Vocabulary::getDataURLs
+   * @expectedException PHPUnit_Framework_Error_Warning
+   */
+  public function testGetDataURLsNotGuessable() {
     $vocab = $this->model->getVocabulary('test');
-    $url = $vocab->getDataURL();
-    $this->assertEquals('http://skosmos.skos/dump/test/', $url);
+    $url = $vocab->getDataURLs();
   }
   
   /**
-   * @covers Vocabulary::getDataURL
+   * @covers Vocabulary::getDataURLs
    */
-  public function testGetDataURLNotSet() {
+  public function testGetDataURLsNotSet() {
     $vocab = $this->model->getVocabulary('testdiff');
-    $url = $vocab->getDataURL();
-    $this->assertEquals(false, $url);
+    $url = $vocab->getDataURLs();
+    $this->assertEquals(array(), $url);
   }
   
   /**

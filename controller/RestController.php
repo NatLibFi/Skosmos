@@ -472,11 +472,21 @@ class RestController extends Controller
     if (isset($_GET['uri'])) {
       $uri = $_GET['uri'];
     } else if ($vocab !== null) { // whole vocabulary - redirect to download URL
-      $url = $this->getVocabulary($vocab)->getDataURL();
-      if (!$url)
+      $urls = $this->getVocabulary($vocab)->getDataURLs();
+      if (sizeof($urls) == 0)
         return $this->return_error('404', 'Not Found', "No download source URL known for vocabulary $vocab");
-      header("Location: " . $url);
 
+      if (isset($_GET['format'])) {
+        $format = $_GET['format'];
+        if (!in_array($format, array_keys($urls)))
+          return $this->return_error(400, 'Bad Request', "Unsupported format. Supported MIME types are: " . implode(' ', array_keys($urls)));
+      } else {
+        header('Vary: Accept'); // inform caches that a decision was made based on Accept header
+        $priorities = array_keys($urls);
+        $best = $this->negotiator->getBest($_SERVER['HTTP_ACCEPT'], $priorities);
+        $format = $best != null ? $best->getValue() : $priorities[0];
+      }
+      header("Location: " . $urls[$format]);
       return;
     } else {
       return $this->return_error(400, 'Bad Request', "uri parameter missing");
