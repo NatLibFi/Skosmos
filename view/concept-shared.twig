@@ -84,7 +84,7 @@
                 {% endif %}
               {% elseif property.type == 'rdf:type' %}<p>{{ propval.label|trans }}</p>
               {% else %} {# Literals (no URI), eg. alternative labels as properties #}
-                <p>{{ propval.label }} {% if propval.lang and (propval.lang != lang) or explicit_langcodes %}({{ propval.lang }}){% endif %}</p>
+                <p{% if property.type == 'skos:altLabel' %} class="replaced"{% endif %}>{{ propval.label }} {% if propval.lang and (propval.lang != lang) or explicit_langcodes %}({{ propval.lang }}){% endif %}</p>
               {% endif %}
               </li>
           {% endfor %}
