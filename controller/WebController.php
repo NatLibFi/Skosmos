@@ -528,7 +528,6 @@ class WebController extends Controller
                         'languages' => $this->languages,
                         'lang' => $lang,
                         'vocab_id' => $vocab_id,
-                        'vocab_stats' => $vocab_stats,
                         'vocab' => $vocab,
                         'alpha_results' => $search_results,
                         'search_letter' => $letter,

@@ -61,7 +61,7 @@ if (sizeof($parts) <= 2) {
         } elseif ($parts[3] == 'search') {
           $controller->invokeVocabularySearch($vocab, $lang);
         } elseif ($parts[3] == 'index') {
-          if (sizeof($parts) == 4) { // no letter
+          if (sizeof($parts) == 4 || (sizeof($parts) == 5) && $parts[4] === '') { // no letter
             $controller->invokeAlphabeticalIndex($vocab, $lang);
           } else { // letter given
             $controller->invokeAlphabeticalIndex($vocab, $lang, $parts[4]);
