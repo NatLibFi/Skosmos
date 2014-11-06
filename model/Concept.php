@@ -31,6 +31,7 @@ class Concept extends VocabularyDataObject
 
     'skos:topConceptOf',		# because it's too technical, not relevant for users
     'skos:inScheme',			# should be evident in any case
+    'skos:member'			    # this is shouldn't be shown on the group page
   );
 
   /**

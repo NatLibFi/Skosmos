@@ -115,7 +115,7 @@ $(function() { // DOCUMENT READY
   });
 
   // if on the search results page and there is only one result 
-  if ($('.concept-info').length === 1) { 
+  if ($('#hierarchy').hasClass('active')) { 
     invokeParentTree(getTreeConfiguration()); 
   }
 
@@ -474,18 +474,24 @@ $(function() { // DOCUMENT READY
         $.ajaxQ.abortAll();
         var base_path = path_fix.length / 3;
         var clicked = $(this);
-        var $content = $('#sidebar');
+        var $sidebar = $('#sidebar');
+        var $content = $('.content');
         $('.sidebar-grey').empty().prepend(spinner);
         var targetUrl = event.target.href;
         var parameters = $.param({'base_path' : base_path});
+        var group_page_url = targetUrl.replace('groups', 'page');
+        // ajaxing the sidebar content
         $.ajax({
             url : targetUrl,
             data: parameters,
             success : function(data) {
-              $content.empty();
+              $sidebar.empty();
               var title = $(data).filter('title').text();
               var response = $('#sidebar', data).html();
-              $content.append(response);
+              $sidebar.append(response);
+              $content.empty();
+              concept = $('.content', data).html();
+              $content.append(concept);
               $('.nav').scrollTop(0);
               if (window.history.pushState)
                 window.history.pushState(null, null, encodeURI(event.target.href));

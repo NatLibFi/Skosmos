@@ -604,6 +604,8 @@ class WebController extends Controller
     $groups = $vocab->listConceptGroups();
     $contents = $vocab->listConceptGroupContents($groupuri);
     $group_name = $groups[$groupuri];
+    $uri = $vocab->getConceptURI($group); // make sure it's a full URI
+    $results = $vocab->getConceptInfo($uri);
     echo $template
             ->render(
                     array('path_fix' => $this->path_fix,
@@ -614,7 +616,8 @@ class WebController extends Controller
                         'contents' => $contents,
                         'parts' => $this->parts,
                         'label' => $group_name,
-                        'request_uri' => $this->request_uri
+                        'request_uri' => $this->request_uri,
+                        'search_results' => $results
             ));
   }
 
