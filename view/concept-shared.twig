@@ -95,7 +95,7 @@
             {% set prevlang = '' %}{# Only displaying the language when it appears for the very first time #}
             {% for lang,labels in concept.foreignLabels %}
               {% for value in labels %}
-                <tr><td class="versal">{% if prevlang != lang %}{{ lang|trans }}{% endif %}</td><td class="versal{% if value.type == "skos:altLabel" %} replaced{%else %}-bold{% endif %}">{{ value.label }}</td></tr>
+                <tr{% if prevlang != lang %} class="first-of-language"{% endif %}><td class="versal">{% if prevlang != lang %}{{ lang|trans }}{% endif %}</td><td class="versal{% if value.type == "skos:altLabel" %} replaced{%else %}-bold{% endif %}">{{ value.label }}</td></tr>
                 {% set prevlang = lang %}
               {% endfor %}
             {% endfor %}

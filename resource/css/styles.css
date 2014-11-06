@@ -766,9 +766,26 @@ tr {
   border-image: '../pics/stripe.png' 20 20 repeat;
 }
 
+.property-value-table {
+  margin-bottom: 5px;
+}
+
 .property-value-table > tbody > tr > td {
   border: none !important;
   vertical-align: top;
+  line-height: 15px !important;
+}
+
+.property-value-table > tbody > tr.first-of-language > td {
+  padding-top: 10px !important;
+}
+
+.property-value-table > tbody > tr.first-of-language:first-child > td {
+  padding-top: 5px !important;
+}
+
+.property-value-table > tbody > tr > td.versal-bold {
+  font-weight: 500 !important;
 }
 
 .property-value-table > tbody > tr > td:first-child {
