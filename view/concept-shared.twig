@@ -90,19 +90,15 @@
           {% endfor %}
           </ul></td></tr>
         {% endfor %}
-        {% if concept.foreignPrefLabels or concept.foreignAltLabels %}<tr><td><span class="versal property-click" title="{% trans "foreign prefLabel help" %}" >{{ 'foreign prefLabels'|trans|upper }}</span></td><td>
-            <ul>
-            {% for lang,labels in concept.foreignPrefLabels %}
-              {% for label in labels %}
-                <li><p>{{ label }} ({{ lang }})</p></li>
+        {% if concept.foreignLabels %}<tr><td><span class="versal property-click" title="{% trans "foreign prefLabel help" %}" >{{ 'foreign prefLabels'|trans|upper }}</span></td><td>
+            <table class="property-value-table"><tbody>
+            {% for lang,labels in concept.foreignLabels %}
+              {% for value in labels %}
+                <tr><td class="versal">{{ lang|trans }}</td><td class="versal{% if value.type == "skos:altLabel" %} replaced{%else %}-bold{% endif %}">{{ value.label }}</td></tr>
               {% endfor %}
             {% endfor %}
-            {% for lang,labels in concept.foreignAltLabels %}
-              {% for label in labels %}
-                <li><p>{{ label }} ({% if lang %}{{ lang }}, {% endif %}{% trans "replaced" %})</p></li>
-              {% endfor %}
-            {% endfor %}
-            </ul></td></tr>
+            </tbody></table>
+            </td></tr>
         {% endif %}
           <tr><td><span class="versal">URI</span></td>
           <td><span class="versal uri-input-box">{{ concept.uri }}</span></tr>

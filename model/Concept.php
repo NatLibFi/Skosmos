@@ -69,25 +69,6 @@ class Concept extends VocabularyDataObject
     return false;
   }
    
-
-  /**
-   * Returns the skos:prefLabels in other languages than the ui language.
-   * @return string
-   */
-  public function getForeignPrefLabels()
-  {
-    return $this->getForeignLabels('skos:prefLabel');
-  }
-
-  /**
-   * Returns the skos:altLabels in other languages than the ui language.
-   * @return string
-   */
-  public function getForeignAltLabels()
-  {
-    return $this->getForeignLabels('skos:altLabel');
-  }
-
   /**
    * Returns a label for the concept in the ui language or if not possible in any language.
    * @return string
@@ -523,16 +504,33 @@ class Concept extends VocabularyDataObject
 
   /**
    * Gets the values for the property in question in all other languages than the ui language.
-   * @param string $prop property identifier eg. 'skos:prefLabel'
    */
-  private function getForeignLabels($prop)
+  public function getForeignLabels()
   {
     global $LANGUAGES;
     $labels = array();
-    foreach ($this->resource->allLiterals($prop) as $lit) {
+    foreach ($this->resource->allLiterals('skos:prefLabel') as $lit) {
       // filtering away subsets of the current language eg. en vs en-GB
       if ($lit->getLang() != $this->lang && strpos($lit->getLang(), $this->lang . '-') !== 0)
-        $labels[$lit->getLang()][] = $lit->getValue();
+        $labels[$lit->getLang()][] = new ConceptPropertyValue(
+            'skos:prefLabel',
+            '',
+            '',
+            $lit->getLang(),
+            $lit->getValue()
+          );
+
+    }
+    foreach ($this->resource->allLiterals('skos:altLabel') as $lit) {
+      // filtering away subsets of the current language eg. en vs en-GB
+      if ($lit->getLang() != $this->lang && strpos($lit->getLang(), $this->lang . '-') !== 0)
+        $labels[$lit->getLang()][] = new ConceptPropertyValue(
+            'skos:altLabel',
+            '',
+            '',
+            $lit->getLang(),
+            $lit->getValue()
+          );
     }
     // sorting the labels by the language defined in the configuration.
     $order = array_keys($LANGUAGES);
@@ -543,7 +541,7 @@ class Concept extends VocabularyDataObject
         unset($labels[$key]);
       }
 
-    return $ordered + $labels;
+    return $ordered;
   }
 
 }

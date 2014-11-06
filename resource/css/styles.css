@@ -766,6 +766,15 @@ tr {
   border-image: '../pics/stripe.png' 20 20 repeat;
 }
 
+.property-value-table > tbody > tr > td {
+  border: none !important;
+  vertical-align: top;
+}
+
+.property-value-table > tbody > tr > td:first-child {
+  width: 100px !important;
+}
+
 /* vocabulary
  ****************************/
 .container {
