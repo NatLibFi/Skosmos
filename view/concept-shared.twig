@@ -92,9 +92,11 @@
         {% endfor %}
         {% if concept.foreignLabels %}<tr><td><span class="versal property-click" title="{% trans "foreign prefLabel help" %}" >{{ 'foreign prefLabels'|trans|upper }}</span></td><td>
             <table class="property-value-table"><tbody>
+            {% set prevlang = '' %}{# Only displaying the language when it appears for the very first time #}
             {% for lang,labels in concept.foreignLabels %}
               {% for value in labels %}
-                <tr><td class="versal">{{ lang|trans }}</td><td class="versal{% if value.type == "skos:altLabel" %} replaced{%else %}-bold{% endif %}">{{ value.label }}</td></tr>
+                <tr><td class="versal">{% if prevlang != lang %}{{ lang|trans }}{% endif %}</td><td class="versal{% if value.type == "skos:altLabel" %} replaced{%else %}-bold{% endif %}">{{ value.label }}</td></tr>
+                {% set prevlang = lang %}
               {% endfor %}
             {% endfor %}
             </tbody></table>
