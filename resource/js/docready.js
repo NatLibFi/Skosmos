@@ -249,7 +249,7 @@ $(function() { // DOCUMENT READY
     $('#statistics tr:nth-of-type(1)').after('<tr><td><span class="spinner" /></td></td></tr>');
 
     $.ajax({
-      url : rest_base_url + vocab + '/count',
+      url : rest_base_url + vocab + '/vocabularyStatistics',
       success : function(data) {
         $spinner = $('.vocab-info-literals .spinner');
         $spinner.after(data.concepts);
@@ -258,7 +258,7 @@ $(function() { // DOCUMENT READY
     });
     
     $.ajax({
-      url : rest_base_url + vocab + '/labelCount',
+      url : rest_base_url + vocab + '/labelStatistics',
       success : function(data) {
         $('#statistics tr:nth-of-type(2)').detach(); // removing the spinner
         var stats = '';
