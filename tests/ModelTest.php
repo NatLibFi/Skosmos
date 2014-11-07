@@ -183,6 +183,28 @@ class ModelTest extends PHPUnit_Framework_TestCase
   /**
    * @covers Model::searchConcepts
    * @depends testConstructorWithConfig
+   */
+  public function testSearchWithOnlyWildcard() {
+    $model = new Model();
+    $result = $model->searchConcepts('*','test','en','en');
+    $this->assertEquals(array(), $result);
+  }
+  
+  /**
+   * @covers Model::searchConcepts
+   * @depends testConstructorWithConfig
+   */
+  public function testSearchWithOnlyMultipleWildcards() {
+    $model = new Model();
+    $result = $model->searchConcepts('**','test','en','en');
+    $this->assertEquals(array(), $result);
+    $result = $model->searchConcepts('******','test','en','en');
+    $this->assertEquals(array(), $result);
+  }
+  
+  /**
+   * @covers Model::searchConcepts
+   * @depends testConstructorWithConfig
    * @expectedException \Exception
    * @expectedExceptionMessage Missing argument
    */

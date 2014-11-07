@@ -252,7 +252,7 @@ class Model
   public function searchConcepts($term, $vocids, $lang, $search_lang, $type = null, $parent=null, $group=null, $offset = 0, $limit = DEFAULT_SEARCH_LIMIT, $hidden = true, $fields = null)
   {
     $term = trim($term);
-    if ($term == "" || $term == "*")
+    if ($term == "" || !preg_match('/[^*]/', $term))
       return array(); // don't even try to search for empty prefix
 
     // make vocids an array in every case
