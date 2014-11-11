@@ -210,7 +210,7 @@ class Concept extends VocabularyDataObject
                 $prop_info['prop'],
                 $prop_info['concept_uri'],
                 $prop_info['vocab'],
-                $label_lang,
+                null,
                 $label,
                 null,
                 null,
