@@ -271,7 +271,7 @@ class Model
       $arrayClass = null;
       $sparql = $this->getDefaultSparql();
     }
-    if (!$type) $type = 'skos:Concept';
+    if (!$type) $type = array('skos:Concept');
 
     $results = $sparql->queryConcepts($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $type, $parent, $group, $hidden, $fields);
     $ret = array();

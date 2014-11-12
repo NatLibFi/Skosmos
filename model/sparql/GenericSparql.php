@@ -430,19 +430,21 @@ EOQ;
    * @param int $limit maximum number of hits to retrieve; 0 for unlimited
    * @param int $offset offset of results to retrieve; 0 for beginning of list
    * @param string $arrayClass the URI for thesaurus array class, or null if not used
-   * @param string $type limit search to concepts of the given type
+   * @param array $types limit search to concepts of the given type(s)
    * @param string $parent limit search to concepts which have the given concept as parent in the transitive broader hierarchy
    * @param string $group limit search to concepts which are in the given group
    * @param boolean $hidden include matches on hidden labels (default: true)
    * @param array $fields extra fields to include in the result (array of strings). (default: null = none)
    * @return array query result object
    */
-  public function queryConcepts($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $type, $parent=null, $group=null, $hidden=true, $fields=null)
+  public function queryConcepts($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent=null, $group=null, $hidden=true, $fields=null)
   {
     $gc = $this->graphClause;
     $limit = ($limit) ? 'LIMIT ' . $limit : '';
     $offset = ($offset) ? 'OFFSET ' . $offset : '';
-    $type = EasyRdf_Namespace::expand($type);
+    $unprefixed_types;
+    foreach($types as $type)
+      $unprefixed_types[] = EasyRdf_Namespace::expand($type);
 
     // extra variable expressions to request
     $extravars = '';
@@ -467,7 +469,14 @@ EOF;
     }
 
     // extra types to query, if using thesaurus arrays
-    $extratypes = $arrayClass ? "UNION { ?s rdf:type <$arrayClass> }" : "";
+    $extratypes = $arrayClass ? "UNION { ?s a <$arrayClass> }" : "";
+
+    if (sizeof($unprefixed_types) === 1) // if only one type limitation set no UNION needed
+      $type = $unprefixed_types[0];
+    else { // multiple type limitations require setting a UNION for each of those
+      foreach($unprefixed_types as $utype)
+        $extratypes .= "\nUNION { ?s a <$utype> }";
+    }      
 
     // extra conditions for label language, if specified
     $labelcond_match = ($search_lang) ? "&& langMatches(lang(?match), '$search_lang')" : "";

@@ -412,6 +412,8 @@ class WebController extends Controller
     $term = urldecode(isset($_GET['q']) ? $_GET['q'] : "");
     $search_lang = (isset($_GET['lang'])) ? $_GET['lang'] : $lang;
     $type = (isset($_GET['type'])) ? $_GET['type'] : null;
+    if ($type && !is_array($type)) // if only one type param given place it into an array regardless
+      $type = array($type);
     $group = (isset($_GET['group'])) ? $_GET['group'] : null;
     $parent = (isset($_GET['parent'])) ? $_GET['parent'] : null;
     $offset = (isset($_GET['offset']) && is_numeric($_GET['offset']) && $_GET['offset'] >= 0) ? $_GET['offset'] : 0;

@@ -989,6 +989,7 @@ $(function() { // DOCUMENT READY
     },
     maxHeight: 300 
   });
+
   if ($('#groups.active').length === 1 || ( $('#alpha.active').length === 1 && $('.alphabetic-search-results').length === 1) ) {
     $(".sidebar-grey").mCustomScrollbar({ 
       alwaysShowScrollbar: 1,
@@ -1044,7 +1045,7 @@ $(function() { // DOCUMENT READY
     var $loading = $("<div class='search-result'><p>" + loading_text + "&hellip;<span class='spinner'/></p></div>"); 
     $('.search-result-listing').empty();
     $('.search-result-listing').append($loading);
-    var typeLimit = $('#type-limit').val();
+    var typeLimit = $('#type-limit').val(); // .join('+');
     var groupLimit = $('#group-limit').val();
     var parentLimit = $('#parent-limit').attr('data-uri');
     var parameters = $.param({'type' : typeLimit, 'group' : groupLimit, 'parent': parentLimit});
@@ -1088,13 +1089,13 @@ $(function() { // DOCUMENT READY
       return false;
     });
 
-    $('.multiselect-container').mCustomScrollbar({ 
-      alwaysShowScrollbar: 1,
-      scrollInertia: 0, 
-      mouseWheel:{ scrollAmount: 60 },
-      snapAmount: 20,
-      snapOffset: 1
-    });
+    //$('.multiselect-container').mCustomScrollbar({ 
+      //alwaysShowScrollbar: 1,
+      //scrollInertia: 0, 
+      //mouseWheel:{ scrollAmount: 60 },
+      //snapAmount: 20,
+      //snapOffset: 1
+    //});
 
     $('#parent-limit').typeahead({ hint: false, highlight: true, minLength: autocomplete_activation },{
         name: 'concept', 
