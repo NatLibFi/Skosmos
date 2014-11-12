@@ -1045,7 +1045,7 @@ $(function() { // DOCUMENT READY
     var $loading = $("<div class='search-result'><p>" + loading_text + "&hellip;<span class='spinner'/></p></div>"); 
     $('.search-result-listing').empty();
     $('.search-result-listing').append($loading);
-    var typeLimit = $('#type-limit').val(); // .join('+');
+    var typeLimit = $('#type-limit').val().join('+');
     var groupLimit = $('#group-limit').val();
     var parentLimit = $('#parent-limit').attr('data-uri');
     var parameters = $.param({'type' : typeLimit, 'group' : groupLimit, 'parent': parentLimit});
