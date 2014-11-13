@@ -1089,13 +1089,13 @@ $(function() { // DOCUMENT READY
       return false;
     });
 
-    //$('.multiselect-container').mCustomScrollbar({ 
-      //alwaysShowScrollbar: 1,
-      //scrollInertia: 0, 
-      //mouseWheel:{ scrollAmount: 60 },
-      //snapAmount: 20,
-      //snapOffset: 1
-    //});
+    $('.multiselect-container').mCustomScrollbar({ 
+      alwaysShowScrollbar: 1,
+      scrollInertia: 0, 
+      mouseWheel:{ scrollAmount: 60 },
+      snapAmount: 20,
+      snapOffset: 1
+    });
 
     $('#parent-limit').typeahead({ hint: false, highlight: true, minLength: autocomplete_activation },{
         name: 'concept', 

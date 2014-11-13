@@ -141,7 +141,7 @@ section {
 .multiselect-container > li > a > label {
    padding: 3px 20px 3px 25px !important;
    word-wrap: break-word;
-   white-space: pre-wrap;
+   white-space: pre-line;
 }
 
 .headerbar {
@@ -611,6 +611,21 @@ ul.vocab-category {
   height: 26px;
 }
 
+.multiselect-container li {
+  min-height: 26px !important;
+}
+
+.multiselect-container li > a > label.checkbox {
+  margin: 0;
+  padding: 3px 5px 3px 25px;
+  height: 100% !important;
+}
+
+.multiselect-container li > a > label.checkbox > input {
+  margin-top: 2px;
+  padding: 0;
+}
+
 .search-options .multiselect > span {
   float: left;
   width: 252px;
@@ -619,6 +634,7 @@ ul.vocab-category {
 }
 
 .search-options .multiselect > .caret {
+  color: #474b4f !important;
   float: right;
   position: absolute;
   right: 5px;
