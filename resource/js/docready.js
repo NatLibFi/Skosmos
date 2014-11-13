@@ -973,16 +973,14 @@ $(function() { // DOCUMENT READY
         var selected = '';
         options.each(function() {
           var label = ($(this).attr('label') !== undefined) ? $(this).attr('label') : $(this).html();
-
-          selected += label + ', ';
+          if (label !== '')
+            selected += label + ', ';
         });
         return '<span>' + selected.substr(0, selected.length - 2) + ' </span><b class="caret"></b>';
       }
     },
     numberDisplayed: 2,
     buttonWidth: 'auto',
-    onChange: function(element, checked) {
-    },
     onDropdownShown: function(event) { 
       var $activeChild = $(event.currentTarget).find('.active');
       $('.multiselect-container').mCustomScrollbar('scrollTo', $activeChild); 
@@ -1046,6 +1044,8 @@ $(function() { // DOCUMENT READY
     $('.search-result-listing').empty();
     $('.search-result-listing').append($loading);
     var typeLimit = $('#type-limit').val().join('+');
+    if (typeLimit[0] === '+') // filtering the empty selection out of the search string
+      typeLimit = typeLimit.substring(1);
     var groupLimit = $('#group-limit').val();
     var parentLimit = $('#parent-limit').attr('data-uri');
     var parameters = $.param({'type' : typeLimit, 'group' : groupLimit, 'parent': parentLimit});
