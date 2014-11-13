@@ -169,7 +169,11 @@ class RestController extends Controller
     $vocid = isset($_GET['vocab']) ? $_GET['vocab'] : $vocab; # optional
     $lang = isset($_GET['lang']) ? $_GET['lang'] : null; # optional
     $labellang = isset($_GET['labellang']) ? $_GET['labellang'] : null; # optional
-    $type = isset($_GET['type']) ? $_GET['type'] : 'skos:Concept';
+    $type = isset($_GET['type']) ? $_GET['type'] : array('skos:Concept');
+    if ($type && strpos($type, '+'))
+      $type = explode('+',$type);
+    else if ($type && !is_array($type)) // if only one type param given place it into an array regardless
+      $type = array($type);
     $parent = isset($_GET['parent']) ? $_GET['parent'] : null;
     $group = isset($_GET['group']) ? $_GET['group'] : null;
     $fields = isset($_GET['fields']) ? explode(' ', $_GET['fields']) : null;
