@@ -541,7 +541,8 @@ class Concept extends VocabularyDataObject
         unset($labels[$key]);
       }
 
-    return $ordered;
+    ksort($labels);
+    return $ordered + $labels;
   }
 
 }
