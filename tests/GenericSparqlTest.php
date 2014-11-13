@@ -263,7 +263,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   public function testQueryConcepts()
   {
     $voc = $this->model->getVocabulary('test');
-    $actual = $this->sparql->queryConcepts('bass*',array($voc),'en', 'en', 20, 0, null, 'skos:Concept');
+    $actual = $this->sparql->queryConcepts('bass*',array($voc),'en', 'en', 20, 0, null, array('skos:Concept'));
     $this->assertEquals(1, sizeof($actual));
     $this->assertEquals('Bass', $actual[0]['prefLabel']);
   }
@@ -274,7 +274,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   public function testQueryConceptsAsteriskBeforeTerm()
   {
     $voc = $this->model->getVocabulary('test');
-    $actual = $this->sparql->queryConcepts('*bass',array($voc),'en', 'en', 20, 0, null, 'skos:Concept');
+    $actual = $this->sparql->queryConcepts('*bass',array($voc),'en', 'en', 20, 0, null, array('skos:Concept'));
     $this->assertEquals(3, sizeof($actual));
     foreach($actual as $match)
       $this->assertContains('bass', $match['prefLabel'], '',true);
