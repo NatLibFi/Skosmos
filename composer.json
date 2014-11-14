@@ -3,7 +3,7 @@
         "components/jquery": "1.11.*",
         "components/jqueryui": "1.10.*",
         "components/handlebars.js": "v1.3.0",
-        "easyrdf/easyrdf": "~0.9.0@RC",
+        "easyrdf/easyrdf": "0.9.*",
         "twig/twig": "1.13.*",
         "twig/extensions": "1.*",
         "twitter/bootstrap": "3.2.*",
