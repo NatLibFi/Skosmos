@@ -1346,6 +1346,10 @@ p.autocomplete-label {
   width: 13px !important;
 }
 
+.yso-concept {
+  color: #474b4f !important;
+}
+
 /* Font definitions
  *****************************************/
 li {
