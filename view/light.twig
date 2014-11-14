@@ -14,7 +14,6 @@
 {% endif %}
 
 
-{% include 'footer.inc' ignore missing %}
 <title>{{ ServiceName }}{% block title %}{% endblock %}</title>
 </head>
 <body{% if vocab_id == '' and vocab_id != 'feedback' and vocab_id != 'about' %} class="frontpage-logo"{% else %} class="vocab-{{vocab_id}}"{% endif %}>
@@ -132,5 +131,6 @@
     <footer id="footer"></footer>
   </section>
   {% include 'scripts.twig' %}
+  {% include 'footer.inc' ignore missing %}
 </body>
 </html>

@@ -78,9 +78,6 @@ function createConceptObject(conceptUri, conceptData) {
     state: { opened: true },
     children: []
   };
-  // adding a css class for separating the yso concepts from the special domain ontology concepts
-  if (vocab !== 'yso' && newNode.uri.indexOf('www.yso.fi/onto/yso/') !== -1)
-    newNode.a_attr['class'] = 'yso-concept';
   // setting the flag manually if the concept is known to have narrowers, but they aren't included eg. included topconcepts
   if(conceptData.hasChildren === true) {
     newNode.children = true;
@@ -100,9 +97,6 @@ function createConceptObject(conceptUri, conceptData) {
         parents: conceptUri,
         state: { opened: true }
       };
-      // adding a css class for separating the yso concepts from the special domain ontology concepts
-      if (vocab !== 'yso' && childObject.uri.indexOf('www.yso.fi/onto/yso/') !== -1)
-        childObject.a_attr['class'] = 'yso-concept';
       if (child === $('.uri-input-box').html()) { /* childObject.data.attr.id = 'jstree-leaf-proper'; */ }
       // if the childConcept hasn't got any children the state is not needed.
       if (hasChildren) {
@@ -176,9 +170,6 @@ function vocabRoot(topConcepts) {
       children: [],
       state: { opened: false } 
     };
-    // adding a css class for separating the yso concepts from the special domain ontology concepts
-    if (vocab !== 'yso' && childObject.uri.indexOf('www.yso.fi/onto/yso/') !== -1)
-      childObject.a_attr['class'] = 'yso-concept';
     setNode(childObject);
     topArray.push(childObject);
   }
@@ -219,9 +210,6 @@ function createObjectsFromNarrowers(narrowerResponse) {
       parents: narrowerResponse.uri,
       state: { opened: false, disabled: false, selected: false }
     };
-    // adding a css class for separating the yso concepts from the special domain ontology concepts
-    if (vocab !== 'yso' && childObject.uri.indexOf('www.yso.fi/onto/yso/') !== -1)
-      childObject.a_attr['class'] = 'yso-concept';
     if (hasChildren) {
       childObject.children = true;
       childObject.state.opened = false;
