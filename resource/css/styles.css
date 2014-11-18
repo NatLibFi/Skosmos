@@ -75,21 +75,18 @@ section {
 }
 
 #language {
-  position: absolute;
-  right: 2.5%;
+  float: right;
   height: 50px;
   width: auto;
   padding-left: 0px;
+  padding-right: 2.5%;
   text-align: right;
   overflow: hidden;
   line-height: 70px;
 }
 
 #navigation {
-  right: 200px;
-  right: calc(175px + 3%);
-  padding-right: 30px;
-  position: absolute;
+  padding-right: 25px;
   height: 50px;
   min-width: 0px;
   max-width: 530px;
@@ -128,6 +125,11 @@ section {
   padding: 0 !important;
   margin-top: 0 !important;
   top: 40px !important;
+}
+
+.header-float > .navbar-form {
+  box-shadow: none;
+
 }
 
 .multiselect-container {
@@ -341,6 +343,11 @@ section {
   font-weight: bold;
   height: 40px;
   padding-left: 8px !important;
+  box-shadow: none !important;
+}
+  
+#search-field:focus {
+  box-shadow: none !important;
 }
 
 .input-group {
@@ -1557,6 +1564,12 @@ body, .versal, h1, h2, p, .versal-bold {
 
 }
 
+@media (max-width: 400px) {
+  #navi3 {
+    display: none;
+  }
+}
+
 @media (max-width: 550px) {
   
   #navigation {
@@ -1589,19 +1602,17 @@ body, .versal, h1, h2, p, .versal-bold {
     left: 3.5%;
   }
 
-  /*#search-field {*/
-    /*max-width: 100px;*/
-  /*}*/
-
   #navigation > a, #language > a, #navi4 > span {
     margin: 2px;
     font-weight: 500;
   }
 
   .frontpage #language {
-    top: 110px !important;
-    right: 3.5%;
+    position: absolute;
+    right: 2.5%;
     text-align: left;
+    top: 110px !important;
+    padding-right: 0;
   }
 
   #service-logo {
@@ -1611,7 +1622,7 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   .frontpage-spacing {
-    top: 100px !important;
+    top: 95px !important;
   }
 
   .frontpage-spacing .header-float {
@@ -1625,6 +1636,7 @@ body, .versal, h1, h2, p, .versal-bold {
 
   #navigation {
     padding-right: 0 !important;
+    position: absolute;
   }
 }
 
@@ -1672,6 +1684,10 @@ body, .versal, h1, h2, p, .versal-bold {
   
   .navbar-form {
     max-width: none !important;
+  }
+
+  .twitter-typeahead {
+    display: inline !important;
   }
 }
 
@@ -1822,11 +1838,13 @@ body, .versal, h1, h2, p, .versal-bold {
 
   #language { 
     right: 0;
+    padding-right: 0;
+    padding-left: 25px;
   }
 
   #navigation {
     position: relative;
-    right: 200px;
+    padding-right: 0;
   }
 
   .welcome-box {
