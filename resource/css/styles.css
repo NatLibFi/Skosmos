@@ -4,7 +4,7 @@
 html, body {
   margin: 0;
   padding: 0;
-  height: 100%;
+  min-height: 100%;
   min-width: 100%;
   background-color: #d5dbde !important;
 }
@@ -826,7 +826,7 @@ tr {
 }
 
 .search-results-property-table > tbody > tr > td.versal-pref {
-  color: #62729f;
+  font-weight: 500 !important;
 }
 
 /* vocabulary
@@ -1382,6 +1382,10 @@ h1, .prefLabel, .prefLabelLang {
   font-family: 'Fira Sans' !important;
   font-size: 27px !important;
   font-weight: 400 !important;
+}
+
+.prefLabel, .prefLabelLang {
+  font-weight: 500 !important;
 }
 
 .prefLabelLang {
