@@ -1141,11 +1141,12 @@ EOQ;
     $result = $this->client->query($query);
     foreach ($result as $row) {
       if (isset($row->super)) {
-        if (!isset($ret[$row->super->getURI()]))
-          $ret[$row->super->getURI()] = array();
-        $ret[$row->super->getURI()]['children'][$row->group->getURI()] = $row->label->getValue();
+        $superuri = $row->super->getURI();
+        if (!isset($ret[$superuri]))
+          $ret[$superuri] = array();
+        $ret[$superuri]['children'][$row->group->getURI()] = $row->label->getValue();
       } else
-        $ret[$row->group->getURI()] = array('label' => $row->label->getValue());
+        $ret[$row->group->getURI()]['label'] = $row->label->getValue();
     }
 
     return $ret;

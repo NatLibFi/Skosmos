@@ -559,7 +559,9 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
     $actual = $sparql->ListConceptGroups('http://www.w3.org/2004/02/skos/core#Collection', 'en');
     $this->assertEquals('Freshwater fish', $actual['http://www.skosmos.skos/groups/fresh']['label']);
     $this->assertEquals('Saltwater fish', $actual['http://www.skosmos.skos/groups/salt']['label']);
-}
+    $this->assertEquals('Fish', $actual['http://www.skosmos.skos/groups/fish']['label']);
+    $this->assertEquals('Submarine-like fish', $actual['http://www.skosmos.skos/groups/fish']['children']['http://www.skosmos.skos/groups/sub']);
+  }
 
   /**
    * @covers GenericSparql::listConceptGroupContents
