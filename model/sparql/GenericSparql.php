@@ -1166,7 +1166,7 @@ SELECT ?conc ?label
 WHERE {
  $gc {
    <$group> a <$groupClass> .
-   <$group> skos:member ?conc .
+   { <$group> skos:member ?conc . } UNION { ?conc isothes:superGroup <$group> }
    FILTER NOT EXISTS { ?conc owl:deprecated true }
    ?conc skos:prefLabel ?label .
    FILTER (langMatches(lang(?label), '$lang'))
