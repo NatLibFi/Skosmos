@@ -747,6 +747,10 @@ div.input-group > .input-group-addon {
   margin: 15px 0 5px 15px;
 }
 
+li.sub-group {
+  margin-left: 25px;
+}
+
 /* scrollbars
  ****************************/
 .mCSB_container {

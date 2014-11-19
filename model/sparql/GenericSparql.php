@@ -1127,10 +1127,11 @@ EOQ;
   {
     $gc = $this->graphClause;
     $query = <<<EOQ
-SELECT ?group ?label
+SELECT ?group ?super ?label
 WHERE {
  $gc {
    ?group a <$groupClass> .
+   OPTIONAL { ?group isothes:superGroup ?super . }
    { ?group skos:prefLabel ?label } UNION { ?group rdfs:label ?label }
    FILTER (langMatches(lang(?label), '$lang'))
  }
@@ -1139,7 +1140,12 @@ EOQ;
     $ret = array();
     $result = $this->client->query($query);
     foreach ($result as $row) {
-      $ret[$row->group->getURI()] = $row->label->getValue();
+      if (isset($row->super)) {
+        if (!isset($ret[$row->super->getURI()]))
+          $ret[$row->super->getURI()] = array();
+        $ret[$row->super->getURI()]['children'][$row->group->getURI()] = $row->label->getValue();
+      } else
+        $ret[$row->group->getURI()] = array('label' => $row->label->getValue());
     }
 
     return $ret;
