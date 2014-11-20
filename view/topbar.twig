@@ -1,5 +1,5 @@
 <a {% if vocab_id == '' %}id="service-logo"{% endif %} {% if vocab_id != '' or vocab_id == 'feedback' or vocab_id == 'about' %}class="service-{{ lang }}" {% endif %}href="{{ path_fix }}{{ lang }}/"><h1 id="service-name">{% if ServiceName is defined  %}{{ ServiceName }}{% else %}Skosmos{% endif %}</h1></a>
-{% if languages %}
+{% if languages|length > 1 %}
 <div id="language"><span class="navigation-font">|</span>
   {% for langcode, langdata in languages %}
   {% if lang != langcode %}
