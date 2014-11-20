@@ -1609,7 +1609,6 @@ body, .versal, h1, h2, p, .versal-bold {
   }
     
   .frontpage #navigation {
-    top: 110px !important;
     width: auto !important;
     left: 3.5%;
   }
@@ -1623,7 +1622,6 @@ body, .versal, h1, h2, p, .versal-bold {
     position: absolute;
     right: 2.5%;
     text-align: left;
-    top: 110px !important;
     padding-right: 0;
   }
 
@@ -1633,16 +1631,12 @@ body, .versal, h1, h2, p, .versal-bold {
     right: 3%;
   }
 
-  .frontpage-spacing {
-    top: 95px !important;
-  }
-
   .frontpage-spacing .header-float {
     float: left;
   }
 
   section.frontpage {
-    top: 100px;
+    top: 10px;
     overflow: hidden;
   }
 
