@@ -1426,7 +1426,7 @@ h2 {
   font-family: 'Fira Sans';
 }
 
-.topbar a.navigation-font {
+.topbar a.navigation-font, .topbar span {
   color: #394554 !important;
 }
 
