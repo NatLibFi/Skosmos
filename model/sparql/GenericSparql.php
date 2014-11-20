@@ -1123,7 +1123,7 @@ EOQ;
    * @param string $lang language of labels to return
    * @return array Result array with group URI as key and group label as value
    */
-  public function listConceptGroups($groupClass, $lang)
+  public function listConceptGroups($groupClass, $lang, $flat)
   {
     $gc = $this->graphClause;
     $query = <<<EOQ
@@ -1140,15 +1140,17 @@ EOQ;
     $ret = array();
     $result = $this->client->query($query);
     foreach ($result as $row) {
-      if (isset($row->super)) {
+      if (isset($row->super) && !$flat) {
         $superuri = $row->super->getURI();
         if (!isset($ret[$superuri]))
           $ret[$superuri] = array();
         $ret[$superuri]['children'][$row->group->getURI()] = $row->label->getValue();
-      } else
+      } else {
         $ret[$row->group->getURI()]['label'] = $row->label->getValue();
+        if ($flat && isset($row->super))
+          $ret[$row->group->getURI()]['super'] = $row->super->getURI();
+      }
     }
-
     return $ret;
   }
 

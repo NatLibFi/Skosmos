@@ -552,19 +552,40 @@ class Vocabulary extends DataObject
 
   /**
    * Lists the different concept groups available in the vocabulary.
+   * @param boolean $flat set to true if you want a non hierarchical representation. 
    * @return array
    */
-  public function listConceptGroups()
+  public function listConceptGroups($flat=false)
   {
     $ret = array();
     $gclass = $this->getGroupClassURI();
     if ($gclass === null) return $ret; // no group class defined, so empty result
-    $groups = $this->getSparql()->listConceptGroups($gclass, $this->lang);
+    $groups = $this->getSparql()->listConceptGroups($gclass, $this->lang, $flat);
     foreach ($groups as $uri => $label) {
       $ret[$uri] = $label;
     }
 
     return $ret;
+  }
+ 
+  /**
+   * Returns the group name from the available concept groups. If the group has
+   * isothes:superGroups those are also added to the name string. 
+   * @param string $groupuri uri of the group. 
+   * @return string 
+   */
+  public function getGroupName($groupuri)
+  {
+    $groups = $this->listConceptGroups(true);
+    if (sizeof($groups) === 0)
+      return '';
+    $current = $groups[$groupuri];
+    $ret = $current['label'];
+    while(isset($current['super'])) {
+      $current = $groups[$current['super']];
+      $ret = $current['label'] . ' > ' . $ret;
+    }
+    return $ret; 
   }
 
   /**

@@ -604,9 +604,8 @@ class WebController extends Controller
       return;
     }
     $groupuri = $vocab->getConceptURI($group);
-    $groups = $vocab->listConceptGroups();
     $contents = $vocab->listConceptGroupContents($groupuri);
-    $group_name = $groups[$groupuri]['label'];
+    $group_name = $vocab->getGroupName($groupuri);
     $uri = $vocab->getConceptURI($group); // make sure it's a full URI
     $results = $vocab->getConceptInfo($uri);
     echo $template
