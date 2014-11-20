@@ -226,15 +226,6 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
     $url = $vocab->getDataURLs();
     $this->assertEquals(array(), $url);
   }
-  
-  /**
-   * @covers Vocabulary::getGroupName
-   */
-  public function testGetGroupName() {
-    $vocab = $this->model->getVocabulary('groups');
-    $name = $vocab->getGroupName('http://www.skosmos.skos/groups/sub');
-    $this->assertEquals('http://www.skosmos.skos/groups/sub', $name);
-  }
 
   /**
    * @covers Vocabulary::getGroupClassURI
