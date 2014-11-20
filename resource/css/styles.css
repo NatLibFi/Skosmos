@@ -113,6 +113,10 @@ section {
   cursor: default;
 }
 
+#navi4 > span {
+  border-bottom: 2px dotted #cfcfcf;
+}
+
 /* headerbar stuff
  *************************/
 
