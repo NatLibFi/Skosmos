@@ -159,7 +159,7 @@ section {
 }
 
 .headerbar-coloured {
-  background-color: #b2bac0;
+  background-color: #00748F;
 }
 
 .header-left {
@@ -167,7 +167,7 @@ section {
 }
 
 .header-left > h1 {
-  background-color: #b2bac0;
+  background-color: #00748F;
   position: absolute;
   line-height: 50px;
   margin: 0 0 0 15px;
