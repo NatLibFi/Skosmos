@@ -1672,10 +1672,6 @@ body, .versal, h1, h2, p, .versal-bold {
 }
 
 @media (max-width: 500px) {
-  #navi4 {
-    display: none;
-  }
-
   .btn-group {
     width: 100%;
   }
