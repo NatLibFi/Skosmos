@@ -1699,7 +1699,7 @@ body, .versal, h1, h2, p, .versal-bold {
 
 @media (max-width: 768px) {
   .multiselect  {
-    margin: 6px 0 !important;
+    /*margin: 6px 0 !important;*/
   }
 
 }
@@ -1779,14 +1779,13 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   .welcome-box, .right-box {
-    margin-left: 150px !important;
     width: 200px !important;
   }
 
   #vocabulary-list {
     margin-left: 20px;
     width: auto;
-    width: calc(100% - 375px) !important;
+    width: calc(100% - 225px) !important;
   }
 
   h1 {
@@ -1853,10 +1852,6 @@ body, .versal, h1, h2, p, .versal-bold {
     padding-right: 0;
   }
 
-  .welcome-box {
-    margin-left: 140px !important;
-  }
-
   .welcome-box, .right-box {
     width: 210px !important;
   }
@@ -1895,7 +1890,7 @@ body, .versal, h1, h2, p, .versal-bold {
   #vocabulary-list {
     position: relative;
     display: inline-block;
-    width: 580px !important;
+    width: 720px !important;
   }
 
   #sidebar {
