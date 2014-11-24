@@ -371,7 +371,14 @@ class Concept extends VocabularyDataObject
         $exvocab = $exvoc ? $exvoc->getId() : null;
         $reverseUri = $reverseResource->getUri(null);
         $label = $reverseResource->label($this->lang) ? $reverseResource->label($this->lang) : $reverseResource->label();
-        $properties[$property][] = new ConceptPropertyValue($property, $reverseUri, $exvocab, $label ? $label->getLang() : null, $label ? $label->getValue() : null);
+        $labelLang = $label ? $label->getLang() : null;
+        $label = $label ? $label->getValue() : null;
+        $super = $reverseResource->get('isothes:superGroup');
+        while(isset($super)) {
+          $label = $super->label($this->lang) . ' > ' . $label;
+          $super = $super->get('isothes:superGroup');
+        }
+        $properties[$property][] = new ConceptPropertyValue($property, $reverseUri, $exvocab, $labelLang, $label);
       }
     }
 

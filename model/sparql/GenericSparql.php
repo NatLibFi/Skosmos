@@ -233,6 +233,8 @@ CONSTRUCT {
  ?o rdfs:label ?ol .
  ?group skos:member ?uri .
  ?group skos:prefLabel ?grouplabel .
+ ?group isothes:superGroup ?super .
+ ?super skos:prefLabel ?superlabel .
  ?group rdf:type ?grouptype . $construct
 } WHERE {
  $gc {
@@ -242,7 +244,12 @@ CONSTRUCT {
   UNION
   { ?group skos:member ?uri .
     ?group skos:prefLabel ?grouplabel .
-    ?group rdf:type ?grouptype . }
+    ?group rdf:type ?grouptype . 
+    OPTIONAL {
+      ?group isothes:superGroup+ ?super . 
+      ?super skos:prefLabel ?superlabel . 
+    }
+  }
   UNION
   {
    ?uri ?p ?o .
