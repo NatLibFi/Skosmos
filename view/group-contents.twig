@@ -19,9 +19,9 @@
 <div class="sidebar-grey">
   <div class="group-container">
     <p>{% if label != '' %}{{ label }}{% else %}{% trans "concepts within the group" %}{% endif %}</p>
-    <ul class="group-contents side-navi">
-      {% for uri, label in contents %}
-      <li><a href="{{ uri | link_url(vocab,lang) }}">{{ label }}</a></li>
+    <ul class="group-index side-navi">
+      {% for uri, value in contents %}
+      <li{% if value.hasSuper %} class="sub-group"{% endif %}><a href="{% if value.hasSuper %}{{ uri | link_url(vocab,lang,'groups') }}{% else %}{{ uri | link_url(vocab,lang) }}{% endif %}">{{ value.label }}</a></li>
       {% endfor %}
     </ul>
   </div>

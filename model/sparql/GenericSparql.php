@@ -1172,7 +1172,7 @@ EOQ;
   {
     $gc = $this->graphClause;
     $query = <<<EOQ
-SELECT ?conc ?label
+SELECT ?conc ?super ?label
 WHERE {
  $gc {
    <$group> a <$groupClass> .
@@ -1181,12 +1181,14 @@ WHERE {
    ?conc skos:prefLabel ?label .
    FILTER (langMatches(lang(?label), '$lang'))
  }
+ BIND(EXISTS{?conc isothes:superGroup <$group>} as ?super)
 } ORDER BY lcase(?label)
 EOQ;
     $ret = array();
     $result = $this->client->query($query);
     foreach ($result as $row) {
-      $ret[$row->conc->getURI()] = $row->label->getValue();
+      $ret[$row->conc->getURI()]['label'] = $row->label->getValue();
+      $ret[$row->conc->getURI()]['hasSuper'] = $row->super->getValue();
     }
 
     return $ret;
