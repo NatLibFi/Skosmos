@@ -360,28 +360,6 @@ class Concept extends VocabularyDataObject
       }
     }
 
-    // finding out if the concept is a member of some group
-    $reverseResources = $this->graph->resourcesMatching('skos:member', $this->resource);
-    if (isset($reverseResources)) {
-      $arrayClassURI = $this->vocab !== null ? $this->vocab->getArrayClassURI() : null;
-      $arrayClass = $arrayClassURI !== null ? EasyRdf_Namespace::shorten($arrayClassURI) : null;
-      foreach ($reverseResources as $reverseResource) {
-        $property = in_array($arrayClass, $reverseResource->types()) ? "skosmos:memberOfArray" : "skosmos:memberOf" ;
-        $exvoc = $this->model->guessVocabularyFromURI($reverseResource->getUri());
-        $exvocab = $exvoc ? $exvoc->getId() : null;
-        $reverseUri = $reverseResource->getUri(null);
-        $label = $reverseResource->label($this->lang) ? $reverseResource->label($this->lang) : $reverseResource->label();
-        $labelLang = $label ? $label->getLang() : null;
-        $label = $label ? $label->getValue() : null;
-        $super = $reverseResource->get('isothes:superGroup');
-        while(isset($super)) {
-          $label = $super->label($this->lang) . ' > ' . $label;
-          $super = $super->get('isothes:superGroup');
-        }
-        $properties[$property][] = new ConceptPropertyValue($property, $reverseUri, $exvocab, $labelLang, $label);
-      }
-    }
-
     // if skos:narrower properties are actually groups we need to remove duplicates.
     foreach ($members_array as $topConcept) {
       $topProp = new ConceptPropertyValue('skos:narrower', $topConcept['parts'], $topConcept['vocab'], $topConcept['lang'], $topConcept['label'], $exvocab = null);
@@ -508,6 +486,36 @@ class Concept extends VocabularyDataObject
 
     return $members_array;
   }
+
+  /**
+   * Gets the groups the concept belongs to.
+   */
+  public function getGroupProperties() {
+    // finding out if the concept is a member of some group
+    $groups = array();
+    $reverseResources = $this->graph->resourcesMatching('skos:member', $this->resource);
+    if (isset($reverseResources)) {
+      $arrayClassURI = $this->vocab !== null ? $this->vocab->getArrayClassURI() : null;
+      $arrayClass = $arrayClassURI !== null ? EasyRdf_Namespace::shorten($arrayClassURI) : null;
+      foreach ($reverseResources as $reverseResource) {
+        $property = in_array($arrayClass, $reverseResource->types()) ? "skosmos:memberOfArray" : "skosmos:memberOf" ;
+        $exvoc = $this->model->guessVocabularyFromURI($reverseResource->getUri());
+        $exvocab = $exvoc ? $exvoc->getId() : null;
+        $reverseUri = $reverseResource->getUri(null);
+        $label = $reverseResource->label($this->lang) ? $reverseResource->label($this->lang) : $reverseResource->label();
+        $labelLang = $label ? $label->getLang() : null;
+        $label = $label ? $label->getValue() : null;
+        $super = $reverseResource->get('isothes:superGroup');
+        while(isset($super)) {
+          $groups[] = new ConceptPropertyValue('isothes:superGroup', $super->getUri(), $exvocab, $labelLang, $super->label($this->lang));
+          $super = $super->get('isothes:superGroup');
+        }
+        $groups[] = new ConceptPropertyValue($property, $reverseUri, $exvocab, $labelLang, $label);
+      }
+    }
+    return $groups;
+  }
+
 
   /**
    * Gets the values for the property in question in all other languages than the ui language.

@@ -90,6 +90,13 @@
           {% endfor %}
           </ul></td></tr>
         {% endfor %}
+        {% if concept.groupProperties %}<tr><td><span class="versal property-click" title="{% trans "skos:member_help" %}" >{% trans "skos:member" %}</span></td><td>
+            {% for group in concept.groupProperties %}
+              {% if not loop.first %}<span class="versal"> &#62 </span>{% endif %} 
+              <a class="versal" href="{{ group.uri | link_url(group.vocab,lang, 'groups') }}">{{ group.label }}</a>
+            {% endfor %}
+          </td>
+        {% endif %}
         {% if concept.foreignLabels %}<tr><td><span class="versal property-click" title="{% trans "foreign prefLabel help" %}" >{{ 'foreign prefLabels'|trans|upper }}</span></td><td class="empty"></td>
             {% set prevlang = '' %}{# Only displaying the language when it appears for the very first time #}
             {% for lang,labels in concept.foreignLabels %}
