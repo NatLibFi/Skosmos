@@ -90,7 +90,7 @@
           {% endfor %}
           </ul></td></tr>
         {% endfor %}
-        {% if concept.groupProperties %}<tr><td><span class="versal property-click" title="{% trans "skosmos:memberOf_help" %}" >{% trans "skosmos:memberOf" %}</span></td><td>
+        {% if concept.groupProperties %}<tr><td><span class="versal property-click" title="{% trans "skosmos:memberOf_help" %}" >{{ 'skosmos:memberOf'|trans|upper }}</span></td><td>
             {% for group in concept.groupProperties %}
               {% if not loop.first %}<span class="versal"> &#62 </span>{% endif %} 
               <a class="versal" href="{{ group.uri | link_url(group.vocab,lang, 'groups') }}">{{ group.label }}</a>
