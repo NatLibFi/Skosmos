@@ -91,10 +91,14 @@
           </ul></td></tr>
         {% endfor %}
         {% if concept.groupProperties %}<tr><td><span class="versal property-click" title="{% trans "skosmos:memberOf_help" %}" >{{ 'skosmos:memberOf'|trans|upper }}</span></td><td>
+            <ul>
             {% for group in concept.groupProperties %}
-              {% if not loop.first %}<span class="versal"> &#62 </span>{% endif %} 
-              <a class="versal" href="{{ group.uri | link_url(group.vocab,lang, 'groups') }}">{{ group.label }}</a>
+              {% if group.type != 'isothes:superGroup' and not superFound %}<li>{% endif %}
+                <a class="versal" href="{{ group.uri | link_url(group.vocab,lang, 'groups') }}">{{ group.label }}</a>
+                {% if group.type == 'isothes:superGroup' %}{% set superFound = true %}<span class="versal"> &#62 </span>{% endif %}
+              {% if group.type != 'isothes:superGroup' and not superFound %}</li>{% endif %}
             {% endfor %}
+            </ul>
           </td>
         {% endif %}
         {% if concept.foreignLabels %}<tr><td><span class="versal property-click" title="{% trans "foreign prefLabel help" %}" >{{ 'foreign prefLabels'|trans|upper }}</span></td><td class="empty"></td>
