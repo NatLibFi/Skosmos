@@ -941,7 +941,7 @@ tr {
   margin-bottom: 0;
 }
 
-.hidden-breadcrumb {
+.hidden-breadcrumb, .hidden-path {
   display: none;
 }
 

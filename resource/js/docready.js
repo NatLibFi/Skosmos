@@ -225,6 +225,23 @@ $(function() { // DOCUMENT READY
         return false;
       }
   );
+  
+  // event handling restoring the hidden breadcrumb paths
+  $(document).on('click', '.restore-breadcrumbs',
+      function(event){
+        $(this).remove();
+        $('.hidden-path').removeClass('hidden-path');
+        return false;
+      }
+  );
+
+  // if there are multiple breadcrumb paths hide those and generate a button for displaying those
+  var $crumbs = $('.crumb-path');
+  if ($crumbs.length > 1) {
+    for (var i = 1; i < $crumbs.length; i++)
+      $($crumbs[i]).addClass('hidden-path');
+    $($crumbs[0]).after('<a class="versal restore-breadcrumbs" href="#">' + expand + ' (' + $crumbs.length + ') ...</a>');
+  }
 
   /**
    * Combines the different properties into an object with the language codes as 
@@ -233,7 +250,7 @@ $(function() { // DOCUMENT READY
    */
   function combineStatistics(input) {
     var combined = {};
-    for (i = 0; i < input.length; i++) {
+    for (var i = 0; i < input.length; i++) {
       var property = input[i];
       if (!combined[property.lang])
         combined[property.lang] = [property.lang]; 
