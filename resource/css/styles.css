@@ -952,6 +952,7 @@ tr {
 
 .crumb-path {
   float:left;
+  width: 100%;
 }
 
 .crumb-path:first-of-type {
