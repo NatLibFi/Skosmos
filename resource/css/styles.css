@@ -141,6 +141,7 @@ section {
 }
 
 .multiselect-container > li.active > a, .multiselect-container > li > a:focus, .dropdown-menu > li:hover > a {
+  background-color: #00748F !important;
   color: #ffffff !important;
 }
 
