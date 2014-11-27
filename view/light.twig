@@ -96,7 +96,7 @@
             <select id="group-limit" value="{{ limit-group }}" class="form-control multiselect">
               <option></option>
               {% for uri,group in group_index %}
-                <option value="{{ uri }}">{{ group }}</option>
+                <option value="{{ uri }}">{{ group.label }}</option>
               {% endfor %}
             </select>
           </div>
