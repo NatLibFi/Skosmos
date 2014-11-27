@@ -112,6 +112,8 @@ $(function() { // DOCUMENT READY
     if (settings.url.indexOf('search') !== -1 && $autocomplete.length > 0 && $autocomplete[0].offsetHeight === 302)
       $(".tt-dropdown-menu").mCustomScrollbar({ alwaysShowScrollbar: 1, scrollInertia: 0 });
     countAndSetOffset();
+
+    hideCrumbs();
   });
 
   // if on the search results page and there is only one result 
@@ -235,12 +237,16 @@ $(function() { // DOCUMENT READY
       }
   );
 
+  hideCrumbs();
+
   // if there are multiple breadcrumb paths hide those and generate a button for displaying those
-  var $crumbs = $('.crumb-path');
-  if ($crumbs.length > 1) {
-    for (var i = 1; i < $crumbs.length; i++)
-      $($crumbs[i]).addClass('hidden-path');
-    $($crumbs[0]).after('<a class="versal restore-breadcrumbs" href="#">' + expand + ' (' + $crumbs.length + ') ...</a>');
+  function hideCrumbs() {
+    var $crumbs = $('.crumb-path');
+    if ($crumbs.length > 1) {
+      for (var i = 1; i < $crumbs.length; i++)
+        $($crumbs[i]).addClass('hidden-path');
+      $($crumbs[0]).after('<a class="versal restore-breadcrumbs" href="#">' + expand + ' (' + $crumbs.length + ') ...</a>');
+    }
   }
 
   /**
