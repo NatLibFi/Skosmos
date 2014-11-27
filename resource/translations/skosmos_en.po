@@ -186,7 +186,7 @@ msgstr "Send feedback"
 
 #: /tmp/cache/5476d1686d39e/0e/21/616815bd3942b86671f42d3ed4b2.php:55
 msgid "Show all breadcrumb paths"
-msgstr "show more paths"
+msgstr "show all # paths"
 
 #: /tmp/cache/5476d1686d39e/31/cf/f203575414177e7630c9c3fb219d.php:69
 msgid "Thank you for your feedback"

@@ -186,7 +186,7 @@ msgstr "Sänd respons"
 
 #: /tmp/cache/5475de8a56d95/0e/21/616815bd3942b86671f42d3ed4b2.php:55
 msgid "Show all breadcrumb paths"
-msgstr "visa mera sökväg"
+msgstr "visa alla # sökväg"
 
 #: /tmp/cache/5475de8a56d95/31/cf/f203575414177e7630c9c3fb219d.php:69
 msgid "Thank you for your feedback"
