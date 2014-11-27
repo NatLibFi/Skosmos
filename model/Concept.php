@@ -527,7 +527,7 @@ class Concept extends VocabularyDataObject
     foreach ($this->resource->allLiterals('skos:prefLabel') as $lit) {
       // filtering away subsets of the current language eg. en vs en-GB
       if ($lit->getLang() != $this->lang && strpos($lit->getLang(), $this->lang . '-') !== 0)
-        $labels[$lit->getLang()][] = new ConceptPropertyValue(
+        $labels[gettext($lit->getLang())][] = new ConceptPropertyValue(
             'skos:prefLabel',
             '',
             '',
@@ -539,7 +539,7 @@ class Concept extends VocabularyDataObject
     foreach ($this->resource->allLiterals('skos:altLabel') as $lit) {
       // filtering away subsets of the current language eg. en vs en-GB
       if ($lit->getLang() != $this->lang && strpos($lit->getLang(), $this->lang . '-') !== 0)
-        $labels[$lit->getLang()][] = new ConceptPropertyValue(
+        $labels[gettext($lit->getLang())][] = new ConceptPropertyValue(
             'skos:altLabel',
             '',
             '',
@@ -550,11 +550,13 @@ class Concept extends VocabularyDataObject
     // sorting the labels by the language defined in the configuration.
     $order = array_keys($LANGUAGES);
     $ordered = array();
-    foreach($order as $key)
+    foreach($order as $key) {
+      $key = gettext($key);
       if (array_key_exists($key, $labels)) {
         $ordered[$key] = $labels[$key];
         unset($labels[$key]);
       }
+    }
 
     ksort($labels);
     return $ordered + $labels;
