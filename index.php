@@ -20,7 +20,7 @@ try {
 // PATH_INFO, for example "/ysa/fi"
 $path = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '';
 $parts = explode('/', $path);
-$path_fix = (isset($parts)) ? str_repeat("../", sizeof($parts) - 2) : "";
+$path_fix = (sizeof($parts) > 1) ? str_repeat("../", sizeof($parts) - 2) : "";
 if (isset($_GET['base_path']))
   $path_fix = (isset($parts)) ? str_repeat("../", $_GET['base_path']): "";
 
