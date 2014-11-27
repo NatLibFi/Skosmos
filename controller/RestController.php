@@ -336,6 +336,8 @@ class RestController extends Controller
     $lang = $this->getAndSetLanguage($vocabId);
     $queriedtypes = $this->model->getTypes($vocabId, $lang);
 
+    $types = array();
+
     /* encode the results in a JSON-LD compatible array */
     foreach ($queriedtypes as $uri => $typedata) {
       $type = array_merge(array('uri' => $uri), $typedata);
