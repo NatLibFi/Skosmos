@@ -21,8 +21,9 @@ try {
 $path = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '';
 $parts = explode('/', $path);
 $path_fix = (sizeof($parts) > 1) ? str_repeat("../", sizeof($parts) - 2) : "";
-if (isset($_GET['base_path']))
-  $path_fix = (isset($parts)) ? str_repeat("../", $_GET['base_path']): "";
+if (isset($_GET['base_path'])) {
+  $path_fix = str_repeat('../', intval($_GET['base_path']));
+}
 
 require_once 'controller/WebController.php';
 
