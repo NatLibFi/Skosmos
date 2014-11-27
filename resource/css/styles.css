@@ -945,6 +945,13 @@ tr {
   display: none;
 }
 
+.restore-breadcrumbs {
+  position: absolute;
+  background-color: #fff;
+  top: 18px;
+  right: 15px;
+}
+
 .field-label {
   vertical-align: top !important; 
 }

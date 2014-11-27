@@ -242,10 +242,11 @@ $(function() { // DOCUMENT READY
   // if there are multiple breadcrumb paths hide those and generate a button for displaying those
   function hideCrumbs() {
     var $crumbs = $('.crumb-path');
-    if ($crumbs.length > 1) {
-      for (var i = 1; i < $crumbs.length; i++)
+    if ($crumbs.length > 4) {
+      for (var i = 4; i < $crumbs.length; i++)
         $($crumbs[i]).addClass('hidden-path');
-      $($crumbs[0]).after('<a class="versal restore-breadcrumbs" href="#">' + expand + ' (' + $crumbs.length + ') ...</a>');
+      if ($('.restore-breadcrumbs').length === 0)
+        $($crumbs[$crumbs.length-1]).after('<a class="versal restore-breadcrumbs" href="#">[' + expand + ' (' + ($crumbs.length - 4) + ') ]</a>');
     }
   }
 
