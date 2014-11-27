@@ -1,14 +1,17 @@
 clear
 
 echo 'writing translations: ...'
-msgfmt skosmos_en.po
-mv messages.mo en/LC_MESSAGES/skosmos.mo
 
-msgfmt skosmos_fi.po
-mv messages.mo fi/LC_MESSAGES/skosmos.mo
+for file in *.po; do
+	lang=$(echo $file | sed 's/skosmos_\(.*\)\.po/\1/')
+	if [ -n $lang ]; then
+		echo " - $lang"
+		msgfmt skosmos_$lang.po
+		mkdir -p $lang/LC_MESSAGES
+		mv -f messages.mo $lang/LC_MESSAGES/skosmos.mo
+	fi
+done
 
-msgfmt skosmos_sv.po
-mv messages.mo sv/LC_MESSAGES/skosmos.mo
 echo 'translations ready ...'
 
 sudo service apache2 restart
