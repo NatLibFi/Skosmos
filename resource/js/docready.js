@@ -246,7 +246,7 @@ $(function() { // DOCUMENT READY
       for (var i = 4; i < $crumbs.length; i++)
         $($crumbs[i]).addClass('hidden-path');
       if ($('.restore-breadcrumbs').length === 0)
-        $($crumbs[$crumbs.length-1]).after('<a class="versal restore-breadcrumbs" href="#">[' + expand + ' (' + ($crumbs.length - 4) + ') ]</a>');
+        $($crumbs[0]).after('<a class="versal restore-breadcrumbs" href="#">[' + expand + ' (' + ($crumbs.length - 4) + ') ]</a>');
     }
   }
 

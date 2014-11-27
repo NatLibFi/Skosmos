@@ -946,10 +946,16 @@ tr {
 }
 
 .restore-breadcrumbs {
-  position: absolute;
   background-color: #fff;
-  top: 18px;
-  right: 15px;
+  float: right;
+}
+
+.crumb-path {
+  float:left;
+}
+
+.crumb-path:first-of-type {
+  max-width: calc(100% - 180px);
 }
 
 .field-label {
