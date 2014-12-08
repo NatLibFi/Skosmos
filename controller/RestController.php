@@ -169,11 +169,7 @@ class RestController extends Controller
     $vocid = isset($_GET['vocab']) ? $_GET['vocab'] : $vocab; # optional
     $lang = isset($_GET['lang']) ? $_GET['lang'] : null; # optional
     $labellang = isset($_GET['labellang']) ? $_GET['labellang'] : null; # optional
-    $type = isset($_GET['type']) ? $_GET['type'] : array('skos:Concept');
-    if ($type && strpos($type, '+'))
-      $type = explode('+',$type);
-    else if ($type && !is_array($type)) // if only one type param given place it into an array regardless
-      $type = array($type);
+    $types = isset($_GET['type']) ? explode(' ', $_GET['type']) : array('skos:Concept');
     $parent = isset($_GET['parent']) ? $_GET['parent'] : null;
     $group = isset($_GET['group']) ? $_GET['group'] : null;
     $fields = isset($_GET['fields']) ? explode(' ', $_GET['fields']) : null;
@@ -183,7 +179,7 @@ class RestController extends Controller
 
     $maxhits = isset($_GET['maxhits']) ? ($_GET['maxhits']) : null; # optional
     $offset = isset($_GET['offset']) ? ($_GET['offset']) : 0; # optional
-    $results = $this->model->searchConcepts($term, $vocids, $labellang, $lang, $type, $parent, $group, $offset, $maxhits, true, $fields);
+    $results = $this->model->searchConcepts($term, $vocids, $labellang, $lang, $types, $parent, $group, $offset, $maxhits, true, $fields);
     // before serializing to JSON, get rid of the Vocabulary object that came with each resource
     foreach ($results as &$res) {
       unset($res['voc']);
@@ -335,6 +331,8 @@ class RestController extends Controller
       return $this->return_error(400, "Bad Request", "lang parameter missing");
     $lang = $this->getAndSetLanguage($vocabId);
     $queriedtypes = $this->model->getTypes($vocabId, $lang);
+
+    $types = array();
 
     /* encode the results in a JSON-LD compatible array */
     foreach ($queriedtypes as $uri => $typedata) {
