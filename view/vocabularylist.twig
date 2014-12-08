@@ -3,7 +3,11 @@
   {% if vocab_list is not defined or vocab_list|length == 0 %}
   <h2>{% trans "No vocabularies on the server!" %}</h2>
   {% else %}
-  <h2>{% trans "Vocabularies on the server" %}</h2>
+    {% if category_label %}
+    <h2>{{ category_label }}</h2>
+    {% else %}
+    <h2>{% trans "Vocabularies on the server" %}</h2>
+    {% endif %}
   </div>
   <div class="vocabularies">
     {% for vocabClassName,vocabArray in vocab_list %}

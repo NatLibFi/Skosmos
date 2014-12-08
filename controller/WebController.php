@@ -166,11 +166,12 @@ class WebController extends Controller
     $template = $this->twig->loadTemplate('light.twig');
     // set template variables
     $requestUri = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    $categoryLabel = $this->model->getCategoryLabel($lang);
     $vocabList = $this->model->getVocabularyList();
     // render template
     echo $template
             ->render(
-                    array('vocab_list' => $vocabList,
+                    array('vocab_list' => $vocabList, 'category_label' => $categoryLabel,
                         'path_fix' => $this->path_fix, 'languages' => $this->languages, 'front_page' => True,
                         'lang' => $lang, 'parts' => $this->parts, 'request_uri' => $this->request_uri));
   }

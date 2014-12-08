@@ -424,6 +424,20 @@ class Model
   }
 
   /**
+   * Creates dataobjects of all the different vocabulary categories (Health etc.).
+   * @param string $lang language code of returned labels, eg. 'fi'
+   * @return string the label for vocabulary categories.
+   */
+  public function getCategoryLabel($lang)
+  {
+    $cats = $this->graph->allOfType('skos:ConceptScheme');
+    if ($cats)
+      $label = $cats[0]->label($lang);
+
+    return $label;
+  }
+
+  /**
    * Returns a single cached vocabulary.
    * @param string $vocid the vocabulary id eg. 'mesh'.
    * @return vocabulary dataobject
