@@ -166,7 +166,7 @@ class WebController extends Controller
     $template = $this->twig->loadTemplate('light.twig');
     // set template variables
     $requestUri = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-    $categoryLabel = $this->model->getCategoryLabel($lang);
+    $categoryLabel = $this->model->getClassificationLabel($lang);
     $vocabList = $this->model->getVocabularyList();
     // render template
     echo $template

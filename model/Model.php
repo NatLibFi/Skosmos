@@ -424,15 +424,14 @@ class Model
   }
 
   /**
-   * Creates dataobjects of all the different vocabulary categories (Health etc.).
+   * Returns the label defined in vocabularies.ttl with the appropriate language.
    * @param string $lang language code of returned labels, eg. 'fi'
    * @return string the label for vocabulary categories.
    */
-  public function getCategoryLabel($lang)
+  public function getClassificationLabel($lang)
   {
     $cats = $this->graph->allOfType('skos:ConceptScheme');
-    if ($cats)
-      $label = $cats[0]->label($lang);
+    $label = $cats ? $cats[0]->label($lang) : null;
 
     return $label;
   }
