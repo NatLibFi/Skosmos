@@ -259,9 +259,9 @@ $(function() { // DOCUMENT READY
     var combined = {};
     for (var i = 0; i < input.length; i++) {
       var property = input[i];
-      if (!combined[property.lang])
-        combined[property.lang] = [property.lang]; 
-      combined[property.lang].push(property.count);
+      if (!combined[property.literal])
+        combined[property.literal] = [property.literal]; 
+      combined[property.literal].push(property.count);
     }
     return combined;
   }
@@ -283,6 +283,7 @@ $(function() { // DOCUMENT READY
     
     $.ajax({
       url : rest_base_url + vocab + '/labelStatistics',
+      data: $.param({'lang' : lang}),
       success : function(data) {
         $('#statistics tr:nth-of-type(2)').detach(); // removing the spinner
         var stats = '';

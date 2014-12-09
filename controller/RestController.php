@@ -295,13 +295,16 @@ class RestController extends Controller
     $lang = $this->getAndSetLanguage($vocabId);
     $vocab = $this->getVocabulary($vocabId);
     
+    if(isset($_GET['lang'])) // used in the UI for including literals for the langcodes.
+      $litlang = $_GET['lang'];
+    
     $vocab_stats = $vocab->getLabelStatistics();
 
     /* encode the results in a JSON-LD compatible array */
     $concept_counts = array();
     foreach ($vocab_stats['terms'] as $proplang => $properties) {
       foreach ($properties as $prop => $value)
-        $concept_counts[] = array('prop' => $prop, 'lang' => $proplang, 'count' => $value ); 
+        $concept_counts[] = $litlang ? array('prop' => $prop, 'lang' => $proplang, 'literal' => gettext($proplang), 'count' => $value ): array('prop' => $prop, 'lang' => $proplang, 'count' => $value ); 
     }
 
     $ret = array(
