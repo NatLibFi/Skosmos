@@ -283,7 +283,7 @@ $(function() { // DOCUMENT READY
     
     $.ajax({
       url : rest_base_url + vocab + '/labelStatistics',
-      data: $.param({'literals' : true, 'lang' : lang}),
+      data: $.param({'lang' : lang}),
       success : function(data) {
         $('#statistics tr:nth-of-type(2)').detach(); // removing the spinner
         var stats = '';
