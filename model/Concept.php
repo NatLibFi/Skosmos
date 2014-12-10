@@ -300,7 +300,7 @@ class Concept extends VocabularyDataObject
             foreach ($collection['sub_members'] as $member) 
               $in_a_collection[$member['uri']] = true;
 
-          if($collection['sub_members']); // do not show empty collections in the narrowers
+          if($collection['sub_members']) // do not show empty collections in the narrowers
             $members_array = array_merge($current_collection_members, $members_array);
         }
       }
