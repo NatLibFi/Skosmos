@@ -281,20 +281,27 @@ class Concept extends VocabularyDataObject
   {
     $properties = array();
     $narrowers_by_uri = array(); 
+    $in_a_collection = array();
     $members_array = array();
     $long_uris = $this->resource->propertyUris();
     $duplicates = array();
 
     // looking for collections and linking those with their narrower concepts
     if ($this->vocab->getArrayClassURI() !== null) {
-      $collections = $this->graph->resourcesMatching('skos:member', $val);
+      $collections = $this->graph->resourcesMatching('skos:member');//, $val);
       if (sizeof($collections) > 0) { 
         // indexing the narrowers once to avoid iterating all of them with every collection
         foreach ($this->resource->allResources('skos:narrower') as $narrower)
           $narrowers_by_uri[$narrower->getUri()] = $narrower;
 
-        foreach ($collections as $coll)
-          $members_array = array_merge($this->getCollectionMembers($coll, $narrowers_by_uri), $members_array);
+        foreach ($collections as $coll) {
+          $current_collection_members = $this->getCollectionMembers($coll, $narrowers_by_uri);
+          foreach ($current_collection_members as $collection)
+            foreach ($collection['sub_members'] as $member) 
+              $in_a_collection[$member['uri']] = true;
+
+          $members_array = array_merge($current_collection_members, $members_array);
+        }
       }
     }
 
@@ -328,6 +335,9 @@ class Concept extends VocabularyDataObject
         $label = null;
         $label_lang = null;
         $exvocab = null;
+        // skipping narrower concepts which are already shown in a collection
+        if ($prop === 'skos:narrower' && array_key_exists($val->getUri(), $in_a_collection))
+          continue;
 
         if ($prop === 'skos:exactMatch' || $prop === 'skos:narrowMatch' || $prop === 'skos:broadMatch' || $prop === 'owl:sameAs' || $prop === 'skos:closeMatch') {
           break;
