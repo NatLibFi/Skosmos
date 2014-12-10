@@ -280,10 +280,23 @@ class Concept extends VocabularyDataObject
   public function getProperties()
   {
     $properties = array();
-
+    $narrowers_by_uri = array(); 
     $members_array = array();
     $long_uris = $this->resource->propertyUris();
     $duplicates = array();
+
+    // looking for collections and linking those with their narrower concepts
+    if ($this->vocab->getArrayClassURI() !== null) {
+      $collections = $this->graph->resourcesMatching('skos:member', $val);
+      if (sizeof($collections) > 0) { 
+        // indexing the narrowers once to avoid iterating all of them with every collection
+        foreach ($this->resource->allResources('skos:narrower') as $narrower)
+          $narrowers_by_uri[$narrower->getUri()] = $narrower;
+
+        foreach ($collections as $coll)
+          $members_array = array_merge($this->getCollectionMembers($coll, $narrowers_by_uri), $members_array);
+      }
+    }
 
     foreach ($long_uris as &$prop) {
       if (EasyRdf_Namespace::shorten($prop)) // shortening property labels if possible
@@ -309,22 +322,13 @@ class Concept extends VocabularyDataObject
             $properties[$prop][] = new ConceptPropertyValue($prop, null, null, $val->getLang(), $val->getValue());
         }
       }
-
+      
       // Iterating through every resource and adding these to the data object.
       foreach ($this->resource->allResources($sprop) as $val) {
         $label = null;
         $label_lang = null;
         $exvocab = null;
 
-        if ($this->vocab !== null && $this->vocab->getArrayClassURI() !== null && $prop === 'skos:narrower') {
-          $collections = $this->graph->resourcesMatching('skos:member', $val);
-          if (sizeof($collections) > 0) { // if the narrower concept is part of some collection
-            foreach ($collections as $coll) {
-              $members_array = array_merge($this->getCollectionMembers($coll, $this->resource), $members_array);
-            }
-            continue;
-          }
-        }
         if ($prop === 'skos:exactMatch' || $prop === 'skos:narrowMatch' || $prop === 'skos:broadMatch' || $prop === 'owl:sameAs' || $prop === 'skos:closeMatch') {
           break;
         } elseif ($prop === 'rdf:type') {
@@ -452,10 +456,10 @@ class Concept extends VocabularyDataObject
   /**
    * Gets the members of a specific collection.
    * @param $coll
-   * @param EasyRdf_Resource $resource
+   * @param array containing all narrowers as EasyRdf_Resource
    * @return array
    */
-  private function getCollectionMembers($coll, $resource)
+  private function getCollectionMembers($coll, $narrowers)
   {
     $members_array = Array();
     $coll_info = $this->getPropertyParam($coll);
@@ -464,24 +468,20 @@ class Concept extends VocabularyDataObject
       $external = true;
     $members_array[$coll->getUri()] = array('type' => 'resource', 'label' => $coll_info['label'], 'lang' => $coll_info['lang'],
         'uri' => $coll_info['concept_uri'], 'vocab' => $coll_info['vocab'], 'parts' => $coll->getUri(), 'external' => $external);
-    $narrowers = $resource->allResources('skos:narrower');
     foreach ($coll->allResources('skos:member') as $member) {
-      foreach ($narrowers as $narrower) {
-        if ($narrower->getUri() === $member->getUri()) { // found a narrower concept that is a member of this collection
-          $narrow_info = $this->getPropertyParam($narrower);
-          $external = false;
-          if (strstr($narrow_info['concept_uri'], 'http')) // for identifying concepts that are found with a uri not consistent with the current vocabulary
-            $external = true;
-          if ($narrow_info['label'] == null) { // fixes json encoded unicode characters causing labels to disappear in afo
-            $narrow_info['label'] = ('"' . $narrow_info['concept_uri'] . '"');
-            $narrow_info['label'] = json_decode($narrow_info['label']);
-            $narrow_info['concept_uri'] = $narrow_info['label'];
-            $narrow_info['label'] = strtr($narrow_info['label'], '_', ' ');
-          }
-          $members_array[$coll->getUri()]['sub_members'][] = array('type' => 'resource', 'label' => $narrow_info['label'], 'lang' => $narrow_info['lang'],
-              'uri' => $narrow_info['concept_uri'], 'vocab' => $narrow_info['vocab'], 'parts' => $narrower->getUri(), 'external' => $external);
-        }
+      $narrower = $narrowers[$member->getUri()];
+      $narrow_info = $this->getPropertyParam($narrower);
+      $external = false;
+      if (strstr($narrow_info['concept_uri'], 'http')) // for identifying concepts that are found with a uri not consistent with the current vocabulary
+        $external = true;
+      if ($narrow_info['label'] == null) { // fixes json encoded unicode characters causing labels to disappear in afo
+        $narrow_info['label'] = ('"' . $narrow_info['concept_uri'] . '"');
+        $narrow_info['label'] = json_decode($narrow_info['label']);
+        $narrow_info['concept_uri'] = $narrow_info['label'];
+        $narrow_info['label'] = strtr($narrow_info['label'], '_', ' ');
       }
+      $members_array[$coll->getUri()]['sub_members'][] = array('type' => 'resource', 'label' => $narrow_info['label'], 'lang' => $narrow_info['lang'],
+        'uri' => $narrow_info['concept_uri'], 'vocab' => $narrow_info['vocab'], 'parts' => $narrower->getUri(), 'external' => $external);
     }
 
     return $members_array;
