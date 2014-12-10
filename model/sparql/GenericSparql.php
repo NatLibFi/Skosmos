@@ -213,7 +213,7 @@ EOQ;
     } else {
       // add information that can be used to format narrower concepts by
       // the array they belong to ("milk by source animal" use case)
-      $construct = "\n ?x skos:member ?o . ?x skos:prefLabel ?xl . ";
+      $construct = "\n ?x skos:member ?o . ?x skos:prefLabel ?xl . ?x a <$arrayClass> .";
       $optional  = "\n OPTIONAL {
                       ?x skos:member ?o .
                       ?x a <$arrayClass> .
@@ -234,6 +234,7 @@ CONSTRUCT {
  ?group skos:member ?uri .
  ?group skos:prefLabel ?grouplabel .
  ?group isothes:superGroup ?super .
+ ?group rdf:type ?grouptype . 
  ?super skos:prefLabel ?superlabel .
  ?group rdf:type ?grouptype . $construct
 } WHERE {

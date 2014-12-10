@@ -288,7 +288,7 @@ class Concept extends VocabularyDataObject
 
     // looking for collections and linking those with their narrower concepts
     if ($this->vocab->getArrayClassURI() !== null) {
-      $collections = $this->graph->resourcesMatching('skos:member');//, $val);
+      $collections = $this->graph->allOfType($this->vocab->getArrayClassURI()); 
       if (sizeof($collections) > 0) { 
         // indexing the narrowers once to avoid iterating all of them with every collection
         foreach ($this->resource->allResources('skos:narrower') as $narrower)
@@ -480,7 +480,10 @@ class Concept extends VocabularyDataObject
         'uri' => $coll_info['concept_uri'], 'vocab' => $coll_info['vocab'], 'parts' => $coll->getUri(), 'external' => $external);
     foreach ($coll->allResources('skos:member') as $member) {
       $narrower = $narrowers[$member->getUri()];
-      $narrow_info = $this->getPropertyParam($narrower);
+      if (isset($narrower))
+        $narrow_info = $this->getPropertyParam($narrower);
+      else 
+        continue;
       $external = false;
       if (strstr($narrow_info['concept_uri'], 'http')) // for identifying concepts that are found with a uri not consistent with the current vocabulary
         $external = true;
