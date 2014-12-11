@@ -956,10 +956,6 @@ tr {
   width: 100%;
 }
 
-.crumb-path:first-of-type {
-  max-width: calc(100% - 180px);
-}
-
 .field-label {
   vertical-align: top !important; 
 }
@@ -1725,6 +1721,11 @@ body, .versal, h1, h2, p, .versal-bold {
     top: 425px !important;
     left: 0;
   }
+
+  .crumb-path:first-of-type {
+    max-width: calc(100% - 180px);
+  }
+
 }
 
 @media (min-width: 801px) {
