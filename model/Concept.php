@@ -161,8 +161,13 @@ class Concept extends VocabularyDataObject
           $exuri = $val->getUri();
           $exvoc = $this->model->guessVocabularyFromURI($exuri);
           if ($exvoc) {
-            $label_lang = $exvoc->getDefaultLanguage();
+            $label_lang = $this->lang;
             $label = $this->getExternalLabel($exvoc, $exuri, $label_lang);
+            // if there isn't a label available with the current ui language use the vocabulary default language
+            if (!$label) { 
+              $label_lang = $exvoc->getDefaultLanguage();
+              $label = $this->getExternalLabel($exvoc, $exuri, $label_lang);
+            }
             $exvocab = $exvoc->getId();
             $voclabel = $exvoc->getTitle();
           }
