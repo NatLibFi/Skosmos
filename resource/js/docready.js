@@ -610,9 +610,6 @@ $(function() { // DOCUMENT READY
   // - "" when searching in all languages
   var qlang = search_lang;
   
-  // setting the focus to the search box on default
-  $("#search-field").focus();
-
   if (search_lang === 'anything' || !search_lang || (typeof getUrlParams().lang !== 'undefined' && getUrlParams().lang === '')) {
     $('#lang-dropdown-toggle').html($('.lang-button-all').html() + ' <span class="caret"></span>');
     $('#lang-input').val('');
@@ -1138,5 +1135,10 @@ $(function() { // DOCUMENT READY
       $('#search-field').typeahead('open'); 
     });
   }
+  
+  // setting the focus to the search box on default if we are not on the search results page
+  if ($('.search-result-listing').length === 0)
+    $("#search-field").focus();
+
 
 });
