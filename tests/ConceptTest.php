@@ -107,4 +107,32 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('Test property value', $propvals[0]->getLabel());
   }
 
+  /**
+   * @covers Concept::getProperties
+   * @covers ConceptProperty::getValues
+   * @covers ConceptPropertyValue::getLabel
+   * @covers ConceptPropertyValue::getSubMembers
+   */
+  public function testGetPropertiesWithNarrowersPartOfACollection()
+  {
+    bindtextdomain('skosmos', 'resource/translations');
+    bind_textdomain_codeset('skosmos', 'UTF-8');
+
+    // Choose domain for translations
+    textdomain('skosmos');
+    $model = new Model();
+    $vocab = $model->getVocabulary('groups');
+    $concept = $vocab->getConceptInfo("http://www.skosmos.skos/groups/ta1");
+    $props = $concept[0]->getProperties();
+    $narrowers = $props['skos:narrower']->getValues();
+    $this->assertCount(3, $narrowers);
+    $this->assertEquals("Freshwater fish", $narrowers[0]->getLabel());
+    $subs = $narrowers[0]->getSubMembers();
+    $this->assertArrayHasKey("Carp", $subs);
+    $subs = $narrowers[1]->getSubMembers();
+    $this->assertArrayHasKey("Flatfish", $subs);
+    $this->assertArrayHasKey("Tuna", $subs);
+    $subs = $narrowers[2]->getSubMembers();
+    $this->assertArrayHasKey("Tuna", $subs);
+  }
 }
