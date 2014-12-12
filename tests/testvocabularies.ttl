@@ -48,6 +48,7 @@
 	void:dataDump <http://skosmos.skos/dump/test/groups.ttl>,
 		<http://skosmos.skos/dump/test/groups> ;
 	void:uriSpace "http://www.skosmos.skos/onto/groups/";
+	skosmos:arrayClass isothes:ThesaurusArray ;
 	void:sparqlEndpoint <http://localhost:3030/ds/sparql> ;
 	skosmos:language "fi", "en";
 	skosmos:indexShowClass meta:TestClass;

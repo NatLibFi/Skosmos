@@ -126,13 +126,17 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $props = $concept[0]->getProperties();
     $narrowers = $props['skos:narrower']->getValues();
     $this->assertCount(3, $narrowers);
-    $this->assertEquals("Freshwater fish", $narrowers[0]->getLabel());
-    $subs = $narrowers[0]->getSubMembers();
-    $this->assertArrayHasKey("Carp", $subs);
-    $subs = $narrowers[1]->getSubMembers();
-    $this->assertArrayHasKey("Flatfish", $subs);
-    $this->assertArrayHasKey("Tuna", $subs);
-    $subs = $narrowers[2]->getSubMembers();
-    $this->assertArrayHasKey("Tuna", $subs);
+    foreach ($narrowers as $coll) {
+      $subs = $coll->getSubMembers();
+      if ($coll->getLabel() === "Freshwater fish") {
+        $this->assertArrayHasKey("Carp", $subs);
+      } elseif ($coll->getLabel() === "Saltwater Fish") {
+        $this->assertArrayHasKey("Flatfish", $subs);
+        $this->assertArrayHasKey("Tuna", $subs);
+      } elseif ($coll->getLabel() === "Submarine-like fish") {
+        $this->assertArrayHasKey("Tuna", $subs);
+      }
+
+    }
   }
 }
