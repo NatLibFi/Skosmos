@@ -272,15 +272,22 @@ class RestController extends Controller
     $ret = array(
         '@context' => array(
             'skos' => 'http://www.w3.org/2004/02/skos/core#',
+            'void' => 'http://rdfs.org/ns/void#',
             'onki' => 'http://schema.onki.fi/onki#',
             'uri' => '@id',
             'id' => 'onki:vocabularyIdentifier',
+            'concepts' => 'void:classPartition',
+            'class' => array('@id' => 'void:class', '@type' => '@id'),
+            'count' => 'void:entities',
             '@language' => $lang,
         ),
         'uri' => '',
         'id' => $vocabId,
         'title' => $vocab->getTitle(),
-        'concepts' => $vocab_stats['concepts'] 
+        'concepts' => array(
+            'class' => 'skos:Concept',
+            'count' => $vocab_stats['concepts'],
+        ),
     );
 
     return $this->return_json($ret);

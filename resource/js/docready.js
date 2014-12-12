@@ -276,7 +276,7 @@ $(function() { // DOCUMENT READY
       url : rest_base_url + vocab + '/vocabularyStatistics',
       success : function(data) {
         $spinner = $('.vocab-info-literals .spinner');
-        $spinner.after(data.concepts);
+        $spinner.after(data.concepts.count);
         $spinner.detach();
       }
     });
