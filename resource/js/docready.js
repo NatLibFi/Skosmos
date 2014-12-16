@@ -258,10 +258,11 @@ $(function() { // DOCUMENT READY
   function combineStatistics(input) {
     var combined = {};
     for (var i = 0; i < input.length; i++) {
-      var property = input[i];
-      if (!combined[property.literal])
-        combined[property.literal] = [property.literal]; 
-      combined[property.literal].push(property.count);
+      var langdata = input[i];
+      combined[langdata.literal] = [langdata.literal]
+      for (var j = 0; j < langdata.properties.length; j++) {
+        combined[langdata.literal].push(langdata.properties[j].labels);
+      }
     }
     return combined;
   }
@@ -287,7 +288,7 @@ $(function() { // DOCUMENT READY
       success : function(data) {
         $('#statistics tr:nth-of-type(2)').detach(); // removing the spinner
         var stats = '';
-        var combined = combineStatistics(data.values);
+        var combined = combineStatistics(data.languages);
         $.each(combined, function(lang, values) { // each array contains one language
           stats += '<tr>';
           for (var i = 0; i < values.length; i++) { // the array values are placed into tds

@@ -304,28 +304,42 @@ class RestController extends Controller
     
     if(isset($_GET['lang'])) // used in the UI for including literals for the langcodes.
       $litlang = $_GET['lang'];
+    else
+      $litlang = null;
     
     $vocab_stats = $vocab->getLabelStatistics();
 
     /* encode the results in a JSON-LD compatible array */
-    $concept_counts = array();
+    $counts = array();
     foreach ($vocab_stats['terms'] as $proplang => $properties) {
-      foreach ($properties as $prop => $value)
-        $concept_counts[] = $litlang ? array('prop' => $prop, 'lang' => $proplang, 'literal' => gettext($proplang), 'count' => $value ): array('prop' => $prop, 'lang' => $proplang, 'count' => $value ); 
+      $langdata = array('language' => $proplang);
+      if ($litlang) $langdata['literal'] = gettext($proplang);
+      $langdata['properties'] = array();
+      foreach ($properties as $prop => $value) {
+        $langdata['properties'][] = array('property' => $prop, 'labels' => $value);
+      }
+      $counts[] = $langdata;
     }
 
     $ret = array(
         '@context' => array(
+            'rdfs' => 'http://www.w3.org/2000/01/rdf-schema#',
             'skos' => 'http://www.w3.org/2004/02/skos/core#',
+            'void' => 'http://rdfs.org/ns/void#',
+            'void-ext' => 'http://ldf.fi/void-ext#',
             'onki' => 'http://schema.onki.fi/onki#',
             'uri' => '@id',
             'id' => 'onki:vocabularyIdentifier',
-            '@language' => $lang,
+            'languages' => 'void-ext:languagePartition',
+            'language' => 'void-ext:language',
+            'literal' => array('@id' => 'rdfs:label', '@language' => $lang),
+            'properties' => 'void:propertyPartition',
+            'labels' => 'void:triples',
         ),
         'uri' => '',
         'id' => $vocabId,
         'title' => $vocab->getTitle(),
-        'values' => $concept_counts 
+        'languages' => $counts 
     );
 
     return $this->return_json($ret);
