@@ -136,6 +136,7 @@ class RestController extends Controller
     /* encode the results in a JSON-LD compatible array */
     $ret = array(
         '@context' => array(
+            'rdfs' => 'http://www.w3.org/2000/01/rdf-schema#',
             'onki' => 'http://schema.onki.fi/onki#',
             'title' => array('@id'=>'rdfs:label', '@language'=>$lang),
             'vocabularies' => 'onki:hasVocabulary',
@@ -231,6 +232,7 @@ class RestController extends Controller
 
     $ret = array(
         '@context' => array(
+            'rdfs' => 'http://www.w3.org/2000/01/rdf-schema#',
             'skos' => 'http://www.w3.org/2004/02/skos/core#',
             'onki' => 'http://schema.onki.fi/onki#',
             'dct' => 'http://purl.org/dc/terms/',
@@ -366,6 +368,7 @@ class RestController extends Controller
 
     $ret = array(
         '@context' => array(
+            'rdfs' => 'http://www.w3.org/2000/01/rdf-schema#',
             'skos' => 'http://www.w3.org/2004/02/skos/core#',
             'onki' => 'http://schema.onki.fi/onki#',
             'uri' => '@id',
