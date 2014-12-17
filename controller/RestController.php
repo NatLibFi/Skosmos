@@ -334,7 +334,6 @@ class RestController extends Controller
             'id' => 'onki:vocabularyIdentifier',
             'languages' => 'void-ext:languagePartition',
             'language' => 'void-ext:language',
-            'literal' => array('@id' => 'rdfs:label', '@language' => $lang),
             'properties' => 'void:propertyPartition',
             'labels' => 'void:triples',
         ),
@@ -343,6 +342,9 @@ class RestController extends Controller
         'title' => $vocab->getTitle(),
         'languages' => $counts 
     );
+    
+    if ($litlang)
+      $ret['@context']['literal'] = array('@id' => 'rdfs:label', '@language' => $litlang);
 
     return $this->return_json($ret);
   }
