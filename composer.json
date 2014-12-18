@@ -1,4 +1,8 @@
 {
+    "name": "nat-lib-fi/skosmos",
+    "description": "Thesaurus and controlled vocabulary browser using SKOS and SPARQL",
+    "type": "project",
+    "license": "MIT",
     "require": {
         "components/jquery": "1.11.*",
         "components/jqueryui": "1.10.*",
