@@ -37,7 +37,7 @@ $(function() { // DOCUMENT READY
   var spinner = '<div class="loading-spinner"><span class="spinner-text">'+ loading_text + '</span><span class="spinner" /></div>';
 
   var selectedVocabs = [];
-  var vocabSelectionString = readCookie('SKOSMOS_SELECTED') ? readCookie('SKOSMOS_SELECTED') : '';
+  var vocabSelectionString = getUrlParams().vocabs ? getUrlParams().vocabs.replace('+',' ') : readCookie('SKOSMOS_SELECTED');
   $('#selected-vocabs').val(vocabSelectionString);
 
   // Shortens the properties that don't fit on one row on the search result view.
