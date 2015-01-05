@@ -60,6 +60,29 @@
     </div>
     {% endif %}
   {% endfor %}
+  {% if concept.groupProperties %}
+  <div class="property">
+      <span class="property-click" title="{% trans "skosmos:memberOf" %}">
+        <img class="property-hover" src="{{ path_fix }}resource/pics/group.gif">
+      </span>
+      <div class="property-values">
+      {% set previous = false %}
+      {% for propval in concept.groupProperties %} {# loop through ConceptPropertyValue objects #}
+        {% set outerLast = loop.last %}
+        {% if propval.uri %} {# resources with URI #}
+          {% spaceless %}
+            {% if propval.label %}
+              <span class="versal value">{{ propval.label|trans }}</span>
+              {% if propval.lang and (propval.lang != lang) or explicit_langcodes %}<span class="versal"> ({{ propval.lang }})</span>{% endif %}{% if not loop.last %}<span class="versal">,</span>{% endif %}
+            {% endif %}
+          {% endspaceless %}
+        {% else %} {# Literals (no URI), eg. alternative labels as properties #}
+            <span class="versal value">{{ propval.label }}{% if not loop.last %},{% endif %}</span>
+        {% endif %}
+      {% endfor %}
+      </div>
+    </div>
+  {% endif %}
   {% if concept.foreignPrefLabels %}
     <div class="property">
       <span class="property-click" title="{% trans "foreign prefLabel help" %}"><img class="property-hover" src="{{ path_fix }}resource/pics/globe.gif"></span>
