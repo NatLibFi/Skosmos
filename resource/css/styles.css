@@ -289,7 +289,6 @@ section {
 }
 
 .search-result-listing .prefLabel {
-  font-size: 14px !important;
   font-weight: bold !important;
 }
 
@@ -1811,6 +1810,14 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 }
 
+@media (max-width: 1259px) {
+
+  .search-result-listing .prefLabel {
+    font-size: 14px !important;
+  }
+
+}
+
 @media (min-width: 1260px) {
   section, .headerbar, .topbar {
     width: 1190px !important;
@@ -1912,7 +1919,7 @@ body, .versal, h1, h2, p, .versal-bold {
     font-size: 27px !important;
   }
 
-  li, .versal, .versal-bold, p, .search-result > .prefLabel{
+  li, .versal, .versal-bold, p, .search-result > .prefLabel {
     font-size: 16px !important;
   }
 
