@@ -83,14 +83,14 @@
       </div>
     </div>
   {% endif %}
-  {% if concept.foreignPrefLabels %}
+  {% if concept.foreignLabels %}
     <div class="property">
       <span class="property-click" title="{% trans "foreign prefLabel help" %}"><img class="property-hover" src="{{ path_fix }}resource/pics/globe.gif"></span>
-      {% for lang,labels in concept.foreignPrefLabels %}
+      {% for langstring, labels in concept.foreignLabels %}{% spaceless %}
         {% for label in labels %}
-        <span class="versal proplabel">{{ label }} ({{ lang }})</span>
-        {% endfor %}{% if loop.last == false %}<span class="versal">,</span>{% endif %}
-      {% endfor %}
+        <span class="versal proplabel">{{ label }} ({{ label.lang }})</span>{% if loop.last == false %}<span class="versal">, </span>{% endif %}
+        {% endfor %}{% if loop.last == false %}<span class="versal">, </span>{% endif %}
+      {% endspaceless %}{% endfor %}
     </div>
   {% endif %}
   {% if concept.uri %}
