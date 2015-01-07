@@ -418,7 +418,11 @@ EOQ;
    * @return string VALUES clause, or "" if not necessary to limit
    */
   protected function formatValuesGraph($vocabs) {
-    if ($this->isDefaultEndpoint() && $vocabs != null && sizeof($vocabs) > 0) {
+    if ($this->isDefaultEndpoint()) {
+      if ($vocabs === null || sizeof($vocabs) == 0) {
+        // searching from all vocabularies - limit to known graphs
+        $vocabs = $this->model->getVocabularies();
+      }
       $graphs = array();
       foreach ($vocabs as $voc) {
         $graphs[] = $voc->getGraph();
