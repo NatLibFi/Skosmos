@@ -312,11 +312,13 @@ class Concept extends VocabularyDataObject
         foreach ($collections as $coll) {
           $current_collection_members = $this->getCollectionMembers($coll, $narrowers_by_uri);
           foreach ($current_collection_members as $collection)
-            foreach ($collection['sub_members'] as $member) 
-              $in_a_collection[$member['uri']] = true;
+            if (array_key_exists('sub_members', $collection))
+              foreach ($collection['sub_members'] as $member) 
+                $in_a_collection[$member['uri']] = true;
 
-          if($collection['sub_members']) // do not show empty collections in the narrowers
-            $members_array = array_merge($current_collection_members, $members_array);
+          if (array_key_exists('sub_members', $collection))
+            if($collection['sub_members']) // do not show empty collections in the narrowers
+              $members_array = array_merge($current_collection_members, $members_array);
         }
       }
     }
