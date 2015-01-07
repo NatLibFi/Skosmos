@@ -11,6 +11,6 @@
   </div>
 </div>
 <div class="credits">
-  <p>{% trans "SKOSmos layout designed by Hahmo" %}</p>
+  <p>{% if ServiceName != 'SERVICE_NAME' %}{{ ServiceName }}{% else %}Skosmos{% endif %} {% trans "layout designed by Hahmo" %}</p>
 </div>
 {% endblock %}
