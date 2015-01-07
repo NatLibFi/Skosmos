@@ -495,6 +495,8 @@ class Concept extends VocabularyDataObject
     $members_array[$coll->getUri()] = array('type' => 'resource', 'label' => $coll_info['label'], 'lang' => $coll_info['lang'],
         'uri' => $coll_info['concept_uri'], 'vocab' => $coll_info['vocab'], 'parts' => $coll->getUri(), 'external' => $external);
     foreach ($coll->allResources('skos:member') as $member) {
+      if (!array_key_exists($member->getUri(), $narrowers))
+        continue;
       $narrower = $narrowers[$member->getUri()];
       if (isset($narrower))
         $narrow_info = $this->getPropertyParam($narrower);
