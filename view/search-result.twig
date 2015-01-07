@@ -52,7 +52,7 @@
                 {% endif %}
               {% endspaceless %}
               {% else %} {# Literals (no URI), eg. alternative labels as properties #}
-                  <span class="versal value">{{ propval.label }}{% if not loop.last %},{% endif %}</span>
+                  <span class="versal {% if propval.type == 'skos:altLabel' %}replaced {% endif %}  value">{{ propval.label }}{% if not loop.last %},{% endif %}</span>
               {% endif %}
           {% endif %}
       {% endfor %}
@@ -88,7 +88,7 @@
       <span class="property-click" title="{% trans "foreign prefLabel help" %}"><img class="property-hover" src="{{ path_fix }}resource/pics/globe.gif"></span>
       {% for langstring, labels in concept.foreignLabels %}{% spaceless %}
         {% for label in labels %}
-        <span class="versal proplabel">{{ label }} ({{ label.lang }})</span>{% if loop.last == false %}<span class="versal">, </span>{% endif %}
+        <span class="versal{% if label.type == 'skos:prefLabel' %} prefLabel {% elseif label.type == 'skos:altLabel'%} replaced {% endif %} proplabel">{{ label }}</span><span class="versal"> ({{ label.lang }})</span>{% if loop.last == false %}<span class="versal">, </span>{% endif %}
         {% endfor %}{% if loop.last == false %}<span class="versal">, </span>{% endif %}
       {% endspaceless %}{% endfor %}
     </div>
