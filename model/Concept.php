@@ -34,6 +34,16 @@ class Concept extends VocabularyDataObject
     'skos:member'			    # this is shouldn't be shown on the group page
   );
 
+  /** related concepts that should be shown to users in the appendix */
+  private $MAPPING_PROPERTIES = array(
+    'skos:exactMatch', 
+    'skos:narrowMatch', 
+    'skos:broadMatch', 
+    'skos:closeMatch', 
+    'skos:relatedMatch', 
+    'owl:sameAs' 
+  );
+
   /**
    * Initializing the concept object requires the following parameters.
    * @param Model $model
@@ -157,7 +167,7 @@ class Concept extends VocabularyDataObject
         $exvocab = null;
         $voclabel = null;
 
-        if ($prop === 'skos:exactMatch' || $prop === 'skos:narrowMatch' || $prop === 'skos:broadMatch' || $prop === 'owl:sameAs' || $prop === 'skos:closeMatch') {
+        if (in_array($prop, $this->MAPPING_PROPERTIES)) {
           $exuri = $val->getUri();
           $exvoc = $this->model->guessVocabularyFromURI($exuri);
           if ($exvoc) {
@@ -345,7 +355,7 @@ class Concept extends VocabularyDataObject
         if ($prop === 'skos:narrower' && array_key_exists($val->getUri(), $in_a_collection))
           continue;
 
-        if ($prop === 'skos:exactMatch' || $prop === 'skos:narrowMatch' || $prop === 'skos:broadMatch' || $prop === 'owl:sameAs' || $prop === 'skos:closeMatch') {
+        if (in_array($prop, $this->MAPPING_PROPERTIES)) {
           break;
         } elseif ($prop === 'rdf:type') {
           $exuri = $val->getUri();
