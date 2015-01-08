@@ -312,11 +312,13 @@ class Concept extends VocabularyDataObject
         foreach ($collections as $coll) {
           $current_collection_members = $this->getCollectionMembers($coll, $narrowers_by_uri);
           foreach ($current_collection_members as $collection)
-            foreach ($collection['sub_members'] as $member) 
-              $in_a_collection[$member['uri']] = true;
+            if (array_key_exists('sub_members', $collection))
+              foreach ($collection['sub_members'] as $member) 
+                $in_a_collection[$member['uri']] = true;
 
-          if($collection['sub_members']) // do not show empty collections in the narrowers
-            $members_array = array_merge($current_collection_members, $members_array);
+          if (array_key_exists('sub_members', $collection))
+            if($collection['sub_members']) // do not show empty collections in the narrowers
+              $members_array = array_merge($current_collection_members, $members_array);
         }
       }
     }
@@ -495,6 +497,8 @@ class Concept extends VocabularyDataObject
     $members_array[$coll->getUri()] = array('type' => 'resource', 'label' => $coll_info['label'], 'lang' => $coll_info['lang'],
         'uri' => $coll_info['concept_uri'], 'vocab' => $coll_info['vocab'], 'parts' => $coll->getUri(), 'external' => $external);
     foreach ($coll->allResources('skos:member') as $member) {
+      if (!array_key_exists($member->getUri(), $narrowers))
+        continue;
       $narrower = $narrowers[$member->getUri()];
       if (isset($narrower))
         $narrow_info = $this->getPropertyParam($narrower);
