@@ -331,9 +331,10 @@ class WebController extends Controller
     $this->setLanguageProperties($lang);
     $vocab_id = 'About';
     $url = $_SERVER['HTTP_HOST'];
+    $version = $this->model->getVersion();
     echo $template
             ->render(array('path_fix' => $this->path_fix, 'languages' => $this->languages,
-                           'lang' => $lang, 'vocab_id' => $vocab_id,
+                           'lang' => $lang, 'vocab_id' => $vocab_id, 'version' => $version,
                            'server_instance' => $url, 'request_uri' => $this->request_uri));
   }
 

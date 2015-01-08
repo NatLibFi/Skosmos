@@ -13,4 +13,7 @@
 <div class="credits">
   <p>{% if ServiceName != 'SERVICE_NAME' %}{{ ServiceName }}{% else %}Skosmos{% endif %} {% trans "layout designed by Hahmo" %}</p>
 </div>
+<div class="version">
+  <p>{% trans %}Skosmos version {{ version }}{% endtrans %}</p>
+</div>
 {% endblock %}
