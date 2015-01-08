@@ -23,6 +23,17 @@ class ModelTest extends PHPUnit_Framework_TestCase
   }
   
   /**
+   * @covers Model::getVersion
+   * @depends testConstructorWithConfig
+   */
+
+  public function testGetVersion() {
+    $model = new Model(); 
+    $version = $model->getVersion();
+    $this->assertNotEmpty($version);
+  }
+  
+  /**
    * @covers Model::getVocabularyList
    * @depends testConstructorWithConfig
    */

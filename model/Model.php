@@ -68,6 +68,19 @@ class Model
       echo "Error: " . $e->getMessage();
     }
   }
+  
+  /**
+   * Return the version of this Skosmos installation, or "unknown" if
+   * it cannot be determined. The version information is based on Git tags.
+   * @return string version
+   */
+  public function getVersion() {
+    $ver = null;
+    if (file_exists('.git'))
+      $ver = shell_exec('git describe --tags');
+    if ($ver === null) return "unknown";
+    return $ver;
+  }
 
   /**
    * Return all the vocabularies available.
