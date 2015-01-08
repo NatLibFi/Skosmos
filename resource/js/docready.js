@@ -946,9 +946,11 @@ $(function() { // DOCUMENT READY
   }
 
   // preselecting the vocabularies from the cookie for the multiselect dropdown plugin.
-  $.each(vocabSelectionString.split(' '), function(index, vocabId) {
-    $('option[value="' + vocabId + '"]').prop('selected', 'true');
-  });
+  if (vocabSelectionString !== null) {
+    $.each(vocabSelectionString.split(' '), function(index, vocabId) {
+      $('option[value="' + vocabId + '"]').prop('selected', 'true');
+    });
+  }
 
   $('.headerbar .multiselect').multiselect({
     buttonText: function(options) {
