@@ -1068,8 +1068,8 @@ $(function() { // DOCUMENT READY
     var $loading = $("<div class='search-result'><p>" + loading_text + "&hellip;<span class='spinner'/></p></div>"); 
     $('.search-result-listing').empty();
     $('.search-result-listing').append($loading);
-    var typeLimit = $('#type-limit').val().join('+');
-    if (typeLimit[0] === '+') // filtering the empty selection out of the search string
+    var typeLimit = $('#type-limit').val() ? $('#type-limit').val().join('+') : $('#type-limit').val();
+    if (typeLimit && typeLimit[0] === '+') // filtering the empty selection out of the search string
       typeLimit = typeLimit.substring(1);
     var groupLimit = $('#group-limit').val();
     var parentLimit = $('#parent-limit').attr('data-uri');
