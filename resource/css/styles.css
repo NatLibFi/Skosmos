@@ -232,6 +232,7 @@ section {
   border: medium none !important;
   border-radius: 0 !important;
   height: 40px;
+  margin-left: 0 !important;
 }
 
 .search-vocab-text {
@@ -1225,13 +1226,21 @@ ul.nav-tabs > li {
 }
 
 .tt-dropdown-menu {
-  width: 200px;
+  width: 100%; //fallback
+  width: calc(100% + 50px) !important;
+  min-width: calc(100% + 50px) !important;
+  right: 0px !important;
+  top: 40px !important;
   max-height:302px;
   overflow-y: auto;
   background-color: #F9F9F9;
   border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 0 !important;
+}
+  
+.twitter-typeahead {
+  display: block !important;
 }
 
 .tt-dropdown-menu.mCustomScrollbar {
@@ -1695,17 +1704,19 @@ body, .versal, h1, h2, p, .versal-bold {
   .navbar-form {
     max-width: none !important;
   }
-
-  .twitter-typeahead {
-    display: inline !important;
-  }
 }
 
-@media (max-width: 768px) {
-  .multiselect  {
-    /*margin: 6px 0 !important;*/
+@media (max-width: 800px) {
+  input#search-field {
+    max-width: 130px;
   }
 
+}
+
+@media (max-width: 700px) {
+  input#search-field {
+    max-width: none;
+  }
 }
 
 @media (min-width: 640px) {
@@ -1726,9 +1737,6 @@ body, .versal, h1, h2, p, .versal-bold {
 }
 
 @media (min-width: 801px) {
-  section, .headerbar {
-  }
-  
   .right-box {
     top: 435px !important;
   }
@@ -1736,10 +1744,6 @@ body, .versal, h1, h2, p, .versal-bold {
   .frontpage-alert {
     margin-left: 20px;
     width: calc(100% - 375px);
-  }
-
-  .navbar-form .ui-autocomplete .tt-dropdown {
-    max-width: 250px !important;
   }
 
   .nav > li > a {
@@ -1756,10 +1760,6 @@ body, .versal, h1, h2, p, .versal-bold {
   
   .tt-dropdown-menu {
     width: 234px;
-  }
-
-  .frontpage-logo .tt-dropdown-menu {
-    width: 295px !important;
   }
 
   #navigation > a {
