@@ -1641,21 +1641,7 @@ body, .versal, h1, h2, p, .versal-bold {
 }
 
 @media (max-width: 500px) {
-  .btn-group {
-    width: 100%;
-  }
-
-  .btn-group > .btn {
-    width: 100% !important;
-  }
-
-  .navbar-form, .input-group, #search-field {
-    width: 100% !important;
-  }
   
-  .navbar-form {
-    max-width: none !important;
-  }
 }
 
 @media (max-width: 800px) {
@@ -1700,6 +1686,7 @@ body, .versal, h1, h2, p, .versal-bold {
 
   .frontpage-spacing .header-float {
     float: left;
+    width: 100%;
   }
 
   section.frontpage {
@@ -1714,6 +1701,22 @@ body, .versal, h1, h2, p, .versal-bold {
 
   input#search-field {
     max-width: none;
+  }
+  
+  .btn-group {
+    width: 100%;
+  }
+
+  .btn-group > .btn {
+    width: 100% !important;
+  }
+
+  .navbar-form, .input-group, #search-field {
+    width: 100% !important;
+  }
+  
+  .frontpage-logo .navbar-form {
+    max-width: none !important;
   }
 }
 
