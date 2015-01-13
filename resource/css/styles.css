@@ -1615,54 +1615,6 @@ body, .versal, h1, h2, p, .versal-bold {
   
 }
 
-@media (max-width: 700px) {
-  .topbar {
-    position: relative;
-  }
-
-  #navi1, #navi2, #navi3, #navi4 {
-    background-image: none !important;
-    padding-left: 0 !important;
-  }
-    
-  #navigation {
-    width: auto !important;
-    left: 2.5%;
-  }
-
-  #navigation > a, #language > a, #navi4 > span {
-    margin: 2px;
-    font-weight: 500;
-  }
-
-  .frontpage #language {
-    position: absolute;
-    right: 2.5%;
-    text-align: left;
-    padding-right: 0;
-  }
-
-  #service-logo {
-    height: 200px !important;
-    position: absolute;
-    right: 3%;
-  }
-
-  .frontpage-spacing .header-float {
-    float: left;
-  }
-
-  section.frontpage {
-    top: 10px;
-    overflow: hidden;
-  }
-
-  #navigation {
-    padding-right: 0 !important;
-    position: absolute;
-  }
-}
-
 @media (max-width: 640px) {
 
   .welcome-box, .right-box {
@@ -1714,6 +1666,52 @@ body, .versal, h1, h2, p, .versal-bold {
 }
 
 @media (max-width: 700px) {
+  .topbar {
+    position: relative;
+  }
+
+  #navi1, #navi2, #navi3, #navi4 {
+    background-image: none !important;
+    padding-left: 0 !important;
+  }
+    
+  #navigation {
+    width: auto !important;
+    left: 2.5%;
+  }
+
+  #navigation > a, #language > a, #navi4 > span {
+    margin: 2px;
+    font-weight: 500;
+  }
+
+  .frontpage #language {
+    position: absolute;
+    right: 2.5%;
+    text-align: left;
+    padding-right: 0;
+  }
+
+  #service-logo {
+    height: 200px !important;
+    position: absolute;
+    right: 3%;
+  }
+
+  .frontpage-spacing .header-float {
+    float: left;
+  }
+
+  section.frontpage {
+    top: 10px;
+    overflow: hidden;
+  }
+
+  #navigation {
+    padding-right: 0 !important;
+    position: absolute;
+  }
+
   input#search-field {
     max-width: none;
   }
