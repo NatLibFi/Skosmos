@@ -580,19 +580,8 @@ class Concept extends VocabularyDataObject
             $lit->getValue()
           );
     }
-    // sorting the labels by the language defined in the configuration.
-    $order = array_keys($LANGUAGES);
-    $ordered = array();
-    foreach($order as $key) {
-      $key = gettext($key);
-      if (array_key_exists($key, $labels)) {
-        $ordered[$key] = $labels[$key];
-        unset($labels[$key]);
-      }
-    }
-
     ksort($labels);
-    return $ordered + $labels;
+    return $labels;
   }
 
 }

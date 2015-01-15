@@ -101,14 +101,15 @@
             </ul>
           </td>
         {% endif %}
-        {% if concept.foreignLabels %}<tr><td><span class="versal property-click" title="{% trans "foreign prefLabel help" %}" >{{ 'foreign prefLabels'|trans|upper }}</span></td><td class="empty"></td>
+        {% if concept.foreignLabels %}<tr><td><span class="versal property-click" title="{% trans "foreign prefLabel help" %}" >{{ 'foreign prefLabels'|trans|upper }}</span></td><td>
             {% set prevlang = '' %}{# Only displaying the language when it appears for the very first time #}
+            <table>
             {% for lang,labels in concept.foreignLabels %}
               {% for value in labels %}
-                <tr class="other-languages{% if prevlang != lang %} first-of-language{% endif %}"><td class="versal">{% if prevlang != lang %}<p>{{ lang|trans }}</p>{% endif %}</td><td class="versal{% if value.type == "skos:altLabel" %} replaced{%else %} versal-pref{% endif %}">{{ value.label }}</td></tr>
+                <tr class="other-languages{% if prevlang != lang %} first-of-language{% endif %}"><td class="versal{% if value.type == "skos:altLabel" %} replaced{%else %} versal-pref{% endif %}">{{ value.label }}</td><td class="versal">{% if prevlang != lang %}<p>{{ lang|trans }}</p>{% endif %}</td></tr>
                 {% set prevlang = lang %}
               {% endfor %}
-            {% endfor %}
+            {% endfor %}</table></td></tr>
         {% endif %}
           <tr><td><span class="versal">URI</span></td>
           <td><span class="versal uri-input-box">{{ concept.uri }}</span></tr>
