@@ -986,7 +986,7 @@ tr {
 }
 
 .search-results-property-table tr.first-of-language > td {
-  padding-top: 10px !important;
+  padding-top: 0px !important;
 }
 
 .search-results-property-table tbody > tr > td:first-of-type {
