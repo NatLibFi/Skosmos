@@ -558,7 +558,7 @@ class WebController extends Controller
    * @param string $vocab_id vocabulary identifier eg. 'yso'.
    * @param string $lang language parameter eg. 'fi' for Finnish.
    */
-  public function invokeGroupIndex($vocab_id, $lang)
+  public function invokeGroupIndex($vocab_id, $lang, $stats=false)
   {
     $this->setLanguageProperties($lang);
     $template = $this->twig->loadTemplate('group-index.twig');
@@ -581,6 +581,7 @@ class WebController extends Controller
                     array('path_fix' => $this->path_fix,
                         'languages' => $this->languages,
                         'lang' => $lang,
+                        'stats' => $stats,
                         'vocab_id' => $vocab_id,
                         'vocab' => $vocab,
                         'groups' => $groups,
@@ -668,8 +669,14 @@ class WebController extends Controller
       $lang_msg = gettext("language_changed_message");
       $this->setLanguageProperties($lang);
     }
+    $defaultView = $vocab->getDefaultSidebarView();
 
     // load template
+    if ($defaultView === 'groups') {
+      $this->invokeGroupIndex($vocab_id, $lang, true);
+      return;
+    } 
+    
     $template = $this->twig->loadTemplate('vocab.twig');
 
     echo $template
@@ -681,6 +688,7 @@ class WebController extends Controller
                         'parts' => $this->parts,
                         'vocab_id' => $vocab_id,
                         'search_letter' => 'A',
+                        'active_tab' => $defaultView,
                         'lang_supported' => $lang_support,
                         'request_uri' => $this->request_uri,
                         'lang_changed' => $lang_msg));

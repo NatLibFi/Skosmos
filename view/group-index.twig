@@ -28,3 +28,9 @@
   </div>
 </div>
 {% endblock %}
+
+{% block content %}
+  {% if stats %}
+    {% include "vocab-shared.twig" %}
+  {% endif %}
+{% endblock %}

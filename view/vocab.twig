@@ -1,6 +1,33 @@
 {% extends "light.twig" %}
 {% block title %}: {{ vocab.title }}{% endblock %}
 
+{% block sidebar %}
+<div class="sidebar-buttons">
+  <ul class="nav nav-tabs">
+    <li id="alpha"{% if active_tab == 'alphabetical' %} class="active"{% endif %}><a href="{{ path_fix }}{{ vocab_id }}/{{ lang }}/index">{% trans "Alpha-nav" %}</a></li>
+    {% if vocab.showHierarchy %}
+    <li id="hierarchy"{% if active_tab == 'hierarchy' %} class="active"{% endif %}><a href="#" id="hier-trigger">{% trans "Hier-nav" %}</a></li>
+    {% endif %}
+    {% if vocab.groupClassURI %}
+    <li id="groups"><a href="{{ path_fix }}{{ vocab_id }}/{{ lang }}/groups">{% trans "Group-nav" %}</a></li>
+    {% else %}
+    {% endif %}
+  </ul>
+</div>
+
+<div class="sidebar-grey">
+  <div class="group-container">
+    <ul class="group-index">
+      {% for uri, value in groups %}
+      <li><a href="{{ uri | link_url(vocab,lang,'groups') }}">{{ value.label }}</a>
+        {% if value.children %}{% for childuri,childlabel in value.children %}<li class="sub-group"><a href="{{ childuri | link_url(vocab,lang,'groups') }}">{{ childlabel }}</a></li>{% endfor %}{% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock %}
+
 {% block content %}
   {% include "vocab-shared.twig" %}
 {% endblock %}

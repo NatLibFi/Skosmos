@@ -59,6 +59,21 @@ class Vocabulary extends DataObject
 
     return $ret;
   }
+  
+  /**
+   * Returns the vocabulary default sidebar view.
+   * @return string name of the view 
+   */
+  public function getDefaultSidebarView()
+  {
+    $defview = $this->resource->getLiteral('skosmos:defaultSidebarView');
+    if ($defview) {
+      $value = $defview->getValue();
+      if ($value === 'groups' || $value === 'hierarchy') 
+        return $value;
+    }
+    return 'alphabetical'; // if not defined displaying the alphabetical index 
+  }
 
   /**
    * Get the default language of this vocabulary
