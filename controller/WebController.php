@@ -9,6 +9,7 @@
  * Importing the dependencies.
  */
 require_once 'controller/Controller.php';
+use \Punic\Language;
 
 /**
  * WebController is an extension of the Controller that handles all
@@ -105,6 +106,12 @@ class WebController extends Controller
       return $controller->path_fix . "$vocid/$lang/$type/?uri=" . urlencode($uri);
     });
     $this->twig->addFilter($urlFilter);
+
+    // register a Twig filter for generating strings from language codes with CLDR 
+    $langFilter = new Twig_SimpleFilter('lang_name', function ($langcode, $lang) use ($controller) {
+      return Language::getName($langcode, $lang); 
+    });
+    $this->twig->addFilter($langFilter);
 
     $tplDir = 'view';
 

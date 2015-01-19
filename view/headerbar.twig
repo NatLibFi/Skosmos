@@ -32,7 +32,7 @@
         <ul class="dropdown-menu">
         {% if vocab is defined %}
           {% for langcode in vocab.languages %}
-          <li><a href="#" class="lang-button" hreflang="{{ langcode }}">{% trans langcode %}</a></li>
+          <li><a href="#" class="lang-button" hreflang="{{ langcode }}">{{ langcode | lang_name(lang) }}</a></li>
           {% endfor %}
         {% else %}
           <li><a href="#" class="lang-button" hreflang="{{ lang }}">{% trans lang %}</a></li>

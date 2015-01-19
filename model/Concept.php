@@ -8,6 +8,7 @@
 /**
  * Dataobject for a single concept.
  */
+
 class Concept extends VocabularyDataObject
 {
   /**
@@ -560,7 +561,7 @@ class Concept extends VocabularyDataObject
     foreach ($this->resource->allLiterals('skos:prefLabel') as $lit) {
       // filtering away subsets of the current language eg. en vs en-GB
       if ($lit->getLang() != $this->lang && strpos($lit->getLang(), $this->lang . '-') !== 0)
-        $labels[gettext($lit->getLang())][] = new ConceptPropertyValue(
+        $labels[$lit->getLang()][] = new ConceptPropertyValue(
             'skos:prefLabel',
             '',
             '',
@@ -572,7 +573,7 @@ class Concept extends VocabularyDataObject
     foreach ($this->resource->allLiterals('skos:altLabel') as $lit) {
       // filtering away subsets of the current language eg. en vs en-GB
       if ($lit->getLang() != $this->lang && strpos($lit->getLang(), $this->lang . '-') !== 0)
-        $labels[gettext($lit->getLang())][] = new ConceptPropertyValue(
+        $labels[$lit->getLang()][] = new ConceptPropertyValue(
             'skos:altLabel',
             '',
             '',
