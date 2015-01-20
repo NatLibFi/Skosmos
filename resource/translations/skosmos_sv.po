@@ -446,7 +446,7 @@ msgstr "Begrepp/term vars betydelse är vidare."
 
 #: /tmp/cache/54bcc118b3924/b7/b8/db5433ea968c6a0d09780d91f529.php:65
 msgid "skos:changeNote"
-msgstr "skos:changeNote"
+msgstr "Anmärkning om ändring"
 
 #: /tmp/cache/54bcc118b3924/b7/b8/db5433ea968c6a0d09780d91f529.php:43
 msgid "skos:closeMatch"
@@ -466,7 +466,7 @@ msgstr "Uttömmande beskrivning av begreppets betydelse."
 
 #: /tmp/cache/54bcc118b3924/b7/b8/db5433ea968c6a0d09780d91f529.php:63
 msgid "skos:editorialNote"
-msgstr "skos:editorialNote"
+msgstr "Redaktionell anmärkning"
 
 #: /tmp/cache/54bcc118b3924/b7/b8/db5433ea968c6a0d09780d91f529.php:41
 msgid "skos:exactMatch"
@@ -478,7 +478,7 @@ msgstr "Till sin betydelse samma begrepp."
 
 #: /tmp/cache/54bcc118b3924/b7/b8/db5433ea968c6a0d09780d91f529.php:59
 msgid "skos:example"
-msgstr "skos:example"
+msgstr "Användningsexempel"
 
 #: /tmp/cache/54bcc118b3924/b7/b8/db5433ea968c6a0d09780d91f529.php:51
 msgid "skos:hasTopConcept"
@@ -490,7 +490,7 @@ msgstr "Dolda begrepp"
 
 #: /tmp/cache/54bcc118b3924/b7/b8/db5433ea968c6a0d09780d91f529.php:61
 msgid "skos:historyNote"
-msgstr "skos:historyNote"
+msgstr "Anmärkning om ändringshistoria"
 
 #: /tmp/cache/54bcc118b3924/b7/b8/db5433ea968c6a0d09780d91f529.php:47
 msgid "skos:inScheme"

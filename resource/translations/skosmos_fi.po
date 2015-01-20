@@ -467,7 +467,7 @@ msgstr "Tyhjentävä kuvaus käsitteen merkityksestä."
 
 #: /tmp/cache/54bcc10e391ce/b7/b8/db5433ea968c6a0d09780d91f529.php:63
 msgid "skos:editorialNote"
-msgstr "Toimituksellinen huomautus"
+msgstr "Kehityshuomautus"
 
 #: /tmp/cache/54bcc10e391ce/b7/b8/db5433ea968c6a0d09780d91f529.php:41
 msgid "skos:exactMatch"
