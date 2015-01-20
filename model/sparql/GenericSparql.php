@@ -549,8 +549,7 @@ EOF;
       $term = substr($term, 0, -1); // remove the final asterisk
       $term = str_replace('\\', '\\\\', $term); // quote slashes
       $term = str_replace('\'', '\\\'', mb_strtolower($term, 'UTF-8')); // make lowercase and escape single quotes
-      $filtercond = "strstarts(lcase(str(?match)), '$term')" . // avoid matches on both altLabel and prefLabel
-                    " && !(?match != ?label && strstarts(lcase(str(?label)), '$term'))";
+      $filtercond = "strstarts(lcase(str(?match)), '$term')" ;
     } elseif (preg_match('/^\*[^\*]+$/', $term)) { // suffix query
       $term = substr($term, 1); // remove the preceding asterisk
       $term = str_replace('\\', '\\\\', $term); // quote slashes
