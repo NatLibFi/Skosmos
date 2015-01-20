@@ -468,12 +468,24 @@ class Concept extends VocabularyDataObject
       $label = $val->label();
       $ret['label'] = $label->getValue();
       $ret['lang'] = $label->getLang();
+    } elseif ($val->getLiteral('rdf:value', $this->lang) !== null) { // current language
+      $label = $val->getLiteral('rdf:value', $this->lang);
+      $ret['label'] = $label->getValue();
+      $ret['lang'] = $label->getLang();
+      $ret['concept_uri'] = null; // URIs of Related Resource Descriptions are not used
+    } elseif ($val->getLiteral('rdf:value') !== null) { // any language
+      $label = $val->getLiteral('rdf:value');
+      $ret['label'] = $label->getValue();
+      $ret['lang'] = $label->getLang();
+      $ret['concept_uri'] = null; // URIs of Related Resource Descriptions are not used
     } else {
       $ret['label'] = null;
       $ret['lang'] = null;
     }
 
-    $ret['concept_uri'] = $val->getUri();
+    if (!array_key_exists('concept_uri', $ret)) {
+      $ret['concept_uri'] = $val->getUri();
+    }
     $ret['vocab'] = $this->getVocab();
     $ret['prop'] = $prop;
     $ret['exvocab'] = isset($exvocid) ? $exvocid : null;

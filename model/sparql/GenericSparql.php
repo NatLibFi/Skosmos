@@ -231,6 +231,7 @@ CONSTRUCT {
  ?o rdf:type ?ot .
  ?o skos:prefLabel ?opl .
  ?o rdfs:label ?ol .
+ ?o rdf:value ?ov .
  ?group skos:member ?uri .
  ?group skos:prefLabel ?grouplabel .
  ?group isothes:superGroup ?super .
@@ -264,6 +265,8 @@ CONSTRUCT {
      { ?o skos:prefLabel ?opl . }
      UNION
      { ?o rdfs:label ?ol . }
+     UNION
+     { ?o rdf:value ?ov . }
    } $optional
   }
  }
