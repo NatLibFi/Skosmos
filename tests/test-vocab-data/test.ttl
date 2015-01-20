@@ -43,6 +43,7 @@ test:ta114 a skos:Concept, meta:TestClass ;
 test:ta115 a skos:Concept, meta:TestClass ;
     skos:broader test:ta1 ;
     skos:inScheme test:conceptscheme ;
+    skos:definition "any fish belonging to the order Anguilliformes"@en ;
     skos:prefLabel "Eel"@en .
 
 test:ta116 a skos:Concept, meta:TestClass ;
@@ -77,7 +78,11 @@ test:ta121 a skos:Concept, meta:TestClass ;
 test:ta122 a skos:Concept, meta:TestClass ;
     skos:broader test:ta116 ;
     skos:inScheme test:conceptscheme ;
+    skos:definition test:black_sea_bass_def ;
     skos:prefLabel "Black sea bass"@en .
+
+test:black_sea_bass_def
+    rdf:value "The black sea bass (Centropristis striata) is an exclusively marine fish." .
 
 test:ta123 a skos:Concept, meta:TestClass ;
     dct:modified "2014-10-01T16:29:03+00:00"^^xsd:dateTime ;
