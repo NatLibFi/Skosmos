@@ -343,10 +343,8 @@ class Model
 
     $uris = array();
     $vocabs = array();
-    if ($vocids != null) {
-      foreach ($vocids as $vocid) {
-        $vocabs[] = $this->getVocabulary($vocid);
-      }
+    foreach ($hits as $hit) {
+      $vocabs[] = $hit['voc'];
     }
     foreach ($hits as $hit)
       $uris[] = $hit['uri'];
