@@ -116,7 +116,7 @@ $(function() { // DOCUMENT READY
     hideCrumbs();
   });
 
-  // if on the search results page and there is only one result 
+  // if the hierarchy tab is active filling the jstree with data 
   if ($('#hierarchy').hasClass('active')) { 
     invokeParentTree(getTreeConfiguration()); 
   }
