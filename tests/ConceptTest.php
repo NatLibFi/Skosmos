@@ -139,4 +139,33 @@ class ConceptTest extends PHPUnit_Framework_TestCase
 
     }
   }
+  
+  /**
+   * @covers Concept::getProperties
+   */
+  
+  public function testGetPropertiesDefinitionLiteral() {
+    $vocab = $this->model->getVocabulary('test');
+    $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta115');
+    $concept = $concepts[0];
+    $props = $concept->getProperties();
+    $propvals = $props['skos:definition']->getValues();
+    $this->assertEquals('any fish belonging to the order Anguilliformes', $propvals[0]->getLabel());
+  }
+
+  /**
+   * @covers Concept::getProperties
+   */
+  
+  public function testGetPropertiesDefinitionResource() {
+    $vocab = $this->model->getVocabulary('test');
+    $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta122');
+    $concept = $concepts[0];
+    $props = $concept->getProperties();
+    $propvals = $props['skos:definition']->getValues();
+    $this->assertEquals('The black sea bass (Centropristis striata) is an exclusively marine fish.', $propvals[0]->getLabel());
+    $this->assertNull($propvals[0]->getUri());
+  }
+
+
 }
