@@ -182,6 +182,7 @@ class Concept extends VocabularyDataObject
             $voclabel = $exvoc->getTitle();
           }
           if (!$exvoc || !$label) {
+            $response = null;
             if ($this->vocab->getExternalResourcesLoading())
               $response = $this->model->getResourceFromUri($exuri);
             if ($response) {
