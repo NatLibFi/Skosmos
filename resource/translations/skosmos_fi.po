@@ -598,7 +598,7 @@ msgid "Alternate terms"
 msgstr "Korvatut termit"
 
 #: /tmp/cache/54bcc10ee6a27/13/6d/25624c89d5f9ac9c32fc8560191d.php:115
-msgid "Concept counts by language"
+msgid "Term counts by language"
 msgstr "Käsitteiden lukumäärät kielittäin"
 
 #: /tmp/cache/54bcc10ee6a27/13/6d/25624c89d5f9ac9c32fc8560191d.php:121

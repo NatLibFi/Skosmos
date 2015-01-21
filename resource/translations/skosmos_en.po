@@ -597,8 +597,8 @@ msgid "Alternate terms"
 msgstr "Alternate terms"
 
 #: /tmp/cache/54bcc12a3e6e2/13/6d/25624c89d5f9ac9c32fc8560191d.php:115
-msgid "Concept counts by language"
-msgstr "Concept counts by language"
+msgid "Term counts by language"
+msgstr "Term counts by language"
 
 #: /tmp/cache/54bcc12a3e6e2/13/6d/25624c89d5f9ac9c32fc8560191d.php:121
 msgid "Concept language"

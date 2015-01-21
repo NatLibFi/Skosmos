@@ -597,8 +597,8 @@ msgid "Alternate terms"
 msgstr "Ersatta termer"
 
 #: /tmp/cache/54bcc1196aa68/13/6d/25624c89d5f9ac9c32fc8560191d.php:115
-msgid "Concept counts by language"
-msgstr "Begrepp på olika språk"
+msgid "Term counts by language"
+msgstr "Termer på olika språk"
 
 #: /tmp/cache/54bcc1196aa68/13/6d/25624c89d5f9ac9c32fc8560191d.php:121
 msgid "Concept language"
