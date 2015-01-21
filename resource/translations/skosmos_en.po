@@ -87,8 +87,8 @@ msgid "Error: Requested vocabulary \"%vocab_id%\" not found!"
 msgstr "Error: Requested vocabulary \"%vocab_id%\" not found!"
 
 #: /tmp/cache/54bcc12984197/f3/ad/c29275c1535e0544c16a5c268290.php:858
-msgid "Error: term \"%term%\" not found in vocabulary!"
-msgstr "Error: term \"%term%\" not found in vocabulary!"
+msgid "Error: Term \"%term%\" not found in vocabulary!"
+msgstr "Error: Term \"%term%\" not found in vocabulary!"
 
 #: /tmp/cache/54bcc12984197/bd/1b/8ea01a92d3d28ecbc47efa229ca9.php:461
 msgid "Error: the vocabulary does not contain terms beginning with \"%letter%\"!"
