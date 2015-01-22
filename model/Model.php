@@ -345,9 +345,8 @@ class Model
     $vocabs = array();
     foreach ($hits as $hit) {
       $vocabs[] = $hit['voc'];
-    }
-    foreach ($hits as $hit)
       $uris[] = $hit['uri'];
+    }
     if (sizeof($vocabs) == 1) {
       $voc = $vocabs[0];
       $sparql = $voc->getSparql();

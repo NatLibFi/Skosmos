@@ -206,7 +206,14 @@ EOQ;
       $uris = array($uris);
 
     $values = $this->formatValues('?uri', $uris, 'uri');
-    $values_graph = $this->formatValuesGraph($vocabs);
+    
+    // filtering duplicates 
+    $unique_vocabs = array();
+    if ($vocabs)
+      foreach ($vocabs as $voc)
+        $unique_vocabs[$voc->getId()] = $voc;
+    
+    $values_graph = $this->formatValuesGraph($unique_vocabs);
 
     if (!$arrayClass) {
       $construct = $optional = "";
@@ -282,9 +289,9 @@ EOQ;
       return;
 
     $conceptArray = array();
-    foreach ($uris as $uri) {
+    foreach ($uris as $index => $uri) {
       $conc = $result->resource($uri);
-      $vocab = sizeof($vocabs) == 1 ? $vocabs[0] : $this->model->guessVocabularyFromUri($uri);
+      $vocab = sizeof($vocabs) == 1 ? $vocabs[0] : $vocabs[$index];
       $conceptArray[] = new Concept($this->model, $vocab, $conc, $result);
     }
 
