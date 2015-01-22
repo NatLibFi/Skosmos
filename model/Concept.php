@@ -42,6 +42,7 @@ class Concept extends VocabularyDataObject
     'skos:broadMatch', 
     'skos:closeMatch', 
     'skos:relatedMatch', 
+    'rdfs:seeAlso', 
     'owl:sameAs' 
   );
 
