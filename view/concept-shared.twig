@@ -106,7 +106,7 @@
             <table>
             {% for language,labels in concept.foreignLabels %}
               {% for value in labels %}
-                <tr class="other-languages{% if prevlang != language %} first-of-language{% endif %}"><td class="versal{% if value.type == "skos:altLabel" %} replaced{%else %} versal-pref{% endif %}">{{ value.label }}</td><td class="versal">{% if prevlang != language %}<p>{{ language | lang_name(lang) }}</p>{% endif %}</td></tr>
+                <tr class="other-languages{% if prevlang != language %} first-of-language{% endif %}"><td class="versal{% if value.type == "skos:altLabel" %} replaced{%else %} versal-pref{% endif %}">{{ value.label }}</td><td class="versal">{% if prevlang != language %}<p>{{ language }}</p>{% endif %}</td></tr>
                 {% set prevlang = language %}
               {% endfor %}
             {% endfor %}</table></td></tr>

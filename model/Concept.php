@@ -574,7 +574,7 @@ class Concept extends VocabularyDataObject
     foreach ($this->resource->allLiterals('skos:prefLabel') as $lit) {
       // filtering away subsets of the current language eg. en vs en-GB
       if ($lit->getLang() != $this->lang && strpos($lit->getLang(), $this->lang . '-') !== 0)
-        $labels[$lit->getLang()][] = new ConceptPropertyValue(
+        $labels[Punic\Language::getName($lit->getLang(), $this->lang)][] = new ConceptPropertyValue(
             'skos:prefLabel',
             '',
             '',
@@ -586,7 +586,7 @@ class Concept extends VocabularyDataObject
     foreach ($this->resource->allLiterals('skos:altLabel') as $lit) {
       // filtering away subsets of the current language eg. en vs en-GB
       if ($lit->getLang() != $this->lang && strpos($lit->getLang(), $this->lang . '-') !== 0)
-        $labels[$lit->getLang()][] = new ConceptPropertyValue(
+        $labels[Punic\Language::getName($lit->getLang(), $this->lang)][] = new ConceptPropertyValue(
             'skos:altLabel',
             '',
             '',
