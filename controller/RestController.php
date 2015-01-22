@@ -315,7 +315,7 @@ class RestController extends Controller
     $counts = array();
     foreach ($vocab_stats['terms'] as $proplang => $properties) {
       $langdata = array('language' => $proplang);
-      if ($litlang) $langdata['literal'] = gettext($proplang);
+      if ($litlang) $langdata['literal'] = Punic\Language::getName($proplang, $litlang);
       $langdata['properties'] = array();
       foreach ($properties as $prop => $value) {
         $langdata['properties'][] = array('property' => $prop, 'labels' => $value);
