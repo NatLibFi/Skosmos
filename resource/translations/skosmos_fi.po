@@ -89,7 +89,7 @@ msgstr "Virhe: Pyydettyä sanastoa \"%vocab_id%\" ei löydy!"
 
 #: /tmp/cache/54bcc10e391ce/f3/ad/c29275c1535e0544c16a5c268290.php:858
 msgid "Error: term \"%term%\" not found in vocabulary!"
-msgstr "Virhe: termiä \"%term%\" ei löydy sanastosta!"
+msgstr "Virhe: Termiä \"%term%\" ei löydy sanastosta!"
 
 #: /tmp/cache/54bcc10e391ce/bd/1b/8ea01a92d3d28ecbc47efa229ca9.php:461
 msgid "Error: the vocabulary does not contain terms beginning with \"%letter%\"!"
@@ -598,7 +598,7 @@ msgid "Alternate terms"
 msgstr "Korvatut termit"
 
 #: /tmp/cache/54bcc10ee6a27/13/6d/25624c89d5f9ac9c32fc8560191d.php:115
-msgid "Concept counts by language"
+msgid "Term counts by language"
 msgstr "Käsitteiden lukumäärät kielittäin"
 
 #: /tmp/cache/54bcc10ee6a27/13/6d/25624c89d5f9ac9c32fc8560191d.php:121
