@@ -47,12 +47,18 @@ $twig->addExtension(new Symfony\Bridge\Twig\Extension\FormExtension(
 ));
 // You can add more extensions here.
 
-// Custom filter for ONKI Light / Skosmos templates
+// Custom filters for Skosmos templates
 $urlFilter = new Twig_SimpleFilter('link_url',
-    function($uri, $vocab, $lang,$type='page') {
+    function($uri, $vocab, $lang, $type='page') {
         return $uri; // dummy implementation
     });
 $twig->addFilter($urlFilter);
+
+$langFilter = new Twig_SimpleFilter('lang_name',
+    function ($langcode,$lang) {
+        return $langcode; // dummy implementation
+    });
+$twig->addFilter($langFilter);
 
 array_shift($_SERVER['argv']);
 $addTemplate = false;
