@@ -126,7 +126,7 @@
         <div class="concept-appendix">
           <table class="table search-results-property-table {% if concept.type == 'skosext:DeprecatedConcept' %} deprecated{% endif %}">
           {% for property in appendixProperties %} {# loop through ConceptProperty objects #}
-            <tr><td><span class="versal property-click" title="{{ property.description }}">{{ property.label|upper }}</span></td><td>
+            <tr><td><span class="versal{% if not (property.type in property.description and '_help' in property.description) %} property-click" title="{{ property.description }}{% endif %}">{{ property.label|upper }}</span></td><td>
             <table class="table appendix-values">
             {% for propval in property.values %} {# loop through ConceptPropertyValue objects #}
               {% if propval.uri %} {# resources with URI #}
