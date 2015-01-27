@@ -51,7 +51,7 @@
           <br /><a class="prefLabel foundby" href="{{ concept.uri | link_url(concept.vocab,lang) }}">{{ concept.label }}</a></span>
         </td>
         {% else %}
-        <td>
+        <td>{% if concept.notation %}<span class="notation">{{ concept.notation }}</span>{% endif %}
         <span class="prefLabel
           {% if lang_count is not defined and rest != 1 %}">{{ concept.label }}</span>{% if explicit_langcodes %}<span class="prefLabelLang"> ({{ concept.lang }})</span>{% endif %}{% else %}"></span>
           <a class="prefLabel conceptlabel" href="{% if concept.type == "skos:Collection" %}{{ concept.uri | link_url(concept.vocab, lang, 'groups') }}{% elseif concept.exvocab is defined%}{{ concept.uri | link_url(concept.exvocab,concept.lang) }}{% else %}{{ concept.uri | link_url(concept.vocab,concept.lang) }}{% endif %}">{{ concept.label }}</a>

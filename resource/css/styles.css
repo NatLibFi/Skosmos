@@ -293,6 +293,10 @@ section {
   font-weight: bold !important;
 }
 
+.notation {
+  margin-right: 15px;
+}
+
 .search-result-listing .search-result {
   margin: 20px 15px ;
 }
@@ -1411,13 +1415,13 @@ li {
   font-size: 14px !important;
 }
 
-h1, .prefLabel, .prefLabelLang {
+h1, .prefLabel, .prefLabelLang, .notation {
   font-family: 'Fira Sans' !important;
   font-size: 27px !important;
   font-weight: 400 !important;
 }
 
-.prefLabel, .prefLabelLang {
+.prefLabel, .prefLabelLang, .notation {
   font-weight: 500 !important;
 }
 
@@ -1820,7 +1824,7 @@ body, .versal, h1, h2, p, .versal-bold {
 
 @media (max-width: 1259px) {
 
-  .search-result-listing .prefLabel {
+  .search-result-listing .prefLabel, .search-result-listing .notation {
     font-size: 14px !important;
   }
 
@@ -1927,7 +1931,7 @@ body, .versal, h1, h2, p, .versal-bold {
     font-size: 27px !important;
   }
 
-  li, .versal, .versal-bold, p, .search-result > .prefLabel {
+  li, .versal, .versal-bold, p, .search-result > .prefLabel, .search-result > .notation {
     font-size: 16px !important;
   }
 

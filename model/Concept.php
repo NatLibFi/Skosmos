@@ -100,6 +100,18 @@ class Concept extends VocabularyDataObject
     // empty
     return "";
   }
+  
+  /**
+   * Returns a notation for the concept or null if it has not been defined.
+   * @return string eg. '999'
+   */
+  public function getNotation()
+  {
+    $notation = $this->resource->get('skos:notation');
+    if ($notation !== null)
+      return $notation->getValue();
+    return null; 
+  }
 
   /**
    * Returns the vocabulary identifier string or null if that is not available.
