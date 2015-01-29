@@ -206,6 +206,19 @@ class Model
       }
     return $result;
   }
+  
+  /**
+   * Return the languages present in the configured vocabularies.
+   * @return array Array with lang codes (string)
+   */
+  public function getLanguages()
+  {
+    $vocabs = $this->getVocabularyList(false);
+    $ret = array();
+    foreach ($vocabs as $vocab)
+      $ret = array_merge($vocab->getLanguages(), $ret);
+    return array_unique($ret);
+  }
 
   /**
    * returns a concept's RDF data in downloadable format

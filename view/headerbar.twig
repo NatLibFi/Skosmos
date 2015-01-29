@@ -35,7 +35,9 @@
           <li><a href="#" class="lang-button" hreflang="{{ langcode }}">{{ langcode | lang_name(lang) }}</a></li>
           {% endfor %}
         {% else %}
-          <li><a href="#" class="lang-button" hreflang="{{ lang }}">{{ lang | lang_name(lang) }}</a></li>
+          {% for langcode in lang_list %}
+          <li><a href="#" class="lang-button" hreflang="{{ langcode }}">{{ langcode | lang_name(lang) }}</a></li>
+          {% endfor %}
         {% endif %}
           <li><a href="#" class="lang-button-all" hreflang="">{% trans "Search language: any" %}</a></li>
         </ul>

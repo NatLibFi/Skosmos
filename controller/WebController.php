@@ -175,12 +175,13 @@ class WebController extends Controller
     $requestUri = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     $categoryLabel = $this->model->getClassificationLabel($lang);
     $vocabList = $this->model->getVocabularyList();
+    $langList = $this->model->getLanguages();
     // render template
     echo $template
             ->render(
                     array('vocab_list' => $vocabList, 'category_label' => $categoryLabel,
                         'path_fix' => $this->path_fix, 'languages' => $this->languages, 'front_page' => True,
-                        'lang' => $lang, 'parts' => $this->parts, 'request_uri' => $this->request_uri));
+                        'lang' => $lang, 'parts' => $this->parts, 'request_uri' => $this->request_uri, 'lang_list' => $langList));
   }
 
   /**
