@@ -773,10 +773,8 @@ $(function() { // DOCUMENT READY
             }
             item.label = item.prefLabel;
             // combining all the matched properties.
-            if (item.matchedPrefLabel) {
-              item.label = item.matchedPrefLabel;
-              delete item.prefLabel;
-            }
+            if (item.matchedPrefLabel)
+              item.matched = item.matchedPrefLabel;
             if (item.altLabel)
               item.replaced = item.altLabel;
             if (item.hiddenLabel)
@@ -813,9 +811,9 @@ $(function() { // DOCUMENT READY
   concepts.initialize();
 
   var autocompleteTemplate =[
-    '{{# if replaced }}<p class="replaced">{{replaced}}</p>{{/if}}',
-    '{{# if replaced }}{{# if lang}}<p>({{lang}})</p>{{/if}}<p> &rarr; </p>{{/if}}',
-    '<p class="autocomplete-label">{{label}}{{# if lang}}{{# unless replaced }}<p>({{lang}})</p>{{/unless}}{{/if}}</p>',
+    '{{# if matched }}<p>{{matched}}{{# if lang}} ({{lang}}){{/if}} = </p>{{/if}}',
+    '{{# if replaced }}<p class="replaced">{{replaced}}{{# if lang}} ({{lang}}){{/if}} &rarr; </p>{{/if}}',
+    '<p class="autocomplete-label">{{label}}{{# if lang}}{{# unless matched }}<p>({{lang}})</p>{{/unless}}{{/if}}</p>',
     '{{# if type }}<span class="concept-type">{{type}}</span>{{/if}}',
     '<div class="vocab">{{vocabLabel}}</div>',
   ].join('');

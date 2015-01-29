@@ -15,7 +15,7 @@
       <a class="prefLabel" href="{{ concept.uri | link_url(concept.vocab,lang) }}">{{ concept.label }}{% if explicit_langcodes %} ({{ concept.lang }}){% endif %}</a></span>
       
       {% else %}{% if concept.notation %}<span class="notation">{{ concept.notation }}</span>{% endif %}
-      <a class="prefLabel" href="{{ concept.uri | link_url(concept.vocab,lang) }}">{{ concept.foundby }}</a></span>
+      <span class="versal">{{ concept.foundBy }} = </span><a class="prefLabel" href="{{ concept.uri | link_url(concept.vocab,lang) }}">{{ concept.label }}</a></span>
       {% endif %}
     {% else %}
     {% if concept.notation %}<span class="notation">{{ concept.notation }}</span>{% endif %}
