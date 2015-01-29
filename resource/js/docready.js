@@ -611,7 +611,7 @@ $(function() { // DOCUMENT READY
   // - "" when searching in all languages
   var qlang = search_lang;
   
-  if (search_lang === 'anything' || !search_lang || (typeof getUrlParams().lang !== 'undefined' && getUrlParams().lang === '')) {
+  if (search_lang === 'anything' || (typeof getUrlParams().lang !== 'undefined' && getUrlParams().lang === '')) {
     $('#lang-dropdown-toggle').html($('.lang-button-all').html() + ' <span class="caret"></span>');
     $('#lang-input').val('');
     qlang = "";
@@ -635,7 +635,7 @@ $(function() { // DOCUMENT READY
       search_lang_possible = true;
   });
   
-  if (!search_lang_possible) {
+  if (!search_lang_possible && search_lang !== 'anything') {
     var langPretty = $('a[hreflang=""]').html();
     $('#lang-dropdown-toggle').html(langPretty + ' <span class="caret"></span>');
     qlang = '';
