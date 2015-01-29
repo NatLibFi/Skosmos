@@ -294,7 +294,11 @@ section {
 }
 
 .notation {
-  margin-right: 15px;
+  margin-right: 12px;
+}
+
+.search-result > .notation {
+  margin-right: 6px;
 }
 
 .search-result-listing .search-result {
