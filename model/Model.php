@@ -211,12 +211,17 @@ class Model
    * Return the languages present in the configured vocabularies.
    * @return array Array with lang codes (string)
    */
-  public function getLanguages()
+  public function getLanguages($lang)
   {
     $vocabs = $this->getVocabularyList(false);
     $ret = array();
-    foreach ($vocabs as $vocab)
-      $ret = array_merge($vocab->getLanguages(), $ret);
+    foreach ($vocabs as $vocab) {
+      foreach ($vocab->getLanguages() as $langcode) {
+        $langlit = Punic\Language::getName($langcode, $lang);
+        $ret[$langlit] = $langcode;
+      }
+    }
+    ksort($ret);
     return array_unique($ret);
   }
 

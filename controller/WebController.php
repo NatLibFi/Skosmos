@@ -175,7 +175,7 @@ class WebController extends Controller
     $requestUri = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     $categoryLabel = $this->model->getClassificationLabel($lang);
     $vocabList = $this->model->getVocabularyList();
-    $langList = $this->model->getLanguages();
+    $langList = $this->model->getLanguages($lang);
     // render template
     echo $template
             ->render(
