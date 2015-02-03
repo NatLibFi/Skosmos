@@ -647,8 +647,10 @@ EOQ;
         }
       }
 
-      $hit['prefLabel'] = $row->label->getValue();
-      $hit['lang'] = $row->label->getLang();
+      if (isset($row->label))
+        $hit['prefLabel'] = $row->label->getValue();
+      if (isset($row->label))
+        $hit['lang'] = $row->label->getLang();
 
       if (isset($row->plabel)) {
         $hit['matchedPrefLabel'] = $row->plabel->getValue();
