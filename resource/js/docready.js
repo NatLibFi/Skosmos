@@ -774,7 +774,7 @@ $(function() { // DOCUMENT READY
             item.label = item.prefLabel;
             // combining all the matched properties.
             if (item.matchedPrefLabel)
-              item.matched = item.matchedPrefLabel;
+              item.label = item.matchedPrefLabel;
             if (item.altLabel)
               item.replaced = item.altLabel;
             if (item.hiddenLabel)
