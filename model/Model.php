@@ -16,6 +16,8 @@ EasyRdf_Namespace::set('isothes', 'http://purl.org/iso25964/skos-thes#');
 require_once 'model/DataObject.php';
 require_once 'model/VocabularyDataObject.php';
 require_once 'model/Concept.php';
+require_once 'model/ConceptProperty.php';
+require_once 'model/ConceptPropertyValue.php';
 require_once 'model/VocabularyCategory.php';
 require_once 'model/Vocabulary.php';
 require_once 'model/Breadcrumb.php';
