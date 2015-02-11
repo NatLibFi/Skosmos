@@ -514,9 +514,6 @@ class WebController extends Controller
     } else { 
       $count = ($offset > 0 || !isset($_GET['base_path'])) ? null : 250;
     }
-    if ($offset === 0) {
-      $vocab_stats = $this->model->getVocabulary($vocab_id)->getStatistics();
-    }
     $lang_msg = null;
     $lang_support = true;
     $newlang = $this->verifyVocabularyLanguage($lang, $vocab->getLanguages());
