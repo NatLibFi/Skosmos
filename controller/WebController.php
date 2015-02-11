@@ -532,8 +532,10 @@ class WebController extends Controller
     if (!$all_at_once) {
       $search_results = $vocab->searchConceptsAlphabetical($letter, $count, $offset);
       $letters = $vocab->getAlphabet();
-    } else
+    } else {
       $search_results = $vocab->searchConceptsAlphabetical('*');
+      $letters = null;
+    }
 
     $controller = $this; // for use by anonymous function below
     echo $template
