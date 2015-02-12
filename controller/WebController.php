@@ -78,12 +78,14 @@ class WebController extends Controller
     // setting the service custom css file from the config.inc
     if (defined('CUSTOM_CSS'))
       $this->twig->addGlobal("ServiceCustomCss", CUSTOM_CSS);
+    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
+      $this->twig->addGlobal("ContentLanguage", $content_lang);
     // setting the list of properties to be displayed in the search results
     $this->twig->addGlobal("PreferredProperties", array('skos:prefLabel', 'skos:narrower', 'skos:broader', 'skosmos:memberOf', 'skos:altLabel', 'skos:related'));
 
     // register a Twig filter for generating URLs for vocabulary resources (concepts and groups)
     $controller = $this; // for use by anonymous function below
-    $urlFilter = new Twig_SimpleFilter('link_url', function ($uri, $vocab, $lang, $type='page') use ($controller) {
+    $urlFilter = new Twig_SimpleFilter('link_url', function ($uri, $vocab, $lang, $type='page', $clang) use ($controller) {
       // $vocab can either be null, a vocabulary id (string) or a Vocabulary object
       if ($vocab === null) {
         // target vocabulary is unknown, best bet is to link to the plain URI
@@ -94,11 +96,13 @@ class WebController extends Controller
       } else {
         $vocid = $vocab->getId();
       }
+      if (!$clang)
+        $clang = $lang;
       // case 1: URI within vocabulary namespace: use only local name
       $localname = $vocab->getLocalName($uri);
       if ($localname != $uri && $localname == urlencode($localname)) {
         // check that the prefix stripping worked, and there are no problematic chars in localname
-        return $controller->path_fix . "$vocid/$lang/$type/$localname";
+        return $controller->path_fix . "$vocid/$lang/$type/$localname?clang=$clang";
       }
 
       // case 2: URI outside vocabulary namespace, or has problematic chars
@@ -374,7 +378,6 @@ class WebController extends Controller
     // convert to vocids array to support multi-vocabulary search
     $vocids = $vocabs !== null ? explode(' ', $vocabs) : null;
     
-    $this->twig->addGlobal("ContentLanguage", $content_lang);
     $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocids, $lang, $content_lang, $offset, 20, $type, $parent, $group);
     $counts = $count_and_results['count'];
     $search_results = $count_and_results['results'];
@@ -439,7 +442,6 @@ class WebController extends Controller
     $term = trim($term); // surrounding whitespace is not considered significant
     $sterm = strpos($term, "*") === FALSE ? $term . "*" : $term; // default to prefix search
     try {
-      $this->twig->addGlobal("ContentLanguage", $content_lang);
       $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocab_id, $lang, $content_lang, $offset, 20, $type, $parent, $group);
       $counts = $count_and_results['count'];
       $search_results = $count_and_results['results'];

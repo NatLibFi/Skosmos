@@ -12,10 +12,10 @@
     {% endif %}
     {% if concept.foundBy %} {# hit has been found through an alt/hidden/another language label #}
       {% if concept.foundByType != 'lang' %}<span class="versal replaced">{{ concept.foundBy }}</span><span class="versal"> &rarr;&nbsp;</span>{% if concept.notation %}<span class="notation">{{ concept.notation }}</span>{% endif %}
-      <a class="prefLabel" href="{{ concept.uri | link_url(concept.vocab,lang) }}">{{ concept.label }}{% if explicit_langcodes %} ({{ concept.lang }}){% endif %}</a></span>
+      <a class="prefLabel" href="{{ concept.uri | link_url(concept.vocab,lang,'page',ContentLanguage) }}">{{ concept.label }}{% if explicit_langcodes %} ({{ concept.lang }}){% endif %}</a></span>
       
       {% else %}{% if concept.notation %}<span class="notation">{{ concept.notation }}</span>{% endif %}
-      <span class="versal">{{ concept.foundBy }} = </span><a class="prefLabel" href="{{ concept.uri | link_url(concept.vocab,lang) }}">{{ concept.label }}</a></span>
+      <a class="prefLabel" href="{{ concept.uri | link_url(concept.vocab,lang,'page', ContentLanguage) }}">{{ concept.foundBy }}</a>
       {% endif %}
     {% else %}
     {% if concept.notation %}<span class="notation">{{ concept.notation }}</span>{% endif %}
@@ -47,13 +47,13 @@
                   {% if propval.exvocab and propval.exvocab != propval.vocab %}{# if the property is located in a another vocabulary #}
                   <span class="versal value">{{ propval.label }}</span>
                   {% else %}
-                  <span class="versal value">{{ propval.label|trans }}</span>
+                  <span class="versal value">{{ propval.label(ContentLanguage) }}</span>
                   {% endif %}
                   {% if propval.lang and (propval.lang != lang) or explicit_langcodes %}<span class="versal"> ({{ propval.lang }})</span>{% endif %}{% if not loop.last %}<span class="versal">,</span>{% endif %}
                 {% endif %}
               {% endspaceless %}
               {% else %} {# Literals (no URI), eg. alternative labels as properties #}
-                  <span class="versal {% if propval.type == 'skos:altLabel' %}replaced {% endif %}  value">{{ propval.label }}{% if not loop.last %},{% endif %}</span>
+                  <span class="versal {% if propval.type == 'skos:altLabel' %}replaced {% endif %}  value">{{ propval.label(ContentLanguage) }}{% if not loop.last %},{% endif %}</span>
               {% endif %}
           {% endif %}
       {% endfor %}

@@ -163,6 +163,7 @@ class Concept extends VocabularyDataObject
 
   public function getMappingProperties()
   {
+    return;
     $properties = array();
 
     $members_array = array();
@@ -355,6 +356,7 @@ class Concept extends VocabularyDataObject
       // Iterating through every literal and adding these to the data object.
       foreach ($this->resource->allLiterals($sprop) as $val) {
         if ($val->getLang() == $this->lang || $val->getLang() === null) {
+          continue; // TODO: remove this when the conceptPropertyValue actually works
           // if the property is a date object a string representation is passed as the value.
           if ($val->getDataType() === 'xsd:date' || $val->getDataType() === 'xsd:dateTime')
             $properties[$prop][] = new ConceptPropertyValue($prop, null, null, $val->getLang(), $val->__toString());
@@ -395,14 +397,7 @@ class Concept extends VocabularyDataObject
           $prop_info['exvocab'] = $exvocab;
         }
         if ($prop_info['label'] !== null) {
-          $properties[$prop_info['prop']][] = new ConceptPropertyValue(
-            $prop_info['prop'],
-            $prop_info['concept_uri'],
-            $prop_info['vocab'],
-            $prop_info['lang'],
-            $prop_info['label'],
-            $prop_info['exvocab']
-          );
+          $properties[$prop_info['prop']][] = new ConceptPropertyValue($this->model, $this->vocab, $val, $prop);
         }
       }
     }
@@ -551,6 +546,7 @@ class Concept extends VocabularyDataObject
    * Gets the groups the concept belongs to.
    */
   public function getGroupProperties() {
+    return;
     // finding out if the concept is a member of some group
     $groups = array();
     $reverseResources = $this->graph->resourcesMatching('skos:member', $this->resource);
@@ -582,6 +578,7 @@ class Concept extends VocabularyDataObject
    */
   public function getForeignLabels()
   {
+    return;
     global $LANGUAGES;
     $labels = array();
     foreach ($this->resource->allLiterals('skos:prefLabel') as $lit) {
