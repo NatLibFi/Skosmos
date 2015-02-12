@@ -218,11 +218,12 @@ class WebController extends Controller
       $this->setLanguageProperties($lang);
     }
 
+    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
     $langcodes = $vocab->getShowLangCodes();
     $vocab = $this->model->getVocabulary($vocab_id);
     $uri = $vocab->getConceptURI($uri); // make sure it's a full URI
     $results = $vocab->getConceptInfo($uri);
-    $crumbs = $this->model->getBreadCrumbs($vocab, $lang, $uri);
+    $crumbs = $this->model->getBreadCrumbs($vocab, $content_lang, $uri);
     echo $template->render(Array(
       'search_results' => $results,
       'vocab' => $vocab,
@@ -361,7 +362,7 @@ class WebController extends Controller
     $this->setLanguageProperties($lang);
 
     $term = htmlspecialchars(isset($_GET['q']) ? $_GET['q'] : "");
-    $content_lang = (isset($_GET['clang'])) ? $_GET['lang'] : $lang;
+    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
     $type = (isset($_GET['type'])) ? $_GET['type'] : null;
     $group = (isset($_GET['group'])) ? $_GET['group'] : null;
     $parent = (isset($_GET['parent'])) ? $_GET['parent'] : null;

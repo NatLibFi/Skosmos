@@ -230,7 +230,8 @@ function getParams(node) {
     nodeId = $('.uri-input-box').html(); // using the real uri of the concept from the view.
   else
     nodeId = node.original.uri;
-  return $.param({'uri' : nodeId, 'lang' : lang});
+  var contentLanguage = getUrlParams().clang ? getUrlParams().clang : lang;
+  return $.param({'uri' : nodeId, 'lang' : contentLanguage});
 }
 
 /* 

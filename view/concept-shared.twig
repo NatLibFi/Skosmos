@@ -22,7 +22,7 @@
             {% set crumbId = loop.index %}
               <div class="crumb-path">
               {% for crumb in path %}
-              {% if not loop.last %}<a class="propertyvalue bread-crumb{% if crumb.hiddenLabel %} expand-crumbs{% endif %}" href="{{ crumb.uri|link_url(vocab,lang) }}">{{ crumb.prefLabel }}</a><span class="bread-crumb"> > </span>
+              {% if not loop.last %}<a class="propertyvalue bread-crumb{% if crumb.hiddenLabel %} expand-crumbs{% endif %}" href="{{ crumb.uri|link_url(vocab,lang,'page',ContentLanguage) }}">{{ crumb.prefLabel }}</a><span class="bread-crumb"> > </span>
               {% else %}<span class="bread-crumb propertylabel-pink">{{ crumb.prefLabel }}</span>
               {% endif %}
               {% if crumb.hiddenLabel %}
