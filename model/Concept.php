@@ -85,11 +85,11 @@ class Concept extends VocabularyDataObject
    * Returns a label for the concept in the ui language or if not possible in any language.
    * @return string
    */
-  public function getLabel()
+  public function getLabel($lang='')
   {
     // 1. label in current language
-    if ($this->resource->label($this->lang) !== null)
-      return $this->resource->label($this->lang)->getValue();
+    if ($this->resource->label($lang) !== null)
+      return $this->resource->label($lang);
     // 2. label in any language
     $label = $this->resource->label();
     // if the label lang code is a subset of the ui lang eg. en-GB
