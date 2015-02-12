@@ -357,7 +357,7 @@ class WebController extends Controller
     $this->setLanguageProperties($lang);
 
     $term = htmlspecialchars(isset($_GET['q']) ? $_GET['q'] : "");
-    $search_lang = (isset($_GET['lang'])) ? $_GET['lang'] : $lang;
+    $content_lang = (isset($_GET['clang'])) ? $_GET['lang'] : $lang;
     $type = (isset($_GET['type'])) ? $_GET['type'] : null;
     $group = (isset($_GET['group'])) ? $_GET['group'] : null;
     $parent = (isset($_GET['parent'])) ? $_GET['parent'] : null;
@@ -374,8 +374,8 @@ class WebController extends Controller
     // convert to vocids array to support multi-vocabulary search
     $vocids = $vocabs !== null ? explode(' ', $vocabs) : null;
     
-    $this->twig->addGlobal("SearchLanguage", $search_lang);
-    $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocids, $lang, $search_lang, $offset, 20, $type, $parent, $group);
+    $this->twig->addGlobal("ContentLanguage", $content_lang);
+    $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocids, $lang, $content_lang, $offset, 20, $type, $parent, $group);
     $counts = $count_and_results['count'];
     $search_results = $count_and_results['results'];
     $uri_parts = $_SERVER['REQUEST_URI'];
@@ -388,7 +388,7 @@ class WebController extends Controller
                 'lang' => $lang,
                 'search_results' => $search_results,
                 'term' => $term,
-                'lang_count' => $search_lang,
+                'lang_count' => $content_lang,
                 'rest' => $rest, 'parts' => $this->parts, 'global_search' => True, 'uri_parts' => $uri_parts,
                 'request_uri' => $this->request_uri,
                 'vocab_list' => $vocabList
@@ -420,7 +420,7 @@ class WebController extends Controller
     }
     $groups = $vocab->listConceptGroups();
     $term = urldecode(isset($_GET['q']) ? $_GET['q'] : "");
-    $search_lang = (isset($_GET['lang'])) ? $_GET['lang'] : $lang;
+    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
     $type = (isset($_GET['type'])) ? $_GET['type'] : null;
     if ($type && strpos($type, '+'))
       $type = explode('+',$type);
@@ -439,8 +439,8 @@ class WebController extends Controller
     $term = trim($term); // surrounding whitespace is not considered significant
     $sterm = strpos($term, "*") === FALSE ? $term . "*" : $term; // default to prefix search
     try {
-      $this->twig->addGlobal("SearchLanguage", $search_lang);
-      $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocab_id, $lang, $search_lang, $offset, 20, $type, $parent, $group);
+      $this->twig->addGlobal("ContentLanguage", $content_lang);
+      $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocab_id, $lang, $content_lang, $offset, 20, $type, $parent, $group);
       $counts = $count_and_results['count'];
       $search_results = $count_and_results['results'];
     } catch (Exception $e) {
@@ -454,7 +454,7 @@ class WebController extends Controller
                 'vocab_id' => $vocab_id,
                 'vocab' => $vocab,
                 'term' => $term,
-                'lang_count' => $search_lang,
+                'lang_count' => $content_lang,
                 'rest' => $rest, 'parts' => $this->parts));
       return;
     }
@@ -469,7 +469,7 @@ class WebController extends Controller
                 'search_results' => $search_results,
                 'search_count' => $counts,
                 'term' => $term,
-                'lang_count' => $search_lang,
+                'lang_count' => $content_lang,
                 'rest' => $rest, 'parts' => $this->parts, 
                 'uri_parts' => $uri_parts,
                 'limit_parent' => $parent,

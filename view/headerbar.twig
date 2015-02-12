@@ -25,7 +25,7 @@
     </select>
   {% endif %}
   <form class="navbar-form" role="search" name="text-search" action="{{ path_fix }}{% if vocab_id is defined %}{{ vocab_id }}/{% endif %}{{ lang }}/search">
-    <input style="display: none" name="lang" value="{% if SearchLanguage %}{{ SearchLanguage }}{% else %}{{ lang }}{% endif %}" id="lang-input">
+    <input style="display: none" name="clang" value="{% if ContentLanguage %}{{ ContentLanguage }}{% else %}{{ lang }}{% endif %}" id="lang-input">
     <div class="input-group">
       <div class="input-group-btn">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="lang-dropdown-toggle">{% trans "Language literal" %}</button>
