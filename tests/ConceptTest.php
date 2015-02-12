@@ -33,26 +33,6 @@ class ConceptTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @covers Concept::getLabel
-   */
-  public function testGetLabelInUILang()
-  {
-    $label = $this->concept->getLabel();
-    $this->assertEquals('Carp', $label);
-  }
-  
-  /**
-   * @covers Concept::getLabel
-   */
-  public function testGetLabelUILangNotAvailable()
-  {
-    $search_results = $this->model->searchConceptsAndInfo('hauki', 'test', 'en', null); 
-    $this->concept = $search_results['results'][0];
-    $label = $this->concept->getLabel();
-    $this->assertEquals('Hauki (fi)', $label);
-  }
-  
-  /**
    * @covers Concept::getVocab
    */
   public function testGetLabel()
