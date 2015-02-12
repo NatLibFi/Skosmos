@@ -29,7 +29,7 @@
                 {% for hiddenPath in combined %}
                   {% if crumbId == loop.index %}
                     {% for hiddenCrumb in hiddenPath %}
-                    <a class="propertyvalue hidden-breadcrumb" href="{{ hiddenCrumb.uri|link_url(vocab,lang) }}">{{ hiddenCrumb.hiddenLabel }}</a><span class="hidden-breadcrumb"> > </span>
+                    <a class="propertyvalue hidden-breadcrumb" href="{{ hiddenCrumb.uri|link_url(vocab,lang,'page',ContentLanguage) }}">{{ hiddenCrumb.hiddenLabel }}</a><span class="hidden-breadcrumb"> > </span>
                     {% endfor %}
                   {% endif %}
                 {% endfor %}
