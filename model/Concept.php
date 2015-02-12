@@ -163,7 +163,6 @@ class Concept extends VocabularyDataObject
 
   public function getMappingProperties()
   {
-    return;
     $properties = array();
 
     $members_array = array();
@@ -220,6 +219,8 @@ class Concept extends VocabularyDataObject
                 $schemeLabel = parse_url($exuri, PHP_URL_HOST);
               }
               $prop_info = $this->getPropertyParam($val, $prop);
+              $properties[$prop_info['prop']][] = new ConceptPropertyValue($this->model, $this->vocab, $response, $prop);
+              continue; //TODO: FIX THIS ( LCSH )
               $properties[$prop_info['prop']][] = new ConceptPropertyValue(
                 $prop_info['prop'],
                 $prop_info['concept_uri'],
@@ -237,6 +238,7 @@ class Concept extends VocabularyDataObject
               $exvocab = null;
               
               $prop_info = $this->getPropertyParam($val, $prop);
+              continue; //TODO: FIX THIS (uses uri as label)
               $properties[$prop_info['prop']][] = new ConceptPropertyValue(
                 $prop_info['prop'],
                 $prop_info['concept_uri'],
@@ -260,6 +262,7 @@ class Concept extends VocabularyDataObject
           $prop_info['exvocab'] = $exvocab;
         }
         if ($prop_info['label'] !== null && $voclabel !== null) {
+          continue; //TODO: FIX THIS (when the vocabulary in question can be found [YSA, ALLARS, etc.])
           $properties[$prop_info['prop']][] = new ConceptPropertyValue(
             $prop_info['prop'],
             $prop_info['concept_uri'],
@@ -546,7 +549,6 @@ class Concept extends VocabularyDataObject
    * Gets the groups the concept belongs to.
    */
   public function getGroupProperties() {
-    return;
     // finding out if the concept is a member of some group
     $groups = array();
     $reverseResources = $this->graph->resourcesMatching('skos:member', $this->resource);
@@ -563,10 +565,10 @@ class Concept extends VocabularyDataObject
         $label = $label ? $label->getValue() : null;
         $super = $reverseResource->get('isothes:superGroup');
         while(isset($super)) {
-          $groups[] = new ConceptPropertyValue('isothes:superGroup', $super->getUri(), $exvocab, $labelLang, $super->label($this->lang));
+          $groups[] = new ConceptPropertyValue($this->model, $this->vocab, $super, 'isothes:superGroup');
           $super = $super->get('isothes:superGroup');
         }
-        $groups[] = new ConceptPropertyValue($property, $reverseUri, $exvocab, $labelLang, $label);
+        $groups[] = new ConceptPropertyValue($this->model, $this->vocab, $reverseResource, $property);
       }
     }
     return $groups;

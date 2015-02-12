@@ -73,7 +73,7 @@
         {% if propval.uri %} {# resources with URI #}
           {% spaceless %}
             {% if propval.label %}
-              <span class="versal value">{{ propval.label|trans }}</span>
+              <span class="versal value">{{ propval.label(ContentLanguage) }}</span>
               {% if propval.lang and (propval.lang != lang) or explicit_langcodes %}<span class="versal"> ({{ propval.lang }})</span>{% endif %}{% if not loop.last %}<span class="versal">,</span>{% endif %}
             {% endif %}
           {% endspaceless %}
