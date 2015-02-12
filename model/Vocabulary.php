@@ -539,9 +539,10 @@ class Vocabulary extends DataObject
    * @param integer $limit
    * @param boolean $any set to true if you want to have a label even in case of a correct language one missing.
    */
-  public function getConceptTransitiveBroaders($uri, $limit, $any=false)
+  public function getConceptTransitiveBroaders($uri, $limit, $any=false, $lang)
   {
-    return $this->getSparql()->queryTransitiveProperty($uri, 'skos:broader', $this->lang, $limit, $any);
+    $lang = $lang ? $lang : $this->lang;
+    return $this->getSparql()->queryTransitiveProperty($uri, 'skos:broader', $lang, $limit, $any);
   }
 
   /**

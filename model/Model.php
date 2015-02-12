@@ -122,11 +122,10 @@ class Model
    */
   public function getBreadCrumbs($vocab, $lang, $uri)
   {
-    $broaders = $vocab->getConceptTransitiveBroaders($uri, 1000, true);
+    $broaders = $vocab->getConceptTransitiveBroaders($uri, 1000, true, $lang);
     $this->getCrumbs($broaders, $uri);
     $crumbs['combined'] = $this->combineCrumbs();
     $crumbs['breadcrumbs'] = $this->crumbs;
-
     return $crumbs;
   }
 

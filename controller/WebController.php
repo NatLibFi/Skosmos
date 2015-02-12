@@ -85,7 +85,7 @@ class WebController extends Controller
 
     // register a Twig filter for generating URLs for vocabulary resources (concepts and groups)
     $controller = $this; // for use by anonymous function below
-    $urlFilter = new Twig_SimpleFilter('link_url', function ($uri, $vocab, $lang, $type='page', $clang) use ($controller) {
+    $urlFilter = new Twig_SimpleFilter('link_url', function ($uri, $vocab, $lang, $type='page', $clang=null) use ($controller) {
       // $vocab can either be null, a vocabulary id (string) or a Vocabulary object
       if ($vocab === null) {
         // target vocabulary is unknown, best bet is to link to the plain URI
@@ -96,7 +96,7 @@ class WebController extends Controller
       } else {
         $vocid = $vocab->getId();
       }
-      if (!$clang)
+      if (!isset($clang))
         $clang = $lang;
       // case 1: URI within vocabulary namespace: use only local name
       $localname = $vocab->getLocalName($uri);
