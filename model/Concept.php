@@ -357,14 +357,8 @@ class Concept extends VocabularyDataObject
       }
 
       // Iterating through every literal and adding these to the data object.
-      foreach ($this->resource->allLiterals($sprop) as $val) {
-        // if the property is a date object a string representation is passed as the value.
-        if ($val->getDataType() === 'xsd:date' || $val->getDataType() === 'xsd:dateTime')
-          //$properties[$prop][] = new ConceptPropertyValue($prop, null, null, $val->getLang(), $val->__toString());
-          continue; // TODO: remove this when the conceptPropertyValue actually works
-        else
-          $properties[$prop][] = new ConceptPropertyValueLiteral($val, $prop);
-      }
+      foreach ($this->resource->allLiterals($sprop) as $val)
+        $properties[$prop][] = new ConceptPropertyValueLiteral($val, $prop);
       
       // Iterating through every resource and adding these to the data object.
       foreach ($this->resource->allResources($sprop) as $val) {
