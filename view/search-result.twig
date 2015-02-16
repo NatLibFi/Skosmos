@@ -12,7 +12,7 @@
     {% endif %}
     {% if concept.foundBy %} {# hit has been found through an alt/hidden/another language label #}
       {% if concept.foundByType != 'lang' %}<span class="versal replaced">{{ concept.foundBy }}</span><span class="versal"> &rarr;&nbsp;</span>{% if concept.notation %}<span class="notation">{{ concept.notation }}</span>{% endif %}
-      <a class="prefLabel" href="{{ concept.uri | link_url(concept.vocab,lang,'page',ContentLanguage) }}">{{ concept.label }}{% if explicit_langcodes %} ({{ concept.lang }}){% endif %}</a></span>
+      <a class="prefLabel" href="{{ concept.uri | link_url(concept.vocab,lang,'page',ContentLanguage) }}">{{ concept.label(ContentLanguage) }}{% if explicit_langcodes %} ({{ concept.lang }}){% endif %}</a></span>
       
       {% else %}{% if concept.notation %}<span class="notation">{{ concept.notation }}</span>{% endif %}
       <a class="prefLabel" href="{{ concept.uri | link_url(concept.vocab,lang,'page',ContentLanguage) }}">{{ concept.foundBy }}</a>
