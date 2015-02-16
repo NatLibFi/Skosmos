@@ -19,9 +19,9 @@ class ConceptPropertyValueLiteral
 
   public function __toString()
   {
-    if ($this->label === null)
+    if ($this->getLabel() === null)
       return "";
-    return $this->label;
+    return $this->getLabel();
   }
 
   public function getLang()
