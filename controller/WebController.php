@@ -443,7 +443,7 @@ class WebController extends Controller
     $term = trim($term); // surrounding whitespace is not considered significant
     $sterm = strpos($term, "*") === FALSE ? $term . "*" : $term; // default to prefix search
     try {
-      $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocab_id, $lang, $content_lang, $offset, 20, $type, $parent, $group);
+      $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocab_id, $content_lang, $content_lang, $offset, 20, $type, $parent, $group);
       $counts = $count_and_results['count'];
       $search_results = $count_and_results['results'];
     } catch (Exception $e) {

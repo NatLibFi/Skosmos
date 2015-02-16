@@ -19,7 +19,7 @@
       {% endif %}
     {% else %}
     {% if concept.notation %}<span class="notation">{{ concept.notation }}</span>{% endif %}
-    <a class="prefLabel conceptlabel" href="{% if concept.type == "skos:Collection" %}{{ concept.uri | link_url(concept.vocab, lang, 'groups') }}{% elseif concept.exvocab is defined%}{{ concept.uri | link_url(concept.exvocab,concept.lang) }}{% else %}{{ concept.uri | link_url(concept.vocab,concept.lang) }}{% endif %}">{{ concept.label }}</a>{% if explicit_langcodes %}<span class="versal"> ({{ concept.lang }})</span>{% endif %}
+    <a class="prefLabel conceptlabel" href="{% if concept.type == "skos:Collection" %}{{ concept.uri | link_url(concept.vocab, lang, 'groups') }}{% elseif concept.exvocab is defined%}{{ concept.uri | link_url(concept.exvocab,concept.lang) }}{% else %}{{ concept.uri | link_url(concept.vocab,lang,'page',ContentLanguage) }}{% endif %}">{{ concept.label(ContentLanguage) }}</a>{% if explicit_langcodes %}<span class="versal"> ({{ concept.lang }})</span>{% endif %}
     {% endif %}
   {% endspaceless %}
   {% if concept.type == 'skosext:DeprecatedConcept' %}<h2 class="deprecated-alert">{% trans %}deprecated{% endtrans %}</h2>{% endif %}
