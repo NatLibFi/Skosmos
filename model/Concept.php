@@ -372,6 +372,7 @@ class Concept extends VocabularyDataObject
         if (in_array($prop, $this->MAPPING_PROPERTIES)) {
           break;
         } elseif ($prop === 'rdf:type') {
+          continue;
           $exuri = $val->getUri();
           $exvoc = $this->model->guessVocabularyFromURI($exuri);
           if ($exvoc) {
