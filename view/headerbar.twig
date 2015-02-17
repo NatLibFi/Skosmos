@@ -14,7 +14,7 @@
 <div class="header-float">
 {% if vocab_id != 'About' and vocab_id != 'Feedback' %}
   
-  {% if not front_page and global_search is not defined %}<div class="search-vocab-text search-hint" title="{% trans "search_example_text" %}"><p>{% trans "Search within this vocabulary:" %}</p></div>{% endif %}
+  {% if not front_page and global_search is not defined %}<div class="search-vocab-text search-hint" title="{% trans "search_example_text" %}"><p>{% trans "Content language" %}</p></div>{% endif %}
   {% if vocab_list is defined %}
     <select class="multiselect" multiple="multiple">
     {% for vocabClassName,vocabArray in vocab_list %}
@@ -39,7 +39,7 @@
           <li><a href="#" class="lang-button" hreflang="{{ langcode }}">{{ langcode | lang_name(lang) }}</a></li>
           {% endfor %}
         {% endif %}
-          <li><a href="#" class="lang-button-all" hreflang="">{% trans "Search language: any" %}</a></li>
+          {#<li><a href="#" class="lang-button-all" hreflang="">{% trans "Search language: any" %}</a></li>#}
         </ul>
       </div><!-- /btn-group -->
       <input id="search-field" type="text" class="form-control" name="q" value="{{ term }}">
