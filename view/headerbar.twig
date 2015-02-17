@@ -32,7 +32,7 @@
         <ul class="dropdown-menu">
         {% if vocab is defined %}
           {% for langcode in vocab.languages %}
-          <li><a href="#" class="lang-button" hreflang="{{ langcode }}">{{ langcode | lang_name(lang) }}</a></li>
+          <li><a href="?clang={{langcode}}" class="lang-button" hreflang="{{ langcode }}">{{ langcode | lang_name(lang) }}</a></li>
           {% endfor %}
         {% else %}
           {% for langcode in lang_list %}
