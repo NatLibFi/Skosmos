@@ -197,7 +197,7 @@ EOQ;
    * @param boolean $as_graph whether to return a graph (true) or array of Concepts (false)
    * @return mixed query result graph (EasyRdf_Graph), or array of Concept objects
    */ 
-  public function queryConceptInfo($uris, $arrayClass = null, $vocabs = null, $as_graph = false)
+  public function queryConceptInfo($uris, $arrayClass = null, $vocabs = null, $as_graph = false, $clang)
   {
     $gc = $this->graphClause;
 
@@ -292,7 +292,7 @@ EOQ;
     foreach ($uris as $index => $uri) {
       $conc = $result->resource($uri);
       $vocab = sizeof($vocabs) == 1 ? $vocabs[0] : $vocabs[$index];
-      $conceptArray[] = new Concept($this->model, $vocab, $conc, $result);
+      $conceptArray[] = new Concept($this->model, $vocab, $conc, $result, $clang);
     }
 
     return $conceptArray;

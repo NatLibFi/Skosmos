@@ -222,7 +222,7 @@ class WebController extends Controller
     $langcodes = $vocab->getShowLangCodes();
     $vocab = $this->model->getVocabulary($vocab_id);
     $uri = $vocab->getConceptURI($uri); // make sure it's a full URI
-    $results = $vocab->getConceptInfo($uri);
+    $results = $vocab->getConceptInfo($uri, $content_lang);
     $crumbs = $this->model->getBreadCrumbs($vocab, $content_lang, $uri);
     echo $template->render(Array(
       'search_results' => $results,

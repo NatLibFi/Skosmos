@@ -22,6 +22,7 @@ class Concept extends VocabularyDataObject
   private $graph;
   /** the preferred order of properties */
   public $order;
+  private $clang;
 
   /** concept properties that should not be shown to users */
   private $DELETED_PROPERTIES = array(
@@ -53,11 +54,12 @@ class Concept extends VocabularyDataObject
    * @param EasyRdf_Resource $resource
    * @param EasyRdf_Graph $graph
    */
-  public function __construct($model, $vocab, $resource, $graph)
+  public function __construct($model, $vocab, $resource, $graph, $clang)
   {
     parent::__construct($model, $vocab, $resource);
     $this->order = array("rdf:type", "dc:isReplacedBy", "skos:definition", "skos:broader", "skos:narrower", "skos:related", "skos:altLabel", "skosmos:memberOf", "skos:note", "skos:scopeNote", "skos:historyNote", "rdfs:comment", "dc11:source", "dc:source", "skos:prefLabel");
     $this->graph = $graph;
+    $this->clang = $clang;
   }
 
   /**
@@ -573,31 +575,17 @@ class Concept extends VocabularyDataObject
    */
   public function getForeignLabels()
   {
-    return;
     global $LANGUAGES;
     $labels = array();
     foreach ($this->resource->allLiterals('skos:prefLabel') as $lit) {
       // filtering away subsets of the current language eg. en vs en-GB
-      if ($lit->getLang() != $this->lang && strpos($lit->getLang(), $this->lang . '-') !== 0)
-        $labels[Punic\Language::getName($lit->getLang(), $this->lang)][] = new ConceptPropertyValue(
-            'skos:prefLabel',
-            '',
-            '',
-            $lit->getLang(),
-            $lit->getValue()
-          );
-
+      if ($lit->getLang() != $this->clang && strpos($lit->getLang(), $this->lang . '-') !== 0)
+        $labels[Punic\Language::getName($lit->getLang(), $this->lang)][]  = new ConceptPropertyValueLiteral($lit, 'skos:prefLabel');
     }
     foreach ($this->resource->allLiterals('skos:altLabel') as $lit) {
       // filtering away subsets of the current language eg. en vs en-GB
-      if ($lit->getLang() != $this->lang && strpos($lit->getLang(), $this->lang . '-') !== 0)
-        $labels[Punic\Language::getName($lit->getLang(), $this->lang)][] = new ConceptPropertyValue(
-            'skos:altLabel',
-            '',
-            '',
-            $lit->getLang(),
-            $lit->getValue()
-          );
+      if ($lit->getLang() != $this->clang && strpos($lit->getLang(), $this->lang . '-') !== 0)
+        $labels[Punic\Language::getName($lit->getLang(), $this->lang)][]  = new ConceptPropertyValueLiteral($lit, 'skos:altLabel');
     }
     ksort($labels);
     return $labels;

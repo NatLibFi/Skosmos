@@ -559,11 +559,11 @@ class Vocabulary extends DataObject
    * @param string $uri the full URI of the concept
    * @return array
    */
-  public function getConceptInfo($uri)
+  public function getConceptInfo($uri, $clang)
   {
     $sparql = $this->getSparql();
 
-    return $sparql->queryConceptInfo($uri, $this->getArrayClassURI(), array($this));
+    return $sparql->queryConceptInfo($uri, $this->getArrayClassURI(), array($this), null, $clang);
   }
 
   /**
