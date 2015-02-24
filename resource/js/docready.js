@@ -696,9 +696,12 @@ $(function() { // DOCUMENT READY
   function onSelection($e, datum) {
     if ($e.currentTarget.id !== 'parent-limit') {
       var localname = datum.localname;
+      var clang = getUrlParams().clang;
       if (!localname || encodeURIComponent(localname) != localname) {
         localname = "?uri=" + datum.uri;
       }
+      if (clang)
+        localname += '?clang=' + clang;
       // replaced complex logic with path_fix that should always work.
       if (datum.type && datum.type.indexOf('Collection') !== -1) {
         location.href = encodeURI(path_fix + datum.vocab + '/' + lang + '/groups/' + localname);
