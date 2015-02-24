@@ -359,8 +359,12 @@ class Concept extends VocabularyDataObject
       }
 
       // Iterating through every literal and adding these to the data object.
-      foreach ($this->resource->allLiterals($sprop) as $val)
-        $properties[$prop][] = new ConceptPropertyValueLiteral($val, $prop);
+      foreach ($this->resource->allLiterals($sprop) as $val) {
+        $literal = new ConceptPropertyValueLiteral($val, $prop, $this->clang);
+        // checking that the literal has either the correct language or no language set
+        if ($literal->getLang() == null || $literal->getLang() == $this->clang)
+          $properties[$prop][] = $literal; 
+      }
       
       // Iterating through every resource and adding these to the data object.
       foreach ($this->resource->allResources($sprop) as $val) {

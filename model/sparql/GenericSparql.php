@@ -197,7 +197,7 @@ EOQ;
    * @param boolean $as_graph whether to return a graph (true) or array of Concepts (false)
    * @return mixed query result graph (EasyRdf_Graph), or array of Concept objects
    */ 
-  public function queryConceptInfo($uris, $arrayClass = null, $vocabs = null, $as_graph = false, $clang)
+  public function queryConceptInfo($uris, $arrayClass = null, $vocabs = null, $as_graph = false, $clang = null)
   {
     $gc = $this->graphClause;
 
