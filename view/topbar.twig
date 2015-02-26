@@ -1,4 +1,4 @@
-<a {% if vocab_id == '' %}id="service-logo"{% endif %} {% if vocab_id != '' or vocab_id == 'feedback' or vocab_id == 'about' %}class="service-{{ lang }}" {% endif %}href="{{ path_fix }}{{ lang }}/"><h1 id="service-name">{% if ServiceName is defined  %}{{ ServiceName }}{% else %}Skosmos{% endif %}</h1></a>
+<a {% if vocab_id == '' %}id="service-logo"{% endif %} {% if vocab_id != '' or vocab_id == 'feedback' or vocab_id == 'about' %}class="service-{{ lang }}" {% endif %}href="{{ path_fix }}{{ lang }}/{% if ContentLanguage %}?clang={{ ContentLanguage }}{% endif %}"><h1 id="service-name">{% if ServiceName is defined  %}{{ ServiceName }}{% else %}Skosmos{% endif %}</h1></a>
 {% if languages|length > 1 %}
 <div id="language"><span class="navigation-font">|</span>
   {% for langcode, langdata in languages %}
@@ -9,13 +9,13 @@
 </div>
 {% endif %}
 <div id="navigation">
-  <a href="{{ path_fix }}{{ lang }}/" id="navi1" class="navigation-font" >
+  <a href="{{ path_fix }}{{ lang }}/{% if ContentLanguage %}?clang={{ ContentLanguage }}{% endif %}" id="navi1" class="navigation-font" >
   {% trans "Vocabularies-nav" %}
   </a>
-  <a href="{{ path_fix }}{{ lang }}/about" id="navi2" class="navigation-font">
+  <a href="{{ path_fix }}{{ lang }}/about{% if ContentLanguage %}?clang={{ ContentLanguage }}{% endif %}" id="navi2" class="navigation-font">
   {% trans "About page" %}
   </a>
-  <a href="{{ path_fix }}{% if vocab_id and vocab.title%}{{ vocab_id }}/{% endif %}{{ lang }}/feedback" id="navi3" class="navigation-font">
+  <a href="{{ path_fix }}{% if vocab_id and vocab.title%}{{ vocab_id }}/{% endif %}{{ lang }}/feedback{% if ContentLanguage %}?clang={{ ContentLanguage }}{% endif %}" id="navi3" class="navigation-font">
   {% trans "Feedback" %}
   </a>
   <span id="navi4" title="{% trans "helper_help" %}">
