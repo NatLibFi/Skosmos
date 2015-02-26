@@ -39,6 +39,7 @@ $(function() { // DOCUMENT READY
   var selectedVocabs = [];
   var vocabSelectionString = getUrlParams().vocabs ? getUrlParams().vocabs.replace(/\+/g,' ') : readCookie('SKOSMOS_SELECTED');
   $('#selected-vocabs').val(vocabSelectionString);
+  var clang = getUrlParams().clang ? getUrlParams().clang : lang;
 
   // Shortens the properties that don't fit on one row on the search result view.
   function shortenProperties() {
@@ -337,7 +338,6 @@ $(function() { // DOCUMENT READY
         var base_path = path_fix.length / 3;
         var clicked = $(this);
         var $content = $('.content');
-        var clang = getUrlParams().clang;
         var targetUrl = 'http://' + base_url + vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(event.target.href);
         var parameters = $.param({'base_path' : base_path, 'clang' : clang});
         $('#hier-trigger').attr('href', targetUrl);
@@ -697,7 +697,6 @@ $(function() { // DOCUMENT READY
   function onSelection($e, datum) {
     if ($e.currentTarget.id !== 'parent-limit') {
       var localname = datum.localname;
-      var clang = getUrlParams().clang;
       if (!localname || encodeURIComponent(localname) != localname) {
         localname = "?uri=" + datum.uri;
       }
@@ -1054,7 +1053,7 @@ $(function() { // DOCUMENT READY
    */
   if ($('#alpha').hasClass('active') && $('#vocab-info').length == 1 && $('.alphabetical-search-results').length === 0) {
     // taking into account the possibility that the lang parameter has been changed by the WebController.
-    var urlLangCorrected = '//' + base_url + vocab + '/' + lang + '/index?limit=250&offset=0';
+    var urlLangCorrected = '//' + base_url + vocab + '/' + clang + '/index?limit=250&offset=0';
     $('.sidebar-grey').empty().append('<div class="loading-spinner"><span class="spinner-text">'+ loading_text + '</span><span class="spinner" /></div>');
     $.ajax({
       url : urlLangCorrected,
