@@ -337,8 +337,9 @@ $(function() { // DOCUMENT READY
         var base_path = path_fix.length / 3;
         var clicked = $(this);
         var $content = $('.content');
+        var clang = getUrlParams().clang;
         var targetUrl = 'http://' + base_url + vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(event.target.href);
-        var parameters = $.param({'base_path' : base_path});
+        var parameters = $.param({'base_path' : base_path, 'clang' : clang});
         $('#hier-trigger').attr('href', targetUrl);
         $.ajax({
             url : targetUrl,
