@@ -375,6 +375,10 @@ class Concept extends VocabularyDataObject
         if (in_array($prop, $this->MAPPING_PROPERTIES)) {
           break;
         } elseif ($prop === 'rdf:type') {
+          if ($val->shorten() == 'skos:Concept') {
+            // no need to display that type is a plain Concept (see issue #200)
+            break;
+          }
           $exuri = $val->getUri();
           $exvoc = $this->model->guessVocabularyFromURI($exuri);
           if ($exvoc) {
