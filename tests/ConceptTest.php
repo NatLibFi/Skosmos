@@ -9,6 +9,10 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     require_once 'testconfig.inc';
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');
+    bindtextdomain('skosmos', 'resource/translations');
+    bind_textdomain_codeset('skosmos', 'UTF-8');
+    textdomain('skosmos');
+
     $this->model = new Model();
     $search_results = $this->model->searchConceptsAndInfo('carp', 'test', 'en', 'en'); 
     $this->concept = $search_results['results'][0];
@@ -109,17 +113,24 @@ class ConceptTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers Concept::getProperties
+   */
+  public function testGetPropertiesTypes()
+  {
+    $props = $this->concept->getProperties();
+    $propvals = $props['rdf:type']->getValues();
+    $this->assertCount(1, $propvals); // should only have type meta:TestClass, not skos:Concept (see #200)
+    $this->assertEquals('Test class', $propvals[0]->getLabel());
+    $this->assertEquals('http://www.skosmos.skos/test-meta/TestClass', $propvals[0]->getUri());
+  }
+
+  /**
+   * @covers Concept::getProperties
    * @covers ConceptProperty::getValues
    * @covers ConceptPropertyValue::getLabel
    * @covers ConceptPropertyValue::getSubMembers
    */
   public function testGetPropertiesWithNarrowersPartOfACollection()
   {
-    bindtextdomain('skosmos', 'resource/translations');
-    bind_textdomain_codeset('skosmos', 'UTF-8');
-
-    // Choose domain for translations
-    textdomain('skosmos');
     $model = new Model();
     $vocab = $model->getVocabulary('groups');
     $concept = $vocab->getConceptInfo("http://www.skosmos.skos/groups/ta1");
