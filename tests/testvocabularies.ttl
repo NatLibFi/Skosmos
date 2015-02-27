@@ -51,7 +51,7 @@
 	skosmos:arrayClass isothes:ThesaurusArray ;
 	void:sparqlEndpoint <http://localhost:3030/ds/sparql> ;
 	skosmos:language "fi", "en";
-	skosmos:indexShowClass meta:TestClass;
+	skosmos:indexShowClass meta:TestClass, meta:TestClass2;
 	skosmos:sparqlGraph <http://www.skosmos.skos/groups/> .
 
 <http://skosmos.skos/dump/test/groups> dc:format "application/rdf+xml" .

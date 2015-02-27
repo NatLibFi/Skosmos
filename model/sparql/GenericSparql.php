@@ -675,12 +675,12 @@ EOQ;
    * @param $letter the letter (or special class) to search for
    * @param $lang language of labels
    */
-  public function queryConceptsAlphabetical($letter, $lang, $limit=null, $offset=null, $class=null) {
+  public function queryConceptsAlphabetical($letter, $lang, $limit=null, $offset=null, $classes=null) {
     $gc = $this->graphClause;
     $limit = ($limit) ? 'LIMIT ' . $limit : '';
     $offset = ($offset) ? 'OFFSET ' . $offset : '';
-    $class = ($class) ? $class : 'http://www.w3.org/2004/02/skos/core#Concept';
-    $values = 'VALUES (?type) { (<' . $class . '>) }';
+    $classes = ($classes) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
+    $values = $this->formatValues('?type', $classes, 'uri');
     
     // eliminating whitespace and line changes when the conditions aren't needed.
     $limitandoffset = '';
@@ -781,10 +781,10 @@ EOQ;
    * @return array array of characters
    */
    
-  public function queryFirstCharacters($lang, $class=null) {
+  public function queryFirstCharacters($lang, $classes=null) {
     $gc = $this->graphClause;
-    $class = ($class) ? $class : 'http://www.w3.org/2004/02/skos/core#Concept' ;
-    $values = 'VALUES (?type) { (<' . $class . '>) }';
+    $classes = (sizeof($classes) > 0) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept') ;
+    $values = $this->formatValues('?type', $classes, 'uri');
     $query = <<<EOQ
 SELECT DISTINCT (substr(ucase(str(?label)), 1, 1) as ?l) WHERE {
   $gc {

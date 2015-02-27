@@ -63,6 +63,16 @@ groups:ta114 a skos:Concept, meta:TestClass2 ;
     skos:inScheme groups:conceptscheme ;
     skos:prefLabel "Guppy"@en-gb .
 
+groups:ta115 a skos:Concept, meta:TestClass ;
+    skos:broader groups:ta1 ;
+    skos:inScheme groups:conceptscheme ;
+    skos:prefLabel "3-eyed fish"@en .
+
+groups:ta116 a skos:Concept, meta:TestClass ;
+    skos:broader groups:ta1 ;
+    skos:inScheme groups:conceptscheme ;
+    skos:prefLabel "'fish and chips'"@en .
+
 groups:conceptscheme a skos:ConceptScheme ;
     rdfs:label "Test conceptscheme with groups"@en ;
     skos:hasTopConcept groups:ta1 .

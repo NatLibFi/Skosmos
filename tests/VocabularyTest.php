@@ -33,21 +33,22 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @covers Vocabulary::getIndexClass
+   * @covers Vocabulary::getIndexClasses
    */
-  public function testGetIndexClassNotSet() {
+  public function testGetIndexClassesNotSet() {
     $vocab = $this->model->getVocabulary('test');
-    $actual = $vocab->getIndexClass();
-    $this->assertEquals(null, $actual);
+    $actual = $vocab->getIndexClasses();
+    $this->assertEquals(array(), $actual);
   }
   
   /**
-   * @covers Vocabulary::getIndexClass
+   * @covers Vocabulary::getIndexClasses
    */
-  public function testGetIndexClass() {
+  public function testGetIndexClasses() {
     $vocab = $this->model->getVocabulary('groups');
-    $actual = $vocab->getIndexClass();
-    $this->assertEquals('http://www.skosmos.skos/test-meta/TestClass', $actual);
+    $actual = $vocab->getIndexClasses();
+    $expected = array('http://www.skosmos.skos/test-meta/TestClass','http://www.skosmos.skos/test-meta/TestClass2');
+    $this->assertEquals($expected, $actual);
   }
   
   /**
@@ -347,7 +348,7 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   public function testGetAlphabetIssue107() {
     $vocab = $this->model->getVocabulary('groups');
     $alpha = $vocab->getAlphabet();
-    $this->assertEquals(array("G"), $alpha);
+    $this->assertEquals(array("G", "!*", "0-9"), $alpha);
   }
 
   /**
@@ -367,5 +368,46 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
     $info = $vocab->getInfo();
     $this->assertEquals(array("dc11:title" => array('Test ontology 2')), $info);
   }
+
+  /**
+   * @covers Vocabulary::searchConceptsAlphabetical
+   */
+  public function testSearchConceptsAlphabetical() {
+    $vocab = $this->model->getVocabulary('groups');
+    $concepts = $vocab->searchConceptsAlphabetical('G');
+    $this->assertCount(2, $concepts);
+    $this->assertEquals('Grouped fish', $concepts[0]['prefLabel']);
+    $this->assertEquals('Guppy', $concepts[1]['prefLabel']);
+  }
+
+  /**
+   * @covers Vocabulary::searchConceptsAlphabetical
+   */
+  public function testSearchConceptsAlphabeticalDigits() {
+    $vocab = $this->model->getVocabulary('groups');
+    $concepts = $vocab->searchConceptsAlphabetical('0-9');
+    $this->assertCount(1, $concepts);
+    $this->assertEquals('3-eyed fish', $concepts[0]['prefLabel']);
+  }
+
+  /**
+   * @covers Vocabulary::searchConceptsAlphabetical
+   */
+  public function testSearchConceptsAlphabeticalSpecial() {
+    $vocab = $this->model->getVocabulary('groups');
+    $concepts = $vocab->searchConceptsAlphabetical('!*');
+    $this->assertCount(1, $concepts);
+    $this->assertEquals("'fish and chips'", $concepts[0]['prefLabel']);
+  }
+
+  /**
+   * @covers Vocabulary::searchConceptsAlphabetical
+   */
+  public function testSearchConceptsAlphabeticalEverything() {
+    $vocab = $this->model->getVocabulary('groups');
+    $concepts = $vocab->searchConceptsAlphabetical('*');
+    $this->assertCount(4, $concepts);
+  }
+
 
 }
