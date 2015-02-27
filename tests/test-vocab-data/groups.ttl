@@ -58,7 +58,7 @@ groups:ta1 a skos:Concept, meta:TestClass ;
     skos:prefLabel "Grouped fish"@en ;
     skos:topConceptOf groups:conceptscheme .
 
-groups:ta114 a skos:Concept, meta:TestClass ;
+groups:ta114 a skos:Concept, meta:TestClass2 ;
     skos:broader groups:ta1 ;
     skos:inScheme groups:conceptscheme ;
     skos:prefLabel "Guppy"@en-gb .
