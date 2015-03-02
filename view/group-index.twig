@@ -5,12 +5,12 @@
 {% block sidebar %}
 <div class="sidebar-buttons">
   <ul class="nav nav-tabs">
-    <li id="alpha"><a href="{{ path_fix }}{{ vocab_id }}/{{ lang }}/index">{% trans "Alpha-nav" %}</a></li>
+    <li id="alpha"><a href="{{ path_fix }}{{ vocab_id }}/{{ lang }}/index{% if ContentLanguage %}?clang={{ ContentLanguage }}{% endif %}">{% trans "Alpha-nav" %}</a></li>
     {% if search_results|length == 1 or vocab.showHierarchy %}
     <li id="hierarchy"><a href="#" id="hier-trigger">{% trans "Hier-nav" %}</a></li>
     {% endif %}
     {% if vocab.groupClassURI %}
-    <li id="groups" class="active"><a href="{{ path_fix }}{{ vocab_id }}/{{ lang }}/groups">{% trans "Group-nav" %}</a></li>
+    <li id="groups" class="active"><a href="{{ path_fix }}{{ vocab_id }}/{{ lang }}/groups{% if ContentLanguage %}?clang={{ ContentLanguage }}{% endif %}">{% trans "Group-nav" %}</a></li>
     {% else %}
     {% endif %}
   </ul>
