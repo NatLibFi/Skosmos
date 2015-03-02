@@ -606,6 +606,7 @@ class WebController extends Controller
   {
     $this->setLanguageProperties($lang);
     $template = $this->twig->loadTemplate('group-contents.twig');
+    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
     try {
       $vocab = $this->model->getVocabulary($vocab_id);
     } catch (Exception $e) {
@@ -620,7 +621,7 @@ class WebController extends Controller
       return;
     }
     $groupuri = $vocab->getConceptURI($group);
-    $contents = $vocab->listConceptGroupContents($groupuri);
+    $contents = $vocab->listConceptGroupContents($groupuri, $content_lang);
     $group_name = $vocab->getGroupName($groupuri);
     $uri = $vocab->getConceptURI($group); // make sure it's a full URI
     $results = $vocab->getConceptInfo($uri);
