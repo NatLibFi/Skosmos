@@ -496,6 +496,7 @@ class WebController extends Controller
   {
     $this->setLanguageProperties($lang);
     $template = $this->twig->loadTemplate('alphabetical-index.twig');
+    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
 
     try {
       $vocab = $this->model->getVocabulary($vocab_id);
@@ -533,7 +534,7 @@ class WebController extends Controller
 
     $all_at_once = $vocab->getAlphabeticalFull();
     if (!$all_at_once) {
-      $search_results = $vocab->searchConceptsAlphabetical($letter, $count, $offset);
+      $search_results = $vocab->searchConceptsAlphabetical($letter, $count, $offset, $content_lang);
       $letters = $vocab->getAlphabet();
     } else
       $search_results = $vocab->searchConceptsAlphabetical('*');
