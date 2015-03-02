@@ -566,6 +566,7 @@ class WebController extends Controller
   {
     $this->setLanguageProperties($lang);
     $template = $this->twig->loadTemplate('group-index.twig');
+    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
     try {
       $vocab = $this->model->getVocabulary($vocab_id);
     } catch (Exception $e) {
@@ -579,7 +580,7 @@ class WebController extends Controller
 
       return;
     }
-    $groups = $vocab->listConceptGroups();
+    $groups = $vocab->listConceptGroups(false, $content_lang);
     echo $template
             ->render(
                     array('path_fix' => $this->path_fix,
