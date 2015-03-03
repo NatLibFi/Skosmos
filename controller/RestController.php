@@ -27,7 +27,7 @@ class RestController extends Controller
   private function return_error($code, $status, $message)
   {
     header("HTTP/1.0 $code $status");
-    header("Content-type: text/plain");
+    header("Content-type: text/plain; charset=utf-8");
     echo "$code $status : $message";
     exit();
   }
@@ -39,7 +39,7 @@ class RestController extends Controller
   private function return_json($data)
   {
     if (isset($_GET['callback'])) {
-      header("Content-type: application/javascript");
+      header("Content-type: application/javascript; charset=utf-8");
       // wrap with JSONP callback
       echo $_GET['callback'] . "(" . json_encode($data) . ");";
     } else {
@@ -48,7 +48,7 @@ class RestController extends Controller
       $priorities = array('application/json', 'application/ld+json');
       $best = (isset($_SERVER['HTTP_ACCEPT'])) ? $negotiator->getBest($_SERVER['HTTP_ACCEPT'], $priorities) : null;
       $format = $best != null ? $best->getValue() : $priorities[0];
-      header("Content-type: $format");
+      header("Content-type: $format; charset=utf-8");
       header("Vary: Accept"); // inform caches that we made a choice based on Accept header
       echo json_encode($data);
     }
@@ -563,7 +563,7 @@ class RestController extends Controller
       $results = \ML\JsonLD\JsonLD::toString($compact_jsonld);
     }
 
-    header("Content-type: " . $format);
+    header("Content-type: $format; charset=utf-8");
     echo $results;
   }
 
