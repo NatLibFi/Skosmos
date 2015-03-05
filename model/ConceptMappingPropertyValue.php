@@ -75,9 +75,14 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
     } elseif ($this->resource->getLiteral('rdf:value') !== null) { // any language
       return $this->resource->getLiteral('rdf:value');
     } 
+    
+    // if the resource is from a another vocabulary known by the skosmos instance
     if ($exvocab)
       return $this->getExternalLabel($exvocab, $this->getUri(), $exvocab->getDefaultLanguage());
-    return null;
+
+    // using URI as label if nothing else has been found.
+    $label = $this->resource->shorten() ? $this->resource->shorten() : $this->resource->getUri();
+    return $label;
   }
 
   public function getUri()
