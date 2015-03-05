@@ -100,8 +100,20 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
     $exvocab = $this->model->guessVocabularyFromURI($this->resource->getUri());
     if ($exvocab)
       return $exvocab->getTitle();
-    else 
-      return null;
+    else {
+      $scheme = $this->resource->get('skos:inScheme');
+      $schemeLabel = null;
+      if($scheme) {
+        $schemeResource = $this->model->getResourceFromUri($scheme->getUri());
+        if ($schemeResource)
+          return $schemeResource->label()->getValue();
+      }
+      if ($label !== null && $schemeLabel == null) {
+        // got a label for the concept, but not the scheme - use the host name as scheme label
+        $schemeLabel = parse_url($this->resource->getUri(), PHP_URL_HOST);
+      }
+    }
+    return null;
   }
 
   public function addSubMember($type, $label, $uri, $vocab, $lang, $exvocab = null)
