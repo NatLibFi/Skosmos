@@ -69,7 +69,7 @@
               {% if value.altLabel %}
               <span class="replaced">{{ value.altLabel }}</span>	&rarr; <a href="{{ value.uri | link_url(vocab,lang) }}">{{ value.prefLabel }}</a>
               {% else %}
-              <a href="{{ value.uri | link_url(vocab,lang) }}">{{ value.prefLabel }}</a>
+              <a href="{{ value.uri | link_url(vocab,lang,'page',ContentLanguage) }}">{{ value.prefLabel }}</a>
               {% endif %}
              </li>
               {% endfor %}
