@@ -221,7 +221,7 @@ class Concept extends VocabularyDataObject
                 $schemeLabel = parse_url($exuri, PHP_URL_HOST);
               }
               $prop_info = $this->getPropertyParam($val, $prop);
-              $properties[$prop_info['prop']][] = new ConceptPropertyValue($this->model, $this->vocab, $response, $prop);
+              $properties[$prop_info['prop']][] = new ConceptMappingPropertyValue($this->model, $this->vocab, $response, $prop);
               continue; //TODO: FIX THIS ( LCSH )
               $properties[$prop_info['prop']][] = new ConceptPropertyValue(
                 $prop_info['prop'],
@@ -264,6 +264,7 @@ class Concept extends VocabularyDataObject
           $prop_info['exvocab'] = $exvocab;
         }
         if ($prop_info['label'] !== null && $voclabel !== null) {
+          $properties[$prop_info['prop']][] = new ConceptMappingPropertyValue($this->model, $this->vocab, $val, $prop);
           continue; //TODO: FIX THIS (when the vocabulary in question can be found [YSA, ALLARS, etc.])
           $properties[$prop_info['prop']][] = new ConceptPropertyValue(
             $prop_info['prop'],

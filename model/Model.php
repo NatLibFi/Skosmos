@@ -18,6 +18,7 @@ require_once 'model/VocabularyDataObject.php';
 require_once 'model/Concept.php';
 require_once 'model/ConceptProperty.php';
 require_once 'model/ConceptPropertyValue.php';
+require_once 'model/ConceptMappingPropertyValue.php';
 require_once 'model/ConceptPropertyValueLiteral.php';
 require_once 'model/VocabularyCategory.php';
 require_once 'model/Vocabulary.php';
