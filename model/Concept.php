@@ -223,59 +223,11 @@ class Concept extends VocabularyDataObject
               $prop_info = $this->getPropertyParam($val, $prop);
               $properties[$prop_info['prop']][] = new ConceptMappingPropertyValue($this->model, $this->vocab, $response, $prop);
               continue; //TODO: FIX THIS ( LCSH )
-              $properties[$prop_info['prop']][] = new ConceptPropertyValue(
-                $prop_info['prop'],
-                $prop_info['concept_uri'],
-                $prop_info['vocab'],
-                $label_lang,
-                $label,
-                null,
-                null,
-                $schemeLabel
-              );
-            }
-            if (!$label) {
-              $label = $val->shorten() ? $val->shorten() : $exuri;
-              $label_lang = $this->lang;
-              $exvocab = null;
-              
-              $prop_info = $this->getPropertyParam($val, $prop);
-              continue; //TODO: FIX THIS (uses uri as label)
-              $properties[$prop_info['prop']][] = new ConceptPropertyValue(
-                $prop_info['prop'],
-                $prop_info['concept_uri'],
-                $prop_info['vocab'],
-                null,
-                $label,
-                null,
-                null,
-                null 
-              );
-
             }
           }
+          $properties[$prop][] = new ConceptMappingPropertyValue($this->model, $this->vocab, $val, $prop);
         } else {
           break;
-        }
-        $prop_info = $this->getPropertyParam($val, $prop);
-        if ($prop_info['label'] == null) {
-          $prop_info['label'] = $label;
-          $prop_info['lang'] = $label_lang;
-          $prop_info['exvocab'] = $exvocab;
-        }
-        if ($prop_info['label'] !== null && $voclabel !== null) {
-          $properties[$prop_info['prop']][] = new ConceptMappingPropertyValue($this->model, $this->vocab, $val, $prop);
-          continue; //TODO: FIX THIS (when the vocabulary in question can be found [YSA, ALLARS, etc.])
-          $properties[$prop_info['prop']][] = new ConceptPropertyValue(
-            $prop_info['prop'],
-            $prop_info['concept_uri'],
-            $prop_info['vocab'],
-            $prop_info['lang'],
-            $prop_info['label'],
-            $prop_info['exvocab'],
-            null,
-            $voclabel
-          );
         }
       }
     }
