@@ -133,17 +133,17 @@
             {% for propval in property.values %} {# loop through ConceptPropertyValue objects #}
               {% if propval.uri %} {# resources with URI #}
                 {% if propval.label %}
-                  <tr>
+                <tr>
                   <td>
-                <a class="versal" href="{{ propval.uri | link_url(propval.exvocab, propval.lang, null, ContentLanguage) }}">{{ propval.label(ContentLanguage) }}</a> 
-                  {% if propval.lang and (propval.lang != lang) or (explicit_langcodes and propval.lang) %}<span class="propertyvalue"> ({{ propval.lang }})</span>{% endif %}
+                    <a class="versal" href="{{ propval.uri | link_url(propval.exvocab, propval.lang, null, ContentLanguage) }}">{{ propval.label(ContentLanguage) }}</a>
+                  {% if propval.label.lang and (propval.label.lang != ContentLanguage) or (explicit_langcodes and propval.label.lang) %}<span class="propertyvalue"> ({{ propval.label(ContentLanguage).lang }})</span>{% endif %}
                   </td>
                   <td>
                   {% if propval.vocabname %}
-                  <p class="appendix-vocab-label">{{ propval.vocabname }}</p>
+                    <p class="appendix-vocab-label">{{ propval.vocabname }}</p>
                   {% endif %}
                   </td>
-                  </tr>
+                </tr>
                 {% endif %}
               {% endif %}
             {% endfor %}
