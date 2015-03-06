@@ -166,10 +166,9 @@ class Concept extends VocabularyDataObject
   public function getMappingProperties()
   {
     $properties = array();
-
     $members_array = array();
-    $long_uris = $this->resource->propertyUris();
 
+    $long_uris = $this->resource->propertyUris();
     foreach ($long_uris as &$prop) {
       if (EasyRdf_Namespace::shorten($prop)) // shortening property labels if possible
         $prop = $sprop = EasyRdf_Namespace::shorten($prop);
@@ -178,56 +177,23 @@ class Concept extends VocabularyDataObject
 
       // Iterating through every resource and adding these to the data object.
       foreach ($this->resource->allResources($sprop) as $val) {
-        $label = null;
-        $label_lang = null;
-        $exvocab = null;
-        $voclabel = null;
-
         if (in_array($prop, $this->MAPPING_PROPERTIES)) {
+
+          // checking if the target vocabulary can be found at the skosmos endpoint
           $exuri = $val->getUri();
           $exvoc = $this->model->guessVocabularyFromURI($exuri);
-          if ($exvoc) {
-            $label_lang = $this->lang;
-            $label = $this->getExternalLabel($exvoc, $exuri, $label_lang);
-            // if there isn't a label available with the current ui language use the vocabulary default language
-            if (!$label) { 
-              $label_lang = $exvoc->getDefaultLanguage();
-              $label = $this->getExternalLabel($exvoc, $exuri, $label_lang);
-            }
-            $exvocab = $exvoc->getId();
-            $voclabel = $exvoc->getTitle();
-          }
-          if (!$exvoc || !$label) {
+          // if not querying the uri itself
+          if (!$exvoc) {
             $response = null;
-            if ($this->vocab->getExternalResourcesLoading())
+            // if told to do so in the vocabulary configuration
+            if ($this->vocab->getExternalResourcesLoading()) 
               $response = $this->model->getResourceFromUri($exuri);
             if ($response) {
-              $pref_label = $this->model->getResourceLabel($response, $this->lang);
-              if($pref_label) {
-                $label = $pref_label->getValue();
-                $label_lang = $pref_label->getLang();
-              }
-              $scheme = $response->get('skos:inScheme');
-              $schemeLabel = null;
-              if($scheme) {
-                $schemeResource = $this->model->getResourceFromUri($scheme->getUri());
-                if ($schemeResource)
-                  $schemeLabel = $schemeResource->label();
-                if ($schemeLabel)
-                  $schemeLabel = $schemeLabel->getValue();
-              }
-              if ($label !== null && $schemeLabel == null) {
-                // got a label for the concept, but not the scheme - use the host name as scheme label
-                $schemeLabel = parse_url($exuri, PHP_URL_HOST);
-              }
-              $prop_info = $this->getPropertyParam($val, $prop);
-              $properties[$prop_info['prop']][] = new ConceptMappingPropertyValue($this->model, $this->vocab, $response, $prop);
-              continue; //TODO: FIX THIS ( LCSH )
+              $properties[$prop][] = new ConceptMappingPropertyValue($this->model, $this->vocab, $response, $prop);
+              continue;
             }
           }
           $properties[$prop][] = new ConceptMappingPropertyValue($this->model, $this->vocab, $val, $prop);
-        } else {
-          break;
         }
       }
     }
