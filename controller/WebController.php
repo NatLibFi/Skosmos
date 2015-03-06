@@ -624,7 +624,7 @@ class WebController extends Controller
     $contents = $vocab->listConceptGroupContents($groupuri, $content_lang);
     $group_name = $vocab->getGroupName($groupuri);
     $uri = $vocab->getConceptURI($group); // make sure it's a full URI
-    $results = $vocab->getConceptInfo($uri);
+    $results = $vocab->getConceptInfo($uri, $content_lang);
     echo $template
             ->render(
                     array('path_fix' => $this->path_fix,
