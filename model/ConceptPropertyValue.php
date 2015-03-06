@@ -71,7 +71,8 @@ class ConceptPropertyValue extends VocabularyDataObject
     } elseif ($this->resource->getLiteral('rdf:value') !== null) { // any language
       return $this->resource->getLiteral('rdf:value');
     } 
-    return null;
+    $label = $this->resource->shorten() ? $this->resource->shorten() : $this->getUri();
+    return $label;
   }
 
   public function getUri()

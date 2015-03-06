@@ -293,32 +293,10 @@ class Concept extends VocabularyDataObject
         if ($prop === 'skos:narrower' && array_key_exists($val->getUri(), $in_a_collection))
           continue;
 
-        if (in_array($prop, $this->MAPPING_PROPERTIES)) {
+        if (in_array($prop, $this->MAPPING_PROPERTIES))
           break;
-        } elseif ($prop === 'rdf:type') {
-          continue;
-          $exuri = $val->getUri();
-          $exvoc = $this->model->guessVocabularyFromURI($exuri);
-          if ($exvoc) {
-            $label_lang = $exvoc->getDefaultLanguage();
-            $label = $this->getExternalLabel($exvoc, $exuri, $label_lang);
-            $exvocab = $exvoc->getId();
-          }
-          if (!$exvoc || !$label) {
-            $label = $val->shorten() ? $val->shorten() : $exuri;
-            $label_lang = $this->lang;
-            $exvocab = null;
-          }
-        }
-        $prop_info = $this->getPropertyParam($val, $prop);
-        if ($prop_info['label'] == null) {
-          $prop_info['label'] = $label;
-          $prop_info['lang'] = $label_lang;
-          $prop_info['exvocab'] = $exvocab;
-        }
-        if ($prop_info['label'] !== null) {
-          $properties[$prop_info['prop']][] = new ConceptPropertyValue($this->model, $this->vocab, $val, $prop);
-        }
+
+        $properties[$prop][] = new ConceptPropertyValue($this->model, $this->vocab, $val, $prop);
       }
     }
 
