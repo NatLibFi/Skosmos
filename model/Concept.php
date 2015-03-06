@@ -190,10 +190,10 @@ class Concept extends VocabularyDataObject
               $response = $this->model->getResourceFromUri($exuri);
             if ($response) {
               $properties[$prop][] = new ConceptMappingPropertyValue($this->model, $this->vocab, $response, $prop);
-              continue;
             }
-          }
-          $properties[$prop][] = new ConceptMappingPropertyValue($this->model, $this->vocab, $val, $prop);
+          } 
+          else
+            $properties[$prop][] = new ConceptMappingPropertyValue($this->model, $this->vocab, $val, $prop);
         }
       }
     }
