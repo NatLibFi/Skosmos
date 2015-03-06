@@ -286,9 +286,6 @@ class Concept extends VocabularyDataObject
       
       // Iterating through every resource and adding these to the data object.
       foreach ($this->resource->allResources($sprop) as $val) {
-        $label = null;
-        $label_lang = null;
-        $exvocab = null;
         // skipping narrower concepts which are already shown in a collection
         if ($prop === 'skos:narrower' && array_key_exists($val->getUri(), $in_a_collection))
           continue;
