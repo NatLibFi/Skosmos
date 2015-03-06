@@ -44,7 +44,7 @@ class DataObject
   {
     if ($exvoc) {
       $exsparql = $exvoc->getSparql();
-      $results = $exsparql->queryLabel($exuri, $lang, true);
+      $results = $exsparql->queryLabel($exuri, $lang);
 
       return isset($results[$lang]) ? $results[$lang] : null;
     } else {

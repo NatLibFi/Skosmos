@@ -593,7 +593,7 @@ class RestController extends Controller
     );
 
     if (isset($results[$lang]))
-      $ret['prefLabel'] = $results[$lang];
+      $ret['prefLabel'] = $results[$lang]->getValue();
 
     return $this->return_json($ret);
   }

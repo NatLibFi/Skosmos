@@ -807,10 +807,9 @@ EOQ;
    * Query for a label (skos:prefLabel, rdfs:label, dc:title, dc11:title) of a resource.
    * @param string $uri
    * @param string $lang
-   * @param boolean $literal if set to true easyrdf literal returned instead of string.
    * @return array array of labels (key: lang, val: label), or null if resource doesn't exist
    */
-  public function queryLabel($uri, $lang, $literal=false)
+  public function queryLabel($uri, $lang)
   {
     $gc = $this->graphClause;
     $labelcond_label = ($lang) ? "FILTER( langMatches(lang(?label), '$lang') )" : "";
@@ -843,7 +842,7 @@ EOQ;
     foreach ($result as $row) {
       if (!isset($row->label))
         return array(); // existing concept but no labels
-      $ret[$row->label->getLang()] = ($literal) ? $row->label : $row->label->getValue();
+      $ret[$row->label->getLang()] = $row->label;
     }
 
     if (sizeof($ret) > 0)
