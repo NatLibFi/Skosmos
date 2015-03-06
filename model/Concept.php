@@ -211,7 +211,6 @@ class Concept extends VocabularyDataObject
     foreach ($properties as $prop => $values) {
       // sorting the values by vocabulary name for consistency.
       $sortedvalues = array();
-      $fixed;
       foreach ($values as $value) {
         $sortedvalues[$value->getVocabName() . $value . $value->getUri()] = $value; 
       }
