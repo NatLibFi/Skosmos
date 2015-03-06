@@ -290,6 +290,9 @@ class Concept extends VocabularyDataObject
         if ($prop === 'skos:narrower' && array_key_exists($val->getUri(), $in_a_collection))
           continue;
 
+        if ($prop === 'rdf:type' && $val->shorten() === 'skos:Concept') 
+          break;
+
         if (in_array($prop, $this->MAPPING_PROPERTIES))
           break;
 
