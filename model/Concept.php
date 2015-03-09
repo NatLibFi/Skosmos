@@ -251,13 +251,13 @@ class Concept extends VocabularyDataObject
         foreach ($collections as $coll) {
           $current_collection_members = $this->getCollectionMembers($coll, $narrowers_by_uri);
           foreach ($current_collection_members as $collection)
-            if (array_key_exists('sub_members', $collection))
-              foreach ($collection['sub_members'] as $member) 
-                $in_a_collection[$member['uri']] = true;
+            if ($collection->getSubMembers())
+              $submembers = $collection->getSubMembers();
+              foreach ($submembers as $member)
+                $in_a_collection[$member->getUri()] = true;
 
-          if (array_key_exists('sub_members', $collection))
-            if($collection['sub_members']) // do not show empty collections in the narrowers
-              $members_array = array_merge($current_collection_members, $members_array);
+          if ($collection->getSubMembers())
+            $members_array = array_merge($current_collection_members, $members_array);
         }
       }
     }
@@ -301,12 +301,8 @@ class Concept extends VocabularyDataObject
     }
 
     // if skos:narrower properties are actually groups we need to remove duplicates.
-    foreach ($members_array as $topConcept) {
-      $topProp = new ConceptPropertyValue('skos:narrower', $topConcept['parts'], $topConcept['vocab'], $topConcept['lang'], $topConcept['label'], $exvocab = null);
-      $properties['skos:narrower'][] = $topProp;
-      foreach ($topConcept['sub_members'] as $subMember) {
-        $topProp->addSubMember('skosmos:sub', $subMember['label'], $subMember['parts'], $subMember['vocab'], $subMember['lang'], $subMember['external']);
-      }
+    foreach($members_array as $group) {
+      $properties['skos:narrower'][] = $group;
     }
 
     // clean up: remove unwanted properties
@@ -349,9 +345,6 @@ class Concept extends VocabularyDataObject
           }
       }
     }
-
-    // unsetting the prefLabel last to detect and remove properties with the same value.
-    unset($ret['skos:prefLabel']);
 
     return $ret;
   }
@@ -414,8 +407,7 @@ class Concept extends VocabularyDataObject
     $external = false;
     if (strstr($coll_info['concept_uri'], 'http')) // for identifying concepts that are found with a uri not consistent with the current vocabulary
       $external = true;
-    $members_array[$coll->getUri()] = array('type' => 'resource', 'label' => $coll_info['label'], 'lang' => $coll_info['lang'],
-        'uri' => $coll_info['concept_uri'], 'vocab' => $coll_info['vocab'], 'parts' => $coll->getUri(), 'external' => $external);
+    $members_array[$coll->getUri()] = new ConceptPropertyValue($this->model, $this->vocab, $coll, 'skos:narrower');
     foreach ($coll->allResources('skos:member') as $member) {
       if (!array_key_exists($member->getUri(), $narrowers))
         continue;
@@ -427,14 +419,7 @@ class Concept extends VocabularyDataObject
       $external = false;
       if (strstr($narrow_info['concept_uri'], 'http')) // for identifying concepts that are found with a uri not consistent with the current vocabulary
         $external = true;
-      if ($narrow_info['label'] == null) { // fixes json encoded unicode characters causing labels to disappear in afo
-        $narrow_info['label'] = ('"' . $narrow_info['concept_uri'] . '"');
-        $narrow_info['label'] = json_decode($narrow_info['label']);
-        $narrow_info['concept_uri'] = $narrow_info['label'];
-        $narrow_info['label'] = strtr($narrow_info['label'], '_', ' ');
-      }
-      $members_array[$coll->getUri()]['sub_members'][] = array('type' => 'resource', 'label' => $narrow_info['label'], 'lang' => $narrow_info['lang'],
-        'uri' => $narrow_info['concept_uri'], 'vocab' => $narrow_info['vocab'], 'parts' => $narrower->getUri(), 'external' => $external);
+      $members_array[$coll->getUri()]->addSubMember(new ConceptPropertyValue($this->model, $this->vocab, $narrower, 'skos:member'));
     }
 
     return $members_array;
