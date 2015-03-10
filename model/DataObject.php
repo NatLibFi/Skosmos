@@ -63,7 +63,7 @@ class DataObject
       return $sortable;
     uksort($sortable, array($this, 'mycompare'));
     foreach ($sortable as $prop => $vals) {
-      usort($sortable[$prop], 'strcoll');
+      ksort($sortable[$prop]);
     }
 
     return $sortable;

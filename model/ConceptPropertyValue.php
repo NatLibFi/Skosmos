@@ -23,19 +23,11 @@ class ConceptPropertyValue extends VocabularyDataObject
   private $parentProperty;
   private $submembers;
 
-  //public function __construct($prop, $uri, $vocab, $lang, $label, $exvocab = null, $parent = null, $vocabname = null)
   public function __construct($model, $vocab, $resource, $prop)
   {
     parent::__construct($model, $vocab, $resource);
     $this->submembers = array();
-    //$this->lang = $lang;
-    //$this->exvocab = $exvocab;
     $this->type = $prop;
-    //$this->label = $label;
-    //$this->uri = $uri;
-    //$this->vocab = $vocab;
-    //$this->vocabName = $vocabname;
-    //$this->parentProperty = $parent;
   }
 
   public function __toString()

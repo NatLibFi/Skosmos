@@ -283,7 +283,7 @@ class Concept extends VocabularyDataObject
         $literal = new ConceptPropertyValueLiteral($val, $prop, $this->clang);
         // checking that the literal has either the correct language or no language set
         if ($literal->getLang() == null || $literal->getLang() == $this->clang)
-          $properties[$prop][] = $literal; 
+          $properties[$prop][$literal->getLabel()] = $literal; 
       }
       
       // Iterating through every resource and adding these to the data object.
@@ -298,10 +298,14 @@ class Concept extends VocabularyDataObject
         if (in_array($prop, $this->MAPPING_PROPERTIES))
           break;
 
-        $properties[$prop][] = new ConceptPropertyValue($this->model, $this->vocab, $val, $prop);
+        $propval = new ConceptPropertyValue($this->model, $this->vocab, $val, $prop);
+        $label = $propval->getLabel($this->clang);
+
+        if ($label->getValue())
+          $properties[$prop][$label->getValue()] = $propval;
       }
     }
-
+    
     // if skos:narrower properties are actually groups we need to remove duplicates.
     foreach($members_array as $group) {
       $properties['skos:narrower'][] = $group;
@@ -312,7 +316,7 @@ class Concept extends VocabularyDataObject
       if (isset($properties[$prop]))
         unset($properties[$prop]);
     }
-
+    
     // sorting the properties to a order preferred in the Skosmos concept page.
     $properties = $this->arbitrarySort($properties);
 
