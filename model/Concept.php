@@ -250,11 +250,13 @@ class Concept extends VocabularyDataObject
 
         foreach ($collections as $coll) {
           $current_collection_members = $this->getCollectionMembers($coll, $narrowers_by_uri);
-          foreach ($current_collection_members as $collection)
-            if ($collection->getSubMembers())
+          foreach ($current_collection_members as $collection) {
+            if ($collection->getSubMembers()) {
               $submembers = $collection->getSubMembers();
               foreach ($submembers as $member)
                 $in_a_collection[$member->getUri()] = true;
+            }
+          }
 
           if ($collection->getSubMembers())
             $members_array = array_merge($current_collection_members, $members_array);
@@ -322,8 +324,11 @@ class Concept extends VocabularyDataObject
       $proplabel = $propres->label($this->lang); // current language
       if (!$proplabel) $proplabel = $propres->label(); // any language
       foreach ($values as $value) {
-        $vallabel = $value->getLabel();
-        if (!is_string($vallabel)) continue;
+        $vallabel = $value->getLabel($this->clang) ? $value->getLabel($this->clang) : $value->getLabel($this->lang);
+        if (!is_string($vallabel)) {
+          $vallabel = $vallabel->getValue();
+          if (!is_string($vallabel)) continue;
+        }
         $propertyValues[$vallabel][] = $propres->getUri();
       }
       $propobj = new ConceptProperty($prop, $proplabel, $values);
