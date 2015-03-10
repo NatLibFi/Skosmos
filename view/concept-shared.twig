@@ -75,7 +75,7 @@
                   {% endif %}
                   {% if propval.SubMembers %}<div class="subvalue"> {# if property is a group concept that has sub properties #}
                     {% for sub_member in propval.SubMembers %}
-                      <a class="propertyvalue" href="{{ sub_member.uri | link_url(propval.vocab,lang) }}">{{ sub_member.label }}</a>
+                      <a class="propertyvalue" href="{{ sub_member.uri | link_url(propval.vocab,lang) }}">{{ sub_member.label(ContentLanguage) }}</a>
                       {% if sub_member.lang and (sub_member.lang != lang or explicit_langcodes) %}<span class="propertyvalue"> ({{ sub_member.lang }})</span>{% endif %}
                       <br />
                     {% endfor %}
