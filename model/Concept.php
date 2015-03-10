@@ -324,11 +324,8 @@ class Concept extends VocabularyDataObject
       $proplabel = $propres->label($this->lang); // current language
       if (!$proplabel) $proplabel = $propres->label(); // any language
       foreach ($values as $value) {
-        $vallabel = $value->getLabel($this->clang) ? $value->getLabel($this->clang) : $value->getLabel($this->lang);
-        if (!is_string($vallabel)) {
-          $vallabel = $vallabel->getValue();
-          if (!is_string($vallabel)) continue;
-        }
+        $vallabel = $value->getLabel();
+        if (!is_string($vallabel)) continue;
         $propertyValues[$vallabel][] = $propres->getUri();
       }
       $propobj = new ConceptProperty($prop, $proplabel, $values);
@@ -424,7 +421,7 @@ class Concept extends VocabularyDataObject
       $external = false;
       if (strstr($narrow_info['concept_uri'], 'http')) // for identifying concepts that are found with a uri not consistent with the current vocabulary
         $external = true;
-      $members_array[$coll->getUri()]->addSubMember(new ConceptPropertyValue($this->model, $this->vocab, $narrower, 'skos:member'));
+      $members_array[$coll->getUri()]->addSubMember(new ConceptPropertyValue($this->model, $this->vocab, $narrower, 'skos:member'), $this->clang);
     }
 
     return $members_array;

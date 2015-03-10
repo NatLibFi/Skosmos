@@ -95,9 +95,10 @@ class ConceptPropertyValue extends VocabularyDataObject
     return $this->vocabName;
   }
 
-  public function addSubMember($member)
+  public function addSubMember($member, $lang='')
   {
-    $this->submembers[$member->getLabel()->getValue()] = $member;
+    $label = $member->getLabel($lang) ? $member->getLabel($lang) : $member->getLabel();
+    $this->submembers[$label->getValue()] = $member;
     $this->sortSubMembers();
   }
 
