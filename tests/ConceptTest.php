@@ -121,7 +121,6 @@ class ConceptTest extends PHPUnit_Framework_TestCase
    */
   public function testGetPropertiesWithNarrowersPartOfACollection()
   {
-    $this->markTestIncomplete('This test has not been implemented yet.');
     bindtextdomain('skosmos', 'resource/translations');
     bind_textdomain_codeset('skosmos', 'UTF-8');
 
@@ -129,7 +128,7 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     textdomain('skosmos');
     $model = new Model();
     $vocab = $model->getVocabulary('groups');
-    $concept = $vocab->getConceptInfo("http://www.skosmos.skos/groups/ta1");
+    $concept = $vocab->getConceptInfo("http://www.skosmos.skos/groups/ta1", "en");
     $props = $concept[0]->getProperties();
     $narrowers = $props['skos:narrower']->getValues();
     $this->assertCount(3, $narrowers);
@@ -143,7 +142,6 @@ class ConceptTest extends PHPUnit_Framework_TestCase
       } elseif ($coll->getLabel() === "Submarine-like fish") {
         $this->assertArrayHasKey("Tuna", $subs);
       }
-
     }
   }
   

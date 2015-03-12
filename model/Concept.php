@@ -301,7 +301,9 @@ class Concept extends VocabularyDataObject
         $propval = new ConceptPropertyValue($this->model, $this->vocab, $val, $prop);
         $label = $propval->getLabel($this->clang);
 
-        if ($label->getValue())
+        if (is_string($label)) 
+          $properties[$prop][$label] = $propval;
+        elseif ($label->getValue())
           $properties[$prop][$label->getValue()] = $propval;
       }
     }
