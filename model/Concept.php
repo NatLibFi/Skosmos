@@ -291,12 +291,12 @@ class Concept extends VocabularyDataObject
         // skipping narrower concepts which are already shown in a collection
         if ($prop === 'skos:narrower' && array_key_exists($val->getUri(), $in_a_collection))
           continue;
-
+        // hiding rdf:type property if it's just skos:Concept
         if ($prop === 'rdf:type' && $val->shorten() === 'skos:Concept') 
-          break;
-
+          continue;
+        // handled by getMappingProperties()
         if (in_array($prop, $this->MAPPING_PROPERTIES))
-          break;
+          continue;
 
         $propval = new ConceptPropertyValue($this->model, $this->vocab, $val, $prop);
         $label = $propval->getLabel($this->clang);
@@ -356,76 +356,21 @@ class Concept extends VocabularyDataObject
   }
 
   /**
-   * Returns an array of a resources property
-   * @param EasyRdf_Resource $val
-   * @param string $prop identifier eg. 'skos:narrower'.
-   * @return array
-   */
-  private function getPropertyParam($val, $prop = null)
-  {
-    $exvocab = $this->model->guessVocabularyFromURI($val->getUri());
-    if (isset($exvocab))
-      $exvocid = $exvocab->getId();
-    $ret = array();
-
-    if ($val->label($this->lang) !== null) { // current language
-      $ret['label'] = $val->label($this->lang)->getValue();
-      $ret['lang'] = $this->lang;
-    } elseif ($val->label() !== null) { // any language
-      $label = $val->label();
-      $ret['label'] = $label->getValue();
-      $ret['lang'] = $label->getLang();
-    } elseif ($val->getLiteral('rdf:value', $this->lang) !== null) { // current language
-      $label = $val->getLiteral('rdf:value', $this->lang);
-      $ret['label'] = $label->getValue();
-      $ret['lang'] = $label->getLang();
-      $ret['concept_uri'] = null; // URIs of Related Resource Descriptions are not used
-    } elseif ($val->getLiteral('rdf:value') !== null) { // any language
-      $label = $val->getLiteral('rdf:value');
-      $ret['label'] = $label->getValue();
-      $ret['lang'] = $label->getLang();
-      $ret['concept_uri'] = null; // URIs of Related Resource Descriptions are not used
-    } else {
-      $ret['label'] = null;
-      $ret['lang'] = null;
-    }
-
-    if (!array_key_exists('concept_uri', $ret)) {
-      $ret['concept_uri'] = $val->getUri();
-    }
-    $ret['vocab'] = $this->getVocab();
-    $ret['prop'] = $prop;
-    $ret['exvocab'] = isset($exvocid) ? $exvocid : null;
-
-    return $ret;
-  }
-
-  /**
    * Gets the members of a specific collection.
    * @param $coll
    * @param array containing all narrowers as EasyRdf_Resource
-   * @return array
+   * @return array containing ConceptPropertyValue objects
    */
   private function getCollectionMembers($coll, $narrowers)
   {
     $members_array = Array();
-    $coll_info = $this->getPropertyParam($coll);
-    $external = false;
-    if (strstr($coll_info['concept_uri'], 'http')) // for identifying concepts that are found with a uri not consistent with the current vocabulary
-      $external = true;
     $members_array[$coll->getUri()] = new ConceptPropertyValue($this->model, $this->vocab, $coll, 'skos:narrower');
     foreach ($coll->allResources('skos:member') as $member) {
-      if (!array_key_exists($member->getUri(), $narrowers))
-        continue;
-      $narrower = $narrowers[$member->getUri()];
-      if (isset($narrower))
-        $narrow_info = $this->getPropertyParam($narrower);
-      else 
-        continue;
-      $external = false;
-      if (strstr($narrow_info['concept_uri'], 'http')) // for identifying concepts that are found with a uri not consistent with the current vocabulary
-        $external = true;
-      $members_array[$coll->getUri()]->addSubMember(new ConceptPropertyValue($this->model, $this->vocab, $narrower, 'skos:member'), $this->clang);
+      if (array_key_exists($member->getUri(), $narrowers)) {
+        $narrower = $narrowers[$member->getUri()];
+        if (isset($narrower))
+          $members_array[$coll->getUri()]->addSubMember(new ConceptPropertyValue($this->model, $this->vocab, $narrower, 'skos:member'), $this->clang);
+      }
     }
 
     return $members_array;

@@ -101,7 +101,7 @@ class ConceptPropertyValue extends VocabularyDataObject
     return $this->submembers;
   }
 
-  public function sortSubMembers()
+  private function sortSubMembers()
   {
     if (!empty($this->submembers))
       ksort($this->submembers);
