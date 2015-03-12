@@ -59,7 +59,7 @@ class Concept extends VocabularyDataObject
     parent::__construct($model, $vocab, $resource);
     $this->order = array("rdf:type", "dc:isReplacedBy", "skos:definition", "skos:broader", "skos:narrower", "skos:related", "skos:altLabel", "skosmos:memberOf", "skos:note", "skos:scopeNote", "skos:historyNote", "rdfs:comment", "dc11:source", "dc:source", "skos:prefLabel");
     $this->graph = $graph;
-    $this->clang = $clang;
+    $this->clang = $clang ? $clang : $this->lang;
   }
 
   /**

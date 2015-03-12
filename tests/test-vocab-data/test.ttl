@@ -18,6 +18,21 @@ meta:TestClass a owl:Class ;
 skosmos:testprop a rdf:Property ;
     rdfs:label "Skosmos test property"@en .
 
+skos:prefLabel a rdf:Property ;
+    rdfs:label "preferred label"@en .
+
+skos:altLabel a rdf:Property ;
+    rdfs:label "alternative label"@en .
+
+skos:scopeNote a rdf:Property ;
+    rdfs:label "scope note"@en .
+
+skos:broader a rdf:Property ;
+    rdfs:label "has broader"@en .
+
+skos:narrower a rdf:Property ;
+    rdfs:label "has narrower"@en .
+
 test:ta111 a skos:Concept, meta:TestClass ;
     skos:broader test:ta1 ;
     skos:inScheme test:conceptscheme ;

@@ -79,13 +79,38 @@ class ConceptTest extends PHPUnit_Framework_TestCase
    * @covers ConceptProperty::getValues
    * @covers ConceptPropertyValue::getLabel
    */
-  public function testGetProperties()
+  public function testGetPropertiesLiteralValue()
   {
-    $this->markTestIncomplete('This test has not been implemented yet.');
     $props = $this->concept->getProperties();
     $propvals = $props['http://www.skosmos.skos/testprop']->getValues();
+
     $this->assertEquals('Skosmos test property', $props['http://www.skosmos.skos/testprop']->getLabel()->getValue());
-    $this->assertEquals('Test property value', $propvals[0]->getLabel());
+    $this->assertEquals('Test property value', $propvals['Test property value']->getLabel());
+  }
+
+  /**
+   * @covers Concept::getProperties
+   * @covers ConceptProperty::getValues
+   * @covers ConceptPropertyValue::getLabel
+   */
+  public function testGetPropertiesCorrectNumberOfProperties()
+  {
+    $props = $this->concept->getProperties();
+ 
+    $this->assertEquals(6, sizeof($props));
+  }
+
+  /**
+   * @covers Concept::getProperties
+   * @covers ConceptProperty::getValues
+   * @covers ConceptPropertyValue::getLabel
+   */
+  public function testGetPropertiesCorrectOrderOfProperties()
+  {
+    $props = $this->concept->getProperties();
+    $expected = array (0 => 'skos:broader',1 => 'skos:narrower',2 => 'skos:altLabel',3 => 'skos:scopeNote',4 => 'skos:prefLabel',5 => 'http://www.skosmos.skos/testprop');
+    $this->assertEquals(array_keys($props), $expected);
+ 
   }
 
   /**
