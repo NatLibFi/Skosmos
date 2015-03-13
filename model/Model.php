@@ -166,6 +166,13 @@ class Model
   {
     if(!isset($path))
       $path = array();
+    // check that there is no cycle (issue #220)
+    foreach ($path as $childcrumb) {
+      if ($childcrumb->getUri() == $uri) {
+        // found a cycle - short-circuit and stop
+        return;
+      }
+    }
     if (isset($bT[$uri]['direct'])) {
       foreach ($bT[$uri]['direct'] as $broaderUri) {
         $newpath = array_merge($path, array(new Breadcrumb($uri, $bT[$uri]['label'])));
