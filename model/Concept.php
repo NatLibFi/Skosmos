@@ -261,6 +261,7 @@ class Concept extends VocabularyDataObject
           if ($collection->getSubMembers())
             $members_array = array_merge($current_collection_members, $members_array);
         }
+        ksort($members_array);
       }
     }
 
@@ -366,12 +367,13 @@ class Concept extends VocabularyDataObject
   private function getCollectionMembers($coll, $narrowers)
   {
     $members_array = Array();
-    $members_array[$coll->getUri()] = new ConceptPropertyValue($this->model, $this->vocab, $coll, 'skos:narrower');
+    $coll_label = $coll->label()->getValue($this->clang) ? $coll->label($this->clang)->getValue() : $coll->label()->getValue();
+    $members_array[$coll_label] = new ConceptPropertyValue($this->model, $this->vocab, $coll, 'skos:narrower');
     foreach ($coll->allResources('skos:member') as $member) {
       if (array_key_exists($member->getUri(), $narrowers)) {
         $narrower = $narrowers[$member->getUri()];
         if (isset($narrower))
-          $members_array[$coll->getUri()]->addSubMember(new ConceptPropertyValue($this->model, $this->vocab, $narrower, 'skos:member'), $this->clang);
+          $members_array[$coll_label]->addSubMember(new ConceptPropertyValue($this->model, $this->vocab, $narrower, 'skos:member'), $this->clang);
       }
     }
 
