@@ -78,8 +78,6 @@ class WebController extends Controller
     // setting the service custom css file from the config.inc
     if (defined('CUSTOM_CSS'))
       $this->twig->addGlobal("ServiceCustomCss", CUSTOM_CSS);
-    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
-      $this->twig->addGlobal("ContentLanguage", $content_lang);
     // setting the list of properties to be displayed in the search results
     $this->twig->addGlobal("PreferredProperties", array('skos:prefLabel', 'skos:narrower', 'skos:broader', 'skosmos:memberOf', 'skos:altLabel', 'skos:related'));
 
@@ -219,6 +217,7 @@ class WebController extends Controller
     }
 
     $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
+    $this->twig->addGlobal("ContentLanguage", $content_lang);
     $langcodes = $vocab->getShowLangCodes();
     $vocab = $this->model->getVocabulary($vocab_id);
     $uri = $vocab->getConceptURI($uri); // make sure it's a full URI
@@ -263,6 +262,9 @@ class WebController extends Controller
 
       return;
     }
+    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
+    $this->twig->addGlobal("ContentLanguage", $content_lang);
+
     $feedback_sent = False;
     $feedback_msg = null;
     if (isset($_POST['message'])) {
@@ -379,6 +381,9 @@ class WebController extends Controller
     // convert to vocids array to support multi-vocabulary search
     $vocids = $vocabs !== null ? explode(' ', $vocabs) : null;
     
+    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
+    $this->twig->addGlobal("ContentLanguage", $content_lang);
+
     $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocids, $lang, $content_lang, $offset, 20, $type, $parent, $group);
     $counts = $count_and_results['count'];
     $search_results = $count_and_results['results'];
@@ -425,6 +430,7 @@ class WebController extends Controller
     $groups = $vocab->listConceptGroups();
     $term = urldecode(isset($_GET['q']) ? $_GET['q'] : "");
     $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
+    $this->twig->addGlobal("ContentLanguage", $content_lang);
     $type = (isset($_GET['type'])) ? $_GET['type'] : null;
     if ($type && strpos($type, '+'))
       $type = explode('+',$type);
@@ -496,7 +502,6 @@ class WebController extends Controller
   {
     $this->setLanguageProperties($lang);
     $template = $this->twig->loadTemplate('alphabetical-index.twig');
-    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
 
     try {
       $vocab = $this->model->getVocabulary($vocab_id);
@@ -531,6 +536,8 @@ class WebController extends Controller
       $lang_msg = gettext("language_changed_message");
       $this->setLanguageProperties($lang);
     }
+    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
+    $this->twig->addGlobal("ContentLanguage", $content_lang);
 
     $all_at_once = $vocab->getAlphabeticalFull();
     if (!$all_at_once) {
@@ -568,6 +575,7 @@ class WebController extends Controller
     $this->setLanguageProperties($lang);
     $template = $this->twig->loadTemplate('group-index.twig');
     $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
+    $this->twig->addGlobal("ContentLanguage", $content_lang);
     try {
       $vocab = $this->model->getVocabulary($vocab_id);
     } catch (Exception $e) {
@@ -607,6 +615,7 @@ class WebController extends Controller
     $this->setLanguageProperties($lang);
     $template = $this->twig->loadTemplate('group-contents.twig');
     $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
+    $this->twig->addGlobal("ContentLanguage", $content_lang);
     try {
       $vocab = $this->model->getVocabulary($vocab_id);
     } catch (Exception $e) {
@@ -676,6 +685,8 @@ class WebController extends Controller
       $lang_msg = gettext("language_changed_message");
       $this->setLanguageProperties($lang);
     }
+    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
+    $this->twig->addGlobal("ContentLanguage", $content_lang);
     $defaultView = $vocab->getDefaultSidebarView();
 
     // load template
