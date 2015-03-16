@@ -150,13 +150,12 @@ class ConceptTest extends PHPUnit_Framework_TestCase
    */
   
   public function testGetPropertiesDefinitionLiteral() {
-    $this->markTestIncomplete('This test has not been implemented yet.');
     $vocab = $this->model->getVocabulary('test');
-    $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta115');
+    $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta115', 'en');
     $concept = $concepts[0];
     $props = $concept->getProperties();
     $propvals = $props['skos:definition']->getValues();
-    $this->assertEquals('any fish belonging to the order Anguilliformes', $propvals[0]->getLabel());
+    $this->assertEquals('any fish belonging to the order Anguilliformes', $propvals['any fish belonging to the order Anguilliformes']->getLabel());
   }
 
   /**
@@ -164,14 +163,12 @@ class ConceptTest extends PHPUnit_Framework_TestCase
    */
   
   public function testGetPropertiesDefinitionResource() {
-    $this->markTestIncomplete('This test has not been implemented yet.');
     $vocab = $this->model->getVocabulary('test');
-    $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta122');
+    $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta122', 'en');
     $concept = $concepts[0];
     $props = $concept->getProperties();
     $propvals = $props['skos:definition']->getValues();
-    $this->assertEquals('The black sea bass (Centropristis striata) is an exclusively marine fish.', $propvals[0]->getLabel());
-    $this->assertNull($propvals[0]->getUri());
+    $this->assertEquals('The black sea bass (Centropristis striata) is an exclusively marine fish.', $propvals['The black sea bass (Centropristis striata) is an exclusively marine fish.']->getLabel());
   }
 
 
