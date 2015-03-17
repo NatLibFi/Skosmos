@@ -18,11 +18,11 @@ class ConceptProperty
    * @param string $label
    * @param array $values contains ConceptPropertyValues
    */
-  public function __construct($prop, $label, $values)
+  public function __construct($prop, $label)
   {
     $this->prop = $prop;
     $this->label = $label;
-    $this->values = $values;
+    $this->values = array(); 
   }
 
   /**
@@ -57,6 +57,21 @@ class ConceptProperty
   public function getValues()
   {
     return $this->values;
+  }
+  
+  public function addValue($value, $lang='')
+  {
+    $label = $value->getLabel($lang) ? $value->getLabel($lang) : $value->getLabel();
+    if (!is_string($label))
+      $label = $label->getValue();
+    $this->values[$label] = $value;
+    $this->sortValues();
+  }
+
+  private function sortValues()
+  {
+    if (!empty($this->submembers))
+      ksort($this->submembers);
   }
 
   /**

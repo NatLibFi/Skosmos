@@ -328,14 +328,12 @@ class Concept extends VocabularyDataObject
     $ret = array();
     foreach ($properties as $prop => $values) {
       $propres = new EasyRdf_Resource($prop, $this->graph);
-      $proplabel = $propres->label($this->lang); // current language
-      if (!$proplabel) $proplabel = $propres->label(); // any language
-      foreach ($values as $value) {
-        $vallabel = $value->getLabel();
-        if (!is_string($vallabel)) continue;
-        $propertyValues[$vallabel][] = $propres->getUri();
-      }
-      $propobj = new ConceptProperty($prop, $proplabel, $values);
+      $proplabel = $propres->label($this->lang) ? $propres->label($this->lang) : $propres->label();
+      $propobj = new ConceptProperty($prop, $proplabel);
+
+      foreach ($values as $value)
+        $propobj->addValue($value, $this->clang);
+
       if ($propobj->getLabel()) // only display properties for which we have a label
         $ret[$prop] = $propobj;
     }
