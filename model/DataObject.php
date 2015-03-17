@@ -101,21 +101,6 @@ class DataObject
   }
 
   /**
-   * Gets the values for the property in question in all other languages than the ui language.
-   * @param string $prop property identifier eg. 'skos:prefLabel'
-   */
-  private function getForeignLabels($prop)
-  {
-    $labels = array();
-    foreach ($this->resource->allLiterals($prop) as $lit) {
-      if ($lit->getLang() != $this->lang)
-        $labels[$lit->getLang()][] = $lit->getValue();
-    }
-
-    return $labels;
-  }
-
-  /**
    * Getter function to retrieve property values.
    * @param string $name
    */
