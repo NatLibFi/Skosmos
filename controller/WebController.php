@@ -246,7 +246,7 @@ class WebController extends Controller
     $this->setLanguageProperties($lang);
     $vocabList = $this->model->getVocabularyList(false);
     try {
-      $vocab = (isset($vocab_id)) ? $this->model->getVocabulary($vocab_id) : "";
+      $vocab = (isset($vocab_id)) ? $this->model->getVocabulary($vocab_id) : null;
     } catch (Exception $e) {
       header("HTTP/1.0 404 Not Found");
       if (LOG_CAUGHT_EXCEPTIONS)
@@ -267,8 +267,7 @@ class WebController extends Controller
     $feedback_name = (isset($_POST['name'])) ? $_POST['name'] : null;
     $feedback_email = (isset($_POST['email'])) ? $_POST['email'] : null;
     $feedback_vocab = (isset($_POST['vocab'])) ? $_POST['vocab'] : null;
-    if ($vocab)
-      $feedback_vocab_email = $vocab->getFeedbackRecipient(); 
+    $feedback_vocab_email = ($vocab !== null) ? $vocab->getFeedbackRecipient() : null; 
 
     // if the hidden field has been set a value we have found a spam bot 
     // and we do not actually send the message.
@@ -315,9 +314,9 @@ class WebController extends Controller
     $params = empty($envelopeSender) ? '' : "-f $envelopeSender";
 
     // adding some information about the user for debugging purposes.
-    $agent = $_SERVER['HTTP_USER_AGENT'];
-    $referer = $_SERVER['HTTP_REFERER'];
-    $ip = $_SERVER['REMOTE_ADDR'];
+    $agent = (isset($_SERVER['HTTP_USER_AGENT'])) ? $_SERVER['HTTP_USER_AGENT'] : '';
+    $referer = (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : '';
+    $ip = (isset($_SERVER['REMOTE_ADDR'])) ? $_SERVER['HTTP_REFERER'] : '';
     $timestamp = date(DATE_RFC2822);
 
     $message = $message . "<br /><br /> Debugging information:" 
