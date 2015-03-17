@@ -1,0 +1,31 @@
+@prefix cycle: <http://www.skosmos.skos/cycle/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+cycle:ta1 a skos:Concept ;
+    skos:inScheme cycle:conceptscheme ;
+    skos:narrower cycle:ta2, cycle:ta3 ;
+    skos:prefLabel "Top of cycle"@en ;
+    skos:topConceptOf cycle:conceptscheme .
+
+cycle:ta2 a skos:Concept ;
+    skos:inScheme cycle:conceptscheme ;
+    skos:broader cycle:ta1 ;
+    skos:narrower cycle:ta2 ;
+    skos:prefLabel "Concept 2"@en .
+
+cycle:ta3 a skos:Concept ;
+    skos:inScheme cycle:conceptscheme ;
+    skos:broader cycle:ta1, cycle:ta4 ;
+    skos:narrower cycle:ta4 ;
+    skos:prefLabel "Concept 3"@en .
+
+cycle:ta4 a skos:Concept ;
+    skos:inScheme cycle:conceptscheme ;
+    skos:broader cycle:ta3 ;
+    skos:narrower cycle:ta3 ;
+    skos:prefLabel "Concept 4"@en .
+
+cycle:conceptscheme a skos:ConceptScheme ;
+    rdfs:label "Test conceptscheme with cycles"@en ;
+    skos:hasTopConcept cycle:ta1 .
