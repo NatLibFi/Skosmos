@@ -376,7 +376,7 @@ class Model
       $arrayClass = null;
       $sparql = $this->getDefaultSparql();
     }
-    $ret = $sparql->queryConceptInfo($uris, $arrayClass, $vocabs);
+    $ret = $sparql->queryConceptInfo($uris, $arrayClass, $vocabs, null, $search_lang);
 
     // For marking that the concept has been found through an alternative label, hidden
     // label or a label in another language

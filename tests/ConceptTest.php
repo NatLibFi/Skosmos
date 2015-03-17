@@ -124,7 +124,7 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $concept = $search_results['results'][0];
     $props = $concept->getProperties();
     $expected = array (0 => '3D Bass',1 => 'Bass',2 => 'Buri',3 => 'Carp',4 => 'Eel',5 => 'Hauki',6 => 'Tuna',7 => 'test:ta113',8 => 'test:ta120');
-    $this->assertEquals(array_keys($props['skos:narrower']->getValues()), $expected);
+    $this->assertEquals($expected, array_keys($props['skos:narrower']->getValues()));
  
   }
 
