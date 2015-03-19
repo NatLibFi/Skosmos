@@ -167,6 +167,7 @@ class Concept extends VocabularyDataObject
   {
     $properties = array();
     $members_array = array();
+    $ret = array();
 
     $long_uris = $this->resource->propertyUris();
     foreach ($long_uris as &$prop) {
@@ -175,10 +176,15 @@ class Concept extends VocabularyDataObject
       else
         $sprop = "<$prop>"; // EasyRdf requires full URIs to be in angle brackets
 
-      // Iterating through every resource and adding these to the data object.
-      foreach ($this->resource->allResources($sprop) as $val) {
-        if (in_array($prop, $this->MAPPING_PROPERTIES)) {
+      if (in_array($prop, $this->MAPPING_PROPERTIES)) {
+        $propres = new EasyRdf_Resource($prop, $this->graph);
+        $proplabel = $propres->label($this->lang) ? $propres->label($this->lang) : $propres->label(); // current language
+        $propobj = new ConceptProperty($prop, $proplabel);
+        if ($propobj->getLabel()) // only display properties for which we have a label
+          $ret[$prop] = $propobj;
 
+        // Iterating through every resource and adding these to the data object.
+        foreach ($this->resource->allResources($sprop) as $val) {
           // checking if the target vocabulary can be found at the skosmos endpoint
           $exuri = $val->getUri();
           $exvoc = $this->model->guessVocabularyFromURI($exuri);
@@ -188,41 +194,23 @@ class Concept extends VocabularyDataObject
             // if told to do so in the vocabulary configuration
             if ($this->vocab->getExternalResourcesLoading()) 
               $response = $this->model->getResourceFromUri($exuri);
-            if ($response) {
-              $properties[$prop][] = new ConceptMappingPropertyValue($this->model, $this->vocab, $response, $prop);
-            }
+            if ($response)
+              $ret[$prop]->addValue(new ConceptMappingPropertyValue($this->model, $this->vocab, $response, $prop), $this->clang);
           } 
           else
-            $properties[$prop][] = new ConceptMappingPropertyValue($this->model, $this->vocab, $val, $prop);
+            $ret[$prop]->addValue(new ConceptMappingPropertyValue($this->model, $this->vocab, $val, $prop), $this->clang);
         }
       }
     }
 
-    // sorting the properties to a order preferred in the Skosmos concept page.
-    $properties = $this->arbitrarySort($properties);
-
     // clean up: remove unwanted properties
     foreach ($this->DELETED_PROPERTIES as $prop) {
-      if (isset($properties[$prop]))
-        unset($properties[$prop]);
+      if (isset($ret[$prop]))
+        unset($ret[$prop]);
     }
 
-    $ret = array();
-    foreach ($properties as $prop => $values) {
-      // sorting the values by vocabulary name for consistency.
-      $sortedvalues = array();
-      foreach ($values as $value) {
-        $sortedvalues[$value->getVocabName() . $value . $value->getUri()] = $value; 
-      }
-      ksort($sortedvalues);
-      $values = $sortedvalues;
-      $propres = new EasyRdf_Resource($prop, $this->graph);
-      $proplabel = $propres->label($this->lang); // current language
-      if (!$proplabel) $proplabel = $propres->label(); // any language
-      $propobj = new ConceptProperty($prop, $proplabel, $values);
-      if ($propobj->getLabel()) // only display properties for which we have a label
-        $ret[] = $propobj;
-    }
+    // sorting the properties to a order preferred in the Skosmos concept page.
+    $ret = $this->arbitrarySort($ret);
 
     return $ret;
   }
@@ -312,10 +300,6 @@ class Concept extends VocabularyDataObject
       $properties['skos:narrower'][] = $group;
     }
 
-    // sorting the properties to a order preferred in the Skosmos concept page.
-    $properties = $this->arbitrarySort($properties);
-    $ret = $this->arbitrarySort($ret);
-
     $propertyValues = array();
 
     foreach ($properties as $prop => $values)
@@ -346,6 +330,8 @@ class Concept extends VocabularyDataObject
       if(sizeof($prop->getValues()) === 0)
         unset($ret[$key]);
 
+    // sorting the properties to the order preferred in the Skosmos concept page.
+    $ret = $this->arbitrarySort($ret);
     return $ret;
   }
 

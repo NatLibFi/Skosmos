@@ -113,7 +113,7 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
         if ($schemeResource)
           return $schemeResource->label()->getValue();
       }
-      if ($label !== null && $schemeLabel == null) {
+      if ($schemeLabel == null) {
         // got a label for the concept, but not the scheme - use the host name as scheme label
         $schemeLabel = parse_url($this->resource->getUri(), PHP_URL_HOST);
       }
