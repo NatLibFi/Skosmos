@@ -176,7 +176,7 @@ class Concept extends VocabularyDataObject
       else
         $sprop = "<$prop>"; // EasyRdf requires full URIs to be in angle brackets
 
-      if (in_array($prop, $this->MAPPING_PROPERTIES)) {
+      if (in_array($prop, $this->MAPPING_PROPERTIES) && !in_array($prop, $this->DELETED_PROPERTIES)) {
         $propres = new EasyRdf_Resource($prop, $this->graph);
         $proplabel = $propres->label($this->lang) ? $propres->label($this->lang) : $propres->label(); // current language
         $propobj = new ConceptProperty($prop, $proplabel);
@@ -203,12 +203,6 @@ class Concept extends VocabularyDataObject
           }
         }
       }
-    }
-
-    // clean up: remove unwanted properties
-    foreach ($this->DELETED_PROPERTIES as $prop) {
-      if (isset($ret[$prop]))
-        unset($ret[$prop]);
     }
 
     // sorting the properties to a order preferred in the Skosmos concept page.
@@ -262,39 +256,41 @@ class Concept extends VocabularyDataObject
       else
         $sprop = "<$prop>"; // EasyRdf requires full URIs to be in angle brackets
       
-      $propres = new EasyRdf_Resource($prop, $this->graph);
-      $proplabel = $propres->label($this->lang) ? $propres->label($this->lang) : $propres->label();
-      $propobj = new ConceptProperty($prop, $proplabel);
-      
-      if ($propobj->getLabel()) // only display properties for which we have a label
-        $ret[$prop] = $propobj;
+      if (!in_array($prop, $this->DELETED_PROPERTIES)) {
+        $propres = new EasyRdf_Resource($prop, $this->graph);
+        $proplabel = $propres->label($this->lang) ? $propres->label($this->lang) : $propres->label();
+        $propobj = new ConceptProperty($prop, $proplabel);
 
-      // searching for subproperties of literals too
-      foreach ($this->graph->allResources($prop, 'rdfs:subPropertyOf') as $subi) {
-        $suburi = EasyRdf_Namespace::shorten($subi->getUri());
-        if (!isset($suburi))
-          $suburi = $subi->getUri();
-        $duplicates[$suburi] = $prop;
-      }
+        if ($propobj->getLabel()) // only display properties for which we have a label
+          $ret[$prop] = $propobj;
 
-      // Iterating through every literal and adding these to the data object.
-      foreach ($this->resource->allLiterals($sprop) as $val)
-        $ret[$prop]->addValue(new ConceptPropertyValueLiteral($val, $prop, $this->clang));
-      
-      // Iterating through every resource and adding these to the data object.
-      foreach ($this->resource->allResources($sprop) as $val) {
-        // skipping narrower concepts which are already shown in a collection
-        if ($prop === 'skos:narrower' && array_key_exists($val->getUri(), $in_a_collection))
-          continue;
-        // hiding rdf:type property if it's just skos:Concept
-        if ($prop === 'rdf:type' && $val->shorten() === 'skos:Concept') 
-          continue;
-        // handled by getMappingProperties()
-        if (in_array($prop, $this->MAPPING_PROPERTIES))
-          continue;
+        // searching for subproperties of literals too
+        foreach ($this->graph->allResources($prop, 'rdfs:subPropertyOf') as $subi) {
+          $suburi = EasyRdf_Namespace::shorten($subi->getUri());
+          if (!isset($suburi))
+            $suburi = $subi->getUri();
+          $duplicates[$suburi] = $prop;
+        }
 
-        if (isset($ret[$prop]))
-          $ret[$prop]->addValue(new ConceptPropertyValue($this->model, $this->vocab, $val, $prop), $this->clang);
+        // Iterating through every literal and adding these to the data object.
+        foreach ($this->resource->allLiterals($sprop) as $val)
+          $ret[$prop]->addValue(new ConceptPropertyValueLiteral($val, $prop, $this->clang));
+
+        // Iterating through every resource and adding these to the data object.
+        foreach ($this->resource->allResources($sprop) as $val) {
+          // skipping narrower concepts which are already shown in a collection
+          if ($prop === 'skos:narrower' && array_key_exists($val->getUri(), $in_a_collection))
+            continue;
+          // hiding rdf:type property if it's just skos:Concept
+          if ($prop === 'rdf:type' && $val->shorten() === 'skos:Concept') 
+            continue;
+          // handled by getMappingProperties()
+          if (in_array($prop, $this->MAPPING_PROPERTIES))
+            continue;
+
+          if (isset($ret[$prop]))
+            $ret[$prop]->addValue(new ConceptPropertyValue($this->model, $this->vocab, $val, $prop), $this->clang);
+        }
       }
     }
     
@@ -323,11 +319,6 @@ class Concept extends VocabularyDataObject
           }
       }
     }
-    
-    // clean up: remove unwanted properties
-    foreach ($this->DELETED_PROPERTIES as $prop)
-      if (isset($ret[$prop]))
-        unset($ret[$prop]);
 
     foreach($ret as $key => $prop)
       if(sizeof($prop->getValues()) === 0)
