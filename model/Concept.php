@@ -314,6 +314,7 @@ class Concept extends VocabularyDataObject
 
     // sorting the properties to a order preferred in the Skosmos concept page.
     $properties = $this->arbitrarySort($properties);
+    $ret = $this->arbitrarySort($ret);
 
     $propertyValues = array();
 

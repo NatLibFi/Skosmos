@@ -63,7 +63,8 @@ class DataObject
       return $sortable;
     uksort($sortable, array($this, 'mycompare'));
     foreach ($sortable as $prop => $vals) {
-      ksort($sortable[$prop]);
+      if (is_array($prop)) // the ConceptProperty objects have their own sorting methods
+        ksort($sortable[$prop]);
     }
 
     return $sortable;
