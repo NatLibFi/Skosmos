@@ -239,6 +239,7 @@ class Concept extends VocabularyDataObject
     $members_array = array();
     $long_uris = $this->resource->propertyUris();
     $duplicates = array();
+    $ret = array();
 
     // looking for collections and linking those with their narrower concepts
     if ($this->vocab->getArrayClassURI() !== null) {
@@ -270,6 +271,13 @@ class Concept extends VocabularyDataObject
         $prop = $sprop = EasyRdf_Namespace::shorten($prop);
       else
         $sprop = "<$prop>"; // EasyRdf requires full URIs to be in angle brackets
+      
+      $propres = new EasyRdf_Resource($prop, $this->graph);
+      $proplabel = $propres->label($this->lang) ? $propres->label($this->lang) : $propres->label();
+      $propobj = new ConceptProperty($prop, $proplabel);
+      
+      if ($propobj->getLabel()) // only display properties for which we have a label
+        $ret[$prop] = $propobj;
 
       // searching for subproperties of literals too
       foreach ($this->graph->allResources($prop, 'rdfs:subPropertyOf') as $subi) {
@@ -280,12 +288,8 @@ class Concept extends VocabularyDataObject
       }
 
       // Iterating through every literal and adding these to the data object.
-      foreach ($this->resource->allLiterals($sprop) as $val) {
-        $literal = new ConceptPropertyValueLiteral($val, $prop, $this->clang);
-        // checking that the literal has either the correct language or no language set
-        if ($literal->getLang() == null || $literal->getLang() == $this->clang)
-          $properties[$prop][$literal->getLabel()] = $literal; 
-      }
+      foreach ($this->resource->allLiterals($sprop) as $val)
+        $ret[$prop]->addValue(new ConceptPropertyValueLiteral($val, $prop, $this->clang));
       
       // Iterating through every resource and adding these to the data object.
       foreach ($this->resource->allResources($sprop) as $val) {
@@ -299,13 +303,7 @@ class Concept extends VocabularyDataObject
         if (in_array($prop, $this->MAPPING_PROPERTIES))
           continue;
 
-        $propval = new ConceptPropertyValue($this->model, $this->vocab, $val, $prop);
-        $label = $propval->getLabel($this->clang);
-
-        if (is_string($label)) 
-          $properties[$prop][$label] = $propval;
-        elseif ($label->getValue())
-          $properties[$prop][$label->getValue()] = $propval;
+        $ret[$prop]->addValue(new ConceptPropertyValue($this->model, $this->vocab, $val, $prop), $this->clang);
       }
     }
     
@@ -314,29 +312,14 @@ class Concept extends VocabularyDataObject
       $properties['skos:narrower'][] = $group;
     }
 
-    // clean up: remove unwanted properties
-    foreach ($this->DELETED_PROPERTIES as $prop) {
-      if (isset($properties[$prop]))
-        unset($properties[$prop]);
-    }
-    
     // sorting the properties to a order preferred in the Skosmos concept page.
     $properties = $this->arbitrarySort($properties);
 
     $propertyValues = array();
 
-    $ret = array();
-    foreach ($properties as $prop => $values) {
-      $propres = new EasyRdf_Resource($prop, $this->graph);
-      $proplabel = $propres->label($this->lang) ? $propres->label($this->lang) : $propres->label();
-      $propobj = new ConceptProperty($prop, $proplabel);
-
+    foreach ($properties as $prop => $values)
       foreach ($values as $value)
-        $propobj->addValue($value, $this->clang);
-
-      if ($propobj->getLabel()) // only display properties for which we have a label
-        $ret[$prop] = $propobj;
-    }
+        $ret[$prop]->addValue($value, $this->clang);
 
     foreach ($propertyValues as $value => $propnames) {
       // if the value of prefLabel and rdfs:label are the same we can remove rdfs:label as it's redundant
@@ -352,6 +335,15 @@ class Concept extends VocabularyDataObject
           }
       }
     }
+    
+    // clean up: remove unwanted properties
+    foreach ($this->DELETED_PROPERTIES as $prop)
+      if (isset($ret[$prop]))
+        unset($ret[$prop]);
+
+    foreach($ret as $key => $prop)
+      if(sizeof($prop->getValues()) === 0)
+        unset($ret[$key]);
 
     return $ret;
   }

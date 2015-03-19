@@ -70,8 +70,8 @@ class ConceptProperty
 
   private function sortValues()
   {
-    if (!empty($this->submembers))
-      ksort($this->submembers);
+    if (!empty($this->values))
+      ksort($this->values);
   }
 
   /**
