@@ -185,20 +185,22 @@ class Concept extends VocabularyDataObject
 
         // Iterating through every resource and adding these to the data object.
         foreach ($this->resource->allResources($sprop) as $val) {
-          // checking if the target vocabulary can be found at the skosmos endpoint
-          $exuri = $val->getUri();
-          $exvoc = $this->model->guessVocabularyFromURI($exuri);
-          // if not querying the uri itself
-          if (!$exvoc) {
-            $response = null;
-            // if told to do so in the vocabulary configuration
-            if ($this->vocab->getExternalResourcesLoading()) 
-              $response = $this->model->getResourceFromUri($exuri);
-            if ($response)
-              $ret[$prop]->addValue(new ConceptMappingPropertyValue($this->model, $this->vocab, $response, $prop), $this->clang);
-          } 
-          else
-            $ret[$prop]->addValue(new ConceptMappingPropertyValue($this->model, $this->vocab, $val, $prop), $this->clang);
+          if (isset($ret[$prop])) {
+            // checking if the target vocabulary can be found at the skosmos endpoint
+            $exuri = $val->getUri();
+            $exvoc = $this->model->guessVocabularyFromURI($exuri);
+            // if not querying the uri itself
+            if (!$exvoc) {
+              $response = null;
+              // if told to do so in the vocabulary configuration
+              if ($this->vocab->getExternalResourcesLoading()) 
+                $response = $this->model->getResourceFromUri($exuri);
+              if ($response)
+                $ret[$prop]->addValue(new ConceptMappingPropertyValue($this->model, $this->vocab, $response, $prop), $this->clang);
+            } 
+            else
+              $ret[$prop]->addValue(new ConceptMappingPropertyValue($this->model, $this->vocab, $val, $prop), $this->clang);
+          }
         }
       }
     }
@@ -291,7 +293,8 @@ class Concept extends VocabularyDataObject
         if (in_array($prop, $this->MAPPING_PROPERTIES))
           continue;
 
-        $ret[$prop]->addValue(new ConceptPropertyValue($this->model, $this->vocab, $val, $prop), $this->clang);
+        if (isset($ret[$prop]))
+          $ret[$prop]->addValue(new ConceptPropertyValue($this->model, $this->vocab, $val, $prop), $this->clang);
       }
     }
     
