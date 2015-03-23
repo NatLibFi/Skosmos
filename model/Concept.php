@@ -243,10 +243,10 @@ class Concept extends VocabularyDataObject
             }
           }
 
-          if ($collection->getSubMembers())
+          if ($collection->getSubMembers()) 
             $members_array = array_merge($current_collection_members, $members_array);
         }
-        ksort($members_array);
+        $properties['skos:narrower'] = $members_array;
       }
     }
 
@@ -292,11 +292,6 @@ class Concept extends VocabularyDataObject
             $ret[$prop]->addValue(new ConceptPropertyValue($this->model, $this->vocab, $val, $prop), $this->clang);
         }
       }
-    }
-    
-    // if skos:narrower properties are actually groups we need to remove duplicates.
-    foreach($members_array as $group) {
-      $properties['skos:narrower'][] = $group;
     }
 
     $propertyValues = array();
