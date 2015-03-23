@@ -62,7 +62,7 @@ class ConceptProperty
   public function addValue($value, $lang='')
   {
     $label = $value->getLabel($lang) ? $value->getLabel($lang) : $value->getLabel();
-    if (!is_string($label))
+    if (method_exists($label, 'getValue'))
       $label = $label->getValue();
     $this->values[$label] = $value;
     $this->sortValues();
