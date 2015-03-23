@@ -195,8 +195,10 @@ class Concept extends VocabularyDataObject
               // if told to do so in the vocabulary configuration
               if ($this->vocab->getExternalResourcesLoading()) 
                 $response = $this->model->getResourceFromUri($exuri);
-              if ($response)
+              if ($response) {
                 $ret[$prop]->addValue(new ConceptMappingPropertyValue($this->model, $this->vocab, $response, $prop), $this->clang);
+                continue;
+              }
             } 
             $ret[$prop]->addValue(new ConceptMappingPropertyValue($this->model, $this->vocab, $val, $prop), $this->clang);
           }
