@@ -39,12 +39,12 @@ class ConceptPropertyValueLiteral
     return $this->type;
   }
 
-  public function getLabel($lang='')
+  public function getLabel()
   {
     // if the property is a date object a string representation is passed as the value.
     if ($this->literal->getDataType() === 'xsd:date' || $this->literal->getDataType() === 'xsd:dateTime')
       return $this->literal->__toString();
-    return $this->literal->getValue($lang);
+    return $this->literal->getValue();
   }
 
   public function getUri()

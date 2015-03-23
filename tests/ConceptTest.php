@@ -97,7 +97,7 @@ class ConceptTest extends PHPUnit_Framework_TestCase
   {
     $props = $this->concept->getProperties();
  
-    $this->assertEquals(6, sizeof($props));
+    $this->assertEquals(5, sizeof($props));
   }
 
   /**
@@ -108,8 +108,8 @@ class ConceptTest extends PHPUnit_Framework_TestCase
   public function testGetPropertiesCorrectOrderOfProperties()
   {
     $props = $this->concept->getProperties();
-    $expected = array (0 => 'skos:broader',1 => 'skos:narrower',2 => 'skos:altLabel',3 => 'skos:scopeNote',4 => 'skos:prefLabel',5 => 'http://www.skosmos.skos/testprop');
-    $this->assertEquals(array_keys($props), $expected);
+    $expected = array (0 => 'skos:broader',1 => 'skos:narrower',2 => 'skos:altLabel',3 => 'skos:scopeNote',4 => 'http://www.skosmos.skos/testprop');
+    $this->assertEquals($expected, array_keys($props));
  
   }
   

@@ -388,6 +388,7 @@ class Model
         $ret[$idx]->setFoundBy($hit['hiddenLabel'] . $lang_suffix, 'hidden');
       if (isset($hit['matchedPrefLabel']))
         $ret[$idx]->setFoundBy($hit['matchedPrefLabel'] . $lang_suffix, 'lang');
+      $ret[$idx]->setContentLang($hit['lang']);
     }
 
     return array('count' => sizeof($allhits), 'results' => $ret);

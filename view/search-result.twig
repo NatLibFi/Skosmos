@@ -53,8 +53,8 @@
                 {% endif %}
               {% endspaceless %}
               {% else %} {# Literals (no URI), eg. alternative labels as properties #}
-                 {% if propval.lang == ContentLanguage or propval.lang == null %}<span class="versal {% if propval.type == 'skos:altLabel' %}replaced {% endif %}  value">{{ propval.label(ContentLanguage) }}{% if not loop.last %},{% endif %}</span>
-              {% endif %}{% endif %}
+                 <span class="versal {% if propval.type == 'skos:altLabel' %}replaced {% endif %} value">{{ propval.label }}{% if not loop.last %},{% endif %}</span>
+              {% endif %}
           {% endif %}
       {% endfor %}
       </div>

@@ -7,12 +7,15 @@ class ConceptPropertyValue extends VocabularyDataObject
 {
   /** property type */
   private $type;
+  /** content language */
+  private $clang;
 
-  public function __construct($model, $vocab, $resource, $prop)
+  public function __construct($model, $vocab, $resource, $prop, $clang='')
   {
     parent::__construct($model, $vocab, $resource);
     $this->submembers = array();
     $this->type = $prop;
+    $this->clang = $clang;
   }
 
   public function __toString()
@@ -29,6 +32,8 @@ class ConceptPropertyValue extends VocabularyDataObject
 
   public function getLabel($lang='')
   {
+    if ($this->clang)
+      $lang = $this->clang;
     if ($this->resource->label($lang) !== null) { // current language
       return $this->resource->label($lang);
     } elseif ($this->resource->label() !== null) { // any language

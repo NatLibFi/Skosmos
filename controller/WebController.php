@@ -430,6 +430,7 @@ class WebController extends Controller
     $groups = $vocab->listConceptGroups();
     $term = urldecode(isset($_GET['q']) ? $_GET['q'] : "");
     $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
+    $search_lang = (isset($_GET['qlang'])) ? $_GET['qlang'] : $content_lang;
     $this->twig->addGlobal("ContentLanguage", $content_lang);
     $type = (isset($_GET['type'])) ? $_GET['type'] : null;
     if ($type && strpos($type, '+'))
@@ -449,7 +450,7 @@ class WebController extends Controller
     $term = trim($term); // surrounding whitespace is not considered significant
     $sterm = strpos($term, "*") === FALSE ? $term . "*" : $term; // default to prefix search
     try {
-      $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocab_id, $content_lang, $content_lang, $offset, 20, $type, $parent, $group);
+      $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocab_id, $content_lang, $search_lang, $offset, 20, $type, $parent, $group);
       $counts = $count_and_results['count'];
       $search_results = $count_and_results['results'];
     } catch (Exception $e) {

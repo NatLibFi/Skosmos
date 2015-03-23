@@ -89,6 +89,7 @@ class Concept extends VocabularyDataObject
    */
   public function getLabel($lang='')
   {
+    $lang = $this->clang;
     // 1. label in current language
     if ($this->resource->label($lang) !== null)
       return $this->resource->label($lang);
@@ -133,6 +134,14 @@ class Concept extends VocabularyDataObject
     return $this->vocab ? $this->vocab->getShortName() : null;
   }
 
+  /**
+   * Setter for the $clang property.
+   * @param string $clang language code eg. 'en' 
+   */
+  public function setContentLang($clang)
+  {
+    $this->clang = $clang;
+  }
 
   /**
    * Setter for the $foundby property.
@@ -179,7 +188,7 @@ class Concept extends VocabularyDataObject
       if (in_array($prop, $this->MAPPING_PROPERTIES) && !in_array($prop, $this->DELETED_PROPERTIES)) {
         $propres = new EasyRdf_Resource($prop, $this->graph);
         $proplabel = $propres->label($this->lang) ? $propres->label($this->lang) : $propres->label(); // current language
-        $propobj = new ConceptProperty($prop, $proplabel);
+        $propobj = new ConceptProperty($prop, $proplabel, $this->clang);
         if ($propobj->getLabel()) // only display properties for which we have a label
           $ret[$prop] = $propobj;
 
@@ -258,9 +267,11 @@ class Concept extends VocabularyDataObject
         $sprop = "<$prop>"; // EasyRdf requires full URIs to be in angle brackets
       
       if (!in_array($prop, $this->DELETED_PROPERTIES)) {
+        if ($prop === 'skos:prefLabel') 
+          continue;
         $propres = new EasyRdf_Resource($prop, $this->graph);
         $proplabel = $propres->label($this->lang) ? $propres->label($this->lang) : $propres->label();
-        $propobj = new ConceptProperty($prop, $proplabel);
+        $propobj = new ConceptProperty($prop, $proplabel, $this->clang);
 
         if ($propobj->getLabel()) // only display properties for which we have a label
           $ret[$prop] = $propobj;
@@ -274,8 +285,12 @@ class Concept extends VocabularyDataObject
         }
 
         // Iterating through every literal and adding these to the data object.
-        foreach ($this->resource->allLiterals($sprop) as $val)
-          $ret[$prop]->addValue(new ConceptPropertyValueLiteral($val, $prop, $this->clang));
+        foreach ($this->resource->allLiterals($sprop) as $val) {
+          $literal = new ConceptPropertyValueLiteral($val, $prop);
+          // only add literals when they match the content/hit language or have no language defined
+          if ($literal->getLang() === $this->clang || $literal->getLang() === null) 
+            $ret[$prop]->addValue($literal);
+        }
 
         // Iterating through every resource and adding these to the data object.
         foreach ($this->resource->allResources($sprop) as $val) {
@@ -290,7 +305,7 @@ class Concept extends VocabularyDataObject
             continue;
 
           if (isset($ret[$prop]))
-            $ret[$prop]->addValue(new ConceptPropertyValue($this->model, $this->vocab, $val, $prop), $this->clang);
+            $ret[$prop]->addValue(new ConceptPropertyValue($this->model, $this->vocab, $val, $prop, $this->clang), $this->clang);
         }
       }
     }
