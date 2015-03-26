@@ -697,6 +697,11 @@ $(function() { // DOCUMENT READY
   $(document).on('click', '#any-lang-href', function($e) {
     $($e.target.children).click();
   });
+  
+  $(document).on('click', '#any-lang-href > input', function($e) {
+    if ($('#search-field').val().length > 1)
+    $('#search-all-button').click();
+  });
 
   function onSelection($e, datum) {
     if ($e.currentTarget.id !== 'parent-limit') {
