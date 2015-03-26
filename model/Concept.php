@@ -349,7 +349,9 @@ class Concept extends VocabularyDataObject
   private function getCollectionMembers($coll, $narrowers)
   {
     $members_array = Array();
-    $coll_label = $coll->label()->getValue($this->clang) ? $coll->label($this->clang)->getValue() : $coll->label()->getValue();
+    $coll_label = $coll->label()->getValue($this->clang) ? $coll->label($this->clang) : $coll->label();
+    if ($coll_label)
+      $coll_label = $coll_label->getValue();
     $members_array[$coll_label] = new ConceptPropertyValue($this->model, $this->vocab, $coll, 'skos:narrower');
     foreach ($coll->allResources('skos:member') as $member) {
       if (array_key_exists($member->getUri(), $narrowers)) {
