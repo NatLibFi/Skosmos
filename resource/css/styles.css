@@ -139,14 +139,14 @@ section {
   box-shadow: none;
 }
 
-ul.dropdown-menu > li:last-child {
+ul.dropdown-menu > li:last-child > a {
   display:table
 }
 
-ul.dropdown-menu > li:last-child > * {
+ul.dropdown-menu > li:last-child > a > input {
   display: table-cell;
   vertical-align: middle;
-  margin: 0;
+  margin: 0 0 0 5px;
 }
 
 .multiselect-container {
