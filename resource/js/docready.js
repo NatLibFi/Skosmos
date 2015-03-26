@@ -694,6 +694,10 @@ $(function() { // DOCUMENT READY
     }
   });
 
+  $(document).on('click', '#any-lang-href', function($e) {
+    $($e.target.children).click();
+  });
+
   function onSelection($e, datum) {
     if ($e.currentTarget.id !== 'parent-limit') {
       var localname = datum.localname;

@@ -40,7 +40,7 @@
           {% endfor %}
         {% endif %}
           <li class="divider"></li>
-          <li><a href="#">{% trans "Show matches in any language" %}<input name="qlang" type="checkbox"{% if AnyLang %} checked{% endif%}></input></a></li>
+          <li><a id="any-lang-href" href="#">{% trans "Show matches in any language" %}<input name="qlang" type="checkbox"{% if AnyLang %} checked{% endif%}></input></a></li>
           {#<li><a href="#" class="lang-button-all" hreflang="">{% trans "Search language: any" %}</a></li>#}
         </ul>
       </div><!-- /btn-group -->
