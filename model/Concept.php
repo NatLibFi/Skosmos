@@ -288,7 +288,7 @@ class Concept extends VocabularyDataObject
         foreach ($this->resource->allLiterals($sprop) as $val) {
           $literal = new ConceptPropertyValueLiteral($val, $prop);
           // only add literals when they match the content/hit language or have no language defined
-          if ($literal->getLang() === $this->clang || $literal->getLang() === null) 
+          if (isset($ret[$prop]) && ($literal->getLang() === $this->clang || $literal->getLang() === null))
             $ret[$prop]->addValue($literal);
         }
 
