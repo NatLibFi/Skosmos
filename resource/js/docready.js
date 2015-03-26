@@ -694,13 +694,15 @@ $(function() { // DOCUMENT READY
     }
   });
 
+  // if the link is clicked ticking the checkbox also
   $(document).on('click', '#any-lang-href', function($e) {
     $($e.target.children).click();
   });
   
+  // when the checkbox is clicked trigger the search if the search term isn't empty
   $(document).on('click', '#any-lang-href > input', function($e) {
     if ($('#search-field').val().length > 1)
-    $('#search-all-button').click();
+      $('#search-all-button').click();
   });
 
   function onSelection($e, datum) {
