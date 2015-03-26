@@ -39,6 +39,8 @@
           <li><a href="#" class="lang-button" hreflang="{{ langcode }}">{{ langcode | lang_name(lang) }}</a></li>
           {% endfor %}
         {% endif %}
+          <li class="divider"></li>
+          <li><span class="versal">{% trans "Show matches in any language" %}</span><input type="checkbox"></input></li>
           {#<li><a href="#" class="lang-button-all" hreflang="">{% trans "Search language: any" %}</a></li>#}
         </ul>
       </div><!-- /btn-group -->
