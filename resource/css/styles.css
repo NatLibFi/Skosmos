@@ -145,8 +145,8 @@ ul.dropdown-menu > li:last-child {
 
 ul.dropdown-menu > li:last-child > * {
   display: table-cell;
-  margin: 2px;
   vertical-align: middle;
+  margin: 0;
 }
 
 .multiselect-container {

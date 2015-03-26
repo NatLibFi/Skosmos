@@ -78,6 +78,9 @@ class WebController extends Controller
     // setting the service custom css file from the config.inc
     if (defined('CUSTOM_CSS'))
       $this->twig->addGlobal("ServiceCustomCss", CUSTOM_CSS);
+    // set only if the checkbox in the language selection dropdown should be ticked
+    if (isset($_GET['qlang']))
+      $this->twig->addGlobal("AnyLang", true);
     // setting the list of properties to be displayed in the search results
     $this->twig->addGlobal("PreferredProperties", array('skos:prefLabel', 'skos:narrower', 'skos:broader', 'skosmos:memberOf', 'skos:altLabel', 'skos:related'));
 
@@ -430,7 +433,7 @@ class WebController extends Controller
     $groups = $vocab->listConceptGroups();
     $term = urldecode(isset($_GET['q']) ? $_GET['q'] : "");
     $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
-    $search_lang = (isset($_GET['qlang'])) ? $_GET['qlang'] : $content_lang;
+    $search_lang = (isset($_GET['qlang'])) ? '' : $content_lang;
     $this->twig->addGlobal("ContentLanguage", $content_lang);
     $type = (isset($_GET['type'])) ? $_GET['type'] : null;
     if ($type && strpos($type, '+'))
