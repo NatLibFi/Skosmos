@@ -379,6 +379,7 @@ class WebController extends Controller
     $search_results = $count_and_results['results'];
     $uri_parts = $_SERVER['REQUEST_URI'];
     $vocabList = $this->model->getVocabularyList();
+    $langList = $this->model->getLanguages($lang);
 
     echo $template->render(
             array('path_fix' => $this->path_fix,
@@ -390,6 +391,7 @@ class WebController extends Controller
                 'lang_count' => $search_lang,
                 'rest' => $rest, 'parts' => $this->parts, 'global_search' => True, 'uri_parts' => $uri_parts,
                 'request_uri' => $this->request_uri,
+                'lang_list' => $langList,
                 'vocab_list' => $vocabList
 
     ));
