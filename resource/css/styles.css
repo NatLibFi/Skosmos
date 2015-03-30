@@ -1005,7 +1005,7 @@ tr {
   padding-top: 0px !important;
 }
 
-.search-results-property-table td.versal-pref {
+.search-results-property-table td.versal-pref, .group-container > p.versal-pref {
   font-weight: 500 !important;
 }
 
