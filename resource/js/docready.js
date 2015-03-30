@@ -701,7 +701,7 @@ $(function() { // DOCUMENT READY
   
   // when the checkbox is clicked trigger the search if the search term isn't empty
   $(document).on('click', '#any-lang-href > input', function($e) {
-    if ($('#search-field').val().length > 1)
+    if ($('.search-result-listing').length > 0 && $('#search-field').val().length > 1)
       $('#search-all-button').click();
   });
 
