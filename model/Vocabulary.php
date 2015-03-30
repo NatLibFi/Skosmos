@@ -476,14 +476,16 @@ class Vocabulary extends DataObject
 
   /**
    * Returns a boolean value set in the vocabularies.ttl config.
-   * @return string concept class URI or null 
+   * @return array array of concept class URIs (can be empty) 
    */
-  public function getIndexClass()
+  public function getIndexClasses()
   {
-    $val = $this->resource->getResource("skosmos:indexShowClass");
-    if ($val)
-      return $val->getURI();
-    return null;
+    $resources = $this->resource->allResources("skosmos:indexShowClass");
+    $ret = array();
+    foreach ($resources as $res) {
+      $ret[] = $res->getURI();
+    }
+    return $ret;
   }
 
   /**
@@ -634,7 +636,7 @@ class Vocabulary extends DataObject
    * @return array array of letters
    */
   public function getAlphabet() {
-    $chars = $this->getSparql()->queryFirstCharacters($this->lang, $this->getIndexClass());
+    $chars = $this->getSparql()->queryFirstCharacters($this->lang, $this->getIndexClasses());
     $letters = array();
     $digits = false;
     $specials = false;
@@ -661,8 +663,8 @@ class Vocabulary extends DataObject
    * (everything) are supported.
    * @param $letter letter (or special token) to search for
    */
-  public function searchConceptsAlphabetical($letter, $limit, $offset, $clang) {
-    return $this->getSparql()->queryConceptsAlphabetical($letter, $clang, $limit, $offset, $this->getIndexClass());
+  public function searchConceptsAlphabetical($letter, $limit=null, $offset=null, $clang=null) {
+    return $this->getSparql()->queryConceptsAlphabetical($letter, $clang, $limit, $offset, $this->getIndexClasses());
   }
 
 }

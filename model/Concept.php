@@ -269,6 +269,7 @@ class Concept extends VocabularyDataObject
       if (!in_array($prop, $this->DELETED_PROPERTIES)) {
         if ($prop === 'skos:prefLabel') 
           continue;
+        
         $propres = new EasyRdf_Resource($prop, $this->graph);
         $proplabel = $propres->label($this->lang) ? $propres->label($this->lang) : $propres->label();
         $propobj = new ConceptProperty($prop, $proplabel, $this->clang);
@@ -295,13 +296,13 @@ class Concept extends VocabularyDataObject
         // Iterating through every resource and adding these to the data object.
         foreach ($this->resource->allResources($sprop) as $val) {
           // skipping narrower concepts which are already shown in a collection
-          if ($prop === 'skos:narrower' && array_key_exists($val->getUri(), $in_a_collection))
+          if ($sprop === 'skos:narrower' && array_key_exists($val->getUri(), $in_a_collection))
             continue;
           // hiding rdf:type property if it's just skos:Concept
-          if ($prop === 'rdf:type' && $val->shorten() === 'skos:Concept') 
+          if ($sprop === 'rdf:type' && $val->shorten() === 'skos:Concept') 
             continue;
           // handled by getMappingProperties()
-          if (in_array($prop, $this->MAPPING_PROPERTIES))
+          if (in_array($sprop, $this->MAPPING_PROPERTIES))
             continue;
 
           if (isset($ret[$prop]))

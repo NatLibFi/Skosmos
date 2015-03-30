@@ -180,6 +180,20 @@ class ModelTest extends PHPUnit_Framework_TestCase
     $result = $model->getBreadCrumbs($vocabstub, 'en', 'http://www.yso.fi/onto/yso/p13871');
     $this->assertEquals(6, sizeof($result['breadcrumbs'][0]));
   }
+
+  /**
+   * @covers Model::getBreadCrumbs
+   * @covers Model::combineCrumbs
+   * @covers Model::getCrumbs
+   * @depends testConstructorWithConfig
+   */
+  public function testGetBreadCrumbsCycle() {
+    $model = new Model();
+    $vocab = $model->getVocabulary('cycle');
+    $result = $model->getBreadCrumbs($vocab, 'en', 'http://www.skosmos.skos/cycle/ta4');
+    foreach ($result['breadcrumbs'][0] as $crumb)    
+      $this->assertInstanceOf('Breadcrumb', $crumb);
+  }
   
   /**
    * @covers Model::searchConcepts
