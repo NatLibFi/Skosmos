@@ -835,7 +835,10 @@ $(function() { // DOCUMENT READY
     '<div class="vocab">{{vocabLabel}}</div>',
   ].join('');
 
-  $('#search-field').typeahead({ hint: false, highlight: true, minLength: autocomplete_activation },
+  var dark = ($('#search-field').val().length > 0) ? ' clear-search-dark' : '';
+  var clearButton = '<span class="versal clear-search' + dark + '">&#215;</span>';
+
+  var $typeahead = $('#search-field').typeahead({ hint: false, highlight: true, minLength: autocomplete_activation },
     {
       name: 'concept', 
       displayKey: 'label', 
@@ -850,6 +853,14 @@ $(function() { // DOCUMENT READY
     $('.tt-dropdown-menu').mCustomScrollbar("scrollTo", '.tt-cursor');
   }).on('typeahead:selected', onSelection).bind('focus', function() {
     $('#search-field').typeahead('open'); 
+  }).after(clearButton).on('keypress', function() {
+    if($typeahead.val().length > 0 && $(this).hasClass('clear-search-dark') === false)    
+      $('.clear-search').addClass('clear-search-dark');
+  });
+    
+  
+  $('.clear-search').on('click', function() { 
+    $typeahead.typeahead('val', ''); $(this).removeClass('clear-search-dark');
   });
 
   // Some form validation for the feedback form

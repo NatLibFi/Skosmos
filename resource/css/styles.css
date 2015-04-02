@@ -1322,6 +1322,20 @@ ul.nav-tabs > li {
   margin: 0;
 }
 
+.clear-search {
+  color: #CCCCCC !important;
+  font-size: 24px !important;
+  top: 3px;
+  cursor: pointer;
+  position: absolute !important; 
+  right: 10px; 
+  z-index: 9001;
+}
+
+.clear-search-dark {
+  color: #555555 !important;
+}
+
 .gist {
   font-size: 14px;
 }
