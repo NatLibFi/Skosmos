@@ -7,7 +7,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-27 13:04+0200\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Osma Suominen <osma.suominen@helsinki.fi>\n"
+"Last-Translator: Dan Michael O. Heggø <danmichaelo@gmail.com>\n"
 "Language-Team: ONKI Team <onki-posti@helsinki.fi>\n"
 "Language: nb\n"
 "MIME-Version: 1.0\n"
@@ -206,9 +206,8 @@ msgid "Show all breadcrumb paths"
 msgstr "Vis alle stier"
 
 #: /tmp/cache/54f04f35c9dae/bd/18/082f84f6ac0787f1638aac1a519c.php:75
-#, fuzzy
 msgid "Skosmos version %version%"
-msgstr "Skosmos version %version%"
+msgstr "Skosmos versjon %version%"
 
 #: /tmp/cache/54f04f35c9dae/13/6d/25624c89d5f9ac9c32fc8560191d.php:115
 msgid "Term counts by language"
@@ -369,7 +368,6 @@ msgid "isothes:ThesaurusArray"
 msgstr "Inndeling av søskenbegrep"
 
 #: /tmp/cache/54f04f35c9dae/bd/18/082f84f6ac0787f1638aac1a519c.php:69
-#, fuzzy
 msgid "layout designed by Hahmo"
 msgstr "layout av Hahmo"
 
@@ -391,14 +389,13 @@ msgstr "Begrepstype"
 
 #: /tmp/cache/54f04f35c9dae/b7/b8/db5433ea968c6a0d09780d91f529.php:129
 msgid "rdfs:comment"
-msgstr "Bemerkninger"
+msgstr "Note"
 
 #: /tmp/cache/54f04f35c9dae/b7/b8/db5433ea968c6a0d09780d91f529.php:125
 msgid "rdfs:label"
 msgstr "Term"
 
 #: /tmp/cache/54f04f35c9dae/b7/b8/db5433ea968c6a0d09780d91f529.php:127
-#, fuzzy
 msgid "rdfs:seeAlso"
 msgstr "Se også"
 
@@ -451,9 +448,8 @@ msgid "skos:broader_help"
 msgstr "Videre begreper i samme vokabular."
 
 #: /tmp/cache/54f04f35c9dae/b7/b8/db5433ea968c6a0d09780d91f529.php:65
-#, fuzzy
 msgid "skos:changeNote"
-msgstr "Bruksbemerkninger"
+msgstr "Endringsnote"
 
 #: /tmp/cache/54f04f35c9dae/b7/b8/db5433ea968c6a0d09780d91f529.php:43
 msgid "skos:closeMatch"
@@ -472,7 +468,6 @@ msgid "skos:definition_help"
 msgstr "Beskrivelse og avgrensning av begrepets omfang."
 
 #: /tmp/cache/54f04f35c9dae/b7/b8/db5433ea968c6a0d09780d91f529.php:63
-#, fuzzy
 msgid "skos:editorialNote"
 msgstr "Redaksjonelle bemerkninger"
 
@@ -485,7 +480,6 @@ msgid "skos:exactMatch_help"
 msgstr "Begreper i andre vokabularer med tilsvarende betydning."
 
 #: /tmp/cache/54f04f35c9dae/b7/b8/db5433ea968c6a0d09780d91f529.php:59
-#, fuzzy
 msgid "skos:example"
 msgstr "Eksempel"
 
@@ -498,9 +492,8 @@ msgid "skos:hiddenLabel"
 msgstr "Skjult term"
 
 #: /tmp/cache/54f04f35c9dae/b7/b8/db5433ea968c6a0d09780d91f529.php:61
-#, fuzzy
 msgid "skos:historyNote"
-msgstr "Historiske bemerkninger"
+msgstr "Endringshistorikk"
 
 #: /tmp/cache/54f04f35c9dae/b7/b8/db5433ea968c6a0d09780d91f529.php:47
 msgid "skos:inScheme"
@@ -532,7 +525,7 @@ msgstr "Smalere begreper i samme vokabular."
 
 #: /tmp/cache/54f04f35c9dae/b7/b8/db5433ea968c6a0d09780d91f529.php:53
 msgid "skos:note"
-msgstr "Bemerkning"
+msgstr "Note"
 
 #: /tmp/cache/54f04f35c9dae/b7/b8/db5433ea968c6a0d09780d91f529.php:147
 msgid "skos:note_help"
@@ -557,11 +550,11 @@ msgstr "Andre begreper med nærliggende betydningsinnhold."
 
 #: /tmp/cache/54f04f35c9dae/b7/b8/db5433ea968c6a0d09780d91f529.php:55
 msgid "skos:scopeNote"
-msgstr "Bruksbemerkninger"
+msgstr "Begrepsavklaringsnote"
 
 #: /tmp/cache/54f04f35c9dae/b7/b8/db5433ea968c6a0d09780d91f529.php:149
 msgid "skos:scopeNote_help"
-msgstr "Bemerkninger om begrepet og dets bruk."
+msgstr "Noter for å avgrense begrepet og forklare bruken av det."
 
 #: /tmp/cache/54f04f35c9dae/b7/b8/db5433ea968c6a0d09780d91f529.php:49
 msgid "skos:topConceptOf"
