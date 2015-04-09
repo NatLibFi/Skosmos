@@ -32,16 +32,14 @@
         <ul class="dropdown-menu">
         {% if vocab is defined %}
           {% for langcode in vocab.languages %}
-          <li><a href="?clang={{langcode}}" class="lang-button" hreflang="{{ langcode }}">{{ langcode | lang_name(lang) }}</a></li>
+          <li><a href="?clang={{langcode}}{% if term %}&q={{ term }}{% endif %}" class="lang-button" hreflang="{{ langcode }}">{{ langcode | lang_name(lang) }}</a></li>
           {% endfor %}
         {% else %}
           {% for langcode in lang_list %}
           <li><a href="#" class="lang-button" hreflang="{{ langcode }}">{{ langcode | lang_name(lang) }}</a></li>
           {% endfor %}
         {% endif %}
-          <li class="divider"></li>
-          <li><a id="any-lang-href" href="#">{% trans "Show matches in any language" %}<input name="anylang" type="checkbox"{% if AnyLang %} checked{% endif%}></input></a></li>
-          {#<li><a href="#" class="lang-button-all" hreflang="">{% trans "Search language: any" %}</a></li>#}
+          <li><a href="?clang={{ ContentLanguage }}&anylang=on{% if term %}&q={{ term }}{% endif %}" class="lang-button-all">{% trans "Search language: any" %}</a><input name="anylang" type="checkbox"{% if AnyLang %} checked{% endif%}></input></li>
         </ul>
       </div><!-- /btn-group -->
       <input id="search-field" type="text" class="form-control" name="q" value="{{ term }}">

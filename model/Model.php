@@ -388,13 +388,12 @@ class Model
     // For marking that the concept has been found through an alternative label, hidden
     // label or a label in another language
     foreach ($hits as $idx => $hit) {
-      $lang_suffix = (isset($hit['lang']) && $hit['lang'] !== $lang) ? ' (' . $hit['lang'] . ')' : '';
       if (isset($hit['altLabel']) && isset($ret[$idx]))
-        $ret[$idx]->setFoundBy($hit['altLabel'] . $lang_suffix, 'alt');
+        $ret[$idx]->setFoundBy($hit['altLabel'], 'alt');
       if (isset($hit['hiddenLabel']) && isset($ret[$idx]))
-        $ret[$idx]->setFoundBy($hit['hiddenLabel'] . $lang_suffix, 'hidden');
+        $ret[$idx]->setFoundBy($hit['hiddenLabel'], 'hidden');
       if (isset($hit['matchedPrefLabel']))
-        $ret[$idx]->setFoundBy($hit['matchedPrefLabel'] . $lang_suffix, 'lang');
+        $ret[$idx]->setFoundBy($hit['matchedPrefLabel'], 'lang');
       $ret[$idx]->setContentLang($hit['lang']);
     }
 

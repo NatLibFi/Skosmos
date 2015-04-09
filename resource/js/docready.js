@@ -597,8 +597,6 @@ $(function() { // DOCUMENT READY
   
   // Setting the language parameters according to the cookie if found.
   var search_lang = readCookie('SKOSMOS_SEARCH_LANG');
-  if (search_lang) 
-    $('#lang-input')[0].value = search_lang;
   
   // taking the url parameters given by the controller 
   // into parts used for determining if we are on the search listings
@@ -612,9 +610,8 @@ $(function() { // DOCUMENT READY
   // - "" when searching in all languages
   var qlang = search_lang;
   
-  if (search_lang === 'anything' || (typeof getUrlParams().lang !== 'undefined' && getUrlParams().lang === '')) {
+  if (search_lang === 'anything') {
     $('#lang-dropdown-toggle').html($('.lang-button-all').html() + ' <span class="caret"></span>');
-    $('#lang-input').val('');
     qlang = "";
   } else if (!search_lang){
       var langPretty = $('a[hreflang=' + lang + ']').html();
@@ -655,7 +652,7 @@ $(function() { // DOCUMENT READY
   });
   
   $('.lang-button-all').on('click', function() {
-    qlang = "";
+    //qlang = "";
     createCookie('SKOSMOS_SEARCH_LANG', 'anything', 365);
     $('#lang-input').val('');
     $('#lang-dropdown-toggle').html($('.lang-button-all').html() + ' <span class="caret"></span>');
@@ -692,17 +689,6 @@ $(function() { // DOCUMENT READY
     } else {
       $('#search-all-button').attr('disabled', false);
     }
-  });
-
-  // if the link is clicked ticking the checkbox also
-  $(document).on('click', '#any-lang-href', function($e) {
-    $($e.target.children).click();
-  });
-  
-  // when the checkbox is clicked trigger the search if the search term isn't empty
-  $(document).on('click', '#any-lang-href > input', function($e) {
-    if ($('.search-result-listing').length > 0 && $('#search-field').val().length > 1)
-      $('#search-all-button').click();
   });
 
   function onSelection($e, datum) {
@@ -770,7 +756,7 @@ $(function() { // DOCUMENT READY
           var vocabString = $('.frontpage').length ? vocabSelectionString : vocab; 
           var parameters = $.param({'vocab' : vocabString, 'lang' : qlang, 'labellang' : lang});
           // if the search has been targeted at all languages by clicking the checkbox
-          if ($('#any-lang-href > input').is(':checked'))
+          if ($('#any-lang-href > input').is(':checked')) // TODO: FIX THIS
             parameters = $.param({'vocab' : vocabString, 'lang' : '', 'labellang' : ''});
           settings.url = settings.url + '&' + parameters;
         }

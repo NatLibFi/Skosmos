@@ -131,22 +131,12 @@ section {
   top: 40px !important;
 }
 
-.dropdown-menu > li.divider {
-  margin: 0;
-}
-
 .header-float > .navbar-form {
   box-shadow: none;
 }
 
-ul.dropdown-menu > li:last-child > a {
-  display:table
-}
-
-ul.dropdown-menu > li:last-child > a > input {
-  display: table-cell;
-  vertical-align: middle;
-  margin: 0 0 0 5px;
+ul.dropdown-menu > li:last-child > input {
+  display: none;
 }
 
 .multiselect-container {

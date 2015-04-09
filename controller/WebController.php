@@ -436,7 +436,7 @@ class WebController extends Controller
     }
     $groups = $vocab->listConceptGroups();
     $term = urldecode(isset($_GET['q']) ? $_GET['q'] : "");
-    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
+    $content_lang = (isset($_GET['clang']) && $_GET['clang'] !== '') ? $_GET['clang'] : $lang;
     $search_lang = (isset($_GET['anylang'])) ? '' : $content_lang;
     $this->twig->addGlobal("ContentLanguage", $content_lang);
     $type = (isset($_GET['type'])) ? $_GET['type'] : null;
