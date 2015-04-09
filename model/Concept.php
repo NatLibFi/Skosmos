@@ -143,6 +143,10 @@ class Concept extends VocabularyDataObject
     $this->clang = $clang;
   }
 
+  public function getContentLang() {
+    return $this->clang;
+  }
+
   /**
    * Setter for the $foundby property.
    * @param string $label label that was matched
