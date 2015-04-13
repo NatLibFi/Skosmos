@@ -595,8 +595,8 @@ $(function() { // DOCUMENT READY
     style: { classes: 'qtip-tipsy qtip-skosmos' } 
   });
   
-  // Setting the language parameters according to the cookie if found.
-  var search_lang = readCookie('SKOSMOS_SEARCH_LANG');
+  // Setting the language parameters according to the clang parameter or if that's not possible the cookie.
+  var search_lang = (getUrlParams().clang && !getUrlParams().anylang) ? (getUrlParams().clang) : readCookie('SKOSMOS_SEARCH_LANG');
   
   // taking the url parameters given by the controller 
   // into parts used for determining if we are on the search listings

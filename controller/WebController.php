@@ -175,6 +175,8 @@ class WebController extends Controller
    */
   public function invokeVocabularies($lang)
   {
+    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
+    $this->twig->addGlobal("ContentLanguage", $content_lang);
     // set language parameters for gettext
     $this->setLanguageProperties($lang);
     // load template
