@@ -370,6 +370,7 @@ class WebController extends Controller
 
     $term = htmlspecialchars(isset($_GET['q']) ? $_GET['q'] : "");
     $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
+    $search_lang = (isset($_GET['anylang'])) ? '' : $content_lang;
     $type = (isset($_GET['type'])) ? $_GET['type'] : null;
     $group = (isset($_GET['group'])) ? $_GET['group'] : null;
     $parent = (isset($_GET['parent'])) ? $_GET['parent'] : null;
@@ -389,7 +390,7 @@ class WebController extends Controller
     $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
     $this->twig->addGlobal("ContentLanguage", $content_lang);
 
-    $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocids, $lang, $content_lang, $offset, 20, $type, $parent, $group);
+    $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocids, $content_lang, $search_lang, $offset, 20, $type, $parent, $group);
     $counts = $count_and_results['count'];
     $search_results = $count_and_results['results'];
     $uri_parts = $_SERVER['REQUEST_URI'];
@@ -407,6 +408,7 @@ class WebController extends Controller
                 'rest' => $rest, 'parts' => $this->parts, 'global_search' => True, 'uri_parts' => $uri_parts,
                 'request_uri' => $this->request_uri,
                 'lang_list' => $langList,
+                'vocabs' => $vocabs,
                 'vocab_list' => $vocabList
 
     ));
