@@ -686,17 +686,16 @@ class WebController extends Controller
       return;
     }
 
+    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
     $lang_msg = null;
     $lang_support = true;
-    $newlang = $this->verifyVocabularyLanguage($lang, $vocab->getLanguages());
+    $newlang = $this->verifyVocabularyLanguage($content_lang, $vocab->getLanguages());
     if ($newlang !== null) {
-      $lang = $newlang;
+      $content_lang = $newlang;
       $lang_support = false;
       // translate this string here and now to avoid the wrong language issue in the template..
       $lang_msg = gettext("language_changed_message");
-      $this->setLanguageProperties($lang);
     }
-    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
     $this->twig->addGlobal("ContentLanguage", $content_lang);
     $defaultView = $vocab->getDefaultSidebarView();
 

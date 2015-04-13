@@ -39,7 +39,7 @@ $(function() { // DOCUMENT READY
   var selectedVocabs = [];
   var vocabSelectionString = getUrlParams().vocabs ? getUrlParams().vocabs.replace(/\+/g,' ') : readCookie('SKOSMOS_SELECTED');
   $('#selected-vocabs').val(vocabSelectionString);
-  var clang = getUrlParams().clang ? getUrlParams().clang : lang;
+  var clang = content_lang !== '' ? content_lang : lang;
 
   // Shortens the properties that don't fit on one row on the search result view.
   function shortenProperties() {
@@ -596,7 +596,7 @@ $(function() { // DOCUMENT READY
   });
   
   // Setting the language parameters according to the clang parameter or if that's not possible the cookie.
-  var search_lang = (getUrlParams().clang && !getUrlParams().anylang) ? (getUrlParams().clang) : readCookie('SKOSMOS_SEARCH_LANG');
+  var search_lang = (content_lang !== '' && !getUrlParams().anylang) ? content_lang : readCookie('SKOSMOS_SEARCH_LANG');
   
   // taking the url parameters given by the controller 
   // into parts used for determining if we are on the search listings
