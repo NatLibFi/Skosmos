@@ -381,14 +381,18 @@ class Concept extends VocabularyDataObject
       $arrayClass = $arrayClassURI !== null ? EasyRdf_Namespace::shorten($arrayClassURI) : null;
       foreach ($reverseResources as $reverseResource) {
         $property = in_array($arrayClass, $reverseResource->types()) ? "skosmos:memberOfArray" : "skosmos:memberOf" ;
+        $coll_label = $reverseResource->label()->getValue($this->clang) ? $reverseResource->label($this->clang) : $reverseResource->label();
+        if ($coll_label)
+          $coll_label = $coll_label->getValue();
         $super = $reverseResource->get('isothes:superGroup');
         while(isset($super)) {
-          $groups[] = new ConceptPropertyValue($this->model, $this->vocab, $super, 'isothes:superGroup', $this->clang);
+          $groups[$coll_label] = new ConceptPropertyValue($this->model, $this->vocab, $super, 'isothes:superGroup', $this->clang);
           $super = $super->get('isothes:superGroup');
         }
-        $groups[] = new ConceptPropertyValue($this->model, $this->vocab, $reverseResource, $property, $this->clang);
+        $groups[$coll_label] = new ConceptPropertyValue($this->model, $this->vocab, $reverseResource, $property, $this->clang);
       }
     }
+    ksort($groups);
     return $groups;
   }
 
