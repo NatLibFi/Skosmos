@@ -3,11 +3,11 @@
     <div>
       <h1>{% trans "Vocabulary information" %}</h1>
       <hr />
-      {% if vocab.info %}
+      {% if vocab.info(ContentLanguage) %}
     </div>
     <div class="vocab-info-literals">
       <table class="table">
-        {% for key, values in vocab.info %}
+        {% for key, values in vocab.info(ContentLanguage) %}
         {% set keytrans = key %}
         <tr>
           <th class="versal">{{ keytrans|trans|upper }}</th>

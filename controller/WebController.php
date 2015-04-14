@@ -688,7 +688,7 @@ class WebController extends Controller
 
     // load template
     if ($defaultView === 'groups') {
-      $this->invokeGroupIndex($vocab_id, $lang, true);
+      $this->invokeGroupIndex($vocab_id, $content_lang, true);
       return;
     } 
     

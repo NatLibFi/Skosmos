@@ -223,17 +223,19 @@ class Vocabulary extends DataObject
    * Retrieves all the information about the Vocabulary
    * from the SPARQL-endpoint.
    */
-  public function getInfo()
+  public function getInfo($lang=null)
   {
     $ret = array();
+    if (!$lang)
+      $lang = $this->lang;
 
     // get metadata from vocabulary configuration file
     foreach ($this->resource->properties() as $prop) {
-      foreach ($this->resource->allLiterals($prop, $this->lang) as $val) {
+      foreach ($this->resource->allLiterals($prop, $lang) as $val) {
         $ret[$prop][] = $val->getValue();
       }
       foreach ($this->resource->allResources($prop) as $val) {
-        $label = $val->label($this->lang);
+        $label = $val->label($lang);
         if ($label) {
           $ret[$prop][] = $label->getValue();
         }
@@ -250,7 +252,7 @@ class Vocabulary extends DataObject
     $this->order = array("dc:title","dc11:title","skos:prefLabel","rdfs:label","dc:subject", "dc11:subject", "dc:description", "dc11:description","dc:publisher","dc11:publisher","dc:creator","dc11:creator","dc:contributor", "dc:language", "dc11:language","owl:versionInfo","dc:source", "dc11:source");
 
     foreach ($cs->properties() as $prop) {
-      foreach ($cs->allLiterals($prop, $this->lang) as $val) {
+      foreach ($cs->allLiterals($prop, $lang) as $val) {
         $ret[$prop][] = $val->getValue();
       }
       if (!isset($ret[$prop]) || sizeof($ret[$prop]) == 0) { // not found with language tag
@@ -263,12 +265,12 @@ class Vocabulary extends DataObject
         }
       }
       foreach ($cs->allResources($prop) as $val) {
-        $label = $val->label($this->lang);
+        $label = $val->label($lang);
         if ($label) {
           $ret[$prop][] = $label->getValue();
         } else {
           $exvocab = $this->model->guessVocabularyFromURI($val->getURI());
-          $exlabel = $this->getExternalLabel($exvocab, $val->getURI(), $this->lang);
+          $exlabel = $this->getExternalLabel($exvocab, $val->getURI(), $lang);
           $ret[$prop][] = isset($exlabel) ? $exlabel : $val->getURI();
         }
       }
