@@ -4,11 +4,6 @@
 {% endblock %}
 {% block content %}
 <div class="search-result-listing">
-  {% if lang_changed %}
-  <div class="alert alert-danger">
-    <h4>{{ lang_changed }}</h4>
-  </div>
-  {% endif %}
   {% include 'search-result.twig' %}
   {% if vocab_id == 'null' and not global_search %}
   <div class="alert alert-danger">

@@ -215,16 +215,11 @@ class WebController extends Controller
       exit();
     }
 
-    $lang_msg = null;
-    $newlang = $this->verifyVocabularyLanguage($lang, $vocab->getLanguages());
-    if ($newlang !== null) {
-      $lang = $newlang;
-      // translate this string here and now to avoid the wrong language issue in the template..
-      $lang_msg = gettext("language_changed_message");
-      $this->setLanguageProperties($lang);
-    }
-
     $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
+    $newlang = $this->verifyVocabularyLanguage($content_lang, $vocab->getLanguages());
+    if ($newlang !== null)
+      $content_lang = $newlang;
+
     $this->twig->addGlobal("ContentLanguage", $content_lang);
     $langcodes = $vocab->getShowLangCodes();
     $vocab = $this->model->getVocabulary($vocab_id);
@@ -242,8 +237,7 @@ class WebController extends Controller
       'explicit_langcodes' => $langcodes,
       'request_uri' => $this->request_uri,
       'bread_crumbs' => $crumbs['breadcrumbs'],
-      'combined' => $crumbs['combined'],
-      'lang_changed' => $lang_msg)
+      'combined' => $crumbs['combined'])
     );
   }
 
@@ -535,17 +529,14 @@ class WebController extends Controller
     } else { 
       $count = ($offset > 0 || !isset($_GET['base_path'])) ? null : 250;
     }
-    $lang_msg = null;
-    $lang_support = true;
-    $newlang = $this->verifyVocabularyLanguage($lang, $vocab->getLanguages());
-    if ($newlang !== null) {
-      $lang = $newlang;
-      $lang_support = false;
-      // translate this string here and now to avoid the wrong language issue in the template..
-      $lang_msg = gettext("language_changed_message");
-      $this->setLanguageProperties($lang);
-    }
+    
     $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
+    $lang_support = true;
+    $newlang = $this->verifyVocabularyLanguage($content_lang, $vocab->getLanguages());
+    if ($newlang !== null) {
+      $content_lang = $newlang;
+      $lang_support = false;
+    }
     $this->twig->addGlobal("ContentLanguage", $content_lang);
 
     $all_at_once = $vocab->getAlphabeticalFull();
@@ -571,8 +562,7 @@ class WebController extends Controller
                         'letter' => $letter,
                         'parts' => $this->parts,
                         'all_letters' => $all_at_once,
-                        'request_uri' => $this->request_uri,
-                        'lang_changed' => $lang_msg
+                        'request_uri' => $this->request_uri
             ));
   }
 
@@ -687,14 +677,11 @@ class WebController extends Controller
     }
 
     $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
-    $lang_msg = null;
     $lang_support = true;
     $newlang = $this->verifyVocabularyLanguage($content_lang, $vocab->getLanguages());
     if ($newlang !== null) {
       $content_lang = $newlang;
       $lang_support = false;
-      // translate this string here and now to avoid the wrong language issue in the template..
-      $lang_msg = gettext("language_changed_message");
     }
     $this->twig->addGlobal("ContentLanguage", $content_lang);
     $defaultView = $vocab->getDefaultSidebarView();
@@ -718,8 +705,7 @@ class WebController extends Controller
                         'search_letter' => 'A',
                         'active_tab' => $defaultView,
                         'lang_supported' => $lang_support,
-                        'request_uri' => $this->request_uri,
-                        'lang_changed' => $lang_msg));
+                        'request_uri' => $this->request_uri));
   }
 
   /**
