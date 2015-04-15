@@ -694,16 +694,20 @@ $(function() { // DOCUMENT READY
   function onSelection($e, datum) {
     if ($e.currentTarget.id !== 'parent-limit') {
       var localname = datum.localname;
+      var params = {};
       if (!localname || encodeURIComponent(localname) != localname) {
-        localname = "?uri=" + datum.uri;
+        localname = '';
+        params['uri'] = datum.uri;
       }
-      if (clang)
-        localname += '?clang=' + clang;
+      if (clang) {
+        params['clang'] = clang;
+      }
+      var paramstr = $.isEmptyObject(params) ? '' : '?' + $.param(params);
       // replaced complex logic with path_fix that should always work.
       if (datum.type && datum.type.indexOf('Collection') !== -1) {
-        location.href = encodeURI(path_fix + datum.vocab + '/' + lang + '/groups/' + localname);
+        location.href = path_fix + datum.vocab + '/' + lang + '/groups/' + localname + paramstr;
       } else {
-        location.href = encodeURI(path_fix + datum.vocab + '/' + lang + '/page/' + localname);
+        location.href = path_fix + datum.vocab + '/' + lang + '/page/' + localname + paramstr;
       }
     } else {
       $('#parent-limit').attr('data-uri', datum.uri); 

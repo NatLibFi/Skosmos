@@ -111,7 +111,7 @@ class WebController extends Controller
 
       // case 2: URI outside vocabulary namespace, or has problematic chars
       // pass the full URI as parameter instead
-      return $controller->path_fix . "$vocid/$lang/$type/?uri=" . urlencode($uri) . "?clang=$clang";
+      return $controller->path_fix . "$vocid/$lang/$type/?uri=" . urlencode($uri) . "&clang=$clang";
     });
     $this->twig->addFilter($urlFilter);
 
