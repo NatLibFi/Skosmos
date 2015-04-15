@@ -42,8 +42,6 @@ class Model
   private $vocabularies_by_graph = null;
   /** cache for Vocabulary objects */
   private $vocabularies_by_urispace = null;
-  /** stores the breadcrumbs */
-  private $crumbs;
   /** how long to store retrieved URI information in APC cache */
   private $URI_FETCH_TTL = 86400; // 1 day
 
@@ -114,86 +112,6 @@ class Model
     if (!$categories)
       uksort($ret, 'strcoll');
     return $ret;
-  }
-
-  /**
-   * Makes a query for the transitive broaders of a concept and returns the concepts hierarchy processed for the view.
-   * @param string $vocab
-   * @param string $lang
-   * @param string $uri
-   */
-  public function getBreadCrumbs($vocab, $lang, $uri)
-  {
-    $broaders = $vocab->getConceptTransitiveBroaders($uri, 1000, true, $lang);
-    $this->getCrumbs($broaders, $uri);
-    $crumbs['combined'] = $this->combineCrumbs();
-    $crumbs['breadcrumbs'] = $this->crumbs;
-    return $crumbs;
-  }
-
-  /**
-   * Takes the crumbs as a parameter and combines the crumbs if the path they form is too long.
-   * @return array
-   */
-  public function combineCrumbs()
-  {
-    $combined = array();
-    foreach ($this->crumbs as $pathKey => $path) {
-      $firstToCombine = true;
-      $combinedPath = array();
-      foreach ($path as $crumbKey => $crumb) {
-        if ($crumb->getPrefLabel() === '...') {
-          array_push($combinedPath, $crumb);
-          if ($firstToCombine) {
-            $firstToCombine = false;
-          } else {
-            unset($this->crumbs[$pathKey][$crumbKey]);
-          }
-        }
-      }
-      $combined[] = $combinedPath;
-    }
-
-    return $combined;
-  }
-
-  /**
-   * Recursive function for building the breadcrumb paths for the view.
-   * @param array $bT contains the results of the broaderTransitive query.
-   * @param string $uri
-   * @param array $path
-   */
-  private function getCrumbs($bT, $uri, $path=null)
-  {
-    if(!isset($path))
-      $path = array();
-    // check that there is no cycle (issue #220)
-    foreach ($path as $childcrumb) {
-      if ($childcrumb->getUri() == $uri) {
-        // found a cycle - short-circuit and stop
-        return;
-      }
-    }
-    if (isset($bT[$uri]['direct'])) {
-      foreach ($bT[$uri]['direct'] as $broaderUri) {
-        $newpath = array_merge($path, array(new Breadcrumb($uri, $bT[$uri]['label'])));
-        if ($uri !== $broaderUri)
-          $this->getCrumbs($bT, $broaderUri, $newpath);
-      }
-    } else { // we have reached the end of a path and we need to start a new row in the 'stack'
-      if (isset($bT[$uri]))
-        $path = array_merge($path, array(new Breadcrumb($uri, $bT[$uri]['label'])));
-      $index = 1;
-      $length = sizeof($path);
-      $limit = $length - 5;
-      foreach ($path as $crumb) {
-        if ($length > 5 && $index > $length-$limit) { // displays 5 concepts closest to the concept.
-          $crumb->hideLabel();
-        }
-        $index++;
-      }
-      $this->crumbs[] = array_reverse($path);
-    }
   }
 
   /**
