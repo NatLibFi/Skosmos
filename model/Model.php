@@ -163,7 +163,7 @@ class Model
    * @param string $uri
    * @param array $path
    */
-  public function getCrumbs($bT, $uri, $path=null)
+  private function getCrumbs($bT, $uri, $path=null)
   {
     if(!isset($path))
       $path = array();
