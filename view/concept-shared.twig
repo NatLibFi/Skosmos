@@ -66,7 +66,7 @@
                   <a class="versal" href="{% if propval.type == "skosmos:memberOf" %}{{ propval.uri | link_url(propval.vocab, lang, 'groups') }}{% else %}{{ propval.uri | link_url(propval.vocab, lang, 'page', ContentLanguage) }}{% endif %}">{{ propval.label }}</a>
                   {% else %}
                   <a class="versal" href="{% if propval.type == "skosmos:memberOf" %}{{ propval.uri | link_url(propval.vocab, lang, 'groups', ContentLanguage) }}{% else %}{{ propval.uri | link_url(propval.vocab, lang, 'page',ContentLanguage) }}{% endif %}">{{ propval.label(ContentLanguage) }}</a>
-                    {% if propval.lang and (propval.lang != lang or explicit_langcodes) %}<span class="versal"> ({{ propval.lang }})</span>{% endif %}
+                    {% if propval.lang and (propval.lang != lang or explicit_langcodes) %}<span class="versal"> ({{ propval.label.lang }})</span>{% endif %}
                   {% endif %}
                   {% if propval.SubMembers %}<div class="subvalue"> {# if property is a group concept that has sub properties #}
                     {% for sub_member in propval.SubMembers %}
