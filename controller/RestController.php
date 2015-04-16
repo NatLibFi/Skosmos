@@ -759,11 +759,15 @@ class RestController extends Controller
    */
   public function hierarchy($vocabId)
   {
-    $lang = $this->getAndSetLanguage($vocabId);
     $vocab = $this->getVocabulary($vocabId);
     $uri = $this->parseURI();
+    
+    if (isset($_GET['lang']))
+      $lang = $_GET['lang'];
+    else
+      $lang = $vocab->getDefaultLanguage();
 
-    $results = $this->getVocabulary($vocabId)->getConceptHierarchy($uri);
+    $results = $this->getVocabulary($vocabId)->getConceptHierarchy($uri, $lang);
     if ($results === NULL)
       return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
     

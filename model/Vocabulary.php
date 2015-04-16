@@ -497,9 +497,10 @@ class Vocabulary extends DataObject
    * Gets the parent concepts of a concept and child concepts for all of those.
    * @param string $uri
    */
-  public function getConceptHierarchy($uri)
+  public function getConceptHierarchy($uri, $lang)
   {
-    return $this->getSparql()->queryParentList($uri, $this->lang);
+    $lang = $lang ? $lang : $this->lang;
+    return $this->getSparql()->queryParentList($uri, $lang);
   }
 
   /**
@@ -535,7 +536,7 @@ class Vocabulary extends DataObject
    * @param string $uri
    * @param string $lang language identifier.
    */
-  public function getConceptBroaders($uri, $lang='fi')
+  public function getConceptBroaders($uri)
   {
     return $this->getSparql()->queryProperty($uri, 'skos:broader', $this->lang);
   }
