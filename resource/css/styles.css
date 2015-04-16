@@ -1370,26 +1370,14 @@ p.autocomplete-label {
   box-shadow: none !important;
 }
 
-.jstree-default .jstree-node {
+.jstree-default .jstree-node, .jstree-default .jstree-anchor {
     line-height: 18px !important;
     min-height: 18px !important;
-    min-width: 18px !important;
-}
-
-.jstree-default .jstree-anchor {
-    height: 18px !important;
-    line-height: 18px !important;
 }
 
 .jstree-default .jstree-icon {
-    height: 18px !important;
     line-height: 18px !important;
-    width: 18px !important;
-}
-
-.jstree-default .jstree-icon:empty {
     height: 18px !important;
-    line-height: 18px !important;
     width: 18px !important;
 }
 
@@ -1398,11 +1386,15 @@ p.autocomplete-label {
 }
 
 .jstree-default .jstree-wholerow {
-    height: 18px !important;
+    min-height: 18px !important;
 }
 
-.jstree-leaf > .jstree-anchor {
-  margin-left: 5px !important;
+.jstree-open > .jstree-anchor, .jstree-closed > .jstree-anchor {
+  line-height: 18px !important;
+}
+
+.jstree-anchor {
+  padding: 0 18px 0 1px !important;
 }
 
 .jstree-node {
@@ -1413,6 +1405,9 @@ p.autocomplete-label {
   margin-left: 2px !important;
 }
 
+.jstree-default a { white-space:normal !important; height: auto !important; } 
+.jstree-default li > ins { vertical-align:top; }
+
 .sidebar-grey .jstree-closed > .jstree-ocl {
   background-position: -100px -8px !important;
 }
@@ -1421,9 +1416,8 @@ p.autocomplete-label {
   background-position: -132px -8px !important;
 }
 
-.sidebar-grey .jstree-leaf > .jstree-ocl {
-  background-position: -68px -4px !important;
-  width: 13px !important;
+.jstree-default .jstree-leaf > .jstree-ocl {
+  background-position: -68px -8px !important;
 }
 
 .yso-concept {
