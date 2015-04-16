@@ -699,7 +699,7 @@ $(function() { // DOCUMENT READY
         localname = '';
         params['uri'] = datum.uri;
       }
-      if (clang) {
+      if (clang && clang != lang) {
         params['clang'] = clang;
       }
       var paramstr = $.isEmptyObject(params) ? '' : '?' + $.param(params);

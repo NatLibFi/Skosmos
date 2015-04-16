@@ -97,21 +97,27 @@ class WebController extends Controller
       } else {
         $vocid = $vocab->getId();
       }
-      if (!isset($clang))
-        $clang = $lang;
       
-      $anylang = (isset($_GET['anylang'])) ? '&anylang=on' : '';
+      $params = array();
+      if (isset($clang) && $clang != $lang)
+        $params['clang'] = $clang;
+      
+      if (isset($_GET['anylang']))
+        $params['anylang'] = 'on';
+      
 
       // case 1: URI within vocabulary namespace: use only local name
       $localname = $vocab->getLocalName($uri);
       if ($localname != $uri && $localname == urlencode($localname)) {
         // check that the prefix stripping worked, and there are no problematic chars in localname
-        return $controller->path_fix . "$vocid/$lang/$type/$localname?clang=$clang$anylang";
+        $paramstr = sizeof($params) > 0 ? '?' . http_build_query($params) : '';
+        return $controller->path_fix . "$vocid/$lang/$type/$localname" . $paramstr;
       }
 
       // case 2: URI outside vocabulary namespace, or has problematic chars
       // pass the full URI as parameter instead
-      return $controller->path_fix . "$vocid/$lang/$type/?uri=" . urlencode($uri) . "&clang=$clang";
+      $params['uri'] = $uri;
+      return $controller->path_fix . "$vocid/$lang/$type/?" . http_build_query($params);
     });
     $this->twig->addFilter($urlFilter);
 
@@ -176,7 +182,7 @@ class WebController extends Controller
   public function invokeVocabularies($lang)
   {
     $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
-    $this->twig->addGlobal("ContentLanguage", $content_lang);
+    if ($content_lang != $lang) $this->twig->addGlobal("ContentLanguage", $content_lang);
     // set language parameters for gettext
     $this->setLanguageProperties($lang);
     // load template
@@ -220,7 +226,7 @@ class WebController extends Controller
     if ($newlang !== null)
       $content_lang = $newlang;
 
-    $this->twig->addGlobal("ContentLanguage", $content_lang);
+    if ($content_lang != $lang) $this->twig->addGlobal("ContentLanguage", $content_lang);
     $langcodes = $vocab->getShowLangCodes();
     $vocab = $this->model->getVocabulary($vocab_id);
     $uri = $vocab->getConceptURI($uri); // make sure it's a full URI
@@ -265,7 +271,7 @@ class WebController extends Controller
       return;
     }
     $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
-    $this->twig->addGlobal("ContentLanguage", $content_lang);
+    if ($content_lang != $lang) $this->twig->addGlobal("ContentLanguage", $content_lang);
 
     $feedback_sent = False;
     $feedback_msg = null;
@@ -384,7 +390,7 @@ class WebController extends Controller
     $vocids = $vocabs !== null ? explode(' ', $vocabs) : null;
     
     $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
-    $this->twig->addGlobal("ContentLanguage", $content_lang);
+    if ($content_lang != $lang) $this->twig->addGlobal("ContentLanguage", $content_lang);
 
     $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocids, $content_lang, $search_lang, $offset, 20, $type, $parent, $group);
     $counts = $count_and_results['count'];
@@ -436,7 +442,7 @@ class WebController extends Controller
     $term = urldecode(isset($_GET['q']) ? $_GET['q'] : "");
     $content_lang = (isset($_GET['clang']) && $_GET['clang'] !== '') ? $_GET['clang'] : $lang;
     $search_lang = (isset($_GET['anylang'])) ? '' : $content_lang;
-    $this->twig->addGlobal("ContentLanguage", $content_lang);
+    if ($content_lang != $lang) $this->twig->addGlobal("ContentLanguage", $content_lang);
     $type = (isset($_GET['type'])) ? $_GET['type'] : null;
     if ($type && strpos($type, '+'))
       $type = explode('+',$type);
@@ -537,7 +543,7 @@ class WebController extends Controller
       $content_lang = $newlang;
       $lang_support = false;
     }
-    $this->twig->addGlobal("ContentLanguage", $content_lang);
+    if ($content_lang != $lang) $this->twig->addGlobal("ContentLanguage", $content_lang);
 
     $all_at_once = $vocab->getAlphabeticalFull();
     if (!$all_at_once) {
@@ -576,7 +582,7 @@ class WebController extends Controller
     $this->setLanguageProperties($lang);
     $template = $this->twig->loadTemplate('group-index.twig');
     $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
-    $this->twig->addGlobal("ContentLanguage", $content_lang);
+    if ($content_lang != $lang) $this->twig->addGlobal("ContentLanguage", $content_lang);
     try {
       $vocab = $this->model->getVocabulary($vocab_id);
     } catch (Exception $e) {
@@ -616,7 +622,7 @@ class WebController extends Controller
     $this->setLanguageProperties($lang);
     $template = $this->twig->loadTemplate('group-contents.twig');
     $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
-    $this->twig->addGlobal("ContentLanguage", $content_lang);
+    if ($content_lang != $lang) $this->twig->addGlobal("ContentLanguage", $content_lang);
     try {
       $vocab = $this->model->getVocabulary($vocab_id);
     } catch (Exception $e) {
@@ -683,7 +689,7 @@ class WebController extends Controller
       $content_lang = $newlang;
       $lang_support = false;
     }
-    $this->twig->addGlobal("ContentLanguage", $content_lang);
+    if ($content_lang != $lang) $this->twig->addGlobal("ContentLanguage", $content_lang);
     $defaultView = $vocab->getDefaultSidebarView();
 
     // load template
