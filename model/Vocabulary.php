@@ -16,9 +16,6 @@ class Vocabulary extends DataObject
   /** cached value of URI space */
   private $urispace = null;
 
-  /** stores the breadcrumbs */
-  private $crumbs;
-
   /**
    * Extracts the vocabulary id string from the baseuri of the vocabulary.
    * @return string identifier eg. 'mesh'.
@@ -682,20 +679,18 @@ class Vocabulary extends DataObject
   public function getBreadCrumbs($lang, $uri)
   {
     $broaders = $this->getConceptTransitiveBroaders($uri, 1000, true, $lang);
-    $this->getCrumbs($broaders, $uri);
-    $crumbs['combined'] = $this->combineCrumbs();
-    $crumbs['breadcrumbs'] = $this->crumbs;
-    return $crumbs;
+    $origCrumbs = $this->getCrumbs($broaders, $uri);
+    return $this->combineCrumbs($origCrumbs);
   }
 
   /**
    * Takes the crumbs as a parameter and combines the crumbs if the path they form is too long.
    * @return array
    */
-  private function combineCrumbs()
+  private function combineCrumbs($origCrumbs)
   {
     $combined = array();
-    foreach ($this->crumbs as $pathKey => $path) {
+    foreach ($origCrumbs as $pathKey => $path) {
       $firstToCombine = true;
       $combinedPath = array();
       foreach ($path as $crumbKey => $crumb) {
@@ -704,14 +699,14 @@ class Vocabulary extends DataObject
           if ($firstToCombine) {
             $firstToCombine = false;
           } else {
-            unset($this->crumbs[$pathKey][$crumbKey]);
+            unset($origCrumbs[$pathKey][$crumbKey]);
           }
         }
       }
       $combined[] = $combinedPath;
     }
 
-    return $combined;
+    return array('combined' => $combined, 'breadcrumbs' => $origCrumbs);
   }
 
   /**
@@ -722,20 +717,22 @@ class Vocabulary extends DataObject
    */
   private function getCrumbs($bT, $uri, $path=null)
   {
+    $crumbs = array();
     if(!isset($path))
       $path = array();
     // check that there is no cycle (issue #220)
     foreach ($path as $childcrumb) {
       if ($childcrumb->getUri() == $uri) {
         // found a cycle - short-circuit and stop
-        return;
+        return $crumbs;
       }
     }
     if (isset($bT[$uri]['direct'])) {
       foreach ($bT[$uri]['direct'] as $broaderUri) {
         $newpath = array_merge($path, array(new Breadcrumb($uri, $bT[$uri]['label'])));
-        if ($uri !== $broaderUri)
-          $this->getCrumbs($bT, $broaderUri, $newpath);
+        if ($uri !== $broaderUri) {
+          $crumbs = array_merge($crumbs, $this->getCrumbs($bT, $broaderUri, $newpath));
+        }
       }
     } else { // we have reached the end of a path and we need to start a new row in the 'stack'
       if (isset($bT[$uri]))
@@ -749,10 +746,9 @@ class Vocabulary extends DataObject
         }
         $index++;
       }
-      $this->crumbs[] = array_reverse($path);
+      $crumbs[] = array_reverse($path);
     }
+    return $crumbs;
   }
-
-
 
 }
