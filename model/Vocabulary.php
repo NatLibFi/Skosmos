@@ -639,10 +639,11 @@ class Vocabulary extends DataObject
   /**
    * Returns the letters of the alphabet which have been used in this vocabulary.
    * The returned letters may also include specials such as '0-9' (digits) and '!*' (special characters).
+   * @param $clang content language
    * @return array array of letters
    */
-  public function getAlphabet() {
-    $chars = $this->getSparql()->queryFirstCharacters($this->lang, $this->getIndexClasses());
+  public function getAlphabet($clang) {
+    $chars = $this->getSparql()->queryFirstCharacters($clang, $this->getIndexClasses());
     $letters = array();
     $digits = false;
     $specials = false;
