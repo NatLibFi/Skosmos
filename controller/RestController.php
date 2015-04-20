@@ -775,7 +775,7 @@ class RestController extends Controller
       $scheme = isset($_GET['scheme']) ? $_GET['scheme'] : $vocab->getDefaultConceptScheme();
 
       /* encode the results in a JSON-LD compatible array */
-      $topconcepts = $vocab->getTopConcepts($scheme);
+      $topconcepts = $vocab->getTopConcepts($scheme, $lang);
       foreach ($topconcepts as $uri => $label) {
         if (!isset($results[$uri]))
           $results[$uri] = array('uri'=>$uri, 'top'=>$scheme, 'prefLabel'=>$label, 'hasChildren'=> true);

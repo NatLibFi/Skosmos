@@ -330,12 +330,14 @@ class Vocabulary extends DataObject
    * @return array Array with concept URIs (string) as keys and labels (string) as values
    */
 
-  public function getTopConcepts($conceptScheme=null)
+  public function getTopConcepts($conceptScheme=null, $lang='')
   {
+    if ($lang === '')
+      $lang = $this->lang;
     if (!$conceptScheme)
       $conceptScheme = $this->getDefaultConceptScheme();
 
-    return $this->getSparql()->queryTopConcepts($conceptScheme, $this->lang);
+    return $this->getSparql()->queryTopConcepts($conceptScheme, $lang);
   }
 
   /**
