@@ -548,7 +548,7 @@ class WebController extends Controller
     $all_at_once = $vocab->getAlphabeticalFull();
     if (!$all_at_once) {
       $search_results = $vocab->searchConceptsAlphabetical($letter, $count, $offset, $content_lang);
-      $letters = $vocab->getAlphabet();
+      $letters = $vocab->getAlphabet($content_lang);
     } else {
       $search_results = $vocab->searchConceptsAlphabetical('*');
       $letters = null;

@@ -338,7 +338,7 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
    */
   public function testGetAlphabet() {
     $vocab = $this->model->getVocabulary('test');
-    $alpha = $vocab->getAlphabet();
+    $alpha = $vocab->getAlphabet('en');
     $this->assertEquals(array("B","C","E","F","M","T","!*", "0-9"), $alpha);
   }
 
@@ -347,7 +347,7 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
    */
   public function testGetAlphabetIssue107() {
     $vocab = $this->model->getVocabulary('groups');
-    $alpha = $vocab->getAlphabet();
+    $alpha = $vocab->getAlphabet('en');
     $this->assertEquals(array("G", "!*", "0-9"), $alpha);
   }
 
