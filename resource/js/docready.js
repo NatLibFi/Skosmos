@@ -399,7 +399,6 @@ $(function() { // DOCUMENT READY
                 $(val).attr('href', url);
               });
               $.each($('.lang-button'), function(index, val) {
-                //TODO: FIX THIS ASAP
                 var url;
                 var btn_href = $(val).attr('href');
                 if (event.target.href.indexOf('clang') === -1)
@@ -567,6 +566,18 @@ $(function() { // DOCUMENT READY
               if (window.history.pushState)
                 window.history.pushState(null, null, encodeURI(event.target.href));
               document.title = title;
+              $.each($('.lang-button'), function(index, val) {
+                var url;
+                var btn_href = $(val).attr('href');
+                if (event.target.href.indexOf('clang') === -1)
+                  url = encodeURI(event.target.href + btn_href);
+                else if (btn_href.indexOf('anylang') === -1)
+                  url = encodeURI(event.target.href).replace(/clang=\w{2}/, 'clang=' + btn_href.substr(-2));
+                else
+                  url = encodeURI(event.target.href).replace(/clang=\w{2}/, btn_href.substr(1));
+
+                $(val).attr('href', url);
+              });
             }
           });
         } else {
