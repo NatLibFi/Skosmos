@@ -398,6 +398,19 @@ $(function() { // DOCUMENT READY
                 var url = encodeURI(event.target.href).replace('/' + lang + '/', '/' + btn_lang +'/');
                 $(val).attr('href', url);
               });
+              $.each($('.lang-button'), function(index, val) {
+                //TODO: FIX THIS ASAP
+                var url;
+                var btn_href = $(val).attr('href');
+                if (event.target.href.indexOf('clang') === -1)
+                  url = encodeURI(event.target.href + btn_href);
+                else if (btn_href.indexOf('anylang') === -1)
+                  url = encodeURI(event.target.href).replace(/clang=\w{2}/, 'clang=' + btn_href.substr(-2));
+                else
+                  url = encodeURI(event.target.href).replace(/clang=\w{2}/, btn_href.substr(1));
+
+                $(val).attr('href', url);
+              });
             }
         });
         return false;
