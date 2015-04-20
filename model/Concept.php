@@ -362,7 +362,7 @@ class Concept extends VocabularyDataObject
       if (array_key_exists($member->getUri(), $narrowers)) {
         $narrower = $narrowers[$member->getUri()];
         if (isset($narrower))
-          $members_array[$coll_label]->addSubMember(new ConceptPropertyValue($this->model, $this->vocab, $narrower, 'skos:member'), $this->clang);
+          $members_array[$coll_label]->addSubMember(new ConceptPropertyValue($this->model, $this->vocab, $narrower, 'skos:member', $this->clang), $this->clang);
       }
     }
 
