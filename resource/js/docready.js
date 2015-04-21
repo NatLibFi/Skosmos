@@ -360,6 +360,7 @@ $(function() { // DOCUMENT READY
                 var url = targetUrl.replace('/' + lang + '/', '/' + btn_lang +'/');
                 $(val).attr('href', url);
               });
+              updateClangButtons(event);
             }
         });
         return false;
@@ -398,18 +399,7 @@ $(function() { // DOCUMENT READY
                 var url = encodeURI(event.target.href).replace('/' + lang + '/', '/' + btn_lang +'/');
                 $(val).attr('href', url);
               });
-              $.each($('.lang-button'), function(index, val) {
-                var url;
-                var btn_href = $(val).attr('href');
-                if (event.target.href.indexOf('clang') === -1)
-                  url = encodeURI(event.target.href + btn_href);
-                else if (btn_href.indexOf('anylang') === -1)
-                  url = encodeURI(event.target.href).replace(/clang=\w{2}/, 'clang=' + btn_href.substr(-2));
-                else
-                  url = encodeURI(event.target.href).replace(/clang=\w{2}/, btn_href.substr(1));
-
-                $(val).attr('href', url);
-              });
+              updateClangButtons(event);
             }
         });
         return false;
@@ -449,6 +439,23 @@ $(function() { // DOCUMENT READY
         return false;
       }
   );
+
+  function updateClangButtons(event) {
+    $.each($('.lang-button'), function(index, val) {
+      var url;
+      var btn_href = $(val).attr('href');
+      // removing the last page url if this isn't the first.
+      btn_href = btn_href.substr(btn_href.indexOf('?clang'));
+      if (event.target.href.indexOf('clang') === -1)
+      url = encodeURI(event.target.href + btn_href);
+      else if (btn_href.indexOf('anylang') === -1)
+      url = encodeURI(event.target.href).replace(/clang=\w{2}/, 'clang=' + btn_href.substr(-2));
+      else
+      url = encodeURI(event.target.href).replace(/clang=\w{2}/, btn_href.substr(1));
+
+    $(val).attr('href', url);
+    });
+  }
 
   // if we are on the vocab front page initialize the hierarchy view with a top concept.
   $(document).on('click', '#hier-trigger', 
@@ -501,6 +508,7 @@ $(function() { // DOCUMENT READY
               if (window.history.pushState)
                 window.history.pushState(null, null, encodeURI(event.target.href));
               document.title = title;
+              updateClangButtons(event);
             }
         });
         return false;
@@ -535,6 +543,7 @@ $(function() { // DOCUMENT READY
               if (window.history.pushState)
                 window.history.pushState(null, null, encodeURI(event.target.href));
               document.title = title;
+              updateClangButtons(event);
             }
         });
         return false;
@@ -566,18 +575,7 @@ $(function() { // DOCUMENT READY
               if (window.history.pushState)
                 window.history.pushState(null, null, encodeURI(event.target.href));
               document.title = title;
-              $.each($('.lang-button'), function(index, val) {
-                var url;
-                var btn_href = $(val).attr('href');
-                if (event.target.href.indexOf('clang') === -1)
-                  url = encodeURI(event.target.href + btn_href);
-                else if (btn_href.indexOf('anylang') === -1)
-                  url = encodeURI(event.target.href).replace(/clang=\w{2}/, 'clang=' + btn_href.substr(-2));
-                else
-                  url = encodeURI(event.target.href).replace(/clang=\w{2}/, btn_href.substr(1));
-
-                $(val).attr('href', url);
-              });
+              updateClangButtons();
             }
           });
         } else {
