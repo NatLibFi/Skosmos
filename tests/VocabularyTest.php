@@ -357,7 +357,7 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   public function testGetInfo() {
     $vocab = $this->model->getVocabulary('test');
     $info = $vocab->getInfo();
-    $this->assertEquals(array("dc:title" => array('Test ontology'), "dc:subject" => array('Science and medicine'),'dc:modified' => array ('2014-10-01 16:29:03'), "rdf:type" => array('http://www.w3.org/2004/02/skos/core#ConceptScheme')), $info);
+    $this->assertEquals(array("dc:title" => array('Test ontology'), "dc:subject" => array('Science and medicine'),'dc:modified' => array ('Wednesday, October 1, 2014 16:29:03'), "rdf:type" => array('http://www.w3.org/2004/02/skos/core#ConceptScheme')), $info);
   }
   
   /**
