@@ -259,7 +259,7 @@ class Vocabulary extends DataObject
         foreach ($cs->allLiterals($prop, null) as $val) {
           $v = $val->getValue();
           if ($v instanceof DateTime) {
-            $v = $v->format('Y-m-d H:i:s');
+            $v = Punic\Calendar::formatDate($v, 'full', $lang) . ' ' . Punic\Calendar::format($v, 'HH:mm:ss', $lang);
           }
           $ret[$prop][] = $v;
         }
