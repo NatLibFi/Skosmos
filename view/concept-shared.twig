@@ -130,7 +130,7 @@
                 {% if propval.label %}
                 <tr>
                   <td>
-                    <a class="versal" href="{{ propval.uri | link_url(propval.exvocab, propval.lang, null, ContentLanguage) }}">{{ propval.label(ContentLanguage) }}</a>
+                    <a class="versal" href="{{ propval.uri | link_url(propval.exvocab, lang, 'page', ContentLanguage) }}">{{ propval.label(ContentLanguage) }}</a>
                   {% if propval.label.lang and (propval.label.lang != ContentLanguage) or (explicit_langcodes and propval.label.lang) %}<span class="propertyvalue"> ({{ propval.label(ContentLanguage).lang }})</span>{% endif %}
                   </td>
                   <td>
