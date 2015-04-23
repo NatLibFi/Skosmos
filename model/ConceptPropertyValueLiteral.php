@@ -10,7 +10,6 @@ class ConceptPropertyValueLiteral
   /** property type */
   private $type;
 
-  //public function __construct($prop, $uri, $vocab, $lang, $label, $exvocab = null, $parent = null, $vocabname = null)
   public function __construct($literal, $prop)
   {
     $this->literal = $literal;
@@ -41,9 +40,9 @@ class ConceptPropertyValueLiteral
 
   public function getLabel()
   {
-    // if the property is a date object a string representation is passed as the value.
+    // if the property is a date object converting it to a human readable representation.
     if ($this->literal->getDataType() === 'xsd:date' || $this->literal->getDataType() === 'xsd:dateTime')
-      return $this->literal->__toString();
+      return Punic\Calendar::formatDate($this->literal->getValue(), 'full');
     return $this->literal->getValue();
   }
 
