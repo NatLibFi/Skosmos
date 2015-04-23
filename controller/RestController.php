@@ -475,12 +475,12 @@ class RestController extends Controller
    */
   public function topConcepts($vocabId)
   {
-    $lang = $this->getAndSetLanguage($vocabId);
     $vocab = $this->getVocabulary($vocabId);
+    $lang = $this->parseLang() !== '' ? $this->parseLang() : $vocab->getDefaultLanguage(); 
     $scheme = isset($_GET['scheme']) ? $_GET['scheme'] : $vocab->getDefaultConceptScheme();
 
     /* encode the results in a JSON-LD compatible array */
-    $topconcepts = $vocab->getTopConcepts($scheme);
+    $topconcepts = $vocab->getTopConcepts($scheme, $lang);
     $results = array();
     foreach ($topconcepts as $uri => $label) {
       $results[] = array('uri'=>$uri, 'label'=>$label);
