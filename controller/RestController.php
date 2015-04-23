@@ -689,12 +689,12 @@ class RestController extends Controller
    */
   public function narrower($vocabId)
   {
-    $lang = $this->getAndSetLanguage($vocabId);
     $vocab = $this->getVocabulary($vocabId);
+    $lang = $this->parseLang() !== '' ? $this->parseLang() : $vocab->getDefaultLanguage(); 
     $uri = $this->parseURI();
 
     $results = array();
-    $narrowers = $vocab->getConceptNarrowers($uri);
+    $narrowers = $vocab->getConceptNarrowers($uri, $lang);
     if ($narrowers === NULL)
       return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
     foreach ($narrowers as $object => $vals) {
@@ -723,8 +723,8 @@ class RestController extends Controller
    */
   public function narrowerTransitive($vocabId)
   {
-    $lang = $this->getAndSetLanguage($vocabId);
     $vocab = $this->getVocabulary($vocabId);
+    $lang = $this->parseLang() !== '' ? $this->parseLang() : $vocab->getDefaultLanguage(); 
     $uri = $this->parseURI();
     $limit = $this->parseLimit();
     isset($_GET['limit']) ?
@@ -732,7 +732,7 @@ class RestController extends Controller
     if ($limit <= 0) $this->return_error(400, "Bad Request", "Invalid limit parameter");
 
     $results = array();
-    $narrowers = $vocab->getConceptTransitiveNarrowers($uri, $limit);
+    $narrowers = $vocab->getConceptTransitiveNarrowers($uri, $limit, $lang);
     if ($narrowers === NULL)
       return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
     foreach ($narrowers as $nuri => $vals) {

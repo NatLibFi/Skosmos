@@ -515,20 +515,24 @@ class Vocabulary extends DataObject
   /**
    * Gets the skos:narrower relations of a concept.
    * @param string $uri
+   * @param string $lang language identifier.
    */
-  public function getConceptNarrowers($uri)
+  public function getConceptNarrowers($uri, $lang)
   {
-    return $this->getSparql()->queryProperty($uri, 'skos:narrower', $this->lang);
+    $lang = $lang ? $lang : $this->lang;
+    return $this->getSparql()->queryProperty($uri, 'skos:narrower', $lang);
   }
 
   /**
    * Gets the skos:narrowerTransitive relations of a concept.
    * @param string $uri
    * @param integer $limit
+   * @param string $lang language identifier.
    */
-  public function getConceptTransitiveNarrowers($uri, $limit)
+  public function getConceptTransitiveNarrowers($uri, $limit, $lang)
   {
-    return $this->getSparql()->queryTransitiveProperty($uri, 'skos:narrower',$this->lang,$limit);
+    $lang = $lang ? $lang : $this->lang;
+    return $this->getSparql()->queryTransitiveProperty($uri, 'skos:narrower',$lang,$limit);
   }
 
   /**
