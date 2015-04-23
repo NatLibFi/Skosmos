@@ -327,6 +327,7 @@ class Vocabulary extends DataObject
    * Return the top concepts of a concept scheme in the vocabulary.
    * @param string $conceptScheme URI of concept scheme whose top concepts to return. If not set,
    *                              the default concept scheme of the vocabulary will be used.
+   * @param string $lang preferred language for the concept labels,
    * @return array Array with concept URIs (string) as keys and labels (string) as values
    */
 
@@ -535,9 +536,10 @@ class Vocabulary extends DataObject
    * @param string $uri
    * @param string $lang language identifier.
    */
-  public function getConceptBroaders($uri)
+  public function getConceptBroaders($uri, $lang)
   {
-    return $this->getSparql()->queryProperty($uri, 'skos:broader', $this->lang);
+    $lang = $lang ? $lang : $this->lang;
+    return $this->getSparql()->queryProperty($uri, 'skos:broader', $lang);
   }
 
   /**

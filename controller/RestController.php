@@ -614,12 +614,12 @@ class RestController extends Controller
    */
   public function broader($vocabId)
   {
-    $lang = $this->getAndSetLanguage($vocabId);
     $vocab = $this->getVocabulary($vocabId);
+    $lang = $this->parseLang() !== '' ? $this->parseLang() : $vocab->getDefaultLanguage(); 
     $uri = $this->parseURI();
 
     $results = array();
-    $broaders = $vocab->getConceptBroaders($uri);
+    $broaders = $vocab->getConceptBroaders($uri, $lang);
     if ($broaders === NULL)
       return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
     foreach ($broaders as $object => $vals) {
