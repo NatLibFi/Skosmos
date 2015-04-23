@@ -648,13 +648,13 @@ class RestController extends Controller
    */
   public function broaderTransitive($vocabId)
   {
-    $lang = $this->getAndSetLanguage($vocabId);
     $vocab = $this->getVocabulary($vocabId);
+    $lang = $this->parseLang() !== '' ? $this->parseLang() : $vocab->getDefaultLanguage(); 
     $uri = $this->parseURI();
     $limit = $this->parseLimit();
 
     $results = array();
-    $broaders = $vocab->getConceptTransitiveBroaders($uri, $limit);
+    $broaders = $vocab->getConceptTransitiveBroaders($uri, $limit, false, $lang);
     if ($broaders === NULL)
       return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
     foreach ($broaders as $buri => $vals) {
