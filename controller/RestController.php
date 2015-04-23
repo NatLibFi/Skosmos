@@ -77,6 +77,15 @@ class RestController extends Controller
     if (isset($_GET['uri'])) return $_GET['uri'];
     return $this->return_error(400, "Bad Request", "uri parameter missing");
   }
+  
+  /**
+   * Parses and returns the uri parameter. Returns and error if the parameter is missing.
+   */
+  private function parseLang()
+  {
+    if (isset($_GET['lang'])) return $_GET['lang'];
+    else return '';
+  }
 
   /**
    * Parses and returns the limit parameter. Returns and error if the parameter is missing.
@@ -574,8 +583,8 @@ class RestController extends Controller
    */
   public function label($vocid)
   {
-    $lang = $this->getAndSetLanguage($vocid);
     $vocab = $this->getVocabulary($vocid);
+    $lang = $this->parseLang() !== '' ? $this->parseLang() : $vocab->getDefaultLanguage(); 
     $uri = $this->parseURI();
 
     $results = $vocab->getConceptLabel($uri, $lang);
@@ -762,10 +771,7 @@ class RestController extends Controller
     $vocab = $this->getVocabulary($vocabId);
     $uri = $this->parseURI();
     
-    if (isset($_GET['lang']))
-      $lang = $_GET['lang'];
-    else
-      $lang = $vocab->getDefaultLanguage();
+    $lang = $this->parseLang() !== '' ? $this->parseLang() : $vocab->getDefaultLanguage(); 
 
     $results = $this->getVocabulary($vocabId)->getConceptHierarchy($uri, $lang);
     if ($results === NULL)
