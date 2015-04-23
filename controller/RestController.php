@@ -816,11 +816,11 @@ class RestController extends Controller
    */
   public function children($vocabId)
   {
-    $lang = $this->getAndSetLanguage($vocabId);
     $vocab = $this->getVocabulary($vocabId);
+    $lang = $this->parseLang() !== '' ? $this->parseLang() : $vocab->getDefaultLanguage(); 
     $uri = $this->parseURI();
 
-    $children = $vocab->getConceptChildren($uri);
+    $children = $vocab->getConceptChildren($uri, $lang);
     if ($children === NULL)
       return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
 
@@ -848,12 +848,12 @@ class RestController extends Controller
    */
   public function related($vocabId)
   {
-    $lang = $this->getAndSetLanguage($vocabId);
     $vocab = $this->getVocabulary($vocabId);
+    $lang = $this->parseLang() !== '' ? $this->parseLang() : $vocab->getDefaultLanguage(); 
     $uri = $this->parseURI();
 
     $results = array();
-    $related = $vocab->getConceptRelateds($uri);
+    $related = $vocab->getConceptRelateds($uri, $lang);
     if ($related === NULL)
       return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
     foreach ($related as $uri => $vals) {
