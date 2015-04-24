@@ -42,7 +42,7 @@ class ConceptPropertyValueLiteral
   {
     // if the property is a date object converting it to a human readable representation.
     if ($this->literal->getDataType() === 'xsd:date' || $this->literal->getDataType() === 'xsd:dateTime')
-      return Punic\Calendar::formatDate($this->literal->getValue(), 'full');
+      return Punic\Calendar::formatDate($this->literal->getValue(), 'short');
     return $this->literal->getValue();
   }
 
