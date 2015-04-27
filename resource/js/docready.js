@@ -477,7 +477,7 @@ $(function() { // DOCUMENT READY
   });
   
   // event handler for clicking the group index tab 
-  $(document).on('click', '.nav-tabs a[href$="groups"]',
+  $(document).on('click', '#groups',
       function(event) {
         $.ajaxQ.abortAll();
         var base_path = path_fix.length / 3;
