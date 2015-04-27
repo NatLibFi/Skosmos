@@ -407,7 +407,7 @@ $(function() { // DOCUMENT READY
   );
   
   // event handler for clicking the alphabetical index tab 
-  $(document).on('click', '.nav-tabs a[href$="index"]',
+  $(document).on('click', '#alpha',
       function(event) {
         $.ajaxQ.abortAll();
         var base_path = path_fix.length / 3;
