@@ -360,7 +360,7 @@ class Concept extends VocabularyDataObject
     $coll_label = $coll->label()->getValue($this->clang) ? $coll->label($this->clang) : $coll->label();
     if ($coll_label)
       $coll_label = $coll_label->getValue();
-    $members_array[$coll_label] = new ConceptPropertyValue($this->model, $this->vocab, $coll, 'skos:narrower');
+    $members_array[$coll_label] = new ConceptPropertyValue($this->model, $this->vocab, $coll, 'skos:narrower', $this->clang);
     foreach ($coll->allResources('skos:member') as $member) {
       if (array_key_exists($member->getUri(), $narrowers)) {
         $narrower = $narrowers[$member->getUri()];
