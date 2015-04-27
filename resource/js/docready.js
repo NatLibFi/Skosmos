@@ -260,7 +260,7 @@ $(function() { // DOCUMENT READY
     var combined = {};
     for (var i = 0; i < input.length; i++) {
       var langdata = input[i];
-      combined[langdata.literal] = [langdata.literal]
+      combined[langdata.literal] = [langdata.literal];
       for (var j = 0; j < langdata.properties.length; j++) {
         combined[langdata.literal].push(langdata.properties[j].labels);
       }
@@ -631,19 +631,20 @@ $(function() { // DOCUMENT READY
   // - a language code, e.g. "en", when searching in a specific language
   // - "" when searching in all languages
   var qlang = search_lang;
+  var langPretty;
   
   if (search_lang === 'anything') {
     $('#lang-dropdown-toggle').html($('.lang-button-all').html() + ' <span class="caret"></span>');
     qlang = "";
   } else if (!search_lang){
-      var langPretty = $('a[hreflang=' + lang + ']').html();
+      langPretty = $('a[hreflang=' + lang + ']').html();
       search_lang = lang;
       if (!langPretty)
         langPretty = $('a[hreflang="anything"]').html();
       $('#lang-dropdown-toggle').html(langPretty + ' <span class="caret"></span>');
       qlang = lang;
   } else {
-      var langPretty = $('a[hreflang=' + search_lang + ']').html();
+      langPretty = $('a[hreflang=' + search_lang + ']').html();
       if (!langPretty)
         langPretty = $('a[hreflang=""]').html();
       $('#lang-dropdown-toggle').html(langPretty + ' <span class="caret"></span>');
@@ -656,7 +657,7 @@ $(function() { // DOCUMENT READY
   });
   
   if (!search_lang_possible && search_lang !== 'anything') {
-    var langPretty = $('a[hreflang=""]').html();
+    langPretty = $('a[hreflang=""]').html();
     $('#lang-dropdown-toggle').html(langPretty + ' <span class="caret"></span>');
     qlang = '';
     createCookie('SKOSMOS_SEARCH_LANG', qlang, 365);
@@ -719,10 +720,10 @@ $(function() { // DOCUMENT READY
       var params = {};
       if (!localname || encodeURIComponent(localname) != localname) {
         localname = '';
-        params['uri'] = datum.uri;
+        params.uri = datum.uri;
       }
       if (clang && clang != lang) {
-        params['clang'] = clang;
+        params.clang = clang;
       }
       var paramstr = $.isEmptyObject(params) ? '' : '?' + $.param(params);
       // replaced complex logic with path_fix that should always work.
