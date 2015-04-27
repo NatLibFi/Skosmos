@@ -222,7 +222,7 @@ class WebController extends Controller
     }
 
     $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
-    $newlang = $this->verifyVocabularyLanguage($content_lang, $vocab->getLanguages());
+    $newlang = $this->verifyVocabularyLanguage($content_lang, $vocab);
     if ($newlang !== null)
       $content_lang = $newlang;
 
@@ -538,7 +538,7 @@ class WebController extends Controller
     
     $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
     $lang_support = true;
-    $newlang = $this->verifyVocabularyLanguage($content_lang, $vocab->getLanguages());
+    $newlang = $this->verifyVocabularyLanguage($content_lang, $vocab);
     if ($newlang !== null) {
       $content_lang = $newlang;
       $lang_support = false;
@@ -581,8 +581,7 @@ class WebController extends Controller
   {
     $this->setLanguageProperties($lang);
     $template = $this->twig->loadTemplate('group-index.twig');
-    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
-    if ($content_lang != $lang) $this->twig->addGlobal("ContentLanguage", $content_lang);
+
     try {
       $vocab = $this->model->getVocabulary($vocab_id);
     } catch (Exception $e) {
@@ -596,6 +595,16 @@ class WebController extends Controller
 
       return;
     }
+
+    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
+    $lang_support = true;
+    $newlang = $this->verifyVocabularyLanguage($content_lang, $vocab);
+    if ($newlang !== null) {
+      $content_lang = $newlang;
+      $lang_support = false;
+    }
+    if ($content_lang !== $lang) $this->twig->addGlobal("ContentLanguage", $content_lang);
+
     $groups = $vocab->listConceptGroups(false, $content_lang);
     echo $template
             ->render(
@@ -671,7 +680,6 @@ class WebController extends Controller
       $vocab = $this->model->getVocabulary($vocab_id);
     } catch (Exception $e) {
       header("HTTP/1.0 404 Not Found");
-      header("HTTP/1.0 404 Not Found");
       $template = $this->twig->loadTemplate('concept-info.twig');
       if (LOG_CAUGHT_EXCEPTIONS)
         error_log('Caught exception: ' . $e->getMessage());
@@ -681,22 +689,22 @@ class WebController extends Controller
 
       return;
     }
+    
+    $defaultView = $vocab->getDefaultSidebarView();
+    // load template
+    if ($defaultView === 'groups') {
+      $this->invokeGroupIndex($vocab_id, $lang, true);
+      return;
+    } 
 
     $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
     $lang_support = true;
-    $newlang = $this->verifyVocabularyLanguage($content_lang, $vocab->getLanguages());
+    $newlang = $this->verifyVocabularyLanguage($content_lang, $vocab);
     if ($newlang !== null) {
       $content_lang = $newlang;
       $lang_support = false;
     }
-    if ($content_lang != $lang) $this->twig->addGlobal("ContentLanguage", $content_lang);
-    $defaultView = $vocab->getDefaultSidebarView();
-
-    // load template
-    if ($defaultView === 'groups') {
-      $this->invokeGroupIndex($vocab_id, $content_lang, true);
-      return;
-    } 
+    if ($content_lang !== $lang) $this->twig->addGlobal("ContentLanguage", $content_lang);
     
     $template = $this->twig->loadTemplate('vocab.twig');
 
@@ -736,26 +744,19 @@ class WebController extends Controller
    * Verify that the requested language is supported by the vocabulary. If not, returns
    * another language supported by the vocabulary.
    * @param string $lang language to set
-   * @param array $supported_languages languages supported by the vocabulary
+   * @param Vocabulary $vocab the vocabulary in question 
    * @return string language tag supported by the vocabulary, or null if the given one is supported
    */
 
-  private function verifyVocabularyLanguage($lang, $vocab_languages)
+  private function verifyVocabularyLanguage($lang, $vocab)
   {
+    $vocab_languages = $vocab->getLanguages();
     $lang_support = in_array($lang, $vocab_languages);
-    // If not just pick a suitable replacement from the supported languages of the ontology
-    if ($lang_support) {
+    if ($lang_support)
       return null;
-    } else {
-      foreach ($this->languages as $langcode => $langdata) {
-        if (in_array($langcode, $vocab_languages)) {
-          $lang = $langcode;
-        }
-      }
-
-      return $lang;
-    }
-
+    // If desired language is not available just use the default language of the vocabulary 
+    else
+      return $vocab->getDefaultLanguage();
   }
 
 }
