@@ -229,7 +229,12 @@ class WebController extends Controller
     if ($content_lang != $lang) $this->twig->addGlobal("ContentLanguage", $content_lang);
     $langcodes = $vocab->getShowLangCodes();
     $vocab = $this->model->getVocabulary($vocab_id);
-    $uri = $vocab->getConceptURI($uri); // make sure it's a full URI
+    
+    $full_uri = $vocab->getConceptURI($uri); // make sure it's a full URI
+    // if rendering a page with the uri parameter the param needs to be passed for the template
+    $uri_param =  ($full_uri === $uri) ? 'uri=' . $full_uri : ''; 
+    $uri = $full_uri;
+
     $results = $vocab->getConceptInfo($uri, $content_lang);
     $crumbs = $vocab->getBreadCrumbs($content_lang, $uri);
     echo $template->render(Array(
@@ -243,6 +248,7 @@ class WebController extends Controller
       'explicit_langcodes' => $langcodes,
       'request_uri' => $this->request_uri,
       'bread_crumbs' => $crumbs['breadcrumbs'],
+      'uri_param' => $uri_param,
       'combined' => $crumbs['combined'])
     );
   }
