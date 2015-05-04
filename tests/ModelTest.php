@@ -2,19 +2,9 @@
 
 class ModelTest extends PHPUnit_Framework_TestCase
 {
-  /**
-   * @covers Model::__construct
-   * @expectedException \Exception
-   * @expectedExceptionMessage Use of undefined constant VOCABULARIES_FILE - assumed 'VOCABULARIES_FILE'
-   */
-  public function testConstructorNoVocabulariesConfigFile()
-  {
-    new Model(); 
-  }
   
   /**
    * @covers Model::__construct
-   * @depends testConstructorNoVocabulariesConfigFile
    */
   public function testConstructorWithConfig()
   {
