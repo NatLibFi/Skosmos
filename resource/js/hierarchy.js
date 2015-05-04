@@ -159,6 +159,7 @@ function buildParentTree(uri, parentData) {
 
   // Iterating over the nodes to make sure all concepts have their children set.
   appendChildrenToParents();
+  console.log(rootArray);
   return rootArray;
 }
 
@@ -190,12 +191,13 @@ function appendChildrenToParents() {
       if (parentNode !== current)
         if (parentNode && $.inArray(current, parentNode.children) === -1) {
           for(var sibling in parentNode.children) {
-            if(parentNode.children[sibling].uri == current.uri){ 
-              // if the concept has already been added remove the previous one since this one is more accurate.
-              parentNode.children.splice(sibling, 1);
+            if(parentNode.children[sibling].uri === current.uri){ 
+              // if the concept has already been enrich the previous one with the additional information.
+              parentNode.children[sibling].children = current.children;
+              parentNode.children[sibling].state = current.state;
+              parentNode.children[sibling].li_attr = current.li_attr;
             }
           }
-          parentNode.children.push(current);
         }
     }
   }
