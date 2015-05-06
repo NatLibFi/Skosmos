@@ -913,7 +913,7 @@ EOQ;
    * @param boolean $anylang if you want a label even when it isn't available in the language you requested.
    * @return array array of property values (key: URI, val: label), or null if concept doesn't exist
    */
-  public function queryTransitiveProperty($uri, $prop, $lang, $limit, $anylang=false)
+  public function queryTransitiveProperty($uri, $prop, $lang, $limit, $anylang=false, $fallbacklang='')
   {
     $uri = is_array($uri) ? $uri[0] : $uri;
     $gc = $this->graphClause;
@@ -950,8 +950,6 @@ EOQ;
         return array(); // existing concept but no properties
       if (isset($row->label)) {
         $val = array('label'=>$row->label->getValue());
-        if ($row->label->getLang() !== $lang)
-          $val['label'] .= ' (' . $row->label->getLang() . ')';
       } else {
         $val = array('label'=>null);
       }
@@ -959,9 +957,27 @@ EOQ;
         $val['direct'] = explode(' ', $row->direct->getValue());
       }
       // Preventing labels in a non preferred language overriding the preferred language.
-      if (isset($row->label) && $row->label->getLang() === $lang || array_key_exists($row->object->getUri(), $ret) === false)
-        $ret[$row->object->getUri()] = $val;
+      if (isset($row->label) && $row->label->getLang() === $lang || array_key_exists($row->object->getUri(), $ret) === false) {
+        if ($row->label->getLang() === $lang)
+          $ret[$row->object->getUri()] = $val;
+        elseif ($row->label->getLang() === $fallbacklang) {
+          $val['label'] .= ' (' . $row->label->getLang() . ')';
+          $ret[$row->object->getUri()] = $val;
+        }       
+      }
     }
+
+    // second iteration of results to find labels for the ones that didn't have one in the preferred languages
+      foreach ($result as $row) {
+        if (isset($row->object) && array_key_exists($row->object->getUri(), $ret) === false) {
+          $val = array('label'=>$row->label->getValue());
+          if (isset($row->direct) && $row->direct->getValue() != '') {
+            $val['direct'] = explode(' ', $row->direct->getValue());
+          }
+          $ret[$row->object->getUri()] = $val;
+        }
+      }
+
     if (sizeof($ret) > 0)
       return $ret; // existing concept, with properties
     else

@@ -557,7 +557,8 @@ class Vocabulary extends DataObject
   public function getConceptTransitiveBroaders($uri, $limit, $any=false, $lang)
   {
     $lang = $lang ? $lang : $this->lang;
-    return $this->getSparql()->queryTransitiveProperty($uri, 'skos:broader', $lang, $limit, $any);
+    $fallback = $this->getDefaultLanguage();
+    return $this->getSparql()->queryTransitiveProperty($uri, 'skos:broader', $lang, $limit, $any, $fallback);
   }
 
   /**
