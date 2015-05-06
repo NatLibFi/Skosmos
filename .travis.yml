@@ -6,6 +6,7 @@ php:
   - "5.3"
 install:
   - composer install --no-dev
+  - composer require codeclimate/php-test-reporter
 before_script:
   - cd tests
   - sh ./init_fuseki.sh
