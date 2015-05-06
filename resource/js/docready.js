@@ -73,7 +73,7 @@ $(function() { // DOCUMENT READY
    */
   $(document).ajaxComplete(function(event, xhr, settings) {
     $('.property-click').qtip({ 
-      position: { my: 'bottom center', at: 'top center' },
+      position: { my: 'bottom center', at: 'top center' },
       style: { classes: 'qtip-tipsy qtip-skosmos' } 
     });
     if (settings.url.indexOf('groups') !== -1 || settings.url.indexOf('index') !== -1) {
@@ -125,7 +125,7 @@ $(function() { // DOCUMENT READY
   var textColor = $('.search-parameter-highlight').css('color');
   countAndSetOffset();
 
-  if(parts.indexOf('search') == -1) { // Disabled if on the search results page.
+  if(parts.indexOf('search') === -1) { // Disabled if on the search results page.
   /*
    * Event handler for clicking the preflabel and making a selection of it for copy pasting.
    */
@@ -200,7 +200,7 @@ $(function() { // DOCUMENT READY
     var sidebarFixed = false;
     // the handler listens to headerbars position so it works correctly after the sidebar is hidden/shown again.
     $('.headerbar').waypoint(function(direction) {
-      if (!sidebarFixed && direction == 'down') {
+      if (!sidebarFixed && direction === 'down') {
         sidebarFixed = true;
         $('#sidebar').addClass('fixed');
       } else {
@@ -445,7 +445,7 @@ $(function() { // DOCUMENT READY
       // removing the last page url if this isn't the first.
       btn_href = btn_href.substr(btn_href.indexOf('clang'));
       if (event.target.href.indexOf('clang') === -1) {
-        if (getUrlParams().uri) { // if the href has a uri parameter (like the hierarchy links)
+        if (getUrlParams().uri) { // if the href has a uri parameter (like the hierarchy links)
           // the url already has a short uri and now we just can't add the long uri without removing the short uri first
           var url_parts = window.location.href.split('/');
           url_parts = url_parts.slice(0, url_parts.length - 1).join('/');
@@ -607,7 +607,7 @@ $(function() { // DOCUMENT READY
   });
   
   $('.search-hint').qtip({ 
-    position: { my: 'top center', at: 'bottom center' },
+    position: { my: 'top center', at: 'bottom center' },
     style: { classes: 'qtip-tipsy qtip-skosmos' } 
   });
   
