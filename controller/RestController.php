@@ -29,7 +29,6 @@ class RestController extends Controller
     header("HTTP/1.0 $code $status");
     header("Content-type: text/plain; charset=utf-8");
     echo "$code $status : $message";
-    exit();
   }
 
   /**
@@ -95,7 +94,7 @@ class RestController extends Controller
     $limit = isset($_GET['limit']) ?
              intval($_GET['limit']) : DEFAULT_TRANSITIVE_LIMIT;
     if ($limit <= 0)
-      $this->return_error(400, "Bad Request", "Invalid limit parameter");
+      return $this->return_error(400, "Bad Request", "Invalid limit parameter");
 
     return $limit;
   }
@@ -408,7 +407,7 @@ class RestController extends Controller
       return $this->return_error(400, "Bad Request", "label parameter missing");
     $lang = isset($_GET['lang']) ? $_GET['lang'] : null; # optional
     $vocab = $this->getVocabulary($vocid);
-    if ($label == '') $this->return_error(400, 'Bad Request', 'empty label');
+    if ($label == '') return $this->return_error(400, 'Bad Request', 'empty label');
 
     $results = $this->model->searchConcepts($label, $vocid, $lang, $lang);
 
@@ -729,7 +728,7 @@ class RestController extends Controller
     $limit = $this->parseLimit();
     isset($_GET['limit']) ?
              intval($_GET['limit']) : DEFAULT_TRANSITIVE_LIMIT;
-    if ($limit <= 0) $this->return_error(400, "Bad Request", "Invalid limit parameter");
+    if ($limit <= 0) return $this->return_error(400, "Bad Request", "Invalid limit parameter");
 
     $results = array();
     $narrowers = $vocab->getConceptTransitiveNarrowers($uri, $limit, $lang);
