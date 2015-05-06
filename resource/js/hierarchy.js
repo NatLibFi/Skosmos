@@ -159,7 +159,6 @@ function buildParentTree(uri, parentData) {
 
   // Iterating over the nodes to make sure all concepts have their children set.
   appendChildrenToParents();
-  console.log(rootArray);
   return rootArray;
 }
 
