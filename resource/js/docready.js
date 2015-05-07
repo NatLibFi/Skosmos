@@ -787,7 +787,7 @@ $(function() { // DOCUMENT READY
           var vocabString = $('.frontpage').length ? vocabSelectionString : vocab; 
           var parameters = $.param({'vocab' : vocabString, 'lang' : qlang, 'labellang' : lang});
           // if the search has been targeted at all languages by clicking the checkbox
-          if ($('#any-lang-href > input').is(':checked')) // TODO: FIX THIS
+          if ($('input[name=anylang]').is(':checked'))
             parameters = $.param({'vocab' : vocabString, 'lang' : '', 'labellang' : ''});
           settings.url = settings.url + '&' + parameters;
         }
