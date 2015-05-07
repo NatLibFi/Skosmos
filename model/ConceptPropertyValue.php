@@ -36,6 +36,8 @@ class ConceptPropertyValue extends VocabularyDataObject
       $lang = $this->clang;
     if ($this->resource->label($lang) !== null) { // current language
       return $this->resource->label($lang);
+    } elseif ($this->resource->label($this->vocab->getDefaultLanguage()) !== null) { // vocab default language
+      return $this->resource->label($this->vocab->getDefaultLanguage());
     } elseif ($this->resource->label() !== null) { // any language
       return $this->resource->label();
     } elseif ($this->resource->getLiteral('rdf:value', $lang) !== null) { // current language
