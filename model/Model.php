@@ -25,7 +25,6 @@ require_once 'model/Vocabulary.php';
 require_once 'model/Breadcrumb.php';
 
 require_once 'model/sparql/GenericSparql.php';
-require_once 'model/sparql/BigdataSparql.php';
 require_once 'model/sparql/JenaTextSparql.php';
 
 /**

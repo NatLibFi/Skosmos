@@ -6,9 +6,15 @@ php:
   - "5.3"
 install:
   - composer install --no-dev
+  - composer require codeclimate/php-test-reporter
 before_script:
   - cd tests
   - sh ./init_fuseki.sh
   - cd ..
 after_script:
   - pkill -f 'java -Xmx1200M -jar'
+  - vendor/bin/test-reporter --stdout > codeclimate.json
+  - "curl -X POST -d @codeclimate.json -H 'Content-Type: application/json' -H 'User-Agent: Code Climate (PHP Test Reporter v0.1.1)' https://codeclimate.com/test_reports"
+addons:
+  code_climate:
+    repo_token: fb98170a5c7ea9cc2bbab19ff26268335e6a11a4f8267ca935e5e8ff4624886c
