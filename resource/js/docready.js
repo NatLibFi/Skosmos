@@ -785,7 +785,7 @@ $(function() { // DOCUMENT READY
         beforeSend: function(jqXHR, settings) {
           wildcard = ($('#search-field').val().indexOf('*') === -1) ? '*' : '';
           var vocabString = $('.frontpage').length ? vocabSelectionString : vocab; 
-          var parameters = $.param({'vocab' : vocabString, 'lang' : qlang, 'labellang' : lang});
+          var parameters = $.param({'vocab' : vocabString, 'lang' : qlang, 'labellang' : qlang});
           // if the search has been targeted at all languages by clicking the checkbox
           if ($('input[name=anylang]').is(':checked'))
             parameters = $.param({'vocab' : vocabString, 'lang' : '', 'labellang' : ''});
@@ -814,7 +814,7 @@ $(function() { // DOCUMENT READY
             if (item.hiddenLabel)
               item.replaced = item.hiddenLabel;
             // do not show the label language when it's same or in the same subset as the ui language.
-            if (item.lang && (item.lang === lang || item.lang.indexOf(lang + '-') === 0))
+            if (item.lang && (item.lang === qlang || item.lang.indexOf(qlang + '-') === 0))
               delete(item.lang);
             if (item.type) {
               var toBeRemoved = null;
