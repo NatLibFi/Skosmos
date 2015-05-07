@@ -96,7 +96,10 @@ class Concept extends VocabularyDataObject
     // 1. label in current language
     if ($this->resource->label($lang) !== null)
       return $this->resource->label($lang);
-    // 2. label in any language
+    // 2. label in the vocabulary default language
+    if ($this->resource->label($this->vocab->getDefaultLanguage()) !== null)
+      return $this->resource->label($this->vocab->getDefaultLanguage());
+    // 3. label in any language
     $label = $this->resource->label();
     // if the label lang code is a subset of the ui lang eg. en-GB
     if ($label !== null && strpos($label->getLang(), $this->lang . '-') === 0)
