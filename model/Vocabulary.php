@@ -501,7 +501,8 @@ class Vocabulary extends DataObject
   public function getConceptHierarchy($uri, $lang)
   {
     $lang = $lang ? $lang : $this->lang;
-    return $this->getSparql()->queryParentList($uri, $lang);
+    $fallback = $this->getDefaultLanguage();
+    return $this->getSparql()->queryParentList($uri, $lang, $fallback);
   }
 
   /**

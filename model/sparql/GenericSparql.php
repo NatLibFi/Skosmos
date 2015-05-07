@@ -909,6 +909,7 @@ EOQ;
    * @param string $uri
    * @param string $prop the name of the property eg. 'skos:broader'.
    * @param string $lang
+   * @param string $fallbacklang language to use if label is not available in the preferred language
    * @param integer $limit
    * @param boolean $anylang if you want a label even when it isn't available in the language you requested.
    * @return array array of property values (key: URI, val: label), or null if concept doesn't exist
@@ -1067,12 +1068,13 @@ EOQ;
   }
 
   /**
-     * Query for finding the hierarchy for a concept.
-     * @param string $uri concept uri.
+   * Query for finding the hierarchy for a concept.
+   * @param string $uri concept uri.
    * @param string $lang
-     * @return an array for the REST controller to encode.
-     */
-  public function queryParentList($uri, $lang)
+   * @param string $fallback language to use if label is not available in the preferred language
+   * @return an array for the REST controller to encode.
+   */
+  public function queryParentList($uri, $lang, $fallback)
   {
     $orig_uri = $uri;
         $gc = $this->graphClause;
@@ -1088,6 +1090,10 @@ WHERE {
         ?broad skos:prefLabel ?lab .
         FILTER (langMatches(lang(?lab), "$lang"))
       }
+      OPTIONAL {
+        ?broad skos:prefLabel ?lab .
+        FILTER (langMatches(lang(?lab), "$fallback"))
+      }
       OPTIONAL { # fallback - other language case
         ?broad skos:prefLabel ?lab .
       }
@@ -1096,6 +1102,10 @@ WHERE {
         OPTIONAL {
           ?children skos:prefLabel ?childlab .
           FILTER (langMatches(lang(?childlab), "$lang"))
+        }
+        OPTIONAL {
+          ?children skos:prefLabel ?childlab .
+          FILTER (langMatches(lang(?childlab), "$fallback"))
         }
         OPTIONAL { # fallback - other language case
           ?children skos:prefLabel ?childlab .
@@ -1129,10 +1139,9 @@ EOQ;
         
         $label = null;
         if (isset($row->childlabel)) {
-          if ($row->childlabel->getLang() == $lang)
-            $label = $row->childlabel->getValue();
-          else
-            $label = $row->childlabel->getValue() . " (" . $row->childlabel->getLang() . ")";
+          $label = $row->childlabel->getValue();
+          if ($row->childlabel->getLang() !== $lang)
+            $label .=  " (" . $row->childlabel->getLang() . ")";
         }
         
         $child_arr = array(
@@ -1143,7 +1152,12 @@ EOQ;
         if(!in_array($child_arr, $ret[$uri]['narrower']))
           $ret[$uri]['narrower'][] = $child_arr;
       }
-      $ret[$uri]['prefLabel'] = isset($row->label) ? $row->label->getValue() : null;
+      if (isset($row->label)) {
+        $preflabel = $row->label->getValue();
+        if ($row->label->getLang() !== $lang)   
+          $preflabel .= ' (' . $row->label->getLang() . ')';
+      }
+      $ret[$uri]['prefLabel'] = $preflabel;
       if (isset($row->parent) && (isset($ret[$uri]['broader']) && !in_array($row->parent->getUri(), $ret[$uri]['broader']))) {
         $ret[$uri]['broader'][] = $row->parent->getUri();
       } elseif (isset($row->parent) && !isset($ret[$uri]['broader'])) {
