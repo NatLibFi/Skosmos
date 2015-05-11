@@ -387,7 +387,7 @@ class Concept extends VocabularyDataObject
       $arrayClass = $arrayClassURI !== null ? EasyRdf_Namespace::shorten($arrayClassURI) : null;
       foreach ($reverseResources as $reverseResource) {
         $property = in_array($arrayClass, $reverseResource->types()) ? "skosmos:memberOfArray" : "skosmos:memberOf" ;
-        $coll_label = $reverseResource->label()->getValue($this->clang) ? $reverseResource->label($this->clang) : $reverseResource->label();
+        $coll_label = $reverseResource->label($this->clang) ? $reverseResource->label($this->clang) : $reverseResource->label();
         if ($coll_label)
           $coll_label = $coll_label->getValue();
         $super = $reverseResource->get('isothes:superGroup');
