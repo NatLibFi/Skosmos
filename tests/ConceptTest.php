@@ -134,6 +134,54 @@ class ConceptTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers Concept::getProperties
+   * @covers ConceptProperty::getValues
+   * @covers ConceptPropertyValueLiteral::getLabel
+   */
+  public function testGetTimestamp() {
+    $vocab = $this->model->getVocabulary('test');
+    $concepts = $vocab->getConceptInfo("http://www.skosmos.skos/test/ta123", "en");
+    $concept = $concepts[0];
+    $props = $concept->getProperties();
+    $values = $props['dc:modified']->getValues();
+    $firstval = reset($values);
+    $this->assertEquals($firstval->getLabel(), '10/1/14');
+  }
+
+  /**
+   * @covers Concept::getProperties
+   * @covers ConceptProperty::getValues
+   * @covers ConceptPropertyValueLiteral::getLabel
+   * @expectedException \Exception
+   * @expectedExceptionMessage DateTime::__construct(): Failed to parse time string (1986-21-00) at position 6 (1): Unexpected character
+   */
+
+  public function testGetTimestampInvalidWarning() {
+    $vocab = $this->model->getVocabulary('test');
+    $concepts = $vocab->getConceptInfo("http://www.skosmos.skos/test/ta114", "en");
+    $concept = $concepts[0];
+    $props = $concept->getProperties(); # this should throw a E_USER_WARNING exception
+  }
+
+  /**
+   * @covers Concept::getProperties
+   * @covers ConceptProperty::getValues
+   * @covers ConceptPropertyValueLiteral::getLabel
+   */
+
+  public function testGetTimestampInvalidResult() {
+    $vocab = $this->model->getVocabulary('test');
+    $concepts = $vocab->getConceptInfo("http://www.skosmos.skos/test/ta114", "en");
+    $concept = $concepts[0];
+    # we use @ to suppress the exceptions in order to be able to check the result
+    $props = @$concept->getProperties();
+    $values = $props['dc:modified']->getValues();
+    $firstval = reset($values);
+    $label = @$firstval->getLabel();
+    $this->assertEquals($label, '1986-21-00');
+  }
+
+  /**
+   * @covers Concept::getProperties
    */
   public function testGetPropertiesTypes()
   {
