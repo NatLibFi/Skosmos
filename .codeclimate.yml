@@ -3,4 +3,6 @@ languages:
   JavaScript: true
   PHP: true
   Python: false
-exclude_paths: [tests]
+exclude_paths:
+- tests/*
+
