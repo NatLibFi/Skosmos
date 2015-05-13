@@ -243,28 +243,28 @@ class Vocabulary extends DataObject
     }
 
     // also include ConceptScheme metadata from SPARQL endpoint
-    $cs = $this->getDefaultConceptScheme();
+    $defaultcs = $this->getDefaultConceptScheme();
 
     // query everything the endpoint knows about the ConceptScheme
     $sparql = $this->getSparql();
-    $result = $sparql->queryConceptScheme($cs);
-    $cs = $result->resource($cs);
+    $result = $sparql->queryConceptScheme($defaultcs);
+    $conceptscheme = $result->resource($defaultcs);
     $this->order = array("dc:title","dc11:title","skos:prefLabel","rdfs:label","dc:subject", "dc11:subject", "dc:description", "dc11:description","dc:publisher","dc11:publisher","dc:creator","dc11:creator","dc:contributor", "dc:language", "dc11:language","owl:versionInfo","dc:source", "dc11:source");
 
-    foreach ($cs->properties() as $prop) {
-      foreach ($cs->allLiterals($prop, $lang) as $val) {
+    foreach ($conceptscheme->properties() as $prop) {
+      foreach ($conceptscheme->allLiterals($prop, $lang) as $val) {
         $ret[$prop][] = $val->getValue();
       }
       if (!isset($ret[$prop]) || sizeof($ret[$prop]) == 0) { // not found with language tag
-        foreach ($cs->allLiterals($prop, null) as $val) {
-          $v = $val->getValue();
-          if ($v instanceof DateTime) {
-            $v = Punic\Calendar::formatDate($v, 'full', $lang) . ' ' . Punic\Calendar::format($v, 'HH:mm:ss', $lang);
+        foreach ($conceptscheme->allLiterals($prop, null) as $val) {
+          $value = $val->getValue();
+          if ($value instanceof DateTime) {
+            $value = Punic\Calendar::formatDate($value, 'full', $lang) . ' ' . Punic\Calendar::format($value, 'HH:mm:ss', $lang);
           }
-          $ret[$prop][] = $v;
+          $ret[$prop][] = $value;
         }
       }
-      foreach ($cs->allResources($prop) as $val) {
+      foreach ($conceptscheme->allResources($prop) as $val) {
         $label = $val->label($lang);
         if ($label) {
           $ret[$prop][] = $label->getValue();
