@@ -52,6 +52,7 @@ test:ta112 a skos:Concept, meta:TestClass ;
 
 test:ta114 a skos:Concept, meta:TestClass ;
     skos:broader test:ta1 ;
+    dct:modified "1986-21-00"^^xsd:date ; # date invalid on purpose
     skos:inScheme test:conceptscheme ;
     skos:prefLabel "Buri"@en .
 
