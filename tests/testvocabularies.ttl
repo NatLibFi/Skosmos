@@ -51,6 +51,7 @@
 	skosmos:arrayClass isothes:ThesaurusArray ;
 	void:sparqlEndpoint <http://localhost:3030/ds/sparql> ;
 	skosmos:language "fi", "en";
+	skosmos:defaultLanguage "fi";
 	skosmos:indexShowClass meta:TestClass, meta:TestClass2;
 	skosmos:sparqlGraph <http://www.skosmos.skos/groups/> .
 
@@ -61,6 +62,14 @@
 	void:sparqlEndpoint <http://localhost:3030/ds/sparql> ;
 	skosmos:language "en";
 	skosmos:sparqlGraph <http://www.skosmos.skos/cycle/> .
+
+:duplicates a skosmos:Vocabulary, void:Dataset ;
+	dc11:title "Duplicate labels test vocabulary"@en ;
+	dc:subject :cat_general ;
+	void:uriSpace "http://www.skosmos.skos/onto/dup/";
+	void:sparqlEndpoint <http://localhost:3030/ds/sparql> ;
+	skosmos:language "en";
+	skosmos:sparqlGraph <http://www.skosmos.skos/dup/> .
 
 
 <http://skosmos.skos/dump/test/groups> dc:format "application/rdf+xml" .

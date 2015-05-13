@@ -41,8 +41,15 @@ class ConceptPropertyValueLiteral
   public function getLabel()
   {
     // if the property is a date object converting it to a human readable representation.
-    if ($this->literal->getDataType() === 'xsd:date' || $this->literal->getDataType() === 'xsd:dateTime')
-      return Punic\Calendar::formatDate($this->literal->getValue(), 'short');
+    if ($this->literal instanceof EasyRdf_Literal_Date) {
+      try {
+        $val = $this->literal->getValue();
+        return Punic\Calendar::formatDate($val, 'short');
+      } catch (Exception $e) {
+        trigger_error($e->getMessage(), E_USER_WARNING);
+        return (string)$this->literal;
+      }
+    }
     return $this->literal->getValue();
   }
 

@@ -96,7 +96,10 @@ class Concept extends VocabularyDataObject
     // 1. label in current language
     if ($this->resource->label($lang) !== null)
       return $this->resource->label($lang);
-    // 2. label in any language
+    // 2. label in the vocabulary default language
+    if ($this->resource->label($this->vocab->getDefaultLanguage()) !== null)
+      return $this->resource->label($this->vocab->getDefaultLanguage());
+    // 3. label in any language
     $label = $this->resource->label();
     // if the label lang code is a subset of the ui lang eg. en-GB
     if ($label !== null && strpos($label->getLang(), $this->lang . '-') === 0)
@@ -384,7 +387,7 @@ class Concept extends VocabularyDataObject
       $arrayClass = $arrayClassURI !== null ? EasyRdf_Namespace::shorten($arrayClassURI) : null;
       foreach ($reverseResources as $reverseResource) {
         $property = in_array($arrayClass, $reverseResource->types()) ? "skosmos:memberOfArray" : "skosmos:memberOf" ;
-        $coll_label = $reverseResource->label()->getValue($this->clang) ? $reverseResource->label($this->clang) : $reverseResource->label();
+        $coll_label = $reverseResource->label($this->clang) ? $reverseResource->label($this->clang) : $reverseResource->label();
         if ($coll_label)
           $coll_label = $coll_label->getValue();
         $super = $reverseResource->get('isothes:superGroup');

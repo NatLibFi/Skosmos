@@ -1,0 +1,21 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dc11: <http://purl.org/dc/elements/1.1/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix dup: <http://www.skosmos.skos/dup/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix skosmos: <http://www.skosmos.skos/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dup:d1 a skos:Concept ;
+    skos:prefLabel "Identical label"@en .
+
+dup:d2 a skos:Concept ;
+    skos:prefLabel "Identical label"@en .
+
+dup:d3 a skos:Concept ;
+    skos:closeMatch dup:d1, dup:d2 ; 
+    skos:prefLabel "A label"@en .
