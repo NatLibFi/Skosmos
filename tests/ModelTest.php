@@ -215,6 +215,18 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @covers Model::searchConcepts
    * @depends testConstructorWithConfig
    */
+  public function testSearchConceptsWithOneVocabSearchLangOtherThanLabellang() {
+    $model = new Model();
+    $result = $model->searchConcepts('karppi', 'test', 'en', 'fi');
+    $this->assertEquals('http://www.skosmos.skos/test/ta112', $result[0]['uri']);
+    $this->assertEquals('Carp', $result[0]['prefLabel']);
+  }
+
+  
+  /**
+   * @covers Model::searchConcepts
+   * @depends testConstructorWithConfig
+   */
   public function testSearchConceptsWithAllVocabsCaseInsensitivity() {
     $model = new Model();
     $result = $model->searchConcepts('bass', null, 'en', 'en');
