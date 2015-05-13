@@ -4,5 +4,5 @@ languages:
   PHP: true
   Python: false
 exclude_paths:
-- tests/*
+- resource/js/bootstrap-multiselect.js
 
