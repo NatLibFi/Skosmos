@@ -413,7 +413,7 @@ msgstr "sökresultat för"
 
 #: /tmp/cache/55262acaeb7d6/2b/2f/1ce096ed381c7c416eb3bdf53cb7.php:89
 msgid "search_example_text"
-msgstr "Du kan bestämma trunkering manuellt genom att använda asterisk (*). Pröva t.ex.: *nät eller: *patent*. Om du inte använder asterisk görs sökningen med trunkering i slutet."
+msgstr "Du kan bestämma sökordets trunkering genom att använda asterisk (*). Pröva t.ex.: *nät eller: *patent*. Om du inte använder asterisk görs sökningen med trunkering i slutet."
 
 #: /tmp/cache/55262acaeb7d6/0e/21/616815bd3942b86671f42d3ed4b2.php:47
 msgid "selected"
