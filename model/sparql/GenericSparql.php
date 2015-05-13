@@ -989,9 +989,10 @@ EOQ;
    * Query the narrower concepts of a concept.
    * @param string $uri
    * @param string $lang
+   * @param string $fallback
    * @return array array of arrays describing each child concept, or null if concept doesn't exist
    */
-  public function queryChildren($uri, $lang)
+  public function queryChildren($uri, $lang, $fallback)
   {
     $uri = is_array($uri) ? $uri[0] : $uri;
     $gc = $this->graphClause;
@@ -1004,6 +1005,10 @@ SELECT ?child ?label ?child ?grandchildren WHERE {
       OPTIONAL {
         ?child skos:prefLabel ?label .
         FILTER (langMatches(lang(?label), "$lang"))
+      }
+      OPTIONAL {
+        ?child skos:prefLabel ?label .
+        FILTER (langMatches(lang(?label), "$fallback"))
       }
       OPTIONAL { # other language case
         ?child skos:prefLabel ?label .
