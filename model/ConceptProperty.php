@@ -67,7 +67,7 @@ class ConceptProperty
     $label = $value->getLabel($this->lang) ? $value->getLabel($this->lang) : $value->getLabel();
     if (method_exists($label, 'getValue'))
       $label = $label->getValue();
-    $this->values[$label] = $value;
+    $this->values[$label . $value->getUri()] = $value;
     $this->sortValues();
   }
 
