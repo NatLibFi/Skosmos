@@ -331,6 +331,7 @@ $(function() { // DOCUMENT READY
         }
       });
     }
+    updateClangButtons(targetUrl);
   }
   
   $(window).on("popstate", function(e) {
@@ -368,7 +369,7 @@ $(function() { // DOCUMENT READY
               $('.navbar-form .dropdown-menu').empty();
               $('.navbar-form .dropdown-menu').append(lang_buttons);
               document.title = title;
-              updateClangButtons(event);
+              updateClangButtons(event.target.href);
             }
         });
         return false;
@@ -407,7 +408,7 @@ $(function() { // DOCUMENT READY
                 var url = encodeURI(event.target.href).replace('/' + lang + '/', '/' + btn_lang +'/');
                 $(val).attr('href', url);
               });
-              updateClangButtons(event);
+              updateClangButtons(event.target.href);
             }
         });
         return false;
@@ -448,24 +449,24 @@ $(function() { // DOCUMENT READY
       }
   );
 
-  function updateClangButtons(event) {
+  function updateClangButtons(href) {
     $.each($('.lang-button'), function(index, val) {
       var url;
       var btn_href = $(val).attr('href');
       // removing the last page url if this isn't the first.
       btn_href = btn_href.substr(btn_href.indexOf('clang'));
-      if (event.target.href.indexOf('clang') === -1) {
+      if (href.indexOf('clang') === -1) {
         if (getUrlParams().uri) { // if the href has a uri parameter (like the hierarchy links)
           // the url already has a short uri and now we just can't add the long uri without removing the short uri first
           var url_parts = window.location.href.split('/');
           url_parts = url_parts.slice(0, url_parts.length - 1).join('/');
-          url = encodeURI(url_parts + '/?uri=' + event.target.href + '&' + btn_href);
+          url = encodeURI(url_parts + '/?uri=' + href + '&' + btn_href);
         }  else
-          url = encodeURI(event.target.href + '?' + btn_href);
+          url = encodeURI(href + '?' + btn_href);
       } else if (btn_href.indexOf('anylang') === -1)
-        url = encodeURI(event.target.href).replace(/clang=\w{2}/, 'clang=' + btn_href.substr(-2));
+        url = encodeURI(href).replace(/clang=\w{2}/, 'clang=' + btn_href.substr(-2));
       else
-        url = encodeURI(event.target.href).replace(/clang=\w{2}/, btn_href);
+        url = encodeURI(href).replace(/clang=\w{2}/, btn_href);
 
     $(val).attr('href', url);
     });
@@ -522,7 +523,7 @@ $(function() { // DOCUMENT READY
               if (window.history.pushState)
                 window.history.pushState(null, null, encodeURI(event.target.href));
               document.title = title;
-              updateClangButtons(event);
+              updateClangButtons(event.target.href);
             }
         });
         return false;
@@ -557,7 +558,7 @@ $(function() { // DOCUMENT READY
               if (window.history.pushState)
                 window.history.pushState(null, null, encodeURI(event.target.href));
               document.title = title;
-              updateClangButtons(event);
+              updateClangButtons(event.target.href);
             }
         });
         return false;
