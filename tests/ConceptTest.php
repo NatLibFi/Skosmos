@@ -127,7 +127,7 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $search_results = $this->model->searchConceptsAndInfo('fish', 'test', 'en', 'en'); 
     $concept = $search_results['results'][0];
     $props = $concept->getProperties();
-    $expected = array (0 => '3D Bass',1 => 'Bass',2 => 'Buri',3 => 'Carp',4 => 'Eel',5 => 'Hauki',6 => 'Tuna',7 => 'test:ta113',8 => 'test:ta120');
+    $expected = array (0 => '3D Basshttp://www.skosmos.skos/test/ta117',1 => 'Basshttp://www.skosmos.skos/test/ta116',2 => 'Burihttp://www.skosmos.skos/test/ta114',3 => 'Carphttp://www.skosmos.skos/test/ta112',4 => 'Eelhttp://www.skosmos.skos/test/ta115',5 => 'Haukihttp://www.skosmos.skos/test/ta119',6 => 'Tunahttp://www.skosmos.skos/test/ta111',7 => 'test:ta113http://www.skosmos.skos/test/ta113',8 => 'test:ta120http://www.skosmos.skos/test/ta120');
     $this->assertEquals($expected, array_keys($props['skos:narrower']->getValues()));
  
   }
@@ -188,8 +188,8 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $props = $this->concept->getProperties();
     $propvals = $props['rdf:type']->getValues();
     $this->assertCount(1, $propvals); // should only have type meta:TestClass, not skos:Concept (see #200)
-    $this->assertEquals('Test class', $propvals['Test class']->getLabel());
-    $this->assertEquals('http://www.skosmos.skos/test-meta/TestClass', $propvals['Test class']->getUri());
+    $this->assertEquals('Test class', $propvals['Test classhttp://www.skosmos.skos/test-meta/TestClass']->getLabel());
+    $this->assertEquals('http://www.skosmos.skos/test-meta/TestClass', $propvals['Test classhttp://www.skosmos.skos/test-meta/TestClass']->getUri());
   }
 
   /**
@@ -241,7 +241,7 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $concept = $concepts[0];
     $props = $concept->getProperties();
     $propvals = $props['skos:definition']->getValues();
-    $this->assertEquals('The black sea bass (Centropristis striata) is an exclusively marine fish.', $propvals['The black sea bass (Centropristis striata) is an exclusively marine fish.']->getLabel());
+    $this->assertEquals('The black sea bass (Centropristis striata) is an exclusively marine fish.', $propvals['The black sea bass (Centropristis striata) is an exclusively marine fish.http://www.skosmos.skos/test/black_sea_bass_def']->getLabel());
   }
 
 
