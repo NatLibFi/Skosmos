@@ -398,7 +398,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    */
   public function testQueryChildren()
   {
-    $actual = $this->sparql->queryChildren('http://www.skosmos.skos/test/ta1', 'en');
+    $actual = $this->sparql->queryChildren('http://www.skosmos.skos/test/ta1', 'en', 'en');
     $expected = array (
       0 => array (
         'uri' => 'http://www.skosmos.skos/test/ta111',
@@ -454,7 +454,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    */
   public function testQueryChildrenOfNonExistentConcept()
   {
-    $actual = $this->sparql->queryChildren('http://notfound', 'en');
+    $actual = $this->sparql->queryChildren('http://notfound', 'en', 'en');
     $this->assertEquals(null, $actual);
   }
 
