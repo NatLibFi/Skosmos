@@ -131,6 +131,19 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $this->assertEquals($expected, array_keys($props['skos:narrower']->getValues()));
  
   }
+  
+  /**
+   * @covers Concept::getMappingProperties
+   * @covers ConceptProperty::getValues
+   */
+  public function testGetMappingPropertiesWithIdenticalLabels() {
+    $vocab = $this->model->getVocabulary('duplicates');
+    $concepts = $vocab->getConceptInfo("http://www.skosmos.skos/dup/d3", "en");
+    $concept = $concepts[0];
+    $props = $concept->getMappingProperties();
+    $values = $props['skos:closeMatch']->getValues();
+    $this->assertCount(2, $values);
+  }
 
   /**
    * @covers Concept::getProperties
