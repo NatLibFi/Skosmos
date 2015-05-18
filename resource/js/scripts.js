@@ -34,35 +34,6 @@ function readCookie(name) {
   return null;
 }
 
-/* 
- * Define a function "getElementsByClassName" if it hasn't already been defined (for IE8 and downwards).
- */
-if (typeof document.getElementsByClassName!='function') {
-  document.getElementsByClassName = function() {
-    var elms = document.getElementsByTagName('*');
-    var ei = [];
-    var i, j, ecl;
-    for (i=0;i<elms.length;i++) {
-      if (elms[i].getAttribute('class')) {
-        ecl = elms[i].getAttribute('class').split(' ');
-        for (j=0;j<ecl.length;j++) {
-          if (ecl[j].toLowerCase() == arguments[0].toLowerCase()) {
-            ei.push(elms[i]);
-          }
-        }
-      } else if (elms[i].className) {
-        ecl = elms[i].className.split(' ');
-        for (j=0;j<ecl.length;j++) {
-          if (ecl[j].toLowerCase() == arguments[0].toLowerCase()) {
-            ei.push(elms[i]);
-          }
-        }
-      }
-    }
-    return ei;
-  };
-}
-
 function getUrlParams() {
   var params = {};
   window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str,key,value) {

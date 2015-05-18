@@ -862,7 +862,7 @@ $(function() { // DOCUMENT READY
   var options = { offset : '100%', continuous: false, triggerOnce: true };
   var alpha_complete = false;
   var offcount = 1;
-  var number_of_hits = document.getElementsByClassName("search-result").length;
+  var number_of_hits = $(".search-result").length;
   var $ready = $("<p class='search-count'>" + results + " " + number_of_hits + " " + results_disp +"</p>");
   
   // search-results waypoint
@@ -896,7 +896,7 @@ $(function() { // DOCUMENT READY
   }
 
   function waypointCallback() {
-    var number_of_hits = document.getElementsByClassName("search-result").length;
+    var number_of_hits = $(".search-result").length;
     if (number_of_hits >= waypoint_results * offcount) { $('.search-result-listing').append($loading); }
     var typeLimit = $('#type-limit').val();
     var groupLimit = $('#group-limit').val();
@@ -913,7 +913,7 @@ $(function() { // DOCUMENT READY
         }
         $('.search-result-listing').append($(data).find('.search-result'));
         number_of_hits = $('.uri-input-box').length;
-        $ready = $("<p class='search-count'>" + results + " " + document.getElementsByClassName("search-result").length + " " + results_disp +"</p>");
+        $ready = $("<p class='search-count'>" + results + " " + $(".search-result").length + " " + results_disp +"</p>");
         offcount++;
         shortenProperties();
         $('.search-result:nth-last-of-type(4)').waypoint(function() { waypointCallback(); }, options );
