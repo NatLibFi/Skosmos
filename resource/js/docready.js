@@ -659,7 +659,6 @@ $(function() { // DOCUMENT READY
   });
   
   $('.lang-button-all').on('click', function() {
-    //qlang = "";
     createCookie('SKOSMOS_SEARCH_LANG', 'anything', 365);
     $('#lang-input').val('');
     $('#lang-dropdown-toggle').html($('.lang-button-all').html() + ' <span class="caret"></span>');
@@ -704,7 +703,7 @@ $(function() { // DOCUMENT READY
         localname = '';
         params.uri = datum.uri;
       }
-      if (clang && clang != lang) { params.clang = clang; }
+      if (clang && clang !== lang) { params.clang = clang; }
       var paramstr = $.isEmptyObject(params) ? '' : '?' + $.param(params);
       // replaced complex logic with path_fix that should always work.
       if (datum.type && datum.type.indexOf('Collection') !== -1) {
@@ -1117,10 +1116,9 @@ $(function() { // DOCUMENT READY
         parentLimitReady = false;
       }
     });
+    
     $(document).on('submit', '.search-options', function() {
-      if (parentLimitReady) {
-        loadLimitations();
-      }
+      if (parentLimitReady) { loadLimitations(); }
       return false;
     });
 
