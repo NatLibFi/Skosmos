@@ -486,6 +486,11 @@ $(function() { // DOCUMENT READY
     var redirectUrl = 'http://' + base_url + vocab + '/' + lang + '/page/' + uri.split('/')[uri.split('/').length-1];
     window.location.replace(encodeURI(redirectUrl));
   });
+
+  function updateTitle(data) {
+    var title = $(data).filter('title').text();
+    document.title = title;
+  }
   
   // event handler for clicking the group index tab 
   $(document).on('click', '#groups',
@@ -509,16 +514,16 @@ $(function() { // DOCUMENT READY
             data: parameters,
             success : function(data) {
               $content.empty();
-              var title = $(data).filter('title').text();
               var response = $('#sidebar', data).html();
               $content.append(response);
               if ($('#hierarchy').length === 1)
                 $('#hierarchy').remove();
               $('#alpha').after($hier);
               $('.nav').scrollTop(0);
-              if (window.history.pushState)
+              if (window.history.pushState) {
                 window.history.pushState(null, null, encodeURI(event.target.href));
-              document.title = title;
+              }
+              updateTitle(data);
               updateClangButtons(event.target.href);
             }
         });
@@ -544,16 +549,16 @@ $(function() { // DOCUMENT READY
             data: parameters,
             success : function(data) {
               $sidebar.empty();
-              var title = $(data).filter('title').text();
               var response = $('#sidebar', data).html();
               $sidebar.append(response);
               $content.empty();
               concept = $('.content', data).html();
               $content.append(concept);
               $('.nav').scrollTop(0);
-              if (window.history.pushState)
+              if (window.history.pushState) {
                 window.history.pushState(null, null, encodeURI(event.target.href));
-              document.title = title;
+              }
+              updateTitle(data);
               updateClangButtons(event.target.href);
             }
         });
@@ -579,13 +584,13 @@ $(function() { // DOCUMENT READY
             data: parameters,
             success : function(data) {
               $('#sidebar').empty();
-              var title = $(data).filter('title').text();
               var response = $('#sidebar', data).html();
               $('#sidebar').append(response);
               $('.nav').scrollTop(0);
-              if (window.history.pushState)
+              if (window.history.pushState) {
                 window.history.pushState(null, null, encodeURI(event.target.href));
-              document.title = title;
+              }
+              updateTitle(data);
               updateClangButtons();
             }
           });
@@ -729,7 +734,7 @@ $(function() { // DOCUMENT READY
     if ($e.currentTarget.id !== 'parent-limit') {
       var localname = datum.localname;
       var params = {};
-      if (!localname || encodeURIComponent(localname) != localname) {
+      if (!localname || encodeURIComponent(localname) !== localname) {
         localname = '';
         params.uri = datum.uri;
       }
@@ -1100,7 +1105,7 @@ $(function() { // DOCUMENT READY
   /* makes an AJAX query for the alphabetical index contents when landing on 
    * the vocabulary home page.
    */
-  if ($('#alpha').hasClass('active') && $('#vocab-info').length == 1 && $('.alphabetical-search-results').length === 0) {
+  if ($('#alpha').hasClass('active') && $('#vocab-info').length === 1 && $('.alphabetical-search-results').length === 0) {
     // taking into account the possibility that the lang parameter has been changed by the WebController.
     var urlLangCorrected = '//' + base_url + vocab + '/' + lang + '/index?limit=250&offset=0&clang=' + clang;
     $('.sidebar-grey').empty().append('<div class="loading-spinner"><span class="spinner-text">'+ loading_text + '</span><span class="spinner" /></div>');
