@@ -43,7 +43,7 @@ $(function() { // DOCUMENT READY
 
   // Shortens the properties that don't fit on one row on the search result view.
   function shortenProperties() {
-    $properties = $('.property-values');
+    var $properties = $('.property-values');
     for (var i = 0; i < $properties.length; i++) {
       var $property = $($properties[i]);
       if ($property.height() > 24) {
@@ -276,7 +276,7 @@ $(function() { // DOCUMENT READY
     $.ajax({
       url : rest_base_url + vocab + '/vocabularyStatistics',
       success : function(data) {
-        $spinner = $('.vocab-info-literals .spinner');
+        var $spinner = $('.vocab-info-literals .spinner');
         $spinner.after(data.concepts.count);
         $spinner.detach();
       }
@@ -536,7 +536,7 @@ $(function() { // DOCUMENT READY
               var response = $('#sidebar', data).html();
               $sidebar.append(response);
               $content.empty();
-              concept = $('.content', data).html();
+              var concept = $('.content', data).html();
               $content.append(concept);
               $('.nav').scrollTop(0);
               if (window.history.pushState) { window.history.pushState(null, null, encodeURI(event.target.href)); }
@@ -553,8 +553,7 @@ $(function() { // DOCUMENT READY
       function(event) {
         $.ajaxQ.abortAll();
         if ($('.alphabet-header').length === 0) {
-          alpha_offcount = 1;
-          alpha_complete = false;
+          var alpha_complete = false;
           var $pagination = $('.pagination');
           var base_path = path_fix.length / 3;
           var $content = $('.sidebar-grey');
@@ -571,7 +570,7 @@ $(function() { // DOCUMENT READY
               $('.nav').scrollTop(0);
               if (window.history.pushState) { window.history.pushState(null, null, encodeURI(event.target.href)); }
               updateTitle(data);
-              updateClangButtons();
+              updateClangButtons(event.target.href);
             }
           });
         } else {
