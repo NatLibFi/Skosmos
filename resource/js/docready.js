@@ -312,6 +312,7 @@ $(function() { // DOCUMENT READY
           var response = $('#sidebar', data).html();
           document.title = title;
           $('#sidebar').append(response);
+          updateTopbarLang(data);
         }
       });
     } else {
@@ -328,12 +329,19 @@ $(function() { // DOCUMENT READY
           $('.content').append(response);
           var uri = $('.uri-input-box').text();
           $('a[href="' + uri + '"]').addClass('jstree-clicked');
+          updateTopbarLang(data);
         }
       });
     }
     updateClangButtons(targetUrl);
   }
-  
+
+  function updateTopbarLang(data) {
+    $('#language').empty();
+    var langBut = $('#language', data).html();
+    $('#language').append(langBut);
+  }
+
   $(window).on("popstate", function(e) {
     if (e.originalEvent.state !== null) {
       loadPage(e.originalEvent.state.url);
@@ -363,13 +371,12 @@ $(function() { // DOCUMENT READY
               var response = $('.content', data).html();
               document.title = title;
               if (window.history.pushState)
-                window.history.pushState({url: targetUrl}, '', targetUrl);
+                window.history.pushState({url: targetUrl + '&' + parameters}, '', targetUrl);
               $content.append(response);
               var lang_buttons = $('.navbar-form .dropdown-menu', data).html();
               $('.navbar-form .dropdown-menu').empty();
               $('.navbar-form .dropdown-menu').append(lang_buttons);
               document.title = title;
-              updateClangButtons(event.target.href);
             }
         });
         return false;
@@ -402,12 +409,7 @@ $(function() { // DOCUMENT READY
               if (!$('#hierarchy').length)
                 $('#alpha').after(hierButton);
               $('#hier-trigger').attr('href', event.target.href);
-              $.each($('#language > a'), function(index, val) {
-                var btn_lang = $(val).attr('id');
-                btn_lang = (btn_lang.substr(btn_lang.indexOf('-')+1));
-                var url = encodeURI(event.target.href).replace('/' + lang + '/', '/' + btn_lang +'/');
-                $(val).attr('href', url);
-              });
+              updateTopbarLang(data);
               updateClangButtons(event.target.href);
             }
         });
@@ -456,18 +458,12 @@ $(function() { // DOCUMENT READY
       // removing the last page url if this isn't the first.
       btn_href = btn_href.substr(btn_href.indexOf('clang'));
       if (href.indexOf('clang') === -1) {
-        if (getUrlParams().uri) { // if the href has a uri parameter (like the hierarchy links)
-          // the url already has a short uri and now we just can't add the long uri without removing the short uri first
-          var url_parts = window.location.href.split('/');
-          url_parts = url_parts.slice(0, url_parts.length - 1).join('/');
-          url = encodeURI(url_parts + '/?uri=' + href + '&' + btn_href);
-        }  else
-          url = encodeURI(href + '?' + btn_href);
-      } else if (btn_href.indexOf('anylang') === -1)
-        url = encodeURI(href).replace(/clang=\w{2}/, 'clang=' + btn_href.substr(-2));
-      else
-        url = encodeURI(href).replace(/clang=\w{2}/, btn_href);
-
+        url = href + '?' + btn_href;
+      } else if (btn_href.indexOf('anylang') === -1) {
+        url = (href).replace(/clang=\w{2}/, 'clang=' + btn_href.substr(-2));
+      } else {
+        url = (href).replace(/clang=\w{2}/, btn_href);
+      }
     $(val).attr('href', url);
     });
   }
