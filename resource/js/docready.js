@@ -666,9 +666,7 @@ $(function() { // DOCUMENT READY
   });
   
   var searchTerm = "";
-  // calls for another function to highlight search term in the labels.
   if (getUrlParams().q) {
-    localSearchHighlight(decodeURI(getUrlParams().q.replace(/\*/g, '')));
     searchTerm = decodeURI(getUrlParams().q);
   }
   
@@ -926,7 +924,6 @@ $(function() { // DOCUMENT READY
         number_of_hits = $('.uri-input-box').length;
         $ready = $("<p class='search-count'>" + results + " " + document.getElementsByClassName("search-result").length + " " + results_disp +"</p>");
         offcount++;
-        if (getUrlParams().q) { localSearchHighlight(decodeURI(getUrlParams().q.replace(/\*/g, ""))); }
         shortenProperties();
         $('.search-result:nth-last-of-type(4)').waypoint(function() { waypointCallback(); }, options );
       }
