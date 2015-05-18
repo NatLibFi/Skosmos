@@ -590,21 +590,17 @@ $(function() { // DOCUMENT READY
       setLangCookie(langCode);
     }); 
   });
-  
-  $('.search-hint').qtip({ 
+
+  var qtip_skosmos = { 
     position: { my: 'top center', at: 'bottom center' },
     style: { classes: 'qtip-tipsy qtip-skosmos' } 
-  });
+  };
   
-  $('#navi4').qtip({ 
-    position: { my: 'top center', at: 'bottom center' },
-    style: { classes: 'qtip-tipsy qtip-skosmos' } 
-  });
+  $('.search-hint').qtip(qtip_skosmos);
+  
+  $('#navi4').qtip(qtip_skosmos);
     
-  $('.property-click').qtip({ 
-    position: { my: 'top center', at: 'bottom center' },
-    style: { classes: 'qtip-tipsy qtip-skosmos' } 
-  });
+  $('.property-click').qtip(qtip_skosmos);
   
   // Setting the language parameters according to the clang parameter or if that's not possible the cookie.
   var search_lang = (content_lang !== '' && !getUrlParams().anylang) ? content_lang : readCookie('SKOSMOS_SEARCH_LANG');
