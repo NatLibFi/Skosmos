@@ -318,17 +318,20 @@ $(function() { // DOCUMENT READY
           $('#jstree-leaf-proper').attr('id', '');
           $('.activated-concept').removeClass('activated-concept');
           $('.jstree-clicked').removeClass('jstree-clicked'); 
-          $('.content').empty();
-          var response = $('.content', data).html();
-          $('.content').append(response);
-          var uri = $('.uri-input-box').text();
-          $('a[href="' + uri + '"]').addClass('jstree-clicked');
+          updateContent(data);
+          $('a[href="' + $('.uri-input-box').text() + '"]').addClass('jstree-clicked');
           updateTitle(data);
           updateTopbarLang(data);
         }
       });
     }
     updateClangButtons(targetUrl);
+  }
+  
+  function updateContent(data) {
+    $('.content').empty();
+    var response = $('.content', data).html();
+    $('.content').append(response);
   }
 
   function updateTopbarLang(data) {
