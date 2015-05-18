@@ -619,12 +619,12 @@ $(function() { // DOCUMENT READY
   });
   
   $('#navi4').qtip({ 
-    position: { my: 'top center', at: 'bottom center' },
+    position: { my: 'top center', at: 'bottom center' },
     style: { classes: 'qtip-tipsy qtip-skosmos' } 
   });
     
   $('.property-click').qtip({ 
-    position: { my: 'bottom center', at: 'top center' },
+    position: { my: 'top center', at: 'bottom center' },
     style: { classes: 'qtip-tipsy qtip-skosmos' } 
   });
   
@@ -636,7 +636,7 @@ $(function() { // DOCUMENT READY
   parts = parts.split('/'); // splits pathname, e.g.
   
   var rest_url = rest_base_url; 
-  if (rest_url.indexOf('..') == -1 && rest_url.indexOf('http') == -1) { rest_url = encodeURI(location.protocol + '//' + rest_url); }
+  if (rest_url.indexOf('..') === -1 && rest_url.indexOf('http') === -1) { rest_url = encodeURI(location.protocol + '//' + rest_url); }
   
   // qlang is used in REST queries as a parameter. it is either
   // - a language code, e.g. "en", when searching in a specific language
@@ -821,7 +821,7 @@ $(function() { // DOCUMENT READY
             if (item.hiddenLabel)
               item.replaced = item.hiddenLabel;
             // do not show the label language when it's same or in the same subset as the ui language.
-            if (item.lang && (item.lang === qlang || item.lang.indexOf(qlang + '-') === 0))
+            if (item.lang && (item.lang === qlang || item.lang.indexOf(qlang + '-') === 0))
               delete(item.lang);
             if (item.type) {
               var toBeRemoved = null;
