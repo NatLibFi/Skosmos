@@ -9,4 +9,7 @@
     "vocab": false, 
     "path_fix": false
   }
+  "browser" : true,
+  "jquery" : true,
+  "nonstandard" : true 
 }
