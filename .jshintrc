@@ -1,0 +1,10 @@
+{
+  "globals": { 
+    "lang": false, 
+    "loading_text": false, 
+    "content_lang": false, 
+    "rest_base_url": false, 
+    "vocab": false, 
+    "path_fix": false
+  }
+}
