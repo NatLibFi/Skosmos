@@ -404,7 +404,7 @@ $(function() { // DOCUMENT READY
               var response = $('.content', data).html();
               document.title = title;
               if (window.history.pushState)
-                window.history.pushState(null, null, encodeURI(event.target.href));
+                window.history.pushState(null, null, event.target.href);
               $content.append(response);
               if (!$('#hierarchy').length)
                 $('#alpha').after(hierButton);
