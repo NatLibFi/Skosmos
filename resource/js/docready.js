@@ -306,9 +306,7 @@ $(function() { // DOCUMENT READY
       $.ajax({
         url : targetUrl,
         success : function(data) {
-          $('#sidebar').empty();
-          var response = $('#sidebar', data).html();
-          $('#sidebar').append(response);
+          updateSidebar(data);
           updateTitle(data);
           updateTopbarLang(data);
         }
@@ -425,9 +423,7 @@ $(function() { // DOCUMENT READY
             url : targetUrl,
             data: parameters,
             success : function(data) {
-              $content.empty();
-              var response = $('#sidebar', data).html();
-              $content.append(response);
+              updateSidebar(data);
               if ($('#hierarchy').length === 1) { $('#hierarchy').remove(); }
               $('#alpha').after($hier);
               $('.nav').scrollTop(0);
@@ -479,7 +475,13 @@ $(function() { // DOCUMENT READY
     var title = $(data).filter('title').text();
     document.title = title;
   }
-  
+
+  function updateSidebar(data) {
+    $('#sidebar').empty();
+    var response = $('#sidebar', data).html();
+    $('#sidebar').append(response);
+  }
+
   // event handler for clicking the group index tab 
   $(document).on('click', '#groups',
       function(event) {
@@ -500,9 +502,7 @@ $(function() { // DOCUMENT READY
             url : targetUrl,
             data: parameters,
             success : function(data) {
-              $content.empty();
-              var response = $('#sidebar', data).html();
-              $content.append(response);
+              updateSidebar(data);
               if ($('#hierarchy').length === 1) { $('#hierarchy').remove(); }
               $('#alpha').after($hier);
               $('.nav').scrollTop(0);
@@ -532,9 +532,7 @@ $(function() { // DOCUMENT READY
             url : targetUrl,
             data: parameters,
             success : function(data) {
-              $sidebar.empty();
-              var response = $('#sidebar', data).html();
-              $sidebar.append(response);
+              updateSidebar(data);
               $content.empty();
               var concept = $('.content', data).html();
               $content.append(concept);
@@ -564,9 +562,7 @@ $(function() { // DOCUMENT READY
             url : targetUrl,
             data: parameters,
             success : function(data) {
-              $('#sidebar').empty();
-              var response = $('#sidebar', data).html();
-              $('#sidebar').append(response);
+              updateSidebar(data);
               $('.nav').scrollTop(0);
               if (window.history.pushState) { window.history.pushState(null, null, encodeURI(event.target.href)); }
               updateTitle(data);
