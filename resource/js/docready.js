@@ -8,7 +8,7 @@
   * Ajax query queue that keeps track of ongoing queries 
   * so they can be cancelled if a another event is triggered.
   */
- $.ajaxQ = (function(){
+$.ajaxQ = (function(){
   var id = 0, Q = {};
 
   $(document).ajaxSend(function(e, jqx){
@@ -30,7 +30,7 @@
     }
   };
 
-  })();
+})();
 
 $(function() { // DOCUMENT READY 
 
@@ -82,8 +82,7 @@ $(function() { // DOCUMENT READY
         var removeThese = [];
 
         $.each(elementClasses, function() {
-          if(this.match(/jstree*/))
-          removeThese.push(this);
+          if(this.match(/jstree*/)) { removeThese.push(this); }
         });
         return removeThese.join(' ');
       });
@@ -99,7 +98,7 @@ $(function() { // DOCUMENT READY
       }
     }
     // Sidenav actions only happen when doing other queries than the autocomplete.
-    if (settings.url.indexOf('topConcepts') !== -1 || settings.url.indexOf('index') !== -1 || settings.url.indexOf('groups') !== -1 /* || settings.url.indexOf('hierarchy') !== -1 */ ) {
+    if (settings.url.indexOf('topConcepts') !== -1 || settings.url.indexOf('index') !== -1 || settings.url.indexOf('groups') !== -1 ) {
       var snap = (settings.url.indexOf('hierarchy') !== -1) ? 18 : 15;
       $(".sidebar-grey").mCustomScrollbar({ 
         alwaysShowScrollbar: 1,
@@ -110,17 +109,16 @@ $(function() { // DOCUMENT READY
       });
     } 
     var $autocomplete = $('.tt-dropdown-menu');
-    if (settings.url.indexOf('search') !== -1 && $autocomplete.length > 0 && $autocomplete[0].offsetHeight === 302)
+    if (settings.url.indexOf('search') !== -1 && $autocomplete.length > 0 && $autocomplete[0].offsetHeight === 302) {
       $(".tt-dropdown-menu").mCustomScrollbar({ alwaysShowScrollbar: 1, scrollInertia: 0 });
+    }
     countAndSetOffset();
 
     hideCrumbs();
   });
 
   // if the hierarchy tab is active filling the jstree with data 
-  if ($('#hierarchy').hasClass('active')) { 
-    invokeParentTree(getTreeConfiguration()); 
-  }
+  if ($('#hierarchy').hasClass('active')) { invokeParentTree(getTreeConfiguration()); }
 
   var textColor = $('.search-parameter-highlight').css('color');
   countAndSetOffset();
@@ -176,8 +174,7 @@ $(function() { // DOCUMENT READY
        the .css() can't set important so using .attr() instead. */
     $('.sidebar-grey').attr('style', function() {
       var pixels = $('.nav-tabs').height() + 2; // the 2 pixels are for the borders
-      if ($('.pagination').is(':visible'))
-        pixels += $('.pagination').height();
+      if ($('.pagination').is(':visible')) { pixels += $('.pagination').height(); }
       return 'height: calc(100% - ' + pixels + 'px) !important';
     });
     if ($('#sidebar').length && !$('#sidebar').hasClass('fixed')) {
@@ -244,10 +241,12 @@ $(function() { // DOCUMENT READY
   function hideCrumbs() {
     var $crumbs = $('.crumb-path');
     if ($crumbs.length > 4) {
-      for (var i = 4; i < $crumbs.length; i++)
+      for (var i = 4; i < $crumbs.length; i++) {
         $($crumbs[i]).addClass('hidden-path');
-      if ($('.restore-breadcrumbs').length === 0)
+      }
+      if ($('.restore-breadcrumbs').length === 0) {
         $($crumbs[0]).after('<a class="versal restore-breadcrumbs" href="#">[' + expand.replace('#',($crumbs.length)) + ']</a>');
+      }
     }
   }
 
@@ -343,9 +342,9 @@ $(function() { // DOCUMENT READY
   $(window).on("popstate", function(e) {
     if (e.originalEvent.state !== null) {
       loadPage(e.originalEvent.state.url);
-    }
-    else
+    } else {
       loadPage(document.URL);
+    }
   });
 
   // event handler for clicking the hierarchy concepts
@@ -366,8 +365,7 @@ $(function() { // DOCUMENT READY
               clicked.attr('id', 'jstree-leaf-proper');
               $content.empty();
               var response = $('.content', data).html();
-              if (window.history.pushState)
-                window.history.pushState({url: targetUrl + '&' + parameters}, '', targetUrl);
+              if (window.history.pushState) { window.history.pushState({url: targetUrl + '&' + parameters}, '', targetUrl); }
               $content.append(response);
               var lang_buttons = $('.navbar-form .dropdown-menu', data).html();
               $('.navbar-form .dropdown-menu').empty();
@@ -397,12 +395,9 @@ $(function() { // DOCUMENT READY
             success : function(data) {
               $content.empty();
               var response = $('.content', data).html();
-              if (window.history.pushState) {
-                window.history.pushState(null, null, event.target.href);
-              }
+              if (window.history.pushState) { window.history.pushState(null, null, event.target.href); }
               $content.append(response);
-              if (!$('#hierarchy').length)
-                $('#alpha').after(hierButton);
+              if (!$('#hierarchy').length) { $('#alpha').after(hierButton); }
               $('#hier-trigger').attr('href', event.target.href);
               updateTitle(data);
               updateTopbarLang(data);
@@ -433,13 +428,10 @@ $(function() { // DOCUMENT READY
               $content.empty();
               var response = $('#sidebar', data).html();
               $content.append(response);
-              if ($('#hierarchy').length === 1)
-                $('#hierarchy').remove();
+              if ($('#hierarchy').length === 1) { $('#hierarchy').remove(); }
               $('#alpha').after($hier);
               $('.nav').scrollTop(0);
-              if (window.history.pushState) {
-                window.history.pushState(null, null, encodeURI(event.target.href));
-              }
+              if (window.history.pushState) { window.history.pushState(null, null, encodeURI(event.target.href)); }
               updateTitle(data);
             }
         });
@@ -497,8 +489,7 @@ $(function() { // DOCUMENT READY
         var $clicked = $(this);
         $clicked.parent().addClass('active');
         var $pagination = $('.pagination');
-        if ($pagination)
-          $pagination.hide();
+        if ($pagination) { $pagination.hide(); }
         var $hier = $('#hierarchy');
         var $content = $('#sidebar');
         $('.sidebar-grey').empty().removeClass('sidebar-grey-alpha').prepend(spinner);
@@ -512,13 +503,10 @@ $(function() { // DOCUMENT READY
               $content.empty();
               var response = $('#sidebar', data).html();
               $content.append(response);
-              if ($('#hierarchy').length === 1)
-                $('#hierarchy').remove();
+              if ($('#hierarchy').length === 1) { $('#hierarchy').remove(); }
               $('#alpha').after($hier);
               $('.nav').scrollTop(0);
-              if (window.history.pushState) {
-                window.history.pushState(null, null, encodeURI(event.target.href));
-              }
+              if (window.history.pushState) { window.history.pushState(null, null, encodeURI(event.target.href)); }
               updateTitle(data);
               updateClangButtons(event.target.href);
             }
@@ -551,9 +539,7 @@ $(function() { // DOCUMENT READY
               concept = $('.content', data).html();
               $content.append(concept);
               $('.nav').scrollTop(0);
-              if (window.history.pushState) {
-                window.history.pushState(null, null, encodeURI(event.target.href));
-              }
+              if (window.history.pushState) { window.history.pushState(null, null, encodeURI(event.target.href)); }
               updateTitle(data);
               updateClangButtons(event.target.href);
             }
@@ -583,17 +569,14 @@ $(function() { // DOCUMENT READY
               var response = $('#sidebar', data).html();
               $('#sidebar').append(response);
               $('.nav').scrollTop(0);
-              if (window.history.pushState) {
-                window.history.pushState(null, null, encodeURI(event.target.href));
-              }
+              if (window.history.pushState) { window.history.pushState(null, null, encodeURI(event.target.href)); }
               updateTitle(data);
               updateClangButtons();
             }
           });
         } else {
           var selectedLetter = $(event.target).text().trim();
-          if (document.getElementsByName(selectedLetter).length === 0)
-            return false;
+          if (document.getElementsByName(selectedLetter).length === 0) { return false; }
           var offset = $('li[name=' + selectedLetter + ']').offset().top - $('body').offset().top - 5;
           $('.nav').scrollTop(offset);
         }
@@ -651,21 +634,18 @@ $(function() { // DOCUMENT READY
   } else if (!search_lang){
       langPretty = $('a[hreflang=' + lang + ']').html();
       search_lang = lang;
-      if (!langPretty)
-        langPretty = $('a[hreflang="anything"]').html();
+      if (!langPretty) { langPretty = $('a[hreflang="anything"]').html(); }
       $('#lang-dropdown-toggle').html(langPretty + ' <span class="caret"></span>');
       qlang = lang;
   } else {
       langPretty = $('a[hreflang=' + search_lang + ']').html();
-      if (!langPretty)
-        langPretty = $('a[hreflang=""]').html();
+      if (!langPretty) { langPretty = $('a[hreflang=""]').html(); }
       $('#lang-dropdown-toggle').html(langPretty + ' <span class="caret"></span>');
   }
 
   var search_lang_possible = false;
   $.each($('.input-group-btn a'), function(index, value) { 
-    if(value.hreflang === search_lang)
-      search_lang_possible = true;
+    if(value.hreflang === search_lang) { search_lang_possible = true; }
   });
   
   if (!search_lang_possible && search_lang !== 'anything') {
@@ -677,13 +657,11 @@ $(function() { // DOCUMENT READY
 
   $('.lang-button').click(function() {
     qlang = $(this)[0].attributes.hreflang.value;
-    if (qlang === '')
-      qlang = 'anything';
+    if (qlang === '') { qlang = 'anything'; }
     $('#lang-dropdown-toggle').html($(this).html() + ' <span class="caret"></span>');
     $('#lang-input').val(qlang);
     createCookie('SKOSMOS_SEARCH_LANG', qlang, 365);
-    if (concepts)
-      concepts.clear();
+    if (concepts) { concepts.clear(); }
   });
   
   $('.lang-button-all').on('click', function() {
@@ -691,8 +669,7 @@ $(function() { // DOCUMENT READY
     createCookie('SKOSMOS_SEARCH_LANG', 'anything', 365);
     $('#lang-input').val('');
     $('#lang-dropdown-toggle').html($('.lang-button-all').html() + ' <span class="caret"></span>');
-    if (concepts)
-      concepts.clear();
+    if (concepts) { concepts.clear(); }
   });
 
   $('.lang-button, .lang-button-all').click(function() {
@@ -715,8 +692,7 @@ $(function() { // DOCUMENT READY
   $('#search-field').keyup(function() {
     var empty = false;
     $('#search-field').each(function() {
-      if ($(this).val().length === 0) {
-        empty = true; }
+      if ($(this).val().length === 0) { empty = true; }
     });
 
     if (empty) {
@@ -734,9 +710,7 @@ $(function() { // DOCUMENT READY
         localname = '';
         params.uri = datum.uri;
       }
-      if (clang && clang != lang) {
-        params.clang = clang;
-      }
+      if (clang && clang != lang) { params.clang = clang; }
       var paramstr = $.isEmptyObject(params) ? '' : '?' + $.param(params);
       // replaced complex logic with path_fix that should always work.
       if (datum.type && datum.type.indexOf('Collection') !== -1) {
@@ -762,8 +736,7 @@ $(function() { // DOCUMENT READY
   function processTypeJSON(response) {
     for(var i in response.types) {
       var type = response.types[i];
-      if (type.label)
-        typeLabels[type.uri] = type.label;
+      if (type.label) { typeLabels[type.uri] = type.label; }
     }
   }
 
@@ -795,8 +768,9 @@ $(function() { // DOCUMENT READY
           var vocabString = $('.frontpage').length ? vocabSelectionString : vocab; 
           var parameters = $.param({'vocab' : vocabString, 'lang' : qlang, 'labellang' : qlang});
           // if the search has been targeted at all languages by clicking the checkbox
-          if ($('input[name=anylang]').is(':checked'))
+          if ($('input[name=anylang]').is(':checked')) {
             parameters = $.param({'vocab' : vocabString, 'lang' : '', 'labellang' : ''});
+          }
           settings.url = settings.url + '&' + parameters;
         }
       },
@@ -815,15 +789,11 @@ $(function() { // DOCUMENT READY
             }
             item.label = item.prefLabel;
             // combining all the matched properties.
-            if (item.matchedPrefLabel)
-              item.label = item.matchedPrefLabel;
-            if (item.altLabel)
-              item.replaced = item.altLabel;
-            if (item.hiddenLabel)
-              item.replaced = item.hiddenLabel;
+            if (item.matchedPrefLabel) { item.label = item.matchedPrefLabel; }
+            if (item.altLabel) { item.replaced = item.altLabel; }
+            if (item.hiddenLabel) { item.replaced = item.hiddenLabel; }
             // do not show the label language when it's same or in the same subset as the ui language.
-            if (item.lang && (item.lang === qlang || item.lang.indexOf(qlang + '-') === 0))
-              delete(item.lang);
+            if (item.lang && (item.lang === qlang || item.lang.indexOf(qlang + '-') === 0)) { delete(item.lang); }
             if (item.type) {
               var toBeRemoved = null;
               for (var i = 0; i < item.type.length; i++) {
@@ -838,8 +808,7 @@ $(function() { // DOCUMENT READY
                   item.type[i] = typeLabels[item.type[i]];
                 }
               }
-              if (toBeRemoved !== null)
-                item.type.splice(toBeRemoved, 1);
+              if (toBeRemoved !== null) { item.type.splice(toBeRemoved, 1); }
             }
             return item;
           }));
@@ -879,8 +848,9 @@ $(function() { // DOCUMENT READY
   }).on('typeahead:selected', onSelection).bind('focus', function() {
     $('#search-field').typeahead('open'); 
   }).after(clearButton).on('keypress', function() {
-    if($typeahead.val().length > 0 && $(this).hasClass('clear-search-dark') === false)    
+    if ($typeahead.val().length > 0 && $(this).hasClass('clear-search-dark') === false) {
       $('.clear-search').addClass('clear-search-dark');
+    }
   });
     
   
@@ -949,8 +919,7 @@ $(function() { // DOCUMENT READY
 
   function waypointCallback() {
     var number_of_hits = document.getElementsByClassName("search-result").length;
-    if (number_of_hits >= waypoint_results * offcount)
-      $('.search-result-listing').append($loading);
+    if (number_of_hits >= waypoint_results * offcount) { $('.search-result-listing').append($loading); }
     var typeLimit = $('#type-limit').val();
     var groupLimit = $('#group-limit').val();
     var parentLimit = $('#parent-limit').attr('data-uri');
@@ -968,9 +937,7 @@ $(function() { // DOCUMENT READY
         number_of_hits = $('.uri-input-box').length;
         $ready = $("<p class='search-count'>" + results + " " + document.getElementsByClassName("search-result").length + " " + results_disp +"</p>");
         offcount++;
-        if (getUrlParams().q) {
-          localSearchHighlight(decodeURI(getUrlParams().q.replace(/\*/g, "")));
-        }
+        if (getUrlParams().q) { localSearchHighlight(decodeURI(getUrlParams().q.replace(/\*/g, ""))); }
         shortenProperties();
         $('.search-result:nth-last-of-type(4)').waypoint(function() { waypointCallback(); }, options );
       }
@@ -988,8 +955,7 @@ $(function() { // DOCUMENT READY
           return false;
         }
         vocabSelectionString += ob.value; 
-        if (index < $vocabs.length - 1)
-          vocabSelectionString += ' ';
+        if (index < $vocabs.length - 1) { vocabSelectionString += ' '; }
     });
     // sets the selected vocabularies cookie for the frontpage search.
     createCookie('SKOSMOS_SELECTED', vocabSelectionString, 365);
@@ -1005,13 +971,12 @@ $(function() { // DOCUMENT READY
 
   $('.headerbar .multiselect').multiselect({
     buttonText: function(options) {
-      if (options.length === 0)
+      if (options.length === 0) {
         return  '<span>' + all_vocabs + ' <b class="caret"></b></span>'; 
-      else {
+      } else {
         if (options.length > this.numberDisplayed) {
           return '<span>' + options.length + ' ' + n_selected + ' <b class="caret"></b></span>';
-        }
-        else {
+        } else {
           var selected = '';
           options.each(function() {
             var label = ($(this).attr('label') !== undefined) ? $(this).attr('label') : $(this).html();
@@ -1027,13 +992,14 @@ $(function() { // DOCUMENT READY
     includeSelectAllOption: true,
     selectAllText: all_vocabs,
     onChange: function(element, checked) {
-      if (element)
+      if (element) {
         vocabId = element[0].value;
-      else
+      } else {
         vocabId = '';
-      if (checked && selectedVocabs[vocabId] === undefined)
+      } 
+      if (checked && selectedVocabs[vocabId] === undefined) {
         selectedVocabs[vocabId] = vocabId;
-      else if (selectedVocabs[vocabId] !== undefined) {
+      } else if (selectedVocabs[vocabId] !== undefined) {
         delete selectedVocabs[vocabId];
       } 
       this.vocabSelectionString = updateVocabParam();
@@ -1043,14 +1009,13 @@ $(function() { // DOCUMENT READY
   
   $('.sidebar-grey .multiselect').multiselect({
     buttonText: function(options) {
-      if (options.length === 0)
+      if (options.length === 0) {
         return  '<span>' + ' </span><b class="caret"></b>'; 
-      else {
+      } else {
         var selected = '';
         options.each(function() {
           var label = ($(this).attr('label') !== undefined) ? $(this).attr('label') : $(this).html();
-          if (label !== '')
-            selected += label + ', ';
+          if (label !== '') { selected += label + ', '; }
         });
         return '<span>' + selected.substr(0, selected.length - 2) + ' </span><b class="caret"></b>';
       }
@@ -1130,9 +1095,7 @@ $(function() { // DOCUMENT READY
         success : function(data) {
           var targetUrl = this.url;
           var response = $('.search-result-listing', data).html();
-          if (window.history.pushState) {
-            window.history.pushState({url: targetUrl}, '', targetUrl);
-          }
+          if (window.history.pushState) { window.history.pushState({url: targetUrl}, '', targetUrl); }
           $('.search-result-listing').append(response);
           $loading.detach();
           updateTitle(data);
@@ -1154,14 +1117,16 @@ $(function() { // DOCUMENT READY
     });
 
     $('#parent-limit').focus(function() {
-      if($('#parent-limit').attr('data-uri') !== '')
+      if($('#parent-limit').attr('data-uri') !== '') {
         parentLimitReady = true;
-      else
+      } else {
         parentLimitReady = false;
+      }
     });
     $(document).on('submit', '.search-options', function() {
-      if (parentLimitReady)
+      if (parentLimitReady) {
         loadLimitations();
+      }
       return false;
     });
 
@@ -1191,8 +1156,6 @@ $(function() { // DOCUMENT READY
   }
   
   // setting the focus to the search box on default if we are not on the search results page
-  if ($('.search-result-listing').length === 0)
-    $("#search-field").focus();
-
+  if ($('.search-result-listing').length === 0) { $("#search-field").focus(); }
 
 });
