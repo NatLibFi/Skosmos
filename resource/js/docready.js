@@ -493,9 +493,8 @@ $(function() { // DOCUMENT READY
         var $pagination = $('.pagination');
         if ($pagination) { $pagination.hide(); }
         var $hier = $('#hierarchy');
-        var $content = $('#sidebar');
         $('.sidebar-grey').empty().removeClass('sidebar-grey-alpha').prepend(spinner);
-        $content.removeClass('sidebar-grey-alpha');
+        $('#sidebar').removeClass('sidebar-grey-alpha');
         var targetUrl = event.target.href;
         var parameters = $.param({'base_path' : base_path});
         $.ajax({
