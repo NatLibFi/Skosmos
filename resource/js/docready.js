@@ -308,10 +308,9 @@ $(function() { // DOCUMENT READY
         url : targetUrl,
         success : function(data) {
           $('#sidebar').empty();
-          var title = $(data).filter('title').text();
           var response = $('#sidebar', data).html();
-          document.title = title;
           $('#sidebar').append(response);
+          updateTitle(data);
           updateTopbarLang(data);
         }
       });
@@ -323,12 +322,11 @@ $(function() { // DOCUMENT READY
           $('.activated-concept').removeClass('activated-concept');
           $('.jstree-clicked').removeClass('jstree-clicked'); 
           $('.content').empty();
-          var title = $(data).filter('title').text();
           var response = $('.content', data).html();
-          document.title = title;
           $('.content').append(response);
           var uri = $('.uri-input-box').text();
           $('a[href="' + uri + '"]').addClass('jstree-clicked');
+          updateTitle(data);
           updateTopbarLang(data);
         }
       });
@@ -367,16 +365,14 @@ $(function() { // DOCUMENT READY
               $('#jstree-leaf-proper').attr('id', '');
               clicked.attr('id', 'jstree-leaf-proper');
               $content.empty();
-              var title = $(data).filter('title').text();
               var response = $('.content', data).html();
-              document.title = title;
               if (window.history.pushState)
                 window.history.pushState({url: targetUrl + '&' + parameters}, '', targetUrl);
               $content.append(response);
               var lang_buttons = $('.navbar-form .dropdown-menu', data).html();
               $('.navbar-form .dropdown-menu').empty();
               $('.navbar-form .dropdown-menu').append(lang_buttons);
-              document.title = title;
+              updateTitle(data);
             }
         });
         return false;
@@ -400,15 +396,15 @@ $(function() { // DOCUMENT READY
             data: parameters,
             success : function(data) {
               $content.empty();
-              var title = $(data).filter('title').text();
               var response = $('.content', data).html();
-              document.title = title;
-              if (window.history.pushState)
+              if (window.history.pushState) {
                 window.history.pushState(null, null, event.target.href);
+              }
               $content.append(response);
               if (!$('#hierarchy').length)
                 $('#alpha').after(hierButton);
               $('#hier-trigger').attr('href', event.target.href);
+              updateTitle(data);
               updateTopbarLang(data);
               updateClangButtons(event.target.href);
             }
@@ -435,16 +431,16 @@ $(function() { // DOCUMENT READY
             data: parameters,
             success : function(data) {
               $content.empty();
-              var title = $(data).filter('title').text();
               var response = $('#sidebar', data).html();
               $content.append(response);
               if ($('#hierarchy').length === 1)
                 $('#hierarchy').remove();
               $('#alpha').after($hier);
               $('.nav').scrollTop(0);
-              if (window.history.pushState)
+              if (window.history.pushState) {
                 window.history.pushState(null, null, encodeURI(event.target.href));
-              document.title = title;
+              }
+              updateTitle(data);
             }
         });
         return false;
@@ -1121,25 +1117,25 @@ $(function() { // DOCUMENT READY
   function loadLimitations() {
     $('#alphabetical-menu').detach();
     var $loading = $("<div class='search-result'><p>" + loading_text + "&hellip;<span class='spinner'/></p></div>"); 
-    $('.search-result-listing').empty();
-    $('.search-result-listing').append($loading);
+    $('.search-result-listing').empty().append($loading);
     var typeLimit = $('#type-limit').val() ? $('#type-limit').val().join('+') : $('#type-limit').val();
-    if (typeLimit && typeLimit[0] === '+') // filtering the empty selection out of the search string
+    if (typeLimit && typeLimit[0] === '+') { // filtering the empty selection out of the search string
       typeLimit = typeLimit.substring(1);
+    }
     var groupLimit = $('#group-limit').val();
     var parentLimit = $('#parent-limit').attr('data-uri');
     var parameters = $.param({'type' : typeLimit, 'group' : groupLimit, 'parent': parentLimit});
     $.ajax({
         data: parameters,
         success : function(data) {
-         var targetUrl = this.url;
-          var title = $(data).filter('title').text();
+          var targetUrl = this.url;
           var response = $('.search-result-listing', data).html();
-          document.title = title;
-          if (window.history.pushState)
+          if (window.history.pushState) {
             window.history.pushState({url: targetUrl}, '', targetUrl);
+          }
           $('.search-result-listing').append(response);
           $loading.detach();
+          updateTitle(data);
         }
     });
   }
