@@ -9,6 +9,7 @@
     "Handlebars": false, 
     "getUrlParams": false, 
     "createCookie": false, 
+    "debounce": false, 
     "readCookie": false, 
     "noResultsTranslation": false, 
     "lscache": false, 
