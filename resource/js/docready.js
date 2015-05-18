@@ -37,6 +37,7 @@ $(function() { // DOCUMENT READY
   var spinner = '<div class="loading-spinner"><span class="spinner-text">'+ loading_text + '</span><span class="spinner" /></div>';
 
   var selectedVocabs = [];
+  var vocabId;
   var vocabSelectionString = getUrlParams().vocabs ? getUrlParams().vocabs.replace(/\+/g,' ') : readCookie('SKOSMOS_SELECTED');
   $('#selected-vocabs').val(vocabSelectionString);
   var clang = content_lang !== '' ? content_lang : lang;
@@ -60,7 +61,7 @@ $(function() { // DOCUMENT READY
 
   // kills the autocomplete after a form submit so we won't have to wait for the ajax to complete.
   $('.navbar-form').submit(
-    function(event) {
+    function() {
       $('#search-field').typeahead('destroy');
       $.ajaxQ.abortAll();
     }
@@ -228,7 +229,7 @@ $(function() { // DOCUMENT READY
   
   // event handling restoring the hidden breadcrumb paths
   $(document).on('click', '.restore-breadcrumbs',
-      function(event){
+      function(){
         $(this).remove();
         $('.hidden-path').removeClass('hidden-path');
         return false;
@@ -417,7 +418,6 @@ $(function() { // DOCUMENT READY
         $('.active').removeClass('active');
         var clicked = $(this);
         clicked.parent().addClass('active');
-        var $content = $('#sidebar');
         var $hier = $('#hierarchy');
         $('.sidebar-grey').empty().prepend(spinner);
         var targetUrl = event.target.href;
@@ -457,7 +457,7 @@ $(function() { // DOCUMENT READY
 
   // if we are on the vocab front page initialize the hierarchy view with a top concept.
   $(document).on('click', '#hier-trigger', 
-    function (event) {
+    function () {
       var $content = $('#sidebar');
       if($('.uri-input-box').length === 0) { // if on the vocabulary front page
         $('.sidebar-grey').remove();
@@ -522,13 +522,10 @@ $(function() { // DOCUMENT READY
       function(event) {
         $.ajaxQ.abortAll();
         var base_path = path_fix.length / 3;
-        var clicked = $(this);
-        var $sidebar = $('#sidebar');
         var $content = $('.content');
         $('.sidebar-grey').empty().prepend(spinner);
         var targetUrl = event.target.href;
         var parameters = $.param({'base_path' : base_path});
-        var group_page_url = targetUrl.replace('groups', 'page');
         // ajaxing the sidebar content
         $.ajax({
             url : targetUrl,
@@ -553,8 +550,7 @@ $(function() { // DOCUMENT READY
       function(event) {
         $.ajaxQ.abortAll();
         if ($('.alphabet-header').length === 0) {
-          var alpha_complete = false;
-          var $pagination = $('.pagination');
+          alpha_complete = false;
           var base_path = path_fix.length / 3;
           var $content = $('.sidebar-grey');
           $content.empty().prepend(spinner);
@@ -673,11 +669,6 @@ $(function() { // DOCUMENT READY
     searchTerm = decodeURI(getUrlParams().q);
   }
   
-  var NoResultsLabel = [ {
-    "label" : noResultsTranslation,
-    "vocab" : ""
-  } ];
- 
   // disables the button with an empty search form 
   $('#search-field').keyup(function() {
     var empty = false;
@@ -768,7 +759,7 @@ $(function() { // DOCUMENT READY
       filter: function(data) {
         var context = data['@context'];
         return ($.map(data.results.filter(
-          function(item) {
+          function() {
             return true;
           }),
           function(item) {
@@ -833,7 +824,7 @@ $(function() { // DOCUMENT READY
         suggestion: Handlebars.compile(autocompleteTemplate)
       },
       source: concepts.ttAdapter()
-  }).on('typeahead:cursorchanged', function($e) {
+  }).on('typeahead:cursorchanged', function() {
     $('.tt-dropdown-menu').mCustomScrollbar("scrollTo", '.tt-cursor');
   }).on('typeahead:selected', onSelection).bind('focus', function() {
     $('#search-field').typeahead('open'); 
@@ -936,7 +927,7 @@ $(function() { // DOCUMENT READY
   // activating the custom autocomplete 
   function updateVocabParam() {
     vocabSelectionString = '';
-    $vocabs = $('li.active input');
+    var $vocabs = $('li.active input');
     $.each($vocabs, 
       function(index, ob) { 
         if (ob.value === 'multiselect-all') {
@@ -1044,7 +1035,7 @@ $(function() { // DOCUMENT READY
   
   /* adding the replaced by concept href to the alert box when possible.
    */
-  $replaced = $('.replaced-by');
+  var $replaced = $('.replaced-by');
   if ($replaced.length === 1) {
     var $replacedSpan = $('.replaced-by span'); 
     var undoUppercasing = $replacedSpan.text().substr(0,1) + $replacedSpan.text().substr(1).toLowerCase();
@@ -1136,7 +1127,7 @@ $(function() { // DOCUMENT READY
           suggestion: Handlebars.compile(autocompleteTemplate)
         },
         source: concepts.ttAdapter()
-    }).on('typeahead:cursorchanged', function($e) {
+    }).on('typeahead:cursorchanged', function() {
       $('.tt-dropdown-menu').mCustomScrollbar("scrollTo", '.tt-cursor');
     }).on('typeahead:selected', onSelection).bind('focus', function() {
       $('#search-field').typeahead('open'); 
