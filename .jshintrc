@@ -25,6 +25,10 @@
     "parts": true, 
     "results": false, 
     "results_disp": false, 
+    "readCookie": false, 
+    "createCookie": false, 
+    "getUrlParams": false, 
+    "debounce": false, 
     "n_selected": false, 
     "waypoint_results": false
   },

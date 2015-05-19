@@ -4,6 +4,8 @@
  * see LICENSE.txt for more information
  */
 
+/* exported getUrlParams, readCookie, createCookie, getUrlParams, debounce */
+
 /* 
  * Creates a cookie value and stores it for the user. Takes the given
  * value label, the value itself and the number of days until expires.
