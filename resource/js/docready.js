@@ -414,17 +414,6 @@ $(function() { // DOCUMENT READY
     window.location.replace(encodeURI(redirectUrl));
   });
 
-  function updateTitle(data) {
-    var title = $(data).filter('title').text();
-    document.title = title;
-  }
-
-  function updateSidebar(data) {
-    $('#sidebar').empty();
-    var response = $('#sidebar', data).html();
-    $('#sidebar').append(response);
-  }
-
   // event handler for clicking the group index tab 
   $(document).on('click', '#groups',
       function(event) {

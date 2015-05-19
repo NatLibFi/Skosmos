@@ -4,7 +4,7 @@
  * see LICENSE.txt for more information
  */
 
-/* exported getUrlParams, readCookie, createCookie, getUrlParams, debounce, updateContent, updateTopbarLang, updateClangButtons */
+/* exported getUrlParams, readCookie, createCookie, getUrlParams, debounce, updateContent, updateTopbarLang, updateClangButtons, updateTitle, updateSidebar */
 
 /* 
  * Creates a cookie value and stores it for the user. Takes the given
@@ -98,6 +98,17 @@ function updateTopbarLang(data) {
   $('#language').empty();
   var langBut = $('#language', data).html();
   $('#language').append(langBut);
+}
+
+function updateTitle(data) {
+  var title = $(data).filter('title').text();
+  document.title = title;
+}
+
+function updateSidebar(data) {
+  $('#sidebar').empty();
+  var response = $('#sidebar', data).html();
+  $('#sidebar').append(response);
 }
 
 function updateClangButtons(href) {

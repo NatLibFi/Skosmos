@@ -30,6 +30,8 @@
     "getUrlParams": false, 
     "updateTopbarLang": false, 
     "updateContent": false, 
+    "updateTitle": false, 
+    "updateSidebar": false, 
     "debounce": false, 
     "n_selected": false, 
     "updateClangButtons": false, 
