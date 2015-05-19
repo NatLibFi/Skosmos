@@ -32,6 +32,7 @@
     "updateContent": false, 
     "debounce": false, 
     "n_selected": false, 
+    "updateClangButtons": false, 
     "waypoint_results": false
   },
   "browser" : true,

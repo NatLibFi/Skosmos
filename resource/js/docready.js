@@ -395,23 +395,6 @@ $(function() { // DOCUMENT READY
       }
   );
 
-  function updateClangButtons(href) {
-    $.each($('.lang-button'), function(index, val) {
-      var url;
-      var btn_href = $(val).attr('href');
-      // removing the last page url if this isn't the first.
-      btn_href = btn_href.substr(btn_href.indexOf('clang'));
-      if (href.indexOf('clang') === -1) {
-        url = href + '?' + btn_href;
-      } else if (btn_href.indexOf('anylang') === -1) {
-        url = (href).replace(/clang=\w{2}/, 'clang=' + btn_href.substr(-2));
-      } else {
-        url = (href).replace(/clang=\w{2}/, btn_href);
-      }
-    $(val).attr('href', url);
-    });
-  }
-
   // if we are on the vocab front page initialize the hierarchy view with a top concept.
   $(document).on('click', '#hier-trigger', 
     function () {
