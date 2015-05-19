@@ -32,6 +32,8 @@
     "updateContent": false, 
     "updateTitle": false, 
     "updateSidebar": false, 
+    "setLangCookie": false, 
+    "loadLimitations": false, 
     "debounce": false, 
     "n_selected": false, 
     "updateClangButtons": false, 

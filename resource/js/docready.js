@@ -505,11 +505,6 @@ $(function() { // DOCUMENT READY
         return false;
       }
   );
-
-  // sets the language cookie for 365 days
-  function setLangCookie(lang) {
-    createCookie('SKOSMOS_LANGUAGE', lang, 365);
-  }
   
   // Event handlers for the language selection links for setting the cookie
   $('#language a').each( function(index, el) { 
@@ -985,30 +980,6 @@ $(function() { // DOCUMENT READY
         $('#sidebar').empty();
         $('#sidebar').append($(data).find('#sidebar')[0].innerHTML);
       }
-    });
-  }
-
-  function loadLimitations() {
-    $('#alphabetical-menu').detach();
-    var $loading = $("<div class='search-result'><p>" + loading_text + "&hellip;<span class='spinner'/></p></div>"); 
-    $('.search-result-listing').empty().append($loading);
-    var typeLimit = $('#type-limit').val() ? $('#type-limit').val().join('+') : $('#type-limit').val();
-    if (typeLimit && typeLimit[0] === '+') { // filtering the empty selection out of the search string
-      typeLimit = typeLimit.substring(1);
-    }
-    var groupLimit = $('#group-limit').val();
-    var parentLimit = $('#parent-limit').attr('data-uri');
-    var parameters = $.param({'type' : typeLimit, 'group' : groupLimit, 'parent': parentLimit});
-    $.ajax({
-        data: parameters,
-        success : function(data) {
-          var targetUrl = this.url;
-          var response = $('.search-result-listing', data).html();
-          if (window.history.pushState) { window.history.pushState({url: targetUrl}, '', targetUrl); }
-          $('.search-result-listing').append(response);
-          $loading.detach();
-          updateTitle(data);
-        }
     });
   }
 
