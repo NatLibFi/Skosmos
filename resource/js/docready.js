@@ -326,10 +326,8 @@ $(function() { // DOCUMENT READY
               var response = $('.content', data).html();
               if (window.history.pushState) { window.history.pushState({url: targetUrl + '&' + parameters}, '', targetUrl); }
               $content.append(response);
-              var lang_buttons = $('.navbar-form .dropdown-menu', data).html();
-              $('.navbar-form .dropdown-menu').empty();
-              $('.navbar-form .dropdown-menu').append(lang_buttons);
               updateTitle(data);
+              updateClangButtons(event.target.href);
             }
         });
         return false;

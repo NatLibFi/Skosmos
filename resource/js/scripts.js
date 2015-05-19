@@ -124,6 +124,7 @@ function updateClangButtons(href) {
     } else { // include the anylang=on as well
       url = (href).replace(/clang=\w{2}/, btn_href.substr(btn_href.indexOf('clang'), 19));
     }
+    url = encodeURI(url);
     $(val).attr('href', url);
   });
 }
