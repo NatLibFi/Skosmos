@@ -120,9 +120,9 @@ function updateClangButtons(href) {
     if (href.indexOf('clang') === -1) {
       url = href + '?' + btn_href;
     } else if (btn_href.indexOf('anylang') === -1) {
-      url = (href).replace(/clang=\w{2}/, 'clang=' + btn_href.substr(-2));
-    } else {
-      url = (href).replace(/clang=\w{2}/, btn_href);
+      url = (href).replace(/clang=\w{2}/, btn_href.substr(btn_href.indexOf('clang'), 8));
+    } else { // include the anylang=on as well
+      url = (href).replace(/clang=\w{2}/, btn_href.substr(btn_href.indexOf('clang'), 19));
     }
     $(val).attr('href', url);
   });
