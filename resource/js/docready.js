@@ -297,18 +297,6 @@ $(function() { // DOCUMENT READY
     }
     updateClangButtons(targetUrl);
   }
-  
-  function updateContent(data) {
-    $('.content').empty();
-    var response = $('.content', data).html();
-    $('.content').append(response);
-  }
-
-  function updateTopbarLang(data) {
-    $('#language').empty();
-    var langBut = $('#language', data).html();
-    $('#language').append(langBut);
-  }
 
   $(window).on("popstate", function(e) {
     if (e.originalEvent.state !== null) {

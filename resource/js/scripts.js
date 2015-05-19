@@ -4,7 +4,7 @@
  * see LICENSE.txt for more information
  */
 
-/* exported getUrlParams, readCookie, createCookie, getUrlParams, debounce */
+/* exported getUrlParams, readCookie, createCookie, getUrlParams, debounce, updateContent, updateTopbarLang */
 
 /* 
  * Creates a cookie value and stores it for the user. Takes the given
@@ -46,24 +46,24 @@ function getUrlParams() {
 
 // Debounce function from underscore.js
 function debounce(func, wait, immediate) {
-	var timeout;
-	return function() {
-		var context = this, args = arguments;
-		var later = function() {
-			timeout = null;
-			if (!immediate) func.apply(context, args);
-		};
-		var callNow = immediate && !timeout;
-		clearTimeout(timeout);
-		timeout = setTimeout(later, wait);
-		if (callNow) func.apply(context, args);
-	};
+  var timeout;
+  return function() {
+    var context = this, args = arguments;
+    var later = function() {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+    var callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(context, args);
+  };
 }
 
- /*
-  * Ajax query queue that keeps track of ongoing queries 
-  * so they can be cancelled if a another event is triggered.
-  */
+/*
+ * Ajax query queue that keeps track of ongoing queries 
+ * so they can be cancelled if a another event is triggered.
+ */
 $.ajaxQ = (function(){
   var id = 0, Q = {};
 
@@ -87,3 +87,15 @@ $.ajaxQ = (function(){
   };
 
 })();
+
+function updateContent(data) {
+  $('.content').empty();
+  var response = $('.content', data).html();
+  $('.content').append(response);
+}
+
+function updateTopbarLang(data) {
+  $('#language').empty();
+  var langBut = $('#language', data).html();
+  $('#language').append(langBut);
+}
