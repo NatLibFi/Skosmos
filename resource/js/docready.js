@@ -340,17 +340,14 @@ $(function() { // DOCUMENT READY
   $(document).on('click', '.side-navi a',
       function(event) {
         $.ajaxQ.abortAll();
-        var base_path = path_fix.length / 3;
         var clicked = $(this);
         $('.activated-concept').removeClass('activated-concept');
         clicked.addClass('activated-concept');
         var $content = $('.content');
         var targetUrl = event.target.href;
-        var parameters = $.param({'base_path' : base_path});
         var hierButton = '<li id="hierarchy"><a id="hier-trigger" href="#">' + hiertrans + '</a></li>';
         $.ajax({
             url : targetUrl,
-            data: parameters,
             success : function(data) {
               $content.empty();
               var response = $('.content', data).html();
