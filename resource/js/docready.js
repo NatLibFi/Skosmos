@@ -271,33 +271,6 @@ $(function() { // DOCUMENT READY
     });
   }
 
-  function loadPage(targetUrl) {
-    if (targetUrl.indexOf('index') !== -1 || targetUrl.indexOf('groups') !== -1) {
-      $.ajax({
-        url : targetUrl,
-        success : function(data) {
-          updateSidebar(data);
-          updateTitle(data);
-          updateTopbarLang(data);
-        }
-      });
-    } else {
-      $.ajax({
-        url : targetUrl,
-        success : function(data) {
-          $('#jstree-leaf-proper').attr('id', '');
-          $('.activated-concept').removeClass('activated-concept');
-          $('.jstree-clicked').removeClass('jstree-clicked'); 
-          updateContent(data);
-          $('a[href="' + $('.uri-input-box').text() + '"]').addClass('jstree-clicked');
-          updateTitle(data);
-          updateTopbarLang(data);
-        }
-      });
-    }
-    updateClangButtons(targetUrl);
-  }
-
   $(window).on("popstate", function(e) {
     if (e.originalEvent.state !== null) {
       loadPage(e.originalEvent.state.url);

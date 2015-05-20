@@ -5,6 +5,8 @@
     "all_vocabs": false, 
     "autocomplete_activation": false, 
     "base_url": false, 
+    "expand": false, 
+    "loadPage": false, 
     "Bloodhound": false, 
     "Handlebars": false, 
     "getUrlParams": false, 
