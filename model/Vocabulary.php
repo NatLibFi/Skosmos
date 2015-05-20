@@ -87,10 +87,11 @@ class Vocabulary extends DataObject
     $deflang = $this->resource->getLiteral('skosmos:defaultLanguage');
     if ($deflang) return $deflang->getValue();
     $langs = $this->getLanguages();
+    $deflang = reset($langs); // picking the first one from the list with reset since the keys are not numeric
     if (sizeof($langs) > 1)
-      trigger_error("Default language for vocabulary '" . $this->getId() . "' unknown, choosing '$langs[0]'.", E_USER_WARNING);
+      trigger_error("Default language for vocabulary '" . $this->getId() . "' unknown, choosing '$deflang'.", E_USER_WARNING);
 
-    return $langs[0];
+    return $deflang;
   }
 
   /**
