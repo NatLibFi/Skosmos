@@ -310,11 +310,10 @@ $(function() { // DOCUMENT READY
   $(document).on('click', '.jstree-no-icons a',
       function(event) {
         event.preventDefault();
-        var base_path = path_fix.length / 3;
         var clicked = $(this);
         var $content = $('.content');
         var targetUrl = 'http://' + base_url + vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(event.target.href);
-        var parameters = $.param({'base_path' : base_path, 'clang' : clang});
+        var parameters = $.param({'clang' : clang});
         $('#hier-trigger').attr('href', targetUrl);
         $.ajax({
             url : targetUrl,
@@ -327,7 +326,8 @@ $(function() { // DOCUMENT READY
               if (window.history.pushState) { window.history.pushState({url: targetUrl + '&' + parameters}, '', targetUrl); }
               $content.append(response);
               updateTitle(data);
-              updateClangButtons(event.target.href);
+              updateTopbarLang(data);
+              updateClangButtons(targetUrl + '&' + parameters);
             }
         });
         return false;

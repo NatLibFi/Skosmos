@@ -3,6 +3,20 @@
     "description": "Thesaurus and controlled vocabulary browser using SKOS and SPARQL",
     "type": "project",
     "license": "MIT",
+    "repositories": { 
+        "urijs-unofficial": {
+            "type": "package",
+            "package": {
+                "name": "medialize/uri.js",
+                "version": "1.15.1",
+                "source": {
+                    "url": "git://github.com/medialize/URI.js.git",
+                    "type": "git",
+                    "reference": "v.1.15.1"
+                }
+        }
+      } 
+    },
     "require": {
         "components/jquery": "1.11.*",
         "components/jqueryui": "1.10.*",
@@ -17,6 +31,7 @@
         "phpunit/phpunit": "4.2.*",
         "punic/punic": "1.4.0",
         "ml/json-ld": "1.*",
+        "medialize/uri.js": "1.15.1",
         "ext-gettext": "*"
     },
     "require-dev": {

@@ -35,6 +35,7 @@
     "setLangCookie": false, 
     "loadLimitations": false, 
     "debounce": false, 
+    "URI": false, 
     "n_selected": false, 
     "updateClangButtons": false, 
     "waypoint_results": false

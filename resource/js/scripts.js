@@ -112,20 +112,11 @@ function updateSidebar(data) {
 }
 
 function updateClangButtons(href) {
+  var uri = URI(href).removeSearch('clang');
   $.each($('.lang-button'), function(index, val) {
-    var url;
-    var btn_href = $(val).attr('href');
-    // removing the last page url if this isn't the first.
-    btn_href = btn_href.substr(btn_href.indexOf('clang'));
-    if (href.indexOf('clang') === -1) {
-      url = href + '?' + btn_href;
-    } else if (btn_href.indexOf('anylang') === -1) {
-      url = (href).replace(/clang=\w{2}/, btn_href.substr(btn_href.indexOf('clang'), 8));
-    } else { // include the anylang=on as well
-      url = (href).replace(/clang=\w{2}/, btn_href.substr(btn_href.indexOf('clang'), 19));
-    }
-    url = encodeURI(url);
-    $(val).attr('href', url);
+    var btn_params = URI($(val).attr('href')).removeSearch('uri').search(true);
+    uri.setSearch(btn_params);
+    $(val).attr('href', uri.href());
   });
 }
 
