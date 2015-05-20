@@ -54,8 +54,10 @@ class Vocabulary extends DataObject
     $langs = $this->resource->allLiterals('skosmos:language');
     $ret = array();
     foreach ($langs as $lang) {
-      $ret[] = $lang->getValue();
+      $langlit = Punic\Language::getName($lang->getValue(), $this->lang);
+      $ret[$langlit] = $lang->getValue();
     }
+    ksort($ret);
 
     return $ret;
   }
