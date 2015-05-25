@@ -68,7 +68,7 @@ msgstr "Ta kontakt!"
 
 #: /tmp/cache/55262acaeb7d6/2b/2f/1ce096ed381c7c416eb3bdf53cb7.php:91
 msgid "Content language"
-msgstr "Språk av innehållet"
+msgstr "Innehållets språk"
 
 #: /tmp/cache/55262acaeb7d6/f3/ad/c29275c1535e0544c16a5c268290.php:721
 msgid "Download this concept in SKOS format:"
