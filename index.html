@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Skosmos.org</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container">
+    <h1 id="skosmos" class="page-header">Skosmos <small>Open source web-based SKOS browser and publishing tool</small></h1>
+    <div class="row">
+
+      <div class="col-md-4">
+        <h2 id="features">Features</h2>
+        <ul>
+          <li>search and browse vocabularies</li>
+          <li>alphabetical index</li>
+          <li>thematic index</li>
+          <li>structured concept display</li>
+          <li>visualized concept hierarchy</li>
+          <li>multilingual user interface</li>
+        </ul>
+      </div>
+
+      <div class="col-md-4">
+        <h2 id="usecases">Use cases</h2>
+        <p>Access to controlled vocabularies for indexing, information retrieval and vocabulary development.</p>
+        <h2 id="users">Current users</h2>
+        <ul>
+          <li>Finto</li>
+          <li>FAO / Agrovoc</li>
+          <li>...</li>
+        </ul>
+      </div>
+      
+      <div class="col-md-4">
+      </div>
+
+      <div class="col-md-4">
+        <img src="demo.png" class="img-responsive" alt="Responsive image">
+      </div>
+    
+    </div>
+    
+    <h1 id="technology" class="page-header">Technology</h1>
+    <div class="row">
+
+      <div class="col-md-4">
+        <h2 id="requirements">Requirements</h2>
+        <ul>
+          <li>one or more SKOS vocabularies</li>
+          <li>PHP capable web server</li>
+          <li>SPARQL triple store (we recommend Fuseki with JenaText)</li>
+          <li>HTTP cache (e.g. Varnish)</li>
+        </ul>
+      </div>
+      
+      <div class="col-md-4">
+        <h2 id="architecture">Architecture</h2>
+        <p>Skosmos has been implemented mainly in PHP and javascript. Open source libraries used by Skosmos:</p>
+        <ul>
+          <li>PHP, Composer, Twig, jQuery, jsTree, Bootstrap, typeahead.js</li>
+        </ul>
+      </div>
+      
+      <div class="col-md-4">
+        <h2 id="rest">REST API</h2>
+        <p>Skosmos provides a REST-style API and Linked Data access to the underlying vocabulary data.</p>
+      </div>
+
+    </div>
+    
+    <h1 id="development" class="page-header">Development</h1>
+    <div class="row">
+
+      <div class="col-md-12">
+        <p>Skosmos is distributed as open source with the MIT license. The development process is done on GitHub.</p>
+      </div>
+
+      <div class="col-md-4">
+        <h2 id="team">Team</h2>
+        <p>Skosmos is developed at the National Library of Finland.</p>
+      </div>
+      
+    </div>
+
+  </div> <!-- /container -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</body>
+</html>
