@@ -536,7 +536,7 @@ $(function() { // DOCUMENT READY
   var qlang = search_lang;
   var langPretty;
   
-  if (search_lang === 'anything') {
+  if (search_lang === 'anything' || getUrlParams().anylang === 'on') {
     $('#lang-dropdown-toggle').html($('.lang-button-all').html() + ' <span class="caret"></span>');
     qlang = "";
   } else if (!search_lang){
