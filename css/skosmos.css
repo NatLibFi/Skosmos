@@ -1,0 +1,8 @@
+#topbar {
+  background-color: #449D44;
+}
+
+#topbar > div > h1 {
+  color: #fff;
+  font-weight: bold;
+}

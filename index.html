@@ -6,12 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Skosmos.org</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/skosmos.css">
 </head>
 <body>
-  <div class="container">
-    <h1 id="skosmos" class="page-header">Skosmos <small>Open source web-based SKOS browser and publishing tool</small></h1>
+  <header class="navbar navbar-static-top" id="topbar">
+    <div class="container">
+      <h1 id="skosmos">Skosmos</h1>
+    </div>
+  </header>
+  <div class="container"> 
+      <h1><small>Open source web-based SKOS browser and publishing tool</small></h1>
     <div class="row">
-
       <div class="col-md-4">
         <h2 id="features">Features</h2>
         <ul>
@@ -22,6 +27,7 @@
           <li>visualized concept hierarchy</li>
           <li>multilingual user interface</li>
         </ul>
+        <a href="http://skosmos.dev.finto.fi/en/" target="_blank"><button type="button" class="btn btn-success">Try the Skosmos demo!</button></a>
       </div>
 
       <div class="col-md-4">
@@ -30,7 +36,7 @@
         <h2 id="users">Current users</h2>
         <ul>
           <li><a href="http://finto.fi/en/" target="_blank">Finto</a></li>
-          <li>FAO / Agrovoc</li>
+          <li>FAO / <a href="http://aims.fao.org/vest-registry/vocabularies/agrovoc-multilingual-agricultural-thesaurus" target="_blank">Agrovoc</a></li>
           <li>...</li>
         </ul>
       </div>
@@ -59,9 +65,9 @@
       
       <div class="col-md-4">
         <h2 id="architecture">Architecture</h2>
-        <p>Skosmos has been implemented mainly in PHP and javascript. Open source libraries used by Skosmos:</p>
+        <p>Skosmos has been implemented mainly in PHP and javascript. Open source libraries used by Skosmos include:</p>
         <ul>
-          <li>PHP, Composer, Twig, jQuery, jsTree, Bootstrap, typeahead.js</li>
+          <li>PHP, Composer, EasyRDF, Twig, jQuery, jsTree, Bootstrap, typeahead.js, URI.js, Punic</li>
         </ul>
       </div>
       
