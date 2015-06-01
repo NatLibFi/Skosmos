@@ -40,6 +40,7 @@
     "URI": false, 
     "n_selected": false, 
     "updateClangButtons": false, 
+    "hideCrumbs": false, 
     "waypoint_results": false
   },
   "browser" : true,

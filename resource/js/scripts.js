@@ -4,7 +4,7 @@
  * see LICENSE.txt for more information
  */
 
-/* exported getUrlParams, readCookie, createCookie, getUrlParams, debounce, updateContent, updateTopbarLang, updateClangButtons, updateTitle, updateSidebar, setLangCookie, loadLimitations, loadPage */
+/* exported getUrlParams, readCookie, createCookie, getUrlParams, debounce, updateContent, updateTopbarLang, updateClangButtons, updateTitle, updateSidebar, setLangCookie, loadLimitations, loadPage, hideCrumbs */
 
 /* 
  * Creates a cookie value and stores it for the user. Takes the given
@@ -176,3 +176,15 @@ function loadPage(targetUrl) {
   updateClangButtons(targetUrl);
 }
 
+// if there are multiple breadcrumb paths hide those and generate a button for displaying those
+function hideCrumbs() {
+  var $crumbs = $('.crumb-path');
+  if ($crumbs.length > 4) {
+    for (var i = 4; i < $crumbs.length; i++) {
+      $($crumbs[i]).addClass('hidden-path');
+    }
+    if ($('.restore-breadcrumbs').length === 0) {
+      $($crumbs[0]).after('<a class="versal restore-breadcrumbs" href="#">[' + expand.replace('#',($crumbs.length)) + ']</a>');
+    }
+  }
+}
