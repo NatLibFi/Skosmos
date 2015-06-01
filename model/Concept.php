@@ -254,8 +254,8 @@ class Concept extends VocabularyDataObject
           $narrowers_by_uri[$narrower->getUri()] = $narrower;
 
         foreach ($collections as $coll) {
-          $current_collection_members = $this->getCollectionMembers($coll, $narrowers_by_uri);
-          foreach ($current_collection_members as $collection) {
+          $curr_coll_members = $this->getCollectionMembers($coll, $narrowers_by_uri);
+          foreach ($curr_coll_members as $collection) {
             if ($collection->getSubMembers()) {
               $submembers = $collection->getSubMembers();
               foreach ($submembers as $member)
@@ -264,7 +264,7 @@ class Concept extends VocabularyDataObject
           }
 
           if ($collection->getSubMembers()) 
-            $members_array = array_merge($current_collection_members, $members_array);
+            $members_array = array_merge($curr_coll_members, $members_array);
         }
         $properties['skos:narrower'] = $members_array;
       }
