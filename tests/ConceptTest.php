@@ -79,6 +79,17 @@ class ConceptTest extends PHPUnit_Framework_TestCase
   }
   
   /**
+   * @covers Concept::getForeignLabels
+   * @covers ConceptPropertyLiteralValue::getLabel
+   */
+  public function testGetForeignLabels()
+  {
+    $labels = $this->concept->getForeignLabels();
+
+    $this->assertEquals('Karppi', $labels['Finnish'][0]->getLabel());
+  }
+  
+  /**
    * @covers Concept::getProperties
    * @covers ConceptProperty::getValues
    * @covers ConceptPropertyValue::getLabel
