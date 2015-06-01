@@ -509,10 +509,10 @@ $(function() { // DOCUMENT READY
   var qlang = search_lang;
   var langPretty;
   
-  if (search_lang === 'anything' || getUrlParams().anylang === 'on') {
+  if (search_lang === 'anything' || getUrlParams().anylang === 'on') {
     $('#lang-dropdown-toggle').html($('.lang-button-all').html() + ' <span class="caret"></span>');
     qlang = "";
-  } else if (!search_lang){
+  } else if (!search_lang) {
       langPretty = $('a[hreflang=' + lang + ']').html();
       search_lang = lang;
       if (!langPretty) { langPretty = $('a[hreflang="anything"]').html(); }
@@ -823,7 +823,6 @@ $(function() { // DOCUMENT READY
     $.each($vocabs, 
       function(index, ob) { 
         if (ob.value === 'multiselect-all') {
-          $('input[value=multiselect-all]', $('.multiselect-all')).click();
           return false;
         }
         vocabSelectionString += ob.value; 
@@ -843,7 +842,8 @@ $(function() { // DOCUMENT READY
 
   $('.headerbar .multiselect').multiselect({
     buttonText: function(options) {
-      if (options.length === 0) {
+      console.log();
+      if (options.length === 0 || options.length === ($('.headerbar .multiselect-container li').length - 1)) {
         return  '<span>' + all_vocabs + ' <b class="caret"></b></span>'; 
       } else {
         if (options.length > this.numberDisplayed) {
