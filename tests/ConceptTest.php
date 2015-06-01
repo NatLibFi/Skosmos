@@ -80,7 +80,6 @@ class ConceptTest extends PHPUnit_Framework_TestCase
   
   /**
    * @covers Concept::getForeignLabels
-   * @covers ConceptPropertyLiteralValue::getLabel
    */
   public function testGetForeignLabels()
   {
@@ -241,6 +240,17 @@ class ConceptTest extends PHPUnit_Framework_TestCase
   public function testGetLabelCurrentLanguage()
   {
     $this->assertEquals('Carp', $this->concept->getLabel()->getValue());
+  }
+  
+  /**
+   * @covers Concept::getLabel
+   */
+  public function testGetLabelWhenNull()
+  {
+    $model = new Model();
+    $vocab = $model->getVocabulary('test');
+    $concept = $vocab->getConceptInfo("http://www.skosmos.skos/test/ta120", "en");
+    $this->assertEquals(null, $concept[0]->getLabel());
   }
   
   /**
