@@ -319,6 +319,7 @@ class ConceptTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers Concept::getProperties
+   * @covers ConceptProperty::getValues
    */
   
   public function testGetPropertiesDefinitionResource() {
@@ -329,6 +330,4 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $propvals = $props['skos:definition']->getValues();
     $this->assertEquals('The black sea bass (Centropristis striata) is an exclusively marine fish.', $propvals['The black sea bass (Centropristis striata) is an exclusively marine fish.http://www.skosmos.skos/test/black_sea_bass_def']->getLabel());
   }
-
-
 }

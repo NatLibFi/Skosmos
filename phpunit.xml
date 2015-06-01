@@ -10,6 +10,7 @@
       <file>tests/BreadcrumbTest.php</file>
       <file>tests/DataObjectTest.php</file>
       <file>tests/ConceptTest.php</file>
+      <file>tests/ConceptPropertyTest.php</file>
       <file>tests/GenericSparqlTest.php</file>
     </testsuite>
   </testsuites>
