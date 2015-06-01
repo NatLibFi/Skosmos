@@ -829,7 +829,6 @@ $(function() { // DOCUMENT READY
 
   $('.headerbar .multiselect').multiselect({
     buttonText: function(options) {
-      console.log();
       if (options.length === 0 || options.length === ($('.headerbar .multiselect-container li').length - 1)) {
         return  '<span>' + all_vocabs + ' <b class="caret"></b></span>'; 
       } else {
