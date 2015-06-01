@@ -39,7 +39,7 @@ class ConceptTest extends PHPUnit_Framework_TestCase
   /**
    * @covers Concept::getVocab
    */
-  public function testGetLabel()
+  public function testGetVocab()
   {
     $id = $this->concept->getVocab();
     $this->assertEquals('test', $id);
@@ -203,6 +203,45 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $this->assertCount(1, $propvals); // should only have type meta:TestClass, not skos:Concept (see #200)
     $this->assertEquals('Test class', $propvals['Test classhttp://www.skosmos.skos/test-meta/TestClass']->getLabel());
     $this->assertEquals('http://www.skosmos.skos/test-meta/TestClass', $propvals['Test classhttp://www.skosmos.skos/test-meta/TestClass']->getUri());
+  }
+  
+  /**
+   * @covers Concept::getNotation
+   */
+  public function testGetNotationWhenNull()
+  {
+    $vocab = $this->model->getVocabulary('test');
+    $concepts = $vocab->getConceptInfo("http://www.skosmos.skos/test/ta114", "en");
+    $concept = $concepts[0];
+    $this->assertEquals(null, $concept->getNotation());
+  }
+  
+  /**
+   * @covers Concept::getNotation
+   */
+  public function testGetNotation()
+  {
+    $this->assertEquals('665', $this->concept->getNotation());
+  }
+  
+  /**
+   * @covers Concept::getLabel
+   */
+  public function testGetLabelCurrentLanguage()
+  {
+    $this->assertEquals('Carp', $this->concept->getLabel()->getValue());
+  }
+  
+  /**
+   * @covers Concept::getLabel
+   * @covers Concept::setContentLang
+   * @covers Concept::getContentLang
+   */
+  public function testGetLabelResortingToVocabDefault()
+  {
+    $this->concept->setContentLang('pl');
+    $this->assertEquals('pl', $this->concept->getContentLang());
+    $this->assertEquals('Carp', $this->concept->getLabel()->getValue());
   }
 
   /**

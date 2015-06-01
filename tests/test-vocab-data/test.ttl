@@ -41,6 +41,7 @@ test:ta111 a skos:Concept, meta:TestClass ;
 
 test:ta112 a skos:Concept, meta:TestClass ;
     skosmos:testprop "Test property value" ;
+    skos:notation "665" ;
     skos:broader test:ta1 ;
     skos:narrower test:ta121 ;
     skos:exactMatch test:ta118 ;
