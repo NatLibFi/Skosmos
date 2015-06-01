@@ -24,8 +24,7 @@ class ConceptPropertyTest extends PHPUnit_Framework_TestCase
    * @covers ConceptProperty::getLabel
    * @covers ConceptProperty::getDescription
    */
-  
-  public function testGetPropertiesDescriptionAndLabel() {
+  public function testGetDescriptionAndLabel() {
     $vocab = $this->model->getVocabulary('test');
     $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta122', 'en');
     $concept = $concepts[0];
@@ -33,5 +32,17 @@ class ConceptPropertyTest extends PHPUnit_Framework_TestCase
     $propvals = $props['skos:definition']->getValues();
     $this->assertEquals('Definition', $props['skos:definition']->getLabel());
     $this->assertEquals('A complete explanation of the intended meaning of a concept', $props['skos:definition']->getDescription());
+  }
+
+  /**
+   * @covers Concept::getProperties
+   * @covers ConceptProperty::getType
+   */
+  public function testGetType() {
+    $vocab = $this->model->getVocabulary('test');
+    $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta122', 'en');
+    $concept = $concepts[0];
+    $props = $concept->getProperties();
+    $this->assertEquals('skos:definition', $props['skos:definition']->getType());
   }
 }
