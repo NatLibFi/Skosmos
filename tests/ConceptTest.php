@@ -264,6 +264,19 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('pl', $this->concept->getContentLang());
     $this->assertEquals('Carp', $this->concept->getLabel()->getValue());
   }
+  
+  /**
+   * @covers Concept::getGroupProperties
+   */
+  public function testGetGroupProperties()
+  {
+    $model = new Model();
+    $vocab = $model->getVocabulary('groups');
+    $concept = $vocab->getConceptInfo("http://www.skosmos.skos/groups/ta111", "en");
+    $groups = $concept[0]->getGroupProperties();
+    $this->assertArrayHasKey("Saltwater fish", $groups);
+    $this->assertArrayHasKey("Submarine-like fish", $groups);
+  }
 
   /**
    * @covers Concept::getProperties
