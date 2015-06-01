@@ -41,6 +41,8 @@
     "n_selected": false, 
     "updateClangButtons": false, 
     "shortenProperties": false,
+    "hideCrumbs": false,
+    "combineStatistics": false,
     "waypoint_results": false
   },
   "browser" : true,

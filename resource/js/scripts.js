@@ -4,7 +4,7 @@
  * see LICENSE.txt for more information
  */
 
-/* exported getUrlParams, readCookie, createCookie, getUrlParams, debounce, updateContent, updateTopbarLang, updateClangButtons, updateTitle, updateSidebar, setLangCookie, loadLimitations, loadPage, hideCrumbs, shortenProperties */
+/* exported getUrlParams, readCookie, createCookie, getUrlParams, debounce, updateContent, updateTopbarLang, updateClangButtons, updateTitle, updateSidebar, setLangCookie, loadLimitations, loadPage, hideCrumbs, shortenProperties, combineStatistics */
 
 /* 
  * Creates a cookie value and stores it for the user. Takes the given
@@ -202,5 +202,22 @@ function shortenProperties() {
       $property.parent().append(shortened);
     }
   }
+}
+
+/**
+ * Combines the different properties into an object with the language codes as 
+ * keys and an another array of property counts as the value.
+ * @return object
+ */
+function combineStatistics(input) {
+  var combined = {};
+  for (var i = 0; i < input.length; i++) {
+    var langdata = input[i];
+    combined[langdata.literal] = [langdata.literal];
+    for (var j = 0; j < langdata.properties.length; j++) {
+      combined[langdata.literal].push(langdata.properties[j].labels);
+    }
+  }
+  return combined;
 }
 

@@ -192,23 +192,6 @@ $(function() { // DOCUMENT READY
 
   hideCrumbs();
 
-  /**
-   * Combines the different properties into an object with the language codes as 
-   * keys and an another array of property counts as the value.
-   * @return object
-   */
-  function combineStatistics(input) {
-    var combined = {};
-    for (var i = 0; i < input.length; i++) {
-      var langdata = input[i];
-      combined[langdata.literal] = [langdata.literal];
-      for (var j = 0; j < langdata.properties.length; j++) {
-        combined[langdata.literal].push(langdata.properties[j].labels);
-      }
-    }
-    return combined;
-  }
-
   // ajaxing the concept count and the preflabel counts on the vocabulary front page
   if ($('#vocab-info').length) {
     // adding the spinners      
