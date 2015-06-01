@@ -4,7 +4,7 @@
  * see LICENSE.txt for more information
  */
 
-/* exported getUrlParams, readCookie, createCookie, getUrlParams, debounce, updateContent, updateTopbarLang, updateClangButtons, updateTitle, updateSidebar, setLangCookie, loadLimitations, loadPage, hideCrumbs */
+/* exported getUrlParams, readCookie, createCookie, getUrlParams, debounce, updateContent, updateTopbarLang, updateClangButtons, updateTitle, updateSidebar, setLangCookie, loadLimitations, loadPage, hideCrumbs, shortenProperties */
 
 /* 
  * Creates a cookie value and stores it for the user. Takes the given
@@ -188,3 +188,19 @@ function hideCrumbs() {
     }
   }
 }
+
+// Shortens the properties that don't fit on one row on the search result view.
+function shortenProperties() {
+  var $properties = $('.property-values');
+  for (var i = 0; i < $properties.length; i++) {
+    var $property = $($properties[i]);
+    if ($property.height() > 24) {
+      $property.addClass('shortened-property');
+      var count = $property.children('.value').length;
+      var uri = $property.parent().siblings('a.prefLabel')[0].href;
+      var shortened = '<a href="' + uri +'" class="versal shortened-symbol" style="">... (' + count +')</a>';
+      $property.parent().append(shortened);
+    }
+  }
+}
+

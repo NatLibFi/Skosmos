@@ -14,21 +14,6 @@ $(function() { // DOCUMENT READY
   $('#selected-vocabs').val(vocabSelectionString);
   var clang = content_lang !== '' ? content_lang : lang;
 
-  // Shortens the properties that don't fit on one row on the search result view.
-  function shortenProperties() {
-    var $properties = $('.property-values');
-    for (var i = 0; i < $properties.length; i++) {
-      var $property = $($properties[i]);
-      if ($property.height() > 24) {
-        $property.addClass('shortened-property');
-        var count = $property.children('.value').length;
-        var uri = $property.parent().siblings('a.prefLabel')[0].href;
-        var shortened = '<a href="' + uri +'" class="versal shortened-symbol" style="">... (' + count +')</a>';
-        $property.parent().append(shortened);
-      }
-    }
-  }
-
   shortenProperties();
 
   // kills the autocomplete after a form submit so we won't have to wait for the ajax to complete.
