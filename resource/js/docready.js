@@ -897,7 +897,7 @@ $(function() { // DOCUMENT READY
       $('#parent-limit').val('');
       $('#group-limit').val('');
       $('#group-limit').multiselect('refresh');
-      loadLimitations();
+      loadLimitedResults(loadLimitations());
     });
 
     $('#parent-limit').focus(function() {
@@ -909,7 +909,7 @@ $(function() { // DOCUMENT READY
     });
     
     $(document).on('submit', '.search-options', function() {
-      if (parentLimitReady) { loadLimitations(); }
+      if (parentLimitReady) { loadLimitedResults(loadLimitations()); }
       return false;
     });
 

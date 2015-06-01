@@ -4,7 +4,7 @@
  * see LICENSE.txt for more information
  */
 
-/* exported getUrlParams, readCookie, createCookie, getUrlParams, debounce, updateContent, updateTopbarLang, updateClangButtons, updateTitle, updateSidebar, setLangCookie, loadLimitations, loadPage, hideCrumbs, shortenProperties, countAndSetOffset, combineStatistics */
+/* exported getUrlParams, readCookie, createCookie, getUrlParams, debounce, updateContent, updateTopbarLang, updateClangButtons, updateTitle, updateSidebar, setLangCookie, loadLimitations, loadPage, hideCrumbs, shortenProperties, countAndSetOffset, combineStatistics, loadLimitedResults */
 
 /* 
  * Creates a cookie value and stores it for the user. Takes the given
@@ -131,15 +131,18 @@ function clearResultsAndAddSpinner() {
 }
   
 function loadLimitations() {
-  $('#alphabetical-menu').detach();
-  clearResultsAndAddSpinner();
+  var groupLimit = $('#group-limit').val();
+  var parentLimit = $('#parent-limit').attr('data-uri');
   var typeLimit = $('#type-limit').val() ? $('#type-limit').val().join('+') : $('#type-limit').val();
   if (typeLimit && typeLimit[0] === '+') { // filtering the empty selection out of the search string
     typeLimit = typeLimit.substring(1);
   }
-  var groupLimit = $('#group-limit').val();
-  var parentLimit = $('#parent-limit').attr('data-uri');
-  var parameters = $.param({'type' : typeLimit, 'group' : groupLimit, 'parent': parentLimit});
+
+  return $.param({'type' : typeLimit, 'group' : groupLimit, 'parent': parentLimit});
+}
+
+function loadLimitedResults(parameters) {
+  clearResultsAndAddSpinner();
   $.ajax({
     data: parameters,
     success : function(data) {
