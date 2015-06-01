@@ -126,21 +126,6 @@ $(function() { // DOCUMENT READY
     }
   );
 
-  // Calculates and sets how many vertical pixels the sidebar height should be at the current scroll position.
-  function countAndSetOffset() {
-    /* calculates the sidebars content maximum height and sets it as an inline style.
-       the .css() can't set important so using .attr() instead. */
-    $('.sidebar-grey').attr('style', function() {
-      var pixels = $('.nav-tabs').height() + 2; // the 2 pixels are for the borders
-      if ($('.pagination').is(':visible')) { pixels += $('.pagination').height(); }
-      return 'height: calc(100% - ' + pixels + 'px) !important';
-    });
-    if ($('#sidebar').length && !$('#sidebar').hasClass('fixed')) {
-      var yOffset = window.innerHeight - ( $('#sidebar').offset().top - window.pageYOffset);
-      $('#sidebar').css('height', yOffset);
-    }
-  }
-
   var sidebarResizer = debounce(function() {
     countAndSetOffset();
   }, 40);
@@ -681,15 +666,12 @@ $(function() { // DOCUMENT READY
     }
   });
     
-  
   $('.clear-search').on('click', function() { 
     $typeahead.typeahead('val', ''); $(this).removeClass('clear-search-dark');
   });
 
   // Some form validation for the feedback form
-  $("#send-feedback")
-  .click(
-    function() {
+  $("#send-feedback").click(function() {
       $('#email').removeClass('missing-value');
       $('#message').removeClass('missing-value');
       var emailMessageVal = $("#message").val();
@@ -704,7 +686,7 @@ $(function() { // DOCUMENT READY
         requiredFields = false;
       }
       return requiredFields;
-    });
+  });
 
   // Initializes the waypoints plug-in used for the search listings.
   var $loading = $("<p>" + loading_text + "&hellip;<span class='spinner'/></p>"); 
@@ -797,8 +779,8 @@ $(function() { // DOCUMENT READY
 
   $('.headerbar .multiselect').multiselect({
     buttonText: function(options) {
-      if (options.length === 0 || options.length === ($('.headerbar .multiselect-container li').length - 1)) {
-        return  '<span>' + all_vocabs + ' <b class="caret"></b></span>'; 
+      if (options.length === 0 || options.length === ($('.headerbar .multiselect-container li').length - 1)) {
+        return '<span>' + all_vocabs + ' <b class="caret"></b></span>'; 
       } else {
         if (options.length > this.numberDisplayed) {
           return '<span>' + options.length + ' ' + n_selected + ' <b class="caret"></b></span>';

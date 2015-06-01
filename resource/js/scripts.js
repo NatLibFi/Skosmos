@@ -4,7 +4,7 @@
  * see LICENSE.txt for more information
  */
 
-/* exported getUrlParams, readCookie, createCookie, getUrlParams, debounce, updateContent, updateTopbarLang, updateClangButtons, updateTitle, updateSidebar, setLangCookie, loadLimitations, loadPage, hideCrumbs, shortenProperties, combineStatistics */
+/* exported getUrlParams, readCookie, createCookie, getUrlParams, debounce, updateContent, updateTopbarLang, updateClangButtons, updateTitle, updateSidebar, setLangCookie, loadLimitations, loadPage, hideCrumbs, shortenProperties, countAndSetOffset, combineStatistics */
 
 /* 
  * Creates a cookie value and stores it for the user. Takes the given
@@ -219,5 +219,20 @@ function combineStatistics(input) {
     }
   }
   return combined;
+}
+
+// Calculates and sets how many vertical pixels the sidebar height should be at the current scroll position.
+function countAndSetOffset() {
+  /* calculates the sidebars content maximum height and sets it as an inline style.
+     the .css() can't set important so using .attr() instead. */
+  $('.sidebar-grey').attr('style', function() {
+    var pixels = $('.nav-tabs').height() + 2; // the 2 pixels are for the borders
+    if ($('.pagination').is(':visible')) { pixels += $('.pagination').height(); }
+    return 'height: calc(100% - ' + pixels + 'px) !important';
+  });
+  if ($('#sidebar').length && !$('#sidebar').hasClass('fixed')) {
+    var yOffset = window.innerHeight - ( $('#sidebar').offset().top - window.pageYOffset);
+    $('#sidebar').css('height', yOffset);
+  }
 }
 

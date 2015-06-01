@@ -43,6 +43,7 @@
     "shortenProperties": false,
     "hideCrumbs": false,
     "combineStatistics": false,
+    "countAndSetOffset": false,
     "waypoint_results": false
   },
   "browser" : true,
