@@ -139,9 +139,8 @@ function loadLimitations() {
   $.ajax({
     data: parameters,
     success : function(data) {
-      var targetUrl = this.url;
       var response = $('.search-result-listing', data).html();
-      if (window.history.pushState) { window.history.pushState({url: targetUrl}, '', targetUrl); }
+      if (window.history.pushState) { window.history.pushState({url: this.url}, '', this.url); }
       $('.search-result-listing').append(response);
       $loading.detach();
       updateTitle(data);
