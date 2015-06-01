@@ -124,11 +124,15 @@ function updateClangButtons(href) {
 function setLangCookie(lang) {
   createCookie('SKOSMOS_LANGUAGE', lang, 365);
 }
+
+function clearResultsAndAddSpinner() {
+  var $loading = $("<div class='search-result'><p>" + loading_text + "&hellip;<span class='spinner'/></p></div>"); 
+  $('.search-result-listing').empty().append($loading);
+}
   
 function loadLimitations() {
   $('#alphabetical-menu').detach();
-  var $loading = $("<div class='search-result'><p>" + loading_text + "&hellip;<span class='spinner'/></p></div>"); 
-  $('.search-result-listing').empty().append($loading);
+  clearResultsAndAddSpinner();
   var typeLimit = $('#type-limit').val() ? $('#type-limit').val().join('+') : $('#type-limit').val();
   if (typeLimit && typeLimit[0] === '+') { // filtering the empty selection out of the search string
     typeLimit = typeLimit.substring(1);
@@ -142,7 +146,7 @@ function loadLimitations() {
       var response = $('.search-result-listing', data).html();
       if (window.history.pushState) { window.history.pushState({url: this.url}, '', this.url); }
       $('.search-result-listing').append(response);
-      $loading.detach();
+      $('.spinner').parent().parent().detach();
       updateTitle(data);
     }
   });
