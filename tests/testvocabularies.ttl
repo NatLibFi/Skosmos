@@ -53,6 +53,7 @@
 		<http://skosmos.skos/dump/test/groups> ;
 	void:uriSpace "http://www.skosmos.skos/onto/groups/";
 	skosmos:arrayClass isothes:ThesaurusArray ;
+  skosmos:groupClass skos:Collection ;
 	void:sparqlEndpoint <http://localhost:3030/ds/sparql> ;
 	skosmos:language "fi", "en";
 	skosmos:defaultLanguage "fi";

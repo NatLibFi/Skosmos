@@ -395,7 +395,16 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
     $stats = $vocab->getStatistics();
     $this->assertEquals(13, $stats['concepts']);
   }
-
+  
+  /**
+   * @covers Vocabulary::getGroupName
+   */
+  public function testGetGroupName() {
+    $vocab = $this->model->getVocabulary('groups');
+    $name = $vocab->getGroupName("http://www.skosmos.skos/groups/fresh");
+    $this->assertEquals('Freshwater fish', $name);
+  }
+  
   /**
    * @covers Vocabulary::getAlphabet
    */
