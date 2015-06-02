@@ -81,10 +81,10 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   /**
    * @covers Vocabulary::getShowLangCodes
    */
-  public function testGetShowLangCodesWhenSetToFalse() {
+  public function testGetShowLangCodesWhenSetToTrue() {
     $vocab = $this->model->getVocabulary('testdiff');
     $codes = $vocab->getShowLangCodes();
-    $this->assertFalse($codes);
+    $this->assertTrue($codes);
   }
   
   /**
