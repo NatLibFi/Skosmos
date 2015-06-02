@@ -124,5 +124,6 @@ test:ta1 a skos:Concept, meta:TestClass ;
 test:conceptscheme a skos:ConceptScheme ;
     rdfs:label "Test conceptscheme"@en ;
     dct:modified "2014-10-01T16:29:03+00:00"^^xsd:dateTime ;
+    owl:versionInfo "The latest and greatest version"^^xsd:string ;
     skos:hasTopConcept test:ta1 .
 
