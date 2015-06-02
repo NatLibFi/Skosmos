@@ -407,6 +407,17 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   }
   
   /**
+   * @covers Vocabulary::listConceptGroupContents
+   */
+  public function testListConceptGroupContents() {
+    $vocab = $this->model->getVocabulary('groups');
+    $cgroups = $vocab->listConceptGroupContents('http://www.skosmos.skos/groups/salt', 'en');
+    $expected = array('http://www.skosmos.skos/groups/ta113' => array ('label' => 'Flatfish','hasSuper' => false,),);
+    $this->assertEquals($expected, $cgroups);
+  }
+  
+  
+  /**
    * @covers Vocabulary::getGroupName
    */
   public function testGetGroupName() {
