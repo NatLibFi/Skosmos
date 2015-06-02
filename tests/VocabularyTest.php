@@ -79,6 +79,24 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   }
   
   /**
+   * @covers Vocabulary::getDefaultSidebarView
+   */
+  public function testGetDefaultSidebarView() {
+    $vocab = $this->model->getVocabulary('testdiff');
+    $default = $vocab->getDefaultSidebarView();
+    $this->assertEquals('groups', $default);
+  }
+
+  /**
+   * @covers Vocabulary::getDefaultSidebarView
+   */
+  public function testGetDefaultSidebarViewWhenNotSet() {
+    $vocab = $this->model->getVocabulary('test');
+    $default = $vocab->getDefaultSidebarView();
+    $this->assertEquals('alphabetical', $default);
+  }
+  
+  /**
    * @covers Vocabulary::getShowLangCodes
    */
   public function testGetShowLangCodesWhenSetToTrue() {
