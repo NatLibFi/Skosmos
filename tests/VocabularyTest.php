@@ -61,6 +61,42 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   }
   
   /**
+   * @covers Vocabulary::getFeedbackRecipient
+   */
+  public function testGetFeedbackRecipient() {
+    $vocab = $this->model->getVocabulary('test');
+    $email = $vocab->getFeedbackRecipient();
+    $this->assertEquals('developer@vocabulary.org', $email);
+  }
+  
+  /**
+   * @covers Vocabulary::getExternalResourcesLoading
+   */
+  public function testGetExternalResourcesLoadingWhenNotSet() {
+    $vocab = $this->model->getVocabulary('test');
+    $external = $vocab->getExternalResourcesLoading();
+    $this->assertTrue($external);
+  }
+  
+  /**
+   * @covers Vocabulary::getShowLangCodes
+   */
+  public function testGetShowLangCodesWhenSetToFalse() {
+    $vocab = $this->model->getVocabulary('testdiff');
+    $codes = $vocab->getShowLangCodes();
+    $this->assertFalse($codes);
+  }
+  
+  /**
+   * @covers Vocabulary::getShowLangCodes
+   */
+  public function testGetShowLangCodesWhenNotSet() {
+    $vocab = $this->model->getVocabulary('test');
+    $codes = $vocab->getShowLangCodes();
+    $this->assertFalse($codes);
+  }
+  
+  /**
    * @covers Vocabulary::getDefaultLanguage
    */
   public function testGetDefaultLanguage() {
@@ -277,8 +313,17 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   /**
    * @covers Vocabulary::getShowHierarchy
    */
-  public function testGetShowHierarchyNotSet() {
+  public function testGetShowHierarchySetToFalse() {
     $vocab = $this->model->getVocabulary('testdiff');
+    $uri = $vocab->getShowHierarchy();
+    $this->assertEquals(false, $uri);
+  }
+  
+  /**
+   * @covers Vocabulary::getShowHierarchy
+   */
+  public function testGetShowHierarchyNotSet() {
+    $vocab = $this->model->getVocabulary('groups');
     $uri = $vocab->getShowHierarchy();
     $this->assertEquals(false, $uri);
   }

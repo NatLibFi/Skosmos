@@ -24,6 +24,7 @@
   skos:prefLabel "Test ontology"@en ;
 	skosmos:arrayClass isothes:ThesaurusArray ;
 	skosmos:defaultLanguage "en";
+  skosmos:feedbackRecipient "developer@vocabulary.org";
 	skosmos:groupClass skos:Collection;
 	skosmos:language "en";
 	skosmos:showTopConcepts "true";
@@ -39,6 +40,8 @@
 	skosmos:language "fi", "en";
 	skosmos:sparqlDialect "JenaText";
 	skosmos:fullAlphabeticalIndex "true";
+	skosmos:explicitLanguageTags "true";
+	skosmos:showTopConcepts "false";
 	skosmos:sparqlGraph <http://www.skosmos.skos/testdiff/> ;
 	skosmos:mainConceptScheme <http://www.skosmos.skos/testdiff#conceptscheme> .
 
