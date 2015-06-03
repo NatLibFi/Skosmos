@@ -7,12 +7,14 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
 {
   /** property type */
   private $type;
+  private $clang;
 
-  public function __construct($model, $vocab, $resource, $prop)
+  public function __construct($model, $vocab, $resource, $prop, $clang='')
   {
     parent::__construct($model, $vocab, $resource);
     $this->submembers = array();
     $this->type = $prop;
+    $this->clang = $clang;
   }
 
   public function __toString()
@@ -29,6 +31,8 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
 
   public function getLabel($lang='')
   {
+    if ($this->clang)
+      $lang = $this->clang;
     $exvocab = $this->model->guessVocabularyFromURI($this->resource->getUri());
     if (isset($exvocab))
       $exvocid = $exvocab->getId();

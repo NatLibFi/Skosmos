@@ -219,7 +219,7 @@ class Concept extends VocabularyDataObject
                 continue;
               }
             } 
-            $ret[$prop]->addValue(new ConceptMappingPropertyValue($this->model, $this->vocab, $val, $prop), $this->clang);
+            $ret[$prop]->addValue(new ConceptMappingPropertyValue($this->model, $this->vocab, $val, $prop, $this->clang), $this->clang);
           }
         }
       }
