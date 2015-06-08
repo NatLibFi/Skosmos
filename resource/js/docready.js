@@ -224,9 +224,10 @@ $(function() { // DOCUMENT READY
       function(event) {
         event.preventDefault();
         var clicked = $(this);
+        var base_path = path_fix.length / 3;
         var $content = $('.content');
         var targetUrl = 'http://' + base_url + vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(event.target.href);
-        var parameters = $.param({'clang' : clang});
+        var parameters = $.param({'base_path' : base_path, 'clang' : clang});
         $('#hier-trigger').attr('href', targetUrl);
         $.ajax({
             url : targetUrl,
@@ -251,6 +252,8 @@ $(function() { // DOCUMENT READY
   $(document).on('click', '.side-navi a',
       function(event) {
         $.ajaxQ.abortAll();
+        var base_path = path_fix.length / 3;
+        var parameters = $.param({'base_path' : base_path});
         var clicked = $(this);
         $('.activated-concept').removeClass('activated-concept');
         clicked.addClass('activated-concept');
@@ -259,6 +262,7 @@ $(function() { // DOCUMENT READY
         var hierButton = '<li id="hierarchy"><a id="hier-trigger" href="#">' + hiertrans + '</a></li>';
         $.ajax({
             url : targetUrl,
+            data: parameters,
             success : function(data) {
               $content.empty();
               var response = $('.content', data).html();
