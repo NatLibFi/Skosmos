@@ -19,7 +19,7 @@
     <select class="multiselect" multiple="multiple">
     {% for vocabClassName,vocabArray in vocab_list %}
       {% for vocab in vocabArray %}
-      <option value="{{ vocab.id }}" data-voc-shortname="{{ vocab.shortname }}" data-label="{{ vocab.title }}">{{ vocab.shortname }}</option>
+      <option value="{{ vocab.id }}" data-voc-shortname="{{ vocab.shortname }}" data-label="{{ vocab.title }}" title="{{ vocab.title }}">{{ vocab.shortname }}</option>
       {% endfor %}
     {% endfor %}
     </select>
