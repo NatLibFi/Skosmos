@@ -433,6 +433,8 @@ $(function() { // DOCUMENT READY
     
   $('.property-click').qtip(qtip_skosmos);
   
+  $('.redirected-vocab-id').qtip(qtip_skosmos);
+  
   // Setting the language parameters according to the clang parameter or if that's not possible the cookie.
   var search_lang = (content_lang !== '' && !getUrlParams().anylang) ? content_lang : readCookie('SKOSMOS_SEARCH_LANG');
   

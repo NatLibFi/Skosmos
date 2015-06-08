@@ -139,6 +139,15 @@ class Concept extends VocabularyDataObject
   {
     return $this->vocab ? $this->vocab->getShortName() : null;
   }
+  
+  /**
+   * Returns the vocabulary shortname string or id if that is not available.
+   * @return string
+   */
+  public function getVocabTitle()
+  {
+    return $this->vocab ? $this->vocab->getTitle() : null;
+  }
 
   /**
    * Setter for the $clang property.
