@@ -182,7 +182,6 @@ $(function() { // DOCUMENT READY
     // adding the spinners      
     $('.vocab-info-literals tr:nth-last-child(2) th').after('<td class="versal"><span class="spinner" /></td>');
     $('#statistics tr:nth-of-type(1)').after('<tr><td><span class="spinner" /></td></td></tr>');
-
     $.ajax({
       url : rest_base_url + vocab + '/vocabularyStatistics',
       success : function(data) {
@@ -521,6 +520,7 @@ $(function() { // DOCUMENT READY
     }
   });
 
+  // typeahead selection action
   function onSelection($e, datum) {
     if ($e.currentTarget.id !== 'parent-limit') {
       var localname = datum.localname;
@@ -533,9 +533,9 @@ $(function() { // DOCUMENT READY
       var paramstr = $.isEmptyObject(params) ? '' : '?' + $.param(params);
       // replaced complex logic with path_fix that should always work.
       if (datum.type && datum.type.indexOf('Collection') !== -1) {
-        location.href = path_fix + datum.vocab + '/' + lang + '/groups/' + localname + paramstr;
+        location.href = datum.vocab + '/' + lang + '/groups/' + localname + paramstr;
       } else {
-        location.href = path_fix + datum.vocab + '/' + lang + '/page/' + localname + paramstr;
+        location.href = datum.vocab + '/' + lang + '/page/' + localname + paramstr;
       }
     } else {
       $('#parent-limit').attr('data-uri', datum.uri); 
@@ -565,7 +565,7 @@ $(function() { // DOCUMENT READY
     processTypeJSON(typeJSON); 
   } else { // if not then ajax the rest api and cache the results.
     var typeParam = $.param({'lang' : lang });
-    var typeUrl = rest_url + 'types';
+    var typeUrl = rest_base_url + 'types';
     var typeJson = $.getJSON(typeUrl, typeParam, function(response) {
       lscache.set('types:' + lang, response, 1440);
       processTypeJSON(response);
@@ -576,7 +576,7 @@ $(function() { // DOCUMENT READY
   
   var concepts = new Bloodhound({
     remote: { 
-      url: rest_url + 'search?query=',
+      url: rest_base_url + 'search?query=',
       replace: function(url, query) {
         var wildcard = (query.indexOf('*') === -1) ? '*' : '';
         return url + encodeURIComponent(query) + wildcard;
@@ -721,7 +721,7 @@ $(function() { // DOCUMENT READY
       var parameters = $.param({'offset' : 250});
       var letter = '/' + $('.pagination > .active > a')[0].innerHTML;
       $.ajax({
-        url : 'http://' + base_url + vocab + '/' + lang + '/index' + letter,
+        url : vocab + '/' + lang + '/index' + letter,
         data : parameters,
         success : function(data) {
           $loading.detach();
@@ -882,7 +882,7 @@ $(function() { // DOCUMENT READY
    */
   if ($('#alpha').hasClass('active') && $('#vocab-info').length === 1 && $('.alphabetical-search-results').length === 0) {
     // taking into account the possibility that the lang parameter has been changed by the WebController.
-    var urlLangCorrected = '//' + base_url + vocab + '/' + lang + '/index?limit=250&offset=0&clang=' + clang;
+    var urlLangCorrected = vocab + '/' + lang + '/index?limit=250&offset=0&clang=' + clang;
     $('.sidebar-grey').empty().append('<div class="loading-spinner"><span class="spinner-text">'+ loading_text + '</span><span class="spinner" /></div>');
     $.ajax({
       url : urlLangCorrected,

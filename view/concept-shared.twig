@@ -112,8 +112,8 @@
           <td><span class="versal uri-input-box">{{ concept.uri }}</span></tr>
           <tr><td><span class="versal">{% trans %}Download this concept in SKOS format:{% endtrans %}
 
-          </span></td><td><span class="versal"><a href="{{ path_fix }}rest/v1/{% if concept.vocab != "" %}{{ concept.vocab }}{% else %}{{ vocab.id }}{% endif %}/data?uri={{ concept.uri|url_encode }}&amp;format=application/rdf%2Bxml">RDF/XML</a>
-            <a href="{{ path_fix }}rest/v1/{% if concept.vocab != "" %}{{ concept.vocab }}{% else %}{{ vocab.id }}{% endif %}/data?uri={{ concept.uri|url_encode }}&amp;format=text/turtle">
+          </span></td><td><span class="versal"><a href="rest/v1/{% if concept.vocab != "" %}{{ concept.vocab }}{% else %}{{ vocab.id }}{% endif %}/data?uri={{ concept.uri|url_encode }}&amp;format=application/rdf%2Bxml">RDF/XML</a>
+            <a href="rest/v1/{% if concept.vocab != "" %}{{ concept.vocab }}{% else %}{{ vocab.id }}{% endif %}/data?uri={{ concept.uri|url_encode }}&amp;format=text/turtle">
               TURTLE</a>
           </span></td></tr>
         </table>

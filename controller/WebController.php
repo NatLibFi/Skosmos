@@ -41,6 +41,8 @@ class WebController extends Controller
    */
   public $request_uri;
 
+  public $base_href;
+
   /**
    * Constructor for the WebController can be given the path_fix as a parameter.
    * @param string $path_fix eg. '../../'
@@ -69,7 +71,8 @@ class WebController extends Controller
     //ENABLES DUMP() method for easy and fun debugging!
     $this->twig->addExtension(new Twig_Extension_Debug());
     // used for setting the base href for the relative urls
-    $this->twig->addGlobal("CurrentUrl", $_SERVER["REQUEST_URI"]);
+    $this->base_href = (defined('BASE_HREF')) ? BASE_HREF : $this->guessBaseHref();
+    $this->twig->addGlobal("BaseHref", $this->base_href);
     // setting the service name string from the config.inc
     $this->twig->addGlobal("ServiceName", SERVICE_NAME);
     // setting the service logo location from the config.inc
@@ -111,13 +114,13 @@ class WebController extends Controller
       if ($localname != $uri && $localname == urlencode($localname)) {
         // check that the prefix stripping worked, and there are no problematic chars in localname
         $paramstr = sizeof($params) > 0 ? '?' . http_build_query($params) : '';
-        return $controller->path_fix . "$vocid/$lang/$type/$localname" . $paramstr;
+        return $controller->base_href . "$vocid/$lang/$type/$localname" . $paramstr;
       }
 
       // case 2: URI outside vocabulary namespace, or has problematic chars
       // pass the full URI as parameter instead
       $params['uri'] = $uri;
-      return $controller->path_fix . "$vocid/$lang/$type/?" . http_build_query($params);
+      return $controller->base_href . "$vocid/$lang/$type/?" . http_build_query($params);
     });
     $this->twig->addFilter($urlFilter);
 
@@ -138,6 +141,20 @@ class WebController extends Controller
       if ($ext == 'twig')
         $this->twig->loadTemplate(str_replace($tplDir . '/', '', $file));
     }
+  }
+
+  private function guessBaseHref()
+  {
+    $base_dir  = __DIR__; // Absolute path to your installation, ex: /var/www/mywebsite
+    $doc_root  = preg_replace("!{$_SERVER['SCRIPT_NAME']}$!", '', $_SERVER['SCRIPT_FILENAME']); # ex: /var/www
+    $base_url  = preg_replace("!^{$doc_root}!", '', $base_dir); # ex: '' or '/mywebsite'
+    $base_url = str_replace('/controller','/',$base_url);
+    $protocol  = empty($_SERVER['HTTPS']) ? 'http' : 'https';
+    $port      = $_SERVER['SERVER_PORT'];
+    $disp_port = ($protocol == 'http' && $port == 80 || $protocol == 'https' && $port == 443) ? '' : ":$port";
+    $domain    = $_SERVER['SERVER_NAME'];
+    $full_url  = "$protocol://{$domain}{$disp_port}{$base_url}"; # Ex: 'http://example.com', 'https://example.com/mywebsite', etc.
+    return $full_url;
   }
 
   /**

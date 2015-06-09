@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="{{ lang }}">
 <head>
-<base href="{{ CurrentUrl }}">
+<base href="{{ BaseHref }}">
 {% include 'meta.twig' %}
-<link href="{{ path_fix }}resource/css/styles.css" media="screen, print" rel="stylesheet" type="text/css">
-<link href="{{ path_fix }}vendor/twitter/bootstrap/dist/css/bootstrap.min.css" media="screen, print" rel="stylesheet" type="text/css">
-<link href="{{ path_fix }}vendor/vakata/jstree/dist/themes/default/style.min.css" media="screen, print" rel="stylesheet" type="text/css">
-<link href="{{ path_fix }}resource/css/bootstrap-multiselect.css" media="screen, print" rel="stylesheet" type="text/css">
-<link href="{{ path_fix }}resource/css/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css" />
-<link href="{{ path_fix }}resource/css/jquery.qtip.min.css" rel="stylesheet" type="text/css" />
+<link href="resource/css/styles.css" media="screen, print" rel="stylesheet" type="text/css">
+<link href="vendor/twitter/bootstrap/dist/css/bootstrap.min.css" media="screen, print" rel="stylesheet" type="text/css">
+<link href="vendor/vakata/jstree/dist/themes/default/style.min.css" media="screen, print" rel="stylesheet" type="text/css">
+<link href="resource/css/bootstrap-multiselect.css" media="screen, print" rel="stylesheet" type="text/css">
+<link href="resource/css/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css" />
+<link href="resource/css/jquery.qtip.min.css" rel="stylesheet" type="text/css" />
 {% if ServiceCustomCss %}
-<link href="{{ path_fix }}{{ ServiceCustomCss }}" media="screen, print" rel="stylesheet" type="text/css">
+<link href="{{ ServiceCustomCss }}" media="screen, print" rel="stylesheet" type="text/css">
 {% endif %}
 
 
@@ -35,12 +35,12 @@
       <div class="sidebar-buttons">
         <ul class="nav nav-tabs">
         {% if not term %}
-          <li id="alpha"{% if search_results|length != 1 or (term and search_results|length == 1) %} class ="active"{% endif %}><a href="{{ path_fix }}{{ vocab_id }}/{{ lang }}/index{% if ContentLanguage %}?clang={{ ContentLanguage }}{% endif %}">{% trans "Alpha-nav" %}</a></li>
+          <li id="alpha"{% if search_results|length != 1 or (term and search_results|length == 1) %} class ="active"{% endif %}><a href="{{ vocab_id }}/{{ lang }}/index{% if ContentLanguage %}?clang={{ ContentLanguage }}{% endif %}">{% trans "Alpha-nav" %}</a></li>
           {% if search_results|length == 1 or vocab.showHierarchy %}
           <li id="hierarchy"{% if search_results|length == 1 and not term %} class ="active"{% endif %}><a href="#" id="hier-trigger">{% trans "Hier-nav" %}</a></li>
           {% endif %}
           {% if vocab.groupClassURI %}
-          <li id="groups"><a href="{{ path_fix }}{{ vocab_id }}/{{ lang }}/groups{% if ContentLanguage %}?clang={{ ContentLanguage }}{% endif %}">{% trans "Group-nav" %}</a></li>
+          <li id="groups"><a href="{{ vocab_id }}/{{ lang }}/groups{% if ContentLanguage %}?clang={{ ContentLanguage }}{% endif %}">{% trans "Group-nav" %}</a></li>
           {% else %}
           {% endif %}
         {% else %}
@@ -51,7 +51,7 @@
       {% if letters %}
         <ul class="pagination">
         {% for letter in letters %} {# looping through all letters #}
-          <li{% if search_letter == letter %} class="active"{% endif %}><a href="{{ path_fix }}{{ vocab_id }}/{{ lang }}/index/{{ letter }}{% if ContentLanguage %}?clang={{ ContentLanguage }}{% endif %}">{{ letter }}</a></li>
+          <li{% if search_letter == letter %} class="active"{% endif %}><a href="{{ vocab_id }}/{{ lang }}/index/{{ letter }}{% if ContentLanguage %}?clang={{ ContentLanguage }}{% endif %}">{{ letter }}</a></li>
         {% endfor %}
         </ul>
       {% endif %}

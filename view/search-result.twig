@@ -27,7 +27,7 @@
     {% if property.type in PreferredProperties %}
     <div class="property">
       <span class="property-click" title="{{ property.description }}">
-        <img class="property-hover" src="{{ path_fix }}resource/pics/{% if property.type == 'skos:broader' %}broader{% elseif property.type == 'skos:narrower' %}narrower{% elseif property.type == 'skos:altLabel' %}replaced{% elseif property.type == 'skos:related' %}cloud{% elseif property.type == 'skosmos:memberOf' %}group{% else %}globe{% endif %}.gif">
+        <img class="property-hover" src="resource/pics/{% if property.type == 'skos:broader' %}broader{% elseif property.type == 'skos:narrower' %}narrower{% elseif property.type == 'skos:altLabel' %}replaced{% elseif property.type == 'skos:related' %}cloud{% elseif property.type == 'skosmos:memberOf' %}group{% else %}globe{% endif %}.gif">
       </span>
       <div class="property-values">
       {% set previous = false %}
@@ -64,7 +64,7 @@
   {% if concept.groupProperties %}
   <div class="property">
       <span class="property-click" title="{% trans "skosmos:memberOf" %}">
-        <img class="property-hover" src="{{ path_fix }}resource/pics/group.gif">
+        <img class="property-hover" src="resource/pics/group.gif">
       </span>
       <div class="property-values">
       {% set previous = false %}
@@ -86,7 +86,7 @@
   {% endif %}
   {% if concept.foreignLabels %}
     <div class="property">
-      <span class="property-click" title="{% trans "foreign prefLabel help" %}"><img class="property-hover" src="{{ path_fix }}resource/pics/globe.gif"></span>
+      <span class="property-click" title="{% trans "foreign prefLabel help" %}"><img class="property-hover" src="resource/pics/globe.gif"></span>
       {% for langstring, labels in concept.foreignLabels %}{% spaceless %}
         {% for label in labels %}
         <span class="versal{% if label.type == 'skos:prefLabel' %} prefLabel {% elseif label.type == 'skos:altLabel'%} replaced {% endif %} proplabel">{{ label }}</span><span class="versal"> ({{ label.lang }})</span>{% if loop.last == false %}<span class="versal">, </span>{% endif %}
