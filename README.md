@@ -7,8 +7,10 @@ Skosmos
 
 Skosmos is a web-based tool providing services for accessing controlled
 vocabularies, which are used by indexers describing documents and searchers
-looking for suitable keywords.  Vocabularies are accessed via SPARQL
-endpoints containing SKOS vocabularies.
+looking for suitable keywords. Vocabularies are accessed via SPARQL
+endpoints containing SKOS vocabularies. See
+[skosmos.org](http://skosmos.org) for more general information about
+Skosmos.
 
 In addition to a modern web user interface for humans, Skosmos provides a
 [REST-style API](https://github.com/NatLibFi/Skosmos/wiki/REST-API) and Linked 
