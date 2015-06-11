@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Skosmos.org</title>
+  <title>Skosmos</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/skosmos.css">
 </head>
@@ -27,7 +27,7 @@
           <li>visualized concept hierarchy</li>
           <li>multilingual user interface</li>
         </ul>
-        <a href="http://skosmos.dev.finto.fi/en/" target="_blank"><button type="button" class="btn btn-success">Try the Skosmos demo!</button></a>
+        <a href="http://skosmos.dev.finto.fi/en/"><button type="button" class="btn btn-success">Try the Skosmos demo!</button></a>
       </div>
 
       <div class="col-md-4">
@@ -35,9 +35,11 @@
         <p>Access to controlled vocabularies for indexing, information retrieval and vocabulary development.</p>
         <h2 id="users">Current users</h2>
         <ul>
-          <li><a href="http://finto.fi/en/" target="_blank">Finto</a></li>
-          <li>FAO / <a href="http://aims.fao.org/vest-registry/vocabularies/agrovoc-multilingual-agricultural-thesaurus" target="_blank">Agrovoc</a></li>
-          <li>...</li>
+          <li><a href="http://finto.fi/en/">Finto</a></li>
+          <li>FAO / <a href="http://aims.fao.org/vest-registry/vocabularies/agrovoc-multilingual-agricultural-thesaurus"
+         >AGROVOC</a></li>
+          <li>Rhineland-Palatinate spatial data initiative <a href="http://www.geoportal.rlp.de/skosmos/">classifications</a></li>
+          <li>University of Oslo Library <a href="http://app.uio.no/ub/emnesok/skosmos/">thesauri</a></li>
         </ul>
       </div>
       
@@ -58,38 +60,61 @@
         <ul>
           <li>one or more SKOS vocabularies</li>
           <li>PHP capable web server</li>
-          <li>SPARQL triple store (we recommend Fuseki with JenaText)</li>
-          <li>HTTP cache (e.g. Varnish)</li>
+          <li>SPARQL triple store (we recommend <a href="http://jena.apache.org/documentation/serving_data/">Apache Jena Fuseki</a> with <a href="https://jena.apache.org/documentation/query/text-query.html">jena-text</a>)</li>
+          <li>HTTP cache (e.g. Varnish) - optional but recommended</li>
         </ul>
+        <p>See <a href="https://github.com/NatLibFi/Skosmos/wiki/Installation">Installation</a> in the Skosmos wiki for details.
+        
       </div>
       
       <div class="col-md-4">
         <h2 id="architecture">Architecture</h2>
         <p>Skosmos has been implemented mainly in PHP and javascript. Open source libraries used by Skosmos include:</p>
         <ul>
-          <li>PHP, Composer, EasyRDF, Twig, jQuery, jsTree, Bootstrap, typeahead.js, URI.js, Punic</li>
+          <li>Composer, EasyRDF, Twig, jQuery, jsTree, Bootstrap, typeahead.js, URI.js, Punic</li>
         </ul>
       </div>
       
       <div class="col-md-4">
         <h2 id="rest">REST API</h2>
-        <p>Skosmos provides a REST-style API and Linked Data access to the underlying vocabulary data. See the REST API <a href="https://github.com/NatLibFi/Skosmos/wiki/REST-API" target="_blank">wiki page</a> for documentation.</p>
+        <p>Skosmos provides a REST-style API and Linked Data access to the underlying vocabulary data. See the <a
+        href="https://github.com/NatLibFi/Skosmos/wiki/REST-API">REST API</a>
+        wiki page for documentation.</p>
       </div>
 
     </div>
+    
+    
     
     <h1 id="development" class="page-header">Development</h1>
     <div class="row">
 
       <div class="col-md-12">
-        <p>Skosmos is distributed as open source with the MIT license. The development process is done on <a href="https://github.com/NatLibFi/Skosmos" target="_blank">GitHub</a>. You can participate by submitting bug reports, writing new translations or writing code.</p>
-      </div>
-
-      <div class="col-md-6">
-        <h2 id="team">Team</h2>
-        <p>Skosmos is being developed at the National Library of Finland.</p>
+        <p>Skosmos is distributed as open source with the MIT license. The development is done openly on <a href="https://github.com/NatLibFi/Skosmos">GitHub</a>. You can participate by submitting bug reports, writing new translations or contributing code.</p>
+        <p>Skosmos is being developed at the <a href="http://www.nationallibrary.fi">National Library of Finland</a>. Contact: <a href="mailto:finto-posti@helsinki.fi">finto-posti@helsinki.fi</a></p>
       </div>
       
+    </div>
+
+    <h1 id="publications" class="page-header">Publications</h1>
+    <div class="row">
+
+      <div class="col-md-12">
+        <h2>Main publication</h2>
+        <p><strong>Please cite</strong> this if you are mentioning Skosmos in a research paper.</p>
+        
+        <p>Suominen, O., Ylikotila, H., Pessala, S., Lappalainen, M., Frosterus, M., Tuominen, J., Baker, T., Caracciolo, C., Retterath, A. (2015).
+        <a href="publishing-skos-vocabularies-with-skosmos.pdf">Publishing SKOS vocabularies with Skosmos</a>. Manuscript submitted for review, June 2015.</p>
+      </div>
+
+      <div class="col-md-12">
+        <h2>Other publications</h2>
+        
+        <p>Suominen, O., Pessala, S., Tuominen, J., Lappalainen, M., Nykyri, S., Ylikotila, H., Frosterus, M., Hyvönen, E. (2014). <a href="https://www.seco.tkk.fi/publications/2014/suominen-et-al-deploying-onki-finto-2014.pdf">Deploying National Ontology Services: From ONKI to Finto</a>. In Proceedings of the ISWC 2014 Industry track.</p>
+        
+        <p>Lappalainen, M., Frosterus, M., Nykyri, S. (2014). <a href="http://library.ifla.org/819/">Reuse of library thesaurus data as ontologies for the public sector.</a> In Proceedings of IFLA WLIC 2014, 16-22 August 2014, Lyon, France. </p>
+
+        <p>Suominen, O., Johansson, A., Ylikotila, H., Tuominen, J., Hyvönen, E. (2012). <a href="https://www.seco.tkk.fi/publications/2012/suominen-et-al-onkilight-2012.pdf">Vocabulary services based on SPARQL endpoints: ONKI Light on SPARQL</a>. In Poster proceedings of the 18th International Conference on Knowledge Engineering and Knowledge Management (EKAW 2012).</p>
     </div>
 
   </div> <!-- /container -->
