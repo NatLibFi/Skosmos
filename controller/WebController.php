@@ -42,6 +42,7 @@ class WebController extends Controller
   public $request_uri;
 
   public $base_href;
+  public $state;
 
   /**
    * Constructor for the WebController can be given the path_fix as a parameter.
@@ -86,10 +87,12 @@ class WebController extends Controller
       $this->twig->addGlobal("AnyLang", true);
     // setting the list of properties to be displayed in the search results
     $this->twig->addGlobal("PreferredProperties", array('skos:prefLabel', 'skos:narrower', 'skos:broader', 'skosmos:memberOf', 'skos:altLabel', 'skos:related'));
+    
+    $this->state = new State();
 
     // register a Twig filter for generating URLs for vocabulary resources (concepts and groups)
     $controller = $this; // for use by anonymous function below
-    $urlFilter = new Twig_SimpleFilter('link_url', function ($uri, $vocab, $lang, $type='page', $clang=null) use ($controller) {
+    $urlFilter = new Twig_SimpleFilter('link_url', function ($uri, $vocab, $lang, $type='page', $clang=null, $term=null) use ($controller) {
       // $vocab can either be null, a vocabulary id (string) or a Vocabulary object
       if ($vocab === null) {
         // target vocabulary is unknown, best bet is to link to the plain URI
@@ -102,19 +105,23 @@ class WebController extends Controller
       }
       
       $params = array();
-      if (isset($clang) && $clang != $lang)
+      if (isset($clang) && $clang !== $lang)
         $params['clang'] = $clang;
       
       if (isset($_GET['anylang']))
         $params['anylang'] = 'on';
       
-
+      if (isset($term))
+        $params['q'] = $term;
+      
       // case 1: URI within vocabulary namespace: use only local name
       $localname = $vocab->getLocalName($uri);
-      if ($localname != $uri && $localname == urlencode($localname)) {
+      if ($localname !== $uri && $localname === urlencode($localname)) {
         // check that the prefix stripping worked, and there are no problematic chars in localname
         $paramstr = sizeof($params) > 0 ? '?' . http_build_query($params) : '';
-        return $controller->base_href . "$vocid/$lang/$type/$localname" . $paramstr;
+        if ($type && $type !== '')
+          return $controller->base_href . "$vocid/$lang/$type/$localname" . $paramstr;
+        return $controller->base_href . "$vocid/$lang/$localname" . $paramstr;
       }
 
       // case 2: URI outside vocabulary namespace, or has problematic chars
@@ -251,6 +258,12 @@ class WebController extends Controller
     // if rendering a page with the uri parameter the param needs to be passed for the template
     $uri_param =  ($full_uri === $uri) ? 'uri=' . $full_uri : ''; 
     $uri = $full_uri;
+    
+    $this->state->setContentLang($content_lang);
+    $this->state->setLang($lang);
+    $this->state->setVocabid($vocab->getId());
+    $this->state->setPage('page');
+    $this->state->setUri($uri);
 
     $results = $vocab->getConceptInfo($uri, $content_lang);
     $crumbs = $vocab->getBreadCrumbs($content_lang, $uri);
@@ -265,8 +278,8 @@ class WebController extends Controller
       'explicit_langcodes' => $langcodes,
       'request_uri' => $this->request_uri,
       'bread_crumbs' => $crumbs['breadcrumbs'],
-      'uri_param' => $uri_param,
-      'combined' => $crumbs['combined'])
+      'combined' => $crumbs['combined'],
+      'state' => $this->state)
     );
   }
 
@@ -481,6 +494,12 @@ class WebController extends Controller
     } else {
       $rest = null;
     }
+    
+    $this->state->setContentLang($content_lang);
+    $this->state->setLang($lang);
+    $this->state->setVocabid($vocab->getId());
+    $this->state->setPage('search');
+
     $term = trim($term); // surrounding whitespace is not considered significant
     $sterm = strpos($term, "*") === FALSE ? $term . "*" : $term; // default to prefix search
     try {
@@ -522,7 +541,8 @@ class WebController extends Controller
                 'group_index' => $groups,
                 'types' => $vocab_types,
                 'explicit_langcodes' => $langcodes,
-                'request_uri' => $this->request_uri
+                'request_uri' => $this->request_uri,
+                'state' => $this->state
 
     ));
   }
@@ -629,6 +649,12 @@ class WebController extends Controller
     if ($content_lang !== $lang) $this->twig->addGlobal("ContentLanguage", $content_lang);
 
     $groups = $vocab->listConceptGroups(false, $content_lang);
+    
+    $this->state->setContentLang($content_lang);
+    $this->state->setLang($lang);
+    $this->state->setVocabid($vocab->getId());
+    $this->state->setPage('groups');
+
     echo $template
             ->render(
                     array('path_fix' => $this->path_fix,
@@ -639,7 +665,8 @@ class WebController extends Controller
                         'vocab' => $vocab,
                         'groups' => $groups,
                         'parts' => $this->parts,
-                        'request_uri' => $this->request_uri
+                        'request_uri' => $this->request_uri,
+                        'state' => $this->state
             ));
   }
 
@@ -673,6 +700,13 @@ class WebController extends Controller
     $group_name = $vocab->getGroupName($groupuri);
     $uri = $vocab->getConceptURI($group); // make sure it's a full URI
     $results = $vocab->getConceptInfo($uri, $content_lang);
+    
+    $this->state->setContentLang($content_lang);
+    $this->state->setLang($lang);
+    $this->state->setVocabid($vocab->getId());
+    $this->state->setPage('groups');
+    $this->state->setUri($groupuri);
+
     echo $template
             ->render(
                     array('path_fix' => $this->path_fix,
@@ -684,7 +718,8 @@ class WebController extends Controller
                         'parts' => $this->parts,
                         'label' => $group_name,
                         'request_uri' => $this->request_uri,
-                        'search_results' => $results
+                        'search_results' => $results,
+                        'state' => $this->state
             ));
   }
 
@@ -730,6 +765,10 @@ class WebController extends Controller
     if ($content_lang !== $lang) $this->twig->addGlobal("ContentLanguage", $content_lang);
     
     $template = $this->twig->loadTemplate('vocab.twig');
+    
+    $this->state->setContentLang($content_lang);
+    $this->state->setLang($lang);
+    $this->state->setVocabid($vocab->getId());
 
     echo $template
             ->render(
@@ -742,7 +781,9 @@ class WebController extends Controller
                         'search_letter' => 'A',
                         'active_tab' => $defaultView,
                         'lang_supported' => $lang_support,
-                        'request_uri' => $this->request_uri));
+                        'request_uri' => $this->request_uri,
+                        'state' => $this->state
+                      ));
   }
 
   /**

@@ -12,7 +12,7 @@
 </div>
 {% endif %}
 <div class="header-float">
-{% if vocab_id != 'About' and vocab_id != 'Feedback' %}
+{% if state.page != 'About' and state.page != 'Feedback' %}
   
   {% if not front_page and global_search is not defined %}<div class="search-vocab-text"><p>{% trans "Content language" %}</p></div>{% endif %}
   {% if vocab_list is defined %}
@@ -32,14 +32,15 @@
         <ul class="dropdown-menu">
         {% if vocab is defined %}
           {% for langcode in vocab.languages %}
-          <li><a href="?{% if uri_param %}{{ uri_param }}&{% endif %}clang={{langcode}}{% if term %}&q={{ term }}{% endif %}" class="lang-button" hreflang="{{ langcode }}">{{ langcode | lang_name(lang) }}</a></li>
+          {#<li><a href="{{ state.vocabid }}/{{ state.page }}/?{% if state.uri %}uri={{ state.uri }}&{% endif %}clang={{langcode}}{% if term %}&q={{ term }}{% endif %}" class="lang-button" hreflang="{{ langcode }}">{{ langcode | lang_name(lang) }}</a></li>#}
+          <li><a href="{{ state.uri | link_url(state.vocabid,state.lang,state.page,langcode,term) }}" class="lang-button" hreflang="{{ langcode }}">{{ langcode | lang_name(lang) }}</a></li>
           {% endfor %}
         {% else %}
           {% for langcode in lang_list %}
           <li><a href="?clang={{langcode}}{% if term %}&q={{ term }}{% endif %}" class="lang-button" hreflang="{{ langcode }}">{{ langcode | lang_name(lang) }}</a></li>
           {% endfor %}
         {% endif %}
-          <li><a href="?{% if uri_param %}{{ uri_param }}&{% endif %}clang={% if ContentLanguage %}{{ ContentLanguage }}{% else %}{{ lang }}{% endif %}&anylang=on{% if term %}&q={{ term }}{% endif %}{% if vocabs %}&vocabs={{ vocabs }}{% endif %}" class="lang-button lang-button-all">{% trans "Search language: any" %}</a><input name="anylang" type="checkbox"{% if AnyLang %} checked{% endif%}></input></li>
+          <li><a href="{{ state.vocabid }}/{{ state.page }}/?{% if state.uri %}uri={{ state.uri }}&{% endif %}clang={% if ContentLanguage %}{{ ContentLanguage }}{% else %}{{ lang }}{% endif %}&anylang=on{% if term %}&q={{ term }}{% endif %}{% if vocabs %}&vocabs={{ vocabs }}{% endif %}" class="lang-button lang-button-all">{% trans "Search language: any" %}</a><input name="anylang" type="checkbox"{% if AnyLang %} checked{% endif%}></input></li>
         </ul>
       </div><!-- /btn-group -->
       <input id="search-field" type="text" class="form-control" name="q" value="{{ term }}">
