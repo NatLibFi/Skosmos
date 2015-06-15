@@ -85,8 +85,10 @@ if (sizeof($parts) <= 2) {
           } else {
             if (isset($_GET['uri']))
               $controller->invokeGroupContents($vocab, $lang, $_GET['uri']);
-            else
+            elseif ($parts[4] !== '')
               $controller->invokeGroupContents($vocab, $lang, $parts[4]);
+            else
+              $controller->invokeGroupIndex($vocab, $lang);
           }
         } else {
           $controller->invokeGenericErrorPage();
