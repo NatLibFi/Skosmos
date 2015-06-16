@@ -216,12 +216,17 @@ class WebController extends Controller
     $categoryLabel = $this->model->getClassificationLabel($lang);
     $vocabList = $this->model->getVocabularyList();
     $langList = $this->model->getLanguages($lang);
+    
+    $this->state->setContentLang($content_lang);
+    $this->state->setLang($lang);
+
     // render template
     echo $template
             ->render(
                     array('vocab_list' => $vocabList, 'category_label' => $categoryLabel,
                         'path_fix' => $this->path_fix, 'languages' => $this->languages, 'front_page' => True,
-                        'lang' => $lang, 'parts' => $this->parts, 'request_uri' => $this->request_uri, 'lang_list' => $langList));
+                        'lang' => $lang, 'parts' => $this->parts, 'request_uri' => $this->request_uri, 
+                        'lang_list' => $langList, 'state' => $this->state));
   }
 
   /**
@@ -434,6 +439,10 @@ class WebController extends Controller
     $uri_parts = $_SERVER['REQUEST_URI'];
     $vocabList = $this->model->getVocabularyList();
     $langList = $this->model->getLanguages($lang);
+    
+    $this->state->setContentLang($content_lang);
+    $this->state->setLang($lang);
+    $this->state->setPage('search');
 
     echo $template->render(
             array('path_fix' => $this->path_fix,
@@ -447,7 +456,8 @@ class WebController extends Controller
                 'request_uri' => $this->request_uri,
                 'lang_list' => $langList,
                 'vocabs' => $vocabs,
-                'vocab_list' => $vocabList
+                'vocab_list' => $vocabList,
+                'state' => $this->state
 
     ));
   }
@@ -596,6 +606,12 @@ class WebController extends Controller
       $search_results = $vocab->searchConceptsAlphabetical('*', null, null, $content_lang);
       $letters = null;
     }
+    
+    $this->state->setContentLang($content_lang);
+    $this->state->setLang($lang);
+    $this->state->setVocabid($vocab->getId());
+    $this->state->setPage('index');
+    $this->state->setLetter($letter);
 
     $controller = $this; // for use by anonymous function below
     echo $template
@@ -611,7 +627,8 @@ class WebController extends Controller
                         'letter' => $letter,
                         'parts' => $this->parts,
                         'all_letters' => $all_at_once,
-                        'request_uri' => $this->request_uri
+                        'request_uri' => $this->request_uri,
+                        'state' => $this->state
             ));
   }
 
