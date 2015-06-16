@@ -108,8 +108,8 @@ class WebController extends Controller
       if (isset($clang) && $clang !== $lang)
         $params['clang'] = $clang;
       
-      if (isset($_GET['anylang']))
-        $params['anylang'] = 'on';
+      //if (isset($_GET['anylang']))
+        //$params['anylang'] = 'on';
       
       if (isset($term))
         $params['q'] = $term;
