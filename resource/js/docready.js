@@ -225,7 +225,7 @@ $(function() { // DOCUMENT READY
         var clicked = $(this);
         var base_path = path_fix.length / 3;
         var $content = $('.content');
-        var targetUrl = 'http://' + base_url + vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(event.target.href);
+        var targetUrl = vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(event.target.href);
         var parameters = $.param({'base_path' : base_path, 'clang' : clang});
         $('#hier-trigger').attr('href', targetUrl);
         $.ajax({
@@ -323,7 +323,7 @@ $(function() { // DOCUMENT READY
         return false;
     }
     var uri = $('.uri-input-box').html();
-    var redirectUrl = 'http://' + base_url + vocab + '/' + lang + '/page/' + uri.split('/')[uri.split('/').length-1];
+    var redirectUrl = vocab + '/' + lang + '/page/' + uri.split('/')[uri.split('/').length-1];
     window.location.replace(encodeURI(redirectUrl));
   });
 
