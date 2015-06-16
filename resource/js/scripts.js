@@ -4,7 +4,7 @@
  * see LICENSE.txt for more information
  */
 
-/* exported getUrlParams, readCookie, createCookie, getUrlParams, debounce, updateContent, updateTopbarLang, updateClangButtons, updateTitle, updateSidebar, setLangCookie, loadLimitations, loadPage, hideCrumbs, shortenProperties, countAndSetOffset, combineStatistics, loadLimitedResults */
+/* exported getUrlParams, readCookie, createCookie, getUrlParams, debounce, updateContent, updateTopbarLang, updateTitle, updateSidebar, setLangCookie, loadLimitations, loadPage, hideCrumbs, shortenProperties, countAndSetOffset, combineStatistics, loadLimitedResults */
 
 /* 
  * Creates a cookie value and stores it for the user. Takes the given
@@ -111,15 +111,6 @@ function updateSidebar(data) {
   $('#sidebar').append(response);
 }
 
-function updateClangButtons(href) {
-  var uri = URI(href).removeSearch('clang');
-  $.each($('.lang-button'), function(index, val) {
-    var btn_params = URI($(val).attr('href')).removeSearch('uri').search(true);
-    uri.setSearch(btn_params);
-    $(val).attr('href', uri.href());
-  });
-}
-
 // sets the language cookie for 365 days
 function setLangCookie(lang) {
   createCookie('SKOSMOS_LANGUAGE', lang, 365);
@@ -163,6 +154,8 @@ function loadPage(targetUrl) {
         updateSidebar(data);
         updateTitle(data);
         updateTopbarLang(data);
+        // take the content language buttons from the response
+        $('.header-float .dropdown-menu').empty().append($('.header-float .dropdown-menu', data).html());
       }
     });
   } else {
@@ -176,10 +169,11 @@ function loadPage(targetUrl) {
         $('a[href="' + $('.uri-input-box').text() + '"]').addClass('jstree-clicked');
         updateTitle(data);
         updateTopbarLang(data);
+        // take the content language buttons from the response
+        $('.header-float .dropdown-menu').empty().append($('.header-float .dropdown-menu', data).html());
       }
     });
   }
-  updateClangButtons(targetUrl);
 }
 
 // if there are multiple breadcrumb paths hide those and generate a button for displaying those

@@ -240,7 +240,8 @@ $(function() { // DOCUMENT READY
               $content.append(response);
               updateTitle(data);
               updateTopbarLang(data);
-              updateClangButtons(targetUrl + '&' + parameters);
+              // take the content language buttons from the response
+              $('.header-float .dropdown-menu').empty().append($('.header-float .dropdown-menu', data).html());
             }
         });
         return false;
@@ -271,7 +272,8 @@ $(function() { // DOCUMENT READY
               $('#hier-trigger').attr('href', event.target.href);
               updateTitle(data);
               updateTopbarLang(data);
-              updateClangButtons(event.target.href);
+              // take the content language buttons from the response
+              $('.header-float .dropdown-menu').empty().append($('.header-float .dropdown-menu', data).html());
             }
         });
         return false;
@@ -350,7 +352,8 @@ $(function() { // DOCUMENT READY
               $('.nav').scrollTop(0);
               if (window.history.pushState) { window.history.pushState(null, null, encodeURI(event.target.href)); }
               updateTitle(data);
-              updateClangButtons(event.target.href);
+              // take the content language buttons from the response
+              $('.header-float .dropdown-menu').empty().append($('.header-float .dropdown-menu', data).html());
             }
         });
         return false;
@@ -378,7 +381,8 @@ $(function() { // DOCUMENT READY
               $('.nav').scrollTop(0);
               if (window.history.pushState) { window.history.pushState(null, null, encodeURI(event.target.href)); }
               updateTitle(data);
-              updateClangButtons(event.target.href);
+              // take the content language buttons from the response
+              $('.header-float .dropdown-menu').empty().append($('.header-float .dropdown-menu', data).html());
             }
         });
         return false;
@@ -404,7 +408,8 @@ $(function() { // DOCUMENT READY
               $('.nav').scrollTop(0);
               if (window.history.pushState) { window.history.pushState(null, null, encodeURI(event.target.href)); }
               updateTitle(data);
-              updateClangButtons(event.target.href);
+              // take the content language buttons from the response
+              $('.header-float .dropdown-menu').empty().append($('.header-float .dropdown-menu', data).html());
             }
           });
         } else {
