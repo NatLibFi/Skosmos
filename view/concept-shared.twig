@@ -91,7 +91,7 @@
             <ul>
             {% for group in concept.groupProperties %}
               {% if group.type != 'isothes:superGroup' and not superFound %}<li>{% endif %}
-                <a class="versal" href="{{ group.uri | link_url(group.vocab,state.lang,'groups',ContentLanguage) }}">{{ group.label(ContentLanguage) }}</a>
+                <a class="versal" href="{{ group.uri | link_url(group.vocab,request.lang,'groups',ContentLanguage) }}">{{ group.label(ContentLanguage) }}</a>
                 {% if group.type == 'isothes:superGroup' %}{% set superFound = true %}<span class="versal"> &#62; </span>{% endif %}
               {% if group.type != 'isothes:superGroup' and not superFound %}</li>{% endif %}
             {% endfor %}
@@ -130,7 +130,7 @@
                 {% if propval.label %}
                 <tr>
                   <td>
-                    <a class="versal" href="{{ propval.uri | link_url(propval.exvocab, state.lang, 'page', state.contentLang) }}">{{ propval.label(ContentLanguage) }}</a>
+                    <a class="versal" href="{{ propval.uri | link_url(propval.exvocab, request.lang, 'page', request.contentLang) }}">{{ propval.label(ContentLanguage) }}</a>
                   {% if propval.label.lang and (propval.label.lang != ContentLanguage) or (explicit_langcodes and propval.label.lang) %}<span class="propertyvalue"> ({{ propval.label(ContentLanguage).lang }})</span>{% endif %}
                   </td>
                   <td>

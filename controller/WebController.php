@@ -42,7 +42,7 @@ class WebController extends Controller
   public $request_uri;
 
   public $base_href;
-  public $state;
+  public $request;
 
   /**
    * Constructor for the WebController can be given the path_fix as a parameter.
@@ -88,7 +88,7 @@ class WebController extends Controller
     // setting the list of properties to be displayed in the search results
     $this->twig->addGlobal("PreferredProperties", array('skos:prefLabel', 'skos:narrower', 'skos:broader', 'skosmos:memberOf', 'skos:altLabel', 'skos:related'));
     
-    $this->state = new State();
+    $this->request = new Request();
 
     // register a Twig filter for generating URLs for vocabulary resources (concepts and groups)
     $controller = $this; // for use by anonymous function below
@@ -214,8 +214,8 @@ class WebController extends Controller
     $vocabList = $this->model->getVocabularyList();
     $langList = $this->model->getLanguages($lang);
     
-    $this->state->setContentLang($content_lang);
-    $this->state->setLang($lang);
+    $this->request->setContentLang($content_lang);
+    $this->request->setLang($lang);
 
     // render template
     echo $template
@@ -223,7 +223,7 @@ class WebController extends Controller
                     array('vocab_list' => $vocabList, 'category_label' => $categoryLabel,
                         'path_fix' => $this->path_fix, 'languages' => $this->languages, 'front_page' => True,
                         'lang' => $lang, 'parts' => $this->parts, 'request_uri' => $this->request_uri, 
-                        'lang_list' => $langList, 'state' => $this->state));
+                        'lang_list' => $langList, 'request' => $this->request));
   }
 
   /**
@@ -261,11 +261,11 @@ class WebController extends Controller
     $uri_param =  ($full_uri === $uri) ? 'uri=' . $full_uri : ''; 
     $uri = $full_uri;
     
-    $this->state->setContentLang($content_lang);
-    $this->state->setLang($lang);
-    $this->state->setVocabid($vocab->getId());
-    $this->state->setPage('page');
-    $this->state->setUri($uri);
+    $this->request->setContentLang($content_lang);
+    $this->request->setLang($lang);
+    $this->request->setVocabid($vocab->getId());
+    $this->request->setPage('page');
+    $this->request->setUri($uri);
 
     $results = $vocab->getConceptInfo($uri, $content_lang);
     $crumbs = $vocab->getBreadCrumbs($content_lang, $uri);
@@ -281,7 +281,7 @@ class WebController extends Controller
       'request_uri' => $this->request_uri,
       'bread_crumbs' => $crumbs['breadcrumbs'],
       'combined' => $crumbs['combined'],
-      'state' => $this->state)
+      'request' => $this->request)
     );
   }
 
@@ -331,9 +331,9 @@ class WebController extends Controller
     if ($vocab_id == null)
       $vocab_id = 'Feedback';
     
-    $this->state->setContentLang($content_lang);
-    $this->state->setLang($lang);
-    $this->state->setPage('feedback');
+    $this->request->setContentLang($content_lang);
+    $this->request->setLang($lang);
+    $this->request->setPage('feedback');
 
     echo $template
             ->render(
@@ -346,7 +346,7 @@ class WebController extends Controller
                         'feedback_sent' => $feedback_sent,
                         'parts' => $this->parts,
                         'request_uri' => $this->request_uri,
-                        'state' => $this->state
+                        'request' => $this->request
             ));
   }
 
@@ -398,13 +398,17 @@ class WebController extends Controller
     $url = $_SERVER['HTTP_HOST'];
     $version = $this->model->getVersion();
     
-    $this->state->setLang($lang);
-    $this->state->setPage('feedback');
+    $this->request->setLang($lang);
+    $this->request->setPage('feedback');
 
     echo $template
-            ->render(array('path_fix' => $this->path_fix, 'languages' => $this->languages,
-                           'lang' => $lang, 'vocab_id' => $vocab_id, 'version' => $version,
-                           'server_instance' => $url, 'request_uri' => $this->request_uri, 'state' => $this->state));
+      ->render(array('path_fix' => $this->path_fix, 
+                    'languages' => $this->languages,
+                    'vocab_id' => $vocab_id, 
+                    'version' => $version,
+                    'server_instance' => $url, 
+                    'request_uri' => $this->request_uri, 
+                    'request' => $this->request));
   }
 
   /**
@@ -446,9 +450,9 @@ class WebController extends Controller
     $vocabList = $this->model->getVocabularyList();
     $langList = $this->model->getLanguages($lang);
     
-    $this->state->setContentLang($content_lang);
-    $this->state->setLang($lang);
-    $this->state->setPage('search');
+    $this->request->setContentLang($content_lang);
+    $this->request->setLang($lang);
+    $this->request->setPage('search');
 
     echo $template->render(
             array('path_fix' => $this->path_fix,
@@ -462,7 +466,7 @@ class WebController extends Controller
                 'lang_list' => $langList,
                 'vocabs' => $vocabs,
                 'vocab_list' => $vocabList,
-                'state' => $this->state
+                'request' => $this->request
 
     ));
   }
@@ -510,10 +514,10 @@ class WebController extends Controller
       $rest = null;
     }
     
-    $this->state->setContentLang($content_lang);
-    $this->state->setLang($lang);
-    $this->state->setVocabid($vocab->getId());
-    $this->state->setPage('search');
+    $this->request->setContentLang($content_lang);
+    $this->request->setLang($lang);
+    $this->request->setVocabid($vocab->getId());
+    $this->request->setPage('search');
 
     $term = trim($term); // surrounding whitespace is not considered significant
     $sterm = strpos($term, "*") === FALSE ? $term . "*" : $term; // default to prefix search
@@ -554,7 +558,7 @@ class WebController extends Controller
                 'types' => $vocab_types,
                 'explicit_langcodes' => $langcodes,
                 'request_uri' => $this->request_uri,
-                'state' => $this->state
+                'request' => $this->request
 
     ));
   }
@@ -609,11 +613,11 @@ class WebController extends Controller
       $letters = null;
     }
     
-    $this->state->setContentLang($content_lang);
-    $this->state->setLang($lang);
-    $this->state->setVocabid($vocab->getId());
-    $this->state->setPage('index');
-    $this->state->setLetter($letter);
+    $this->request->setContentLang($content_lang);
+    $this->request->setLang($lang);
+    $this->request->setVocabid($vocab->getId());
+    $this->request->setPage('index');
+    $this->request->setLetter($letter);
 
     $controller = $this; // for use by anonymous function below
     echo $template
@@ -630,7 +634,7 @@ class WebController extends Controller
                         'parts' => $this->parts,
                         'all_letters' => $all_at_once,
                         'request_uri' => $this->request_uri,
-                        'state' => $this->state
+                        'request' => $this->request
             ));
   }
 
@@ -669,10 +673,10 @@ class WebController extends Controller
 
     $groups = $vocab->listConceptGroups(false, $content_lang);
     
-    $this->state->setContentLang($content_lang);
-    $this->state->setLang($lang);
-    $this->state->setVocabid($vocab->getId());
-    $this->state->setPage('groups');
+    $this->request->setContentLang($content_lang);
+    $this->request->setLang($lang);
+    $this->request->setVocabid($vocab->getId());
+    $this->request->setPage('groups');
 
     echo $template
             ->render(
@@ -685,7 +689,7 @@ class WebController extends Controller
                         'groups' => $groups,
                         'parts' => $this->parts,
                         'request_uri' => $this->request_uri,
-                        'state' => $this->state
+                        'request' => $this->request
             ));
   }
 
@@ -720,11 +724,11 @@ class WebController extends Controller
     $uri = $vocab->getConceptURI($group); // make sure it's a full URI
     $results = $vocab->getConceptInfo($uri, $content_lang);
     
-    $this->state->setContentLang($content_lang);
-    $this->state->setLang($lang);
-    $this->state->setVocabid($vocab->getId());
-    $this->state->setPage('groups');
-    $this->state->setUri($groupuri);
+    $this->request->setContentLang($content_lang);
+    $this->request->setLang($lang);
+    $this->request->setVocabid($vocab->getId());
+    $this->request->setPage('groups');
+    $this->request->setUri($groupuri);
 
     echo $template
             ->render(
@@ -738,7 +742,7 @@ class WebController extends Controller
                         'label' => $group_name,
                         'request_uri' => $this->request_uri,
                         'search_results' => $results,
-                        'state' => $this->state
+                        'request' => $this->request
             ));
   }
 
@@ -785,9 +789,9 @@ class WebController extends Controller
     
     $template = $this->twig->loadTemplate('vocab.twig');
     
-    $this->state->setContentLang($content_lang);
-    $this->state->setLang($lang);
-    $this->state->setVocabid($vocab->getId());
+    $this->request->setContentLang($content_lang);
+    $this->request->setLang($lang);
+    $this->request->setVocabid($vocab->getId());
 
     echo $template
             ->render(
@@ -801,7 +805,7 @@ class WebController extends Controller
                         'active_tab' => $defaultView,
                         'lang_supported' => $lang_support,
                         'request_uri' => $this->request_uri,
-                        'state' => $this->state
+                        'request' => $this->request
                       ));
   }
 

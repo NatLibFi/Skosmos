@@ -11,7 +11,7 @@ var missing_value = "{% trans %}Value is required and can not be empty{% endtran
 var expand = "{% trans %}Show all breadcrumb paths{% endtrans %}";
 
 <!-- variables passed through to javascript -->
-var lang = "{{ state.lang }}";
+var lang = "{{ request.lang }}";
 var content_lang = "{{ ContentLanguage }}";
 var vocab = "{{ vocab_id }}";
 var path_fix = "{{ path_fix }}";
