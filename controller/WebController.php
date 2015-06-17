@@ -780,10 +780,8 @@ class WebController extends Controller
     $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
     $lang_support = true;
     $newlang = $this->verifyVocabularyLanguage($content_lang, $vocab);
-    if ($newlang !== null) {
+    if ($newlang !== null)
       $content_lang = $newlang;
-      $lang_support = false;
-    }
     if ($content_lang !== $lang) $this->twig->addGlobal("ContentLanguage", $content_lang);
     
     $template = $this->twig->loadTemplate('vocab.twig');
@@ -801,7 +799,6 @@ class WebController extends Controller
                         'vocab_id' => $vocab_id,
                         'search_letter' => 'A',
                         'active_tab' => $defaultView,
-                        'lang_supported' => $lang_support,
                         'request_uri' => $this->request_uri,
                         'request' => $this->request
                       ));
