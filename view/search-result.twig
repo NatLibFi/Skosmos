@@ -15,11 +15,11 @@
       <a class="prefLabel" href="{{ concept.uri | link_url(concept.vocab,lang,'page',concept.contentLang) }}">{{ concept.label(ContentLanguage) }}</a>{% if explicit_langcodes or AnyLang %}<span class="versal"> ({{ concept.contentLang }})</span>{% endif %}</span>
       
       {% else %}{% if concept.notation %}<span class="notation">{{ concept.notation }}</span>{% endif %}
-      <a class="prefLabel" href="{{ concept.uri | link_url(concept.vocab,lang,'page',concept.contentLang) }}">{{ concept.foundBy }}</a>{% if explicit_langcodes or AnyLang %}<span class="versal"> ({{ concept.contentLang }})</span>{% endif %}
+      <a class="prefLabel" href="{{ concept.uri | link_url(concept.vocab,state.lang,'page',concept.contentLang) }}">{{ concept.foundBy }}</a>{% if explicit_langcodes or AnyLang %}<span class="versal"> ({{ concept.contentLang }})</span>{% endif %}
       {% endif %}
     {% else %}
     {% if concept.notation %}<span class="notation">{{ concept.notation }}</span>{% endif %}
-    <a class="prefLabel conceptlabel" href="{% if concept.type == "skos:Collection" %}{{ concept.uri | link_url(concept.vocab, lang, 'groups') }}{% elseif concept.exvocab is defined%}{{ concept.uri | link_url(concept.exvocab,concept.contentLang) }}{% else %}{{ concept.uri | link_url(concept.vocab,lang,'page',concept.contentLang) }}{% endif %}">{{ concept.label(ContentLanguage) }}</a>{% if explicit_langcodes or AnyLang %}<span class="versal"> ({{ concept.contentLang }})</span>{% endif %}
+    <a class="prefLabel conceptlabel" href="{% if concept.type == "skos:Collection" %}{{ concept.uri | link_url(concept.vocab, state.lang, 'groups') }}{% elseif concept.exvocab is defined%}{{ concept.uri | link_url(concept.exvocab,concept.contentLang) }}{% else %}{{ concept.uri | link_url(concept.vocab,state.lang,'page',concept.contentLang) }}{% endif %}">{{ concept.label(ContentLanguage) }}</a>{% if explicit_langcodes or AnyLang %}<span class="versal"> ({{ concept.contentLang }})</span>{% endif %}
     {% endif %}
   {% endspaceless %}
   {% if concept.type == 'skosext:DeprecatedConcept' %}<h2 class="deprecated-alert">{% trans %}deprecated{% endtrans %}</h2>{% endif %}
@@ -49,7 +49,7 @@
                   {% else %}
                   <span class="versal value">{{ propval.label(ContentLanguage) }}</span>
                   {% endif %}
-                  {% if propval.lang and (propval.lang != lang) or explicit_langcodes %}<span class="versal"> ({{ propval.lang }})</span>{% endif %}{% if not loop.last %}<span class="versal">,</span>{% endif %}
+                  {% if propval.lang and (propval.lang != state.lang) or explicit_langcodes %}<span class="versal"> ({{ propval.lang }})</span>{% endif %}{% if not loop.last %}<span class="versal">,</span>{% endif %}
                 {% endif %}
               {% endspaceless %}
               {% else %} {# Literals (no URI), eg. alternative labels as properties #}
@@ -74,7 +74,7 @@
           {% spaceless %}
             {% if propval.label %}
               <span class="versal value">{{ propval.label(ContentLanguage) }}</span>
-              {% if propval.lang and (propval.lang != lang) or explicit_langcodes %}<span class="versal"> ({{ propval.lang }})</span>{% endif %}{% if not loop.last %}<span class="versal">,</span>{% endif %}
+              {% if propval.lang and (propval.lang != state.lang) or explicit_langcodes %}<span class="versal"> ({{ propval.lang }})</span>{% endif %}{% if not loop.last %}<span class="versal">,</span>{% endif %}
             {% endif %}
           {% endspaceless %}
         {% else %} {# Literals (no URI), eg. alternative labels as properties #}

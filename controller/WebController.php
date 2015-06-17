@@ -330,6 +330,10 @@ class WebController extends Controller
 
     if ($vocab_id == null)
       $vocab_id = 'Feedback';
+    
+    $this->state->setContentLang($content_lang);
+    $this->state->setLang($lang);
+    $this->state->setPage('feedback');
 
     echo $template
             ->render(
@@ -341,7 +345,8 @@ class WebController extends Controller
                         'vocabList' => $vocabList,
                         'feedback_sent' => $feedback_sent,
                         'parts' => $this->parts,
-                        'request_uri' => $this->request_uri
+                        'request_uri' => $this->request_uri,
+                        'state' => $this->state
             ));
   }
 
@@ -392,10 +397,14 @@ class WebController extends Controller
     $vocab_id = 'About';
     $url = $_SERVER['HTTP_HOST'];
     $version = $this->model->getVersion();
+    
+    $this->state->setLang($lang);
+    $this->state->setPage('feedback');
+
     echo $template
             ->render(array('path_fix' => $this->path_fix, 'languages' => $this->languages,
                            'lang' => $lang, 'vocab_id' => $vocab_id, 'version' => $version,
-                           'server_instance' => $url, 'request_uri' => $this->request_uri));
+                           'server_instance' => $url, 'request_uri' => $this->request_uri, 'state' => $this->state));
   }
 
   /**
@@ -530,7 +539,6 @@ class WebController extends Controller
     echo $template->render(
             array('path_fix' => $this->path_fix,
                 'languages' => $this->languages,
-                'lang' => $lang,
                 'vocab_id' => $vocab_id,
                 'vocab' => $vocab,
                 'parts' => $this->parts,

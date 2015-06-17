@@ -91,7 +91,7 @@
             <ul>
             {% for group in concept.groupProperties %}
               {% if group.type != 'isothes:superGroup' and not superFound %}<li>{% endif %}
-                <a class="versal" href="{{ group.uri | link_url(group.vocab,lang,'groups',ContentLanguage) }}">{{ group.label(ContentLanguage) }}</a>
+                <a class="versal" href="{{ group.uri | link_url(group.vocab,state.lang,'groups',ContentLanguage) }}">{{ group.label(ContentLanguage) }}</a>
                 {% if group.type == 'isothes:superGroup' %}{% set superFound = true %}<span class="versal"> &#62; </span>{% endif %}
               {% if group.type != 'isothes:superGroup' and not superFound %}</li>{% endif %}
             {% endfor %}
