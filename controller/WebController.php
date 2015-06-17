@@ -339,7 +339,6 @@ class WebController extends Controller
             ->render(
                     array('path_fix' => $this->path_fix,
                         'languages' => $this->languages,
-                        'lang' => $lang,
                         'vocab_id' => $vocab_id,
                         'vocab' => $vocab,
                         'vocabList' => $vocabList,
@@ -797,7 +796,6 @@ class WebController extends Controller
             ->render(
                     array('path_fix' => $this->path_fix,
                         'languages' => $this->languages,
-                        'lang' => $lang,
                         'vocab' => $vocab,
                         'parts' => $this->parts,
                         'vocab_id' => $vocab_id,
