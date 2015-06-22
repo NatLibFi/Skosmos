@@ -328,7 +328,6 @@ class WebController extends Controller
     }
 
     $request->setContentLang($content_lang);
-    $request->setPage('feedback');
 
     echo $template->render(
       array(
@@ -391,8 +390,6 @@ class WebController extends Controller
     $url = $_SERVER['HTTP_HOST'];
     $version = $this->model->getVersion();
     
-    $request->setPage('feedback');
-
     echo $template->render(
       array(
         'path_fix' => $this->path_fix, 
