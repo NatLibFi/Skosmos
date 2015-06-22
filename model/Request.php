@@ -90,7 +90,7 @@ class Request
   }
 
   public function getVocabid() {
-    return $this->vocabid;
+    return isset($this->vocabid) ? $this->vocabid : '';
   }
 
   /**
