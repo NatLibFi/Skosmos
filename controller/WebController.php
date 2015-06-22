@@ -198,24 +198,23 @@ class WebController extends Controller
 
   /**
    * Loads and renders the view containing all the vocabularies.
-   * @param string $lang language parameter eg. 'fi' for Finnish.
+   * @param Request $request
    */
-  public function invokeVocabularies($lang)
+  public function invokeVocabularies($request)
   {
-    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
-    if ($content_lang !== $lang) $this->twig->addGlobal("ContentLanguage", $content_lang);
+    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $request->getLang();
+    if ($content_lang !== $request->getLang()) $this->twig->addGlobal("ContentLanguage", $content_lang);
     // set language parameters for gettext
-    $this->setLanguageProperties($lang);
+    $this->setLanguageProperties($request->getLang());
     // load template
     $template = $this->twig->loadTemplate('light.twig');
     // set template variables
     $requestUri = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-    $categoryLabel = $this->model->getClassificationLabel($lang);
+    $categoryLabel = $this->model->getClassificationLabel($request->getLang());
     $vocabList = $this->model->getVocabularyList();
-    $langList = $this->model->getLanguages($lang);
+    $langList = $this->model->getLanguages($request->getLang());
     
-    $this->request->setContentLang($content_lang);
-    $this->request->setLang($lang);
+    $request->setContentLang($content_lang);
 
     // render template
     echo $template->render(
@@ -228,7 +227,7 @@ class WebController extends Controller
         'parts' => $this->parts, 
         'request_uri' => $this->request_uri, 
         'lang_list' => $langList, 
-        'request' => $this->request
+        'request' => $request
     ));
   }
 
@@ -295,16 +294,14 @@ class WebController extends Controller
 
   /**
    * Invokes the feedback page with information of the users current vocabulary.
-   * @param string $vocab_id used for the default setting of the dropdown menu.
-   * @param string $lang language parameter eg. 'fi' for Finnish.
    */
-  public function invokeFeedbackForm($lang, $vocab_id = null)
+  public function invokeFeedbackForm($request)
   {
     $template = $this->twig->loadTemplate('feedback.twig');
-    $this->setLanguageProperties($lang);
+    $this->setLanguageProperties($request->getLang());
     $vocabList = $this->model->getVocabularyList(false);
     try {
-      $vocab = (isset($vocab_id)) ? $this->model->getVocabulary($vocab_id) : null;
+      $vocab = ($request->getVocabid() !== '') ? $this->model->getVocabulary($request->getVocabid()) : null;
     } catch (Exception $e) {
       header("HTTP/1.0 404 Not Found");
       if (LOG_CAUGHT_EXCEPTIONS)
@@ -318,8 +315,8 @@ class WebController extends Controller
 
       return;
     }
-    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
-    if ($content_lang !== $lang) $this->twig->addGlobal("ContentLanguage", $content_lang);
+    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $request->getLang();
+    if ($content_lang !== $request->getLang()) $this->twig->addGlobal("ContentLanguage", $content_lang);
 
     $feedback_sent = False;
     $feedback_msg = null;
@@ -338,11 +335,8 @@ class WebController extends Controller
       $this->sendFeedback($feedback_msg, $feedback_name, $feedback_email, $feedback_vocab, $feedback_vocab_email);
     }
 
-    $this->request->setContentLang($content_lang);
-    $this->request->setLang($lang);
-    $this->request->setPage('feedback');
-    if ($vocab_id !== null)
-      $this->request->setVocabid($vocab_id);
+    $request->setContentLang($content_lang);
+    $request->setPage('feedback');
 
     echo $template->render(
       array(
@@ -353,7 +347,7 @@ class WebController extends Controller
         'feedback_sent' => $feedback_sent,
         'parts' => $this->parts,
         'request_uri' => $this->request_uri,
-        'request' => $this->request
+        'request' => $request
       ));
   }
 
@@ -397,16 +391,15 @@ class WebController extends Controller
    * Invokes the about page for the Skosmos service.
    * @param string $lang language parameter eg. 'fi' for Finnish.
    */
-  public function invokeAboutPage($lang = 'en')
+  public function invokeAboutPage($request)
   {
     $template = $this->twig->loadTemplate('about.twig');
-    $this->setLanguageProperties($lang);
+    $this->setLanguageProperties($request->getLang());
     $vocab_id = 'About';
     $url = $_SERVER['HTTP_HOST'];
     $version = $this->model->getVersion();
     
-    $this->request->setLang($lang);
-    $this->request->setPage('feedback');
+    $request->setPage('feedback');
 
     echo $template->render(
       array(
@@ -415,17 +408,16 @@ class WebController extends Controller
         'version' => $version,
         'server_instance' => $url, 
         'request_uri' => $this->request_uri, 
-        'request' => $this->request
+        'request' => $request
       ));
   }
 
   /**
    * Invokes the search for concepts in all the availible ontologies.
-   * @param string $vocab_id contains the name of the vocabulary in question.
-   * @param string $lang language parameter eg. 'fi' for Finnish.
    */
-  public function invokeGlobalSearch($lang)
+  public function invokeGlobalSearch($request)
   {
+    $lang = $request->getLang();
     $template = $this->twig->loadTemplate('vocab-search-listing.twig');
     $this->setLanguageProperties($lang);
 
@@ -458,9 +450,7 @@ class WebController extends Controller
     $vocabList = $this->model->getVocabularyList();
     $langList = $this->model->getLanguages($lang);
     
-    $this->request->setContentLang($content_lang);
-    $this->request->setLang($lang);
-    $this->request->setPage('search');
+    $request->setContentLang($content_lang);
 
     echo $template->render(
       array(
@@ -476,7 +466,7 @@ class WebController extends Controller
         'lang_list' => $langList,
         'vocabs' => $vocabs,
         'vocab_list' => $vocabList,
-        'request' => $this->request
+        'request' => $request
     ));
   }
 
@@ -763,13 +753,14 @@ class WebController extends Controller
    * @param string $lang language parameter eg. 'fi' for Finnish.
    * @param string $letter letter parameter eg. 'R'.
    */
-  public function invokeVocabularyHome($vocab_id, $lang, $letter = 'A')
+  public function invokeVocabularyHome($request, $letter = 'A')
   {
+    $lang = $request->getLang();
     // set language parameters for gettext
     $this->setLanguageProperties($lang);
 
     try {
-      $vocab = $this->model->getVocabulary($vocab_id);
+      $vocab = $this->model->getVocabulary($request->getVocabid());
     } catch (Exception $e) {
       header("HTTP/1.0 404 Not Found");
       $template = $this->twig->loadTemplate('concept-info.twig');
@@ -801,9 +792,7 @@ class WebController extends Controller
     
     $template = $this->twig->loadTemplate('vocab.twig');
     
-    $this->request->setContentLang($content_lang);
-    $this->request->setLang($lang);
-    $this->request->setVocabid($vocab->getId());
+    $request->setContentLang($content_lang);
 
     echo $template->render(
       array(
@@ -814,7 +803,7 @@ class WebController extends Controller
         'search_letter' => 'A',
         'active_tab' => $defaultView,
         'request_uri' => $this->request_uri,
-        'request' => $this->request
+        'request' => $request
       ));
   }
 
