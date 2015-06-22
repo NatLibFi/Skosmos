@@ -23,7 +23,6 @@ require_once 'model/ConceptPropertyValueLiteral.php';
 require_once 'model/VocabularyCategory.php';
 require_once 'model/Vocabulary.php';
 require_once 'model/Breadcrumb.php';
-require_once 'model/Request.php';
 
 require_once 'model/sparql/GenericSparql.php';
 require_once 'model/sparql/JenaTextSparql.php';
