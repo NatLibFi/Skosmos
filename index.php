@@ -63,43 +63,44 @@ if (sizeof($parts) <= 2) {
       if (array_key_exists($parts[2], $LANGUAGES)) {
         $lang = $parts[2];
         $request->setLang($parts[2]);
-        if ($parts[3] == '') {
+        $request->setPage($parts[3]);
+        if ($request->getPage() == '') {
           $controller->invokeVocabularyHome($request);
-        } elseif ($parts[3] == 'feedback') {
+        } elseif ($request->getPage() == 'feedback') {
           $controller->invokeFeedbackForm($request);
-        } elseif ($parts[3] == 'search') {
-          $controller->invokeVocabularySearch($vocab, $lang);
-        } elseif ($parts[3] == 'index') {
+        } elseif ($request->getPage() == 'search') {
+          $controller->invokeVocabularySearch($request);
+        } elseif ($request->getPage() == 'index') {
           if (sizeof($parts) == 4 || (sizeof($parts) == 5) && $parts[4] === '') { // no letter
-            $controller->invokeAlphabeticalIndex($vocab, $lang);
+            $controller->invokeAlphabeticalIndex($request);
           } else { // letter given
-            $controller->invokeAlphabeticalIndex($vocab, $lang, $parts[4]);
+            $controller->invokeAlphabeticalIndex($request, $parts[4]);
           }
-        } elseif ($parts[3] == 'page') {
+        } elseif ($request->getPage() == 'page') {
           if (isset($_GET['uri'])) {
-            $controller->invokeVocabularyConcept($vocab, $lang, $_GET['uri']);
+            $controller->invokeVocabularyConcept($request, $_GET['uri']);
           } elseif (sizeof($parts) == 5) {
-            $controller->invokeVocabularyConcept($vocab, $lang, $parts[4]);
+            $controller->invokeVocabularyConcept($request, $parts[4]);
           } else {
-            $controller->invokeGenericErrorPage();
+            $controller->invokeGenericErrorPage($request);
           }
-        } elseif ($parts[3] == 'groups') {
+        } elseif ($request->getPage() == 'groups') {
           if (sizeof($parts) == 4) {
             if (isset($_GET['uri'])) {
-              $controller->invokeGroupContents($vocab, $lang, $_GET['uri']);
+              $controller->invokeGroupContents($request, $_GET['uri']);
             } else {
-              $controller->invokeGroupIndex($vocab, $lang);
+              $controller->invokeGroupIndex($request);
             }
           } else {
             if (isset($_GET['uri']))
-              $controller->invokeGroupContents($vocab, $lang, $_GET['uri']);
+              $controller->invokeGroupContents($request, $_GET['uri']);
             elseif ($parts[4] !== '')
-              $controller->invokeGroupContents($vocab, $lang, $parts[4]);
+              $controller->invokeGroupContents($request, $parts[4]);
             else
-              $controller->invokeGroupIndex($vocab, $lang);
+              $controller->invokeGroupIndex($request);
           }
         } else {
-          $controller->invokeGenericErrorPage();
+          $controller->invokeGenericErrorPage($request);
         }
       } else { // language code missing, redirect to some language version
         $lang = $controller->guessLanguage($vocab);

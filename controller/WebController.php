@@ -42,7 +42,6 @@ class WebController extends Controller
   public $request_uri;
 
   public $base_href;
-  public $request;
 
   /**
    * Constructor for the WebController can be given the path_fix as a parameter.
@@ -88,8 +87,6 @@ class WebController extends Controller
     // setting the list of properties to be displayed in the search results
     $this->twig->addGlobal("PreferredProperties", array('skos:prefLabel', 'skos:narrower', 'skos:broader', 'skosmos:memberOf', 'skos:altLabel', 'skos:related'));
     
-    $this->request = new Request();
-
     // register a Twig filter for generating URLs for vocabulary resources (concepts and groups)
     $controller = $this; // for use by anonymous function below
     $urlFilter = new Twig_SimpleFilter('link_url', function ($uri, $vocab, $lang, $type='page', $clang=null, $term=null) use ($controller) {
@@ -233,16 +230,15 @@ class WebController extends Controller
 
   /**
    * Invokes the concept page of a single concept in a specific vocabulary.
-   * @param string $vocab_id contains the name of the vocabulary in question.
-   * @param string $lang language parameter eg. 'fi' for Finnish.
    * @param string $uri localname or uri of concept.
    */
-  public function invokeVocabularyConcept($vocab_id, $lang, $uri)
+  public function invokeVocabularyConcept($request, $uri)
   {
+    $lang = $request->getLang();
     $this->setLanguageProperties($lang);
     $template = $this->twig->loadTemplate('concept-info.twig');
     try {
-      $vocab = $this->model->getVocabulary($vocab_id);
+      $vocab = $this->model->getVocabulary($request->getVocabid());
     } catch (Exception $e) {
       header("HTTP/1.0 404 Not Found");
       if (LOG_CAUGHT_EXCEPTIONS)
@@ -263,18 +259,14 @@ class WebController extends Controller
 
     if ($content_lang !== $lang) $this->twig->addGlobal("ContentLanguage", $content_lang);
     $langcodes = $vocab->getShowLangCodes();
-    $vocab = $this->model->getVocabulary($vocab_id);
     
     $full_uri = $vocab->getConceptURI($uri); // make sure it's a full URI
     // if rendering a page with the uri parameter the param needs to be passed for the template
     $uri_param =  ($full_uri === $uri) ? 'uri=' . $full_uri : ''; 
     $uri = $full_uri;
     
-    $this->request->setContentLang($content_lang);
-    $this->request->setLang($lang);
-    $this->request->setVocabid($vocab->getId());
-    $this->request->setPage('page');
-    $this->request->setUri($uri);
+    $request->setContentLang($content_lang);
+    $request->setUri($uri);
 
     $results = $vocab->getConceptInfo($uri, $content_lang);
     $crumbs = $vocab->getBreadCrumbs($content_lang, $uri);
@@ -288,7 +280,7 @@ class WebController extends Controller
       'request_uri' => $this->request_uri,
       'bread_crumbs' => $crumbs['breadcrumbs'],
       'combined' => $crumbs['combined'],
-      'request' => $this->request)
+      'request' => $request)
     );
   }
 
@@ -475,13 +467,14 @@ class WebController extends Controller
    * @param string $vocab_id contains the name of the vocabulary in question.
    * @param string $lang language parameter eg. 'fi' for Finnish.
    */
-  public function invokeVocabularySearch($vocab_id, $lang)
+  public function invokeVocabularySearch($request)
   {
+    $lang = $request->getLang();
     $template = $this->twig->loadTemplate('vocab-search-listing.twig');
     $this->setLanguageProperties($lang);
     try {
-      $vocab = $this->model->getVocabulary($vocab_id);
-      $vocab_types = $this->model->getTypes($vocab_id, $lang);
+      $vocab = $this->model->getVocabulary($request->getVocabid());
+      $vocab_types = $this->model->getTypes($request->getVocabid(), $lang);
     } catch (Exception $e) {
       header("HTTP/1.0 404 Not Found");
       if (LOG_CAUGHT_EXCEPTIONS)
@@ -515,15 +508,12 @@ class WebController extends Controller
       $rest = null;
     }
     
-    $this->request->setContentLang($content_lang);
-    $this->request->setLang($lang);
-    $this->request->setVocabid($vocab->getId());
-    $this->request->setPage('search');
+    $request->setContentLang($content_lang);
 
     $term = trim($term); // surrounding whitespace is not considered significant
     $sterm = strpos($term, "*") === FALSE ? $term . "*" : $term; // default to prefix search
     try {
-      $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocab_id, $content_lang, $search_lang, $offset, 20, $type, $parent, $group);
+      $count_and_results = $this->model->searchConceptsAndInfo($sterm, $request->getVocabid(), $content_lang, $search_lang, $offset, 20, $type, $parent, $group);
       $counts = $count_and_results['count'];
       $search_results = $count_and_results['results'];
     } catch (Exception $e) {
@@ -560,23 +550,22 @@ class WebController extends Controller
         'types' => $vocab_types,
         'explicit_langcodes' => $langcodes,
         'request_uri' => $this->request_uri,
-        'request' => $this->request
+        'request' => $request
     ));
   }
 
   /**
    * Invokes the alphabetical listing for a specific vocabulary.
-   * @param string $vocab_id contains the name of the vocabulary in question.
-   * @param string $lang language parameter eg. 'fi' for Finnish.
    * @param string $letter eg. 'R'.
    */
-  public function invokeAlphabeticalIndex($vocab_id, $lang, $letter = 'A')
+  public function invokeAlphabeticalIndex($request, $letter = 'A')
   {
+    $lang = $request->getLang();
     $this->setLanguageProperties($lang);
     $template = $this->twig->loadTemplate('alphabetical-index.twig');
 
     try {
-      $vocab = $this->model->getVocabulary($vocab_id);
+      $vocab = $this->model->getVocabulary($request->getVocabid());
     } catch (Exception $e) {
       header("HTTP/1.0 404 Not Found");
       $template = $this->twig->loadTemplate('concept-info.twig');
@@ -616,11 +605,8 @@ class WebController extends Controller
       $letters = null;
     }
     
-    $this->request->setContentLang($content_lang);
-    $this->request->setLang($lang);
-    $this->request->setVocabid($vocab->getId());
-    $this->request->setPage('index');
-    $this->request->setLetter($letter);
+    $request->setContentLang($content_lang);
+    $request->setLetter($letter);
 
     $controller = $this; // for use by anonymous function below
     echo $template->render(
@@ -635,7 +621,7 @@ class WebController extends Controller
           'parts' => $this->parts,
           'all_letters' => $all_at_once,
           'request_uri' => $this->request_uri,
-          'request' => $this->request
+          'request' => $request
         ));
   }
 
@@ -644,13 +630,14 @@ class WebController extends Controller
    * @param string $vocab_id vocabulary identifier eg. 'yso'.
    * @param string $lang language parameter eg. 'fi' for Finnish.
    */
-  public function invokeGroupIndex($vocab_id, $lang, $stats=false)
+  public function invokeGroupIndex($request, $stats=false)
   {
+    $lang = $request->getLang();
     $this->setLanguageProperties($lang);
     $template = $this->twig->loadTemplate('group-index.twig');
 
     try {
-      $vocab = $this->model->getVocabulary($vocab_id);
+      $vocab = $this->model->getVocabulary($request->getVocabid());
     } catch (Exception $e) {
       header("HTTP/1.0 404 Not Found");
       $template = $this->twig->loadTemplate('concept-info.twig');
@@ -676,10 +663,7 @@ class WebController extends Controller
 
     $groups = $vocab->listConceptGroups(false, $content_lang);
     
-    $this->request->setContentLang($content_lang);
-    $this->request->setLang($lang);
-    $this->request->setVocabid($vocab->getId());
-    $this->request->setPage('groups');
+    $request->setContentLang($content_lang);
 
     echo $template->render(
       array(
@@ -690,24 +674,23 @@ class WebController extends Controller
         'groups' => $groups,
         'parts' => $this->parts,
         'request_uri' => $this->request_uri,
-        'request' => $this->request
+        'request' => $request
       ));
   }
 
   /**
    * Invokes the vocabulary group contents page template.
-   * @param string $vocab_id vocabulary identifier eg. 'yso'.
-   * @param string $lang language parameter eg. 'fi' for Finnish.
    * @param string $group group URI.
    */
-  public function invokeGroupContents($vocab_id, $lang, $group)
+  public function invokeGroupContents($request, $group)
   {
+    $lang = $request->getLang();
     $this->setLanguageProperties($lang);
     $template = $this->twig->loadTemplate('group-contents.twig');
     $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
     if ($content_lang !== $lang) $this->twig->addGlobal("ContentLanguage", $content_lang);
     try {
-      $vocab = $this->model->getVocabulary($vocab_id);
+      $vocab = $this->model->getVocabulary($request->getVocabid());
     } catch (Exception $e) {
       header("HTTP/1.0 404 Not Found");
       $template = $this->twig->loadTemplate('concept-info.twig');
@@ -727,11 +710,8 @@ class WebController extends Controller
     $uri = $vocab->getConceptURI($group); // make sure it's a full URI
     $results = $vocab->getConceptInfo($uri, $content_lang);
     
-    $this->request->setContentLang($content_lang);
-    $this->request->setLang($lang);
-    $this->request->setVocabid($vocab->getId());
-    $this->request->setPage('groups');
-    $this->request->setUri($groupuri);
+    $request->setContentLang($content_lang);
+    $request->setUri($groupuri);
 
     echo $template->render(
       array(
@@ -743,7 +723,7 @@ class WebController extends Controller
         'label' => $group_name,
         'request_uri' => $this->request_uri,
         'search_results' => $results,
-        'request' => $this->request
+        'request' => $request
       ));
   }
 
