@@ -17,14 +17,14 @@
             {% set crumbId = loop.index %}
               <div class="crumb-path">
               {% for crumb in path %}
-              {% if not loop.last %}<a class="propertyvalue bread-crumb{% if crumb.hiddenLabel %} expand-crumbs{% endif %}" href="{{ crumb.uri|link_url(vocab,lang,'page',ContentLanguage) }}">{{ crumb.prefLabel }}</a><span class="bread-crumb"> > </span>
+              {% if not loop.last %}<a class="propertyvalue bread-crumb{% if crumb.hiddenLabel %} expand-crumbs{% endif %}" href="{{ crumb.uri|link_url(vocab,request.lang,'page',ContentLanguage) }}">{{ crumb.prefLabel }}</a><span class="bread-crumb"> > </span>
               {% else %}<span class="bread-crumb propertylabel-pink">{{ crumb.prefLabel }}</span>
               {% endif %}
               {% if crumb.hiddenLabel %}
                 {% for hiddenPath in combined %}
                   {% if crumbId == loop.index %}
                     {% for hiddenCrumb in hiddenPath %}
-                    <a class="propertyvalue hidden-breadcrumb" href="{{ hiddenCrumb.uri|link_url(vocab,lang,'page',ContentLanguage) }}">{{ hiddenCrumb.hiddenLabel }}</a><span class="hidden-breadcrumb"> > </span>
+                    <a class="propertyvalue hidden-breadcrumb" href="{{ hiddenCrumb.uri|link_url(vocab,request.lang,'page',ContentLanguage) }}">{{ hiddenCrumb.hiddenLabel }}</a><span class="hidden-breadcrumb"> > </span>
                     {% endfor %}
                   {% endif %}
                 {% endfor %}
@@ -43,13 +43,13 @@
           {% if concept.ExVocab is defined %}
           <span class="prefLabel conceptlabel redirected-vocab-id"> @{{ concept.ExVocab }}</span>
           {% endif %}
-          <br /><a class="prefLabel foundby" href="{{ concept.uri | link_url(concept.vocab,lang) }}">{{ concept.label }}</a></span>
+          <br /><a class="prefLabel foundby" href="{{ concept.uri | link_url(concept.vocab,request.lang) }}">{{ concept.label }}</a></span>
         </td>
         {% else %}
         <td>{% if concept.notation %}<span class="notation">{{ concept.notation }}</span>{% endif %}
         <span class="prefLabel
           {% if rest != 1 %}">{{ concept.label(ContentLanguage) }}</span>{% if explicit_langcodes %}<span class="prefLabelLang"> ({{ concept.label.lang }})</span>{% endif %}{% else %}"></span>
-          <a class="prefLabel conceptlabel" href="{% if concept.type == "skos:Collection" %}{{ concept.uri | link_url(concept.vocab, lang, 'groups',ContentLanguage) }}{% elseif concept.exvocab is defined%}{{ concept.uri | link_url(concept.exvocab,concept.lang, 'page', ContentLanguage) }}{% else %}{{ concept.uri | link_url(concept.vocab,concept.lang,'page',ContentLanguage) }}{% endif %}">{{ concept.label }}</a>
+          <a class="prefLabel conceptlabel" href="{% if concept.type == "skos:Collection" %}{{ concept.uri | link_url(concept.vocab, request.lang, 'groups',ContentLanguage) }}{% elseif concept.exvocab is defined%}{{ concept.uri | link_url(concept.exvocab,concept.lang, 'page', ContentLanguage) }}{% else %}{{ concept.uri | link_url(concept.vocab,concept.lang,'page',ContentLanguage) }}{% endif %}">{{ concept.label }}</a>
           {% endif %}
         </td>
         {% endif %}
@@ -63,15 +63,15 @@
               {% if propval.uri and propval.type != 'rdf:type' %} {# resources with URI #}
                 {% if propval.label %}
                   {% if propval.exvocab and propval.exvocab != propval.vocab %}{# if the property is located in a another vocabulary #}
-                  <a class="versal" href="{% if propval.type == "skosmos:memberOf" %}{{ propval.uri | link_url(propval.vocab, lang, 'groups') }}{% else %}{{ propval.uri | link_url(propval.vocab, lang, 'page', ContentLanguage) }}{% endif %}">{{ propval.label }}</a>
+                  <a class="versal" href="{% if propval.type == "skosmos:memberOf" %}{{ propval.uri | link_url(propval.vocab, request.lang, 'groups') }}{% else %}{{ propval.uri | link_url(propval.vocab, request.lang, 'page', ContentLanguage) }}{% endif %}">{{ propval.label }}</a>
                   {% else %}
-                  <a class="versal" href="{% if propval.type == "skosmos:memberOf" %}{{ propval.uri | link_url(propval.vocab, lang, 'groups', ContentLanguage) }}{% else %}{{ propval.uri | link_url(propval.vocab, lang, 'page',ContentLanguage) }}{% endif %}">{{ propval.label(ContentLanguage) }}</a>
-                    {% if propval.lang and (propval.lang != lang or explicit_langcodes) %}<span class="versal"> ({{ propval.label.lang }})</span>{% endif %}
+                  <a class="versal" href="{% if propval.type == "skosmos:memberOf" %}{{ propval.uri | link_url(propval.vocab, request.lang, 'groups', ContentLanguage) }}{% else %}{{ propval.uri | link_url(propval.vocab, request.lang, 'page',ContentLanguage) }}{% endif %}">{{ propval.label(ContentLanguage) }}</a>
+                    {% if propval.lang and (propval.lang != request.lang or explicit_langcodes) %}<span class="versal"> ({{ propval.label.lang }})</span>{% endif %}
                   {% endif %}
                   {% if propval.SubMembers %}<div class="subvalue"> {# if property is a group concept that has sub properties #}
                     {% for sub_member in propval.SubMembers %}
-                      <a class="propertyvalue" href="{{ sub_member.uri | link_url(propval.vocab,lang) }}">{{ sub_member.label(ContentLanguage) }}</a>
-                      {% if sub_member.lang and (sub_member.lang != lang or explicit_langcodes) %}<span class="propertyvalue"> ({{ sub_member.lang }})</span>{% endif %}
+                      <a class="propertyvalue" href="{{ sub_member.uri | link_url(propval.vocab,request.lang) }}">{{ sub_member.label(ContentLanguage) }}</a>
+                      {% if sub_member.lang and (sub_member.lang != request.lang or explicit_langcodes) %}<span class="propertyvalue"> ({{ sub_member.lang }})</span>{% endif %}
                       <br />
                     {% endfor %}
                     </div>
@@ -79,7 +79,7 @@
                 {% endif %}
               {% elseif property.type == 'rdf:type' %}<p>{{ propval.label|trans }}</p>
               {% else %} {# Literals (no URI), eg. alternative labels as properties #}
-                {% if propval.lang == ContentLanguage or propval.lang == null or not ContentLanguage and propval.lang == lang %}
+                {% if propval.lang == ContentLanguage or propval.lang == null or not ContentLanguage and propval.lang == request.lang %}
                 <p{% if property.type == 'skos:altLabel' %} class="replaced"{% endif %}>{{ propval.label }}{% if propval.lang and (ContentLanguage and propval.lang != ContentLanguage or explicit_langcodes) %} ({{ propval.lang }}){% endif %}</p>
                 {% endif %}
               {% endif %}

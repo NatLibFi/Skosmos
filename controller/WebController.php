@@ -218,12 +218,18 @@ class WebController extends Controller
     $this->request->setLang($lang);
 
     // render template
-    echo $template
-            ->render(
-                    array('vocab_list' => $vocabList, 'category_label' => $categoryLabel,
-                        'path_fix' => $this->path_fix, 'languages' => $this->languages, 'front_page' => True,
-                        'lang' => $lang, 'parts' => $this->parts, 'request_uri' => $this->request_uri, 
-                        'lang_list' => $langList, 'request' => $this->request));
+    echo $template->render(
+      array(
+        'vocab_list' => $vocabList, 
+        'category_label' => $categoryLabel,
+        'path_fix' => $this->path_fix, 
+        'languages' => $this->languages, 
+        'front_page' => True,
+        'parts' => $this->parts, 
+        'request_uri' => $this->request_uri, 
+        'lang_list' => $langList, 
+        'request' => $this->request
+    ));
   }
 
   /**
@@ -242,8 +248,12 @@ class WebController extends Controller
       header("HTTP/1.0 404 Not Found");
       if (LOG_CAUGHT_EXCEPTIONS)
         error_log('Caught exception: ' . $e->getMessage());
-      echo $template->render(array('path_fix' => $this->path_fix, 'languages' => $this->languages,
-          'lang' => $lang, 'vocab_id' => $vocab_id, 'request_uri' => $this->request_uri));
+      echo $template->render(
+        array(
+          'path_fix' => $this->path_fix, 
+          'languages' => $this->languages,
+          'request_uri' => $this->request_uri
+        ));
       exit();
     }
 
@@ -272,11 +282,9 @@ class WebController extends Controller
     echo $template->render(Array(
       'search_results' => $results,
       'vocab' => $vocab,
-      'vocab_id' => $vocab_id,
       'path_fix' => $this->path_fix,
       'languages' => $this->languages,
       'parts' => $this->parts,
-      'lang' => $lang,
       'explicit_langcodes' => $langcodes,
       'request_uri' => $this->request_uri,
       'bread_crumbs' => $crumbs['breadcrumbs'],
@@ -301,10 +309,12 @@ class WebController extends Controller
       header("HTTP/1.0 404 Not Found");
       if (LOG_CAUGHT_EXCEPTIONS)
         error_log('Caught exception: ' . $e->getMessage());
-      echo $template->render(array('path_fix' => $this->path_fix,
+      echo $template->render(
+        array(
+          'path_fix' => $this->path_fix,
           'languages' => $this->languages,
-          'lang' => $lang, 'vocab_id' => $vocab_id,
-          'vocabList' => $vocabList));
+          'vocabList' => $vocabList
+        ));
 
       return;
     }
@@ -334,17 +344,17 @@ class WebController extends Controller
     if ($vocab_id !== null)
       $this->request->setVocabid($vocab_id);
 
-    echo $template
-            ->render(
-                    array('path_fix' => $this->path_fix,
-                        'languages' => $this->languages,
-                        'vocab' => $vocab,
-                        'vocabList' => $vocabList,
-                        'feedback_sent' => $feedback_sent,
-                        'parts' => $this->parts,
-                        'request_uri' => $this->request_uri,
-                        'request' => $this->request
-            ));
+    echo $template->render(
+      array(
+        'path_fix' => $this->path_fix,
+        'languages' => $this->languages,
+        'vocab' => $vocab,
+        'vocabList' => $vocabList,
+        'feedback_sent' => $feedback_sent,
+        'parts' => $this->parts,
+        'request_uri' => $this->request_uri,
+        'request' => $this->request
+      ));
   }
 
   /**
@@ -398,14 +408,15 @@ class WebController extends Controller
     $this->request->setLang($lang);
     $this->request->setPage('feedback');
 
-    echo $template
-      ->render(array('path_fix' => $this->path_fix, 
-                    'languages' => $this->languages,
-                    'vocab_id' => $vocab_id, 
-                    'version' => $version,
-                    'server_instance' => $url, 
-                    'request_uri' => $this->request_uri, 
-                    'request' => $this->request));
+    echo $template->render(
+      array(
+        'path_fix' => $this->path_fix, 
+        'languages' => $this->languages,
+        'version' => $version,
+        'server_instance' => $url, 
+        'request_uri' => $this->request_uri, 
+        'request' => $this->request
+      ));
   }
 
   /**
@@ -452,19 +463,20 @@ class WebController extends Controller
     $this->request->setPage('search');
 
     echo $template->render(
-            array('path_fix' => $this->path_fix,
-                'search_count' => $counts,
-                'languages' => $this->languages,
-                'lang' => $lang,
-                'search_results' => $search_results,
-                'term' => $term,
-                'rest' => $rest, 'parts' => $this->parts, 'global_search' => True, 'uri_parts' => $uri_parts,
-                'request_uri' => $this->request_uri,
-                'lang_list' => $langList,
-                'vocabs' => $vocabs,
-                'vocab_list' => $vocabList,
-                'request' => $this->request
-
+      array(
+        'path_fix' => $this->path_fix,
+        'search_count' => $counts,
+        'languages' => $this->languages,
+        'search_results' => $search_results,
+        'term' => $term,
+        'rest' => $rest, 'parts' => $this->parts, 
+        'global_search' => True, 
+        'uri_parts' => $uri_parts,
+        'request_uri' => $this->request_uri,
+        'lang_list' => $langList,
+        'vocabs' => $vocabs,
+        'vocab_list' => $vocabList,
+        'request' => $this->request
     ));
   }
 
@@ -484,9 +496,11 @@ class WebController extends Controller
       header("HTTP/1.0 404 Not Found");
       if (LOG_CAUGHT_EXCEPTIONS)
         error_log('Caught exception: ' . $e->getMessage());
-      echo $template->render(array('path_fix' => $this->path_fix,
+      echo $template->render(
+        array(
+          'path_fix' => $this->path_fix,
           'languages' => $this->languages,
-          'lang' => $lang, 'vocab_id' => $vocab_id));
+        ));
 
       return;
     }
@@ -527,36 +541,36 @@ class WebController extends Controller
       if (LOG_CAUGHT_EXCEPTIONS)
         error_log('Caught exception: ' . $e->getMessage());
       echo $template->render(
-            array('path_fix' => $this->path_fix,
-                'languages' => $this->languages,
-                'lang' => $lang,
-                'vocab_id' => $vocab_id,
-                'vocab' => $vocab,
-                'term' => $term,
-                'rest' => $rest, 'parts' => $this->parts));
+        array(
+          'path_fix' => $this->path_fix,
+          'languages' => $this->languages,
+          'vocab' => $vocab,
+          'term' => $term,
+          'rest' => $rest, 
+          'parts' => $this->parts
+        ));
       return;
     }
     $uri_parts = $_SERVER['REQUEST_URI'];
     echo $template->render(
-            array('path_fix' => $this->path_fix,
-                'languages' => $this->languages,
-                'vocab_id' => $vocab_id,
-                'vocab' => $vocab,
-                'parts' => $this->parts,
-                'search_results' => $search_results,
-                'search_count' => $counts,
-                'term' => $term,
-                'rest' => $rest, 'parts' => $this->parts, 
-                'uri_parts' => $uri_parts,
-                'limit_parent' => $parent,
-                'limit_type' => $type,
-                'limit_group' => $group,
-                'group_index' => $groups,
-                'types' => $vocab_types,
-                'explicit_langcodes' => $langcodes,
-                'request_uri' => $this->request_uri,
-                'request' => $this->request
-
+      array(
+        'path_fix' => $this->path_fix,
+        'languages' => $this->languages,
+        'vocab' => $vocab,
+        'parts' => $this->parts,
+        'search_results' => $search_results,
+        'search_count' => $counts,
+        'term' => $term,
+        'rest' => $rest, 'parts' => $this->parts, 
+        'uri_parts' => $uri_parts,
+        'limit_parent' => $parent,
+        'limit_type' => $type,
+        'limit_group' => $group,
+        'group_index' => $groups,
+        'types' => $vocab_types,
+        'explicit_langcodes' => $langcodes,
+        'request_uri' => $this->request_uri,
+        'request' => $this->request
     ));
   }
 
@@ -578,9 +592,11 @@ class WebController extends Controller
       $template = $this->twig->loadTemplate('concept-info.twig');
       if (LOG_CAUGHT_EXCEPTIONS)
         error_log('Caught exception: ' . $e->getMessage());
-      echo $template->render(array('path_fix' => $this->path_fix,
-          'languages' => $this->languages,
-          'lang' => $lang, 'vocab_id' => $vocab_id));
+      echo $template->render(
+        array(
+          'path_fix' => $this->path_fix,
+          'languages' => $this->languages
+        ));
 
       return;
     }
@@ -617,22 +633,20 @@ class WebController extends Controller
     $this->request->setLetter($letter);
 
     $controller = $this; // for use by anonymous function below
-    echo $template
-            ->render(
-                    array('path_fix' => $this->path_fix,
-                        'languages' => $this->languages,
-                        'lang' => $lang,
-                        'vocab_id' => $vocab_id,
-                        'vocab' => $vocab,
-                        'alpha_results' => $search_results,
-                        'search_letter' => $letter,
-                        'letters' => $letters,
-                        'letter' => $letter,
-                        'parts' => $this->parts,
-                        'all_letters' => $all_at_once,
-                        'request_uri' => $this->request_uri,
-                        'request' => $this->request
-            ));
+    echo $template->render(
+        array(
+          'path_fix' => $this->path_fix,
+          'languages' => $this->languages,
+          'vocab' => $vocab,
+          'alpha_results' => $search_results,
+          'search_letter' => $letter,
+          'letters' => $letters,
+          'letter' => $letter,
+          'parts' => $this->parts,
+          'all_letters' => $all_at_once,
+          'request_uri' => $this->request_uri,
+          'request' => $this->request
+        ));
   }
 
   /**
@@ -652,9 +666,11 @@ class WebController extends Controller
       $template = $this->twig->loadTemplate('concept-info.twig');
       if (LOG_CAUGHT_EXCEPTIONS)
         error_log('Caught exception: ' . $e->getMessage());
-      echo $template->render(array('path_fix' => $this->path_fix,
-          'languages' => $this->languages,
-          'lang' => $lang, 'vocab_id' => $vocab_id));
+      echo $template->render(
+        array(
+          'path_fix' => $this->path_fix,
+          'languages' => $this->languages
+        ));
 
       return;
     }
@@ -675,17 +691,17 @@ class WebController extends Controller
     $this->request->setVocabid($vocab->getId());
     $this->request->setPage('groups');
 
-    echo $template
-            ->render(
-                    array('path_fix' => $this->path_fix,
-                        'languages' => $this->languages,
-                        'stats' => $stats,
-                        'vocab' => $vocab,
-                        'groups' => $groups,
-                        'parts' => $this->parts,
-                        'request_uri' => $this->request_uri,
-                        'request' => $this->request
-            ));
+    echo $template->render(
+      array(
+        'path_fix' => $this->path_fix,
+        'languages' => $this->languages,
+        'stats' => $stats,
+        'vocab' => $vocab,
+        'groups' => $groups,
+        'parts' => $this->parts,
+        'request_uri' => $this->request_uri,
+        'request' => $this->request
+      ));
   }
 
   /**
@@ -707,9 +723,11 @@ class WebController extends Controller
       $template = $this->twig->loadTemplate('concept-info.twig');
       if (LOG_CAUGHT_EXCEPTIONS)
         error_log('Caught exception: ' . $e->getMessage());
-      echo $template->render(array('path_fix' => $this->path_fix,
-          'languages' => $this->languages,
-          'lang' => $lang, 'vocab_id' => $vocab_id));
+      echo $template->render(
+        array(
+          'path_fix' => $this->path_fix,
+          'languages' => $this->languages
+        ));
 
       return;
     }
@@ -725,18 +743,18 @@ class WebController extends Controller
     $this->request->setPage('groups');
     $this->request->setUri($groupuri);
 
-    echo $template
-            ->render(
-                    array('path_fix' => $this->path_fix,
-                        'languages' => $this->languages,
-                        'vocab' => $vocab,
-                        'contents' => $contents,
-                        'parts' => $this->parts,
-                        'label' => $group_name,
-                        'request_uri' => $this->request_uri,
-                        'search_results' => $results,
-                        'request' => $this->request
-            ));
+    echo $template->render(
+      array(
+        'path_fix' => $this->path_fix,
+        'languages' => $this->languages,
+        'vocab' => $vocab,
+        'contents' => $contents,
+        'parts' => $this->parts,
+        'label' => $group_name,
+        'request_uri' => $this->request_uri,
+        'search_results' => $results,
+        'request' => $this->request
+      ));
   }
 
   /**
@@ -757,9 +775,12 @@ class WebController extends Controller
       $template = $this->twig->loadTemplate('concept-info.twig');
       if (LOG_CAUGHT_EXCEPTIONS)
         error_log('Caught exception: ' . $e->getMessage());
-      echo $template->render(array('path_fix' => $this->path_fix,
-        'languages' => $this->languages,
-        'lang' => $lang, 'vocab_id' => $vocab_id));
+
+      echo $template->render(
+        array(
+          'path_fix' => $this->path_fix,
+          'languages' => $this->languages
+        ));
 
       return;
     }
@@ -784,17 +805,17 @@ class WebController extends Controller
     $this->request->setLang($lang);
     $this->request->setVocabid($vocab->getId());
 
-    echo $template
-            ->render(
-                    array('path_fix' => $this->path_fix,
-                        'languages' => $this->languages,
-                        'vocab' => $vocab,
-                        'parts' => $this->parts,
-                        'search_letter' => 'A',
-                        'active_tab' => $defaultView,
-                        'request_uri' => $this->request_uri,
-                        'request' => $this->request
-                    ));
+    echo $template->render(
+      array(
+        'path_fix' => $this->path_fix,
+        'languages' => $this->languages,
+        'vocab' => $vocab,
+        'parts' => $this->parts,
+        'search_letter' => 'A',
+        'active_tab' => $defaultView,
+        'request_uri' => $this->request_uri,
+        'request' => $this->request
+      ));
   }
 
   /**
@@ -806,14 +827,13 @@ class WebController extends Controller
     $this->setLanguageProperties($lang);
     header("HTTP/1.0 404 Not Found");
     $template = $this->twig->loadTemplate('error-page.twig');
-    echo $template
-            ->render(
-                    array('path_fix' => $this->path_fix,
-                        'languages' => $this->languages,
-                        'lang' => $lang,
-                        'parts' => $this->parts,
-                        'requested_page' => $_SERVER['REQUEST_URI']
-                    ));
+    echo $template->render(
+      array(
+        'path_fix' => $this->path_fix,
+        'languages' => $this->languages,
+        'parts' => $this->parts,
+        'requested_page' => $_SERVER['REQUEST_URI']
+      ));
   }
 
   /**
