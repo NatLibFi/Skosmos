@@ -1,12 +1,12 @@
-{% if vocab_id is defined %}
+{% if request.vocabid is defined %}
 <div class="header-left">
   {% if path_fix|length > 5 %}
-  <h1><a href="{% if vocab_id %}{{ vocab_id  }}/{% endif %}{{lang}}/{% if ContentLanguage %}?clang={{ ContentLanguage }}{% endif %}">{{ vocab.title }}</a></h1>
+  <h1><a href="{% if request.vocabid %}{{ request.vocabid  }}/{% endif %}{{ request.lang }}/{% if ContentLanguage %}?clang={{ ContentLanguage }}{% endif %}">{{ vocab.title }}</a></h1>
   {% else %}
     {% if vocab.title is defined %}
     <h1>{{ vocab.title }}</h1>
-    {% else %}
-    <h1>{{ vocab_id|trans }}</h1>
+    {% elseif request.vocabid %}
+    <h1>{{ request.vocabid|trans }}</h1>
     {% endif %}
   {% endif %}
 </div>
@@ -24,7 +24,7 @@
     {% endfor %}
     </select>
   {% endif %}
-  <form class="navbar-form" role="search" name="text-search" action="{% if vocab_id is defined %}{{ vocab_id }}/{% endif %}{{ request.lang }}/search">
+  <form class="navbar-form" role="search" name="text-search" action="{% if request.vocabid != '' %}{{ request.vocabid }}/{% endif %}{{ request.lang }}/search">
     <input style="display: none" name="clang" value="{% if ContentLanguage %}{{ ContentLanguage }}{% else %}{{ lang }}{% endif %}" id="lang-input">
     <div class="input-group">
       <div class="input-group-btn">

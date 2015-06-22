@@ -16,31 +16,31 @@
 
 <title>{{ ServiceName }}{% block title %}{% endblock %}</title>
 </head>
-<body{% if vocab_id == '' and vocab_id != 'feedback' and vocab_id != 'about' %} class="frontpage-logo"{% else %} class="vocab-{{vocab_id}}"{% endif %}>
-  {% if vocab_id != '' or vocab_id == 'feedback' or vocab_id == 'about' %}<div class="topbar-white">{% endif %}
-    <div class="topbar{% if vocab_id != '' or vocab_id == 'feedback' or vocab_id == 'about' %} topbar-white{% else %} frontpage{% endif %}">
+<body{% if request.vocabid == '' and request.page != 'feedback' and request.page != 'about' %} class="frontpage-logo"{% else %} class="vocab-{{ request.vocabid }}"{% endif %}>
+  {% if request.vocabid != '' or request.page == 'feedback' or request.page == 'about' %}<div class="topbar-white">{% endif %}
+    <div class="topbar{% if request.vocabid != '' or request.vocabid == 'feedback' or request.vocabid == 'about' %} topbar-white{% else %} frontpage{% endif %}">
       {% include 'topbar.twig' %}
     </div>
-  {% if vocab_id != '' or vocab_id == 'feedback' or vocab_id == 'about' %}</div>{% endif %}
+  {% if request.vocabid != '' or request.page == 'feedback' or request.page == 'about' %}</div>{% endif %}
   {% block headernav %}
-  <div class="headerbar{% if vocab_id == '' or global_search %} frontpage-spacing{% endif %}{% if vocab_id != '' or vocab_id == 'feedback' or vocab_id == 'about' %} headerbar-coloured{% endif %}">
+  <div class="headerbar{% if request.vocabid == '' or global_search %} frontpage-spacing{% endif %}{% if request.vocabid != '' or request.page == 'feedback' or request.page == 'about' %} headerbar-coloured{% endif %}">
     {% include 'headerbar.twig' %}
   </div>
   {% endblock %}
-  <section{% if vocab_id == '' or global_search %} class="frontpage"{% endif %}>
-    {% if not vocab_id == '' %}
+  <section{% if request.vocabid == '' or global_search %} class="frontpage"{% endif %}>
+    {% if not request.vocabid == '' %}
     <div id="sidebar">
     {% block sidebar %}
-      {% if vocab_id != '' or vocab_id == 'feedback' or vocab_id == 'about' %}
+      {% if request.vocabid != '' or request.page == 'feedback' or request.page == 'about' %}
       <div class="sidebar-buttons">
         <ul class="nav nav-tabs">
         {% if not term %}
-          <li id="alpha"{% if search_results|length != 1 or (term and search_results|length == 1) %} class ="active"{% endif %}><a href="{{ vocab_id }}/{{ request.lang }}/index{% if ContentLanguage %}?clang={{ ContentLanguage }}{% endif %}">{% trans "Alpha-nav" %}</a></li>
+          <li id="alpha"{% if search_results|length != 1 or (term and search_results|length == 1) %} class ="active"{% endif %}><a href="{{ request.vocabid }}/{{ request.lang }}/index{% if ContentLanguage %}?clang={{ ContentLanguage }}{% endif %}">{% trans "Alpha-nav" %}</a></li>
           {% if search_results|length == 1 or vocab.showHierarchy %}
           <li id="hierarchy"{% if search_results|length == 1 and not term %} class ="active"{% endif %}><a href="#" id="hier-trigger">{% trans "Hier-nav" %}</a></li>
           {% endif %}
           {% if vocab.groupClassURI %}
-          <li id="groups"><a href="{{ vocab_id }}/{{ request.lang }}/groups{% if ContentLanguage %}?clang={{ ContentLanguage }}{% endif %}">{% trans "Group-nav" %}</a></li>
+          <li id="groups"><a href="{{ request.vocabid }}/{{ request.lang }}/groups{% if ContentLanguage %}?clang={{ ContentLanguage }}{% endif %}">{% trans "Group-nav" %}</a></li>
           {% else %}
           {% endif %}
         {% else %}
@@ -51,7 +51,7 @@
       {% if letters %}
         <ul class="pagination">
         {% for letter in letters %} {# looping through all letters #}
-          <li{% if search_letter == letter %} class="active"{% endif %}><a href="{{ vocab_id }}/{{ request.lang }}/index/{{ letter }}{% if ContentLanguage %}?clang={{ ContentLanguage }}{% endif %}">{{ letter }}</a></li>
+          <li{% if search_letter == letter %} class="active"{% endif %}><a href="{{ request.vocabid }}/{{ request.lang }}/index/{{ letter }}{% if ContentLanguage %}?clang={{ ContentLanguage }}{% endif %}">{{ letter }}</a></li>
         {% endfor %}
         </ul>
       {% endif %}
@@ -113,11 +113,11 @@
   {% endif %}
 
     </div>
-    {% if vocab_id == '' and vocab_id != 'feedback' and vocab_id != 'about' and not global_search %}
+    {% if request.vocabid == '' and request.page != 'feedback' and request.page != 'about' and not global_search %}
       {% include 'left.inc' ignore missing %}
     {% endif %}
     {% block error %}
-      {% if vocab_id == '' and vocab_id != 'feedback' and vocab_id != 'about' and not global_search %}
+      {% if request.vocabid == '' and request.page != 'feedback' and request.page != 'about' and not global_search %}
         {% include 'vocabularylist.twig' %}
       {% endif %}
       <div class="{% if global_search %}global-{% endif %}content">
@@ -125,7 +125,7 @@
       {% endblock %}
       </div>
     {% endblock %}
-    {% if vocab_id == '' and not global_search %}
+    {% if request.vocabid == '' and not global_search and request.page != 'feedback' and request.page != 'about' %}
       {% include 'right.inc' ignore missing %}
     {% endif %}
     <footer id="footer"></footer>

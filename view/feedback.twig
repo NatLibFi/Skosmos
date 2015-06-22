@@ -20,7 +20,7 @@
         <select class="form-control" name="vocab">
           <option value="none">{% trans %}Not to a specific vocabulary{% endtrans %}</option>
             {% for option in vocabList %}
-            <option value="{{ option.id }}"{% if vocab_id == option.id %} selected="selected"{% endif %}>{{ option.title }}</option>
+            <option value="{{ option.id }}"{% if request.vocabid == option.id %} selected="selected"{% endif %}>{{ option.title }}</option>
             {% endfor %}
         </select>
         {% endif %}

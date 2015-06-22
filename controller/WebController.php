@@ -328,18 +328,16 @@ class WebController extends Controller
       $this->sendFeedback($feedback_msg, $feedback_name, $feedback_email, $feedback_vocab, $feedback_vocab_email);
     }
 
-    if ($vocab_id == null)
-      $vocab_id = 'Feedback';
-    
     $this->request->setContentLang($content_lang);
     $this->request->setLang($lang);
     $this->request->setPage('feedback');
+    if ($vocab_id !== null)
+      $this->request->setVocabid($vocab_id);
 
     echo $template
             ->render(
                     array('path_fix' => $this->path_fix,
                         'languages' => $this->languages,
-                        'vocab_id' => $vocab_id,
                         'vocab' => $vocab,
                         'vocabList' => $vocabList,
                         'feedback_sent' => $feedback_sent,
@@ -681,9 +679,7 @@ class WebController extends Controller
             ->render(
                     array('path_fix' => $this->path_fix,
                         'languages' => $this->languages,
-                        'lang' => $lang,
                         'stats' => $stats,
-                        'vocab_id' => $vocab_id,
                         'vocab' => $vocab,
                         'groups' => $groups,
                         'parts' => $this->parts,
@@ -733,8 +729,6 @@ class WebController extends Controller
             ->render(
                     array('path_fix' => $this->path_fix,
                         'languages' => $this->languages,
-                        'lang' => $lang,
-                        'vocab_id' => $vocab_id,
                         'vocab' => $vocab,
                         'contents' => $contents,
                         'parts' => $this->parts,
@@ -796,12 +790,11 @@ class WebController extends Controller
                         'languages' => $this->languages,
                         'vocab' => $vocab,
                         'parts' => $this->parts,
-                        'vocab_id' => $vocab_id,
                         'search_letter' => 'A',
                         'active_tab' => $defaultView,
                         'request_uri' => $this->request_uri,
                         'request' => $this->request
-                      ));
+                    ));
   }
 
   /**
@@ -819,7 +812,8 @@ class WebController extends Controller
                         'languages' => $this->languages,
                         'lang' => $lang,
                         'parts' => $this->parts,
-                        'requested_page' => $_SERVER['REQUEST_URI']));
+                        'requested_page' => $_SERVER['REQUEST_URI']
+                    ));
   }
 
   /**

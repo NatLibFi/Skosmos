@@ -5,9 +5,9 @@
 {% block content %}
 <div class="search-result-listing">
   {% include 'search-result.twig' %}
-  {% if vocab_id == 'null' and not global_search %}
+  {% if request.vocabid == 'null' and not global_search %}
   <div class="alert alert-danger">
-    <h4>{% trans %}Error: Requested vocabulary "{{ vocab_id }}" not found!{% endtrans %}</h4>
+    <h4>{% trans %}Error: Requested vocabulary not found!{% endtrans %}</h4>
   </div>
   {% endif %}
 </div>

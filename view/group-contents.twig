@@ -5,12 +5,12 @@
 {% block sidebar %}
 <div class="sidebar-buttons">
   <ul class="nav nav-tabs">
-    <li id="alpha"><a href="{{ vocab_id }}/{{ lang }}/index">{% trans "Alpha-nav" %}</a></li>
+    <li id="alpha"><a href="{{ request.vocabid }}/{{ request.lang }}/index">{% trans "Alpha-nav" %}</a></li>
     {% if vocab.showHierarchy %}
     <li id="hierarchy"><a href="#" id="hier-trigger">{% trans "Hier-nav" %}</a></li>
     {% endif %}
     {% if vocab.groupClassURI %}
-    <li id="groups" class="active"><a href="{{ vocab_id }}/{{ lang }}/groups">{% trans "Group-nav" %}</a></li>
+    <li id="groups" class="active"><a href="{{ request.vocabid }}/{{ request.lang }}/groups">{% trans "Group-nav" %}</a></li>
     {% else %}
     {% endif %}
   </ul>
@@ -20,7 +20,7 @@
     <p class="versal-pref">{% if label != '' %}{{ label }}{% else %}{% trans "concepts within the group" %}{% endif %}</p>
     <ul class="side-navi">
       {% for uri, value in contents %}
-      <li{% if value.hasSuper %} class="sub-group"{% endif %}><a href="{% if value.hasSuper %}{{ uri | link_url(vocab,lang,'groups', ContentLanguage) }}{% else %}{{ uri | link_url(vocab,lang,'page', ContentLanguage) }}{% endif %}">{{ value.label }}</a></li>
+      <li{% if value.hasSuper %} class="sub-group"{% endif %}><a href="{% if value.hasSuper %}{{ uri | link_url(vocab,request.lang,'groups', ContentLanguage) }}{% else %}{{ uri | link_url(vocab,request.lang,'page', ContentLanguage) }}{% endif %}">{{ value.label }}</a></li>
       {% endfor %}
     </ul>
   </div>
