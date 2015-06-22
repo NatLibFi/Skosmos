@@ -6,7 +6,7 @@
  */
 
 /**
- * Stores session state information
+ * Provides access to the http request information
  */
 class Request 
 {
