@@ -959,9 +959,9 @@ EOQ;
       }
       // Preventing labels in a non preferred language overriding the preferred language.
       if (isset($row->label) && $row->label->getLang() === $lang || array_key_exists($row->object->getUri(), $ret) === false) {
-        if ($row->label->getLang() === $lang)
+        if (!isset($row->label) || $row->label->getLang() === $lang) {
           $ret[$row->object->getUri()] = $val;
-        elseif ($row->label->getLang() === $fallbacklang) {
+        } elseif ($row->label->getLang() === $fallbacklang) {
           $val['label'] .= ' (' . $row->label->getLang() . ')';
           $ret[$row->object->getUri()] = $val;
         }       
