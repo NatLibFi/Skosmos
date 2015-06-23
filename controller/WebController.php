@@ -556,7 +556,7 @@ class WebController extends Controller
       $search_results = $vocab->searchConceptsAlphabetical($letter, $count, $offset, $content_lang);
       $letters = $vocab->getAlphabet($content_lang);
     } else {
-      $search_results = $vocab->searchConceptsAlphabetical('*');
+      $search_results = $vocab->searchConceptsAlphabetical('*', null, null, $content_lang);
       $letters = null;
     }
 
