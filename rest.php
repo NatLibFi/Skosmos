@@ -17,8 +17,10 @@ header("Access-Control-Allow-Origin: *"); // enable CORS for the whole REST API
 
 try {
   require_once 'controller/RestController.php';
+  require_once 'model/Model.php';
 
-  $controller = new RestController();
+  $model = new Model();
+  $controller = new RestController($model);
 
   if (sizeof($parts) < 2 || $parts[1] == "") {
     header("HTTP/1.0 404 Not Found");
