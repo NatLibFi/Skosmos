@@ -26,10 +26,11 @@ if (isset($_GET['base_path'])) {
 }
 
 require_once 'controller/WebController.php';
-require_once 'model/Request.php';
+require_once 'model/Model.php';
 
-$controller = new WebController($path_fix);
-$request = new Request();
+$model = new Model();
+$controller = new WebController($model, $path_fix);
+$request = new Request($model);
 if (sizeof($parts) <= 2) {
   // if language code missing, redirect to guessed language
   // in any case, redirect to <lang>/

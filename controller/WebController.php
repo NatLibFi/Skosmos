@@ -47,9 +47,9 @@ class WebController extends Controller
    * Constructor for the WebController can be given the path_fix as a parameter.
    * @param string $path_fix eg. '../../'
    */
-  public function __construct($path_fix)
+  public function __construct($model, $path_fix)
   {
-    parent::__construct();
+    parent::__construct($model);
 
     // used for making proper hrefs for the language selection
     $this->request_uri = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];

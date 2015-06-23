@@ -17,8 +17,6 @@ try {
   exit();
 }
 
-require_once 'model/Model.php';
-
 /**
  * Handles all the requests from the user and changes the view accordingly.
  */
@@ -37,9 +35,9 @@ class Controller
   /**
    * Initializes the Model object.
    */
-  public function __construct()
+  public function __construct($model)
   {
-    $this->model = new Model();
+    $this->model = $model;
     $this->negotiator = new \Negotiation\FormatNegotiator();
 
     // Specify the location of the translation tables

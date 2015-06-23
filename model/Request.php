@@ -17,12 +17,14 @@ class Request
   private $vocabid;
   private $uri;
   private $letter;
+  private $model;
 
   /**
    * Initializes the Request Object
    */
-  public function __construct()
+  public function __construct($model)
   {
+    $this->model = $model;
   }
 
   public function getLang() {
