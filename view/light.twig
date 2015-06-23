@@ -35,12 +35,12 @@
       <div class="sidebar-buttons">
         <ul class="nav nav-tabs">
         {% if not term %}
-          <li id="alpha"{% if search_results|length != 1 or (term and search_results|length == 1) %} class ="active"{% endif %}><a href="{{ request.vocabid }}/{{ request.lang }}/index{% if ContentLanguage %}?clang={{ ContentLanguage }}{% endif %}">{% trans "Alpha-nav" %}</a></li>
+          <li id="alpha"{% if search_results|length != 1 or (term and search_results|length == 1) %} class ="active"{% endif %}><a href="{{ request.vocabid }}/{{ request.lang }}/index{% if request.contentLang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Alpha-nav" %}</a></li>
           {% if search_results|length == 1 or vocab.showHierarchy %}
           <li id="hierarchy"{% if search_results|length == 1 and not term %} class ="active"{% endif %}><a href="#" id="hier-trigger">{% trans "Hier-nav" %}</a></li>
           {% endif %}
           {% if vocab.groupClassURI %}
-          <li id="groups"><a href="{{ request.vocabid }}/{{ request.lang }}/groups{% if ContentLanguage %}?clang={{ ContentLanguage }}{% endif %}">{% trans "Group-nav" %}</a></li>
+          <li id="groups"><a href="{{ request.vocabid }}/{{ request.lang }}/groups{% if request.contentLang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Group-nav" %}</a></li>
           {% else %}
           {% endif %}
         {% else %}
@@ -51,7 +51,7 @@
       {% if letters %}
         <ul class="pagination">
         {% for letter in letters %} {# looping through all letters #}
-          <li{% if letter == request.letter %} class="active"{% endif %}><a href="{{ request.vocabid }}/{{ request.lang }}/index/{{ letter }}{% if ContentLanguage %}?clang={{ ContentLanguage }}{% endif %}">{{ letter }}</a></li>
+          <li{% if letter == request.letter %} class="active"{% endif %}><a href="{{ request.vocabid }}/{{ request.lang }}/index/{{ letter }}{% if request.contentLang %}?clang={{ request.contentLang }}{% endif %}">{{ letter }}</a></li>
         {% endfor %}
         </ul>
       {% endif %}
@@ -67,9 +67,9 @@
               {% endif %}
               <li>
               {% if value.altLabel %}
-              <span class="replaced">{{ value.altLabel }}</span>	&rarr; <a href="{{ value.uri | link_url(vocab,request.lang,'page',ContentLanguage) }}">{{ value.prefLabel }}</a>
+              <span class="replaced">{{ value.altLabel }}</span>	&rarr; <a href="{{ value.uri | link_url(vocab,request.lang,'page',request.contentLang) }}">{{ value.prefLabel }}</a>
               {% else %}
-              <a href="{{ value.uri | link_url(vocab,request.lang,'page',ContentLanguage) }}">{{ value.prefLabel }}</a>
+              <a href="{{ value.uri | link_url(vocab,request.lang,'page',request.contentLang) }}">{{ value.prefLabel }}</a>
               {% endif %}
              </li>
               {% endfor %}
