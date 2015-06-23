@@ -87,7 +87,7 @@ if (sizeof($parts) <= 2) {
             }
           } else {
             (isset($_GET['uri'])) ? $request->setUri($_GET['uri']) : $request->setUri($parts[4]);
-            if ($request->getUri() === null || $request->getUri() === '')
+            if ($request->getUri() === null)
               $controller->invokeGroupIndex($request);
             else
               $controller->invokeGroupContents($request);
