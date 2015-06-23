@@ -53,13 +53,21 @@ if (sizeof($parts) <= 2) {
     }
   } else { // vocabulary-specific pages
     $vocab = $parts[1];
-    $request->setVocabid($parts[1]);
+    try {
+      $request->setVocab($parts[1]);
+    } catch (Exception $e) {
+      //TODO: make a proper error message
+      $controller->invokeGenericErrorPage($request);
+      exit();
+    }
     if (sizeof($parts) == 3) { // language code missing
       $lang = $controller->guessLanguage();
       header("Location: " . $lang . "/");
     } else {
       if (array_key_exists($parts[2], $LANGUAGES)) {
         $lang = $parts[2];
+        $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
+        $request->setContentLang($content_lang);
         $request->setLang($parts[2]);
         $request->setPage($parts[3]);
         if ($request->getPage() == '') {

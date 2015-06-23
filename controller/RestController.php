@@ -347,7 +347,7 @@ class RestController extends Controller
         ),
         'uri' => '',
         'id' => $vocabId,
-        'title' => $vocab->getTitle(),
+        'title' => $vocab->getTitle($litlang),
         'languages' => $counts 
     );
     

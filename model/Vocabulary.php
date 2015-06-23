@@ -36,9 +36,11 @@ class Vocabulary extends DataObject
    * Returns the human readable vocabulary title.
    * @return string the title of the vocabulary
    */
-  public function getTitle()
+  public function getTitle($lang=null)
   {
-    $literal = $this->resource->getLiteral('dc:title', $this->lang);
+    if (!isset($lang))
+      $lang = $this->lang;
+    $literal = $this->resource->getLiteral('dc:title', $lang);
     if ($literal)
       return $literal->getValue();
     // not found with selected language, try any language
@@ -767,6 +769,18 @@ class Vocabulary extends DataObject
       $crumbs[] = array_reverse($path);
     }
     return $crumbs;
+  }
+  
+  /**
+   * Verify that the requested language is supported by the vocabulary. If not, returns
+   * the default language of the vocabulary.
+   * @param string $lang language to check 
+   * @return string language tag that is supported by the vocabulary
+   */
+
+  public function verifyVocabularyLanguage($lang)
+  {
+    return (in_array($lang, $this->getLanguages())) ? $lang : $this->getDefaultLanguage();
   }
 
 }

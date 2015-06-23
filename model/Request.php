@@ -14,7 +14,7 @@ class Request
   private $lang;
   private $clang;
   private $page;
-  private $vocabid;
+  private $vocab;
   private $uri;
   private $letter;
   private $model;
@@ -49,7 +49,12 @@ class Request
    * @param string $clang
    */
   public function setContentLang($clang) {
-    $this->clang = $clang;
+    $this->clang = $this->verifyContentLang($clang);
+  }
+
+  private function verifyContentLang($lang) {
+    if ($this->vocab)
+      return $this->vocab->verifyVocabularyLanguage($lang);
   }
 
   public function getPage() {
@@ -58,7 +63,7 @@ class Request
 
   /**
    * Sets the page id variable eg. 'groups'
-   * @param string $lang
+   * @param string $page
    */
   public function setPage($page) {
     if ($page !== '')
@@ -84,7 +89,7 @@ class Request
 
   /**
    * Sets the page id variable eg. 'groups'
-   * @param string $lang
+   * @param string $uri
    */
   public function setURI($uri) {
     if ($uri !== '')
@@ -92,15 +97,27 @@ class Request
   }
 
   public function getVocabid() {
-    return isset($this->vocabid) ? $this->vocabid : '';
+    return isset($this->vocab) ? $this->vocab->getId() : '';
   }
 
   /**
    * Sets the vocab id variable eg. 'stw'
-   * @param string $lang
+   * @param string $vocabid
    */
   public function setVocabid($vocabid) {
     $this->vocabid = $vocabid;
+  }
+  
+  /**
+   * Creates a Vocabulary object 
+   * @param string $vocabid
+   */
+  public function setVocab($vocabid) {
+    $this->vocab = $this->model->getVocabulary($vocabid);
+  }
+  
+  public function getVocab() {
+    return $this->vocab;
   }
 
 }

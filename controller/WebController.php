@@ -199,7 +199,6 @@ class WebController extends Controller
    */
   public function invokeVocabularies($request)
   {
-    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $request->getLang();
     // set language parameters for gettext
     $this->setLanguageProperties($request->getLang());
     // load template
@@ -210,8 +209,6 @@ class WebController extends Controller
     $vocabList = $this->model->getVocabularyList();
     $langList = $this->model->getLanguages($request->getLang());
     
-    $request->setContentLang($content_lang);
-
     // render template
     echo $template->render(
       array(
@@ -235,37 +232,16 @@ class WebController extends Controller
     $lang = $request->getLang();
     $this->setLanguageProperties($lang);
     $template = $this->twig->loadTemplate('concept-info.twig');
-    try {
-      $vocab = $this->model->getVocabulary($request->getVocabid());
-    } catch (Exception $e) {
-      header("HTTP/1.0 404 Not Found");
-      if (LOG_CAUGHT_EXCEPTIONS)
-        error_log('Caught exception: ' . $e->getMessage());
-      echo $template->render(
-        array(
-          'path_fix' => $this->path_fix, 
-          'languages' => $this->languages,
-          'request_uri' => $this->request_uri
-        ));
-      exit();
-    }
-
-    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
-    $newlang = $this->verifyVocabularyLanguage($content_lang, $vocab);
-    if ($newlang !== null)
-      $content_lang = $newlang;
+    $vocab = $request->getVocab();
 
     $langcodes = $vocab->getShowLangCodes();
-    
     $full_uri = $vocab->getConceptURI($request->getUri()); // make sure it's a full URI
     // if rendering a page with the uri parameter the param needs to be passed for the template
     $uri_param =  ($full_uri === $request->getUri()) ? 'uri=' . $full_uri : ''; 
     $uri = $full_uri;
     
-    $request->setContentLang($content_lang);
-
-    $results = $vocab->getConceptInfo($uri, $content_lang);
-    $crumbs = $vocab->getBreadCrumbs($content_lang, $uri);
+    $results = $vocab->getConceptInfo($uri, $request->getContentLang());
+    $crumbs = $vocab->getBreadCrumbs($request->getContentLang(), $uri);
     echo $template->render(Array(
       'search_results' => $results,
       'vocab' => $vocab,
@@ -288,22 +264,7 @@ class WebController extends Controller
     $template = $this->twig->loadTemplate('feedback.twig');
     $this->setLanguageProperties($request->getLang());
     $vocabList = $this->model->getVocabularyList(false);
-    try {
-      $vocab = ($request->getVocabid() !== '') ? $this->model->getVocabulary($request->getVocabid()) : null;
-    } catch (Exception $e) {
-      header("HTTP/1.0 404 Not Found");
-      if (LOG_CAUGHT_EXCEPTIONS)
-        error_log('Caught exception: ' . $e->getMessage());
-      echo $template->render(
-        array(
-          'path_fix' => $this->path_fix,
-          'languages' => $this->languages,
-          'vocabList' => $vocabList
-        ));
-
-      return;
-    }
-    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $request->getLang();
+    $vocab = $request->getVocab();
 
     $feedback_sent = False;
     $feedback_msg = null;
@@ -321,8 +282,6 @@ class WebController extends Controller
     if ($feedback_sent && $_POST['trap'] === '') {
       $this->sendFeedback($feedback_msg, $feedback_name, $feedback_email, $feedback_vocab, $feedback_vocab_email);
     }
-
-    $request->setContentLang($content_lang);
 
     echo $template->render(
       array(
@@ -406,7 +365,7 @@ class WebController extends Controller
     $this->setLanguageProperties($lang);
 
     $term = htmlspecialchars(isset($_GET['q']) ? $_GET['q'] : "");
-    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
+    $content_lang = $request->getContentLang();
     $search_lang = (isset($_GET['anylang'])) ? '' : $content_lang;
     $type = (isset($_GET['type'])) ? $_GET['type'] : null;
     $group = (isset($_GET['group'])) ? $_GET['group'] : null;
@@ -424,8 +383,6 @@ class WebController extends Controller
     // convert to vocids array to support multi-vocabulary search
     $vocids = $vocabs !== null ? explode(' ', $vocabs) : null;
     
-    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
-
     $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocids, $content_lang, $search_lang, $offset, 20, $type, $parent, $group);
     $counts = $count_and_results['count'];
     $search_results = $count_and_results['results'];
@@ -433,8 +390,6 @@ class WebController extends Controller
     $vocabList = $this->model->getVocabularyList();
     $langList = $this->model->getLanguages($lang);
     
-    $request->setContentLang($content_lang);
-
     echo $template->render(
       array(
         'path_fix' => $this->path_fix,
@@ -461,8 +416,8 @@ class WebController extends Controller
     $lang = $request->getLang();
     $template = $this->twig->loadTemplate('vocab-search-listing.twig');
     $this->setLanguageProperties($lang);
+    $vocab = $request->getVocab();
     try {
-      $vocab = $this->model->getVocabulary($request->getVocabid());
       $vocab_types = $this->model->getTypes($request->getVocabid(), $lang);
     } catch (Exception $e) {
       header("HTTP/1.0 404 Not Found");
@@ -478,7 +433,7 @@ class WebController extends Controller
     }
     $groups = $vocab->listConceptGroups();
     $term = urldecode(isset($_GET['q']) ? $_GET['q'] : "");
-    $content_lang = (isset($_GET['clang']) && $_GET['clang'] !== '') ? $_GET['clang'] : $lang;
+    $content_lang = $request->getContentLang();
     $search_lang = (isset($_GET['anylang'])) ? '' : $content_lang;
     $type = (isset($_GET['type'])) ? $_GET['type'] : null;
     if ($type && strpos($type, '+'))
@@ -496,8 +451,6 @@ class WebController extends Controller
       $rest = null;
     }
     
-    $request->setContentLang($content_lang);
-
     $term = trim($term); // surrounding whitespace is not considered significant
     $sterm = strpos($term, "*") === FALSE ? $term . "*" : $term; // default to prefix search
     try {
@@ -550,23 +503,8 @@ class WebController extends Controller
     $lang = $request->getLang();
     $this->setLanguageProperties($lang);
     $template = $this->twig->loadTemplate('alphabetical-index.twig');
+    $vocab = $request->getVocab();
 
-    try {
-      $vocab = $this->model->getVocabulary($request->getVocabid());
-    } catch (Exception $e) {
-      header("HTTP/1.0 404 Not Found");
-      $template = $this->twig->loadTemplate('concept-info.twig');
-      if (LOG_CAUGHT_EXCEPTIONS)
-        error_log('Caught exception: ' . $e->getMessage());
-      echo $template->render(
-        array(
-          'path_fix' => $this->path_fix,
-          'languages' => $this->languages
-        ));
-
-      return;
-    }
-    
     $offset = (isset($_GET['offset']) && is_numeric($_GET['offset']) && $_GET['offset'] >= 0) ? $_GET['offset'] : 0;
     if (isset($_GET['limit'])) {
       $count = $_GET['limit'];
@@ -574,13 +512,7 @@ class WebController extends Controller
       $count = ($offset > 0 || !isset($_GET['base_path'])) ? null : 250;
     }
     
-    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
-    $lang_support = true;
-    $newlang = $this->verifyVocabularyLanguage($content_lang, $vocab);
-    if ($newlang !== null) {
-      $content_lang = $newlang;
-      $lang_support = false;
-    }
+    $content_lang = $request->getContentLang();
 
     $all_at_once = $vocab->getAlphabeticalFull();
     if (!$all_at_once) {
@@ -617,35 +549,9 @@ class WebController extends Controller
     $lang = $request->getLang();
     $this->setLanguageProperties($lang);
     $template = $this->twig->loadTemplate('group-index.twig');
-
-    try {
-      $vocab = $this->model->getVocabulary($request->getVocabid());
-    } catch (Exception $e) {
-      header("HTTP/1.0 404 Not Found");
-      $template = $this->twig->loadTemplate('concept-info.twig');
-      if (LOG_CAUGHT_EXCEPTIONS)
-        error_log('Caught exception: ' . $e->getMessage());
-      echo $template->render(
-        array(
-          'path_fix' => $this->path_fix,
-          'languages' => $this->languages
-        ));
-
-      return;
-    }
-
-    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
-    $lang_support = true;
-    $newlang = $this->verifyVocabularyLanguage($content_lang, $vocab);
-    if ($newlang !== null) {
-      $content_lang = $newlang;
-      $lang_support = false;
-    }
-
-    $groups = $vocab->listConceptGroups(false, $content_lang);
+    $vocab = $request->getVocab();
+    $groups = $vocab->listConceptGroups(false, $request->getContentLang());
     
-    $request->setContentLang($content_lang);
-
     echo $template->render(
       array(
         'path_fix' => $this->path_fix,
@@ -667,31 +573,15 @@ class WebController extends Controller
     $lang = $request->getLang();
     $this->setLanguageProperties($lang);
     $template = $this->twig->loadTemplate('group-contents.twig');
-    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
-    try {
-      $vocab = $this->model->getVocabulary($request->getVocabid());
-    } catch (Exception $e) {
-      header("HTTP/1.0 404 Not Found");
-      $template = $this->twig->loadTemplate('concept-info.twig');
-      if (LOG_CAUGHT_EXCEPTIONS)
-        error_log('Caught exception: ' . $e->getMessage());
-      echo $template->render(
-        array(
-          'path_fix' => $this->path_fix,
-          'languages' => $this->languages
-        ));
-
-      return;
-    }
+    $content_lang = $request->getContentLang();
+    $vocab = $request->getVocab();
+    
     $groupuri = $vocab->getConceptURI($request->getUri());
     $contents = $vocab->listConceptGroupContents($groupuri, $content_lang);
     $group_name = $vocab->getGroupName($groupuri);
     $uri = $vocab->getConceptURI($request->getUri()); // make sure it's a full URI
     $results = $vocab->getConceptInfo($uri, $content_lang);
     
-    $request->setContentLang($content_lang);
-    $request->setUri($groupuri);
-
     echo $template->render(
       array(
         'path_fix' => $this->path_fix,
@@ -714,23 +604,7 @@ class WebController extends Controller
     $lang = $request->getLang();
     // set language parameters for gettext
     $this->setLanguageProperties($lang);
-
-    try {
-      $vocab = $this->model->getVocabulary($request->getVocabid());
-    } catch (Exception $e) {
-      header("HTTP/1.0 404 Not Found");
-      $template = $this->twig->loadTemplate('concept-info.twig');
-      if (LOG_CAUGHT_EXCEPTIONS)
-        error_log('Caught exception: ' . $e->getMessage());
-
-      echo $template->render(
-        array(
-          'path_fix' => $this->path_fix,
-          'languages' => $this->languages
-        ));
-
-      return;
-    }
+    $vocab = $request->getVocab();
     
     $defaultView = $vocab->getDefaultSidebarView();
     // load template
@@ -739,16 +613,8 @@ class WebController extends Controller
       return;
     } 
 
-    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
-    $lang_support = true;
-    $newlang = $this->verifyVocabularyLanguage($content_lang, $vocab);
-    if ($newlang !== null)
-      $content_lang = $newlang;
-    
     $template = $this->twig->loadTemplate('vocab.twig');
     
-    $request->setContentLang($content_lang);
-
     echo $template->render(
       array(
         'path_fix' => $this->path_fix,
