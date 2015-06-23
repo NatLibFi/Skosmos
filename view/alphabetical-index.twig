@@ -1,5 +1,5 @@
 {% extends "light.twig" %}
-{% block title %}: {{ vocab.shortName }}: {% trans "Alphabetical index" %}: {{ search_letter }}{% endblock %}
+{% block title %}: {{ vocab.shortName }}: {% trans "Alphabetical index" %}: {{ request.letter }}{% endblock %}
 
 {% block content %}
   {% include "vocab-shared.twig" %}

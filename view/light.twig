@@ -51,7 +51,7 @@
       {% if letters %}
         <ul class="pagination">
         {% for letter in letters %} {# looping through all letters #}
-          <li{% if search_letter == letter %} class="active"{% endif %}><a href="{{ request.vocabid }}/{{ request.lang }}/index/{{ letter }}{% if ContentLanguage %}?clang={{ ContentLanguage }}{% endif %}">{{ letter }}</a></li>
+          <li{% if letter == request.letter %} class="active"{% endif %}><a href="{{ request.vocabid }}/{{ request.lang }}/index/{{ letter }}{% if ContentLanguage %}?clang={{ ContentLanguage }}{% endif %}">{{ letter }}</a></li>
         {% endfor %}
         </ul>
       {% endif %}
@@ -74,7 +74,7 @@
              </li>
               {% endfor %}
             </ul>
-            {% elseif not search_results %}<span class="header-text-small-font">{% trans %}Error: the vocabulary does not contain terms beginning with "{{ letter }}"!{% endtrans %}</span>
+            {% elseif not search_results %}<span class="header-text-small-font">{% trans %}Error: the vocabulary does not contain terms beginning with {% endtrans %}"{{ request.letter }}"!</span>
           {% endif %}
         </div>
         {% if term %}
