@@ -230,9 +230,8 @@ class WebController extends Controller
 
   /**
    * Invokes the concept page of a single concept in a specific vocabulary.
-   * @param string $uri localname or uri of concept.
    */
-  public function invokeVocabularyConcept($request, $uri)
+  public function invokeVocabularyConcept($request)
   {
     $lang = $request->getLang();
     $this->setLanguageProperties($lang);
@@ -260,13 +259,12 @@ class WebController extends Controller
     if ($content_lang !== $lang) $this->twig->addGlobal("ContentLanguage", $content_lang);
     $langcodes = $vocab->getShowLangCodes();
     
-    $full_uri = $vocab->getConceptURI($uri); // make sure it's a full URI
+    $full_uri = $vocab->getConceptURI($request->getUri()); // make sure it's a full URI
     // if rendering a page with the uri parameter the param needs to be passed for the template
-    $uri_param =  ($full_uri === $uri) ? 'uri=' . $full_uri : ''; 
+    $uri_param =  ($full_uri === $request->getUri()) ? 'uri=' . $full_uri : ''; 
     $uri = $full_uri;
     
     $request->setContentLang($content_lang);
-    $request->setUri($uri);
 
     $results = $vocab->getConceptInfo($uri, $content_lang);
     $crumbs = $vocab->getBreadCrumbs($content_lang, $uri);
@@ -555,7 +553,7 @@ class WebController extends Controller
    * Invokes the alphabetical listing for a specific vocabulary.
    * @param string $letter eg. 'R'.
    */
-  public function invokeAlphabeticalIndex($request, $letter = 'A')
+  public function invokeAlphabeticalIndex($request)
   {
     $lang = $request->getLang();
     $this->setLanguageProperties($lang);
@@ -595,7 +593,7 @@ class WebController extends Controller
 
     $all_at_once = $vocab->getAlphabeticalFull();
     if (!$all_at_once) {
-      $search_results = $vocab->searchConceptsAlphabetical($letter, $count, $offset, $content_lang);
+      $search_results = $vocab->searchConceptsAlphabetical($request->getLetter(), $count, $offset, $content_lang);
       $letters = $vocab->getAlphabet($content_lang);
     } else {
       $search_results = $vocab->searchConceptsAlphabetical('*', null, null, $content_lang);
@@ -603,7 +601,6 @@ class WebController extends Controller
     }
     
     $request->setContentLang($content_lang);
-    $request->setLetter($letter);
 
     $controller = $this; // for use by anonymous function below
     echo $template->render(
@@ -612,9 +609,9 @@ class WebController extends Controller
           'languages' => $this->languages,
           'vocab' => $vocab,
           'alpha_results' => $search_results,
-          'search_letter' => $letter,
+          'search_letter' => $request->getLetter(),
           'letters' => $letters,
-          'letter' => $letter,
+          'letter' => $request->getLetter(),
           'parts' => $this->parts,
           'all_letters' => $all_at_once,
           'request_uri' => $this->request_uri,
@@ -677,9 +674,8 @@ class WebController extends Controller
 
   /**
    * Invokes the vocabulary group contents page template.
-   * @param string $group group URI.
    */
-  public function invokeGroupContents($request, $group)
+  public function invokeGroupContents($request)
   {
     $lang = $request->getLang();
     $this->setLanguageProperties($lang);
@@ -701,10 +697,10 @@ class WebController extends Controller
 
       return;
     }
-    $groupuri = $vocab->getConceptURI($group);
+    $groupuri = $vocab->getConceptURI($request->getUri());
     $contents = $vocab->listConceptGroupContents($groupuri, $content_lang);
     $group_name = $vocab->getGroupName($groupuri);
-    $uri = $vocab->getConceptURI($group); // make sure it's a full URI
+    $uri = $vocab->getConceptURI($request->getUri()); // make sure it's a full URI
     $results = $vocab->getConceptInfo($uri, $content_lang);
     
     $request->setContentLang($content_lang);

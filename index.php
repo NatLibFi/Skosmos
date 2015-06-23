@@ -71,33 +71,29 @@ if (sizeof($parts) <= 2) {
         } elseif ($request->getPage() == 'search') {
           $controller->invokeVocabularySearch($request);
         } elseif ($request->getPage() == 'index') {
-          if (sizeof($parts) == 4 || (sizeof($parts) == 5) && $parts[4] === '') { // no letter
-            $controller->invokeAlphabeticalIndex($request);
-          } else { // letter given
-            $controller->invokeAlphabeticalIndex($request, $parts[4]);
-          }
+          if ((sizeof($parts) == 5) && $parts[4] !== '') // letter given
+            $request->setLetter($parts[4]);
+          $controller->invokeAlphabeticalIndex($request);
         } elseif ($request->getPage() == 'page') {
-          if (isset($_GET['uri'])) {
-            $controller->invokeVocabularyConcept($request, $_GET['uri']);
-          } elseif (sizeof($parts) == 5) {
-            $controller->invokeVocabularyConcept($request, $parts[4]);
-          } else {
+          (isset($_GET['uri'])) ? $request->setUri($_GET['uri']) : $request->setUri($parts[4]);
+          if ($request->getUri() === null || $request->getUri() === '')
             $controller->invokeGenericErrorPage($request);
-          }
+          else
+            $controller->invokeVocabularyConcept($request);
         } elseif ($request->getPage() == 'groups') {
           if (sizeof($parts) == 4) {
             if (isset($_GET['uri'])) {
-              $controller->invokeGroupContents($request, $_GET['uri']);
+              $request->setUri($_GET['uri']);
+              $controller->invokeGroupContents($request);
             } else {
               $controller->invokeGroupIndex($request);
             }
           } else {
-            if (isset($_GET['uri']))
-              $controller->invokeGroupContents($request, $_GET['uri']);
-            elseif ($parts[4] !== '')
-              $controller->invokeGroupContents($request, $parts[4]);
-            else
+            (isset($_GET['uri'])) ? $request->setUri($_GET['uri']) : $request->setUri($parts[4]);
+            if ($request->getUri() === null || $request->getUri() === '')
               $controller->invokeGroupIndex($request);
+            else
+              $controller->invokeGroupContents($request);
           }
         } else {
           $controller->invokeGenericErrorPage($request);
