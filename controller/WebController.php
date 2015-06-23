@@ -459,8 +459,6 @@ class WebController extends Controller
 
   /**
    * Invokes the search for a single vocabs concepts.
-   * @param string $vocab_id contains the name of the vocabulary in question.
-   * @param string $lang language parameter eg. 'fi' for Finnish.
    */
   public function invokeVocabularySearch($request)
   {
@@ -551,7 +549,6 @@ class WebController extends Controller
 
   /**
    * Invokes the alphabetical listing for a specific vocabulary.
-   * @param string $letter eg. 'R'.
    */
   public function invokeAlphabeticalIndex($request)
   {
@@ -619,8 +616,7 @@ class WebController extends Controller
 
   /**
    * Invokes the vocabulary group index page template.
-   * @param string $vocab_id vocabulary identifier eg. 'yso'.
-   * @param string $lang language parameter eg. 'fi' for Finnish.
+   * @param boolean $stats set to true to get vocabulary statistics visible.
    */
   public function invokeGroupIndex($request, $stats=false)
   {
@@ -720,11 +716,8 @@ class WebController extends Controller
 
   /**
    * Loads and renders the view containing a specific vocabulary.
-   * @param string $vocab_id contains the name of the vocabulary in question.
-   * @param string $lang language parameter eg. 'fi' for Finnish.
-   * @param string $letter letter parameter eg. 'R'.
    */
-  public function invokeVocabularyHome($request, $letter = 'A')
+  public function invokeVocabularyHome($request)
   {
     $lang = $request->getLang();
     // set language parameters for gettext
@@ -750,7 +743,7 @@ class WebController extends Controller
     $defaultView = $vocab->getDefaultSidebarView();
     // load template
     if ($defaultView === 'groups') {
-      $this->invokeGroupIndex($vocab_id, $lang, true);
+      $this->invokeGroupIndex($request, true);
       return;
     } 
 
