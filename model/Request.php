@@ -29,7 +29,7 @@ class Request
   }
 
   public function getQueryParam($param_name) {
-    return (isset($_GET[$param_name])) ? $_GET[$param_name] : null;
+    return filter_input(INPUT_GET, $param_name, FILTER_SANITIZE_STRING);
   }
 
   public function getLang() {
