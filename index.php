@@ -29,8 +29,9 @@ require_once 'controller/WebController.php';
 require_once 'model/Model.php';
 
 $model = new Model();
-$controller = new WebController($model, $path_fix);
+$controller = new WebController($model);
 $request = new Request($model);
+$request->setPathFix($path_fix);
 if (sizeof($parts) <= 2) {
   // if language code missing, redirect to guessed language
   // in any case, redirect to <lang>/

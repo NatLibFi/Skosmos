@@ -70,6 +70,18 @@ class Request
       $this->page = $page;
   }
 
+  /**
+   * Sets the path fix variable eg. '../../'
+   * @param string $path_fix
+   */
+  public function setPathFix($path_fix) {
+    $this->path_fix = $path_fix;
+  }
+  
+  public function getPathFix() {
+    return $this->path_fix;
+  }
+
   public function getLetter() {
     return (isset($this->letter)) ? $this->letter : 'A';
   }

@@ -24,12 +24,6 @@ class WebController extends Controller
   public $twig;
 
   /**
-  * Used for relative url building inside the templates.
-  * @property string $path_fix a string for making relative urls eg. '../../'.
-  */
-  public $path_fix;
-
-  /**
    * Passing the whole request uri to the templates.
    * @property string $request_uri contains the whole request uri.
    */
@@ -38,16 +32,15 @@ class WebController extends Controller
   public $base_href;
 
   /**
-   * Constructor for the WebController can be given the path_fix as a parameter.
-   * @param string $path_fix eg. '../../'
+   * Constructor for the WebController.
+   * @param Model $model 
    */
-  public function __construct($model, $path_fix)
+  public function __construct($model)
   {
     parent::__construct($model);
 
     // used for making proper hrefs for the language selection
     $this->request_uri = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-    $this->path_fix = $path_fix;
 
     // initialize Twig templates
     $tmp_dir = TEMPLATE_CACHE;
@@ -207,7 +200,6 @@ class WebController extends Controller
       array(
         'vocab_list' => $vocabList, 
         'category_label' => $categoryLabel,
-        'path_fix' => $this->path_fix, 
         'languages' => $this->languages, 
         'front_page' => True,
         'request_uri' => $this->request_uri, 
@@ -236,7 +228,6 @@ class WebController extends Controller
     $crumbs = $vocab->getBreadCrumbs($request->getContentLang(), $uri);
     echo $template->render(Array(
       'search_results' => $results,
-      'path_fix' => $this->path_fix,
       'languages' => $this->languages,
       'explicit_langcodes' => $langcodes,
       'request_uri' => $this->request_uri,
@@ -275,7 +266,6 @@ class WebController extends Controller
 
     echo $template->render(
       array(
-        'path_fix' => $this->path_fix,
         'languages' => $this->languages,
         'vocab' => $vocab,
         'vocabList' => $vocabList,
@@ -335,7 +325,6 @@ class WebController extends Controller
     
     echo $template->render(
       array(
-        'path_fix' => $this->path_fix, 
         'languages' => $this->languages,
         'version' => $version,
         'server_instance' => $url, 
@@ -380,7 +369,6 @@ class WebController extends Controller
     
     echo $template->render(
       array(
-        'path_fix' => $this->path_fix,
         'search_count' => $counts,
         'languages' => $this->languages,
         'search_results' => $search_results,
@@ -412,7 +400,6 @@ class WebController extends Controller
         error_log('Caught exception: ' . $e->getMessage());
       echo $template->render(
         array(
-          'path_fix' => $this->path_fix,
           'languages' => $this->languages,
         ));
 
@@ -450,7 +437,6 @@ class WebController extends Controller
         error_log('Caught exception: ' . $e->getMessage());
       echo $template->render(
         array(
-          'path_fix' => $this->path_fix,
           'languages' => $this->languages,
           'vocab' => $vocab,
           'term' => $term,
@@ -460,7 +446,6 @@ class WebController extends Controller
     }
     echo $template->render(
       array(
-        'path_fix' => $this->path_fix,
         'languages' => $this->languages,
         'vocab' => $vocab,
         'search_results' => $search_results,
@@ -511,7 +496,6 @@ class WebController extends Controller
     $controller = $this; // for use by anonymous function below
     echo $template->render(
         array(
-          'path_fix' => $this->path_fix,
           'languages' => $this->languages,
           'vocab' => $vocab,
           'alpha_results' => $search_results,
@@ -536,7 +520,6 @@ class WebController extends Controller
     
     echo $template->render(
       array(
-        'path_fix' => $this->path_fix,
         'languages' => $this->languages,
         'stats' => $stats,
         'vocab' => $vocab,
@@ -565,7 +548,6 @@ class WebController extends Controller
     
     echo $template->render(
       array(
-        'path_fix' => $this->path_fix,
         'languages' => $this->languages,
         'vocab' => $vocab,
         'contents' => $contents,
@@ -597,7 +579,6 @@ class WebController extends Controller
     
     echo $template->render(
       array(
-        'path_fix' => $this->path_fix,
         'languages' => $this->languages,
         'vocab' => $vocab,
         'search_letter' => 'A',
@@ -618,7 +599,6 @@ class WebController extends Controller
     $template = $this->twig->loadTemplate('error-page.twig');
     echo $template->render(
       array(
-        'path_fix' => $this->path_fix,
         'languages' => $this->languages,
         'requested_page' => $_SERVER['REQUEST_URI']
       ));
