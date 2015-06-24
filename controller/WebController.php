@@ -228,6 +228,7 @@ class WebController extends Controller
     $crumbs = $vocab->getBreadCrumbs($request->getContentLang(), $uri);
     echo $template->render(Array(
       'search_results' => $results,
+      'vocab' => $vocab,
       'languages' => $this->languages,
       'explicit_langcodes' => $langcodes,
       'request_uri' => $this->request_uri,

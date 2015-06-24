@@ -35,7 +35,7 @@ $request->setPathFix($path_fix);
 if (sizeof($parts) <= 2) {
   // if language code missing, redirect to guessed language
   // in any case, redirect to <lang>/
-  $lang = sizeof($parts) == 2 && $parts[1] != '' ? $parts[1] : $controller->guessLanguage();
+  $lang = sizeof($parts) == 2 && $parts[1] !== '' ? $parts[1] : $controller->guessLanguage();
   header("Location: " . $lang . "/");
 } else {
   if (array_key_exists($parts[1], $LANGUAGES)) { // global pages
@@ -71,7 +71,8 @@ if (sizeof($parts) <= 2) {
         $request->setContentLang($content_lang);
         $request->setLang($parts[2]);
         $request->setPage($parts[3]);
-        if ($request->getPage() == '') {
+        if (!$request->getPage()) {
+          $request->setPage('vocab');
           $controller->invokeVocabularyHome($request);
         } elseif ($request->getPage() == 'feedback') {
           $controller->invokeFeedbackForm($request);
