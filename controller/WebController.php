@@ -325,13 +325,13 @@ class WebController extends Controller
     $template = $this->twig->loadTemplate('vocab-search-listing.twig');
     $this->setLanguageProperties($lang);
 
-    $term = htmlspecialchars(isset($_GET['q']) ? $_GET['q'] : "");
+    $term = $request->getQueryParam('q');
     $content_lang = $request->getContentLang();
-    $search_lang = (isset($_GET['anylang'])) ? '' : $content_lang;
-    $type = (isset($_GET['type'])) ? $_GET['type'] : null;
-    $group = (isset($_GET['group'])) ? $_GET['group'] : null;
-    $parent = (isset($_GET['parent'])) ? $_GET['parent'] : null;
-    $offset = (isset($_GET['offset']) && is_numeric($_GET['offset']) && $_GET['offset'] >= 0) ? $_GET['offset'] : 0;
+    $search_lang = $request->getQueryParam('anylang') ? '' : $content_lang;
+    $type = $request->getQueryParam('type');
+    $group = $request->getQueryParam('group');
+    $parent = $request->getQueryParam('parent');
+    $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
     if ($offset > 0) {
       $rest = 1;
     } else {
@@ -388,17 +388,17 @@ class WebController extends Controller
       return;
     }
     $groups = $vocab->listConceptGroups();
-    $term = urldecode(isset($_GET['q']) ? $_GET['q'] : "");
+    $term = $request->getQueryParam('q');
     $content_lang = $request->getContentLang();
-    $search_lang = (isset($_GET['anylang'])) ? '' : $content_lang;
-    $type = (isset($_GET['type'])) ? $_GET['type'] : null;
+    $search_lang = $request->getQueryParam('anylang') ? '' : $content_lang;
+    $type = $request->getQueryParam('type');
     if ($type && strpos($type, '+'))
       $type = explode('+',$type);
     else if ($type && !is_array($type)) // if only one type param given place it into an array regardless
       $type = array($type);
-    $group = (isset($_GET['group'])) ? $_GET['group'] : null;
-    $parent = (isset($_GET['parent'])) ? $_GET['parent'] : null;
-    $offset = (isset($_GET['offset']) && is_numeric($_GET['offset']) && $_GET['offset'] >= 0) ? $_GET['offset'] : 0;
+    $group = $request->getQueryParam('group');
+    $parent = $request->getQueryParam('parent');
+    $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
     $langcodes = $vocab->getShowLangCodes();
     if ($offset > 0) {
       $rest = 1;
