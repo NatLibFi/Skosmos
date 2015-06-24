@@ -30,12 +30,6 @@ class WebController extends Controller
   public $path_fix;
 
   /**
-   * Used for passing url parameters to the templates.
-   * @property string $parts contains the url parameters.
-   */
-  public $parts;
-
-  /**
    * Passing the whole request uri to the templates.
    * @property string $request_uri contains the whole request uri.
    */
@@ -53,7 +47,6 @@ class WebController extends Controller
 
     // used for making proper hrefs for the language selection
     $this->request_uri = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-    $this->parts = rtrim($_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'], 'php.xedni');
     $this->path_fix = $path_fix;
 
     // initialize Twig templates
@@ -217,7 +210,6 @@ class WebController extends Controller
         'path_fix' => $this->path_fix, 
         'languages' => $this->languages, 
         'front_page' => True,
-        'parts' => $this->parts, 
         'request_uri' => $this->request_uri, 
         'lang_list' => $langList, 
         'request' => $request
@@ -247,7 +239,6 @@ class WebController extends Controller
       'vocab' => $vocab,
       'path_fix' => $this->path_fix,
       'languages' => $this->languages,
-      'parts' => $this->parts,
       'explicit_langcodes' => $langcodes,
       'request_uri' => $this->request_uri,
       'bread_crumbs' => $crumbs['breadcrumbs'],
@@ -290,7 +281,6 @@ class WebController extends Controller
         'vocab' => $vocab,
         'vocabList' => $vocabList,
         'feedback_sent' => $feedback_sent,
-        'parts' => $this->parts,
         'request_uri' => $this->request_uri,
         'request' => $request
       ));
@@ -386,7 +376,6 @@ class WebController extends Controller
     $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocids, $content_lang, $search_lang, $offset, 20, $type, $parent, $group);
     $counts = $count_and_results['count'];
     $search_results = $count_and_results['results'];
-    $uri_parts = $_SERVER['REQUEST_URI'];
     $vocabList = $this->model->getVocabularyList();
     $langList = $this->model->getLanguages($lang);
     
@@ -397,7 +386,7 @@ class WebController extends Controller
         'languages' => $this->languages,
         'search_results' => $search_results,
         'term' => $term,
-        'rest' => $rest, 'parts' => $this->parts, 
+        'rest' => $rest, 
         'global_search' => True, 
         'request_uri' => $this->request_uri,
         'lang_list' => $langList,
@@ -467,21 +456,18 @@ class WebController extends Controller
           'vocab' => $vocab,
           'term' => $term,
           'rest' => $rest, 
-          'parts' => $this->parts
         ));
       return;
     }
-    $uri_parts = $_SERVER['REQUEST_URI'];
     echo $template->render(
       array(
         'path_fix' => $this->path_fix,
         'languages' => $this->languages,
         'vocab' => $vocab,
-        'parts' => $this->parts,
         'search_results' => $search_results,
         'search_count' => $counts,
         'term' => $term,
-        'rest' => $rest, 'parts' => $this->parts, 
+        'rest' => $rest, 
         'limit_parent' => $parent,
         'limit_type' => $type,
         'limit_group' => $group,
@@ -531,7 +517,6 @@ class WebController extends Controller
           'vocab' => $vocab,
           'alpha_results' => $search_results,
           'letters' => $letters,
-          'parts' => $this->parts,
           'all_letters' => $all_at_once,
           'request_uri' => $this->request_uri,
           'request' => $request
@@ -557,7 +542,6 @@ class WebController extends Controller
         'stats' => $stats,
         'vocab' => $vocab,
         'groups' => $groups,
-        'parts' => $this->parts,
         'request_uri' => $this->request_uri,
         'request' => $request
       ));
@@ -586,7 +570,6 @@ class WebController extends Controller
         'languages' => $this->languages,
         'vocab' => $vocab,
         'contents' => $contents,
-        'parts' => $this->parts,
         'label' => $group_name,
         'request_uri' => $this->request_uri,
         'search_results' => $results,
@@ -618,7 +601,6 @@ class WebController extends Controller
         'path_fix' => $this->path_fix,
         'languages' => $this->languages,
         'vocab' => $vocab,
-        'parts' => $this->parts,
         'search_letter' => 'A',
         'active_tab' => $defaultView,
         'request_uri' => $this->request_uri,
@@ -639,7 +621,6 @@ class WebController extends Controller
       array(
         'path_fix' => $this->path_fix,
         'languages' => $this->languages,
-        'parts' => $this->parts,
         'requested_page' => $_SERVER['REQUEST_URI']
       ));
   }
