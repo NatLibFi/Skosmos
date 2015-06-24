@@ -61,7 +61,7 @@ class Concept extends VocabularyDataObject
     $this->graph = $graph;
     $this->clang = $clang;
     // setting the Punic plugins locale for localized datetime conversions
-    if ($this->clang !== '')
+    if ($this->clang && $this->clang !== '')
       Punic\Data::setDefaultLocale($clang);
   }
 
