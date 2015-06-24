@@ -1,6 +1,6 @@
 {% if request.vocabid is defined %}
 <div class="header-left">
-  <h1><a href="{% if request.vocabid != '' %}{{ request.vocabid  }}/{% endif %}{{ request.lang }}/{% if request.contentLang %}?clang={{ request.contentLang }}{% endif %}">{{ vocab.title(request.contentLang) }}</a></h1>
+  <h1><a href="{% if request.vocabid != '' %}{{ request.vocabid  }}/{% endif %}{{ request.lang }}/{% if request.contentLang %}?clang={{ request.contentLang }}{% endif %}">{{ request.vocab.title(request.contentLang) }}</a></h1>
 </div>
 {% endif %}
 <div class="header-float">

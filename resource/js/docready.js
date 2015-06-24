@@ -81,7 +81,7 @@ $(function() { // DOCUMENT READY
   var textColor = $('.search-parameter-highlight').css('color');
   countAndSetOffset();
 
-  if($('.search-result-listing').length > 0) { // Disabled if on the search results page.
+  if($('.search-result-listing').length === 0) { // Disabled if on the search results page.
   /*
    * Event handler for clicking the preflabel and making a selection of it for copy pasting.
    */
