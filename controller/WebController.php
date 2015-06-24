@@ -181,7 +181,6 @@ class WebController extends Controller
     // load template
     $template = $this->twig->loadTemplate('light.twig');
     // set template variables
-    $requestUri = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     $categoryLabel = $this->model->getClassificationLabel($request->getLang());
     $vocabList = $this->model->getVocabularyList();
     $langList = $this->model->getLanguages($request->getLang());
@@ -192,7 +191,6 @@ class WebController extends Controller
         'vocab_list' => $vocabList, 
         'category_label' => $categoryLabel,
         'languages' => $this->languages, 
-        'front_page' => True,
         'lang_list' => $langList, 
         'request' => $request
     ));
@@ -459,11 +457,11 @@ class WebController extends Controller
     $template = $this->twig->loadTemplate('alphabetical-index.twig');
     $vocab = $request->getVocab();
 
-    $offset = (isset($_GET['offset']) && is_numeric($_GET['offset']) && $_GET['offset'] >= 0) ? $_GET['offset'] : 0;
-    if (isset($_GET['limit'])) {
-      $count = $_GET['limit'];
+    $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
+    if ($request->getQueryParam('limit')) {
+      $count = $request->getQueryParam('limit');
     } else { 
-      $count = ($offset > 0 || !isset($_GET['base_path'])) ? null : 250;
+      $count = ($offset > 0 || !$request->getQueryParam('base_path')) ? null : 250;
     }
     
     $content_lang = $request->getContentLang();
