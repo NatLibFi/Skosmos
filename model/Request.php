@@ -28,6 +28,10 @@ class Request
     $this->model = $model;
   }
 
+  public function getQueryParam($param_name) {
+    return (isset($_GET[$param_name])) ? $_GET[$param_name] : null;
+  }
+
   public function getLang() {
     return $this->lang;
   }
