@@ -81,7 +81,7 @@ $(function() { // DOCUMENT READY
   var textColor = $('.search-parameter-highlight').css('color');
   countAndSetOffset();
 
-  if(parts.indexOf('search') === -1) { // Disabled if on the search results page.
+  if($('.search-result-listing').length > 0) { // Disabled if on the search results page.
   /*
    * Event handler for clicking the preflabel and making a selection of it for copy pasting.
    */
@@ -446,10 +446,6 @@ $(function() { // DOCUMENT READY
   // Setting the language parameters according to the clang parameter or if that's not possible the cookie.
   var search_lang = (content_lang !== '' && !getUrlParams().anylang) ? content_lang : readCookie('SKOSMOS_SEARCH_LANG');
   
-  // taking the url parameters given by the controller 
-  // into parts used for determining if we are on the search listings
-  parts = parts.split('/'); // splits pathname, e.g.
-  
   var rest_url = rest_base_url; 
   if (rest_url.indexOf('..') === -1 && rest_url.indexOf('http') === -1) { rest_url = encodeURI(location.protocol + '//' + rest_url); }
   
@@ -709,7 +705,7 @@ $(function() { // DOCUMENT READY
   var $ready = $("<p class='search-count'>" + results + " " + number_of_hits + " " + results_disp +"</p>");
   
   // search-results waypoint
-  if (parts[parts.length-1].indexOf('search') !== -1 && number_of_hits !== 0) { // if we are in the search page with some results
+  if (number_of_hits > 0) { // if we are in the search page with some results
     if (number_of_hits < waypoint_results * offcount) { 
       $('.search-result-listing').append($ready);
     }
