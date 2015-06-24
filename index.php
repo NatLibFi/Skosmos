@@ -32,6 +32,9 @@ $model = new Model();
 $controller = new WebController($model);
 $request = new Request($model);
 $request->setPathFix($path_fix);
+// used for making proper hrefs for the language selection
+$request->setRequestUri($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+
 if (sizeof($parts) <= 2) {
   // if language code missing, redirect to guessed language
   // in any case, redirect to <lang>/

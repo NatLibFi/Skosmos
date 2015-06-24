@@ -23,12 +23,6 @@ class WebController extends Controller
   */
   public $twig;
 
-  /**
-   * Passing the whole request uri to the templates.
-   * @property string $request_uri contains the whole request uri.
-   */
-  public $request_uri;
-
   public $base_href;
 
   /**
@@ -38,9 +32,6 @@ class WebController extends Controller
   public function __construct($model)
   {
     parent::__construct($model);
-
-    // used for making proper hrefs for the language selection
-    $this->request_uri = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
     // initialize Twig templates
     $tmp_dir = TEMPLATE_CACHE;
@@ -202,7 +193,6 @@ class WebController extends Controller
         'category_label' => $categoryLabel,
         'languages' => $this->languages, 
         'front_page' => True,
-        'request_uri' => $this->request_uri, 
         'lang_list' => $langList, 
         'request' => $request
     ));
@@ -231,7 +221,6 @@ class WebController extends Controller
       'vocab' => $vocab,
       'languages' => $this->languages,
       'explicit_langcodes' => $langcodes,
-      'request_uri' => $this->request_uri,
       'bread_crumbs' => $crumbs['breadcrumbs'],
       'combined' => $crumbs['combined'],
       'request' => $request)
@@ -271,7 +260,6 @@ class WebController extends Controller
         'vocab' => $vocab,
         'vocabList' => $vocabList,
         'feedback_sent' => $feedback_sent,
-        'request_uri' => $this->request_uri,
         'request' => $request
       ));
   }
@@ -329,7 +317,6 @@ class WebController extends Controller
         'languages' => $this->languages,
         'version' => $version,
         'server_instance' => $url, 
-        'request_uri' => $this->request_uri, 
         'request' => $request
       ));
   }
@@ -376,7 +363,6 @@ class WebController extends Controller
         'term' => $term,
         'rest' => $rest, 
         'global_search' => True, 
-        'request_uri' => $this->request_uri,
         'lang_list' => $langList,
         'vocabs' => $vocabs,
         'vocab_list' => $vocabList,
@@ -459,7 +445,6 @@ class WebController extends Controller
         'group_index' => $groups,
         'types' => $vocab_types,
         'explicit_langcodes' => $langcodes,
-        'request_uri' => $this->request_uri,
         'request' => $request
     ));
   }
@@ -502,7 +487,6 @@ class WebController extends Controller
           'alpha_results' => $search_results,
           'letters' => $letters,
           'all_letters' => $all_at_once,
-          'request_uri' => $this->request_uri,
           'request' => $request
         ));
   }
@@ -525,7 +509,6 @@ class WebController extends Controller
         'stats' => $stats,
         'vocab' => $vocab,
         'groups' => $groups,
-        'request_uri' => $this->request_uri,
         'request' => $request
       ));
   }
@@ -553,7 +536,6 @@ class WebController extends Controller
         'vocab' => $vocab,
         'contents' => $contents,
         'label' => $group_name,
-        'request_uri' => $this->request_uri,
         'search_results' => $results,
         'request' => $request
       ));
@@ -584,7 +566,6 @@ class WebController extends Controller
         'vocab' => $vocab,
         'search_letter' => 'A',
         'active_tab' => $defaultView,
-        'request_uri' => $this->request_uri,
         'request' => $request
       ));
   }

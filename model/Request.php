@@ -18,6 +18,7 @@ class Request
   private $uri;
   private $letter;
   private $model;
+  private $request_uri;
 
   /**
    * Initializes the Request Object
@@ -80,6 +81,18 @@ class Request
   
   public function getPathFix() {
     return $this->path_fix;
+  }
+
+  /**
+   * Sets the reuquest uri variable
+   * @param string $uri
+   */
+  public function setRequestUri($uri) {
+    $this->request_uri = $uri;
+  }
+  
+  public function getRequestUri() {
+    return $this->request_uri;
   }
 
   public function getLetter() {
