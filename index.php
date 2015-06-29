@@ -20,10 +20,6 @@ try {
 // PATH_INFO, for example "/ysa/fi"
 $path = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '';
 $parts = explode('/', $path);
-$path_fix = (sizeof($parts) > 1) ? str_repeat("../", sizeof($parts) - 2) : "";
-if (isset($_GET['base_path'])) {
-  $path_fix = str_repeat('../', intval($_GET['base_path']));
-}
 
 require_once 'controller/WebController.php';
 require_once 'model/Model.php';
@@ -31,7 +27,13 @@ require_once 'model/Model.php';
 $model = new Model();
 $controller = new WebController($model);
 $request = new Request($model);
+
+$path_fix = (sizeof($parts) > 1) ? str_repeat("../", sizeof($parts) - 2) : "";
+if ($request->getQueryParam('base_path')) {
+  $path_fix = str_repeat('../', intval($request->getQueryParam('base_path')));
+}
 $request->setPathFix($path_fix);
+
 // used for making proper hrefs for the language selection
 $request->setRequestUri($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 
