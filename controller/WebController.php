@@ -340,7 +340,7 @@ class WebController extends Controller
     $term = trim($term); // surrounding whitespace is not considered significant
     $sterm = strpos($term, "*") === FALSE ? $term . "*" : $term; // default to prefix search
 
-    $vocabs = !empty($_GET['vocabs']) ? $_GET['vocabs'] : null; # optional
+    $vocabs = $request->getQueryParam('vocabs'); # optional
     // convert to vocids array to support multi-vocabulary search
     $vocids = $vocabs !== null ? explode(' ', $vocabs) : null;
     
