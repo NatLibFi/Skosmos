@@ -60,6 +60,7 @@ class Request
   private function verifyContentLang($lang) {
     if ($this->vocab)
       return $this->vocab->verifyVocabularyLanguage($lang);
+    return $lang;
   }
 
   public function getPage() {
