@@ -74,7 +74,7 @@ class WebController extends Controller
       } else {
         $vocid = $vocab->getId();
       }
-      
+
       $params = array();
       if (isset($clang) && $clang !== $lang)
         $params['clang'] = $clang;
@@ -87,7 +87,7 @@ class WebController extends Controller
       if ($localname !== $uri && $localname === urlencode($localname)) {
         // check that the prefix stripping worked, and there are no problematic chars in localname
         $paramstr = sizeof($params) > 0 ? '?' . http_build_query($params) : '';
-        if ($type && $type !== '')
+        if ($type && $type !== '' && $type !== 'vocab')
           return $controller->base_href . "$vocid/$lang/$type/$localname" . $paramstr;
         return $controller->base_href . "$vocid/$lang/$localname" . $paramstr;
       }

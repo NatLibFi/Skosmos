@@ -28,7 +28,7 @@
           {% endfor %}
         {% else %}
           {% for langcode in lang_list %}
-          <li><a href="{{ request.lang }}/{{ request.page }}?clang={{langcode}}{% if term %}&q={{ term }}{% endif %}" class="lang-button" hreflang="{{ langcode }}">{{ langcode | lang_name(request.lang) }}</a></li>
+          <li><a href="{{ request.lang }}/{{ request.page }}?clang={{langcode}}{% if term %}&q={{ term }}{% endif %}{% if vocabs %}&vocabs={{ vocabs }}" {% endif %}class="lang-button" hreflang="{{ langcode }}">{{ langcode | lang_name(request.lang) }}</a></li>
           {% endfor %}
         {% endif %}
           <li><a href="{% if request.vocabid %}{{ request.vocabid }}/{% endif %}{% if request.page %}{{ request.page }}/{% endif%}?{% if request.uri %}uri={{ request.uri }}&{% endif %}clang={% if request.contentLang %}{{ request.contentLang }}{% else %}{{ request.lang }}{% endif %}&anylang=on{% if term %}&q={{ term }}{% endif %}{% if vocabs %}&vocabs={{ vocabs }}{% endif %}" class="lang-button lang-button-all">{% trans "Search language: any" %}</a><input name="anylang" type="checkbox"{% if request.queryparam('anylang') %} checked{% endif%}></input></li>
@@ -46,7 +46,7 @@
       id="all-languages-true" name="all" value="1"
       onClick="createCookie('SKOSMOS_SEARCH_ALL', this.value , 365);" />
     </div>
-    {% if request.page == '' %}<input id="selected-vocabs" type="text" name="vocabs">{% endif %}
+    {% if request.page == '' or request.page == 'search' %}<input id="selected-vocabs" type="text" name="vocabs">{% endif %}
   </form>
 {% endif %}
 </div>
