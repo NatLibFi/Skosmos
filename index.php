@@ -90,21 +90,21 @@ if (sizeof($parts) <= 2) {
             $request->setLetter($parts[4]);
           $controller->invokeAlphabeticalIndex($request);
         } elseif ($request->getPage() == 'page') {
-          (isset($_GET['uri'])) ? $request->setUri($_GET['uri']) : $request->setUri($parts[4]);
+          ($request->getQueryParam('uri')) ? $request->setUri($request->getQueryParam('uri')) : $request->setUri($parts[4]);
           if ($request->getUri() === null || $request->getUri() === '')
             $controller->invokeGenericErrorPage($request);
           else
             $controller->invokeVocabularyConcept($request);
         } elseif ($request->getPage() == 'groups') {
           if (sizeof($parts) == 4) {
-            if (isset($_GET['uri'])) {
-              $request->setUri($_GET['uri']);
+            if ($request->getQueryParam('uri')) {
+              $request->setUri($request->getQueryParam('uri'));
               $controller->invokeGroupContents($request);
             } else {
               $controller->invokeGroupIndex($request);
             }
           } else {
-            (isset($_GET['uri'])) ? $request->setUri($_GET['uri']) : $request->setUri($parts[4]);
+            ($request->getQueryParam('uri')) ? $request->setUri($request->getQueryParam('uri')) : $request->setUri($parts[4]);
             if ($request->getUri() === null)
               $controller->invokeGroupIndex($request);
             else
