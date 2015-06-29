@@ -158,7 +158,7 @@ class WebController extends Controller
     header('Vary: Accept-Language'); // inform caches that a decision was made based on Accept header
     $this->negotiator = new \Negotiation\LanguageNegotiator();
     $langcodes = array_keys($this->languages);
-    $acceptLanguage = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? $_SERVER['HTTP_ACCEPT_LANGUAGE'] : '';
+    $acceptLanguage = filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE', FILTER_SANITIZE_STRING) ? filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE', FILTER_SANITIZE_STRING) : '';
     $bestLang = $this->negotiator->getBest($acceptLanguage, $langcodes);
     if (isset($bestLang) && in_array($bestLang, $langcodes))
       return $bestLang->getValue();
@@ -304,7 +304,7 @@ class WebController extends Controller
     $template = $this->twig->loadTemplate('about.twig');
     $this->setLanguageProperties($request->getLang());
     $vocab_id = 'About';
-    $url = $_SERVER['HTTP_HOST'];
+    $url = $request->getServerConstant('HTTP_HOST');
     $version = $this->model->getVersion();
     
     echo $template->render(
