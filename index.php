@@ -43,7 +43,7 @@ if (sizeof($parts) <= 2) {
 } else {
   if (array_key_exists($parts[1], $LANGUAGES)) { // global pages
     $request->setLang($parts[1]);
-    $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
+    $content_lang = $request->getQueryParam('clang');
     $request->setContentLang($content_lang);
     ($parts[2] == 'about' || $parts[2] == 'feedback' || $parts[2] == 'search') ? $request->setPage($parts[2]) : $request->setPage('');
     if ($request->getPage() == '') {
@@ -72,7 +72,7 @@ if (sizeof($parts) <= 2) {
     } else {
       if (array_key_exists($parts[2], $LANGUAGES)) {
         $lang = $parts[2];
-        $content_lang = (isset($_GET['clang'])) ? $_GET['clang'] : $lang;
+        $content_lang = $request->getQueryParam('clang');
         $request->setContentLang($content_lang);
         $request->setLang($parts[2]);
         $request->setPage($parts[3]);
