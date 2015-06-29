@@ -17,10 +17,6 @@ try {
   exit();
 }
 
-// PATH_INFO, for example "/ysa/fi"
-$path = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '';
-$parts = explode('/', $path);
-
 require_once 'controller/WebController.php';
 require_once 'model/Model.php';
 
@@ -28,6 +24,9 @@ $model = new Model();
 $controller = new WebController($model);
 $request = new Request($model);
 
+// PATH_INFO, for example "/ysa/fi"
+$path = $request->getServerConstant('PATH_INFO') ? $request->getServerConstant('PATH_INFO') : '';
+$parts = explode('/', $path);
 $path_fix = (sizeof($parts) > 1) ? str_repeat("../", sizeof($parts) - 2) : "";
 if ($request->getQueryParam('base_path')) {
   $path_fix = str_repeat('../', intval($request->getQueryParam('base_path')));
@@ -35,7 +34,7 @@ if ($request->getQueryParam('base_path')) {
 $request->setPathFix($path_fix);
 
 // used for making proper hrefs for the language selection
-$request->setRequestUri($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+$request->setRequestUri($request->getServerConstant('HTTP_HOST') . $request->getServerConstant('REQUEST_URI'));
 
 if (sizeof($parts) <= 2) {
   // if language code missing, redirect to guessed language
@@ -116,7 +115,7 @@ if (sizeof($parts) <= 2) {
       } else { // language code missing, redirect to some language version
         $lang = $controller->guessLanguage($vocab);
         $pattern = '|' . preg_quote("/$vocab/") . '|';
-        $location = preg_replace($pattern, "/$vocab/$lang/", $_SERVER['REQUEST_URI'], 1);
+        $location = preg_replace($pattern, "/$vocab/$lang/", $request->getServerConstant('REQUEST_URI'), 1);
         header("Location: $location");
       }
     }

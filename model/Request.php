@@ -32,6 +32,10 @@ class Request
     return filter_input(INPUT_GET, $param_name, FILTER_SANITIZE_STRING);
   }
 
+  public function getServerConstant($param_name) {
+    return filter_input(INPUT_SERVER, $param_name, FILTER_SANITIZE_STRING);
+  }
+
   public function getLang() {
     return $this->lang;
   }
