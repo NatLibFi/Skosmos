@@ -236,18 +236,18 @@ class WebController extends Controller
 
     $feedback_sent = False;
     $feedback_msg = null;
-    if (isset($_POST['message'])) {
+    if (filter_input(INPUT_POST, 'message', FILTER_SANITIZE_STRING)) {
       $feedback_sent = True;
-      $feedback_msg = $_POST['message'];
+      $feedback_msg = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_STRING);
     }
-    $feedback_name = (isset($_POST['name'])) ? $_POST['name'] : null;
-    $feedback_email = (isset($_POST['email'])) ? $_POST['email'] : null;
-    $feedback_vocab = (isset($_POST['vocab'])) ? $_POST['vocab'] : null;
+    $feedback_name =  filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
+    $feedback_email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
+    $feedback_vocab = filter_input(INPUT_POST, 'vocab', FILTER_SANITIZE_STRING);
     $feedback_vocab_email = ($vocab !== null) ? $vocab->getFeedbackRecipient() : null; 
 
     // if the hidden field has been set a value we have found a spam bot 
     // and we do not actually send the message.
-    if ($feedback_sent && $_POST['trap'] === '') {
+    if ($feedback_sent && filter_input(INPUT_POST, 'trap', FILTER_SANITIZE_STRING) === '') {
       $this->sendFeedback($feedback_msg, $feedback_name, $feedback_email, $feedback_vocab, $feedback_vocab_email);
     }
 
