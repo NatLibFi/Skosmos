@@ -616,11 +616,12 @@ class Vocabulary extends DataObject
    * Returns the group name from the available concept groups. If the group has
    * isothes:superGroups those are also added to the name string. 
    * @param string $groupuri uri of the group. 
+   * @param string $clang content language parameter 
    * @return string 
    */
-  public function getGroupName($groupuri)
+  public function getGroupName($groupuri, $clang=null)
   {
-    $groups = $this->listConceptGroups(true);
+    $groups = $this->listConceptGroups(true, $clang);
     if (sizeof($groups) === 0)
       return '';
     $current = $groups[$groupuri];

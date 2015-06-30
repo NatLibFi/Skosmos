@@ -523,7 +523,7 @@ class WebController extends Controller
     
     $groupuri = $vocab->getConceptURI($request->getUri());
     $contents = $vocab->listConceptGroupContents($groupuri, $content_lang);
-    $group_name = $vocab->getGroupName($groupuri);
+    $group_name = $vocab->getGroupName($groupuri, $content_lang);
     $uri = $vocab->getConceptURI($request->getUri()); // make sure it's a full URI
     $results = $vocab->getConceptInfo($uri, $content_lang);
     
