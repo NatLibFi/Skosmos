@@ -120,14 +120,16 @@ class WebController extends Controller
 
   private function guessBaseHref()
   {
+    $script_name = filter_input(INPUT_SERVER, 'SCRIPT_NAME', FILTER_SANITIZE_STRING);
+    $script_filename = filter_input(INPUT_SERVER, 'SCRIPT_FILENAME', FILTER_SANITIZE_STRING);
     $base_dir  = __DIR__; // Absolute path to your installation, ex: /var/www/mywebsite
-    $doc_root  = preg_replace("!{$_SERVER['SCRIPT_NAME']}$!", '', $_SERVER['SCRIPT_FILENAME']); # ex: /var/www
+    $doc_root  = preg_replace("!{$script_name}$!", '', $script_filename); # ex: /var/www
     $base_url  = preg_replace("!^{$doc_root}!", '', $base_dir); # ex: '' or '/mywebsite'
     $base_url = str_replace('/controller','/',$base_url);
-    $protocol  = empty($_SERVER['HTTPS']) ? 'http' : 'https';
-    $port      = $_SERVER['SERVER_PORT'];
+    $protocol  = filter_input(INPUT_SERVER, 'HTTPS', FILTER_SANITIZE_STRING) === null ? 'http' : 'https';
+    $port      = filter_input(INPUT_SERVER, 'SERVER_PORT', FILTER_SANITIZE_STRING);
     $disp_port = ($protocol == 'http' && $port == 80 || $protocol == 'https' && $port == 443) ? '' : ":$port";
-    $domain    = $_SERVER['SERVER_NAME'];
+    $domain    = filter_input(INPUT_SERVER, 'SERVER_NAME', FILTER_SANITIZE_STRING);
     $full_url  = "$protocol://{$domain}{$disp_port}{$base_url}"; # Ex: 'http://example.com', 'https://example.com/mywebsite', etc.
     return $full_url;
   }
@@ -577,7 +579,7 @@ class WebController extends Controller
     echo $template->render(
       array(
         'languages' => $this->languages,
-        'requested_page' => $_SERVER['REQUEST_URI']
+        'requested_page' => filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_STRING)
       ));
   }
 
