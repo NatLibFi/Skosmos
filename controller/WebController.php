@@ -143,8 +143,8 @@ class WebController extends Controller
   public function guessLanguage($vocab_id=null)
   {
     // 1. select language based on SKOSMOS_LANGUAGE cookie
-    if (isset($_COOKIE['SKOSMOS_LANGUAGE']))
-      return $_COOKIE['SKOSMOS_LANGUAGE'];
+    if (filter_input(INPUT_COOKIE, 'SKOSMOS_LANGUAGE', FILTER_SANITIZE_STRING))
+      return filter_input(INPUT_COOKIE, 'SKOSMOS_LANGUAGE', FILTER_SANITIZE_STRING);
 
     // 2. if vocabulary given, select based on the default language of the vocabulary
     if ($vocab_id) {
