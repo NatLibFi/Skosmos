@@ -223,12 +223,11 @@ class RestController extends Controller
 
   /**
    * Loads the vocabulary metadata. And wraps the result in a json-ld object.
-   * @param string $vocabId identifier string for the vocabulary eg. 'yso'.
+   * @param Request $request
    */
-  public function vocabularyInformation($vocabId)
+  public function vocabularyInformation($request)
   {
-    $lang = $this->getAndSetLanguage($vocabId);
-    $vocab = $this->getVocabulary($vocabId);
+    $vocab = $request->getVocab();
 
     /* encode the results in a JSON-LD compatible array */
     $conceptschemes = array();
@@ -254,10 +253,10 @@ class RestController extends Controller
             'label' => 'rdfs:label',
             'prefLabel' => 'skos:prefLabel',
             'title' => 'dct:title',
-            '@language' => $lang,
+            '@language' => $request->getLang(),
         ),
         'uri' => '',
-        'id' => $vocabId,
+        'id' => $vocab->getId(),
         'title' => $vocab->getTitle(),
         'defaultLanguage' => $vocab->getDefaultLanguage(),
         'languages' => $vocab->getLanguages(),
@@ -359,14 +358,11 @@ class RestController extends Controller
 
   /**
    * Loads the vocabulary type metadata. And wraps the result in a json-ld object.
-   * @param string $vocabId identifier string for the vocabulary eg. 'yso'.
+   * @param Request $request
    */
-  public function types($vocabId = null)
+  public function types($request)
   {
-    if ($vocabId == null && !isset($_GET['lang']))
-      return $this->return_error(400, "Bad Request", "lang parameter missing");
-    $lang = $this->getAndSetLanguage($vocabId);
-    $queriedtypes = $this->model->getTypes($vocabId, $lang);
+    $queriedtypes = $this->model->getTypes($request->getVocab()->getId(), $request->getLang());
 
     $types = array();
 
@@ -386,7 +382,7 @@ class RestController extends Controller
             'label' => 'rdfs:label',
             'superclass' => array('@id' => 'rdfs:subClassOf', '@type' => '@id'),
             'types' => 'onki:hasType',
-            '@language' => $lang,
+            '@language' => $request->getLang(),
         ),
         'uri' => '',
         'types' => $types,
@@ -469,17 +465,16 @@ class RestController extends Controller
 
   /**
    * Queries the top concepts of a vocabulary and wraps the results in a json-ld object.
-   * @param string $vocabId identifier string for the vocabulary eg. 'yso'.
+   * @param Request $request
    * @return object json-ld object
    */
-  public function topConcepts($vocabId)
+  public function topConcepts($request)
   {
-    $vocab = $this->getVocabulary($vocabId);
-    $lang = $this->parseLang() !== '' ? $this->parseLang() : $vocab->getDefaultLanguage(); 
-    $scheme = isset($_GET['scheme']) ? $_GET['scheme'] : $vocab->getDefaultConceptScheme();
+    $vocab = $request->getVocab();
+    $scheme = $request->getQueryParam('scheme') ? $request->getQueryParam('scheme') : $vocab->getDefaultConceptScheme();
 
     /* encode the results in a JSON-LD compatible array */
-    $topconcepts = $vocab->getTopConcepts($scheme, $lang);
+    $topconcepts = $vocab->getTopConcepts($scheme, $request->getLang());
     $results = array();
     foreach ($topconcepts as $uri => $label) {
       $results[] = array('uri'=>$uri, 'label'=>$label);
@@ -492,7 +487,7 @@ class RestController extends Controller
             'uri' => '@id',
             'topconcepts' => 'skos:hasTopConcept',
             'label' => 'skos:prefLabel',
-            '@language' => $lang,
+            '@language' => $request->getLang(),
         ),
         'uri' => $scheme,
         'topconcepts' => $results,

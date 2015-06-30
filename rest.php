@@ -21,6 +21,7 @@ try {
 
   $model = new Model();
   $controller = new RestController($model);
+  $request = new Request($model);
 
   if (sizeof($parts) < 2 || $parts[1] == "") {
     header("HTTP/1.0 404 Not Found");
@@ -37,12 +38,22 @@ try {
     header("Location: " . $parts[1] . "/");
   } else {
     $vocab = $parts[1];
+    try {
+      $request->setVocab($parts[1]);
+      $lang = $request->getQueryParam('lang') ? $request->getQueryParam('lang') : $request->getVocab()->getDefaultLanguage();
+      $request->setLang($lang);
+    } catch (Exception $e) {
+      header("HTTP/1.0 404 Not Found");
+      header("Content-type: text/plain; charset=utf-8");
+      echo("404 Not Found : Vocabulary id '$parts[1]' not found.");
+      exit();
+    }
     if ($parts[2] == '') {
-      $controller->vocabularyInformation($vocab);
+      $controller->vocabularyInformation($request);
     } elseif ($parts[2] == 'types') {
-      $controller->types($vocab);
+      $controller->types($request);
     } elseif ($parts[2] == 'topConcepts') {
-      $controller->topConcepts($vocab);
+      $controller->topConcepts($request);
     } elseif ($parts[2] == 'data') {
       $controller->data($vocab);
     } elseif ($parts[2] == 'search') {
