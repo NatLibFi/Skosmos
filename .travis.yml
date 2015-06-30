@@ -7,6 +7,7 @@ php:
 install:
   - composer self-update
   - composer install --no-dev
+  - composer update
   - composer require codeclimate/php-test-reporter
 before_script:
   - cd tests
