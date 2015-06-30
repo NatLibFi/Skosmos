@@ -1313,7 +1313,7 @@ ul.nav-tabs > li {
   margin: 0;
 }
 
-.clear-search {
+.twitter-typeahead > .clear-search {
   color: #CCCCCC !important;
   font-size: 24px !important;
   top: 4px;
