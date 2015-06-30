@@ -283,9 +283,9 @@ class WebController extends Controller
     $params = empty($envelopeSender) ? '' : "-f $envelopeSender";
 
     // adding some information about the user for debugging purposes.
-    $agent = (isset($_SERVER['HTTP_USER_AGENT'])) ? $_SERVER['HTTP_USER_AGENT'] : '';
-    $referer = (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : '';
-    $ip = (isset($_SERVER['REMOTE_ADDR'])) ? $_SERVER['HTTP_REFERER'] : '';
+    $agent = (filter_input(INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_SANITIZE_STRING)) ? filter_input(INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_SANITIZE_STRING) : '';
+    $referer = (filter_input(INPUT_SERVER, 'HTTP_REFERER', FILTER_SANITIZE_STRING)) ? filter_input(INPUT_SERVER, 'HTTP_REFERER', FILTER_SANITIZE_STRING) : '';
+    $ip = (filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_SANITIZE_STRING)) ? filter_input(INPUT_SERVER, 'HTTP_REFERER', FILTER_SANITIZE_STRING) : '';
     $timestamp = date(DATE_RFC2822);
 
     $message = $message . "<br /><br /> Debugging information:" 
