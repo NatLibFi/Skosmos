@@ -5,6 +5,7 @@ php:
   - "5.4"
   - "5.3"
 install:
+  - composer self-update
   - composer install --no-dev
   - composer require codeclimate/php-test-reporter
 before_script:
