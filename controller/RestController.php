@@ -750,25 +750,23 @@ class RestController extends Controller
   /**
    * Used for querying broader transitive relations
    * and some narrowers for a concept in the hierarchy view.
-   * @param string $vocabId vocabulary identifier eg. 'yso'.
+   * @param Request $request
    * @return object json-ld wrapped hierarchical concept uris and labels.
    */
-  public function hierarchy($vocabId)
+  public function hierarchy($request)
   {
-    $vocab = $this->getVocabulary($vocabId);
-    $uri = $this->parseURI();
-    
-    $lang = $this->parseLang() !== '' ? $this->parseLang() : $vocab->getDefaultLanguage(); 
+    $lang = $request->getLang() ? $request->getLang() : $request->getVocab()->getDefaultLanguage(); 
+    $uri = $request->getUri();
 
-    $results = $this->getVocabulary($vocabId)->getConceptHierarchy($uri, $lang);
+    $results = $request->getVocab()->getConceptHierarchy($uri, $lang);
     if ($results === NULL)
       return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
     
-    if ($vocab->getShowHierarchy()) {
-      $scheme = isset($_GET['scheme']) ? $_GET['scheme'] : $vocab->getDefaultConceptScheme();
+    if ($request->getVocab()->getShowHierarchy()) {
+      $scheme = $request->getQueryParam('scheme') ? $request->getQueryParam('scheme') : $request->getVocab()->getDefaultConceptScheme();
 
       /* encode the results in a JSON-LD compatible array */
-      $topconcepts = $vocab->getTopConcepts($scheme, $lang);
+      $topconcepts = $request->getVocab()->getTopConcepts($scheme, $lang);
       foreach ($topconcepts as $uri => $label) {
         if (!isset($results[$uri]))
           $results[$uri] = array('uri'=>$uri, 'top'=>$scheme, 'prefLabel'=>$label, 'hasChildren'=> true);
