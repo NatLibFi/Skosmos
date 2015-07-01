@@ -71,7 +71,7 @@ try {
     } elseif ($parts[2] == 'narrower') {
       $controller->narrower($request);
     } elseif ($parts[2] == 'narrowerTransitive') {
-      $controller->narrowerTransitive($vocab);
+      $controller->narrowerTransitive($request);
     } elseif ($parts[2] == 'hierarchy') {
       $controller->hierarchy($vocab);
     } elseif ($parts[2] == 'children') {
