@@ -1,6 +1,6 @@
 if [ ! -f jena-fuseki1-1.1.2/fuseki-server ]; then
   echo "fuseki server file not found - downloading it"
-  wget --output-document=fuseki-dist.tar.gz http://www.nic.funet.fi/pub/mirrors/apache.org/jena/binaries/jena-fuseki1-1.1.2-distribution.tar.gz 
+  wget --output-document=fuseki-dist.tar.gz http://mirror.netinch.com/pub/apache/jena/binaries/jena-fuseki1-1.1.2-distribution.tar.gz 
   tar -zxvf fuseki-dist.tar.gz
 fi
 
