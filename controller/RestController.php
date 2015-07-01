@@ -266,14 +266,11 @@ class RestController extends Controller
 
   /**
    * Loads the vocabulary metadata. And wraps the result in a json-ld object.
-   * @param string $vocabId identifier string for the vocabulary eg. 'yso'.
+   * @param Request $request
    */
-  public function vocabularyStatistics($vocabId)
+  public function vocabularyStatistics($request)
   {
-    $lang = $this->getAndSetLanguage($vocabId);
-    $vocab = $this->getVocabulary($vocabId);
-    
-    $vocab_stats = $vocab->getStatistics();
+    $vocab_stats = $request->getVocab()->getStatistics();
 
     /* encode the results in a JSON-LD compatible array */
     $ret = array(
@@ -286,11 +283,11 @@ class RestController extends Controller
             'concepts' => 'void:classPartition',
             'class' => array('@id' => 'void:class', '@type' => '@id'),
             'count' => 'void:entities',
-            '@language' => $lang,
+            '@language' => $request->getLang(),
         ),
         'uri' => '',
-        'id' => $vocabId,
-        'title' => $vocab->getTitle(),
+        'id' => $request->getVocab()->getId(),
+        'title' => $request->getVocab()->getTitle(),
         'concepts' => array(
             'class' => 'skos:Concept',
             'count' => $vocab_stats['concepts'],

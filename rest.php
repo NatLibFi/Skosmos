@@ -79,7 +79,7 @@ try {
     } elseif ($parts[2] == 'related') {
       $controller->related($request);
     } elseif ($parts[2] == 'vocabularyStatistics') {
-      $controller->vocabularyStatistics($vocab);
+      $controller->vocabularyStatistics($request);
     } elseif ($parts[2] == 'labelStatistics') {
       $controller->labelStatistics($vocab);
     } else {
