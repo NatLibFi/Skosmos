@@ -23,12 +23,13 @@ try {
   $controller = new RestController($model);
   $request = new Request($model);
   $request->setUri($request->getQueryParam('uri'));
+  $request->setLang($request->getQueryParam('lang'));
 
   if (sizeof($parts) < 2 || $parts[1] == "") {
     header("HTTP/1.0 404 Not Found");
     echo("404 Not Found");
   } elseif ($parts[1] == 'vocabularies') {
-    $controller->vocabularies();
+    $controller->vocabularies($request);
   } elseif ($parts[1] == 'search') {
     $controller->search($request);
   } elseif ($parts[1] == 'types') {

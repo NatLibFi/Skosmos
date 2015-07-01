@@ -121,16 +121,14 @@ class RestController extends Controller
   /**
    * Returns all the vocabularies available on the server in a json object.
    */
-  public function vocabularies()
+  public function vocabularies($request)
   {
-    if (!isset($_GET['lang']))
+    if (!$request->getLang())
       return $this->return_error(400, "Bad Request", "lang parameter missing");
-    $lang = $_GET['lang'];
-    $this->setLanguageProperties($lang);
 
     $vocabs = array();
     foreach ($this->model->getVocabularies() as $voc) {
-      $vocabs[$voc->getId()] = $voc->getTitle();
+      $vocabs[$voc->getId()] = $voc->getTitle($request->getLang());
     }
     ksort($vocabs);
     $results = array();
@@ -146,7 +144,7 @@ class RestController extends Controller
         '@context' => array(
             'rdfs' => 'http://www.w3.org/2000/01/rdf-schema#',
             'onki' => 'http://schema.onki.fi/onki#',
-            'title' => array('@id'=>'rdfs:label', '@language'=>$lang),
+            'title' => array('@id'=>'rdfs:label', '@language'=>$request->getLang()),
             'vocabularies' => 'onki:hasVocabulary',
             'id' => 'onki:vocabularyIdentifier',
             'uri' => '@id',
