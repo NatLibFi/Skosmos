@@ -37,53 +37,20 @@ class RestController extends Controller
    */
   private function return_json($data)
   {
-    if (isset($_GET['callback'])) {
+    if (filter_input(INPUT_GET, 'callback', FILTER_SANITIZE_STRING)) {
       header("Content-type: application/javascript; charset=utf-8");
       // wrap with JSONP callback
-      echo $_GET['callback'] . "(" . json_encode($data) . ");";
+      echo filter_input(INPUT_GET, 'callback', FILTER_SANITIZE_STRING) . "(" . json_encode($data) . ");";
     } else {
       // negotiate suitable format
       $negotiator = new \Negotiation\FormatNegotiator();
       $priorities = array('application/json', 'application/ld+json');
-      $best = (isset($_SERVER['HTTP_ACCEPT'])) ? $negotiator->getBest($_SERVER['HTTP_ACCEPT'], $priorities) : null;
+      $best = filter_input(INPUT_SERVER, 'HTTP_ACCEPT', FILTER_SANITIZE_STRING) ? $negotiator->getBest(filter_input(INPUT_SERVER, 'HTTP_ACCEPT', FILTER_SANITIZE_STRING), $priorities) : null;
       $format = $best != null ? $best->getValue() : $priorities[0];
       header("Content-type: $format; charset=utf-8");
       header("Vary: Accept"); // inform caches that we made a choice based on Accept header
       echo json_encode($data);
     }
-  }
-
-  /**
-   * Gets a Vocabulary object. If not found, aborts with a HTTP 404 error.
-   * @param string $vocabId identifier string for the vocabulary eg. 'yso'.
-   * @return object Vocabulary object
-   */
-
-  private function getVocabulary($vocabId)
-  {
-    try {
-      return $this->model->getVocabulary($vocabId);
-    } catch (Exception $e) {
-      return $this->return_error(404, "Not Found", "Vocabulary id '$vocabId' not found.");
-    }
-  }
-
-  /**
-   * Parses and returns the uri parameter. Returns and error if the parameter is missing.
-   */
-  private function parseURI()
-  {
-    if (isset($_GET['uri'])) return $_GET['uri'];
-    return $this->return_error(400, "Bad Request", "uri parameter missing");
-  }
-  
-  /**
-   * Parses and returns the uri parameter. Returns and error if the parameter is missing.
-   */
-  private function parseLang()
-  {
-    if (isset($_GET['lang'])) return $_GET['lang'];
-    else return '';
   }
 
   /**
@@ -96,23 +63,6 @@ class RestController extends Controller
       return $this->return_error(400, "Bad Request", "Invalid limit parameter");
 
     return $limit;
-  }
-
-  /**
-   * Determine the language to use, from the lang URL parameter (if set),
-   * otherwise from the default language of the current vocabulary.
-   * As a side effect, set this language as current language.
-   * @param string $vocabId identifier string for the vocabulary eg. 'yso'.
-   * @return string current language eg. 'en'.
-   */
-  private function getAndSetLanguage($vocabId)
-  {
-    $lang = isset($_GET['lang']) ?
-            $_GET['lang'] :
-            $this->getVocabulary($vocabId)->getDefaultLanguage();
-    $this->setLanguageProperties($lang);
-
-    return $lang;
   }
 
 /** Global REST methods **/
