@@ -22,6 +22,7 @@ try {
   $model = new Model();
   $controller = new RestController($model);
   $request = new Request($model);
+  $request->setUri($request->getQueryParam('uri'));
 
   if (sizeof($parts) < 2 || $parts[1] == "") {
     header("HTTP/1.0 404 Not Found");
@@ -29,11 +30,11 @@ try {
   } elseif ($parts[1] == 'vocabularies') {
     $controller->vocabularies();
   } elseif ($parts[1] == 'search') {
-    $controller->search();
+    $controller->search($request);
   } elseif ($parts[1] == 'types') {
     $controller->types();
   } elseif ($parts[1] == 'data') {
-    $controller->data();
+    $controller->data($request);
   } elseif (sizeof($parts) == 2) {
     header("Location: " . $parts[1] . "/");
   } else {
@@ -42,7 +43,6 @@ try {
       $request->setVocab($parts[1]);
       $lang = $request->getQueryParam('lang') ? $request->getQueryParam('lang') : $request->getVocab()->getDefaultLanguage();
       $request->setLang($lang);
-      $request->setUri($request->getQueryParam('uri'));
     } catch (Exception $e) {
       header("HTTP/1.0 404 Not Found");
       header("Content-type: text/plain; charset=utf-8");
@@ -58,7 +58,7 @@ try {
     } elseif ($parts[2] == 'data') {
       $controller->data($request);
     } elseif ($parts[2] == 'search') {
-      $controller->search($vocab);
+      $controller->search($request);
     } elseif ($parts[2] == 'label') {
       $controller->label($vocab);
     } elseif ($parts[2] == 'lookup') {

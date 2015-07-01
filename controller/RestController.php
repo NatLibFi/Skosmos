@@ -160,34 +160,35 @@ class RestController extends Controller
 
   /**
    * Performs the search function calls. And wraps the result in a json-ld object.
-   * @param string $vocab identifier string for the vocabulary eg. 'yso'.
+   * @param Request $request
    */
-  public function search($vocab=null)
+  public function search($request)
   {
-    if(isset($_GET['query']))
-      $term = $_GET['query'];
-    else
+    $maxhits = $request->getQueryParam('maxhits');
+    $offset = $request->getQueryParam('offset');
+    $term = $request->getQueryParam('query');
+
+    if(!$term) {
       return $this->return_error(400, "Bad Request", "query parameter missing");
-    if (isset($_GET['maxhits']) && (!is_numeric($_GET['maxhits']) || $_GET['maxhits'] <= 0)) {
+    }
+    if ($maxhits && (!is_numeric($maxhits) || $maxhits <= 0)) {
       return $this->return_error(400, "Bad Request", "maxhits parameter is invalid");
     }
-    if (isset($_GET['offset']) && (!is_numeric($_GET['offset']) || $_GET['offset'] < 0)) {
+    if ($offset && (!is_numeric($offset) || $offset < 0)) {
       return $this->return_error(400, "Bad Request", "offset parameter is invalid");
     }
 
-    $vocid = isset($_GET['vocab']) ? $_GET['vocab'] : $vocab; # optional
-    $lang = isset($_GET['lang']) ? $_GET['lang'] : null; # optional
-    $labellang = isset($_GET['labellang']) ? $_GET['labellang'] : null; # optional
-    $types = isset($_GET['type']) ? explode(' ', $_GET['type']) : array('skos:Concept');
-    $parent = isset($_GET['parent']) ? $_GET['parent'] : null;
-    $group = isset($_GET['group']) ? $_GET['group'] : null;
-    $fields = isset($_GET['fields']) ? explode(' ', $_GET['fields']) : null;
+    $vocid = $request->getVocab() ? $request->getVocab()->getId() : null; # optional
+    $lang = $request->getLang(); # optional
+    $labellang = $request->getQueryParam('labellang'); # optional
+    $types =  $request->getQueryParam('type') ? explode(' ', $request->getQueryParam('type')) : array('skos:Concept');
+    $parent = $request->getQueryParam('parent');
+    $group = $request->getQueryParam('group');
+    $fields = $request->getQueryParam('fields') ? explode(' ', $request->getQueryParam('fields')) : null;
 
     // convert to vocids array to support multi-vocabulary search
     $vocids = !empty($vocid) ? explode(' ', $vocid) : null;
 
-    $maxhits = isset($_GET['maxhits']) ? ($_GET['maxhits']) : null; # optional
-    $offset = isset($_GET['offset']) ? ($_GET['offset']) : 0; # optional
     $results = $this->model->searchConcepts($term, $vocids, $labellang, $lang, $types, $parent, $group, $offset, $maxhits, true, $fields);
     // before serializing to JSON, get rid of the Vocabulary object that came with each resource
     foreach ($results as &$res) {
@@ -538,7 +539,8 @@ class RestController extends Controller
       $format = $best != null ? $best->getValue() : $priorities[0];
     }
     
-    $results = $this->model->getRDF($vocab->getId(), $uri, $format);
+    $vocid = $vocab ? $vocab->getId() : null;
+    $results = $this->model->getRDF($vocid, $uri, $format);
 
     if ($format == 'application/ld+json' || $format == 'application/json') {
       // further compact JSON-LD document using a context
