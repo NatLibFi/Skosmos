@@ -498,26 +498,28 @@ class RestController extends Controller
 
   /**
    * Download a concept as json-ld or redirect to download the whole vocabulary.
-   * @param string $vocab vocabulary identifier.
+   * @param Request $request
    * @return object json-ld formatted concept.
    */
-  public function data($vocab=null)
+  public function data($request)
   {
-    if (isset($_GET['uri'])) {
-      $uri = $_GET['uri'];
+    $vocab = $request->getVocab();
+    $format = $request->getQueryParam('format');
+
+    if ($request->getUri()) {
+      $uri = $request->getUri();
     } else if ($vocab !== null) { // whole vocabulary - redirect to download URL
-      $urls = $this->getVocabulary($vocab)->getDataURLs();
+      $urls = $vocab->getDataURLs();
       if (sizeof($urls) == 0)
         return $this->return_error('404', 'Not Found', "No download source URL known for vocabulary $vocab");
 
-      if (isset($_GET['format'])) {
-        $format = $_GET['format'];
+      if ($format) {
         if (!in_array($format, array_keys($urls)))
           return $this->return_error(400, 'Bad Request', "Unsupported format. Supported MIME types are: " . implode(' ', array_keys($urls)));
       } else {
         header('Vary: Accept'); // inform caches that a decision was made based on Accept header
         $priorities = array_keys($urls);
-        $best = $this->negotiator->getBest($_SERVER['HTTP_ACCEPT'], $priorities);
+        $best = $this->negotiator->getBest($request->getServerConstant('HTTP_ACCEPT'), $priorities);
         $format = $best != null ? $best->getValue() : $priorities[0];
       }
       header("Location: " . $urls[$format]);
@@ -526,18 +528,17 @@ class RestController extends Controller
       return $this->return_error(400, 'Bad Request', "uri parameter missing");
     }
     
-    if (isset($_GET['format'])) {
-      $format = $_GET['format'];
+    if ($format) {
       if (!in_array($format, explode(' ', self::$SUPPORTED_MIME_TYPES)))
         return $this->return_error(400, 'Bad Request', "Unsupported format. Supported MIME types are: " . self::$SUPPORTED_MIME_TYPES);
     } else {
       header('Vary: Accept'); // inform caches that a decision was made based on Accept header
       $priorities = explode(' ', self::$SUPPORTED_MIME_TYPES);
-      $best = $this->negotiator->getBest($_SERVER['HTTP_ACCEPT'], $priorities);
+      $best = $this->negotiator->getBest($request->getQueryParam('HTTP_ACCEPT'), $priorities);
       $format = $best != null ? $best->getValue() : $priorities[0];
     }
     
-    $results = $this->model->getRDF($vocab, $uri, $format);
+    $results = $this->model->getRDF($vocab->getId(), $uri, $format);
 
     if ($format == 'application/ld+json' || $format == 'application/json') {
       // further compact JSON-LD document using a context

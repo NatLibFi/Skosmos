@@ -42,6 +42,7 @@ try {
       $request->setVocab($parts[1]);
       $lang = $request->getQueryParam('lang') ? $request->getQueryParam('lang') : $request->getVocab()->getDefaultLanguage();
       $request->setLang($lang);
+      $request->setUri($request->getQueryParam('uri'));
     } catch (Exception $e) {
       header("HTTP/1.0 404 Not Found");
       header("Content-type: text/plain; charset=utf-8");
@@ -55,7 +56,7 @@ try {
     } elseif ($parts[2] == 'topConcepts') {
       $controller->topConcepts($request);
     } elseif ($parts[2] == 'data') {
-      $controller->data($vocab);
+      $controller->data($request);
     } elseif ($parts[2] == 'search') {
       $controller->search($vocab);
     } elseif ($parts[2] == 'label') {
