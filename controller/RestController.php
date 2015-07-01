@@ -573,16 +573,18 @@ class RestController extends Controller
 
   /**
    * Used for querying labels for a uri.
-   * @param string $vocid vocabulary identifier eg. 'yso'.
+   * @param Request $request
    * @return object json-ld wrapped labels.
    */
-  public function label($vocid)
+  public function label($request)
   {
-    $vocab = $this->getVocabulary($vocid);
-    $lang = $this->parseLang() !== '' ? $this->parseLang() : $vocab->getDefaultLanguage(); 
-    $uri = $this->parseURI();
+    $lang = $request->getLang() ? $request->getLang() : $request->getVocab()->getDefaultLanguage(); 
+    
+    if (!$request->getUri())
+      return $this->return_error(400, "Bad Request", "uri parameter missing");
+    $uri = $request->getUri();
 
-    $results = $vocab->getConceptLabel($uri, $lang);
+    $results = $request->getVocab()->getConceptLabel($uri, $lang);
     if ($results === NULL)
       return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
 

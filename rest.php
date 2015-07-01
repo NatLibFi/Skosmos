@@ -61,7 +61,7 @@ try {
     } elseif ($parts[2] == 'search') {
       $controller->search($request);
     } elseif ($parts[2] == 'label') {
-      $controller->label($vocab);
+      $controller->label($request);
     } elseif ($parts[2] == 'lookup') {
       $controller->lookup($vocab);
     } elseif ($parts[2] == 'broader') {
