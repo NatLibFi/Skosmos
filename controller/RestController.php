@@ -796,16 +796,15 @@ class RestController extends Controller
 
   /**
    * Used for querying narrower relations for a concept in the hierarchy view.
-   * @param string $vocabId vocabulary identifier eg. 'yso'.
+   * @param Request $request
    * @return object json-ld wrapped narrower concept uris and labels.
    */
-  public function children($vocabId)
+  public function children($request)
   {
-    $vocab = $this->getVocabulary($vocabId);
-    $lang = $this->parseLang() !== '' ? $this->parseLang() : $vocab->getDefaultLanguage(); 
-    $uri = $this->parseURI();
+    $lang = $request->getLang() ? $request->getLang() : $request->getVocab()->getDefaultLanguage(); 
+    $uri = $request->getUri();
 
-    $children = $vocab->getConceptChildren($uri, $lang);
+    $children = $request->getVocab()->getConceptChildren($uri, $lang);
     if ($children === NULL)
       return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
 
@@ -828,17 +827,16 @@ class RestController extends Controller
 
   /**
    * Used for querying narrower relations for a concept in the hierarchy view.
-   * @param string $vocabId vocabulary identifier eg. 'yso'.
+   * @param Request $request
    * @return object json-ld wrapped hierarchical concept uris and labels.
    */
-  public function related($vocabId)
+  public function related($request)
   {
-    $vocab = $this->getVocabulary($vocabId);
-    $lang = $this->parseLang() !== '' ? $this->parseLang() : $vocab->getDefaultLanguage(); 
-    $uri = $this->parseURI();
+    $lang = $request->getLang() ? $request->getLang() : $request->getVocab()->getDefaultLanguage(); 
+    $uri = $request->getUri();
 
     $results = array();
-    $related = $vocab->getConceptRelateds($uri, $lang);
+    $related = $request->getVocab()->getConceptRelateds($uri, $lang);
     if ($related === NULL)
       return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
     foreach ($related as $uri => $vals) {

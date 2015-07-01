@@ -75,9 +75,9 @@ try {
     } elseif ($parts[2] == 'hierarchy') {
       $controller->hierarchy($request);
     } elseif ($parts[2] == 'children') {
-      $controller->children($vocab);
+      $controller->children($request);
     } elseif ($parts[2] == 'related') {
-      $controller->related($vocab);
+      $controller->related($request);
     } elseif ($parts[2] == 'vocabularyStatistics') {
       $controller->vocabularyStatistics($vocab);
     } elseif ($parts[2] == 'labelStatistics') {
