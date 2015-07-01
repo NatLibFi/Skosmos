@@ -299,25 +299,19 @@ class RestController extends Controller
   
   /**
    * Loads the vocabulary metadata. And wraps the result in a json-ld object.
-   * @param string $vocabId identifier string for the vocabulary eg. 'yso'.
+   * @param Request $request
    */
-  public function labelStatistics($vocabId)
+  public function labelStatistics($request)
   {
-    $lang = $this->getAndSetLanguage($vocabId);
-    $vocab = $this->getVocabulary($vocabId);
+    $lang = $request->getLang();
     
-    if(isset($_GET['lang'])) // used in the UI for including literals for the langcodes.
-      $litlang = $_GET['lang'];
-    else
-      $litlang = null;
-    
-    $vocab_stats = $vocab->getLabelStatistics();
+    $vocab_stats = $request->getVocab()->getLabelStatistics();
 
     /* encode the results in a JSON-LD compatible array */
     $counts = array();
     foreach ($vocab_stats['terms'] as $proplang => $properties) {
       $langdata = array('language' => $proplang);
-      if ($litlang) $langdata['literal'] = Punic\Language::getName($proplang, $litlang);
+      if ($lang) $langdata['literal'] = Punic\Language::getName($proplang, $lang);
       $langdata['properties'] = array();
       foreach ($properties as $prop => $value) {
         $langdata['properties'][] = array('property' => $prop, 'labels' => $value);
@@ -340,13 +334,13 @@ class RestController extends Controller
             'labels' => 'void:triples',
         ),
         'uri' => '',
-        'id' => $vocabId,
-        'title' => $vocab->getTitle($litlang),
+        'id' => $request->getVocab()->getId(),
+        'title' => $request->getVocab()->getTitle($lang),
         'languages' => $counts 
     );
     
-    if ($litlang)
-      $ret['@context']['literal'] = array('@id' => 'rdfs:label', '@language' => $litlang);
+    if ($lang)
+      $ret['@context']['literal'] = array('@id' => 'rdfs:label', '@language' => $lang);
 
     return $this->return_json($ret);
   }

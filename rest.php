@@ -81,7 +81,7 @@ try {
     } elseif ($parts[2] == 'vocabularyStatistics') {
       $controller->vocabularyStatistics($request);
     } elseif ($parts[2] == 'labelStatistics') {
-      $controller->labelStatistics($vocab);
+      $controller->labelStatistics($request);
     } else {
       header("HTTP/1.0 404 Not Found");
       echo("404 Not Found");
