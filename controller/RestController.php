@@ -676,17 +676,16 @@ class RestController extends Controller
 
   /**
    * Used for querying narrower relations for a concept.
-   * @param string $vocabId vocabulary identifier eg. 'yso'.
+   * @param Request $request
    * @return object json-ld wrapped narrower concept uris and labels.
    */
-  public function narrower($vocabId)
+  public function narrower($request)
   {
-    $vocab = $this->getVocabulary($vocabId);
-    $lang = $this->parseLang() !== '' ? $this->parseLang() : $vocab->getDefaultLanguage(); 
-    $uri = $this->parseURI();
+    $lang = $request->getLang() ? $request->getLang() : $request->getVocab()->getDefaultLanguage(); 
+    $uri = $request->getUri();
 
     $results = array();
-    $narrowers = $vocab->getConceptNarrowers($uri, $lang);
+    $narrowers = $request->getVocab()->getConceptNarrowers($uri, $lang);
     if ($narrowers === NULL)
       return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
     foreach ($narrowers as $object => $vals) {

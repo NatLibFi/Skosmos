@@ -69,7 +69,7 @@ try {
     } elseif ($parts[2] == 'broaderTransitive') {
       $controller->broaderTransitive($request);
     } elseif ($parts[2] == 'narrower') {
-      $controller->narrower($vocab);
+      $controller->narrower($request);
     } elseif ($parts[2] == 'narrowerTransitive') {
       $controller->narrowerTransitive($vocab);
     } elseif ($parts[2] == 'hierarchy') {
