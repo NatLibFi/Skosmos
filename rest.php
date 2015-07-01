@@ -65,7 +65,7 @@ try {
     } elseif ($parts[2] == 'lookup') {
       $controller->lookup($request);
     } elseif ($parts[2] == 'broader') {
-      $controller->broader($vocab);
+      $controller->broader($request);
     } elseif ($parts[2] == 'broaderTransitive') {
       $controller->broaderTransitive($vocab);
     } elseif ($parts[2] == 'narrower') {

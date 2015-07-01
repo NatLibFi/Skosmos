@@ -604,17 +604,16 @@ class RestController extends Controller
 
   /**
    * Used for querying broader relations for a concept.
-   * @param string $vocabId vocabulary identifier eg. 'yso'.
+   * @param Request $request
    * @return object json-ld wrapped broader concept uris and labels.
    */
-  public function broader($vocabId)
+  public function broader($request)
   {
-    $vocab = $this->getVocabulary($vocabId);
-    $lang = $this->parseLang() !== '' ? $this->parseLang() : $vocab->getDefaultLanguage(); 
-    $uri = $this->parseURI();
+    $lang = $request->getLang() ? $request->getLang() : $request->getVocab()->getDefaultLanguage(); 
+    $uri = $request->getUri();
 
     $results = array();
-    $broaders = $vocab->getConceptBroaders($uri, $lang);
+    $broaders = $request->getVocab()->getConceptBroaders($uri, $lang);
     if ($broaders === NULL)
       return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
     foreach ($broaders as $object => $vals) {
