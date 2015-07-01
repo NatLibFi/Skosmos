@@ -126,7 +126,6 @@ class RestController extends Controller
     }
 
     $vocid = $request->getVocab() ? $request->getVocab()->getId() : null; # optional
-    $lang = $request->getLang(); # optional
     $labellang = $request->getQueryParam('labellang'); # optional
     $types =  $request->getQueryParam('type') ? explode(' ', $request->getQueryParam('type')) : array('skos:Concept');
     $parent = $request->getQueryParam('parent');
@@ -136,7 +135,7 @@ class RestController extends Controller
     // convert to vocids array to support multi-vocabulary search
     $vocids = !empty($vocid) ? explode(' ', $vocid) : null;
 
-    $results = $this->model->searchConcepts($term, $vocids, $labellang, $lang, $types, $parent, $group, $offset, $maxhits, true, $fields);
+    $results = $this->model->searchConcepts($term, $vocids, $labellang, $request->getLang(), $types, $parent, $group, $offset, $maxhits, true, $fields);
     // before serializing to JSON, get rid of the Vocabulary object that came with each resource
     foreach ($results as &$res) {
       unset($res['voc']);
@@ -161,7 +160,7 @@ class RestController extends Controller
         'results' => $results,
     );
 
-    if ($lang)
+    if ($request->getLang())
       $ret['@context']['@language'] = $labellang;
 
     return $this->return_json($ret);
@@ -339,10 +338,9 @@ class RestController extends Controller
     $label = $request->getQueryParam('label');
     if(!$label)
       return $this->return_error(400, "Bad Request", "label parameter missing");
-    $lang = $request->getLang(); # optional
     $vocab = $request->getVocab();
 
-    $results = $this->model->searchConcepts($label, $vocab->getId(), $lang, $lang);
+    $results = $this->model->searchConcepts($label, $vocab->getId(), $request->getLang(), $request->getLang());
 
     $hits = array();
     // case 1: exact match on preferred label
@@ -394,8 +392,8 @@ class RestController extends Controller
         'uri' => '',
         'results' => $hits,
     );
-    if ($lang)
-      $ret['@context']['@language'] = $lang;
+    if ($request->getLang())
+      $ret['@context']['@language'] = $request->getLang();
 
     return $this->return_json($ret);
   }
@@ -516,13 +514,11 @@ class RestController extends Controller
    */
   public function label($request)
   {
-    $lang = $request->getLang() ? $request->getLang() : $request->getVocab()->getDefaultLanguage(); 
-    
     if (!$request->getUri())
       return $this->return_error(400, "Bad Request", "uri parameter missing");
     $uri = $request->getUri();
 
-    $results = $request->getVocab()->getConceptLabel($uri, $lang);
+    $results = $request->getVocab()->getConceptLabel($uri, $request->getLang());
     if ($results === NULL)
       return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
 
@@ -531,7 +527,7 @@ class RestController extends Controller
             'skos' => 'http://www.w3.org/2004/02/skos/core#',
             'uri' => '@id',
             'prefLabel' => 'skos:prefLabel',
-            '@language' => $lang,
+            '@language' => $request->getLang(),
         ),
         'uri' => $uri,
     );
@@ -549,11 +545,10 @@ class RestController extends Controller
    */
   public function broader($request)
   {
-    $lang = $request->getLang() ? $request->getLang() : $request->getVocab()->getDefaultLanguage(); 
     $uri = $request->getUri();
 
     $results = array();
-    $broaders = $request->getVocab()->getConceptBroaders($uri, $lang);
+    $broaders = $request->getVocab()->getConceptBroaders($uri, $request->getLang());
     if ($broaders === NULL)
       return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
     foreach ($broaders as $object => $vals) {
@@ -566,7 +561,7 @@ class RestController extends Controller
             'uri' => '@id',
             'prefLabel' => 'skos:prefLabel',
             'broader' => 'skos:broader',
-            '@language' => $lang,
+            '@language' => $request->getLang(),
         ),
         'uri' => $uri,
         'broader' => $results,
@@ -582,12 +577,11 @@ class RestController extends Controller
    */
   public function broaderTransitive($request)
   {
-    $lang = $request->getLang() ? $request->getLang() : $request->getVocab()->getDefaultLanguage(); 
     $uri = $request->getUri();
     $limit = $this->parseLimit();
 
     $results = array();
-    $broaders = $request->getVocab()->getConceptTransitiveBroaders($uri, $limit, false, $lang);
+    $broaders = $request->getVocab()->getConceptTransitiveBroaders($uri, $limit, false, $request->getLang());
     if ($broaders === NULL)
       return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
     foreach ($broaders as $buri => $vals) {
@@ -606,7 +600,7 @@ class RestController extends Controller
             'prefLabel' => 'skos:prefLabel',
             'broader' => array('@id'=>'skos:broader','@type'=>'@id'),
             'broaderTransitive' => array('@id'=>'skos:broaderTransitive','@container'=>'@index'),
-            '@language' => $lang,
+            '@language' => $request->getLang(),
         ),
         'uri' => $uri,
         'broaderTransitive' => $results,
@@ -622,11 +616,10 @@ class RestController extends Controller
    */
   public function narrower($request)
   {
-    $lang = $request->getLang() ? $request->getLang() : $request->getVocab()->getDefaultLanguage(); 
     $uri = $request->getUri();
 
     $results = array();
-    $narrowers = $request->getVocab()->getConceptNarrowers($uri, $lang);
+    $narrowers = $request->getVocab()->getConceptNarrowers($uri, $request->getLang());
     if ($narrowers === NULL)
       return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
     foreach ($narrowers as $object => $vals) {
@@ -639,7 +632,7 @@ class RestController extends Controller
             'uri' => '@id',
             'prefLabel' => 'skos:prefLabel',
             'narrower' => 'skos:narrower',
-            '@language' => $lang,
+            '@language' => $request->getLang(),
         ),
         'uri' => $uri,
         'narrower' => $results,
@@ -655,12 +648,11 @@ class RestController extends Controller
    */
   public function narrowerTransitive($request)
   {
-    $lang = $request->getLang() ? $request->getLang() : $request->getVocab()->getDefaultLanguage(); 
     $uri = $request->getUri();
     $limit = $this->parseLimit();
 
     $results = array();
-    $narrowers = $request->getVocab()->getConceptTransitiveNarrowers($uri, $limit, $lang);
+    $narrowers = $request->getVocab()->getConceptTransitiveNarrowers($uri, $limit, $request->getLang());
     if ($narrowers === NULL)
       return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
     foreach ($narrowers as $nuri => $vals) {
@@ -679,7 +671,7 @@ class RestController extends Controller
             'prefLabel' => 'skos:prefLabel',
             'narrower' => array('@id'=>'skos:narrower','@type'=>'@id'),
             'narrowerTransitive' => array('@id'=>'skos:narrowerTransitive','@container'=>'@index'),
-            '@language' => $lang,
+            '@language' => $request->getLang(),
         ),
         'uri' => $uri,
         'narrowerTransitive' => $results,
@@ -696,10 +688,9 @@ class RestController extends Controller
    */
   public function hierarchy($request)
   {
-    $lang = $request->getLang() ? $request->getLang() : $request->getVocab()->getDefaultLanguage(); 
     $uri = $request->getUri();
 
-    $results = $request->getVocab()->getConceptHierarchy($uri, $lang);
+    $results = $request->getVocab()->getConceptHierarchy($uri, $request->getLang());
     if ($results === NULL)
       return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
     
@@ -707,7 +698,7 @@ class RestController extends Controller
       $scheme = $request->getQueryParam('scheme') ? $request->getQueryParam('scheme') : $request->getVocab()->getDefaultConceptScheme();
 
       /* encode the results in a JSON-LD compatible array */
-      $topconcepts = $request->getVocab()->getTopConcepts($scheme, $lang);
+      $topconcepts = $request->getVocab()->getTopConcepts($scheme, $request->getLang());
       foreach ($topconcepts as $uri => $label) {
         if (!isset($results[$uri]))
           $results[$uri] = array('uri'=>$uri, 'top'=>$scheme, 'prefLabel'=>$label, 'hasChildren'=> true);
@@ -726,7 +717,7 @@ class RestController extends Controller
             'broaderTransitive' => array('@id'=>'skos:broaderTransitive','@container'=>'@index'),
             'top' => array('@id'=>'skos:topConceptOf','@type'=>'@id'),
             'hasChildren' => 'onki:hasChildren',
-            '@language' => $lang,
+            '@language' => $request->getLang(),
         ),
         'uri' => $uri,
         'broaderTransitive' => $results,
@@ -742,10 +733,9 @@ class RestController extends Controller
    */
   public function children($request)
   {
-    $lang = $request->getLang() ? $request->getLang() : $request->getVocab()->getDefaultLanguage(); 
     $uri = $request->getUri();
 
-    $children = $request->getVocab()->getConceptChildren($uri, $lang);
+    $children = $request->getVocab()->getConceptChildren($uri, $request->getLang());
     if ($children === NULL)
       return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
 
@@ -757,7 +747,7 @@ class RestController extends Controller
             'prefLabel' => 'skos:prefLabel',
             'narrower' => 'skos:narrower',
             'hasChildren' => 'onki:hasChildren',
-            '@language' => $lang,
+            '@language' => $request->getLang(),
         ),
         'uri' => $uri,
         'narrower' => $children,
@@ -773,11 +763,10 @@ class RestController extends Controller
    */
   public function related($request)
   {
-    $lang = $request->getLang() ? $request->getLang() : $request->getVocab()->getDefaultLanguage(); 
     $uri = $request->getUri();
 
     $results = array();
-    $related = $request->getVocab()->getConceptRelateds($uri, $lang);
+    $related = $request->getVocab()->getConceptRelateds($uri, $request->getLang());
     if ($related === NULL)
       return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
     foreach ($related as $uri => $vals) {
@@ -791,7 +780,7 @@ class RestController extends Controller
             'type' => '@type',
             'prefLabel' => 'skos:prefLabel',
             'related' => 'skos:related',
-            '@language' => $lang,
+            '@language' => $request->getLang(),
         ),
         'uri' => $uri,
         'related' => $results,
