@@ -91,8 +91,7 @@ class RestController extends Controller
    */
   private function parseLimit()
   {
-    $limit = isset($_GET['limit']) ?
-             intval($_GET['limit']) : DEFAULT_TRANSITIVE_LIMIT;
+    $limit = filter_input(INPUT_GET, 'limit', FILTER_SANITIZE_NUMBER_INT) ? filter_input(INPUT_GET, 'limit', FILTER_SANITIZE_NUMBER_INT) : DEFAULT_TRANSITIVE_LIMIT;
     if ($limit <= 0)
       return $this->return_error(400, "Bad Request", "Invalid limit parameter");
 
@@ -637,18 +636,17 @@ class RestController extends Controller
 
   /**
    * Used for querying broader transitive relations for a concept.
-   * @param string $vocabId vocabulary identifier eg. 'yso'.
+   * @param Request $request
    * @return object json-ld wrapped broader transitive concept uris and labels.
    */
-  public function broaderTransitive($vocabId)
+  public function broaderTransitive($request)
   {
-    $vocab = $this->getVocabulary($vocabId);
-    $lang = $this->parseLang() !== '' ? $this->parseLang() : $vocab->getDefaultLanguage(); 
-    $uri = $this->parseURI();
+    $lang = $request->getLang() ? $request->getLang() : $request->getVocab()->getDefaultLanguage(); 
+    $uri = $request->getUri();
     $limit = $this->parseLimit();
 
     $results = array();
-    $broaders = $vocab->getConceptTransitiveBroaders($uri, $limit, false, $lang);
+    $broaders = $request->getVocab()->getConceptTransitiveBroaders($uri, $limit, false, $lang);
     if ($broaders === NULL)
       return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
     foreach ($broaders as $buri => $vals) {
