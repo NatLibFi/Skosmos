@@ -63,7 +63,7 @@ try {
     } elseif ($parts[2] == 'label') {
       $controller->label($request);
     } elseif ($parts[2] == 'lookup') {
-      $controller->lookup($vocab);
+      $controller->lookup($request);
     } elseif ($parts[2] == 'broader') {
       $controller->broader($vocab);
     } elseif ($parts[2] == 'broaderTransitive') {

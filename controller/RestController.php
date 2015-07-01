@@ -392,19 +392,17 @@ class RestController extends Controller
 
   /**
    * Used for finding terms by their exact prefLabel. Wraps the result in a json-ld object.
-   * @param string $vocid identifier string for the vocabulary eg. 'yso'.
+   * @param Request $request
    */
-  public function lookup($vocid)
+  public function lookup($request)
   {
-    if(isset($_GET['label']))
-      $label = $_GET['label'];
-    else
+    $label = $request->getQueryParam('label');
+    if(!$label)
       return $this->return_error(400, "Bad Request", "label parameter missing");
-    $lang = isset($_GET['lang']) ? $_GET['lang'] : null; # optional
-    $vocab = $this->getVocabulary($vocid);
-    if ($label == '') return $this->return_error(400, 'Bad Request', 'empty label');
+    $lang = $request->getLang(); # optional
+    $vocab = $request->getVocab();
 
-    $results = $this->model->searchConcepts($label, $vocid, $lang, $lang);
+    $results = $this->model->searchConcepts($label, $vocab->getId(), $lang, $lang);
 
     $hits = array();
     // case 1: exact match on preferred label
