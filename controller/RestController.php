@@ -300,7 +300,8 @@ class RestController extends Controller
    */
   public function types($request)
   {
-    $queriedtypes = $this->model->getTypes($request->getVocab()->getId(), $request->getLang());
+    $vocid = $request->getVocab() ? $request->getVocab()->getId() : null;
+    $queriedtypes = $this->model->getTypes($vocid, $request->getLang());
 
     $types = array();
 
