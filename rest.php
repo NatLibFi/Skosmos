@@ -24,6 +24,7 @@ try {
   $request = new Request($model);
   $request->setUri($request->getQueryParam('uri'));
   $request->setLang($request->getQueryParam('lang'));
+  $request->setVocab($request->getQueryParam('vocab'));
 
   if (sizeof($parts) < 2 || $parts[1] == "") {
     header("HTTP/1.0 404 Not Found");
