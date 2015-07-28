@@ -5,7 +5,6 @@
  */
 var treeIndex = {}; 
 var urlToUri = {};
-var rest = rest_base_url; 
 
 /* 
  * For legacy browsers that don't natively support Object.size().
@@ -73,7 +72,7 @@ function getLeafOffset() {
  */
 function createConceptObject(conceptUri, conceptData) {
   var prefLabel = conceptData.prefLabel; // the json narrower response has a different structure.
-  newNode = { 
+  var newNode = { 
     text: prefLabel, 
     a_attr: { "href" : conceptUri },
     uri: conceptUri,
@@ -130,10 +129,9 @@ function buildParentTree(uri, parentData) {
     rootNode;
 
     for(var conceptUri in parentData) {
-    var previousNode = currentNode,
-      branchHelper, 
-      exactMatchFound;
-    currentNode = createConceptObject(conceptUri, parentData[conceptUri]);
+      var branchHelper, 
+        exactMatchFound;
+      currentNode = createConceptObject(conceptUri, parentData[conceptUri]);
     /* if a node has the property topConceptOf set it as the root node. 
      * Or just setting the last node as a root if nothing else has been found 
      */
@@ -191,7 +189,7 @@ function appendChildrenToParents() {
         if (parentNode && $.inArray(current, parentNode.children) === -1) {
           for(var sibling in parentNode.children) {
             if(parentNode.children[sibling].uri === current.uri){ 
-              // if the concept has already been enrich the previous one with the additional information.
+              // if the concept has already been found enrich the previous one with the additional information.
               parentNode.children[sibling].children = current.children;
               parentNode.children[sibling].state = current.state;
               parentNode.children[sibling].li_attr = current.li_attr;
