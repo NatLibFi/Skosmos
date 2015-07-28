@@ -73,7 +73,7 @@ if (sizeof($parts) <= 2) {
     } else {
       if (array_key_exists($parts[2], $LANGUAGES)) {
         $lang = $parts[2];
-        $content_lang = $request->getQueryParam('clang');
+        $content_lang = $request->getQueryParam('clang') ? $request->getQueryParam('clang') : $lang;
         $request->setContentLang($content_lang);
         $request->setLang($parts[2]);
         $request->setPage($parts[3]);
