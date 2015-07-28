@@ -162,7 +162,6 @@ function loadPage(targetUrl) {
     $.ajax({
       url : targetUrl,
       success : function(data) {
-        $('#jstree-leaf-proper').attr('id', '');
         $('.activated-concept').removeClass('activated-concept');
         $('.jstree-clicked').removeClass('jstree-clicked'); 
         updateContent(data);

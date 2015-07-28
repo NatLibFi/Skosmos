@@ -232,8 +232,6 @@ $(function() { // DOCUMENT READY
             url : targetUrl,
             data: parameters,
             success : function(data) {
-              $('#jstree-leaf-proper').attr('id', '');
-              clicked.attr('id', 'jstree-leaf-proper');
               $content.empty();
               var response = $('.content', data).html();
               if (window.history.pushState) { window.history.pushState({url: targetUrl + '&' + parameters}, '', targetUrl); }
