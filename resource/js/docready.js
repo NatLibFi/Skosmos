@@ -250,22 +250,17 @@ $(function() { // DOCUMENT READY
   $(document).on('click', '.side-navi a',
       function(event) {
         $.ajaxQ.abortAll();
-        var base_path = path_fix.length / 3;
-        var parameters = $.param({'base_path' : base_path});
-        var clicked = $(this);
+        var parameters = $.param({'base_path' : path_fix.length / 3});
         $('.activated-concept').removeClass('activated-concept');
-        clicked.addClass('activated-concept');
+        $(this).addClass('activated-concept');
         var $content = $('.content');
-        var targetUrl = event.target.href;
         var hierButton = '<li id="hierarchy"><a id="hier-trigger" href="#">' + hiertrans + '</a></li>';
         $.ajax({
-            url : targetUrl,
+            url : event.target.href,
             data: parameters,
             success : function(data) {
-              $content.empty();
-              var response = $('.content', data).html();
               if (window.history.pushState) { window.history.pushState(null, null, event.target.href); }
-              $content.append(response);
+              $content.empty().append($('.content', data).html());
               if (!$('#hierarchy').length) { $('#alpha').after(hierButton); }
               $('#hier-trigger').attr('href', event.target.href);
               updateTitle(data);
@@ -282,21 +277,17 @@ $(function() { // DOCUMENT READY
   $(document).on('click', '#alpha',
       function(event) {
         $.ajaxQ.abortAll();
-        var base_path = path_fix.length / 3;
         $('.active').removeClass('active');
-        var clicked = $(this);
-        clicked.parent().addClass('active');
-        var $hier = $('#hierarchy');
+        $(this).parent().addClass('active');
         $('.sidebar-grey').empty().prepend(spinner);
         var targetUrl = event.target.href;
-        var parameters = $.param({'base_path' : base_path});
+        var parameters = $.param({'base_path' : path_fix.length / 3});
         $.ajax({
             url : targetUrl,
             data: parameters,
             success : function(data) {
               updateSidebar(data);
-              if ($('#hierarchy').length === 1) { $('#hierarchy').remove(); }
-              $('#alpha').after($hier);
+              $('#alpha').after($('#hierarchy'));
               $('.nav').scrollTop(0);
               if (window.history.pushState) { window.history.pushState(null, null, encodeURI(event.target.href)); }
               updateTitle(data);
