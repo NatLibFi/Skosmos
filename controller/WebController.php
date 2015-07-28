@@ -270,7 +270,7 @@ class WebController extends Controller
    */
   public function sendFeedback($message, $fromName = null, $fromEmail = null, $fromVocab = null, $toMail = null)
   {
-    $to = ($toMail) ? $toMail : FEEDBACK_ADDRESS;
+    $toAddress = ($toMail) ? $toMail : FEEDBACK_ADDRESS;
     if ($fromVocab !== null)
       $message = 'Feedback from vocab: ' . strtoupper($fromVocab) . "<br />" . $message;
     $subject = SERVICE_NAME . " feedback";
@@ -285,16 +285,28 @@ class WebController extends Controller
     // adding some information about the user for debugging purposes.
     $agent = (filter_input(INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_SANITIZE_STRING)) ? filter_input(INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_SANITIZE_STRING) : '';
     $referer = (filter_input(INPUT_SERVER, 'HTTP_REFERER', FILTER_SANITIZE_STRING)) ? filter_input(INPUT_SERVER, 'HTTP_REFERER', FILTER_SANITIZE_STRING) : '';
-    $ip = (filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_SANITIZE_STRING)) ? filter_input(INPUT_SERVER, 'HTTP_REFERER', FILTER_SANITIZE_STRING) : '';
+    $ipAddress = (filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_SANITIZE_STRING)) ? filter_input(INPUT_SERVER, 'HTTP_REFERER', FILTER_SANITIZE_STRING) : '';
     $timestamp = date(DATE_RFC2822);
 
     $message = $message . "<br /><br /> Debugging information:" 
       . "<br />Timestamp: " . $timestamp 
       . "<br />User agent: " . $agent 
-      . "<br />IP address: " . $ip 
+      . "<br />IP address: " . $ipAddress
       . "<br />Referer: " . $referer;
     
-    mail($to, $subject, $message, $headers, $params) or die("Failure");
+    try {
+      mail($toAddress, $subject, $message, $headers, $params);
+    } catch (Exception $e) {
+      header("HTTP/1.0 404 Not Found");
+      if (LOG_CAUGHT_EXCEPTIONS)
+        error_log('Caught exception: ' . $e->getMessage());
+      echo $template->render(
+        array(
+          'languages' => $this->languages,
+        ));
+
+      return;
+    }
   }
 
   /**
