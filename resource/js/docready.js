@@ -740,7 +740,7 @@ $(function() { // DOCUMENT READY
     var typeLimit = $('#type-limit').val();
     var groupLimit = $('#group-limit').val();
     var parentLimit = $('#parent-limit').attr('data-uri');
-    var parameters = $.param({'q' : searchTerm, 'vocabs' : vocabSelectionString, 'offset' : offcount * waypoint_results, 'lang' : decodeURI(getUrlParams().lang), 'type' : typeLimit, 'group' : groupLimit, 'parent': parentLimit});
+    var parameters = $.param({'q' : searchTerm, 'vocabs' : vocabSelectionString, 'offset' : offcount * waypoint_results, 'clang' : content_lang, 'type' : typeLimit, 'group' : groupLimit, 'parent': parentLimit, anylang: getUrlParams().anylang});
     $.ajax({
       url : window.location.pathname,
       data : parameters,
