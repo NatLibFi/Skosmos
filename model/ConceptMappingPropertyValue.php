@@ -97,7 +97,7 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
 
   public function addSubMember($type, $label, $uri, $vocab, $lang, $exvocab = null)
   {
-    $this->submembers[$label] = new ConceptPropertyValue($type, $uri, $vocab, $lang, $label, $exvocab = null);
+    $this->submembers[$label] = new ConceptPropertyValue($type, $uri, $vocab, $lang, $label, $exvocab);
     $this->sortSubMembers();
   }
 
