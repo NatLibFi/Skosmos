@@ -48,7 +48,7 @@
         {% else %}
         <td>{% if concept.notation %}<span class="notation">{{ concept.notation }}</span>{% endif %}
         <span class="prefLabel
-          {% if rest != 1 %}">{{ concept.label(request.contentLang) }}</span>{% if explicit_langcodes %}<span class="prefLabelLang"> ({{ concept.label.lang }})</span>{% endif %}{% else %}"></span>
+          {% if rest != 1 %}">{{ concept.label(request.contentLang) }}</span>{% if explicit_langcodes or concept.lang != request.contentLang %}<span class="prefLabelLang"> ({{ concept.label.lang }})</span>{% endif %}{% else %}"></span>
           <a class="prefLabel conceptlabel" href="{% if concept.type == "skos:Collection" %}{{ concept.uri | link_url(concept.vocab, request.lang, 'groups',request.contentLang) }}{% elseif concept.exvocab is defined%}{{ concept.uri | link_url(concept.exvocab,concept.lang, 'page', request.contentLang) }}{% else %}{{ concept.uri | link_url(concept.vocab,concept.lang,'page',request.contentLang) }}{% endif %}">{{ concept.label }}</a>
           {% endif %}
         </td>
