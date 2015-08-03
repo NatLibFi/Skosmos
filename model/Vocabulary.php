@@ -448,6 +448,24 @@ class Vocabulary extends DataObject
   }
 
   /**
+   * Returns custom properties displayed on the search page if configured.
+   * @return string array class URI or null
+   */
+
+  public function getAdditionalSearchProperties()
+  {
+    $resources = $this->resource->allResources("skosmos:showPropertyInSearch");
+    $ret = array();
+    foreach ($resources as $res) {
+      $prop = $res->getURI();
+      if (EasyRdf_Namespace::shorten($prop)) // shortening property labels if possible
+        $prop = EasyRdf_Namespace::shorten($prop);
+      $ret[] = $prop;
+    }
+    return $ret;
+  }
+
+  /**
    * Returns a boolean value set in the vocabularies.ttl config.
    * @return boolean
    */

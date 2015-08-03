@@ -24,7 +24,7 @@
   {% endspaceless %}
   {% if concept.type == 'skosext:DeprecatedConcept' %}<h2 class="deprecated-alert">{% trans %}deprecated{% endtrans %}</h2>{% endif %}
   {% for property in concept.properties %} {# loop through ConceptProperty objects #}
-    {% if property.type in PreferredProperties %}
+    {% if property.type in PreferredProperties or property.type in vocab.additionalSearchProperties %}
     <div class="property">
       <span class="property-click" title="{{ property.description }}">
         <img class="property-hover" src="resource/pics/{% if property.type == 'skos:broader' %}broader{% elseif property.type == 'skos:narrower' %}narrower{% elseif property.type == 'skos:altLabel' %}replaced{% elseif property.type == 'skos:related' %}cloud{% elseif property.type == 'skosmos:memberOf' %}group{% else %}globe{% endif %}.gif">
