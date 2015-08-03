@@ -9,6 +9,11 @@
         <h2 class="deprecated-alert">{% trans %}deprecated{% endtrans %}</h2>
       </div>
       {% endif %}
+      {% if concept.label.lang != request.contentLang %}
+      <div class="alert alert-lang">
+        <h2 class="language-alert">{% trans %}There is no term for this concept in this language{% endtrans %}</h2>
+      </div>
+      {% endif %}
       <div class="concept-info{% if concept.deprecated %} deprecated-concept{% endif %}">
         <div class="concept-main">
         {% if bread_crumbs is defined %}

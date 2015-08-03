@@ -828,6 +828,12 @@ tr {
   color: white !important;
 }
 
+.alert-lang {
+  background-color: #D4EDEB !important;
+  color: #474b4f !important;
+}
+
+
 .frontpage-alert {
   display: inline-block;
 }
