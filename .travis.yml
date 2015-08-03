@@ -8,6 +8,9 @@ php:
 install:
   - composer install --no-dev
   - composer require codeclimate/php-test-reporter
+cache:
+  directories:
+    - vendor
 before_script:
   - cd tests
   - sh ./init_fuseki.sh
