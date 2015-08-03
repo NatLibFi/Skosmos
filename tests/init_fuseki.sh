@@ -1,10 +1,10 @@
-if [ ! -f jena-fuseki1-1.3.0/fuseki-server ]; then
+if [ ! -f jena-fuseki1-1.1.2/fuseki-server ]; then
   echo "fuseki server file not found - downloading it"
-  wget --output-document=fuseki-dist.tar.gz http://mirror.netinch.com/pub/apache/jena/binaries/jena-fuseki1-1.3.0-distribution.tar.gz 
+  wget --output-document=fuseki-dist.tar.gz http://archive.apache.org/dist/jena/binaries/jena-fuseki1-1.1.2-distribution.tar.gz 
   tar -zxvf fuseki-dist.tar.gz
 fi
 
-cd jena-fuseki1-1.3.0
+cd jena-fuseki1-1.1.2
 ./fuseki-server --config ../fuseki-assembler.ttl &
 until $(curl --output /dev/null --silent --head --fail http://localhost:3030); do
   printf '.'
