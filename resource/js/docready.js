@@ -317,32 +317,29 @@ $(function() { // DOCUMENT READY
   });
 
   // event handler for clicking the group index tab 
-  $(document).on('click', '#groups',
+  $(document).on('click', '#groups > a',
       function(event) {
         $.ajaxQ.abortAll();
-        var base_path = path_fix.length / 3;
         $('.active').removeClass('active');
         var $clicked = $(this);
         $clicked.parent().addClass('active');
         var $pagination = $('.pagination');
         if ($pagination) { $pagination.hide(); }
-        var $hier = $('#hierarchy');
-        $('.sidebar-grey').empty().removeClass('sidebar-grey-alpha').prepend(spinner);
+        $('.sidebar-grey').remove().prepend(spinner);
+        $('#sidebar').append('<div class="sidebar-grey"><div class="group-hierarchy"></div></div>');
         $('#sidebar').removeClass('sidebar-grey-alpha');
-        var targetUrl = event.target.href;
-        var parameters = $.param({'base_path' : base_path});
+        var targetUrl = rest_base_url + vocab + '/groups';
+        var parameters = $.param({'lang' : content_lang});
         $.ajax({
             url : targetUrl,
             data: parameters,
             success : function(data) {
-              updateSidebar(data);
-              if ($('#hierarchy').length === 1) { $('#hierarchy').remove(); }
-              $('#alpha').after($hier);
               $('.nav').scrollTop(0);
               if (window.history.pushState) { window.history.pushState(null, null, encodeURI(event.target.href)); }
-              updateTitle(data);
+              buildGroupTree(data.groupHierarchy);
+              //updateTitle(data);
               // take the content language buttons from the response
-              $('.header-float .dropdown-menu').empty().append($('.header-float .dropdown-menu', data).html());
+              //$('.header-float .dropdown-menu').empty().append($('.header-float .dropdown-menu', data).html());
             }
         });
         return false;
@@ -865,6 +862,12 @@ $(function() { // DOCUMENT READY
     var undoUppercasing = $replacedSpan.text().substr(0,1) + $replacedSpan.text().substr(1).toLowerCase();
     var html = '<h2 class="alert-replaced">' + undoUppercasing + ':<a href="' + $('.replaced-by a')[0] + '">' + $('.replaced-by a').html() + '</h2>';
     $('.alert-danger').append(html);
+$(document).on('click', '#groups', 
+  function() {
+    $('.sidebar-grey').clear(); 
+    return false;
+  }
+);
   } 
 
   /* makes an AJAX query for the alphabetical index contents when landing on 
