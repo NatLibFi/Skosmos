@@ -12,17 +12,18 @@ function buildGroupTree(response) {
       data.push(group);
   }
   $('.group-hierarchy').jstree({ 
-    'animation' : 0,
-    'themes' : { 'icons': false },
     'plugins' : ['sort'],
-    'core' : { 'data' : data } });
+    'core' : { 
+      'data' : data, 
+      'animation' : 0,
+      'themes' : { 'icons': false },
+    } });
 }
 
 function createGroupNode(uri, groupObject) {
-  var node = {'id' : uri, 'parent' : '#'};
+  var node = {'id' : uri, 'parent' : '#', children : []};
   node.text = groupObject.label;
   if (groupObject.members) {
-    node.children = [];
     for (var memberUri in node.members) {
       var child = createGroupNode(memberUri, node.members[memberUri]);
       child.parent = uri; 
