@@ -11,6 +11,7 @@ function buildGroupTree(response) {
     if (group.text)
       data.push(group);
   }
+  
   $('.group-hierarchy').jstree({ 
     'plugins' : ['sort'],
     'core' : { 
@@ -21,12 +22,11 @@ function buildGroupTree(response) {
 }
 
 function createGroupNode(uri, groupObject) {
-  var node = {'id' : uri, 'parent' : '#', children : []};
+  var node = {'id' : uri, 'parent' : '#', children : [], a_attr : { "href" : uri }};
   node.text = groupObject.label;
   if (groupObject.members) {
-    for (var memberUri in node.members) {
-      var child = createGroupNode(memberUri, node.members[memberUri]);
-      child.parent = uri; 
+    for (var memberUri in groupObject.members) {
+      var child = { 'id' : memberUri, 'text' : groupObject.members[memberUri], 'parent' : uri };
       if (child.text)
         node.children.push(child);
     }
