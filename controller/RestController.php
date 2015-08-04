@@ -726,6 +726,32 @@ class RestController extends Controller
 
     return $this->return_json($ret);
   }
+  
+  /**
+   * Used for querying group hierarchy for the sidebar group view.
+   * @param Request $request
+   * @return object json-ld wrapped hierarchical concept uris and labels.
+   */
+  public function groups($request)
+  {
+    $results = $request->getVocab()->listConceptGroups(false, $request->getLang());
+    if ($results === NULL)
+      return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
+
+    $ret = array(
+        '@context' => array(
+            'skos' => 'http://www.w3.org/2004/02/skos/core#',
+            'onki' => 'http://schema.onki.fi/onki#',
+            'uri' => '@id',
+            'type' => '@type',
+            'prefLabel' => 'skos:prefLabel',
+            '@language' => $request->getLang(),
+        ),
+        'groupHierarchy' => $results,
+    );
+
+    return $this->return_json($ret);
+  }
 
   /**
    * Used for querying narrower relations for a concept in the hierarchy view.

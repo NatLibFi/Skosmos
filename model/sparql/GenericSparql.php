@@ -1202,7 +1202,7 @@ EOQ;
         $superuri = $row->super->getURI();
         if (!isset($ret[$superuri]))
           $ret[$superuri] = array();
-        $ret[$superuri]['children'][$row->group->getURI()] = $row->label->getValue();
+        $ret[$superuri]['members'][$row->group->getURI()] = $row->label->getValue();
       } else {
         $ret[$row->group->getURI()]['label'] = $row->label->getValue();
         if ($flat && isset($row->super))
