@@ -10,7 +10,7 @@ install:
   - composer require codeclimate/php-test-reporter
 cache:
   directories:
-    - vendor
+    - $HOME/.composer 
 before_script:
   - cd tests
   - sh ./init_fuseki.sh
