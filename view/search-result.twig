@@ -94,6 +94,22 @@
       {% endspaceless %}{% endfor %}
     </div>
   {% endif %}
+  {% if concept.mappingProperties %}
+    {% for property in concept.mappingProperties %} {# loop through ConceptProperty objects #}
+      {% if property.type in vocab.additionalSearchProperties %}
+      <div class="property">
+        <span class="property-click" title="{{ property.type|trans }}">
+          <img class="property-hover" src="resource/pics/globe.gif">
+        </span>
+        <div class="property-values">
+          {% for propval in property.values %} {# loop through ConceptProperty objects #}
+          <span class="versal value">{{ propval.label(request.contentLang) }}</span>{% if loop.last == false %}<span class="versal">, </span>{% endif %}
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
   {% if concept.uri %}
     <div><span class="versal uri-input-box">{{ concept.uri }}</span></div>
   {% endif %}
