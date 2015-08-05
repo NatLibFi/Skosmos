@@ -330,18 +330,7 @@ $(function() { // DOCUMENT READY
         $('#sidebar').removeClass('sidebar-grey-alpha');
         var targetUrl = rest_base_url + vocab + '/groups';
         var parameters = $.param({'lang' : content_lang});
-        $.ajax({
-            url : targetUrl,
-            data: parameters,
-            success : function(data) {
-              $('.nav').scrollTop(0);
-              if (window.history.pushState) { window.history.pushState(null, null, encodeURI(event.target.href)); }
-              buildGroupTree(data.groupHierarchy);
-              //updateTitle(data);
-              // take the content language buttons from the response
-              //$('.header-float .dropdown-menu').empty().append($('.header-float .dropdown-menu', data).html());
-            }
-        });
+        invokeGroupTree();
         return false;
       }
   );

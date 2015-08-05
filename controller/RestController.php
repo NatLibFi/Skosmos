@@ -752,6 +752,36 @@ class RestController extends Controller
 
     return $this->return_json($ret);
   }
+  
+  /**
+   * Used for querying member relations for a group.
+   * @param Request $request
+   * @return object json-ld wrapped narrower concept uris and labels.
+   */
+  public function groupMembers($request)
+  {
+    $uri = $request->getUri();
+
+    $children = $request->getVocab()->listConceptGroupContents($uri, $request->getLang());
+    if ($children === NULL)
+      return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
+
+    $ret = array(
+        '@context' => array(
+            'skos' => 'http://www.w3.org/2004/02/skos/core#',
+            'uri' => '@id',
+            'type' => '@type',
+            'prefLabel' => 'skos:prefLabel',
+            'narrower' => 'skos:narrower',
+            'hasChildren' => 'onki:hasChildren',
+            '@language' => $request->getLang(),
+        ),
+        'uri' => $uri,
+        'members' => $children,
+    );
+
+    return $this->return_json($ret);
+  }
 
   /**
    * Used for querying narrower relations for a concept in the hierarchy view.

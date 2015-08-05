@@ -86,6 +86,8 @@ try {
       $controller->labelStatistics($request);
     } elseif ($parts[2] == 'groups') {
       $controller->groups($request);
+    } elseif ($parts[2] == 'groupMembers') {
+      $controller->groupMembers($request);
     } else {
       header("HTTP/1.0 404 Not Found");
       echo("404 Not Found");
