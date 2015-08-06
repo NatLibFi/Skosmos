@@ -40,7 +40,7 @@ function invokeGroupTree() {
               } else {
                 var children = [];
                 for (var memberUri in response.members) {
-                  var child = {'id' : memberUri, 'text' : response.members[memberUri].label,'parent' : nodeId, children : false, a_attr : { "href" : memberUri, 'state' : { 'opened' : false }}};
+                  var child = {'id' : memberUri, 'text' : response.members[memberUri].label,'parent' : nodeId, children : false, a_attr : { "href" : memberUri}};
                   if (response.members[memberUri].hasMembers)
                     child.children = true;
                   children.push(child);
@@ -55,20 +55,13 @@ function invokeGroupTree() {
     } 
   });
 }
+var first = true;
 
 function createGroupNode(uri, groupObject) {
   var node = {'id' : uri, 'parent' : '#', children : [], a_attr : { "href" : uri }};
   node.text = groupObject.label;
   if (groupObject.members)
     node.children = true;
-  node.state = { 'opened' : false };
-  //if (groupObject.members) {
-    //for (var memberUri in groupObject.members) {
-      //var child = { 'id' : memberUri, 'text' : groupObject.members[memberUri], 'parent' : uri };
-      //if (child.text)
-        //node.children.push(child);
-    //}
-  //}
   return node;
 }
 
