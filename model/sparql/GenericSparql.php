@@ -1223,7 +1223,7 @@ EOQ;
   {
     $gc = $this->graphClause;
     $query = <<<EOQ
-SELECT ?conc ?super ?label
+SELECT ?conc ?super ?label ?members
 WHERE {
  $gc {
    <$group> a <$groupClass> .
@@ -1233,6 +1233,7 @@ WHERE {
    FILTER (langMatches(lang(?label), '$lang'))
  }
  BIND(EXISTS{?conc isothes:superGroup <$group>} as ?super)
+ BIND(EXISTS{?conc skos:member ?submembers} as ?members)
 } ORDER BY lcase(?label)
 EOQ;
     $ret = array();
@@ -1240,6 +1241,7 @@ EOQ;
     foreach ($result as $row) {
       $ret[$row->conc->getURI()]['label'] = $row->label->getValue();
       $ret[$row->conc->getURI()]['hasSuper'] = $row->super->getValue();
+      $ret[$row->conc->getURI()]['hasMembers'] = $row->members->getValue();
     }
 
     return $ret;
