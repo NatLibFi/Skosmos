@@ -402,7 +402,7 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   public function testListConceptGroups() {
     $vocab = $this->model->getVocabulary('groups');
     $cgroups = $vocab->listConceptGroups(false, 'en');
-    $expected = array ('http://www.skosmos.skos/groups/fish' => array('label' => 'Fish', 'children' => array ('http://www.skosmos.skos/groups/sub' => 'Submarine-like fish',),),'http://www.skosmos.skos/groups/fresh' => array ('label' => 'Freshwater fish',),'http://www.skosmos.skos/groups/salt' => array ('label' => 'Saltwater fish',),);
+    $expected = array ('http://www.skosmos.skos/groups/fish' => array ('label' => 'Fish','members' => array ('http://www.skosmos.skos/groups/sub' => 'Submarine-like fish',),),'http://www.skosmos.skos/groups/fresh' => array ('label' => 'Freshwater fish','members' => true,),'http://www.skosmos.skos/groups/salt' => array ('label' => 'Saltwater fish','members' => true,),'http://www.skosmos.skos/groups/sub' => array ('members' => true,),);
     $this->assertEquals($expected, $cgroups);
   }
   
@@ -412,7 +412,7 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   public function testListConceptGroupContents() {
     $vocab = $this->model->getVocabulary('groups');
     $cgroups = $vocab->listConceptGroupContents('http://www.skosmos.skos/groups/salt', 'en');
-    $expected = array('http://www.skosmos.skos/groups/ta113' => array ('label' => 'Flatfish','hasSuper' => false,),);
+    $expected = array('http://www.skosmos.skos/groups/ta113' => array ('label' => 'Flatfish','hasSuper' => false, 'hasMembers' => false),);
     $this->assertEquals($expected, $cgroups);
   }
   

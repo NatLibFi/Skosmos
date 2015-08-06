@@ -560,7 +560,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('Freshwater fish', $actual['http://www.skosmos.skos/groups/fresh']['label']);
     $this->assertEquals('Saltwater fish', $actual['http://www.skosmos.skos/groups/salt']['label']);
     $this->assertEquals('Fish', $actual['http://www.skosmos.skos/groups/fish']['label']);
-    $this->assertEquals('Submarine-like fish', $actual['http://www.skosmos.skos/groups/fish']['children']['http://www.skosmos.skos/groups/sub']);
+    $this->assertEquals('Submarine-like fish', $actual['http://www.skosmos.skos/groups/fish']['members']['http://www.skosmos.skos/groups/sub']);
   }
 
   /**
