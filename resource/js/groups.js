@@ -15,6 +15,11 @@ function buildGroupTree(response) {
 }
   
 function invokeGroupTree() {
+  var $treeObject = $('.group-hierarchy');
+  $treeObject.on('activate_node.jstree', function(event, node) {
+    $treeObject.jstree('open_node', node.node);
+  });
+
   $('.group-hierarchy').jstree({ 
     'plugins' : ['sort'],
     'core' : { 
