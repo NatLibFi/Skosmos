@@ -328,6 +328,7 @@ $(function() { // DOCUMENT READY
         if ($pagination) { $pagination.hide(); }
         $('.sidebar-grey').remove().prepend(spinner);
         $('#sidebar').append('<div class="sidebar-grey"><div class="group-hierarchy"></div></div>');
+        if (window.history.pushState) { window.history.pushState(null, null, encodeURI(event.target.href)); }
         invokeGroupTree();
         return false;
       }
