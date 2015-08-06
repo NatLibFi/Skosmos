@@ -1185,11 +1185,12 @@ EOQ;
   {
     $gc = $this->graphClause;
     $query = <<<EOQ
-SELECT ?group ?super ?label
+SELECT ?group ?super ?label ?members
 WHERE {
  $gc {
    ?group a <$groupClass> .
    OPTIONAL { ?group isothes:superGroup ?super . }
+   BIND(EXISTS{?group skos:member ?submembers} as ?members)
    { ?group skos:prefLabel ?label } UNION { ?group rdfs:label ?label }
    FILTER (langMatches(lang(?label), '$lang'))
  }
@@ -1208,6 +1209,8 @@ EOQ;
         if ($flat && isset($row->super))
           $ret[$row->group->getURI()]['super'] = $row->super->getURI();
       }
+      if (isset($row->members))
+        $ret[$row->group->getURI()]['members'] = $row->members->getValue();
     }
     return $ret;
   }

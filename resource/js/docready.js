@@ -77,6 +77,7 @@ $(function() { // DOCUMENT READY
 
   // if the hierarchy tab is active filling the jstree with data 
   if ($('#hierarchy').hasClass('active')) { invokeParentTree(getTreeConfiguration()); }
+  if ($('#groups').hasClass('active')) { invokeGroupTree(); }
 
   var textColor = $('.search-parameter-highlight').css('color');
   countAndSetOffset();
@@ -327,9 +328,6 @@ $(function() { // DOCUMENT READY
         if ($pagination) { $pagination.hide(); }
         $('.sidebar-grey').remove().prepend(spinner);
         $('#sidebar').append('<div class="sidebar-grey"><div class="group-hierarchy"></div></div>');
-        $('#sidebar').removeClass('sidebar-grey-alpha');
-        var targetUrl = rest_base_url + vocab + '/groups';
-        var parameters = $.param({'lang' : content_lang});
         invokeGroupTree();
         return false;
       }

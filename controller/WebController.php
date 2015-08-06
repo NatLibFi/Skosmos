@@ -510,14 +510,12 @@ class WebController extends Controller
     $this->setLanguageProperties($lang);
     $template = $this->twig->loadTemplate('group-index.twig');
     $vocab = $request->getVocab();
-    $groups = $vocab->listConceptGroups(false, $request->getContentLang());
     
     echo $template->render(
       array(
         'languages' => $this->languages,
         'stats' => $stats,
         'vocab' => $vocab,
-        'groups' => $groups,
         'request' => $request
       ));
   }

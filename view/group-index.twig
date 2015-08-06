@@ -17,7 +17,7 @@
 </div>
 
 <div class="sidebar-grey">
-  <div class="group-container">
+  <div class="group-hierarchy">
     <ul class="group-index">
       {% for uri, value in groups %}
       <li><a href="{{ uri | link_url(vocab, request.lang, request.page, request.contentLang) }}">{{ value.label }}</a>
