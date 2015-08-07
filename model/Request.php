@@ -135,14 +135,6 @@ class Request
   }
 
   /**
-   * Sets the vocab id variable eg. 'stw'
-   * @param string $vocabid
-   */
-  public function setVocabid($vocabid) {
-    $this->vocabid = $vocabid;
-  }
-  
-  /**
    * Creates a Vocabulary object 
    * @param string $vocabid
    */

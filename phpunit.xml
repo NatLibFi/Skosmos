@@ -12,6 +12,7 @@
       <file>tests/ConceptTest.php</file>
       <file>tests/ConceptPropertyTest.php</file>
       <file>tests/GenericSparqlTest.php</file>
+      <file>tests/RequestTest.php</file>
     </testsuite>
   </testsuites>
   <filter>
