@@ -48,6 +48,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
   
   /**
    * @covers Request::setContentLang
+   * @covers Request::getContentLang
    * @covers Request::verifyContentLang
    */
   public function testSetContentLang() {
@@ -60,10 +61,30 @@ class RequestTest extends PHPUnit_Framework_TestCase
    * @covers Request::setContentLang
    * @covers Request::verifyContentLang
    */
+  public function testSetContentLangWhenNoVocabularyAvailable() {
+    $clang = $this->request->setContentLang('fi');
+    $this->assertEquals('fi', $this->request->getContentLang());
+  }
+  
+  /**
+   * @covers Request::setContentLang
+   * @covers Request::getContentLang
+   * @covers Request::verifyContentLang
+   */
   public function testSetContentLangWithUnsupportedLanguage() {
     $this->request->setVocab('test');
     $clang = $this->request->setContentLang('ru');
     $this->assertEquals('en', $this->request->getContentLang());
+  }
+  
+  /**
+   * @covers Request::setLang
+   * @covers Request::getLang
+   */
+  public function testSetAndGetLang() {
+    $this->request->setVocab('test');
+    $clang = $this->request->setLang('en');
+    $this->assertEquals('en', $this->request->getLang());
   }
   
   /**
@@ -83,5 +104,32 @@ class RequestTest extends PHPUnit_Framework_TestCase
     $this->request->setLetter('X');
     $this->assertEquals('X', $this->request->getLetter());
   }
+  
+  /**
+   * @covers Request::setRequestUri
+   * @covers Request::getRequestUri
+   */
+  public function testSetAndGetRequestUri() {
+    $this->request->setRequestUri('http://api.finto.fi/rest/v1/vocabularies?lang=en');
+    $this->assertEquals('http://api.finto.fi/rest/v1/vocabularies?lang=en', $this->request->getRequestUri());
+  }
+  
+  /**
+   * @covers Request::setPage
+   * @covers Request::getPage
+   */
+  public function testSetAndGetPage() {
+    $this->request->setPage('index');
+    $this->assertEquals('index', $this->request->getPage());
+  }
 
+  /**
+   * @covers Request::setPathFix
+   * @covers Request::getPathFix
+   */
+  public function testSetAndGetPathFix() {
+    $this->request->setPathFix('../../');
+    $this->assertEquals('../../', $this->request->getPathFix());
+  }
+  
 }
