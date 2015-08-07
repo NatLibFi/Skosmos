@@ -925,10 +925,6 @@ $(document).on('click', '#groups',
     });
   }
 
-  $(document).on('click', '.jstree-ocl', function() {
-    $(this).siblings()[0].click();
-  });
-  
   // setting the focus to the search box on default if we are not on the search results page
   if ($('.search-result-listing').length === 0) { $("#search-field").focus(); }
 
