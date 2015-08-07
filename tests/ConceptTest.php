@@ -164,10 +164,8 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $vocab = $this->model->getVocabulary('test');
     $concepts = $vocab->getConceptInfo("http://www.skosmos.skos/test/ta123", "en");
     $concept = $concepts[0];
-    $props = $concept->getProperties();
-    $values = $props['dc:modified']->getValues();
-    $firstval = reset($values);
-    $this->assertEquals($firstval->getLabel(), '10/1/14');
+    $date = $concept->getDate();
+    $this->assertContains('10/1/14', $date);
   }
 
   /**
@@ -182,7 +180,7 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $vocab = $this->model->getVocabulary('test');
     $concepts = $vocab->getConceptInfo("http://www.skosmos.skos/test/ta114", "en");
     $concept = $concepts[0];
-    $props = $concept->getProperties(); # this should throw a E_USER_WARNING exception
+    $props = $concept->getDate(); # this should throw a E_USER_WARNING exception
   }
 
   /**
@@ -196,11 +194,8 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $concepts = $vocab->getConceptInfo("http://www.skosmos.skos/test/ta114", "en");
     $concept = $concepts[0];
     # we use @ to suppress the exceptions in order to be able to check the result
-    $props = @$concept->getProperties();
-    $values = $props['dc:modified']->getValues();
-    $firstval = reset($values);
-    $label = @$firstval->getLabel();
-    $this->assertEquals($label, '1986-21-00');
+    $date = @$concept->getDate();
+    $this->assertEquals('1986-21-00', $date);
   }
 
   /**
