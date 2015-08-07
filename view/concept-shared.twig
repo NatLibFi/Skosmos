@@ -60,6 +60,8 @@
         {% endif %}
         </tr>
         <tr><td class="preflabel-spacer" colspan="2"></td></tr>
+        {% if concept.date %}<tr><td></td><td class="date-info"><p>{{ concept.date }}</p></td></tr>
+        {% endif %}
         {% endspaceless %}
         {% for property in concept.properties %} {# loop through ConceptProperty objects #}
           <tr{% if property.type == 'dc:isReplacedBy' %} class="replaced-by"{% endif%}><td><span class="versal{% if property.type == 'rdf:type' %}-bold{% endif %}{% if not (property.type in property.description and '_help' in property.description) %} property-click" title="{{ property.description }}"{% else %}"{% endif %}>{{ property.label|upper }}</span></td><td><ul>

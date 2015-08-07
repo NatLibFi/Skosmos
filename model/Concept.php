@@ -33,7 +33,9 @@ class Concept extends VocabularyDataObject
 
     'skos:topConceptOf',		# because it's too technical, not relevant for users
     'skos:inScheme',			# should be evident in any case
-    'skos:member'			    # this is shouldn't be shown on the group page
+    'skos:member',			  # this is shouldn't be shown on the group page
+    'dc:created',	        # handled separately 
+    'dc:modified'		      # handled separately
   );
 
   /** related concepts that should be shown to users in the appendix */
@@ -357,6 +359,19 @@ class Concept extends VocabularyDataObject
 
     // sorting the properties to the order preferred in the Skosmos concept page.
     $ret = $this->arbitrarySort($ret);
+    return $ret;
+  }
+
+  /**
+   * Gets the creation date and modification date if available.
+   * @return String containing the date information in a human readable format.
+   */
+  public function getDate() {
+    $ret = null;
+    if ($this->resource->get('dc:created'))
+      $ret = gettext('dc:created') . ' ' . (Punic\Calendar::formatDate($this->resource->get('dc:created')->getValue(), 'short'));
+    if ($this->resource->get('dc:modified'))
+      $ret .= ' ' . gettext('dc:modified') . ' ' . (Punic\Calendar::formatDate($this->resource->get('dc:modified')->getValue(), 'short'));
     return $ret;
   }
 

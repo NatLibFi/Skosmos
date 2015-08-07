@@ -1225,6 +1225,15 @@ ul.nav-tabs > li {
   margin-right: 150px;
 }
 
+.date-info > p {
+  font-size: 12px;
+  float: right;
+}
+
+td.date-info {
+  border-bottom: none !important;
+}
+
 /* typeahead.js
  ***********************************/
 
@@ -1964,6 +1973,10 @@ body, .versal, h1, h2, p, .versal-bold {
   .appendix-vocab-label {
     font-size: 14px !important;
     line-height: 23px;
+  }
+
+  .date-info > p {
+    font-size: 14px !important;
   }
 
   .search-options > div.input-group > .twitter-typeahead, .search-options > div.input-group > .twitter-typeahead > .tt-dropdown-menu {
