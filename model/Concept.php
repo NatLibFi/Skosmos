@@ -300,9 +300,7 @@ class Concept extends VocabularyDataObject
 
         // searching for subproperties of literals too
         foreach ($this->graph->allResources($prop, 'rdfs:subPropertyOf') as $subi) {
-          $suburi = EasyRdf_Namespace::shorten($subi->getUri());
-          if (!isset($suburi))
-            $suburi = $subi->getUri();
+          $suburi = EasyRdf_Namespace::shorten($subi->getUri()) ? EasyRdf_Namespace::shorten($subi->getUri()) : $subi->getUri();
           $duplicates[$suburi] = $prop;
         }
 
