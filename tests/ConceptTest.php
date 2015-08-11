@@ -207,7 +207,7 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $concept = $concepts[0];
     # we use @ to suppress the exceptions in order to be able to check the result
     $date = @$concept->getDate();
-    $this->assertEquals('1986-21-00', $date);
+    $this->assertContains('1986-21-00', $date);
   }
 
   /**
