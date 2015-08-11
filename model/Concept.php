@@ -388,7 +388,7 @@ class Concept extends VocabularyDataObject
         $ret .= ' ' . gettext('skosmos:modified') . ' ' . (Punic\Calendar::formatDate($modified, 'short'));
       } catch (Exception $e) {
         trigger_error($e->getMessage(), E_USER_WARNING);
-        return (string)$this->resource->get('dc:modified') . (string)$this->resource->get('dc:created');
+        return gettext('skosmos:modified') . ' ' . (string)$this->resource->get('dc:modified') . ' ' . gettext('skosmos:created') . ' ' . (string)$this->resource->get('dc:created');
       }
     return $ret;
   }
