@@ -169,7 +169,19 @@ class ConceptTest extends PHPUnit_Framework_TestCase
   }
 
   /**
-   * @covers Concept::getProperties
+   * @covers Concept::getDate
+   */
+  public function testGetDateWithCreatedAndModified() {
+    $vocab = $this->model->getVocabulary('dates');
+    $concepts = $vocab->getConceptInfo("http://www.skosmos.skos/date/d1", "en");
+    $concept = $concepts[0];
+    $date = $concept->getDate();
+    $this->assertContains('1/3/00', $date);
+    $this->assertContains('6/6/12', $date);
+  }
+
+  /**
+   * @covers Concept::getDate
    * @covers ConceptProperty::getValues
    * @covers ConceptPropertyValueLiteral::getLabel
    * @expectedException \Exception

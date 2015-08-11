@@ -1,0 +1,16 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix date: <http://www.skosmos.skos/date/> .
+@prefix meta: <http://www.skosmos.skos/test-meta/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix skosmos: <http://www.skosmos.skos/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+date:d1 a skos:Concept, meta:TestClass ;
+    dc:created "2000-01-03T12:46:39+03:00"^^xsd:dateTime ;
+    dc:modified "2012-06-06T12:46:39+03:00"^^xsd:dateTime ;
+    skos:prefLabel "A date"@en .
+

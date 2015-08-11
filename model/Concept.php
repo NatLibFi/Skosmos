@@ -369,9 +369,13 @@ class Concept extends VocabularyDataObject
   public function getDate() {
     $ret = null;
     try {
-      if ($this->resource->get('dc:created'))
+      if ($this->resource->get('dc11:created'))
+        $ret = gettext('dc11:created') . ' ' . (Punic\Calendar::formatDate($this->resource->get('dc11:created')->getValue(), 'short'));
+      else if ($this->resource->get('dc:created'))
         $ret = gettext('dc:created') . ' ' . (Punic\Calendar::formatDate($this->resource->get('dc:created')->getValue(), 'short'));
-      if ($this->resource->get('dc:modified'))
+      if ($this->resource->get('dc11:modified'))
+        $ret .= ' ' . gettext('dc11:modified') . ' ' . (Punic\Calendar::formatDate($this->resource->get('dc11:modified')->getValue(), 'short'));
+      else if ($this->resource->get('dc:modified'))
         $ret .= ' ' . gettext('dc:modified') . ' ' . (Punic\Calendar::formatDate($this->resource->get('dc:modified')->getValue(), 'short'));
       } catch (Exception $e) {
         trigger_error($e->getMessage(), E_USER_WARNING);
