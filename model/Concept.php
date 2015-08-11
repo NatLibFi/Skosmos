@@ -367,16 +367,27 @@ class Concept extends VocabularyDataObject
    * @return String containing the date information in a human readable format.
    */
   public function getDate() {
-    $ret = null;
+    $ret = '';
+    $created = '';
+    $modified = '';
     try {
+      // finding the created properties
       if ($this->resource->get('dc11:created'))
-        $ret = gettext('dc11:created') . ' ' . (Punic\Calendar::formatDate($this->resource->get('dc11:created')->getValue(), 'short'));
+        $created = $this->resource->get('dc11:created')->getValue();
       else if ($this->resource->get('dc:created'))
-        $ret = gettext('dc:created') . ' ' . (Punic\Calendar::formatDate($this->resource->get('dc:created')->getValue(), 'short'));
+        $created = $this->resource->get('dc:created')->getValue();
+
+      // finding the modified properties
       if ($this->resource->get('dc11:modified'))
-        $ret .= ' ' . gettext('dc11:modified') . ' ' . (Punic\Calendar::formatDate($this->resource->get('dc11:modified')->getValue(), 'short'));
+        $modified = $this->resource->get('dc11:modified')->getValue();
       else if ($this->resource->get('dc:modified'))
-        $ret .= ' ' . gettext('dc:modified') . ' ' . (Punic\Calendar::formatDate($this->resource->get('dc:modified')->getValue(), 'short'));
+        $modified = $this->resource->get('dc:modified')->getValue();
+
+      // making a human readable string from the timestamps
+      if ($created != '') 
+        $ret = gettext('skosmos:created') . ' ' . (Punic\Calendar::formatDate($created, 'short'));
+      if ($modified != '') 
+        $ret .= ' ' . gettext('skosmos:modified') . ' ' . (Punic\Calendar::formatDate($modified, 'short'));
       } catch (Exception $e) {
         trigger_error($e->getMessage(), E_USER_WARNING);
         return (string)$this->resource->get('dc:modified') . (string)$this->resource->get('dc:created');
