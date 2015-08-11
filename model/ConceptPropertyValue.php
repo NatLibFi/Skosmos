@@ -49,6 +49,10 @@ class ConceptPropertyValue extends VocabularyDataObject
     return $label;
   }
 
+  public function getType() {
+    return $this->type;
+  }
+
   public function getUri()
   {
     return $this->resource->getUri();
