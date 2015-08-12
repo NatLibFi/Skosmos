@@ -470,13 +470,11 @@ test:ta116
    * @covers Model::fetchResourceFromUri
    * @depends testConstructorWithConfig
    */
-  public function testGetResourceFromUriAndLabelFromResource() {
+  public function testGetResourceFromUri() {
     $model = new Model(); 
     $resource = $model->getResourceFromUri('http://www.yso.fi/onto/yso/p19378');
-    $label = $model->getResourceLabel($resource, 'en');
     $this->assertInstanceOf('EasyRdf_Resource', $resource);
     $this->assertEquals('http://www.yso.fi/onto/yso/p19378', $resource->getURI());
-    $this->assertEquals('cat', $label);
   }
 
 }
