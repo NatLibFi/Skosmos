@@ -337,7 +337,7 @@ class Concept extends VocabularyDataObject
       if(sizeof($prop->getValues()) === 0)
         unset($ret[$key]);
 
-    //$ret = $this->removeDuplicatePropertyValues($ret, $duplicates);
+    $ret = $this->removeDuplicatePropertyValues($ret, $duplicates);
     // sorting the properties to the order preferred in the Skosmos concept page.
     $ret = $this->arbitrarySort($ret);
     return $ret;

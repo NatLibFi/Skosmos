@@ -19,3 +19,15 @@ dup:d2 a skos:Concept ;
 dup:d3 a skos:Concept ;
     skos:closeMatch dup:d1, dup:d2 ; 
     skos:prefLabel "A label"@en .
+
+dup:d4 a skos:Concept ;
+    dup:prop1 "Identical property value"@en;
+    dup:prop2 "Identical property value"@en;
+    skos:prefLabel "A concept with a duplicate property"@en .
+
+dup:prop1
+  rdfs:label "Very nice property"@en .
+   
+dup:prop2
+  rdfs:subPropertyOf dup:prop1 ;
+  rdfs:label "Nearly as nice subproperty"@en.
