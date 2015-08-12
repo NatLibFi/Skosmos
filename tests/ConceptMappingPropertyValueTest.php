@@ -53,4 +53,16 @@ class ConceptMappingPropertyValueTest extends PHPUnit_Framework_TestCase
     $propvals = $props['skos:exactMatch']->getValues();
     $this->assertEquals('Test ontology', $propvals['Eelhttp://www.skosmos.skos/test/ta115']->getVocabName());
   }
+  
+  /**
+   * @covers ConceptMappingPropertyValue::getUri
+   */
+  public function testGetUri() {
+    $vocab = $this->model->getVocabulary('mapping');
+    $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/mapping/m1', 'en');
+    $concept = $concepts[0];
+    $props = $concept->getMappingProperties();
+    $propvals = $props['skos:exactMatch']->getValues();
+    $this->assertEquals('http://www.skosmos.skos/test/ta115', $propvals['Eelhttp://www.skosmos.skos/test/ta115']->getUri());
+  }
 }
