@@ -41,8 +41,10 @@ function invokeGroupTree() {
                 var children = [];
                 for (var memberUri in response.members) {
                   var child = {'id' : memberUri, 'text' : response.members[memberUri].label,'parent' : nodeId, children : false, a_attr : { "href" : memberUri}};
-                  if (response.members[memberUri].hasMembers)
+                  if (response.members[memberUri].hasMembers) {
                     child.children = true;
+                    child.a_attr.class = 'group';
+                  }
                   children.push(child);
                 }
                 cb(children);
@@ -60,8 +62,10 @@ var first = true;
 function createGroupNode(uri, groupObject) {
   var node = {'id' : uri, 'parent' : '#', children : [], a_attr : { "href" : uri }};
   node.text = groupObject.label;
-  if (groupObject.members)
+  if (groupObject.members) {
     node.children = true;
+    node.a_attr.class = 'group';
+  }
   return node;
 }
 

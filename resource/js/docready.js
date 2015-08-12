@@ -223,10 +223,11 @@ $(function() { // DOCUMENT READY
   $(document).on('click', '.jstree-no-icons a',
       function(event) {
         event.preventDefault();
-        var clicked = $(this);
         var base_path = path_fix.length / 3;
         var $content = $('.content');
         var targetUrl = vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(event.target.href);
+        if ($(this).hasClass('group'))
+          targetUrl = vocab + '/' + lang + '/groups/?uri=' + encodeURIComponent(event.target.href);
         var parameters = $.param({'base_path' : base_path, 'clang' : clang});
         $('#hier-trigger').attr('href', targetUrl);
         $.ajax({
