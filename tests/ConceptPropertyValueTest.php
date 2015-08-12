@@ -44,5 +44,23 @@ class ConceptPropertyValueTest extends PHPUnit_Framework_TestCase
     $propvals = $props['skos:narrower']->getValues();
     $this->assertEquals('http://www.skosmos.skos/test/ta121', $propvals['Crucian carphttp://www.skosmos.skos/test/ta121']->getUri());
   }
+  
+  /**
+   * @covers ConceptPropertyValue::getVocab
+   */
+  public function testGetVocab() {
+    $props = $this->concept->getProperties();
+    $vocab = $this->model->getVocabulary('test');
+    $propvals = $props['skos:narrower']->getValues();
+    $this->assertEquals($vocab, $propvals['Crucian carphttp://www.skosmos.skos/test/ta121']->getVocab());
+  }
 
+  /**
+   * @covers ConceptPropertyValue::getVocabName
+   */
+  public function testGetVocabName() {
+    $props = $this->concept->getProperties();
+    $propvals = $props['skos:narrower']->getValues();
+    $this->assertEquals('Test ontology', $propvals['Crucian carphttp://www.skosmos.skos/test/ta121']->getVocabName());
+  }
 }
