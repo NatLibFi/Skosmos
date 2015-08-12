@@ -22,6 +22,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers ConceptMappingPropertyValue::getLabel
+   * @covers DataObject::getExternalLabel
    */
   public function testGetLabelFromExternalVocabulary() {
     $concepts = $this->vocab->getConceptInfo('http://www.skosmos.skos/mapping/m1', 'en');
