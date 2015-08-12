@@ -115,6 +115,8 @@ class ConceptTest extends PHPUnit_Framework_TestCase
   }
 
   /**
+   * @covers DataObject::arbitrarySort
+   * @covers DataObject::mycompare
    * @covers Concept::getProperties
    * @covers ConceptProperty::getValues
    * @covers ConceptPropertyValue::getLabel
