@@ -84,6 +84,14 @@
 	skosmos:language "en";
 	skosmos:sparqlGraph <http://www.skosmos.skos/date/> .
 
+:mapping a skosmos:Vocabulary, void:Dataset ;
+	dc11:title "Vocabulary with mappings"@en ;
+	dc:subject :cat_general ;
+	void:uriSpace "http://www.skosmos.skos/onto/mapping/";
+	void:sparqlEndpoint <http://localhost:3030/ds/sparql> ;
+	skosmos:language "en";
+	skosmos:sparqlGraph <http://www.skosmos.skos/mapping/> .
+
 <http://skosmos.skos/dump/test/groups> dc:format "application/rdf+xml" .
 
 :cat_science a skos:Concept ;

@@ -399,54 +399,12 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   public function testQueryChildren()
   {
     $actual = $this->sparql->queryChildren('http://www.skosmos.skos/test/ta1', 'en', 'en');
-    $expected = array (
-      0 => array (
-        'uri' => 'http://www.skosmos.skos/test/ta111',
-        'prefLabel' => 'Tuna',
-        'hasChildren' => false,
-      ),
-      1 => array (
-        'uri' => 'http://www.skosmos.skos/test/ta112',
-        'prefLabel' => 'Carp',
-        'hasChildren' => true,
-      ),
-      2 => array (
-        'uri' => 'http://www.skosmos.skos/test/ta114',
-        'prefLabel' => 'Buri',
-        'hasChildren' => false,
-      ),
-      3 => array (
-        'uri' => 'http://www.skosmos.skos/test/ta115',
-        'prefLabel' => 'Eel',
-        'hasChildren' => false,
-      ),
-      4 => array (
-        'uri' => 'http://www.skosmos.skos/test/ta116',
-        'prefLabel' => 'Bass',
-        'hasChildren' => false,
-      ),
-      5 => array (
-        'uri' => 'http://www.skosmos.skos/test/ta117',
-        'prefLabel' => '3D Bass',
-        'hasChildren' => false,
-      ),
-      6 => array (
-        'uri' => 'http://www.skosmos.skos/test/ta119',
-        'prefLabel' => 'Hauki (fi)',
-        'hasChildren' => false,
-      ),
-      7 => array (
-        'uri' => 'http://www.skosmos.skos/test/ta120',
-        'prefLabel' => NULL,
-        'hasChildren' => false,
-      ),
-      8 => array (
-        'uri' => 'http://www.skosmos.skos/test/ta113',
-        'prefLabel' => NULL,
-        'hasChildren' => false,
-      ),
-    );
-    $this->assertEquals($expected, $actual);
+    $actual_uris = array();
+    foreach ($actual as $child)
+      $actual_uris[$child['uri']] = $child['uri'];
+    $expected = array ('http://www.skosmos.skos/test/ta111','http://www.skosmos.skos/test/ta112','http://www.skosmos.skos/test/ta114','http://www.skosmos.skos/test/ta115','http://www.skosmos.skos/test/ta116','http://www.skosmos.skos/test/ta117','http://www.skosmos.skos/test/ta119','http://www.skosmos.skos/test/ta120','http://www.skosmos.skos/test/ta113');
+    foreach ($expected as $uri)
+      $this->assertArrayHasKey($uri, $actual_uris);
   }
   
   /**
