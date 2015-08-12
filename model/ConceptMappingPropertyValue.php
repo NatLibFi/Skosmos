@@ -17,13 +17,6 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
     $this->clang = $clang;
   }
 
-  public function __toString()
-  {
-    if ($this->label === null)
-      return "";
-    return $this->label;
-  }
-
   public function getType()
   {
     return $this->type;

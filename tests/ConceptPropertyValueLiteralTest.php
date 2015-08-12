@@ -29,6 +29,33 @@ class ConceptPropertyValueLiteralTest extends PHPUnit_Framework_TestCase
   }
 
   /**
+   * @covers ConceptPropertyValueLiteral::getLang
+   */
+  public function testGetLang() {
+    $props = $this->concept->getProperties();
+    $propvals = $props['skos:scopeNote']->getValues();
+    $this->assertEquals('en', $propvals['Carp are oily freshwater fish']->getLang());
+  }
+
+  /**
+   * @covers ConceptPropertyValueLiteral::getType
+   */
+  public function testGetType() {
+    $props = $this->concept->getProperties();
+    $propvals = $props['skos:scopeNote']->getValues();
+    $this->assertEquals('skos:scopeNote', $propvals['Carp are oily freshwater fish']->getType());
+  }
+
+  /**
+   * @covers ConceptPropertyValueLiteral::getUri
+   */
+  public function testGetUri() {
+    $props = $this->concept->getProperties();
+    $propvals = $props['skos:scopeNote']->getValues();
+    $this->assertEquals(null, $propvals['Carp are oily freshwater fish']->getUri());
+  }
+
+  /**
    * @covers ConceptPropertyValueLiteral::__toString
    */
   public function testGetToString() {

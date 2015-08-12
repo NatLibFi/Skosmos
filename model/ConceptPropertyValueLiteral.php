@@ -28,11 +28,6 @@ class ConceptPropertyValueLiteral
     return $this->literal->getLang();
   }
 
-  public function getExVocab()
-  {
-    return $this->exvocab;
-  }
-
   public function getType()
   {
     return $this->type;
