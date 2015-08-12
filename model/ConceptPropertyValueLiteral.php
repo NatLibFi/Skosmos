@@ -53,19 +53,4 @@ class ConceptPropertyValueLiteral
     return null;
   }
 
-  public function getParent()
-  {
-    return $this->parentProperty;
-  }
-
-  public function getVocab()
-  {
-    return $this->vocab;
-  }
-  
-  public function getVocabName()
-  {
-    return $this->vocab->getShortName();
-  }
-
 }
