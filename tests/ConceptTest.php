@@ -46,6 +46,15 @@ class ConceptTest extends PHPUnit_Framework_TestCase
   }
   
   /**
+   * @covers Concept::getVocabTitle
+   */
+  public function testGetVocabTitle()
+  {
+    $title = $this->concept->getVocabTitle();
+    $this->assertEquals('Test ontology', $title);
+  }
+  
+  /**
    * @covers Concept::getShortName
    */
   public function testGetShortName()
