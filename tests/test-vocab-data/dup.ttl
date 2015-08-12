@@ -25,9 +25,20 @@ dup:d4 a skos:Concept ;
     dup:prop2 "Identical property value"@en;
     skos:prefLabel "A concept with a duplicate property"@en .
 
+dup:d5 a skos:Concept ;
+    dup:prop3 "Identical property value"@en;
+    dup:prop4 "Identical property value"@en;
+    skos:prefLabel "Not a subproperty"@en .
+
 dup:prop1
   rdfs:label "Very nice property"@en .
    
 dup:prop2
   rdfs:subPropertyOf dup:prop1 ;
-  rdfs:label "Nearly as nice subproperty"@en.
+  rdfs:label "Nearly as nice subproperty"@en .
+
+dup:prop3
+  rdfs:label "Nice-ish property"@en .
+   
+dup:prop4
+  rdfs:label "Not at all a subproperty"@en .

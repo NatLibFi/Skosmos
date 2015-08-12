@@ -166,6 +166,18 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $props = $concept->getProperties();
     $this->assertCount(1, $props);
   }
+  
+  /**
+   * @covers Concept::removeDuplicatePropertyValues
+   * @covers Concept::getProperties
+   */
+  public function testRemoveDuplicatePropertyValuesOtherThanSubpropertyof() {
+    $vocab = $this->model->getVocabulary('duplicates');
+    $concepts = $vocab->getConceptInfo("http://www.skosmos.skos/dup/d5", "en");
+    $concept = $concepts[0];
+    $props = $concept->getProperties();
+    $this->assertCount(2, $props);
+  }
 
   /**
    * @covers Concept::getProperties
