@@ -16,3 +16,7 @@ mapping:m1 a skos:Concept ;
     skos:exactMatch test:ta115 ;
     skos:prefLabel "This concept is mapped to a concept in a vocabulary that can be found at the same endpoint"@en .
 
+mapping:m2 a skos:Concept ;
+    skos:exactMatch <http://www.yso.fi/onto/yso/p19378> ;
+    skos:prefLabel "This concept is mapped to a concept in a vocabulary that can not be found at the same endpoint"@en .
+
