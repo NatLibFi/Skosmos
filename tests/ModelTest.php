@@ -452,5 +452,16 @@ test:ta116
     $expectedGraph->parse($expected, "rdfxml");
     $this->assertTrue(EasyRdf_Isomorphic::isomorphic($resultGraph, $expectedGraph));
   }
+  
+  /**
+   * @covers Model::getLanguages
+   * @depends testConstructorWithConfig
+   */
+  public function testGetLanguages() {
+    $model = new Model(); 
+    $languages = $model->getLanguages('en');
+    $expected = array('English' => 'en');
+    $this->assertEquals($expected, $languages);
+  }
 
 }
