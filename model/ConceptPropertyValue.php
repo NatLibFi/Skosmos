@@ -18,13 +18,6 @@ class ConceptPropertyValue extends VocabularyDataObject
     $this->clang = $clang;
   }
 
-  public function __toString()
-  {
-    if ($this->label === null)
-      return "";
-    return $this->label;
-  }
-
   public function getLang()
   {
     return $this->lang;
