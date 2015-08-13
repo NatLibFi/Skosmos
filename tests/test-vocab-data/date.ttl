@@ -12,5 +12,13 @@
 date:d1 a skos:Concept, meta:TestClass ;
     dc:created "2000-01-03T12:46:39+03:00"^^xsd:dateTime ;
     dc:modified "2012-06-06T12:46:39+03:00"^^xsd:dateTime ;
+    date:ownDate "2015-08-08T12:46:39+03:00"^^xsd:dateTime ;
     skos:prefLabel "A date"@en .
+
+date:d2 a skos:Concept, meta:TestClass ;
+    date:ownDate "1986-21-00"^^xsd:date ; #invalid on purpose
+    skos:prefLabel "Broken date"@en .
+
+date:ownDate
+  rdfs:label "This is also a dateTime" .
 
