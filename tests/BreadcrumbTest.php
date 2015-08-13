@@ -37,7 +37,7 @@ class BreadcrumbTest extends PHPUnit_Framework_TestCase
     $bc = new Breadcrumb('http://skosmos.skos/onto/test/t001', 'prefLabel');
     $bc2 = new Breadcrumb('http://skosmos.skos/onto/test/t007', 'narrower');
     $bc->addNarrower($bc2);
-    $child = reset($bc->getNarrowerConcepts());
-    $this->assertEquals($bc2, $child);
+    $children = $bc->getNarrowerConcepts();
+    $this->assertEquals($bc2, $children['http://skosmos.skos/onto/test/t007']);
   }
 }
