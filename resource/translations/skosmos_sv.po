@@ -175,7 +175,7 @@ msgstr "Sök"
 
 #: /tmp/cache/55c9bee610e78/2b/2f/1ce096ed381c7c416eb3bdf53cb7.php:272
 msgid "Search language: any"
-msgstr "På alla språk"
+msgstr "på alla språk"
 
 #: /tmp/cache/55c9bee610e78/bd/1b/8ea01a92d3d28ecbc47efa229ca9.php:299
 msgid "Search options"
