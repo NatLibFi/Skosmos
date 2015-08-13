@@ -35,6 +35,18 @@ class ConceptPropertyTest extends PHPUnit_Framework_TestCase
   }
 
   /**
+   * @covers ConceptProperty::getLabel
+   */
+  public function testGetLabel() {
+    $vocab = $this->model->getVocabulary('dates');
+    $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/date/d1', 'en');
+    $concept = $concepts[0];
+    $props = $concept->getProperties();
+    $proplabel = $props['http://www.skosmos.skos/date/ownDate']->getLabel();
+    $this->assertEquals('This is also a dateTime', $proplabel->getValue());
+  }
+
+  /**
    * @covers Concept::getProperties
    * @covers ConceptProperty::getType
    */
