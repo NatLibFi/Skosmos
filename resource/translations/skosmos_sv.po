@@ -351,7 +351,7 @@ msgstr "Termer på andra språk"
 
 #: /tmp/cache/55c9bee610e78/0e/21/616815bd3942b86671f42d3ed4b2.php:43
 msgid "from all"
-msgstr "från alla"
+msgstr "i alla"
 
 #: /tmp/cache/55c9bee610e78/b7/b8/db5433ea968c6a0d09780d91f529.php:67
 msgid "isothes:ConceptGroup"
