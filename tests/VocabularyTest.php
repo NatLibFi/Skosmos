@@ -545,6 +545,13 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
       $this->assertInstanceOf('Breadcrumb', $crumb);
   }
   
-
+  /**
+   * @covers Vocabulary::getAdditionalSearchProperties
+   */
+  public function testGetAdditionalSearchProperties() {
+    $vocab = $this->model->getVocabulary('dates');
+    $prop = $vocab->getAdditionalSearchProperties();
+    $this->assertEquals('skos:exactMatch', $prop[0]);
+  }
 
 }

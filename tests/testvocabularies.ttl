@@ -82,6 +82,7 @@
 	void:uriSpace "http://www.skosmos.skos/onto/date/";
 	void:sparqlEndpoint <http://localhost:3030/ds/sparql> ;
 	skosmos:language "en";
+	skosmos:showPropertyInSearch skos:exactMatch;
 	skosmos:sparqlGraph <http://www.skosmos.skos/date/> .
 
 :mapping a skosmos:Vocabulary, void:Dataset ;
