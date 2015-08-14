@@ -472,7 +472,7 @@ class WebController extends Controller
     if ($request->getQueryParam('limit')) {
       $count = $request->getQueryParam('limit');
     } else { 
-      $count = ($offset > 0 || !$request->getQueryParam('base_path')) ? null : 250;
+      $count = ($offset > 0) ? null : 250;
     }
     
     $content_lang = $request->getContentLang();
