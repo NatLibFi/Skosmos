@@ -27,11 +27,6 @@ $request = new Request($model);
 // PATH_INFO, for example "/ysa/fi"
 $path = $request->getServerConstant('PATH_INFO') ? $request->getServerConstant('PATH_INFO') : '';
 $parts = explode('/', $path);
-$path_fix = (sizeof($parts) > 1) ? str_repeat("../", sizeof($parts) - 2) : "";
-if ($request->getQueryParam('base_path')) {
-  $path_fix = str_repeat('../', intval($request->getQueryParam('base_path')));
-}
-$request->setPathFix($path_fix);
 
 // used for making proper hrefs for the language selection
 $request->setRequestUri($request->getServerConstant('HTTP_HOST') . $request->getServerConstant('REQUEST_URI'));

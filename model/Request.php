@@ -81,18 +81,6 @@ class Request
   }
 
   /**
-   * Sets the path fix variable eg. '../../'
-   * @param string $path_fix
-   */
-  public function setPathFix($path_fix) {
-    $this->path_fix = $path_fix;
-  }
-  
-  public function getPathFix() {
-    return $this->path_fix;
-  }
-
-  /**
    * Sets the reuquest uri variable
    * @param string $uri
    */

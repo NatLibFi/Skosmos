@@ -122,14 +122,5 @@ class RequestTest extends PHPUnit_Framework_TestCase
     $this->request->setPage('index');
     $this->assertEquals('index', $this->request->getPage());
   }
-
-  /**
-   * @covers Request::setPathFix
-   * @covers Request::getPathFix
-   */
-  public function testSetAndGetPathFix() {
-    $this->request->setPathFix('../../');
-    $this->assertEquals('../../', $this->request->getPathFix());
-  }
   
 }
