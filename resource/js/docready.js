@@ -223,12 +223,11 @@ $(function() { // DOCUMENT READY
   $(document).on('click', '.jstree-no-icons a',
       function(event) {
         event.preventDefault();
-        var base_path = path_fix.length / 3;
         var $content = $('.content');
         var targetUrl = vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(event.target.href);
         if ($(this).hasClass('group'))
           targetUrl = vocab + '/' + lang + '/groups/?uri=' + encodeURIComponent(event.target.href);
-        var parameters = $.param({'base_path' : base_path, 'clang' : clang});
+        var parameters = $.param({'clang' : clang});
         $('#hier-trigger').attr('href', targetUrl);
         $.ajax({
             url : targetUrl,
@@ -252,14 +251,12 @@ $(function() { // DOCUMENT READY
   $(document).on('click', '.side-navi a',
       function(event) {
         $.ajaxQ.abortAll();
-        var parameters = $.param({'base_path' : path_fix.length / 3});
         $('.activated-concept').removeClass('activated-concept');
         $(this).addClass('activated-concept');
         var $content = $('.content');
         var hierButton = '<li id="hierarchy"><a id="hier-trigger" href="#">' + hiertrans + '</a></li>';
         $.ajax({
             url : event.target.href,
-            data: parameters,
             success : function(data) {
               if (window.history.pushState) { window.history.pushState(null, null, event.target.href); }
               $content.empty().append($('.content', data).html());
@@ -283,10 +280,8 @@ $(function() { // DOCUMENT READY
         $(this).parent().addClass('active');
         $('.sidebar-grey').empty().prepend(spinner);
         var targetUrl = event.target.href;
-        var parameters = $.param({'base_path' : path_fix.length / 3});
         $.ajax({
             url : targetUrl,
-            data: parameters,
             success : function(data) {
               updateSidebar(data);
               $('#alpha').after($('#hierarchy'));
@@ -339,15 +334,12 @@ $(function() { // DOCUMENT READY
   $(document).on('click','.group-index > li > a',
       function(event) {
         $.ajaxQ.abortAll();
-        var base_path = path_fix.length / 3;
         var $content = $('.content');
         $('.sidebar-grey').empty().prepend(spinner);
         var targetUrl = event.target.href;
-        var parameters = $.param({'base_path' : base_path});
         // ajaxing the sidebar content
         $.ajax({
             url : targetUrl,
-            data: parameters,
             success : function(data) {
               updateSidebar(data);
               $content.empty();
@@ -370,14 +362,11 @@ $(function() { // DOCUMENT READY
         $.ajaxQ.abortAll();
         if ($('.alphabet-header').length === 0) {
           alpha_complete = false;
-          var base_path = path_fix.length / 3;
           var $content = $('.sidebar-grey');
           $content.empty().prepend(spinner);
           var targetUrl = event.target.href;
-          var parameters = $.param({'base_path' : base_path});
           $.ajax({
             url : targetUrl,
-            data: parameters,
             success : function(data) {
               updateSidebar(data);
               $('.nav').scrollTop(0);
