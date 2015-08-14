@@ -496,7 +496,6 @@ $(function() { // DOCUMENT READY
       }
       if (clang && clang !== lang) { params.clang = clang; }
       var paramstr = $.isEmptyObject(params) ? '' : '?' + $.param(params);
-      // replaced complex logic with path_fix that should always work.
       if (datum.type && datum.type.indexOf('Collection') !== -1) {
         location.href = datum.vocab + '/' + lang + '/groups/' + localname + paramstr;
       } else {
