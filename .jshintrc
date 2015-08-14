@@ -17,6 +17,7 @@
     "lscache": false, 
     "getTreeConfiguration": false, 
     "invokeParentTree": false, 
+    "invokeGroupTree": false, 
     "hiertrans": false, 
     "content_lang": false, 
     "lang": false, 
