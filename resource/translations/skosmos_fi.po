@@ -27,11 +27,11 @@ msgstr "suomeksi"
 
 #: model/Concept.php:388
 msgid "skosmos:created"
-msgstr "Luontipäivä"
+msgstr "Luotu"
 
 #: model/Concept.php:390
 msgid "skosmos:modified"
-msgstr "Muokkauspäivä"
+msgstr "Muokattu"
 
 #: /tmp/cache/55c9be9373336/b7/b8/db5433ea968c6a0d09780d91f529.php:177
 #: /tmp/cache/55c9be9373336/bd/18/082f84f6ac0787f1638aac1a519c.php:46
