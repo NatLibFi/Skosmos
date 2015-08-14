@@ -554,4 +554,13 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('skos:exactMatch', $prop[0]);
   }
 
+  /**
+   * @covers Vocabulary::getTopConcepts
+   */
+  public function testGetTopConcepts() {
+    $vocab = $this->model->getVocabulary('test');
+    $prop = $vocab->getTopConcepts();
+    $this->assertEquals('Fish', $prop['http://www.skosmos.skos/test/ta1']);
+  }
+
 }
