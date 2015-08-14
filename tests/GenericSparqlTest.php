@@ -530,8 +530,8 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
     $graph = $voc->getGraph();
     $sparql = new GenericSparql('http://localhost:3030/ds/sparql', $graph, $this->model);
     $actual = $sparql->ListConceptGroupContents('http://www.w3.org/2004/02/skos/core#Collection', 'http://www.skosmos.skos/groups/salt', 'en');
-    $this->assertArrayHasKey('http://www.skosmos.skos/groups/ta113', $actual);
-    $this->assertArrayNotHasKey('http://www.skosmos.skos/groups/ta111', $actual);
+    $this->assertEquals('http://www.skosmos.skos/groups/ta113', $actual[0]['uri']);
+    $this->assertEquals(1, sizeof($actual));
   }
 }
   
