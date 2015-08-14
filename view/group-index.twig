@@ -18,13 +18,6 @@
 
 <div class="sidebar-grey">
   <div class="group-hierarchy">
-    <ul class="group-index">
-      {% for uri, value in groups %}
-      <li><a href="{{ uri | link_url(vocab, request.lang, request.page, request.contentLang) }}">{{ value.label }}</a>
-        {% if value.children %}{% for childuri,childlabel in value.children %}<li class="sub-group"><a href="{{ childuri | link_url(vocab, request.lang, request.page, request.contentLang) }}">{{ childlabel }}</a></li>{% endfor %}{% endif %}
-      </li>
-      {% endfor %}
-    </ul>
   </div>
 </div>
 {% endblock %}

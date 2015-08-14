@@ -528,21 +528,15 @@ class WebController extends Controller
     $lang = $request->getLang();
     $this->setLanguageProperties($lang);
     $template = $this->twig->loadTemplate('group-contents.twig');
-    $content_lang = $request->getContentLang();
     $vocab = $request->getVocab();
     
-    $groupuri = $vocab->getConceptURI($request->getUri());
-    $contents = $vocab->listConceptGroupContents($groupuri, $content_lang);
-    $group_name = $vocab->getGroupName($groupuri, $content_lang);
     $uri = $vocab->getConceptURI($request->getUri()); // make sure it's a full URI
-    $results = $vocab->getConceptInfo($uri, $content_lang);
+    $results = $vocab->getConceptInfo($uri, $request->getContentLang());
     
     echo $template->render(
       array(
         'languages' => $this->languages,
         'vocab' => $vocab,
-        'contents' => $contents,
-        'label' => $group_name,
         'search_results' => $results,
         'request' => $request
       ));
