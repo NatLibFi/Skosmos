@@ -175,7 +175,7 @@ msgstr "Sök"
 
 #: /tmp/cache/55c9bee610e78/2b/2f/1ce096ed381c7c416eb3bdf53cb7.php:272
 msgid "Search language: any"
-msgstr "På alla språk"
+msgstr "på alla språk"
 
 #: /tmp/cache/55c9bee610e78/bd/1b/8ea01a92d3d28ecbc47efa229ca9.php:299
 msgid "Search options"
@@ -351,7 +351,7 @@ msgstr "Termer på andra språk"
 
 #: /tmp/cache/55c9bee610e78/0e/21/616815bd3942b86671f42d3ed4b2.php:43
 msgid "from all"
-msgstr "från alla"
+msgstr "i alla"
 
 #: /tmp/cache/55c9bee610e78/b7/b8/db5433ea968c6a0d09780d91f529.php:67
 msgid "isothes:ConceptGroup"
