@@ -10,8 +10,10 @@ function buildGroupTree(response) {
     var group = createGroupNode(uri, response[uri]); 
     if (group.text)
       data.push(group);
-    if (uri === $('.uri-input-box').html())
+    if (uri === $('.uri-input-box').html()) {
       group.state = { 'opened' : true };
+      group.a_attr.class = "jstree-clicked";
+    }
   }
   return data;
 }
