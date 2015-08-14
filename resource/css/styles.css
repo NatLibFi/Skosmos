@@ -1438,6 +1438,10 @@ p.autocomplete-label {
   color: #474b4f !important;
 }
 
+.group {
+  font-weight: bold;
+}
+
 /* Font definitions
  *****************************************/
 li {
@@ -2013,7 +2017,6 @@ body, .versal, h1, h2, p, .versal-bold {
     width: 400px !important;
   }
 }
-
 
 <!--[if IE]>
 #vocab-info hr {

@@ -12,7 +12,7 @@ function buildGroupTree(response) {
       data.push(group);
     if (uri === $('.uri-input-box').html()) {
       group.state = { 'opened' : true };
-      group.a_attr.class = "jstree-clicked";
+      group.a_attr.class = "jstree-clicked group";
     }
   }
   return data;
@@ -44,10 +44,13 @@ function invokeGroupTree() {
                 cb(buildGroupTree(response.groupHierarchy));
               } else {
                 var children = [];
-                for (var memberUri in response.members) {
-                  var child = {'id' : memberUri, 'text' : response.members[memberUri].label,'parent' : nodeId, children : false, a_attr : { "href" : memberUri}};
-                  if (response.members[memberUri].hasMembers) {
+                for (var i in response.members) {
+                  var member = response.members[i];
+                  var child = {'id' : member.uri, 'text' : member.label,'parent' : nodeId, children : false, a_attr : { "href" : member.uri}};
+                  if (member.hasMembers) {
                     child.children = true;
+                  }
+                  if ($.inArray('skos:Collection', member.type) !== -1) {
                     child.a_attr.class = 'group';
                   }
                   children.push(child);
@@ -64,11 +67,10 @@ function invokeGroupTree() {
 }
 
 function createGroupNode(uri, groupObject) {
-  var node = {'id' : uri, 'parent' : '#', children : [], a_attr : { "href" : uri }};
+  var node = {'id' : uri, 'parent' : '#', children : [], a_attr : { "href" : uri, "class" : "group" }};
   node.text = groupObject.label;
   if (groupObject.members) {
     node.children = true;
-    node.a_attr.class = 'group';
   }
   return node;
 }

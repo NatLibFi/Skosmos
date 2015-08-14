@@ -1226,13 +1226,14 @@ EOQ;
   {
     $gc = $this->graphClause;
     $query = <<<EOQ
-SELECT ?conc ?super ?label ?members
+SELECT ?conc ?super ?label ?members ?type
 WHERE {
  $gc {
    <$group> a <$groupClass> .
    { <$group> skos:member ?conc . } UNION { ?conc isothes:superGroup <$group> }
    FILTER NOT EXISTS { ?conc owl:deprecated true }
    ?conc skos:prefLabel ?label .
+   ?conc a ?type .
    FILTER (langMatches(lang(?label), '$lang'))
  }
  BIND(EXISTS{?conc isothes:superGroup <$group>} as ?super)
@@ -1241,11 +1242,23 @@ WHERE {
 EOQ;
     $ret = array();
     $result = $this->client->query($query);
+    $values = array();
     foreach ($result as $row) {
-      $ret[$row->conc->getURI()]['label'] = $row->label->getValue();
-      $ret[$row->conc->getURI()]['hasSuper'] = $row->super->getValue();
-      $ret[$row->conc->getURI()]['hasMembers'] = $row->members->getValue();
+      if (!array_key_exists($row->conc->getURI(), $values)) {
+        $values[$row->conc->getURI()] = array(
+          'uri' => $row->conc->getURI(),
+          'label' => $row->label->getValue(),
+          'hasSuper' => $row->super->getValue(),
+          'hasMembers' => $row->members->getValue(),
+          'type' => array($row->type->shorten())
+        );
+      } else {
+         $values[$row->conc->getURI()]['type'][] = $row->type->shorten();
+      }
     }
+    
+    foreach ($values as $val)
+      $ret[] = $val; 
 
     return $ret;
   }
