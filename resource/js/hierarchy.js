@@ -244,6 +244,7 @@ function getTreeConfiguration(root) {
       'data' : 
         function(node, cb) { 
           var json_url = (rest_base_url + vocab + '/hierarchy');
+          var nodeId;
           if (node.id === '#') {
             nodeId = $('.uri-input-box').html(); // using the real uri of the concept from the view.
           } else  {
@@ -251,7 +252,7 @@ function getTreeConfiguration(root) {
             json_url = (rest_base_url + vocab + '/children');
           }
           var params = getParams(node); 
-          var jsondata = $.ajax({
+          $.ajax({
             data: params,
             url: json_url, 
             success: function (response) {
@@ -266,7 +267,8 @@ function getTreeConfiguration(root) {
           });
       }
     },
-    'plugins' : ['sort']
+    'plugins' : ['sort'],
+    'sort' : function (a,b) { return this.get_text(a).toLowerCase() > this.get_text(b).toLowerCase() ? 1 : -1; }  
   });
 }
 

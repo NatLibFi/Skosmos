@@ -22,6 +22,7 @@ function invokeGroupTree() {
 
   $('.group-hierarchy').jstree({ 
     'plugins' : ['sort'],
+    'sort' : function (a,b) { return this.get_text(a).toLowerCase() > this.get_text(b).toLowerCase() ? 1 : -1; },
     'core' : { 
       'data' : 
         function(node, cb) { 
@@ -31,7 +32,7 @@ function invokeGroupTree() {
             nodeId = node.id;
             json_url = (rest_base_url + vocab + '/groupMembers');
           }
-          var jsondata = $.ajax({
+          $.ajax({
             data: $.param({'uri' : nodeId, 'lang' : content_lang}),
             url: json_url, 
             success: function (response) {
@@ -57,7 +58,6 @@ function invokeGroupTree() {
     } 
   });
 }
-var first = true;
 
 function createGroupNode(uri, groupObject) {
   var node = {'id' : uri, 'parent' : '#', children : [], a_attr : { "href" : uri }};

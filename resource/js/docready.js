@@ -530,7 +530,7 @@ $(function() { // DOCUMENT READY
   } else { // if not then ajax the rest api and cache the results.
     var typeParam = $.param({'lang' : lang });
     var typeUrl = rest_base_url + 'types';
-    var typeJson = $.getJSON(typeUrl, typeParam, function(response) {
+    $.getJSON(typeUrl, typeParam, function(response) {
       lscache.set('types:' + lang, response, 1440);
       processTypeJSON(response);
     });
