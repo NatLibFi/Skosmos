@@ -130,7 +130,8 @@ class WebController extends Controller
     $port      = filter_input(INPUT_SERVER, 'SERVER_PORT', FILTER_SANITIZE_STRING);
     $disp_port = ($protocol == 'http' && $port == 80 || $protocol == 'https' && $port == 443) ? '' : ":$port";
     $domain    = filter_input(INPUT_SERVER, 'SERVER_NAME', FILTER_SANITIZE_STRING);
-    $full_url  = "$protocol://{$domain}{$disp_port}{$base_url}"; # Ex: 'http://example.com', 'https://example.com/mywebsite', etc.
+    $host      = empty($domain) ? '' : "$protocol://{$domain}{$disp_port}";
+    $full_url  = "{$host}{$base_url}"; # Ex: 'http://example.com', 'https://example.com/mywebsite', etc.
     return $full_url;
   }
 
