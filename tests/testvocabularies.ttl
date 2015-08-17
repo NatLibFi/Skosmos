@@ -83,6 +83,7 @@
 	void:sparqlEndpoint <http://localhost:3030/ds/sparql> ;
 	skosmos:language "en";
 	skosmos:showPropertyInSearch skos:exactMatch;
+  skosmos:hasMultiLingualProperty skos:altLabel ;
 	skosmos:sparqlGraph <http://www.skosmos.skos/date/> .
 
 :mapping a skosmos:Vocabulary, void:Dataset ;

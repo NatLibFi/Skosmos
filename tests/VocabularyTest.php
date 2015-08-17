@@ -562,5 +562,21 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
     $prop = $vocab->getTopConcepts();
     $this->assertEquals('Fish', $prop['http://www.skosmos.skos/test/ta1']);
   }
+  
+  /**
+   * @covers Vocabulary::getAdditionalSearchProperties
+   */
+  public function testIsMultiLingualProperty() {
+    $vocab = $this->model->getVocabulary('dates');
+    $this->assertEquals(true, $vocab->hasMultiLingualProperty('skos:altLabel'));
+  }
+  
+  /**
+   * @covers Vocabulary::getAdditionalSearchProperties
+   */
+  public function testIsMultiLingualPropertyWhenItIsNot() {
+    $vocab = $this->model->getVocabulary('dates');
+    $this->assertEquals(false, $vocab->hasMultiLingualProperty('skos:exactMatch'));
+  }
 
 }

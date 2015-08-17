@@ -466,6 +466,24 @@ class Vocabulary extends DataObject
   }
 
   /**
+   * Queries whether the property should be shown with all the label language variations.
+   * @param string $property
+   * @return boolean 
+   */
+  public function hasMultiLingualProperty($property)
+  {
+    $resources = $this->resource->allResources("skosmos:hasMultiLingualProperty");
+    foreach ($resources as $res) {
+      $prop = $res->getURI();
+      if (EasyRdf_Namespace::shorten($prop)) // shortening property labels if possible
+        $prop = EasyRdf_Namespace::shorten($prop);
+      if ($prop === $property)
+        return true;
+    }
+    return false;
+  }
+
+  /**
    * Returns a boolean value set in the vocabularies.ttl config.
    * @return boolean
    */

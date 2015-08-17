@@ -65,6 +65,17 @@
         {% endspaceless %}
         {% for property in concept.properties %} {# loop through ConceptProperty objects #}
           <tr{% if property.type == 'dc:isReplacedBy' %} class="replaced-by"{% endif%}><td><span class="versal{% if property.type == 'rdf:type' %}-bold{% endif %}{% if not (property.type in property.description and '_help' in property.description) %} property-click" title="{{ property.description }}"{% else %}"{% endif %}>{{ property.label|upper }}</span></td><td><ul>
+          {% if request.vocab.hasMultiLingualProperty(property.type) %}
+            {% set prevlang = '' %}{# Only displaying the language when it appears for the very first time #}
+            <table>
+            {% for language,labels in concept.allLabels(property.type) %}
+              {% for value in labels %}
+              <tr class="other-languages{% if prevlang != language %} first-of-language{% endif %}"><td class="versal{% if value.type == "skos:altLabel" %} replaced{% endif %}">{{ value.label }}</td><td class="versal">{% if prevlang != language %}<p>{{ language }}</p>{% endif %}</td></tr>
+              {% set prevlang = language %}
+              {% endfor %}
+            {% endfor %}
+            </table>
+          {% else %}
           {% for propval in property.values %} {# loop through ConceptPropertyValue objects #}
               <li>
               {% if propval.uri and propval.type != 'rdf:type' %} {# resources with URI #}
@@ -86,13 +97,14 @@
                 {% endif %}
               {% elseif property.type == 'rdf:type' %}<p>{{ propval.label|trans }}</p>
               {% else %} {# Literals (no URI), eg. alternative labels as properties #}
-                {% if propval.lang == request.contentLang or propval.lang == null or not request.contentLang and propval.lang == request.lang %}
-                <p{% if property.type == 'skos:altLabel' %} class="replaced"{% endif %}>{{ propval.label }}{% if propval.lang and (request.contentLang and propval.lang != request.contentLang or explicit_langcodes) %} ({{ propval.lang }}){% endif %}</p>
-                {% endif %}
+                  {% if propval.lang == request.contentLang or propval.lang == null or not request.contentLang and propval.lang == request.lang %}
+                  <p{% if property.type == 'skos:altLabel' %} class="replaced"{% endif %}>{{ propval.label }}{% if propval.lang and (request.contentLang and propval.lang != request.contentLang or explicit_langcodes) %} ({{ propval.lang }}){% endif %}</p>
+                  {% endif %}
               {% endif %}
               </li>
           {% endfor %}
           </ul></td></tr>
+          {% endif %}
         {% endfor %}
         {% if concept.groupProperties %}<tr><td><span class="versal property-click" title="{% trans "skosmos:memberOf_help" %}" >{{ 'skosmos:memberOf'|trans|upper }}</span></td><td>
             <ul>

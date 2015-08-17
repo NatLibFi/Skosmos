@@ -477,4 +477,18 @@ class Concept extends VocabularyDataObject
     return $labels;
   }
 
+  /**
+   * Gets the values for the property in question in all other languages than the ui language.
+   * @param string $property 
+   */
+  public function getAllLabels($property)
+  {
+    global $LANGUAGES;
+    $labels = array();
+    foreach ($this->resource->allLiterals($property) as $lit) {
+      $labels[Punic\Language::getName($lit->getLang(), $this->lang)][]  = new ConceptPropertyValueLiteral($lit, $property);
+    }
+    ksort($labels);
+    return $labels;
+  }
 }
