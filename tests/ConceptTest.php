@@ -98,6 +98,18 @@ class ConceptTest extends PHPUnit_Framework_TestCase
   }
   
   /**
+   * @covers Concept::getAllLabels
+   */
+  public function testGetAllLabels()
+  {
+    $search_results = $this->model->searchConceptsAndInfo('Eel', 'test', 'en', 'en'); 
+    $concept = $search_results['results'][0];
+    $labels = $concept->getAllLabels('skos:definition');
+    $this->assertEquals('Iljettävä limanuljaska', $labels['Finnish'][0]->getLabel());
+    $this->assertEquals('any fish belonging to the order Anguilliformes', $labels['English'][0]->getLabel());
+  }
+  
+  /**
    * @covers Concept::getProperties
    * @covers ConceptProperty::getValues
    * @covers ConceptPropertyValue::getLabel
