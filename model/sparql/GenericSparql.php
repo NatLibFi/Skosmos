@@ -717,7 +717,7 @@ EOQ;
     }
 
     $query = <<<EOQ
-SELECT ?s ?label ?alabel
+SELECT DISTINCT ?s ?label ?alabel
 WHERE {
   $gc {
     {
