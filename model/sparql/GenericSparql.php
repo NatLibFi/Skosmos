@@ -1190,8 +1190,7 @@ WHERE {
  $gc {
    ?group a <$groupClass> .
    OPTIONAL { { ?group isothes:superGroup ?super . } UNION { ?super skos:member ?group . } }
-    
-   BIND(EXISTS{?group skos:member ?submembers} as ?members)
+   BIND(EXISTS{?group skos:member|^isothes:superGroup ?submembers} as ?members)
    { ?group skos:prefLabel ?label } UNION { ?group rdfs:label ?label }
    FILTER (langMatches(lang(?label), '$lang'))
  }

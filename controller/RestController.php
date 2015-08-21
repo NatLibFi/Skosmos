@@ -734,7 +734,7 @@ class RestController extends Controller
    */
   public function groups($request)
   {
-    $results = $request->getVocab()->listConceptGroups(false, $request->getLang());
+    $results = $request->getVocab()->listConceptGroups($request->getLang());
     if ($results === NULL)
       return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
 

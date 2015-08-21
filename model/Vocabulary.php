@@ -629,7 +629,6 @@ class Vocabulary extends DataObject
 
   /**
    * Lists the different concept groups available in the vocabulary.
-   * @param boolean $flat set to true if you want a non hierarchical representation. 
    * @param string $clang content language parameter 
    * @return array
    */
