@@ -564,17 +564,17 @@ $expected = array ('http://www.skosmos.skos/groups/fish' => array ('label' => 'F
   }
   
   /**
-   * @covers Vocabulary::getAdditionalSearchProperties
+   * @covers Vocabulary::hasMultiLingualProperty
    */
-  public function testIsMultiLingualProperty() {
+  public function testHasMultiLingualProperty() {
     $vocab = $this->model->getVocabulary('dates');
     $this->assertEquals(true, $vocab->hasMultiLingualProperty('skos:altLabel'));
   }
   
   /**
-   * @covers Vocabulary::getAdditionalSearchProperties
+   * @covers Vocabulary::hasMultiLingualProperty
    */
-  public function testIsMultiLingualPropertyWhenItIsNot() {
+  public function testHasMultiLingualPropertyWhenItIsNot() {
     $vocab = $this->model->getVocabulary('dates');
     $this->assertEquals(false, $vocab->hasMultiLingualProperty('skos:exactMatch'));
   }
