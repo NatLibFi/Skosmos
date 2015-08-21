@@ -633,14 +633,14 @@ class Vocabulary extends DataObject
    * @param string $clang content language parameter 
    * @return array
    */
-  public function listConceptGroups($flat=false, $clang=null)
+  public function listConceptGroups($clang=null)
   {
     if (!$clang)
       $clang = $this->lang;
     $ret = array();
     $gclass = $this->getGroupClassURI();
     if ($gclass === null) return $ret; // no group class defined, so empty result
-    $groups = $this->getSparql()->listConceptGroups($gclass, $clang, $flat);
+    $groups = $this->getSparql()->listConceptGroups($gclass, $clang);
     foreach ($groups as $uri => $label) {
       $ret[$uri] = $label;
     }
@@ -657,7 +657,7 @@ class Vocabulary extends DataObject
    */
   public function getGroupName($groupuri, $clang=null)
   {
-    $groups = $this->listConceptGroups(true, $clang);
+    $groups = $this->listConceptGroups($clang);
     if (sizeof($groups) === 0)
       return '';
     $current = $groups[$groupuri];

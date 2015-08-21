@@ -8,7 +8,7 @@ function buildGroupTree(response) {
   var data = [];
   for (var uri in response) {
     var group = createGroupNode(uri, response[uri]); 
-    if (group.text)
+    if (group.text && !response[uri].super)
       data.push(group);
     if (uri === $('.uri-input-box').html()) {
       group.state = { 'opened' : true };
@@ -69,7 +69,7 @@ function invokeGroupTree() {
 function createGroupNode(uri, groupObject) {
   var node = {'id' : uri, 'parent' : '#', children : [], a_attr : { "href" : uri, "class" : "group" }};
   node.text = groupObject.label;
-  if (groupObject.members) {
+  if (groupObject.hasMembers) {
     node.children = true;
   }
   return node;

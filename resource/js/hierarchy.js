@@ -200,6 +200,7 @@ function appendChildrenToParents() {
   }
 }
 
+
 function createObjectsFromNarrowers(narrowerResponse) {
   var childArray = [];
   for (var child in narrowerResponse.narrower) {

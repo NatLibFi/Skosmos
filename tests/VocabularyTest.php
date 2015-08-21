@@ -402,7 +402,7 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   public function testListConceptGroups() {
     $vocab = $this->model->getVocabulary('groups');
     $cgroups = $vocab->listConceptGroups(false, 'en');
-    $expected = array ('http://www.skosmos.skos/groups/fish' => array ('label' => 'Fish','members' => array ('http://www.skosmos.skos/groups/sub' => 'Submarine-like fish',),),'http://www.skosmos.skos/groups/fresh' => array ('label' => 'Freshwater fish','members' => true,),'http://www.skosmos.skos/groups/salt' => array ('label' => 'Saltwater fish','members' => true,),'http://www.skosmos.skos/groups/sub' => array ('members' => true,),);
+$expected = array ('http://www.skosmos.skos/groups/fish' => array ('label' => 'Fish', 'hasMembers' => false,),'http://www.skosmos.skos/groups/fresh' => array ('label' => 'Freshwater fish', 'hasMembers' => true,),'http://www.skosmos.skos/groups/salt' => array ('label' => 'Saltwater fish', 'hasMembers' => true,), 'http://www.skosmos.skos/groups/sub' => array ('label' => 'Submarine-like fish', 'super' => array (0 => 'http://www.skosmos.skos/groups/fish'), 'hasMembers' => true));
     $this->assertEquals($expected, $cgroups);
   }
   

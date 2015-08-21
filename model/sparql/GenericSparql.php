@@ -1181,7 +1181,7 @@ EOQ;
    * @param string $lang language of labels to return
    * @return array Result array with group URI as key and group label as value
    */
-  public function listConceptGroups($groupClass, $lang, $flat)
+  public function listConceptGroups($groupClass, $lang)
   {
     $gc = $this->graphClause;
     $query = <<<EOQ
@@ -1189,7 +1189,8 @@ SELECT ?group ?super ?label ?members
 WHERE {
  $gc {
    ?group a <$groupClass> .
-   OPTIONAL { ?group isothes:superGroup ?super . }
+   OPTIONAL { { ?group isothes:superGroup ?super . } UNION { ?super skos:member ?group . } }
+    
    BIND(EXISTS{?group skos:member ?submembers} as ?members)
    { ?group skos:prefLabel ?label } UNION { ?group rdfs:label ?label }
    FILTER (langMatches(lang(?label), '$lang'))
@@ -1199,18 +1200,11 @@ EOQ;
     $ret = array();
     $result = $this->client->query($query);
     foreach ($result as $row) {
-      if (isset($row->super) && !$flat) {
-        $superuri = $row->super->getURI();
-        if (!isset($ret[$superuri]))
-          $ret[$superuri] = array();
-        $ret[$superuri]['members'][$row->group->getURI()] = $row->label->getValue();
-      } else {
-        $ret[$row->group->getURI()]['label'] = $row->label->getValue();
-        if ($flat && isset($row->super))
-          $ret[$row->group->getURI()]['super'] = $row->super->getURI();
-      }
+      $ret[$row->group->getURI()]['label'] = $row->label->getValue();
+      if (isset($row->super))
+          $ret[$row->group->getURI()]['super'][] = $row->super->getURI();
       if (isset($row->members))
-        $ret[$row->group->getURI()]['members'] = $row->members->getValue();
+        $ret[$row->group->getURI()]['hasMembers'] = $row->members->getValue();
     }
     return $ret;
   }
