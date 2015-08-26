@@ -402,7 +402,7 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   public function testListConceptGroups() {
     $vocab = $this->model->getVocabulary('groups');
     $cgroups = $vocab->listConceptGroups(false, 'en');
-$expected = array ('http://www.skosmos.skos/groups/fish' => array ('label' => 'Fish', 'hasMembers' => true,),'http://www.skosmos.skos/groups/fresh' => array ('label' => 'Freshwater fish', 'hasMembers' => true,),'http://www.skosmos.skos/groups/salt' => array ('label' => 'Saltwater fish', 'hasMembers' => true,), 'http://www.skosmos.skos/groups/sub' => array ('label' => 'Submarine-like fish', 'super' => array (0 => 'http://www.skosmos.skos/groups/fish'), 'hasMembers' => true));
+    $expected = array (0 => array ('label' => 'Fish', 'uri' => 'http://www.skosmos.skos/groups/fish', 'hasMembers' => true), 1 => array ('label' => 'Freshwater fish', 'uri' => 'http://www.skosmos.skos/groups/fresh', 'hasMembers' => true), 2 => array ('label' => 'Saltwater fish', 'uri' => 'http://www.skosmos.skos/groups/salt', 'hasMembers' => true),3 => array ('label' => 'Submarine-like fish', 'uri' => 'http://www.skosmos.skos/groups/sub', 'super' => array (0 => 'http://www.skosmos.skos/groups/fish'), 'hasMembers' => true));
     $this->assertEquals($expected, $cgroups);
   }
   
@@ -414,16 +414,6 @@ $expected = array ('http://www.skosmos.skos/groups/fish' => array ('label' => 'F
     $cgroups = $vocab->listConceptGroupContents('http://www.skosmos.skos/groups/salt', 'en');
     $expected = array (0 => array ('uri' => 'http://www.skosmos.skos/groups/ta113','label' => 'Flatfish','hasSuper' => false,'hasMembers' => false,'type' => array (0 => 'skos:Concept')));
     $this->assertEquals($expected, $cgroups);
-  }
-  
-  
-  /**
-   * @covers Vocabulary::getGroupName
-   */
-  public function testGetGroupName() {
-    $vocab = $this->model->getVocabulary('groups');
-    $name = $vocab->getGroupName("http://www.skosmos.skos/groups/fresh");
-    $this->assertEquals('Freshwater fish', $name);
   }
   
   /**
