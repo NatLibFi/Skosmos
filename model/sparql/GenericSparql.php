@@ -1199,11 +1199,12 @@ EOQ;
     $ret = array();
     $result = $this->client->query($query);
     foreach ($result as $row) {
-      $ret[$row->group->getURI()]['label'] = $row->label->getValue();
+      $group = array('label' => $row->label->getValue(), 'uri' => $row->group->getURI());
       if (isset($row->super))
-          $ret[$row->group->getURI()]['super'][] = $row->super->getURI();
+          $group['super'][] = $row->super->getURI();
       if (isset($row->members))
-        $ret[$row->group->getURI()]['hasMembers'] = $row->members->getValue();
+        $group['hasMembers'] = $row->members->getValue();
+      $ret[] = $group;
     }
     return $ret;
   }

@@ -747,7 +747,7 @@ class RestController extends Controller
             'prefLabel' => 'skos:prefLabel',
             '@language' => $request->getLang(),
         ),
-        'groupHierarchy' => $results,
+        'groups' => $results,
     );
 
     return $this->return_json($ret);

@@ -6,11 +6,11 @@
 
 function buildGroupTree(response) {
   var data = [];
-  for (var uri in response) {
-    var group = createGroupNode(uri, response[uri]); 
-    if (group.text && !response[uri].super)
+  for (var i in response) {
+    var group = createGroupNode(response[i].uri, response[i]); 
+    if (group.text && !response[i].super)
       data.push(group);
-    if (uri === $('.uri-input-box').html()) {
+    if (response[i].uri === $('.uri-input-box').html()) {
       group.state = { 'opened' : true };
       group.a_attr.class = "jstree-clicked group";
     }
@@ -40,8 +40,8 @@ function invokeGroupTree() {
             data: $.param({'uri' : nodeId, 'lang' : content_lang}),
             url: json_url, 
             success: function (response) {
-              if (response.groupHierarchy) { // the default hierarchy query that fires when a page loads.
-                cb(buildGroupTree(response.groupHierarchy));
+              if (response.groups) { // the default hierarchy query that fires when a page loads.
+                cb(buildGroupTree(response.groups));
               } else {
                 var children = [];
                 for (var i in response.members) {
