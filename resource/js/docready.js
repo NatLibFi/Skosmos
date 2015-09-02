@@ -682,7 +682,7 @@ $(function() { // DOCUMENT READY
     if (!alpha_complete && $('.pagination').length === 1) {      
       alpha_complete = true;
       $('.alphabetical-search-results').append($loading);
-      var parameters = $.param({'offset' : 250});
+      var parameters = $.param({'offset' : 250, 'clang': content_lang});
       var letter = '/' + $('.pagination > .active > a')[0].innerHTML;
       $.ajax({
         url : vocab + '/' + lang + '/index' + letter,
