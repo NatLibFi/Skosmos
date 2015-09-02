@@ -494,7 +494,8 @@ $(function() { // DOCUMENT READY
         localname = '';
         params.uri = datum.uri;
       }
-      if (clang && clang !== lang) { params.clang = clang; }
+      if ($('input[name=anylang]').is(':checked')) { params.anylang = 'on'; }
+      if ($('input[name=anylang]').is(':checked') && clang && clang !== lang) { params.clang = clang; }
       var paramstr = $.isEmptyObject(params) ? '' : '?' + $.param(params);
       if (datum.type && datum.type.indexOf('Collection') !== -1) {
         location.href = datum.vocab + '/' + lang + '/groups/' + localname + paramstr;
