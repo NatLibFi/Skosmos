@@ -224,9 +224,7 @@ $(function() { // DOCUMENT READY
       function(event) {
         event.preventDefault();
         var $content = $('.content');
-        var targetUrl = vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(event.target.href);
-        if ($(this).hasClass('group'))
-          targetUrl = vocab + '/' + lang + '/groups/?uri=' + encodeURIComponent(event.target.href);
+        var targetUrl = event.target.href;
         var parameters = $.param({'clang' : clang});
         $('#hier-trigger').attr('href', targetUrl);
         $.ajax({

@@ -46,12 +46,13 @@ function invokeGroupTree() {
                 var children = [];
                 for (var i in response.members) {
                   var member = response.members[i];
-                  var child = {'id' : member.uri, 'text' : member.label,'parent' : nodeId, children : false, a_attr : { "href" : member.uri}};
+                  var child = {'id' : member.uri, 'text' : member.label,'parent' : nodeId, children : false, a_attr : { "href" : vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(member.uri)}};
                   if (member.hasMembers) {
                     child.children = true;
                   }
                   if ($.inArray('skos:Collection', member.type) !== -1) {
                     child.a_attr.class = 'group';
+                    child.a_attr.href = vocab + '/' + lang + '/groups/?uri=' + encodeURIComponent(member.uri);
                   }
                   children.push(child);
                 }
@@ -67,7 +68,7 @@ function invokeGroupTree() {
 }
 
 function createGroupNode(uri, groupObject) {
-  var node = {'id' : uri, 'parent' : '#', children : [], a_attr : { "href" : uri, "class" : "group" }};
+  var node = {'id' : uri, 'parent' : '#', children : [], a_attr : { "href" : vocab + '/' + lang + '/groups/?uri=' + encodeURIComponent(uri), "class" : "group" }};
   node.text = groupObject.label;
   if (groupObject.hasMembers) {
     node.children = true;

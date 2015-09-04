@@ -74,7 +74,7 @@ function createConceptObject(conceptUri, conceptData) {
   var prefLabel = conceptData.prefLabel; // the json narrower response has a different structure.
   var newNode = { 
     text: prefLabel, 
-    a_attr: { "href" : conceptUri },
+    a_attr: { "href" : vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(conceptUri) },
     uri: conceptUri,
     parents: conceptData.broader,
     state: { opened: true },
@@ -94,7 +94,7 @@ function createConceptObject(conceptUri, conceptData) {
       var hasChildren = conceptObject.hasChildren; 
       var childObject = {
         text: conceptObject.label, 
-        a_attr: { "href" : conceptData.narrower[child].uri },
+        a_attr: { "href" : vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(conceptData.narrower[child].uri) },
         uri: conceptData.narrower[child].uri,
         parents: conceptUri,
         state: { opened: true }
@@ -166,7 +166,7 @@ function vocabRoot(topConcepts) {
     var conceptData = topConcepts[i];
     var childObject = {
       text: conceptData.label, 
-      a_attr : { "href" : conceptData.uri },
+      a_attr : { "href" : vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(conceptData.uri) },
       uri: conceptData.uri,
       children: [],
       state: { opened: false } 
@@ -208,7 +208,7 @@ function createObjectsFromNarrowers(narrowerResponse) {
     var hasChildren = conceptObject.hasChildren; 
     var childObject = {
       text : conceptObject.prefLabel, 
-      a_attr : { "href" : conceptObject.uri },
+      a_attr : { "href" : vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(conceptObject.uri) },
       uri: conceptObject.uri,
       parents: narrowerResponse.uri,
       state: { opened: false, disabled: false, selected: false }
