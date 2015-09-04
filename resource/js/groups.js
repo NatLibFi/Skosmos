@@ -26,6 +26,9 @@ function buildGroupTree(response) {
         if (grouplist[superuri].children === true)
           grouplist[superuri].children = [];
         grouplist[superuri].children.push(groupobj);
+        if (groupobj.state)
+          grouplist[superuri].state = groupobj.state;
+
       }
     }
   }
