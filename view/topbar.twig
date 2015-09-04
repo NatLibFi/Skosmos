@@ -1,4 +1,4 @@
-<a {% if request.vocabid == '' and request.page != 'feedback' and request.page != 'about' %}id="service-logo"{% endif %} {% if request.vocabid != '' or request.page == 'feedback' or request.page == 'about' %}class="service-{{ request.lang }}" {% endif %}href="{{ request.lang }}/{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}"><h1 id="service-name">{% if ServiceName is defined  %}{{ ServiceName }}{% else %}Skosmos{% endif %}</h1></a>
+<a {% if request.vocabid == '' and request.page != 'feedback' and request.page != 'about' %}id="service-logo"{% endif %} {% if request.vocabid != '' or request.page == 'feedback' or request.page == 'about' %}class="service-{{ request.lang }}" {% endif %}href="{{ request.lang }}/{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}"><h1 id="service-name">{% if ServiceName is defined  %}{{ ServiceName }}{% else %}Skosmos{% endif %}</h1></a>
 {% if languages|length > 1 %}
 <div id="language"><span class="navigation-font">|</span>
   {% for langcode, langdata in languages %}
@@ -9,13 +9,13 @@
 </div>
 {% endif %}
 <div id="navigation">
-  <a href="{{ request.lang }}/{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}" id="navi1" class="navigation-font" >
+  <a href="{{ request.lang }}/{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}" id="navi1" class="navigation-font" >
   {% trans "Vocabularies-nav" %}
   </a>
-  <a href="{{ request.lang }}/about{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}" id="navi2" class="navigation-font">
+  <a href="{{ request.lang }}/about{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}" id="navi2" class="navigation-font">
   {% trans "About page" %}
   </a>
-  <a href="{% if request.vocabid and vocab.title%}{{ request.vocabid }}/{% endif %}{{ request.lang }}/feedback{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}" id="navi3" class="navigation-font">
+  <a href="{% if request.vocabid and vocab.title%}{{ request.vocabid }}/{% endif %}{{ request.lang }}/feedback{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}" id="navi3" class="navigation-font">
   {% trans "Feedback" %}
   </a>
   <span id="navi4" title="{% trans "helper_help" %}<br /><br />{% trans "search_example_text" %}">
