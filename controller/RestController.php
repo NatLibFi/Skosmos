@@ -125,7 +125,7 @@ class RestController extends Controller
       return $this->return_error(400, "Bad Request", "offset parameter is invalid");
     }
 
-    $vocid = $request->getVocab() ? $request->getVocab()->getId() : null; # optional
+    $vocid = $request->getVocabId(); # optional
     $labellang = $request->getQueryParam('labellang'); # optional
     $types =  $request->getQueryParam('type') ? explode(' ', $request->getQueryParam('type')) : array('skos:Concept');
     $parent = $request->getQueryParam('parent');

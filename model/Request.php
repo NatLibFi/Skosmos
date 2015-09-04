@@ -15,6 +15,7 @@ class Request
   private $clang;
   private $page;
   private $vocab;
+  private $vocabids;
   private $uri;
   private $letter;
   private $model;
@@ -117,8 +118,18 @@ class Request
     if ($uri !== '')
       $this->uri = $uri;
   }
+  
+  /**
+   * Used to set the vocab id variable when multiple vocabularies have been chosen eg. 'lcsh+yso'
+   * @param string $ids
+   */
+  public function setVocabids($ids) {
+    $this->vocabids = $ids;
+  }
 
   public function getVocabid() {
+    if ($this->vocabids)
+      return $this->vocabids;
     return isset($this->vocab) ? $this->vocab->getId() : '';
   }
 
@@ -127,7 +138,10 @@ class Request
    * @param string $vocabid
    */
   public function setVocab($vocabid) {
-    $this->vocab = $this->model->getVocabulary($vocabid);
+    if (strpos($vocabid, ' ') !== false) // if there are multiple vocabularies just storing the string
+      $this->setVocabids($vocabid);
+    else
+      $this->vocab = $this->model->getVocabulary($vocabid);
   }
   
   public function getVocab() {
