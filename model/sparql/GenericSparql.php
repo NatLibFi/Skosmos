@@ -1230,7 +1230,7 @@ WHERE {
    ?conc a ?type .
    FILTER (langMatches(lang(?label), '$lang'))
  }
- BIND(EXISTS{?conc isothes:superGroup <$group>} as ?super)
+ BIND(EXISTS{?submembers isothes:superGroup ?conc} as ?super)
  BIND(EXISTS{?conc skos:member ?submembers} as ?members)
 } ORDER BY lcase(?label)
 EOQ;
@@ -1242,7 +1242,7 @@ EOQ;
         $values[$row->conc->getURI()] = array(
           'uri' => $row->conc->getURI(),
           'label' => $row->label->getValue(),
-          'hasSuper' => $row->super->getValue(),
+          'isSuper' => $row->super->getValue(),
           'hasMembers' => $row->members->getValue(),
           'type' => array($row->type->shorten())
         );

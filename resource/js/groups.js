@@ -47,7 +47,7 @@ function invokeGroupTree() {
                 for (var i in response.members) {
                   var member = response.members[i];
                   var child = {'id' : member.uri, 'text' : member.label,'parent' : nodeId, children : false, a_attr : { "href" : vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(member.uri)}};
-                  if (member.hasMembers) {
+                  if (member.hasMembers || member.isSuper) {
                     child.children = true;
                   }
                   if ($.inArray('skos:Collection', member.type) !== -1) {
@@ -70,7 +70,7 @@ function invokeGroupTree() {
 function createGroupNode(uri, groupObject) {
   var node = {'id' : uri, 'parent' : '#', children : [], a_attr : { "href" : vocab + '/' + lang + '/groups/?uri=' + encodeURIComponent(uri), "class" : "group" }};
   node.text = groupObject.label;
-  if (groupObject.hasMembers) {
+  if (groupObject.hasMembers || groupObject.isSuper) {
     node.children = true;
   }
   return node;
