@@ -46,10 +46,17 @@ class Model
   private $URI_FETCH_TTL = 86400; // 1 day
 
   /**
-   * Initializes the object with the configuration from the vocabularies.ttl
+   * Initializes the Model object
    */
   public function __construct()
   {
+    $this->initializeVocabularies();
+  }
+
+  /**
+   * Initializes the configuration from the vocabularies.ttl file
+   */
+  private function initializeVocabularies() {
     if (!file_exists(VOCABULARIES_FILE))
       throw new Exception(VOCABULARIES_FILE . ' is missing, please provide one.');
     try {
@@ -70,7 +77,7 @@ class Model
       echo "Error: " . $e->getMessage();
     }
   }
-  
+
   /**
    * Return the version of this Skosmos installation, or "unknown" if
    * it cannot be determined. The version information is based on Git tags.
@@ -482,6 +489,11 @@ class Model
 
   private function fetchResourceFromUri($uri) {
     try {
+      // change the timeout setting for external requests
+      $httpclient = EasyRdf_Http::getDefaultHttpClient();
+      $httpclient->setConfig(array('timeout' => HTTP_TIMEOUT));
+      EasyRdf_Http::setDefaultHttpClient($httpclient);  
+   
       $client = EasyRdf_Graph::newAndLoad(EasyRdf_Utils::removeFragmentFromUri($uri));
       return $client->resource($uri);
     } catch (Exception $e) {
