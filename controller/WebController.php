@@ -88,14 +88,14 @@ class WebController extends Controller
         // check that the prefix stripping worked, and there are no problematic chars in localname
         $paramstr = sizeof($params) > 0 ? '?' . http_build_query($params) : '';
         if ($type && $type !== '' && $type !== 'vocab')
-          return $controller->base_href . "$vocid/$lang/$type/$localname" . $paramstr;
-        return $controller->base_href . "$vocid/$lang/$localname" . $paramstr;
+          return "$vocid/$lang/$type/$localname" . $paramstr;
+        return "$vocid/$lang/$localname" . $paramstr;
       }
 
       // case 2: URI outside vocabulary namespace, or has problematic chars
       // pass the full URI as parameter instead
       $params['uri'] = $uri;
-      return $controller->base_href . "$vocid/$lang/$type/?" . http_build_query($params);
+      return "$vocid/$lang/$type/?" . http_build_query($params);
     });
     $this->twig->addFilter($urlFilter);
 
