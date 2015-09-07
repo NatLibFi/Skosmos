@@ -77,6 +77,10 @@ class Concept extends VocabularyDataObject
   {
     return $this->resource->getUri();
   }
+
+  public function getType() {
+    return $this->resource->types();
+  }
   
   /**
    * Returns a boolean value indicating if the concept has been deprecated.

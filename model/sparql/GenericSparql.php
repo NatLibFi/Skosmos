@@ -583,7 +583,7 @@ SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph (GROUP_CONCAT(DISTINCT 
 $extravars
 WHERE {
  $graph_text
-  { ?s rdf:type <$type> } $extratypes
+  { ?s rdf:type <$type> } UNION { ?s a isothes:ConceptGroup } $extratypes
   { $pgcond
    ?s rdf:type ?type .
    ?s ?prop ?match .
