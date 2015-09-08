@@ -3,6 +3,9 @@
 // configuration for easyRDF
 define("VOCABULARIES_FILE", "vocabularies.ttl");
 
+// HTTP client configuration
+define("HTTP_TIMEOUT", 5); // external HTTP request timeout in seconds
+
 // interface languages available, and the corresponding system locales
 $LANGUAGES = array(
   'fi' => 'fi_FI.utf8',
