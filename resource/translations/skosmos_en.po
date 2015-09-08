@@ -32,7 +32,7 @@ msgstr "Created"
 #: model/Concept.php:399
 #: model/Concept.php:402
 msgid "skosmos:modified"
-msgstr "Last modified"
+msgstr "modified"
 
 #: /tmp/cache/55e940225b209/b7/b8/db5433ea968c6a0d09780d91f529.php:179
 #: /tmp/cache/55e940225b209/bd/18/082f84f6ac0787f1638aac1a519c.php:46

@@ -399,12 +399,16 @@ class Concept extends VocabularyDataObject
       // making a human readable string from the timestamps
       if ($created != '') 
         $ret = gettext('skosmos:created') . ' ' . (Punic\Calendar::formatDate($created, 'short'));
-      if ($modified != '') 
-        $ret .= ' ' . gettext('skosmos:modified') . ' ' . (Punic\Calendar::formatDate($modified, 'short'));
-      } catch (Exception $e) {
-        trigger_error($e->getMessage(), E_USER_WARNING);
-        return gettext('skosmos:modified') . ' ' . (string)$this->resource->get('dc:modified') . ' ' . gettext('skosmos:created') . ' ' . (string)$this->resource->get('dc:created');
+      if ($modified != '') {
+        if ($created != '')
+          $ret .= ', ' . gettext('skosmos:modified') . ' ' . (Punic\Calendar::formatDate($modified, 'short'));
+        else
+          $ret .= ' ' . ucfirst(gettext('skosmos:modified')) . ' ' . (Punic\Calendar::formatDate($modified, 'short'));
       }
+    } catch (Exception $e) {
+      trigger_error($e->getMessage(), E_USER_WARNING);
+      return gettext('skosmos:modified') . ' ' . (string)$this->resource->get('dc:modified') . ' ' . gettext('skosmos:created') . ' ' . (string)$this->resource->get('dc:created');
+    }
     return $ret;
   }
 

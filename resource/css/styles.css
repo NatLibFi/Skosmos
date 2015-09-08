@@ -1225,12 +1225,11 @@ ul.nav-tabs > li {
   margin-right: 150px;
 }
 
-.date-info > p {
+span.date-info {
+  margin-top: 4px;
   font-size: 12px;
-}
-
-td.date-info {
-  border-bottom: none !important;
+  text-align: bottom;
+  float: right;
 }
 
 /* typeahead.js
@@ -1978,7 +1977,8 @@ body, .versal, h1, h2, p, .versal-bold {
     line-height: 23px;
   }
 
-  .date-info > p {
+  span.date-info {
+    margin-top: 0px;
     font-size: 14px !important;
   }
 

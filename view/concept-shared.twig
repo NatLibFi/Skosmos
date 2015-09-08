@@ -60,8 +60,6 @@
         {% endif %}
         </tr>
         <tr><td class="preflabel-spacer" colspan="2"></td></tr>
-        {% if concept.date %}<tr><td></td><td class="date-info"><p>{{ concept.date }}</p></td></tr>
-        {% endif %}
         {% endspaceless %}
         {% for property in concept.properties %} {# loop through ConceptProperty objects #}
           <tr{% if property.type == 'dc:isReplacedBy' %} class="replaced-by"{% endif%}><td><span class="versal{% if property.type == 'rdf:type' %}-bold{% endif %}{% if not (property.type in property.description and '_help' in property.description) %} property-click" title="{{ property.description }}"{% else %}"{% endif %}>{{ property.label|upper }}</span></td><td><ul>
@@ -134,7 +132,7 @@
           </span></td><td><span class="versal"><a href="rest/v1/{% if concept.vocab != "" %}{{ concept.vocab }}{% else %}{{ vocab.id }}{% endif %}/data?uri={{ concept.uri|url_encode }}&amp;format=application/rdf%2Bxml">RDF/XML</a>
             <a href="rest/v1/{% if concept.vocab != "" %}{{ concept.vocab }}{% else %}{{ vocab.id }}{% endif %}/data?uri={{ concept.uri|url_encode }}&amp;format=text/turtle">
               TURTLE</a>
-          </span></td></tr>
+          </span>{% if concept.date %}<span class="versal date-info">{{ concept.date }}</span>{% endif %}</td></tr>
         </table>
         </div>
         {% set appendixProperties = concept.mappingProperties %}
