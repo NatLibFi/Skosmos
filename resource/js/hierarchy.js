@@ -157,7 +157,8 @@ function buildParentTree(uri, parentData) {
 
   // Iterating over the nodes to make sure all concepts have their children set.
   appendChildrenToParents();
-  return rootArray;
+  // avoiding the issue with multiple inheritance by deep copying the whole tree object before giving it to jsTree
+  return JSON.parse(JSON.stringify(rootArray));
 }
 
 function vocabRoot(topConcepts) {
