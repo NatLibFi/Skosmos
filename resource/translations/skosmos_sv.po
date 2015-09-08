@@ -32,7 +32,7 @@ msgstr "Skapad"
 #: model/Concept.php:403
 #: model/Concept.php:406
 msgid "skosmos:modified"
-msgstr "ändringsdatum"
+msgstr "senast editerad"
 
 #: /tmp/cache/55eeae982fd12/b7/b8/db5433ea968c6a0d09780d91f529.php:179
 #: /tmp/cache/55eeae982fd12/bd/18/082f84f6ac0787f1638aac1a519c.php:46
