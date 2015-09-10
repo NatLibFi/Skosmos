@@ -402,7 +402,7 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   public function testListConceptGroups() {
     $vocab = $this->model->getVocabulary('groups');
     $cgroups = $vocab->listConceptGroups(false, 'en');
-    $expected = array (0 => array ('label' => 'Fish', 'uri' => 'http://www.skosmos.skos/groups/fish', 'hasMembers' => true), 1 => array ('label' => 'Freshwater fish', 'uri' => 'http://www.skosmos.skos/groups/fresh', 'hasMembers' => true), 2 => array ('label' => 'Saltwater fish', 'uri' => 'http://www.skosmos.skos/groups/salt', 'hasMembers' => true),3 => array ('label' => 'Submarine-like fish', 'uri' => 'http://www.skosmos.skos/groups/sub', 'super' => array (0 => 'http://www.skosmos.skos/groups/fish'), 'hasMembers' => true));
+    $expected = array (0 => array ('uri' => 'http://www.skosmos.skos/groups/fish', 'hasMembers' => true, 'prefLabel' => 'Fish', ), 1 => array ('uri' => 'http://www.skosmos.skos/groups/fresh', 'hasMembers' => true, 'prefLabel' => 'Freshwater fish'), 2 => array ('uri' => 'http://www.skosmos.skos/groups/salt', 'hasMembers' => true, 'prefLabel' => 'Saltwater fish'),3 => array ('uri' => 'http://www.skosmos.skos/groups/sub', 'super' => array (0 => 'http://www.skosmos.skos/groups/fish'), 'hasMembers' => true, 'prefLabel' => 'Submarine-like fish'));
     $this->assertEquals($expected, $cgroups);
   }
   
@@ -412,7 +412,7 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   public function testListConceptGroupContents() {
     $vocab = $this->model->getVocabulary('groups');
     $cgroups = $vocab->listConceptGroupContents('http://www.skosmos.skos/groups/salt', 'en');
-    $expected = array (0 => array ('uri' => 'http://www.skosmos.skos/groups/ta113','label' => 'Flatfish','isSuper' => false,'hasMembers' => false,'type' => array (0 => 'skos:Concept')));
+    $expected = array (0 => array ('uri' => 'http://www.skosmos.skos/groups/ta113','isSuper' => false,'hasMembers' => false,'type' => array (0 => 'skos:Concept'),'prefLabel' => 'Flatfish'));
     $this->assertEquals($expected, $cgroups);
   }
   
