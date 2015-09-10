@@ -773,8 +773,6 @@ class RestController extends Controller
             'uri' => '@id',
             'type' => '@type',
             'prefLabel' => 'skos:prefLabel',
-            'narrower' => 'skos:narrower',
-            'hasChildren' => 'onki:hasChildren',
             '@language' => $request->getLang(),
         ),
         'uri' => $uri,
