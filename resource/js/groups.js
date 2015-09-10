@@ -47,14 +47,10 @@ function invokeGroupTree() {
     'core' : { 
       'data' : 
         function(node, cb) { 
-          var nodeId;
-          var json_url = (rest_base_url + vocab + '/groups');
-          if (node.id !== '#') {
-            nodeId = node.id;
-            json_url = (rest_base_url + vocab + '/groupMembers');
-          }
+          var json_url = (node.id !== '#') ? (rest_base_url + vocab + '/groupMembers') : (rest_base_url + vocab + '/groups');
+          var params = (node.id !== '#') ? $.param({'uri' : node.id, 'lang' : content_lang}): $.param({'lang' : content_lang});
           $.ajax({
-            data: $.param({'uri' : nodeId, 'lang' : content_lang}),
+            data: params,
             url: json_url, 
             success: function (response) {
               if (response.groups) { // the default hierarchy query that fires when a page loads.
@@ -63,7 +59,7 @@ function invokeGroupTree() {
                 var children = [];
                 for (var i in response.members) {
                   var member = response.members[i];
-                  var child = {'id' : member.uri, 'text' : member.prefLabel,'parent' : nodeId, children : false, a_attr : { "href" : vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(member.uri)}};
+                  var child = {'id' : member.uri, 'text' : member.prefLabel,'parent' : node.id, children : false, a_attr : { "href" : vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(member.uri)}};
                   if (member.hasMembers || member.isSuper) {
                     child.children = true;
                   }
