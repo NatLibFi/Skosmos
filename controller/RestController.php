@@ -735,8 +735,6 @@ class RestController extends Controller
   public function groups($request)
   {
     $results = $request->getVocab()->listConceptGroups($request->getLang());
-    if ($results === NULL)
-      return $this->return_error('404', 'Not Found', "Could not find group <$uri>");
 
     $ret = array(
         '@context' => array(
@@ -745,8 +743,12 @@ class RestController extends Controller
             'uri' => '@id',
             'type' => '@type',
             'prefLabel' => 'skos:prefLabel',
+            'groups' => 'onki:hasGroup',
+            'childGroups' => array('@id'=>'skos:member','@type'=>'@id'),
+            'hasMembers' => 'onki:hasMembers',
             '@language' => $request->getLang(),
         ),
+        'uri' => '',
         'groups' => $results,
     );
 
@@ -768,11 +770,11 @@ class RestController extends Controller
 
     $ret = array(
         '@context' => array(
-            'isothes' => 'http://purl.org/iso25964/skos-thes#',
             'skos' => 'http://www.w3.org/2004/02/skos/core#',
             'uri' => '@id',
             'type' => '@type',
             'prefLabel' => 'skos:prefLabel',
+            'members' => 'skos:member',
             '@language' => $request->getLang(),
         ),
         'uri' => $uri,

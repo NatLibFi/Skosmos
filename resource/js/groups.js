@@ -3,34 +3,38 @@
  * MIT License
  * see LICENSE.txt for more information
  */
-var grouplist = [];
 
 function buildGroupTree(response) {
   var data = [];
+  var groups = {};
   for (var i in response) {
     var group = createGroupNode(response[i].uri, response[i]); 
-    grouplist[response[i].uri] = group;
-    if (group.text && !response[i].super)
-      data.push(group);
+    groups[response[i].uri] = group;
     if (response[i].uri === $('.uri-input-box').html()) {
       group.state = { 'opened' : true };
       group.a_attr.class = "jstree-clicked group";
     }
   }
-  // appending the groups to their superGroups
+  // adding children to the groups
   for (var i in response) {
-    var groupobj = grouplist[response[i].uri];
-    for (var j in response[i].super) {
-      var superuri = response[i].super[j];
-      if (grouplist[superuri]) {
-        if (grouplist[superuri].children === true)
-          grouplist[superuri].children = [];
-        grouplist[superuri].children.push(groupobj);
-        if (groupobj.state)
-          grouplist[superuri].state = groupobj.state;
-
+    var groupobj = groups[response[i].uri];
+    for (var j in response[i].childGroups) {
+      var childuri = response[i].childGroups[j];
+      if (groups[childuri]) {
+        var childobj = groups[childuri];
+        if (groupobj.children === true)
+          groupobj.children = [];
+        groupobj.children.push(childobj);
+        if (childobj.state)
+          groupobj.state = childobj.state;
+        childobj.is_child = true;
       }
     }
+  }
+  for (var uri in groups) {
+    var groupobj = groups[uri];
+    if (!groupobj.is_child)
+      data.push(groupobj);
   }
   return data;
 }
@@ -83,7 +87,7 @@ function invokeGroupTree() {
 function createGroupNode(uri, groupObject) {
   var node = {'id' : uri, children : [], a_attr : { "href" : vocab + '/' + lang + '/groups/?uri=' + encodeURIComponent(uri), "class" : "group" }};
   node.text = groupObject.prefLabel;
-  if (groupObject.hasMembers || groupObject.isSuper) {
+  if (groupObject.hasMembers || groupObject.isSuper) {
     node.children = true;
   }
   return node;

@@ -1185,23 +1185,25 @@ EOQ;
   {
     $gc = $this->graphClause;
     $query = <<<EOQ
-SELECT ?group ?super ?label ?members
+SELECT ?group (GROUP_CONCAT(STR(?child)) as ?children) ?label ?members
 WHERE {
  $gc {
    ?group a <$groupClass> .
-   OPTIONAL { { ?group isothes:superGroup ?super . } UNION { ?super skos:member ?group . } }
-   BIND(EXISTS{?group skos:member|^isothes:superGroup ?submembers} as ?members)
+   OPTIONAL { ?group skos:member ?child . ?child a <$groupClass> }
+   BIND(EXISTS{?group skos:member ?submembers} as ?members)
    { ?group skos:prefLabel ?label } UNION { ?group rdfs:label ?label }
    FILTER (langMatches(lang(?label), '$lang'))
  }
-} ORDER BY lcase(?label)
+}
+GROUP BY ?group ?label ?members
+ORDER BY lcase(?label)
 EOQ;
     $ret = array();
     $result = $this->client->query($query);
     foreach ($result as $row) {
       $group = array('prefLabel' => $row->label->getValue(), 'uri' => $row->group->getURI());
-      if (isset($row->super))
-          $group['super'][] = $row->super->getURI();
+      if (isset($row->children))
+          $group['childGroups'] = explode(' ', $row->children->getValue());
       if (isset($row->members))
         $group['hasMembers'] = $row->members->getValue();
       $ret[] = $group;
