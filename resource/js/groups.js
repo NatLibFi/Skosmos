@@ -63,7 +63,7 @@ function invokeGroupTree() {
                 var children = [];
                 for (var i in response.members) {
                   var member = response.members[i];
-                  var child = {'id' : member.uri, 'text' : member.label,'parent' : nodeId, children : false, a_attr : { "href" : vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(member.uri)}};
+                  var child = {'id' : member.uri, 'text' : member.prefLabel,'parent' : nodeId, children : false, a_attr : { "href" : vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(member.uri)}};
                   if (member.hasMembers || member.isSuper) {
                     child.children = true;
                   }
@@ -86,7 +86,7 @@ function invokeGroupTree() {
 
 function createGroupNode(uri, groupObject) {
   var node = {'id' : uri, children : [], a_attr : { "href" : vocab + '/' + lang + '/groups/?uri=' + encodeURIComponent(uri), "class" : "group" }};
-  node.text = groupObject.label;
+  node.text = groupObject.prefLabel;
   if (groupObject.hasMembers || groupObject.isSuper) {
     node.children = true;
   }

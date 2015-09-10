@@ -1199,7 +1199,7 @@ EOQ;
     $ret = array();
     $result = $this->client->query($query);
     foreach ($result as $row) {
-      $group = array('label' => $row->label->getValue(), 'uri' => $row->group->getURI());
+      $group = array('prefLabel' => $row->label->getValue(), 'uri' => $row->group->getURI());
       if (isset($row->super))
           $group['super'][] = $row->super->getURI();
       if (isset($row->members))
@@ -1241,7 +1241,7 @@ EOQ;
       if (!array_key_exists($row->conc->getURI(), $values)) {
         $values[$row->conc->getURI()] = array(
           'uri' => $row->conc->getURI(),
-          'label' => $row->label->getValue(),
+          'prefLabel' => $row->label->getValue(),
           'isSuper' => $row->super->getValue(),
           'hasMembers' => $row->members->getValue(),
           'type' => array($row->type->shorten())
