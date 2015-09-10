@@ -305,11 +305,13 @@ $(function() { // DOCUMENT READY
         invokeParentTree(getTreeConfiguration(true)); 
         $('#hier-trigger').attr('href', '#');
         return false;
+      }
+      var uri = $('.uri-input-box').html();
+      var redirectUrl = vocab + '/' + lang + '/page/' + uri.split('/')[uri.split('/').length-1];
+      window.location.replace(encodeURI(redirectUrl));
+      return false;
     }
-    var uri = $('.uri-input-box').html();
-    var redirectUrl = vocab + '/' + lang + '/page/' + uri.split('/')[uri.split('/').length-1];
-    window.location.replace(encodeURI(redirectUrl));
-  });
+  );
 
   // event handler for clicking the group index tab 
   $(document).on('click', '#groups > a',
