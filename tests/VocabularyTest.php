@@ -402,7 +402,7 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   public function testListConceptGroups() {
     $vocab = $this->model->getVocabulary('groups');
     $cgroups = $vocab->listConceptGroups(false, 'en');
-    $expected = array (0 => array ('uri' => 'http://www.skosmos.skos/groups/fish', 'hasMembers' => true, 'prefLabel' => 'Fish', ), 1 => array ('uri' => 'http://www.skosmos.skos/groups/fresh', 'hasMembers' => true, 'prefLabel' => 'Freshwater fish'), 2 => array ('uri' => 'http://www.skosmos.skos/groups/salt', 'hasMembers' => true, 'prefLabel' => 'Saltwater fish'),3 => array ('uri' => 'http://www.skosmos.skos/groups/sub', 'super' => array (0 => 'http://www.skosmos.skos/groups/fish'), 'hasMembers' => true, 'prefLabel' => 'Submarine-like fish'));
+    $expected = array (0 => array ('uri' => 'http://www.skosmos.skos/groups/fish', 'hasMembers' => true, 'childGroups' => array('http://www.skosmos.skos/groups/sub'), 'prefLabel' => 'Fish'), 1 => array ('uri' => 'http://www.skosmos.skos/groups/fresh', 'hasMembers' => true, 'prefLabel' => 'Freshwater fish'), 2 => array ('uri' => 'http://www.skosmos.skos/groups/salt', 'hasMembers' => true, 'prefLabel' => 'Saltwater fish'),3 => array ('uri' => 'http://www.skosmos.skos/groups/sub', 'hasMembers' => true, 'prefLabel' => 'Submarine-like fish'));
     $this->assertEquals($expected, $cgroups);
   }
   

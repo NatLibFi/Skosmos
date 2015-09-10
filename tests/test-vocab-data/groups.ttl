@@ -18,14 +18,14 @@ groups:fresh a isothes:ThesaurusArray, skos:Collection ;
 
 groups:sub a isothes:ThesaurusArray, skos:Collection ;
     skos:prefLabel "Submarine-like fish"@en ;
-    skos:member groups:ta111 ;
-    isothes:superGroup groups:fish .
+    skos:member groups:ta111 .
 
 groups:salt a isothes:ThesaurusArray, skos:Collection ;
     skos:prefLabel "Saltwater fish"@en ;
     skos:member groups:ta111, groups:ta113 .
 
 groups:fish a isothes:ThesaurusArray, skos:Collection ;
+    skos:member groups:sub ;
     skos:prefLabel "Fish"@en .
 
 groups:ta111 a skos:Concept ;
