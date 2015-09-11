@@ -1201,7 +1201,8 @@ EOQ;
     $ret = array();
     $result = $this->client->query($query);
     foreach ($result as $row) {
-      $group = array('prefLabel' => $row->label->getValue(), 'uri' => $row->group->getURI());
+      if (isset($row->label))
+        $group = array('prefLabel' => $row->label->getValue(), 'uri' => $row->group->getURI());
       if (isset($row->children))
           $group['childGroups'] = explode(' ', $row->children->getValue());
       if (isset($row->members))
