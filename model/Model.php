@@ -528,7 +528,7 @@ class Model
   {
     $classname = $dialect . "Sparql";
 
-    return new $classname($endpoint, $graph, $this); exit();
+    return new $classname($endpoint, $graph, $this);
   }
 
   /**
