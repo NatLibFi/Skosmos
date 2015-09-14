@@ -33,10 +33,21 @@ function buildGroupTree(response) {
   }
   for (var uri in groups) {
     var groupobj = groups[uri];
-    if (!groupobj.is_child)
+    if (!groupobj.is_child) {
+      fixStates(groupobj);
       data.push(groupobj);
+    }
   }
   return data;
+}
+
+function fixStates(groupobj) {
+  for (var i in groupobj.children) {
+    fixStates(groupobj.children[i]);
+    if (groupobj.children[i].state) {
+      groupobj.state = groupobj.children[i].state;
+    }
+  }
 }
   
 function invokeGroupTree() {
