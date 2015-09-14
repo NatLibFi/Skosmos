@@ -65,6 +65,29 @@ class RestController extends Controller
     return $limit;
   }
 
+  /**
+   * Negotiate a MIME type according to the proposed format, the list of valid
+   * formats, and an optional proposed format. 
+   * As a side effect, set the HTTP Vary header if a choice was made based on
+   * the Accept header.
+   * @param array $choices possible MIME types as strings
+   * @param string $accept HTTP Accept header value
+   * @param string $format proposed format
+   * @return string selected format, or null if negotiation failed
+   */
+  private function negotiateFormat($choices, $accept, $format) {
+    if ($format) {
+      if (!in_array($format, $choices))
+        return null;
+    } else {
+      header('Vary: Accept'); // inform caches that a decision was made based on Accept header
+      $best = $this->negotiator->getBest($accept, $choices);
+      $format = ($best != null) ? $best->getValue() : null;
+    }
+    return $format;
+  }
+
+
 /** Global REST methods **/
 
   /**
@@ -430,28 +453,6 @@ class RestController extends Controller
     );
 
     return $this->return_json($ret);
-  }
-
-  /**
-   * Negotiate a MIME type according to the proposed format, the list of valid
-   * formats, and an optional proposed format. 
-   * As a side effect, set the HTTP Vary header if a choice was made based on
-   * the Accept header.
-   * @param array $choices possible MIME types as strings
-   * @param string $accept HTTP Accept header value
-   * @param string $format proposed format
-   * @return string selected format, or null if negotiation failed
-   */
-  private function negotiateFormat($choices, $accept, $format) {
-    if ($format) {
-      if (!in_array($format, $choices))
-        return null;
-    } else {
-      header('Vary: Accept'); // inform caches that a decision was made based on Accept header
-      $best = $this->negotiator->getBest($accept, $choices);
-      $format = ($best != null) ? $best->getValue() : null;
-    }
-    return $format;
   }
 
   /**
