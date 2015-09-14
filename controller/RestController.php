@@ -470,7 +470,7 @@ class RestController extends Controller
     } else {
       header('Vary: Accept'); // inform caches that a decision was made based on Accept header
       $priorities = explode(' ', self::$SUPPORTED_MIME_TYPES);
-      $best = $this->negotiator->getBest($request->getQueryParam('HTTP_ACCEPT'), $priorities);
+      $best = $this->negotiator->getBest($request->getServerConstant('HTTP_ACCEPT'), $priorities);
       $format = $best != null ? $best->getValue() : $priorities[0];
     }
     
