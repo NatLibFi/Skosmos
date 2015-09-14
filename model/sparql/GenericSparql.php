@@ -343,18 +343,18 @@ EOQ;
 
   /**
    * Retrieves conceptScheme information from the endpoint.
-   * @param string $cs concept scheme URI
+   * @param string $conceptscheme concept scheme URI
    * @return EasyRDF_Graph query result graph
    */
-  public function queryConceptScheme($cs)
+  public function queryConceptScheme($conceptscheme)
   {
     $gc = $this->graphClause;
     $query = <<<EOQ
 CONSTRUCT {
-  <$cs> ?property ?value .
+  <$conceptscheme> ?property ?value .
 } WHERE {
   $gc {
-    <$cs> ?property ?value .
+    <$conceptscheme> ?property ?value .
     FILTER (?property != skos:hasTopConcept)
   }
 }
@@ -395,14 +395,14 @@ WHERE {
 EOQ;
     $ret = array();
     foreach ($this->client->query($query) as $row) {
-      $cs = array();
+      $conceptscheme = array();
       if (isset($row->label))
-        $cs['label'] = $row->label->getValue();
+        $conceptscheme['label'] = $row->label->getValue();
       if (isset($row->prefLabel))
-        $cs['prefLabel'] = $row->prefLabel->getValue();
+        $conceptscheme['prefLabel'] = $row->prefLabel->getValue();
       if (isset($row->title))
-        $cs['title'] = $row->title->getValue();
-      $ret[$row->cs->getURI()] = $cs;
+        $conceptscheme['title'] = $row->title->getValue();
+      $ret[$row->cs->getURI()] = $conceptscheme;
     }
 
     return $ret;
