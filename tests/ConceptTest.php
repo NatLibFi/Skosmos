@@ -41,8 +41,8 @@ class ConceptTest extends PHPUnit_Framework_TestCase
    */
   public function testGetVocab()
   {
-    $id = $this->concept->getVocab();
-    $this->assertEquals('test', $id);
+    $voc = $this->concept->getVocab();
+    $this->assertInstanceOf('Vocabulary', $voc);
   }
   
   /**
