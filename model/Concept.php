@@ -131,12 +131,12 @@ class Concept extends VocabularyDataObject
   }
 
   /**
-   * Returns the vocabulary identifier string or null if that is not available.
-   * @return string
+   * Returns the Vocabulary object or undefined if that is not available.
+   * @return Vocabulary
    */
   public function getVocab()
   {
-    return $this->vocab ? $this->vocab->getId() : null;
+    return $this->vocab;
   }
   
   /**

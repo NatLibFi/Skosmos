@@ -7,7 +7,7 @@
 {% for concept in search_results %} {# loop through the hits #}
 <div class="search-result">
   {% spaceless %}
-    {% if vocab == '' and concept.vocab is defined %}
+    {% if vocab == '' and concept.vocab.id is defined %}
     <span class="prefLabel conceptlabel redirected-vocab-id" title="{{ concept.vocabTitle }}">{{ concept.shortName }}: </span>
     {% endif %}
     {% if concept.foundBy %} {# hit has been found through an alt/hidden/another language label #}
@@ -24,7 +24,7 @@
   {% endspaceless %}
   {% if concept.type == 'skosext:DeprecatedConcept' %}<h2 class="deprecated-alert">{% trans %}deprecated{% endtrans %}</h2>{% endif %}
   {% for property in concept.properties %} {# loop through ConceptProperty objects #}
-    {% if property.type in PreferredProperties or property.type in vocab.additionalSearchProperties %}
+    {% if property.type in PreferredProperties or property.type in concept.vocab.additionalSearchProperties %}
     <div class="property">
       <span class="property-click" title="{{ property.description }}">
         <img class="property-hover" src="resource/pics/{% if property.type == 'skos:broader' %}broader{% elseif property.type == 'skos:narrower' %}narrower{% elseif property.type == 'skos:altLabel' %}replaced{% elseif property.type == 'skos:related' %}cloud{% elseif property.type == 'skosmos:memberOf' %}group{% else %}globe{% endif %}.gif">
@@ -96,7 +96,7 @@
   {% endif %}
   {% if concept.mappingProperties %}
     {% for property in concept.mappingProperties %} {# loop through ConceptProperty objects #}
-      {% if property.type in vocab.additionalSearchProperties %}
+      {% if property.type in concept.vocab.additionalSearchProperties %}
       <div class="property">
         <span class="property-click" title="{{ property.type|trans }}">
           <img class="property-hover" src="resource/pics/globe.gif">
