@@ -8,6 +8,7 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
   /** property type */
   private $type;
   private $clang;
+  private $labelcache;
 
   public function __construct($model, $vocab, $resource, $prop, $clang='')
   {
@@ -15,6 +16,7 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
     $this->submembers = array();
     $this->type = $prop;
     $this->clang = $clang;
+    $this->labelcache = array();
   }
 
   public function getType()
@@ -24,6 +26,15 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
 
   public function getLabel($lang='')
   {
+    if (isset($this->labelcache[$lang]))
+      return $this->labelcache[$lang];
+
+    $label = $this->queryLabel($lang);
+    $this->labelcache[$lang] = $label;
+    return $label;
+  }
+
+  private function queryLabel($lang) {
     if ($this->clang)
       $lang = $this->clang;
     $exvocab = $this->model->guessVocabularyFromURI($this->resource->getUri());
