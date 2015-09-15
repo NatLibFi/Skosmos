@@ -93,8 +93,9 @@
       {% endspaceless %}{% endfor %}
     </div>
   {% endif %}
-  {% if concept.mappingProperties %}
-    {% for property in concept.mappingProperties %} {# loop through ConceptProperty objects #}
+  {% set mappingProperties = concept.mappingProperties %}
+  {% if mappingProperties %}
+    {% for property in mappingProperties %} {# loop through ConceptProperty objects #}
       {% if property.type in concept.vocab.additionalSearchProperties %}
       <div class="property">
         <span class="property-click" title="{{ property.type|trans }}">
