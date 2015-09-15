@@ -451,15 +451,18 @@ class Concept extends VocabularyDataObject
         $coll_label = $reverseResource->label($this->clang) ? $reverseResource->label($this->clang) : $reverseResource->label();
         if ($coll_label)
           $coll_label = $coll_label->getValue();
-        $super = $reverseResource->get('isothes:superGroup');
-        while(isset($super)) {
-          $groups[$coll_label] = new ConceptPropertyValue($this->model, $this->vocab, $super, 'isothes:superGroup', $this->clang);
-          $super = $super->get('isothes:superGroup');
-        }
         $groups[$coll_label] = new ConceptPropertyValue($this->model, $this->vocab, $reverseResource, $property, $this->clang);
+        ksort($groups);
+        $super = $this->graph->resourcesMatching('skos:member', $reverseResource);
+        while(isset($super) && !empty($super)) {
+          foreach ($super as $res) {
+            $superprop = new ConceptPropertyValue($this->model, $this->vocab, $res, 'skosmos:memberOfSuper', $this->clang);
+            array_unshift($groups, $superprop);
+            $super = $this->graph->resourcesMatching('skos:member', $res);
+          }
+        }
       }
     }
-    ksort($groups);
     return $groups;
   }
 
