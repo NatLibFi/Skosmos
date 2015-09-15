@@ -239,7 +239,8 @@ CONSTRUCT {
  ?o skos:prefLabel ?opl .
  ?o rdfs:label ?ol .
  ?o rdf:value ?ov .
- ?group skos:member ?child .
+ ?directgroup skos:member ?uri .
+ ?parent skos:member ?group .
  ?group skos:prefLabel ?grouplabel .
  ?group rdf:type ?grouptype . $construct
 } WHERE {
@@ -248,10 +249,12 @@ CONSTRUCT {
   UNION
   { ?sp ?uri ?op . }
   UNION
-  { ?group skos:member+ ?uri .
+  { 
+    ?directgroup skos:member ?uri .
+    ?group skos:member+ ?uri .
     ?group skos:prefLabel ?grouplabel .
     ?group rdf:type ?grouptype . 
-    ?group skos:member ?child
+    OPTIONAL { ?parent skos:member ?group }
   }
   UNION
   {
