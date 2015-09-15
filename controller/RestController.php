@@ -65,6 +65,29 @@ class RestController extends Controller
     return $limit;
   }
 
+  /**
+   * Negotiate a MIME type according to the proposed format, the list of valid
+   * formats, and an optional proposed format. 
+   * As a side effect, set the HTTP Vary header if a choice was made based on
+   * the Accept header.
+   * @param array $choices possible MIME types as strings
+   * @param string $accept HTTP Accept header value
+   * @param string $format proposed format
+   * @return string selected format, or null if negotiation failed
+   */
+  private function negotiateFormat($choices, $accept, $format) {
+    if ($format) {
+      if (!in_array($format, $choices))
+        return null;
+    } else {
+      header('Vary: Accept'); // inform caches that a decision was made based on Accept header
+      $best = $this->negotiator->getBest($accept, $choices);
+      $format = ($best != null) ? $best->getValue() : null;
+    }
+    return $format;
+  }
+
+
 /** Global REST methods **/
 
   /**
@@ -449,30 +472,16 @@ class RestController extends Controller
       if (sizeof($urls) == 0)
         return $this->return_error('404', 'Not Found', "No download source URL known for vocabulary $vocab");
 
-      if ($format) {
-        if (!in_array($format, array_keys($urls)))
-          return $this->return_error(400, 'Bad Request', "Unsupported format. Supported MIME types are: " . implode(' ', array_keys($urls)));
-      } else {
-        header('Vary: Accept'); // inform caches that a decision was made based on Accept header
-        $priorities = array_keys($urls);
-        $best = $this->negotiator->getBest($request->getServerConstant('HTTP_ACCEPT'), $priorities);
-        $format = $best != null ? $best->getValue() : $priorities[0];
-      }
+      $format = $this->negotiateFormat(array_keys($urls), $request->getServerConstant('HTTP_ACCEPT'), $format);
+      if (!$format) return $this->return_error(406, 'Not Acceptable', "Unsupported format. Supported MIME types are: " . implode(' ', array_keys($urls)));
       header("Location: " . $urls[$format]);
       return;
     } else {
       return $this->return_error(400, 'Bad Request', "uri parameter missing");
     }
     
-    if ($format) {
-      if (!in_array($format, explode(' ', self::$SUPPORTED_MIME_TYPES)))
-        return $this->return_error(400, 'Bad Request', "Unsupported format. Supported MIME types are: " . self::$SUPPORTED_MIME_TYPES);
-    } else {
-      header('Vary: Accept'); // inform caches that a decision was made based on Accept header
-      $priorities = explode(' ', self::$SUPPORTED_MIME_TYPES);
-      $best = $this->negotiator->getBest($request->getQueryParam('HTTP_ACCEPT'), $priorities);
-      $format = $best != null ? $best->getValue() : $priorities[0];
-    }
+    $format = $this->negotiateFormat(explode(' ', self::$SUPPORTED_MIME_TYPES), $request->getServerConstant('HTTP_ACCEPT'), $format);
+    if (!$format) return $this->return_error(406, 'Not Acceptable', "Unsupported format. Supported MIME types are: " . self::$SUPPORTED_MIME_TYPES);
     
     $vocid = $vocab ? $vocab->getId() : null;
     $results = $this->model->getRDF($vocid, $uri, $format);

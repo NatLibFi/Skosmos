@@ -39,9 +39,9 @@ class Model
   /** cache for Vocabulary objects */
   private $all_vocabularies = null;
   /** cache for Vocabulary objects */
-  private $vocabularies_by_graph = null;
+  private $vocabs_by_graph = null;
   /** cache for Vocabulary objects */
-  private $vocabularies_by_urispace = null;
+  private $vocabs_by_urispace = null;
   /** how long to store retrieved URI information in APC cache */
   private $URI_FETCH_TTL = 86400; // 1 day
 
@@ -425,17 +425,17 @@ class Model
    */
   public function getVocabularyByGraph($graph, $endpoint = DEFAULT_ENDPOINT)
   {
-    if ($this->vocabularies_by_graph == null) { // initialize cache
-      $this->vocabularies_by_graph = array();
+    if ($this->vocabs_by_graph == null) { // initialize cache
+      $this->vocabs_by_graph = array();
       foreach ($this->getVocabularies() as $voc) {
         $key = json_encode(array($voc->getGraph(), $voc->getEndpoint()));
-        $this->vocabularies_by_graph[$key] = $voc;
+        $this->vocabs_by_graph[$key] = $voc;
       }
     }
 
     $key = json_encode(array($graph,$endpoint));
-    if (array_key_exists($key, $this->vocabularies_by_graph))
-      return $this->vocabularies_by_graph[$key];
+    if (array_key_exists($key, $this->vocabs_by_graph))
+      return $this->vocabs_by_graph[$key];
     else
       throw new Exception( "no vocabulary found for graph $graph and endpoint $endpoint");
   }
@@ -449,22 +449,22 @@ class Model
    */
   public function guessVocabularyFromURI($uri)
   {
-    if ($this->vocabularies_by_urispace == null) { // initialize cache
-      $this->vocabularies_by_urispace = array();
+    if ($this->vocabs_by_urispace == null) { // initialize cache
+      $this->vocabs_by_urispace = array();
       foreach ($this->getVocabularies() as $voc) {
-        $this->vocabularies_by_urispace[$voc->getUriSpace()] = $voc;
+        $this->vocabs_by_urispace[$voc->getUriSpace()] = $voc;
       }
     }
 
     // try to guess the URI space and look it up in the cache
     $res = new EasyRdf_Resource($uri);
     $namespace = substr($uri, 0, -strlen($res->localName()));
-    if (array_key_exists($namespace, $this->vocabularies_by_urispace)) {
-      return $this->vocabularies_by_urispace[$namespace];
+    if (array_key_exists($namespace, $this->vocabs_by_urispace)) {
+      return $this->vocabs_by_urispace[$namespace];
     }
 
     // didn't work, try to match with each URI space separately
-    foreach ($this->vocabularies_by_urispace as $urispace => $voc)
+    foreach ($this->vocabs_by_urispace as $urispace => $voc)
       if (strpos($uri, $urispace) === 0) return $voc;
 
     // not found
@@ -528,7 +528,7 @@ class Model
   {
     $classname = $dialect . "Sparql";
 
-    return new $classname($endpoint, $graph, $this); exit();
+    return new $classname($endpoint, $graph, $this);
   }
 
   /**
