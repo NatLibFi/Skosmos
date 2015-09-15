@@ -40,7 +40,8 @@ class ConceptMappingPropertyValueTest extends PHPUnit_Framework_TestCase
     $concept = $concepts[0];
     $props = $concept->getMappingProperties();
     $propvals = $props['skos:exactMatch']->getValues();
-    $this->assertEquals('Test short', $propvals['Eelhttp://www.skosmos.skos/test/ta115']->getExVocab());
+    $this->assertInstanceOf('Vocabulary', $propvals['Eelhttp://www.skosmos.skos/test/ta115']->getExVocab());
+    $this->assertEquals('test', $propvals['Eelhttp://www.skosmos.skos/test/ta115']->getExVocab()->getId());
   }
   
   /**

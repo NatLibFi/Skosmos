@@ -58,8 +58,7 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
 
   public function getExVocab() {
     $exvocab = $this->model->guessVocabularyFromURI($this->getUri());
-    if (isset($exvocab))
-      return $exvocab->getShortName();
+    return $exvocab;
   }
 
   public function getVocab()

@@ -102,7 +102,7 @@
         </span>
         <div class="property-values">
           {% for propval in property.values %} {# loop through ConceptMappingPropertyValue objects #}
-          {% if propval.exVocab != '' %}<span class="redirected-vocab-id prefLabel">{{ propval.exVocab }}: </<span>{% endif %}<span class="versal value">{{ propval.label(request.contentLang) }} {% if propval.label(request.contentLang).lang != request.contentLang %}({{ propval.label(request.contentLang).lang }})</span>{% endif %}{% if loop.last == false %}<span class="versal">, </span>{% endif %}
+          {% if propval.exVocab %}<span class="redirected-vocab-id prefLabel">{{ propval.exVocab.shortName }}: </<span>{% endif %}<span class="versal value">{{ propval.label(request.contentLang) }} {% if propval.label(request.contentLang).lang != request.contentLang %}({{ propval.label(request.contentLang).lang }})</span>{% endif %}{% if loop.last == false %}<span class="versal">, </span>{% endif %}
           {% endfor %}
         </div>
       </div>
