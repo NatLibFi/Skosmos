@@ -101,8 +101,8 @@
           <img class="property-hover" src="resource/pics/globe.gif">
         </span>
         <div class="property-values">
-          {% for propval in property.values %} {# loop through ConceptProperty objects #}
-          <span class="versal value">{{ propval.label(request.contentLang) }} {% if propval.label(request.contentLang).lang != request.contentLang %}({{ propval.label(request.contentLang).lang }})</span>{% endif %}{% if loop.last == false %}<span class="versal">, </span>{% endif %}
+          {% for propval in property.values %} {# loop through ConceptMappingPropertyValue objects #}
+          {% if propval.exVocab != '' %}<span class="versal redirected-vocab-id prefLabel">{{ propval.exVocab }}: </<span>{% endif %}<span class="versal value">{{ propval.label(request.contentLang) }} {% if propval.label(request.contentLang).lang != request.contentLang %}({{ propval.label(request.contentLang).lang }})</span>{% endif %}{% if loop.last == false %}<span class="versal">, </span>{% endif %}
           {% endfor %}
         </div>
       </div>
