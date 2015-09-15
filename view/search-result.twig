@@ -94,7 +94,7 @@
     </div>
   {% endif %}
   {% set mappingProperties = concept.mappingProperties %}
-  {% if mappingProperties %}
+  {% if concept.vocab.additionalSearchProperties and mappingProperties %}
     {% for property in mappingProperties %} {# loop through ConceptProperty objects #}
       {% if property.type in concept.vocab.additionalSearchProperties %}
       <div class="property">
