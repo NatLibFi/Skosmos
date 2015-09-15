@@ -73,9 +73,9 @@
         {% if propval.uri and propval.type != 'skosmos:memberOfArray'%} {# resources with URI #}
           {% spaceless %}
             {% if propval.label %}
-              {% if not loop.first %}<span class="versal">, </span>{% endif %}
               <span class="versal value">{{ propval.label(request.contentLang) }}</span>
               {% if propval.lang and (propval.lang != request.lang) or explicit_langcodes %}<span class="versal"> ({{ propval.lang }})</span>{% endif %}
+              {% if propval.type == 'skosmos:memberOfSuper' %}<span class="versal"> > </span> {% elseif not loop.last %},{% endif %}
             {% endif %}
           {% endspaceless %}
         {% endif %}
