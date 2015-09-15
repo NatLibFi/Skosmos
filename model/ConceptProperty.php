@@ -64,7 +64,8 @@ class ConceptProperty
   
   public function addValue($value)
   {
-    $label = $value->getLabel($this->lang) ? $value->getLabel($this->lang) : $value->getLabel();
+    $label = $value->getLabel($this->lang);
+    if (!$label) $label = $value->getLabel(); // try any language
     if (method_exists($label, 'getValue'))
       $label = $label->getValue();
     $this->values[$label . $value->getUri()] = $value;
