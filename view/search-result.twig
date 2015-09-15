@@ -93,22 +93,24 @@
       {% endspaceless %}{% endfor %}
     </div>
   {% endif %}
-  {% set mappingProperties = concept.mappingProperties %}
-  {% if concept.vocab.additionalSearchProperties and mappingProperties %}
-    {% for property in mappingProperties %} {# loop through ConceptProperty objects #}
-      {% if property.type in concept.vocab.additionalSearchProperties %}
-      <div class="property">
-        <span class="property-click" title="{{ property.type|trans }}">
-          <img class="property-hover" src="resource/pics/globe.gif">
-        </span>
-        <div class="property-values">
-          {% for propval in property.values %} {# loop through ConceptMappingPropertyValue objects #}
-          {% if propval.exVocab %}<span class="redirected-vocab-id prefLabel">{{ propval.exVocab.shortName }}: </span>{% endif %}<span class="versal value">{{ propval.label(request.contentLang) }} {% if propval.label(request.contentLang).lang != request.contentLang %}({{ propval.label(request.contentLang).lang }})</span>{% endif %}{% if loop.last == false %}<span class="versal">, </span>{% endif %}
-          {% endfor %}
+  {% if concept.vocab.additionalSearchProperties %} 
+    {% set mappingProperties = concept.mappingProperties %}
+    {% if mappingProperties %}
+      {% for property in mappingProperties %} {# loop through ConceptProperty objects #}
+        {% if property.type in concept.vocab.additionalSearchProperties %}
+        <div class="property">
+          <span class="property-click" title="{{ property.type|trans }}">
+            <img class="property-hover" src="resource/pics/globe.gif">
+          </span>
+          <div class="property-values">
+            {% for propval in property.values %} {# loop through ConceptMappingPropertyValue objects #}
+            {% if propval.exVocab %}<span class="redirected-vocab-id prefLabel">{{ propval.exVocab.shortName }}: </span>{% endif %}<span class="versal value">{{ propval.label(request.contentLang) }} {% if propval.label(request.contentLang).lang != request.contentLang %}({{ propval.label(request.contentLang).lang }})</span>{% endif %}{% if loop.last == false %}<span class="versal">, </span>{% endif %}
+            {% endfor %}
+          </div>
         </div>
-      </div>
-      {% endif %}
-    {% endfor %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
   {% endif %}
   {% if concept.uri %}
     <div><span class="versal uri-input-box">{{ concept.uri }}</span></div>
