@@ -402,9 +402,9 @@ class WebController extends Controller
 
       return;
     }
-    $groups = $vocab->listConceptGroups();
     $term = $request->getQueryParam('q');
     $content_lang = $request->getContentLang();
+    $groups = $vocab->listConceptGroups($content_lang);
     $search_lang = $request->getQueryParam('anylang') ? '' : $content_lang;
     $type = $request->getQueryParam('type');
     if ($type && strpos($type, '+'))
