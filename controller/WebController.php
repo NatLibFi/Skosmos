@@ -357,7 +357,7 @@ class WebController extends Controller
 
     $vocabs = $request->getQueryParam('vocabs'); # optional
     // convert to vocids array to support multi-vocabulary search
-    $vocids = $vocabs !== null ? explode(' ', $vocabs) : null;
+    $vocids = ($vocabs !== null && $vocabs !== '') ? explode(' ', $vocabs) : null;
     
     $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocids, $content_lang, $search_lang, $offset, 20, $type, $parent, $group);
     $counts = $count_and_results['count'];
