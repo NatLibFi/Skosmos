@@ -487,8 +487,8 @@ OPTIONAL {
 EOF;
     }
 
-    // extra types to query, if using thesaurus arrays
-    $extratypes = $arrayClass ? "UNION { ?s a <$arrayClass> }" : "";
+    // extra types to query, if using thesaurus arrays and no additional type restrictions have been applied
+    $extratypes = ($arrayClass && $types === array('skos:Concept'))? "UNION { ?s a <$arrayClass> }" : "";
 
     if (sizeof($unprefixed_types) === 1) // if only one type limitation set no UNION needed
       $type = $unprefixed_types[0];
