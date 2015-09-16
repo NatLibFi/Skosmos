@@ -97,6 +97,7 @@ class RestController extends Controller
   {
     if (!$request->getLang())
       return $this->return_error(400, "Bad Request", "lang parameter missing");
+    $this->setLanguageProperties($request->getLang());
 
     $vocabs = array();
     foreach ($this->model->getVocabularies() as $voc) {
@@ -198,6 +199,7 @@ class RestController extends Controller
   public function vocabularyInformation($request)
   {
     $vocab = $request->getVocab();
+    $this->setLanguageProperties($request->getLang());
 
     /* encode the results in a JSON-LD compatible array */
     $conceptschemes = array();
@@ -242,6 +244,7 @@ class RestController extends Controller
    */
   public function vocabularyStatistics($request)
   {
+    $this->setLanguageProperties($request->getLang());
     $vocab_stats = $request->getVocab()->getStatistics();
 
     /* encode the results in a JSON-LD compatible array */
@@ -276,6 +279,7 @@ class RestController extends Controller
   public function labelStatistics($request)
   {
     $lang = $request->getLang();
+    $this->setLanguageProperties($request->getLang());
     
     $vocab_stats = $request->getVocab()->getLabelStatistics();
 
@@ -323,6 +327,7 @@ class RestController extends Controller
    */
   public function types($request)
   {
+    $this->setLanguageProperties($request->getLang());
     $vocid = $request->getVocab() ? $request->getVocab()->getId() : null;
     $queriedtypes = $this->model->getTypes($vocid, $request->getLang());
 
