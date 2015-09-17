@@ -309,9 +309,13 @@ SELECT DISTINCT ?type ?label ?superclass
 WHERE {
   $gc {
     {
-      { ?type rdfs:subClassOf* skos:Concept . }
+      { BIND( skos:Concept as ?type ) }
       UNION
-      { ?type rdfs:subClassOf* skos:Collection . }
+      { BIND( skos:Collection as ?type ) }
+      UNION
+      { ?type rdfs:subClassOf/rdfs:subClassOf* skos:Concept . }
+      UNION
+      { ?type rdfs:subClassOf/rdfs:subClassOf* skos:Collection . }
     }
     OPTIONAL {
       ?type rdfs:label ?label .
