@@ -74,9 +74,8 @@ msgid "Contact us!"
 msgstr "Kontaktieren Sie uns!"
 
 #: /tmp/cache/55f808de2edcb/2b/2f/1ce096ed381c7c416eb3bdf53cb7.php:60
-#, fuzzy
 msgid "Content language"
-msgstr "Sprache"
+msgstr "Sprache der Inhalte"
 
 #: /tmp/cache/55f808de2edcb/f3/ad/c29275c1535e0544c16a5c268290.php:794
 msgid "Download this concept in SKOS format:"
