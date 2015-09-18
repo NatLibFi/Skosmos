@@ -40,7 +40,7 @@ class RestController extends Controller
     if (filter_input(INPUT_GET, 'callback', FILTER_SANITIZE_STRING)) {
       header("Content-type: application/javascript; charset=utf-8");
       // wrap with JSONP callback
-      echo filter_input(INPUT_GET, 'callback', FILTER_SANITIZE_STRING) . "(" . json_encode($data) . ");";
+      echo filter_input(INPUT_GET, 'callback', FILTER_UNSAFE_RAW) . "(" . json_encode($data) . ");";
     } else {
       // negotiate suitable format
       $negotiator = new \Negotiation\FormatNegotiator();
