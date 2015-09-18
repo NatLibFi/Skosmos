@@ -1162,8 +1162,8 @@ EOQ;
         $preflabel = $row->label->getValue();
         if ($row->label->getLang() !== $lang)   
           $preflabel .= ' (' . $row->label->getLang() . ')';
+        $ret[$uri]['prefLabel'] = $preflabel;
       }
-      $ret[$uri]['prefLabel'] = $preflabel;
       if (isset($row->parent) && (isset($ret[$uri]['broader']) && !in_array($row->parent->getUri(), $ret[$uri]['broader']))) {
         $ret[$uri]['broader'][] = $row->parent->getUri();
       } elseif (isset($row->parent) && !isset($ret[$uri]['broader'])) {
