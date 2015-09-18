@@ -547,8 +547,8 @@ class RestController extends Controller
         'uri' => $uri,
     );
 
-    if (isset($results[$lang]))
-      $ret['prefLabel'] = $results[$lang]->getValue();
+    if (isset($results[$request->getLang()]))
+      $ret['prefLabel'] = $results[$request->getLang()]->getValue();
 
     return $this->return_json($ret);
   }
