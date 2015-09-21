@@ -334,6 +334,7 @@ class ConceptTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers Concept::getProperties
+   * @covers Concept::getCollectionMembers
    * @covers ConceptProperty::getValues
    * @covers ConceptPropertyValue::getLabel
    * @covers ConceptPropertyValue::getSubMembers
