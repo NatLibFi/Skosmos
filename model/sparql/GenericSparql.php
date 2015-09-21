@@ -1190,9 +1190,11 @@ SELECT ?group (GROUP_CONCAT(STR(?child)) as ?children) ?label ?members
 WHERE {
  $gc {
    ?group a <$groupClass> .
-   OPTIONAL { ?group skos:member ?child . ?child a <$groupClass> }
+   OPTIONAL { ?group skos:member|isothes:subGroup ?child .
+              ?child a <$groupClass> }
    BIND(EXISTS{?group skos:member ?submembers} as ?members)
-   { ?group skos:prefLabel ?label } UNION { ?group rdfs:label ?label }
+   OPTIONAL { ?group skos:prefLabel ?label } 
+   OPTIONAL { ?group rdfs:label ?label }
    FILTER (langMatches(lang(?label), '$lang'))
  }
 }
