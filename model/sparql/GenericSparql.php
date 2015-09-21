@@ -1086,7 +1086,7 @@ EOQ;
         $gc = $this->graphClause;
     $query = <<<EOQ
 SELECT ?broad ?parent ?member ?children ?grandchildren 
-(SAMPLE(?lab) as ?label) (SAMPLE(?childlab) as ?childlabel) (SAMPLE(?topcs) AS ?top)
+(SAMPLE(?lab) as ?label) (SAMPLE(?childlab) as ?childlabel) (SAMPLE(?topcs) AS ?top) (SAMPLE(?nota) as ?notation) (SAMPLE(?childnota) as ?childnotation)
 WHERE {
     $gc {
       <$uri> a skos:Concept .
@@ -1103,6 +1103,7 @@ WHERE {
       OPTIONAL { # fallback - other language case
         ?broad skos:prefLabel ?lab .
       }
+      OPTIONAL { ?broad skos:notation ?nota . }
       OPTIONAL { ?broad skos:broader ?parent . }
       OPTIONAL { ?broad skos:narrower ?children .
         OPTIONAL {
@@ -1115,6 +1116,9 @@ WHERE {
         }
         OPTIONAL { # fallback - other language case
           ?children skos:prefLabel ?childlab .
+        }
+        OPTIONAL {
+          ?children skos:notation ?childnota .
         }
       }
       BIND ( EXISTS { ?children skos:narrower ?a . } AS ?grandchildren )
@@ -1155,6 +1159,8 @@ EOQ;
           'label' => $label,
           'hasChildren' => filter_var($row->grandchildren->getValue(), FILTER_VALIDATE_BOOLEAN),
         );
+        if (isset($row->childnotation))
+          $child_arr['notation'] = $row->childnotation->getValue();
         if(!in_array($child_arr, $ret[$uri]['narrower']))
           $ret[$uri]['narrower'][] = $child_arr;
       }
@@ -1164,6 +1170,8 @@ EOQ;
           $preflabel .= ' (' . $row->label->getLang() . ')';
         $ret[$uri]['prefLabel'] = $preflabel;
       }
+      if (isset($row->notation)) 
+        $ret[$uri]['notation'] = $row->notation->getValue();
       if (isset($row->parent) && (isset($ret[$uri]['broader']) && !in_array($row->parent->getUri(), $ret[$uri]['broader']))) {
         $ret[$uri]['broader'][] = $row->parent->getUri();
       } elseif (isset($row->parent) && !isset($ret[$uri]['broader'])) {

@@ -87,6 +87,8 @@ function createConceptObject(conceptUri, conceptData) {
   }
   // if we are at a top concepts page we want to highlight that node and mark it as to be initially opened.
   if (newNode.uri === $('.uri-input-box').html()) { newNode.li_attr = { class: 'jstree-leaf-proper' }; }
+  if (conceptData.notation)
+    newNode.text = '<span class="tree-notation">' + conceptData.notation + '</span> ' + newNode.text;
   if (conceptData.narrower) { // filtering out the ones that don't have labels 
     var childArray = [];
     for (var child in conceptData.narrower) {
@@ -99,6 +101,8 @@ function createConceptObject(conceptUri, conceptData) {
         parents: conceptUri,
         state: { opened: true }
       };
+      if (conceptData.narrower[child].notation)
+        childObject.text = '<span class="tree-notation">' + conceptData.narrower[child].notation + '</span> ' + childObject.text;
       if (child === $('.uri-input-box').html()) { /* childObject.data.attr.id = 'jstree-leaf-proper'; */ }
       // if the childConcept hasn't got any children the state is not needed.
       if (hasChildren) {

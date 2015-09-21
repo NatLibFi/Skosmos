@@ -1420,6 +1420,7 @@ p.autocomplete-label {
 
 .jstree-default a { white-space:normal !important; height: auto !important; } 
 .jstree-default li > ins { vertical-align:top; }
+.jstree-default a > .tree-notation { color: #333 !important; };
 
 .sidebar-grey .jstree-closed > .jstree-ocl {
   background-position: -100px -8px !important;

@@ -442,6 +442,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
             'uri' => 'http://www.skosmos.skos/test/ta112',
             'label' => 'Carp',
             'hasChildren' => true,
+            'notation' => '665'
           ),
           1 => array (
             'uri' => 'http://www.skosmos.skos/test/ta117',

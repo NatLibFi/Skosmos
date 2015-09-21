@@ -727,6 +727,7 @@ class RestController extends Controller
             'uri' => '@id',
             'type' => '@type',
             'prefLabel' => 'skos:prefLabel',
+            'notation' => 'skos:notation',
             'narrower' => array('@id'=>'skos:narrower','@type'=>'@id'),
             'broader' => array('@id'=>'skos:broader','@type'=>'@id'),
             'broaderTransitive' => array('@id'=>'skos:broaderTransitive','@container'=>'@index'),
