@@ -147,32 +147,23 @@ function loadLimitedResults(parameters) {
 }
 
 function loadPage(targetUrl) {
-  if (targetUrl.indexOf('index') !== -1 || targetUrl.indexOf('groups') !== -1) {
-    $.ajax({
-      url : targetUrl,
-      success : function(data) {
+  $.ajax({
+    url : targetUrl,
+    success : function(data) {
+      if (targetUrl.indexOf('index') !== -1 || targetUrl.indexOf('groups') !== -1) {
         updateSidebar(data);
-        updateTitle(data);
-        updateTopbarLang(data);
-        // take the content language buttons from the response
-        $('.header-float .dropdown-menu').empty().append($('.header-float .dropdown-menu', data).html());
-      }
-    });
-  } else {
-    $.ajax({
-      url : targetUrl,
-      success : function(data) {
+      } else {
         $('.activated-concept').removeClass('activated-concept');
         $('.jstree-clicked').removeClass('jstree-clicked'); 
         updateContent(data);
         $('a[href="' + $('.uri-input-box').text() + '"]').addClass('jstree-clicked');
-        updateTitle(data);
-        updateTopbarLang(data);
-        // take the content language buttons from the response
-        $('.header-float .dropdown-menu').empty().append($('.header-float .dropdown-menu', data).html());
       }
-    });
-  }
+      updateTitle(data);
+      updateTopbarLang(data);
+      // take the content language buttons from the response
+      $('.header-float .dropdown-menu').empty().append($('.header-float .dropdown-menu', data).html());
+    }
+  });
 }
 
 // if there are multiple breadcrumb paths hide those and generate a button for displaying those
