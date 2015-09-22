@@ -150,6 +150,7 @@ class RestController extends Controller
     }
 
     $vocid = $request->getVocabId(); # optional
+    $lang = $request->getQueryParam('lang'); # optional
     $labellang = $request->getQueryParam('labellang'); # optional
     $types =  $request->getQueryParam('type') ? explode(' ', $request->getQueryParam('type')) : array('skos:Concept');
     $parent = $request->getQueryParam('parent');
@@ -159,7 +160,7 @@ class RestController extends Controller
     // convert to vocids array to support multi-vocabulary search
     $vocids = !empty($vocid) ? explode(' ', $vocid) : null;
 
-    $results = $this->model->searchConcepts($term, $vocids, $labellang, $request->getLang(), $types, $parent, $group, $offset, $maxhits, true, $fields);
+    $results = $this->model->searchConcepts($term, $vocids, $labellang, $lang, $types, $parent, $group, $offset, $maxhits, true, $fields);
     // before serializing to JSON, get rid of the Vocabulary object that came with each resource
     foreach ($results as &$res) {
       unset($res['voc']);
@@ -184,8 +185,10 @@ class RestController extends Controller
         'results' => $results,
     );
 
-    if ($request->getLang())
+    if ($labellang)
       $ret['@context']['@language'] = $labellang;
+    elseif ($lang)
+      $ret['@context']['@language'] = $lang;
 
     return $this->return_json($ret);
   }
@@ -367,9 +370,10 @@ class RestController extends Controller
     $label = $request->getQueryParam('label');
     if(!$label)
       return $this->return_error(400, "Bad Request", "label parameter missing");
+    $lang = $request->getQueryParam('lang');
     $vocab = $request->getVocab();
 
-    $results = $this->model->searchConcepts($label, $vocab->getId(), $request->getLang(), $request->getLang());
+    $results = $this->model->searchConcepts($label, $vocab->getId(), $lang, $lang);
 
     $hits = array();
     // case 1: exact match on preferred label
@@ -421,8 +425,8 @@ class RestController extends Controller
         'uri' => '',
         'results' => $hits,
     );
-    if ($request->getLang())
-      $ret['@context']['@language'] = $request->getLang();
+    if ($lang)
+      $ret['@context']['@language'] = $lang;
 
     return $this->return_json($ret);
   }
