@@ -637,8 +637,20 @@ $(function() { // DOCUMENT READY
     }
   });
     
+  // storing the search input before autocompletion fires into the local storage cache
+  $('#search-field').on('input', function() { 
+    // storing the value for only 2 minutes to prevent surprising behaviour
+    lscache.set('skosmos-query', $(this).val(), 2); 
+  });
+  // reading the stored input from the local storage cache
+  if (lscache.get('skosmos-query')) {
+    $typeahead.typeahead('val', lscache.get('skosmos-query'));
+  }
+
   $('.clear-search').on('click', function() { 
-    $typeahead.typeahead('val', ''); $(this).removeClass('clear-search-dark');
+    $typeahead.typeahead('val', ''); 
+    lscache.remove('skosmos-query');
+    $(this).removeClass('clear-search-dark');
   });
 
   // Some form validation for the feedback form
