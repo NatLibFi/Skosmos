@@ -105,17 +105,6 @@ class WebController extends Controller
     });
     $this->twig->addFilter($langFilter);
 
-    $tplDir = 'view';
-
-    // iterate over all your templates
-    foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($tplDir),
-            RecursiveIteratorIterator::LEAVES_ONLY) as $file) {
-      // force compilation
-      $path = explode('.', $file);
-      $ext = end($path);
-      if ($ext == 'twig')
-        $this->twig->loadTemplate(str_replace($tplDir . '/', '', $file));
-    }
   }
 
   private function guessBaseHref()
