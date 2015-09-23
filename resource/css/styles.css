@@ -1336,7 +1336,7 @@ span.date-info {
   z-index: 9001;
 }
 
-.clear-search-dark {
+.twitter-typeahead > .clear-search-dark {
   color: #555555 !important;
 }
 
