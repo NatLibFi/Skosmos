@@ -7,7 +7,7 @@
 $(function() { // DOCUMENT READY 
 
   var spinner = '<div class="loading-spinner"><span class="spinner-text">'+ loading_text + '</span><span class="spinner" /></div>';
-
+  var searchString = ''; // stores the search field's value before autocomplete selection changes it
   var selectedVocabs = [];
   var vocabId;
   var vocabSelectionString = getUrlParams().vocabs ? getUrlParams().vocabs.replace(/\+/g,' ') : readCookie('SKOSMOS_SELECTED');
@@ -488,6 +488,8 @@ $(function() { // DOCUMENT READY
   // typeahead selection action
   function onSelection($e, datum) {
     if ($e.currentTarget.id !== 'parent-limit') {
+      // restoring the original value
+      $typeahead.typeahead('val', searchString);
       var localname = datum.localname;
       var params = {};
       if (!localname || encodeURIComponent(localname) !== localname) {
@@ -637,19 +639,13 @@ $(function() { // DOCUMENT READY
     }
   });
     
-  // storing the search input before autocompletion fires into the local storage cache
+  // storing the search input before autocompletion changes it 
   $('#search-field').on('input', function() { 
-    // storing the value for only 2 minutes to prevent surprising behaviour
-    lscache.set('skosmos-query', $(this).val(), 2); 
+    searchString = $(this).val(); 
   });
-  // reading the stored input from the local storage cache
-  if (lscache.get('skosmos-query')) {
-    $typeahead.typeahead('val', lscache.get('skosmos-query'));
-  }
 
   $('.clear-search').on('click', function() { 
-    $typeahead.typeahead('val', ''); 
-    lscache.remove('skosmos-query');
+    searchString = '';
     $(this).removeClass('clear-search-dark');
   });
 
