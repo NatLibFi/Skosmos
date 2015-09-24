@@ -718,8 +718,6 @@ class RestController extends Controller
       foreach ($topconcepts as $top) {
         if (!isset($results[$top['uri']])) {
           $results[$top['uri']] = array('uri'=>$top['uri'], 'top'=>$scheme, 'prefLabel'=>$top['label'], 'hasChildren'=>$top['hasChildren']);
-          if (isset($top['notation']))
-            $results[$top['uri']]['notation'] = $top['notation'];
         }
       }
     }

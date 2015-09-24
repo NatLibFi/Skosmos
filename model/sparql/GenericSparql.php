@@ -1054,12 +1054,11 @@ EOQ;
   {
         $gc = $this->graphClause;
     $query = <<<EOQ
-SELECT ?top ?label ?notation ?children WHERE {
+SELECT ?top ?label ?children WHERE {
   $gc {
   ?top skos:topConceptOf <$conceptScheme> .
   ?top skos:prefLabel ?label .
   FILTER (langMatches(lang(?label), "$lang"))
-  OPTIONAL { ?top skos:notation ?notation . }
   BIND ( EXISTS { ?top skos:narrower ?a . } AS ?children )
   }
 }
@@ -1069,8 +1068,6 @@ EOQ;
     foreach ($result as $row) {
       if (isset($row->top) && isset($row->label)) {
         $top = array('uri' => $row->top->getUri(), 'label' => $row->label->getValue(), 'hasChildren' => filter_var($row->children->getValue(), FILTER_VALIDATE_BOOLEAN));
-        if (isset($row->notation))
-          $top['notation'] = $row->notation->getValue();
         $ret[] = $top;
       }
     }
