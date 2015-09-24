@@ -46,6 +46,7 @@
     "combineStatistics": false,
     "countAndSetOffset": false,
     "loadLimitedResults": false,
+    "naturalCompare": false,
     "waypoint_results": false
   },
   "browser" : true,

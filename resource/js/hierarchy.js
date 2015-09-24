@@ -276,7 +276,7 @@ function getTreeConfiguration(root) {
       }
     },
     'plugins' : ['sort'],
-    'sort' : function (a,b) { return this.get_text(a).toLowerCase() > this.get_text(b).toLowerCase() ? 1 : -1; }  
+    'sort' : function (a,b) { return naturalCompare(this.get_text(a).toLowerCase(), this.get_text(b).toLowerCase()); }  
   });
 }
 
