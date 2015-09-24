@@ -292,7 +292,7 @@ $(function() { // DOCUMENT READY
       }
   );
 
-  // if we are on the vocab front page initialize the hierarchy view with a top concept.
+  // event handler for clicking the sidebar hierarchy tab
   $(document).on('click', '#hier-trigger', 
     function () {
       var $content = $('#sidebar');
@@ -307,7 +307,7 @@ $(function() { // DOCUMENT READY
         return false;
       }
       var uri = $('.uri-input-box').html();
-      var redirectUrl = vocab + '/' + lang + '/page/' + uri.split('/')[uri.split('/').length-1];
+      var redirectUrl = vocab + '/' + lang + '/page/?uri=' + uri;
       window.location.replace(encodeURI(redirectUrl));
       return false;
     }
