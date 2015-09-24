@@ -823,6 +823,7 @@ class RestController extends Controller
             'type' => '@type',
             'prefLabel' => 'skos:prefLabel',
             'narrower' => 'skos:narrower',
+            'notation' => 'skos:notation',
             'hasChildren' => 'onki:hasChildren',
             '@language' => $request->getLang(),
         ),
