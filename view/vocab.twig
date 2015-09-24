@@ -1,5 +1,5 @@
 {% extends "light.twig" %}
-{% block title %}: {{ vocab.title }}{% endblock %}
+{% block title %}: {{ vocab.title(request.contentLang) }}{% endblock %}
 
 {% block sidebar %}
 <div class="sidebar-buttons">
