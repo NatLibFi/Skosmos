@@ -450,7 +450,6 @@ class RestController extends Controller
             'onki' => 'http://schema.onki.fi/onki#',
             'uri' => '@id',
             'topconcepts' => 'skos:hasTopConcept',
-            'notation' => 'skos:notation',
             'label' => 'skos:prefLabel',
             '@language' => $request->getLang(),
         ),
