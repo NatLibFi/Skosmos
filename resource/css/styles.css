@@ -1232,6 +1232,10 @@ span.date-info {
   float: right;
 }
 
+.concept-download-links > a {
+ margin-right: 1px; 
+}
+
 /* typeahead.js
  ***********************************/
 
