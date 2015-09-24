@@ -134,6 +134,7 @@
           </span></td><td><span class="versal"><a href="rest/v1/{% if concept.vocab %}{{ concept.vocab.id }}{% else %}{{ vocab.id }}{% endif %}/data?uri={{ concept.uri|url_encode }}&amp;format=application/rdf%2Bxml">RDF/XML</a>
             <a href="rest/v1/{% if concept.vocab %}{{ concept.vocab.id }}{% else %}{{ vocab.id }}{% endif %}/data?uri={{ concept.uri|url_encode }}&amp;format=text/turtle">
               TURTLE</a>
+            <a href="rest/v1/{% if concept.vocab %}{{ concept.vocab.id }}{% else %}{{ vocab.id }}{% endif %}/data?uri={{ concept.uri|url_encode }}&amp;format=application/ld%2Bjson">JSON-LD</a>
           </span>{% if concept.date %}<span class="versal date-info">{{ concept.date }}</span>{% endif %}</td></tr>
         </table>
         </div>
