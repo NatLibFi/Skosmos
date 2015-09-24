@@ -998,7 +998,7 @@ EOQ;
     $uri = is_array($uri) ? $uri[0] : $uri;
     $gc = $this->graphClause;
     $query = <<<EOQ
-SELECT ?child ?label ?child ?grandchildren WHERE {
+SELECT ?child ?label ?child ?grandchildren ?notation WHERE {
   $gc {
     <$uri> a skos:Concept .
     OPTIONAL {
@@ -1013,6 +1013,9 @@ SELECT ?child ?label ?child ?grandchildren WHERE {
       }
       OPTIONAL { # other language case
         ?child skos:prefLabel ?label .
+      }
+      OPTIONAL {
+        ?child skos:notation ?notation .
       }
       BIND ( EXISTS { ?child skos:narrower ?a . } AS ?grandchildren )
     }
@@ -1032,12 +1035,14 @@ EOQ;
         else
           $label = $row->label->getValue() . " (" . $row->label->getLang() . ")";
       }
-        
-      $ret[] = array(
+      $child_array = array(
         'uri' => $row->child->getUri(),
         'prefLabel' => $label,
         'hasChildren' => filter_var($row->grandchildren->getValue(), FILTER_VALIDATE_BOOLEAN),
       );
+      if (isset($row->notation))
+        $child_array['notation'] = $row->notation->getValue();
+      $ret[] = $child_array;
     }
     if (sizeof($ret) > 0)
       return $ret; // existing concept, with children

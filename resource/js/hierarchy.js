@@ -218,6 +218,8 @@ function createObjectsFromNarrowers(narrowerResponse) {
       parents: narrowerResponse.uri,
       state: { opened: false, disabled: false, selected: false }
     };
+    if (conceptObject.notation)
+      childObject.text = '<span class="tree-notation">' + conceptObject.notation + '</span> ' + childObject.text;
     if (hasChildren) {
       childObject.children = true;
       childObject.state.opened = false;
