@@ -550,7 +550,7 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   public function testGetTopConcepts() {
     $vocab = $this->model->getVocabulary('test');
     $prop = $vocab->getTopConcepts();
-    $this->assertEquals('Fish', $prop['http://www.skosmos.skos/test/ta1']);
+    $this->assertEquals(array (0 => array ('uri' => 'http://www.skosmos.skos/test/ta1','label' => 'Fish','hasChildren' => true)), $prop);
   }
   
   /**

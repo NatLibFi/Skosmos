@@ -443,10 +443,6 @@ class RestController extends Controller
 
     /* encode the results in a JSON-LD compatible array */
     $topconcepts = $vocab->getTopConcepts($scheme, $request->getLang());
-    $results = array();
-    foreach ($topconcepts as $uri => $label) {
-      $results[] = array('uri'=>$uri, 'label'=>$label);
-    }
 
     $ret = array(
         '@context' => array(
@@ -454,11 +450,12 @@ class RestController extends Controller
             'onki' => 'http://schema.onki.fi/onki#',
             'uri' => '@id',
             'topconcepts' => 'skos:hasTopConcept',
+            'notation' => 'skos:notation',
             'label' => 'skos:prefLabel',
             '@language' => $request->getLang(),
         ),
         'uri' => $scheme,
-        'topconcepts' => $results,
+        'topconcepts' => $topconcepts,
     );
 
     return $this->return_json($ret);
@@ -718,9 +715,12 @@ class RestController extends Controller
 
       /* encode the results in a JSON-LD compatible array */
       $topconcepts = $request->getVocab()->getTopConcepts($scheme, $request->getLang());
-      foreach ($topconcepts as $uri => $label) {
-        if (!isset($results[$uri]))
-          $results[$uri] = array('uri'=>$uri, 'top'=>$scheme, 'prefLabel'=>$label, 'hasChildren'=> true);
+      foreach ($topconcepts as $top) {
+        if (!isset($results[$top['uri']])) {
+          $results[$top['uri']] = array('uri'=>$top['uri'], 'top'=>$scheme, 'prefLabel'=>$top['label'], 'hasChildren'=>$top['hasChildren']);
+          if (isset($top['notation']))
+            $results[$top['uri']]['notation'] = $top['notation'];
+        }
       }
     }
 

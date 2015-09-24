@@ -422,7 +422,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   public function testQueryTopConcepts()
   {
     $actual = $this->sparql->queryTopConcepts('http://www.skosmos.skos/test/conceptscheme', 'en');
-    $this->assertEquals(array('http://www.skosmos.skos/test/ta1' => 'Fish'), $actual);
+    $this->assertEquals(array (0 => array ('uri' => 'http://www.skosmos.skos/test/ta1','label' => 'Fish','hasChildren' => true)), $actual);
   }
 
   /**
