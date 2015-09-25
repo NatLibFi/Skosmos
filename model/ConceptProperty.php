@@ -59,23 +59,19 @@ class ConceptProperty
    */
   public function getValues()
   {
+    $this->sortValues();
     return $this->values;
   }
   
   public function addValue($value)
   {
-    $label = $value->getLabel($this->lang);
-    if (!$label) $label = $value->getLabel(); // try any language
-    if (method_exists($label, 'getValue'))
-      $label = $label->getValue();
-    $this->values[$label . $value->getUri()] = $value;
-    $this->sortValues();
+    $this->values[$value->getLabel() . $value->getUri()] = $value;
   }
 
   private function sortValues()
   {
     if (!empty($this->values))
-      ksort($this->values);
+      natcasesort($this->values);
   }
 
   /**

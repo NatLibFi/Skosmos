@@ -798,4 +798,16 @@ class Vocabulary extends DataObject
     return (in_array($lang, $this->getLanguages())) ? $lang : $this->getDefaultLanguage();
   }
 
+  /**
+   * Returns a boolean value set in the vocabularies.ttl config.
+   * @return boolean
+   */
+  public function sortByNotation()
+  {
+    $val = $this->resource->getLiteral("skosmos:sortByNotation");
+    if ($val)
+      return filter_var($val->getValue(), FILTER_VALIDATE_BOOLEAN);
+    return false;
+  }
+
 }

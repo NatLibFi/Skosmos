@@ -239,6 +239,7 @@ CONSTRUCT {
  ?o skos:prefLabel ?opl .
  ?o rdfs:label ?ol .
  ?o rdf:value ?ov .
+ ?o skos:notation ?on .
  ?directgroup skos:member ?uri .
  ?parent skos:member ?group .
  ?group skos:prefLabel ?grouplabel .
@@ -271,6 +272,8 @@ CONSTRUCT {
      { ?o rdfs:label ?ol . }
      UNION
      { ?o rdf:value ?ov . }
+     UNION
+     { ?o skos:notation ?on . }
    } $optional
   }
  }

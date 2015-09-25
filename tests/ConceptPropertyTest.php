@@ -67,8 +67,12 @@ class ConceptPropertyTest extends PHPUnit_Framework_TestCase
     $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta1', 'en');
     $concept = $concepts[0];
     $props = $concept->getProperties();
-    $prop = $props['skos:narrower']->getValues();
-    $expected_order = array (0 => '3D Basshttp://www.skosmos.skos/test/ta117',1 => 'Basshttp://www.skosmos.skos/test/ta116',2 => 'Burihttp://www.skosmos.skos/test/ta114',3 => 'Carphttp://www.skosmos.skos/test/ta112',4 => 'Eelhttp://www.skosmos.skos/test/ta115',5 => 'Haukihttp://www.skosmos.skos/test/ta119',6 => 'Tunahttp://www.skosmos.skos/test/ta111',7 => 'test:ta113http://www.skosmos.skos/test/ta113',8 => 'test:ta120http://www.skosmos.skos/test/ta120');
-    $this->assertEquals($expected_order, array_keys($prop));
+    $prevlabel;
+    foreach($props['skos:narrower'] as $val) {
+      $label = is_string($val->getLabel()) ? $val->getLabel() : $val->getLabel()-getValue();
+      if ($prevlabel)
+        $this->assertEquals(1, strnatcmp($prevlabel, $label));
+      $prevlabel = $label;
+    }
   }
 }

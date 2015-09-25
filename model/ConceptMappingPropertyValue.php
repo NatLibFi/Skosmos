@@ -19,6 +19,12 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
     $this->labelcache = array();
   }
 
+  public function __toString() {
+    $label = $this->getLabel();    
+    $notation = $this->getNotation();
+    return $notation . $label;
+  }
+
   public function getType()
   {
     return $this->type;
@@ -96,6 +102,12 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
       }
     }
     return null;
+  }
+  
+  public function getNotation()
+  {
+    if ($this->resource->get('skos:notation'))
+      return $this->resource->get('skos:notation')->getValue();
   }
 
 }

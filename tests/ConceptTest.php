@@ -160,9 +160,13 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $search_results = $this->model->searchConceptsAndInfo('fish', 'test', 'en', 'en'); 
     $concept = $search_results['results'][0];
     $props = $concept->getProperties();
-    $expected = array (0 => '3D Basshttp://www.skosmos.skos/test/ta117',1 => 'Basshttp://www.skosmos.skos/test/ta116',2 => 'Burihttp://www.skosmos.skos/test/ta114',3 => 'Carphttp://www.skosmos.skos/test/ta112',4 => 'Eelhttp://www.skosmos.skos/test/ta115',5 => 'Haukihttp://www.skosmos.skos/test/ta119',6 => 'Tunahttp://www.skosmos.skos/test/ta111',7 => 'test:ta113http://www.skosmos.skos/test/ta113',8 => 'test:ta120http://www.skosmos.skos/test/ta120');
-    $this->assertEquals($expected, array_keys($props['skos:narrower']->getValues()));
- 
+    $prevlabel;
+    foreach($props['skos:narrower'] as $val) {
+      $label = is_string($val->getLabel()) ? $val->getLabel() : $val->getLabel()-getValue();
+      if ($prevlabel)
+        $this->assertEquals(1, strnatcmp($prevlabel, $label));
+      $prevlabel = $label;
+    }
   }
   
   /**

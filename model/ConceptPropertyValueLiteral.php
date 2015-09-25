@@ -52,5 +52,10 @@ class ConceptPropertyValueLiteral
   {
     return null;
   }
+  
+  public function getNotation()
+  {
+    return null;
+  }
 
 }

@@ -18,6 +18,13 @@ class ConceptPropertyValue extends VocabularyDataObject
     $this->clang = $clang;
   }
 
+  public function __toString() {
+    $label = is_string($this->getLabel()) ? $this->getLabel() : $this->getLabel()->getValue();
+    if($this->vocab->sortByNotation())
+      $label = $this->getNotation() . $label;
+    return $label;
+  }
+
   public function getLang()
   {
     return $this->lang;
@@ -79,6 +86,12 @@ class ConceptPropertyValue extends VocabularyDataObject
   {
     if (!empty($this->submembers))
       ksort($this->submembers);
+  }
+  
+  public function getNotation()
+  {
+    if ($this->resource->get('skos:notation'))
+      return $this->resource->get('skos:notation')->getValue();
   }
 
 }
