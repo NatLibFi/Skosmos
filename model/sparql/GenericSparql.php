@@ -1204,7 +1204,7 @@ EOQ;
   {
     $gc = $this->graphClause;
     $query = <<<EOQ
-SELECT ?group (GROUP_CONCAT(STR(?child)) as ?children) ?label ?members
+SELECT ?group (GROUP_CONCAT(STR(?child)) as ?children) ?label ?members ?notation
 WHERE {
  $gc {
    ?group a <$groupClass> .
@@ -1214,9 +1214,10 @@ WHERE {
    OPTIONAL { ?group skos:prefLabel ?label } 
    OPTIONAL { ?group rdfs:label ?label }
    FILTER (langMatches(lang(?label), '$lang'))
+   OPTIONAL { ?group skos:notation ?notation }
  }
 }
-GROUP BY ?group ?label ?members
+GROUP BY ?group ?label ?members ?notation
 ORDER BY lcase(?label)
 EOQ;
     $ret = array();
@@ -1228,6 +1229,8 @@ EOQ;
           $group['childGroups'] = explode(' ', $row->children->getValue());
       if (isset($row->members))
         $group['hasMembers'] = $row->members->getValue();
+      if (isset($row->notation))
+        $group['notation'] = $row->notation->getValue();
       $ret[] = $group;
     }
     return $ret;
@@ -1244,7 +1247,7 @@ EOQ;
   {
     $gc = $this->graphClause;
     $query = <<<EOQ
-SELECT ?conc ?super ?label ?members ?type
+SELECT ?conc ?super ?label ?members ?type ?notation
 WHERE {
  $gc {
    <$group> a <$groupClass> .
@@ -1253,6 +1256,7 @@ WHERE {
    ?conc skos:prefLabel ?label .
    ?conc a ?type .
    FILTER (langMatches(lang(?label), '$lang'))
+   OPTIONAL { ?conc skos:notation ?notation }
  }
  BIND(EXISTS{?submembers isothes:superGroup ?conc} as ?super)
  BIND(EXISTS{?conc skos:member ?submembers} as ?members)
@@ -1270,6 +1274,8 @@ EOQ;
           'hasMembers' => $row->members->getValue(),
           'type' => array($row->type->shorten())
         );
+        if (isset($row->notation))
+          $values[$row->conc->getURI()]['notation'] = $row->notation->getValue();
       } else {
          $values[$row->conc->getURI()]['type'][] = $row->type->shorten();
       }

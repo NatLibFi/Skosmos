@@ -58,7 +58,7 @@ function invokeGroupTree() {
 
   $('.group-hierarchy').jstree({ 
     'plugins' : ['sort'],
-    'sort' : function (a,b) { return this.get_text(a).toLowerCase() > this.get_text(b).toLowerCase() ? 1 : -1; },
+    'sort' : function (a,b) { return naturalCompare(this.get_text(a).toLowerCase(), this.get_text(b).toLowerCase()); },
     'core' : { 
       'data' : 
         function(node, cb) { 
@@ -77,6 +77,9 @@ function invokeGroupTree() {
                   var child = {'id' : member.uri, 'text' : member.prefLabel,'parent' : node.id, children : false, a_attr : { "href" : vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(member.uri)}};
                   if (member.hasMembers || member.isSuper) {
                     child.children = true;
+                  }
+                  if (member.notation) {
+                    child.text = '<span class="tree-notation">' + member.notation + '</span> ' + child.text;
                   }
                   if ($.inArray('skos:Collection', member.type) !== -1) {
                     child.a_attr.class = 'group';
@@ -100,6 +103,8 @@ function createGroupNode(uri, groupObject) {
   node.text = groupObject.prefLabel;
   if (groupObject.hasMembers || groupObject.isSuper) {
     node.children = true;
+  if (groupObject.notation)
+    node.text = '<span class="tree-notation">' + groupObject.notation + '</span> ' + node.text;
   }
   return node;
 }
