@@ -248,7 +248,13 @@ class RestController extends Controller
   public function vocabularyStatistics($request)
   {
     $this->setLanguageProperties($request->getLang());
-    $vocab_stats = $request->getVocab()->getStatistics();
+    $vocab_stats = $request->getVocab()->getStatistics($request->getQueryParam('lang'));
+    $subTypes = array();
+    foreach($vocab_stats as $subtype) {
+      if ($subtype['type'] !== 'http://www.w3.org/2004/02/skos/core#Concept') {
+        $subTypes[] = $subtype;
+      }
+    }
 
     /* encode the results in a JSON-LD compatible array */
     $ret = array(
@@ -260,6 +266,7 @@ class RestController extends Controller
             'id' => 'onki:vocabularyIdentifier',
             'concepts' => 'void:classPartition',
             'class' => array('@id' => 'void:class', '@type' => '@id'),
+            'subTypes' => array('@id' => 'void:class', '@type' => '@id'),
             'count' => 'void:entities',
             '@language' => $request->getLang(),
         ),
@@ -268,8 +275,9 @@ class RestController extends Controller
         'title' => $request->getVocab()->getTitle(),
         'concepts' => array(
             'class' => 'skos:Concept',
-            'count' => $vocab_stats['concepts'],
+            'count' => $vocab_stats['http://www.w3.org/2004/02/skos/core#Concept']['count'],
         ),
+        'subTypes' => $subTypes 
     );
 
     return $this->return_json($ret);
@@ -283,7 +291,6 @@ class RestController extends Controller
   {
     $lang = $request->getLang();
     $this->setLanguageProperties($request->getLang());
-    
     $vocab_stats = $request->getVocab()->getLabelStatistics();
 
     /* encode the results in a JSON-LD compatible array */

@@ -185,9 +185,20 @@ $(function() { // DOCUMENT READY
     $('#statistics tr:nth-of-type(1)').after('<tr><td><span class="spinner" /></td></td></tr>');
     $.ajax({
       url : rest_base_url + vocab + '/vocabularyStatistics',
+      data: $.param({'lang' : content_lang}),
       success : function(data) {
         var $spinner = $('.vocab-info-literals .spinner');
-        $spinner.after(data.concepts.count);
+        console.log(data);
+        var typeStats = '<table><tr><td class="count-type">' + data.concepts.class + '</td><td>' + data.concepts.count +'</td></tr>';
+        for (var i in data.subTypes) {
+          var sub = data.subTypes[i];
+          var label = sub.label ? sub.label : sub.type;
+          typeStats += '<tr><td class="count-type">' + label + '</td>' + '<td>' + sub.count + '</td></tr>';
+        }
+        typeStats += '</table>';
+        console.log(typeStats);
+          
+        $spinner.after(typeStats);
         $spinner.detach();
       }
     });

@@ -107,20 +107,28 @@ class GenericSparql
    * Used for counting number of concepts in a vocabulary.
    * @return int number of concepts in this vocabulary
    */
-  public function countConcepts()
+  public function countConcepts($lang=null)
   {
     $gc = $this->graphClause;
     $query = <<<EOQ
-      SELECT (COUNT(?conc) as ?c) WHERE {
+      SELECT (COUNT(?conc) as ?c) ?type ?typelabel WHERE {
         $gc {
-          { ?conc a skos:Concept }
+          { ?conc a ?type . 
+            ?type rdfs:subClassOf* skos:Concept . }
+          OPTIONAL { ?type rdfs:label ?typelabel . }
         }
       }
+GROUP BY ?type ?typelabel
 EOQ;
     $result = $this->client->query($query);
+    $ret = array();
     foreach ($result as $row) {
-      return $row->c->getValue();
+      $ret[$row->type->getUri()]['type'] = $row->type->getUri();
+      $ret[$row->type->getUri()]['count'] = $row->c->getValue();
+      if (isset($row->typelabel) && $row->typelabel->getLang() === $lang)
+        $ret[$row->type->getUri()]['label'] = $row->typelabel->getValue();
     }
+    return $ret;
   }
 
   /**
@@ -128,12 +136,14 @@ EOQ;
    * @param array $langs Languages to query for
    * @return Array containing count of concepts for each language and property.
    */
-  public function countLangConcepts($langs)
+  public function countLangConcepts($langs, $classes=null)
   {
     $gc = $this->graphClause;
     $ret = array();
+    $classes = ($classes) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
 
     $props = array('skos:prefLabel', 'skos:altLabel', 'skos:hiddenLabel');
+    $values = $this->formatValues('?type', $classes, 'uri');
     $values_lang = $this->formatValues('?lang', $langs, 'literal');
     $values_prop = $this->formatValues('?prop', $props, null);
 
@@ -142,14 +152,15 @@ SELECT ?lang ?prop
   (COUNT(?label) as ?count)
 WHERE {
   $gc {
-    ?conc a skos:Concept .
+    ?conc a ?type .
     ?conc ?prop ?label .
     FILTER (langMatches(lang(?label), ?lang))
     $values_lang
     $values_prop
   }
+  $values
 }
-GROUP BY ?lang ?prop
+GROUP BY ?lang ?prop ?type
 EOQ;
     // Count the number of terms in each language
     $result = $this->client->query($query);

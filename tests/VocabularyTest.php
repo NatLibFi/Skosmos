@@ -393,7 +393,7 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   public function testGetStatistics() {
     $vocab = $this->model->getVocabulary('test');
     $stats = $vocab->getStatistics();
-    $this->assertEquals(13, $stats['concepts']);
+    $this->assertEquals(13, $stats['http://www.w3.org/2004/02/skos/core#Concept']['count']);
   }
   
   /**

@@ -819,6 +819,10 @@ tr {
   margin-bottom: 15px;
 }
 
+.count-type {
+  padding-right: 20px;
+}
+
 /* alerts 
  ****************************/
 .alert {
