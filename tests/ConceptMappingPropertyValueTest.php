@@ -5,6 +5,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit_Framework_TestCase
   private $model; 
   private $concept;
   private $vocab;
+  private $props;
 
   protected function setUp() {
     require_once 'testconfig.inc';
@@ -15,9 +16,10 @@ class ConceptMappingPropertyValueTest extends PHPUnit_Framework_TestCase
     textdomain('skosmos');
 
     $this->model = new Model();
-    $search_results = $this->model->searchConceptsAndInfo('carp', 'test', 'en', 'en'); 
-    $this->concept = $search_results['results'][0];
     $this->vocab = $this->model->getVocabulary('mapping');
+    $concepts = $this->vocab->getConceptInfo('http://www.skosmos.skos/mapping/m1', 'en');
+    $this->concept = $concepts[0];
+    $this->props = $this->concept->getMappingProperties();
   }
 
   /**
@@ -25,10 +27,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit_Framework_TestCase
    * @covers DataObject::getExternalLabel
    */
   public function testGetLabelFromExternalVocabulary() {
-    $concepts = $this->vocab->getConceptInfo('http://www.skosmos.skos/mapping/m1', 'en');
-    $concept = $concepts[0];
-    $props = $concept->getMappingProperties();
-    $propvals = $props['skos:exactMatch']->getValues();
+    $propvals = $this->props['skos:exactMatch']->getValues();
     $this->assertEquals('Eel', $propvals['Eelhttp://www.skosmos.skos/test/ta115']->getLabel()->getValue());
   }
 
@@ -36,10 +35,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit_Framework_TestCase
    * @covers ConceptMappingPropertyValue::getExVocab
    */
   public function testGetExVocab() {
-    $concepts = $this->vocab->getConceptInfo('http://www.skosmos.skos/mapping/m1', 'en');
-    $concept = $concepts[0];
-    $props = $concept->getMappingProperties();
-    $propvals = $props['skos:exactMatch']->getValues();
+    $propvals = $this->props['skos:exactMatch']->getValues();
     $this->assertInstanceOf('Vocabulary', $propvals['Eelhttp://www.skosmos.skos/test/ta115']->getExVocab());
     $this->assertEquals('test', $propvals['Eelhttp://www.skosmos.skos/test/ta115']->getExVocab()->getId());
   }
@@ -48,10 +44,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit_Framework_TestCase
    * @covers ConceptMappingPropertyValue::getVocabName
    */
   public function testGetVocabNameWithExternalVocabulary() {
-    $concepts = $this->vocab->getConceptInfo('http://www.skosmos.skos/mapping/m1', 'en');
-    $concept = $concepts[0];
-    $props = $concept->getMappingProperties();
-    $propvals = $props['skos:exactMatch']->getValues();
+    $propvals = $this->props['skos:exactMatch']->getValues();
     $this->assertEquals('Test ontology', $propvals['Eelhttp://www.skosmos.skos/test/ta115']->getVocabName());
   }
   
@@ -59,10 +52,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit_Framework_TestCase
    * @covers ConceptMappingPropertyValue::getUri
    */
   public function testGetUri() {
-    $concepts = $this->vocab->getConceptInfo('http://www.skosmos.skos/mapping/m1', 'en');
-    $concept = $concepts[0];
-    $props = $concept->getMappingProperties();
-    $propvals = $props['skos:exactMatch']->getValues();
+    $propvals = $this->props['skos:exactMatch']->getValues();
     $this->assertEquals('http://www.skosmos.skos/test/ta115', $propvals['Eelhttp://www.skosmos.skos/test/ta115']->getUri());
   }
   
@@ -70,10 +60,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit_Framework_TestCase
    * @covers ConceptMappingPropertyValue::getVocab
    */
   public function testGetVocab() {
-    $concepts = $this->vocab->getConceptInfo('http://www.skosmos.skos/mapping/m1', 'en');
-    $concept = $concepts[0];
-    $props = $concept->getMappingProperties();
-    $propvals = $props['skos:exactMatch']->getValues();
+    $propvals = $this->props['skos:exactMatch']->getValues();
     $this->assertEquals($this->vocab, $propvals['Eelhttp://www.skosmos.skos/test/ta115']->getVocab());
   }
   
@@ -81,10 +68,15 @@ class ConceptMappingPropertyValueTest extends PHPUnit_Framework_TestCase
    * @covers ConceptMappingPropertyValue::getType
    */
   public function testGetType() {
-    $concepts = $this->vocab->getConceptInfo('http://www.skosmos.skos/mapping/m1', 'en');
-    $concept = $concepts[0];
-    $props = $concept->getMappingProperties();
-    $propvals = $props['skos:exactMatch']->getValues();
+    $propvals = $this->props['skos:exactMatch']->getValues();
     $this->assertEquals('skos:exactMatch', $propvals['Eelhttp://www.skosmos.skos/test/ta115']->getType());
+  }
+  
+  /**
+   * @covers ConceptMappingPropertyValue::__toString
+   */
+  public function testToString() {
+    $propvals = $this->props['skos:exactMatch']->getValues();
+    $this->assertEquals('Eel', $propvals['Eelhttp://www.skosmos.skos/test/ta115']->__toString());
   }
 }
