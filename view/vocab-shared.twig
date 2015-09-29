@@ -19,13 +19,14 @@
         </tr>
         <tr><td class="property-divider"></td></tr>
         {% endfor %}
-        <tr>
-          <th class="versal">{{ 'Concepts'|trans|upper }}</th>
-        </tr>
-        <tr><td class="property-divider"></td></tr>
       </table>
     </div>
     <div>
+      <h2>{% trans "Concept counts by type" %}</h2>
+      <table id="counts">
+        <tr><th class="versal">{% trans "Type" %}</th><th class="versal">{% trans "Count" %}</th></tr>
+        <tr><td class="property-divider"></td></tr>
+      </table>
       <h2>{% trans "Term counts by language" %}</h2>
       <table class="table" id="statistics">
       <tr>

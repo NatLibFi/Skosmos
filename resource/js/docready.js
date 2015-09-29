@@ -181,22 +181,19 @@ $(function() { // DOCUMENT READY
   // ajaxing the concept count and the preflabel counts on the vocabulary front page
   if ($('#vocab-info').length) {
     // adding the spinners      
-    $('.vocab-info-literals tr:nth-last-child(2) th').after('<td class="versal"><span class="spinner" /></td>');
+    $('#counts tr:nth-of-type(1)').after('<tr><td><span class="spinner" /></td></td></tr>');
     $('#statistics tr:nth-of-type(1)').after('<tr><td><span class="spinner" /></td></td></tr>');
     $.ajax({
       url : rest_base_url + vocab + '/vocabularyStatistics',
       data: $.param({'lang' : content_lang}),
       success : function(data) {
-        var $spinner = $('.vocab-info-literals .spinner');
-        console.log(data);
-        var typeStats = '<table><tr><td class="count-type">' + data.concepts.class + '</td><td>' + data.concepts.count +'</td></tr>';
+        var $spinner = $('#counts tr:nth-of-type(2)');
+        var typeStats = '<tr><td class="count-type versal">' + data.concepts.class + '</td><td class="versal">' + data.concepts.count +'</td></tr>';
         for (var i in data.subTypes) {
           var sub = data.subTypes[i];
           var label = sub.label ? sub.label : sub.type;
-          typeStats += '<tr><td class="count-type">' + label + '</td>' + '<td>' + sub.count + '</td></tr>';
+          typeStats += '<tr><td class="count-type versal">' + label + '</td>' + '<td class="versal">' + sub.count + '</td></tr>';
         }
-        typeStats += '</table>';
-        console.log(typeStats);
           
         $spinner.after(typeStats);
         $spinner.detach();

@@ -274,7 +274,7 @@ class RestController extends Controller
         'id' => $request->getVocab()->getId(),
         'title' => $request->getVocab()->getTitle(),
         'concepts' => array(
-            'class' => 'skos:Concept',
+            'class' => gettext('skos:Concept'),
             'count' => $vocab_stats['http://www.w3.org/2004/02/skos/core#Concept']['count'],
         ),
         'subTypes' => $subTypes 
