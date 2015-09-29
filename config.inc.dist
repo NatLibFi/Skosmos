@@ -47,3 +47,6 @@ define("SERVICE_LOGO", "./resource/pics/logo.png");
 
 // customize the css by adding your own stylesheet
 define("CUSTOM_CSS", "resource/css/stylesheet.css");
+
+// Customize the base element. Set this if the automatic base url detection doesn't work. For example setups behind a proxy.
+// define("BASE_HREF", "http://localhost/Skosmos/");
