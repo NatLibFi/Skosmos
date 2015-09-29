@@ -647,6 +647,7 @@ $(function() { // DOCUMENT READY
   $('.clear-search').on('click', function() { 
     searchString = '';
     $typeahead.val('');
+    $typeahead.focus();
     $(this).removeClass('clear-search-dark');
   });
 
