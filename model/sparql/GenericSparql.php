@@ -387,7 +387,7 @@ EOQ;
   {
     $gc = $this->graphClause;
     $query = <<<EOQ
-SELECT ?cs ?label
+SELECT ?cs ?label ?preflabel ?title
 WHERE {
  $gc {
    ?cs a skos:ConceptScheme .
@@ -397,7 +397,7 @@ WHERE {
    }
    OPTIONAL {
      ?cs skos:prefLabel ?preflabel .
-     FILTER(langMatches(lang(?prefLabel), '$lang'))
+     FILTER(langMatches(lang(?preflabel), '$lang'))
    }
    OPTIONAL {
      { ?cs dc11:title ?title }
@@ -413,8 +413,8 @@ EOQ;
       $conceptscheme = array();
       if (isset($row->label))
         $conceptscheme['label'] = $row->label->getValue();
-      if (isset($row->prefLabel))
-        $conceptscheme['prefLabel'] = $row->prefLabel->getValue();
+      if (isset($row->preflabel))
+        $conceptscheme['prefLabel'] = $row->preflabel->getValue();
       if (isset($row->title))
         $conceptscheme['title'] = $row->title->getValue();
       $ret[$row->cs->getURI()] = $conceptscheme;
