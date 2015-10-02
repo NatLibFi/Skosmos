@@ -143,6 +143,27 @@ ul.dropdown-menu > li:last-child > input {
   border-radius: 0 !important;
 }
 
+.header-float .multiselect > .caret {
+  position: absolute;
+  right: 5px;
+  top: 18px;
+}
+
+.header-float > .btn-group > button {
+  width: 175px;
+  overflow: hidden;
+}
+
+.header-float > .btn-group > .multiselect-container {
+  width: 175px;
+}
+
+.multiselect > span {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+}
+
 .multiselect-container > li.active > a, .multiselect-container > li > a:focus, .dropdown-menu > li:hover > a {
   background-color: #00748F !important;
   color: #ffffff !important;
@@ -186,16 +207,6 @@ ul.dropdown-menu > li:last-child > input {
 
 .header-float {
   float: right;
-}
-
-.header-float > .btn-group {
-  vertical-align: baseline;
-  float: left;
-}
-
-.header-float > .btn-group > button {
-  width: 150px;
-  overflow: hidden;
 }
 
 .headerbar-coloured > .header-float > p {
@@ -335,10 +346,6 @@ ul.dropdown-menu > li:last-child > input {
 .multiselect {
   border: 0 !important;
   margin: 5px 0 0 0 !important;
-}
-
-.multiselect > span {
-  float: right;
 }
 
 #selected-vocabs {
