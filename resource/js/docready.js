@@ -499,10 +499,11 @@ $(function() { // DOCUMENT READY
       if ($('input[name=anylang]').is(':checked')) { params.anylang = 'on'; }
       if ($('input[name=anylang]').is(':checked') && clang && clang !== lang) { params.clang = clang; }
       var paramstr = $.isEmptyObject(params) ? '' : '?' + $.param(params);
+      var base_href = $('base').attr('href'); // see #315
       if (datum.type && datum.type.indexOf('Collection') !== -1) {
-        location.href = datum.vocab + '/' + lang + '/groups/' + localname + paramstr;
+        location.href = base_href + datum.vocab + '/' + lang + '/groups/' + localname + paramstr;
       } else {
-        location.href = datum.vocab + '/' + lang + '/page/' + localname + paramstr;
+        location.href = base_href + datum.vocab + '/' + lang + '/page/' + localname + paramstr;
       }
     } else {
       $('#parent-limit').attr('data-uri', datum.uri); 
