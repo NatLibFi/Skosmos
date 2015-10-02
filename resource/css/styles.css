@@ -1900,8 +1900,12 @@ body, .versal, h1, h2, p, .versal-bold {
     width: 370px !important;
   }
   
-  .search-options .multiselect > span, .search-options .multiselect-container {
+  .search-options .multiselect-container {
     width: 370px !important;
+  }
+  
+  .search-options .multiselect > span {
+    width: 340px;
   }
   
   .pagination {
