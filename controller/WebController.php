@@ -566,15 +566,15 @@ class WebController extends Controller
   /**
    * Invokes a very generic errorpage.
    */
-  public function invokeGenericErrorPage()
+  public function invokeGenericErrorPage($request)
   {
-    $lang = $this->guessLanguage();
-    $this->setLanguageProperties($lang);
+    $this->setLanguageProperties($request->getLang());
     header("HTTP/1.0 404 Not Found");
     $template = $this->twig->loadTemplate('error-page.twig');
     echo $template->render(
       array(
         'languages' => $this->languages,
+        'request' => $request,
         'requested_page' => filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_STRING)
       ));
   }
