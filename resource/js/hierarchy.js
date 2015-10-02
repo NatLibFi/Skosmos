@@ -85,7 +85,7 @@ function createConceptObject(conceptUri, conceptData) {
     newNode.children = true;
     newNode.state.opened = false;
   }
-  // if we are at a top concepts page we want to highlight that node and mark it as to be initially opened.
+  // if we are at a concept page we want to highlight that node and mark it as to be initially opened.
   if (newNode.uri === $('.uri-input-box').html()) { newNode.li_attr = { class: 'jstree-leaf-proper' }; }
   if (conceptData.notation)
     newNode.text = '<span class="tree-notation">' + conceptData.notation + '</span> ' + newNode.text;
@@ -241,6 +241,53 @@ function getParams(node) {
   return $.param({'uri' : nodeId, 'lang' : clang});
 }
 
+function schemeRoot(schemes) {
+  var topArray = [];
+  for (var i = 0; i < schemes.length; i++) {
+    var scheme = schemes[i];
+    var label = scheme.prefLabel; 
+    if (!label && scheme.label)
+      label = scheme.label;
+    else if (!label)
+      label = scheme.uri;
+    var schemeObject = {
+      text: label, 
+      a_attr : { "href" : vocab + '/' + lang + '/page/?uri=' + scheme.uri, 'class': 'scheme'},
+      uri: scheme.uri,
+      children: true,
+      state: { opened: false } 
+    };
+    setNode(schemeObject);
+    topArray.push(schemeObject);
+  }
+  return topArray;
+}
+
+function topConceptsToSchemes(topConcepts) {
+  var childArray = [];
+  for (var i in topConcepts) {
+    var conceptObject = topConcepts[i];
+    var hasChildren = conceptObject.hasChildren; 
+    var childObject = {
+      text : conceptObject.label, 
+      a_attr : { "href" : vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(conceptObject.uri) },
+      uri: conceptObject.uri,
+      state: { opened: false, disabled: false, selected: false }
+    };
+    if (conceptObject.notation)
+      childObject.text = '<span class="tree-notation">' + conceptObject.notation + '</span> ' + childObject.text;
+    if (hasChildren) {
+      childObject.children = true;
+      childObject.state.opened = false;
+    }
+    setNode(childObject);
+    childArray.push(childObject);
+  }
+  return childArray;
+}
+
+
+
 /* 
  * Gives you the Skosmos default jsTree configuration.
  */
@@ -251,6 +298,33 @@ function getTreeConfiguration(root) {
       'themes' : { 'icons': false },
       'data' : 
         function(node, cb) { 
+          var clang = content_lang !== '' ? content_lang : lang;
+          // load top concepts of concept scheme
+          if (node && node.original && node.original.a_attr && node.original.a_attr.class === 'scheme') {
+            var scheme_url = (rest_base_url + vocab + '/topConcepts');
+            $.ajax({
+              data: $.param({'scheme': node.original.uri, 'lang' : clang}),
+              url: scheme_url, 
+              success: function (response) {
+                cb(topConceptsToSchemes(response.topconcepts));
+              }
+            });
+            return false;
+          }
+          // load concept schemes
+          else if (node.id === '#' && $('#vocab-info').length) { 
+            var scheme_url = (rest_base_url + vocab + '/');
+            $.ajax({
+              data: $.param({'lang': clang}),
+              url: scheme_url, 
+              success: function (response) {
+                if (response.conceptschemes.length > 1) { // the default hierarchy query that fires when a page loads.
+                  cb(schemeRoot(response.conceptschemes));
+                }
+              }
+            });
+            return false;
+          }
           var json_url = (rest_base_url + vocab + '/hierarchy');
           var nodeId;
           if (node.id === '#') {

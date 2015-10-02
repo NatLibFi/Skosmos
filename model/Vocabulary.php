@@ -494,6 +494,18 @@ class Vocabulary extends DataObject
   
   /**
    * Returns a boolean value set in the vocabularies.ttl config.
+   * @return boolean
+   */
+  public function showConceptSchemesInHierarchy()
+  {
+    $val = $this->resource->getLiteral("skosmos:conceptSchemesInHierarchy");
+    if ($val)
+      return filter_var($val->getValue(), FILTER_VALIDATE_BOOLEAN);
+    return false;
+  }
+  
+  /**
+   * Returns a boolean value set in the vocabularies.ttl config.
    * @return boolean defaults to true if fetching hasn't been explicitly denied.
    */
   public function getExternalResourcesLoading()

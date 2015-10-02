@@ -387,7 +387,7 @@ EOQ;
   {
     $gc = $this->graphClause;
     $query = <<<EOQ
-SELECT ?cs ?label
+SELECT ?cs ?label ?preflabel ?title
 WHERE {
  $gc {
    ?cs a skos:ConceptScheme .
@@ -397,7 +397,7 @@ WHERE {
    }
    OPTIONAL {
      ?cs skos:prefLabel ?preflabel .
-     FILTER(langMatches(lang(?prefLabel), '$lang'))
+     FILTER(langMatches(lang(?preflabel), '$lang'))
    }
    OPTIONAL {
      { ?cs dc11:title ?title }
@@ -413,8 +413,8 @@ EOQ;
       $conceptscheme = array();
       if (isset($row->label))
         $conceptscheme['label'] = $row->label->getValue();
-      if (isset($row->prefLabel))
-        $conceptscheme['prefLabel'] = $row->prefLabel->getValue();
+      if (isset($row->preflabel))
+        $conceptscheme['prefLabel'] = $row->preflabel->getValue();
       if (isset($row->title))
         $conceptscheme['title'] = $row->title->getValue();
       $ret[$row->cs->getURI()] = $conceptscheme;
@@ -1069,25 +1069,31 @@ EOQ;
    * @param string $conceptScheme
    * @param string $lang
    */
-  public function queryTopConcepts($conceptScheme='?concept', $lang)
+  public function queryTopConcepts($conceptSchemes, $lang)
   {
+    if (!is_array($conceptSchemes))
+      $conceptSchemes = array($conceptSchemes);
+
+    $values = $this->formatValues('?topuri', $conceptSchemes, 'uri');
+    
         $gc = $this->graphClause;
     $query = <<<EOQ
-SELECT ?top ?label ?notation ?children WHERE {
+SELECT DISTINCT ?top ?topuri ?label ?notation ?children WHERE {
   $gc {
-  ?top skos:topConceptOf <$conceptScheme> .
+  ?top skos:topConceptOf ?topuri .
   ?top skos:prefLabel ?label .
   FILTER (langMatches(lang(?label), "$lang"))
   OPTIONAL { ?top skos:notation ?notation . }
   BIND ( EXISTS { ?top skos:narrower ?a . } AS ?children )
   }
+  $values
 }
 EOQ;
     $result = $this->client->query($query);
     $ret = array();
     foreach ($result as $row) {
       if (isset($row->top) && isset($row->label)) {
-        $top = array('uri' => $row->top->getUri(), 'label' => $row->label->getValue(), 'hasChildren' => filter_var($row->children->getValue(), FILTER_VALIDATE_BOOLEAN));
+        $top = array('uri' => $row->top->getUri(), 'topConceptOf' => $row->topuri->getUri() , 'label' => $row->label->getValue(), 'hasChildren' => filter_var($row->children->getValue(), FILTER_VALIDATE_BOOLEAN));
         if (isset($row->notation))
           $top['notation'] = $row->notation->getValue();
         $ret[] = $top;

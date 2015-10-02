@@ -446,7 +446,9 @@ class RestController extends Controller
   public function topConcepts($request)
   {
     $vocab = $request->getVocab();
-    $scheme = $request->getQueryParam('scheme') ? $request->getQueryParam('scheme') : $vocab->getDefaultConceptScheme();
+    $scheme = $request->getQueryParam('scheme');
+    if (!$scheme)
+        $scheme = $vocab->showConceptSchemesInHierarchy() ? array_keys($vocab->getConceptSchemes()) : $vocab->getDefaultConceptScheme();
 
     /* encode the results in a JSON-LD compatible array */
     $topconcepts = $vocab->getTopConcepts($scheme, $request->getLang());
@@ -718,13 +720,26 @@ class RestController extends Controller
       return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
     
     if ($request->getVocab()->getShowHierarchy()) {
-      $scheme = $request->getQueryParam('scheme') ? $request->getQueryParam('scheme') : $request->getVocab()->getDefaultConceptScheme();
+      $scheme = $request->getQueryParam('scheme');
+      
+      if ($request->getVocab()->showConceptSchemesInHierarchy()) {
+        $schemes = $request->getVocab()->getConceptSchemes();
+        foreach ($schemes as $schemeuri => $schemearr) {
+          $label = $schemeuri; // fallback
+          if (isset($schemearr['prefLabel']))
+            $label = $schemearr['prefLabel'];
+          elseif (isset($schemearr['label']))
+            $label = $schemearr['label'];
+          $results[$schemeuri] = array('uri'=>$schemeuri, 'schemeLabel'=>$label);
+        }
+        $scheme = (!$scheme) ? array_keys($schemes) : $request->getVocab()->getDefaultConceptScheme();
+      }
 
       /* encode the results in a JSON-LD compatible array */
       $topconcepts = $request->getVocab()->getTopConcepts($scheme, $request->getLang());
       foreach ($topconcepts as $top) {
         if (!isset($results[$top['uri']])) {
-          $results[$top['uri']] = array('uri'=>$top['uri'], 'top'=>$scheme, 'prefLabel'=>$top['label'], 'hasChildren'=>$top['hasChildren']);
+          $results[$top['uri']] = array('uri'=>$top['uri'], 'top'=>$top['topConceptOf'], 'prefLabel'=>$top['label'], 'hasChildren'=>$top['hasChildren']);
           if (isset($top['notation']))
             $results[$top['uri']]['notation'] = $top['notation'];
         }
