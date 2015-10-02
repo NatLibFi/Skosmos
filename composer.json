@@ -1,42 +1,55 @@
 {
-    "name": "nat-lib-fi/skosmos",
-    "description": "Thesaurus and controlled vocabulary browser using SKOS and SPARQL",
-    "type": "project",
-    "license": "MIT",
-    "repositories": { 
-        "urijs-unofficial": {
-            "type": "package",
-            "package": {
-                "name": "medialize/uri.js",
-                "version": "1.15.1",
-                "source": {
-                    "url": "git://github.com/medialize/URI.js.git",
-                    "type": "git",
-                    "reference": "v.1.15.1"
-                }
+  "name": "nat-lib-fi/skosmos",
+  "description": "Thesaurus and controlled vocabulary browser using SKOS and SPARQL",
+  "type": "project",
+  "license": "MIT",
+  "repositories": { 
+    "urijs-unofficial": {
+      "type": "package",
+      "package": {
+        "name": "medialize/uri.js",
+        "version": "1.15.1",
+        "source": {
+          "url": "git://github.com/medialize/URI.js.git",
+          "type": "git",
+          "reference": "v.1.15.1"
         }
-      } 
+      }
     },
-    "require": {
-        "components/jquery": "1.11.*",
-        "components/jqueryui": "1.10.*",
-        "components/handlebars.js": "v1.3.0",
-        "easyrdf/easyrdf": "0.9.*",
-        "twig/twig": "1.13.*",
-        "twig/extensions": "1.*",
-        "twitter/bootstrap": "3.2.*",
-        "twitter/typeahead.js": "v0.10.5",
-        "willdurand/negotiation": "1.3.*",
-        "vakata/jstree": "3.2.*",
-        "phpunit/phpunit": "4.2.*",
-        "punic/punic": "1.4.0",
-        "ml/json-ld": "1.*",
-        "medialize/uri.js": "1.15.1",
-        "ext-gettext": "*"
-    },
-    "require-dev": {
-        "umpirsky/twig-gettext-extractor": "1.1.*",
-        "phpdocumentor/phpdocumentor": "2.*",
-        "codeclimate/php-test-reporter": "^0.1.2"
-    }
+    "bootstrap-multiselect": {
+      "type": "package",
+      "package": {
+        "name": "davidstutz/bootstrap-multiselect",
+        "version": "0.9.13",
+        "source": {
+          "url": "git://github.com/davidstutz/bootstrap-multiselect.git",
+          "type": "git",
+          "reference": "v0.9.13"
+        }
+      }
+    } 
+  },
+  "require": {
+    "components/jquery": "1.11.*",
+    "components/jqueryui": "1.10.*",
+    "components/handlebars.js": "v1.3.0",
+    "davidstutz/bootstrap-multiselect": "v0.9.13",
+    "easyrdf/easyrdf": "0.9.*",
+    "twig/twig": "1.13.*",
+    "twig/extensions": "1.*",
+    "twitter/bootstrap": "3.2.*",
+    "twitter/typeahead.js": "v0.10.5",
+    "willdurand/negotiation": "1.3.*",
+    "vakata/jstree": "3.2.*",
+    "phpunit/phpunit": "4.2.*",
+    "punic/punic": "1.4.0",
+    "ml/json-ld": "1.*",
+    "medialize/uri.js": "1.15.1",
+    "ext-gettext": "*"
+  },
+  "require-dev": {
+    "umpirsky/twig-gettext-extractor": "1.1.*",
+    "phpdocumentor/phpdocumentor": "2.*",
+    "codeclimate/php-test-reporter": "^0.1.2"
+  }
 }

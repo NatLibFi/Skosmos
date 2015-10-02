@@ -770,18 +770,17 @@ $(function() { // DOCUMENT READY
   $('.headerbar .multiselect').multiselect({
     buttonText: function(options) {
       if (options.length === 0 || options.length === ($('.headerbar .multiselect-container li').length - 1)) {
-        return '<span>' + all_vocabs + ' <b class="caret"></b></span>'; 
+        return all_vocabs; 
       } else {
         if (options.length > this.numberDisplayed) {
-          return '<span>' + options.length + ' ' + n_selected + ' <b class="caret"></b></span>';
+          return options.length + ' ' + n_selected;
         } else {
           var selected = '';
           options.each(function() {
             var label = ($(this).attr('label') !== undefined) ? $(this).attr('label') : $(this).html();
-
             selected += label + ', ';
           });
-          return '<span>' + selected.substr(0, selected.length - 2) + ' <b class="caret"></b></span>';
+          return selected.substr(0, selected.length - 2);
         }
       }
     },
@@ -808,14 +807,14 @@ $(function() { // DOCUMENT READY
   $('.sidebar-grey .multiselect').multiselect({
     buttonText: function(options) {
       if (options.length === 0) {
-        return  '<span>' + ' </span><b class="caret"></b>'; 
+        return  ''; 
       } else {
         var selected = '';
         options.each(function() {
           var label = ($(this).attr('label') !== undefined) ? $(this).attr('label') : $(this).html();
           if (label !== '') { selected += label + ', '; }
         });
-        return '<span>' + selected.substr(0, selected.length - 2) + ' </span><b class="caret"></b>';
+        return selected.substr(0, selected.length - 2);
       }
     },
     numberDisplayed: 2,
