@@ -507,10 +507,11 @@ $(function() { // DOCUMENT READY
       if ($('input[name=anylang]').is(':checked')) { params.anylang = 'on'; }
       if ($('input[name=anylang]').is(':checked') && clang && clang !== lang) { params.clang = clang; }
       var paramstr = $.isEmptyObject(params) ? '' : '?' + $.param(params);
+      var base_href = $('base').attr('href'); // see #315
       if (datum.type && datum.type.indexOf('Collection') !== -1) {
-        location.href = datum.vocab + '/' + lang + '/groups/' + localname + paramstr;
+        location.href = base_href + datum.vocab + '/' + lang + '/groups/' + localname + paramstr;
       } else {
-        location.href = datum.vocab + '/' + lang + '/page/' + localname + paramstr;
+        location.href = base_href + datum.vocab + '/' + lang + '/page/' + localname + paramstr;
       }
     } else {
       $('#parent-limit').attr('data-uri', datum.uri); 
@@ -769,18 +770,17 @@ $(function() { // DOCUMENT READY
   $('.headerbar .multiselect').multiselect({
     buttonText: function(options) {
       if (options.length === 0 || options.length === ($('.headerbar .multiselect-container li').length - 1)) {
-        return '<span>' + all_vocabs + ' <b class="caret"></b></span>'; 
+        return all_vocabs; 
       } else {
         if (options.length > this.numberDisplayed) {
-          return '<span>' + options.length + ' ' + n_selected + ' <b class="caret"></b></span>';
+          return options.length + ' ' + n_selected;
         } else {
           var selected = '';
           options.each(function() {
             var label = ($(this).attr('label') !== undefined) ? $(this).attr('label') : $(this).html();
-
             selected += label + ', ';
           });
-          return '<span>' + selected.substr(0, selected.length - 2) + ' <b class="caret"></b></span>';
+          return selected.substr(0, selected.length - 2);
         }
       }
     },
@@ -807,14 +807,14 @@ $(function() { // DOCUMENT READY
   $('.sidebar-grey .multiselect').multiselect({
     buttonText: function(options) {
       if (options.length === 0) {
-        return  '<span>' + ' </span><b class="caret"></b>'; 
+        return  ''; 
       } else {
         var selected = '';
         options.each(function() {
           var label = ($(this).attr('label') !== undefined) ? $(this).attr('label') : $(this).html();
           if (label !== '') { selected += label + ', '; }
         });
-        return '<span>' + selected.substr(0, selected.length - 2) + ' </span><b class="caret"></b>';
+        return selected.substr(0, selected.length - 2);
       }
     },
     numberDisplayed: 2,
