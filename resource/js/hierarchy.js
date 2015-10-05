@@ -245,13 +245,13 @@ function schemeRoot(schemes) {
   var topArray = [];
   for (var i = 0; i < schemes.length; i++) {
     var scheme = schemes[i];
-    var label = scheme.prefLabel; 
-    if (!label && scheme.label)
+    var label = scheme.uri; // fallback
+    if (scheme.prefLabel)
+      label = scheme.prefLabel;
+    else if (scheme.label)
       label = scheme.label;
-    else if (!label)
+    else if (scheme.title)
       label = scheme.title;
-    else if (!label)
-      label = scheme.uri;
     var schemeObject = {
       text: label, 
       a_attr : { "href" : vocab + '/' + lang + '/page/?uri=' + scheme.uri, 'class': 'scheme'},
