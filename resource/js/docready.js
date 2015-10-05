@@ -624,29 +624,31 @@ $(function() { // DOCUMENT READY
     '<div class="vocab">{{vocabLabel}}</div>',
   ].join('');
 
-  var dark = ($('#search-field').val().length > 0) ? ' clear-search-dark' : '';
-  var clearButton = '<span class="versal clear-search' + dark + '">&#215;</span>';
+  if ($('.headerbar').length > 0) {
+    var dark = ($('#search-field').val().length > 0) ? ' clear-search-dark' : '';
+    var clearButton = '<span class="versal clear-search' + dark + '">&#215;</span>';
 
-  var $typeahead = $('#search-field').typeahead({ hint: false, highlight: true, minLength: autocomplete_activation },
-    {
-      name: 'concept', 
-      displayKey: 'label', 
-      templates: {
-        empty: Handlebars.compile([
-          '<div><p class="autocomplete-no-results">{{#noresults}}{{/noresults}}</p></div>'
-        ].join('')),
-        suggestion: Handlebars.compile(autocompleteTemplate)
-      },
-      source: concepts.ttAdapter()
-  }).on('typeahead:cursorchanged', function() {
-    $('.tt-dropdown-menu').mCustomScrollbar("scrollTo", '.tt-cursor');
-  }).on('typeahead:selected', onSelection).bind('focus', function() {
-    $('#search-field').typeahead('open'); 
-  }).after(clearButton).on('keypress', function() {
-    if ($typeahead.val().length > 0 && $(this).hasClass('clear-search-dark') === false) {
-      $('.clear-search').addClass('clear-search-dark');
-    }
-  });
+    var $typeahead = $('#search-field').typeahead({ hint: false, highlight: true, minLength: autocomplete_activation },
+      {
+        name: 'concept', 
+        displayKey: 'label', 
+        templates: {
+          empty: Handlebars.compile([
+            '<div><p class="autocomplete-no-results">{{#noresults}}{{/noresults}}</p></div>'
+          ].join('')),
+          suggestion: Handlebars.compile(autocompleteTemplate)
+        },
+        source: concepts.ttAdapter()
+    }).on('typeahead:cursorchanged', function() {
+      $('.tt-dropdown-menu').mCustomScrollbar("scrollTo", '.tt-cursor');
+    }).on('typeahead:selected', onSelection).bind('focus', function() {
+      $('#search-field').typeahead('open'); 
+    }).after(clearButton).on('keypress', function() {
+      if ($typeahead.val().length > 0 && $(this).hasClass('clear-search-dark') === false) {
+        $('.clear-search').addClass('clear-search-dark');
+      }
+    });
+  }
     
   // storing the search input before autocompletion changes it 
   $('#search-field').on('input', function() { 

@@ -103,7 +103,6 @@ function createConceptObject(conceptUri, conceptData) {
       };
       if (conceptData.narrower[child].notation)
         childObject.text = '<span class="tree-notation">' + conceptData.narrower[child].notation + '</span> ' + childObject.text;
-      if (child === $('.uri-input-box').html()) { /* childObject.data.attr.id = 'jstree-leaf-proper'; */ }
       // if the childConcept hasn't got any children the state is not needed.
       if (hasChildren) {
         childObject.children = true;
