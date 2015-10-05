@@ -624,7 +624,7 @@ $(function() { // DOCUMENT READY
     '<div class="vocab">{{vocabLabel}}</div>',
   ].join('');
 
-  if ($('.header-bar').length > 0) {
+  if ($('.headerbar').length > 0) {
     var dark = ($('#search-field').val().length > 0) ? ' clear-search-dark' : '';
     var clearButton = '<span class="versal clear-search' + dark + '">&#215;</span>';
 
