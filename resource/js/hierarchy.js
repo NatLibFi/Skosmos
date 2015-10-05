@@ -249,6 +249,8 @@ function schemeRoot(schemes) {
     if (!label && scheme.label)
       label = scheme.label;
     else if (!label)
+      label = scheme.title;
+    else if (!label)
       label = scheme.uri;
     var schemeObject = {
       text: label, 
