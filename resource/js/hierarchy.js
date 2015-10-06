@@ -64,7 +64,6 @@ function getLeafOffset() {
   }
 }
 
-
 /*
  * Creates a concept object from the data returned by a rest query.
  * @param
@@ -164,23 +163,6 @@ function buildParentTree(uri, parentData) {
   return JSON.parse(JSON.stringify(rootArray));
 }
 
-function vocabRoot(topConcepts) {
-  var topArray = [];
-  for (var i = 0; i < topConcepts.length; i++) {
-    var conceptData = topConcepts[i];
-    var childObject = {
-      text: conceptData.label, 
-      a_attr : { "href" : vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(conceptData.uri) },
-      uri: conceptData.uri,
-      children: [],
-      state: { opened: false } 
-    };
-    setNode(childObject);
-    topArray.push(childObject);
-  }
-  return topArray;
-}
-
 /*
  * Iterates through the tree and fixes all the parents by adding references to their child concepts.
  */
@@ -203,7 +185,6 @@ function appendChildrenToParents() {
     }
   }
 }
-
 
 function createObjectsFromNarrowers(narrowerResponse) {
   var childArray = [];
@@ -229,7 +210,6 @@ function createObjectsFromNarrowers(narrowerResponse) {
   return childArray;
 }
 
-
 function getParams(node) {
   var nodeId;
   if (node.id === '#')
@@ -244,22 +224,24 @@ function schemeRoot(schemes) {
   var topArray = [];
   for (var i = 0; i < schemes.length; i++) {
     var scheme = schemes[i];
-    var label = scheme.uri; // fallback
+    var label = '';
     if (scheme.prefLabel)
       label = scheme.prefLabel;
     else if (scheme.label)
       label = scheme.label;
     else if (scheme.title)
       label = scheme.title;
-    var schemeObject = {
-      text: label, 
-      a_attr : { "href" : vocab + '/' + lang + '/page/?uri=' + scheme.uri, 'class': 'scheme'},
-      uri: scheme.uri,
-      children: true,
-      state: { opened: false } 
-    };
-    setNode(schemeObject);
-    topArray.push(schemeObject);
+    if (label !== '') { // hiding schemes without a label/title
+      var schemeObject = {
+        text: label, 
+        a_attr : { "href" : vocab + '/' + lang + '/page/?uri=' + scheme.uri, 'class': 'scheme'},
+        uri: scheme.uri,
+        children: true,
+        state: { opened: false } 
+      };
+      //setNode(schemeObject);
+      topArray.push(schemeObject);
+    }
   }
   return topArray;
 }
@@ -287,12 +269,10 @@ function topConceptsToSchemes(topConcepts) {
   return childArray;
 }
 
-
-
 /* 
  * Gives you the Skosmos default jsTree configuration.
  */
-function getTreeConfiguration(root) {
+function getTreeConfiguration() {
   $('.sidebar-grey').empty().jstree({ 
     'core' : {
       'animation' : 0,
@@ -300,49 +280,49 @@ function getTreeConfiguration(root) {
       'data' : 
         function(node, cb) { 
           var clang = content_lang !== '' ? content_lang : lang;
-          // load top concepts of concept scheme
-          if (node && node.original && node.original.a_attr && node.original.a_attr.class === 'scheme') {
-            var scheme_url = (rest_base_url + vocab + '/topConcepts');
-            $.ajax({
-              data: $.param({'scheme': node.original.uri, 'lang' : clang}),
-              url: scheme_url, 
-              success: function (response) {
-                cb(topConceptsToSchemes(response.topconcepts));
-              }
-            });
-            return false;
-          }
-          // load concept schemes
-          else if (node.id === '#' && $('#vocab-info').length) { 
-            var scheme_url = (rest_base_url + vocab + '/');
-            $.ajax({
-              data: $.param({'lang': clang}),
-              url: scheme_url, 
-              success: function (response) {
-                if (response.conceptschemes.length > 1) { // the default hierarchy query that fires when a page loads.
-                  cb(schemeRoot(response.conceptschemes));
-                }
-              }
-            });
-            return false;
-          }
           var json_url = (rest_base_url + vocab + '/hierarchy');
           var nodeId;
-          if (node.id === '#') {
+          var params = getParams(node); 
+          // top concepts of a concept scheme
+          if (node.original && node.original.a_attr && node.original.a_attr.class === 'scheme') {
+            json_url = (rest_base_url + vocab + '/topConcepts');
+            params = $.param({'scheme': node.original.uri, 'lang' : clang});
+          } 
+          // concept schemes of the vocabulary
+          else if (node.id === '#' && $('#vocab-info').length) { 
+            json_url = (rest_base_url + vocab + '/');
+          }  
+          // concept hierarchy
+          else if (node.id === '#') {
             nodeId = $('.uri-input-box').html(); // using the real uri of the concept from the view.
-          } else  {
+          } 
+          // narrowers of a concept
+          else  {
             nodeId = node.uri;
             json_url = (rest_base_url + vocab + '/children');
           }
-          var params = getParams(node); 
           $.ajax({
             data: params,
             url: json_url, 
             success: function (response) {
               if (response.broaderTransitive) { // the default hierarchy query that fires when a page loads.
                 cb(buildParentTree(nodeId, response.broaderTransitive));
-              } else if(response.topconcepts) {
-                cb(vocabRoot(response.topconcepts));
+              } else if (response.conceptschemes) {
+                var schemeobjects = schemeRoot(response.conceptschemes);
+                // if there are multiple concept schemes display those at the top level
+                if (schemeobjects.length > 1) {
+                  cb(schemeobjects);
+                } else { // if there was only one concept scheme display it's top concepts at the top level
+                  $.ajax({
+                    data: $.param({'lang': clang}),
+                    url: rest_base_url + vocab + '/hierarchy', 
+                    success: function (response) {
+                      cb(buildParentTree(undefined, response.broaderTransitive));
+                    }
+                  });
+                }
+              } else if (response.topconcepts) {
+                cb(topConceptsToSchemes(response.topconcepts));
               } else {
                 cb(createObjectsFromNarrowers(response));
               }
