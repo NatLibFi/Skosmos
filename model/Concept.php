@@ -98,7 +98,7 @@ class Concept extends VocabularyDataObject
    * Returns a label for the concept in the ui language or if not possible in any language.
    * @return string
    */
-  public function getLabel($lang='')
+  public function getLabel()
   {
     $lang = $this->clang;
     // 1. label in current language
@@ -201,8 +201,6 @@ class Concept extends VocabularyDataObject
 
   public function getMappingProperties()
   {
-    $properties = array();
-    $members_array = array();
     $ret = array();
 
     $long_uris = $this->resource->propertyUris();
