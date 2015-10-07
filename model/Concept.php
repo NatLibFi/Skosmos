@@ -20,8 +20,6 @@ class Concept extends VocabularyDataObject
   private $foundbytype;
   /** the EasyRdf_Graph object of the concept */
   private $graph;
-  /** the preferred order of properties */
-  public $order;
   private $clang;
 
   /** concept properties that should not be shown to users */

@@ -10,9 +10,6 @@
  */
 class Vocabulary extends DataObject
 {
-  /** the preferred order of the vocabulary information properties */
-  public $order;
-
   /** cached value of URI space */
   private $urispace = null;
 

@@ -11,6 +11,10 @@
 class DataObject
 {
   /**
+   * Preferred order of properties, to be set by subclasses
+   */
+  protected $order;
+  /**
    * Model instance which created this object
    */
   protected $model;
@@ -30,6 +34,7 @@ class DataObject
       throw new Exception('Invalid constructor parameter given to DataObject.');
     $this->model = $model;
     $this->resource = $resource;
+    $this->order = array();
   }
 
   /**
