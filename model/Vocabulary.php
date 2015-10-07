@@ -628,7 +628,7 @@ class Vocabulary extends DataObject
    */
   public function listConceptGroups($clang=null)
   {
-    if (!$clang)
+    if ($clang === null || $clang == '')
       $clang = $this->lang;
     $ret = array();
     $gclass = $this->getGroupClassURI();
