@@ -22,10 +22,6 @@ class DataObject
    * EasyRdf resource representing this object
    */
   protected $resource;
-  /**
-   * User interface language, automatically detected from locale
-   */
-  public $lang;
 
   /**
    * Initializes the DataObject
