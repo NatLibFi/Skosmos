@@ -1089,8 +1089,7 @@ EOQ;
    */
   public function queryParentList($uri, $lang, $fallback)
   {
-    $orig_uri = $uri;
-        $gc = $this->graphClause;
+    $gc = $this->graphClause;
     $query = <<<EOQ
 SELECT ?broad ?parent ?member ?children ?grandchildren 
 (SAMPLE(?lab) as ?label) (SAMPLE(?childlab) as ?childlabel) (SAMPLE(?topcs) AS ?top) (SAMPLE(?nota) as ?notation) (SAMPLE(?childnota) as ?childnotation)
