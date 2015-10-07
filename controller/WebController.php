@@ -306,7 +306,6 @@ class WebController extends Controller
   {
     $template = $this->twig->loadTemplate('about.twig');
     $this->setLanguageProperties($request->getLang());
-    $vocab_id = 'About';
     $url = $request->getServerConstant('HTTP_HOST');
     $version = $this->model->getVersion();
     
@@ -477,7 +476,6 @@ class WebController extends Controller
     
     $request->setContentLang($content_lang);
 
-    $controller = $this; // for use by anonymous function below
     echo $template->render(
         array(
           'languages' => $this->languages,
