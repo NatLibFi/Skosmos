@@ -1,6 +1,8 @@
 [![Build Status](https://travis-ci.org/NatLibFi/Skosmos.svg?branch=master)](https://travis-ci.org/NatLibFi/Skosmos)
 [![Test Coverage](https://codeclimate.com/github/NatLibFi/Skosmos/badges/coverage.svg)](https://codeclimate.com/github/NatLibFi/Skosmos/coverage)
 [![Code Climate](https://codeclimate.com/github/NatLibFi/Skosmos/badges/gpa.svg)](https://codeclimate.com/github/NatLibFi/Skosmos)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/NatLibFi/Skosmos/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/NatLibFi/Skosmos/?branch=master)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/ca1939e4-919d-4429-95e7-d63e0a35f9a1/mini.png)](https://insight.sensiolabs.com/projects/ca1939e4-919d-4429-95e7-d63e0a35f9a1)
 
 Skosmos
 =======

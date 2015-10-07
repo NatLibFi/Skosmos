@@ -13,7 +13,6 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
   public function __construct($model, $vocab, $resource, $prop, $clang='')
   {
     parent::__construct($model, $vocab, $resource);
-    $this->submembers = array();
     $this->type = $prop;
     $this->clang = $clang;
     $this->labelcache = array();
@@ -44,8 +43,6 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
     if ($this->clang)
       $lang = $this->clang;
     $exvocab = $this->model->guessVocabularyFromURI($this->resource->getUri());
-    if (isset($exvocab))
-      $exvocid = $exvocab->getId();
 
     if ($this->resource->label($lang) !== null) { // current language
       return $this->resource->label($lang);
@@ -90,18 +87,14 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
       return $exvocab->getTitle();
     else {
       $scheme = $this->resource->get('skos:inScheme');
-      $schemeLabel = null;
       if($scheme) {
         $schemeResource = $this->model->getResourceFromUri($scheme->getUri());
         if ($schemeResource)
           return $schemeResource->label()->getValue();
       }
-      if ($schemeLabel == null) {
-        // got a label for the concept, but not the scheme - use the host name as scheme label
-        $schemeLabel = parse_url($this->resource->getUri(), PHP_URL_HOST);
-      }
+      // got a label for the concept, but not the scheme - use the host name as scheme label
+      return parse_url($this->resource->getUri(), PHP_URL_HOST);
     }
-    return null;
   }
   
   public function getNotation()
