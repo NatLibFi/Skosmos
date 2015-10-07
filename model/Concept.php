@@ -296,7 +296,7 @@ class Concept extends VocabularyDataObject
         $proplabel = $propres->label($this->lang) ? $propres->label($this->lang) : $propres->label();
         $propobj = new ConceptProperty($prop, $proplabel);
 
-        if ($propobj->getLabel()) // only display properties for which we have a label
+        if ($propobj->getLabel() !== null) // only display properties for which we have a label
           $ret[$prop] = $propobj;
 
         // searching for subproperties of literals too
