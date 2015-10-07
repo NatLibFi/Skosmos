@@ -115,8 +115,8 @@ class WebController extends Controller
     $script_filename = str_replace("\\", "/", $script_filename); // fixing windows paths with \ (see #309)
     $base_dir  = __DIR__; // Absolute path to your installation, ex: /var/www/mywebsite
     $base_dir = str_replace("\\", "/", $base_dir); // fixing windows paths with \ (see #309)
-    $doc_root  = preg_replace("!{$script_name}$!", '', $script_filename); # ex: /var/www
-    $base_url  = preg_replace("!^{$doc_root}!", '', $base_dir); # example: '' or '/mywebsite'
+    $doc_root  = preg_replace("!{$script_name}$!", '', $script_filename);
+    $base_url  = preg_replace("!^{$doc_root}!", '', $base_dir);
     $base_url = str_replace('/controller','/',$base_url);
     $protocol  = filter_input(INPUT_SERVER, 'HTTPS', FILTER_SANITIZE_STRING) === null ? 'http' : 'https';
     $port      = filter_input(INPUT_SERVER, 'SERVER_PORT', FILTER_SANITIZE_STRING);
