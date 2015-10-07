@@ -452,7 +452,7 @@ class Vocabulary extends DataObject
     $ret = array();
     foreach ($resources as $res) {
       $prop = $res->getURI();
-      if (EasyRdf_Namespace::shorten($prop)) // shortening property labels if possible
+      if (EasyRdf_Namespace::shorten($prop) !== null) // shortening property labels if possible
         $prop = EasyRdf_Namespace::shorten($prop);
       $ret[] = $prop;
     }
@@ -469,7 +469,7 @@ class Vocabulary extends DataObject
     $resources = $this->resource->allResources("skosmos:hasMultiLingualProperty");
     foreach ($resources as $res) {
       $prop = $res->getURI();
-      if (EasyRdf_Namespace::shorten($prop)) // shortening property labels if possible
+      if (EasyRdf_Namespace::shorten($prop) !== null) // shortening property labels if possible
         $prop = EasyRdf_Namespace::shorten($prop);
       if ($prop === $property)
         return true;
