@@ -462,7 +462,7 @@ EOQ;
     $gc = $this->graphClause;
     $limit = ($limit) ? 'LIMIT ' . $limit : '';
     $offset = ($offset) ? 'OFFSET ' . $offset : '';
-    $unprefixed_types;
+    $unprefixed_types = array();
     foreach($types as $type)
       $unprefixed_types[] = EasyRdf_Namespace::expand($type);
 
