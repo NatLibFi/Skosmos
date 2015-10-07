@@ -623,7 +623,7 @@ EOQ;
         if (!array_key_exists($typeuri, $qnamecache)) {
           $res = new EasyRdf_Resource($typeuri);
           $qname = $res->shorten(); // returns null on failure
-          $qnamecache[$typeuri] = $qname != null ? $qname : $typeuri;
+          $qnamecache[$typeuri] = ($qname !== null) ? $qname : $typeuri;
         }
         $hit['type'][] = $qnamecache[$typeuri];
       }
