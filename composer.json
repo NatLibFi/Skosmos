@@ -35,7 +35,7 @@
     "components/handlebars.js": "v1.3.0",
     "davidstutz/bootstrap-multiselect": "v0.9.13",
     "easyrdf/easyrdf": "0.9.*",
-    "twig/twig": "1.13.*",
+    "twig/twig": "1.22.*",
     "twig/extensions": "1.*",
     "twitter/bootstrap": "3.2.*",
     "twitter/typeahead.js": "v0.10.5",
