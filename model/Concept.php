@@ -205,7 +205,7 @@ class Concept extends VocabularyDataObject
 
     $long_uris = $this->resource->propertyUris();
     foreach ($long_uris as &$prop) {
-      if (EasyRdf_Namespace::shorten($prop)) // shortening property labels if possible
+      if (EasyRdf_Namespace::shorten($prop) !== null) // shortening property labels if possible
         $prop = $sprop = EasyRdf_Namespace::shorten($prop);
       else
         $sprop = "<$prop>"; // EasyRdf requires full URIs to be in angle brackets
