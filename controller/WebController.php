@@ -300,7 +300,6 @@ class WebController extends Controller
 
   /**
    * Invokes the about page for the Skosmos service.
-   * @param string $lang language parameter eg. 'fi' for Finnish.
    */
   public function invokeAboutPage($request)
   {
