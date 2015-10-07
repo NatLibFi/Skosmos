@@ -25,7 +25,7 @@ class DataObject
   /**
    * User interface language, automatically detected from locale
    */
-  protected $lang;
+  public $lang;
 
   /**
    * Initializes the DataObject
