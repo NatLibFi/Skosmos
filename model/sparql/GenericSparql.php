@@ -412,9 +412,10 @@ EOQ;
    * tet indexes in SPARQL dialects that support them.
    *
    * @param string $term search term
+   * @param string $property property to search e.g. 'skos:prefLabel'
    * @return string SPARQL text search clause
    */
-  protected function createTextQueryCondition($term)
+  protected function createTextQueryCondition($term, $property='')
   {
     return '# generic SPARQL dialect, no text index support';
   }
