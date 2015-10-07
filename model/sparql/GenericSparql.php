@@ -77,24 +77,6 @@ class GenericSparql
   }
 
   /**
-   * If there is no vocabulary id available use this to guess it from the uri.
-   * @param string $uri
-   */
-  private function guessVocabID($uri)
-  {
-    try {
-      $exvoc = $this->model->guessVocabularyFromURI($uri);
-    } catch (Exception $e) {
-      trigger_error($e->getMessage(), E_USER_WARNING);
-
-      return "???";
-    }
-    $exvocab = $exvoc->getId();
-
-    return $exvocab;
-  }
-
-  /**
    * Returns the graph instance
    * @return object EasyRDF graph instance.
    */
