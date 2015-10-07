@@ -133,10 +133,11 @@ class Model
     foreach ($result as $uri => $values)
       if(empty($values)) {
         $shorteneduri = EasyRdf_Namespace::shorten($uri);
-        if ($shorteneduri !== null)
+        if ($shorteneduri !== null) {
           $trans = gettext($shorteneduri);
-        if ($trans) {
-          $result[$uri] = array('label' => $trans);
+          if ($trans) {
+            $result[$uri] = array('label' => $trans);
+          }
         }
       }
     return $result;
