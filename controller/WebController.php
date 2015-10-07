@@ -574,23 +574,4 @@ class WebController extends Controller
       ));
   }
 
-  /**
-   * Verify that the requested language is supported by the vocabulary. If not, returns
-   * another language supported by the vocabulary.
-   * @param string $lang language to set
-   * @param Vocabulary $vocab the vocabulary in question 
-   * @return string language tag supported by the vocabulary, or null if the given one is supported
-   */
-
-  private function verifyVocabularyLanguage($lang, $vocab)
-  {
-    $vocab_languages = $vocab->getLanguages();
-    $lang_support = in_array($lang, $vocab_languages);
-    if ($lang_support)
-      return null;
-    // If desired language is not available just use the default language of the vocabulary 
-    else
-      return $vocab->getDefaultLanguage();
-  }
-
 }
