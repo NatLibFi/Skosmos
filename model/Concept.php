@@ -213,7 +213,7 @@ class Concept extends VocabularyDataObject
       if (in_array($prop, $this->MAPPING_PROPERTIES) && !in_array($prop, $this->DELETED_PROPERTIES)) {
         $propres = new EasyRdf_Resource($prop, $this->graph);
         $proplabel = $propres->label($this->lang) ? $propres->label($this->lang) : $propres->label(); // current language
-        $propobj = new ConceptProperty($prop, $proplabel, $this->clang);
+        $propobj = new ConceptProperty($prop, $proplabel);
         if ($propobj->getLabel()) // only display properties for which we have a label
           $ret[$prop] = $propobj;
 
@@ -294,7 +294,7 @@ class Concept extends VocabularyDataObject
       if (!in_array($prop, $this->DELETED_PROPERTIES)) {
         $propres = new EasyRdf_Resource($prop, $this->graph);
         $proplabel = $propres->label($this->lang) ? $propres->label($this->lang) : $propres->label();
-        $propobj = new ConceptProperty($prop, $proplabel, $this->clang);
+        $propobj = new ConceptProperty($prop, $proplabel);
 
         if ($propobj->getLabel()) // only display properties for which we have a label
           $ret[$prop] = $propobj;

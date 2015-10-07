@@ -11,20 +11,16 @@ class ConceptProperty
   private $label;
   /** stores the property values */
   private $values;
-  
-  private $lang;
 
   /**
    * Label parameter seems to be optional in this phase.
    * @param string $prop property type eg. 'rdf:type'.
    * @param string $label
-   * @param array $values contains ConceptPropertyValues
    */
-  public function __construct($prop, $label, $lang)
+  public function __construct($prop, $label)
   {
     $this->prop = $prop;
     $this->label = $label;
-    $this->lang = $lang;
     $this->values = array(); 
   }
 
