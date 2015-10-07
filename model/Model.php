@@ -503,11 +503,10 @@ class Model
 
   public function getResourceFromUri($uri) {
     EasyRdf_Format::unregister('json'); // prevent parsing errors for sources which return invalid JSON
-    $resource = null;
     // using apc cache for the resource if available
     if (function_exists('apc_store') && function_exists('apc_fetch')) {
       $key = 'fetch: ' . EasyRdf_Utils::removeFragmentFromUri($uri);
-       $resource = apc_fetch($key);
+      $resource = apc_fetch($key);
       if ($resource === null || $resource === FALSE) { // was not found in cache, or previous request failed
         $resource = $this->fetchResourceFromUri($uri);
         apc_store($key, $resource, $this->URI_FETCH_TTL);
