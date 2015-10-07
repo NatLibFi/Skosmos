@@ -139,7 +139,7 @@ class WebController extends Controller
       return filter_input(INPUT_COOKIE, 'SKOSMOS_LANGUAGE', FILTER_SANITIZE_STRING);
 
     // 2. if vocabulary given, select based on the default language of the vocabulary
-    if ($vocab_id) {
+    if ($vocab_id !== null && $vocab_id !== '') {
       try {
         $vocab = $this->model->getVocabulary($vocab_id);
         return $vocab->getDefaultLanguage();
