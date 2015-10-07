@@ -337,7 +337,7 @@ class Vocabulary extends DataObject
   {
     if ($lang === '')
       $lang = $this->lang;
-    if (!$conceptScheme)
+    if ($conceptScheme === null || $conceptScheme == '')
       $conceptScheme = $this->getDefaultConceptScheme();
 
     return $this->getSparql()->queryTopConcepts($conceptScheme, $lang);
