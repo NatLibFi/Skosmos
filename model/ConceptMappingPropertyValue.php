@@ -13,7 +13,6 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
   public function __construct($model, $vocab, $resource, $prop, $clang='')
   {
     parent::__construct($model, $vocab, $resource);
-    $this->submembers = array();
     $this->type = $prop;
     $this->clang = $clang;
     $this->labelcache = array();
