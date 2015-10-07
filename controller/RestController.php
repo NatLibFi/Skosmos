@@ -723,14 +723,17 @@ class RestController extends Controller
       $scheme = $request->getQueryParam('scheme');
       
       if ($request->getVocab()->showConceptSchemesInHierarchy()) {
-        $schemes = $request->getVocab()->getConceptSchemes();
+        $schemes = $request->getVocab()->getConceptSchemes($request->getLang());
         foreach ($schemes as $schemeuri => $schemearr) {
-          $label = $schemeuri; // fallback
+          $label;
           if (isset($schemearr['prefLabel']))
             $label = $schemearr['prefLabel'];
           elseif (isset($schemearr['label']))
             $label = $schemearr['label'];
-          $results[$schemeuri] = array('uri'=>$schemeuri, 'schemeLabel'=>$label);
+          elseif (isset($schemearr['title']))
+            $label = $schemearr['title'];
+          if ($label)
+            $results[$schemeuri] = array('uri'=>$schemeuri, 'schemeLabel'=>$label);
         }
         $scheme = (!$scheme) ? array_keys($schemes) : $request->getVocab()->getDefaultConceptScheme();
       }

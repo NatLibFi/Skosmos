@@ -304,9 +304,11 @@ class Vocabulary extends DataObject
    * @return array Array with concept scheme URIs (string) as keys and labels (string) as values
    */
 
-  public function getConceptSchemes()
+  public function getConceptSchemes($lang='')
   {
-    return $this->getSparql()->queryConceptSchemes($this->lang);
+    if ($lang === '')
+      $lang = $this->lang;
+    return $this->getSparql()->queryConceptSchemes($lang);
   }
 
   /**
