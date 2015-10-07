@@ -198,10 +198,7 @@ class WebController extends Controller
     $vocab = $request->getVocab();
 
     $langcodes = $vocab->getShowLangCodes();
-    $full_uri = $vocab->getConceptURI($request->getUri()); // make sure it's a full URI
-    // if rendering a page with the uri parameter the param needs to be passed for the template
-    $uri_param =  ($full_uri === $request->getUri()) ? 'uri=' . $full_uri : ''; 
-    $uri = $full_uri;
+    $uri = $vocab->getConceptURI($request->getUri()); // make sure it's a full URI
     
     $results = $vocab->getConceptInfo($uri, $request->getContentLang());
     $crumbs = $vocab->getBreadCrumbs($request->getContentLang(), $uri);
