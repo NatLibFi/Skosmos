@@ -202,7 +202,7 @@ EOQ;
     
     // filtering duplicates 
     $unique_vocabs = array();
-    if ($vocabs)
+    if (sizeof($vocabs) > 0)
       foreach ($vocabs as $voc)
         $unique_vocabs[$voc->getId()] = $voc;
     
