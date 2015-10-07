@@ -214,7 +214,7 @@ class Concept extends VocabularyDataObject
         $propres = new EasyRdf_Resource($prop, $this->graph);
         $proplabel = $propres->label($this->lang) ? $propres->label($this->lang) : $propres->label(); // current language
         $propobj = new ConceptProperty($prop, $proplabel);
-        if ($propobj->getLabel()) // only display properties for which we have a label
+        if ($propobj->getLabel() !== null) // only display properties for which we have a label
           $ret[$prop] = $propobj;
 
         // Iterating through every resource and adding these to the data object.
