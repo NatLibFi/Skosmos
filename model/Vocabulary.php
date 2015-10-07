@@ -24,7 +24,7 @@ class Vocabulary extends DataObject
     // hash namespace
       return $uriparts[1];
     // slash namespace
-    $uriparts = explode("/", $voc->getURI());
+    $uriparts = explode("/", $this->resource->getURI());
 
     return $uriparts[count($uriparts) - 1];
   }
