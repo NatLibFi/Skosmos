@@ -88,18 +88,14 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
       return $exvocab->getTitle();
     else {
       $scheme = $this->resource->get('skos:inScheme');
-      $schemeLabel = null;
       if($scheme) {
         $schemeResource = $this->model->getResourceFromUri($scheme->getUri());
         if ($schemeResource)
           return $schemeResource->label()->getValue();
       }
-      if ($schemeLabel == null) {
-        // got a label for the concept, but not the scheme - use the host name as scheme label
-        $schemeLabel = parse_url($this->resource->getUri(), PHP_URL_HOST);
-      }
+      // got a label for the concept, but not the scheme - use the host name as scheme label
+      return parse_url($this->resource->getUri(), PHP_URL_HOST);
     }
-    return null;
   }
   
   public function getNotation()
