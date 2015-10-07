@@ -44,8 +44,6 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
     if ($this->clang)
       $lang = $this->clang;
     $exvocab = $this->model->guessVocabularyFromURI($this->resource->getUri());
-    if (isset($exvocab))
-      $exvocid = $exvocab->getId();
 
     if ($this->resource->label($lang) !== null) { // current language
       return $this->resource->label($lang);
