@@ -287,6 +287,7 @@ class WebController extends Controller
       mail($toAddress, $subject, $message, $headers, $params);
     } catch (Exception $e) {
       header("HTTP/1.0 404 Not Found");
+      $template = $this->twig->loadTemplate('error-page.twig');
       if (LOG_CAUGHT_EXCEPTIONS)
         error_log('Caught exception: ' . $e->getMessage());
       echo $template->render(
