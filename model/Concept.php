@@ -20,8 +20,6 @@ class Concept extends VocabularyDataObject
   private $foundbytype;
   /** the EasyRdf_Graph object of the concept */
   private $graph;
-  /** the preferred order of properties */
-  public $order;
   private $clang;
 
   /** concept properties that should not be shown to users */
@@ -98,7 +96,7 @@ class Concept extends VocabularyDataObject
    * Returns a label for the concept in the ui language or if not possible in any language.
    * @return string
    */
-  public function getLabel($lang='')
+  public function getLabel()
   {
     $lang = $this->clang;
     // 1. label in current language
@@ -201,13 +199,11 @@ class Concept extends VocabularyDataObject
 
   public function getMappingProperties()
   {
-    $properties = array();
-    $members_array = array();
     $ret = array();
 
     $long_uris = $this->resource->propertyUris();
     foreach ($long_uris as &$prop) {
-      if (EasyRdf_Namespace::shorten($prop)) // shortening property labels if possible
+      if (EasyRdf_Namespace::shorten($prop) !== null) // shortening property labels if possible
         $prop = $sprop = EasyRdf_Namespace::shorten($prop);
       else
         $sprop = "<$prop>"; // EasyRdf requires full URIs to be in angle brackets
@@ -215,8 +211,8 @@ class Concept extends VocabularyDataObject
       if (in_array($prop, $this->MAPPING_PROPERTIES) && !in_array($prop, $this->DELETED_PROPERTIES)) {
         $propres = new EasyRdf_Resource($prop, $this->graph);
         $proplabel = $propres->label($this->lang) ? $propres->label($this->lang) : $propres->label(); // current language
-        $propobj = new ConceptProperty($prop, $proplabel, $this->clang);
-        if ($propobj->getLabel()) // only display properties for which we have a label
+        $propobj = new ConceptProperty($prop, $proplabel);
+        if ($propobj->getLabel() !== null) // only display properties for which we have a label
           $ret[$prop] = $propobj;
 
         // Iterating through every resource and adding these to the data object.
@@ -280,7 +276,7 @@ class Concept extends VocabularyDataObject
             }
           }
 
-          if ($collection->getSubMembers()) 
+          if (isset($collection) && $collection->getSubMembers()) 
             $members_array = array_merge($curr_coll_members, $members_array);
         }
         $properties['skos:narrower'] = $members_array;
@@ -288,7 +284,7 @@ class Concept extends VocabularyDataObject
     }
 
     foreach ($long_uris as &$prop) {
-      if (EasyRdf_Namespace::shorten($prop)) // shortening property labels if possible
+      if (EasyRdf_Namespace::shorten($prop) !== null) // shortening property labels if possible
         $prop = $sprop = EasyRdf_Namespace::shorten($prop);
       else
         $sprop = "<$prop>"; // EasyRdf requires full URIs to be in angle brackets
@@ -296,9 +292,9 @@ class Concept extends VocabularyDataObject
       if (!in_array($prop, $this->DELETED_PROPERTIES)) {
         $propres = new EasyRdf_Resource($prop, $this->graph);
         $proplabel = $propres->label($this->lang) ? $propres->label($this->lang) : $propres->label();
-        $propobj = new ConceptProperty($prop, $proplabel, $this->clang);
+        $propobj = new ConceptProperty($prop, $proplabel);
 
-        if ($propobj->getLabel()) // only display properties for which we have a label
+        if ($propobj->getLabel() !== null) // only display properties for which we have a label
           $ret[$prop] = $propobj;
 
         // searching for subproperties of literals too

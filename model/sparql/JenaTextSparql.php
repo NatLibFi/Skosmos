@@ -51,7 +51,9 @@ class JenaTextSparql extends GenericSparql
     // 2. Ensure proper SPARQL quoting
     $term = str_replace('\\', '\\\\', $term); // escape backslashes
     $term = str_replace("'", "\\'", $term); // escape single quotes
+    
+    $max_results = $this->MAX_N;
 
-    return "{ ?s text:query ($property '$term' $this->MAX_N) }";
+    return "{ ?s text:query ($property '$term' $max_results) }";
   }
 }

@@ -10,9 +10,6 @@
  */
 class Vocabulary extends DataObject
 {
-  /** the preferred order of the vocabulary information properties */
-  public $order;
-
   /** cached value of URI space */
   private $urispace = null;
 
@@ -27,7 +24,7 @@ class Vocabulary extends DataObject
     // hash namespace
       return $uriparts[1];
     // slash namespace
-    $uriparts = explode("/", $voc->getURI());
+    $uriparts = explode("/", $this->resource->getURI());
 
     return $uriparts[count($uriparts) - 1];
   }
@@ -342,7 +339,7 @@ class Vocabulary extends DataObject
   {
     if ($lang === '')
       $lang = $this->lang;
-    if (!$conceptScheme)
+    if ($conceptScheme === null || $conceptScheme == '')
       $conceptScheme = $this->getDefaultConceptScheme();
 
     return $this->getSparql()->queryTopConcepts($conceptScheme, $lang);
@@ -457,7 +454,7 @@ class Vocabulary extends DataObject
     $ret = array();
     foreach ($resources as $res) {
       $prop = $res->getURI();
-      if (EasyRdf_Namespace::shorten($prop)) // shortening property labels if possible
+      if (EasyRdf_Namespace::shorten($prop) !== null) // shortening property labels if possible
         $prop = EasyRdf_Namespace::shorten($prop);
       $ret[] = $prop;
     }
@@ -474,7 +471,7 @@ class Vocabulary extends DataObject
     $resources = $this->resource->allResources("skosmos:hasMultiLingualProperty");
     foreach ($resources as $res) {
       $prop = $res->getURI();
-      if (EasyRdf_Namespace::shorten($prop)) // shortening property labels if possible
+      if (EasyRdf_Namespace::shorten($prop) !== null) // shortening property labels if possible
         $prop = EasyRdf_Namespace::shorten($prop);
       if ($prop === $property)
         return true;
@@ -645,7 +642,7 @@ class Vocabulary extends DataObject
    */
   public function listConceptGroups($clang=null)
   {
-    if (!$clang)
+    if ($clang === null || $clang == '')
       $clang = $this->lang;
     $ret = array();
     $gclass = $this->getGroupClassURI();

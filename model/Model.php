@@ -133,10 +133,11 @@ class Model
     foreach ($result as $uri => $values)
       if(empty($values)) {
         $shorteneduri = EasyRdf_Namespace::shorten($uri);
-        if ($shorteneduri)
+        if ($shorteneduri !== null) {
           $trans = gettext($shorteneduri);
-        if ($trans) {
-          $result[$uri] = array('label' => $trans);
+          if ($trans) {
+            $result[$uri] = array('label' => $trans);
+          }
         }
       }
     return $result;
@@ -237,7 +238,7 @@ class Model
       $arrayClass = null;
       $sparql = $this->getDefaultSparql();
     }
-    if (!$type) $type = array('skos:Concept');
+    if ($type === null) $type = array('skos:Concept');
 
     $results = $sparql->queryConcepts($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $type, $parent, $group, $hidden, $fields);
     $ret = array();
@@ -503,11 +504,10 @@ class Model
 
   public function getResourceFromUri($uri) {
     EasyRdf_Format::unregister('json'); // prevent parsing errors for sources which return invalid JSON
-    $resource = null;
     // using apc cache for the resource if available
     if (function_exists('apc_store') && function_exists('apc_fetch')) {
       $key = 'fetch: ' . EasyRdf_Utils::removeFragmentFromUri($uri);
-       $resource = apc_fetch($key);
+      $resource = apc_fetch($key);
       if ($resource === null || $resource === FALSE) { // was not found in cache, or previous request failed
         $resource = $this->fetchResourceFromUri($uri);
         apc_store($key, $resource, $this->URI_FETCH_TTL);

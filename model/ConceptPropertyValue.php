@@ -5,6 +5,8 @@
  */
 class ConceptPropertyValue extends VocabularyDataObject
 {
+  /** submembers */
+  private $submembers;
   /** property type */
   private $type;
   /** content language */

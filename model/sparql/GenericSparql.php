@@ -77,24 +77,6 @@ class GenericSparql
   }
 
   /**
-   * If there is no vocabulary id available use this to guess it from the uri.
-   * @param string $uri
-   */
-  private function guessVocabID($uri)
-  {
-    try {
-      $exvoc = $this->model->guessVocabularyFromURI($uri);
-    } catch (Exception $e) {
-      trigger_error($e->getMessage(), E_USER_WARNING);
-
-      return "???";
-    }
-    $exvocab = $exvoc->getId();
-
-    return $exvocab;
-  }
-
-  /**
    * Returns the graph instance
    * @return object EasyRDF graph instance.
    */
@@ -220,13 +202,13 @@ EOQ;
     
     // filtering duplicates 
     $unique_vocabs = array();
-    if ($vocabs)
+    if (sizeof($vocabs) > 0)
       foreach ($vocabs as $voc)
         $unique_vocabs[$voc->getId()] = $voc;
     
     $values_graph = $this->formatValuesGraph($unique_vocabs);
 
-    if (!$arrayClass) {
+    if (!$arrayClass !== null) {
       $construct = $optional = "";
     } else {
       // add information that can be used to format narrower concepts by
@@ -430,9 +412,10 @@ EOQ;
    * tet indexes in SPARQL dialects that support them.
    *
    * @param string $term search term
+   * @param string $property property to search e.g. 'skos:prefLabel'
    * @return string SPARQL text search clause
    */
-  protected function createTextQueryCondition($term)
+  protected function createTextQueryCondition($term, $property='')
   {
     return '# generic SPARQL dialect, no text index support';
   }
@@ -479,7 +462,7 @@ EOQ;
     $gc = $this->graphClause;
     $limit = ($limit) ? 'LIMIT ' . $limit : '';
     $offset = ($offset) ? 'OFFSET ' . $offset : '';
-    $unprefixed_types;
+    $unprefixed_types = array();
     foreach($types as $type)
       $unprefixed_types[] = EasyRdf_Namespace::expand($type);
 
@@ -640,7 +623,7 @@ EOQ;
         if (!array_key_exists($typeuri, $qnamecache)) {
           $res = new EasyRdf_Resource($typeuri);
           $qname = $res->shorten(); // returns null on failure
-          $qnamecache[$typeuri] = $qname != null ? $qname : $typeuri;
+          $qnamecache[$typeuri] = ($qname !== null) ? $qname : $typeuri;
         }
         $hit['type'][] = $qnamecache[$typeuri];
       }
@@ -1112,8 +1095,7 @@ EOQ;
    */
   public function queryParentList($uri, $lang, $fallback)
   {
-    $orig_uri = $uri;
-        $gc = $this->graphClause;
+    $gc = $this->graphClause;
     $query = <<<EOQ
 SELECT ?broad ?parent ?member ?children ?grandchildren 
 (SAMPLE(?lab) as ?label) (SAMPLE(?childlab) as ?childlabel) (SAMPLE(?topcs) AS ?top) (SAMPLE(?nota) as ?notation) (SAMPLE(?childnota) as ?childnotation)
@@ -1243,10 +1225,11 @@ EOQ;
     $ret = array();
     $result = $this->client->query($query);
     foreach ($result as $row) {
+      $group = array('uri' => $row->group->getURI());
       if (isset($row->label))
-        $group = array('prefLabel' => $row->label->getValue(), 'uri' => $row->group->getURI());
+        $group['prefLabel'] = $row->label->getValue();
       if (isset($row->children))
-          $group['childGroups'] = explode(' ', $row->children->getValue());
+        $group['childGroups'] = explode(' ', $row->children->getValue());
       if (isset($row->members))
         $group['hasMembers'] = $row->members->getValue();
       if (isset($row->notation))

@@ -115,14 +115,14 @@ class WebController extends Controller
     $script_filename = str_replace("\\", "/", $script_filename); // fixing windows paths with \ (see #309)
     $base_dir  = __DIR__; // Absolute path to your installation, ex: /var/www/mywebsite
     $base_dir = str_replace("\\", "/", $base_dir); // fixing windows paths with \ (see #309)
-    $doc_root  = preg_replace("!{$script_name}$!", '', $script_filename); # ex: /var/www
-    $base_url  = preg_replace("!^{$doc_root}!", '', $base_dir); # ex: '' or '/mywebsite'
+    $doc_root  = preg_replace("!{$script_name}$!", '', $script_filename);
+    $base_url  = preg_replace("!^{$doc_root}!", '', $base_dir);
     $base_url = str_replace('/controller','/',$base_url);
     $protocol  = filter_input(INPUT_SERVER, 'HTTPS', FILTER_SANITIZE_STRING) === null ? 'http' : 'https';
     $port      = filter_input(INPUT_SERVER, 'SERVER_PORT', FILTER_SANITIZE_STRING);
     $disp_port = ($protocol == 'http' && $port == 80 || $protocol == 'https' && $port == 443) ? '' : ":$port";
     $domain    = filter_input(INPUT_SERVER, 'SERVER_NAME', FILTER_SANITIZE_STRING);
-    $full_url  = "$protocol://{$domain}{$disp_port}{$base_url}"; # Ex: 'http://example.com', 'https://example.com/mywebsite', etc.
+    $full_url  = "$protocol://{$domain}{$disp_port}{$base_url}";
     return $full_url;
   }
 
@@ -139,7 +139,7 @@ class WebController extends Controller
       return filter_input(INPUT_COOKIE, 'SKOSMOS_LANGUAGE', FILTER_SANITIZE_STRING);
 
     // 2. if vocabulary given, select based on the default language of the vocabulary
-    if ($vocab_id) {
+    if ($vocab_id !== null && $vocab_id !== '') {
       try {
         $vocab = $this->model->getVocabulary($vocab_id);
         return $vocab->getDefaultLanguage();
@@ -198,10 +198,7 @@ class WebController extends Controller
     $vocab = $request->getVocab();
 
     $langcodes = $vocab->getShowLangCodes();
-    $full_uri = $vocab->getConceptURI($request->getUri()); // make sure it's a full URI
-    // if rendering a page with the uri parameter the param needs to be passed for the template
-    $uri_param =  ($full_uri === $request->getUri()) ? 'uri=' . $full_uri : ''; 
-    $uri = $full_uri;
+    $uri = $vocab->getConceptURI($request->getUri()); // make sure it's a full URI
     
     $results = $vocab->getConceptInfo($uri, $request->getContentLang());
     $crumbs = $vocab->getBreadCrumbs($request->getContentLang(), $uri);
@@ -290,6 +287,7 @@ class WebController extends Controller
       mail($toAddress, $subject, $message, $headers, $params);
     } catch (Exception $e) {
       header("HTTP/1.0 404 Not Found");
+      $template = $this->twig->loadTemplate('error-page.twig');
       if (LOG_CAUGHT_EXCEPTIONS)
         error_log('Caught exception: ' . $e->getMessage());
       echo $template->render(
@@ -303,13 +301,11 @@ class WebController extends Controller
 
   /**
    * Invokes the about page for the Skosmos service.
-   * @param string $lang language parameter eg. 'fi' for Finnish.
    */
   public function invokeAboutPage($request)
   {
     $template = $this->twig->loadTemplate('about.twig');
     $this->setLanguageProperties($request->getLang());
-    $vocab_id = 'About';
     $url = $request->getServerConstant('HTTP_HOST');
     $version = $this->model->getVersion();
     
@@ -480,7 +476,6 @@ class WebController extends Controller
     
     $request->setContentLang($content_lang);
 
-    $controller = $this; // for use by anonymous function below
     echo $template->render(
         array(
           'languages' => $this->languages,
@@ -577,25 +572,6 @@ class WebController extends Controller
         'request' => $request,
         'requested_page' => filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_STRING)
       ));
-  }
-
-  /**
-   * Verify that the requested language is supported by the vocabulary. If not, returns
-   * another language supported by the vocabulary.
-   * @param string $lang language to set
-   * @param Vocabulary $vocab the vocabulary in question 
-   * @return string language tag supported by the vocabulary, or null if the given one is supported
-   */
-
-  private function verifyVocabularyLanguage($lang, $vocab)
-  {
-    $vocab_languages = $vocab->getLanguages();
-    $lang_support = in_array($lang, $vocab_languages);
-    if ($lang_support)
-      return null;
-    // If desired language is not available just use the default language of the vocabulary 
-    else
-      return $vocab->getDefaultLanguage();
   }
 
 }
