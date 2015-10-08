@@ -276,7 +276,7 @@ class Concept extends VocabularyDataObject
             }
           }
 
-          if ($collection->getSubMembers()) 
+          if (isset($collection) && $collection->getSubMembers()) 
             $members_array = array_merge($curr_coll_members, $members_array);
         }
         $properties['skos:narrower'] = $members_array;
