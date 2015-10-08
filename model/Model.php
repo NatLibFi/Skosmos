@@ -450,7 +450,7 @@ class Model
    */
   public function guessVocabularyFromURI($uri)
   {
-    if ($this->vocabs_by_urispace == null) { // initialize cache
+    if ($this->vocabs_by_urispace === null) { // initialize cache
       $this->vocabs_by_urispace = array();
       foreach ($this->getVocabularies() as $voc) {
         $this->vocabs_by_urispace[$voc->getUriSpace()] = $voc;
