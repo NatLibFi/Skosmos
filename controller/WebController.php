@@ -115,14 +115,14 @@ class WebController extends Controller
     $script_filename = str_replace("\\", "/", $script_filename); // fixing windows paths with \ (see #309)
     $base_dir  = __DIR__; // Absolute path to your installation, ex: /var/www/mywebsite
     $base_dir = str_replace("\\", "/", $base_dir); // fixing windows paths with \ (see #309)
-    $doc_root  = preg_replace("!{$script_name}$!", '', $script_filename); # ex: /var/www
-    $base_url  = preg_replace("!^{$doc_root}!", '', $base_dir); # ex: '' or '/mywebsite'
+    $doc_root  = preg_replace("!{$script_name}$!", '', $script_filename);
+    $base_url  = preg_replace("!^{$doc_root}!", '', $base_dir);
     $base_url = str_replace('/controller','/',$base_url);
     $protocol  = filter_input(INPUT_SERVER, 'HTTPS', FILTER_SANITIZE_STRING) === null ? 'http' : 'https';
     $port      = filter_input(INPUT_SERVER, 'SERVER_PORT', FILTER_SANITIZE_STRING);
     $disp_port = ($protocol == 'http' && $port == 80 || $protocol == 'https' && $port == 443) ? '' : ":$port";
     $domain    = filter_input(INPUT_SERVER, 'SERVER_NAME', FILTER_SANITIZE_STRING);
-    $full_url  = "$protocol://{$domain}{$disp_port}{$base_url}"; # Ex: 'http://example.com', 'https://example.com/mywebsite', etc.
+    $full_url  = "$protocol://{$domain}{$disp_port}{$base_url}";
     return $full_url;
   }
 
