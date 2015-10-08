@@ -82,7 +82,7 @@ class RestController extends Controller
     } else {
       header('Vary: Accept'); // inform caches that a decision was made based on Accept header
       $best = $this->negotiator->getBest($accept, $choices);
-      $format = ($best != null) ? $best->getValue() : null;
+      $format = ($best !== null) ? $best->getValue() : null;
     }
     return $format;
   }

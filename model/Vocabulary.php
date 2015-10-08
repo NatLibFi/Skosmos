@@ -139,7 +139,7 @@ class Vocabulary extends DataObject
    */
   public function getUriSpace()
   {
-    if ($this->urispace == null) // initialize cache
+    if ($this->urispace === null) // initialize cache
       $this->urispace = $this->resource->getLiteral('void:uriSpace')->getValue();
 
     return $this->urispace;

@@ -264,7 +264,7 @@ class Model
       $realvoc = $this->guessVocabularyFromURI($hit['uri']);
       if ($realvoc != $voc) {
         unset($hit['localname']);
-        $hit['exvocab'] = $realvoc != null ? $realvoc->getId() : "???";
+        $hit['exvocab'] = ($realvoc !== null) ? $realvoc->getId() : "???";
       }
 
       $ret[] = $hit;
@@ -347,7 +347,7 @@ class Model
    */
   public function getVocabularies()
   {
-    if ($this->all_vocabularies == null) { // initialize cache
+    if ($this->all_vocabularies === null) { // initialize cache
       $vocs = $this->graph->allOfType('skosmos:Vocabulary');
       $this->all_vocabularies = $this->createDataObjects("Vocabulary", $vocs);
       foreach ($this->all_vocabularies as $voc) {
@@ -426,7 +426,7 @@ class Model
    */
   public function getVocabularyByGraph($graph, $endpoint = DEFAULT_ENDPOINT)
   {
-    if ($this->vocabs_by_graph == null) { // initialize cache
+    if ($this->vocabs_by_graph === null) { // initialize cache
       $this->vocabs_by_graph = array();
       foreach ($this->getVocabularies() as $voc) {
         $key = json_encode(array($voc->getGraph(), $voc->getEndpoint()));

@@ -64,7 +64,7 @@ class DataObject
   protected function arbitrarySort($sortable)
   {
     // sorting the result list to a arbitrary order defined below in mycompare()
-    if ($sortable == null)
+    if ($sortable === null)
       return $sortable;
     uksort($sortable, array($this, 'mycompare'));
     foreach ($sortable as $prop => $vals) {
