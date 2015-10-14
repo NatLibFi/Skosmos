@@ -46,7 +46,7 @@ class RestController extends Controller
       $negotiator = new \Negotiation\FormatNegotiator();
       $priorities = array('application/json', 'application/ld+json');
       $best = filter_input(INPUT_SERVER, 'HTTP_ACCEPT', FILTER_SANITIZE_STRING) ? $negotiator->getBest(filter_input(INPUT_SERVER, 'HTTP_ACCEPT', FILTER_SANITIZE_STRING), $priorities) : null;
-      $format = $best != null ? $best->getValue() : $priorities[0];
+      $format = ($best !== null) ? $best->getValue() : $priorities[0];
       header("Content-type: $format; charset=utf-8");
       header("Vary: Accept"); // inform caches that we made a choice based on Accept header
       echo json_encode($data);
@@ -82,7 +82,7 @@ class RestController extends Controller
     } else {
       header('Vary: Accept'); // inform caches that a decision was made based on Accept header
       $best = $this->negotiator->getBest($accept, $choices);
-      $format = ($best != null) ? $best->getValue() : null;
+      $format = ($best !== null) ? $best->getValue() : null;
     }
     return $format;
   }
