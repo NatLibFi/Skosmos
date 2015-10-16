@@ -658,17 +658,11 @@ class RestController extends Controller
       $results[] = array('uri'=>$object, 'prefLabel'=>$vals['label']);
     }
 
-    $ret = array(
-        '@context' => array(
-            'skos' => 'http://www.w3.org/2004/02/skos/core#',
-            'uri' => '@id',
-            'prefLabel' => 'skos:prefLabel',
-            'narrower' => 'skos:narrower',
-            '@language' => $request->getLang(),
-        ),
-        'uri' => $uri,
-        'narrower' => $results,
+    $ret = array_merge($this->context, array(
+      'uri' => $uri,
+      'narrower' => $results)
     );
+    $ret['@context'] = array_merge($ret['@context'], array('prefLabel' => 'skos:prefLabel', 'narrower' => 'skos:narrower', '@language' => $request->getLang()));
 
     return $this->return_json($ret);
   }
@@ -695,19 +689,11 @@ class RestController extends Controller
       $results[$nuri] = $result;
     }
 
-    $ret = array(
-        '@context' => array(
-            'skos' => 'http://www.w3.org/2004/02/skos/core#',
-            'uri' => '@id',
-            'type' => '@type',
-            'prefLabel' => 'skos:prefLabel',
-            'narrower' => array('@id'=>'skos:narrower','@type'=>'@id'),
-            'narrowerTransitive' => array('@id'=>'skos:narrowerTransitive','@container'=>'@index'),
-            '@language' => $request->getLang(),
-        ),
-        'uri' => $uri,
-        'narrowerTransitive' => $results,
+    $ret = array_merge($this->context, array(
+      'uri' => $uri,
+      'narrowerTransitive' => $results)
     );
+    $ret['@context'] = array_merge($ret['@context'], array('prefLabel' => 'skos:prefLabel', 'narrower' => array('@id'=>'skos:narrower','@type'=>'@id'), 'narrowerTransitive' => array('@id'=>'skos:narrowerTransitive','@container'=>'@index'), '@language' => $request->getLang()));
 
     return $this->return_json($ret);
   }
@@ -740,24 +726,11 @@ class RestController extends Controller
       }
     }
 
-    $ret = array(
-        '@context' => array(
-            'skos' => 'http://www.w3.org/2004/02/skos/core#',
-            'onki' => 'http://schema.onki.fi/onki#',
-            'uri' => '@id',
-            'type' => '@type',
-            'prefLabel' => 'skos:prefLabel',
-            'notation' => 'skos:notation',
-            'narrower' => array('@id'=>'skos:narrower','@type'=>'@id'),
-            'broader' => array('@id'=>'skos:broader','@type'=>'@id'),
-            'broaderTransitive' => array('@id'=>'skos:broaderTransitive','@container'=>'@index'),
-            'top' => array('@id'=>'skos:topConceptOf','@type'=>'@id'),
-            'hasChildren' => 'onki:hasChildren',
-            '@language' => $request->getLang(),
-        ),
-        'uri' => $uri,
-        'broaderTransitive' => $results,
+    $ret = array_merge($this->context, array(
+      'uri' => $uri,
+      'broaderTransitive' => $results)
     );
+    $ret['@context'] = array_merge($ret['@context'], array('onki' => 'http://schema.onki.fi/onki#', 'prefLabel' => 'skos:prefLabel', 'notation' => 'skos:notation', 'narrower' => array('@id'=>'skos:narrower','@type'=>'@id'), 'broader' => array('@id'=>'skos:broader','@type'=>'@id'), 'broaderTransitive' => array('@id'=>'skos:broaderTransitive','@container'=>'@index'), 'top' => array('@id'=>'skos:topConceptOf','@type'=>'@id'), 'hasChildren' => 'onki:hasChildren', '@language' => $request->getLang()));
 
     return $this->return_json($ret);
   }
