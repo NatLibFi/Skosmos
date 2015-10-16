@@ -23,7 +23,8 @@ class RestController extends Controller
       'skos' => 'http://www.w3.org/2004/02/skos/core#',
       'uri' => '@id',
       'type' => '@type',
-    )
+    ),
+    'uri' => ''
   );
 
   /**
@@ -770,21 +771,10 @@ class RestController extends Controller
   {
     $results = $request->getVocab()->listConceptGroups($request->getLang());
 
-    $ret = array(
-        '@context' => array(
-            'skos' => 'http://www.w3.org/2004/02/skos/core#',
-            'onki' => 'http://schema.onki.fi/onki#',
-            'uri' => '@id',
-            'type' => '@type',
-            'prefLabel' => 'skos:prefLabel',
-            'groups' => 'onki:hasGroup',
-            'childGroups' => array('@id'=>'skos:member','@type'=>'@id'),
-            'hasMembers' => 'onki:hasMembers',
-            '@language' => $request->getLang(),
-        ),
-        'uri' => '',
-        'groups' => $results,
+    $ret = array_merge($this->context, array(
+      'groups' => $results)
     );
+    $ret['@context'] = array_merge($ret['@context'], array('onki' => 'http://schema.onki.fi/onki#', 'prefLabel' => 'skos:prefLabel', 'groups' => 'onki:hasGroup','childGroups' => array('@id'=>'skos:member','@type'=>'@id'), 'hasMembers' => 'onki:hasMembers', '@language' => $request->getLang()));
 
     return $this->return_json($ret);
   }
@@ -824,20 +814,11 @@ class RestController extends Controller
     if ($children === NULL)
       return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
 
-    $ret = array(
-        '@context' => array(
-            'skos' => 'http://www.w3.org/2004/02/skos/core#',
-            'uri' => '@id',
-            'type' => '@type',
-            'prefLabel' => 'skos:prefLabel',
-            'narrower' => 'skos:narrower',
-            'notation' => 'skos:notation',
-            'hasChildren' => 'onki:hasChildren',
-            '@language' => $request->getLang(),
-        ),
-        'uri' => $uri,
-        'narrower' => $children,
+    $ret = array_merge($this->context, array(
+      'uri' => $uri,
+      'narrower' => $children)
     );
+    $ret['@context'] = array_merge($ret['@context'], array('prefLabel' => 'skos:prefLabel', 'narrower' => 'skos:narrower', 'notation' => 'skos:notation', 'hasChildren' => 'onki:hasChildren', '@language' => $request->getLang()));
 
     return $this->return_json($ret);
   }
