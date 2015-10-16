@@ -358,21 +358,8 @@ class RestController extends Controller
       $types[] = $type;
     }
 
-    $ret = array(
-        '@context' => array(
-            'rdfs' => 'http://www.w3.org/2000/01/rdf-schema#',
-            'skos' => 'http://www.w3.org/2004/02/skos/core#',
-            'onki' => 'http://schema.onki.fi/onki#',
-            'uri' => '@id',
-            'type' => '@type',
-            'label' => 'rdfs:label',
-            'superclass' => array('@id' => 'rdfs:subClassOf', '@type' => '@id'),
-            'types' => 'onki:hasType',
-            '@language' => $request->getLang(),
-        ),
-        'uri' => '',
-        'types' => $types,
-    );
+    $ret = array_merge($this->context, array('types' => $types));
+    $ret['@context'] = array_merge($ret['@context'], array('rdfs' => 'http://www.w3.org/2000/01/rdf-schema#','onki' => 'http://schema.onki.fi/onki#','label' => 'rdfs:label','superclass' => array('@id' => 'rdfs:subClassOf', '@type' => '@id'),'types' => 'onki:hasType','@language' => $request->getLang()));
 
     return $this->return_json($ret);
   }
@@ -426,21 +413,8 @@ class RestController extends Controller
     foreach($hits as &$res)
       unset($res['voc']);
 
-    $ret = array(
-        '@context' => array(
-            'skos' => 'http://www.w3.org/2004/02/skos/core#',
-            'onki' => 'http://schema.onki.fi/onki#',
-            'results' => array(
-                '@id' => 'onki:results',
-            ),
-            'uri' => '@id',
-            'prefLabel' => 'skos:prefLabel',
-            'altLabel' => 'skos:altLabel',
-            'hiddenLabel' => 'skos:hiddenLabel',
-        ),
-        'uri' => '',
-        'results' => $hits,
-    );
+    $ret = array_merge($this->context, array('result' => $hits));
+    $ret['@context'] = array_merge($ret['@context'], array('onki' => 'http://schema.onki.fi/onki#','results' => array('@id' => 'onki:results',), 'prefLabel' => 'skos:prefLabel', 'altLabel' => 'skos:altLabel', 'hiddenLabel' => 'skos:hiddenLabel'));
     if ($lang)
       $ret['@context']['@language'] = $lang;
 
@@ -460,19 +434,11 @@ class RestController extends Controller
     /* encode the results in a JSON-LD compatible array */
     $topconcepts = $vocab->getTopConcepts($scheme, $request->getLang());
 
-    $ret = array(
-        '@context' => array(
-            'skos' => 'http://www.w3.org/2004/02/skos/core#',
-            'onki' => 'http://schema.onki.fi/onki#',
-            'uri' => '@id',
-            'topconcepts' => 'skos:hasTopConcept',
-            'notation' => 'skos:notation',
-            'label' => 'skos:prefLabel',
-            '@language' => $request->getLang(),
-        ),
-        'uri' => $scheme,
-        'topconcepts' => $topconcepts,
+    $ret = array_merge($this->context, array(
+      'uri' => $scheme,
+      'topconcepts' => $topconcepts)
     );
+    $ret['@context'] = array_merge($ret['@context'], array('onki' => 'http://schema.onki.fi/onki#','topconcepts' => 'skos:hasTopConcept','notation' => 'skos:notation', 'label' => 'skos:prefLabel', '@language' => $request->getLang()));
 
     return $this->return_json($ret);
   }
