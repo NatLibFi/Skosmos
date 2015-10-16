@@ -554,15 +554,8 @@ class RestController extends Controller
     if ($results === NULL)
       return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
 
-    $ret = array(
-        '@context' => array(
-            'skos' => 'http://www.w3.org/2004/02/skos/core#',
-            'uri' => '@id',
-            'prefLabel' => 'skos:prefLabel',
-            '@language' => $request->getLang(),
-        ),
-        'uri' => $uri,
-    );
+    $ret = array_merge($this->context, array('uri' => $uri));
+    $ret['@context'] = array_merge($ret['@context'], array('prefLabel' => 'skos:prefLabel', '@language' => $request->getLang()));
 
     if (isset($results[$request->getLang()]))
       $ret['prefLabel'] = $results[$request->getLang()]->getValue();
@@ -587,17 +580,11 @@ class RestController extends Controller
       $results[] = array('uri'=>$object, 'prefLabel'=>$vals['label']);
     }
 
-    $ret = array(
-        '@context' => array(
-            'skos' => 'http://www.w3.org/2004/02/skos/core#',
-            'uri' => '@id',
-            'prefLabel' => 'skos:prefLabel',
-            'broader' => 'skos:broader',
-            '@language' => $request->getLang(),
-        ),
-        'uri' => $uri,
-        'broader' => $results,
+    $ret = array_merge($this->context, array(
+      'uri' => $uri,
+      'broader' => $results)
     );
+    $ret['@context'] = array_merge($ret['@context'], array('prefLabel' => 'skos:prefLabel', 'broader' => 'skos:broader', '@language' => $request->getLang()));
 
     return $this->return_json($ret);
   }
@@ -624,19 +611,11 @@ class RestController extends Controller
       $results[$buri] = $result;
     }
 
-    $ret = array(
-        '@context' => array(
-            'skos' => 'http://www.w3.org/2004/02/skos/core#',
-            'uri' => '@id',
-            'type' => '@type',
-            'prefLabel' => 'skos:prefLabel',
-            'broader' => array('@id'=>'skos:broader','@type'=>'@id'),
-            'broaderTransitive' => array('@id'=>'skos:broaderTransitive','@container'=>'@index'),
-            '@language' => $request->getLang(),
-        ),
-        'uri' => $uri,
-        'broaderTransitive' => $results,
+    $ret = array_merge($this->context, array(
+      'uri' => $uri,
+      'broaderTransitive' => $results)
     );
+    $ret['@context'] = array_merge($ret['@context'], array('prefLabel' => 'skos:prefLabel', 'broader' => array('@id'=>'skos:broader','@type'=>'@id'), 'broaderTransitive' => array('@id'=>'skos:broaderTransitive','@container'=>'@index'), '@language' => $request->getLang()));
 
     return $this->return_json($ret);
   }
