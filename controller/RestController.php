@@ -17,6 +17,14 @@ class RestController extends Controller
 {
   /* supported MIME types that can be used to return RDF data */
   private static $SUPPORTED_MIME_TYPES = 'application/rdf+xml text/turtle application/ld+json application/json';
+  /* context array template */
+  private $context = array(
+    '@context' => array(
+      'skos' => 'http://www.w3.org/2004/02/skos/core#',
+      'uri' => '@id',
+      'type' => '@type',
+    )
+  );
 
   /**
    * Echos an error message when the request can't be fulfilled.
@@ -794,18 +802,11 @@ class RestController extends Controller
     if ($children === NULL)
       return $this->return_error('404', 'Not Found', "Could not find group <$uri>");
 
-    $ret = array(
-        '@context' => array(
-            'skos' => 'http://www.w3.org/2004/02/skos/core#',
-            'uri' => '@id',
-            'type' => '@type',
-            'prefLabel' => 'skos:prefLabel',
-            'members' => 'skos:member',
-            '@language' => $request->getLang(),
-        ),
-        'uri' => $uri,
-        'members' => $children,
+    $ret = array_merge($this->context, array(
+      'uri' => $uri,
+      'members' => $children)
     );
+    $ret['@context'] = array_merge($ret['@context'], array('prefLabel' => 'skos:prefLabel', 'members' => 'skos:member', '@language' => $request->getLang()));
 
     return $this->return_json($ret);
   }
@@ -858,19 +859,12 @@ class RestController extends Controller
       $results[] = array('uri'=>$uri, 'prefLabel'=>$vals['label']);
     }
 
-    $ret = array(
-        '@context' => array(
-            'skos' => 'http://www.w3.org/2004/02/skos/core#',
-            'uri' => '@id',
-            'type' => '@type',
-            'prefLabel' => 'skos:prefLabel',
-            'related' => 'skos:related',
-            '@language' => $request->getLang(),
-        ),
-        'uri' => $uri,
-        'related' => $results,
+    $ret = array_merge($this->context, array(
+      'uri' => $uri,
+      'related' => $results)
     );
-
+    $ret['@context'] = array_merge($ret['@context'], array('prefLabel' => 'skos:prefLabel', 'related' => 'skos:related', '@language' => $request->getLang()));
+    
     return $this->return_json($ret);
   }
 }
