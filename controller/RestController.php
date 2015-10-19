@@ -519,15 +519,14 @@ class RestController extends Controller
   {
     if (!$request->getUri())
       return $this->return_error(400, "Bad Request", "uri parameter missing");
-    $uri = $request->getUri();
 
-    $results = $request->getVocab()->getConceptLabel($uri, $request->getLang());
+    $results = $request->getVocab()->getConceptLabel($request->getUri(), $request->getLang());
     if ($results === NULL)
-      return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
+      return $this->return_error('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
 
     $ret = array_merge_recursive($this->context, array(
       '@context' => array('prefLabel' => 'skos:prefLabel', '@language' => $request->getLang()), 
-      'uri' => $uri)
+      'uri' => $request->getUri())
     );
 
     if (isset($results[$request->getLang()]))
@@ -543,19 +542,17 @@ class RestController extends Controller
    */
   public function broader($request)
   {
-    $uri = $request->getUri();
-
     $results = array();
-    $broaders = $request->getVocab()->getConceptBroaders($uri, $request->getLang());
+    $broaders = $request->getVocab()->getConceptBroaders($request->getUri(), $request->getLang());
     if ($broaders === NULL)
-      return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
+      return $this->return_error('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
     foreach ($broaders as $object => $vals) {
       $results[] = array('uri'=>$object, 'prefLabel'=>$vals['label']);
     }
 
     $ret = array_merge_recursive($this->context, array(
       '@context' => array('prefLabel' => 'skos:prefLabel', 'broader' => 'skos:broader', '@language' => $request->getLang()),
-      'uri' => $uri,
+      'uri' => $request->getUri(),
       'broader' => $results)
     );
 
@@ -569,13 +566,10 @@ class RestController extends Controller
    */
   public function broaderTransitive($request)
   {
-    $uri = $request->getUri();
-    $limit = $this->parseLimit();
-
     $results = array();
-    $broaders = $request->getVocab()->getConceptTransitiveBroaders($uri, $limit, false, $request->getLang());
+    $broaders = $request->getVocab()->getConceptTransitiveBroaders($request->getUri(), $this->parseLimit(), false, $request->getLang());
     if ($broaders === NULL)
-      return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
+      return $this->return_error('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
     foreach ($broaders as $buri => $vals) {
       $result = array('uri'=>$buri, 'prefLabel'=>$vals['label']);
       if (isset($vals['direct'])) {
@@ -586,7 +580,7 @@ class RestController extends Controller
 
     $ret = array_merge_recursive($this->context, array(
       '@context' => array('prefLabel' => 'skos:prefLabel', 'broader' => array('@id'=>'skos:broader','@type'=>'@id'), 'broaderTransitive' => array('@id'=>'skos:broaderTransitive','@container'=>'@index'), '@language' => $request->getLang()),
-      'uri' => $uri,
+      'uri' => $request->getUri(),
       'broaderTransitive' => $results)
     );
 
@@ -600,19 +594,17 @@ class RestController extends Controller
    */
   public function narrower($request)
   {
-    $uri = $request->getUri();
-
     $results = array();
-    $narrowers = $request->getVocab()->getConceptNarrowers($uri, $request->getLang());
+    $narrowers = $request->getVocab()->getConceptNarrowers($request->getUri(), $request->getLang());
     if ($narrowers === NULL)
-      return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
+      return $this->return_error('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
     foreach ($narrowers as $object => $vals) {
       $results[] = array('uri'=>$object, 'prefLabel'=>$vals['label']);
     }
 
     $ret = array_merge_recursive($this->context, array(
       '@context' => array('prefLabel' => 'skos:prefLabel', 'narrower' => 'skos:narrower', '@language' => $request->getLang()),
-      'uri' => $uri,
+      'uri' => $request->getUri(),
       'narrower' => $results)
     );
 
@@ -626,13 +618,10 @@ class RestController extends Controller
    */
   public function narrowerTransitive($request)
   {
-    $uri = $request->getUri();
-    $limit = $this->parseLimit();
-
     $results = array();
-    $narrowers = $request->getVocab()->getConceptTransitiveNarrowers($uri, $limit, $request->getLang());
+    $narrowers = $request->getVocab()->getConceptTransitiveNarrowers($request->getUri(), $this->parseLimit(), $request->getLang());
     if ($narrowers === NULL)
-      return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
+      return $this->return_error('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
     foreach ($narrowers as $nuri => $vals) {
       $result = array('uri'=>$nuri, 'prefLabel'=>$vals['label']);
       if (isset($vals['direct'])) {
@@ -643,7 +632,7 @@ class RestController extends Controller
 
     $ret = array_merge_recursive($this->context, array(
       '@context' => array('prefLabel' => 'skos:prefLabel', 'narrower' => array('@id'=>'skos:narrower','@type'=>'@id'), 'narrowerTransitive' => array('@id'=>'skos:narrowerTransitive','@container'=>'@index'), '@language' => $request->getLang()),
-      'uri' => $uri,
+      'uri' => $request->getUri(),
       'narrowerTransitive' => $results)
     );
 
@@ -658,9 +647,7 @@ class RestController extends Controller
    */
   public function hierarchy($request)
   {
-    $uri = $request->getUri();
-
-    $results = $request->getVocab()->getConceptHierarchy($uri, $request->getLang());
+    $results = $request->getVocab()->getConceptHierarchy($request->getUri(), $request->getLang());
     if ($results === NULL)
       return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
     
@@ -680,7 +667,7 @@ class RestController extends Controller
 
     $ret = array_merge_recursive($this->context, array(
       '@context' => array('onki' => 'http://schema.onki.fi/onki#', 'prefLabel' => 'skos:prefLabel', 'notation' => 'skos:notation', 'narrower' => array('@id'=>'skos:narrower','@type'=>'@id'), 'broader' => array('@id'=>'skos:broader','@type'=>'@id'), 'broaderTransitive' => array('@id'=>'skos:broaderTransitive','@container'=>'@index'), 'top' => array('@id'=>'skos:topConceptOf','@type'=>'@id'), 'hasChildren' => 'onki:hasChildren', '@language' => $request->getLang()),
-      'uri' => $uri,
+      'uri' => $request->getUri(),
       'broaderTransitive' => $results)
     );
 
@@ -712,15 +699,13 @@ class RestController extends Controller
    */
   public function groupMembers($request)
   {
-    $uri = $request->getUri();
-
-    $children = $request->getVocab()->listConceptGroupContents($uri, $request->getLang());
+    $children = $request->getVocab()->listConceptGroupContents($request->getUri(), $request->getLang());
     if ($children === NULL)
-      return $this->return_error('404', 'Not Found', "Could not find group <$uri>");
+      return $this->return_error('404', 'Not Found', "Could not find group <{$request->getUri()}>");
 
     $ret = array_merge_recursive($this->context, array(
       '@context' => array('prefLabel' => 'skos:prefLabel', 'members' => 'skos:member', '@language' => $request->getLang()),
-      'uri' => $uri,
+      'uri' => $request->getUri(),
       'members' => $children)
     );
 
@@ -734,15 +719,13 @@ class RestController extends Controller
    */
   public function children($request)
   {
-    $uri = $request->getUri();
-
-    $children = $request->getVocab()->getConceptChildren($uri, $request->getLang());
+    $children = $request->getVocab()->getConceptChildren($request->getUri(), $request->getLang());
     if ($children === NULL)
-      return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
+      return $this->return_error('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
 
     $ret = array_merge_recursive($this->context, array(
       '@context' => array('prefLabel' => 'skos:prefLabel', 'narrower' => 'skos:narrower', 'notation' => 'skos:notation', 'hasChildren' => 'onki:hasChildren', '@language' => $request->getLang()),
-      'uri' => $uri,
+      'uri' => $request->getUri(),
       'narrower' => $children)
     );
 
@@ -756,12 +739,10 @@ class RestController extends Controller
    */
   public function related($request)
   {
-    $uri = $request->getUri();
-
     $results = array();
-    $related = $request->getVocab()->getConceptRelateds($uri, $request->getLang());
+    $related = $request->getVocab()->getConceptRelateds($request->getUri(), $request->getLang());
     if ($related === NULL)
-      return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
+      return $this->return_error('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
     foreach ($related as $uri => $vals) {
       $results[] = array('uri'=>$uri, 'prefLabel'=>$vals['label']);
     }
