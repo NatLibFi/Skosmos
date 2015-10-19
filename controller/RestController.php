@@ -23,8 +23,7 @@ class RestController extends Controller
       'skos' => 'http://www.w3.org/2004/02/skos/core#',
       'uri' => '@id',
       'type' => '@type',
-    ),
-    'uri' => ''
+    )
   );
 
   /**
@@ -358,8 +357,11 @@ class RestController extends Controller
       $types[] = $type;
     }
 
-    $ret = array_merge($this->context, array('types' => $types));
-    $ret['@context'] = array_merge($ret['@context'], array('rdfs' => 'http://www.w3.org/2000/01/rdf-schema#','onki' => 'http://schema.onki.fi/onki#','label' => 'rdfs:label','superclass' => array('@id' => 'rdfs:subClassOf', '@type' => '@id'),'types' => 'onki:hasType','@language' => $request->getLang()));
+    $ret = array_merge_recursive($this->context, array(
+      '@context' => array('rdfs' => 'http://www.w3.org/2000/01/rdf-schema#','onki' => 'http://schema.onki.fi/onki#','label' => 'rdfs:label','superclass' => array('@id' => 'rdfs:subClassOf', '@type' => '@id'),'types' => 'onki:hasType','@language' => $request->getLang()),
+      'uri' => '',
+      'types' => $types)
+    );
 
     return $this->return_json($ret);
   }
@@ -413,8 +415,11 @@ class RestController extends Controller
     foreach($hits as &$res)
       unset($res['voc']);
 
-    $ret = array_merge($this->context, array('result' => $hits));
-    $ret['@context'] = array_merge($ret['@context'], array('onki' => 'http://schema.onki.fi/onki#','results' => array('@id' => 'onki:results',), 'prefLabel' => 'skos:prefLabel', 'altLabel' => 'skos:altLabel', 'hiddenLabel' => 'skos:hiddenLabel'));
+    $ret = array_merge_recursive($this->context, array(
+      '@context' => array('onki' => 'http://schema.onki.fi/onki#','results' => array('@id' => 'onki:results',), 'prefLabel' => 'skos:prefLabel', 'altLabel' => 'skos:altLabel', 'hiddenLabel' => 'skos:hiddenLabel'),
+      'result' => $hits)
+    );
+    
     if ($lang)
       $ret['@context']['@language'] = $lang;
 
@@ -434,11 +439,11 @@ class RestController extends Controller
     /* encode the results in a JSON-LD compatible array */
     $topconcepts = $vocab->getTopConcepts($scheme, $request->getLang());
 
-    $ret = array_merge($this->context, array(
+    $ret = array_merge_recursive($this->context, array(
+      '@context' => array('onki' => 'http://schema.onki.fi/onki#','topconcepts' => 'skos:hasTopConcept','notation' => 'skos:notation', 'label' => 'skos:prefLabel', '@language' => $request->getLang()),
       'uri' => $scheme,
       'topconcepts' => $topconcepts)
     );
-    $ret['@context'] = array_merge($ret['@context'], array('onki' => 'http://schema.onki.fi/onki#','topconcepts' => 'skos:hasTopConcept','notation' => 'skos:notation', 'label' => 'skos:prefLabel', '@language' => $request->getLang()));
 
     return $this->return_json($ret);
   }
@@ -520,8 +525,10 @@ class RestController extends Controller
     if ($results === NULL)
       return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
 
-    $ret = array_merge($this->context, array('uri' => $uri));
-    $ret['@context'] = array_merge($ret['@context'], array('prefLabel' => 'skos:prefLabel', '@language' => $request->getLang()));
+    $ret = array_merge_recursive($this->context, array(
+      '@context' => array('prefLabel' => 'skos:prefLabel', '@language' => $request->getLang()), 
+      'uri' => $uri)
+    );
 
     if (isset($results[$request->getLang()]))
       $ret['prefLabel'] = $results[$request->getLang()]->getValue();
@@ -546,11 +553,11 @@ class RestController extends Controller
       $results[] = array('uri'=>$object, 'prefLabel'=>$vals['label']);
     }
 
-    $ret = array_merge($this->context, array(
+    $ret = array_merge_recursive($this->context, array(
+      '@context' => array('prefLabel' => 'skos:prefLabel', 'broader' => 'skos:broader', '@language' => $request->getLang()),
       'uri' => $uri,
       'broader' => $results)
     );
-    $ret['@context'] = array_merge($ret['@context'], array('prefLabel' => 'skos:prefLabel', 'broader' => 'skos:broader', '@language' => $request->getLang()));
 
     return $this->return_json($ret);
   }
@@ -577,11 +584,11 @@ class RestController extends Controller
       $results[$buri] = $result;
     }
 
-    $ret = array_merge($this->context, array(
+    $ret = array_merge_recursive($this->context, array(
+      '@context' => array('prefLabel' => 'skos:prefLabel', 'broader' => array('@id'=>'skos:broader','@type'=>'@id'), 'broaderTransitive' => array('@id'=>'skos:broaderTransitive','@container'=>'@index'), '@language' => $request->getLang()),
       'uri' => $uri,
       'broaderTransitive' => $results)
     );
-    $ret['@context'] = array_merge($ret['@context'], array('prefLabel' => 'skos:prefLabel', 'broader' => array('@id'=>'skos:broader','@type'=>'@id'), 'broaderTransitive' => array('@id'=>'skos:broaderTransitive','@container'=>'@index'), '@language' => $request->getLang()));
 
     return $this->return_json($ret);
   }
@@ -603,11 +610,11 @@ class RestController extends Controller
       $results[] = array('uri'=>$object, 'prefLabel'=>$vals['label']);
     }
 
-    $ret = array_merge($this->context, array(
+    $ret = array_merge_recursive($this->context, array(
+      '@context' => array('prefLabel' => 'skos:prefLabel', 'narrower' => 'skos:narrower', '@language' => $request->getLang()),
       'uri' => $uri,
       'narrower' => $results)
     );
-    $ret['@context'] = array_merge($ret['@context'], array('prefLabel' => 'skos:prefLabel', 'narrower' => 'skos:narrower', '@language' => $request->getLang()));
 
     return $this->return_json($ret);
   }
@@ -634,11 +641,11 @@ class RestController extends Controller
       $results[$nuri] = $result;
     }
 
-    $ret = array_merge($this->context, array(
+    $ret = array_merge_recursive($this->context, array(
+      '@context' => array('prefLabel' => 'skos:prefLabel', 'narrower' => array('@id'=>'skos:narrower','@type'=>'@id'), 'narrowerTransitive' => array('@id'=>'skos:narrowerTransitive','@container'=>'@index'), '@language' => $request->getLang()),
       'uri' => $uri,
       'narrowerTransitive' => $results)
     );
-    $ret['@context'] = array_merge($ret['@context'], array('prefLabel' => 'skos:prefLabel', 'narrower' => array('@id'=>'skos:narrower','@type'=>'@id'), 'narrowerTransitive' => array('@id'=>'skos:narrowerTransitive','@container'=>'@index'), '@language' => $request->getLang()));
 
     return $this->return_json($ret);
   }
@@ -671,11 +678,11 @@ class RestController extends Controller
       }
     }
 
-    $ret = array_merge($this->context, array(
+    $ret = array_merge_recursive($this->context, array(
+      '@context' => array('onki' => 'http://schema.onki.fi/onki#', 'prefLabel' => 'skos:prefLabel', 'notation' => 'skos:notation', 'narrower' => array('@id'=>'skos:narrower','@type'=>'@id'), 'broader' => array('@id'=>'skos:broader','@type'=>'@id'), 'broaderTransitive' => array('@id'=>'skos:broaderTransitive','@container'=>'@index'), 'top' => array('@id'=>'skos:topConceptOf','@type'=>'@id'), 'hasChildren' => 'onki:hasChildren', '@language' => $request->getLang()),
       'uri' => $uri,
       'broaderTransitive' => $results)
     );
-    $ret['@context'] = array_merge($ret['@context'], array('onki' => 'http://schema.onki.fi/onki#', 'prefLabel' => 'skos:prefLabel', 'notation' => 'skos:notation', 'narrower' => array('@id'=>'skos:narrower','@type'=>'@id'), 'broader' => array('@id'=>'skos:broader','@type'=>'@id'), 'broaderTransitive' => array('@id'=>'skos:broaderTransitive','@container'=>'@index'), 'top' => array('@id'=>'skos:topConceptOf','@type'=>'@id'), 'hasChildren' => 'onki:hasChildren', '@language' => $request->getLang()));
 
     return $this->return_json($ret);
   }
@@ -689,10 +696,11 @@ class RestController extends Controller
   {
     $results = $request->getVocab()->listConceptGroups($request->getLang());
 
-    $ret = array_merge($this->context, array(
+    $ret = array_merge_recursive($this->context, array(
+      '@context' => array('onki' => 'http://schema.onki.fi/onki#', 'prefLabel' => 'skos:prefLabel', 'groups' => 'onki:hasGroup','childGroups' => array('@id'=>'skos:member','@type'=>'@id'), 'hasMembers' => 'onki:hasMembers', '@language' => $request->getLang()),
+      'uri' => '',
       'groups' => $results)
     );
-    $ret['@context'] = array_merge($ret['@context'], array('onki' => 'http://schema.onki.fi/onki#', 'prefLabel' => 'skos:prefLabel', 'groups' => 'onki:hasGroup','childGroups' => array('@id'=>'skos:member','@type'=>'@id'), 'hasMembers' => 'onki:hasMembers', '@language' => $request->getLang()));
 
     return $this->return_json($ret);
   }
@@ -710,11 +718,11 @@ class RestController extends Controller
     if ($children === NULL)
       return $this->return_error('404', 'Not Found', "Could not find group <$uri>");
 
-    $ret = array_merge($this->context, array(
+    $ret = array_merge_recursive($this->context, array(
+      '@context' => array('prefLabel' => 'skos:prefLabel', 'members' => 'skos:member', '@language' => $request->getLang()),
       'uri' => $uri,
       'members' => $children)
     );
-    $ret['@context'] = array_merge($ret['@context'], array('prefLabel' => 'skos:prefLabel', 'members' => 'skos:member', '@language' => $request->getLang()));
 
     return $this->return_json($ret);
   }
@@ -732,11 +740,11 @@ class RestController extends Controller
     if ($children === NULL)
       return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
 
-    $ret = array_merge($this->context, array(
+    $ret = array_merge_recursive($this->context, array(
+      '@context' => array('prefLabel' => 'skos:prefLabel', 'narrower' => 'skos:narrower', 'notation' => 'skos:notation', 'hasChildren' => 'onki:hasChildren', '@language' => $request->getLang()),
       'uri' => $uri,
       'narrower' => $children)
     );
-    $ret['@context'] = array_merge($ret['@context'], array('prefLabel' => 'skos:prefLabel', 'narrower' => 'skos:narrower', 'notation' => 'skos:notation', 'hasChildren' => 'onki:hasChildren', '@language' => $request->getLang()));
 
     return $this->return_json($ret);
   }
@@ -758,11 +766,11 @@ class RestController extends Controller
       $results[] = array('uri'=>$uri, 'prefLabel'=>$vals['label']);
     }
 
-    $ret = array_merge($this->context, array(
+    $ret = array_merge_recursive($this->context, array(
+      '@context' => array('prefLabel' => 'skos:prefLabel', 'related' => 'skos:related', '@language' => $request->getLang()),
       'uri' => $uri,
       'related' => $results)
     );
-    $ret['@context'] = array_merge($ret['@context'], array('prefLabel' => 'skos:prefLabel', 'related' => 'skos:related', '@language' => $request->getLang()));
     
     return $this->return_json($ret);
   }
