@@ -700,7 +700,7 @@ class RestController extends Controller
   public function groupMembers($request)
   {
     $children = $request->getVocab()->listConceptGroupContents($request->getUri(), $request->getLang());
-    if ($children === NULL)
+    if (empty($children))
       return $this->return_error('404', 'Not Found', "Could not find group <{$request->getUri()}>");
 
     $ret = array_merge_recursive($this->context, array(
