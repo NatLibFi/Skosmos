@@ -568,7 +568,7 @@ class RestController extends Controller
   {
     $results = array();
     $broaders = $request->getVocab()->getConceptTransitiveBroaders($request->getUri(), $this->parseLimit(), false, $request->getLang());
-    if ($broaders === NULL)
+    if (empty($broaders))
       return $this->return_error('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
     foreach ($broaders as $buri => $vals) {
       $result = array('uri'=>$buri, 'prefLabel'=>$vals['label']);
@@ -620,7 +620,7 @@ class RestController extends Controller
   {
     $results = array();
     $narrowers = $request->getVocab()->getConceptTransitiveNarrowers($request->getUri(), $this->parseLimit(), $request->getLang());
-    if ($narrowers === NULL)
+    if (empty($narrowers))
       return $this->return_error('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
     foreach ($narrowers as $nuri => $vals) {
       $result = array('uri'=>$nuri, 'prefLabel'=>$vals['label']);
