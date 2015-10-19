@@ -648,8 +648,8 @@ class RestController extends Controller
   public function hierarchy($request)
   {
     $results = $request->getVocab()->getConceptHierarchy($request->getUri(), $request->getLang());
-    if ($results === NULL)
-      return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
+    if (empty($results))
+      return $this->return_error('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
     
     if ($request->getVocab()->getShowHierarchy()) {
       $scheme = $request->getQueryParam('scheme') ? $request->getQueryParam('scheme') : $request->getVocab()->getDefaultConceptScheme();
