@@ -249,6 +249,7 @@ function getTreeConfiguration(root) {
     'core' : {
       'animation' : 0,
       'themes' : { 'icons': false },
+      'strings' : { 'Loading ...' : jstree_loading },
       'data' : 
         function(node, cb) { 
           var json_url = (rest_base_url + vocab + '/hierarchy');
@@ -278,7 +279,7 @@ function getTreeConfiguration(root) {
       }
     },
     'plugins' : ['sort'],
-    'sort' : function (a,b) { return naturalCompare(this.get_text(a).toLowerCase(), this.get_text(b).toLowerCase()); }  
+    'sort' : function (a,b) { return naturalCompare(this.get_text(a).toLowerCase(), this.get_text(b).toLowerCase()); }
   });
 }
 

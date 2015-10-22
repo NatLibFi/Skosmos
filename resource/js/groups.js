@@ -94,6 +94,7 @@ function invokeGroupTree() {
       },
       'animation' : 0,
       'themes' : { 'icons': false },
+      'strings' : { 'Loading ...' : jstree_loading }
     } 
   });
 }
