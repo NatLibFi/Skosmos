@@ -172,9 +172,10 @@ function vocabRoot(topConcepts) {
       text: conceptData.label, 
       a_attr : { "href" : vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(conceptData.uri) },
       uri: conceptData.uri,
-      children: [],
       state: { opened: false } 
     };
+    if (conceptData.hasChildren)
+      childObject.children = true;
     setNode(childObject);
     topArray.push(childObject);
   }
@@ -252,8 +253,10 @@ function getTreeConfiguration(root) {
         function(node, cb) { 
           var json_url = (rest_base_url + vocab + '/hierarchy');
           var nodeId;
-          if (node.id === '#') {
+          if (node.id === '#' && $('.uri-input-box').length) {
             nodeId = $('.uri-input-box').html(); // using the real uri of the concept from the view.
+          } else if(node.id === '#') {
+            json_url = (rest_base_url + vocab + '/topConcepts');
           } else  {
             nodeId = node.uri;
             json_url = (rest_base_url + vocab + '/children');

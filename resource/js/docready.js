@@ -56,7 +56,7 @@ $(function() { // DOCUMENT READY
       }
     }
     // Sidenav actions only happen when doing other queries than the autocomplete.
-    if (settings.url.indexOf('topConcepts') !== -1 || settings.url.indexOf('index') !== -1 || settings.url.indexOf('groups') !== -1 ) {
+    if (settings.url.indexOf('index') !== -1 || settings.url.indexOf('groups') !== -1 ) {
       var snap = (settings.url.indexOf('hierarchy') !== -1) ? 18 : 15;
       $(".sidebar-grey").mCustomScrollbar({ 
         alwaysShowScrollbar: 1,
@@ -309,8 +309,8 @@ $(function() { // DOCUMENT READY
         $('.active').removeClass('active');
         $('#hier-trigger').parent().addClass('active');
         $('.pagination').hide();
-        $content.append('<div class="sidebar-grey"><div class="hierarchy-bar-tree"></div></div>');
-        invokeParentTree(getTreeConfiguration(true)); 
+        $content.append('<div class="sidebar-grey"></div>');
+        invokeParentTree(getTreeConfiguration()); 
         $('#hier-trigger').attr('href', '#');
         return false;
       }
