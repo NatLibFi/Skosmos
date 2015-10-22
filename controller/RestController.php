@@ -17,6 +17,14 @@ class RestController extends Controller
 {
   /* supported MIME types that can be used to return RDF data */
   private static $SUPPORTED_MIME_TYPES = 'application/rdf+xml text/turtle application/ld+json application/json';
+  /* context array template */
+  private $context = array(
+    '@context' => array(
+      'skos' => 'http://www.w3.org/2004/02/skos/core#',
+      'uri' => '@id',
+      'type' => '@type',
+    )
+  );
 
   /**
    * Echos an error message when the request can't be fulfilled.
@@ -349,20 +357,10 @@ class RestController extends Controller
       $types[] = $type;
     }
 
-    $ret = array(
-        '@context' => array(
-            'rdfs' => 'http://www.w3.org/2000/01/rdf-schema#',
-            'skos' => 'http://www.w3.org/2004/02/skos/core#',
-            'onki' => 'http://schema.onki.fi/onki#',
-            'uri' => '@id',
-            'type' => '@type',
-            'label' => 'rdfs:label',
-            'superclass' => array('@id' => 'rdfs:subClassOf', '@type' => '@id'),
-            'types' => 'onki:hasType',
-            '@language' => $request->getLang(),
-        ),
-        'uri' => '',
-        'types' => $types,
+    $ret = array_merge_recursive($this->context, array(
+      '@context' => array('rdfs' => 'http://www.w3.org/2000/01/rdf-schema#','onki' => 'http://schema.onki.fi/onki#','label' => 'rdfs:label','superclass' => array('@id' => 'rdfs:subClassOf', '@type' => '@id'),'types' => 'onki:hasType','@language' => $request->getLang()),
+      'uri' => '',
+      'types' => $types)
     );
 
     return $this->return_json($ret);
@@ -417,21 +415,11 @@ class RestController extends Controller
     foreach($hits as &$res)
       unset($res['voc']);
 
-    $ret = array(
-        '@context' => array(
-            'skos' => 'http://www.w3.org/2004/02/skos/core#',
-            'onki' => 'http://schema.onki.fi/onki#',
-            'results' => array(
-                '@id' => 'onki:results',
-            ),
-            'uri' => '@id',
-            'prefLabel' => 'skos:prefLabel',
-            'altLabel' => 'skos:altLabel',
-            'hiddenLabel' => 'skos:hiddenLabel',
-        ),
-        'uri' => '',
-        'results' => $hits,
+    $ret = array_merge_recursive($this->context, array(
+      '@context' => array('onki' => 'http://schema.onki.fi/onki#','results' => array('@id' => 'onki:results',), 'prefLabel' => 'skos:prefLabel', 'altLabel' => 'skos:altLabel', 'hiddenLabel' => 'skos:hiddenLabel'),
+      'result' => $hits)
     );
+    
     if ($lang)
       $ret['@context']['@language'] = $lang;
 
@@ -453,18 +441,10 @@ class RestController extends Controller
     /* encode the results in a JSON-LD compatible array */
     $topconcepts = $vocab->getTopConcepts($scheme, $request->getLang());
 
-    $ret = array(
-        '@context' => array(
-            'skos' => 'http://www.w3.org/2004/02/skos/core#',
-            'onki' => 'http://schema.onki.fi/onki#',
-            'uri' => '@id',
-            'topconcepts' => 'skos:hasTopConcept',
-            'notation' => 'skos:notation',
-            'label' => 'skos:prefLabel',
-            '@language' => $request->getLang(),
-        ),
-        'uri' => $scheme,
-        'topconcepts' => $topconcepts,
+    $ret = array_merge_recursive($this->context, array(
+      '@context' => array('onki' => 'http://schema.onki.fi/onki#','topconcepts' => 'skos:hasTopConcept','notation' => 'skos:notation', 'label' => 'skos:prefLabel', '@language' => $request->getLang()),
+      'uri' => $scheme,
+      'topconcepts' => $topconcepts)
     );
 
     return $this->return_json($ret);
@@ -541,20 +521,14 @@ class RestController extends Controller
   {
     if (!$request->getUri())
       return $this->return_error(400, "Bad Request", "uri parameter missing");
-    $uri = $request->getUri();
 
-    $results = $request->getVocab()->getConceptLabel($uri, $request->getLang());
+    $results = $request->getVocab()->getConceptLabel($request->getUri(), $request->getLang());
     if ($results === NULL)
-      return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
+      return $this->return_error('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
 
-    $ret = array(
-        '@context' => array(
-            'skos' => 'http://www.w3.org/2004/02/skos/core#',
-            'uri' => '@id',
-            'prefLabel' => 'skos:prefLabel',
-            '@language' => $request->getLang(),
-        ),
-        'uri' => $uri,
+    $ret = array_merge_recursive($this->context, array(
+      '@context' => array('prefLabel' => 'skos:prefLabel', '@language' => $request->getLang()), 
+      'uri' => $request->getUri())
     );
 
     if (isset($results[$request->getLang()]))
@@ -570,26 +544,18 @@ class RestController extends Controller
    */
   public function broader($request)
   {
-    $uri = $request->getUri();
-
     $results = array();
-    $broaders = $request->getVocab()->getConceptBroaders($uri, $request->getLang());
+    $broaders = $request->getVocab()->getConceptBroaders($request->getUri(), $request->getLang());
     if ($broaders === NULL)
-      return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
+      return $this->return_error('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
     foreach ($broaders as $object => $vals) {
       $results[] = array('uri'=>$object, 'prefLabel'=>$vals['label']);
     }
 
-    $ret = array(
-        '@context' => array(
-            'skos' => 'http://www.w3.org/2004/02/skos/core#',
-            'uri' => '@id',
-            'prefLabel' => 'skos:prefLabel',
-            'broader' => 'skos:broader',
-            '@language' => $request->getLang(),
-        ),
-        'uri' => $uri,
-        'broader' => $results,
+    $ret = array_merge_recursive($this->context, array(
+      '@context' => array('prefLabel' => 'skos:prefLabel', 'broader' => 'skos:broader', '@language' => $request->getLang()),
+      'uri' => $request->getUri(),
+      'broader' => $results)
     );
 
     return $this->return_json($ret);
@@ -602,13 +568,10 @@ class RestController extends Controller
    */
   public function broaderTransitive($request)
   {
-    $uri = $request->getUri();
-    $limit = $this->parseLimit();
-
     $results = array();
-    $broaders = $request->getVocab()->getConceptTransitiveBroaders($uri, $limit, false, $request->getLang());
-    if ($broaders === NULL)
-      return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
+    $broaders = $request->getVocab()->getConceptTransitiveBroaders($request->getUri(), $this->parseLimit(), false, $request->getLang());
+    if (empty($broaders))
+      return $this->return_error('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
     foreach ($broaders as $buri => $vals) {
       $result = array('uri'=>$buri, 'prefLabel'=>$vals['label']);
       if (isset($vals['direct'])) {
@@ -617,18 +580,10 @@ class RestController extends Controller
       $results[$buri] = $result;
     }
 
-    $ret = array(
-        '@context' => array(
-            'skos' => 'http://www.w3.org/2004/02/skos/core#',
-            'uri' => '@id',
-            'type' => '@type',
-            'prefLabel' => 'skos:prefLabel',
-            'broader' => array('@id'=>'skos:broader','@type'=>'@id'),
-            'broaderTransitive' => array('@id'=>'skos:broaderTransitive','@container'=>'@index'),
-            '@language' => $request->getLang(),
-        ),
-        'uri' => $uri,
-        'broaderTransitive' => $results,
+    $ret = array_merge_recursive($this->context, array(
+      '@context' => array('prefLabel' => 'skos:prefLabel', 'broader' => array('@id'=>'skos:broader','@type'=>'@id'), 'broaderTransitive' => array('@id'=>'skos:broaderTransitive','@container'=>'@index'), '@language' => $request->getLang()),
+      'uri' => $request->getUri(),
+      'broaderTransitive' => $results)
     );
 
     return $this->return_json($ret);
@@ -641,26 +596,18 @@ class RestController extends Controller
    */
   public function narrower($request)
   {
-    $uri = $request->getUri();
-
     $results = array();
-    $narrowers = $request->getVocab()->getConceptNarrowers($uri, $request->getLang());
+    $narrowers = $request->getVocab()->getConceptNarrowers($request->getUri(), $request->getLang());
     if ($narrowers === NULL)
-      return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
+      return $this->return_error('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
     foreach ($narrowers as $object => $vals) {
       $results[] = array('uri'=>$object, 'prefLabel'=>$vals['label']);
     }
 
-    $ret = array(
-        '@context' => array(
-            'skos' => 'http://www.w3.org/2004/02/skos/core#',
-            'uri' => '@id',
-            'prefLabel' => 'skos:prefLabel',
-            'narrower' => 'skos:narrower',
-            '@language' => $request->getLang(),
-        ),
-        'uri' => $uri,
-        'narrower' => $results,
+    $ret = array_merge_recursive($this->context, array(
+      '@context' => array('prefLabel' => 'skos:prefLabel', 'narrower' => 'skos:narrower', '@language' => $request->getLang()),
+      'uri' => $request->getUri(),
+      'narrower' => $results)
     );
 
     return $this->return_json($ret);
@@ -673,13 +620,10 @@ class RestController extends Controller
    */
   public function narrowerTransitive($request)
   {
-    $uri = $request->getUri();
-    $limit = $this->parseLimit();
-
     $results = array();
-    $narrowers = $request->getVocab()->getConceptTransitiveNarrowers($uri, $limit, $request->getLang());
-    if ($narrowers === NULL)
-      return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
+    $narrowers = $request->getVocab()->getConceptTransitiveNarrowers($request->getUri(), $this->parseLimit(), $request->getLang());
+    if (empty($narrowers))
+      return $this->return_error('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
     foreach ($narrowers as $nuri => $vals) {
       $result = array('uri'=>$nuri, 'prefLabel'=>$vals['label']);
       if (isset($vals['direct'])) {
@@ -688,18 +632,10 @@ class RestController extends Controller
       $results[$nuri] = $result;
     }
 
-    $ret = array(
-        '@context' => array(
-            'skos' => 'http://www.w3.org/2004/02/skos/core#',
-            'uri' => '@id',
-            'type' => '@type',
-            'prefLabel' => 'skos:prefLabel',
-            'narrower' => array('@id'=>'skos:narrower','@type'=>'@id'),
-            'narrowerTransitive' => array('@id'=>'skos:narrowerTransitive','@container'=>'@index'),
-            '@language' => $request->getLang(),
-        ),
-        'uri' => $uri,
-        'narrowerTransitive' => $results,
+    $ret = array_merge_recursive($this->context, array(
+      '@context' => array('prefLabel' => 'skos:prefLabel', 'narrower' => array('@id'=>'skos:narrower','@type'=>'@id'), 'narrowerTransitive' => array('@id'=>'skos:narrowerTransitive','@container'=>'@index'), '@language' => $request->getLang()),
+      'uri' => $request->getUri(),
+      'narrowerTransitive' => $results)
     );
 
     return $this->return_json($ret);
@@ -713,11 +649,9 @@ class RestController extends Controller
    */
   public function hierarchy($request)
   {
-    $uri = $request->getUri();
-
-    $results = $request->getVocab()->getConceptHierarchy($uri, $request->getLang());
-    if ($results === NULL)
-      return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
+    $results = $request->getVocab()->getConceptHierarchy($request->getUri(), $request->getLang());
+    if (empty($results))
+      return $this->return_error('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
     
     if ($request->getVocab()->getShowHierarchy()) {
       $scheme = $request->getQueryParam('scheme');
@@ -749,23 +683,10 @@ class RestController extends Controller
       }
     }
 
-    $ret = array(
-        '@context' => array(
-            'skos' => 'http://www.w3.org/2004/02/skos/core#',
-            'onki' => 'http://schema.onki.fi/onki#',
-            'uri' => '@id',
-            'type' => '@type',
-            'prefLabel' => 'skos:prefLabel',
-            'notation' => 'skos:notation',
-            'narrower' => array('@id'=>'skos:narrower','@type'=>'@id'),
-            'broader' => array('@id'=>'skos:broader','@type'=>'@id'),
-            'broaderTransitive' => array('@id'=>'skos:broaderTransitive','@container'=>'@index'),
-            'top' => array('@id'=>'skos:topConceptOf','@type'=>'@id'),
-            'hasChildren' => 'onki:hasChildren',
-            '@language' => $request->getLang(),
-        ),
-        'uri' => $uri,
-        'broaderTransitive' => $results,
+    $ret = array_merge_recursive($this->context, array(
+      '@context' => array('onki' => 'http://schema.onki.fi/onki#', 'prefLabel' => 'skos:prefLabel', 'notation' => 'skos:notation', 'narrower' => array('@id'=>'skos:narrower','@type'=>'@id'), 'broader' => array('@id'=>'skos:broader','@type'=>'@id'), 'broaderTransitive' => array('@id'=>'skos:broaderTransitive','@container'=>'@index'), 'top' => array('@id'=>'skos:topConceptOf','@type'=>'@id'), 'hasChildren' => 'onki:hasChildren', '@language' => $request->getLang()),
+      'uri' => $request->getUri(),
+      'broaderTransitive' => $results)
     );
 
     return $this->return_json($ret);
@@ -780,20 +701,10 @@ class RestController extends Controller
   {
     $results = $request->getVocab()->listConceptGroups($request->getLang());
 
-    $ret = array(
-        '@context' => array(
-            'skos' => 'http://www.w3.org/2004/02/skos/core#',
-            'onki' => 'http://schema.onki.fi/onki#',
-            'uri' => '@id',
-            'type' => '@type',
-            'prefLabel' => 'skos:prefLabel',
-            'groups' => 'onki:hasGroup',
-            'childGroups' => array('@id'=>'skos:member','@type'=>'@id'),
-            'hasMembers' => 'onki:hasMembers',
-            '@language' => $request->getLang(),
-        ),
-        'uri' => '',
-        'groups' => $results,
+    $ret = array_merge_recursive($this->context, array(
+      '@context' => array('onki' => 'http://schema.onki.fi/onki#', 'prefLabel' => 'skos:prefLabel', 'groups' => 'onki:hasGroup','childGroups' => array('@id'=>'skos:member','@type'=>'@id'), 'hasMembers' => 'onki:hasMembers', '@language' => $request->getLang()),
+      'uri' => '',
+      'groups' => $results)
     );
 
     return $this->return_json($ret);
@@ -806,23 +717,14 @@ class RestController extends Controller
    */
   public function groupMembers($request)
   {
-    $uri = $request->getUri();
+    $children = $request->getVocab()->listConceptGroupContents($request->getUri(), $request->getLang());
+    if (empty($children))
+      return $this->return_error('404', 'Not Found', "Could not find group <{$request->getUri()}>");
 
-    $children = $request->getVocab()->listConceptGroupContents($uri, $request->getLang());
-    if ($children === NULL)
-      return $this->return_error('404', 'Not Found', "Could not find group <$uri>");
-
-    $ret = array(
-        '@context' => array(
-            'skos' => 'http://www.w3.org/2004/02/skos/core#',
-            'uri' => '@id',
-            'type' => '@type',
-            'prefLabel' => 'skos:prefLabel',
-            'members' => 'skos:member',
-            '@language' => $request->getLang(),
-        ),
-        'uri' => $uri,
-        'members' => $children,
+    $ret = array_merge_recursive($this->context, array(
+      '@context' => array('prefLabel' => 'skos:prefLabel', 'members' => 'skos:member', '@language' => $request->getLang()),
+      'uri' => $request->getUri(),
+      'members' => $children)
     );
 
     return $this->return_json($ret);
@@ -835,25 +737,14 @@ class RestController extends Controller
    */
   public function children($request)
   {
-    $uri = $request->getUri();
-
-    $children = $request->getVocab()->getConceptChildren($uri, $request->getLang());
+    $children = $request->getVocab()->getConceptChildren($request->getUri(), $request->getLang());
     if ($children === NULL)
-      return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
+      return $this->return_error('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
 
-    $ret = array(
-        '@context' => array(
-            'skos' => 'http://www.w3.org/2004/02/skos/core#',
-            'uri' => '@id',
-            'type' => '@type',
-            'prefLabel' => 'skos:prefLabel',
-            'narrower' => 'skos:narrower',
-            'notation' => 'skos:notation',
-            'hasChildren' => 'onki:hasChildren',
-            '@language' => $request->getLang(),
-        ),
-        'uri' => $uri,
-        'narrower' => $children,
+    $ret = array_merge_recursive($this->context, array(
+      '@context' => array('prefLabel' => 'skos:prefLabel', 'narrower' => 'skos:narrower', 'notation' => 'skos:notation', 'hasChildren' => 'onki:hasChildren', '@language' => $request->getLang()),
+      'uri' => $request->getUri(),
+      'narrower' => $children)
     );
 
     return $this->return_json($ret);
@@ -866,29 +757,20 @@ class RestController extends Controller
    */
   public function related($request)
   {
-    $uri = $request->getUri();
-
     $results = array();
-    $related = $request->getVocab()->getConceptRelateds($uri, $request->getLang());
+    $related = $request->getVocab()->getConceptRelateds($request->getUri(), $request->getLang());
     if ($related === NULL)
-      return $this->return_error('404', 'Not Found', "Could not find concept <$uri>");
+      return $this->return_error('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
     foreach ($related as $uri => $vals) {
       $results[] = array('uri'=>$uri, 'prefLabel'=>$vals['label']);
     }
 
-    $ret = array(
-        '@context' => array(
-            'skos' => 'http://www.w3.org/2004/02/skos/core#',
-            'uri' => '@id',
-            'type' => '@type',
-            'prefLabel' => 'skos:prefLabel',
-            'related' => 'skos:related',
-            '@language' => $request->getLang(),
-        ),
-        'uri' => $uri,
-        'related' => $results,
+    $ret = array_merge_recursive($this->context, array(
+      '@context' => array('prefLabel' => 'skos:prefLabel', 'related' => 'skos:related', '@language' => $request->getLang()),
+      'uri' => $uri,
+      'related' => $results)
     );
-
+    
     return $this->return_json($ret);
   }
 }

@@ -5,14 +5,15 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   private $model; 
   private $graph; 
   private $sparql;
+  private $vocab;
 
   protected function setUp() {
     require_once 'testconfig.inc';
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');
     $this->model = new Model();
-    $voc = $this->model->getVocabulary('test');
-    $this->graph = $voc->getGraph();
+    $this->vocab = $this->model->getVocabulary('test');
+    $this->graph = $this->vocab->getGraph();
     $this->sparql = new GenericSparql('http://localhost:3030/ds/sparql', $this->graph, $this->model);
   }
  
@@ -209,14 +210,24 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GenericSparql::queryConceptInfo
-   * @todo   Implement testQueryConceptInfo().
+   * @covers GenericSparql::formatValues
    */
-  public function testQueryConceptInfo()
+  public function testQueryConceptInfoWithOneURI()
   {
-    // Remove the following lines when you implement this test.
-    $this->markTestIncomplete(
-      'This test has not been implemented yet.'
-    );
+    $actual = $this->sparql->queryConceptInfo(array('http://www.skosmos.skos/test/ta123'), null, array($this->vocab), false, 'en');
+    $this->assertInstanceOf('Concept', $actual[0]);
+    $this->assertEquals('http://www.skosmos.skos/test/ta123', $actual[0]->getUri());
+  }
+
+  /**
+   * @covers GenericSparql::queryConceptInfo
+   * @covers GenericSparql::formatValues
+   */
+  public function testQueryConceptInfoWithOneURINotInArray()
+  {
+    $actual = $this->sparql->queryConceptInfo('http://www.skosmos.skos/test/ta123', null, array($this->vocab), false, 'en');
+    $this->assertInstanceOf('Concept', $actual[0]);
+    $this->assertEquals('http://www.skosmos.skos/test/ta123', $actual[0]->getUri());
   }
 
   /**

@@ -163,6 +163,24 @@ function buildParentTree(uri, parentData) {
   return JSON.parse(JSON.stringify(rootArray));
 }
 
+function vocabRoot(topConcepts) {
+  var topArray = [];
+  for (var i = 0; i < topConcepts.length; i++) {
+    var conceptData = topConcepts[i];
+    var childObject = {
+      text: conceptData.label, 
+      a_attr : { "href" : vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(conceptData.uri) },
+      uri: conceptData.uri,
+      state: { opened: false } 
+    };
+    if (conceptData.hasChildren)
+      childObject.children = true;
+    setNode(childObject);
+    topArray.push(childObject);
+  }
+  return topArray;
+}
+
 /*
  * Iterates through the tree and fixes all the parents by adding references to their child concepts.
  */
@@ -277,6 +295,7 @@ function getTreeConfiguration() {
     'core' : {
       'animation' : 0,
       'themes' : { 'icons': false },
+      'strings' : { 'Loading ...' : jstree_loading },
       'data' : 
         function(node, cb) { 
           var clang = content_lang !== '' ? content_lang : lang;
@@ -315,9 +334,9 @@ function getTreeConfiguration() {
                 } else { // if there was only one concept scheme display it's top concepts at the top level
                   $.ajax({
                     data: $.param({'lang': clang}),
-                    url: rest_base_url + vocab + '/hierarchy', 
+                    url: rest_base_url + vocab + '/topConcepts', 
                     success: function (response) {
-                      cb(buildParentTree(undefined, response.broaderTransitive));
+                      cb(vocabRoot(response.topconcepts));
                     }
                   });
                 }
@@ -331,7 +350,7 @@ function getTreeConfiguration() {
       }
     },
     'plugins' : ['sort'],
-    'sort' : function (a,b) { return naturalCompare(this.get_text(a).toLowerCase(), this.get_text(b).toLowerCase()); }  
+    'sort' : function (a,b) { return naturalCompare(this.get_text(a).toLowerCase(), this.get_text(b).toLowerCase()); }
   });
 }
 

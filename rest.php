@@ -10,9 +10,6 @@
  */
 require_once 'config.inc';
 
-$path = $_SERVER['PATH_INFO']; // esim. "/search"
-$parts = explode('/', $path);
-
 header("Access-Control-Allow-Origin: *"); // enable CORS for the whole REST API
 
 try {
@@ -22,6 +19,8 @@ try {
   $model = new Model();
   $controller = new RestController($model);
   $request = new Request($model);
+  $path = $request->getServerConstant('PATH_INFO') ? $request->getServerConstant('PATH_INFO') : ''; // eg. "/search"
+  $parts = explode('/', $path);
   $request->setUri($request->getQueryParam('uri'));
   $request->setLang($request->getQueryParam('lang'));
   if ($request->getQueryParam('vocab'))
