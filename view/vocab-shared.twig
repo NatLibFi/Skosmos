@@ -3,7 +3,6 @@
     <div>
       <h1>{% trans "Vocabulary information" %}</h1>
       <hr />
-      {% if vocab.info(request.contentLang) %}
     </div>
     <div class="vocab-info-literals">
       <table class="table">
@@ -38,7 +37,6 @@
       <tr><td class="property-divider"></td></tr>
       </table>
     </div>
-    {% endif %}
     {% if vocab.dataURLs %}
     <div class="download-links">
       <span class="versal">{% trans %}Download this vocabulary as SKOS/RDF:{% endtrans %}
