@@ -122,13 +122,17 @@ function createConceptObject(conceptUri, conceptData) {
  * @param {String} uri
  * @param {Object} parentData
  */
-function buildParentTree(uri, parentData) {
+function buildParentTree(uri, parentData, schemes) {
   if (parentData === undefined || parentData === null) { return; }
 
   var loopIndex = 0, // for adding the last concept as a root if no better candidates have been found.
     currentNode,
     rootArray = [],
     rootNode;
+
+  if (schemes.length > 1) {
+    rootArray = schemes;
+  }
 
     for(var conceptUri in parentData) {
       var branchHelper, 
@@ -141,8 +145,21 @@ function buildParentTree(uri, parentData) {
       if (!rootNode) {  
         branchHelper = currentNode;
       }
-      rootNode = currentNode; 
-      rootArray.push(rootNode);
+      if (schemes.length > 1 && parentData[conceptUri].inScheme) {
+        for (var i in schemes) {
+          if (schemes[i].uri === parentData[conceptUri].inScheme) {
+            if(Object.prototype.toString.call(schemes[i].children) !== '[object Array]' ) {
+              schemes[i].children = [];
+            }
+            schemes[i].children.push(currentNode);
+            schemes[i].state = {opened: true};
+          }
+        }
+      }
+      else {
+        rootNode = currentNode; 
+        rootArray.push(rootNode);
+      }
     }
     if (exactMatchFound) { // combining branches if we have met a exact match during the previous iteration.
       currentNode.children.push(branchHelper); 
@@ -302,52 +319,58 @@ function getTreeConfiguration() {
           var json_url = (rest_base_url + vocab + '/hierarchy');
           var nodeId;
           var params = getParams(node); 
-          // top concepts of a concept scheme
-          if (node.original && node.original.a_attr && node.original.a_attr.class === 'scheme') {
-            json_url = (rest_base_url + vocab + '/topConcepts');
-            params = $.param({'scheme': node.original.uri, 'lang' : clang});
-          } 
-          // concept schemes of the vocabulary
-          else if (node.id === '#' && $('#vocab-info').length) { 
-            json_url = (rest_base_url + vocab + '/');
-          }  
-          // concept hierarchy
-          else if (node.id === '#') {
-            nodeId = $('.uri-input-box').html(); // using the real uri of the concept from the view.
-          } 
-          // narrowers of a concept
-          else  {
-            nodeId = node.uri;
-            json_url = (rest_base_url + vocab + '/children');
-          }
+          var schemeObjects;
           $.ajax({
-            data: params,
-            url: json_url, 
+            data: $.param({'lang': clang}),
+            url: rest_base_url + vocab + '/',
             success: function (response) {
-              if (response.broaderTransitive) { // the default hierarchy query that fires when a page loads.
-                cb(buildParentTree(nodeId, response.broaderTransitive));
-              } else if (response.conceptschemes) {
-                var schemeobjects = schemeRoot(response.conceptschemes);
-                // if there are multiple concept schemes display those at the top level
-                if (schemeobjects.length > 1) {
-                  cb(schemeobjects);
-                } else { // if there was only one concept scheme display it's top concepts at the top level
-                  $.ajax({
-                    data: $.param({'lang': clang}),
-                    url: rest_base_url + vocab + '/topConcepts', 
-                    success: function (response) {
-                      cb(vocabRoot(response.topconcepts));
-                    }
-                  });
+              schemeObjects = schemeRoot(response.conceptschemes);
+              // if there are multiple concept schemes display those at the top level
+              if (schemeObjects.length > 1 && node.id === '#' && $('#vocab-info').length) {
+                cb(schemeObjects);
+              } 
+              // if there was only one concept scheme display it's top concepts at the top level 
+              else if(node.id === '#' && $('#vocab-info').length) { 
+                $.ajax({
+                  data: $.param({'lang': clang}),
+                  url: rest_base_url + vocab + '/topConcepts', 
+                  success: function (response) {
+                    cb(vocabRoot(response.topconcepts));
+                  }
+                });
+              }
+              else {
+                // top concepts of a concept scheme
+                if (node.original && node.original.a_attr && node.original.a_attr.class === 'scheme') {
+                  json_url = (rest_base_url + vocab + '/topConcepts');
+                  params = $.param({'scheme': node.original.uri, 'lang' : clang});
+                } 
+                // concept hierarchy
+                else if (node.id === '#') {
+                  nodeId = $('.uri-input-box').html(); // using the real uri of the concept from the view.
+                } 
+                // narrowers of a concept
+                else  {
+                  nodeId = node.uri;
+                  json_url = (rest_base_url + vocab + '/children');
                 }
-              } else if (response.topconcepts) {
-                cb(topConceptsToSchemes(response.topconcepts));
-              } else {
-                cb(createObjectsFromNarrowers(response));
+                $.ajax({
+                  data: params,
+                url: json_url, 
+                success: function (response) {
+                  if (response.broaderTransitive) { // the default hierarchy query that fires when a page loads.
+                    cb(buildParentTree(nodeId, response.broaderTransitive, schemeObjects));
+                  } else if (response.topconcepts) {
+                    cb(topConceptsToSchemes(response.topconcepts));
+                  } else {
+                    cb(createObjectsFromNarrowers(response));
+                  }
+                }
+                });
               }
             }
           });
-      }
+        }
     },
     'plugins' : ['sort'],
     'sort' : function (a,b) { return naturalCompare(this.get_text(a).toLowerCase(), this.get_text(b).toLowerCase()); }

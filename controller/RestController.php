@@ -655,22 +655,6 @@ class RestController extends Controller
     
     if ($request->getVocab()->getShowHierarchy()) {
       $scheme = $request->getQueryParam('scheme');
-      
-      if ($request->getVocab()->showConceptSchemesInHierarchy()) {
-        $schemes = $request->getVocab()->getConceptSchemes($request->getLang());
-        foreach ($schemes as $schemeuri => $schemearr) {
-          $label;
-          if (isset($schemearr['prefLabel']))
-            $label = $schemearr['prefLabel'];
-          elseif (isset($schemearr['label']))
-            $label = $schemearr['label'];
-          elseif (isset($schemearr['title']))
-            $label = $schemearr['title'];
-          if ($label)
-            $results[$schemeuri] = array('uri'=>$schemeuri, 'schemeLabel'=>$label);
-        }
-        $scheme = (!$scheme) ? array_keys($schemes) : $request->getVocab()->getDefaultConceptScheme();
-      }
 
       /* encode the results in a JSON-LD compatible array */
       $topconcepts = $request->getVocab()->getTopConcepts($scheme, $request->getLang());
@@ -679,6 +663,8 @@ class RestController extends Controller
           $results[$top['uri']] = array('uri'=>$top['uri'], 'top'=>$top['topConceptOf'], 'prefLabel'=>$top['label'], 'hasChildren'=>$top['hasChildren']);
           if (isset($top['notation']))
             $results[$top['uri']]['notation'] = $top['notation'];
+          if (isset($top['topConceptOf']))
+            $results[$top['uri']]['inScheme'] = $top['topConceptOf'];
         }
       }
     }
