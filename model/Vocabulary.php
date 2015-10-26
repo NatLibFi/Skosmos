@@ -255,26 +255,25 @@ class Vocabulary extends DataObject
 
     foreach ($conceptscheme->properties() as $prop) {
       foreach ($conceptscheme->allLiterals($prop, $lang) as $val) {
-        $ret[$prop][] = $val->getValue();
+        $ret[$prop][] = $val;
       }
       if (!isset($ret[$prop]) || sizeof($ret[$prop]) == 0) { // not found with language tag
         foreach ($conceptscheme->allLiterals($prop, null) as $val) {
           $value = $val->getValue();
           if ($value instanceof DateTime) {
-            $value = Punic\Calendar::formatDate($value, 'full', $lang) . ' ' . Punic\Calendar::format($value, 'HH:mm:ss', $lang);
+            $val = Punic\Calendar::formatDate($value, 'full', $lang) . ' ' . Punic\Calendar::format($value, 'HH:mm:ss', $lang);
           }
-          $ret[$prop][] = $value;
+          $ret[$prop][] = $val;
         }
       }
       foreach ($conceptscheme->allResources($prop) as $val) {
-        $label = $val->label($lang);
-        if ($label) {
-          $ret[$prop][] = $label->getValue();
-        } else {
-          $exvocab = $this->model->guessVocabularyFromURI($val->getURI());
-          $exlabel = $this->getExternalLabel($exvocab, $val->getURI(), $lang);
-          $ret[$prop][] = isset($exlabel) ? $exlabel : $val->getURI();
+        $exvocab = $this->model->guessVocabularyFromURI($val->getURI());
+        $exlabel = $this->getExternalLabel($exvocab, $val->getURI(), $lang);
+        if (isset($exlabel)) {
+          $val->add('skosmos:vocab', $exvocab->getId());
+          $val->add('skosmos:label', $exlabel);
         }
+        $ret[$prop][] =  $val;
       }
     }
     if (isset($ret['owl:versionInfo'])) { // if version info availible for vocabulary convert it to a more readable format
