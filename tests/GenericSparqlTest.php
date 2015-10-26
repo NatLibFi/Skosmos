@@ -433,7 +433,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   public function testQueryTopConcepts()
   {
     $actual = $this->sparql->queryTopConcepts('http://www.skosmos.skos/test/conceptscheme', 'en');
-    $this->assertEquals(array (0 => array ('uri' => 'http://www.skosmos.skos/test/ta1','label' => 'Fish','hasChildren' => true)), $actual);
+    $this->assertEquals(array (0 => array ('uri' => 'http://www.skosmos.skos/test/ta1','label' => 'Fish','hasChildren' => true, 'topConceptOf' => 'http://www.skosmos.skos/test/conceptscheme')), $actual);
   }
 
   /**
@@ -497,6 +497,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
           ),
         ),
         'prefLabel' => 'Fish',
+        'inScheme' => 'http://www.skosmos.skos/test/conceptscheme'
       ),
       'http://www.skosmos.skos/test/ta116' => array (
         'uri' => 'http://www.skosmos.skos/test/ta116',
