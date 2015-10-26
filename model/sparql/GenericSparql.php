@@ -463,8 +463,11 @@ EOQ;
     $limit = ($limit) ? 'LIMIT ' . $limit : '';
     $offset = ($offset) ? 'OFFSET ' . $offset : '';
     $unprefixed_types = array();
-    foreach($types as $type)
-      $unprefixed_types[] = EasyRdf_Namespace::expand($type);
+    $type = '';
+    if (!empty($types)) {
+      foreach($types as $type)
+        $unprefixed_types[] = EasyRdf_Namespace::expand($type);
+    }
 
     // extra variable expressions to request
     $extravars = '';
