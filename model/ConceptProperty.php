@@ -5,78 +5,85 @@
  */
 class ConceptProperty
 {
-  /** stores the property type */
-  private $prop;
-  /** stores the property label */
-  private $label;
-  /** stores the property values */
-  private $values;
+    /** stores the property type */
+    private $prop;
+    /** stores the property label */
+    private $label;
+    /** stores the property values */
+    private $values;
 
-  /**
-   * Label parameter seems to be optional in this phase.
-   * @param string $prop property type eg. 'rdf:type'.
-   * @param string $label
-   */
-  public function __construct($prop, $label)
-  {
-    $this->prop = $prop;
-    $this->label = $label;
-    $this->values = array(); 
-  }
+    /**
+     * Label parameter seems to be optional in this phase.
+     * @param string $prop property type eg. 'rdf:type'.
+     * @param string $label
+     */
+    public function __construct($prop, $label)
+    {
+        $this->prop = $prop;
+        $this->label = $label;
+        $this->values = array();
+    }
 
-  /**
-   * Gets the gettext translation for a property or returns the identifier as a fallback.
-   */
-  public function getLabel()
-  {
-    // first see if we have a translation
-    $label = gettext($this->prop);
-    if ($label != $this->prop) return $label;
-    // if not, see if there was a label for the property in the graph
-    if ($this->label) return $this->label;
-    // when no label is found, don't show the property at all
-    return null;
-  }
+    /**
+     * Gets the gettext translation for a property or returns the identifier as a fallback.
+     */
+    public function getLabel()
+    {
+        // first see if we have a translation
+        $label = gettext($this->prop);
+        if ($label != $this->prop) {
+            return $label;
+        }
 
-  /**
-   * Returns a gettext translation for the property tooltip.
-   * @return string
-   */
-  public function getDescription()
-  {
-    $helpprop = $this->prop . "_help";
+        // if not, see if there was a label for the property in the graph
+        if ($this->label) {
+            return $this->label;
+        }
 
-    return gettext($helpprop); // can't use string constant, it'd be picked up by xgettext
-  }
+        // when no label is found, don't show the property at all
+        return null;
+    }
 
-  /**
-   * Returns an array of the property values.
-   * @return array containing ConceptPropertyValue objects.
-   */
-  public function getValues()
-  {
-    $this->sortValues();
-    return $this->values;
-  }
-  
-  public function addValue($value)
-  {
-    $this->values[$value->getLabel() . $value->getUri()] = $value;
-  }
+    /**
+     * Returns a gettext translation for the property tooltip.
+     * @return string
+     */
+    public function getDescription()
+    {
+        $helpprop = $this->prop . "_help";
 
-  private function sortValues()
-  {
-    if (!empty($this->values))
-      natcasesort($this->values);
-  }
+        return gettext($helpprop); // can't use string constant, it'd be picked up by xgettext
+    }
 
-  /**
-   * Returns property type as a string.
-   * @return string eg. 'rdf:type'.
-   */
-  public function getType()
-  {
-    return $this->prop;
-  }
+    /**
+     * Returns an array of the property values.
+     * @return array containing ConceptPropertyValue objects.
+     */
+    public function getValues()
+    {
+        $this->sortValues();
+        return $this->values;
+    }
+
+    public function addValue($value)
+    {
+        $this->values[$value->getLabel() . $value->getUri()] = $value;
+    }
+
+    private function sortValues()
+    {
+        if (!empty($this->values)) {
+            natcasesort($this->values);
+        }
+
+    }
+
+    /**
+     * Returns property type as a string.
+     * @return string eg. 'rdf:type'.
+     */
+    public function getType()
+    {
+        return $this->prop;
+    }
 }
-
