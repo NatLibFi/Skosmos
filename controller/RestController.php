@@ -32,7 +32,7 @@ class RestController extends Controller
    * @param string $status
    * @param string $message
    */
-  private function return_error($code, $status, $message)
+  private function returnError($code, $status, $message)
   {
     header("HTTP/1.0 $code $status");
     header("Content-type: text/plain; charset=utf-8");
@@ -43,7 +43,7 @@ class RestController extends Controller
    * Handles json encoding, adding the content type headers and optional callback function.
    * @param array $data the data to be returned.
    */
-  private function return_json($data)
+  private function returnJson($data)
   {
     if (filter_input(INPUT_GET, 'callback', FILTER_SANITIZE_STRING)) {
       header("Content-type: application/javascript; charset=utf-8");
@@ -68,7 +68,7 @@ class RestController extends Controller
   {
     $limit = filter_input(INPUT_GET, 'limit', FILTER_SANITIZE_NUMBER_INT) ? filter_input(INPUT_GET, 'limit', FILTER_SANITIZE_NUMBER_INT) : DEFAULT_TRANSITIVE_LIMIT;
     if ($limit <= 0)
-      return $this->return_error(400, "Bad Request", "Invalid limit parameter");
+      return $this->returnError(400, "Bad Request", "Invalid limit parameter");
 
     return $limit;
   }
@@ -104,7 +104,7 @@ class RestController extends Controller
   public function vocabularies($request)
   {
     if (!$request->getLang())
-      return $this->return_error(400, "Bad Request", "lang parameter missing");
+      return $this->returnError(400, "Bad Request", "lang parameter missing");
     $this->setLanguageProperties($request->getLang());
 
     $vocabs = array();
@@ -134,7 +134,7 @@ class RestController extends Controller
         'vocabularies' => $results,
     );
 
-    return $this->return_json($ret);
+    return $this->returnJson($ret);
   }
 
   /**
@@ -148,13 +148,13 @@ class RestController extends Controller
     $term = $request->getQueryParam('query');
 
     if(!$term) {
-      return $this->return_error(400, "Bad Request", "query parameter missing");
+      return $this->returnError(400, "Bad Request", "query parameter missing");
     }
     if ($maxhits && (!is_numeric($maxhits) || $maxhits <= 0)) {
-      return $this->return_error(400, "Bad Request", "maxhits parameter is invalid");
+      return $this->returnError(400, "Bad Request", "maxhits parameter is invalid");
     }
     if ($offset && (!is_numeric($offset) || $offset < 0)) {
-      return $this->return_error(400, "Bad Request", "offset parameter is invalid");
+      return $this->returnError(400, "Bad Request", "offset parameter is invalid");
     }
 
     $vocid = $request->getVocabId(); # optional
@@ -198,7 +198,7 @@ class RestController extends Controller
     elseif ($lang)
       $ret['@context']['@language'] = $lang;
 
-    return $this->return_json($ret);
+    return $this->returnJson($ret);
   }
 
 /** Vocabulary-specific methods **/
@@ -246,7 +246,7 @@ class RestController extends Controller
         'conceptschemes' => $conceptschemes,
     );
 
-    return $this->return_json($ret);
+    return $this->returnJson($ret);
   }
 
   /**
@@ -288,7 +288,7 @@ class RestController extends Controller
         'subTypes' => $subTypes 
     );
 
-    return $this->return_json($ret);
+    return $this->returnJson($ret);
   }
   
   /**
@@ -336,7 +336,7 @@ class RestController extends Controller
     if ($lang)
       $ret['@context']['literal'] = array('@id' => 'rdfs:label', '@language' => $lang);
 
-    return $this->return_json($ret);
+    return $this->returnJson($ret);
   }
 
   /**
@@ -363,7 +363,7 @@ class RestController extends Controller
       'types' => $types)
     );
 
-    return $this->return_json($ret);
+    return $this->returnJson($ret);
   }
 
   /**
@@ -374,7 +374,7 @@ class RestController extends Controller
   {
     $label = $request->getQueryParam('label');
     if(!$label)
-      return $this->return_error(400, "Bad Request", "label parameter missing");
+      return $this->returnError(400, "Bad Request", "label parameter missing");
     $lang = $request->getQueryParam('lang');
     $vocab = $request->getVocab();
 
@@ -408,7 +408,7 @@ class RestController extends Controller
     }
 
     if (sizeof($hits) == 0) // no matches found
-      return $this->return_error(404, 'Not Found', "Could not find label '$label'");
+      return $this->returnError(404, 'Not Found', "Could not find label '$label'");
 
     // did find some matches!
     // get rid of Vocabulary objects
@@ -423,7 +423,7 @@ class RestController extends Controller
     if ($lang)
       $ret['@context']['@language'] = $lang;
 
-    return $this->return_json($ret);
+    return $this->returnJson($ret);
   }
 
   /**
@@ -447,7 +447,7 @@ class RestController extends Controller
       'topconcepts' => $topconcepts)
     );
 
-    return $this->return_json($ret);
+    return $this->returnJson($ret);
   }
 
   /**
@@ -465,18 +465,18 @@ class RestController extends Controller
     } else if ($vocab !== null) { // whole vocabulary - redirect to download URL
       $urls = $vocab->getDataURLs();
       if (sizeof($urls) == 0)
-        return $this->return_error('404', 'Not Found', "No download source URL known for vocabulary $vocab");
+        return $this->returnError('404', 'Not Found', "No download source URL known for vocabulary $vocab");
 
       $format = $this->negotiateFormat(array_keys($urls), $request->getServerConstant('HTTP_ACCEPT'), $format);
-      if (!$format) return $this->return_error(406, 'Not Acceptable', "Unsupported format. Supported MIME types are: " . implode(' ', array_keys($urls)));
+      if (!$format) return $this->returnError(406, 'Not Acceptable', "Unsupported format. Supported MIME types are: " . implode(' ', array_keys($urls)));
       header("Location: " . $urls[$format]);
       return;
     } else {
-      return $this->return_error(400, 'Bad Request', "uri parameter missing");
+      return $this->returnError(400, 'Bad Request', "uri parameter missing");
     }
     
     $format = $this->negotiateFormat(explode(' ', self::$SUPPORTED_MIME_TYPES), $request->getServerConstant('HTTP_ACCEPT'), $format);
-    if (!$format) return $this->return_error(406, 'Not Acceptable', "Unsupported format. Supported MIME types are: " . self::$SUPPORTED_MIME_TYPES);
+    if (!$format) return $this->returnError(406, 'Not Acceptable', "Unsupported format. Supported MIME types are: " . self::$SUPPORTED_MIME_TYPES);
     
     $vocid = $vocab ? $vocab->getId() : null;
     $results = $this->model->getRDF($vocid, $uri, $format);
@@ -520,11 +520,11 @@ class RestController extends Controller
   public function label($request)
   {
     if (!$request->getUri())
-      return $this->return_error(400, "Bad Request", "uri parameter missing");
+      return $this->returnError(400, "Bad Request", "uri parameter missing");
 
     $results = $request->getVocab()->getConceptLabel($request->getUri(), $request->getLang());
     if ($results === NULL)
-      return $this->return_error('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
+      return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
 
     $ret = array_merge_recursive($this->context, array(
       '@context' => array('prefLabel' => 'skos:prefLabel', '@language' => $request->getLang()), 
@@ -534,7 +534,7 @@ class RestController extends Controller
     if (isset($results[$request->getLang()]))
       $ret['prefLabel'] = $results[$request->getLang()]->getValue();
 
-    return $this->return_json($ret);
+    return $this->returnJson($ret);
   }
 
   /**
@@ -547,7 +547,7 @@ class RestController extends Controller
     $results = array();
     $broaders = $request->getVocab()->getConceptBroaders($request->getUri(), $request->getLang());
     if ($broaders === NULL)
-      return $this->return_error('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
+      return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
     foreach ($broaders as $object => $vals) {
       $results[] = array('uri'=>$object, 'prefLabel'=>$vals['label']);
     }
@@ -558,7 +558,7 @@ class RestController extends Controller
       'broader' => $results)
     );
 
-    return $this->return_json($ret);
+    return $this->returnJson($ret);
   }
 
   /**
@@ -571,7 +571,7 @@ class RestController extends Controller
     $results = array();
     $broaders = $request->getVocab()->getConceptTransitiveBroaders($request->getUri(), $this->parseLimit(), false, $request->getLang());
     if (empty($broaders))
-      return $this->return_error('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
+      return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
     foreach ($broaders as $buri => $vals) {
       $result = array('uri'=>$buri, 'prefLabel'=>$vals['label']);
       if (isset($vals['direct'])) {
@@ -586,7 +586,7 @@ class RestController extends Controller
       'broaderTransitive' => $results)
     );
 
-    return $this->return_json($ret);
+    return $this->returnJson($ret);
   }
 
   /**
@@ -599,7 +599,7 @@ class RestController extends Controller
     $results = array();
     $narrowers = $request->getVocab()->getConceptNarrowers($request->getUri(), $request->getLang());
     if ($narrowers === NULL)
-      return $this->return_error('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
+      return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
     foreach ($narrowers as $object => $vals) {
       $results[] = array('uri'=>$object, 'prefLabel'=>$vals['label']);
     }
@@ -610,7 +610,7 @@ class RestController extends Controller
       'narrower' => $results)
     );
 
-    return $this->return_json($ret);
+    return $this->returnJson($ret);
   }
 
   /**
@@ -623,7 +623,7 @@ class RestController extends Controller
     $results = array();
     $narrowers = $request->getVocab()->getConceptTransitiveNarrowers($request->getUri(), $this->parseLimit(), $request->getLang());
     if (empty($narrowers))
-      return $this->return_error('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
+      return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
     foreach ($narrowers as $nuri => $vals) {
       $result = array('uri'=>$nuri, 'prefLabel'=>$vals['label']);
       if (isset($vals['direct'])) {
@@ -638,7 +638,7 @@ class RestController extends Controller
       'narrowerTransitive' => $results)
     );
 
-    return $this->return_json($ret);
+    return $this->returnJson($ret);
   }
 
   /**
@@ -651,7 +651,7 @@ class RestController extends Controller
   {
     $results = $request->getVocab()->getConceptHierarchy($request->getUri(), $request->getLang());
     if (empty($results))
-      return $this->return_error('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
+      return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
     
     if ($request->getVocab()->getShowHierarchy()) {
       $schemes = $request->getVocab()->getConceptSchemes($request->getLang());
@@ -677,7 +677,7 @@ class RestController extends Controller
       'broaderTransitive' => $results)
     );
 
-    return $this->return_json($ret);
+    return $this->returnJson($ret);
   }
   
   /**
@@ -695,7 +695,7 @@ class RestController extends Controller
       'groups' => $results)
     );
 
-    return $this->return_json($ret);
+    return $this->returnJson($ret);
   }
   
   /**
@@ -707,7 +707,7 @@ class RestController extends Controller
   {
     $children = $request->getVocab()->listConceptGroupContents($request->getUri(), $request->getLang());
     if (empty($children))
-      return $this->return_error('404', 'Not Found', "Could not find group <{$request->getUri()}>");
+      return $this->returnError('404', 'Not Found', "Could not find group <{$request->getUri()}>");
 
     $ret = array_merge_recursive($this->context, array(
       '@context' => array('prefLabel' => 'skos:prefLabel', 'members' => 'skos:member', '@language' => $request->getLang()),
@@ -715,7 +715,7 @@ class RestController extends Controller
       'members' => $children)
     );
 
-    return $this->return_json($ret);
+    return $this->returnJson($ret);
   }
 
   /**
@@ -727,7 +727,7 @@ class RestController extends Controller
   {
     $children = $request->getVocab()->getConceptChildren($request->getUri(), $request->getLang());
     if ($children === NULL)
-      return $this->return_error('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
+      return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
 
     $ret = array_merge_recursive($this->context, array(
       '@context' => array('prefLabel' => 'skos:prefLabel', 'narrower' => 'skos:narrower', 'notation' => 'skos:notation', 'hasChildren' => 'onki:hasChildren', '@language' => $request->getLang()),
@@ -735,7 +735,7 @@ class RestController extends Controller
       'narrower' => $children)
     );
 
-    return $this->return_json($ret);
+    return $this->returnJson($ret);
   }
 
   /**
@@ -748,7 +748,7 @@ class RestController extends Controller
     $results = array();
     $related = $request->getVocab()->getConceptRelateds($request->getUri(), $request->getLang());
     if ($related === NULL)
-      return $this->return_error('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
+      return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
     foreach ($related as $uri => $vals) {
       $results[] = array('uri'=>$uri, 'prefLabel'=>$vals['label']);
     }
@@ -759,6 +759,6 @@ class RestController extends Controller
       'related' => $results)
     );
     
-    return $this->return_json($ret);
+    return $this->returnJson($ret);
   }
 }
