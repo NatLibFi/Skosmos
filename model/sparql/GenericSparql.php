@@ -1101,7 +1101,7 @@ EOQ;
     $gc = $this->graphClause;
     $query = <<<EOQ
 SELECT ?broad ?parent ?member ?children ?grandchildren 
-(SAMPLE(?lab) as ?label) (SAMPLE(?childlab) as ?childlabel) (SAMPLE(?topcs) AS ?top) (SAMPLE(?nota) as ?notation) (SAMPLE(?childnota) as ?childnotation) (SAMPLE(?scheme) as ?inscheme)
+(SAMPLE(?lab) as ?label) (SAMPLE(?childlab) as ?childlabel) (SAMPLE(?topcs) AS ?top) (SAMPLE(?nota) as ?notation) (SAMPLE(?childnota) as ?childnotation)
 WHERE {
     $gc {
       <$uri> a skos:Concept .
@@ -1137,9 +1137,7 @@ WHERE {
         }
       }
       BIND ( EXISTS { ?children skos:narrower ?a . } AS ?grandchildren )
-      OPTIONAL { ?broad skos:topConceptOf ?topcs . 
-                 ?broad skos:inScheme ?scheme . 
-      }
+      OPTIONAL { ?broad skos:topConceptOf ?topcs . }
     }
 }
 }
@@ -1159,9 +1157,6 @@ EOQ;
       }
       if (isset($row->top)) {
         $ret[$uri]['top'] = $row->top->getUri();
-      }
-      if (isset($row->inscheme)) {
-        $ret[$uri]['inScheme'] = $row->inscheme->getUri();
       }
       if (isset($row->children)) {
         if(!isset($ret[$uri]['narrower']))

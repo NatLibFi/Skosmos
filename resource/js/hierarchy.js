@@ -134,10 +134,10 @@ function buildParentTree(uri, parentData, schemes) {
     rootArray = schemes;
   }
 
-    for(var conceptUri in parentData) {
-      var branchHelper, 
-        exactMatchFound;
-      currentNode = createConceptObject(conceptUri, parentData[conceptUri]);
+  for(var conceptUri in parentData) {
+    var branchHelper, 
+      exactMatchFound;
+    currentNode = createConceptObject(conceptUri, parentData[conceptUri]);
     /* if a node has the property topConceptOf set it as the root node. 
      * Or just setting the last node as a root if nothing else has been found 
      */
@@ -145,14 +145,17 @@ function buildParentTree(uri, parentData, schemes) {
       if (!rootNode) {  
         branchHelper = currentNode;
       }
-      if (schemes.length > 1 && parentData[conceptUri].inScheme) {
+      // if there are multiple concept schemes attach the topConcepts to the concept schemes
+      if (schemes.length > 1 && (parentData[conceptUri].top)) {
         for (var i in schemes) {
-          if (schemes[i].uri === parentData[conceptUri].inScheme) {
+          if (schemes[i].uri === parentData[conceptUri].top) {
             if(Object.prototype.toString.call(schemes[i].children) !== '[object Array]' ) {
               schemes[i].children = [];
             }
             schemes[i].children.push(currentNode);
-            schemes[i].state = {opened: true};
+            // the hierarchy response contains the parent information before the topConcepts so it's a safe bet to open the first node 
+            if (loopIndex === 0) 
+              schemes[i].state = currentNode.state;
           }
         }
       }

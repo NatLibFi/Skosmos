@@ -497,7 +497,6 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
           ),
         ),
         'prefLabel' => 'Fish',
-        'inScheme' => 'http://www.skosmos.skos/test/conceptscheme'
       ),
       'http://www.skosmos.skos/test/ta116' => array (
         'uri' => 'http://www.skosmos.skos/test/ta116',

@@ -654,17 +654,19 @@ class RestController extends Controller
       return $this->return_error('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
     
     if ($request->getVocab()->getShowHierarchy()) {
-      $scheme = $request->getQueryParam('scheme');
+      $schemes = $request->getVocab()->getConceptSchemes($request->getLang());
+      foreach ($schemes as $scheme) {
+        if(!isset($scheme['title']) && !isset($scheme['label']) && !isset($scheme['prefLabel']))
+          unset($schemes[array_search($scheme, $schemes)]);
+      }
 
       /* encode the results in a JSON-LD compatible array */
-      $topconcepts = $request->getVocab()->getTopConcepts($scheme, $request->getLang());
+      $topconcepts = $request->getVocab()->getTopConcepts(array_keys($schemes), $request->getLang());
       foreach ($topconcepts as $top) {
         if (!isset($results[$top['uri']])) {
           $results[$top['uri']] = array('uri'=>$top['uri'], 'top'=>$top['topConceptOf'], 'prefLabel'=>$top['label'], 'hasChildren'=>$top['hasChildren']);
           if (isset($top['notation']))
             $results[$top['uri']]['notation'] = $top['notation'];
-          if (isset($top['topConceptOf']))
-            $results[$top['uri']]['inScheme'] = $top['topConceptOf'];
         }
       }
     }
