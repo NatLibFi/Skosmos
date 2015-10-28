@@ -329,7 +329,7 @@ function getTreeConfiguration() {
             success: function (response) {
               schemeObjects = schemeRoot(response.conceptschemes);
               // if there are multiple concept schemes display those at the top level
-              if (schemeObjects.length > 1 && node.id === '#' && $('#vocab-info').length) {
+              if ((schemeObjects.length > 1 && node.id === '#' && $('#vocab-info').length) || node.id === '#' && $('tbody > tr:nth-of-type(3) p').html() === 'skos:ConceptScheme') {
                 cb(schemeObjects);
               } 
               // if there was only one concept scheme display it's top concepts at the top level 
