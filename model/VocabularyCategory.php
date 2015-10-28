@@ -10,21 +10,21 @@
  */
 class VocabularyCategory extends DataObject
 {
-  /**
-   * Returns all vocabularies in the category.
-   */
-  public function getVocabularies()
-  {
-    return $this->model->getVocabulariesInCategory($this->resource);
-  }
+    /**
+     * Returns all vocabularies in the category.
+     */
+    public function getVocabularies()
+    {
+        return $this->model->getVocabulariesInCategory($this->resource);
+    }
 
-  /**
-   * Returns the title of the category.
-   */
-  public function getTitle()
-  {
-    $label = $this->resource->label($this->lang);
-    return is_null($label) ? $this->resource->localName() : $label->getValue();
-  }
+    /**
+     * Returns the title of the category.
+     */
+    public function getTitle()
+    {
+        $label = $this->resource->label($this->lang);
+        return is_null($label) ? $this->resource->localName() : $label->getValue();
+    }
 
 }

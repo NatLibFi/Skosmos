@@ -10,23 +10,23 @@
  */
 class VocabularyDataObject extends DataObject
 {
-  /**
-   * Vocabulary instance where this object originated.
-   * @property object $vocab
-   */
-  protected $vocab;
+    /**
+     * Vocabulary instance where this object originated.
+     * @property object $vocab
+     */
+    protected $vocab;
 
-  /**
-   * Needs the following parameters.
-   * @param Model $model
-   * @param Vocabulary $vocab
-   * @param EasyRdf_Resource $resource
-   */
-  public function __construct($model, $vocab, $resource)
-  {
-    parent::__construct($model, $resource);
+    /**
+     * Needs the following parameters.
+     * @param Model $model
+     * @param Vocabulary $vocab
+     * @param EasyRdf_Resource $resource
+     */
+    public function __construct($model, $vocab, $resource)
+    {
+        parent::__construct($model, $resource);
 
-    $this->vocab = $vocab;
-  }
+        $this->vocab = $vocab;
+    }
 
 }
