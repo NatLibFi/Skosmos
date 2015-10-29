@@ -416,8 +416,8 @@ class WebController extends Controller
         $type = $request->getQueryParam('type');
         if ($type && strpos($type, '+')) {
             $type = explode('+', $type);
-        } else if ($type && !is_array($type)) // if only one type param given place it into an array regardless
-        {
+        } else if ($type && !is_array($type)) {
+            // if only one type param given place it into an array regardless
             $type = array($type);
         }
 
