@@ -14,6 +14,21 @@ class Vocabulary extends DataObject
     private $urispace = null;
 
     /**
+     * Returns a boolean value based on a literal value from the vocabularies.ttl configuration.
+     * @param string $property the property to query
+     * @param boolean $default the default value if the value is not set in configuration
+     */
+    private function getBoolean($property, $default = false)
+    {
+        $val = $this->resource->getLiteral($property);
+        if ($val) {
+            return filter_var($val->getValue(), FILTER_VALIDATE_BOOLEAN);
+        }
+
+        return $default;
+    }
+
+    /**
      * Extracts the vocabulary id string from the baseuri of the vocabulary.
      * @return string identifier eg. 'mesh'.
      */
@@ -205,12 +220,7 @@ class Vocabulary extends DataObject
      */
     public function getAlphabeticalFull()
     {
-        $val = $this->resource->getLiteral('skosmos:fullAlphabeticalIndex');
-        if ($val) {
-            return filter_var($val->getValue(), FILTER_VALIDATE_BOOLEAN);
-        }
-
-        return false;
+        return $this->getBoolean('skosmos:fullAlphabeticalIndex');
     }
 
     /**
@@ -537,12 +547,7 @@ class Vocabulary extends DataObject
      */
     public function getShowHierarchy()
     {
-        $val = $this->resource->getLiteral("skosmos:showTopConcepts");
-        if ($val) {
-            return filter_var($val->getValue(), FILTER_VALIDATE_BOOLEAN);
-        }
-
-        return false;
+        return $this->getBoolean('skosmos:showTopConcepts');
     }
 
     /**
@@ -551,12 +556,7 @@ class Vocabulary extends DataObject
      */
     public function showConceptSchemesInHierarchy()
     {
-        $val = $this->resource->getLiteral("skosmos:conceptSchemesInHierarchy");
-        if ($val) {
-            return filter_var($val->getValue(), FILTER_VALIDATE_BOOLEAN);
-        }
-
-        return false;
+        return $this->getBoolean('skosmos:conceptSchemesInHierarchy');
     }
 
     /**
@@ -565,12 +565,7 @@ class Vocabulary extends DataObject
      */
     public function getExternalResourcesLoading()
     {
-        $val = $this->resource->getLiteral("skosmos:loadExternalResources");
-        if ($val) {
-            return filter_var($val->getValue(), FILTER_VALIDATE_BOOLEAN);
-        }
-
-        return true;
+        return $this->getBoolean('skosmos:loadExternalResources', true);
     }
 
     /**
@@ -579,12 +574,7 @@ class Vocabulary extends DataObject
      */
     public function getShowLangCodes()
     {
-        $val = $this->resource->getLiteral("skosmos:explicitLanguageTags");
-        if ($val) {
-            return filter_var($val->getValue(), FILTER_VALIDATE_BOOLEAN);
-        }
-
-        return false;
+        return $this->getBoolean('skosmos:explicitLanguageTags');
     }
 
     /**
@@ -891,12 +881,7 @@ class Vocabulary extends DataObject
      */
     public function sortByNotation()
     {
-        $val = $this->resource->getLiteral("skosmos:sortByNotation");
-        if ($val) {
-            return filter_var($val->getValue(), FILTER_VALIDATE_BOOLEAN);
-        }
-
-        return false;
+        return $this->getBoolean('skosmos:sortByNotation');
     }
 
 }

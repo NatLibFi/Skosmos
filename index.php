@@ -82,8 +82,8 @@ if (sizeof($parts) <= 2) {
                 } elseif ($request->getPage() == 'search') {
                     $controller->invokeVocabularySearch($request);
                 } elseif ($request->getPage() == 'index') {
-                    if ((sizeof($parts) == 5) && $parts[4] !== '') // letter given
-                    {
+                    if ((sizeof($parts) == 5) && $parts[4] !== '') {
+                        // letter given
                         $request->setLetter($parts[4]);
                     }
 

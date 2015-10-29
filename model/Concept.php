@@ -220,8 +220,8 @@ class Concept extends VocabularyDataObject
 
         $long_uris = $this->resource->propertyUris();
         foreach ($long_uris as &$prop) {
-            if (EasyRdf_Namespace::shorten($prop) !== null) // shortening property labels if possible
-            {
+            if (EasyRdf_Namespace::shorten($prop) !== null) {
+                // shortening property labels if possible
                 $prop = $sprop = EasyRdf_Namespace::shorten($prop);
             } else {
                 $sprop = "<$prop>";
@@ -232,8 +232,8 @@ class Concept extends VocabularyDataObject
                 $propres = new EasyRdf_Resource($prop, $this->graph);
                 $proplabel = $propres->label($this->lang) ? $propres->label($this->lang) : $propres->label(); // current language
                 $propobj = new ConceptProperty($prop, $proplabel);
-                if ($propobj->getLabel() !== null) // only display properties for which we have a label
-                {
+                if ($propobj->getLabel() !== null) {
+                    // only display properties for which we have a label
                     $ret[$prop] = $propobj;
                 }
 
@@ -313,8 +313,8 @@ class Concept extends VocabularyDataObject
         }
 
         foreach ($long_uris as &$prop) {
-            if (EasyRdf_Namespace::shorten($prop) !== null) // shortening property labels if possible
-            {
+            if (EasyRdf_Namespace::shorten($prop) !== null) {
+                // shortening property labels if possible
                 $prop = $sprop = EasyRdf_Namespace::shorten($prop);
             } else {
                 $sprop = "<$prop>";
@@ -326,8 +326,8 @@ class Concept extends VocabularyDataObject
                 $proplabel = $propres->label($this->lang) ? $propres->label($this->lang) : $propres->label();
                 $propobj = new ConceptProperty($prop, $proplabel);
 
-                if ($propobj->getLabel() !== null) // only display properties for which we have a label
-                {
+                if ($propobj->getLabel() !== null) {
+                    // only display properties for which we have a label
                     $ret[$prop] = $propobj;
                 }
 
@@ -410,9 +410,8 @@ class Concept extends VocabularyDataObject
         foreach ($propertyValues as $value => $propnames) {
             // if there are multiple properties with the same string value.
             if (count($propnames) > 1) {
-                foreach ($propnames as $property)
-                // if there is a more accurate property delete the more generic one.
-                {
+                foreach ($propnames as $property) {
+                    // if there is a more accurate property delete the more generic one.
                     if (isset($duplicates[$property])) {
                         unset($ret[$property]);
                     }
@@ -561,8 +560,8 @@ class Concept extends VocabularyDataObject
     {
         global $LANGUAGES;
         $labels = array();
-        if (EasyRdf_Namespace::shorten($property) !== null) // shortening property labels if possible
-        {
+        if (EasyRdf_Namespace::shorten($property) !== null) {
+            // shortening property labels if possible
             $property = EasyRdf_Namespace::shorten($property);
         } else {
             $property = "<$property>";

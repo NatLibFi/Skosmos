@@ -430,8 +430,8 @@ class RestController extends Controller
 
         }
 
-        if (sizeof($hits) == 0) // no matches found
-        {
+        if (sizeof($hits) == 0) {
+            // no matches found
             return $this->returnError(404, 'Not Found', "Could not find label '$label'");
         }
 
