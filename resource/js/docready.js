@@ -241,7 +241,7 @@ $(function() { // DOCUMENT READY
             success : function(data) {
               $content.empty();
               var response = $('.content', data).html();
-              if (window.history.pushState) { window.history.pushState({url: targetUrl + '&' + parameters}, '', targetUrl); }
+              if (window.history.pushState) { window.history.pushState({url: targetUrl + '&' + parameters}, '', targetUrl + '&' + parameters); }
               $content.append(response);
               updateTitle(data);
               updateTopbarLang(data);
