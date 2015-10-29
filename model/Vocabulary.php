@@ -15,10 +15,10 @@ class Vocabulary extends DataObject
 
     /**
      * Returns a boolean value based on a literal value from the vocabularies.ttl configuration.
-     * @param string property the property to query
-     * @param boolean default the default value if the value is not set in configuration
+     * @param string $property the property to query
+     * @param boolean $default the default value if the value is not set in configuration
      */
-    private function getBoolean($property, $default=false)
+    private function getBoolean($property, $default = false)
     {
         $val = $this->resource->getLiteral($property);
         if ($val) {
