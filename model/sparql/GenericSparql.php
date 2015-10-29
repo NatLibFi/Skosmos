@@ -1052,8 +1052,8 @@ EOQ;
 
   /**
    * Query the top concepts of a vocabulary.
-   * @param string $conceptScheme
-   * @param string $lang
+   * @param string $conceptSchemes concept schemes whose top concepts to query for
+   * @param string $lang language of labels
    */
   public function queryTopConcepts($conceptSchemes, $lang)
   {
@@ -1228,8 +1228,7 @@ EOQ;
     $ret = array();
     $result = $this->client->query($query);
     foreach ($result as $row) {
-      if (isset($row->group))
-        $group = array('uri' => $row->group->getURI());
+      $group = array('uri' => $row->group->getURI());
       if (isset($row->label))
         $group['prefLabel'] = $row->label->getValue();
       if (isset($row->children))
