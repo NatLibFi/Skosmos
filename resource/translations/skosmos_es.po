@@ -1,14 +1,15 @@
 # 
 # Translators:
 # Karna Wegner <karna.wegner@fao.org>, 2015
+# osma <osma.suominen@helsinki.fi>, 2015
 # Wilmer Arturo Moyano <wilmer.moyano@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-09-29 10:29+0200\n"
-"PO-Revision-Date: 2015-10-14 07:53+0000\n"
-"Last-Translator: Karna Wegner <karna.wegner@fao.org>\n"
+"PO-Revision-Date: 2015-10-29 12:55+0000\n"
+"Last-Translator: osma <osma.suominen@helsinki.fi>\n"
 "Language-Team: Spanish (http://www.transifex.com/national-library-of-finland/skosmos/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -389,11 +390,11 @@ msgstr "Versión"
 
 #: /tmp/cache/560a3dcf9ce8e/b7/b8/db5433ea968c6a0d09780d91f529.php:123
 msgid "rdf:type"
-msgstr "Tipo de concepto"
+msgstr "Tipo"
 
 #: /tmp/cache/560a3dcf9ce8e/b7/b8/db5433ea968c6a0d09780d91f529.php:159
 msgid "rdf:type_help"
-msgstr "Tipo de concepto"
+msgstr "Tipo"
 
 #: /tmp/cache/560a3dcf9ce8e/b7/b8/db5433ea968c6a0d09780d91f529.php:129
 msgid "rdfs:comment"

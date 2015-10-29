@@ -1,13 +1,14 @@
 # 
 # Translators:
 # Armando Stellato <stellato@info.uniroma2.it>, 2015
+# osma <osma.suominen@helsinki.fi>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-09-29 10:29+0200\n"
-"PO-Revision-Date: 2015-10-07 09:32+0000\n"
-"Last-Translator: Armando Stellato <stellato@info.uniroma2.it>\n"
+"PO-Revision-Date: 2015-10-29 12:56+0000\n"
+"Last-Translator: osma <osma.suominen@helsinki.fi>\n"
 "Language-Team: Italian (http://www.transifex.com/national-library-of-finland/skosmos/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -388,11 +389,11 @@ msgstr "Versione"
 
 #: /tmp/cache/560a3dcf9ce8e/b7/b8/db5433ea968c6a0d09780d91f529.php:123
 msgid "rdf:type"
-msgstr "Tipo di concetto"
+msgstr "Tipo"
 
 #: /tmp/cache/560a3dcf9ce8e/b7/b8/db5433ea968c6a0d09780d91f529.php:159
 msgid "rdf:type_help"
-msgstr "Tipo di concetto"
+msgstr "Tipo"
 
 #: /tmp/cache/560a3dcf9ce8e/b7/b8/db5433ea968c6a0d09780d91f529.php:129
 msgid "rdfs:comment"
