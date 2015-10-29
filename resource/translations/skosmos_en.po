@@ -387,11 +387,11 @@ msgstr "Version"
 
 #: /tmp/cache/560a3dcf9ce8e/b7/b8/db5433ea968c6a0d09780d91f529.php:123
 msgid "rdf:type"
-msgstr "Concept type"
+msgstr "Type"
 
 #: /tmp/cache/560a3dcf9ce8e/b7/b8/db5433ea968c6a0d09780d91f529.php:159
 msgid "rdf:type_help"
-msgstr "Concept type"
+msgstr "Type of entity"
 
 #: /tmp/cache/560a3dcf9ce8e/b7/b8/db5433ea968c6a0d09780d91f529.php:129
 msgid "rdfs:comment"
