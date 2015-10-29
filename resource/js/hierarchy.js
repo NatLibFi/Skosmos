@@ -284,8 +284,8 @@ function schemeRoot(schemes) {
   return topArray;
 }
 
-function topConceptsToSchemes(topConcepts) {
-  var childArray = [];
+function topConceptsToSchemes(topConcepts, schemes) {
+  var childArray = schemes.length > 1 ? schemes : [];
   for (var i in topConcepts) {
     var conceptObject = topConcepts[i];
     var hasChildren = conceptObject.hasChildren; 
@@ -302,7 +302,20 @@ function topConceptsToSchemes(topConcepts) {
       childObject.state.opened = false;
     }
     setNode(childObject);
-    childArray.push(childObject);
+    if (schemes.length > 1) {
+      for (var j in schemes) {
+        if (conceptObject.topConceptOf === schemes[j].uri) {
+          if(Object.prototype.toString.call(schemes[j].children) !== '[object Array]' ) {
+            schemes[j].children = [];
+          }
+          schemes[j].children.push(childObject);
+          schemes[j].state.opened = true;
+          schemes[j].a_attr.class = 'jstree-clicked';
+        }
+      }
+    } else {
+      childArray.push(childObject);
+    }
   }
   return childArray;
 }
@@ -329,7 +342,7 @@ function getTreeConfiguration() {
             success: function (response) {
               schemeObjects = schemeRoot(response.conceptschemes);
               // if there are multiple concept schemes display those at the top level
-              if ((schemeObjects.length > 1 && node.id === '#' && $('#vocab-info').length) || node.id === '#' && $('tbody > tr:nth-of-type(3) p').html() === 'skos:ConceptScheme') {
+              if (schemeObjects.length > 1 && node.id === '#' && $('#vocab-info').length) {
                 cb(schemeObjects);
               } 
               // if there was only one concept scheme display it's top concepts at the top level 
@@ -347,6 +360,14 @@ function getTreeConfiguration() {
                 if (node.original && node.original.a_attr && node.original.a_attr.class === 'scheme') {
                   json_url = (rest_base_url + vocab + '/topConcepts');
                   params = $.param({'scheme': node.original.uri, 'lang' : clang});
+                  // no longer needed at this point
+                  schemeObjects = []; 
+                } 
+                // concept scheme page
+                else if (node.id === '#' && $('tbody > tr:nth-of-type(3) p').html() === 'skos:ConceptScheme') {
+                  nodeId = $('.uri-input-box').html(); // using the real uri of the concept from the view.
+                  json_url = (rest_base_url + vocab + '/topConcepts');
+                  params = $.param({'scheme': nodeId, 'lang' : clang});
                 } 
                 // concept hierarchy
                 else if (node.id === '#') {
@@ -364,7 +385,7 @@ function getTreeConfiguration() {
                   if (response.broaderTransitive) { // the default hierarchy query that fires when a page loads.
                     cb(buildParentTree(nodeId, response.broaderTransitive, schemeObjects));
                   } else if (response.topconcepts) {
-                    cb(topConceptsToSchemes(response.topconcepts));
+                    cb(topConceptsToSchemes(response.topconcepts, schemeObjects));
                   } else {
                     cb(createObjectsFromNarrowers(response));
                   }
