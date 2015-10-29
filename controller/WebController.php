@@ -413,7 +413,7 @@ class WebController extends Controller
         $content_lang = $request->getContentLang();
         $groups = $vocab->listConceptGroups($content_lang);
         $search_lang = $request->getQueryParam('anylang') ? '' : $content_lang;
-        $type = $request->getQueryParam('type');
+        $type = $request->getQueryParam('type') !== '' ? $request->getQueryParam('type') : null;
         if ($type && strpos($type, '+')) {
             $type = explode('+', $type);
         } else if ($type && !is_array($type)) {
@@ -421,8 +421,8 @@ class WebController extends Controller
             $type = array($type);
         }
 
-        $group = $request->getQueryParam('group');
-        $parent = $request->getQueryParam('parent');
+        $group = $request->getQueryParam('group') !== '' ? $request->getQueryParam('group') : null;
+        $parent = $request->getQueryParam('parent') !== '' ? $request->getQueryParam('parent') : null;
         $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
         $langcodes = $vocab->getShowLangCodes();
         if ($offset > 0) {
