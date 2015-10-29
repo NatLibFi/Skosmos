@@ -1052,8 +1052,8 @@ EOQ;
 
   /**
    * Query the top concepts of a vocabulary.
-   * @param string $conceptScheme
-   * @param string $lang
+   * @param string $conceptSchemes concept schemes whose top concepts to query for
+   * @param string $lang language of labels
    */
   public function queryTopConcepts($conceptSchemes, $lang)
   {
