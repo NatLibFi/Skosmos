@@ -102,11 +102,10 @@ function invokeGroupTree() {
 function createGroupNode(uri, groupObject) {
   var node = {'id' : uri, children : [], a_attr : { "href" : vocab + '/' + lang + '/groups/?uri=' + encodeURIComponent(uri), "class" : "group" }};
   node.text = groupObject.prefLabel;
-  if (groupObject.hasMembers || groupObject.isSuper) {
+  if (groupObject.hasMembers || groupObject.isSuper)
     node.children = true;
   if (groupObject.notation)
     node.text = '<span class="tree-notation">' + groupObject.notation + '</span> ' + node.text;
-  }
   return node;
 }
 
