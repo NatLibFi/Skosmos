@@ -1,11 +1,14 @@
 <a {% if request.vocabid == '' and request.page != 'feedback' and request.page != 'about' %}id="service-logo"{% endif %} {% if request.vocabid != '' or request.page == 'feedback' or request.page == 'about' %}class="service-{{ request.lang }}" {% endif %}href="{{ request.lang }}/{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}"><h1 id="service-name">{% if ServiceName is defined  %}{{ ServiceName }}{% else %}Skosmos{% endif %}</h1></a>
 {% if languages|length > 1 %}
-<div id="language"><span class="navigation-font">|</span>
+<div id="language" class="dropdown"><span class="navigation-font">|</span>
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="lang-dropdown-toggle">{% trans "Language literal" %}</button>
+  <ul class="dropdown-menu dropdown-menu-right">
   {% for langcode, langdata in languages %}
   {% if request.lang != langcode %}
-  <a id="language-{{ langcode}}" class="navigation-font" href="//{{ request.requesturi|replace({("/#{request.lang}/"): "/#{langcode}/"}) }}"> {{langdata.name}}</a>
+  <li><a id="language-{{ langcode}}" class="navigation-font" href="//{{ request.requesturi|replace({("/#{request.lang}/"): "/#{langcode}/"}) }}"> {{langdata.name}}</a></li>
   {% endif %}
   {% endfor %}
+  </ul>
 </div>
 {% endif %}
 <div id="navigation">

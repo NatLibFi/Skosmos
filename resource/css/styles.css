@@ -79,10 +79,9 @@ section {
   height: 50px;
   width: auto;
   padding-left: 0px;
-  padding-right: 2.5%;
+  padding-right: 2%;
   text-align: right;
-  overflow: hidden;
-  line-height: 70px;
+  line-height: 50px;
 }
 
 #navigation {
