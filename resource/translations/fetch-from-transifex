@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Fetch translations from Transifex.
+# If run without parameters, will update all non-core languages.
+# If run with a parameter, will update only the given language.
+# Example: fetch-from-transifex fr
+
+
+function fetch {
+	lang=$1
+	
+	if [ "$lang" = "fi" -o "$lang" = "sv" -o "$lang" = "en" ]; then
+		# don't try to fetch core languages from Transifex
+		return
+	fi
+	
+	url=https://www.transifex.com/api/2/project/skosmos/resource/skosmos_enpo/translation/$lang/?file=PO
+	outfile=skosmos_$lang.po
+
+	echo "Fetching $outfile from $url"
+	curl -L --user $username:$password -X GET -o $outfile $url
+	echo
+}
+
+
+read -p "Transifex username: " username
+
+read -s -p "Transifex password: " password
+
+echo
+
+if [ -z "$1" ]; then
+	for fn in skosmos_*.po; do
+		base=${fn%.po}
+		lang=${base#skosmos_}
+		fetch $lang
+	done
+else
+	fetch $1
+fi
