@@ -128,6 +128,7 @@ function buildParentTree(uri, parentData, schemes) {
   var loopIndex = 0, // for adding the last concept as a root if no better candidates have been found.
     currentNode,
     rootArray = [],
+    schemeOpened = false,
     rootNode;
 
   if (schemes.length > 1) {
@@ -153,9 +154,11 @@ function buildParentTree(uri, parentData, schemes) {
               schemes[i].children = [];
             }
             schemes[i].children.push(currentNode);
-            // the hierarchy response contains the parent information before the topConcepts so it's a safe bet to open the first node 
-            if (loopIndex === 0) 
+            // the hierarchy response contains the parent info before the topConcepts so it's a safe to open the first one without broaders 
+            if (schemeOpened === false && !currentNode.broader) {
               schemes[i].state = currentNode.state;
+              schemeOpened = true;
+            }
           }
         }
       }
