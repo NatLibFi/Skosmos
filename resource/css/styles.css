@@ -84,6 +84,21 @@ section {
   line-height: 50px;
 }
 
+#language > .dropdown-menu {
+  z-index: 9002;
+  position: fixed !important;
+  padding-right: 2%;
+  border-radius: 0 !important;
+  margin-top: 0 !important;
+  padding: 0 !important;
+  top: 45px !important;
+  right: 2%;
+}
+
+#language > .dropdown-toggle {
+  /*margin-right: 0px;*/
+}
+
 #navigation {
   padding-right: 25px;
   height: 50px;
@@ -1927,6 +1942,11 @@ body, .versal, h1, h2, p, .versal-bold {
     right: 0;
     padding-right: 0;
     padding-left: 25px;
+  }
+  
+  #language > .dropdown-menu { 
+    position: absolute !important;
+    right: 0;
   }
 
   #navigation {
