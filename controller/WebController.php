@@ -63,6 +63,10 @@ class WebController extends Controller
         if (defined('CUSTOM_CSS')) {
             $this->twig->addGlobal("ServiceCustomCss", CUSTOM_CSS);
         }
+        // used for displaying the ui language selection as a dropdown
+        if (defined('UI_LANGUAGE_DROPDOWN')) {
+            $this->twig->addGlobal("LanguageDropdown", UI_LANGUAGE_DROPDOWN);
+        }
 
         // setting the list of properties to be displayed in the search results
         $this->twig->addGlobal("PreferredProperties", array('skos:prefLabel', 'skos:narrower', 'skos:broader', 'skosmos:memberOf', 'skos:altLabel', 'skos:related'));
