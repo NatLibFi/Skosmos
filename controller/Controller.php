@@ -56,6 +56,7 @@ class Controller
             $this->languages[$langcode] = array('locale' => $locale);
             $this->setLanguageProperties($langcode);
             $this->languages[$langcode]['name'] = gettext('in_this_language');
+            $this->languages[$langcode]['lemma'] = Punic\Language::getName($langcode, $langcode);
         }
     }
 

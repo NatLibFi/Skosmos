@@ -104,6 +104,8 @@ section {
   background: none !important;
   border: none;
   border-radius: 0;
+  color: #394554 !important;
+  margin-top: -3px;
   padding: 0px;
 }
 
