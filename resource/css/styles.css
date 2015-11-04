@@ -77,11 +77,12 @@ section {
 #language {
   float: right;
   height: 50px;
+  line-height: 70px;
   width: auto;
   padding-left: 0px;
   padding-right: 2%;
   text-align: right;
-  line-height: 50px;
+  line-height: 70px;
 }
 
 #language > .dropdown-menu {
@@ -95,8 +96,19 @@ section {
   right: 2%;
 }
 
+#language > .dropdown-menu > li, #language > .dropdown-menu > li > a {
+  margin: 0;
+}
+
 #language > .dropdown-toggle {
-  /*margin-right: 0px;*/
+  background: none !important;
+  border: none;
+  border-radius: 0;
+  padding: 0px;
+}
+
+#language > .dropdown-toggle:hover, #language > .dropdown-toggle:focus, #language > .dropdown-toggle:active, #language > .dropdown-toggle:visited {
+  background: none;
 }
 
 #navigation {
@@ -1510,7 +1522,7 @@ h2 {
 
 .navigation-font {
   font-family: 'Fira Sans';
-  font-size: 16px;
+  font-size: 16px !important;
   color: black;
 }
 
