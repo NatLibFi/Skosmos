@@ -443,61 +443,6 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   {
     $actual = $this->sparql->queryParentList('http://www.skosmos.skos/test/ta122', 'en', 'en');
     $expected = array(
-      'http://www.skosmos.skos/test/ta1' => 
-      array (
-        'uri' => 'http://www.skosmos.skos/test/ta1',
-        'top' => 'http://www.skosmos.skos/test/conceptscheme',
-        'narrower' => 
-        array (
-          0 => array (
-            'uri' => 'http://www.skosmos.skos/test/ta112',
-            'label' => 'Carp',
-            'hasChildren' => true,
-            'notation' => '665'
-          ),
-          1 => array (
-            'uri' => 'http://www.skosmos.skos/test/ta117',
-            'label' => '3D Bass',
-            'hasChildren' => false,
-          ),
-          2 => array (
-            'uri' => 'http://www.skosmos.skos/test/ta119',
-            'label' => 'Hauki (fi)',
-            'hasChildren' => false,
-          ),
-          3 => array (
-            'uri' => 'http://www.skosmos.skos/test/ta115',
-            'label' => 'Eel',
-            'hasChildren' => false,
-          ),
-          4 => array (
-            'uri' => 'http://www.skosmos.skos/test/ta120',
-            'label' => NULL,
-            'hasChildren' => false,
-          ),
-          5 => array (
-            'uri' => 'http://www.skosmos.skos/test/ta111',
-            'label' => 'Tuna',
-            'hasChildren' => false,
-          ),
-          6 => array (
-            'uri' => 'http://www.skosmos.skos/test/ta116',
-            'label' => 'Bass',
-            'hasChildren' => false,
-          ),
-          7 => array (
-            'uri' => 'http://www.skosmos.skos/test/ta113',
-            'label' => NULL,
-            'hasChildren' => false,
-          ),
-          8 => array (
-            'uri' => 'http://www.skosmos.skos/test/ta114',
-            'label' => 'Buri',
-            'hasChildren' => false,
-          ),
-        ),
-        'prefLabel' => 'Fish',
-      ),
       'http://www.skosmos.skos/test/ta116' => array (
         'uri' => 'http://www.skosmos.skos/test/ta116',
         'prefLabel' => 'Bass',
@@ -515,7 +460,68 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
         ),
       ),
     );
-    $this->assertEquals($expected, $actual);
+    $props = array (
+      'uri' => 'http://www.skosmos.skos/test/ta1',
+      'top' => 'http://www.skosmos.skos/test/conceptscheme',
+      'prefLabel' => 'Fish',
+    );
+    $narrowers = array (
+      0 => array (
+        'uri' => 'http://www.skosmos.skos/test/ta112',
+        'label' => 'Carp',
+        'hasChildren' => true,
+        'notation' => '665'
+      ),
+      1 => array (
+        'uri' => 'http://www.skosmos.skos/test/ta117',
+        'label' => '3D Bass',
+        'hasChildren' => false,
+      ),
+      2 => array (
+        'uri' => 'http://www.skosmos.skos/test/ta119',
+        'label' => 'Hauki (fi)',
+        'hasChildren' => false,
+      ),
+      3 => array (
+        'uri' => 'http://www.skosmos.skos/test/ta115',
+        'label' => 'Eel',
+        'hasChildren' => false,
+      ),
+      4 => array (
+        'uri' => 'http://www.skosmos.skos/test/ta120',
+        'label' => NULL,
+        'hasChildren' => false,
+      ),
+      5 => array (
+        'uri' => 'http://www.skosmos.skos/test/ta111',
+        'label' => 'Tuna',
+        'hasChildren' => false,
+      ),
+      6 => array (
+        'uri' => 'http://www.skosmos.skos/test/ta116',
+        'label' => 'Bass',
+        'hasChildren' => false,
+      ),
+      7 => array (
+        'uri' => 'http://www.skosmos.skos/test/ta113',
+        'label' => NULL,
+        'hasChildren' => false,
+      ),
+      8 => array (
+        'uri' => 'http://www.skosmos.skos/test/ta114',
+        'label' => 'Buri',
+        'hasChildren' => false,
+      ),
+    );
+    foreach ($narrowers as $narrower) {
+      $this->assertContains($narrower, $actual['http://www.skosmos.skos/test/ta1']['narrower']);
+    }
+    foreach ($expected as $concept) {
+      $this->assertContains($concept, $actual);
+    }
+    foreach ($props as $property) {
+      $this->assertContains($property, $actual['http://www.skosmos.skos/test/ta1']);
+    }
   }
 
   /**
