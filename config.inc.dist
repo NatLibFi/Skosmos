@@ -50,3 +50,6 @@ define("CUSTOM_CSS", "resource/css/stylesheet.css");
 
 // Customize the base element. Set this if the automatic base url detection doesn't work. For example setups behind a proxy.
 // define("BASE_HREF", "http://localhost/Skosmos/");
+
+// whether to display the ui language selection as a dropdown (useful for cases where there are more than 3 languages) 
+define("UI_LANGUAGE_DROPDOWN", FALSE);
