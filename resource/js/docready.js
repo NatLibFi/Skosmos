@@ -687,7 +687,7 @@ $(function() { // DOCUMENT READY
   var alpha_complete = false;
   var offcount = 1;
   var number_of_hits = $(".search-result").length;
-  var $ready = $("<p class='search-count'>" + results + " " + number_of_hits + " " + results_disp +"</p>");
+  var $ready = $("<p class='search-count'>" + results_disp.replace('%d', number_of_hits) +"</p>");
   
   // search-results waypoint
   if (number_of_hits > 0) { // if we are in the search page with some results
