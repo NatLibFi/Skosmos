@@ -1,5 +1,5 @@
 {% if term %}
-<div class="search-count{% if limit_type or limit_parent or limit_group %} search-limited{% endif %}"><p>{{ search_count }} {% trans 'results for' %} '{{ term }}'{% if limit_type %}, {% trans "limited to type" %} '{% for type in limit_type %}{{ type }}{% if loop.last == false %}, {% endif %}{% endfor %}'{% endif %}{% if limit_parent %}, {% trans "limited to parent" %} '{{ limit_parent }}'{% endif %}{% if limit_group %}, {% trans "limited to group" %} '{{ limit_group }}'{% endif %}</p>
+<div class="search-count{% if limit_type or limit_parent or limit_group %} search-limited{% endif %}"><p>{% trans %}{{ search_count }} results for '{{ term }}'{% endtrans %}{% if limit_type %}, {% trans "limited to type" %} '{% for type in limit_type %}{{ type }}{% if loop.last == false %}, {% endif %}{% endfor %}'{% endif %}{% if limit_parent %}, {% trans "limited to parent" %} '{{ limit_parent }}'{% endif %}{% if limit_group %}, {% trans "limited to group" %} '{{ limit_group }}'{% endif %}</p>
 </div>{% if limit_type or limit_parent or limit_group %}<button type="button" class="btn btn-default" id="remove-limits">{% trans "Clear limitations" %}</button>{% endif %}
 {% endif %}
 {% if search_results|length == 0 %}<p class="no-results">{% trans 'The search provided no results.' %}</p>{% endif %}
