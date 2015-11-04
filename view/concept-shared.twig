@@ -109,7 +109,7 @@
             {% for group in concept.groupProperties %}
               {% if group.type != 'skosmos:memberOfArray' %}
                 {% if group.type != 'skosmos:memberOfSuper' and not superFound %}<li>{% endif %}
-                  <a class="versal" href="{{ group.uri | link_url(group.vocab,request.lang,'groups',request.contentLang) }}">{{ group.label(request.contentLang) }}</a>
+                  <a class="versal" href="{{ group.uri | link_url(group.vocab,request.lang,'groups',request.contentLang) }}">{% if group.notation %}<span class="versal">{{ group.notation }} </span>{% endif %}{{ group.label(request.contentLang) }}</a>
                   {% if group.type == 'skosmos:memberOfSuper' %}{% set superFound = true %}<span class="versal"> &#62; </span>{% endif %}
                 {% if group.type != 'skosmos:memberOfSuper' and not superFound %}</li>{% endif %}
               {% endif %}
