@@ -283,7 +283,7 @@ $(function() { // DOCUMENT READY
       function(event) {
         $.ajaxQ.abortAll();
         $('.active').removeClass('active');
-        $(this).parent().addClass('active');
+        $('#alpha').addClass('active');
         $('.sidebar-grey').empty().prepend(spinner);
         var targetUrl = event.target.href;
         $.ajax({
