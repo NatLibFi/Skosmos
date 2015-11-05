@@ -21,6 +21,7 @@
 <div class="sidebar-grey">
   <div class="group-container">
     <ul class="change-list">
+      <p class="versal-bold">{% trans "New and modified concepts" %}:</p>
       {% for day,concepts in changeList %}
         <span class="versal versal-bold">{{day}}</span>
         {% for concept in concepts %}
