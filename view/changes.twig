@@ -22,7 +22,7 @@
   <div class="group-container">
     <ul class="change-list">
       {% for day,concepts in changeList %}
-        <span class="versal">{{day}}</span>
+        <span class="versal versal-bold">{{day}}</span>
         {% for concept in concepts %}
           <li><a href="{{ concept.uri | link_url(vocab,request.lang,'page') }}">{{ concept.prefLabel }}</a></li>
         {% endfor %}
