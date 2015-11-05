@@ -1296,11 +1296,14 @@ EOQ;
   /**
    * return a list of recently changed or entirely new concepts
    * @param string $lang language of labels to return
+   * @param int $offset offset of results to retrieve; 0 for beginning of list
    * @return array Result array
    */
-  public function queryChangeList($lang)
+  public function queryChangeList($lang, $offset=0)
   {
     $gc = $this->graphClause;
+    $offset = ($offset) ? 'OFFSET ' . $offset : '';
+
     $query = <<<EOQ
 SELECT DISTINCT * 
 WHERE {
@@ -1313,7 +1316,7 @@ WHERE {
   }
 } 
 ORDER BY DESC(?date)
-LIMIT 100
+LIMIT 150 $offset
 EOQ;
     $ret = array();
     $result = $this->client->query($query);
