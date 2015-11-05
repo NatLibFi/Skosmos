@@ -1305,12 +1305,11 @@ EOQ;
     $offset = ($offset) ? 'OFFSET ' . $offset : '';
 
     $query = <<<EOQ
-SELECT DISTINCT * 
+SELECT DISTINCT ?concept ?date ?label
 WHERE {
   $gc {
     ?concept a skos:Concept .
     ?concept dc:modified|dc:created ?date .
-    #FILTER (?date > "2015-11-03T00:00:00"^^xsd:dateTime)
     ?concept skos:prefLabel ?label .
     FILTER (langMatches(lang(?label), '$lang'))
   }
