@@ -320,6 +320,19 @@ $(function() { // DOCUMENT READY
       return false;
     }
   );
+  
+  // event handler for clicking the group index tab 
+  $(document).on('click', '#changes > a',
+      function() {
+        $.ajaxQ.abortAll();
+        $('.active').removeClass('active');
+        var $clicked = $(this);
+        $clicked.parent().addClass('active');
+        var $pagination = $('.pagination');
+        if ($pagination) { $pagination.hide(); }
+        $('.sidebar-grey').empty().prepend(spinner);
+      }
+  );
 
   // event handler for clicking the group index tab 
   $(document).on('click', '#groups > a',
@@ -892,12 +905,12 @@ $(function() { // DOCUMENT READY
     var undoUppercasing = $replacedSpan.text().substr(0,1) + $replacedSpan.text().substr(1).toLowerCase();
     var html = '<h2 class="alert-replaced">' + undoUppercasing + ':<a href="' + $('.replaced-by a')[0] + '">' + $('.replaced-by a').html() + '</h2>';
     $('.alert-danger').append(html);
-$(document).on('click', '#groups', 
-  function() {
-    $('.sidebar-grey').clear(); 
-    return false;
-  }
-);
+    $(document).on('click', '#groups', 
+      function() {
+        $('.sidebar-grey').clear(); 
+          return false;
+      }
+    );
   } 
 
   /* makes an AJAX query for the alphabetical index contents when landing on 
