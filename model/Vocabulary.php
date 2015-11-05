@@ -884,6 +884,15 @@ class Vocabulary extends DataObject
     {
         return $this->getBoolean('skosmos:sortByNotation');
     }
+    
+    /**
+     * Returns a boolean value set in the vocabularies.ttl config.
+     * @return boolean
+     */
+    public function showChangeList()
+    {
+        return $this->getBoolean('skosmos:showChangeList');
+    }
 
     /**
      * Returns a list of recently changed or entirely new concepts.
@@ -891,6 +900,12 @@ class Vocabulary extends DataObject
      */
     public function getChangeList($lang)
     {
-        return $this->getSparql()->queryChangeList($lang);
+      $changelist = $this->getSparql()->queryChangeList($lang);
+      $bydate = array();
+      foreach($changelist as &$concept) {
+        $concept['datestring'] = Punic\Calendar::formatDate($concept['date'], 'medium', $lang); // . ' ' . Punic\Calendar::format($concept['date'], 'HH:mm', $lang); 
+        $bydate[Punic\Calendar::formatDate($concept['date'], 'medium', $lang)][] = $concept;
+      }
+      return $bydate;
     }
 }
