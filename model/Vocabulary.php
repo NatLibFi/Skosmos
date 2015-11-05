@@ -885,4 +885,12 @@ class Vocabulary extends DataObject
         return $this->getBoolean('skosmos:sortByNotation');
     }
 
+    /**
+     * Returns a list of recently changed or entirely new concepts.
+     * @return Array 
+     */
+    public function getChangeList($lang)
+    {
+        return $this->getSparql()->queryChangeList($lang);
+    }
 }

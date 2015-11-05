@@ -603,4 +603,26 @@ class WebController extends Controller
             ));
     }
 
+    /**
+     * Loads and renders the view containing a list of recent changes in the vocabulary.
+     * @param Request $request
+     */
+    public function invokeChangeList($request)
+    {
+        // set language parameters for gettext
+        $this->setLanguageProperties($request->getLang());
+        $vocab = $request->getVocab();
+        // load template
+        $template = $this->twig->loadTemplate('changes.twig');
+
+        // render template
+        echo $template->render(
+            array(
+                'vocab' => $vocab,
+                'languages' => $this->languages,
+                'request' => $request,
+                'changeList' => $vocab->getChangeList($request->getContentLang())
+            ));
+    }
+
 }

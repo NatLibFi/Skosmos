@@ -1292,4 +1292,39 @@ EOQ;
 
     return $ret;
   }
+
+  /**
+   * return a list of recently changed or entirely new concepts
+   * @param string $lang language of labels to return
+   * @return array Result array
+   */
+  public function queryChangeList($lang)
+  {
+    $gc = $this->graphClause;
+    $query = <<<EOQ
+SELECT DISTINCT * 
+WHERE {
+  $gc {
+    ?concept a skos:Concept .
+    ?concept dc:modified|dc:created ?date .
+    #FILTER (?date > "2015-11-03T00:00:00"^^xsd:dateTime)
+    ?concept skos:prefLabel ?label .
+    FILTER (langMatches(lang(?label), '$lang'))
+  }
+} 
+ORDER BY DESC(?date)
+LIMIT 100
+EOQ;
+    $ret = array();
+    $result = $this->client->query($query);
+    foreach ($result as $row) {
+      $concept = array('uri' => $row->concept->getURI());
+      if (isset($row->label))
+        $concept['prefLabel'] = $row->label->getValue();
+      if (isset($row->date))
+        $concept['date'] = $row->date->getValue();
+      $ret[] = $concept;
+    }
+    return $ret;
+  }
 }
