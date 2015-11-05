@@ -718,6 +718,27 @@ $(function() { // DOCUMENT READY
       });
     }
   }
+  var changeOffset = 200;
+  
+  function changeListWaypointCallback() {
+    $('.change-list').append($loading);
+    var parameters = $.param({'offset' : changeOffset, 'clang': content_lang});
+    var lastdate = $('.change-list > span:last-of-type')[0].innerHTML;
+    $.ajax({
+      url : vocab + '/' + lang + '/changes',
+      data : parameters,
+      success : function(data) {
+        $loading.detach();
+        if ($(data).find('.change-list').length === 1) {
+          $('.change-list').append($(data).find('.change-list')[0].innerHTML);
+          var $lastdate = $('.change-list > span:contains(' + lastdate + ')');
+          if ($lastdate.length === 2)
+           $lastdate[1].remove();
+        }
+      }
+    });
+    changeOffset += 200;
+  }
 
   function waypointCallback() {
     var number_of_hits = $(".search-result").length;
@@ -836,6 +857,17 @@ $(function() { // DOCUMENT READY
       snapAmount: 15,
       snapOffset: 1,
       callbacks: { alwaysTriggerOffsets: false, onTotalScroll: alphaWaypointCallback, onTotalScrollOffset: 300 }
+    });
+  }
+  
+  if ($('#changes.active').length === 1) {
+    $(".sidebar-grey").mCustomScrollbar({ 
+      alwaysShowScrollbar: 1,
+      scrollInertia: 0, 
+      mouseWheel:{ preventDefault: true, scrollAmount: 105 },
+      snapAmount: 15,
+      snapOffset: 1,
+      callbacks: { alwaysTriggerOffsets: false, onTotalScroll: changeListWaypointCallback, onTotalScrollOffset: 300 }
     });
   }
 

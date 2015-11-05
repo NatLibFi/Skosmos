@@ -898,9 +898,9 @@ class Vocabulary extends DataObject
      * Returns a list of recently changed or entirely new concepts.
      * @return Array 
      */
-    public function getChangeList($lang)
+    public function getChangeList($lang, $offset)
     {
-      $changelist = $this->getSparql()->queryChangeList($lang);
+      $changelist = $this->getSparql()->queryChangeList($lang, $offset);
       $bydate = array();
       foreach($changelist as &$concept) {
         $concept['datestring'] = Punic\Calendar::formatDate($concept['date'], 'medium', $lang); // . ' ' . Punic\Calendar::format($concept['date'], 'HH:mm', $lang); 

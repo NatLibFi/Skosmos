@@ -612,6 +612,7 @@ class WebController extends Controller
         // set language parameters for gettext
         $this->setLanguageProperties($request->getLang());
         $vocab = $request->getVocab();
+        $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
         // load template
         $template = $this->twig->loadTemplate('changes.twig');
 
@@ -621,7 +622,7 @@ class WebController extends Controller
                 'vocab' => $vocab,
                 'languages' => $this->languages,
                 'request' => $request,
-                'changeList' => $vocab->getChangeList($request->getContentLang())
+                'changeList' => $vocab->getChangeList($request->getContentLang(), $offset)
             ));
     }
 

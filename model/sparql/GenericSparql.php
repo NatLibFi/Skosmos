@@ -1299,7 +1299,7 @@ EOQ;
    * @param int $offset offset of results to retrieve; 0 for beginning of list
    * @return array Result array
    */
-  public function queryChangeList($lang, $offset=0)
+  public function queryChangeList($lang, $offset)
   {
     $gc = $this->graphClause;
     $offset = ($offset) ? 'OFFSET ' . $offset : '';
@@ -1316,7 +1316,7 @@ WHERE {
   }
 } 
 ORDER BY DESC(?date)
-LIMIT 150 $offset
+LIMIT 200 $offset
 EOQ;
     $ret = array();
     $result = $this->client->query($query);
