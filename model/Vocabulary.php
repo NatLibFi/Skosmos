@@ -902,9 +902,12 @@ class Vocabulary extends DataObject
     {
       $changelist = $this->getSparql()->queryChangeList($lang, $offset);
       $bydate = array();
-      foreach($changelist as &$concept) {
-        $concept['datestring'] = Punic\Calendar::formatDate($concept['date'], 'medium', $lang); // . ' ' . Punic\Calendar::format($concept['date'], 'HH:mm', $lang); 
-        $bydate[Punic\Calendar::formatDate($concept['date'], 'medium', $lang)][] = $concept;
+      foreach($changelist as $concept) {
+        $concept['datestring'] = Punic\Calendar::formatDate($concept['date'], 'medium', $lang);
+        $bydate[Punic\Calendar::formatDate($concept['date'], 'medium', $lang)][strtolower($concept['prefLabel'])] = $concept;
+      }
+      foreach($bydate as &$date) {
+        ksort($date);
       }
       return $bydate;
     }
