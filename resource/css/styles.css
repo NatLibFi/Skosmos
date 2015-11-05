@@ -1246,6 +1246,13 @@ ul.nav-tabs > li {
   width: 34% !important;
 }
 
+.nav-four-wide > li {
+  width: 28% !important;
+}
+
+.nav-four-wide > #alpha {
+  width: 16% !important;
+}
 
 .nav-tabs > li > a:hover {
   background-color: #ffffff !important;
