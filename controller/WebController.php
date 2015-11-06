@@ -190,12 +190,14 @@ class WebController extends Controller
         // set template variables
         $categoryLabel = $this->model->getClassificationLabel($request->getLang());
         $vocabList = $this->model->getVocabularyList();
+        $sortedVocabs = $this->model->getVocabularyList(false);
         $langList = $this->model->getLanguages($request->getLang());
 
         // render template
         echo $template->render(
             array(
                 'vocab_list' => $vocabList,
+                'sorted_vocabs' => $sortedVocabs,
                 'category_label' => $categoryLabel,
                 'languages' => $this->languages,
                 'lang_list' => $langList,
@@ -372,6 +374,7 @@ class WebController extends Controller
         $counts = $count_and_results['count'];
         $search_results = $count_and_results['results'];
         $vocabList = $this->model->getVocabularyList();
+        $sortedVocabs = $this->model->getVocabularyList(false);
         $langList = $this->model->getLanguages($lang);
 
         echo $template->render(
@@ -385,6 +388,7 @@ class WebController extends Controller
                 'lang_list' => $langList,
                 'vocabs' => $vocabs,
                 'vocab_list' => $vocabList,
+                'sorted_vocabs' => $sortedVocabs,
                 'request' => $request,
             ));
     }
