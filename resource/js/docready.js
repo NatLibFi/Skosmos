@@ -747,6 +747,7 @@ $(function() { // DOCUMENT READY
           var $lastdate = $('.change-list > span:contains(' + lastdate + ')');
           if ($lastdate.length === 2)
            $lastdate[1].remove();
+          $('.change-list > p:last-of-type').remove();
         }
       }
     });
