@@ -626,7 +626,7 @@ class WebController extends Controller
                 'vocab' => $vocab,
                 'languages' => $this->languages,
                 'request' => $request,
-                'changeList' => $vocab->getChangeList($request->getContentLang(), $offset)
+                'changeList' => $vocab->getChangeList($request->getContentLang(), $request->getLang(), $offset)
             ));
     }
 

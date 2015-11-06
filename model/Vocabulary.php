@@ -896,9 +896,11 @@ class Vocabulary extends DataObject
 
     /**
      * Returns a list of recently changed or entirely new concepts.
+     * @param string $clang content language for the labels 
+     * @param string $lang UI language for the dates
      * @return Array 
      */
-    public function getChangeList($lang, $offset)
+    public function getChangeList($clang, $lang, $offset)
     {
       $changelist = $this->getSparql()->queryChangeList($lang, $offset);
       $bydate = array();
