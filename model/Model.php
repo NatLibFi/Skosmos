@@ -102,10 +102,12 @@ class Model
 
     /**
      * Return all the vocabularies available.
-     * @param boolean $categories wheter you want everything included in a subarray of
+     * @param boolean $categories whether you want everything included in a subarray of
      * a category.
+     * @param boolean $shortname set to true if you want the vocabularies sorted by 
+     * their shortnames instead of ther titles.
      */
-    public function getVocabularyList($categories = true)
+    public function getVocabularyList($categories = true, $shortname = false)
     {
         $cats = $this->getVocabularyCategories();
         $ret = array();
@@ -115,7 +117,7 @@ class Model
             // find all the vocabs in this category
             $vocs = array();
             foreach ($cat->getVocabularies() as $voc) {
-                $vocs[$voc->getTitle()] = $voc;
+                $vocs[$shortname ? $voc->getShortname() : $voc->getTitle()] = $voc;
             }
             uksort($vocs, 'strcoll');
 
