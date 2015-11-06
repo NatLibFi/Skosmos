@@ -260,13 +260,12 @@ $(function() { // DOCUMENT READY
         $('.activated-concept').removeClass('activated-concept');
         $(this).addClass('activated-concept');
         var $content = $('.content');
-        var hierButton = '<li id="hierarchy"><a id="hier-trigger" href="#">' + hiertrans + '</a></li>';
         $.ajax({
             url : event.target.href,
             success : function(data) {
               if (window.history.pushState) { window.history.pushState(null, null, event.target.href); }
               $content.empty().append($('.content', data).html());
-              if (!$('#hierarchy').length) { $('#alpha').after(hierButton); }
+              if (!$('#hierarchy').length) { $('#hierarchy-disabled').attr('id', 'hierarchy'); }
               $('#hier-trigger').attr('href', event.target.href);
               updateTitle(data);
               updateTopbarLang(data);
