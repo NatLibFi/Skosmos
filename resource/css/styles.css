@@ -1262,6 +1262,11 @@ ul.nav-tabs > li {
   background-color: #f6f7f8 !important;
 }
 
+#hierarchy-disabled > * {
+  background-color: #b5d1cd !important;
+  color: #74787A !important;
+}
+
 .content {
   margin-left: 350px;
 }

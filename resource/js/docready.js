@@ -303,6 +303,8 @@ $(function() { // DOCUMENT READY
   // event handler for clicking the sidebar hierarchy tab
   $(document).on('click', '#hier-trigger', 
     function () {
+      if($(this).parent()[0].id === 'hierarchy-disabled')
+        return false;
       var $content = $('#sidebar');
       if($('.uri-input-box').length === 0) { // if on the vocabulary front page
         $('.sidebar-grey').remove();
