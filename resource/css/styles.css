@@ -1225,7 +1225,11 @@ tr.replaced-by > td > ul > li > a {
   margin-top: 5px; 
 }
 
-.changes-navi > span:first-of-type {
+.changes-navi > a:hover, .changes-navi > a:focus, .changes-navi > a:active  {
+  text-decoration: none;
+}
+
+.changes-navi > *:first-of-type {
   margin-right: 5px; 
 }
 
