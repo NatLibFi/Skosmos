@@ -1214,8 +1214,15 @@ tr.replaced-by > td > ul > li > a {
 } 
 
 .changes-navi {
-  padding: 5px 15px;
+  background-color: #F6F7F8;
+  padding-left: 15px;
+  height: 30px;
   border-bottom: 1px solid #c7e7e5 !important;
+}
+
+.changes-navi > * {
+  display: inline-block;
+  margin-top: 5px; 
 }
 
 .changes-navi > span:first-of-type {

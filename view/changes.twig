@@ -15,17 +15,16 @@
     {% endif %}
   </ul>
 </div>
-
-<div class="sidebar-grey">
-  <div class="changes-navi">
+<div class="changes-navi">
 {% if request.page == 'new' %}
-    <span class="versal versal-bold">{% trans 'New concepts' %}</span>
-    <a class="versal" href="{{ request.vocabid }}/{{ request.lang }}/changes{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans 'Modified concepts' %}</a>
+  <span class="versal versal-bold">{% trans 'New concepts' %}</span>
+  <a class="versal" href="{{ request.vocabid }}/{{ request.lang }}/changes{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans 'Modified concepts' %}</a>
 {% elseif request.page == 'changes' %}
-    <a class="versal" href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans 'New concepts' %}</a>
-    <span class="versal versal-bold">{% trans 'Modified concepts' %}</span>
+  <a class="versal" href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans 'New concepts' %}</a>
+  <span class="versal versal-bold">{% trans 'Modified concepts' %}</span>
 {% endif %}
-  </div>
+</div>
+<div class="sidebar-grey">
   <div class="group-container">
     <ul class="change-list">
       {% for day,concepts in changeList %}

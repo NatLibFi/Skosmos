@@ -218,6 +218,7 @@ function countAndSetOffset() {
   $('.sidebar-grey').attr('style', function() {
     var pixels = $('.nav-tabs').height() + 2; // the 2 pixels are for the borders
     if ($('.pagination').is(':visible')) { pixels += $('.pagination').height(); }
+    if ($('.changes-navi').is(':visible')) { pixels += $('.changes-navi').height(); }
     return 'height: calc(100% - ' + pixels + 'px) !important';
   });
   if ($('#sidebar').length && !$('#sidebar').hasClass('fixed')) {
