@@ -1288,6 +1288,10 @@ ul.nav-tabs > li {
   cursor: default;
 }
 
+#changes > a {
+  background-color: #A0D6CF;
+}
+
 .content {
   margin-left: 350px;
 }
