@@ -1285,6 +1285,7 @@ ul.nav-tabs > li {
 #hierarchy-disabled > * {
   background-color: #b5d1cd !important;
   color: #74787A !important;
+  cursor: default;
 }
 
 .content {
