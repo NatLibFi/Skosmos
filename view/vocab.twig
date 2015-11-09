@@ -11,7 +11,7 @@
     {% else %}
     {% endif %}
     {% if vocab.showChangeList %}
-    <li id="changes"><a href="{{ request.vocabid }}/{{ request.lang }}/changes{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Changes-nav" %}</a></li>
+    <li id="changes"><a href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Changes-nav" %}</a></li>
     {% endif %}
   </ul>
 </div>

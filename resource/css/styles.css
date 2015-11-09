@@ -1213,6 +1213,15 @@ tr.replaced-by > td > ul > li > a {
   padding: 0 0 0 10px !important;
 } 
 
+.changes-navi {
+  padding: 5px 15px;
+  border-bottom: 1px solid #c7e7e5 !important;
+}
+
+.changes-navi > span:first-of-type {
+  margin-right: 5px; 
+}
+
 .nav-tabs, #groups > a {
   background-color: #e0e4e7;
   border-bottom: none !important;

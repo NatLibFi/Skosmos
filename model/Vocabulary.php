@@ -900,9 +900,9 @@ class Vocabulary extends DataObject
      * @param string $lang UI language for the dates
      * @return Array 
      */
-    public function getChangeList($clang, $lang, $offset)
+    public function getChangeList($prop, $clang, $lang, $offset)
     {
-      $changelist = $this->getSparql()->queryChangeList($lang, $offset);
+      $changelist = $this->getSparql()->queryChangeList($lang, $offset, $prop);
       $bydate = array();
       foreach($changelist as $concept) {
         $concept['datestring'] = Punic\Calendar::formatDate($concept['date'], 'medium', $lang);

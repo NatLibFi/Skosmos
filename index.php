@@ -114,6 +114,8 @@ if (sizeof($parts) <= 2) {
 
                     }
                 } elseif ($request->getPage() == 'changes') {
+                    $controller->invokeChangeList($request, 'dc:modified');
+                } elseif ($request->getPage() == 'new') {
                     $controller->invokeChangeList($request);
                 } else {
                     $controller->invokeGenericErrorPage($request);

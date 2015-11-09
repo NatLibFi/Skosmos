@@ -1299,7 +1299,7 @@ EOQ;
    * @param int $offset offset of results to retrieve; 0 for beginning of list
    * @return array Result array
    */
-  public function queryChangeList($lang, $offset)
+  public function queryChangeList($lang, $offset, $prop)
   {
     $gc = $this->graphClause;
     $offset = ($offset) ? 'OFFSET ' . $offset : '';
@@ -1309,7 +1309,7 @@ SELECT DISTINCT ?concept ?date ?label
 WHERE {
   $gc {
     ?concept a skos:Concept .
-    ?concept dc:modified|dc:created ?date .
+    ?concept $prop ?date .
     ?concept skos:prefLabel ?label .
     FILTER (langMatches(lang(?label), '$lang'))
   }
