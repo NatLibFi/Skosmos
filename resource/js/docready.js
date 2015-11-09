@@ -322,7 +322,7 @@ $(function() { // DOCUMENT READY
     }
   );
   
-  // event handler for clicking the group index tab 
+  // event handler for clicking the changes tab 
   $(document).on('click', '#changes > a',
       function() {
         $.ajaxQ.abortAll();
@@ -344,6 +344,7 @@ $(function() { // DOCUMENT READY
         $clicked.parent().addClass('active');
         var $pagination = $('.pagination');
         if ($pagination) { $pagination.hide(); }
+        if ($('.changes-navi')) { $('.changes-navi').hide(); }
         $('.sidebar-grey').remove().prepend(spinner);
         $('#sidebar').append('<div class="sidebar-grey"><div class="group-hierarchy"></div></div>');
         if (window.history.pushState) { window.history.pushState(null, null, encodeURI(event.target.href)); }
