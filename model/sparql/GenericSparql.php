@@ -1314,7 +1314,7 @@ WHERE {
     FILTER (langMatches(lang(?label), '$lang'))
   }
 } 
-ORDER BY DESC(?date)
+ORDER BY DESC(YEAR(?date)) DESC(MONTH(?date)) DESC(DAY(?date)) LCASE(?label)
 LIMIT 200 $offset
 EOQ;
     $ret = array();
