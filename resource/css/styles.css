@@ -1292,6 +1292,15 @@ ul.nav-tabs > li {
   background-color: #A0D6CF;
 }
 
+.change-list > span {
+  display: inline-block;
+  margin-top: 15px;
+}
+
+.change-list > span:first-of-type {
+  margin: 0;
+}
+
 .content {
   margin-left: 350px;
 }
