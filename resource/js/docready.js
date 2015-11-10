@@ -298,6 +298,48 @@ $(function() { // DOCUMENT READY
         return false;
       }
   );
+  
+  // event handler for clicking the changes tab 
+  $(document).on('click', '#changes',
+      function(event) {
+        $.ajaxQ.abortAll();
+        $('.active').removeClass('active');
+        $('#changes').addClass('active');
+        $('.sidebar-grey').empty().prepend(spinner);
+        var targetUrl = event.target.href;
+        $.ajax({
+            url : targetUrl,
+            success : function(data) {
+              updateSidebar(data);
+              $('#changes').after($('#hierarchy'));
+              $('.nav').scrollTop(0);
+              if (window.history.pushState) { window.history.pushState(null, null, encodeURI(event.target.href)); }
+              updateTitle(data);
+            }
+        });
+        return false;
+      }
+  );
+  
+  // event handler for clicking the changes tab submenu
+  $(document).on('click', '.changes-navi > a',
+      function(event) {
+        $.ajaxQ.abortAll();
+        $('.sidebar-grey').empty().prepend(spinner);
+        var targetUrl = event.target.href;
+        $.ajax({
+            url : targetUrl,
+            success : function(data) {
+              updateSidebar(data);
+              $('#changes').after($('#hierarchy'));
+              $('.nav').scrollTop(0);
+              if (window.history.pushState) { window.history.pushState(null, null, encodeURI(event.target.href)); }
+              updateTitle(data);
+            }
+        });
+        return false;
+      }
+  );
 
   // event handler for clicking the sidebar hierarchy tab
   $(document).on('click', '#hier-trigger', 
