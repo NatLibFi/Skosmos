@@ -56,7 +56,7 @@ $(function() { // DOCUMENT READY
       }
     }
     // Sidenav actions only happen when doing other queries than the autocomplete.
-    if (settings.url.indexOf('index') !== -1 || settings.url.indexOf('groups') !== -1 ) {
+    if (settings.url.indexOf('index') !== -1 || settings.url.indexOf('groups') !== -1 || settings.url.indexOf('changes') !== -1 || settings.url.indexOf('new') !== -1) {
       var snap = (settings.url.indexOf('hierarchy') !== -1) ? 18 : 15;
       $(".sidebar-grey").mCustomScrollbar({ 
         alwaysShowScrollbar: 1,
