@@ -4,7 +4,7 @@
 {% block sidebar %}
 <div class="sidebar-buttons">
   <ul class="nav nav-tabs{% if vocab.showChangeList and vocab.groupClassURI %} nav-four-wide{% endif %}">
-    <li id="alpha"{% if active_tab == 'alphabetical' %} class="active"{% endif %}><a href="{{ request.vocabid }}/{{ request.lang }}/index{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% if vocab.showChangeList and vocab.groupClassURI %}A-Z{% else %}{% trans "Alpha-nav" %}{% endif %}</a></li>
+    <li id="alpha"{% if active_tab == 'alphabetical' %} class="active"{% endif %}><a href="{{ request.vocabid }}/{{ request.lang }}/index{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% if vocab.showChangeList and vocab.groupClassURI %}{% trans 'A-Z' %}{% else %}{% trans "Alpha-nav" %}{% endif %}</a></li>
     <li id="hierarchy{% if not vocab.showHierarchy %}-disabled{% endif %}"{% if active_tab == 'hierarchy' %} class="active"{% endif %}><a href="#" id="hier-trigger">{% trans "Hier-nav" %}</a></li>
     {% if vocab.groupClassURI %}
     <li id="groups"><a href="{{ request.vocabid }}/{{ request.lang }}/groups{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Group-nav" %}</a></li>
