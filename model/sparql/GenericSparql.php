@@ -1259,9 +1259,11 @@ WHERE {
    <$group> a <$groupClass> .
    { <$group> skos:member ?conc . } UNION { ?conc isothes:superGroup <$group> }
    FILTER NOT EXISTS { ?conc owl:deprecated true }
-   ?conc skos:prefLabel ?label .
    ?conc a ?type .
-   FILTER (langMatches(lang(?label), '$lang'))
+   OPTIONAL { ?conc skos:prefLabel ?label .
+    FILTER (langMatches(lang(?label), '$lang'))
+   }
+   OPTIONAL { ?conc skos:prefLabel ?label . }
    OPTIONAL { ?conc skos:notation ?notation }
  }
  BIND(EXISTS{?submembers isothes:superGroup ?conc} as ?super)
@@ -1273,9 +1275,15 @@ EOQ;
     $values = array();
     foreach ($result as $row) {
       if (!array_key_exists($row->conc->getURI(), $values)) {
+        if (isset($row->label)) {
+          if ($row->label->getLang() == $lang)
+            $label = $row->label->getValue();
+          else
+            $label = $row->label->getValue() . " (" . $row->label->getLang() . ")";
+        }
         $values[$row->conc->getURI()] = array(
           'uri' => $row->conc->getURI(),
-          'prefLabel' => $row->label->getValue(),
+          'prefLabel' => $label,
           'isSuper' => $row->super->getValue(),
           'hasMembers' => $row->members->getValue(),
           'type' => array($row->type->shorten())
