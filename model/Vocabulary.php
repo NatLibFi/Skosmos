@@ -908,9 +908,6 @@ class Vocabulary extends DataObject
         $concept['datestring'] = Punic\Calendar::formatDate($concept['date'], 'medium', $lang);
         $bydate[Punic\Calendar::formatDate($concept['date'], 'medium', $lang)][strtolower($concept['prefLabel'])] = $concept;
       }
-      //foreach($bydate as &$date) {
-        //ksort($date);
-      //}
       return $bydate;
     }
 }
