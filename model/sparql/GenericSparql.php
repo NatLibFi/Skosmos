@@ -495,8 +495,9 @@ EOF;
     $extratypes = ($arrayClass && $types === array('skos:Concept'))? "UNION { ?s a <$arrayClass> }" : "";
 
     if (sizeof($unprefixed_types) === 1) // if only one type limitation set no UNION needed
-      $type = $unprefixed_types[0];
+      $type = '<' . $unprefixed_types[0] . '>';
     else { // multiple type limitations require setting a UNION for each of those
+      $type = '[]';
       foreach($unprefixed_types as $utype)
         $extratypes .= "\nUNION { ?s a <$utype> }";
     }      
@@ -584,7 +585,7 @@ SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph (GROUP_CONCAT(DISTINCT 
 $extravars
 WHERE {
  $graph_text
-  { ?s rdf:type <$type> } UNION { ?s a isothes:ConceptGroup } $extratypes
+  { ?s rdf:type $type } UNION { ?s a isothes:ConceptGroup } $extratypes
   { $pgcond
    ?s rdf:type ?type .
    ?s ?prop ?match .

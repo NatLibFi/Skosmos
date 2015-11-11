@@ -817,7 +817,7 @@ $(function() { // DOCUMENT READY
         }
         $('.search-result-listing').append($(data).find('.search-result'));
         number_of_hits = $('.uri-input-box').length;
-        $ready = $("<p class='search-count'>" + results + " " + $(".search-result").length + " " + results_disp +"</p>");
+        $ready = $("<p class='search-count'>" + results_disp.replace('%d',$(".search-result").length) +"</p>");
         offcount++;
         shortenProperties();
         $('.search-result:nth-last-of-type(4)').waypoint(function() { waypointCallback(); }, options );
