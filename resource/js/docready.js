@@ -493,7 +493,7 @@ $(function() { // DOCUMENT READY
     }
   });
 
-  // typeahead selection action
+  // typeahead autocomplete selection action
   function onSelection($e, datum) {
     if ($e.currentTarget.id !== 'parent-limit') {
       // restoring the original value
@@ -508,7 +508,7 @@ $(function() { // DOCUMENT READY
       if ($('input[name=anylang]').is(':checked') && clang && clang !== lang) { params.clang = clang; }
       var paramstr = $.isEmptyObject(params) ? '' : '?' + $.param(params);
       var base_href = $('base').attr('href'); // see #315
-      if (datum.type && datum.type.indexOf('Collection') !== -1) {
+      if (datum.type && (datum.type.indexOf('skos:Collection') !== -1 || datum.type.indexOf('isothes:ConceptGroup') !== -1)) {
         location.href = base_href + datum.vocab + '/' + lang + '/groups/' + localname + paramstr;
       } else {
         location.href = base_href + datum.vocab + '/' + lang + '/page/' + localname + paramstr;
@@ -591,16 +591,17 @@ $(function() { // DOCUMENT READY
             if (item.lang && (item.lang === qlang || item.lang.indexOf(qlang + '-') === 0)) { delete(item.lang); }
             if (item.type) {
               var toBeRemoved = null;
+              item.typeLabel = item.type;
               for (var i = 0; i < item.type.length; i++) {
                 if (item.type[i] === 'skos:Concept' && item.type.length > 1) {
                   toBeRemoved = item.type.indexOf('skos:Concept');
                 }
                 var prefix = item.type[i].substr(0, item.type[i].indexOf(':'));
                 if (prefix !== 'http' && prefix !== undefined && context[prefix] !== undefined) {
-                  item.type[i] = context[prefix] + item.type[i].substr(item.type[i].indexOf(':') + 1, item.type[i].length);
-                }
-                if (typeLabels[item.type[i]] !== undefined) {
-                  item.type[i] = typeLabels[item.type[i]];
+                  var unprefixed = context[prefix] + item.type[i].substr(item.type[i].indexOf(':') + 1, item.type[i].length);
+                  if (typeLabels[unprefixed] !== undefined) {
+                    item.typeLabel[i] = typeLabels[unprefixed];
+                  }
                 }
               }
               if (toBeRemoved !== null) { item.type.splice(toBeRemoved, 1); }
@@ -620,7 +621,7 @@ $(function() { // DOCUMENT READY
     '{{# if matched }}<p>{{matched}}{{# if lang}} ({{lang}}){{/if}} = </p>{{/if}}',
     '{{# if replaced }}<p class="replaced">{{replaced}}{{# if lang}} ({{lang}}){{/if}} &rarr; </p>{{/if}}',
     '<p class="autocomplete-label">{{label}}{{# if lang}}{{# unless matched }}<p>({{lang}})</p>{{/unless}}{{/if}}</p>',
-    '{{# if type }}<span class="concept-type">{{type}}</span>{{/if}}',
+    '{{# if typeLabel }}<span class="concept-type">{{typeLabel}}</span>{{/if}}',
     '<div class="vocab">{{vocabLabel}}</div>',
   ].join('');
 
