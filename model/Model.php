@@ -329,11 +329,11 @@ class Model
         $uris = array();
         $vocabs = array();
         foreach ($hits as $hit) {
-            $vocabs[] = $hit['voc'];
+            $vocabs[$hit['voc']->getId()] = $hit['voc'];
             $uris[] = $hit['uri'];
         }
         if (sizeof($vocabs) == 1) {
-            $voc = $vocabs[0];
+            $voc = reset($vocabs);
             $sparql = $voc->getSparql();
             $arrayClass = $voc->getArrayClassURI();
         } else {

@@ -284,7 +284,7 @@ EOQ;
     $conceptArray = array();
     foreach ($uris as $index => $uri) {
       $conc = $result->resource($uri);
-      $vocab = sizeof($vocabs) == 1 ? $vocabs[0] : $vocabs[$index];
+      $vocab = sizeof($vocabs) == 1 ? reset($vocabs) : $vocabs[$index];
       $conceptArray[] = new Concept($this->model, $vocab, $conc, $result, $clang);
     }
 
