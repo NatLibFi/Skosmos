@@ -188,11 +188,14 @@ $(function() { // DOCUMENT READY
       data: $.param({'lang' : content_lang}),
       success : function(data) {
         var $spinner = $('#counts tr:nth-of-type(2)');
-        var typeStats = '<tr><td class="count-type versal">' + data.concepts.class + '</td><td class="versal">' + data.concepts.count +'</td></tr>';
+        var typeStats = '<tr><td class="count-type versal">' + data.concepts.label + '</td><td class="versal">' + data.concepts.count +'</td></tr>';
         for (var i in data.subTypes) {
           var sub = data.subTypes[i];
           var label = sub.label ? sub.label : sub.type;
           typeStats += '<tr><td class="count-type versal">' + label + '</td>' + '<td class="versal">' + sub.count + '</td></tr>';
+        }
+        if (data.conceptGroups) {
+          typeStats += '<tr><td class="count-type versal">' + data.conceptGroups.label + '</td><td class="versal">' + data.conceptGroups.count +'</td></tr>';
         }
           
         $spinner.after(typeStats);

@@ -265,7 +265,7 @@ class RestController extends Controller
         $vocab_stats = $request->getVocab()->getStatistics($request->getQueryParam('lang'));
         $subTypes = array();
         foreach ($vocab_stats as $subtype) {
-            if ($subtype['type'] !== 'http://www.w3.org/2004/02/skos/core#Concept') {
+            if ($subtype['type'] !== 'http://www.w3.org/2004/02/skos/core#Concept' && $subtype['type'] !== 'http://www.w3.org/2004/02/skos/core#Collection') {
                 $subTypes[] = $subtype;
             }
         }
@@ -273,12 +273,14 @@ class RestController extends Controller
         /* encode the results in a JSON-LD compatible array */
         $ret = array(
             '@context' => array(
+                'rdfs' => 'http://www.w3.org/2000/01/rdf-schema#',
                 'skos' => 'http://www.w3.org/2004/02/skos/core#',
                 'void' => 'http://rdfs.org/ns/void#',
                 'onki' => 'http://schema.onki.fi/onki#',
                 'uri' => '@id',
                 'id' => 'onki:vocabularyIdentifier',
                 'concepts' => 'void:classPartition',
+                'label' => 'rdfs:label',
                 'class' => array('@id' => 'void:class', '@type' => '@id'),
                 'subTypes' => array('@id' => 'void:class', '@type' => '@id'),
                 'count' => 'void:entities',
@@ -288,8 +290,14 @@ class RestController extends Controller
             'id' => $request->getVocab()->getId(),
             'title' => $request->getVocab()->getTitle(),
             'concepts' => array(
-                'class' => gettext('skos:Concept'),
+                'class' => 'http://www.w3.org/2004/02/skos/core#Concept',
+                'label' => gettext('skos:Concept'),
                 'count' => $vocab_stats['http://www.w3.org/2004/02/skos/core#Concept']['count'],
+            ),
+            'conceptGroups' => array(
+                'class' => 'http://www.w3.org/2004/02/skos/core#Collection',
+                'label' => gettext('skos:Collection'),
+                'count' => $vocab_stats['http://www.w3.org/2004/02/skos/core#Collection']['count'],
             ),
             'subTypes' => $subTypes,
         );

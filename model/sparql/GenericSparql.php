@@ -96,7 +96,7 @@ class GenericSparql
       SELECT (COUNT(?conc) as ?c) ?type ?typelabel WHERE {
         $gc {
           { ?conc a ?type . 
-            ?type rdfs:subClassOf* skos:Concept . }
+          { ?type rdfs:subClassOf* skos:Concept . } UNION { ?type rdfs:subClassOf* skos:Collection . } }
           OPTIONAL { ?type rdfs:label ?typelabel . }
         }
       }
