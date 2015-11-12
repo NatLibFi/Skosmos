@@ -34,6 +34,7 @@ $(function() { // DOCUMENT READY
       position: { my: 'bottom center', at: 'top center' },
       style: { classes: 'qtip-tipsy qtip-skosmos' } 
     });
+    $('#hierarchy-disabled > #hier-trigger').qtip(qtip_skosmos_hierarchy);
     if (settings.url.indexOf('groups') !== -1 || settings.url.indexOf('index') !== -1) {
       $('.sidebar-grey').removeClass(function(index, classes) {
         var elementClasses = classes.split(' ');
@@ -268,7 +269,11 @@ $(function() { // DOCUMENT READY
             success : function(data) {
               if (window.history.pushState) { window.history.pushState(null, null, event.target.href); }
               $content.empty().append($('.content', data).html());
-              if (!$('#hierarchy').length) { $('#hierarchy-disabled').attr('id', 'hierarchy'); }
+              if (!$('#hierarchy').length) { 
+                $('#hierarchy-disabled').attr('id', 'hierarchy'); 
+                $('#hier-trigger').attr('title', '');
+                $('#hier-trigger').qtip('disable'); 
+              }
               $('#hier-trigger').attr('href', event.target.href);
               updateTitle(data);
               updateTopbarLang(data);
@@ -309,6 +314,8 @@ $(function() { // DOCUMENT READY
         $('.active').removeClass('active');
         $('#changes').addClass('active');
         $('.sidebar-grey').empty().prepend(spinner);
+        var $pagination = $('.pagination');
+        if ($pagination) { $pagination.hide(); }
         var targetUrl = event.target.href;
         $.ajax({
             url : targetUrl,
@@ -365,19 +372,6 @@ $(function() { // DOCUMENT READY
       window.location.replace(encodeURI(redirectUrl));
       return false;
     }
-  );
-  
-  // event handler for clicking the changes tab 
-  $(document).on('click', '#changes > a',
-      function() {
-        $.ajaxQ.abortAll();
-        $('.active').removeClass('active');
-        var $clicked = $(this);
-        $clicked.parent().addClass('active');
-        var $pagination = $('.pagination');
-        if ($pagination) { $pagination.hide(); }
-        $('.sidebar-grey').empty().prepend(spinner);
-      }
   );
 
   // event handler for clicking the group index tab 
@@ -467,6 +461,11 @@ $(function() { // DOCUMENT READY
     style: { classes: 'qtip-tipsy qtip-skosmos' } 
   };
   
+  var qtip_skosmos_hierarchy = { 
+    position: { my: 'top left', at: 'bottom center' },
+    style: { classes: 'qtip-tipsy qtip-skosmos' } 
+  };
+  
   $('.search-hint').qtip(qtip_skosmos);
   
   $('#navi4').qtip(qtip_skosmos);
@@ -474,6 +473,8 @@ $(function() { // DOCUMENT READY
   $('.property-click').qtip(qtip_skosmos);
   
   $('.redirected-vocab-id').qtip(qtip_skosmos);
+  
+  $('#hierarchy-disabled > #hier-trigger').qtip(qtip_skosmos_hierarchy);
   
   // Setting the language parameters according to the clang parameter or if that's not possible the cookie.
   var search_lang = (content_lang !== '' && !getUrlParams().anylang) ? content_lang : readCookie('SKOSMOS_SEARCH_LANG');
