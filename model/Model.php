@@ -326,12 +326,14 @@ class Model
 
         $uris = array();
         $vocabs = array();
+        $uniqueVocabs = array();
         foreach ($hits as $hit) {
-            $vocabs[$hit['voc']->getId()] = $hit['voc'];
+            $uniqueVocabs[$hit['voc']->getId()] = $hit['voc']->getId();
+            $vocabs[] = $hit['voc'];
             $uris[] = $hit['uri'];
         }
-        if (sizeof($vocabs) == 1) {
-            $voc = reset($vocabs);
+        if (sizeof($uniqueVocabs) == 1) {
+            $voc = $vocabs[0];
             $sparql = $voc->getSparql();
             $arrayClass = $voc->getArrayClassURI();
         } else {
