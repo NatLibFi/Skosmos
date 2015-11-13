@@ -27,6 +27,28 @@ class Vocabulary extends DataObject
 
         return $default;
     }
+    
+    /**
+     * Returns a boolean value based on a literal value from the vocabularies.ttl configuration.
+     * @param string $property the property to query
+     * @param string $lang preferred language for the literal,
+     */
+    private function getLiteral($property, $lang=null)
+    {
+        if (!isset($lang)) {;
+            $lang = $this->getEnvLang();
+        }
+
+        $literal = $this->resource->getLiteral($property, $lang);
+        if ($literal) {
+            return $literal->getValue();
+        }
+
+        // not found with selected language, try any language
+        $literal = $this->resource->getLiteral($property);
+        if ($literal)
+          return $literal->getValue();
+    }
 
     /**
      * Extracts the vocabulary id string from the baseuri of the vocabulary.
@@ -53,17 +75,7 @@ class Vocabulary extends DataObject
      */
     public function getTitle($lang = null)
     {
-        if (!isset($lang)) {;
-            $lang = $this->getEnvLang();;
-        }
-
-        $literal = $this->resource->getLiteral('dc:title', $lang);
-        if ($literal) {
-            return $literal->getValue();
-        }
-
-        // not found with selected language, try any language
-        return $this->resource->getLiteral('dc:title')->getValue();
+        return $this->getLiteral('dc:title', $lang);
     }
 
     /**
@@ -230,16 +242,9 @@ class Vocabulary extends DataObject
      */
     public function getShortName()
     {
-        $val = $this->resource->getLiteral('skosmos:shortName', $this->getEnvLang());
-        if ($val) {
-            return $val->getValue();
-        }
-
-        // not found with selected language, try any language
-        $val = $this->resource->getLiteral('skosmos:shortName');
-        if ($val) {
-            return $val->getValue();
-        }
+        $shortname = $this->getLiteral('skosmos:shortName');
+        if ($shortname) 
+          return $shortname;
 
         // if no shortname exists fall back to the id
         return $this->getId();
