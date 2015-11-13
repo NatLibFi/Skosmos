@@ -53,7 +53,6 @@ class Vocabulary extends DataObject
      */
     public function getTitle($lang = null)
     {
-      $lang = null;
         if (!isset($lang)) {;
             $lang = $this->getEnvLang();;
         }

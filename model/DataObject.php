@@ -115,7 +115,6 @@ class DataObject
         
     /**
      * Getter function to retrieve the ui language from the locale.
-     * @param string $name
      */
     public function getEnvLang()    
     {
