@@ -235,16 +235,6 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   /**
    * @covers Vocabulary::getShortName
    */
-  public function testGetShortNameWithLang() {
-    $vocab = $this->model->getVocabulary('test');
-    $vocab->lang = 'fi';
-    $name = $vocab->getShortName();
-    $this->assertEquals('Testi lyhyt', $name);
-  }
-  
-  /**
-   * @covers Vocabulary::getShortName
-   */
   public function testGetShortNameNotDefined() {
     $vocab = $this->model->getVocabulary('testdiff');
     $name = $vocab->getShortName();

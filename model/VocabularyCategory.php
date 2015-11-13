@@ -23,7 +23,7 @@ class VocabularyCategory extends DataObject
      */
     public function getTitle()
     {
-        $label = $this->resource->label($this->lang);
+        $label = $this->resource->label($this->getEnvLang());
         return is_null($label) ? $this->resource->localName() : $label->getValue();
     }
 

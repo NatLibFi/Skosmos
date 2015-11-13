@@ -32,7 +32,7 @@ class ConceptPropertyValue extends VocabularyDataObject
 
     public function getLang()
     {
-        return $this->lang;
+        return $this->getEnvLang();
     }
 
     public function getLabel($lang = '')

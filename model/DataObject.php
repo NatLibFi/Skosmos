@@ -112,22 +112,14 @@ class DataObject
         //if neither in $order, then a simple alphabetic sort...
         return ($a < $b) ? -1 : 1;
     }
-
+        
     /**
-     * Getter function to retrieve property values.
+     * Getter function to retrieve the ui language from the locale.
      * @param string $name
      */
-    public function __get($name)
+    public function getEnvLang()    
     {
-        if ($name == 'lang') {
-            // get language from locale, same as used by gettext, set by Controller
-            $this->lang = substr(getenv("LC_ALL"), 0, 2);
-
-            return $this->lang;
-        }
-
-        trigger_error("Undefined property accessed via __get(): $name", E_USER_NOTICE);
-        return null;
+       // get language from locale, same as used by gettext, set by Controller
+       return substr(getenv("LC_ALL"), 0, 2);
     }
-
 }

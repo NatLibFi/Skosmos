@@ -118,7 +118,7 @@ class Concept extends VocabularyDataObject
         // 3. label in any language
         $label = $this->resource->label();
         // if the label lang code is a subset of the ui lang eg. en-GB
-        if ($label !== null && strpos($label->getLang(), $this->lang . '-') === 0) {
+        if ($label !== null && strpos($label->getLang(), $this->getEnvLang() . '-') === 0) {
             return $label->getValue();
         }
 
@@ -230,7 +230,7 @@ class Concept extends VocabularyDataObject
 
             if (in_array($prop, $this->MAPPING_PROPERTIES) && !in_array($prop, $this->DELETED_PROPERTIES)) {
                 $propres = new EasyRdf_Resource($prop, $this->graph);
-                $proplabel = $propres->label($this->lang) ? $propres->label($this->lang) : $propres->label(); // current language
+                $proplabel = $propres->label($this->getEnvLang()) ? $propres->label($this->getEnvLang()) : $propres->label(); // current language
                 $propobj = new ConceptProperty($prop, $proplabel);
                 if ($propobj->getLabel() !== null) {
                     // only display properties for which we have a label
@@ -323,7 +323,7 @@ class Concept extends VocabularyDataObject
 
             if (!in_array($prop, $this->DELETED_PROPERTIES)) {
                 $propres = new EasyRdf_Resource($prop, $this->graph);
-                $proplabel = $propres->label($this->lang) ? $propres->label($this->lang) : $propres->label();
+                $proplabel = $propres->label($this->getEnvLang()) ? $propres->label($this->getEnvLang()) : $propres->label();
                 $propobj = new ConceptProperty($prop, $proplabel);
 
                 if ($propobj->getLabel() !== null) {
@@ -536,15 +536,15 @@ class Concept extends VocabularyDataObject
         $labels = array();
         foreach ($this->resource->allLiterals('skos:prefLabel') as $lit) {
             // filtering away subsets of the current language eg. en vs en-GB
-            if ($lit->getLang() != $this->clang && strpos($lit->getLang(), $this->lang . '-') !== 0) {
-                $labels[Punic\Language::getName($lit->getLang(), $this->lang)][] = new ConceptPropertyValueLiteral($lit, 'skos:prefLabel');
+            if ($lit->getLang() != $this->clang && strpos($lit->getLang(), $this->getEnvLang() . '-') !== 0) {
+                $labels[Punic\Language::getName($lit->getLang(), $this->getEnvLang())][] = new ConceptPropertyValueLiteral($lit, 'skos:prefLabel');
             }
 
         }
         foreach ($this->resource->allLiterals('skos:altLabel') as $lit) {
             // filtering away subsets of the current language eg. en vs en-GB
-            if ($lit->getLang() != $this->clang && strpos($lit->getLang(), $this->lang . '-') !== 0) {
-                $labels[Punic\Language::getName($lit->getLang(), $this->lang)][] = new ConceptPropertyValueLiteral($lit, 'skos:altLabel');
+            if ($lit->getLang() != $this->clang && strpos($lit->getLang(), $this->getEnvLang() . '-') !== 0) {
+                $labels[Punic\Language::getName($lit->getLang(), $this->getEnvLang())][] = new ConceptPropertyValueLiteral($lit, 'skos:altLabel');
             }
 
         }
@@ -568,7 +568,7 @@ class Concept extends VocabularyDataObject
         }
         // EasyRdf requires full URIs to be in angle brackets
         foreach ($this->resource->allLiterals($property) as $lit) {
-            $labels[Punic\Language::getName($lit->getLang(), $this->lang)][] = new ConceptPropertyValueLiteral($lit, $property);
+            $labels[Punic\Language::getName($lit->getLang(), $this->getEnvLang())][] = new ConceptPropertyValueLiteral($lit, $property);
         }
         ksort($labels);
         return $labels;

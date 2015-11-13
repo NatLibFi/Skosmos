@@ -53,8 +53,9 @@ class Vocabulary extends DataObject
      */
     public function getTitle($lang = null)
     {
-        if (!isset($lang)) {
-            $lang = $this->lang;
+      $lang = null;
+        if (!isset($lang)) {;
+            $lang = $this->getEnvLang();;
         }
 
         $literal = $this->resource->getLiteral('dc:title', $lang);
@@ -75,7 +76,7 @@ class Vocabulary extends DataObject
         $langs = $this->resource->allLiterals('skosmos:language');
         $ret = array();
         foreach ($langs as $lang) {
-            $langlit = Punic\Language::getName($lang->getValue(), $this->lang);
+            $langlit = Punic\Language::getName($lang->getValue(), $this->getEnvLang());
             $ret[$langlit] = $lang->getValue();
         }
         ksort($ret);
@@ -230,7 +231,7 @@ class Vocabulary extends DataObject
      */
     public function getShortName()
     {
-        $val = $this->resource->getLiteral('skosmos:shortName', $this->lang);
+        $val = $this->resource->getLiteral('skosmos:shortName', $this->getEnvLang());
         if ($val) {
             return $val->getValue();
         }
@@ -264,7 +265,7 @@ class Vocabulary extends DataObject
     {
         $ret = array();
         if (!$lang) {
-            $lang = $this->lang;
+            $lang = $this->getEnvLang();
         }
 
         // get metadata from vocabulary configuration file
@@ -342,7 +343,7 @@ class Vocabulary extends DataObject
     public function getConceptSchemes($lang = '')
     {
         if ($lang === '') {
-            $lang = $this->lang;
+            $lang = $this->getEnvLang();
         }
 
         return $this->getSparql()->queryConceptSchemes($lang);
@@ -380,7 +381,7 @@ class Vocabulary extends DataObject
     public function getTopConcepts($conceptScheme = null, $lang = '')
     {
         if ($lang === '') {
-            $lang = $this->lang;
+            $lang = $this->getEnvLang();
         }
 
         if ($conceptScheme === null || $conceptScheme == '') {
@@ -598,7 +599,7 @@ class Vocabulary extends DataObject
      */
     public function getConceptHierarchy($uri, $lang)
     {
-        $lang = $lang ? $lang : $this->lang;
+        $lang = $lang ? $lang : $this->getEnvLang();
         $fallback = $this->getDefaultLanguage();
         return $this->getSparql()->queryParentList($uri, $lang, $fallback);
     }
@@ -609,7 +610,7 @@ class Vocabulary extends DataObject
      */
     public function getConceptChildren($uri, $lang)
     {
-        $lang = $lang ? $lang : $this->lang;
+        $lang = $lang ? $lang : $this->getEnvLang();
         $fallback = $this->getDefaultLanguage();
         return $this->getSparql()->queryChildren($uri, $lang, $fallback);
     }
@@ -621,7 +622,7 @@ class Vocabulary extends DataObject
      */
     public function getConceptNarrowers($uri, $lang)
     {
-        $lang = $lang ? $lang : $this->lang;
+        $lang = $lang ? $lang : $this->getEnvLang();
         return $this->getSparql()->queryProperty($uri, 'skos:narrower', $lang);
     }
 
@@ -633,7 +634,7 @@ class Vocabulary extends DataObject
      */
     public function getConceptTransitiveNarrowers($uri, $limit, $lang)
     {
-        $lang = $lang ? $lang : $this->lang;
+        $lang = $lang ? $lang : $this->getEnvLang();
         return $this->getSparql()->queryTransitiveProperty($uri, 'skos:narrower', $lang, $limit);
     }
 
@@ -644,7 +645,7 @@ class Vocabulary extends DataObject
      */
     public function getConceptBroaders($uri, $lang)
     {
-        $lang = $lang ? $lang : $this->lang;
+        $lang = $lang ? $lang : $this->getEnvLang();
         return $this->getSparql()->queryProperty($uri, 'skos:broader', $lang);
     }
 
@@ -657,7 +658,7 @@ class Vocabulary extends DataObject
      */
     public function getConceptTransitiveBroaders($uri, $limit, $any = false, $lang)
     {
-        $lang = $lang ? $lang : $this->lang;
+        $lang = $lang ? $lang : $this->getEnvLang();
         $fallback = $this->getDefaultLanguage();
         return $this->getSparql()->queryTransitiveProperty($uri, 'skos:broader', $lang, $limit, $any, $fallback);
     }
@@ -669,7 +670,7 @@ class Vocabulary extends DataObject
      */
     public function getConceptRelateds($uri, $lang)
     {
-        $lang = $lang ? $lang : $this->lang;
+        $lang = $lang ? $lang : $this->getEnvLang();
         return $this->getSparql()->queryProperty($uri, 'skos:related', $lang);
     }
 
@@ -693,7 +694,7 @@ class Vocabulary extends DataObject
     public function listConceptGroups($clang = null)
     {
         if ($clang === null || $clang == '') {
-            $clang = $this->lang;
+            $clang = $this->getEnvLang();
         }
 
         $ret = array();
@@ -718,7 +719,7 @@ class Vocabulary extends DataObject
     public function listConceptGroupContents($glname, $clang)
     {
         if (!$clang) {
-            $clang = $this->lang;
+            $clang = $this->getEnvLang();
         }
 
         $ret = array();
