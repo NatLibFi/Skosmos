@@ -354,8 +354,12 @@ $(function() { // DOCUMENT READY
   // event handler for clicking the sidebar hierarchy tab
   $(document).on('click', '#hier-trigger', 
     function () {
-      if($(this).parent()[0].id === 'hierarchy-disabled')
+      if($(this).parent()[0].id === 'hierarchy-disabled') {
         return false;
+      } else if($('.jstree-clicked').hasClass('group')) {
+        $('#groups > a').click();
+        return false;
+      }
       var $content = $('#sidebar');
       if($('.uri-input-box').length === 0) { // if on the vocabulary front page
         $('.sidebar-grey').remove();
@@ -383,6 +387,7 @@ $(function() { // DOCUMENT READY
         $clicked.parent().addClass('active');
         var $pagination = $('.pagination');
         if ($pagination) { $pagination.hide(); }
+        $('#hierarchy').attr('id', 'hierarchy-disabled');
         if ($('.changes-navi')) { $('.changes-navi').hide(); }
         $('.sidebar-grey').remove().prepend(spinner);
         $('#sidebar').append('<div class="sidebar-grey"><div class="group-hierarchy"></div></div>');
@@ -393,20 +398,25 @@ $(function() { // DOCUMENT READY
   );
  
   // event handler for clicking groups
-  $(document).on('click','.group-index > li > a',
+  $(document).on('click','div.group-hierarchy a',
       function(event) {
-        $.ajaxQ.abortAll();
         var $content = $('.content');
-        $('.sidebar-grey').empty().prepend(spinner);
         var targetUrl = event.target.href;
         // ajaxing the sidebar content
         $.ajax({
             url : targetUrl,
             success : function(data) {
-              updateSidebar(data);
-              $content.empty();
-              var concept = $('.content', data).html();
-              $content.append(concept);
+              if (!$('#hierarchy').length) { 
+                $('#hierarchy-disabled').attr('id', 'hierarchy'); 
+                $('#hier-trigger').attr('title', '');
+                $('#hier-trigger').qtip('disable'); 
+              }
+              $('#hier-trigger').attr('href', event.target.href);
+              updateTitle(data);
+              updateTopbarLang(data);
+              //// take the content language buttons from the response
+              //$('.header-float .dropdown-menu').empty().append($('.header-float .dropdown-menu', data).html());
+              $content.empty().append($('.content', data).html());
               $('.nav').scrollTop(0);
               if (window.history.pushState) { window.history.pushState(null, null, encodeURI(event.target.href)); }
               updateTitle(data);
