@@ -611,6 +611,10 @@ $values_graph
 EOQ;
 
     $results = $this->client->query($query);
+    return $this->transformConceptSearchResults($results, $vocabs);
+  }
+
+  private function transformConceptSearchResults($results, $vocabs) {
     $ret = array();
     $qnamecache = array(); // optimization to avoid expensive shorten() calls
 
@@ -667,7 +671,6 @@ EOQ;
 
       $ret[] = $hit;
     }
-
     return $ret;
   }
 
