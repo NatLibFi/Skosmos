@@ -478,16 +478,28 @@ EOQ;
     return $limitandoffset;
   }
 
-  private function generateConceptSearchQuery($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent, $group, $hidden, $fields) {
-    $gc = $this->graphClause;
-    $limitandoffset = $this->formatLimitAndOffset($limit, $offset);
+  private function formatTypes($types, $arrayClass) {
     $unprefixed_types = array();
     $type = '';
     if (!empty($types)) {
       foreach($types as $type)
         $unprefixed_types[] = EasyRdf_Namespace::expand($type);
     }
+    
+    // extra types to query, if using thesaurus arrays and no additional type restrictions have been applied
+    $extratypes = ($arrayClass && $types === array('skos:Concept'))? "UNION { ?s a <$arrayClass> }" : "";
 
+    if (sizeof($unprefixed_types) === 1) // if only one type limitation set no UNION needed
+      $type = '<' . $unprefixed_types[0] . '>';
+    else { // multiple type limitations require setting a UNION for each of those
+      $type = '[]';
+      foreach($unprefixed_types as $utype)
+        $extratypes .= "\nUNION { ?s a <$utype> }";
+    }      
+    return "{ ?s rdf:type $type } UNION { ?s a isothes:ConceptGroup } $extratypes";
+  }
+
+  private function formatBroader($lang, $fields) {
     // extra variable expressions to request
     $extravars = '';
     // extra fields to query for
@@ -509,17 +521,19 @@ OPTIONAL {
 }
 EOF;
     }
+    return array('extravars' => $extravars, 'extrafields' => $extrafields);
+  }
 
-    // extra types to query, if using thesaurus arrays and no additional type restrictions have been applied
-    $extratypes = ($arrayClass && $types === array('skos:Concept'))? "UNION { ?s a <$arrayClass> }" : "";
 
-    if (sizeof($unprefixed_types) === 1) // if only one type limitation set no UNION needed
-      $type = '<' . $unprefixed_types[0] . '>';
-    else { // multiple type limitations require setting a UNION for each of those
-      $type = '[]';
-      foreach($unprefixed_types as $utype)
-        $extratypes .= "\nUNION { ?s a <$utype> }";
-    }      
+  private function generateConceptSearchQuery($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent, $group, $hidden, $fields) {
+    $gc = $this->graphClause;
+    $limitandoffset = $this->formatLimitAndOffset($limit, $offset);
+
+    $formattedtype = $this->formatTypes($types, $arrayClass);
+
+    $formattedbroader = $this->formatBroader($lang, $fields);
+    $extravars = $formattedbroader['extravars'];
+    $extrafields = $formattedbroader['extrafields'];
 
     // extra conditions for label language, if specified
     $labelcond_match = ($search_lang) ? "&& langMatches(lang(?match), '$search_lang')" : "";
@@ -595,7 +609,7 @@ SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph (GROUP_CONCAT(DISTINCT 
 $extravars
 WHERE {
  $graph_text
-  { ?s rdf:type $type } UNION { ?s a isothes:ConceptGroup } $extratypes
+  $formattedtype
   { $pgcond
    ?s rdf:type ?type .
    ?s ?prop ?match .
