@@ -464,10 +464,23 @@ EOQ;
     return $this->transformConceptSearchResults($results, $vocabs);
   }
 
-  private function generateConceptSearchQuery($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent, $group, $hidden, $fields) {
-    $gc = $this->graphClause;
+  private function formatLimitAndOffset($limit, $offset) {
     $limit = ($limit) ? 'LIMIT ' . $limit : '';
     $offset = ($offset) ? 'OFFSET ' . $offset : '';
+    // eliminating whitespace and line changes when the conditions aren't needed.
+    $limitandoffset = '';
+    if ($limit && $offset)
+      $limitandoffset = "\n" . $limit . "\n" . $offset;
+    elseif ($limit)
+      $limitandoffset = "\n" . $limit;
+    elseif ($offset)
+      $limitandoffset = "\n" . $offset;
+    return $limitandoffset;
+  }
+
+  private function generateConceptSearchQuery($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent, $group, $hidden, $fields) {
+    $gc = $this->graphClause;
+    $limitandoffset = $this->formatLimitAndOffset($limit, $offset);
     $unprefixed_types = array();
     $type = '';
     if (!empty($types)) {
@@ -531,15 +544,6 @@ EOF;
     elseif ($groupcond !== '')
       $pgcond = "\n" . $groupcond;
     
-    // eliminating whitespace and line changes when the conditions aren't needed.
-    $limitandoffset = '';
-    if ($limit && $offset)
-      $limitandoffset = "\n" . $limit . "\n" . $offset;
-    elseif ($limit)
-      $limitandoffset = "\n" . $limit;
-    elseif ($offset)
-      $limitandoffset = "\n" . $offset;
-
     $orderextra = $this->isDefaultEndpoint() ? $this->graph : '';
 
     # make VALUES clauses
