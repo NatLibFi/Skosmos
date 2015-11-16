@@ -459,6 +459,12 @@ EOQ;
    */
   public function queryConcepts($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent=null, $group=null, $hidden=true, $fields=null)
   {
+    $query = $this->generateConceptSearchQuery($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent, $group, $hidden, $fields);
+    $results = $this->client->query($query);
+    return $this->transformConceptSearchResults($results, $vocabs);
+  }
+
+  private function generateConceptSearchQuery($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent, $group, $hidden, $fields) {
     $gc = $this->graphClause;
     $limit = ($limit) ? 'LIMIT ' . $limit : '';
     $offset = ($offset) ? 'OFFSET ' . $offset : '';
@@ -609,9 +615,7 @@ GROUP BY ?match ?s ?label ?plabel ?alabel ?hlabel ?graph ?prop
 ORDER BY lcase(str(?match)) lang(?match) $orderextra $limitandoffset
 $values_graph
 EOQ;
-
-    $results = $this->client->query($query);
-    return $this->transformConceptSearchResults($results, $vocabs);
+    return $query;
   }
 
   private function transformConceptSearchResults($results, $vocabs) {
