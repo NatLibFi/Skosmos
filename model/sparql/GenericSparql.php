@@ -208,7 +208,7 @@ EOQ;
     
     $values_graph = $this->formatValuesGraph($unique_vocabs);
 
-    if (!$arrayClass !== null) {
+    if ($arrayClass === null) {
       $construct = $optional = "";
     } else {
       // add information that can be used to format narrower concepts by
