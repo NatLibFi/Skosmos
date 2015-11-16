@@ -442,33 +442,58 @@ EOQ;
   }
 
   /**
-   * Query for concepts using a search term.
-   * @param string $term search term
-   * @param array $vocabs array of Vocabulary objects to search; empty for global search
-   * @param string $lang language code of the returned labels
-   * @param string $search_lang language code used for matching labels (null means any language)
+   * Formats combined limit and offset clauses for the sparql query 
    * @param int $limit maximum number of hits to retrieve; 0 for unlimited
    * @param int $offset offset of results to retrieve; 0 for beginning of list
-   * @param string $arrayClass the URI for thesaurus array class, or null if not used
-   * @param array $types limit search to concepts of the given type(s)
-   * @param string $parent limit search to concepts which have the given concept as parent in the transitive broader hierarchy
-   * @param string $group limit search to concepts which are in the given group
-   * @param boolean $hidden include matches on hidden labels (default: true)
-   * @param array $fields extra fields to include in the result (array of strings). (default: null = none)
-   * @return array query result object
+   * @return string sparql query clauses
    */
-  public function queryConcepts($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent=null, $group=null, $hidden=true, $fields=null)
-  {
-    $gc = $this->graphClause;
+  private function formatLimitAndOffset($limit, $offset) {
     $limit = ($limit) ? 'LIMIT ' . $limit : '';
     $offset = ($offset) ? 'OFFSET ' . $offset : '';
+    // eliminating whitespace and line changes when the conditions aren't needed.
+    $limitandoffset = '';
+    if ($limit && $offset)
+      $limitandoffset = "\n" . $limit . "\n" . $offset;
+    elseif ($limit)
+      $limitandoffset = "\n" . $limit;
+    elseif ($offset)
+      $limitandoffset = "\n" . $offset;
+    return $limitandoffset;
+  }
+
+  /**
+   * Formats a sparql query clause for limiting the search to specific concept types.
+   * @param array $types limit search to concepts of the given type(s)
+   * @param string $arrayClass the URI for thesaurus array class, or null if not used
+   * @return string sparql query clause 
+   */
+  private function formatTypes($types, $arrayClass) {
     $unprefixed_types = array();
     $type = '';
     if (!empty($types)) {
       foreach($types as $type)
         $unprefixed_types[] = EasyRdf_Namespace::expand($type);
     }
+    
+    // extra types to query, if using thesaurus arrays and no additional type restrictions have been applied
+    $extratypes = ($arrayClass && $types === array('skos:Concept'))? "UNION { ?s a <$arrayClass> }" : "";
 
+    if (sizeof($unprefixed_types) === 1) // if only one type limitation set no UNION needed
+      $type = '<' . $unprefixed_types[0] . '>';
+    else { // multiple type limitations require setting a UNION for each of those
+      $type = '[]';
+      foreach($unprefixed_types as $utype)
+        $extratypes .= "\nUNION { ?s a <$utype> }";
+    }      
+    return "{ ?s rdf:type $type } UNION { ?s a isothes:ConceptGroup } $extratypes";
+  }
+
+  /**
+   * @param string $lang language code of the returned labels
+   * @param array $fields extra fields to include in the result (array of strings). (default: null = none)
+   * @return string sparql query clause 
+   */
+  private function formatBroader($lang, $fields) {
     // extra variable expressions to request
     $extravars = '';
     // extra fields to query for
@@ -490,17 +515,35 @@ OPTIONAL {
 }
 EOF;
     }
+    return array('extravars' => $extravars, 'extrafields' => $extrafields);
+  }
 
-    // extra types to query, if using thesaurus arrays and no additional type restrictions have been applied
-    $extratypes = ($arrayClass && $types === array('skos:Concept'))? "UNION { ?s a <$arrayClass> }" : "";
 
-    if (sizeof($unprefixed_types) === 1) // if only one type limitation set no UNION needed
-      $type = '<' . $unprefixed_types[0] . '>';
-    else { // multiple type limitations require setting a UNION for each of those
-      $type = '[]';
-      foreach($unprefixed_types as $utype)
-        $extratypes .= "\nUNION { ?s a <$utype> }";
-    }      
+  /**
+   * Query for concepts using a search term.
+   * @param string $term search term
+   * @param array $vocabs array of Vocabulary objects to search; empty for global search
+   * @param string $lang language code of the returned labels
+   * @param string $search_lang language code used for matching labels (null means any language)
+   * @param int $limit maximum number of hits to retrieve; 0 for unlimited
+   * @param int $offset offset of results to retrieve; 0 for beginning of list
+   * @param string $arrayClass the URI for thesaurus array class, or null if not used
+   * @param array $types limit search to concepts of the given type(s)
+   * @param string $parent limit search to concepts which have the given concept as parent in the transitive broader hierarchy
+   * @param string $group limit search to concepts which are in the given group
+   * @param boolean $hidden include matches on hidden labels (default: true)
+   * @param array $fields extra fields to include in the result (array of strings). (default: null = none)
+   * @return string sparql query 
+   */
+  private function generateConceptSearchQuery($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent, $group, $hidden, $fields) {
+    $gc = $this->graphClause;
+    $limitandoffset = $this->formatLimitAndOffset($limit, $offset);
+
+    $formattedtype = $this->formatTypes($types, $arrayClass);
+
+    $formattedbroader = $this->formatBroader($lang, $fields);
+    $extravars = $formattedbroader['extravars'];
+    $extrafields = $formattedbroader['extrafields'];
 
     // extra conditions for label language, if specified
     $labelcond_match = ($search_lang) ? "&& langMatches(lang(?match), '$search_lang')" : "";
@@ -525,15 +568,6 @@ EOF;
     elseif ($groupcond !== '')
       $pgcond = "\n" . $groupcond;
     
-    // eliminating whitespace and line changes when the conditions aren't needed.
-    $limitandoffset = '';
-    if ($limit && $offset)
-      $limitandoffset = "\n" . $limit . "\n" . $offset;
-    elseif ($limit)
-      $limitandoffset = "\n" . $limit;
-    elseif ($offset)
-      $limitandoffset = "\n" . $offset;
-
     $orderextra = $this->isDefaultEndpoint() ? $this->graph : '';
 
     # make VALUES clauses
@@ -585,7 +619,7 @@ SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph (GROUP_CONCAT(DISTINCT 
 $extravars
 WHERE {
  $graph_text
-  { ?s rdf:type $type } UNION { ?s a isothes:ConceptGroup } $extratypes
+  $formattedtype
   { $pgcond
    ?s rdf:type ?type .
    ?s ?prop ?match .
@@ -609,8 +643,16 @@ GROUP BY ?match ?s ?label ?plabel ?alabel ?hlabel ?graph ?prop
 ORDER BY lcase(str(?match)) lang(?match) $orderextra $limitandoffset
 $values_graph
 EOQ;
+    return $query;
+  }
 
-    $results = $this->client->query($query);
+  /**
+   * Transform the concept search query results into the skosmos desired return format.
+   * @param EasyRdf_Sparql_Result $results
+   * @param array $vocabs array of Vocabulary objects to search; empty for global search
+   * @return array query result object
+   */
+  private function transformConceptSearchResults($results, $vocabs) {
     $ret = array();
     $qnamecache = array(); // optimization to avoid expensive shorten() calls
 
@@ -667,8 +709,30 @@ EOQ;
 
       $ret[] = $hit;
     }
-
     return $ret;
+  }
+
+  /**
+   * Query for concepts using a search term.
+   * @param string $term search term
+   * @param array $vocabs array of Vocabulary objects to search; empty for global search
+   * @param string $lang language code of the returned labels
+   * @param string $search_lang language code used for matching labels (null means any language)
+   * @param int $limit maximum number of hits to retrieve; 0 for unlimited
+   * @param int $offset offset of results to retrieve; 0 for beginning of list
+   * @param string $arrayClass the URI for thesaurus array class, or null if not used
+   * @param array $types limit search to concepts of the given type(s)
+   * @param string $parent limit search to concepts which have the given concept as parent in the transitive broader hierarchy
+   * @param string $group limit search to concepts which are in the given group
+   * @param boolean $hidden include matches on hidden labels (default: true)
+   * @param array $fields extra fields to include in the result (array of strings). (default: null = none)
+   * @return array query result object
+   */
+  public function queryConcepts($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent=null, $group=null, $hidden=true, $fields=null)
+  {
+    $query = $this->generateConceptSearchQuery($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent, $group, $hidden, $fields);
+    $results = $this->client->query($query);
+    return $this->transformConceptSearchResults($results, $vocabs);
   }
 
   /**
