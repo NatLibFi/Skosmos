@@ -270,6 +270,8 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GenericSparql::queryConcepts
+   * @covers GenericSparql::generateConceptSearchQuery
+   * @covers GenericSparql::transformConceptSearchResults
    */
   public function testQueryConcepts()
   {
