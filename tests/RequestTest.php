@@ -106,15 +106,6 @@ class RequestTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @covers Request::setRequestUri
-   * @covers Request::getRequestUri
-   */
-  public function testSetAndGetRequestUri() {
-    $this->request->setRequestUri('http://api.finto.fi/rest/v1/vocabularies?lang=en');
-    $this->assertEquals('http://api.finto.fi/rest/v1/vocabularies?lang=en', $this->request->getRequestUri());
-  }
-  
-  /**
    * @covers Request::setPage
    * @covers Request::getPage
    */
