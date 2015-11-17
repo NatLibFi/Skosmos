@@ -30,8 +30,6 @@ $request = new Request($model);
 $path = $request->getServerConstant('PATH_INFO') ? $request->getServerConstant('PATH_INFO') : '';
 $parts = explode('/', $path);
 
-// used for making proper hrefs for the language selection
-$request->setRequestUri($request->getServerConstant('HTTP_HOST') . $request->getServerConstant('REQUEST_URI'));
 
 if (sizeof($parts) <= 2) {
     // if language code missing, redirect to guessed language

@@ -19,7 +19,6 @@ class Request
     private $uri;
     private $letter;
     private $model;
-    private $request_uri;
 
     /**
      * Initializes the Request Object
@@ -96,18 +95,18 @@ class Request
 
     }
 
-    /**
-     * Sets the reuquest uri variable
-     * @param string $uri
-     */
-    public function setRequestUri($uri)
-    {
-        $this->request_uri = $uri;
-    }
-
     public function getRequestUri()
     {
-        return $this->request_uri;
+        return $this->getServerConstant('HTTP_HOST') . $this->getServerConstant('REQUEST_URI');
+    }
+    
+    /**
+     * Returns the relative page url eg. '/yso/fi/search?clang=en&q=cat'
+     * @return string the relative url of the page
+     */
+    public function getLangUrl()
+    {
+        return substr(str_replace(str_replace('/index.php', '', $this->getServerConstant('SCRIPT_NAME')), '', $this->getServerConstant('REQUEST_URI')), 1);
     }
 
     public function getLetter()
