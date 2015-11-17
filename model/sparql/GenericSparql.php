@@ -558,15 +558,7 @@ EOF;
     // extra conditions for parent and group, if specified
     $parentcond = ($parent) ? "?s skos:broader+ <$parent> ." : "";
     $groupcond = ($group) ? "<$group> skos:member ?s ." : "";
-    
-    // eliminating whitespace and line changes when the conditions aren't needed.
-    $pgcond = '';
-    if ($parentcond && $groupcond)
-      $pgcond = "\n" . $parentcond . "\n" . $groupcond;
-    elseif ($parentcond !== '')
-      $pgcond = "\n" . $parentcond;
-    elseif ($groupcond !== '')
-      $pgcond = "\n" . $groupcond;
+    $pgcond = $parentcond . $groupcond;
     
     $orderextra = $this->isDefaultEndpoint() ? $this->graph : '';
 
