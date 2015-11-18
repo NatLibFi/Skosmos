@@ -68,6 +68,8 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   
   /**
    * @covers GenericSparql::queryFirstCharacters
+   * @covers GenericSparql::generateFirstCharactersQuery
+   * @covers GenericSparql::transformFirstCharactersResults
    */
   public function testQueryFirstCharacters() {
     $actual = $this->sparql->queryFirstCharacters('en');

@@ -976,12 +976,11 @@ EOQ;
   }
 
   /**
-   * Query for the first characters (letter or otherwise) of the labels in the particular language.
+   * Creates the query used for finding out which letters should be displayed in the alphabetical index.
    * @param string $lang language
-   * @return array array of characters
+   * @return string sparql query
    */
-   
-  public function queryFirstCharacters($lang, $classes=null) {
+  private function generateFirstCharactersQuery($lang, $classes) {
     $gc = $this->graphClause;
     $classes = (sizeof($classes) > 0) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept') ;
     $values = $this->formatValues('?type', $classes, 'uri');
@@ -995,12 +994,31 @@ SELECT DISTINCT (substr(ucase(str(?label)), 1, 1) as ?l) WHERE {
   $values
 }
 EOQ;
-    $result = $this->client->query($query);
+    return $query;
+  }
+
+  /**
+   * Transforms the first characters query results into an array format.
+   * @param EasyRdf_Sparql_Result $results
+   * @return array
+   */
+  private function transformFirstCharactersResults($result) {
     $ret = array();
     foreach ($result as $row) {
       $ret[] = $row->l->getValue();
     } 
     return $ret;
+  }
+
+  /**
+   * Query for the first characters (letter or otherwise) of the labels in the particular language.
+   * @param string $lang language
+   * @return array array of characters
+   */
+  public function queryFirstCharacters($lang, $classes=null) {
+    $query = $this->generateFirstCharactersQuery($lang, $classes);
+    $result = $this->client->query($query);
+    return $this->transformFirstCharactersResults($result);
   }
 
   /**
