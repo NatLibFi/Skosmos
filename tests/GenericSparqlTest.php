@@ -80,22 +80,6 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   /**
    * @covers GenericSparql::queryLabel
    */
-  public function estQueryLabel() {
-    $actual = $this->sparql->queryLabel('http://www.skosmos.skos/test/ta112','en');
-    $this->assertEquals(array('en' => 'Carp'), $actual);
-  }
-  
-  /**
-   * @covers GenericSparql::queryLabel
-   */
-  public function estQueryLabelWithoutLangParamGiven() {
-    $actual = $this->sparql->queryLabel('http://www.skosmos.skos/test/ta112', null);
-    $this->assertEquals(array('en' => 'Carp', 'fi' => 'Karppi'), $actual);
-  }
-  
-  /**
-   * @covers GenericSparql::queryLabel
-   */
   public function testQueryLabelWhenConceptNotFound() {
     $actual = $this->sparql->queryLabel('http://notfound', null);
     $this->assertEquals(null, $actual);
@@ -333,6 +317,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   
   /**
    * @covers GenericSparql::queryLabel
+   * @covers GenericSparql::generateLabelQuery
    */
   public function testQueryLabelNotExistingConcept()
   {
@@ -342,6 +327,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GenericSparql::queryLabel
+   * @covers GenericSparql::generateLabelQuery
    */
   public function testQueryLabel()
   {
@@ -352,6 +338,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   
   /**
    * @covers GenericSparql::queryLabel
+   * @covers GenericSparql::generateLabelQuery
    */
   public function testQueryLabelWithoutLangParamGiven()
   {

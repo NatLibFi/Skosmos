@@ -1022,13 +1022,11 @@ EOQ;
   }
 
   /**
-   * Query for a label (skos:prefLabel, rdfs:label, dc:title, dc11:title) of a resource.
    * @param string $uri
    * @param string $lang
-   * @return array array of labels (key: lang, val: label), or null if resource doesn't exist
+   * @return string sparql query string
    */
-  public function queryLabel($uri, $lang)
-  {
+  private function generateLabelQuery($uri, $lang) {
     $gc = $this->graphClause;
     $labelcond_label = ($lang) ? "FILTER( langMatches(lang(?label), '$lang') )" : "";
     $query = <<<EOQ
@@ -1055,6 +1053,18 @@ WHERE {
   }
 }
 EOQ;
+    return $query;
+  }
+
+  /**
+   * Query for a label (skos:prefLabel, rdfs:label, dc:title, dc11:title) of a resource.
+   * @param string $uri
+   * @param string $lang
+   * @return array array of labels (key: lang, val: label), or null if resource doesn't exist
+   */
+  public function queryLabel($uri, $lang)
+  {
+    $query = $this->generateLabelQuery($uri, $lang);
     $result = $this->client->query($query);
     $ret = array();
     foreach ($result as $row) {
