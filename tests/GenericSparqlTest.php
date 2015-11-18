@@ -109,6 +109,9 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   
   /**
    * @covers GenericSparql::queryConceptsAlphabetical
+   * @covers GenericSparql::generateAlphabeticalListQuery
+   * @covers GenericSparql::formatFilterConditions
+   * @covers GenericSparql::transformAlphabeticalListResults
    */
   public function testQueryConceptsAlphabetical() {
     $actual = $this->sparql->queryConceptsAlphabetical('b', 'en');
@@ -137,6 +140,9 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   
   /**
    * @covers GenericSparql::queryConceptsAlphabetical
+   * @covers GenericSparql::generateAlphabeticalListQuery
+   * @covers GenericSparql::formatFilterConditions
+   * @covers GenericSparql::transformAlphabeticalListResults
    */
   public function testQueryConceptsAlphabeticalLimit() {
     $actual = $this->sparql->queryConceptsAlphabetical('b', 'en', 2);
@@ -159,6 +165,9 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   
   /**
    * @covers GenericSparql::queryConceptsAlphabetical
+   * @covers GenericSparql::generateAlphabeticalListQuery
+   * @covers GenericSparql::formatFilterConditions
+   * @covers GenericSparql::transformAlphabeticalListResults
    */
   public function testQueryConceptsAlphabeticalLimitAndOffset() {
     $actual = $this->sparql->queryConceptsAlphabetical('b', 'en', 2, 1);
@@ -181,6 +190,9 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   
   /**
    * @covers GenericSparql::queryConceptsAlphabetical
+   * @covers GenericSparql::generateAlphabeticalListQuery
+   * @covers GenericSparql::formatFilterConditions
+   * @covers GenericSparql::transformAlphabeticalListResults
    */
   public function testQueryConceptsAlphabeticalNoResults() {
     $actual = $this->sparql->queryConceptsAlphabetical('x', 'en');
@@ -190,6 +202,9 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GenericSparql::queryConceptsAlphabetical
+   * @covers GenericSparql::generateAlphabeticalListQuery
+   * @covers GenericSparql::formatFilterConditions
+   * @covers GenericSparql::transformAlphabeticalListResults
    */
   public function testQueryConceptsAlphabeticalSpecialChars() {
     $actual = $this->sparql->queryConceptsAlphabetical('!*', 'en');
@@ -199,6 +214,9 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   
   /**
    * @covers GenericSparql::queryConceptsAlphabetical
+   * @covers GenericSparql::generateAlphabeticalListQuery
+   * @covers GenericSparql::formatFilterConditions
+   * @covers GenericSparql::transformAlphabeticalListResults
    */
   public function testQueryConceptsAlphabeticalNumbers() {
     $actual = $this->sparql->queryConceptsAlphabetical('0-9', 'en');
@@ -208,6 +226,9 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   
   /**
    * @covers GenericSparql::queryConceptsAlphabetical
+   * @covers GenericSparql::generateAlphabeticalListQuery
+   * @covers GenericSparql::formatFilterConditions
+   * @covers GenericSparql::transformAlphabeticalListResults
    */
   public function testQueryConceptsAlphabeticalFull() {
     $actual = $this->sparql->queryConceptsAlphabetical('*', 'en');

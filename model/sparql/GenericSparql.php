@@ -842,30 +842,11 @@ EOQ;
   }
 
   /**
-   * Query for concepts with a term starting with the given letter. Also special classes '0-9' (digits),
-   * '*!' (special characters) and '*' (everything) are accepted.
+   * Generates sparql query clauses used for creating the alphabetical index.
    * @param string $letter the letter (or special class) to search for
-   * @param string $lang language of labels
-   * @param integer $limit limits the amount of results 
-   * @param integer $offset offsets the result set 
-   * @param array $classes 
+   * @return array of sparql query clause strings
    */
-  public function queryConceptsAlphabetical($letter, $lang, $limit=null, $offset=null, $classes=null) {
-    $gc = $this->graphClause;
-    $limit = ($limit) ? 'LIMIT ' . $limit : '';
-    $offset = ($offset) ? 'OFFSET ' . $offset : '';
-    $classes = ($classes) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
-    $values = $this->formatValues('?type', $classes, 'uri');
-    
-    // eliminating whitespace and line changes when the conditions aren't needed.
-    $limitandoffset = '';
-    if ($limit && $offset)
-      $limitandoffset = "\n" . $limit . "\n" . $offset;
-    elseif ($limit)
-      $limitandoffset = "\n" . $limit;
-    elseif ($offset)
-      $limitandoffset = "\n" . $offset;
-
+  private function formatFilterConditions($letter) {
     $use_regex = false;
 
     if ($letter == '*') {
@@ -890,6 +871,28 @@ EOQ;
       $filtercond_label = "strstarts(lcase(str(?label)), '$lcletter')";
       $filtercond_alabel = "strstarts(lcase(str(?alabel)), '$lcletter')";
     }
+    return array('textpref' => $textcond_pref, 'textalt' => $textcond_alt, 'filterpref' => $filtercond_label, 'filteralt' => $filtercond_alabel);
+  }
+
+  /**
+   * Generates the sparql query used for rendering the alphabetical index.
+   * @param string $letter the letter (or special class) to search for
+   * @param string $lang language of labels
+   * @param integer $limit limits the amount of results 
+   * @param integer $offset offsets the result set 
+   * @param array $classes 
+   * @return string sparql query
+   */
+  private function generateAlphabeticalListQuery($letter, $lang, $limit, $offset, $classes) {
+    $gc = $this->graphClause;
+    $classes = ($classes) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
+    $values = $this->formatValues('?type', $classes, 'uri');
+    $limitandoffset = $this->formatLimitAndOffset($limit, $offset);
+    $conditions = $this->formatFilterConditions($letter);
+    $textcond_pref = $conditions['textpref'];
+    $textcond_alt = $conditions['textalt'];
+    $filtercond_label = $conditions['filterpref'];
+    $filtercond_alabel = $conditions['filteralt'];
 
     $query = <<<EOQ
 SELECT DISTINCT ?s ?label ?alabel
@@ -924,8 +927,15 @@ WHERE {
 }
 ORDER BY LCASE(IF(BOUND(?alabel), STR(?alabel), STR(?label))) $limitandoffset
 EOQ;
+    return $query;
+  }
 
-    $results = $this->client->query($query);
+  /**
+   * Transforms the alphabetical list query results into an array format.
+   * @param EasyRdf_Sparql_Result $results
+   * @return array
+   */
+  private function transformAlphabeticalListResults($results) {
     $ret = array();
 
     foreach ($results as $row) {
@@ -948,6 +958,21 @@ EOQ;
     }
 
     return $ret;
+  }
+
+  /**
+   * Query for concepts with a term starting with the given letter. Also special classes '0-9' (digits),
+   * '*!' (special characters) and '*' (everything) are accepted.
+   * @param string $letter the letter (or special class) to search for
+   * @param string $lang language of labels
+   * @param integer $limit limits the amount of results 
+   * @param integer $offset offsets the result set 
+   * @param array $classes 
+   */
+  public function queryConceptsAlphabetical($letter, $lang, $limit=null, $offset=null, $classes=null) {
+    $query = $this->generateAlphabeticalListQuery($letter, $lang, $limit, $offset, $classes);
+    $results = $this->client->query($query);
+    return $this->transformAlphabeticalListResults($results);
   }
 
   /**
