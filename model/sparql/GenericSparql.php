@@ -182,30 +182,32 @@ EOQ;
     return "VALUES ($varname) { $values }";
   }
 
+  
   /**
-   * Returns information (as a graph) for one or more concept URIs
-   * @param mixed $uris concept URI (string) or array of URIs
-   * @param string $arrayClass the URI for thesaurus array class, or null if not used
-   * @param string $vocabs array of Vocabulary object
-   * @param boolean $as_graph whether to return a graph (true) or array of Concepts (false)
-   * @return mixed query result graph (EasyRdf_Graph), or array of Concept objects
-   */ 
-  public function queryConceptInfo($uris, $arrayClass = null, $vocabs = null, $as_graph = false, $clang = null)
-  {
-    $gc = $this->graphClause;
-
-    // if just a single URI is given, put it in an array regardless
-    if (!is_array($uris))
-      $uris = array($uris);
-
-    $values = $this->formatValues('?uri', $uris, 'uri');
-    
+   * Filters multiple instances of the same vocabulary from the input array.
+   * @param array $vocabs array of Vocabulary objects
+   * @return array of Vocabulary objects
+   */
+  private function filterDuplicateVocabs($vocabs) {
     // filtering duplicates 
     $unique_vocabs = array();
     if (sizeof($vocabs) > 0)
       foreach ($vocabs as $voc)
         $unique_vocabs[$voc->getId()] = $voc;
-    
+    return $unique_vocabs;
+  }
+
+  /**
+   * Generates a sparql query for one or more concept URIs
+   * @param mixed $uris concept URI (string) or array of URIs
+   * @param string $arrayClass the URI for thesaurus array class, or null if not used
+   * @param string $vocabs array of Vocabulary object
+   * @return string sparql query
+   */ 
+  private function generateConceptInfoQuery($uris, $arrayClass, $vocabs) {
+    $gc = $this->graphClause;
+    $values = $this->formatValues('?uri', $uris, 'uri');
+    $unique_vocabs = $this->filterDuplicateVocabs($vocabs);
     $values_graph = $this->formatValuesGraph($unique_vocabs);
 
     if ($arrayClass === null) {
@@ -274,6 +276,41 @@ CONSTRUCT {
 }
 $values_graph
 EOQ;
+    return $query;
+  }
+
+  /**
+   * Transforms ConceptInfo query results into an array of Concept objects
+   * @param EasyRdf_Graph $result query results to be transformed
+   * @param mixed $uris concept URI (string) or array of URIs
+   * @param string $vocabs array of Vocabulary object
+   * @return mixed query result graph (EasyRdf_Graph), or array of Concept objects
+   */ 
+  private function transformConceptInfoResults($result, $uris, $vocabs, $clang) {
+    $conceptArray = array();
+    foreach ($uris as $index => $uri) {
+      $conc = $result->resource($uri);
+      $vocab = sizeof($vocabs) == 1 ? $vocabs[0] : $vocabs[$index];
+      $conceptArray[] = new Concept($this->model, $vocab, $conc, $result, $clang);
+    }
+    return $conceptArray;
+  }
+
+  /**
+   * Returns information (as a graph) for one or more concept URIs
+   * @param mixed $uris concept URI (string) or array of URIs
+   * @param string $arrayClass the URI for thesaurus array class, or null if not used
+   * @param string $vocabs array of Vocabulary object
+   * @param boolean $as_graph whether to return a graph (true) or array of Concepts (false)
+   * @return mixed query result graph (EasyRdf_Graph), or array of Concept objects
+   */ 
+  public function queryConceptInfo($uris, $arrayClass = null, $vocabs = null, $as_graph = false, $clang = null)
+  {
+    // if just a single URI is given, put it in an array regardless
+    if (!is_array($uris))
+      $uris = array($uris);
+
+    $query = $this->generateConceptInfoQuery($uris, $arrayClass, $vocabs);
     $result = $this->client->query($query);
     if ($as_graph)
       return $result;
@@ -281,14 +318,7 @@ EOQ;
     if ($result->isEmpty())
       return;
 
-    $conceptArray = array();
-    foreach ($uris as $index => $uri) {
-      $conc = $result->resource($uri);
-      $vocab = sizeof($vocabs) == 1 ? $vocabs[0] : $vocabs[$index];
-      $conceptArray[] = new Concept($this->model, $vocab, $conc, $result, $clang);
-    }
-
-    return $conceptArray;
+    return $this->transformConceptInfoResults($result, $uris, $vocabs, $clang);
   }
 
   /**
@@ -296,7 +326,6 @@ EOQ;
    * @param string $lang
    * @return array Array with URIs (string) as key and array of (label, superclassURI) as value
    */
-
   public function queryTypes($lang)
   {
     $gc = $this->graphClause;
