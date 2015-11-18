@@ -999,7 +999,7 @@ EOQ;
 
   /**
    * Transforms the first characters query results into an array format.
-   * @param EasyRdf_Sparql_Result $results
+   * @param EasyRdf_Sparql_Result $result
    * @return array
    */
   private function transformFirstCharactersResults($result) {
