@@ -242,6 +242,8 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GenericSparql::queryTypes
+   * @covers GenericSparql::generateQueryTypesQuery
+   * @covers GenericSparql::transformQueryTypesResults
    */
   public function testQueryTypes()
   {

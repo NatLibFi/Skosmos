@@ -360,12 +360,11 @@ EOQ;
   }
 
   /**
-   * Retrieve information about types from the endpoint
+   * Generates the sparql query for queryTypes 
    * @param string $lang
-   * @return array Array with URIs (string) as key and array of (label, superclassURI) as value
+   * @return string sparql query 
    */
-  public function queryTypes($lang)
-  {
+  private function generateQueryTypesQuery($lang) {
     $gc = $this->graphClause;
     $query = <<<EOQ
 SELECT DISTINCT ?type ?label ?superclass
@@ -394,15 +393,36 @@ WHERE {
   }
 }
 EOQ;
-    $result = array();
-    foreach ($this->client->query($query) as $row) {
+    return $query;
+  }
+
+  /**
+   * Transforms the results into an array format. 
+   * @param EasyRdf_Sparql_Result $result
+   * @return array Array with URIs (string) as key and array of (label, superclassURI) as value
+   */
+  private function transformQueryTypesResults($result) {
+    var_dump($result);
+    $ret = array();
+    foreach ($result as $row) {
       $type = array();
       if (isset($row->label)) $type['label'] = $row->label->getValue();
       if (isset($row->superclass)) $type['superclass'] = $row->superclass->getUri();
-      $result[$row->type->getURI()] = $type;
+      $ret[$row->type->getURI()] = $type;
     }
+    return $ret;
+  }
 
-    return $result;
+  /**
+   * Retrieve information about types from the endpoint
+   * @param string $lang
+   * @return array Array with URIs (string) as key and array of (label, superclassURI) as value
+   */
+  public function queryTypes($lang)
+  {
+    $query = $this->generateQueryTypesQuery($lang);
+    $result = $this->client->query($query);
+    return $this->transformQueryTypesResults($result);
   }
 
   /**
