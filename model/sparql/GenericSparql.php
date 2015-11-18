@@ -402,7 +402,6 @@ EOQ;
    * @return array Array with URIs (string) as key and array of (label, superclassURI) as value
    */
   private function transformQueryTypesResults($result) {
-    var_dump($result);
     $ret = array();
     foreach ($result as $row) {
       $type = array();
