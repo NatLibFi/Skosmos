@@ -425,12 +425,11 @@ EOQ;
   }
 
   /**
-   * Retrieves conceptScheme information from the endpoint.
+   * Generates the concept scheme query.
    * @param string $conceptscheme concept scheme URI
-   * @return EasyRDF_Graph query result graph
+   * @return string sparql query 
    */
-  public function queryConceptScheme($conceptscheme)
-  {
+  private function generateQueryConceptSchemeQuery($conceptscheme) {
     $gc = $this->graphClause;
     $query = <<<EOQ
 CONSTRUCT {
@@ -442,7 +441,17 @@ CONSTRUCT {
   }
 }
 EOQ;
+    return $query;
+  }
 
+  /**
+   * Retrieves conceptScheme information from the endpoint.
+   * @param string $conceptscheme concept scheme URI
+   * @return EasyRDF_Graph query result graph
+   */
+  public function queryConceptScheme($conceptscheme)
+  {
+    $query = $this->generateQueryConceptSchemeQuery($conceptscheme);
     return $this->client->query($query);
   }
 
