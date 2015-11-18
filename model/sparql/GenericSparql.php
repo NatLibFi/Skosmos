@@ -86,11 +86,10 @@ class GenericSparql
   }
 
   /**
-   * Used for counting number of concepts in a vocabulary.
-   * @return int number of concepts in this vocabulary
+   * Generates the sparql query for retrieving concept and collection counts in a vocabulary.
+   * @return string sparql query
    */
-  public function countConcepts($lang=null)
-  {
+  private function generateCountConceptsQuery() {
     $gc = $this->graphClause;
     $query = <<<EOQ
       SELECT (COUNT(?conc) as ?c) ?type ?typelabel WHERE {
@@ -102,7 +101,16 @@ class GenericSparql
       }
 GROUP BY ?type ?typelabel
 EOQ;
-    $result = $this->client->query($query);
+    return $query;
+  }
+
+  /**
+   * Used for transforming the concept count query results.
+   * @param EasyRdf_Graph $result query results to be transformed
+   * @param string $lang language of labels
+   * @return Array containing the label counts 
+   */
+  private function transformCountConceptsResults($result, $lang) {
     $ret = array();
     foreach ($result as $row) {
       $ret[$row->type->getUri()]['type'] = $row->type->getUri();
@@ -111,6 +119,18 @@ EOQ;
         $ret[$row->type->getUri()]['label'] = $row->typelabel->getValue();
     }
     return $ret;
+  }
+
+  /**
+   * Used for counting number of concepts and collections in a vocabulary.
+   * @param string $lang language of labels
+   * @return int number of concepts in this vocabulary
+   */
+  public function countConcepts($lang=null)
+  {
+    $query = $this->generateCountConceptsQuery();
+    $result = $this->client->query($query);
+    return $this->transformCountConceptsResults($result, $lang);
   }
 
   /**

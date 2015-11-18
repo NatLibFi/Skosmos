@@ -35,6 +35,8 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GenericSparql::countConcepts
+   * @covers GenericSparql::generateCountConceptsQuery
+   * @covers GenericSparql::transformCountConceptsResults
    */
   public function testCountConcepts() {
     $actual = $this->sparql->countConcepts();
