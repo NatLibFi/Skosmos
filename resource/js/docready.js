@@ -674,6 +674,9 @@ $(function() { // DOCUMENT READY
                     item.typeLabel[i] = typeLabels[unprefixed];
                   }
                 }
+                if (typeLabels[item.type[i]] !== undefined) {
+                  item.typeLabel[i] = typeLabels[item.type[i]];
+                }
               }
               if (toBeRemoved !== null) { item.type.splice(toBeRemoved, 1); }
             }
