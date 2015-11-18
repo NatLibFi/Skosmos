@@ -106,12 +106,13 @@ EOQ;
 
   /**
    * Used for transforming the concept count query results.
-   * @param EasyRdf_Graph $result query results to be transformed
+   * @param EasyRdf_Sparql_Result $result query results to be transformed
    * @param string $lang language of labels
    * @return Array containing the label counts 
    */
   private function transformCountConceptsResults($result, $lang) {
     $ret = array();
+    var_dump($result);
     foreach ($result as $row) {
       $ret[$row->type->getUri()]['type'] = $row->type->getUri();
       $ret[$row->type->getUri()]['count'] = $row->c->getValue();
