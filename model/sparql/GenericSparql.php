@@ -112,7 +112,6 @@ EOQ;
    */
   private function transformCountConceptsResults($result, $lang) {
     $ret = array();
-    var_dump($result);
     foreach ($result as $row) {
       $ret[$row->type->getUri()]['type'] = $row->type->getUri();
       $ret[$row->type->getUri()]['count'] = $row->c->getValue();
@@ -135,17 +134,13 @@ EOQ;
   }
 
   /**
-   * Counts the number of concepts in a easyRDF graph with a specific language.
    * @param array $langs Languages to query for
-   * @return Array containing count of concepts for each language and property.
+   * @param array $props property names 
    */
-  public function countLangConcepts($langs, $classes=null)
-  {
+  private function generateCountLangConceptsQuery($langs, $classes, $props) {
     $gc = $this->graphClause;
-    $ret = array();
     $classes = ($classes) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
 
-    $props = array('skos:prefLabel', 'skos:altLabel', 'skos:hiddenLabel');
     $values = $this->formatValues('?type', $classes, 'uri');
     $values_lang = $this->formatValues('?lang', $langs, 'literal');
     $values_prop = $this->formatValues('?prop', $props, null);
@@ -165,8 +160,17 @@ WHERE {
 }
 GROUP BY ?lang ?prop ?type
 EOQ;
-    // Count the number of terms in each language
-    $result = $this->client->query($query);
+    return $query;
+  }
+
+  /**
+   * Transforms the CountLangConcepts results into an array of label counts.
+   * @param EasyRdf_Sparql_Result $result query results to be transformed
+   * @param array $langs Languages to query for
+   * @param array $props property names 
+   */
+  private function transformCountLangConceptsResults($result, $langs, $props) {
+    $ret = array();
     // set default count to zero; overridden below if query found labels
     foreach ($langs as $lang) {
       foreach ($props as $prop) {
@@ -179,8 +183,21 @@ EOQ;
           $row->count->getValue();
     }
     ksort($ret);
-
     return $ret;
+  }
+
+  /**
+   * Counts the number of concepts in a easyRDF graph with a specific language.
+   * @param array $langs Languages to query for
+   * @return Array containing count of concepts for each language and property.
+   */
+  public function countLangConcepts($langs, $classes=null)
+  {
+    $props = array('skos:prefLabel', 'skos:altLabel', 'skos:hiddenLabel');
+    $query = $this->generateCountLangConceptsQuery($langs, $classes, $props);
+    // Count the number of terms in each language
+    $result = $this->client->query($query);
+    return $this->transformCountLangConceptsResults($result, $langs, $props);
   }
 
   /**

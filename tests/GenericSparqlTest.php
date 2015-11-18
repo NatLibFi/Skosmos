@@ -45,6 +45,8 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   
   /**
    * @covers GenericSparql::countLangConcepts
+   * @covers GenericSparql::generateCountLangConceptsQuery
+   * @covers GenericSparql::transformCountLangConceptsResults
    */
   public function testCountLangConceptsOneLang() {
     $actual = $this->sparql->countLangConcepts(array('en'));
@@ -54,6 +56,8 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   
   /**
    * @covers GenericSparql::countLangConcepts
+   * @covers GenericSparql::generateCountLangConceptsQuery
+   * @covers GenericSparql::transformCountLangConceptsResults
    */
   public function testCountLangConceptsMultipleLangs() {
     $actual = $this->sparql->countLangConcepts(array('en','fi'));
