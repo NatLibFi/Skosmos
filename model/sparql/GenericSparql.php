@@ -456,12 +456,11 @@ EOQ;
   }
 
   /**
-   * return a list of skos:ConceptScheme instances in the given graph
+   * Generates the queryConceptSchemes sparql query. 
    * @param string $lang language of labels
-   * @return array Array with concept scheme URIs (string) as keys and labels (string) as values
+   * @return string sparql query 
    */
-  public function queryConceptSchemes($lang)
-  {
+  private function generateQueryConceptSchemesQuery($lang) {
     $gc = $this->graphClause;
     $query = <<<EOQ
 SELECT ?cs ?label ?preflabel ?title
@@ -485,8 +484,17 @@ WHERE {
  }
 } ORDER BY ?cs
 EOQ;
+    return $query;
+  }
+
+  /**
+   * Transforms the queryConceptScheme results into an array format.
+   * @param EasyRdf_Sparql_Result $result
+   * @return array
+   */
+  private function transformQueryConceptSchemes($result) {
     $ret = array();
-    foreach ($this->client->query($query) as $row) {
+    foreach ($result as $row) {
       $conceptscheme = array();
       if (isset($row->label))
         $conceptscheme['label'] = $row->label->getValue();
@@ -496,8 +504,19 @@ EOQ;
         $conceptscheme['title'] = $row->title->getValue();
       $ret[$row->cs->getURI()] = $conceptscheme;
     }
-
     return $ret;
+  }
+
+  /**
+   * return a list of skos:ConceptScheme instances in the given graph
+   * @param string $lang language of labels
+   * @return array Array with concept scheme URIs (string) as keys and labels (string) as values
+   */
+  public function queryConceptSchemes($lang)
+  {
+    $query = $this->generateQueryConceptSchemesQuery($lang);
+    $result = $this->client->query($query);
+    return $this->transformQueryConceptSchemes($result);
   }
 
   /**
