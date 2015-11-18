@@ -1079,18 +1079,15 @@ EOQ;
       return null; // nonexistent concept
   }
 
-
   /**
-   * Query a single property of a concept.
+   * Generates a sparql query for queryProperty.
    * @param string $uri
    * @param string $prop the name of the property eg. 'skos:broader'.
    * @param string $lang
    * @param boolean $anylang if you want a label even when it isn't available in the language you requested.
-   * @return array array of property values (key: URI, val: label), or null if concept doesn't exist
+   * @return string sparql query 
    */
-  public function queryProperty($uri, $prop, $lang, $anylang = false)
-  {
-    $uri = is_array($uri) ? $uri[0] : $uri;
+  private function generatePropertyQuery($uri, $prop, $lang, $anylang) {
     $gc = $this->graphClause;
     $anylang = $anylang ? "OPTIONAL { ?object skos:prefLabel ?label }" : "";
 
@@ -1114,7 +1111,16 @@ WHERE {
   }
 }
 EOQ;
-    $result = $this->client->query($query);
+    return $query;
+  }
+
+  /**
+   * Transforms the sparql query result into an array or null if the concept doesn't exist.
+   * @param EasyRdf_Sparql_Result $result
+   * @param string $lang
+   * @return array array of property values (key: URI, val: label), or null if concept doesn't exist
+   */
+  private function transformPropertyQueryResults($result, $lang) {
     $ret = array();
     foreach ($result as $row) {
       if (!isset($row->object))
@@ -1130,6 +1136,22 @@ EOQ;
       return $ret; // existing concept, with properties
     else
       return null; // nonexistent concept
+  }
+
+  /**
+   * Query a single property of a concept.
+   * @param string $uri
+   * @param string $prop the name of the property eg. 'skos:broader'.
+   * @param string $lang
+   * @param boolean $anylang if you want a label even when it isn't available in the language you requested.
+   * @return array array of property values (key: URI, val: label), or null if concept doesn't exist
+   */
+  public function queryProperty($uri, $prop, $lang, $anylang = false)
+  {
+    $uri = is_array($uri) ? $uri[0] : $uri;
+    $query = $this->generatePropertyQuery($uri, $prop, $lang, $anylang);
+    $result = $this->client->query($query);
+    return $this->transformPropertyQueryResults($result, $lang);
   }
 
   /**

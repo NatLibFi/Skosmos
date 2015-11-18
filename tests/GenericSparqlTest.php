@@ -349,6 +349,8 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GenericSparql::queryProperty
+   * @covers GenericSparql::transformPropertyQueryResults
+   * @covers GenericSparql::generatePropertyQuery
    */
   public function testQueryPropertyForBroaderThatExists()
   {
@@ -359,6 +361,8 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   
   /**
    * @covers GenericSparql::queryProperty
+   * @covers GenericSparql::transformPropertyQueryResults
+   * @covers GenericSparql::generatePropertyQuery
    */
   public function testQueryPropertyForNarrowerThatDoesntExist()
   {
@@ -369,6 +373,8 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   
   /**
    * @covers GenericSparql::queryProperty
+   * @covers GenericSparql::transformPropertyQueryResults
+   * @covers GenericSparql::generatePropertyQuery
    */
   public function testQueryPropertyForNonexistentConcept()
   {
