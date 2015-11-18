@@ -492,7 +492,7 @@ EOQ;
    * @param EasyRdf_Sparql_Result $result
    * @return array
    */
-  private function transformQueryConceptSchemes($result) {
+  private function transformQueryConceptSchemesResults($result) {
     $ret = array();
     foreach ($result as $row) {
       $conceptscheme = array();
