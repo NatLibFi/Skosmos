@@ -210,6 +210,8 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GenericSparql::queryConceptInfo
+   * @covers GenericSparql::generateConceptInfoQuery
+   * @covers GenericSparql::transformConceptInfoResults
    * @covers GenericSparql::formatValues
    */
   public function testQueryConceptInfoWithOneURI()
@@ -221,6 +223,8 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GenericSparql::queryConceptInfo
+   * @covers GenericSparql::generateConceptInfoQuery
+   * @covers GenericSparql::transformConceptInfoResults
    * @covers GenericSparql::formatValues
    */
   public function testQueryConceptInfoWithOneURINotInArray()
