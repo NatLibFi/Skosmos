@@ -516,7 +516,7 @@ EOQ;
   {
     $query = $this->generateQueryConceptSchemesQuery($lang);
     $result = $this->client->query($query);
-    return $this->transformQueryConceptSchemes($result);
+    return $this->transformQueryConceptSchemesResults($result);
   }
 
   /**
@@ -844,8 +844,11 @@ EOQ;
   /**
    * Query for concepts with a term starting with the given letter. Also special classes '0-9' (digits),
    * '*!' (special characters) and '*' (everything) are accepted.
-   * @param $letter the letter (or special class) to search for
-   * @param $lang language of labels
+   * @param string $letter the letter (or special class) to search for
+   * @param string $lang language of labels
+   * @param integer $limit limits the amount of results 
+   * @param integer $offset offsets the result set 
+   * @param array $classes 
    */
   public function queryConceptsAlphabetical($letter, $lang, $limit=null, $offset=null, $classes=null) {
     $gc = $this->graphClause;
