@@ -1662,13 +1662,12 @@ EOQ;
   }
 
   /**
-   * return a list of recently changed or entirely new concepts
-   * @param string $lang language of labels to return
+   * Generates the sparql query for queryChangeList.
+   * @param string $lang language of labels to return.
    * @param int $offset offset of results to retrieve; 0 for beginning of list
-   * @return array Result array
+   * @return string sparql query 
    */
-  public function queryChangeList($lang, $offset, $prop)
-  {
+  private function generateChangeListQuery($lang, $offset, $prop) {
     $gc = $this->graphClause;
     $offset = ($offset) ? 'OFFSET ' . $offset : '';
 
@@ -1685,8 +1684,16 @@ WHERE {
 ORDER BY DESC(YEAR(?date)) DESC(MONTH(?date)) LCASE(?label)
 LIMIT 200 $offset
 EOQ;
+    return $query;
+  }
+
+  /**
+   * Transforms the sparql query result into an array.
+   * @param EasyRdf_Sparql_Result $result
+   * @return array 
+   */
+  private function transformChangeListResults($result) {
     $ret = array();
-    $result = $this->client->query($query);
     foreach ($result as $row) {
       $concept = array('uri' => $row->concept->getURI());
       if (isset($row->label))
@@ -1696,5 +1703,18 @@ EOQ;
       $ret[] = $concept;
     }
     return $ret;
+  }
+
+  /**
+   * return a list of recently changed or entirely new concepts
+   * @param string $lang language of labels to return
+   * @param int $offset offset of results to retrieve; 0 for beginning of list
+   * @return array Result array
+   */
+  public function queryChangeList($lang, $offset, $prop)
+  {
+    $query = $this->generateChangeListQuery($lang, $offset, $prop);
+    $result = $this->client->query($query);
+    return $this->transformChangeListResults($result);
   }
 }
