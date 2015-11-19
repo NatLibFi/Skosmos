@@ -35,9 +35,7 @@ For information about released versions, see
 [Release Notes](https://github.com/NatLibFi/Skosmos/wiki/Release-Notes) in 
 the wiki.
 
-Skosmos was formerly known as ONKI Light. See the 
-[old Google Code project page](https://code.google.com/p/onki-light/)
-for historical releases and information.
+Skosmos was formerly known as ONKI Light.
 
 ## Reporting issues
 
