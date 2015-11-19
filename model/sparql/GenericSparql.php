@@ -1261,14 +1261,13 @@ EOQ;
   }
 
   /**
-   * Query the narrower concepts of a concept.
+   * Generates the query for a concepts skos:narrowers.
    * @param string $uri
    * @param string $lang
    * @param string $fallback
-   * @return array array of arrays describing each child concept, or null if concept doesn't exist
+   * @return string sparql query 
    */
-  public function queryChildren($uri, $lang, $fallback)
-  {
+  private function generateNarrowerQuery($uri, $lang, $fallback) {
     $uri = is_array($uri) ? $uri[0] : $uri;
     $gc = $this->graphClause;
     $query = <<<EOQ
@@ -1296,8 +1295,17 @@ SELECT ?child ?label ?child ?grandchildren ?notation WHERE {
   }
 }
 EOQ;
+    return $query;
+  }
+
+  /**
+   * Transforms the sparql result object into an array.
+   * @param EasyRdf_Sparql_Result $result
+   * @param string $lang
+   * @return array array of arrays describing each child concept, or null if concept doesn't exist
+   */
+  private function transformNarrowerResults($result, $lang) {
     $ret = array();
-    $result = $this->client->query($query);
     foreach ($result as $row) {
       if (!isset($row->child))
         return array(); // existing concept but no children
@@ -1322,6 +1330,20 @@ EOQ;
       return $ret; // existing concept, with children
     else
       return null; // nonexistent concept
+  }
+
+  /**
+   * Query the narrower concepts of a concept.
+   * @param string $uri
+   * @param string $lang
+   * @param string $fallback
+   * @return array array of arrays describing each child concept, or null if concept doesn't exist
+   */
+  public function queryChildren($uri, $lang, $fallback)
+  {
+    $query = $this->generateNarrowerQuery($uri, $lang, $fallback);
+    $result = $this->client->query($query);
+    return $this->transformNarrowerResults($result, $lang);
   }
 
   /**

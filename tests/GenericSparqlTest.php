@@ -443,6 +443,8 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GenericSparql::queryChildren
+   * @covers GenericSparql::generateNarrowerQuery
+   * @covers GenericSparql::transformNarrowerResults
    */
   public function testQueryChildren()
   {
@@ -457,6 +459,8 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   
   /**
    * @covers GenericSparql::queryChildren
+   * @covers GenericSparql::generateNarrowerQuery
+   * @covers GenericSparql::transformNarrowerResults
    */
   public function testQueryChildrenOfNonExistentConcept()
   {
