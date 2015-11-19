@@ -384,6 +384,8 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GenericSparql::queryTransitiveProperty
+   * @covers GenericSparql::generateTransitivePropertyQuery
+   * @covers GenericSparql::transformTransitivePropertyResults
    */
   public function testQueryTransitiveProperty()
   {
@@ -407,6 +409,8 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   
   /**
    * @covers GenericSparql::queryTransitiveProperty
+   * @covers GenericSparql::generateTransitivePropertyQuery
+   * @covers GenericSparql::transformTransitivePropertyResults
    */
   public function testQueryTransitivePropertyLongerPath()
   {

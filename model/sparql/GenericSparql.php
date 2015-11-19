@@ -1159,7 +1159,6 @@ EOQ;
    * @param string $uri
    * @param string $prop the name of the property eg. 'skos:broader'.
    * @param string $lang
-   * @param string $fallbacklang language to use if label is not available in the preferred language
    * @param integer $limit
    * @param boolean $anylang if you want a label even when it isn't available in the language you requested.
    * @return string sparql query 
@@ -1256,7 +1255,7 @@ EOQ;
    */
   public function queryTransitiveProperty($uri, $prop, $lang, $limit, $anylang=false, $fallbacklang='')
   {
-    $query = $this->generateTransitivePropertyQuery($uri, $prop, $lang, $limit, $anylang, $fallbacklang);
+    $query = $this->generateTransitivePropertyQuery($uri, $prop, $lang, $limit, $anylang);
     $result = $this->client->query($query);
     return $this->transformTransitivePropertyResults($result, $lang, $fallbacklang);
   }
