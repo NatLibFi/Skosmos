@@ -1386,14 +1386,13 @@ EOQ;
   }
 
   /**
-   * Query for finding the hierarchy for a concept.
+   * Generates a sparql query for finding the hierarchy for a concept.
    * @param string $uri concept uri.
    * @param string $lang
    * @param string $fallback language to use if label is not available in the preferred language
-   * @return an array for the REST controller to encode.
+   * @return string sparql query 
    */
-  public function queryParentList($uri, $lang, $fallback)
-  {
+  private function generateParentListQuery($uri, $lang, $fallback) {
     $gc = $this->graphClause;
     $query = <<<EOQ
 SELECT ?broad ?parent ?member ?children ?grandchildren 
@@ -1439,14 +1438,24 @@ WHERE {
 }
 GROUP BY ?broad ?parent ?member ?children ?grandchildren
 EOQ;
-    $result = $this->client->query($query);
+    return $query;
+  }
+
+  /**
+   * Transforms the result into an array.
+   * @param EasyRdf_Sparql_Result
+   * @param string $uri concept uri.
+   * @param string $lang
+   * @return an array for the REST controller to encode.
+   */
+  private function transformParentListResults($result, $uri, $lang) {
     $ret = array();
     foreach ($result as $row) {
       if (!isset($row->broad))
         return array(); // existing concept but no broaders
       $uri = $row->broad->getUri();
       if (!isset($ret[$uri])) {
-    $ret[$uri] = array('uri'=>$uri);
+        $ret[$uri] = array('uri'=>$uri);
       }
       if (isset($row->exact)) {
         $ret[$uri]['exact'] = $row->exact->getUri();
@@ -1493,6 +1502,20 @@ EOQ;
       return $ret; // existing concept, with children
     else
       return null; // nonexistent concept
+  }
+
+  /**
+   * Query for finding the hierarchy for a concept.
+   * @param string $uri concept uri.
+   * @param string $lang
+   * @param string $fallback language to use if label is not available in the preferred language
+   * @return an array for the REST controller to encode.
+   */
+  public function queryParentList($uri, $lang, $fallback)
+  {
+    $query = $this->generateParentListQuery($uri,$lang,$fallback);
+    $result = $this->client->query($query);
+    return $this->transformParentListResults($result, $uri, $lang);
   }
 
   /**

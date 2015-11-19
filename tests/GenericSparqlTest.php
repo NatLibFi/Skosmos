@@ -479,6 +479,8 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GenericSparql::queryParentList
+   * @covers GenericSparql::generateParentListQuery
+   * @covers GenericSparql::transformParentListResults
    */
   public function testQueryParentList()
   {
