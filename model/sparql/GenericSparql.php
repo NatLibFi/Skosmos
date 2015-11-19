@@ -1448,7 +1448,7 @@ EOQ;
    * @param string $lang
    * @return an array for the REST controller to encode.
    */
-  private function transformParentListResults($result, $uri, $lang) {
+  private function transformParentListResults($result, $lang) {
     $ret = array();
     foreach ($result as $row) {
       if (!isset($row->broad))
@@ -1515,7 +1515,7 @@ EOQ;
   {
     $query = $this->generateParentListQuery($uri,$lang,$fallback);
     $result = $this->client->query($query);
-    return $this->transformParentListResults($result, $uri, $lang);
+    return $this->transformParentListResults($result, $lang);
   }
 
   /**
