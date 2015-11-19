@@ -1162,10 +1162,9 @@ EOQ;
    * @param string $fallbacklang language to use if label is not available in the preferred language
    * @param integer $limit
    * @param boolean $anylang if you want a label even when it isn't available in the language you requested.
-   * @return array array of property values (key: URI, val: label), or null if concept doesn't exist
+   * @return string sparql query 
    */
-  public function queryTransitiveProperty($uri, $prop, $lang, $limit, $anylang=false, $fallbacklang='')
-  {
+  private function generateTransitivePropertyQuery($uri, $prop, $lang, $limit, $anylang) {
     $uri = is_array($uri) ? $uri[0] : $uri;
     $gc = $this->graphClause;
     $filter = $anylang ? "" : "FILTER (langMatches(lang(?label), \"$lang\"))";
@@ -1194,7 +1193,17 @@ WHERE {
 }
 LIMIT $limit
 EOQ;
-    $result = $this->client->query($query);
+    return $query;
+  }
+
+  /**
+   * Transforms the sparql query result object into an array.
+   * @param EasyRdf_Sparql_Result $result
+   * @param string $lang
+   * @param string $fallbacklang language to use if label is not available in the preferred language
+   * @return array of property values (key: URI, val: label), or null if concept doesn't exist
+   */
+  private function transformTransitivePropertyResults($result, $lang, $fallbacklang) {
     $ret = array();
     foreach ($result as $row) {
       if (!isset($row->object))
@@ -1233,6 +1242,23 @@ EOQ;
       return $ret; // existing concept, with properties
     else
       return null; // nonexistent concept
+  }
+
+  /**
+   * Query a single transitive property of a concept.
+   * @param string $uri
+   * @param string $prop the name of the property eg. 'skos:broader'.
+   * @param string $lang
+   * @param string $fallbacklang language to use if label is not available in the preferred language
+   * @param integer $limit
+   * @param boolean $anylang if you want a label even when it isn't available in the language you requested.
+   * @return array array of property values (key: URI, val: label), or null if concept doesn't exist
+   */
+  public function queryTransitiveProperty($uri, $prop, $lang, $limit, $anylang=false, $fallbacklang='')
+  {
+    $query = $this->generateTransitivePropertyQuery($uri, $prop, $lang, $limit, $anylang, $fallbacklang);
+    $result = $this->client->query($query);
+    return $this->transformTransitivePropertyResults($result, $lang, $fallbacklang);
   }
 
   /**
