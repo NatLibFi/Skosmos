@@ -1444,7 +1444,6 @@ EOQ;
   /**
    * Transforms the result into an array.
    * @param EasyRdf_Sparql_Result
-   * @param string $uri concept uri.
    * @param string $lang
    * @return an array for the REST controller to encode.
    */
