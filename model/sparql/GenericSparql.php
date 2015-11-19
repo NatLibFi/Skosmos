@@ -1522,10 +1522,9 @@ EOQ;
    * return a list of concept group instances, sorted by label
    * @param string $groupClass URI of concept group class
    * @param string $lang language of labels to return
-   * @return array Result array with group URI as key and group label as value
+   * @return string sparql query
    */
-  public function listConceptGroups($groupClass, $lang)
-  {
+  private function generateConceptGroupsQuery($groupClass, $lang) {
     $gc = $this->graphClause;
     $query = <<<EOQ
 SELECT ?group (GROUP_CONCAT(STR(?child)) as ?children) ?label ?members ?notation
@@ -1544,8 +1543,16 @@ WHERE {
 GROUP BY ?group ?label ?members ?notation
 ORDER BY lcase(?label)
 EOQ;
-    $ret = array();
-    $result = $this->client->query($query);
+    return $query;
+  }
+
+  /**
+   * Transforms the sparql query result into an array.
+   * @param EasyRdf_Sparql_Result $result
+   * @return array 
+   */
+  private function transformConceptGroupsResults($result) {
+  $ret = array();
     foreach ($result as $row) {
       $group = array('uri' => $row->group->getURI());
       if (isset($row->label))
@@ -1559,6 +1566,19 @@ EOQ;
       $ret[] = $group;
     }
     return $ret;
+  }
+
+  /**
+   * return a list of concept group instances, sorted by label
+   * @param string $groupClass URI of concept group class
+   * @param string $lang language of labels to return
+   * @return array Result array with group URI as key and group label as value
+   */
+  public function listConceptGroups($groupClass, $lang)
+  {
+    $query = $this->generateConceptGroupsQuery($groupClass, $lang);
+    $result = $this->client->query($query);
+    return $this->transformConceptGroupsResults($result);
   }
 
   /**
