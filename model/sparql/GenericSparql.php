@@ -1579,16 +1579,15 @@ EOQ;
     $result = $this->client->query($query);
     return $this->transformConceptGroupsResults($result);
   }
-
+  
   /**
-   * return a list of concepts in a concept group
+   * Generates the sparql query for listConceptGroupContents 
    * @param string $groupClass URI of concept group class
    * @param string $group URI of the concept group instance
    * @param string $lang language of labels to return
-   * @return array Result array with concept URI as key and concept label as value
+   * @return string sparql query
    */
-  public function listConceptGroupContents($groupClass, $group, $lang)
-  {
+  private function generateConceptGroupContentsQuery($groupClass, $group, $lang) {
     $gc = $this->graphClause;
     $query = <<<EOQ
 SELECT ?conc ?super ?label ?members ?type ?notation
@@ -1608,8 +1607,17 @@ WHERE {
  BIND(EXISTS{?conc skos:member ?submembers} as ?members)
 } ORDER BY lcase(?label)
 EOQ;
+    return $query;
+  }  
+
+  /**
+   * Transforms the sparql query result into an array.
+   * @param EasyRdf_Sparql_Result $result
+   * @param string $lang language of labels to return
+   * @return array 
+   */
+  private function transformConceptGroupContentsResults($result, $lang) {
     $ret = array();
-    $result = $this->client->query($query);
     $values = array();
     foreach ($result as $row) {
       if (!array_key_exists($row->conc->getURI(), $values)) {
@@ -1637,6 +1645,20 @@ EOQ;
       $ret[] = $val; 
 
     return $ret;
+  }
+
+  /**
+   * return a list of concepts in a concept group
+   * @param string $groupClass URI of concept group class
+   * @param string $group URI of the concept group instance
+   * @param string $lang language of labels to return
+   * @return array Result array with concept URI as key and concept label as value
+   */
+  public function listConceptGroupContents($groupClass, $group, $lang)
+  {
+    $query = $this->generateConceptGroupContentsQuery($groupClass, $group, $lang);
+    $result = $this->client->query($query);
+    return $this->transformConceptGroupContentsResults($result, $lang);
   }
 
   /**
