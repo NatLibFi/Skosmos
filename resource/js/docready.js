@@ -331,26 +331,6 @@ $(function() { // DOCUMENT READY
       }
   );
   
-  // event handler for clicking the changes tab submenu
-  $(document).on('click', '.changes-navi > a',
-      function(event) {
-        $.ajaxQ.abortAll();
-        $('.sidebar-grey').empty().prepend(spinner);
-        var targetUrl = event.target.href;
-        $.ajax({
-            url : targetUrl,
-            success : function(data) {
-              updateSidebar(data);
-              $('#changes').after($('#hierarchy'));
-              $('.nav').scrollTop(0);
-              if (window.history.pushState) { window.history.pushState(null, null, encodeURI(event.target.href)); }
-              updateTitle(data);
-            }
-        });
-        return false;
-      }
-  );
-
   // event handler for clicking the sidebar hierarchy tab
   $(document).on('click', '#hier-trigger', 
     function () {
@@ -800,7 +780,7 @@ $(function() { // DOCUMENT READY
     var parameters = $.param({'offset' : changeOffset, 'clang': content_lang});
     var lastdate = $('.change-list > span:last-of-type')[0].innerHTML;
     $.ajax({
-      url : vocab + '/' + lang + '/changes',
+      url : vocab + '/' + lang + '/new',
       data : parameters,
       success : function(data) {
         $loading.detach();

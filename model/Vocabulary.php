@@ -911,7 +911,7 @@ class Vocabulary extends DataObject
       $bydate = array();
       foreach($changelist as $concept) {
         $concept['datestring'] = Punic\Calendar::formatDate($concept['date'], 'medium', $lang);
-        $bydate[Punic\Calendar::formatDate($concept['date'], 'medium', $lang)][strtolower($concept['prefLabel'])] = $concept;
+        $bydate[Punic\Calendar::getMonthName($concept['date'], 'wide', $lang, true) . Punic\Calendar::format($concept['date'], ' y', $lang) ][strtolower($concept['prefLabel'])] = $concept;
       }
       return $bydate;
     }
