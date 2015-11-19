@@ -44,14 +44,14 @@ try {
         $vocab = $parts[1];
         try {
             $request->setVocab($parts[1]);
-            $lang = $request->getQueryParam('lang') ? $request->getQueryParam('lang') : $request->getVocab()->getDefaultLanguage();
-            $request->setLang($lang);
         } catch (Exception $e) {
             header("HTTP/1.0 404 Not Found");
             header("Content-type: text/plain; charset=utf-8");
             echo ("404 Not Found : Vocabulary id '$parts[1]' not found.");
-            exit();
+            return;
         }
+        $lang = $request->getQueryParam('lang') ? $request->getQueryParam('lang') : $request->getVocab()->getDefaultLanguage();
+        $request->setLang($lang);
         if ($parts[2] == '') {
             $controller->vocabularyInformation($request);
         } elseif ($parts[2] == 'types') {
@@ -95,5 +95,5 @@ try {
     }
 } catch (Exception $e) {
     header("HTTP/1.0 500 Internal Server Error");
-    die('ERROR: ' . $e->getMessage());
+    echo('ERROR: ' . $e->getMessage());
 }
