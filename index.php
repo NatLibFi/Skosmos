@@ -16,7 +16,7 @@ try {
     require_once 'config.inc';
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage();
-    exit();
+    return;
 }
 
 require_once 'controller/WebController.php';
@@ -60,7 +60,7 @@ if (sizeof($parts) <= 2) {
         } catch (Exception $e) {
             $request->setLang($controller->guessLanguage());
             $controller->invokeGenericErrorPage($request);
-            exit();
+            return;
         }
         if (sizeof($parts) == 3) { // language code missing
             $lang = $controller->guessLanguage();
