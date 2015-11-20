@@ -321,7 +321,7 @@ EOQ;
    * Transforms ConceptInfo query results into an array of Concept objects
    * @param EasyRdf_Graph $result query results to be transformed
    * @param mixed $uris concept URI (string) or array of URIs
-   * @param string $vocabs array of Vocabulary object
+   * @param \Vocabulary[] $vocabs array of Vocabulary object
    * @return mixed query result graph (EasyRdf_Graph), or array of Concept objects
    */ 
   private function transformConceptInfoResults($result, $uris, $vocabs, $clang) {
