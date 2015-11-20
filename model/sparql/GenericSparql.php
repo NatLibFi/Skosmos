@@ -338,7 +338,7 @@ EOQ;
    * Returns information (as a graph) for one or more concept URIs
    * @param mixed $uris concept URI (string) or array of URIs
    * @param string $arrayClass the URI for thesaurus array class, or null if not used
-   * @param \Vocabulary[] $vocabs array of Vocabulary object
+   * @param \Vocabulary[]|null $vocabs array of Vocabulary object
    * @param boolean $as_graph whether to return a graph (true) or array of Concepts (false)
    * @return mixed query result graph (EasyRdf_Graph), or array of Concept objects
    */ 
