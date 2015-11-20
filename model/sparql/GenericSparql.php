@@ -223,8 +223,8 @@ EOQ;
   
   /**
    * Filters multiple instances of the same vocabulary from the input array.
-   * @param array $vocabs array of Vocabulary objects
-   * @return array of Vocabulary objects
+   * @param \Vocabulary[] $vocabs array of Vocabulary objects
+   * @return \Vocabulary[]
    */
   private function filterDuplicateVocabs($vocabs) {
     // filtering duplicates 
@@ -239,7 +239,7 @@ EOQ;
    * Generates a sparql query for one or more concept URIs
    * @param mixed $uris concept URI (string) or array of URIs
    * @param string $arrayClass the URI for thesaurus array class, or null if not used
-   * @param string $vocabs array of Vocabulary object
+   * @param \Vocabulary[] $vocabs array of Vocabulary objects
    * @return string sparql query
    */ 
   private function generateConceptInfoQuery($uris, $arrayClass, $vocabs) {
