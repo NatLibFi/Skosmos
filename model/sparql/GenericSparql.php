@@ -1621,19 +1621,18 @@ EOQ;
     $values = array();
     foreach ($result as $row) {
       if (!array_key_exists($row->conc->getURI(), $values)) {
-        if (isset($row->label)) {
-          if ($row->label->getLang() == $lang)
-            $label = $row->label->getValue();
-          else
-            $label = $row->label->getValue() . " (" . $row->label->getLang() . ")";
-        }
         $values[$row->conc->getURI()] = array(
           'uri' => $row->conc->getURI(),
-          'prefLabel' => $label,
           'isSuper' => $row->super->getValue(),
           'hasMembers' => $row->members->getValue(),
           'type' => array($row->type->shorten())
         );
+        if (isset($row->label)) {
+          if ($row->label->getLang() == $lang)
+            $values[$row->conc->getURI()]['prefLabel'] = $row->label->getValue();
+          else
+            $values[$row->conc->getURI()]['prefLabel'] = $row->label->getValue() . " (" . $row->label->getLang() . ")";
+        }
         if (isset($row->notation))
           $values[$row->conc->getURI()]['notation'] = $row->notation->getValue();
       } else {
