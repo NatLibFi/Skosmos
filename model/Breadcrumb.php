@@ -45,7 +45,7 @@ class Breadcrumb
 
     /**
      * Used for adding narrower relationships to a Breadcrumb concept
-     * @param array $concept
+     * @param Breadcrumb $concept
      */
     public function addNarrower($concept)
     {
