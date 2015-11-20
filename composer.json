@@ -51,5 +51,8 @@
     "umpirsky/twig-gettext-extractor": "1.1.*",
     "phpdocumentor/phpdocumentor": "2.*",
     "codeclimate/php-test-reporter": "^0.1.2"
+  },
+  "autoload": {
+    "classmap": ["controller/", "model/", "model/sparql/"]
   }
 }

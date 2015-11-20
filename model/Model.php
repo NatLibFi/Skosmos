@@ -13,21 +13,6 @@ EasyRdf_Namespace::set('void', 'http://rdfs.org/ns/void#');
 EasyRdf_Namespace::set('skosext', 'http://purl.org/finnonto/schema/skosext#');
 EasyRdf_Namespace::set('isothes', 'http://purl.org/iso25964/skos-thes#');
 
-require_once 'model/DataObject.php';
-require_once 'model/VocabularyDataObject.php';
-require_once 'model/Concept.php';
-require_once 'model/ConceptProperty.php';
-require_once 'model/ConceptPropertyValue.php';
-require_once 'model/ConceptMappingPropertyValue.php';
-require_once 'model/ConceptPropertyValueLiteral.php';
-require_once 'model/VocabularyCategory.php';
-require_once 'model/Vocabulary.php';
-require_once 'model/Breadcrumb.php';
-require_once 'model/Request.php';
-
-require_once 'model/sparql/GenericSparql.php';
-require_once 'model/sparql/JenaTextSparql.php';
-
 /**
  * Model provides access to the data.
  * @property EasyRdf_Graph $graph

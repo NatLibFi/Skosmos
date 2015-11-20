@@ -9,13 +9,11 @@
  * Includes the side wide settings.
  */
 require_once 'config.inc';
+require_once 'vendor/autoload.php';
 
 header("Access-Control-Allow-Origin: *"); // enable CORS for the whole REST API
 
 try {
-    require_once 'controller/RestController.php';
-    require_once 'model/Model.php';
-
     $model = new Model();
     $controller = new RestController($model);
     $request = new Request($model);

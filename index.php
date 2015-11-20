@@ -19,8 +19,18 @@ try {
     return;
 }
 
-require_once 'controller/WebController.php';
-require_once 'model/Model.php';
+/**
+ * Use Composer autoloader to automatically load library classes.
+ */
+try {
+    if (!file_exists('./vendor/autoload.php')) {
+        throw new Exception('Dependencies managed by Composer missing. Please run "php composer.phar install".');
+    }
+    require_once 'vendor/autoload.php';
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+    return;
+}
 
 $model = new Model();
 $controller = new WebController($model);

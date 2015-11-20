@@ -6,20 +6,6 @@
  */
 
 /**
- * Use Composer autoloader to automatically load library classes.
- */
-try {
-    if (!file_exists('./vendor/autoload.php')) {
-        throw new Exception('Dependencies managed by Composer missing. Please run "php composer.phar install".');
-    }
-
-    require_once 'vendor/autoload.php';
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
-    return;
-}
-
-/**
  * Handles all the requests from the user and changes the view accordingly.
  */
 class Controller
