@@ -16,7 +16,7 @@ try {
     require_once 'vendor/autoload.php';
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage();
-    exit();
+    return;
 }
 
 /**
