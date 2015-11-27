@@ -572,7 +572,7 @@ class WebController extends Controller
         $this->setLanguageProperties($lang);
         $vocab = $request->getVocab();
 
-        $defaultView = $vocab->getDefaultSidebarView();
+        $defaultView = $vocab->getConfig()->getDefaultSidebarView();
         // load template
         if ($defaultView === 'groups') {
             $this->invokeGroupIndex($request, true);

@@ -26,42 +26,6 @@ class Vocabulary extends DataObject
     }
 
     /**
-     * Extracts the vocabulary id string from the baseuri of the vocabulary.
-     * @return string identifier eg. 'mesh'.
-     */
-    public function getId()
-    {
-        $uriparts = explode("#", $this->resource->getURI());
-        if (count($uriparts) != 1)
-        // hash namespace
-        {
-            return $uriparts[1];
-        }
-
-        // slash namespace
-        $uriparts = explode("/", $this->resource->getURI());
-
-        return $uriparts[count($uriparts) - 1];
-    }
-
-    /**
-     * Returns the vocabulary default sidebar view.
-     * @return string name of the view
-     */
-    public function getDefaultSidebarView()
-    {
-        $defview = $this->resource->getLiteral('skosmos:defaultSidebarView');
-        if ($defview) {
-            $value = $defview->getValue();
-            if ($value === 'groups' || $value === 'hierarchy') {
-                return $value;
-            }
-
-        }
-        return 'alphabetical'; // if not defined displaying the alphabetical index
-    }
-
-    /**
      * Get the SPARQL endpoint URL for this vocabulary
      *
      * @return string endpoint URL
@@ -639,5 +603,9 @@ class Vocabulary extends DataObject
     
     public function getShortName() {
       return $this->config->getShortName();
+    }
+    
+    public function getId() {
+      return $this->config->getId();
     }
 }

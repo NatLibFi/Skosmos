@@ -111,8 +111,8 @@ class Concept extends VocabularyDataObject
         }
 
         // 2. label in the vocabulary default language
-        if ($this->resource->label($this->vocab->getDefaultLanguage()) !== null) {
-            return $this->resource->label($this->vocab->getDefaultLanguage());
+        if ($this->resource->label($this->vocab->getConfig()->getDefaultLanguage()) !== null) {
+            return $this->resource->label($this->vocab->getConfig()->getDefaultLanguage());
         }
 
         // 3. label in any language
