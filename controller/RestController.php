@@ -471,7 +471,7 @@ class RestController extends Controller
         $vocab = $request->getVocab();
         $scheme = $request->getQueryParam('scheme');
         if (!$scheme) {
-            $scheme = $vocab->showConceptSchemesInHierarchy() ? array_keys($vocab->getConceptSchemes()) : $vocab->getDefaultConceptScheme();
+            $scheme = $vocab->getConfig()->showConceptSchemesInHierarchy() ? array_keys($vocab->getConceptSchemes()) : $vocab->getDefaultConceptScheme();
         }
 
         /* encode the results in a JSON-LD compatible array */

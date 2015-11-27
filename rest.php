@@ -48,7 +48,7 @@ try {
             echo ("404 Not Found : Vocabulary id '$parts[1]' not found.");
             return;
         }
-        $lang = $request->getQueryParam('lang') ? $request->getQueryParam('lang') : $request->getVocab()->getDefaultLanguage();
+        $lang = $request->getQueryParam('lang') ? $request->getQueryParam('lang') : $request->getVocab()->getConfig()->getDefaultLanguage();
         $request->setLang($lang);
         if ($parts[2] == '') {
             $controller->vocabularyInformation($request);
