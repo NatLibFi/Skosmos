@@ -12,42 +12,17 @@ class Vocabulary extends DataObject
 {
     /** cached value of URI space */
     private $urispace = null;
+    private $config;
 
-    /**
-     * Returns a boolean value based on a literal value from the vocabularies.ttl configuration.
-     * @param string $property the property to query
-     * @param boolean $default the default value if the value is not set in configuration
-     */
-    private function getBoolean($property, $default = false)
+    public function __construct($model, $resource)
     {
-        $val = $this->resource->getLiteral($property);
-        if ($val) {
-            return filter_var($val->getValue(), FILTER_VALIDATE_BOOLEAN);
-        }
-
-        return $default;
+        parent::__construct($model, $resource);
+        $this->config = new VocabularyConfig($resource);
     }
-    
-    /**
-     * Returns a boolean value based on a literal value from the vocabularies.ttl configuration.
-     * @param string $property the property to query
-     * @param string $lang preferred language for the literal,
-     */
-    private function getLiteral($property, $lang=null)
+
+    public function getConfig()
     {
-        if (!isset($lang)) {;
-            $lang = $this->getEnvLang();
-        }
-
-        $literal = $this->resource->getLiteral($property, $lang);
-        if ($literal) {
-            return $literal->getValue();
-        }
-
-        // not found with selected language, try any language
-        $literal = $this->resource->getLiteral($property);
-        if ($literal)
-          return $literal->getValue();
+      return $this->config;
     }
 
     /**
@@ -70,32 +45,6 @@ class Vocabulary extends DataObject
     }
 
     /**
-     * Returns the human readable vocabulary title.
-     * @return string the title of the vocabulary
-     */
-    public function getTitle($lang = null)
-    {
-        return $this->getLiteral('dc:title', $lang);
-    }
-
-    /**
-     * Get the languages supported by this vocabulary
-     * @return array languages supported by this vocabulary (as language tag strings)
-     */
-    public function getLanguages()
-    {
-        $langs = $this->resource->allLiterals('skosmos:language');
-        $ret = array();
-        foreach ($langs as $lang) {
-            $langlit = Punic\Language::getName($lang->getValue(), $this->getEnvLang());
-            $ret[$langlit] = $lang->getValue();
-        }
-        ksort($ret);
-
-        return $ret;
-    }
-
-    /**
      * Returns the vocabulary default sidebar view.
      * @return string name of the view
      */
@@ -110,27 +59,6 @@ class Vocabulary extends DataObject
 
         }
         return 'alphabetical'; // if not defined displaying the alphabetical index
-    }
-
-    /**
-     * Get the default language of this vocabulary
-     * @return string default language, e.g. 'en'
-     */
-
-    public function getDefaultLanguage()
-    {
-        $deflang = $this->resource->getLiteral('skosmos:defaultLanguage');
-        if ($deflang) {
-            return $deflang->getValue();
-        }
-
-        $langs = $this->getLanguages();
-        $deflang = reset($langs); // picking the first one from the list with reset since the keys are not numeric
-        if (sizeof($langs) > 1) {
-            trigger_error("Default language for vocabulary '" . $this->getId() . "' unknown, choosing '$deflang'.", E_USER_WARNING);
-        }
-
-        return $deflang;
     }
 
     /**
@@ -224,41 +152,6 @@ class Vocabulary extends DataObject
     public function getLocalName($uri)
     {
         return str_replace($this->getUriSpace(), "", $uri);
-    }
-
-    /**
-     * Wether the alphabetical index is small enough to be shown all at once.
-     * @return boolean true if all concepts can be shown at once.
-     */
-    public function getAlphabeticalFull()
-    {
-        return $this->getBoolean('skosmos:fullAlphabeticalIndex');
-    }
-
-    /**
-     * Returns a short name for a vocabulary if configured. If that has not been set
-     * using vocabId as a fallback.
-     * @return string
-     */
-    public function getShortName()
-    {
-        $shortname = $this->getLiteral('skosmos:shortName');
-        if ($shortname) 
-          return $shortname;
-
-        // if no shortname exists fall back to the id
-        return $this->getId();
-    }
-
-    /**
-     * Get the vocabulary feedback e-mail address and return it.
-     *
-     * @return string e-mail address or null if not defined.
-     */
-    public function getFeedbackRecipient()
-    {
-        $email = $this->resource->get('skosmos:feedbackRecipient');
-        return isset($email) ? $email->getValue() : null;
     }
 
     /**
@@ -433,166 +326,8 @@ class Vocabulary extends DataObject
         $sparql = $this->getSparql();
         $ret = array();
         // count the number of different types of concepts in all languages
-        $ret['terms'] = $sparql->countLangConcepts($this->getLanguages(), $this->getIndexClasses());
+        $ret['terms'] = $sparql->countLangConcepts($this->config->getLanguages(), $this->config->getIndexClasses());
 
-        return $ret;
-    }
-
-    /**
-     * get the URLs from which the vocabulary data can be downloaded
-     * @return array Array with MIME type as key, URL as value
-     */
-    public function getDataURLs()
-    {
-        $ret = array();
-        $urls = $this->resource->allResources("void:dataDump");
-        foreach ($urls as $url) {
-            // first try dc:format and dc11:format
-            $mimetypelit = $url->getLiteral('dc:format');
-            if ($mimetypelit === null) {
-                $mimetypelit = $url->getLiteral('dc11:format');
-            }
-
-            // if still not found, guess MIME type using file extension
-            if ($mimetypelit !== null) {
-                $mimetype = $mimetypelit->getValue();
-            } else {
-                $format = EasyRdf_Format::guessFormat(null, $url->getURI());
-                if ($format === null) {
-                    trigger_error("Could not guess format for <$url>.", E_USER_WARNING);
-                    continue;
-                }
-                $mimetypes = array_keys($format->getMimeTypes());
-                $mimetype = $mimetypes[0];
-            }
-            $ret[$mimetype] = $url->getURI();
-        }
-        return $ret;
-    }
-
-    /**
-     * Returns the class URI used for concept groups in this vocabulary,
-     * or null if not set.
-     * @return string group class URI or null
-     */
-
-    public function getGroupClassURI()
-    {
-        $val = $this->resource->getResource("skosmos:groupClass");
-        if ($val) {
-            return $val->getURI();
-        }
-
-        return null;
-    }
-
-    /**
-     * Returns the class URI used for thesaurus arrays in this vocabulary,
-     * or null if not set.
-     * @return string array class URI or null
-     */
-
-    public function getArrayClassURI()
-    {
-        $val = $this->resource->getResource("skosmos:arrayClass");
-        if ($val) {
-            return $val->getURI();
-        }
-
-        return null;
-    }
-
-    /**
-     * Returns custom properties displayed on the search page if configured.
-     * @return string array class URI or null
-     */
-
-    public function getAdditionalSearchProperties()
-    {
-        $resources = $this->resource->allResources("skosmos:showPropertyInSearch");
-        $ret = array();
-        foreach ($resources as $res) {
-            $prop = $res->getURI();
-            if (EasyRdf_Namespace::shorten($prop) !== null) // shortening property labels if possible
-            {
-                $prop = EasyRdf_Namespace::shorten($prop);
-            }
-
-            $ret[] = $prop;
-        }
-        return $ret;
-    }
-
-    /**
-     * Queries whether the property should be shown with all the label language variations.
-     * @param string $property
-     * @return boolean
-     */
-    public function hasMultiLingualProperty($property)
-    {
-        $resources = $this->resource->allResources("skosmos:hasMultiLingualProperty");
-        foreach ($resources as $res) {
-            $prop = $res->getURI();
-            if (EasyRdf_Namespace::shorten($prop) !== null) // shortening property labels if possible
-            {
-                $prop = EasyRdf_Namespace::shorten($prop);
-            }
-
-            if ($prop === $property) {
-                return true;
-            }
-
-        }
-        return false;
-    }
-
-    /**
-     * Returns a boolean value set in the vocabularies.ttl config.
-     * @return boolean
-     */
-    public function getShowHierarchy()
-    {
-        return $this->getBoolean('skosmos:showTopConcepts');
-    }
-
-    /**
-     * Returns a boolean value set in the vocabularies.ttl config.
-     * @return boolean
-     */
-    public function showConceptSchemesInHierarchy()
-    {
-        return $this->getBoolean('skosmos:conceptSchemesInHierarchy');
-    }
-
-    /**
-     * Returns a boolean value set in the vocabularies.ttl config.
-     * @return boolean defaults to true if fetching hasn't been explicitly denied.
-     */
-    public function getExternalResourcesLoading()
-    {
-        return $this->getBoolean('skosmos:loadExternalResources', true);
-    }
-
-    /**
-     * Returns a boolean value set in the vocabularies.ttl config.
-     * @return boolean
-     */
-    public function getShowLangCodes()
-    {
-        return $this->getBoolean('skosmos:explicitLanguageTags');
-    }
-
-    /**
-     * Returns a boolean value set in the vocabularies.ttl config.
-     * @return array array of concept class URIs (can be empty)
-     */
-    public function getIndexClasses()
-    {
-        $resources = $this->resource->allResources("skosmos:indexShowClass");
-        $ret = array();
-        foreach ($resources as $res) {
-            $ret[] = $res->getURI();
-        }
         return $ret;
     }
 
@@ -604,7 +339,7 @@ class Vocabulary extends DataObject
     public function getConceptHierarchy($uri, $lang)
     {
         $lang = $lang ? $lang : $this->getEnvLang();
-        $fallback = $this->getDefaultLanguage();
+        $fallback = $this->config->getDefaultLanguage();
         return $this->getSparql()->queryParentList($uri, $lang, $fallback);
     }
 
@@ -615,7 +350,7 @@ class Vocabulary extends DataObject
     public function getConceptChildren($uri, $lang)
     {
         $lang = $lang ? $lang : $this->getEnvLang();
-        $fallback = $this->getDefaultLanguage();
+        $fallback = $this->config->getDefaultLanguage();
         return $this->getSparql()->queryChildren($uri, $lang, $fallback);
     }
 
@@ -663,7 +398,7 @@ class Vocabulary extends DataObject
     public function getConceptTransitiveBroaders($uri, $limit, $any = false, $lang)
     {
         $lang = $lang ? $lang : $this->getEnvLang();
-        $fallback = $this->getDefaultLanguage();
+        $fallback = $this->config->getDefaultLanguage();
         return $this->getSparql()->queryTransitiveProperty($uri, 'skos:broader', $lang, $limit, $any, $fallback);
     }
 
@@ -687,7 +422,7 @@ class Vocabulary extends DataObject
     {
         $sparql = $this->getSparql();
 
-        return $sparql->queryConceptInfo($uri, $this->getArrayClassURI(), array($this), null, $clang);
+        return $sparql->queryConceptInfo($uri, $this->config->getArrayClassURI(), array($this), null, $clang);
     }
 
     /**
@@ -702,7 +437,7 @@ class Vocabulary extends DataObject
         }
 
         $ret = array();
-        $gclass = $this->getGroupClassURI();
+        $gclass = $this->config->getGroupClassURI();
         if ($gclass === null) {
             return $ret;
         }
@@ -723,11 +458,11 @@ class Vocabulary extends DataObject
     public function listConceptGroupContents($glname, $clang)
     {
         if (!$clang) {
-            $clang = $this->getEnvLang();
+            $clang = $this->config->getEnvLang();
         }
 
         $ret = array();
-        $gclass = $this->getGroupClassURI();
+        $gclass = $this->config->getGroupClassURI();
         if ($gclass === null) {
             return $ret;
         }
@@ -749,7 +484,7 @@ class Vocabulary extends DataObject
      */
     public function getAlphabet($clang)
     {
-        $chars = $this->getSparql()->queryFirstCharacters($clang, $this->getIndexClasses());
+        $chars = $this->getSparql()->queryFirstCharacters($clang, $this->config->getIndexClasses());
         $letters = array();
         $digits = false;
         $specials = false;
@@ -782,7 +517,7 @@ class Vocabulary extends DataObject
      */
     public function searchConceptsAlphabetical($letter, $limit = null, $offset = null, $clang = null)
     {
-        return $this->getSparql()->queryConceptsAlphabetical($letter, $clang, $limit, $offset, $this->getIndexClasses());
+        return $this->getSparql()->queryConceptsAlphabetical($letter, $clang, $limit, $offset, $this->config->getIndexClasses());
     }
 
     /**
@@ -878,25 +613,7 @@ class Vocabulary extends DataObject
 
     public function verifyVocabularyLanguage($lang)
     {
-        return (in_array($lang, $this->getLanguages())) ? $lang : $this->getDefaultLanguage();
-    }
-
-    /**
-     * Returns a boolean value set in the vocabularies.ttl config.
-     * @return boolean
-     */
-    public function sortByNotation()
-    {
-        return $this->getBoolean('skosmos:sortByNotation');
-    }
-    
-    /**
-     * Returns a boolean value set in the vocabularies.ttl config.
-     * @return boolean
-     */
-    public function showChangeList()
-    {
-        return $this->getBoolean('skosmos:showChangeList');
+        return (in_array($lang, $this->config->getLanguages())) ? $lang : $this->config->getDefaultLanguage();
     }
 
     /**
@@ -914,5 +631,13 @@ class Vocabulary extends DataObject
         $bydate[Punic\Calendar::getMonthName($concept['date'], 'wide', $lang, true) . Punic\Calendar::format($concept['date'], ' y', $lang) ][strtolower($concept['prefLabel'])] = $concept;
       }
       return $bydate;
+    }
+
+    public function getTitle($lang=null) {
+      return $this->config->getTitle($lang);
+    }
+    
+    public function getShortName() {
+      return $this->config->getShortName();
     }
 }

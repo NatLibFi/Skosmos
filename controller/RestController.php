@@ -114,7 +114,7 @@ class RestController extends Controller
 
         $vocabs = array();
         foreach ($this->model->getVocabularies() as $voc) {
-            $vocabs[$voc->getId()] = $voc->getTitle($request->getLang());
+            $vocabs[$voc->getId()] = $voc->getConfig()->getTitle($request->getLang());
         }
         ksort($vocabs);
         $results = array();
@@ -246,9 +246,9 @@ class RestController extends Controller
             ),
             'uri' => '',
             'id' => $vocab->getId(),
-            'title' => $vocab->getTitle(),
-            'defaultLanguage' => $vocab->getDefaultLanguage(),
-            'languages' => $vocab->getLanguages(),
+            'title' => $vocab->getConfig()->getTitle(),
+            'defaultLanguage' => $vocab->getConfig()->getDefaultLanguage(),
+            'languages' => $vocab->getConfig()->getLanguages(),
             'conceptschemes' => $conceptschemes,
         );
 
@@ -288,7 +288,7 @@ class RestController extends Controller
             ),
             'uri' => '',
             'id' => $request->getVocab()->getId(),
-            'title' => $request->getVocab()->getTitle(),
+            'title' => $request->getVocab()->getConfig()->getTitle(),
             'concepts' => array(
                 'class' => 'http://www.w3.org/2004/02/skos/core#Concept',
                 'label' => gettext('skos:Concept'),
@@ -346,7 +346,7 @@ class RestController extends Controller
             ),
             'uri' => '',
             'id' => $request->getVocab()->getId(),
-            'title' => $request->getVocab()->getTitle($lang),
+            'title' => $request->getVocab()->getConfig()->getTitle($lang),
             'languages' => $counts,
         );
 
@@ -707,7 +707,7 @@ class RestController extends Controller
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
         }
 
-        if ($request->getVocab()->getShowHierarchy()) {
+        if ($request->getVocab()->getConfig()->getShowHierarchy()) {
             $schemes = $request->getVocab()->getConceptSchemes($request->getLang());
             foreach ($schemes as $scheme) {
                 if (!isset($scheme['title']) && !isset($scheme['label']) && !isset($scheme['prefLabel'])) {

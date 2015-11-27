@@ -247,7 +247,7 @@ class Concept extends VocabularyDataObject
                         if (!$exvoc) {
                             $response = null;
                             // if told to do so in the vocabulary configuration
-                            if ($this->vocab->getExternalResourcesLoading()) {
+                            if ($this->vocab->getConfig()->getExternalResourcesLoading()) {
                                 $response = $this->model->getResourceFromUri($exuri);
                             }
 
@@ -283,8 +283,8 @@ class Concept extends VocabularyDataObject
         $ret = array();
 
         // looking for collections and linking those with their narrower concepts
-        if ($this->vocab->getArrayClassURI() !== null) {
-            $collections = $this->graph->allOfType($this->vocab->getArrayClassURI());
+        if ($this->vocab->getConfig()->getArrayClassURI() !== null) {
+            $collections = $this->graph->allOfType($this->vocab->getConfig()->getArrayClassURI());
             if (sizeof($collections) > 0) {
                 // indexing the narrowers once to avoid iterating all of them with every collection
                 foreach ($this->resource->allResources('skos:narrower') as $narrower) {
@@ -503,7 +503,7 @@ class Concept extends VocabularyDataObject
         $groups = array();
         $reverseResources = $this->graph->resourcesMatching('skos:member', $this->resource);
         if (isset($reverseResources)) {
-            $arrayClassURI = $this->vocab !== null ? $this->vocab->getArrayClassURI() : null;
+            $arrayClassURI = $this->vocab !== null ? $this->vocab->getConfig()->getArrayClassURI() : null;
             $arrayClass = $arrayClassURI !== null ? EasyRdf_Namespace::shorten($arrayClassURI) : null;
             foreach ($reverseResources as $reverseResource) {
                 $property = in_array($arrayClass, $reverseResource->types()) ? "skosmos:memberOfArray" : "skosmos:memberOf";

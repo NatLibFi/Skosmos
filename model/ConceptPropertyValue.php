@@ -23,7 +23,7 @@ class ConceptPropertyValue extends VocabularyDataObject
     public function __toString()
     {
         $label = is_string($this->getLabel()) ? $this->getLabel() : $this->getLabel()->getValue();
-        if ($this->vocab->sortByNotation()) {
+        if ($this->vocab->getConfig()->sortByNotation()) {
             $label = $this->getNotation() . $label;
         }
 
@@ -43,8 +43,8 @@ class ConceptPropertyValue extends VocabularyDataObject
 
         if ($this->resource->label($lang) !== null) { // current language
             return $this->resource->label($lang);
-        } elseif ($this->resource->label($this->vocab->getDefaultLanguage()) !== null) { // vocab default language
-            return $this->resource->label($this->vocab->getDefaultLanguage());
+        } elseif ($this->resource->label($this->vocab->getConfig()->getDefaultLanguage()) !== null) { // vocab default language
+            return $this->resource->label($this->vocab->getConfig()->getDefaultLanguage());
         } elseif ($this->resource->label() !== null) { // any language
             return $this->resource->label();
         } elseif ($this->resource->getLiteral('rdf:value', $lang) !== null) { // current language

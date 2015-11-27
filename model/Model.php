@@ -102,7 +102,7 @@ class Model
             // find all the vocabs in this category
             $vocs = array();
             foreach ($cat->getVocabularies() as $voc) {
-                $vocs[$shortname ? $voc->getShortname() : $voc->getTitle()] = $voc;
+                $vocs[$shortname ? $voc->getConfig()->getShortname() : $voc->getConfig()->getTitle()] = $voc;
             }
             uksort($vocs, 'strcoll');
 
@@ -154,7 +154,7 @@ class Model
         $vocabs = $this->getVocabularyList(false);
         $ret = array();
         foreach ($vocabs as $vocab) {
-            foreach ($vocab->getLanguages() as $langcode) {
+            foreach ($vocab->getConfig()->getLanguages() as $langcode) {
                 $langlit = Punic\Language::getName($langcode, $lang);
                 $ret[$langlit] = $langcode;
             }
@@ -188,7 +188,7 @@ class Model
         if ($vocid !== null) {
             $vocab = $this->getVocabulary($vocid);
             $sparql = $vocab->getSparql();
-            $arrayClass = $vocab->getArrayClassURI();
+            $arrayClass = $vocab->getConfig()->getArrayClassURI();
             $vocabs = array($vocab);
         } else {
             $sparql = $this->getDefaultSparql();
@@ -241,7 +241,7 @@ class Model
         if (sizeof($vocids) == 1) { // search within vocabulary
             $voc = $vocabs[0];
             $sparql = $voc->getSparql();
-            $arrayClass = $voc->getArrayClassURI();
+            $arrayClass = $voc->getConfig()->getArrayClassURI();
         } else { // multi-vocabulary or global search
             $voc = null;
             $arrayClass = null;
@@ -322,7 +322,7 @@ class Model
         if (sizeof($uniqueVocabs) == 1) {
             $voc = $vocabs[0];
             $sparql = $voc->getSparql();
-            $arrayClass = $voc->getArrayClassURI();
+            $arrayClass = $voc->getConfig()->getArrayClassURI();
         } else {
             $arrayClass = null;
             $sparql = $this->getDefaultSparql();

@@ -61,7 +61,7 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
 
         // if the resource is from a another vocabulary known by the skosmos instance
         if ($exvocab) {
-            $label = $this->getExternalLabel($exvocab, $this->getUri(), $exvocab->getDefaultLanguage());
+            $label = $this->getExternalLabel($exvocab, $this->getUri(), $exvocab->getConfig()->getDefaultLanguage());
             if ($label) {
                 return $label;
             }

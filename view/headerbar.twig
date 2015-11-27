@@ -21,7 +21,7 @@
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="lang-dropdown-toggle">{{ request.lang | lang_name(request.lang) }}</button>
         <ul class="dropdown-menu">
         {% if request.vocab %}
-          {% for langcode in request.vocab.languages %}
+          {% for langcode in request.vocab.config.languages %}
           <li><a href="{{ request.uri | link_url(request.vocabid,request.lang,request.page,langcode,term,letter) }}" class="lang-button" hreflang="{{ langcode }}">{{ langcode | lang_name(request.lang) }}</a></li>
           {% endfor %}
         {% else %}

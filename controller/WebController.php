@@ -215,7 +215,7 @@ class WebController extends Controller
         $template = $this->twig->loadTemplate('concept-info.twig');
         $vocab = $request->getVocab();
 
-        $langcodes = $vocab->getShowLangCodes();
+        $langcodes = $vocab->getConfig()->getShowLangCodes();
         $uri = $vocab->getConceptURI($request->getUri()); // make sure it's a full URI
 
         $results = $vocab->getConceptInfo($uri, $request->getContentLang());
@@ -432,7 +432,7 @@ class WebController extends Controller
         $group = $request->getQueryParam('group') !== '' ? $request->getQueryParam('group') : null;
         $parent = $request->getQueryParam('parent') !== '' ? $request->getQueryParam('parent') : null;
         $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
-        $langcodes = $vocab->getShowLangCodes();
+        $langcodes = $vocab->getConfig()->getShowLangCodes();
         if ($offset > 0) {
             $rest = 1;
             $template = $this->twig->loadTemplate('vocab-search-listing.twig');
@@ -498,7 +498,7 @@ class WebController extends Controller
 
         $content_lang = $request->getContentLang();
 
-        $all_at_once = $vocab->getAlphabeticalFull();
+        $all_at_once = $vocab->getConfig()->getAlphabeticalFull();
         if (!$all_at_once) {
             $search_results = $vocab->searchConceptsAlphabetical($request->getLetter(), $count, $offset, $content_lang);
             $letters = $vocab->getAlphabet($content_lang);
