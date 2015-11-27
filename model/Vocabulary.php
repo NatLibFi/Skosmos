@@ -20,6 +20,10 @@ class Vocabulary extends DataObject
         $this->config = new VocabularyConfig($resource);
     }
 
+    /**
+     * Returns the VocabularyConfig object
+     * @return VocabularyConfig
+     */
     public function getConfig()
     {
       return $this->config;
