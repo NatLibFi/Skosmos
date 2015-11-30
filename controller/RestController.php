@@ -294,14 +294,15 @@ class RestController extends Controller
                 'label' => gettext('skos:Concept'),
                 'count' => $vocab_stats['http://www.w3.org/2004/02/skos/core#Concept']['count'],
             ),
-            'conceptGroups' => array(
-                'class' => 'http://www.w3.org/2004/02/skos/core#Collection',
-                'label' => gettext('skos:Collection'),
-                'count' => $vocab_stats['http://www.w3.org/2004/02/skos/core#Collection']['count'],
-            ),
             'subTypes' => $subTypes,
         );
 
+        if (isset($vocab_stats['http://www.w3.org/2004/02/skos/core#Collection']))
+            $ret['conceptGroups'] = array(
+                'class' => 'http://www.w3.org/2004/02/skos/core#Collection',
+                'label' => gettext('skos:Collection'),
+                'count' => $vocab_stats['http://www.w3.org/2004/02/skos/core#Collection']['count'],
+            );
         return $this->returnJson($ret);
     }
 
