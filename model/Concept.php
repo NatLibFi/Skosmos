@@ -281,9 +281,6 @@ class Concept extends VocabularyDataObject
         $long_uris = $this->resource->propertyUris();
         $duplicates = array();
         $ret = array();
-        $arrayClass = $this->getVocab()->getConfig()->getArrayClassURI();
-        if ($arrayClass !== null && EasyRdf_Namespace::shorten($arrayClass) !== null)
-            $arrayClass = EasyRdf_Namespace::shorten($arrayClass); 
 
         // looking for collections and linking those with their narrower concepts
         if ($this->vocab->getConfig()->getArrayClassURI() !== null) {
@@ -314,6 +311,7 @@ class Concept extends VocabularyDataObject
                 $properties['skos:narrower'] = $members_array;
             }
         }
+
         foreach ($long_uris as &$prop) {
             if (EasyRdf_Namespace::shorten($prop) !== null) {
                 // shortening property labels if possible
@@ -322,7 +320,8 @@ class Concept extends VocabularyDataObject
                 $sprop = "<$prop>";
             }
             // EasyRdf requires full URIs to be in angle brackets
-            if (!in_array($prop, $this->DELETED_PROPERTIES) || (in_array($arrayClass, $this->getType()) && $prop === 'skos:member')) {
+
+            if (!in_array($prop, $this->DELETED_PROPERTIES)) {
                 $propres = new EasyRdf_Resource($prop, $this->graph);
                 $proplabel = $propres->label($this->getEnvLang()) ? $propres->label($this->getEnvLang()) : $propres->label();
                 $propobj = new ConceptProperty($prop, $proplabel);
