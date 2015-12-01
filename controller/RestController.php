@@ -262,10 +262,13 @@ class RestController extends Controller
     public function vocabularyStatistics($request)
     {
         $this->setLanguageProperties($request->getLang());
-        $vocab_stats = $request->getVocab()->getStatistics($request->getQueryParam('lang'));
+        $arrayClass = $request->getVocab()->getConfig()->getArrayClassURI(); 
+        $groupClass = $request->getVocab()->getConfig()->getGroupClassURI(); 
+        $vocab_stats = $request->getVocab()->getStatistics($request->getQueryParam('lang'), $arrayClass, $groupClass);
+        $types = array('http://www.w3.org/2004/02/skos/core#Concept', 'http://www.w3.org/2004/02/skos/core#Collection', $arrayClass, $groupClass);
         $subTypes = array();
         foreach ($vocab_stats as $subtype) {
-            if ($subtype['type'] !== 'http://www.w3.org/2004/02/skos/core#Concept' && $subtype['type'] !== 'http://www.w3.org/2004/02/skos/core#Collection') {
+            if (!in_array($subtype['type'], $types)) {
                 $subTypes[] = $subtype;
             }
         }
@@ -297,12 +300,26 @@ class RestController extends Controller
             'subTypes' => $subTypes,
         );
 
-        if (isset($vocab_stats['http://www.w3.org/2004/02/skos/core#Collection']))
+        if (isset($vocab_stats['http://www.w3.org/2004/02/skos/core#Collection'])) {
             $ret['conceptGroups'] = array(
                 'class' => 'http://www.w3.org/2004/02/skos/core#Collection',
                 'label' => gettext('skos:Collection'),
                 'count' => $vocab_stats['http://www.w3.org/2004/02/skos/core#Collection']['count'],
             );
+        } else if (isset($vocab_stats[$groupClass])) {
+            $ret['conceptGroups'] = array(
+                'class' => $groupClass,
+                'label' => isset($vocab_stats[$groupClass]['label']) ? $vocab_stats[$groupClass]['label'] : gettext($groupClass),
+                'count' => $vocab_stats[$groupClass]['count'],
+            );
+        } else if (isset($vocab_stats[$arrayClass])) {
+            $ret['arrays'] = array(
+                'class' => $arrayClass,
+                'label' => isset($vocab_stats[$arrayClass]['label']) ? $vocab_stats[$arrayClass]['label'] : gettext($arrayClass),
+                'count' => $vocab_stats[$arrayClass]['count'],
+            );
+        }
+
         return $this->returnJson($ret);
     }
 

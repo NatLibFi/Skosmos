@@ -90,13 +90,15 @@ class GenericSparql {
      * Generates the sparql query for retrieving concept and collection counts in a vocabulary.
      * @return string sparql query
      */
-    private function generateCountConceptsQuery() {
+    private function generateCountConceptsQuery($array, $group) {
         $gc = $this->graphClause;
+        $optional = $array ? "UNION { ?type rdfs:subClassOf* <$array> }" : '';
+        $optional .= $group ? "UNION { ?type rdfs:subClassOf* <$group> }" : '';
         $query = <<<EOQ
       SELECT (COUNT(?conc) as ?c) ?type ?typelabel WHERE {
         $gc {
           { ?conc a ?type .
-          { ?type rdfs:subClassOf* skos:Concept . } UNION { ?type rdfs:subClassOf* skos:Collection . } }
+          { ?type rdfs:subClassOf* skos:Concept . } UNION { ?type rdfs:subClassOf* skos:Collection . } $optional }
           OPTIONAL { ?type rdfs:label ?typelabel . }
         }
       }
@@ -129,8 +131,8 @@ EOQ;
      * @param string $lang language of labels
      * @return int number of concepts in this vocabulary
      */
-    public function countConcepts($lang = null) {
-        $query = $this->generateCountConceptsQuery();
+    public function countConcepts($lang = null, $array = null, $group = null) {
+        $query = $this->generateCountConceptsQuery($array, $group);
         $result = $this->client->query($query);
         return $this->transformCountConceptsResults($result, $lang);
     }

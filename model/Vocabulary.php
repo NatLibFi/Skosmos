@@ -276,13 +276,13 @@ class Vocabulary extends DataObject
 
     /**
      * Counts the statistics of the vocabulary.
-     * @return array of the concept counts in different languages
+     * @return array of the concept/group counts
      */
-    public function getStatistics($lang = '')
+    public function getStatistics($lang = '', $array=null, $group=null)
     {
         $sparql = $this->getSparql();
         // find the number of concepts
-        return $sparql->countConcepts($lang);
+        return $sparql->countConcepts($lang, $array, $group);
     }
 
     /**
