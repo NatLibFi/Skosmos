@@ -37,7 +37,7 @@ class JenaTextSparql extends GenericSparql
    * @return string SPARQL text search clause
    */
 
-  protected function createTextQueryCondition($term, $property='', $lang='')
+  private function createTextQueryCondition($term, $property='', $lang='')
   {
     // construct the lucene search term for jena-text
     

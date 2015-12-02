@@ -543,20 +543,6 @@ EOQ;
     }
 
     /**
-     * Make a text query condition that narrows the amount of search
-     * results in term searches. This is a stub implementation,
-     * intended to be overridden in subclasses to enable the use of
-     * tet indexes in SPARQL dialects that support them.
-     *
-     * @param string $term search term
-     * @param string $property property to search e.g. 'skos:prefLabel'
-     * @return string SPARQL text search clause
-     */
-    protected function createTextQueryCondition($term, $property = '') {
-        return '# generic SPARQL dialect, no text index support';
-    }
-
-    /**
      * Generate a VALUES clause for limiting the targeted graphs.
      * @param array $vocabs array of Vocabulary objects to target
      * @return string VALUES clause, or "" if not necessary to limit
@@ -719,12 +705,6 @@ EOF;
         }
         // removes futile asterisks
 
-        # make text query clauses
-        $textcond_pref = $this->createTextQueryCondition($term, 'skos:prefLabel');
-        $textcond_alt = $this->createTextQueryCondition($term, 'skos:altLabel');
-        $textcond_hidden = $this->createTextQueryCondition($term, 'skos:hiddenLabel');
-        $textcond = "{{ $textcond_pref \n} UNION { $textcond_alt \n} UNION { $textcond_hidden \n}}";
-
         # use appropriate matching function depending on query type: =, strstarts, strends or full regex
         if (preg_match('/^[^\*]+$/', $term)) { // exact query
             $term = str_replace('\\', '\\\\', $term); // quote slashes
@@ -748,16 +728,11 @@ EOF;
             $filtercond = "regex(str(?match), '^$term$', 'i')";
         }
 
-        # order of graph clause and text query depends on whether we are performing global search
-        # global search: text query first, then process by graph
-        # local search: limit by graph first, then graph-specific text query
-        $graph_text = $this->isDefaultEndpoint() ? "$textcond \n $gc {" : "$gc { $textcond \n";
-
         $query = <<<EOQ
 SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph (GROUP_CONCAT(DISTINCT ?type) as ?types)
 $extravars
 WHERE {
- $graph_text
+ $gc {
   $formattedtype
   { $pgcond
    ?s rdf:type ?type .
