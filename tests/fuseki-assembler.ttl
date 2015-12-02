@@ -60,14 +60,20 @@ text:TextIndexLucene  rdfs:subClassOf   text:TextIndex .
 <#entMap> a text:EntityMap ;
     text:entityField      "uri" ;
     text:graphField       "graph" ; ## enable graph-specific indexing
-    text:defaultField     "text" ; ## Must be defined in the text:map
+    text:defaultField     "pref" ; ## Must be defined in the text:map
     text:uidField         "uid" ;
     text:langField        "lang" ;
     text:map (
          # skos:prefLabel
-         [ text:field "text" ; text:predicate skos:prefLabel ]
+         [ text:field "pref" ;
+           text:predicate skos:prefLabel ;
+           text:analyzer [ a text:LowerCaseKeywordAnalyzer ] ]
          # skos:altLabel
-         [ text:field "text" ; text:predicate skos:altLabel ]
+         [ text:field "alt" ;
+           text:predicate skos:altLabel ;
+           text:analyzer [ a text:LowerCaseKeywordAnalyzer ] ]
          # skos:hiddenLabel
-         [ text:field "text" ; text:predicate skos:hiddenLabel ]
+         [ text:field "hidden" ;
+           text:predicate skos:hiddenLabel ;
+           text:analyzer [ a text:LowerCaseKeywordAnalyzer ] ]
          ) .
