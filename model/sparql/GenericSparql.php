@@ -74,7 +74,7 @@ class GenericSparql {
      * all vocabularies.
      */
 
-    private function isDefaultEndpoint() {
+    protected function isDefaultEndpoint() {
         return $this->graph[0] == '?';
     }
 
@@ -605,7 +605,7 @@ EOQ;
      * @param string $arrayClass the URI for thesaurus array class, or null if not used
      * @return string sparql query clause
      */
-    private function formatTypes($types, $arrayClass) {
+    protected function formatTypes($types, $arrayClass) {
         $unprefixed_types = array();
         $type = '';
         if (!empty($types)) {
@@ -636,7 +636,7 @@ EOQ;
      * @param array $fields extra fields to include in the result (array of strings). (default: null = none)
      * @return string sparql query clause
      */
-    private function formatBroader($lang, $fields) {
+    protected function formatBroader($lang, $fields) {
         // extra variable expressions to request
         $extravars = '';
         // extra fields to query for
@@ -677,7 +677,7 @@ EOF;
      * @param array $fields extra fields to include in the result (array of strings). (default: null = none)
      * @return string sparql query
      */
-    private function generateConceptSearchQuery($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent, $group, $hidden, $fields) {
+    protected function generateConceptSearchQuery($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent, $group, $hidden, $fields) {
         $gc = $this->graphClause;
         $limitandoffset = $this->formatLimitAndOffset($limit, $offset);
 
