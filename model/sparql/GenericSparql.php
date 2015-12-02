@@ -288,6 +288,10 @@ CONSTRUCT {
  ?directgroup skos:member ?uri .
  ?parent skos:member ?group .
  ?group skos:prefLabel ?grouplabel .
+ ?b1 rdf:first ?item .
+ ?b1 rdf:rest ?b2 .
+ ?item rdf:type ?it .
+ ?item skos:prefLabel ?il .
  ?group rdf:type ?grouptype . $construct
 } WHERE {
  $gc {
@@ -305,6 +309,13 @@ CONSTRUCT {
   UNION
   {
    ?uri ?p ?o .
+   OPTIONAL {
+     ?o rdf:rest* ?b1 .
+     ?b1 rdf:first ?item .
+     ?b1 rdf:rest ?b2 .
+     OPTIONAL { ?item rdf:type ?it . }
+     OPTIONAL { ?item skos:prefLabel ?il . }
+   }
    OPTIONAL {
      { ?p rdfs:label ?proplabel . }
      UNION
