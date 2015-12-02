@@ -903,8 +903,6 @@ EOQ;
         }
 
         # make text query clause
-        $textcond_pref = $use_regex ? '# regex in use' : $this->createTextQueryCondition($letter . '*', 'skos:prefLabel');
-        $textcond_alt = $use_regex ? '# regex in use' : $this->createTextQueryCondition($letter . '*', 'skos:altLabel');
         $lcletter = mb_strtolower($letter, 'UTF-8'); // convert to lower case, UTF-8 safe
         if ($use_regex) {
             $filtercond_label = "regex(str(?label), '^$letter$', 'i')";
@@ -913,7 +911,7 @@ EOQ;
             $filtercond_label = "strstarts(lcase(str(?label)), '$lcletter')";
             $filtercond_alabel = "strstarts(lcase(str(?alabel)), '$lcletter')";
         }
-        return array('textpref' => $textcond_pref, 'textalt' => $textcond_alt, 'filterpref' => $filtercond_label, 'filteralt' => $filtercond_alabel);
+        return array('filterpref' => $filtercond_label, 'filteralt' => $filtercond_alabel);
     }
 
     /**
@@ -931,8 +929,6 @@ EOQ;
         $values = $this->formatValues('?type', $classes, 'uri');
         $limitandoffset = $this->formatLimitAndOffset($limit, $offset);
         $conditions = $this->formatFilterConditions($letter);
-        $textcond_pref = $conditions['textpref'];
-        $textcond_alt = $conditions['textalt'];
         $filtercond_label = $conditions['filterpref'];
         $filtercond_alabel = $conditions['filteralt'];
 
@@ -941,7 +937,6 @@ SELECT DISTINCT ?s ?label ?alabel
 WHERE {
   $gc {
     {
-      $textcond_pref
       ?s skos:prefLabel ?label .
       FILTER (
         $filtercond_label
@@ -950,7 +945,6 @@ WHERE {
     }
     UNION
     {
-      $textcond_alt
       {
         ?s skos:altLabel ?alabel .
         FILTER (
