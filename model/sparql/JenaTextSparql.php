@@ -59,37 +59,31 @@ class JenaTextSparql extends GenericSparql
     return "{ (?s ?score ?literal) text:query ($property '$term' $lang_clause $max_results) }";
   }
 
-  /**
-   * Query for concepts with a term starting with the given letter. Also special classes '0-9' (digits),
-   * '*!' (special characters) and '*' (everything) are accepted.
-   * @param $letter the letter (or special class) to search for
-   * @param $lang language of labels
-   */
-  public function queryConceptsAlphabetical($letter, $lang, $limit=null, $offset=null, $classes=null) {
+    /**
+     * Generates the jena-text-specific sparql query used for rendering the alphabetical index.
+     * @param string $letter the letter (or special class) to search for
+     * @param string $lang language of labels
+     * @param integer $limit limits the amount of results
+     * @param integer $offset offsets the result set
+     * @param array $classes
+     * @return string sparql query
+     */
+
+  public function generateAlphabeticalListQuery($letter, $lang, $limit=null, $offset=null, $classes=null)
+  {
     if ($letter == '*' || $letter == '0-9' || $letter == '!*') {
       // text index cannot support special character queries, use the generic implementation for these
-      return parent::queryConceptAlphabetical($letter, $lang, $limit, $offset, $classes);
+      return parent::generateAlphabeticalListQuery($letter, $lang, $limit, $offset, $classes);
     }
   
     $gc = $this->graphClause;
-    $limit = ($limit) ? 'LIMIT ' . $limit : '';
-    $offset = ($offset) ? 'OFFSET ' . $offset : '';
     $classes = ($classes) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
     $values = $this->formatValues('?type', $classes, 'uri');
+    $limitandoffset = $this->formatLimitAndOffset($limit, $offset);
     
-    // eliminating whitespace and line changes when the conditions aren't needed.
-    $limitandoffset = '';
-    if ($limit && $offset)
-      $limitandoffset = "\n" . $limit . "\n" . $offset;
-    elseif ($limit)
-      $limitandoffset = "\n" . $limit;
-    elseif ($offset)
-      $limitandoffset = "\n" . $offset;
-
     # make text query clause
-    $textcond_pref = $use_regex ? '# regex in use' : $this->createTextQueryCondition($letter . '*', 'skos:prefLabel', $lang);
-    $textcond_alt = $use_regex ? '# regex in use' : $this->createTextQueryCondition($letter . '*', 'skos:altLabel', $lang);
-    $lcletter = mb_strtolower($letter, 'UTF-8'); // convert to lower case, UTF-8 safe
+    $textcond_pref = $this->createTextQueryCondition($letter . '*', 'skos:prefLabel', $lang);
+    $textcond_alt = $this->createTextQueryCondition($letter . '*', 'skos:altLabel', $lang);
 
     $query = <<<EOQ
 SELECT DISTINCT ?s ?label ?alabel
@@ -114,30 +108,7 @@ WHERE {
 }
 ORDER BY LCASE(IF(BOUND(?alabel), STR(?alabel), STR(?label))) $limitandoffset
 EOQ;
-
-    $results = $this->client->query($query);
-    $ret = array();
-
-    foreach ($results as $row) {
-      if (!isset($row->s)) continue; // don't break if query returns a single dummy result
-
-      $hit = array();
-      $hit['uri'] = $row->s->getUri();
-
-      $hit['localname'] = $row->s->localName();
-
-      $hit['prefLabel'] = $row->label->getValue();
-      $hit['lang'] = $row->label->getLang();
-
-      if (isset($row->alabel)) {
-        $hit['altLabel'] = $row->alabel->getValue();
-        $hit['lang'] = $row->alabel->getLang();
-      }
-
-      $ret[] = $hit;
-    }
-
-    return $ret;
+    return $query;
   }
 
 }

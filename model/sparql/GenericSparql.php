@@ -583,7 +583,7 @@ EOQ;
      * @param int $offset offset of results to retrieve; 0 for beginning of list
      * @return string sparql query clauses
      */
-    private function formatLimitAndOffset($limit, $offset) {
+    protected function formatLimitAndOffset($limit, $offset) {
         $limit = ($limit) ? 'LIMIT ' . $limit : '';
         $offset = ($offset) ? 'OFFSET ' . $offset : '';
         // eliminating whitespace and line changes when the conditions aren't needed.
@@ -923,7 +923,7 @@ EOQ;
      * @param array $classes
      * @return string sparql query
      */
-    private function generateAlphabeticalListQuery($letter, $lang, $limit, $offset, $classes) {
+    protected function generateAlphabeticalListQuery($letter, $lang, $limit, $offset, $classes) {
         $gc = $this->graphClause;
         $classes = ($classes) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
         $values = $this->formatValues('?type', $classes, 'uri');
