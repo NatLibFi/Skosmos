@@ -106,7 +106,7 @@ WHERE {
     FILTER NOT EXISTS { ?s owl:deprecated true }
   } $values
 }
-ORDER BY LCASE(IF(BOUND(?alabel), STR(?alabel), STR(?label))) $limitandoffset
+ORDER BY LCASE(?literal) $limitandoffset
 EOQ;
     return $query;
   }
