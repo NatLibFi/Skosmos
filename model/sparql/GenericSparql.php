@@ -1611,6 +1611,10 @@ EOQ;
     private function transformConceptGroupsResults($result) {
         $ret = array();
         foreach ($result as $row) {
+            if (!isset($row->group)) {
+                # no groups found, see issue #357
+                continue;
+            }
             $group = array('uri' => $row->group->getURI());
             if (isset($row->label)) {
                 $group['prefLabel'] = $row->label->getValue();
