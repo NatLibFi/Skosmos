@@ -29,13 +29,19 @@ class Model
     private $vocabs_by_urispace = null;
     /** how long to store retrieved URI information in APC cache */
     private $URI_FETCH_TTL = 86400; // 1 day
+    private $global_config = '';
 
     /**
      * Initializes the Model object
      */
-    public function __construct()
+    public function __construct($config)
     {
+        $this->global_config = $config;
         $this->initializeVocabularies();
+    }
+
+    public function getConfig() {
+      return $this->global_config;
     }
 
     /**
@@ -43,23 +49,23 @@ class Model
      */
     private function initializeVocabularies()
     {
-        if (!file_exists(VOCABULARIES_FILE)) {
-            throw new Exception(VOCABULARIES_FILE . ' is missing, please provide one.');
+        if (!file_exists($this->getConfig()->getVocabularyConfigFile())) {
+            throw new Exception($this->getConfig()->getVocabularyConfigFile() . ' is missing, please provide one.');
         }
 
         try {
             // use APC user cache to store parsed vocabularies.ttl configuration
             if (function_exists('apc_store') && function_exists('apc_fetch')) {
-                $key = realpath(VOCABULARIES_FILE) . ", " . filemtime(VOCABULARIES_FILE);
+                $key = realpath($this->getConfig()->getVocabularyConfigFile()) . ", " . filemtime($this->getConfig()->getVocabularyConfigFile());
                 $this->graph = apc_fetch($key);
                 if ($this->graph === false) { // was not found in cache
                     $this->graph = new EasyRdf_Graph();
-                    $this->graph->parse(file_get_contents(VOCABULARIES_FILE));
+                    $this->graph->parse(file_get_contents($this->getConfig()->getVocabularyConfigFile()));
                     apc_store($key, $this->graph);
                 }
             } else { // APC not available, parse on every request
                 $this->graph = new EasyRdf_Graph();
-                $this->graph->parse(file_get_contents(VOCABULARIES_FILE));
+                $this->graph->parse(file_get_contents($this->getConfig()->getVocabularyConfigFile()));
             }
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
@@ -216,8 +222,11 @@ class Model
      * @param array $fields extra fields to include in the result (array of strings). (default: null = none)
      * @return array search results
      */
-    public function searchConcepts($term, $vocids, $lang, $search_lang, $type = null, $parent = null, $group = null, $offset = 0, $limit = DEFAULT_SEARCH_LIMIT, $hidden = true, $fields = null)
+    public function searchConcepts($term, $vocids, $lang, $search_lang, $type = null, $parent = null, $group = null, $offset = 0, $limit = null, $hidden = true, $fields = null)
     {
+        if ($limit === null) {
+            $limit = $this->getConfig()->getDefaultSearchLimit();
+        }
         $term = trim($term);
         if ($term == "" || !preg_match('/[^*]/', $term)) {
             return array();
@@ -454,8 +463,11 @@ class Model
      * @param $endpoint string endpoint URL (default SPARQL endpoint if omitted)
      * @return Vocabulary vocabulary of this URI, or null if not found
      */
-    public function getVocabularyByGraph($graph, $endpoint = DEFAULT_ENDPOINT)
+    public function getVocabularyByGraph($graph, $endpoint = null)
     {
+        if ($endpoint) {
+            $endpoint = $this->getConfig()->getDefaultEndpoint();
+        }
         if ($this->vocabs_by_graph === null) { // initialize cache
             $this->vocabs_by_graph = array();
             foreach ($this->getVocabularies() as $voc) {
@@ -515,8 +527,7 @@ class Model
      */
     public function getResourceLabel($res, $lang)
     {
-        global $LANGUAGES;
-        $langs = array_merge(array($lang), array_keys($LANGUAGES));
+        $langs = array_merge(array($lang), array_keys($this->config->getLanguages()));
         foreach ($langs as $l) {
             $label = $res->label($l);
             if ($label !== null) {
@@ -532,7 +543,7 @@ class Model
         try {
             // change the timeout setting for external requests
             $httpclient = EasyRdf_Http::getDefaultHttpClient();
-            $httpclient->setConfig(array('timeout' => HTTP_TIMEOUT));
+            $httpclient->setConfig(array('timeout' => $this->getConfig()->getHttpTimeout()));
             EasyRdf_Http::setDefaultHttpClient($httpclient);
 
             $client = EasyRdf_Graph::newAndLoad(EasyRdf_Utils::removeFragmentFromUri($uri));
@@ -577,7 +588,7 @@ class Model
      */
     public function getDefaultSparql()
     {
-        return $this->getSparqlImplementation(DEFAULT_SPARQL_DIALECT, DEFAULT_ENDPOINT, '?graph');
+        return $this->getSparqlImplementation($this->getConfig()->getDefaultSparqlDialect(), $this->getConfig()->getDefaultEndpoint(), '?graph');
     }
 
 }

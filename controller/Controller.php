@@ -36,9 +36,8 @@ class Controller
         textdomain('skosmos');
 
         // Build arrays of language information, with 'locale' and 'name' keys
-        global $LANGUAGES; // global setting defined in config.inc
         $this->languages = array();
-        foreach ($LANGUAGES as $langcode => $locale) {
+        foreach ($this->model->getConfig()->getLanguages() as $langcode => $locale) {
             $this->languages[$langcode] = array('locale' => $locale);
             $this->setLanguageProperties($langcode);
             $this->languages[$langcode]['name'] = gettext('in_this_language');

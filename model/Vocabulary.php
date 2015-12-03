@@ -64,7 +64,7 @@ class Vocabulary extends DataObject
         $endpoint = $this->getEndpoint();
         $graph = $this->getGraph();
         $dialect = $this->resource->get('skosmos:sparqlDialect');
-        $dialect = $dialect ? $dialect->getValue() : DEFAULT_SPARQL_DIALECT;
+        $dialect = $dialect ? $dialect->getValue() : $this->model->getConfig()->getDefaultSparqlDialect();
 
         return $this->model->getSparqlImplementation($dialect, $endpoint, $graph);
     }

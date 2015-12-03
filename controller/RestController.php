@@ -66,7 +66,7 @@ class RestController extends Controller
      */
     private function parseLimit()
     {
-        $limit = filter_input(INPUT_GET, 'limit', FILTER_SANITIZE_NUMBER_INT) ? filter_input(INPUT_GET, 'limit', FILTER_SANITIZE_NUMBER_INT) : DEFAULT_TRANSITIVE_LIMIT;
+        $limit = filter_input(INPUT_GET, 'limit', FILTER_SANITIZE_NUMBER_INT) ? filter_input(INPUT_GET, 'limit', FILTER_SANITIZE_NUMBER_INT) : $this->model->getConfig()->getDefaultTransitiveLimit();
         if ($limit <= 0) {
             return $this->returnError(400, "Bad Request", "Invalid limit parameter");
         }

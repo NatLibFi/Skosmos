@@ -532,7 +532,6 @@ class Concept extends VocabularyDataObject
      */
     public function getForeignLabels()
     {
-        global $LANGUAGES;
         $labels = array();
         foreach ($this->resource->allLiterals('skos:prefLabel') as $lit) {
             // filtering away subsets of the current language eg. en vs en-GB
@@ -558,7 +557,6 @@ class Concept extends VocabularyDataObject
      */
     public function getAllLabels($property)
     {
-        global $LANGUAGES;
         $labels = array();
         if (EasyRdf_Namespace::shorten($property) !== null) {
             // shortening property labels if possible

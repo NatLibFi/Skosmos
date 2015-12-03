@@ -34,7 +34,7 @@ class WebController extends Controller
         parent::__construct($model);
 
         // initialize Twig templates
-        $tmp_dir = TEMPLATE_CACHE;
+        $tmp_dir = $model->getConfig()->getTemplateCache();
 
         // check if the cache pointed by config.inc exists, if not we create it.
         if (!file_exists($tmp_dir)) {
@@ -50,22 +50,22 @@ class WebController extends Controller
         //ENABLES DUMP() method for easy and fun debugging!
         $this->twig->addExtension(new Twig_Extension_Debug());
         // used for setting the base href for the relative urls
-        $this->base_href = (defined('BASE_HREF')) ? BASE_HREF : $this->guessBaseHref();
+        $this->base_href = ($this->model->getConfig()->getBaseHref() !== null) ? $this->model->getConfig()->getBaseHref() : $this->guessBaseHref();
         $this->twig->addGlobal("BaseHref", $this->base_href);
         // setting the service name string from the config.inc
-        $this->twig->addGlobal("ServiceName", SERVICE_NAME);
+        $this->twig->addGlobal("ServiceName", $this->model->getConfig()->getServiceName());
         // setting the service logo location from the config.inc
-        if (defined('SERVICE_LOGO')) {
-            $this->twig->addGlobal("ServiceLogo", SERVICE_LOGO);
+        if ($this->model->getConfig()->getServiceLogo() !== null) {
+            $this->twig->addGlobal("ServiceLogo", $this->model->getConfig()->getServiceLogo());
         }
 
         // setting the service custom css file from the config.inc
-        if (defined('CUSTOM_CSS')) {
-            $this->twig->addGlobal("ServiceCustomCss", CUSTOM_CSS);
+        if ($this->model->getConfig()->getCustomCss() !== null) {
+            $this->twig->addGlobal("ServiceCustomCss", $this->model->getConfig()->getCustomCss());
         }
         // used for displaying the ui language selection as a dropdown
-        if (defined('UI_LANGUAGE_DROPDOWN')) {
-            $this->twig->addGlobal("LanguageDropdown", UI_LANGUAGE_DROPDOWN);
+        if ($this->model->getConfig()->getUiLanguageDropdown() !== null) {
+            $this->twig->addGlobal("LanguageDropdown", $this->model->getConfig()->getUiLanguageDropdown());
         }
 
         // setting the list of properties to be displayed in the search results
@@ -277,7 +277,7 @@ class WebController extends Controller
      */
     public function sendFeedback($message, $fromName = null, $fromEmail = null, $fromVocab = null, $toMail = null)
     {
-        $toAddress = ($toMail) ? $toMail : FEEDBACK_ADDRESS;
+        $toAddress = ($toMail) ? $toMail : $this->model->getConfig()->getFeedbackAddress();
         if ($fromVocab !== null) {
             $message = 'Feedback from vocab: ' . strtoupper($fromVocab) . "<br />" . $message;
         }
@@ -286,7 +286,7 @@ class WebController extends Controller
         $headers = "MIME-Version: 1.0″ . '\r\n";
         $headers .= "Content-type: text/html; charset=UTF-8" . "\r\n";
         if ($toMail) {
-            $headers .= "Cc: " . FEEDBACK_ADDRESS . "\r\n";
+            $headers .= "Cc: " . $this->model->getConfig()->getFeedbackAddress() . "\r\n";
         }
 
         $headers .= "From: $fromName <$fromEmail>" . "\r\n" . 'X-Mailer: PHP/' . phpversion();
@@ -310,7 +310,7 @@ class WebController extends Controller
         } catch (Exception $e) {
             header("HTTP/1.0 404 Not Found");
             $template = $this->twig->loadTemplate('error-page.twig');
-            if (LOG_CAUGHT_EXCEPTIONS) {
+            if ($this->model->getConfig()->getLogCaughtExceptions()) {
                 error_log('Caught exception: ' . $e->getMessage());
             }
 
@@ -406,7 +406,7 @@ class WebController extends Controller
             $vocab_types = $this->model->getTypes($request->getVocabid(), $lang);
         } catch (Exception $e) {
             header("HTTP/1.0 404 Not Found");
-            if (LOG_CAUGHT_EXCEPTIONS) {
+            if ($this->model->getConfig()->getLogCaughtExceptions()) {
                 error_log('Caught exception: ' . $e->getMessage());
             }
 
@@ -448,7 +448,7 @@ class WebController extends Controller
             $search_results = $count_and_results['results'];
         } catch (Exception $e) {
             header("HTTP/1.0 404 Not Found");
-            if (LOG_CAUGHT_EXCEPTIONS) {
+            if ($this->model->getConfig()->getLogCaughtExceptions()) {
                 error_log('Caught exception: ' . $e->getMessage());
             }
 
