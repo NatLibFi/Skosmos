@@ -8,13 +8,13 @@
 /**
  * Includes the side wide settings.
  */
-require_once 'config.inc';
 require_once 'vendor/autoload.php';
 
 header("Access-Control-Allow-Origin: *"); // enable CORS for the whole REST API
 
 try {
-    $model = new Model();
+    $config = new GlobalConfig();
+    $model = new Model($config);
     $controller = new RestController($model);
     $request = new Request($model);
     $path = $request->getServerConstant('PATH_INFO') ? $request->getServerConstant('PATH_INFO') : ''; // eg. "/search"

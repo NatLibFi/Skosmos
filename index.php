@@ -6,20 +6,6 @@
  */
 
 /**
- * include site wide settings for vocabularies and languages
- */
-try {
-    if (!file_exists('./config.inc')) {
-        throw new Exception('config.inc file is missing, please provide one.');
-    }
-
-    require_once 'config.inc';
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
-    return;
-}
-
-/**
  * Use Composer autoloader to automatically load library classes.
  */
 try {
@@ -32,7 +18,8 @@ try {
     return;
 }
 
-$model = new Model();
+$config = new GlobalConfig();
+$model = new Model($config);
 $controller = new WebController($model);
 $request = new Request($model);
 
@@ -47,7 +34,7 @@ if (sizeof($parts) <= 2) {
     $lang = sizeof($parts) == 2 && $parts[1] !== '' ? $parts[1] : $controller->guessLanguage();
     header("Location: " . $lang . "/");
 } else {
-    if (array_key_exists($parts[1], $LANGUAGES)) { // global pages
+  if (array_key_exists($parts[1], $config->getLanguages())) { // global pages
         $request->setLang($parts[1]);
         $content_lang = $request->getQueryParam('clang');
         $request->setContentLang($content_lang);
@@ -76,7 +63,7 @@ if (sizeof($parts) <= 2) {
             $lang = $controller->guessLanguage();
             header("Location: " . $lang . "/");
         } else {
-            if (array_key_exists($parts[2], $LANGUAGES)) {
+            if (array_key_exists($parts[2], $config->getLanguages())) {
                 $lang = $parts[2];
                 $content_lang = $request->getQueryParam('clang') ? $request->getQueryParam('clang') : $lang;
                 $request->setContentLang($content_lang);
