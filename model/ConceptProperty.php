@@ -11,6 +11,8 @@ class ConceptProperty
     private $label;
     /** stores the property values */
     private $values;
+    /** flag whether the values are sorted, as we do lazy sorting */
+    private $is_sorted;
 
     /**
      * Label parameter seems to be optional in this phase.
@@ -22,6 +24,7 @@ class ConceptProperty
         $this->prop = $prop;
         $this->label = $label;
         $this->values = array();
+        $this->is_sorted = true;
     }
 
     /**
@@ -61,13 +64,16 @@ class ConceptProperty
      */
     public function getValues()
     {
-        $this->sortValues();
+        if (!$this->is_sorted) {
+            $this->sortValues();
+        }
         return $this->values;
     }
 
     public function addValue($value)
     {
         $this->values[$value->getLabel() . $value->getUri()] = $value;
+        $this->is_sorted = false;
     }
 
     private function sortValues()
@@ -75,7 +81,7 @@ class ConceptProperty
         if (!empty($this->values)) {
             natcasesort($this->values);
         }
-
+        $this->is_sorted = true;
     }
 
     /**
