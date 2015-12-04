@@ -16,7 +16,7 @@ class GlobalConfig {
                 throw new Exception('config.inc file is missing, please provide one.');
             }
             require_once($file_path);
-            if (isset($languages)) {
+            if (isset($LANGUAGES)) {
                 $this->languages = $LANGUAGES;
             }
         } catch (Exception $e) {
