@@ -1,11 +1,13 @@
 <?php
 
+/**
+ * GlobalConfig provides access to the Skosmos configuration in config.inc.
+ */
 class GlobalConfig {
     private $languages;
 
     public function __construct($config_name=null) 
     {
-        global $LANGUAGES;
         try {
             $file_path = dirname(__FILE__);
             if ($config_name !== null) {
