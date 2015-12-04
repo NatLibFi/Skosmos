@@ -16,6 +16,7 @@ EasyRdf_Namespace::set('isothes', 'http://purl.org/iso25964/skos-thes#');
 /**
  * Model provides access to the data.
  * @property EasyRdf_Graph $graph
+ * @property GlobalConfig $global_config
  */
 class Model
 {
@@ -29,7 +30,7 @@ class Model
     private $vocabs_by_urispace = null;
     /** how long to store retrieved URI information in APC cache */
     private $URI_FETCH_TTL = 86400; // 1 day
-    private $global_config = '';
+    private $global_config;
 
     /**
      * Initializes the Model object
@@ -40,6 +41,10 @@ class Model
         $this->initializeVocabularies();
     }
 
+    /**
+     * Returns the GlobalConfig object given to the Model as a constructor parameter.
+     * @return GlobalConfig
+     */
     public function getConfig() {
       return $this->global_config;
     }
