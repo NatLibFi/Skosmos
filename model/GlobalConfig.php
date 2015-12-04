@@ -33,6 +33,9 @@ class GlobalConfig {
         return $this->languages;
     }
     
+    /**
+     * @return string
+     */
     public function getVocabularyConfigFile() 
     {
         if (defined('VOCABULARIES_FILE')) {
@@ -49,6 +52,9 @@ class GlobalConfig {
         return null;
     }
     
+    /**
+     * @return string
+     */
     public function getDefaultEndpoint() 
     {
         if (defined('DEFAULT_ENDPOINT')) {
@@ -57,6 +63,9 @@ class GlobalConfig {
         return null;
     }
     
+    /**
+     * @return string
+     */
     public function getSparqlGraphStore() 
     {
         if (defined('SPARQL_GRAPH_STORE')) {
@@ -65,6 +74,9 @@ class GlobalConfig {
         return null;
     }
     
+    /**
+     * @return string
+     */
     public function getDefaultTransitiveLimit() 
     {
         if (defined('DEFAULT_TRANSITIVE_LIMIT')) {
@@ -81,6 +93,9 @@ class GlobalConfig {
         return null;
     }
     
+    /**
+     * @return string
+     */
     public function getTemplateCache() 
     {
         if (defined('TEMPLATE_CACHE')) {
@@ -89,6 +104,9 @@ class GlobalConfig {
         return null;
     }
     
+    /**
+     * @return string
+     */
     public function getDefaultSparqlDialect() 
     {
         if (defined('DEFAULT_SPARQL_DIALECT')) {
@@ -97,6 +115,9 @@ class GlobalConfig {
         return null;
     }
 
+    /**
+     * @return string
+     */
     public function getFeedbackAddress() 
     {
         if (defined('FEEDBACK_ADDRESS')) {
@@ -105,6 +126,9 @@ class GlobalConfig {
         return null;
     }
     
+    /**
+     * @return string
+     */
     public function getLogCaughtExceptions() 
     {
         if (defined('LOG_CAUGHT_EXCEPTIONS')) {
@@ -113,6 +137,9 @@ class GlobalConfig {
         return null;
     }
     
+    /**
+     * @return string
+     */
     public function getServiceName() 
     {
         if (defined('SERVICE_NAME')) {
@@ -121,6 +148,9 @@ class GlobalConfig {
         return null;
     }
     
+    /**
+     * @return string
+     */
     public function getServiceTagline() 
     {
         if (defined('SERVICE_TAGLINE')) {
@@ -129,6 +159,9 @@ class GlobalConfig {
         return null;
     }
     
+    /**
+     * @return string
+     */
     public function getServiceLogo() 
     {
         if (defined('SERVICE_LOGO')) {
@@ -137,6 +170,9 @@ class GlobalConfig {
         return null;
     }
     
+    /**
+     * @return string
+     */
     public function getCustomCss() 
     {
         if (defined('CUSTOM_CSS')) {
@@ -145,6 +181,9 @@ class GlobalConfig {
         return null;
     }
     
+    /**
+     * @return string
+     */
     public function getUiLanguageDropdown() 
     {
         if (defined('UI_LANGUAGE_DROPDOWN')) {
@@ -153,6 +192,9 @@ class GlobalConfig {
         return null;
     }
     
+    /**
+     * @return string
+     */
     public function getBaseHref() 
     {
         if (defined('BASE_HREF')) {
