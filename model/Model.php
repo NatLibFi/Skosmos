@@ -465,7 +465,7 @@ class Model
      */
     public function getVocabularyByGraph($graph, $endpoint = null)
     {
-        if ($endpoint) {
+        if ($endpoint === null) {
             $endpoint = $this->getConfig()->getDefaultEndpoint();
         }
         if ($this->vocabs_by_graph === null) { // initialize cache

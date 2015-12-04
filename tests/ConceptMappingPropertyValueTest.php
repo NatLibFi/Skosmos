@@ -15,7 +15,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit_Framework_TestCase
     bind_textdomain_codeset('skosmos', 'UTF-8');
     textdomain('skosmos');
 
-    $this->model = new Model();
+    $this->model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $this->vocab = $this->model->getVocabulary('mapping');
     $concepts = $this->vocab->getConceptInfo('http://www.skosmos.skos/mapping/m1', 'en');
     $this->concept = $concepts[0];

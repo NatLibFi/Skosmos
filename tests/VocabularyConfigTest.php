@@ -1,17 +1,14 @@
 <?php
 
-require_once('model/Model.php');
-
 class VocabularyConfigTest extends PHPUnit_Framework_TestCase
 {
   
   private $model; 
 
   protected function setUp() {
-    require_once 'testconfig.inc';
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');
-    $this->model = new Model();
+    $this->model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
   }
 
   /**

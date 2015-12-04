@@ -13,7 +13,7 @@ class ConceptPropertyValueLiteralTest extends PHPUnit_Framework_TestCase
     bind_textdomain_codeset('skosmos', 'UTF-8');
     textdomain('skosmos');
 
-    $this->model = new Model();
+    $this->model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $search_results = $this->model->searchConceptsAndInfo('carp', 'test', 'en', 'en'); 
     $this->concept = $search_results['results'][0];
   }

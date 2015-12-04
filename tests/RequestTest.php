@@ -6,14 +6,14 @@ class RequestTest extends PHPUnit_Framework_TestCase
   private $request;
   
   protected function setUp() {
-    require_once 'testconfig.inc';
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');
     bindtextdomain('skosmos', 'resource/translations');
     bind_textdomain_codeset('skosmos', 'UTF-8');
     textdomain('skosmos');
 
-    $this->model = new Model();
+    $config = new GlobalConfig('/../tests/testconfig.inc');
+    $this->model = new Model($config);
     $this->request = new Request($this->model);
     $search_results = $this->model->searchConceptsAndInfo('carp', 'test', 'en', 'en'); 
   }

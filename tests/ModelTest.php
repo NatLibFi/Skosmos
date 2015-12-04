@@ -8,8 +8,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    */
   public function testConstructorWithConfig()
   {
-    require_once 'testconfig.inc';
-    new Model(); 
+    new Model(new GlobalConfig('/../tests/testconfig.inc'));
   }
   
   /**
@@ -18,7 +17,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    */
 
   public function testGetVersion() {
-    $model = new Model(); 
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $version = $model->getVersion();
     $this->assertNotEmpty($version);
   }
@@ -28,7 +27,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @depends testConstructorWithConfig
    */
   public function testGetVocabularyList() {
-    $model = new Model(); 
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $categories = $model->getVocabularyList();
     foreach($categories as $category)
       foreach($category as $vocab)
@@ -40,7 +39,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @depends testConstructorWithConfig
    */
   public function testGetVocabularyCategories() {
-    $model = new Model(); 
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc')); 
     $categories = $model->getVocabularyCategories();
     foreach($categories as $category)
       $this->assertInstanceOf('VocabularyCategory', $category);
@@ -51,7 +50,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @depends testConstructorWithConfig
    */
   public function testGetVocabulariesInCategory() {
-    $model = new Model(); 
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc')); 
     $category = $model->getVocabulariesInCategory('cat_science');
     foreach($category as $vocab)
       $this->assertInstanceOf('Vocabulary', $vocab);
@@ -62,7 +61,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @depends testConstructorWithConfig
    */
   public function testGetVocabularyById() {
-    $model = new Model(); 
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc')); 
     $vocab = $model->getVocabulary('test');
     $this->assertInstanceOf('Vocabulary', $vocab);
   }
@@ -74,7 +73,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @expectedExceptionMessage Vocabulary id 'thisshouldnotbefound' not found in configuration 
    */
   public function testGetVocabularyByFalseId() {
-    $model = new Model(); 
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $vocab = $model->getVocabulary('thisshouldnotbefound');
     $this->assertInstanceOf('Vocabulary', $vocab);
   }
@@ -84,7 +83,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @depends testConstructorWithConfig
    */
   public function testGetVocabularyByGraphUri() {
-    $model = new Model(); 
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $vocab = $model->getVocabularyByGraph('http://www.skosmos.skos/test/');
     $this->assertInstanceOf('Vocabulary', $vocab);
   }
@@ -96,7 +95,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @expectedExceptionMessage no vocabulary found for graph http://no/address and endpoint http://localhost:3030/ds/sparql
    */
   public function testGetVocabularyByInvalidGraphUri() {
-    $model = new Model(); 
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $vocab = $model->getVocabularyByGraph('http://no/address');
     $this->assertInstanceOf('Vocabulary', $vocab);
   }
@@ -106,7 +105,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @depends testConstructorWithConfig
    */
   public function testGuessVocabularyFromURI() {
-    $model = new Model();
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $vocab = $model->guessVocabularyFromURI('http://www.skosmos.skos/test/T21329');
     $this->assertInstanceOf('Vocabulary', $vocab);
     $this->assertEquals('test', $vocab->getId());
@@ -116,7 +115,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @depends testConstructorWithConfig
    */
   public function testGuessVocabularyFromURIThatIsNotFound() {
-    $model = new Model();
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $vocab = $model->guessVocabularyFromURI('http://doesnot/exist');
     $this->assertEquals(null, $vocab);
   }
@@ -126,7 +125,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @depends testConstructorWithConfig
    */
   public function testGetDefaultSparql() {
-    $model = new Model();
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $sparql = $model->getDefaultSparql();
     $this->assertInstanceOf('GenericSparql', $sparql);
   }
@@ -136,7 +135,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @depends testConstructorWithConfig
    */
   public function testGetSparqlImplementation() {
-    $model = new Model();
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $sparql = $model->getSparqlImplementation('JenaText', 'http://api.dev.finto.fi/sparql', 'http://www.yso.fi/onto/test/');
     $this->assertInstanceOf('JenaTextSparql', $sparql);
   }
@@ -146,7 +145,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @depends testConstructorWithConfig
    */
   public function testSearchWithEmptyTerm() {
-    $model = new Model();
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $result = $model->searchConcepts('', '', '', '');
     $this->assertEquals(array(), $result);
   }
@@ -156,7 +155,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @depends testConstructorWithConfig
    */
   public function testSearchWithOnlyWildcard() {
-    $model = new Model();
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $result = $model->searchConcepts('*','test','en','en');
     $this->assertEquals(array(), $result);
   }
@@ -166,7 +165,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @depends testConstructorWithConfig
    */
   public function testSearchWithOnlyMultipleWildcards() {
-    $model = new Model();
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $result = $model->searchConcepts('**','test','en','en');
     $this->assertEquals(array(), $result);
     $result = $model->searchConcepts('******','test','en','en');
@@ -180,7 +179,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @expectedExceptionMessage Missing argument
    */
   public function testSearchWithNoParams() {
-    $model = new Model();
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $result = $model->searchConcepts();
   }
 
@@ -189,7 +188,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @depends testConstructorWithConfig
    */
   public function testGetTypesWithoutParams() {
-    $model = new Model();
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $result = $model->getTypes();
     $this->assertEquals(array(
       'http://www.w3.org/2004/02/skos/core#Concept' => array('label' => "skos:Concept"),
@@ -205,7 +204,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @depends testConstructorWithConfig
    */
   public function testSearchConceptsWithOneVocabCaseInsensitivity() {
-    $model = new Model();
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $result = $model->searchConcepts('bass', 'test', 'en', 'en');
     $this->assertEquals('http://www.skosmos.skos/test/ta116', $result[0]['uri']);
     $this->assertEquals('Bass', $result[0]['prefLabel']);
@@ -216,7 +215,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @depends testConstructorWithConfig
    */
   public function testSearchConceptsWithOneVocabSearchLangOtherThanLabellang() {
-    $model = new Model();
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $result = $model->searchConcepts('karppi', 'test', 'en', 'fi');
     $this->assertEquals('http://www.skosmos.skos/test/ta112', $result[0]['uri']);
     $this->assertEquals('Carp', $result[0]['prefLabel']);
@@ -228,7 +227,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @depends testConstructorWithConfig
    */
   public function testSearchConceptsWithAllVocabsCaseInsensitivity() {
-    $model = new Model();
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $result = $model->searchConcepts('bass', null, 'en', 'en');
     $this->assertEquals('http://www.skosmos.skos/test/ta116', $result[0]['uri']);
     $this->assertEquals('Bass', $result[0]['prefLabel']);
@@ -239,7 +238,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @depends testConstructorWithConfig
    */
   public function testSearchConceptsWithMultipleVocabsCaseInsensitivity() {
-    $model = new Model();
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $result = $model->searchConcepts('bass', array('test', 'testdiff'), 'en', 'en');
     $this->assertEquals('http://www.skosmos.skos/test/ta116', $result[0]['uri']);
     $this->assertEquals('Bass', $result[0]['prefLabel']);
@@ -252,7 +251,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @expectedExceptionMessage Vocabulary id 'doesnotexist' not found in configuration.
    */
   public function testSearchConceptsWithNotExistingVocabID() {
-    $model = new Model();
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $result = $model->searchConcepts('bass', array('doesnotexist', 'thisdoesnteither'), 'en', 'en');
   }
 
@@ -262,7 +261,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @depends testConstructorWithConfig
    */
   public function testSearchConceptsWithMultipleBroaders() {
-    $model = new Model();
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $result = $model->searchConcepts('multiple broaders', 'test', 'en', 'en', null, null, null, 0, 10, true, array('broader'));
     $this->assertEquals('http://www.skosmos.skos/test/ta123', $result[0]['uri']);
     $this->assertEquals('multiple broaders', $result[0]['prefLabel']);
@@ -280,7 +279,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @expectedExceptionMessage Vocabulary id 'doesnotexist' not found in configuration.
    */
   public function testSearchConceptsAndInfoWithNotExistingVocabID() {
-    $model = new Model();
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $result = $model->searchConceptsAndInfo('bass', array('doesnotexist', 'thisdoesnteither'), 'en', 'en');
   }
   
@@ -289,7 +288,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @depends testConstructorWithConfig
    */
   public function testSearchConceptsAndInfoWithOneVocabCaseInsensitivity() {
-    $model = new Model();
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $result = $model->searchConceptsAndInfo('bass', 'test', 'en', 'en');
     $this->assertEquals('http://www.skosmos.skos/test/ta116', $result['results'][0]->getUri());
     $this->assertEquals(1, $result['count']);
@@ -300,7 +299,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @depends testConstructorWithConfig
    */
   public function testGetRDFWithVocidAndURIasTurtle() {
-    $model = new Model();
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $result = $model->getRDF('test', 'http://www.skosmos.skos/test/ta116', 'text/turtle');
     $resultGraph = new EasyRdf_Graph();
     $resultGraph->parse($result, "turtle");
@@ -343,7 +342,7 @@ test:ta116
    * @depends testConstructorWithConfig
    */
   public function testGetRDFWithURIasTurtle() {
-    $model = new Model();
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $result = $model->getRDF(null, 'http://www.skosmos.skos/test/ta116', 'text/turtle');
     $resultGraph = new EasyRdf_Graph();
     $resultGraph->parse($result, "turtle");
@@ -386,7 +385,7 @@ test:ta116
    * @depends testConstructorWithConfig
    */
   public function testGetRDFWithVocidAndURIasJSON() {
-    $model = new Model();
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $result = $model->getRDF('test', 'http://www.skosmos.skos/test/ta116', 'application/json');
     
     $resultGraph = new EasyRdf_Graph();
@@ -402,7 +401,7 @@ test:ta116
    * @depends testConstructorWithConfig
    */
   public function testGetRDFWithVocidAndURIasRDFXML() {
-    $model = new Model();
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $result = $model->getRDF('test', 'http://www.skosmos.skos/test/ta116', 'application/rdf+xml');
     $resultGraph = new EasyRdf_Graph();
     $resultGraph->parse($result, "rdfxml");
@@ -458,7 +457,7 @@ test:ta116
    * @depends testConstructorWithConfig
    */
   public function testGetLanguages() {
-    $model = new Model(); 
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc')); 
     $languages = $model->getLanguages('en');
     $expected = array('English' => 'en');
     $this->assertEquals($expected, $languages);
@@ -471,7 +470,7 @@ test:ta116
    * @depends testConstructorWithConfig
    */
   public function testGetResourceFromUri() {
-    $model = new Model(); 
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc')); 
     $resource = $model->getResourceFromUri('http://www.yso.fi/onto/yso/p19378');
     $this->assertInstanceOf('EasyRdf_Resource', $resource);
     $this->assertEquals('http://www.yso.fi/onto/yso/p19378', $resource->getURI());

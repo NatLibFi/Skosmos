@@ -8,10 +8,9 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   private $vocab;
 
   protected function setUp() {
-    require_once 'testconfig.inc';
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');
-    $this->model = new Model();
+    $this->model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $this->vocab = $this->model->getVocabulary('test');
     $this->graph = $this->vocab->getGraph();
     $this->sparql = new GenericSparql('http://localhost:3030/ds/sparql', $this->graph, $this->model);

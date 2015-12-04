@@ -6,14 +6,13 @@ class ConceptPropertyValueTest extends PHPUnit_Framework_TestCase
   private $concept;
 
   protected function setUp() {
-    require_once 'testconfig.inc';
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');
     bindtextdomain('skosmos', 'resource/translations');
     bind_textdomain_codeset('skosmos', 'UTF-8');
     textdomain('skosmos');
 
-    $this->model = new Model();
+    $this->model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $search_results = $this->model->searchConceptsAndInfo('carp', 'test', 'en', 'en'); 
     $this->concept = $search_results['results'][0];
   }

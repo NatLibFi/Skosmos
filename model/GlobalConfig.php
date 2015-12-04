@@ -3,14 +3,22 @@
 class GlobalConfig {
     private $languages;
 
-    public function __construct() 
+    public function __construct($config_name=null) 
     {
         try {
+            $file_path = dirname(__FILE__);
+            if ($config_name !== null) {
+                $file_path .= $config_name;
+            } else {
+                $file_path .= '/../config.inc';
+            }
             if (!file_exists(dirname(__FILE__).'/../config.inc')) {
                 throw new Exception('config.inc file is missing, please provide one.');
             }
-            require_once(dirname(__FILE__).'/../config.inc');
-            $this->languages = $LANGUAGES;
+            require_once($file_path);
+            if (isset($languages)) {
+                $this->languages = $LANGUAGES;
+            }
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
             return;
@@ -58,6 +66,14 @@ class GlobalConfig {
     {
         if (defined('DEFAULT_TRANSITIVE_LIMIT')) {
             return DEFAULT_TRANSITIVE_LIMIT;
+        }
+        return null;
+    }
+    
+    public function getDefaultSearchLimit() 
+    {
+        if (defined('DEFAULT_SEARCH_LIMIT')) {
+            return DEFAULT_SEARCH_LIMIT;
         }
         return null;
     }
