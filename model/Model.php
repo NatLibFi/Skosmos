@@ -12,6 +12,7 @@ EasyRdf_Namespace::set('skosmos', 'http://purl.org/net/skosmos#');
 EasyRdf_Namespace::set('void', 'http://rdfs.org/ns/void#');
 EasyRdf_Namespace::set('skosext', 'http://purl.org/finnonto/schema/skosext#');
 EasyRdf_Namespace::set('isothes', 'http://purl.org/iso25964/skos-thes#');
+EasyRdf_Namespace::set('mads', 'http://www.loc.gov/mads/rdf/v1#');
 
 /**
  * Model provides access to the data.
