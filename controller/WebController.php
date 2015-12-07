@@ -250,7 +250,7 @@ class WebController extends Controller
         $feedback_name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
         $feedback_email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
         $feedback_vocab = filter_input(INPUT_POST, 'vocab', FILTER_SANITIZE_STRING);
-        $feedback_vocab_email = ($vocab !== null) ? $vocab->getFeedbackRecipient() : null;
+        $feedback_vocab_email = ($vocab !== null) ? $vocab->getConfig()->getFeedbackRecipient() : null;
 
         // if the hidden field has been set a value we have found a spam bot
         // and we do not actually send the message.
