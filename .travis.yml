@@ -1,18 +1,11 @@
 sudo: required
+dist: trusty
 language: php
 php:
   - "5.6"
-  - "5.5"
-  - "5.4"
-  - "5.3"
-before_install:
-  - sudo apt-add-repository -y ppa:webupd8team/java
-  - sudo apt-get update -qq
-  - sudo apt-get install -y oracle-java8-installer
-  - sudo update-java-alternatives -s java-8-oracle
 install:
-  - composer install --no-dev
   - composer require codeclimate/php-test-reporter
+  - composer install --no-dev
 cache:
   directories:
     - $HOME/.composer 
