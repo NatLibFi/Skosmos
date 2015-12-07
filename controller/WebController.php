@@ -114,7 +114,7 @@ class WebController extends Controller
         $this->twig->addFilter($urlFilter);
 
         // register a Twig filter for generating strings from language codes with CLDR
-        $langFilter = new Twig_SimpleFilter('lang_name', function ($langcode, $lang) use ($controller) {
+        $langFilter = new Twig_SimpleFilter('lang_name', function ($langcode, $lang) {
             return Language::getName($langcode, $lang);
         });
         $this->twig->addFilter($langFilter);
