@@ -15,7 +15,7 @@ class GlobalConfig {
             } else {
                 $file_path .= '/../config.inc';
             }
-            if (!file_exists(dirname(__FILE__).'/../config.inc')) {
+            if (!file_exists($file_path)) {
                 throw new Exception('config.inc file is missing, please provide one.');
             }
             require_once($file_path);
