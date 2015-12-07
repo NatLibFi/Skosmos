@@ -10,6 +10,7 @@
 @prefix skosmos: <http://www.skosmos.skos/> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix mads: <http://www.loc.gov/mads/rdf/v1#> .
 
 meta:TestClass a owl:Class ;
     rdfs:subClassOf skos:Concept ;
@@ -107,6 +108,19 @@ test:ta123 a skos:Concept, meta:TestClass ;
     skos:broader test:ta118, test:ta119 ;
     skos:inScheme test:conceptscheme ;
     skos:prefLabel "multiple broaders"@en .
+
+test:ta124
+  a mads:ComplexSubject, skos:Concept ;
+  skos:prefLabel "Vadefugler : Europa"@nb ;
+  mads:componentList ( test:ta125 test:ta126 ) .
+
+test:ta125
+  a mads:Topic, skos:Concept ;
+  skos:prefLabel "Vadefugler"@nb .
+
+test:ta126
+  a mads:Geographic, skos:Concept ;
+  skos:prefLabel "Europa"@nb .
 
 test:ta1 a skos:Concept, meta:TestClass ;
     skos:inScheme test:conceptscheme ;

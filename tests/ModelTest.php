@@ -451,7 +451,44 @@ test:ta116
     $expectedGraph->parse($expected, "rdfxml");
     $this->assertTrue(EasyRdf_Isomorphic::isomorphic($resultGraph, $expectedGraph));
   }
-  
+
+  /**
+   * @covers Model::getRDF
+   * @depends testConstructorWithConfig
+   */
+  public function testGetRDFShouldIncludeLists() {
+    $model = new Model();
+    $result = $model->getRDF('test', 'http://www.skosmos.skos/test/ta124', 'text/turtle');
+    $resultGraph = new EasyRdf_Graph();
+    $resultGraph->parse($result, "turtle");
+
+    $expected = '@prefix test: <http://www.skosmos.skos/test/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix mads: <http://www.loc.gov/mads/rdf/v1#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+skos:prefLabel rdfs:label "preferred label"@en .
+
+test:ta124
+  a mads:ComplexSubject, skos:Concept ;
+  skos:prefLabel "Vadefugler : Europa"@nb ;
+  mads:componentList ( test:ta125 test:ta126 ) .
+
+test:ta125
+  a mads:Topic, skos:Concept ;
+  skos:prefLabel "Vadefugler"@nb .
+
+test:ta126
+  a mads:Geographic, skos:Concept ;
+  skos:prefLabel "Europa"@nb .
+
+';
+
+    $expectedGraph = new EasyRdf_Graph();
+    $expectedGraph->parse($expected, "turtle");
+    $this->assertTrue(EasyRdf_Isomorphic::isomorphic($resultGraph, $expectedGraph));
+  }
+
   /**
    * @covers Model::getLanguages
    * @depends testConstructorWithConfig
