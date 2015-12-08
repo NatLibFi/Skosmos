@@ -457,7 +457,7 @@ test:ta116
    * @depends testConstructorWithConfig
    */
   public function testGetRDFShouldIncludeLists() {
-    $model = new Model();
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc')); 
     $result = $model->getRDF('test', 'http://www.skosmos.skos/test/ta124', 'text/turtle');
     $resultGraph = new EasyRdf_Graph();
     $resultGraph->parse($result, "turtle");
