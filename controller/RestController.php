@@ -309,13 +309,13 @@ class RestController extends Controller
         } else if (isset($vocab_stats[$groupClass])) {
             $ret['conceptGroups'] = array(
                 'class' => $groupClass,
-                'label' => isset($vocab_stats[$groupClass]['label']) ? $vocab_stats[$groupClass]['label'] : gettext($groupClass),
+                'label' => isset($vocab_stats[$groupClass]['label']) ? $vocab_stats[$groupClass]['label'] : gettext(EasyRdf_Namespace::shorten($groupClass)),
                 'count' => $vocab_stats[$groupClass]['count'],
             );
         } else if (isset($vocab_stats[$arrayClass])) {
             $ret['arrays'] = array(
                 'class' => $arrayClass,
-                'label' => isset($vocab_stats[$arrayClass]['label']) ? $vocab_stats[$arrayClass]['label'] : gettext($arrayClass),
+                'label' => isset($vocab_stats[$arrayClass]['label']) ? $vocab_stats[$arrayClass]['label'] : gettext(EasyRdf_Namespace::shorten($arrayClass)),
                 'count' => $vocab_stats[$arrayClass]['count'],
             );
         }
