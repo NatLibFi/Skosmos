@@ -190,11 +190,11 @@ class ModelTest extends PHPUnit_Framework_TestCase
     $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $result = $model->getTypes();
     $this->assertEquals(array(
-      'http://www.w3.org/2004/02/skos/core#Concept' => array('label' => "skos:Concept"),
+      'http://www.w3.org/2004/02/skos/core#Concept' => array('label' => "Concept"),
       'http://www.skosmos.skos/test-meta/TestClass' => array(
         'superclass' => 'http://www.w3.org/2004/02/skos/core#Concept'
       ),
-      'http://www.w3.org/2004/02/skos/core#Collection' => array('label' => "skos:Collection")
+      'http://www.w3.org/2004/02/skos/core#Collection' => array('label' => "Collection")
     ), $result);
   }
 
