@@ -15,7 +15,6 @@
     <whitelist processUncoveredFilesFromWhitelist="true">
         <directory suffix=".php">model</directory>
         <directory suffix=".php">model/sparql</directory>
-        <directory suffix=".php">controller</directory>
     </whitelist>
   </filter>
 </phpunit>
