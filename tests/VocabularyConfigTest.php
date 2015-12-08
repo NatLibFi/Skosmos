@@ -104,8 +104,7 @@ class VocabularyConfigTest extends PHPUnit_Framework_TestCase
   
   /**
    * @covers VocabularyConfig::getDefaultLanguage
-   * @expectedException \Exception
-   * @expectedExceptionMessage Default language for vocabulary 'testdiff' unknown, choosing
+   * @expectedException PHPUnit_Framework_Error 
    */
   public function testGetDefaultLanguageWhenNotSet() {
     $vocab = $this->model->getVocabulary('testdiff');

@@ -175,8 +175,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
   /**
    * @covers Model::searchConcepts
    * @depends testConstructorWithConfig
-   * @expectedException \Exception
-   * @expectedExceptionMessage Missing argument
+   * @expectedException PHPUnit_Framework_Error
    */
   public function testSearchWithNoParams() {
     $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));

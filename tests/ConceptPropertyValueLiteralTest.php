@@ -41,8 +41,7 @@ class ConceptPropertyValueLiteralTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers ConceptPropertyValueLiteral::getLabel
-   * @expectedException \Exception
-   * @expectedExceptionMessage DateTime::__construct(): Failed to parse time string (1986-21-00) at position 6 (1): Unexpected character
+   * @expectedException PHPUnit_Framework_Error
    */
   public function testGetLabelThatIsABrokenDate() {
     $vocab = $this->model->getVocabulary('dates');

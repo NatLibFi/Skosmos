@@ -41,7 +41,7 @@
     "twitter/typeahead.js": "v0.10.5",
     "willdurand/negotiation": "1.3.*",
     "vakata/jstree": "3.2.*",
-    "phpunit/phpunit": "4.2.*",
+    "phpunit/phpunit": "5.1.*",
     "punic/punic": "1.4.0",
     "ml/json-ld": "1.*",
     "medialize/uri.js": "1.15.1",
