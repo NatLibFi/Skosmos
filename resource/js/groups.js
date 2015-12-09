@@ -38,7 +38,7 @@ function buildGroupTree(response) {
       data.push(groupobj);
     }
   }
-  return data;
+  return JSON.parse(JSON.stringify(data));
 }
 
 function fixStates(groupobj) {
