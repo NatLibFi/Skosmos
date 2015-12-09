@@ -28,12 +28,22 @@ class GlobalConfig {
         }
     }
 
+    /**
+     * Returns the UI languages specified in the configuration or defaults to
+     * only show English
+     * @return array 
+     */
     public function getLanguages() 
     {
-        return $this->languages;
+        if ($this->languages) {
+            return $this->languages;
+        }
+        return array('en' => 'en_GB.utf8');
     }
     
     /**
+     * Returns the vocabulary configuration file specified the configuration
+     * or vocabularies.ttl if not found.
      * @return string
      */
     public function getVocabularyConfigFile() 
@@ -41,18 +51,25 @@ class GlobalConfig {
         if (defined('VOCABULARIES_FILE')) {
             return VOCABULARIES_FILE;
         }
-        return null;
+        return 'vocabularies.ttl';
     }
     
+    /**
+     * Returns the external HTTP request timeout in seconds or the default value
+     * of 5 seconds if not specified in the configuration.
+     * @return integer
+     */
     public function getHttpTimeout() 
     {
         if (defined('HTTP_TIMEOUT')) {
             return HTTP_TIMEOUT;
         }
-        return null;
+        return 5;
     }
     
     /**
+     * Returns the sparql endpoint address defined in the configuration. If
+     * not then defaulting to http://localhost:3030/ds/sparql 
      * @return string
      */
     public function getDefaultEndpoint() 
@@ -60,7 +77,7 @@ class GlobalConfig {
         if (defined('DEFAULT_ENDPOINT')) {
             return DEFAULT_ENDPOINT;
         }
-        return null;
+        return 'http://localhost:3030/ds/sparql';
     }
     
     /**
@@ -75,25 +92,34 @@ class GlobalConfig {
     }
     
     /**
-     * @return string
+     * Returns the maximum number of items to return in transitive queries if defined
+     * in the configuration or the default value of 1000.
+     * @return integer 
      */
     public function getDefaultTransitiveLimit() 
     {
         if (defined('DEFAULT_TRANSITIVE_LIMIT')) {
             return DEFAULT_TRANSITIVE_LIMIT;
         }
-        return null;
+        return 1000;
     }
     
+    /**
+     * Returns the maximum number of items to return in search queries if defined
+     * in the configuration or the default value of 100.
+     * @return integer 
+     */
     public function getDefaultSearchLimit() 
     {
         if (defined('DEFAULT_SEARCH_LIMIT')) {
             return DEFAULT_SEARCH_LIMIT;
         }
-        return null;
+        return 100;
     }
     
     /**
+     * Returns the configured location for the twig template cache and if not
+     * defined defaults to "/tmp/skosmos-template-cache"
      * @return string
      */
     public function getTemplateCache() 
@@ -101,10 +127,12 @@ class GlobalConfig {
         if (defined('TEMPLATE_CACHE')) {
             return TEMPLATE_CACHE;
         }
-        return null;
+        return '/tmp/skosmos-template-cache';
     }
     
     /**
+     * Returns the defined sparql-query extension eg. "JenaText" or 
+     * if not defined falling back to SPARQL 1.1
      * @return string
      */
     public function getDefaultSparqlDialect() 
@@ -112,10 +140,11 @@ class GlobalConfig {
         if (defined('DEFAULT_SPARQL_DIALECT')) {
             return DEFAULT_SPARQL_DIALECT;
         }
-        return null;
+        return 'Generic';
     }
 
     /**
+     * Returns the feedback address defined in the configuration.
      * @return string
      */
     public function getFeedbackAddress() 
@@ -127,6 +156,7 @@ class GlobalConfig {
     }
     
     /**
+     * Returns true if exception logging has been configured.
      * @return string
      */
     public function getLogCaughtExceptions() 
@@ -134,7 +164,7 @@ class GlobalConfig {
         if (defined('LOG_CAUGHT_EXCEPTIONS')) {
             return LOG_CAUGHT_EXCEPTIONS;
         }
-        return null;
+        return FALSE;
     }
     
     /**
@@ -145,7 +175,7 @@ class GlobalConfig {
         if (defined('SERVICE_NAME')) {
             return SERVICE_NAME;
         }
-        return null;
+        return 'Skosmos';
     }
     
     /**
@@ -189,7 +219,7 @@ class GlobalConfig {
         if (defined('UI_LANGUAGE_DROPDOWN')) {
             return UI_LANGUAGE_DROPDOWN;
         }
-        return null;
+        return FALSE;
     }
     
     /**
