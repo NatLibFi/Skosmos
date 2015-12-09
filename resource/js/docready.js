@@ -504,8 +504,8 @@ $(function() { // DOCUMENT READY
         localname = '';
         params.uri = datum.uri;
       }
-      if ($('input[name=anylang]').is(':checked')) { params.anylang = 'on'; }
-      if ($('input[name=anylang]').is(':checked') && clang && clang !== lang) { params.clang = clang; }
+      if ($('input[name=anylang]').is(':checked')) { params.anylang = 'on'; params.clang = datum.lang }
+      else if (clang && clang !== lang) { params.clang = clang; }
       var paramstr = $.isEmptyObject(params) ? '' : '?' + $.param(params);
       var base_href = $('base').attr('href'); // see #315
       if (datum.type && (datum.type.indexOf('skos:Collection') !== -1 || datum.type.indexOf('isothes:ConceptGroup') !== -1)) {
