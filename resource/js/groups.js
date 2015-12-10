@@ -63,7 +63,7 @@ function invokeGroupTree() {
       'data' : 
         function(node, cb) { 
           var json_url = (node.id !== '#') ? (rest_base_url + vocab + '/groupMembers') : (rest_base_url + vocab + '/groups');
-          var params = (node.id !== '#') ? $.param({'uri' : node.id, 'lang' : content_lang}): $.param({'lang' : content_lang});
+          var params = (node.id !== '#') ? $.param({'uri' : node.a_attr['data-uri'], 'lang' : content_lang}): $.param({'lang' : content_lang});
           $.ajax({
             data: params,
             url: json_url, 
@@ -74,7 +74,7 @@ function invokeGroupTree() {
                 var children = [];
                 for (var i in response.members) {
                   var member = response.members[i];
-                  var child = {'id' : member.uri, 'text' : member.prefLabel,'parent' : node.id, children : false, a_attr : { "href" : vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(member.uri)}};
+                  var child = {'text' : member.prefLabel,'parent' : node.a_attr['data-uri'], children : false, a_attr : { 'data-uri' : member.uri, "href" : vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(member.uri)}};
                   if (member.hasMembers || member.isSuper) {
                     child.children = true;
                   }
@@ -85,9 +85,9 @@ function invokeGroupTree() {
                     child.a_attr.class = 'group';
                     child.a_attr.href = vocab + '/' + lang + '/groups/?uri=' + encodeURIComponent(member.uri);
                   }
-                  children.push(child);
+                  children.push(JSON.parse(JSON.stringify(child)));
                 }
-                cb(children);
+                cb(JSON.parse(JSON.stringify(children)));
               }
             }
           });
@@ -100,7 +100,7 @@ function invokeGroupTree() {
 }
 
 function createGroupNode(uri, groupObject) {
-  var node = {'id' : uri, children : [], a_attr : { "href" : vocab + '/' + lang + '/groups/?uri=' + encodeURIComponent(uri), "class" : "group" }};
+  var node = {children : [], a_attr : {'data-uri' : uri, "href" : vocab + '/' + lang + '/groups/?uri=' + encodeURIComponent(uri), "class" : "group" }};
   node.text = groupObject.prefLabel;
   if (groupObject.hasMembers || groupObject.isSuper)
     node.children = true;

@@ -394,12 +394,9 @@ $(function() { // DOCUMENT READY
               $('#hier-trigger').attr('href', event.target.href);
               updateTitle(data);
               updateTopbarLang(data);
-              //// take the content language buttons from the response
-              //$('.header-float .dropdown-menu').empty().append($('.header-float .dropdown-menu', data).html());
               $content.empty().append($('.content', data).html());
               $('.nav').scrollTop(0);
               if (window.history.pushState) { window.history.pushState(null, null, encodeURI(event.target.href)); }
-              updateTitle(data);
               // take the content language buttons from the response
               $('.header-float .dropdown-menu').empty().append($('.header-float .dropdown-menu', data).html());
             }
