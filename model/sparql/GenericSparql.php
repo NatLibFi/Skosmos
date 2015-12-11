@@ -1595,7 +1595,7 @@ EOQ;
     private function generateConceptGroupsQuery($groupClass, $lang) {
         $gc = $this->graphClause;
         $query = <<<EOQ
-SELECT ?group (GROUP_CONCAT(STR(?child)) as ?children) ?label ?members ?notation
+SELECT ?group (GROUP_CONCAT(DISTINCT STR(?child)) as ?children) ?label ?members ?notation
 WHERE {
  $gc {
    ?group a <$groupClass> .
