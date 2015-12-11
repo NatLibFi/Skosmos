@@ -56,7 +56,7 @@ class JenaTextSparql extends GenericSparql
     
     $max_results = $this->MAX_N;
 
-    return "{ (?s ?score ?literal) text:query ($property '$term' $lang_clause $max_results) }";
+    return "(?s ?score ?literal) text:query ($property '$term' $lang_clause $max_results)";
   }
 
     /**
@@ -127,26 +127,26 @@ class JenaTextSparql extends GenericSparql
 
         # make text query clauses
         $textcond = $this->createTextQueryCondition($term, '?prop', $search_lang);
-
-        # order of graph clause and text query depends on whether we are performing global search
-        # global search: text query first, then process by graph
-        # local search: limit by graph first, then graph-specific text query
-        $graph_text = $this->isDefaultEndpoint() ? "$textcond \n $gc {" : "$gc { $textcond \n";
+        
+        if ($this->isDefaultEndpoint()) {
+            # if doing a global search, we should target the union graph instead of a specific graph
+            $textcond = "GRAPH <urn:x-arq:UnionGraph> { $textcond }";
+        }
 
         $query = <<<EOQ
 SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph (GROUP_CONCAT(DISTINCT ?type) as ?types)
 $extravars
 WHERE {
  $values_prop
- $graph_text
+ $gc {
+  $textcond
   $formattedtype
-  { $pgcond
-   ?s rdf:type ?type .
-   OPTIONAL {
-    ?s skos:prefLabel ?label .
-    FILTER ($labelcond_label)
-   } $labelcond_fallback $extrafields
-  }
+  $pgcond
+  ?s rdf:type ?type .
+  OPTIONAL {
+   ?s skos:prefLabel ?label .
+   FILTER ($labelcond_label)
+  } $labelcond_fallback $extrafields
   FILTER NOT EXISTS { ?s owl:deprecated true }
  }
  BIND(IF(?prop = skos:prefLabel && ?literal != ?label, ?literal, ?unbound) as ?plabel)
