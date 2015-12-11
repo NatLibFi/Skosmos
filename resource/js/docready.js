@@ -232,7 +232,7 @@ $(function() { // DOCUMENT READY
   });
 
   // event handler for clicking the hierarchy concepts
-  $(document).on('click', '.jstree-no-icons a',
+  $(document).on('click', '.concept-hierarchy a',
       function(event) {
         event.preventDefault();
         var $content = $('.content');
@@ -346,7 +346,7 @@ $(function() { // DOCUMENT READY
         $('.active').removeClass('active');
         $('#hier-trigger').parent().addClass('active');
         $('.pagination').hide();
-        $content.append('<div class="sidebar-grey"></div>');
+        $content.append('<div class="sidebar-grey concept-hierarchy"></div>');
         invokeParentTree(getTreeConfiguration()); 
         $('#hier-trigger').attr('href', '#');
         return false;
@@ -396,7 +396,8 @@ $(function() { // DOCUMENT READY
               updateTopbarLang(data);
               $content.empty().append($('.content', data).html());
               $('.nav').scrollTop(0);
-              if (window.history.pushState) { window.history.pushState(null, null, encodeURI(event.target.href)); }
+              if (window.history.pushState) { window.history.pushState(null, null, event.target.href); }
+              updateTitle(data);
               // take the content language buttons from the response
               $('.header-float .dropdown-menu').empty().append($('.header-float .dropdown-menu', data).html());
             }
