@@ -138,5 +138,13 @@ class GlobalConfigTest extends PHPUnit_Framework_TestCase
     $actual = $this->config->getBaseHref();
     $this->assertEquals(null, $actual);
   }
+
+  /**
+   * @covers GlobalConfig::getVocabulariesFile
+   */
+  public function testGetVocabularyConfigFile() {
+    $actual = $this->config->getVocabularyConfigFile();
+    $this->assertEquals('tests/testvocabularies.ttl', $actual);
+  }
 }
 

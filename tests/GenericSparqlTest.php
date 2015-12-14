@@ -583,6 +583,8 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GenericSparql::listConceptGroupContents
+   * @covers GenericSparql::generateConceptGroupContentsQuery
+   * @covers GenericSparql::transformConceptGroupContentsResults
    */
   public function testListConceptGroupContentsIncludingDeprecatedConcept()
   {
