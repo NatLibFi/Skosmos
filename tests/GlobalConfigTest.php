@@ -140,7 +140,7 @@ class GlobalConfigTest extends PHPUnit_Framework_TestCase
   }
 
   /**
-   * @covers GlobalConfig::getVocabulariesFile
+   * @covers GlobalConfig::getVocabularyConfigFile
    */
   public function testGetVocabularyConfigFile() {
     $actual = $this->config->getVocabularyConfigFile();
