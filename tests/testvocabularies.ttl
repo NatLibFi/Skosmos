@@ -94,6 +94,14 @@
 	skosmos:language "en";
 	skosmos:sparqlGraph <http://www.skosmos.skos/mapping/> .
 
+:changes a skosmos:Vocabulary, void:Dataset ;
+	dc11:title "A vocabulary for testing the change list creation"@en ;
+	dc:subject :cat_general ;
+	void:uriSpace "http://www.skosmos.skos/changes/";
+	void:sparqlEndpoint <http://localhost:3030/ds/sparql> ;
+	skosmos:language "en";
+	skosmos:sparqlGraph <http://www.skosmos.skos/changes/> .
+
 <http://skosmos.skos/dump/test/groups> dc:format "application/rdf+xml" .
 
 :cat_science a skos:Concept ;

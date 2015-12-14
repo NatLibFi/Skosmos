@@ -595,5 +595,23 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('http://www.skosmos.skos/groups/ta113', $actual[0]['uri']);
     $this->assertEquals(1, sizeof($actual));
   }
+
+  /**
+   * @covers GenericSparql::queryChangeList
+   * @covers GenericSparql::generateChangeListQuery
+   * @covers GenericSparql::transFormChangeListResults
+   */
+  public function testQueryChangeList()
+  {
+    $voc = $this->model->getVocabulary('changes');
+    $graph = $voc->getGraph();
+    $sparql = new GenericSparql('http://localhost:3030/ds/sparql', $graph, $this->model);
+    $actual = $sparql->queryChangeList('en', 0, 'dc11:created');
+    $order = array();
+    foreach($actual as $concept) {
+        array_push($order, $concept['prefLabel']);
+    }
+    $this->assertEquals(4, sizeof($actual));
+    $this->assertEquals(array('Fourth date', 'Hurr Durr', 'Second date', 'A date'), $order);
+  }
 }
-  
