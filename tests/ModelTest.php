@@ -189,13 +189,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
   public function testGetTypesWithoutParams() {
     $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $result = $model->getTypes();
-    $this->assertEquals(array(
-      'http://www.w3.org/2004/02/skos/core#Concept' => array('label' => "Concept"),
-      'http://www.skosmos.skos/test-meta/TestClass' => array(
-        'superclass' => 'http://www.w3.org/2004/02/skos/core#Concept'
-      ),
-      'http://www.w3.org/2004/02/skos/core#Collection' => array('label' => "Collection")
-    ), $result);
+    $this->assertEquals(array('http://www.w3.org/2004/02/skos/core#Concept', 'http://www.w3.org/2004/02/skos/core#Collection', 'http://purl.org/iso25964/skos-thes#ThesaurusArray', 'http://www.skosmos.skos/test-meta/TestClass'), array_keys($result));
   }
 
   /**
