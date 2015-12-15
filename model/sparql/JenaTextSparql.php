@@ -58,16 +58,6 @@ class JenaTextSparql extends GenericSparql {
 	}
 
 	/**
-	 * Generates the jena-text-specific sparql query used for rendering the alphabetical index.
-	 * @param string $letter the letter (or special class) to search for
-	 * @param string $lang language of labels
-	 * @param integer $limit limits the amount of results
-	 * @param integer $offset offsets the result set
-	 * @param array $classes
-	 * @return string sparql query
-	 */
-
-	/**
 	 * Query for concepts using a search term, with the jena-text index.
 	 * @param string $term search term
 	 * @param array $vocabs array of Vocabulary objects to search; empty for global search
@@ -157,6 +147,16 @@ $values_graph
 EOQ;
 		return $query;
 	}
+
+	/**
+	 * Generates the jena-text-specific sparql query used for rendering the alphabetical index.
+	 * @param string $letter the letter (or special class) to search for
+	 * @param string $lang language of labels
+	 * @param integer $limit limits the amount of results
+	 * @param integer $offset offsets the result set
+	 * @param array $classes
+	 * @return string sparql query
+	 */
 
 	public function generateAlphabeticalListQuery($letter, $lang, $limit = null, $offset = null, $classes = null) {
 		if ($letter == '*' || $letter == '0-9' || $letter == '!*') {
