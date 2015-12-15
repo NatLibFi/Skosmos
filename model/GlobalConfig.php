@@ -212,7 +212,7 @@ class GlobalConfig {
     }
     
     /**
-     * @return string
+     * @return boolean
      */
     public function getUiLanguageDropdown() 
     {
