@@ -400,6 +400,10 @@ WHERE {
       UNION
       { BIND( skos:Collection as ?type ) }
       UNION
+      { BIND( isothes:ConceptGroup as ?type ) }
+      UNION
+      { BIND( isothes:ThesaurusArray as ?type ) }
+      UNION
       { ?type rdfs:subClassOf/rdfs:subClassOf* skos:Concept . }
       UNION
       { ?type rdfs:subClassOf/rdfs:subClassOf* skos:Collection . }
