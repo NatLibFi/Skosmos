@@ -533,7 +533,7 @@ class Model
      */
     public function getResourceLabel($res, $lang)
     {
-        $langs = array_merge(array($lang), array_keys($this->config->getLanguages()));
+        $langs = array_merge(array($lang), array_keys($this->getConfig()->getLanguages()));
         foreach ($langs as $l) {
             $label = $res->label($l);
             if ($label !== null) {
