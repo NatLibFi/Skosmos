@@ -663,6 +663,70 @@ EOF;
     }
 
     /**
+     * Inner query for concepts using a search term.
+     * @param string $term search term
+     * @param string $lang language code of the returned labels
+     * @param string $search_lang language code used for matching labels (null means any language)
+     * @param array $props properties to target e.g. array('skos:prefLabel','skos:altLabel')
+     * @return string sparql query
+     */
+    protected function generateConceptSearchQueryInner($term, $lang, $search_lang, $props) {
+        // extra conditions for label language, if specified
+        $labelcond_match = ($search_lang) ? "&& LANGMATCHES(lang(?match), '$search_lang')" : "";
+        $labelcond_label = ($lang) ? "LANGMATCHES(lang(?label), '$lang')" : "LANGMATCHES(lang(?label), lang(?match))";
+        // if search language and UI/display language differ, must also consider case where there is no prefLabel in
+        // the display language; in that case, should use the label with the same language as the matched label
+        $labelcond_fallback = ($search_lang != $lang) ?
+          "OPTIONAL { # in case previous OPTIONAL block gives no labels\n" .
+          "?s skos:prefLabel ?label . FILTER (LANGMATCHES(LANG(?label), LANG(?match))) }" : "";
+
+        $values_prop = $this->formatValues('?prop', $props);
+
+        # use appropriate matching function depending on query type: =, strstarts, strends or full regex
+        if (preg_match('/^[^\*]+$/', $term)) { // exact query
+            $term = str_replace('\\', '\\\\', $term); // quote slashes
+            $term = str_replace('\'', '\\\'', mb_strtolower($term, 'UTF-8')); // make lowercase and escape single quotes
+            $filtercond = "LCASE(STR(?match)) = '$term'";
+        } elseif (preg_match('/^[^\*]+\*$/', $term)) { // prefix query
+            $term = substr($term, 0, -1); // remove the final asterisk
+            $term = str_replace('\\', '\\\\', $term); // quote slashes
+            $term = str_replace('\'', '\\\'', mb_strtolower($term, 'UTF-8')); // make lowercase and escape single quotes
+            $filtercond = "STRSTARTS(LCASE(STR(?match)), '$term')";
+        } elseif (preg_match('/^\*[^\*]+$/', $term)) { // suffix query
+            $term = substr($term, 1); // remove the preceding asterisk
+            $term = str_replace('\\', '\\\\', $term); // quote slashes
+            $term = str_replace('\'', '\\\'', mb_strtolower($term, 'UTF-8')); // make lowercase and escape single quotes
+            $filtercond = "STRENDS(LCASE(STR(?match)), '$term')";
+        } else { // too complicated - have to use a regex
+            # make sure regex metacharacters are not passed through
+            $term = str_replace('\\', '\\\\', preg_quote($term));
+            $term = str_replace('\\\\*', '.*', $term); // convert asterisk to regex syntax
+            $term = str_replace('\'', '\\\'', $term); // ensure single quotes are quoted
+            $filtercond = "REGEX(STR(?MATCH), '^$term$', 'i')";
+        }
+        
+        $query = <<<EOQ
+SELECT ?s ?match ?label ?plabel ?alabel ?hlabel
+WHERE {
+ $values_prop
+ ?s ?prop ?match .
+ FILTER (
+  $filtercond
+  $labelcond_match
+ )
+ OPTIONAL {
+  ?s skos:prefLabel ?label .
+  FILTER ($labelcond_label)
+ } $labelcond_fallback
+ BIND(IF(?prop = skos:prefLabel && ?match != ?label, ?match, ?unbound) AS ?plabel)
+ BIND(IF(?prop = skos:altLabel, ?match, ?unbound) AS ?alabel)
+ BIND(IF(?prop = skos:hiddenLabel, ?match, ?unbound) AS ?hlabel)
+}
+EOQ;
+        return $query;    
+    }
+
+    /**
      * Query for concepts using a search term.
      * @param string $term search term
      * @param array $vocabs array of Vocabulary objects to search; empty for global search
@@ -688,16 +752,6 @@ EOF;
         $extravars = $formattedbroader['extravars'];
         $extrafields = $formattedbroader['extrafields'];
 
-        // extra conditions for label language, if specified
-        $labelcond_match = ($search_lang) ? "&& langMatches(lang(?match), '$search_lang')" : "";
-        $labelcond_label = ($lang) ? "langMatches(lang(?label), '$lang')" : "langMatches(lang(?label), lang(?match))";
-        // if search language and UI/display language differ, must also consider case where there is no prefLabel in
-        // the display language; in that case, should use the label with the same language as the matched label
-        $labelcond_fallback = ($search_lang != $lang) ?
-        "OPTIONAL { # in case previous OPTIONAL block gives no labels
-       ?s skos:prefLabel ?label .
-       FILTER (langMatches(lang(?label), lang(?match))) }" : "";
-
         // extra conditions for parent and group, if specified
         $parentcond = ($parent) ? "?s skos:broader+ <$parent> ." : "";
         $groupcond = ($group) ? "<$group> skos:member ?s ." : "";
@@ -711,65 +765,31 @@ EOF;
             $props[] = 'skos:hiddenLabel';
         }
 
-        $values_prop = $this->formatValues('?prop', $props);
-
         $values_graph = $this->formatValuesGraph($vocabs);
 
+        // remove futile asterisks from the search term
         while (strpos($term, '**') !== false) {
             $term = str_replace('**', '*', $term);
         }
-        // removes futile asterisks
-
-        # use appropriate matching function depending on query type: =, strstarts, strends or full regex
-        if (preg_match('/^[^\*]+$/', $term)) { // exact query
-            $term = str_replace('\\', '\\\\', $term); // quote slashes
-            $term = str_replace('\'', '\\\'', mb_strtolower($term, 'UTF-8')); // make lowercase and escape single quotes
-            $filtercond = "lcase(str(?match)) = '$term'";
-        } elseif (preg_match('/^[^\*]+\*$/', $term)) { // prefix query
-            $term = substr($term, 0, -1); // remove the final asterisk
-            $term = str_replace('\\', '\\\\', $term); // quote slashes
-            $term = str_replace('\'', '\\\'', mb_strtolower($term, 'UTF-8')); // make lowercase and escape single quotes
-            $filtercond = "strstarts(lcase(str(?match)), '$term')";
-        } elseif (preg_match('/^\*[^\*]+$/', $term)) { // suffix query
-            $term = substr($term, 1); // remove the preceding asterisk
-            $term = str_replace('\\', '\\\\', $term); // quote slashes
-            $term = str_replace('\'', '\\\'', mb_strtolower($term, 'UTF-8')); // make lowercase and escape single quotes
-            $filtercond = "strends(lcase(str(?match)), '$term')";
-        } else { // too complicated - have to use a regex
-            # make sure regex metacharacters are not passed through
-            $term = str_replace('\\', '\\\\', preg_quote($term));
-            $term = str_replace('\\\\*', '.*', $term); // convert asterisk to regex syntax
-            $term = str_replace('\'', '\\\'', $term); // ensure single quotes are quoted
-            $filtercond = "regex(str(?match), '^$term$', 'i')";
-        }
+        
+        $innerquery = $this->generateConceptSearchQueryInner($term, $lang, $search_lang, $props);
 
         $query = <<<EOQ
 SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph (GROUP_CONCAT(DISTINCT ?type) as ?types)
 $extravars
 WHERE {
  $gc {
+  { $innerquery }
   $formattedtype
   { $pgcond
-   ?s rdf:type ?type .
-   ?s ?prop ?match .
-   FILTER (
-    $filtercond
-    $labelcond_match
-   )
-   OPTIONAL {
-    ?s skos:prefLabel ?label .
-    FILTER ($labelcond_label)
-   } $labelcond_fallback $extrafields
+   ?s a ?type .
+   $extrafields
   }
   FILTER NOT EXISTS { ?s owl:deprecated true }
  }
- BIND(IF(?prop = skos:prefLabel && ?match != ?label, ?match, ?unbound) as ?plabel)
- BIND(IF(?prop = skos:altLabel, ?match, ?unbound) as ?alabel)
- BIND(IF(?prop = skos:hiddenLabel, ?match, ?unbound) as ?hlabel)
- $values_prop
 }
-GROUP BY ?match ?s ?label ?plabel ?alabel ?hlabel ?graph ?prop
-ORDER BY lcase(str(?match)) lang(?match) $orderextra $limitandoffset
+GROUP BY ?s ?label ?plabel ?alabel ?hlabel ?graph
+ORDER BY LCASE(STR(?match)) LANG(?match) $orderextra $limitandoffset
 $values_graph
 EOQ;
         return $query;
