@@ -69,7 +69,6 @@ class JenaTextSparql extends GenericSparql
      */
     protected function generateConceptSearchQueryInner($term, $lang, $search_lang, $props) {
         // extra conditions for label language, if specified
-        $labelcond_match = ($search_lang) ? "&& LANGMATCHES(lang(?match), '$search_lang')" : "";
         $labelcond_label = ($lang) ? "LANGMATCHES(lang(?label), '$lang')" : "LANGMATCHES(lang(?label), lang(?match))";
         // if search language and UI/display language differ, must also consider case where there is no prefLabel in
         // the display language; in that case, should use the label with the same language as the matched label
