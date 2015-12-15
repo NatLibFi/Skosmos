@@ -157,7 +157,7 @@ class GlobalConfig {
     
     /**
      * Returns true if exception logging has been configured.
-     * @return string
+     * @return boolean 
      */
     public function getLogCaughtExceptions() 
     {
