@@ -56,67 +56,29 @@ class JenaTextSparql extends GenericSparql
 
         $max_results = $this->MAX_N;
 
-        return "(?s ?score ?literal) text:query ($property '$term' $lang_clause $max_results)";
+        return "(?s ?score ?match) text:query ($property '$term' $lang_clause $max_results) .";
     }
 
     /**
-     * Query for concepts using a search term, with the jena-text index.
+     * Jena-text specific inner query for concepts using a search term.
      * @param string $term search term
-     * @param array $vocabs array of Vocabulary objects to search; empty for global search
      * @param string $lang language code of the returned labels
      * @param string $search_lang language code used for matching labels (null means any language)
-     * @param int $limit maximum number of hits to retrieve; 0 for unlimited
-     * @param int $offset offset of results to retrieve; 0 for beginning of list
-     * @param string $arrayClass the URI for thesaurus array class, or null if not used
-     * @param array $types limit search to concepts of the given type(s)
-     * @param string $parent limit search to concepts which have the given concept as parent in the transitive broader hierarchy
-     * @param string $group limit search to concepts which are in the given group
-     * @param boolean $hidden include matches on hidden labels (default: true)
-     * @param array $fields extra fields to include in the result (array of strings). (default: null = none)
+     * @param array $props properties to target e.g. array('skos:prefLabel','skos:altLabel')
      * @return string sparql query
      */
-    protected function generateConceptSearchQuery($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent, $group, $hidden, $fields)
-    {
-        $gc = $this->graphClause;
-        $limitandoffset = $this->formatLimitAndOffset($limit, $offset);
-
-        $formattedtype = $this->formatTypes($types, $arrayClass);
-
-        $formattedbroader = $this->formatBroader($lang, $fields);
-        $extravars = $formattedbroader['extravars'];
-        $extrafields = $formattedbroader['extrafields'];
-
+    protected function generateConceptSearchQueryInner($term, $lang, $search_lang, $props) {
         // extra conditions for label language, if specified
-        $labelcond_label = ($lang) ? "langMatches(lang(?label), '$lang')" : "langMatches(lang(?label), lang(?literal))";
+        $labelcond_label = ($lang) ? "LANGMATCHES(lang(?label), '$lang')" : "LANGMATCHES(lang(?label), lang(?match))";
         // if search language and UI/display language differ, must also consider case where there is no prefLabel in
         // the display language; in that case, should use the label with the same language as the matched label
         $labelcond_fallback = ($search_lang != $lang) ?
-        "OPTIONAL { # in case previous OPTIONAL block gives no labels
-       ?s skos:prefLabel ?label .
-       FILTER (langMatches(lang(?label), lang(?literal))) }" : "";
+          "OPTIONAL { # in case previous OPTIONAL block gives no labels\n" .
+          "?s skos:prefLabel ?label . FILTER (LANGMATCHES(LANG(?label), LANG(?match))) }" : "";
 
-        // extra conditions for parent and group, if specified
-        $parentcond = ($parent) ? "?s skos:broader+ <$parent> ." : "";
-        $groupcond = ($group) ? "<$group> skos:member ?s ." : "";
-        $pgcond = $parentcond . $groupcond;
-
-        $orderextra = $this->isDefaultEndpoint() ? $this->graph : '';
-
-        # make VALUES clauses
-        $props = array('skos:prefLabel', 'skos:altLabel');
-        if ($hidden) {
-            $props[] = 'skos:hiddenLabel';
-        }
         $values_prop = $this->formatValues('?prop', $props);
 
-        $values_graph = $this->formatValuesGraph($vocabs);
-
-        while (strpos($term, '**') !== false) {
-            $term = str_replace('**', '*', $term);
-        }
-        // removes futile asterisks
-
-        # make text query clauses
+       # make text query clauses
         $textcond = $this->createTextQueryCondition($term, '?prop', $search_lang);
 
         if ($this->isDefaultEndpoint()) {
@@ -125,30 +87,21 @@ class JenaTextSparql extends GenericSparql
         }
 
         $query = <<<EOQ
-SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph (GROUP_CONCAT(DISTINCT ?type) as ?types)
-$extravars
+SELECT ?s ?match ?label ?plabel ?alabel ?hlabel
 WHERE {
  $values_prop
- $gc {
-  $textcond
-  $formattedtype
-  $pgcond
-  ?s rdf:type ?type .
-  OPTIONAL {
-   ?s skos:prefLabel ?label .
-   FILTER ($labelcond_label)
-  } $labelcond_fallback $extrafields
-  FILTER NOT EXISTS { ?s owl:deprecated true }
- }
- BIND(IF(?prop = skos:prefLabel && ?literal != ?label, ?literal, ?unbound) as ?plabel)
- BIND(IF(?prop = skos:altLabel, ?literal, ?unbound) as ?alabel)
- BIND(IF(?prop = skos:hiddenLabel, ?literal, ?unbound) as ?hlabel)
+ $textcond
+ ?s ?prop ?match .
+ OPTIONAL {
+  ?s skos:prefLabel ?label .
+  FILTER ($labelcond_label)
+ } $labelcond_fallback
+ BIND(IF(?prop = skos:prefLabel && ?match != ?label, ?match, ?unbound) AS ?plabel)
+ BIND(IF(?prop = skos:altLabel, ?match, ?unbound) AS ?alabel)
+ BIND(IF(?prop = skos:hiddenLabel, ?match, ?unbound) AS ?hlabel)
 }
-GROUP BY ?literal ?s ?label ?plabel ?alabel ?hlabel ?graph ?prop
-ORDER BY lcase(str(?literal)) lang(?literal) $orderextra $limitandoffset
-$values_graph
 EOQ;
-        return $query;
+        return $query;    
     }
 
     /**
@@ -183,12 +136,12 @@ WHERE {
   $gc {
     {
       $textcond_pref
-      BIND(?literal as ?label)
+      BIND(?match as ?label)
     }
     UNION
     {
       $textcond_alt
-      BIND(?literal as ?alabel)
+      BIND(?match as ?alabel)
       {
         ?s skos:prefLabel ?label .
         FILTER (langMatches(lang(?label), '$lang'))
@@ -198,7 +151,7 @@ WHERE {
     FILTER NOT EXISTS { ?s owl:deprecated true }
   } $values
 }
-ORDER BY LCASE(?literal) $limitandoffset
+ORDER BY LCASE(?match) $limitandoffset
 EOQ;
         return $query;
     }
