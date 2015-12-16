@@ -665,26 +665,13 @@ EOF;
     }
 
     /**
-     * Inner query for concepts using a search term.
+     * Generate condition for matching labels in SPARQL
      * @param string $term search term
-     * @param string $lang language code of the returned labels
      * @param string $search_lang language code used for matching labels (null means any language)
-     * @param string[] $props properties to target e.g. array('skos:prefLabel','skos:altLabel')
-     * @param boolean $unique restrict results to unique concepts (default: false)
-     * @return string sparql query
+     * @return string sparql query snippet
      */
-    protected function generateConceptSearchQueryInner($term, $lang, $search_lang, $props, $unique) {
-        // extra conditions for label language, if specified
-        $labelcond_match = ($search_lang) ? "&& LANGMATCHES(lang(?match), '$search_lang')" : "";
-        $labelcond_label = ($lang) ? "LANGMATCHES(lang(?label), '$lang')" : "LANGMATCHES(lang(?label), lang(?match))";
-        // if search language and UI/display language differ, must also consider case where there is no prefLabel in
-        // the display language; in that case, should use the label with the same language as the matched label
-        $labelcond_fallback = ($search_lang != $lang) ?
-          "OPTIONAL { # in case previous OPTIONAL block gives no labels\n" .
-          "?s skos:prefLabel ?label . FILTER (LANGMATCHES(LANG(?label), LANG(?match))) }" : "";
-
-        $values_prop = $this->formatValues('?prop', $props);
-
+    protected function generateConceptSearchQueryCondition($term, $search_lang)
+    {
         # use appropriate matching function depending on query type: =, strstarts, strends or full regex
         if (preg_match('/^[^\*]+$/', $term)) { // exact query
             $term = str_replace('\\', '\\\\', $term); // quote slashes
@@ -707,16 +694,40 @@ EOF;
             $term = str_replace('\'', '\\\'', $term); // ensure single quotes are quoted
             $filtercond = "REGEX(STR(?MATCH), '^$term$', 'i')";
         }
+
+        $labelcond_match = ($search_lang) ? "&& LANGMATCHES(lang(?match), '$search_lang')" : "";
         
+        return "?s ?prop ?match . FILTER ($filtercond $labelcond_match)";
+    }
+
+
+    /**
+     * Inner query for concepts using a search term.
+     * @param string $term search term
+     * @param string $lang language code of the returned labels
+     * @param string $search_lang language code used for matching labels (null means any language)
+     * @param string[] $props properties to target e.g. array('skos:prefLabel','skos:altLabel')
+     * @param boolean $unique restrict results to unique concepts (default: false)
+     * @return string sparql query
+     */
+    protected function generateConceptSearchQueryInner($term, $lang, $search_lang, $props, $unique)
+    {
+        // extra conditions for label language, if specified
+        $labelcond_label = ($lang) ? "LANGMATCHES(lang(?label), '$lang')" : "LANGMATCHES(lang(?label), lang(?match))";
+        // if search language and UI/display language differ, must also consider case where there is no prefLabel in
+        // the display language; in that case, should use the label with the same language as the matched label
+        $labelcond_fallback = ($search_lang != $lang) ?
+          "OPTIONAL { # in case previous OPTIONAL block gives no labels\n" .
+          "?s skos:prefLabel ?label . FILTER (LANGMATCHES(LANG(?label), LANG(?match))) }" : "";
+
+        $values_prop = $this->formatValues('?prop', $props);
+        $textcond = $this->generateConceptSearchQueryCondition($term, $search_lang);
+
         $queryAll = <<<EOQ
 SELECT ?s ?match ?label ?plabel ?alabel ?hlabel
 WHERE {
  $values_prop
- ?s ?prop ?match .
- FILTER (
-  $filtercond
-  $labelcond_match
- )
+ $textcond
  OPTIONAL {
   ?s skos:prefLabel ?label .
   FILTER ($labelcond_label)
@@ -744,11 +755,7 @@ WHERE {
   WHERE {
    $values_prop
    VALUES (?prop ?pri) { (skos:prefLabel 1) (skos:altLabel 3) (skos:hiddenLabel 5)}
-   ?s ?prop ?match .
-   FILTER (
-    $filtercond
-    $labelcond_match
-   )
+   $textcond
    BIND(IF(langMatches(LANG(?match),'$lang'), ?pri, ?pri+1) AS ?npri)
    BIND(CONCAT(STR(?npri), LANG(?match), '@', STR(?match)) AS ?matchstr)
   }
