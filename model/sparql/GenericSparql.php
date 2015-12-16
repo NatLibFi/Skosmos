@@ -692,7 +692,7 @@ EOF;
             $term = str_replace('\\', '\\\\', preg_quote($term));
             $term = str_replace('\\\\*', '.*', $term); // convert asterisk to regex syntax
             $term = str_replace('\'', '\\\'', $term); // ensure single quotes are quoted
-            $filtercond = "REGEX(STR(?MATCH), '^$term$', 'i')";
+            $filtercond = "REGEX(STR(?match), '^$term$', 'i')";
         }
 
         $labelcond_match = ($search_lang) ? "&& LANGMATCHES(lang(?match), '$search_lang')" : "";
