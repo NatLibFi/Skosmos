@@ -749,13 +749,13 @@ WHERE {
     $filtercond
     $labelcond_match
    )
-   BIND(IF(langMatches(LANG(?match),'fi'), ?pri, ?pri+1) AS ?npri)
+   BIND(IF(langMatches(LANG(?match),'$lang'), ?pri, ?pri+1) AS ?npri)
    BIND(CONCAT(STR(?npri), LANG(?match), '@', STR(?match)) AS ?matchstr)
   }
   GROUP BY ?s
  }
  ?s skos:prefLabel ?label .
- FILTER(LANG(?label)='fi')
+ FILTER(LANG(?label)='$lang')
  BIND(STR(SUBSTR(?hit,1,1)) AS ?pri)
  BIND(STRLANG(STRAFTER(?hit, '@'), SUBSTR(STRBEFORE(?hit, '@'),2)) AS ?match)
  BIND(IF((?pri = "1" || ?pri = "2") && ?match != ?label, ?match, ?unbound) as ?plabel)
