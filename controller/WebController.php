@@ -429,6 +429,7 @@ class WebController extends Controller
             $type = array($type);
         }
 
+        $schemes = $request->getQueryParam('scheme') ? explode(' ', $request->getQueryParam('scheme')) : null;
         $group = $request->getQueryParam('group') !== '' ? $request->getQueryParam('group') : null;
         $parent = $request->getQueryParam('parent') !== '' ? $request->getQueryParam('parent') : null;
         $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
@@ -443,7 +444,7 @@ class WebController extends Controller
         $term = trim($term); // surrounding whitespace is not considered significant
         $sterm = strpos($term, "*") === false ? $term . "*" : $term; // default to prefix search
         try {
-            $count_and_results = $this->model->searchConceptsAndInfo($sterm, $request->getVocabid(), $content_lang, $search_lang, $offset, 20, $type, $parent, $group);
+            $count_and_results = $this->model->searchConceptsAndInfo($sterm, $request->getVocabid(), $content_lang, $search_lang, $offset, 20, $type, $parent, $group, $schemes);
             $counts = $count_and_results['count'];
             $search_results = $count_and_results['results'];
         } catch (Exception $e) {

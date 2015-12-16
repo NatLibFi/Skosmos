@@ -229,7 +229,7 @@ class Model
      * @param boolean $unique restrict results to unique concepts (default: false)
      * @return array search results
      */
-    public function searchConcepts($term, $vocids, $lang, $search_lang, $type = null, $parent = null, $group = null, $offset = 0, $limit = null, $hidden = true, $fields = null, $unique = false)
+    public function searchConcepts($term, $vocids, $lang, $search_lang, $type = null, $parent = null, $group = null, $offset = 0, $limit = null, $hidden = true, $fields = null, $unique = false, $schemes = null)
     {
         if ($limit === null) {
             $limit = $this->getConfig()->getDefaultSearchLimit();
@@ -267,7 +267,7 @@ class Model
             $type = array('skos:Concept');
         }
 
-        $results = $sparql->queryConcepts($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $type, $parent, $group, $hidden, $fields, $unique);
+        $results = $sparql->queryConcepts($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $type, $parent, $group, $hidden, $fields, $unique, $schemes);
         $ret = array();
 
         foreach ($results as $hit) {
@@ -313,7 +313,7 @@ class Model
      * @param string $group limit search to concepts which are in the given group
      * @return array array with keys 'count' and 'results'
      */
-    public function searchConceptsAndInfo($term, $vocids, $lang, $search_lang, $offset = 0, $limit = 20, $type = null, $parent = null, $group = null)
+    public function searchConceptsAndInfo($term, $vocids, $lang, $search_lang, $offset = 0, $limit = 20, $type = null, $parent = null, $group = null, $schemes = null)
     {
         // make vocids an array in every case
         if ($vocids === null) {
@@ -324,7 +324,7 @@ class Model
             $vocids = array($vocids);
         }
 
-        $allhits = $this->searchConcepts($term, $vocids, $lang, $search_lang, $type, $parent, $group, 0, 0, true, null, true);
+        $allhits = $this->searchConcepts($term, $vocids, $lang, $search_lang, $type, $parent, $group, 0, 0, true, null, true, $schemes);
         $hits = array_slice($allhits, $offset, $limit);
 
         $uris = array();

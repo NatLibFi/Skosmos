@@ -746,7 +746,7 @@ EOQ;
      * @param boolean $unique restrict results to unique concepts (default: false)
      * @return string sparql query
      */
-    protected function generateConceptSearchQuery($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent, $group, $hidden, $fields, $unique) {
+    protected function generateConceptSearchQuery($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent, $group, $hidden, $fields, $unique, $schemes) {
         $gc = $this->graphClause;
         $limitandoffset = $this->formatLimitAndOffset($limit, $offset);
 
@@ -755,6 +755,13 @@ EOQ;
         $formattedbroader = $this->formatBroader($lang, $fields);
         $extravars = $formattedbroader['extravars'];
         $extrafields = $formattedbroader['extrafields'];
+
+        $schemecond = '';
+        if (!empty($schemes)) {
+            foreach($schemes as $scheme) {
+                $schemecond .= "?s skos:inScheme <$scheme> . ";
+            }
+        }
 
         // extra conditions for parent and group, if specified
         $parentcond = ($parent) ? "?s skos:broader+ <$parent> ." : "";
@@ -785,9 +792,9 @@ WHERE {
  $gc {
   { $innerquery }
   $formattedtype
-  { $pgcond
+  { $pgcond 
    ?s a ?type .
-   $extrafields
+   $extrafields $schemecond
   }
   FILTER NOT EXISTS { ?s owl:deprecated true }
  }
@@ -892,8 +899,8 @@ EOQ;
      * @param boolean $unique restrict results to unique concepts (default: false)
      * @return array query result object
      */
-    public function queryConcepts($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent = null, $group = null, $hidden = true, $fields = null, $unique = false) {
-        $query = $this->generateConceptSearchQuery($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent, $group, $hidden, $fields, $unique);
+    public function queryConcepts($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent = null, $group = null, $hidden = true, $fields = null, $unique = false, $schemes = null) {
+        $query = $this->generateConceptSearchQuery($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent, $group, $hidden, $fields, $unique, $schemes);
         $results = $this->client->query($query);
         return $this->transformConceptSearchResults($results, $vocabs);
     }

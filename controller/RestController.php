@@ -170,11 +170,12 @@ class RestController extends Controller
         $group = $request->getQueryParam('group');
         $fields = $request->getQueryParam('fields') ? explode(' ', $request->getQueryParam('fields')) : null;
         $unique = $request->getQueryParamBoolean('unique', false);
+        $schemes = $request->getQueryParam('scheme') ? explode(' ', $request->getQueryParam('scheme')) : null;
 
         // convert to vocids array to support multi-vocabulary search
         $vocids = !empty($vocid) ? explode(' ', $vocid) : null;
 
-        $results = $this->model->searchConcepts($term, $vocids, $labellang, $lang, $types, $parent, $group, $offset, $maxhits, true, $fields, $unique);
+        $results = $this->model->searchConcepts($term, $vocids, $labellang, $lang, $types, $parent, $group, $offset, $maxhits, true, $fields, $unique, $schemes);
         // before serializing to JSON, get rid of the Vocabulary object that came with each resource
         foreach ($results as &$res) {
             unset($res['voc']);
