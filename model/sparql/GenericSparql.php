@@ -761,10 +761,12 @@ WHERE {
   }
   GROUP BY ?s
  }
- ?s skos:prefLabel ?label .
- FILTER(LANG(?label)='$lang')
  BIND(STR(SUBSTR(?hit,1,1)) AS ?pri)
  BIND(STRLANG(STRAFTER(?hit, '@'), SUBSTR(STRBEFORE(?hit, '@'),2)) AS ?match)
+ OPTIONAL {
+  ?s skos:prefLabel ?label .
+  FILTER ($labelcond_label)
+ } $labelcond_fallback
  BIND(IF((?pri = "1" || ?pri = "2") && ?match != ?label, ?match, ?unbound) as ?plabel)
  BIND(IF((?pri = "3" || ?pri = "4"), ?match, ?unbound) as ?alabel)
  BIND(IF((?pri = "5" || ?pri = "6"), ?match, ?unbound) as ?hlabel)
