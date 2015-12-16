@@ -264,6 +264,18 @@ class ModelTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('http://www.skosmos.skos/test/ta119', $result[0]['broader'][1]['uri']);
     $this->assertCount(2, $result[0]['type']); // two concept types
   }
+
+  /**
+   * @covers Model::searchConcepts
+   * @depends testConstructorWithConfig
+   */
+  public function testSearchConceptsUnique() {
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
+    $result = $model->searchConcepts('*identical*', 'duplicates', 'en', 'en', null, null, null, 0, 10, true, null, true);
+    $this->assertCount(2, $result);
+    $result = $model->searchConcepts('*identical*', 'duplicates', 'en', 'en', null, null, null, 0, 10, true, null, false);
+    $this->assertCount(3, $result);
+  }
   
   /**
    * @covers Model::searchConceptsAndInfo
