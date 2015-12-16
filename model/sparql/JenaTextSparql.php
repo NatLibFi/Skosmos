@@ -137,11 +137,13 @@ WHERE {
   $gc {
     {
       $textcond_pref
+      FILTER(STRSTARTS(?match, '$letter'))
       BIND(?match as ?label)
     }
     UNION
     {
       $textcond_alt
+      FILTER(STRSTARTS(?match, '$letter'))
       BIND(?match as ?alabel)
       {
         ?s skos:prefLabel ?label .
