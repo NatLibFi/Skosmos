@@ -139,7 +139,7 @@ EOQ;
 
     /**
      * @param array $langs Languages to query for
-     * @param array $props property names
+     * @param string[] $props property names
      */
     private function generateCountLangConceptsQuery($langs, $classes, $props) {
         $gc = $this->graphClause;
@@ -171,7 +171,7 @@ EOQ;
      * Transforms the CountLangConcepts results into an array of label counts.
      * @param EasyRdf_Sparql_Result $result query results to be transformed
      * @param array $langs Languages to query for
-     * @param array $props property names
+     * @param string[] $props property names
      */
     private function transformCountLangConceptsResults($result, $langs, $props) {
         $ret = array();
@@ -250,7 +250,7 @@ EOQ;
     /**
      * Generates a sparql query for one or more concept URIs
      * @param mixed $uris concept URI (string) or array of URIs
-     * @param string $arrayClass the URI for thesaurus array class, or null if not used
+     * @param string|null $arrayClass the URI for thesaurus array class, or null if not used
      * @param \Vocabulary[] $vocabs array of Vocabulary objects
      * @return string sparql query
      */
@@ -345,6 +345,7 @@ EOQ;
      * @param EasyRdf_Graph $result query results to be transformed
      * @param mixed $uris concept URI (string) or array of URIs
      * @param \Vocabulary[] $vocabs array of Vocabulary object
+     * @param string|null $clang content language
      * @return mixed query result graph (EasyRdf_Graph), or array of Concept objects
      */
     private function transformConceptInfoResults($result, $uris, $vocabs, $clang) {
@@ -360,9 +361,10 @@ EOQ;
     /**
      * Returns information (as a graph) for one or more concept URIs
      * @param mixed $uris concept URI (string) or array of URIs
-     * @param string $arrayClass the URI for thesaurus array class, or null if not used
+     * @param string|null $arrayClass the URI for thesaurus array class, or null if not used
      * @param \Vocabulary[]|null $vocabs array of Vocabulary object
      * @param boolean $as_graph whether to return a graph (true) or array of Concepts (false)
+     * @param string|null $clang content language
      * @return mixed query result graph (EasyRdf_Graph), or array of Concept objects
      */
     public function queryConceptInfo($uris, $arrayClass = null, $vocabs = null, $as_graph = false, $clang = null) {
@@ -667,7 +669,7 @@ EOF;
      * @param string $term search term
      * @param string $lang language code of the returned labels
      * @param string $search_lang language code used for matching labels (null means any language)
-     * @param array $props properties to target e.g. array('skos:prefLabel','skos:altLabel')
+     * @param string[] $props properties to target e.g. array('skos:prefLabel','skos:altLabel')
      * @param boolean $unique restrict results to unique concepts (default: false)
      * @return string sparql query
      */
