@@ -14,7 +14,8 @@ dup:d1 a skos:Concept ;
     skos:prefLabel "Identical label"@en .
 
 dup:d2 a skos:Concept ;
-    skos:prefLabel "Identical label"@en .
+    skos:prefLabel "Identical label"@en ;
+    skos:altLabel "Not so identical label"@en .
 
 dup:d3 a skos:Concept ;
     skos:closeMatch dup:d1, dup:d2 ; 
