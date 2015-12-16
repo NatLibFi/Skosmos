@@ -128,6 +128,7 @@ EOQ;
         $limitandoffset = $this->formatLimitAndOffset($limit, $offset);
 
         # make text query clause
+        $lcletter = mb_strtolower($letter, 'UTF-8'); // convert to lower case, UTF-8 safe
         $textcond_pref = $this->createTextQueryCondition($letter . '*', 'skos:prefLabel', $lang);
         $textcond_alt = $this->createTextQueryCondition($letter . '*', 'skos:altLabel', $lang);
 
@@ -137,13 +138,13 @@ WHERE {
   $gc {
     {
       $textcond_pref
-      FILTER(STRSTARTS(?match, '$letter'))
+      FILTER(STRSTARTS(LCASE(STR(?match)), '$lcletter'))
       BIND(?match as ?label)
     }
     UNION
     {
       $textcond_alt
-      FILTER(STRSTARTS(?match, '$letter'))
+      FILTER(STRSTARTS(LCASE(STR(?match)), '$lcletter'))
       BIND(?match as ?alabel)
       {
         ?s skos:prefLabel ?label .
