@@ -280,7 +280,7 @@ CONSTRUCT {
  ?p rdfs:label ?proplabel .
  ?p rdfs:subPropertyOf ?pp .
  ?pp rdfs:label ?plabel .
- ?o rdf:type ?ot .
+ ?o a ?ot .
  ?o skos:prefLabel ?opl .
  ?o rdfs:label ?ol .
  ?o rdf:value ?ov .
@@ -290,9 +290,9 @@ CONSTRUCT {
  ?group skos:prefLabel ?grouplabel .
  ?b1 rdf:first ?item .
  ?b1 rdf:rest ?b2 .
- ?item rdf:type ?it .
+ ?item a ?it .
  ?item skos:prefLabel ?il .
- ?group rdf:type ?grouptype . $construct
+ ?group a ?grouptype . $construct
 } WHERE {
  $gc {
   { ?s ?p ?uri . }
@@ -303,7 +303,7 @@ CONSTRUCT {
     ?directgroup skos:member ?uri .
     ?group skos:member+ ?uri .
     ?group skos:prefLabel ?grouplabel .
-    ?group rdf:type ?grouptype .
+    ?group a ?grouptype .
     OPTIONAL { ?parent skos:member ?group }
   }
   UNION
@@ -313,7 +313,7 @@ CONSTRUCT {
      ?o rdf:rest* ?b1 .
      ?b1 rdf:first ?item .
      ?b1 rdf:rest ?b2 .
-     OPTIONAL { ?item rdf:type ?it . }
+     OPTIONAL { ?item a ?it . }
      OPTIONAL { ?item skos:prefLabel ?il . }
    }
    OPTIONAL {
@@ -321,7 +321,7 @@ CONSTRUCT {
      UNION
      { ?p rdfs:subPropertyOf ?pp . }
      UNION
-     { ?o rdf:type ?ot . }
+     { ?o a ?ot . }
      UNION
      { ?o skos:prefLabel ?opl . }
      UNION
@@ -631,7 +631,7 @@ EOQ;
             }
 
         }
-        return "{ ?s rdf:type $type } UNION { ?s a isothes:ConceptGroup } $extratypes";
+        return "{ ?s a $type } UNION { ?s a isothes:ConceptGroup } $extratypes";
     }
 
     /**
@@ -1132,7 +1132,7 @@ EOQ;
 SELECT ?label
 WHERE {
   $gc {
-    <$uri> rdf:type ?type .
+    <$uri> a ?type .
     OPTIONAL {
       <$uri> skos:prefLabel ?label .
       $labelcond_label
