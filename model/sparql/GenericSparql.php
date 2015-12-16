@@ -839,7 +839,7 @@ WHERE {
   FILTER NOT EXISTS { ?s owl:deprecated true }
  }
 }
-GROUP BY ?s ?label ?plabel ?alabel ?hlabel ?graph
+GROUP BY ?s ?match ?label ?plabel ?alabel ?hlabel ?graph
 ORDER BY LCASE(STR(?match)) LANG(?match) $orderextra $limitandoffset
 $values_graph
 EOQ;
