@@ -668,9 +668,10 @@ EOF;
      * @param string $lang language code of the returned labels
      * @param string $search_lang language code used for matching labels (null means any language)
      * @param array $props properties to target e.g. array('skos:prefLabel','skos:altLabel')
+     * @param boolean $unique restrict results to unique concepts (default: false)
      * @return string sparql query
      */
-    protected function generateConceptSearchQueryInner($term, $lang, $search_lang, $props) {
+    protected function generateConceptSearchQueryInner($term, $lang, $search_lang, $props, $unique) {
         // extra conditions for label language, if specified
         $labelcond_match = ($search_lang) ? "&& LANGMATCHES(lang(?match), '$search_lang')" : "";
         $labelcond_label = ($lang) ? "LANGMATCHES(lang(?label), '$lang')" : "LANGMATCHES(lang(?label), lang(?match))";
@@ -740,9 +741,10 @@ EOQ;
      * @param string $group limit search to concepts which are in the given group
      * @param boolean $hidden include matches on hidden labels (default: true)
      * @param array $fields extra fields to include in the result (array of strings). (default: null = none)
+     * @param boolean $unique restrict results to unique concepts (default: false)
      * @return string sparql query
      */
-    protected function generateConceptSearchQuery($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent, $group, $hidden, $fields) {
+    protected function generateConceptSearchQuery($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent, $group, $hidden, $fields, $unique) {
         $gc = $this->graphClause;
         $limitandoffset = $this->formatLimitAndOffset($limit, $offset);
 
@@ -772,7 +774,7 @@ EOQ;
             $term = str_replace('**', '*', $term);
         }
         
-        $innerquery = $this->generateConceptSearchQueryInner($term, $lang, $search_lang, $props);
+        $innerquery = $this->generateConceptSearchQueryInner($term, $lang, $search_lang, $props, $unique);
 
         $query = <<<EOQ
 SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph (GROUP_CONCAT(DISTINCT ?type) as ?types)
@@ -885,10 +887,11 @@ EOQ;
      * @param string $group limit search to concepts which are in the given group
      * @param boolean $hidden include matches on hidden labels (default: true)
      * @param array $fields extra fields to include in the result (array of strings). (default: null = none)
+     * @param boolean $unique restrict results to unique concepts (default: false)
      * @return array query result object
      */
-    public function queryConcepts($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent = null, $group = null, $hidden = true, $fields = null) {
-        $query = $this->generateConceptSearchQuery($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent, $group, $hidden, $fields);
+    public function queryConcepts($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent = null, $group = null, $hidden = true, $fields = null, $unique = false) {
+        $query = $this->generateConceptSearchQuery($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent, $group, $hidden, $fields, $unique);
         $results = $this->client->query($query);
         return $this->transformConceptSearchResults($results, $vocabs);
     }

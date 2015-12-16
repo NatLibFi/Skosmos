@@ -67,7 +67,8 @@ class JenaTextSparql extends GenericSparql
      * @param array $props properties to target e.g. array('skos:prefLabel','skos:altLabel')
      * @return string sparql query
      */
-    protected function generateConceptSearchQueryInner($term, $lang, $search_lang, $props) {
+    protected function generateConceptSearchQueryInner($term, $lang, $search_lang, $props, $unique)
+    {
         // extra conditions for label language, if specified
         $labelcond_label = ($lang) ? "LANGMATCHES(lang(?label), '$lang')" : "LANGMATCHES(lang(?label), lang(?match))";
         // if search language and UI/display language differ, must also consider case where there is no prefLabel in
@@ -78,9 +79,9 @@ class JenaTextSparql extends GenericSparql
 
         $values_prop = $this->formatValues('?prop', $props);
 
-       # make text query clauses
+        # make text query clauses
         $textcond = $this->createTextQueryCondition($term, '?prop', $search_lang);
-
+        
         if ($this->isDefaultEndpoint()) {
             # if doing a global search, we should target the union graph instead of a specific graph
             $textcond = "GRAPH <urn:x-arq:UnionGraph> { $textcond }";

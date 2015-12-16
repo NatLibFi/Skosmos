@@ -33,6 +33,12 @@ class Request
         return filter_input(INPUT_GET, $param_name, FILTER_SANITIZE_STRING);
     }
 
+    public function getQueryParamBoolean($param_name, $default)
+    {
+        $val = filter_input(INPUT_GET, $param_name, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        return ($val !== null) ? $val : $default;
+    }
+
     public function getServerConstant($param_name)
     {
         return filter_input(INPUT_SERVER, $param_name, FILTER_SANITIZE_STRING);

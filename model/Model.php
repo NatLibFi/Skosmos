@@ -226,9 +226,10 @@ class Model
      * @param int $limit optional paramater for maximum amount of results.
      * @param boolean $hidden include matches on hidden labels (default: true).
      * @param array $fields extra fields to include in the result (array of strings). (default: null = none)
+     * @param boolean $unique restrict results to unique concepts (default: false)
      * @return array search results
      */
-    public function searchConcepts($term, $vocids, $lang, $search_lang, $type = null, $parent = null, $group = null, $offset = 0, $limit = null, $hidden = true, $fields = null)
+    public function searchConcepts($term, $vocids, $lang, $search_lang, $type = null, $parent = null, $group = null, $offset = 0, $limit = null, $hidden = true, $fields = null, $unique = false)
     {
         if ($limit === null) {
             $limit = $this->getConfig()->getDefaultSearchLimit();
@@ -266,7 +267,7 @@ class Model
             $type = array('skos:Concept');
         }
 
-        $results = $sparql->queryConcepts($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $type, $parent, $group, $hidden, $fields);
+        $results = $sparql->queryConcepts($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $type, $parent, $group, $hidden, $fields, $unique);
         $ret = array();
 
         foreach ($results as $hit) {
@@ -323,7 +324,7 @@ class Model
             $vocids = array($vocids);
         }
 
-        $allhits = $this->searchConcepts($term, $vocids, $lang, $search_lang, $type, $parent, $group, 0, 0);
+        $allhits = $this->searchConcepts($term, $vocids, $lang, $search_lang, $type, $parent, $group, 0, 0, true, null, true);
         $hits = array_slice($allhits, $offset, $limit);
 
         $uris = array();
