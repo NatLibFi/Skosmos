@@ -60,25 +60,13 @@ class JenaTextSparql extends GenericSparql
     }
 
     /**
-     * Jena-text specific inner query for concepts using a search term.
+     * Generate jena-text search condition for matching labels in SPARQL
      * @param string $term search term
-     * @param string $lang language code of the returned labels
      * @param string $search_lang language code used for matching labels (null means any language)
-     * @param array $props properties to target e.g. array('skos:prefLabel','skos:altLabel')
-     * @return string sparql query
+     * @return string sparql query snippet
      */
-    protected function generateConceptSearchQueryInner($term, $lang, $search_lang, $props, $unique)
+    protected function generateConceptSearchQueryCondition($term, $search_lang)
     {
-        // extra conditions for label language, if specified
-        $labelcond_label = ($lang) ? "LANGMATCHES(lang(?label), '$lang')" : "LANGMATCHES(lang(?label), lang(?match))";
-        // if search language and UI/display language differ, must also consider case where there is no prefLabel in
-        // the display language; in that case, should use the label with the same language as the matched label
-        $labelcond_fallback = ($search_lang != $lang) ?
-          "OPTIONAL { # in case previous OPTIONAL block gives no labels\n" .
-          "?s skos:prefLabel ?label . FILTER (LANGMATCHES(LANG(?label), LANG(?match))) }" : "";
-
-        $values_prop = $this->formatValues('?prop', $props);
-
         # make text query clauses
         $textcond = $this->createTextQueryCondition($term, '?prop', $search_lang);
         
@@ -86,23 +74,8 @@ class JenaTextSparql extends GenericSparql
             # if doing a global search, we should target the union graph instead of a specific graph
             $textcond = "GRAPH <urn:x-arq:UnionGraph> { $textcond }";
         }
-
-        $query = <<<EOQ
-SELECT ?s ?match ?label ?plabel ?alabel ?hlabel
-WHERE {
- $values_prop
- $textcond
- ?s ?prop ?match .
- OPTIONAL {
-  ?s skos:prefLabel ?label .
-  FILTER ($labelcond_label)
- } $labelcond_fallback
- BIND(IF(?prop = skos:prefLabel && ?match != ?label, ?match, ?unbound) AS ?plabel)
- BIND(IF(?prop = skos:altLabel, ?match, ?unbound) AS ?alabel)
- BIND(IF(?prop = skos:hiddenLabel, ?match, ?unbound) AS ?hlabel)
-}
-EOQ;
-        return $query;    
+        
+        return $textcond;    
     }
 
     /**
@@ -128,6 +101,7 @@ EOQ;
         $limitandoffset = $this->formatLimitAndOffset($limit, $offset);
 
         # make text query clause
+        $lcletter = mb_strtolower($letter, 'UTF-8'); // convert to lower case, UTF-8 safe
         $textcond_pref = $this->createTextQueryCondition($letter . '*', 'skos:prefLabel', $lang);
         $textcond_alt = $this->createTextQueryCondition($letter . '*', 'skos:altLabel', $lang);
 
@@ -137,15 +111,17 @@ WHERE {
   $gc {
     {
       $textcond_pref
+      FILTER(STRSTARTS(LCASE(STR(?match)), '$lcletter'))
       BIND(?match as ?label)
     }
     UNION
     {
       $textcond_alt
+      FILTER(STRSTARTS(LCASE(STR(?match)), '$lcletter'))
       BIND(?match as ?alabel)
       {
         ?s skos:prefLabel ?label .
-        FILTER (langMatches(lang(?label), '$lang'))
+        FILTER (langMatches(LANG(?label), '$lang'))
       }
     }
     ?s a ?type .

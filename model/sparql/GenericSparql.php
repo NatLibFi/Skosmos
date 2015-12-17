@@ -280,7 +280,7 @@ CONSTRUCT {
  ?p rdfs:label ?proplabel .
  ?p rdfs:subPropertyOf ?pp .
  ?pp rdfs:label ?plabel .
- ?o rdf:type ?ot .
+ ?o a ?ot .
  ?o skos:prefLabel ?opl .
  ?o rdfs:label ?ol .
  ?o rdf:value ?ov .
@@ -290,9 +290,9 @@ CONSTRUCT {
  ?group skos:prefLabel ?grouplabel .
  ?b1 rdf:first ?item .
  ?b1 rdf:rest ?b2 .
- ?item rdf:type ?it .
+ ?item a ?it .
  ?item skos:prefLabel ?il .
- ?group rdf:type ?grouptype . $construct
+ ?group a ?grouptype . $construct
 } WHERE {
  $gc {
   { ?s ?p ?uri . }
@@ -303,7 +303,7 @@ CONSTRUCT {
     ?directgroup skos:member ?uri .
     ?group skos:member+ ?uri .
     ?group skos:prefLabel ?grouplabel .
-    ?group rdf:type ?grouptype .
+    ?group a ?grouptype .
     OPTIONAL { ?parent skos:member ?group }
   }
   UNION
@@ -313,7 +313,7 @@ CONSTRUCT {
      ?o rdf:rest* ?b1 .
      ?b1 rdf:first ?item .
      ?b1 rdf:rest ?b2 .
-     OPTIONAL { ?item rdf:type ?it . }
+     OPTIONAL { ?item a ?it . }
      OPTIONAL { ?item skos:prefLabel ?il . }
    }
    OPTIONAL {
@@ -321,7 +321,7 @@ CONSTRUCT {
      UNION
      { ?p rdfs:subPropertyOf ?pp . }
      UNION
-     { ?o rdf:type ?ot . }
+     { ?o a ?ot . }
      UNION
      { ?o skos:prefLabel ?opl . }
      UNION
@@ -631,7 +631,7 @@ EOQ;
             }
 
         }
-        return "{ ?s rdf:type $type } UNION { ?s a isothes:ConceptGroup } $extratypes";
+        return "{ ?s a $type } UNION { ?s a isothes:ConceptGroup } $extratypes";
     }
 
     /**
@@ -665,26 +665,13 @@ EOF;
     }
 
     /**
-     * Inner query for concepts using a search term.
+     * Generate condition for matching labels in SPARQL
      * @param string $term search term
-     * @param string $lang language code of the returned labels
      * @param string $search_lang language code used for matching labels (null means any language)
-     * @param string[] $props properties to target e.g. array('skos:prefLabel','skos:altLabel')
-     * @param boolean $unique restrict results to unique concepts (default: false)
-     * @return string sparql query
+     * @return string sparql query snippet
      */
-    protected function generateConceptSearchQueryInner($term, $lang, $search_lang, $props, $unique) {
-        // extra conditions for label language, if specified
-        $labelcond_match = ($search_lang) ? "&& LANGMATCHES(lang(?match), '$search_lang')" : "";
-        $labelcond_label = ($lang) ? "LANGMATCHES(lang(?label), '$lang')" : "LANGMATCHES(lang(?label), lang(?match))";
-        // if search language and UI/display language differ, must also consider case where there is no prefLabel in
-        // the display language; in that case, should use the label with the same language as the matched label
-        $labelcond_fallback = ($search_lang != $lang) ?
-          "OPTIONAL { # in case previous OPTIONAL block gives no labels\n" .
-          "?s skos:prefLabel ?label . FILTER (LANGMATCHES(LANG(?label), LANG(?match))) }" : "";
-
-        $values_prop = $this->formatValues('?prop', $props);
-
+    protected function generateConceptSearchQueryCondition($term, $search_lang)
+    {
         # use appropriate matching function depending on query type: =, strstarts, strends or full regex
         if (preg_match('/^[^\*]+$/', $term)) { // exact query
             $term = str_replace('\\', '\\\\', $term); // quote slashes
@@ -705,18 +692,42 @@ EOF;
             $term = str_replace('\\', '\\\\', preg_quote($term));
             $term = str_replace('\\\\*', '.*', $term); // convert asterisk to regex syntax
             $term = str_replace('\'', '\\\'', $term); // ensure single quotes are quoted
-            $filtercond = "REGEX(STR(?MATCH), '^$term$', 'i')";
+            $filtercond = "REGEX(STR(?match), '^$term$', 'i')";
         }
+
+        $labelcond_match = ($search_lang) ? "&& LANGMATCHES(lang(?match), '$search_lang')" : "";
         
-        $query = <<<EOQ
+        return "?s ?prop ?match . FILTER ($filtercond $labelcond_match)";
+    }
+
+
+    /**
+     * Inner query for concepts using a search term.
+     * @param string $term search term
+     * @param string $lang language code of the returned labels
+     * @param string $search_lang language code used for matching labels (null means any language)
+     * @param string[] $props properties to target e.g. array('skos:prefLabel','skos:altLabel')
+     * @param boolean $unique restrict results to unique concepts (default: false)
+     * @return string sparql query
+     */
+    protected function generateConceptSearchQueryInner($term, $lang, $search_lang, $props, $unique)
+    {
+        // extra conditions for label language, if specified
+        $labelcond_label = ($lang) ? "LANGMATCHES(lang(?label), '$lang')" : "LANGMATCHES(lang(?label), lang(?match))";
+        // if search language and UI/display language differ, must also consider case where there is no prefLabel in
+        // the display language; in that case, should use the label with the same language as the matched label
+        $labelcond_fallback = ($search_lang != $lang) ?
+          "OPTIONAL { # in case previous OPTIONAL block gives no labels\n" .
+          "?s skos:prefLabel ?label . FILTER (LANGMATCHES(LANG(?label), LANG(?match))) }" : "";
+
+        $values_prop = $this->formatValues('?prop', $props);
+        $textcond = $this->generateConceptSearchQueryCondition($term, $search_lang);
+
+        $queryAll = <<<EOQ
 SELECT ?s ?match ?label ?plabel ?alabel ?hlabel
 WHERE {
  $values_prop
- ?s ?prop ?match .
- FILTER (
-  $filtercond
-  $labelcond_match
- )
+ $textcond
  OPTIONAL {
   ?s skos:prefLabel ?label .
   FILTER ($labelcond_label)
@@ -726,7 +737,44 @@ WHERE {
  BIND(IF(?prop = skos:hiddenLabel, ?match, ?unbound) AS ?hlabel)
 }
 EOQ;
-        return $query;    
+
+        /*
+         * This query does some tricks to obtain a list of unique concepts.
+         * From each match generated by the text index, a string such as
+         * "1en@example" is generated, where the first character is a number
+         * encoding the property and priority, then comes the language tag and
+         * finally the original literal after an @ sign. Of these, the MIN
+         * function is used to pick the best match for each concept. Finally,
+         * the structure is unpacked to get back the original string. Phew!
+         */
+        $queryUnique = <<<EOQ
+SELECT ?s ?match ?label ?plabel ?alabel ?hlabel 
+WHERE { 
+ {
+  SELECT ?s (MIN(?matchstr) AS ?hit)
+  WHERE {
+   $values_prop
+   VALUES (?prop ?pri) { (skos:prefLabel 1) (skos:altLabel 3) (skos:hiddenLabel 5)}
+   $textcond
+   BIND(IF(langMatches(LANG(?match),'$lang'), ?pri, ?pri+1) AS ?npri)
+   BIND(CONCAT(STR(?npri), LANG(?match), '@', STR(?match)) AS ?matchstr)
+  }
+  GROUP BY ?s
+ }
+ FILTER(BOUND(?s))
+ BIND(STR(SUBSTR(?hit,1,1)) AS ?pri)
+ BIND(STRLANG(STRAFTER(?hit, '@'), SUBSTR(STRBEFORE(?hit, '@'),2)) AS ?match)
+ OPTIONAL {
+  ?s skos:prefLabel ?label .
+  FILTER ($labelcond_label)
+ } $labelcond_fallback
+ BIND(IF((?pri = "1" || ?pri = "2") && ?match != ?label, ?match, ?unbound) as ?plabel)
+ BIND(IF((?pri = "3" || ?pri = "4"), ?match, ?unbound) as ?alabel)
+ BIND(IF((?pri = "5" || ?pri = "6"), ?match, ?unbound) as ?hlabel)
+}
+EOQ;
+
+        return $unique ? $queryUnique : $queryAll;
     }
 
     /**
@@ -799,7 +847,7 @@ WHERE {
   FILTER NOT EXISTS { ?s owl:deprecated true }
  }
 }
-GROUP BY ?s ?label ?plabel ?alabel ?hlabel ?graph
+GROUP BY ?s ?match ?label ?plabel ?alabel ?hlabel ?graph
 ORDER BY LCASE(STR(?match)) LANG(?match) $orderextra $limitandoffset
 $values_graph
 EOQ;
@@ -1094,7 +1142,7 @@ EOQ;
 SELECT ?label
 WHERE {
   $gc {
-    <$uri> rdf:type ?type .
+    <$uri> a ?type .
     OPTIONAL {
       <$uri> skos:prefLabel ?label .
       $labelcond_label
