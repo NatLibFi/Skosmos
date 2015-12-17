@@ -229,7 +229,7 @@ class Model
      * @param boolean $unique restrict results to unique concepts (default: false)
      * @return array search results
      */
-    public function searchConcepts($term, $vocids, $lang, $search_lang, $type = null, $parent = null, $group = null, $offset = 0, $limit = null, $hidden = true, $fields = null, $unique = false)
+    public function searchConcepts($term, $vocids, $lang, $search_lang, $type = null, $parent = null, $group = null, $offset = 0, $limit = null, $hidden = true, $fields = null, $unique = false, $params)
     {
         if ($limit === null) {
             $limit = $this->getConfig()->getDefaultSearchLimit();
@@ -257,17 +257,12 @@ class Model
         if (sizeof($vocids) == 1) { // search within vocabulary
             $voc = $vocabs[0];
             $sparql = $voc->getSparql();
-            $arrayClass = $voc->getConfig()->getArrayClassURI();
         } else { // multi-vocabulary or global search
             $voc = null;
-            $arrayClass = null;
             $sparql = $this->getDefaultSparql();
         }
-        if ($type === null) {
-            $type = array('skos:Concept');
-        }
 
-        $results = $sparql->queryConcepts($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $type, $parent, $group, $hidden, $fields, $unique);
+        $results = $sparql->queryConcepts($vocabs, $hidden, $fields, $unique, $params);
         $ret = array();
 
         foreach ($results as $hit) {
@@ -313,7 +308,7 @@ class Model
      * @param string $group limit search to concepts which are in the given group
      * @return array array with keys 'count' and 'results'
      */
-    public function searchConceptsAndInfo($term, $vocids, $lang, $search_lang, $offset = 0, $limit = 20, $type = null, $parent = null, $group = null)
+    public function searchConceptsAndInfo($term, $vocids, $lang, $search_lang, $offset = 0, $limit = 20, $type = null, $parent = null, $group = null, $params)
     {
         // make vocids an array in every case
         if ($vocids === null) {
@@ -324,7 +319,7 @@ class Model
             $vocids = array($vocids);
         }
 
-        $allhits = $this->searchConcepts($term, $vocids, $lang, $search_lang, $type, $parent, $group, 0, 0, true, null, true);
+        $allhits = $this->searchConcepts($term, $vocids, $lang, $search_lang, $type, $parent, $group, 0, 0, true, null, true, $params);
         $hits = array_slice($allhits, $offset, $limit);
 
         $uris = array();

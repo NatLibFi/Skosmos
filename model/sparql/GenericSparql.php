@@ -794,19 +794,18 @@ EOQ;
      * @param boolean $unique restrict results to unique concepts (default: false)
      * @return string sparql query
      */
-    protected function generateConceptSearchQuery($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent, $group, $hidden, $fields, $unique) {
+    protected function generateConceptSearchQuery($vocabs, $hidden, $fields, $unique, $params) {
         $gc = $this->graphClause;
-        $limitandoffset = $this->formatLimitAndOffset($limit, $offset);
+        $limitandoffset = $this->formatLimitAndOffset($params->getSearchLimit(), $params->getOffset());
+        $formattedtype = $this->formatTypes($params->getTypeLimit(), $params->getArrayClass());
 
-        $formattedtype = $this->formatTypes($types, $arrayClass);
-
-        $formattedbroader = $this->formatBroader($lang, $fields);
+        $formattedbroader = $this->formatBroader($params->getLang(), $fields);
         $extravars = $formattedbroader['extravars'];
         $extrafields = $formattedbroader['extrafields'];
 
         // extra conditions for parent and group, if specified
-        $parentcond = ($parent) ? "?s skos:broader+ <$parent> ." : "";
-        $groupcond = ($group) ? "<$group> skos:member ?s ." : "";
+        $parentcond = ($params->getParentLimit()) ? "?s skos:broader+ <$params->getParentLimit()> ." : "";
+        $groupcond = ($params->getGroupLimit()) ? "<$params->getGroupLimit()> skos:member ?s ." : "";
         $pgcond = $parentcond . $groupcond;
 
         $orderextra = $this->isDefaultEndpoint() ? $this->graph : '';
@@ -817,14 +816,15 @@ EOQ;
             $props[] = 'skos:hiddenLabel';
         }
 
-        $values_graph = $this->formatValuesGraph($vocabs);
+        $values_graph = $this->formatValuesGraph($params->getVocab());
 
         // remove futile asterisks from the search term
+        $term = $params->getSearchTerm();
         while (strpos($term, '**') !== false) {
             $term = str_replace('**', '*', $term);
         }
         
-        $innerquery = $this->generateConceptSearchQueryInner($term, $lang, $search_lang, $props, $unique);
+        $innerquery = $this->generateConceptSearchQueryInner($params->getSearchTerm(), $params->getLang(), $params->getSearchLang(), $props, $unique);
 
         $query = <<<EOQ
 SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph (GROUP_CONCAT(DISTINCT ?type) as ?types)
@@ -940,10 +940,10 @@ EOQ;
      * @param boolean $unique restrict results to unique concepts (default: false)
      * @return array query result object
      */
-    public function queryConcepts($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent = null, $group = null, $hidden = true, $fields = null, $unique = false) {
-        $query = $this->generateConceptSearchQuery($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent, $group, $hidden, $fields, $unique);
+    public function queryConcepts($vocabs, $hidden = true, $fields = null, $unique = false, $params) {
+        $query = $this->generateConceptSearchQuery($vocabs, $hidden, $fields, $unique, $params);
         $results = $this->client->query($query);
-        return $this->transformConceptSearchResults($results, $vocabs);
+        return $this->transformConceptSearchResults($results, array($params->getVocab()));
     }
 
     /**

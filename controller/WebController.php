@@ -398,9 +398,9 @@ class WebController extends Controller
      */
     public function invokeVocabularySearch($request)
     {
-        $lang = $request->getLang();
         $template = $this->twig->loadTemplate('vocab-search-listing.twig');
-        $this->setLanguageProperties($lang);
+        $this->setLanguageProperties($request->getLang());
+        $lang = $request->getLang();
         $vocab = $request->getVocab();
         try {
             $vocab_types = $this->model->getTypes($request->getVocabid(), $lang);
@@ -442,8 +442,10 @@ class WebController extends Controller
 
         $term = trim($term); // surrounding whitespace is not considered significant
         $sterm = strpos($term, "*") === false ? $term . "*" : $term; // default to prefix search
+        $parameters = new ConceptSearchParameters($request);
         try {
-            $count_and_results = $this->model->searchConceptsAndInfo($sterm, $request->getVocabid(), $content_lang, $search_lang, $offset, 20, $type, $parent, $group);
+            //$count_and_results = $this->model->searchConceptsAndInfo($parameters);
+            $count_and_results = $this->model->searchConceptsAndInfo($sterm, $request->getVocabid(), $content_lang, $search_lang, $offset, 20, $type, $parent, $group, $parameters);
             $counts = $count_and_results['count'];
             $search_results = $count_and_results['results'];
         } catch (Exception $e) {
