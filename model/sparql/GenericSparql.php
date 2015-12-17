@@ -712,14 +712,6 @@ EOF;
      */
     protected function generateConceptSearchQueryInner($term, $lang, $search_lang, $props, $unique)
     {
-        // extra conditions for label language, if specified
-        $labelcond_label = ($lang) ? "LANGMATCHES(lang(?label), '$lang')" : "LANGMATCHES(lang(?label), lang(?match))";
-        // if search language and UI/display language differ, must also consider case where there is no prefLabel in
-        // the display language; in that case, should use the label with the same language as the matched label
-        $labelcond_fallback = ($search_lang != $lang) ?
-          "OPTIONAL { # in case previous OPTIONAL block gives no labels\n" .
-          "?s skos:prefLabel ?label . FILTER (LANGMATCHES(LANG(?label), LANG(?match))) }" : "";
-
         $values_prop = $this->formatValues('?prop', $props);
         $textcond = $this->generateConceptSearchQueryCondition($term, $search_lang);
 
@@ -736,30 +728,16 @@ EOF;
         $hitgroup = $unique ? 'GROUP BY ?s' : '';
          
         $query = <<<EOQ
-SELECT ?s ?match ?label ?plabel ?alabel ?hlabel 
-WHERE { 
- {
-  SELECT ?s $hitvar
-  WHERE {
-   $values_prop
-   VALUES (?prop ?pri) { (skos:prefLabel 1) (skos:altLabel 3) (skos:hiddenLabel 5)}
-   $textcond
-   BIND(IF(langMatches(LANG(?match),'$lang'), ?pri, ?pri+1) AS ?npri)
-   BIND(CONCAT(STR(?npri), LANG(?match), '@', STR(?match)) AS ?matchstr)
-  }
-  $hitgroup
- }
- FILTER(BOUND(?s))
- BIND(STR(SUBSTR(?hit,1,1)) AS ?pri)
- BIND(STRLANG(STRAFTER(?hit, '@'), SUBSTR(STRBEFORE(?hit, '@'),2)) AS ?match)
- OPTIONAL {
-  ?s skos:prefLabel ?label .
-  FILTER ($labelcond_label)
- } $labelcond_fallback
- BIND(IF((?pri = "1" || ?pri = "2") && ?match != ?label, ?match, ?unbound) as ?plabel)
- BIND(IF((?pri = "3" || ?pri = "4"), ?match, ?unbound) as ?alabel)
- BIND(IF((?pri = "5" || ?pri = "6"), ?match, ?unbound) as ?hlabel)
-}
+   SELECT ?s $hitvar
+   WHERE {
+    $values_prop
+    VALUES (?prop ?pri) { (skos:prefLabel 1) (skos:altLabel 3) (skos:hiddenLabel 5)}
+    $textcond
+    ?s ?prop ?match
+    BIND(IF(langMatches(LANG(?match),'$lang'), ?pri, ?pri+1) AS ?npri)
+    BIND(CONCAT(STR(?npri), LANG(?match), '@', STR(?match)) AS ?matchstr)
+   }
+   $hitgroup
 EOQ;
 
         return $query;
@@ -784,6 +762,15 @@ EOQ;
      */
     protected function generateConceptSearchQuery($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent, $group, $hidden, $fields, $unique) {
         $gc = $this->graphClause;
+
+        // extra conditions for label language, if specified
+        $labelcond_label = ($lang) ? "LANGMATCHES(lang(?label), '$lang')" : "LANGMATCHES(lang(?label), lang(?match))";
+        // if search language and UI/display language differ, must also consider case where there is no prefLabel in
+        // the display language; in that case, should use the label with the same language as the matched label
+        $labelcond_fallback = ($search_lang != $lang) ?
+          "OPTIONAL { # in case previous OPTIONAL block gives no labels\n" .
+          "?s skos:prefLabel ?label . FILTER (LANGMATCHES(LANG(?label), LANG(?match))) }" : "";
+
         $limitandoffset = $this->formatLimitAndOffset($limit, $offset);
 
         $formattedtype = $this->formatTypes($types, $arrayClass);
@@ -818,8 +805,21 @@ EOQ;
 SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph (GROUP_CONCAT(DISTINCT ?type) as ?types)
 $extravars
 WHERE {
+ $values_graph
  $gc {
-  { $innerquery }
+  {
+$innerquery
+  }
+  FILTER(BOUND(?s))
+  BIND(STR(SUBSTR(?hit,1,1)) AS ?pri)
+  BIND(STRLANG(STRAFTER(?hit, '@'), SUBSTR(STRBEFORE(?hit, '@'),2)) AS ?match)
+  OPTIONAL {
+   ?s skos:prefLabel ?label .
+   FILTER ($labelcond_label)
+  } $labelcond_fallback
+  BIND(IF((?pri = "1" || ?pri = "2") && ?match != ?label, ?match, ?unbound) as ?plabel)
+  BIND(IF((?pri = "3" || ?pri = "4"), ?match, ?unbound) as ?alabel)
+  BIND(IF((?pri = "5" || ?pri = "6"), ?match, ?unbound) as ?hlabel)
   $formattedtype
   { $pgcond
    ?s a ?type .
@@ -830,7 +830,6 @@ WHERE {
 }
 GROUP BY ?s ?match ?label ?plabel ?alabel ?hlabel ?graph
 ORDER BY LCASE(STR(?match)) LANG(?match) $orderextra $limitandoffset
-$values_graph
 EOQ;
         return $query;
     }
