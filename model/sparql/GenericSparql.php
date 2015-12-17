@@ -746,7 +746,7 @@ EOF;
         $hitgroup = $unique ? 'GROUP BY ?s ?label' : '';
          
         $query = <<<EOQ
-   SELECT ?s ?label $hitvar
+   SELECT DISTINCT ?s ?label $hitvar
    WHERE {
     $values_prop
     VALUES (?prop ?pri) { (skos:prefLabel 1) (skos:altLabel 3) (skos:hiddenLabel 5)}
