@@ -79,6 +79,18 @@
         </div>
         {% if term %}
         <form class="search-options">
+          {% set conceptSchemes = vocab.conceptSchemes %}
+          {% if conceptSchemes|length > 1 %}
+          <div class="input-group">
+            <span class="versal">{% trans "By scheme" %}</span>
+            <select id="scheme-limit" value="{{ limit-scheme }}" class="form-control multiselect" multiple="multiple">
+              <option></option>
+              {% for uri,scheme in conceptSchemes %}
+                <option value="{{ uri }}">{% if scheme.label %}{{ scheme.label }}{% else %}{{ uri|trans }}{% endif %}</option>
+              {% endfor %}
+            </select>
+          </div>
+          {% endif %}
           {% if types|length > 1 %}
           <div class="input-group">
             <span class="versal">{% trans "By type" %}</span>

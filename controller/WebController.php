@@ -473,6 +473,7 @@ class WebController extends Controller
                 'limit_parent' => $parent,
                 'limit_type' => $type,
                 'limit_group' => $group,
+                'limit_scheme' => $schemes,
                 'group_index' => $groups,
                 'types' => $vocab_types,
                 'explicit_langcodes' => $langcodes,

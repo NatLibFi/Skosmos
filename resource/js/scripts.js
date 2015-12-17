@@ -125,11 +125,15 @@ function loadLimitations() {
   var groupLimit = $('#group-limit').val();
   var parentLimit = $('#parent-limit').attr('data-uri');
   var typeLimit = $('#type-limit').val() ? $('#type-limit').val().join('+') : $('#type-limit').val();
+  var schemeLimit = $('#scheme-limit').val() ? $('#scheme-limit').val().join('+') : $('#scheme-limit').val();
+  if (schemeLimit && schemeLimit[0] === '+') { // filtering the empty selection out of the search string
+    schemeLimit = schemeLimit.substring(1);
+  }
   if (typeLimit && typeLimit[0] === '+') { // filtering the empty selection out of the search string
     typeLimit = typeLimit.substring(1);
   }
 
-  return $.param({'type' : typeLimit, 'group' : groupLimit, 'parent': parentLimit});
+  return $.param({'type' : typeLimit, 'group' : groupLimit, 'parent': parentLimit, 'scheme': schemeLimit});
 }
 
 function loadLimitedResults(parameters) {

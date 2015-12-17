@@ -798,9 +798,10 @@ $(function() { // DOCUMENT READY
     var number_of_hits = $(".search-result").length;
     if (number_of_hits >= waypoint_results * offcount) { $('.search-result-listing').append($loading); }
     var typeLimit = $('#type-limit').val();
+    var schemeLimit = $('#scheme-limit').val();
     var groupLimit = $('#group-limit').val();
     var parentLimit = $('#parent-limit').attr('data-uri');
-    var parameters = $.param({'q' : searchTerm, 'vocabs' : vocabSelectionString, 'offset' : offcount * waypoint_results, 'clang' : content_lang, 'type' : typeLimit, 'group' : groupLimit, 'parent': parentLimit, anylang: getUrlParams().anylang});
+    var parameters = $.param({'q' : searchTerm, 'vocabs' : vocabSelectionString, 'offset' : offcount * waypoint_results, 'clang' : content_lang, 'type' : typeLimit, 'group' : groupLimit, 'parent': parentLimit, anylang: getUrlParams().anylang, 'scheme' : schemeLimit });
     $.ajax({
       url : window.location.pathname,
       data : parameters,
@@ -976,6 +977,8 @@ $(function() { // DOCUMENT READY
     $(document).on('click', '#remove-limits', function() {
       $('#type-limit').val('');
       $('#type-limit').multiselect('refresh');
+      $('#scheme-limit').val('');
+      $('#scheme-limit').multiselect('refresh');
       $('#parent-limit').attr('data-uri', '');
       $('#parent-limit').val('');
       $('#group-limit').val('');
