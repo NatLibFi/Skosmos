@@ -761,6 +761,7 @@ WHERE {
   }
   GROUP BY ?s
  }
+ FILTER(BOUND(?s))
  BIND(STR(SUBSTR(?hit,1,1)) AS ?pri)
  BIND(STRLANG(STRAFTER(?hit, '@'), SUBSTR(STRBEFORE(?hit, '@'),2)) AS ?match)
  OPTIONAL {
