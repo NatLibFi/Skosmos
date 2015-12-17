@@ -518,7 +518,7 @@ class RestController extends Controller
         if ($request->getUri()) {
             $uri = $request->getUri();
         } else if ($vocab !== null) { // whole vocabulary - redirect to download URL
-            $urls = $vocab->getDataURLs();
+            $urls = $vocab->getConfig()->getDataURLs();
             if (sizeof($urls) == 0) {
                 return $this->returnError('404', 'Not Found', "No download source URL known for vocabulary $vocab");
             }
