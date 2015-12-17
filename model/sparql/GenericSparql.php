@@ -582,12 +582,28 @@ EOQ;
      * @return string VALUES clause, or "" if not necessary to limit
      */
     protected function formatValuesGraph($vocabs) {
-        if ($this->isDefaultEndpoint()) {
-            $graphs = $this->getVocabGraphs($vocabs);
-            return $this->formatValues('?graph', $graphs, 'uri');
-        } else {
+        if (!$this->isDefaultEndpoint()) {
             return "";
         }
+        $graphs = $this->getVocabGraphs($vocabs);
+        return $this->formatValues('?graph', $graphs, 'uri');
+    }
+
+    /**
+     * Generate a FILTER clause for limiting the targeted graphs.
+     * @param array $vocabs array of Vocabulary objects to target
+     * @return string FILTER clause, or "" if not necessary to limit
+     */
+    protected function formatFilterGraph($vocabs) {
+        if (!$this->isDefaultEndpoint()) {
+            return "";
+        }
+        $graphs = $this->getVocabGraphs($vocabs);
+        $conditions = array();
+        foreach ($graphs as $graph) {
+          $conditions[] = "?graph=<$graph>";
+        }
+        return "FILTER (" . implode('||', $conditions) . ")";
     }
 
     /**
@@ -806,16 +822,7 @@ EOQ;
             $props[] = 'skos:hiddenLabel';
         }
 
-        if ($this->isDefaultEndpoint()) {
-            $graphs = $this->getVocabGraphs($vocabs);
-            $conditions = array();
-            foreach ($graphs as $graph) {
-              $conditions[] = "?graph=<$graph>";
-            }
-            $filter_graph = "FILTER (" . implode('||', $conditions) . ")";
-        } else {
-            $filter_graph = "";
-        }
+        $filter_graph = $this->formatFilterGraph($vocabs);
 
         // remove futile asterisks from the search term
         while (strpos($term, '**') !== false) {
