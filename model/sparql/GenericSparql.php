@@ -805,7 +805,6 @@ EOQ;
 SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph (GROUP_CONCAT(DISTINCT ?type) as ?types)
 $extravars
 WHERE {
- $values_graph
  $gc {
   {
 $innerquery
@@ -830,6 +829,7 @@ $innerquery
 }
 GROUP BY ?s ?match ?label ?plabel ?alabel ?hlabel ?graph
 ORDER BY LCASE(STR(?match)) LANG(?match) $orderextra $limitandoffset
+$values_graph
 EOQ;
         return $query;
     }
