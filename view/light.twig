@@ -56,7 +56,7 @@
         </ul>
       {% endif %}
 
-      <div class="sidebar-grey {% if alpha_results %} sidebar-grey-alpha{% endif %}">
+      <div class="sidebar-grey {% if alpha_results %} sidebar-grey-alpha{% elseif search_results|length == 1 and not term %} concept-hierarchy{% endif %}">
         <div id="alphabetical-menu">
           {% if alpha_results %}
             {% set previous = '' %}
