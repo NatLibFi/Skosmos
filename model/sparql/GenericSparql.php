@@ -116,6 +116,9 @@ EOQ;
     private function transformCountConceptsResults($result, $lang) {
         $ret = array();
         foreach ($result as $row) {
+            if (!isset($row->type)) {
+                continue;
+            }
             $ret[$row->type->getUri()]['type'] = $row->type->getUri();
             $ret[$row->type->getUri()]['count'] = $row->c->getValue();
             if (isset($row->typelabel) && $row->typelabel->getLang() === $lang) {
