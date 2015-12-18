@@ -217,7 +217,6 @@ class RestController extends Controller
     public function vocabularyInformation($request)
     {
         $vocab = $request->getVocab();
-        $this->setLanguageProperties($request->getLang());
 
         /* encode the results in a JSON-LD compatible array */
         $conceptschemes = array();
@@ -247,7 +246,7 @@ class RestController extends Controller
             ),
             'uri' => '',
             'id' => $vocab->getId(),
-            'title' => $vocab->getConfig()->getTitle(),
+            'title' => $vocab->getConfig()->getTitle($request->getLang()),
             'defaultLanguage' => $vocab->getConfig()->getDefaultLanguage(),
             'languages' => $vocab->getConfig()->getLanguages(),
             'conceptschemes' => $conceptschemes,
