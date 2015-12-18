@@ -836,7 +836,7 @@ class RestController extends Controller
 
         $ret = array_merge_recursive($this->context, array(
             '@context' => array('prefLabel' => 'skos:prefLabel', 'related' => 'skos:related', '@language' => $request->getLang()),
-            'uri' => $uri,
+            'uri' => $request->getUri(),
             'related' => $results)
         );
 
