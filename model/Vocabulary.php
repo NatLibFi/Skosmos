@@ -133,16 +133,10 @@ class Vocabulary extends DataObject
             $lang = $this->getEnvLang();
         }
 
-        // get metadata from vocabulary configuration file
+        // get metadata (literals only e.g. name) from vocabulary configuration file
         foreach ($this->resource->properties() as $prop) {
             foreach ($this->resource->allLiterals($prop, $lang) as $val) {
                 $ret[$prop][] = $val->getValue();
-            }
-            foreach ($this->resource->allResources($prop) as $val) {
-                $label = $val->label($lang);
-                if ($label) {
-                    $ret[$prop][] = $label->getValue();
-                }
             }
         }
 
