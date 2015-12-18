@@ -370,7 +370,16 @@ class WebController extends Controller
         // convert to vocids array to support multi-vocabulary search
         $vocids = ($vocabs !== null && $vocabs !== '') ? explode(' ', $vocabs) : null;
 
-        $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocids, $content_lang, $search_lang, $offset, 20, $type, $parent, $group);
+        try {
+            $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocids, $content_lang, $search_lang, $offset, 20, $type, $parent, $group);
+        } catch (Exception $e) {
+            header("HTTP/1.0 404 Not Found");
+            if ($this->model->getConfig()->getLogCaughtExceptions()) {
+                error_log('Caught exception: ' . $e->getMessage());
+            }
+            $this->invokeGenericErrorPage($request, $e->getMessage());
+            return;
+        }
         $counts = $count_and_results['count'];
         $search_results = $count_and_results['results'];
         $vocabList = $this->model->getVocabularyList();
@@ -594,7 +603,7 @@ class WebController extends Controller
     /**
      * Invokes a very generic errorpage.
      */
-    public function invokeGenericErrorPage($request)
+    public function invokeGenericErrorPage($request, $message = null)
     {
         $this->setLanguageProperties($request->getLang());
         header("HTTP/1.0 404 Not Found");
@@ -603,6 +612,7 @@ class WebController extends Controller
             array(
                 'languages' => $this->languages,
                 'request' => $request,
+                'message' => $message,
                 'requested_page' => filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_STRING),
             ));
     }
