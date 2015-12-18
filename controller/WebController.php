@@ -157,7 +157,7 @@ class WebController extends Controller
         if ($vocab_id !== null && $vocab_id !== '') {
             try {
                 $vocab = $this->model->getVocabulary($vocab_id);
-                return $vocab->getDefaultLanguage();
+                return $vocab->getConfig()->getDefaultLanguage();
             } catch (Exception $e) {
                 // vocabulary id not found, move on to the next selection method
             }
