@@ -562,22 +562,48 @@ EOQ;
     /**
      * Generate a VALUES clause for limiting the targeted graphs.
      * @param array $vocabs array of Vocabulary objects to target
+     * @return string[] array of graph URIs
+     */
+    protected function getVocabGraphs($vocabs) {
+        if ($vocabs === null || sizeof($vocabs) == 0) {
+            // searching from all vocabularies - limit to known graphs
+            $vocabs = $this->model->getVocabularies();
+        }
+        $graphs = array();
+        foreach ($vocabs as $voc) {
+            $graphs[] = $voc->getGraph();
+        }
+        return $graphs;
+    }
+
+    /**
+     * Generate a VALUES clause for limiting the targeted graphs.
+     * @param array $vocabs array of Vocabulary objects to target
      * @return string VALUES clause, or "" if not necessary to limit
      */
     protected function formatValuesGraph($vocabs) {
-        if ($this->isDefaultEndpoint()) {
-            if ($vocabs === null || sizeof($vocabs) == 0) {
-                // searching from all vocabularies - limit to known graphs
-                $vocabs = $this->model->getVocabularies();
-            }
-            $graphs = array();
-            foreach ($vocabs as $voc) {
-                $graphs[] = $voc->getGraph();
-            }
-            return $this->formatValues('?graph', $graphs, 'uri');
-        } else {
+        if (!$this->isDefaultEndpoint()) {
             return "";
         }
+        $graphs = $this->getVocabGraphs($vocabs);
+        return $this->formatValues('?graph', $graphs, 'uri');
+    }
+
+    /**
+     * Generate a FILTER clause for limiting the targeted graphs.
+     * @param array $vocabs array of Vocabulary objects to target
+     * @return string FILTER clause, or "" if not necessary to limit
+     */
+    protected function formatFilterGraph($vocabs) {
+        if (!$this->isDefaultEndpoint()) {
+            return "";
+        }
+        $graphs = $this->getVocabGraphs($vocabs);
+        $conditions = array();
+        foreach ($graphs as $graph) {
+          $conditions[] = "?graph=<$graph>";
+        }
+        return "FILTER (" . implode('||', $conditions) . ")";
     }
 
     /**
@@ -712,6 +738,9 @@ EOF;
      */
     protected function generateConceptSearchQueryInner($term, $lang, $search_lang, $props, $unique)
     {
+        $values_prop = $this->formatValues('?prop', $props);
+        $textcond = $this->generateConceptSearchQueryCondition($term, $search_lang);
+
         // extra conditions for label language, if specified
         $labelcond_label = ($lang) ? "LANGMATCHES(lang(?label), '$lang')" : "LANGMATCHES(lang(?label), lang(?match))";
         // if search language and UI/display language differ, must also consider case where there is no prefLabel in
@@ -719,24 +748,6 @@ EOF;
         $labelcond_fallback = ($search_lang != $lang) ?
           "OPTIONAL { # in case previous OPTIONAL block gives no labels\n" .
           "?s skos:prefLabel ?label . FILTER (LANGMATCHES(LANG(?label), LANG(?match))) }" : "";
-
-        $values_prop = $this->formatValues('?prop', $props);
-        $textcond = $this->generateConceptSearchQueryCondition($term, $search_lang);
-
-        $queryAll = <<<EOQ
-SELECT ?s ?match ?label ?plabel ?alabel ?hlabel
-WHERE {
- $values_prop
- $textcond
- OPTIONAL {
-  ?s skos:prefLabel ?label .
-  FILTER ($labelcond_label)
- } $labelcond_fallback
- BIND(IF(?prop = skos:prefLabel && ?match != ?label, ?match, ?unbound) AS ?plabel)
- BIND(IF(?prop = skos:altLabel, ?match, ?unbound) AS ?alabel)
- BIND(IF(?prop = skos:hiddenLabel, ?match, ?unbound) AS ?hlabel)
-}
-EOQ;
 
         /*
          * This query does some tricks to obtain a list of unique concepts.
@@ -747,34 +758,27 @@ EOQ;
          * function is used to pick the best match for each concept. Finally,
          * the structure is unpacked to get back the original string. Phew!
          */
-        $queryUnique = <<<EOQ
-SELECT ?s ?match ?label ?plabel ?alabel ?hlabel 
-WHERE { 
- {
-  SELECT ?s (MIN(?matchstr) AS ?hit)
-  WHERE {
-   $values_prop
-   VALUES (?prop ?pri) { (skos:prefLabel 1) (skos:altLabel 3) (skos:hiddenLabel 5)}
-   $textcond
-   BIND(IF(langMatches(LANG(?match),'$lang'), ?pri, ?pri+1) AS ?npri)
-   BIND(CONCAT(STR(?npri), LANG(?match), '@', STR(?match)) AS ?matchstr)
-  }
-  GROUP BY ?s
- }
- FILTER(BOUND(?s))
- BIND(STR(SUBSTR(?hit,1,1)) AS ?pri)
- BIND(STRLANG(STRAFTER(?hit, '@'), SUBSTR(STRBEFORE(?hit, '@'),2)) AS ?match)
- OPTIONAL {
-  ?s skos:prefLabel ?label .
-  FILTER ($labelcond_label)
- } $labelcond_fallback
- BIND(IF((?pri = "1" || ?pri = "2") && ?match != ?label, ?match, ?unbound) as ?plabel)
- BIND(IF((?pri = "3" || ?pri = "4"), ?match, ?unbound) as ?alabel)
- BIND(IF((?pri = "5" || ?pri = "6"), ?match, ?unbound) as ?hlabel)
-}
+        $hitvar = $unique ? '(MIN(?matchstr) AS ?hit)' : '(?matchstr AS ?hit)';
+        $hitgroup = $unique ? 'GROUP BY ?s ?label' : '';
+         
+        $query = <<<EOQ
+   SELECT DISTINCT ?s ?label $hitvar
+   WHERE {
+    $values_prop
+    VALUES (?prop ?pri) { (skos:prefLabel 1) (skos:altLabel 3) (skos:hiddenLabel 5)}
+    $textcond
+    ?s ?prop ?match
+    OPTIONAL {
+     ?s skos:prefLabel ?label .
+     FILTER ($labelcond_label)
+    } $labelcond_fallback
+    BIND(IF(langMatches(LANG(?match),'$lang'), ?pri, ?pri+1) AS ?npri)
+    BIND(CONCAT(STR(?npri), LANG(?match), '@', STR(?match)) AS ?matchstr)
+   }
+   $hitgroup
 EOQ;
 
-        return $unique ? $queryUnique : $queryAll;
+        return $query;
     }
 
     /**
@@ -796,6 +800,7 @@ EOQ;
      */
     protected function generateConceptSearchQuery($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $types, $parent, $group, $hidden, $fields, $unique, $schemes) {
         $gc = $this->graphClause;
+
         $limitandoffset = $this->formatLimitAndOffset($limit, $offset);
 
         $formattedtype = $this->formatTypes($types, $arrayClass);
@@ -824,7 +829,7 @@ EOQ;
             $props[] = 'skos:hiddenLabel';
         }
 
-        $values_graph = $this->formatValuesGraph($vocabs);
+        $filter_graph = $this->formatFilterGraph($vocabs);
 
         // remove futile asterisks from the search term
         while (strpos($term, '**') !== false) {
@@ -838,7 +843,15 @@ SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph (GROUP_CONCAT(DISTINCT 
 $extravars
 WHERE {
  $gc {
-  { $innerquery }
+  {
+$innerquery
+  }
+  FILTER(BOUND(?s))
+  BIND(STR(SUBSTR(?hit,1,1)) AS ?pri)
+  BIND(STRLANG(STRAFTER(?hit, '@'), SUBSTR(STRBEFORE(?hit, '@'),2)) AS ?match)
+  BIND(IF((?pri = "1" || ?pri = "2") && ?match != ?label, ?match, ?unbound) as ?plabel)
+  BIND(IF((?pri = "3" || ?pri = "4"), ?match, ?unbound) as ?alabel)
+  BIND(IF((?pri = "5" || ?pri = "6"), ?match, ?unbound) as ?hlabel)
   $formattedtype
   { $pgcond 
    ?s a ?type .
@@ -846,10 +859,10 @@ WHERE {
   }
   FILTER NOT EXISTS { ?s owl:deprecated true }
  }
+ $filter_graph
 }
 GROUP BY ?s ?match ?label ?plabel ?alabel ?hlabel ?graph
 ORDER BY LCASE(STR(?match)) LANG(?match) $orderextra $limitandoffset
-$values_graph
 EOQ;
         return $query;
     }

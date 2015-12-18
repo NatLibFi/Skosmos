@@ -218,7 +218,6 @@ class RestController extends Controller
     public function vocabularyInformation($request)
     {
         $vocab = $request->getVocab();
-        $this->setLanguageProperties($request->getLang());
 
         /* encode the results in a JSON-LD compatible array */
         $conceptschemes = array();
@@ -248,7 +247,7 @@ class RestController extends Controller
             ),
             'uri' => '',
             'id' => $vocab->getId(),
-            'title' => $vocab->getConfig()->getTitle(),
+            'title' => $vocab->getConfig()->getTitle($request->getLang()),
             'defaultLanguage' => $vocab->getConfig()->getDefaultLanguage(),
             'languages' => $vocab->getConfig()->getLanguages(),
             'conceptschemes' => $conceptschemes,
@@ -519,7 +518,7 @@ class RestController extends Controller
         if ($request->getUri()) {
             $uri = $request->getUri();
         } else if ($vocab !== null) { // whole vocabulary - redirect to download URL
-            $urls = $vocab->getDataURLs();
+            $urls = $vocab->getConfig()->getDataURLs();
             if (sizeof($urls) == 0) {
                 return $this->returnError('404', 'Not Found', "No download source URL known for vocabulary $vocab");
             }
@@ -837,7 +836,7 @@ class RestController extends Controller
 
         $ret = array_merge_recursive($this->context, array(
             '@context' => array('prefLabel' => 'skos:prefLabel', 'related' => 'skos:related', '@language' => $request->getLang()),
-            'uri' => $uri,
+            'uri' => $request->getUri(),
             'related' => $results)
         );
 
