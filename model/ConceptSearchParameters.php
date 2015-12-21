@@ -6,12 +6,14 @@
 class ConceptSearchParameters
 {
 
+    private $config;
     private $request;
-    private $vocab;
+    private $vocabs;
 
-    public function __construct($request) 
+    public function __construct($request, $config) 
     {
         $this->request = $request;
+        $this->config = $config;
     }
 
     public function getLang() 
@@ -19,16 +21,27 @@ class ConceptSearchParameters
        return $this->request->getLang();
     } 
 
-    public function getVocab() 
+    public function getVocabs() 
     {
-       return $this->request->getVocab();
+        if ($this->vocabs) {
+            return $this->vocabs;
+        }
+        return array($this->request->getVocab());
     } 
 
     public function getVocabIds()
     {
-        return array($this->getVocab()->getId());
+        if ($this->request->getQueryParam('vocabs')) {
+            $vocabs = $this->request->getQueryParam('vocabs'); 
+            return ($vocabs !== null && $vocabs !== '') ? explode(' ', $vocabs) : null;
+        }
+        return array(reset($this->getVocabs())->getId());
     }
 
+    public function setVocabularies($vocabs) 
+    {
+        $this->vocabs = $vocabs;
+    }
     /*
         if (sizeof($vocids) == 1) { // search within vocabulary
             $voc = $vocabs[0];
@@ -43,7 +56,7 @@ class ConceptSearchParameters
     public function getArrayClass() 
     {
         if (sizeof($this->getVocabIds()) == 1) { // search within vocabulary
-            return $this->getVocab()->getConfig()->getArrayClassURI();
+            return reset($this->getVocabs())->getConfig()->getArrayClassURI();
         }
         return null;
     }
@@ -94,6 +107,7 @@ class ConceptSearchParameters
     {
         return $this->request->getQueryParam('parent') !== '' ? $this->request->getQueryParam('parent') : null;
     }
+
     public function getOffset() 
     {
         return ($this->request->getQueryParam('offset') && is_numeric($this->request->getQueryParam('offset')) && $this->request->getQueryParam('offset') >= 0) ? $this->request->getQueryParam('offset') : 0;
@@ -101,6 +115,6 @@ class ConceptSearchParameters
 
     public function getSearchLimit()
     {
-        return null;
+        return $this->config->getDefaultSearchLimit();
     }
 }

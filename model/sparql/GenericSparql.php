@@ -822,7 +822,7 @@ EOQ;
             $props[] = 'skos:hiddenLabel';
         }
 
-        $filter_graph = $this->formatFilterGraph($params->getVocab());
+        $filter_graph = $this->formatFilterGraph($params->getVocabs());
 
         // remove futile asterisks from the search term
         $term = $params->getSearchTerm();
@@ -957,7 +957,7 @@ EOQ;
     public function queryConcepts($vocabs, $hidden = true, $fields = null, $unique = false, $params) {
         $query = $this->generateConceptSearchQuery($vocabs, $hidden, $fields, $unique, $params);
         $results = $this->client->query($query);
-        return $this->transformConceptSearchResults($results, array($params->getVocab()));
+        return $this->transformConceptSearchResults($results, $params->getVocabs());
     }
 
     /**

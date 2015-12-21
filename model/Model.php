@@ -229,7 +229,7 @@ class Model
      * @param boolean $unique restrict results to unique concepts (default: false)
      * @return array search results
      */
-    public function searchConcepts($term, $vocids, $lang, $search_lang, $type = null, $parent = null, $group = null, $offset = 0, $limit = null, $hidden = true, $fields = null, $unique = false, $params)
+    public function searchConcepts($term, $vocids, $offset = 0, $limit = null, $hidden = true, $fields = null, $unique = false, $params)
     {
         if ($limit === null) {
             $limit = $this->getConfig()->getDefaultSearchLimit();
@@ -308,19 +308,10 @@ class Model
      * @param string $group limit search to concepts which are in the given group
      * @return array array with keys 'count' and 'results'
      */
-    public function searchConceptsAndInfo($term, $vocids, $lang, $search_lang, $offset = 0, $limit = 20, $type = null, $parent = null, $group = null, $params)
+    public function searchConceptsAndInfo($params)
     {
-        // make vocids an array in every case
-        if ($vocids === null) {
-            $vocids = array();
-        }
-
-        if (!is_array($vocids)) {
-            $vocids = array($vocids);
-        }
-
-        $allhits = $this->searchConcepts($term, $vocids, $lang, $search_lang, $type, $parent, $group, 0, 0, true, null, true, $params);
-        $hits = array_slice($allhits, $offset, $limit);
+        $allhits = $this->searchConcepts($params->getSearchTerm(), $params->getVocabIds(), 0, 0, true, null, true, $params);
+        $hits = array_slice($allhits, $params->getOffset(), $params->getSearchLimit());
 
         $uris = array();
         $vocabs = array();
@@ -338,7 +329,7 @@ class Model
             $arrayClass = null;
             $sparql = $this->getDefaultSparql();
         }
-        $ret = $sparql->queryConceptInfo($uris, $arrayClass, $vocabs, null, $search_lang);
+        $ret = $sparql->queryConceptInfo($uris, $arrayClass, $vocabs, null, $params->getSearchLang());
 
         // For marking that the concept has been found through an alternative label, hidden
         // label or a label in another language
