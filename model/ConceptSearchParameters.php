@@ -9,11 +9,13 @@ class ConceptSearchParameters
     private $config;
     private $request;
     private $vocabs;
+    private $rest;
 
-    public function __construct($request, $config) 
+    public function __construct($request, $config, $rest = false) 
     {
         $this->request = $request;
         $this->config = $config;
+        $this->rest = $rest;
     }
 
     public function getLang() 
@@ -63,7 +65,7 @@ class ConceptSearchParameters
     
     public function getSearchTerm() 
     {
-        $term = $this->request->getQueryParam('q');
+        $term = $this->request->getQueryParam('q') ? $this->request->getQueryParam('q') : $this->request->getQueryParam('query');
         $term = trim($term); // surrounding whitespace is not considered significant
         return strpos($term, "*") === false ? $term . "*" : $term; // default to prefix search
     }
@@ -80,6 +82,9 @@ class ConceptSearchParameters
     
     public function getSearchLang() 
     {
+        if ($this->rest) {
+            return $this->request->getQueryParam('lang');
+        }
         return $this->request->getQueryParam('anylang') ? '' : $this->getContentLang();
     }
 

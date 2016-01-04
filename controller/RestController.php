@@ -162,19 +162,15 @@ class RestController extends Controller
             return $this->returnError(400, "Bad Request", "offset parameter is invalid");
         }
 
-        $vocid = $request->getVocabId(); # optional
         $lang = $request->getQueryParam('lang'); # optional
         $labellang = $request->getQueryParam('labellang'); # optional
-        $types = $request->getQueryParam('type') ? explode(' ', $request->getQueryParam('type')) : array('skos:Concept');
-        $parent = $request->getQueryParam('parent');
-        $group = $request->getQueryParam('group');
+
         $fields = $request->getQueryParam('fields') ? explode(' ', $request->getQueryParam('fields')) : null;
         $unique = $request->getQueryParamBoolean('unique', false);
 
-        // convert to vocids array to support multi-vocabulary search
-        $vocids = !empty($vocid) ? explode(' ', $vocid) : null;
-
-        $results = $this->model->searchConcepts($term, $vocids, $labellang, $lang, $types, $parent, $group, $offset, $maxhits, true, $fields, $unique);
+        $parameters = new ConceptSearchParameters($request, $this->model->getConfig(), true);
+        //$results = $this->model->searchConcepts($term, $vocids, $labellang, $lang, $types, $parent, $group, $offset, $maxhits, true, $fields, $unique, $parameters);
+        $results = $this->model->searchConcepts(true, $fields, $unique, $parameters);
         // before serializing to JSON, get rid of the Vocabulary object that came with each resource
         foreach ($results as &$res) {
             unset($res['voc']);

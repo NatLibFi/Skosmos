@@ -229,30 +229,15 @@ class Model
      * @param boolean $unique restrict results to unique concepts (default: false)
      * @return array search results
      */
-    public function searchConcepts($term, $vocids, $offset = 0, $limit = null, $hidden = true, $fields = null, $unique = false, $params)
+    public function searchConcepts($hidden = true, $fields = null, $unique = false, $params)
     {
-        if ($limit === null) {
-            $limit = $this->getConfig()->getDefaultSearchLimit();
-        }
-        $term = trim($term);
-        if ($term == "" || !preg_match('/[^*]/', $term)) {
+        // don't even try to search for empty prefix
+        if ($params->getSearchTerm() == "" || !preg_match('/[^*]/', $params->getSearchTerm())) {
             return array();
         }
-        // don't even try to search for empty prefix
 
-        // make vocids an array in every case
-        if ($vocids === null) {
-            $vocids = array();
-        }
-
-        if (!is_array($vocids)) {
-            $vocids = array($vocids);
-        }
-
-        $vocabs = array();
-        foreach ($vocids as $vocid) {
-            $vocabs[] = $this->getVocabulary($vocid);
-        }
+        $vocids = $params->getVocabIds();
+        $vocabs = $params->getVocabs();
 
         if (sizeof($vocids) == 1) { // search within vocabulary
             $voc = $vocabs[0];
@@ -310,7 +295,7 @@ class Model
      */
     public function searchConceptsAndInfo($params)
     {
-        $allhits = $this->searchConcepts($params->getSearchTerm(), $params->getVocabIds(), 0, 0, true, null, true, $params);
+        $allhits = $this->searchConcepts(true, null, true, $params);
         $hits = array_slice($allhits, $params->getOffset(), $params->getSearchLimit());
 
         $uris = array();
