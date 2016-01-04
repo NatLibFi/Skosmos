@@ -20,7 +20,10 @@ class ConceptSearchParameters
 
     public function getLang() 
     {
-       return $this->request->getLang();
+        if ($this->rest && $this->request->getQueryParam('labellang')) {
+            return $this->request->getQueryParam('labellang');
+        }
+        return $this->request->getLang();
     } 
 
     public function getVocabs() 
@@ -48,17 +51,7 @@ class ConceptSearchParameters
     {
         $this->vocabs = $vocabs;
     }
-    /*
-        if (sizeof($vocids) == 1) { // search within vocabulary
-            $voc = $vocabs[0];
-            $sparql = $voc->getSparql();
-            $arrayClass = $voc->getConfig()->getArrayClassURI();
-        } else { // multi-vocabulary or global search
-            $voc = null;
-            $arrayClass = null;
-            $sparql = $this->getDefaultSparql();
-        }
-    */
+    
     public function getArrayClass() 
     {
         if (sizeof($this->getVocabIds()) == 1) { // search within vocabulary
