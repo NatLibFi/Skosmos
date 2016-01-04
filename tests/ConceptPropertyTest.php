@@ -3,7 +3,6 @@
 class ConceptPropertyTest extends PHPUnit_Framework_TestCase
 {
   private $model; 
-  private $concept;
 
   protected function setUp() {
     require_once 'testconfig.inc';
@@ -14,8 +13,6 @@ class ConceptPropertyTest extends PHPUnit_Framework_TestCase
     textdomain('skosmos');
 
     $this->model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
-    $search_results = $this->model->searchConceptsAndInfo('carp', 'test', 'en', 'en'); 
-    $this->concept = $search_results['results'][0];
   }
 
   /**
