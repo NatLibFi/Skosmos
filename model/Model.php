@@ -232,7 +232,7 @@ class Model
     public function searchConcepts($hidden = true, $fields = null, $unique = false, $params)
     {
         // don't even try to search for empty prefix
-        if ($params->getSearchTerm() == "" || !preg_match('/[^*]/', $params->getSearchTerm())) {
+        if ($params->getSearchTerm() === "" || !preg_match('/[^*]/', $params->getSearchTerm())) {
             return array();
         }
 
