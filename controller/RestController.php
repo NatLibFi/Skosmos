@@ -169,6 +169,16 @@ class RestController extends Controller
         $unique = $request->getQueryParamBoolean('unique', false);
 
         $parameters = new ConceptSearchParameters($request, $this->model->getConfig(), true);
+        
+        $vocabs = $request->getQueryParam('vocab'); # optional
+        // convert to vocids array to support multi-vocabulary search
+        $vocids = ($vocabs !== null && $vocabs !== '') ? explode(' ', $vocabs) : null;
+        $vocabObjects = array();
+        foreach($vocids as $vocid) {
+            $vocabObjects[] = $this->model->getVocabulary($vocid);
+        }
+        $parameters->setVocabularies($vocabObjects);
+
         //$results = $this->model->searchConcepts($term, $vocids, $labellang, $lang, $types, $parent, $group, $offset, $maxhits, true, $fields, $unique, $parameters);
         $results = $this->model->searchConcepts(true, $fields, $unique, $parameters);
         // before serializing to JSON, get rid of the Vocabulary object that came with each resource

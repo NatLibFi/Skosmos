@@ -33,6 +33,10 @@ class ConceptSearchParameters
 
     public function getVocabIds()
     {
+        if ($this->rest) {
+            $vocabs = $this->request->getQueryParam('vocab');
+            return ($vocabs !== null && $vocabs !== '') ? explode(' ', $vocabs) : null;
+        }
         if ($this->request->getQueryParam('vocabs')) {
             $vocabs = $this->request->getQueryParam('vocabs'); 
             return ($vocabs !== null && $vocabs !== '') ? explode(' ', $vocabs) : null;

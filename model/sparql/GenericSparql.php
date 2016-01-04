@@ -810,7 +810,7 @@ EOQ;
         $extrafields = $formattedbroader['extrafields'];
 
         // extra conditions for parent and group, if specified
-        $parentcond = ($params->getParentLimit()) ? "?s skos:broader+ <$params->getParentLimit()> ." : "";
+        $parentcond = ($params->getParentLimit()) ? "?s skos:broader+ <" . $params->getParentLimit() . "> ." : "";
         $groupcond = ($params->getGroupLimit()) ? "<$params->getGroupLimit()> skos:member ?s ." : "";
         $pgcond = $parentcond . $groupcond;
 
