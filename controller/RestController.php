@@ -416,7 +416,6 @@ class RestController extends Controller
         }
 
         $lang = $request->getQueryParam('lang');
-        $vocab = $request->getVocab();
 
         $parameters = new ConceptSearchParameters($request, $this->model->getConfig(), true);
 
