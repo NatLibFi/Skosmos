@@ -143,6 +143,7 @@ EOQ;
     /**
      * @param array $langs Languages to query for
      * @param string[] $props property names
+     * @return string sparql query
      */
     private function generateCountLangConceptsQuery($langs, $classes, $props) {
         $gc = $this->graphClause;
@@ -567,7 +568,7 @@ EOQ;
 
     /**
      * Generate a VALUES clause for limiting the targeted graphs.
-     * @param array $vocabs array of Vocabulary objects to target
+     * @param Vocabulary[] $vocabs the vocabularies to target 
      * @return string[] array of graph URIs
      */
     protected function getVocabGraphs($vocabs) {
