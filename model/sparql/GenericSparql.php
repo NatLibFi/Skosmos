@@ -298,7 +298,10 @@ CONSTRUCT {
  ?group a ?grouptype . $construct
 } WHERE {
  $gc {
-  { ?s ?p ?uri . }
+  {
+    ?s ?p ?uri .
+    FILTER(!isBlank(?s))
+  }
   UNION
   { ?sp ?uri ?op . }
   UNION

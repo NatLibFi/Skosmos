@@ -451,6 +451,34 @@ test:ta126
   }
 
   /**
+   * @covers Model::getRDF
+   * @depends testConstructorWithConfig
+   * Issue: https://github.com/NatLibFi/Skosmos/pull/419
+   */
+  public function testGetRDFShouldNotIncludeExtraBlankNodesFromLists() {
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
+    $result = $model->getRDF('test', 'http://www.skosmos.skos/test/ta125', 'text/turtle');
+    $resultGraph = new EasyRdf_Graph();
+    $resultGraph->parse($result, "turtle");
+
+    $expected = '@prefix test: <http://www.skosmos.skos/test/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix mads: <http://www.loc.gov/mads/rdf/v1#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+skos:prefLabel rdfs:label "preferred label"@en .
+
+test:ta125
+  a mads:Topic, skos:Concept ;
+  skos:prefLabel "Vadefugler"@nb .
+';
+
+    $expectedGraph = new EasyRdf_Graph();
+    $expectedGraph->parse($expected, "turtle");
+    $this->assertTrue(EasyRdf_Isomorphic::isomorphic($resultGraph, $expectedGraph));
+  }
+
+  /**
    * @covers Model::getLanguages
    */
   public function testGetLanguages() {
