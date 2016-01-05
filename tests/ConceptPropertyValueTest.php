@@ -15,7 +15,8 @@ class ConceptPropertyValueTest extends PHPUnit_Framework_TestCase
 
     $this->model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $this->vocab = $this->model->getVocabulary('test');
-    $this->concept = reset($this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en'));
+    $results = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en');
+    $this->concept = reset($results);
   }
 
   /**
@@ -68,7 +69,8 @@ class ConceptPropertyValueTest extends PHPUnit_Framework_TestCase
    * @covers ConceptPropertyValue::getNotation
    */
   public function testGetNotation() {
-    $concept = reset($this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta121', 'en'));
+    $results = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta121', 'en');
+    $concept = reset($results);
     $props = $concept->getProperties();
     $propvals = $props['skos:broader']->getValues();
     $this->assertEquals(665, $propvals['Carphttp://www.skosmos.skos/test/ta112']->getNotation());
@@ -78,7 +80,8 @@ class ConceptPropertyValueTest extends PHPUnit_Framework_TestCase
    * @covers ConceptPropertyValue::__toString
    */
   public function testGetToStringWhenSortByNotationNotSet() {
-    $concept = reset($this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta121', 'en'));
+    $results = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta121', 'en');
+    $concept = reset($results);
     $props = $concept->getProperties();
     $propvals = $props['skos:broader']->getValues();
     $this->assertEquals('Carp', (string)$propvals['Carphttp://www.skosmos.skos/test/ta112']);

@@ -102,7 +102,8 @@ class ConceptTest extends PHPUnit_Framework_TestCase
    */
   public function testGetAllLabels()
   {
-    $concept = reset($this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta115', 'en'));
+    $results = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta115', 'en');
+    $concept = reset($results);
     $labels = $concept->getAllLabels('skos:definition');
     $this->assertEquals('Iljettävä limanuljaska', $labels['Finnish'][0]->getLabel());
     $this->assertEquals('any fish belonging to the order Anguilliformes', $labels['English'][0]->getLabel());
@@ -156,7 +157,8 @@ class ConceptTest extends PHPUnit_Framework_TestCase
    */
   public function testGetPropertiesAlphabeticalSortingOfPropertyValues()
   {
-    $concept = reset($this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta1', 'en'));
+    $results = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta1', 'en'); 
+    $concept = reset($results);
     $props = $concept->getProperties();
     $prevlabel;
     foreach($props['skos:narrower'] as $val) {
