@@ -10,12 +10,16 @@ class ConceptSearchParameters
     private $request;
     private $vocabs;
     private $rest;
+    private $hidden;
+    private $unique;
 
     public function __construct($request, $config, $rest = false) 
     {
         $this->request = $request;
         $this->config = $config;
         $this->rest = $rest;
+        $this->hidden = true;
+        $this->unique = $request->getQueryParamBoolean('unique', false);
     }
 
     public function getLang() 
@@ -121,4 +125,29 @@ class ConceptSearchParameters
     {
         return $this->config->getDefaultSearchLimit();
     }
+
+    public function getUnique() {
+        return $this->unique;
+    }
+
+    public function setUnique($unique) {
+        $this->unique = $unique;
+    }
+
+    public function getAdditionalFields() {
+        return $this->request->getQueryParam('fields') ? explode(' ', $request->getQueryParam('fields')) : null;
+    }
+    
+    public function getHidden() {
+        return $this->hidden;
+    }
+    
+    public function setHidden($hidden) {
+        $this->hidden = $hidden;
+    }
+    
+    public function setAdditionalFields($fields) {
+        $this->fields = $fields;
+    }
+
 }

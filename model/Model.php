@@ -215,21 +215,9 @@ class Model
     /**
      * Makes a SPARQL-query to the endpoint that retrieves concept
      * references as it's search results.
-     * @param string $term the term that is looked for eg. 'cat'.
-     * @param mixed $vocids vocabulary id eg. 'yso', array of such ids for multi-vocabulary search, or null for global search.
-     * @param string $lang language code to show labels in, eg. 'fi' for Finnish.
-     * @param string $search_lang language code used for matching, eg. 'fi' for Finnish, null for any language
-     * @param string $type limit search to concepts of the given type
-     * @param string $parent limit search to concepts which have the given concept as parent in the transitive broader hierarchy
-     * @param string $group limit search to concepts which are in the given group
-     * @param int $offset optional parameter for search offset.
-     * @param int $limit optional paramater for maximum amount of results.
-     * @param boolean $hidden include matches on hidden labels (default: true).
-     * @param array $fields extra fields to include in the result (array of strings). (default: null = none)
-     * @param boolean $unique restrict results to unique concepts (default: false)
      * @return array search results
      */
-    public function searchConcepts($hidden = true, $fields = null, $unique = false, $params)
+    public function searchConcepts($params)
     {
         // don't even try to search for empty prefix
         if ($params->getSearchTerm() === "" || !preg_match('/[^*]/', $params->getSearchTerm())) {
@@ -247,7 +235,7 @@ class Model
             $sparql = $this->getDefaultSparql();
         }
 
-        $results = $sparql->queryConcepts($vocabs, $hidden, $fields, $unique, $params);
+        $results = $sparql->queryConcepts($vocabs, $params->getHidden(), $params->getAdditionalFields(), $params->getUnique(), $params);
         $ret = array();
 
         foreach ($results as $hit) {
@@ -295,7 +283,8 @@ class Model
      */
     public function searchConceptsAndInfo($params)
     {
-        $allhits = $this->searchConcepts(true, null, true, $params);
+        $params->setUnique(true);
+        $allhits = $this->searchConcepts($params);
         $hits = array_slice($allhits, $params->getOffset(), $params->getSearchLimit());
 
         $uris = array();

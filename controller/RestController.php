@@ -165,9 +165,6 @@ class RestController extends Controller
         $lang = $request->getQueryParam('lang'); # optional
         $labellang = $request->getQueryParam('labellang'); # optional
 
-        $fields = $request->getQueryParam('fields') ? explode(' ', $request->getQueryParam('fields')) : null;
-        $unique = $request->getQueryParamBoolean('unique', false);
-
         $parameters = new ConceptSearchParameters($request, $this->model->getConfig(), true);
         
         $vocabs = $request->getQueryParam('vocab'); # optional
@@ -179,7 +176,7 @@ class RestController extends Controller
         }
         $parameters->setVocabularies($vocabObjects);
 
-        $results = $this->model->searchConcepts(true, $fields, $unique, $parameters);
+        $results = $this->model->searchConcepts($parameters);
         // before serializing to JSON, get rid of the Vocabulary object that came with each resource
         foreach ($results as &$res) {
             unset($res['voc']);
@@ -423,7 +420,7 @@ class RestController extends Controller
 
         $parameters = new ConceptSearchParameters($request, $this->model->getConfig(), true);
 
-        $results = $this->model->searchConcepts(null, null, null, $parameters);
+        $results = $this->model->searchConcepts($parameters);
 
         $hits = array();
         // case 1: exact match on preferred label
