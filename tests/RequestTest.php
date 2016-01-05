@@ -15,7 +15,6 @@ class RequestTest extends PHPUnit_Framework_TestCase
     $config = new GlobalConfig('/../tests/testconfig.inc');
     $this->model = new Model($config);
     $this->request = new Request($this->model);
-    $search_results = $this->model->searchConceptsAndInfo('carp', 'test', 'en', 'en'); 
   }
   
   
