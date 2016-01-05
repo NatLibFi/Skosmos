@@ -789,19 +789,11 @@ EOQ;
 
     /**
      * Query for concepts using a search term.
-     * @param string $term search term
      * @param array $vocabs array of Vocabulary objects to search; empty for global search
-     * @param string $lang language code of the returned labels
-     * @param string $search_lang language code used for matching labels (null means any language)
-     * @param int $limit maximum number of hits to retrieve; 0 for unlimited
-     * @param int $offset offset of results to retrieve; 0 for beginning of list
-     * @param string $arrayClass the URI for thesaurus array class, or null if not used
-     * @param array $types limit search to concepts of the given type(s)
-     * @param string $parent limit search to concepts which have the given concept as parent in the transitive broader hierarchy
-     * @param string $group limit search to concepts which are in the given group
      * @param boolean $hidden include matches on hidden labels (default: true)
      * @param array $fields extra fields to include in the result (array of strings). (default: null = none)
      * @param boolean $unique restrict results to unique concepts (default: false)
+     * @param ConceptSearchParameters $params 
      * @return string sparql query
      */
     protected function generateConceptSearchQuery($vocabs, $hidden, $fields, $unique, $params) {
@@ -942,19 +934,11 @@ EOQ;
 
     /**
      * Query for concepts using a search term.
-     * @param string $term search term
      * @param array $vocabs array of Vocabulary objects to search; empty for global search
-     * @param string $lang language code of the returned labels
-     * @param string $search_lang language code used for matching labels (null means any language)
-     * @param int $limit maximum number of hits to retrieve; 0 for unlimited
-     * @param int $offset offset of results to retrieve; 0 for beginning of list
-     * @param string $arrayClass the URI for thesaurus array class, or null if not used
-     * @param array $types limit search to concepts of the given type(s)
-     * @param string $parent limit search to concepts which have the given concept as parent in the transitive broader hierarchy
-     * @param string $group limit search to concepts which are in the given group
      * @param boolean $hidden include matches on hidden labels (default: true)
      * @param array $fields extra fields to include in the result (array of strings). (default: null = none)
      * @param boolean $unique restrict results to unique concepts (default: false)
+     * @param ConceptSearchParameters $params 
      * @return array query result object
      */
     public function queryConcepts($vocabs, $hidden = true, $fields = null, $unique = false, $params) {
