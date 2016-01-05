@@ -4,6 +4,7 @@ class ConceptPropertyValueLiteralTest extends PHPUnit_Framework_TestCase
 {
   private $model; 
   private $concept;
+  private $vocab;
 
   protected function setUp() {
     require_once 'testconfig.inc';
@@ -14,8 +15,8 @@ class ConceptPropertyValueLiteralTest extends PHPUnit_Framework_TestCase
     textdomain('skosmos');
 
     $this->model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
-    $search_results = $this->model->searchConceptsAndInfo('carp', 'test', 'en', 'en'); 
-    $this->concept = $search_results['results'][0];
+    $this->vocab = $this->model->getVocabulary('test');
+    $this->concept = reset($this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en'));
   }
 
 

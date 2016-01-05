@@ -6,6 +6,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   private $graph; 
   private $sparql;
   private $vocab;
+  private $params;
 
   protected function setUp() {
     putenv("LC_ALL=en_GB.utf8");
@@ -13,6 +14,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
     $this->model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $this->vocab = $this->model->getVocabulary('test');
     $this->graph = $this->vocab->getGraph();
+    $this->params = $this->getMockBuilder('ConceptSearchParameters')->disableOriginalConstructor()->getMock();
     $this->sparql = new GenericSparql('http://localhost:3030/ds/sparql', $this->graph, $this->model);
   }
  
@@ -297,7 +299,9 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   public function testQueryConcepts()
   {
     $voc = $this->model->getVocabulary('test');
-    $actual = $this->sparql->queryConcepts('bass*',array($voc),'en', 'en', 20, 0, null, array('skos:Concept'));
+    $this->params->method('getSearchTerm')->will($this->returnValue('bass*'));
+    $this->params->method('getVocabIds')->will($this->returnValue(array('test')));
+    $actual = $this->sparql->queryConcepts(array($voc), null, null, null, $this->params);
     $this->assertEquals(1, sizeof($actual));
     $this->assertEquals('Bass', $actual[0]['prefLabel']);
   }
@@ -308,7 +312,8 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   public function testQueryConceptsAsteriskBeforeTerm()
   {
     $voc = $this->model->getVocabulary('test');
-    $actual = $this->sparql->queryConcepts('*bass',array($voc),'en', 'en', 20, 0, null, array('skos:Concept'));
+    $this->params->method('getSearchTerm')->will($this->returnValue('*bass'));
+    $actual = $this->sparql->queryConcepts(array($voc), null, null, null, $this->params);
     $this->assertEquals(3, sizeof($actual));
     foreach($actual as $match)
       $this->assertContains('bass', $match['prefLabel'], '',true);

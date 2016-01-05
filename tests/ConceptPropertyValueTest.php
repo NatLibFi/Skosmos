@@ -4,7 +4,8 @@ class ConceptPropertyValueTest extends PHPUnit_Framework_TestCase
 {
   private $model; 
   private $concept;
-
+  private $vocab;
+    
   protected function setUp() {
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');
@@ -13,8 +14,8 @@ class ConceptPropertyValueTest extends PHPUnit_Framework_TestCase
     textdomain('skosmos');
 
     $this->model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
-    $search_results = $this->model->searchConceptsAndInfo('carp', 'test', 'en', 'en'); 
-    $this->concept = $search_results['results'][0];
+    $this->vocab = $this->model->getVocabulary('test');
+    $this->concept = reset($this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en'));
   }
 
   /**
@@ -67,9 +68,8 @@ class ConceptPropertyValueTest extends PHPUnit_Framework_TestCase
    * @covers ConceptPropertyValue::getNotation
    */
   public function testGetNotation() {
-    $search_results = $this->model->searchConceptsAndInfo('crucian carp', 'test', 'en', 'en'); 
-    $this->concept = $search_results['results'][0];
-    $props = $this->concept->getProperties();
+    $concept = reset($this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta121', 'en'));
+    $props = $concept->getProperties();
     $propvals = $props['skos:broader']->getValues();
     $this->assertEquals(665, $propvals['Carphttp://www.skosmos.skos/test/ta112']->getNotation());
   }
@@ -78,9 +78,8 @@ class ConceptPropertyValueTest extends PHPUnit_Framework_TestCase
    * @covers ConceptPropertyValue::__toString
    */
   public function testGetToStringWhenSortByNotationNotSet() {
-    $search_results = $this->model->searchConceptsAndInfo('crucian carp', 'test', 'en', 'en'); 
-    $this->concept = $search_results['results'][0];
-    $props = $this->concept->getProperties();
+    $concept = reset($this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta121', 'en'));
+    $props = $concept->getProperties();
     $propvals = $props['skos:broader']->getValues();
     $this->assertEquals('Carp', (string)$propvals['Carphttp://www.skosmos.skos/test/ta112']);
   }

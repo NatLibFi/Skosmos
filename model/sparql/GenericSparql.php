@@ -957,7 +957,7 @@ EOQ;
     public function queryConcepts($vocabs, $hidden = true, $fields = null, $unique = false, $params) {
         $query = $this->generateConceptSearchQuery($vocabs, $hidden, $fields, $unique, $params);
         $results = $this->client->query($query);
-        return $this->transformConceptSearchResults($results, $params->getVocabs());
+        return $this->transformConceptSearchResults($results, $vocabs);
     }
 
     /**
