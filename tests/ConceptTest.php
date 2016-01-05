@@ -14,7 +14,8 @@ class ConceptTest extends PHPUnit_Framework_TestCase
 
     $this->model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $this->vocab = $this->model->getVocabulary('test');
-    $this->concept = reset($this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en'));
+    $results = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en');
+    $this->concept = reset($results);
   }
   
   /**
