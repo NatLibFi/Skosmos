@@ -63,6 +63,8 @@ class ConceptSearchParameters
     public function getSearchTerm() 
     {
         $term = $this->request->getQueryParam('q') ? $this->request->getQueryParam('q') : $this->request->getQueryParam('query');
+        if (!$term && $this->rest)
+            $term = $this->request->getQueryParam('label');
         $term = trim($term); // surrounding whitespace is not considered significant
         return strpos($term, "*") === false ? $term . "*" : $term; // default to prefix search
     }

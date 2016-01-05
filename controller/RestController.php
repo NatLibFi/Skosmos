@@ -421,7 +421,9 @@ class RestController extends Controller
         $lang = $request->getQueryParam('lang');
         $vocab = $request->getVocab();
 
-        $results = $this->model->searchConcepts($label, $vocab->getId(), $lang, $lang);
+        $parameters = new ConceptSearchParameters($request, $this->model->getConfig(), true);
+
+        $results = $this->model->searchConcepts(null, null, null, $parameters);
 
         $hits = array();
         // case 1: exact match on preferred label
