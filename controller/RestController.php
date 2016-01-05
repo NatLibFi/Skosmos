@@ -169,7 +169,7 @@ class RestController extends Controller
         
         $vocabs = $request->getQueryParam('vocab'); # optional
         // convert to vocids array to support multi-vocabulary search
-        $vocids = ($vocabs !== null && $vocabs !== '') ? explode(' ', $vocabs) : null;
+        $vocids = ($vocabs !== null && $vocabs !== '') ? explode(' ', $vocabs) : array();
         $vocabObjects = array();
         foreach($vocids as $vocid) {
             $vocabObjects[] = $this->model->getVocabulary($vocid);
