@@ -145,7 +145,6 @@ class ModelTest extends PHPUnit_Framework_TestCase
    */
   public function testSearchWithOnlyWildcard() {
     $this->params->method('getSearchTerm')->will($this->returnValue('*'));
-    //$result = $this->model->searchConcepts('*','test','en','en');
     $result = $this->model->searchConcepts(null, null, null, $this->params);
     $this->assertEquals(array(), $result);
   }
@@ -156,10 +155,8 @@ class ModelTest extends PHPUnit_Framework_TestCase
   public function testSearchWithOnlyMultipleWildcards() {
     $this->params->method('getSearchTerm')->will($this->returnValue('**'));
     $result = $this->model->searchConcepts(null, null, null, $this->params);
-    //$result = $this->model->searchConcepts('**','test','en','en');
     $this->assertEquals(array(), $result);
     $this->params->method('getSearchTerm')->will($this->returnValue('******'));
-    //$result = $this->model->searchConcepts('******','test','en','en');
     $this->assertEquals(array(), $result);
   }
   
@@ -187,7 +184,6 @@ class ModelTest extends PHPUnit_Framework_TestCase
     $this->params->method('getSearchLang')->will($this->returnValue('en'));
     $this->params->method('getLang')->will($this->returnValue('en'));
     $result = $this->model->searchConcepts(null, null, null, $this->params);
-    //$result = $this->model->searchConcepts('bass', 'test', 'en', 'en');
     $this->assertEquals('http://www.skosmos.skos/test/ta116', $result[0]['uri']);
     $this->assertEquals('Bass', $result[0]['prefLabel']);
   }
@@ -200,7 +196,6 @@ class ModelTest extends PHPUnit_Framework_TestCase
     $this->params->method('getSearchLang')->will($this->returnValue('fi'));
     $this->params->method('getLang')->will($this->returnValue('en'));
     $result = $this->model->searchConcepts(null, null, null, $this->params);
-    //$result = $this->model->searchConcepts('karppi', 'test', 'en', 'fi');
     $this->assertEquals('http://www.skosmos.skos/test/ta112', $result[0]['uri']);
     $this->assertEquals('Carp', $result[0]['prefLabel']);
   }
@@ -230,10 +225,10 @@ class ModelTest extends PHPUnit_Framework_TestCase
    * @covers Model::searchConcepts
    */
   public function testSearchConceptsWithMultipleBroaders() {
-    //$result = $this->model->searchConcepts('multiple broaders', 'test', 'en', 'en', null, null, null, 0, 10, true, array('broader'));
     $this->params->method('getSearchTerm')->will($this->returnValue('multiple broaders'));
+    $this->params->method('getSearchLang')->will($this->returnValue('en'));
+    $this->params->method('getLang')->will($this->returnValue('en'));
     $result = $this->model->searchConcepts(null, array('broader'), null, $this->params);
-    //var_dump($result[0]['broader']);
     $this->assertEquals('http://www.skosmos.skos/test/ta123', $result[0]['uri']);
     $this->assertEquals('multiple broaders', $result[0]['prefLabel']);
     $this->assertCount(2, $result[0]['broader']); // two broader concepts
