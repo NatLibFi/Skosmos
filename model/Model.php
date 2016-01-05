@@ -215,6 +215,7 @@ class Model
     /**
      * Makes a SPARQL-query to the endpoint that retrieves concept
      * references as it's search results.
+     * @param ConceptSearchParameters $params an object that contains all the parameters needed for the search
      * @return array search results
      */
     public function searchConcepts($params)
@@ -270,15 +271,7 @@ class Model
 
     /**
      * Function for performing a search for concepts and their data fields.
-     * @param string $term searchterm eg. 'cat'
-     * @param mixed $vocids vocabulary id eg. 'yso', array of such ids for multi-vocabulary search, or null for global search.
-     * @param string $lang language code of returned labels, eg. 'fi'
-     * @param string $search_lang language code used for matching, eg. 'fi', or null for anything
-     * @param integer $offset used for offsetting the result set eg. '20'
-     * @param integer $limit upper count for the search results eg. '10'
-     * @param string $type limit search to concepts of the given type
-     * @param string $parent limit search to concepts which have the given concept as parent in the transitive broader hierarchy
-     * @param string $group limit search to concepts which are in the given group
+     * @param ConceptSearchParameters $params an object that contains all the parameters needed for the search
      * @return array array with keys 'count' and 'results'
      */
     public function searchConceptsAndInfo($params)
