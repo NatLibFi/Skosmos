@@ -179,7 +179,6 @@ class RestController extends Controller
         }
         $parameters->setVocabularies($vocabObjects);
 
-        //$results = $this->model->searchConcepts($term, $vocids, $labellang, $lang, $types, $parent, $group, $offset, $maxhits, true, $fields, $unique, $parameters);
         $results = $this->model->searchConcepts(true, $fields, $unique, $parameters);
         // before serializing to JSON, get rid of the Vocabulary object that came with each resource
         foreach ($results as &$res) {
