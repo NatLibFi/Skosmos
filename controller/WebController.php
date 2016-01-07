@@ -395,7 +395,7 @@ class WebController extends Controller
                 'rest' => $rest,
                 'global_search' => true,
                 'lang_list' => $langList,
-                'vocabs' => $vocabs,
+                'vocabs' => str_replace(' ', '+', $vocabs),
                 'vocab_list' => $vocabList,
                 'sorted_vocabs' => $sortedVocabs,
                 'request' => $request,
