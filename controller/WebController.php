@@ -357,8 +357,10 @@ class WebController extends Controller
         // convert to vocids array to support multi-vocabulary search
         $vocids = ($vocabs !== null && $vocabs !== '') ? explode(' ', $vocabs) : null;
         $vocabObjects = array();
-        foreach($vocids as $vocid) {
-            $vocabObjects[] = $this->model->getVocabulary($vocid);
+        if ($vocids) {
+            foreach($vocids as $vocid) {
+                $vocabObjects[] = $this->model->getVocabulary($vocid);
+            }
         }
         $parameters->setVocabularies($vocabObjects);
 

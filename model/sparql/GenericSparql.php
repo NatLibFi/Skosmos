@@ -374,7 +374,7 @@ EOQ;
      * @param string|null $clang content language
      * @return mixed query result graph (EasyRdf_Graph), or array of Concept objects
      */
-    public function queryConceptInfo($uris, $arrayClass = null, $vocabs = null, $as_graph = false, $clang = null) {
+    public function queryConceptInfo($uris, $arrayClass = null, $vocabs = array(), $as_graph = false, $clang = null) {
         // if just a single URI is given, put it in an array regardless
         if (!is_array($uris)) {
             $uris = array($uris);
