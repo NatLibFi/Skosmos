@@ -389,7 +389,7 @@ class WebController extends Controller
                 'global_search' => true,
                 'term' => $request->getQueryParam('q'),
                 'lang_list' => $langList,
-                'vocabs' => $vocabs,
+                'vocabs' => str_replace(' ', '+', $vocabs),
                 'vocab_list' => $vocabList,
                 'sorted_vocabs' => $sortedVocabs,
                 'request' => $request,
