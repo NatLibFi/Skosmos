@@ -51,9 +51,9 @@ class ConceptSearchParameters
             $vocabs = $this->request->getQueryParam('vocabs'); 
             return ($vocabs !== null && $vocabs !== '') ? explode(' ', $vocabs) : null;
         }
-        $vocab = reset($this->getVocabs());
-        if ($vocab) {
-            return array($vocab->getId());
+        $vocabs = $this->getVocabs();
+        if ($vocabs[0]) {
+            return array($vocabs[0]->getId());
         }
         return null;
     }
@@ -65,8 +65,9 @@ class ConceptSearchParameters
     
     public function getArrayClass() 
     {
-        if (sizeof($this->getVocabIds()) == 1) { // search within vocabulary
-            return reset($this->getVocabs())->getConfig()->getArrayClassURI();
+        if (sizeof($this->getVocabs()) == 1) { // search within vocabulary
+            $vocabs = $this->getVocabs();
+            return $vocabs[0]->getConfig()->getArrayClassURI();
         }
         return null;
     }
