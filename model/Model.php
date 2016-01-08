@@ -225,10 +225,9 @@ class Model
             return array();
         }
 
-        $vocids = $params->getVocabIds();
         $vocabs = $params->getVocabs();
 
-        if (sizeof($vocids) == 1) { // search within vocabulary
+        if (sizeof($vocabs) === 1) { // search within vocabulary
             $voc = $vocabs[0];
             $sparql = $voc->getSparql();
         } else { // multi-vocabulary or global search
@@ -240,8 +239,8 @@ class Model
         $ret = array();
 
         foreach ($results as $hit) {
-            if (sizeof($vocids) == 1) {
-                $hit['vocab'] = $vocids[0];
+            if (sizeof($vocabs) == 1) {
+                $hit['vocab'] = $vocabs[0]->getId();
             } else {
                 try {
                     $voc = $this->getVocabularyByGraph($hit['graph']);
