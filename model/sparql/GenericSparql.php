@@ -642,29 +642,19 @@ EOQ;
      * @return string sparql query clause
      */
     protected function formatTypes($types, $arrayClass) {
-        $unprefixed_types = array();
-        $type = '';
+        $typestring = '';
+
         if (!empty($types)) {
-            foreach ($types as $type) {
-                $unprefixed_types[] = EasyRdf_Namespace::expand($type);
+            for ($i = 0; $i < sizeof($types); $i++) {
+                if ($i > 0) {
+                    $typestring .= ' UNION ';
+                } 
+                $unprefixed = EasyRdf_Namespace::expand($types[$i]);
+                $typestring .= "{ ?s a <$unprefixed> }";
             }
-
         }
 
-        // extra types to query, if using thesaurus arrays and no additional type restrictions have been applied
-        $extratypes = ($arrayClass && $types === array('skos:Concept')) ? "UNION { ?s a <$arrayClass> }" : "";
-
-        if (sizeof($unprefixed_types) === 1) // if only one type limitation set no UNION needed
-        {
-            $type = '<' . $unprefixed_types[0] . '>';
-        } else { // multiple type limitations require setting a UNION for each of those
-            $type = '[]';
-            foreach ($unprefixed_types as $utype) {
-                $extratypes .= "\nUNION { ?s a <$utype> }";
-            }
-
-        }
-        return "{ ?s a $type } UNION { ?s a isothes:ConceptGroup } $extratypes";
+        return $typestring;
     }
 
     /**
