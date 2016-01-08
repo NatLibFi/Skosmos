@@ -450,7 +450,7 @@ class WebController extends Controller
                 'search_count' => $counts,
                 'rest' => $parameters->getOffset()>0,
                 'limit_parent' => $parameters->getParentLimit(),
-                'limit_type' => $request->getQueryParam('type'),
+                'limit_type' =>  explode('+', $request->getQueryParam('type')),
                 'limit_group' => $parameters->getGroupLimit(),
                 'group_index' => $vocab->listConceptGroups($request->getContentLang()),
                 'parameters' => $parameters,
