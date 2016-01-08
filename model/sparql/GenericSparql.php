@@ -638,10 +638,9 @@ EOQ;
     /**
      * Formats a sparql query clause for limiting the search to specific concept types.
      * @param array $types limit search to concepts of the given type(s)
-     * @param string $arrayClass the URI for thesaurus array class, or null if not used
      * @return string sparql query clause
      */
-    protected function formatTypes($types, $arrayClass) {
+    protected function formatTypes($types) {
         $typestring = '';
 
         if (!empty($types)) {
@@ -789,7 +788,7 @@ EOQ;
     protected function generateConceptSearchQuery($hidden, $fields, $unique, $params) {
         $gc = $this->graphClause;
         $limitandoffset = $this->formatLimitAndOffset($params->getSearchLimit(), $params->getOffset());
-        $formattedtype = $this->formatTypes($params->getTypeLimit(), $params->getArrayClass());
+        $formattedtype = $this->formatTypes($params->getTypeLimit());
         $formattedbroader = $this->formatBroader($params->getLang(), $fields);
         $extravars = $formattedbroader['extravars'];
         $extrafields = $formattedbroader['extrafields'];
