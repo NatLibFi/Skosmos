@@ -165,7 +165,7 @@ class RestController extends Controller
         $vocid = $request->getVocabId(); # optional
         $lang = $request->getQueryParam('lang'); # optional
         $labellang = $request->getQueryParam('labellang'); # optional
-        $types = $request->getQueryParam('type') ? explode(' ', $request->getQueryParam('type')) : array('skos:Concept');
+        $types = $request->getQueryParam('type') ? explode(' ', $request->getQueryParam('type')) : null;
         $parent = $request->getQueryParam('parent');
         $group = $request->getQueryParam('group');
         $fields = $request->getQueryParam('fields') ? explode(' ', $request->getQueryParam('fields')) : null;

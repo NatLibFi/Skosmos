@@ -634,33 +634,20 @@ EOQ;
     /**
      * Formats a sparql query clause for limiting the search to specific concept types.
      * @param array $types limit search to concepts of the given type(s)
-     * @param string $arrayClass the URI for thesaurus array class, or null if not used
      * @return string sparql query clause
      */
-    protected function formatTypes($types, $arrayClass) {
-        $unprefixed_types = array();
-        $type = '';
+    protected function formatTypes($types) {
+        $typestring = '';
         if (!empty($types)) {
-            foreach ($types as $type) {
-                $unprefixed_types[] = EasyRdf_Namespace::expand($type);
+            for ($i = 0; $i < sizeof($types); $i++) {
+                if ($i > 0) {
+                    $typestring .= ' UNION ';
+                } 
+                $unprefixed = EasyRdf_Namespace::expand($types[$i]);
+                $typestring .= "{ ?s a <$unprefixed> }";
             }
-
         }
-
-        // extra types to query, if using thesaurus arrays and no additional type restrictions have been applied
-        $extratypes = ($arrayClass && $types === array('skos:Concept')) ? "UNION { ?s a <$arrayClass> }" : "";
-
-        if (sizeof($unprefixed_types) === 1) // if only one type limitation set no UNION needed
-        {
-            $type = '<' . $unprefixed_types[0] . '>';
-        } else { // multiple type limitations require setting a UNION for each of those
-            $type = '[]';
-            foreach ($unprefixed_types as $utype) {
-                $extratypes .= "\nUNION { ?s a <$utype> }";
-            }
-
-        }
-        return "{ ?s a $type } UNION { ?s a isothes:ConceptGroup } $extratypes";
+        return $typestring;
     }
 
     /**
@@ -806,7 +793,7 @@ EOQ;
 
         $limitandoffset = $this->formatLimitAndOffset($limit, $offset);
 
-        $formattedtype = $this->formatTypes($types, $arrayClass);
+        $formattedtype = $this->formatTypes($types);
 
         $formattedbroader = $this->formatBroader($lang, $fields);
         $extravars = $formattedbroader['extravars'];

@@ -254,6 +254,7 @@ class Model
             $vocabs[] = $this->getVocabulary($vocid);
         }
 
+        $voc = null;
         if (sizeof($vocids) == 1) { // search within vocabulary
             $voc = $vocabs[0];
             $sparql = $voc->getSparql();
@@ -265,6 +266,12 @@ class Model
         }
         if ($type === null) {
             $type = array('skos:Concept');
+            if ($voc && $voc->getConfig()->getArrayClassURI()) {
+                array_push($type, $voc->getConfig()->getArrayClassURI());
+            }
+            if ($voc && $voc->getConfig()->getGroupClassURI()) {
+                array_push($type, $voc->getConfig()->getGroupClassURI());
+            }
         }
 
         $results = $sparql->queryConcepts($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $type, $parent, $group, $hidden, $fields, $unique);
