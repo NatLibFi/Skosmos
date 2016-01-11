@@ -301,7 +301,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
     $voc = $this->model->getVocabulary('test');
     $this->params->method('getSearchTerm')->will($this->returnValue('bass*'));
     $this->params->method('getVocabIds')->will($this->returnValue(array('test')));
-    $actual = $this->sparql->queryConcepts(array($voc), null, null, null, $this->params);
+    $actual = $this->sparql->queryConcepts(array($voc), null, null, $this->params);
     $this->assertEquals(1, sizeof($actual));
     $this->assertEquals('Bass', $actual[0]['prefLabel']);
   }
@@ -313,7 +313,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   {
     $voc = $this->model->getVocabulary('test');
     $this->params->method('getSearchTerm')->will($this->returnValue('*bass'));
-    $actual = $this->sparql->queryConcepts(array($voc), null, null, null, $this->params);
+    $actual = $this->sparql->queryConcepts(array($voc), null, null, $this->params);
     $this->assertEquals(3, sizeof($actual));
     foreach($actual as $match)
       $this->assertContains('bass', $match['prefLabel'], '',true);

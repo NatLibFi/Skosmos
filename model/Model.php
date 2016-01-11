@@ -235,7 +235,7 @@ class Model
             $sparql = $this->getDefaultSparql();
         }
 
-        $results = $sparql->queryConcepts($vocabs, $params->getHidden(), $params->getAdditionalFields(), $params->getUnique(), $params);
+        $results = $sparql->queryConcepts($vocabs, $params->getAdditionalFields(), $params->getUnique(), $params);
         $ret = array();
 
         foreach ($results as $hit) {

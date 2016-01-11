@@ -85,11 +85,6 @@ class ConceptSearchParameters
     {
         return $this->request->getContentLang();
     }
-        
-    public function getConceptGroups() 
-    {
-        return $this->vocab->listConceptGroups($content_lang);
-    }
     
     public function getSearchLang() 
     {
