@@ -162,9 +162,6 @@ class RestController extends Controller
             return $this->returnError(400, "Bad Request", "offset parameter is invalid");
         }
 
-        $lang = $request->getQueryParam('lang'); # optional
-        $labellang = $request->getQueryParam('labellang'); # optional
-
         $parameters = new ConceptSearchParameters($request, $this->model->getConfig(), true);
         
         $vocabs = $request->getQueryParam('vocab'); # optional
@@ -201,10 +198,10 @@ class RestController extends Controller
             'results' => $results,
         );
 
-        if ($labellang) {
-            $ret['@context']['@language'] = $labellang;
-        } elseif ($lang) {
-            $ret['@context']['@language'] = $lang;
+        if ($request->getQueryParam('labellang')) {
+            $ret['@context']['@language'] = $request->getQueryParam('labellang');
+        } elseif ($request->getQueryParam('lang')) {
+            $ret['@context']['@language'] = $request->getQueryParam('lang');;
         }
 
         return $this->returnJson($ret);
