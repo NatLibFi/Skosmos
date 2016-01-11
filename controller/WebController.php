@@ -438,7 +438,6 @@ class WebController extends Controller
                     'languages' => $this->languages,
                     'vocab' => $vocab,
                     'term' => $request->getQueryParam('q'),
-                    'rest' => $rest,
                 ));
             return;
         }
