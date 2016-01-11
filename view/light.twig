@@ -102,7 +102,7 @@
             </select>
           </div>
           {% endif %}
-          {% if vocab.groupClassURI %}
+          {% if vocab.config.groupClassURI %}
           <div class="input-group">
             <span class="versal">{% trans "By group" %}</span>
             <select id="group-limit" value="{{ limit-group }}" class="form-control multiselect">
