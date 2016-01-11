@@ -78,6 +78,9 @@ class ConceptSearchParameters
         if (!$term && $this->rest)
             $term = $this->request->getQueryParam('label');
         $term = trim($term); // surrounding whitespace is not considered significant
+        if ($this->rest) {
+            return $term;
+        }
         return strpos($term, "*") === false ? $term . "*" : $term; // default to prefix search
     }
     
