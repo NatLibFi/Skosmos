@@ -155,8 +155,4 @@ class ConceptSearchParameters
         $this->hidden = $hidden;
     }
     
-    public function setAdditionalFields($fields) {
-        $this->fields = $fields;
-    }
-
 }
