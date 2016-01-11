@@ -144,7 +144,7 @@ class ConceptSearchParameters
     }
 
     public function getAdditionalFields() {
-        return $this->request->getQueryParam('fields') ? explode(' ', $request->getQueryParam('fields')) : null;
+        return $this->request->getQueryParam('fields') ? explode(' ', $this->request->getQueryParam('fields')) : null;
     }
     
     public function getHidden() {
