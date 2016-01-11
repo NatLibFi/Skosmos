@@ -623,4 +623,19 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
     $this->assertEquals(4, sizeof($actual));
     $this->assertEquals(array('Fourth date', 'Hurr Durr', 'Second date', 'A date'), $order);
   }
+
+  /**
+   * @covers GenericSparql::formatTypes
+   * @covers GenericSparql::queryConcepts
+   */
+  public function testLimitSearchToType()
+  {
+    $voc = $this->model->getVocabulary('test');
+    $graph = $voc->getGraph();
+    $sparql = new GenericSparql('http://localhost:3030/ds/sparql', $graph, $this->model);
+    $this->params->method('getSearchTerm')->will($this->returnValue('*'));
+    $this->params->method('getTypeLimit')->will($this->returnValue(array('mads:Topic')));
+    $actual = $this->sparql->queryConcepts(array($voc), null, true, $this->params);
+    $this->assertEquals(1, sizeof($actual));
+  }
 }
