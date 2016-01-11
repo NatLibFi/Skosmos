@@ -641,19 +641,15 @@ EOQ;
      * @return string sparql query clause
      */
     protected function formatTypes($types) {
-        $typestring = '';
-
+        $type_patterns = array();
         if (!empty($types)) {
-            for ($i = 0; $i < sizeof($types); $i++) {
-                if ($i > 0) {
-                    $typestring .= ' UNION ';
-                } 
-                $unprefixed = EasyRdf_Namespace::expand($types[$i]);
-                $typestring .= "{ ?s a <$unprefixed> }";
+            foreach ($types as $type) {
+                $unprefixed = EasyRdf_Namespace::expand($type);
+                $type_patterns[] = "{ ?s a <$unprefixed> }";
             }
         }
 
-        return $typestring;
+        return implode(' UNION ', $type_patterns);;
     }
 
     /**
