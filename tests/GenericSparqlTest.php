@@ -129,6 +129,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    * @covers GenericSparql::queryConceptsAlphabetical
    * @covers GenericSparql::generateAlphabeticalListQuery
    * @covers GenericSparql::formatFilterConditions
+   * @covers GenericSparql::formatLimitAndOffset
    * @covers GenericSparql::transformAlphabeticalListResults
    */
   public function testQueryConceptsAlphabeticalLimit() {
@@ -154,6 +155,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    * @covers GenericSparql::queryConceptsAlphabetical
    * @covers GenericSparql::generateAlphabeticalListQuery
    * @covers GenericSparql::formatFilterConditions
+   * @covers GenericSparql::formatLimitAndOffset
    * @covers GenericSparql::transformAlphabeticalListResults
    */
   public function testQueryConceptsAlphabeticalLimitAndOffset() {
@@ -293,6 +295,8 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GenericSparql::queryConcepts
+   * @covers GenericSparql::generateConceptSearchQueryCondition
+   * @covers GenericSparql::generateConceptSearchQueryInner
    * @covers GenericSparql::generateConceptSearchQuery
    * @covers GenericSparql::transformConceptSearchResults
    */
