@@ -779,13 +779,12 @@ EOQ;
 
     /**
      * Query for concepts using a search term.
-     * @param boolean $hidden include matches on hidden labels (default: true)
      * @param array $fields extra fields to include in the result (array of strings). (default: null = none)
      * @param boolean $unique restrict results to unique concepts (default: false)
      * @param ConceptSearchParameters $params 
      * @return string sparql query
      */
-    protected function generateConceptSearchQuery($hidden, $fields, $unique, $params) {
+    protected function generateConceptSearchQuery($fields, $unique, $params) {
         $gc = $this->graphClause;
         $limitandoffset = $this->formatLimitAndOffset($params->getSearchLimit(), $params->getOffset());
         $formattedtype = $this->formatTypes($params->getTypeLimit());
@@ -802,7 +801,7 @@ EOQ;
 
         # make VALUES clauses
         $props = array('skos:prefLabel', 'skos:altLabel');
-        if ($hidden) {
+        if ($params->getHidden()) {
             $props[] = 'skos:hiddenLabel';
         }
 
@@ -924,14 +923,13 @@ EOQ;
     /**
      * Query for concepts using a search term.
      * @param array $vocabs array of Vocabulary objects to search; empty for global search
-     * @param boolean $hidden include matches on hidden labels (default: true)
      * @param array $fields extra fields to include in the result (array of strings). (default: null = none)
      * @param boolean $unique restrict results to unique concepts (default: false)
      * @param ConceptSearchParameters $params 
      * @return array query result object
      */
-    public function queryConcepts($vocabs, $hidden = true, $fields = null, $unique = false, $params) {
-        $query = $this->generateConceptSearchQuery($hidden, $fields, $unique, $params);
+    public function queryConcepts($vocabs, $fields = null, $unique = false, $params) {
+        $query = $this->generateConceptSearchQuery($fields, $unique, $params);
         $results = $this->client->query($query);
         return $this->transformConceptSearchResults($results, $vocabs);
     }
