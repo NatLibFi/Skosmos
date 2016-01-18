@@ -74,7 +74,6 @@
              </li>
               {% endfor %}
             </ul>
-            {% elseif search_results is not defined %}<span class="header-text-small-font">{% trans %}Error: the vocabulary does not contain terms beginning with{% endtrans %} "{{ request.letter }}"!</span>
           {% endif %}
         </div>
         {% if term %}
@@ -102,7 +101,7 @@
             </select>
           </div>
           {% endif %}
-          {% if vocab.groupClassURI %}
+          {% if vocab.config.groupClassURI %}
           <div class="input-group">
             <span class="versal">{% trans "By group" %}</span>
             <select id="group-limit" value="{{ limit-group }}" class="form-control multiselect">

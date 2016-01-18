@@ -6,6 +6,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   private $graph; 
   private $sparql;
   private $vocab;
+  private $params;
 
   protected function setUp() {
     putenv("LC_ALL=en_GB.utf8");
@@ -13,6 +14,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
     $this->model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $this->vocab = $this->model->getVocabulary('test');
     $this->graph = $this->vocab->getGraph();
+    $this->params = $this->getMockBuilder('ConceptSearchParameters')->disableOriginalConstructor()->getMock();
     $this->sparql = new GenericSparql('http://localhost:3030/ds/sparql', $this->graph, $this->model);
   }
  
@@ -127,6 +129,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    * @covers GenericSparql::queryConceptsAlphabetical
    * @covers GenericSparql::generateAlphabeticalListQuery
    * @covers GenericSparql::formatFilterConditions
+   * @covers GenericSparql::formatLimitAndOffset
    * @covers GenericSparql::transformAlphabeticalListResults
    */
   public function testQueryConceptsAlphabeticalLimit() {
@@ -152,6 +155,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    * @covers GenericSparql::queryConceptsAlphabetical
    * @covers GenericSparql::generateAlphabeticalListQuery
    * @covers GenericSparql::formatFilterConditions
+   * @covers GenericSparql::formatLimitAndOffset
    * @covers GenericSparql::transformAlphabeticalListResults
    */
   public function testQueryConceptsAlphabeticalLimitAndOffset() {
@@ -291,13 +295,17 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GenericSparql::queryConcepts
+   * @covers GenericSparql::generateConceptSearchQueryCondition
+   * @covers GenericSparql::generateConceptSearchQueryInner
    * @covers GenericSparql::generateConceptSearchQuery
    * @covers GenericSparql::transformConceptSearchResults
    */
   public function testQueryConcepts()
   {
     $voc = $this->model->getVocabulary('test');
-    $actual = $this->sparql->queryConcepts('bass*',array($voc),'en', 'en', 20, 0, null, array('skos:Concept'));
+    $this->params->method('getSearchTerm')->will($this->returnValue('bass*'));
+    $this->params->method('getVocabIds')->will($this->returnValue(array('test')));
+    $actual = $this->sparql->queryConcepts(array($voc), null, null, $this->params);
     $this->assertEquals(1, sizeof($actual));
     $this->assertEquals('Bass', $actual[0]['prefLabel']);
   }
@@ -308,7 +316,8 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   public function testQueryConceptsAsteriskBeforeTerm()
   {
     $voc = $this->model->getVocabulary('test');
-    $actual = $this->sparql->queryConcepts('*bass',array($voc),'en', 'en', 20, 0, null, array('skos:Concept'));
+    $this->params->method('getSearchTerm')->will($this->returnValue('*bass'));
+    $actual = $this->sparql->queryConcepts(array($voc), null, null, $this->params);
     $this->assertEquals(3, sizeof($actual));
     foreach($actual as $match)
       $this->assertContains('bass', $match['prefLabel'], '',true);
@@ -613,5 +622,20 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
     }
     $this->assertEquals(4, sizeof($actual));
     $this->assertEquals(array('Fourth date', 'Hurr Durr', 'Second date', 'A date'), $order);
+  }
+
+  /**
+   * @covers GenericSparql::formatTypes
+   * @covers GenericSparql::queryConcepts
+   */
+  public function testLimitSearchToType()
+  {
+    $voc = $this->model->getVocabulary('test');
+    $graph = $voc->getGraph();
+    $sparql = new GenericSparql('http://localhost:3030/ds/sparql', $graph, $this->model);
+    $this->params->method('getSearchTerm')->will($this->returnValue('*'));
+    $this->params->method('getTypeLimit')->will($this->returnValue(array('mads:Topic')));
+    $actual = $this->sparql->queryConcepts(array($voc), null, true, $this->params);
+    $this->assertEquals(1, sizeof($actual));
   }
 }

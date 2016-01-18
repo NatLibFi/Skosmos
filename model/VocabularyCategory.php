@@ -10,12 +10,26 @@
  */
 class VocabularyCategory extends DataObject
 {
+    public function __construct($model, $resource)
+    {
+        if (!($model instanceof Model)) {
+            throw new Exception('Invalid constructor parameter given to DataObject.');
+        }
+
+        $this->model = $model;
+        $this->resource = $resource;
+        $this->order = array();
+    }
+
     /**
      * Returns all vocabularies in the category.
      */
     public function getVocabularies()
     {
-        return $this->model->getVocabulariesInCategory($this->resource);
+        if ($this->resource) {
+            return $this->model->getVocabulariesInCategory($this->resource);
+        }
+        return $this->model->getVocabularies();
     }
 
     /**
@@ -23,8 +37,11 @@ class VocabularyCategory extends DataObject
      */
     public function getTitle()
     {
-        $label = $this->resource->label($this->getEnvLang());
-        return is_null($label) ? $this->resource->localName() : $label->getValue();
+        if ($this->resource) {
+            $label = $this->resource->label($this->getEnvLang());
+            return is_null($label) ? $this->resource->localName() : $label->getValue();
+        }
+        return gettext('vocabularies');
     }
 
 }

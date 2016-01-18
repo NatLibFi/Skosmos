@@ -162,20 +162,18 @@ class RestController extends Controller
             return $this->returnError(400, "Bad Request", "offset parameter is invalid");
         }
 
-        $vocid = $request->getVocabId(); # optional
-        $lang = $request->getQueryParam('lang'); # optional
-        $labellang = $request->getQueryParam('labellang'); # optional
-        $types = $request->getQueryParam('type') ? explode(' ', $request->getQueryParam('type')) : array('skos:Concept');
-        $parent = $request->getQueryParam('parent');
-        $group = $request->getQueryParam('group');
-        $fields = $request->getQueryParam('fields') ? explode(' ', $request->getQueryParam('fields')) : null;
-        $unique = $request->getQueryParamBoolean('unique', false);
-        $schemes = $request->getQueryParam('scheme') ? explode(' ', $request->getQueryParam('scheme')) : null;
-
+        $parameters = new ConceptSearchParameters($request, $this->model->getConfig(), true);
+        
+        $vocabs = $request->getQueryParam('vocab'); # optional
         // convert to vocids array to support multi-vocabulary search
-        $vocids = !empty($vocid) ? explode(' ', $vocid) : null;
+        $vocids = ($vocabs !== null && $vocabs !== '') ? explode(' ', $vocabs) : array();
+        $vocabObjects = array();
+        foreach($vocids as $vocid) {
+            $vocabObjects[] = $this->model->getVocabulary($vocid);
+        }
+        $parameters->setVocabularies($vocabObjects);
 
-        $results = $this->model->searchConcepts($term, $vocids, $labellang, $lang, $types, $parent, $group, $offset, $maxhits, true, $fields, $unique, $schemes);
+        $results = $this->model->searchConcepts($parameters);
         // before serializing to JSON, get rid of the Vocabulary object that came with each resource
         foreach ($results as &$res) {
             unset($res['voc']);
@@ -200,10 +198,10 @@ class RestController extends Controller
             'results' => $results,
         );
 
-        if ($labellang) {
-            $ret['@context']['@language'] = $labellang;
-        } elseif ($lang) {
-            $ret['@context']['@language'] = $lang;
+        if ($request->getQueryParam('labellang')) {
+            $ret['@context']['@language'] = $request->getQueryParam('labellang');
+        } elseif ($request->getQueryParam('lang')) {
+            $ret['@context']['@language'] = $request->getQueryParam('lang');;
         }
 
         return $this->returnJson($ret);
@@ -415,9 +413,10 @@ class RestController extends Controller
         }
 
         $lang = $request->getQueryParam('lang');
-        $vocab = $request->getVocab();
 
-        $results = $this->model->searchConcepts($label, $vocab->getId(), $lang, $lang);
+        $parameters = new ConceptSearchParameters($request, $this->model->getConfig(), true);
+
+        $results = $this->model->searchConcepts($parameters);
 
         $hits = array();
         // case 1: exact match on preferred label

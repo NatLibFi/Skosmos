@@ -189,14 +189,12 @@ class WebController extends Controller
         $template = $this->twig->loadTemplate('light.twig');
         // set template variables
         $categoryLabel = $this->model->getClassificationLabel($request->getLang());
-        $vocabList = $this->model->getVocabularyList();
         $sortedVocabs = $this->model->getVocabularyList(false, true);
         $langList = $this->model->getLanguages($request->getLang());
 
         // render template
         echo $template->render(
             array(
-                'vocab_list' => $vocabList,
                 'sorted_vocabs' => $sortedVocabs,
                 'category_label' => $categoryLabel,
                 'languages' => $this->languages,
@@ -351,27 +349,21 @@ class WebController extends Controller
         $template = $this->twig->loadTemplate('vocab-search-listing.twig');
         $this->setLanguageProperties($lang);
 
-        $term = $request->getQueryParam('q');
-        $content_lang = $request->getContentLang();
-        $search_lang = $request->getQueryParam('anylang') ? '' : $content_lang;
-        $type = $request->getQueryParam('type');
-        $group = $request->getQueryParam('group');
-        $parent = $request->getQueryParam('parent');
-        $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
-        if ($offset > 0) {
-            $rest = 1;
-        } else {
-            $rest = null;
-        }
-        $term = trim($term); // surrounding whitespace is not considered significant
-        $sterm = strpos($term, "*") === false ? $term . "*" : $term; // default to prefix search
+        $parameters = new ConceptSearchParameters($request, $this->model->getConfig());
 
         $vocabs = $request->getQueryParam('vocabs'); # optional
         // convert to vocids array to support multi-vocabulary search
         $vocids = ($vocabs !== null && $vocabs !== '') ? explode(' ', $vocabs) : null;
+        $vocabObjects = array();
+        if ($vocids) {
+            foreach($vocids as $vocid) {
+                $vocabObjects[] = $this->model->getVocabulary($vocid);
+            }
+        }
+        $parameters->setVocabularies($vocabObjects);
 
         try {
-            $count_and_results = $this->model->searchConceptsAndInfo($sterm, $vocids, $content_lang, $search_lang, $offset, 20, $type, $parent, $group);
+            $count_and_results = $this->model->searchConceptsAndInfo($parameters);
         } catch (Exception $e) {
             header("HTTP/1.0 404 Not Found");
             if ($this->model->getConfig()->getLogCaughtExceptions()) {
@@ -391,11 +383,11 @@ class WebController extends Controller
                 'search_count' => $counts,
                 'languages' => $this->languages,
                 'search_results' => $search_results,
-                'term' => $term,
-                'rest' => $rest,
+                'rest' => $parameters->getOffset()>0,
                 'global_search' => true,
+                'term' => $request->getQueryParam('q'),
                 'lang_list' => $langList,
-                'vocabs' => $vocabs,
+                'vocabs' => str_replace(' ', '+', $vocabs),
                 'vocab_list' => $vocabList,
                 'sorted_vocabs' => $sortedVocabs,
                 'request' => $request,
@@ -407,12 +399,11 @@ class WebController extends Controller
      */
     public function invokeVocabularySearch($request)
     {
-        $lang = $request->getLang();
         $template = $this->twig->loadTemplate('vocab-search-listing.twig');
-        $this->setLanguageProperties($lang);
+        $this->setLanguageProperties($request->getLang());
         $vocab = $request->getVocab();
         try {
-            $vocab_types = $this->model->getTypes($request->getVocabid(), $lang);
+            $vocab_types = $this->model->getTypes($request->getVocabid(), $request->getLang());
         } catch (Exception $e) {
             header("HTTP/1.0 404 Not Found");
             if ($this->model->getConfig()->getLogCaughtExceptions()) {
@@ -426,34 +417,12 @@ class WebController extends Controller
 
             return;
         }
-        $term = $request->getQueryParam('q');
-        $content_lang = $request->getContentLang();
-        $groups = $vocab->listConceptGroups($content_lang);
-        $search_lang = $request->getQueryParam('anylang') ? '' : $content_lang;
-        $type = $request->getQueryParam('type') !== '' ? $request->getQueryParam('type') : null;
-        if ($type && strpos($type, '+')) {
-            $type = explode('+', $type);
-        } else if ($type && !is_array($type)) {
-            // if only one type param given place it into an array regardless
-            $type = array($type);
-        }
 
-        $schemes = $request->getQueryParam('scheme') ? explode(' ', $request->getQueryParam('scheme')) : null;
-        $group = $request->getQueryParam('group') !== '' ? $request->getQueryParam('group') : null;
-        $parent = $request->getQueryParam('parent') !== '' ? $request->getQueryParam('parent') : null;
-        $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
         $langcodes = $vocab->getConfig()->getShowLangCodes();
-        if ($offset > 0) {
-            $rest = 1;
-            $template = $this->twig->loadTemplate('vocab-search-listing.twig');
-        } else {
-            $rest = null;
-        }
+        $parameters = new ConceptSearchParameters($request, $this->model->getConfig());
 
-        $term = trim($term); // surrounding whitespace is not considered significant
-        $sterm = strpos($term, "*") === false ? $term . "*" : $term; // default to prefix search
         try {
-            $count_and_results = $this->model->searchConceptsAndInfo($sterm, $request->getVocabid(), $content_lang, $search_lang, $offset, 20, $type, $parent, $group, $schemes);
+            $count_and_results = $this->model->searchConceptsAndInfo($parameters);
             $counts = $count_and_results['count'];
             $search_results = $count_and_results['results'];
         } catch (Exception $e) {
@@ -466,8 +435,7 @@ class WebController extends Controller
                 array(
                     'languages' => $this->languages,
                     'vocab' => $vocab,
-                    'term' => $term,
-                    'rest' => $rest,
+                    'term' => $request->getQueryParam('q'),
                 ));
             return;
         }
@@ -477,13 +445,14 @@ class WebController extends Controller
                 'vocab' => $vocab,
                 'search_results' => $search_results,
                 'search_count' => $counts,
-                'term' => $term,
-                'rest' => $rest,
-                'limit_parent' => $parent,
-                'limit_type' => $type,
-                'limit_group' => $group,
-                'limit_scheme' => $schemes,
-                'group_index' => $groups,
+                'rest' => $parameters->getOffset()>0,
+                'limit_parent' => $parameters->getParentLimit(),
+                'limit_type' =>  $request->getQueryParam('type') ? explode('+', $request->getQueryParam('type')) : null,
+                'limit_group' => $parameters->getGroupLimit(),
+                'limit_scheme' =>  $request->getQueryParam('scheme') ? explode('+', $request->getQueryParam('scheme')) : null,
+                'group_index' => $vocab->listConceptGroups($request->getContentLang()),
+                'parameters' => $parameters,
+                'term' => $request->getQueryParam('q'),
                 'types' => $vocab_types,
                 'explicit_langcodes' => $langcodes,
                 'request' => $request,

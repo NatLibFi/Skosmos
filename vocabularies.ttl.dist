@@ -37,6 +37,7 @@
 	skosmos:language "fi", "sv", "en";
 	skosmos:defaultLanguage "fi";
 	skosmos:showTopConcepts "true";
+	skosmos:showStatistics "false";
 	skosmos:loadExternalResources "false";
 	skosmos:shortName "YSO",
                     "ALLFO"@sv;

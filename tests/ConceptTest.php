@@ -13,8 +13,9 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     textdomain('skosmos');
 
     $this->model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
-    $search_results = $this->model->searchConceptsAndInfo('carp', 'test', 'en', 'en'); 
-    $this->concept = $search_results['results'][0];
+    $this->vocab = $this->model->getVocabulary('test');
+    $results = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en');
+    $this->concept = reset($results);
   }
   
   /**
@@ -101,8 +102,8 @@ class ConceptTest extends PHPUnit_Framework_TestCase
    */
   public function testGetAllLabels()
   {
-    $search_results = $this->model->searchConceptsAndInfo('Eel', 'test', 'en', 'en'); 
-    $concept = $search_results['results'][0];
+    $results = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta115', 'en');
+    $concept = reset($results);
     $labels = $concept->getAllLabels('skos:definition');
     $this->assertEquals('Iljettävä limanuljaska', $labels['Finnish'][0]->getLabel());
     $this->assertEquals('any fish belonging to the order Anguilliformes', $labels['English'][0]->getLabel());
@@ -156,8 +157,8 @@ class ConceptTest extends PHPUnit_Framework_TestCase
    */
   public function testGetPropertiesAlphabeticalSortingOfPropertyValues()
   {
-    $search_results = $this->model->searchConceptsAndInfo('fish', 'test', 'en', 'en'); 
-    $concept = $search_results['results'][0];
+    $results = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta1', 'en'); 
+    $concept = reset($results);
     $props = $concept->getProperties();
     $prevlabel;
     foreach($props['skos:narrower'] as $val) {

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ONKI Light\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-17 09:54+0200\n"
+"POT-Creation-Date: 2016-01-08 09:58+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Henri Ylikotila <henri.ylikotila@helsinki.fi>\n"
 "Language-Team: ONKI Team <onki-posti@helsinki.fi>\n"
@@ -44,640 +44,636 @@ msgstr "Luotu"
 msgid "skosmos:modified"
 msgstr "viimeksi muokattu"
 
-#: /tmp/cache/56726a28e88e2/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:26
+#: /tmp/cache/568f6c0e763a1/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:26
 msgid "%search_count% results for '%term%'"
 msgstr "%search_count% tulosta haulle '%term%'"
 
-#: /tmp/cache/56726a28e88e2/89/8918fbbc730e25498fb2a90c43f7cc896ff81dd4b89b4de856b33d54a90d5de1.php:61
-#: /tmp/cache/56726a28e88e2/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:227
-#: /tmp/cache/56726a28e88e2/92/92eb6a21e41647d1308c2509b8404473d4d555e9a0706b46ba6366280ab84f55.php:61
-#: /tmp/cache/56726a28e88e2/6e/6e42e8c53c0a500ee83faf3238b4cb7d22a33fa5cd53c06e8da925a1f0bf7e61.php:63
-#: /tmp/cache/56726a28e88e2/e5/e5e30dd1e4f7a5aba208e2abff5f397783b237206ddb689ead55f2201f80691a.php:59
+#: /tmp/cache/568f6c0e763a1/89/8918fbbc730e25498fb2a90c43f7cc896ff81dd4b89b4de856b33d54a90d5de1.php:61
+#: /tmp/cache/568f6c0e763a1/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:227
+#: /tmp/cache/568f6c0e763a1/92/92eb6a21e41647d1308c2509b8404473d4d555e9a0706b46ba6366280ab84f55.php:61
+#: /tmp/cache/568f6c0e763a1/6e/6e42e8c53c0a500ee83faf3238b4cb7d22a33fa5cd53c06e8da925a1f0bf7e61.php:63
+#: /tmp/cache/568f6c0e763a1/e5/e5e30dd1e4f7a5aba208e2abff5f397783b237206ddb689ead55f2201f80691a.php:59
 msgid "A-Z"
 msgstr "A-Ö"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:177
-#: /tmp/cache/56726a28e88e2/4c/4c9e7290b4865c2bb9ac100068af08280f5e46261b439083d3982ee19f3cfafb.php:46
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:177
+#: /tmp/cache/568f6c0e763a1/4c/4c9e7290b4865c2bb9ac100068af08280f5e46261b439083d3982ee19f3cfafb.php:46
 msgid "About"
 msgstr "Tietoja"
 
-#: /tmp/cache/56726a28e88e2/cf/cf3ee7d4c923770745328cd04df267b541825922e29a4a579961a2601c61474a.php:35
+#: /tmp/cache/568f6c0e763a1/cf/cf3ee7d4c923770745328cd04df267b541825922e29a4a579961a2601c61474a.php:35
 #, php-format
 msgid "All %d results displayed"
 msgstr "Näytetään kaikki %d tulosta"
 
-#: /tmp/cache/56726a28e88e2/89/8918fbbc730e25498fb2a90c43f7cc896ff81dd4b89b4de856b33d54a90d5de1.php:63
-#: /tmp/cache/56726a28e88e2/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:229
-#: /tmp/cache/56726a28e88e2/92/92eb6a21e41647d1308c2509b8404473d4d555e9a0706b46ba6366280ab84f55.php:63
-#: /tmp/cache/56726a28e88e2/6e/6e42e8c53c0a500ee83faf3238b4cb7d22a33fa5cd53c06e8da925a1f0bf7e61.php:65
-#: /tmp/cache/56726a28e88e2/e5/e5e30dd1e4f7a5aba208e2abff5f397783b237206ddb689ead55f2201f80691a.php:61
+#: /tmp/cache/568f6c0e763a1/89/8918fbbc730e25498fb2a90c43f7cc896ff81dd4b89b4de856b33d54a90d5de1.php:63
+#: /tmp/cache/568f6c0e763a1/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:229
+#: /tmp/cache/568f6c0e763a1/92/92eb6a21e41647d1308c2509b8404473d4d555e9a0706b46ba6366280ab84f55.php:63
+#: /tmp/cache/568f6c0e763a1/6e/6e42e8c53c0a500ee83faf3238b4cb7d22a33fa5cd53c06e8da925a1f0bf7e61.php:65
+#: /tmp/cache/568f6c0e763a1/e5/e5e30dd1e4f7a5aba208e2abff5f397783b237206ddb689ead55f2201f80691a.php:61
 msgid "Alpha-nav"
 msgstr "Aakkosellinen"
 
-#: /tmp/cache/56726a28e88e2/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:512
+#: /tmp/cache/568f6c0e763a1/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:514
 msgid "By group"
 msgstr "Ryhmän mukaan"
 
-#: /tmp/cache/56726a28e88e2/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:544
+#: /tmp/cache/568f6c0e763a1/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:546
 msgid "By parent"
 msgstr "Yläkäsitteen mukaan"
 
-#: /tmp/cache/56726a28e88e2/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:434
+#: /tmp/cache/568f6c0e763a1/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:436
 msgid "By scheme"
-msgstr "Skeeman mukaan"
+msgstr "Osasanaston mukaan"
 
-#: /tmp/cache/56726a28e88e2/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:473
+#: /tmp/cache/568f6c0e763a1/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:475
 msgid "By type"
 msgstr "Tyypin mukaan"
 
-#: /tmp/cache/56726a28e88e2/89/8918fbbc730e25498fb2a90c43f7cc896ff81dd4b89b4de856b33d54a90d5de1.php:112
-#: /tmp/cache/56726a28e88e2/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:291
-#: /tmp/cache/56726a28e88e2/92/92eb6a21e41647d1308c2509b8404473d4d555e9a0706b46ba6366280ab84f55.php:112
-#: /tmp/cache/56726a28e88e2/6e/6e42e8c53c0a500ee83faf3238b4cb7d22a33fa5cd53c06e8da925a1f0bf7e61.php:118
-#: /tmp/cache/56726a28e88e2/e5/e5e30dd1e4f7a5aba208e2abff5f397783b237206ddb689ead55f2201f80691a.php:114
+#: /tmp/cache/568f6c0e763a1/89/8918fbbc730e25498fb2a90c43f7cc896ff81dd4b89b4de856b33d54a90d5de1.php:112
+#: /tmp/cache/568f6c0e763a1/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:291
+#: /tmp/cache/568f6c0e763a1/92/92eb6a21e41647d1308c2509b8404473d4d555e9a0706b46ba6366280ab84f55.php:112
+#: /tmp/cache/568f6c0e763a1/6e/6e42e8c53c0a500ee83faf3238b4cb7d22a33fa5cd53c06e8da925a1f0bf7e61.php:118
+#: /tmp/cache/568f6c0e763a1/e5/e5e30dd1e4f7a5aba208e2abff5f397783b237206ddb689ead55f2201f80691a.php:114
 msgid "Changes-nav"
 msgstr "Muutokset"
 
-#: /tmp/cache/56726a28e88e2/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:122
+#: /tmp/cache/568f6c0e763a1/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:84
 msgid "Clear limitations"
 msgstr "Peru rajoitukset"
 
-#: /tmp/cache/56726a28e88e2/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:74
+#: /tmp/cache/568f6c0e763a1/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:74
 msgid "Contact us!"
 msgstr "Ota yhteyttä!"
 
-#: /tmp/cache/56726a28e88e2/fa/faa08236ede4d85b682688874617f65c5ff881bc49af67a226bcb2e5e9de0068.php:51
+#: /tmp/cache/568f6c0e763a1/fa/faa08236ede4d85b682688874617f65c5ff881bc49af67a226bcb2e5e9de0068.php:51
 msgid "Content language"
 msgstr "Sisällön kieli"
 
-#: /tmp/cache/56726a28e88e2/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:658
+#: /tmp/cache/568f6c0e763a1/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:658
 msgid "Download this concept in SKOS format:"
 msgstr "Lataa tämä käsite:"
 
-#: /tmp/cache/56726a28e88e2/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:126
+#: /tmp/cache/568f6c0e763a1/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:126
 msgid "E-mail:"
 msgstr "Sähköpostiosoite:"
 
-#: /tmp/cache/56726a28e88e2/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:130
+#: /tmp/cache/568f6c0e763a1/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:130
 msgid "Enter your e-mail address"
 msgstr "Syötä sähköpostiosoitteesi"
 
-#: /tmp/cache/56726a28e88e2/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:122
+#: /tmp/cache/568f6c0e763a1/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:122
 msgid "Enter your name"
 msgstr "Syötä nimesi"
 
-#: /tmp/cache/56726a28e88e2/30/308a7807f1f84793e0f9a856050d3d52b74ec8842357022a77c3c398008fbf98.php:69
-#: /tmp/cache/56726a28e88e2/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:825
+#: /tmp/cache/568f6c0e763a1/30/308a7807f1f84793e0f9a856050d3d52b74ec8842357022a77c3c398008fbf98.php:69
+#: /tmp/cache/568f6c0e763a1/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:825
 msgid "Error: Requested vocabulary not found!"
 msgstr "Virhe: Pyydettyä sanastoa ei löydy!"
 
-#: /tmp/cache/56726a28e88e2/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:815
+#: /tmp/cache/568f6c0e763a1/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:815
 msgid "Error: Term \"%term%\" not found in vocabulary!"
 msgstr "Virhe: Termiä \"%term%\" ei löydy sanastosta!"
 
-#: /tmp/cache/56726a28e88e2/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:411
+#: /tmp/cache/568f6c0e763a1/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:413
 msgid "Error: the vocabulary does not contain terms beginning with"
 msgstr "Sanasto ei sisällä termejä jotka alkavat kirjaimella"
 
-#: /tmp/cache/56726a28e88e2/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:34
-#: /tmp/cache/56726a28e88e2/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:54
+#: /tmp/cache/568f6c0e763a1/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:34
+#: /tmp/cache/568f6c0e763a1/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:54
 msgid "Feedback"
 msgstr "Palaute"
 
-#: /tmp/cache/56726a28e88e2/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:64
+#: /tmp/cache/568f6c0e763a1/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:64
 msgid "Feedback has been sent!"
 msgstr "Palaute on lähetetty!"
 
-#: /tmp/cache/56726a28e88e2/92/92eb6a21e41647d1308c2509b8404473d4d555e9a0706b46ba6366280ab84f55.php:35
+#: /tmp/cache/568f6c0e763a1/92/92eb6a21e41647d1308c2509b8404473d4d555e9a0706b46ba6366280ab84f55.php:35
 msgid "Group index"
 msgstr "Ryhmähakemisto"
 
-#: /tmp/cache/56726a28e88e2/89/8918fbbc730e25498fb2a90c43f7cc896ff81dd4b89b4de856b33d54a90d5de1.php:94
-#: /tmp/cache/56726a28e88e2/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:264
-#: /tmp/cache/56726a28e88e2/92/92eb6a21e41647d1308c2509b8404473d4d555e9a0706b46ba6366280ab84f55.php:94
-#: /tmp/cache/56726a28e88e2/6e/6e42e8c53c0a500ee83faf3238b4cb7d22a33fa5cd53c06e8da925a1f0bf7e61.php:100
-#: /tmp/cache/56726a28e88e2/e5/e5e30dd1e4f7a5aba208e2abff5f397783b237206ddb689ead55f2201f80691a.php:96
+#: /tmp/cache/568f6c0e763a1/89/8918fbbc730e25498fb2a90c43f7cc896ff81dd4b89b4de856b33d54a90d5de1.php:94
+#: /tmp/cache/568f6c0e763a1/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:264
+#: /tmp/cache/568f6c0e763a1/92/92eb6a21e41647d1308c2509b8404473d4d555e9a0706b46ba6366280ab84f55.php:94
+#: /tmp/cache/568f6c0e763a1/6e/6e42e8c53c0a500ee83faf3238b4cb7d22a33fa5cd53c06e8da925a1f0bf7e61.php:100
+#: /tmp/cache/568f6c0e763a1/e5/e5e30dd1e4f7a5aba208e2abff5f397783b237206ddb689ead55f2201f80691a.php:96
 msgid "Group-nav"
 msgstr "Ryhmät"
 
-#: /tmp/cache/56726a28e88e2/89/8918fbbc730e25498fb2a90c43f7cc896ff81dd4b89b4de856b33d54a90d5de1.php:78
-#: /tmp/cache/56726a28e88e2/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:248
-#: /tmp/cache/56726a28e88e2/cf/cf3ee7d4c923770745328cd04df267b541825922e29a4a579961a2601c61474a.php:55
-#: /tmp/cache/56726a28e88e2/92/92eb6a21e41647d1308c2509b8404473d4d555e9a0706b46ba6366280ab84f55.php:78
-#: /tmp/cache/56726a28e88e2/6e/6e42e8c53c0a500ee83faf3238b4cb7d22a33fa5cd53c06e8da925a1f0bf7e61.php:84
-#: /tmp/cache/56726a28e88e2/e5/e5e30dd1e4f7a5aba208e2abff5f397783b237206ddb689ead55f2201f80691a.php:80
+#: /tmp/cache/568f6c0e763a1/89/8918fbbc730e25498fb2a90c43f7cc896ff81dd4b89b4de856b33d54a90d5de1.php:78
+#: /tmp/cache/568f6c0e763a1/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:248
+#: /tmp/cache/568f6c0e763a1/cf/cf3ee7d4c923770745328cd04df267b541825922e29a4a579961a2601c61474a.php:55
+#: /tmp/cache/568f6c0e763a1/92/92eb6a21e41647d1308c2509b8404473d4d555e9a0706b46ba6366280ab84f55.php:78
+#: /tmp/cache/568f6c0e763a1/6e/6e42e8c53c0a500ee83faf3238b4cb7d22a33fa5cd53c06e8da925a1f0bf7e61.php:84
+#: /tmp/cache/568f6c0e763a1/e5/e5e30dd1e4f7a5aba208e2abff5f397783b237206ddb689ead55f2201f80691a.php:80
 msgid "Hier-nav"
 msgstr "Hierarkia"
 
-#: /tmp/cache/56726a28e88e2/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:139
+#: /tmp/cache/568f6c0e763a1/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:139
 msgid "Leave this field blank"
 msgstr "Jätä tämä kenttä tyhjäksi"
 
-#: /tmp/cache/56726a28e88e2/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:551
+#: /tmp/cache/568f6c0e763a1/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:553
 msgid "Limit search"
 msgstr "Aseta rajoitukset"
 
-#: /tmp/cache/56726a28e88e2/cf/cf3ee7d4c923770745328cd04df267b541825922e29a4a579961a2601c61474a.php:31
+#: /tmp/cache/568f6c0e763a1/cf/cf3ee7d4c923770745328cd04df267b541825922e29a4a579961a2601c61474a.php:31
 msgid "Loading"
 msgstr "Ladataan"
 
-#: /tmp/cache/56726a28e88e2/cf/cf3ee7d4c923770745328cd04df267b541825922e29a4a579961a2601c61474a.php:27
+#: /tmp/cache/568f6c0e763a1/cf/cf3ee7d4c923770745328cd04df267b541825922e29a4a579961a2601c61474a.php:27
 msgid "Loading more items"
 msgstr "Ladataan sisältöä"
 
-#: /tmp/cache/56726a28e88e2/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:134
+#: /tmp/cache/568f6c0e763a1/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:134
 msgid "Message:"
 msgstr "Viesti:"
 
-#: /tmp/cache/56726a28e88e2/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:118
+#: /tmp/cache/568f6c0e763a1/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:118
 msgid "Name:"
 msgstr "Nimi:"
 
-#: /tmp/cache/56726a28e88e2/cf/cf3ee7d4c923770745328cd04df267b541825922e29a4a579961a2601c61474a.php:23
+#: /tmp/cache/568f6c0e763a1/cf/cf3ee7d4c923770745328cd04df267b541825922e29a4a579961a2601c61474a.php:23
 msgid "No results"
 msgstr "Ei tuloksia"
 
-#: /tmp/cache/56726a28e88e2/80/804f6e9fbb43aed16175bcf88cb91f7ba7b685f17a100a28e0e56402e7e8f141.php:26
+#: /tmp/cache/568f6c0e763a1/80/804f6e9fbb43aed16175bcf88cb91f7ba7b685f17a100a28e0e56402e7e8f141.php:26
 msgid "No vocabularies on the server!"
 msgstr "Ei sanastoja palvelimella!"
 
-#: /tmp/cache/56726a28e88e2/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:88
+#: /tmp/cache/568f6c0e763a1/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:88
 msgid "Not to a specific vocabulary"
 msgstr "Ei tiettyyn sanastoon"
 
-#: /tmp/cache/56726a28e88e2/fa/faa08236ede4d85b682688874617f65c5ff881bc49af67a226bcb2e5e9de0068.php:218
+#: /tmp/cache/568f6c0e763a1/fa/faa08236ede4d85b682688874617f65c5ff881bc49af67a226bcb2e5e9de0068.php:218
 msgid "Search"
 msgstr "Hae"
 
-#: /tmp/cache/56726a28e88e2/fa/faa08236ede4d85b682688874617f65c5ff881bc49af67a226bcb2e5e9de0068.php:203
+#: /tmp/cache/568f6c0e763a1/fa/faa08236ede4d85b682688874617f65c5ff881bc49af67a226bcb2e5e9de0068.php:203
 msgid "Search language: any"
 msgstr "kaikilla kielillä"
 
-#: /tmp/cache/56726a28e88e2/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:273
+#: /tmp/cache/568f6c0e763a1/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:273
 msgid "Search options"
 msgstr "Rajaus"
 
-#: /tmp/cache/56726a28e88e2/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:143
+#: /tmp/cache/568f6c0e763a1/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:143
 msgid "Send feedback"
 msgstr "Lähetä palaute"
 
-#: /tmp/cache/56726a28e88e2/cf/cf3ee7d4c923770745328cd04df267b541825922e29a4a579961a2601c61474a.php:51
+#: /tmp/cache/568f6c0e763a1/cf/cf3ee7d4c923770745328cd04df267b541825922e29a4a579961a2601c61474a.php:51
 msgid "Show all breadcrumb paths"
 msgstr "näytä kaikki # polkua"
 
-#: /tmp/cache/56726a28e88e2/4c/4c9e7290b4865c2bb9ac100068af08280f5e46261b439083d3982ee19f3cfafb.php:72
+#: /tmp/cache/568f6c0e763a1/4c/4c9e7290b4865c2bb9ac100068af08280f5e46261b439083d3982ee19f3cfafb.php:72
 msgid "Skosmos version %version%"
 msgstr "Skosmos-versio %version%"
 
-#: /tmp/cache/56726a28e88e2/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:68
+#: /tmp/cache/568f6c0e763a1/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:68
 msgid "Thank you for your feedback"
 msgstr "Kiitos palautteestasi. Pyrimme vastaamaan kaikkiin palautteisiin mahdollisimman pian."
 
-#: /tmp/cache/56726a28e88e2/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:129
+#: /tmp/cache/568f6c0e763a1/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:91
 msgid "The search provided no results."
 msgstr "Ei hakutuloksia."
 
-#: /tmp/cache/56726a28e88e2/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:48
+#: /tmp/cache/568f6c0e763a1/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:48
 msgid "There is no term for this concept in this language"
 msgstr "Käsitteelle ei ole termiä tällä kielellä."
 
-#: /tmp/cache/56726a28e88e2/cf/cf3ee7d4c923770745328cd04df267b541825922e29a4a579961a2601c61474a.php:47
-#: /tmp/cache/56726a28e88e2/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:155
+#: /tmp/cache/568f6c0e763a1/cf/cf3ee7d4c923770745328cd04df267b541825922e29a4a579961a2601c61474a.php:47
+#: /tmp/cache/568f6c0e763a1/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:155
 msgid "Value is required and can not be empty"
 msgstr "Kenttä on pakollinen"
 
-#: /tmp/cache/56726a28e88e2/80/804f6e9fbb43aed16175bcf88cb91f7ba7b685f17a100a28e0e56402e7e8f141.php:41
+#: /tmp/cache/568f6c0e763a1/80/804f6e9fbb43aed16175bcf88cb91f7ba7b685f17a100a28e0e56402e7e8f141.php:41
 msgid "Vocabularies on the server"
 msgstr "Sanastot ja ontologiat"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:105
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:105
 msgid "dc11:contributor"
 msgstr "Muu tekijä"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:117
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:117
 msgid "dc11:creator"
 msgstr "Tekijä"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:119
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:119
 msgid "dc11:description"
 msgstr "Kuvaus"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:121
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:121
 msgid "dc11:license"
 msgstr "Lisenssi"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:111
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:111
 msgid "dc11:publisher"
 msgstr "Julkaisija"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:113
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:113
 msgid "dc11:relation"
 msgstr "Suhde"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:115
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:115
 msgid "dc11:rights"
 msgstr "Oikeudet"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:107
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:107
 msgid "dc11:source"
 msgstr "Lähde"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:161
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:161
 msgid "dc11:source_help"
 msgstr "Käsitteen kuvauksen lähdetieto"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:109
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:109
 msgid "dc11:title"
 msgstr "Nimi"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:79
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:79
 msgid "dc:contributor"
 msgstr "Muu tekijä"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:91
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:91
 msgid "dc:created"
 msgstr "Luontipäivä"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:77
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:77
 msgid "dc:creator"
 msgstr "Tekijä"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:89
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:89
 msgid "dc:date"
 msgstr "Päiväys"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:75
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:75
 msgid "dc:description"
 msgstr "Kuvaus"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:103
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:103
 msgid "dc:isReplacedBy"
 msgstr "Korvaava käsite"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:93
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:93
 msgid "dc:issued"
 msgstr "Julkaisupäivä"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:101
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:101
 msgid "dc:language"
 msgstr "Kieli"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:83
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:83
 msgid "dc:license"
 msgstr "Lisenssi"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:95
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:95
 msgid "dc:modified"
 msgstr "Muokkauspäivä"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:85
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:85
 msgid "dc:publisher"
 msgstr "Julkaisija"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:97
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:97
 msgid "dc:relation"
 msgstr "Suhde"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:99
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:99
 msgid "dc:replaces"
 msgstr "korvaa käsitteen"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:81
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:81
 msgid "dc:rights"
 msgstr "Oikeudet"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:87
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:87
 msgid "dc:source"
 msgstr "Lähde"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:73
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:73
 msgid "dc:subject"
 msgstr "Aihealue"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:71
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:135
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:71
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:135
 msgid "dc:title"
 msgstr "Nimi"
 
-#: /tmp/cache/56726a28e88e2/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:256
-#: /tmp/cache/56726a28e88e2/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:36
+#: /tmp/cache/568f6c0e763a1/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:218
+#: /tmp/cache/568f6c0e763a1/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:36
 msgid "deprecated"
 msgstr "Käsite on poistettu käytöstä. Älä käytä tätä käsitettä sisällönkuvailuun!"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:175
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:175
 msgid "foaf:homepage"
 msgstr "Kotisivu"
 
-#: /tmp/cache/56726a28e88e2/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:542
-#: /tmp/cache/56726a28e88e2/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:593
+#: /tmp/cache/568f6c0e763a1/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:504
+#: /tmp/cache/568f6c0e763a1/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:593
 msgid "foreign prefLabel help"
 msgstr "Käsitteen termit muilla kielillä."
 
-#: /tmp/cache/56726a28e88e2/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:595
+#: /tmp/cache/568f6c0e763a1/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:595
 msgid "foreign prefLabels"
 msgstr "Muunkieliset termit"
 
-#: /tmp/cache/56726a28e88e2/cf/cf3ee7d4c923770745328cd04df267b541825922e29a4a579961a2601c61474a.php:39
+#: /tmp/cache/568f6c0e763a1/cf/cf3ee7d4c923770745328cd04df267b541825922e29a4a579961a2601c61474a.php:39
 msgid "from all"
 msgstr "kaikista sanastoista"
 
-#: /tmp/cache/56726a28e88e2/89/8918fbbc730e25498fb2a90c43f7cc896ff81dd4b89b4de856b33d54a90d5de1.php:74
-#: /tmp/cache/56726a28e88e2/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:244
-#: /tmp/cache/56726a28e88e2/92/92eb6a21e41647d1308c2509b8404473d4d555e9a0706b46ba6366280ab84f55.php:74
-#: /tmp/cache/56726a28e88e2/6e/6e42e8c53c0a500ee83faf3238b4cb7d22a33fa5cd53c06e8da925a1f0bf7e61.php:80
-#: /tmp/cache/56726a28e88e2/e5/e5e30dd1e4f7a5aba208e2abff5f397783b237206ddb689ead55f2201f80691a.php:76
+#: /tmp/cache/568f6c0e763a1/89/8918fbbc730e25498fb2a90c43f7cc896ff81dd4b89b4de856b33d54a90d5de1.php:74
+#: /tmp/cache/568f6c0e763a1/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:244
+#: /tmp/cache/568f6c0e763a1/92/92eb6a21e41647d1308c2509b8404473d4d555e9a0706b46ba6366280ab84f55.php:74
+#: /tmp/cache/568f6c0e763a1/6e/6e42e8c53c0a500ee83faf3238b4cb7d22a33fa5cd53c06e8da925a1f0bf7e61.php:80
+#: /tmp/cache/568f6c0e763a1/e5/e5e30dd1e4f7a5aba208e2abff5f397783b237206ddb689ead55f2201f80691a.php:76
 msgid "hierarchy-disabled-help"
 msgstr "Ylätason hierarkiaa ei voida näyttää tässä sanastossa."
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:65
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:65
 msgid "isothes:ConceptGroup"
 msgstr "Käsiteryhmä"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:69
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:69
 msgid "isothes:ThesaurusArray"
 msgstr "Sisarkäsitteiden joukko"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:67
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:67
 msgid "isothes:superGroup"
 msgstr "Yläryhmä"
 
-#: /tmp/cache/56726a28e88e2/4c/4c9e7290b4865c2bb9ac100068af08280f5e46261b439083d3982ee19f3cfafb.php:66
+#: /tmp/cache/568f6c0e763a1/4c/4c9e7290b4865c2bb9ac100068af08280f5e46261b439083d3982ee19f3cfafb.php:66
 msgid "layout designed by Hahmo"
 msgstr "-ilmeen suunnittelusta vastaa Hahmo Design"
 
-#: /tmp/cache/56726a28e88e2/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:74
+#: /tmp/cache/568f6c0e763a1/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:74
 msgid "limited to group"
 msgstr "ryhmä"
 
-#: /tmp/cache/56726a28e88e2/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:67
+#: /tmp/cache/568f6c0e763a1/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:67
 msgid "limited to parent"
 msgstr "yläkäsite"
 
-#: /tmp/cache/56726a28e88e2/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:81
-msgid "limited to scheme"
-msgstr "rajattu skeemaan"
-
-#: /tmp/cache/56726a28e88e2/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:29
+#: /tmp/cache/568f6c0e763a1/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:29
 msgid "limited to type"
 msgstr "tyyppi"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:133
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:133
 msgid "owl:sameAs"
 msgstr "Vastaavat käsitteet"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:131
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:131
 msgid "owl:versionInfo"
 msgstr "Versio"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:123
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:123
 msgid "rdf:type"
 msgstr "Tyyppi"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:159
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:159
 msgid "rdf:type_help"
 msgstr "Valitun resurssin tyyppi."
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:129
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:129
 msgid "rdfs:comment"
 msgstr "Huomautus"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:125
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:125
 msgid "rdfs:label"
 msgstr "Termi"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:127
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:127
 msgid "rdfs:seeAlso"
 msgstr "Katso myös"
 
-#: /tmp/cache/56726a28e88e2/cf/cf3ee7d4c923770745328cd04df267b541825922e29a4a579961a2601c61474a.php:43
+#: /tmp/cache/568f6c0e763a1/cf/cf3ee7d4c923770745328cd04df267b541825922e29a4a579961a2601c61474a.php:43
 msgid "selected"
 msgstr "sanastosta"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:37
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:37
 msgid "skos:altLabel"
 msgstr "Korvatut termit"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:151
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:151
 msgid "skos:altLabel_help"
 msgstr "Käsitteeseen ohjaavat termit."
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:27
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:27
 msgid "skos:broadMatch"
 msgstr "Vastaava laajempi käsite"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:167
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:167
 msgid "skos:broadMatch_help"
 msgstr "Käsitettä vastaava laajempi käsite toisessa sanastossa."
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:23
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:23
 msgid "skos:broader"
 msgstr "Yläkäsite"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:143
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:143
 msgid "skos:broader_help"
 msgstr "Merkitykseltään laajempi käsite/termi."
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:63
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:63
 msgid "skos:changeNote"
 msgstr "Huomautus muutoksesta"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:41
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:41
 msgid "skos:closeMatch"
 msgstr "Lähes vastaava käsite"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:165
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:165
 msgid "skos:closeMatch_help"
 msgstr "Läheisesti vastaava käsite toisessa sanastossa."
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:55
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:55
 msgid "skos:definition"
 msgstr "Määritelmä"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:157
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:157
 msgid "skos:definition_help"
 msgstr "Tyhjentävä kuvaus käsitteen merkityksestä."
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:61
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:61
 msgid "skos:editorialNote"
 msgstr "Kehityshuomautus"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:39
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:39
 msgid "skos:exactMatch"
 msgstr "Vastaava käsite"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:163
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:163
 msgid "skos:exactMatch_help"
 msgstr "Merkitykseltään sama käsite toisessa sanastossa."
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:57
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:57
 msgid "skos:example"
 msgstr "Käyttöesimerkki"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:49
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:49
 msgid "skos:hasTopConcept"
 msgstr "Ylätason käsite"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:59
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:59
 msgid "skos:historyNote"
 msgstr "Huomautus muutoshistoriasta"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:45
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:45
 msgid "skos:inScheme"
 msgstr "Käsitteen skeema"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:43
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:43
 msgid "skos:member"
 msgstr "Ryhmään kuuluvat käsitteet"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:153
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:153
 msgid "skos:member_help"
 msgstr "Käsitteet, jotka liittyvät kyseiseen aiheeseen."
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:29
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:29
 msgid "skos:narrowMatch"
 msgstr "Vastaava suppeampi käsite"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:169
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:169
 msgid "skos:narrowMatch_help"
 msgstr "Käsitettä vastaava suppeampi käsite toisessa sanastossa."
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:25
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:25
 msgid "skos:narrower"
 msgstr "Alakäsitteet"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:145
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:145
 msgid "skos:narrower_help"
 msgstr "Merkitykseltään rajatummat käsitteet/termit."
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:51
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:51
 msgid "skos:note"
 msgstr "Huomautus"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:147
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:147
 msgid "skos:note_help"
 msgstr "Huomiota käsitteestä/termistä ja sen käytöstä."
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:35
-#: /tmp/cache/56726a28e88e2/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:234
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:35
+#: /tmp/cache/568f6c0e763a1/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:234
 msgid "skos:prefLabel"
 msgstr "Käytettävä termi"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:31
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:31
 msgid "skos:related"
 msgstr "Assosiatiiviset käsitteet"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:33
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:33
 msgid "skos:relatedMatch"
 msgstr "Assosiatiiviset käsittet"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:155
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:155
 msgid "skos:related_help"
 msgstr "Läheisesti käsitteen/termin aiheeseen liittyvät käsitteet/termit."
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:53
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:53
 msgid "skos:scopeNote"
 msgstr "Käyttöhuomautus"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:149
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:149
 msgid "skos:scopeNote_help"
 msgstr "Huomiota käsitteestä/termistä ja sen käytöstä."
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:47
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:47
 msgid "skos:topConceptOf"
 msgstr "Kuuluu sanastoon"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:141
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:141
 msgid "skosext:DeprecatedConcept"
 msgstr "Poistettu käsite"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:139
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:139
 msgid "skosext:partOf"
 msgstr "Osa kokonaisuutta/käsitettä"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:173
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:173
 msgid "skosext:partOf_help"
 msgstr "Kokonaisuus, jonka osa käsite on."
 
-#: /tmp/cache/56726a28e88e2/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:449
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:137
-#: /tmp/cache/56726a28e88e2/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:537
+#: /tmp/cache/568f6c0e763a1/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:411
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:137
+#: /tmp/cache/568f6c0e763a1/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:537
 msgid "skosmos:memberOf"
 msgstr "Kuuluu ryhmään"
 
-#: /tmp/cache/56726a28e88e2/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:171
-#: /tmp/cache/56726a28e88e2/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:535
+#: /tmp/cache/568f6c0e763a1/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:171
+#: /tmp/cache/568f6c0e763a1/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:535
 msgid "skosmos:memberOf_help"
 msgstr "Ryhmä, johon käsite kuuluu."
 
-#: /tmp/cache/56726a2956043/7f/7f812c317d71ba3939846b0c115ea3547fa8a5795b5c750d8bae5adbffa23be0.php:41
-msgid "404 Error: The page %requested_page% cannot be found."
-msgstr "Virhe 404: Sivua %requested_page% ei löydy."
-
-#: /tmp/cache/56726a2956043/10/10f444be3f922f429458b575ce02fb8a17b62e4cd4a21e4d9c238192dec5d3b8.php:168
+#: /tmp/cache/568f6c0ed7c8b/10/10f444be3f922f429458b575ce02fb8a17b62e4cd4a21e4d9c238192dec5d3b8.php:168
 msgid "About page"
 msgstr "Tietoja"
 
-#: /tmp/cache/56726a2956043/48/48716bd86a4d17f8a6f006070280cdb6a8267fc20fa0418f6e34d9ab4835ad2f.php:34
+#: /tmp/cache/568f6c0ed7c8b/48/48716bd86a4d17f8a6f006070280cdb6a8267fc20fa0418f6e34d9ab4835ad2f.php:34
 msgid "Alphabetical index"
 msgstr "Aakkosellinen hakemisto"
 
-#: /tmp/cache/56726a2956043/d1/d1b825103fbbbc387877af3f3dff368cc6d44fdce3031ee7049605601f24f8c1.php:115
+#: /tmp/cache/568f6c0ed7c8b/d1/d1b825103fbbbc387877af3f3dff368cc6d44fdce3031ee7049605601f24f8c1.php:115
 msgid "Alternate terms"
 msgstr "Korvatut termit"
 
-#: /tmp/cache/56726a2956043/d1/d1b825103fbbbc387877af3f3dff368cc6d44fdce3031ee7049605601f24f8c1.php:107
+#: /tmp/cache/568f6c0ed7c8b/d1/d1b825103fbbbc387877af3f3dff368cc6d44fdce3031ee7049605601f24f8c1.php:107
 msgid "Concept language"
 msgstr "Kieli"
 
-#: /tmp/cache/56726a2956043/d1/d1b825103fbbbc387877af3f3dff368cc6d44fdce3031ee7049605601f24f8c1.php:95
+#: /tmp/cache/568f6c0ed7c8b/d1/d1b825103fbbbc387877af3f3dff368cc6d44fdce3031ee7049605601f24f8c1.php:95
 msgid "Count"
 msgstr "Lukumäärä"
 
-#: /tmp/cache/56726a2956043/d1/d1b825103fbbbc387877af3f3dff368cc6d44fdce3031ee7049605601f24f8c1.php:132
+#: /tmp/cache/568f6c0ed7c8b/d1/d1b825103fbbbc387877af3f3dff368cc6d44fdce3031ee7049605601f24f8c1.php:132
 msgid "Download this vocabulary as SKOS/RDF:"
 msgstr "Lataa tämä sanasto SKOS/RDF-muodossa:"
 
-#: /tmp/cache/56726a2956043/10/10f444be3f922f429458b575ce02fb8a17b62e4cd4a21e4d9c238192dec5d3b8.php:205
+#: /tmp/cache/568f6c0ed7c8b/10/10f444be3f922f429458b575ce02fb8a17b62e4cd4a21e4d9c238192dec5d3b8.php:205
 msgid "Help"
 msgstr "Ohje"
 
-#: /tmp/cache/56726a2956043/d1/d1b825103fbbbc387877af3f3dff368cc6d44fdce3031ee7049605601f24f8c1.php:119
+#: /tmp/cache/568f6c0ed7c8b/d1/d1b825103fbbbc387877af3f3dff368cc6d44fdce3031ee7049605601f24f8c1.php:119
 msgid "Hidden terms"
 msgstr "Piilotermit"
 
-#: /tmp/cache/56726a2956043/10/10f444be3f922f429458b575ce02fb8a17b62e4cd4a21e4d9c238192dec5d3b8.php:58
+#: /tmp/cache/568f6c0ed7c8b/10/10f444be3f922f429458b575ce02fb8a17b62e4cd4a21e4d9c238192dec5d3b8.php:58
 msgid "Interface language"
 msgstr "Käyttökieli"
 
-#: /tmp/cache/56726a2956043/d1/d1b825103fbbbc387877af3f3dff368cc6d44fdce3031ee7049605601f24f8c1.php:111
+#: /tmp/cache/568f6c0ed7c8b/d1/d1b825103fbbbc387877af3f3dff368cc6d44fdce3031ee7049605601f24f8c1.php:111
 msgid "Preferred terms"
 msgstr "Päätermit"
 
-#: /tmp/cache/56726a2956043/d1/d1b825103fbbbc387877af3f3dff368cc6d44fdce3031ee7049605601f24f8c1.php:88
+#: /tmp/cache/568f6c0ed7c8b/d1/d1b825103fbbbc387877af3f3dff368cc6d44fdce3031ee7049605601f24f8c1.php:88
 msgid "Resource counts by type"
 msgstr "Resurssien lukumäärä tyypeittäin"
 
-#: /tmp/cache/56726a2956043/d1/d1b825103fbbbc387877af3f3dff368cc6d44fdce3031ee7049605601f24f8c1.php:101
+#: /tmp/cache/568f6c0ed7c8b/d1/d1b825103fbbbc387877af3f3dff368cc6d44fdce3031ee7049605601f24f8c1.php:101
 msgid "Term counts by language"
 msgstr "Termien lukumäärät kielittäin"
 
-#: /tmp/cache/56726a2956043/d1/d1b825103fbbbc387877af3f3dff368cc6d44fdce3031ee7049605601f24f8c1.php:93
+#: /tmp/cache/568f6c0ed7c8b/7f/7f812c317d71ba3939846b0c115ea3547fa8a5795b5c750d8bae5adbffa23be0.php:42
+msgid "The page %requested_page% cannot be found."
+msgstr "Virhe 404: Sivua %requested_page% ei löydy."
+
+#: /tmp/cache/568f6c0ed7c8b/d1/d1b825103fbbbc387877af3f3dff368cc6d44fdce3031ee7049605601f24f8c1.php:93
 msgid "Type"
 msgstr "Tyyppi"
 
-#: /tmp/cache/56726a2956043/10/10f444be3f922f429458b575ce02fb8a17b62e4cd4a21e4d9c238192dec5d3b8.php:146
+#: /tmp/cache/568f6c0ed7c8b/10/10f444be3f922f429458b575ce02fb8a17b62e4cd4a21e4d9c238192dec5d3b8.php:146
 msgid "Vocabularies-nav"
 msgstr "Sanastot"
 
-#: /tmp/cache/56726a2956043/d1/d1b825103fbbbc387877af3f3dff368cc6d44fdce3031ee7049605601f24f8c1.php:24
+#: /tmp/cache/568f6c0ed7c8b/d1/d1b825103fbbbc387877af3f3dff368cc6d44fdce3031ee7049605601f24f8c1.php:24
 msgid "Vocabulary information"
 msgstr "Tietoja sanastosta"
 
-#: /tmp/cache/56726a2956043/10/10f444be3f922f429458b575ce02fb8a17b62e4cd4a21e4d9c238192dec5d3b8.php:199
+#: /tmp/cache/568f6c0ed7c8b/10/10f444be3f922f429458b575ce02fb8a17b62e4cd4a21e4d9c238192dec5d3b8.php:199
 msgid "helper_help"
 msgstr "Kun viet kursorin pisteillä alleviivatun tekstin kohdalle, saat ominaisuuteen liittyviä ohjeita."
 
-#: /tmp/cache/56726a2956043/10/10f444be3f922f429458b575ce02fb8a17b62e4cd4a21e4d9c238192dec5d3b8.php:201
+#: /tmp/cache/568f6c0ed7c8b/10/10f444be3f922f429458b575ce02fb8a17b62e4cd4a21e4d9c238192dec5d3b8.php:201
 msgid "search_example_text"
 msgstr "Voit määrittää hakusanan katkaisun käyttämällä tähtimerkkiä. Kokeile esimerkiksi: *eläimet tai: *patentti*. Jos et käytä tähtimerkkiä haku tehdään käyttäen loppukatkaisua."
 

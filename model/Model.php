@@ -215,64 +215,32 @@ class Model
     /**
      * Makes a SPARQL-query to the endpoint that retrieves concept
      * references as it's search results.
-     * @param string $term the term that is looked for eg. 'cat'.
-     * @param mixed $vocids vocabulary id eg. 'yso', array of such ids for multi-vocabulary search, or null for global search.
-     * @param string $lang language code to show labels in, eg. 'fi' for Finnish.
-     * @param string $search_lang language code used for matching, eg. 'fi' for Finnish, null for any language
-     * @param string $type limit search to concepts of the given type
-     * @param string $parent limit search to concepts which have the given concept as parent in the transitive broader hierarchy
-     * @param string $group limit search to concepts which are in the given group
-     * @param int $offset optional parameter for search offset.
-     * @param int $limit optional paramater for maximum amount of results.
-     * @param boolean $hidden include matches on hidden labels (default: true).
-     * @param array $fields extra fields to include in the result (array of strings). (default: null = none)
-     * @param boolean $unique restrict results to unique concepts (default: false)
+     * @param ConceptSearchParameters $params an object that contains all the parameters needed for the search
      * @return array search results
      */
-    public function searchConcepts($term, $vocids, $lang, $search_lang, $type = null, $parent = null, $group = null, $offset = 0, $limit = null, $hidden = true, $fields = null, $unique = false, $schemes = null)
+    public function searchConcepts($params)
     {
-        if ($limit === null) {
-            $limit = $this->getConfig()->getDefaultSearchLimit();
-        }
-        $term = trim($term);
-        if ($term == "" || !preg_match('/[^*]/', $term)) {
+        // don't even try to search for empty prefix
+        if ($params->getSearchTerm() === "" || !preg_match('/[^*]/', $params->getSearchTerm())) {
             return array();
         }
-        // don't even try to search for empty prefix
 
-        // make vocids an array in every case
-        if ($vocids === null) {
-            $vocids = array();
-        }
+        $vocabs = $params->getVocabs();
 
-        if (!is_array($vocids)) {
-            $vocids = array($vocids);
-        }
-
-        $vocabs = array();
-        foreach ($vocids as $vocid) {
-            $vocabs[] = $this->getVocabulary($vocid);
-        }
-
-        if (sizeof($vocids) == 1) { // search within vocabulary
+        if (sizeof($vocabs) === 1) { // search within vocabulary
             $voc = $vocabs[0];
             $sparql = $voc->getSparql();
-            $arrayClass = $voc->getConfig()->getArrayClassURI();
         } else { // multi-vocabulary or global search
             $voc = null;
-            $arrayClass = null;
             $sparql = $this->getDefaultSparql();
         }
-        if ($type === null) {
-            $type = array('skos:Concept');
-        }
 
-        $results = $sparql->queryConcepts($term, $vocabs, $lang, $search_lang, $limit, $offset, $arrayClass, $type, $parent, $group, $hidden, $fields, $unique, $schemes);
+        $results = $sparql->queryConcepts($vocabs, $params->getAdditionalFields(), $params->getUnique(), $params);
         $ret = array();
 
         foreach ($results as $hit) {
-            if (sizeof($vocids) == 1) {
-                $hit['vocab'] = $vocids[0];
+            if (sizeof($vocabs) == 1) {
+                $hit['vocab'] = $vocabs[0]->getId();
             } else {
                 try {
                     $voc = $this->getVocabularyByGraph($hit['graph']);
@@ -302,30 +270,14 @@ class Model
 
     /**
      * Function for performing a search for concepts and their data fields.
-     * @param string $term searchterm eg. 'cat'
-     * @param mixed $vocids vocabulary id eg. 'yso', array of such ids for multi-vocabulary search, or null for global search.
-     * @param string $lang language code of returned labels, eg. 'fi'
-     * @param string $search_lang language code used for matching, eg. 'fi', or null for anything
-     * @param integer $offset used for offsetting the result set eg. '20'
-     * @param integer $limit upper count for the search results eg. '10'
-     * @param string $type limit search to concepts of the given type
-     * @param string $parent limit search to concepts which have the given concept as parent in the transitive broader hierarchy
-     * @param string $group limit search to concepts which are in the given group
+     * @param ConceptSearchParameters $params an object that contains all the parameters needed for the search
      * @return array array with keys 'count' and 'results'
      */
-    public function searchConceptsAndInfo($term, $vocids, $lang, $search_lang, $offset = 0, $limit = 20, $type = null, $parent = null, $group = null, $schemes = null)
+    public function searchConceptsAndInfo($params)
     {
-        // make vocids an array in every case
-        if ($vocids === null) {
-            $vocids = array();
-        }
-
-        if (!is_array($vocids)) {
-            $vocids = array($vocids);
-        }
-
-        $allhits = $this->searchConcepts($term, $vocids, $lang, $search_lang, $type, $parent, $group, 0, 0, true, null, true, $schemes);
-        $hits = array_slice($allhits, $offset, $limit);
+        $params->setUnique(true);
+        $allhits = $this->searchConcepts($params);
+        $hits = array_slice($allhits, $params->getOffset(), $params->getSearchLimit());
 
         $uris = array();
         $vocabs = array();
@@ -343,7 +295,7 @@ class Model
             $arrayClass = null;
             $sparql = $this->getDefaultSparql();
         }
-        $ret = $sparql->queryConceptInfo($uris, $arrayClass, $vocabs, null, $search_lang);
+        $ret = $sparql->queryConceptInfo($uris, $arrayClass, $vocabs, null, $params->getSearchLang());
 
         // For marking that the concept has been found through an alternative label, hidden
         // label or a label in another language
@@ -430,6 +382,9 @@ class Model
     public function getVocabularyCategories()
     {
         $cats = $this->graph->allOfType('skos:Concept');
+        if(empty($cats)) {
+            return array(new VocabularyCategory($this, null));
+        }
 
         return $this->createDataObjects("VocabularyCategory", $cats);
     }

@@ -1,19 +1,17 @@
 <div id="vocabulary-list">
   <div class="logo-header">
-  {% if vocab_list is not defined or vocab_list|length == 0 %}
+  {% if request.vocabList|length == 0 %}
   <h2>{% trans "No vocabularies on the server!" %}</h2>
   {% else %}
     {% if category_label %}
     <h2>{{ category_label }}</h2>
-    {% else %}
-    <h2>{% trans "Vocabularies on the server" %}</h2>
     {% endif %}
   </div>
   <div class="vocabularies">
-    {% for vocabClassName,vocabArray in vocab_list %}
+    {% for vocabClassName,vocabArray in request.vocabList %}
     <ul class="vocab-category">
       <li><h2>{{ vocabClassName|upper }}</h2></li>
-      <ul>
+    <ul>
       {% for vocab in vocabArray %}
         <li><a class="navigation-font" href="{{ vocab.id }}/{{ request.lang }}/{% if request.contentLang != request.lang and request.contentLang != '' %}?clang={{ request.contentLang }}{% endif %}">{{ vocab.title }}</a></li>
       {% endfor %}

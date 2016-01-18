@@ -180,7 +180,7 @@ $(function() { // DOCUMENT READY
   hideCrumbs();
 
   // ajaxing the concept count and the preflabel counts on the vocabulary front page
-  if ($('#vocab-info').length) {
+  if ($('#vocab-info').length && $('#statistics').length) {
     // adding the spinners      
     $('#counts tr:nth-of-type(1)').after('<tr><td><span class="spinner" /></td></td></tr>');
     $('#statistics tr:nth-of-type(1)').after('<tr><td><span class="spinner" /></td></td></tr>');
