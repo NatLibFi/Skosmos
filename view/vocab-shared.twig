@@ -20,6 +20,7 @@
         {% endfor %}
       </table>
     </div>
+    {% if vocab.config.showStatistics %}
     <div>
       <h2>{% trans "Resource counts by type" %}</h2>
       <table id="counts">
@@ -37,6 +38,7 @@
       <tr><td class="property-divider"></td></tr>
       </table>
     </div>
+    {% endif %}
     {% if vocab.config.dataURLs %}
     <div class="download-links">
       <span class="versal">{% trans %}Download this vocabulary as SKOS/RDF:{% endtrans %}

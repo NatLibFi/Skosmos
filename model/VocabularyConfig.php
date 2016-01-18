@@ -340,4 +340,8 @@ class VocabularyConfig extends DataObject
 
         return $uriparts[count($uriparts) - 1];
     }
+
+    public function getShowStatistics() {
+        return $this->getBoolean('skosmos:showStatistics', true);
+    }
 }
