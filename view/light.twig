@@ -74,7 +74,6 @@
              </li>
               {% endfor %}
             </ul>
-            {% elseif search_results is not defined %}<span class="header-text-small-font">{% trans %}Error: the vocabulary does not contain terms beginning with{% endtrans %} "{{ request.letter }}"!</span>
           {% endif %}
         </div>
         {% if term %}
