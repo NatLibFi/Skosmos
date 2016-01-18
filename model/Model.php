@@ -382,6 +382,9 @@ class Model
     public function getVocabularyCategories()
     {
         $cats = $this->graph->allOfType('skos:Concept');
+        if(empty($cats)) {
+            return array(new VocabularyCategory($this, null));
+        }
 
         return $this->createDataObjects("VocabularyCategory", $cats);
     }

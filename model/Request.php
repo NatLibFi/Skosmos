@@ -187,4 +187,8 @@ class Request
         return $this->vocab;
     }
 
+    public function getVocabList() {
+        return $this->model->getVocabularyList();
+    }
+
 }

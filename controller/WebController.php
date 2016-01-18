@@ -189,14 +189,12 @@ class WebController extends Controller
         $template = $this->twig->loadTemplate('light.twig');
         // set template variables
         $categoryLabel = $this->model->getClassificationLabel($request->getLang());
-        $vocabList = $this->model->getVocabularyList();
         $sortedVocabs = $this->model->getVocabularyList(false, true);
         $langList = $this->model->getLanguages($request->getLang());
 
         // render template
         echo $template->render(
             array(
-                'vocab_list' => $vocabList,
                 'sorted_vocabs' => $sortedVocabs,
                 'category_label' => $categoryLabel,
                 'languages' => $this->languages,
