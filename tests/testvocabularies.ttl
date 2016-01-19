@@ -12,6 +12,7 @@
 @prefix skosmos: <http://purl.org/net/skosmos#> .
 @prefix isothes: <http://purl.org/iso25964/skos-thes#>.
 @prefix meta: <http://www.skosmos.skos/test-meta/> .
+@prefix my: <http://example.com/myns#> .
 @prefix : <#> .
 
 
@@ -101,6 +102,14 @@
 	void:sparqlEndpoint <http://localhost:3030/ds/sparql> ;
 	skosmos:language "en";
 	skosmos:sparqlGraph <http://www.skosmos.skos/changes/> .
+
+:prefix a skosmos:Vocabulary, void:Dataset ;
+	dc11:title "A vocabulary for testing custom prefixes"@en ;
+	dc:subject :cat_general ;
+	void:uriSpace "http://www.skosmos.skos/prefix/";
+	void:sparqlEndpoint <http://localhost:3030/ds/sparql> ;
+	skosmos:language "en";
+	skosmos:sparqlGraph <http://www.skosmos.skos/prefix/> .
 
 <http://skosmos.skos/dump/test/groups> dc:format "application/rdf+xml" .
 

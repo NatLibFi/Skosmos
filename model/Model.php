@@ -23,6 +23,8 @@ class Model
 {
     /** EasyRdf_Graph graph instance */
     private $graph;
+    /** Namespaces from vocabularies configuration file */
+    private $namespaces;
     /** cache for Vocabulary objects */
     private $all_vocabularies = null;
     /** cache for Vocabulary objects */
@@ -40,6 +42,7 @@ class Model
     {
         $this->global_config = $config;
         $this->initializeVocabularies();
+        $this->initializeNamespaces();
     }
 
     /**
@@ -63,18 +66,45 @@ class Model
             // use APC user cache to store parsed vocabularies.ttl configuration
             if (function_exists('apc_store') && function_exists('apc_fetch')) {
                 $key = realpath($this->getConfig()->getVocabularyConfigFile()) . ", " . filemtime($this->getConfig()->getVocabularyConfigFile());
+                $nskey = "namespaces of " . $key;
                 $this->graph = apc_fetch($key);
-                if ($this->graph === false) { // was not found in cache
-                    $this->graph = new EasyRdf_Graph();
-                    $this->graph->parse(file_get_contents($this->getConfig()->getVocabularyConfigFile()));
+                $this->namespaces = apc_fetch($nskey);
+                if ($this->graph === false || $this->namespaces === false) { // was not found in cache
+                    $this->parseVocabularies($this->getConfig()->getVocabularyConfigFile());
                     apc_store($key, $this->graph);
+                    apc_store($nskey, $this->namespaces);
                 }
             } else { // APC not available, parse on every request
-                $this->graph = new EasyRdf_Graph();
-                $this->graph->parse(file_get_contents($this->getConfig()->getVocabularyConfigFile()));
+                $this->parseVocabularies($this->getConfig()->getVocabularyConfigFile());
             }
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
+        }
+    }
+
+    /**
+     * Parses vocabulary configuration and RDF namespaces from the vocabularies.ttl file
+     * @param string $filename path to vocabularies.ttl file
+     */
+
+    private function parseVocabularies($filename)
+    {
+        $this->graph = new EasyRdf_Graph();
+        $parser = new NamespaceExposingTurtleParser();
+        $parser->parse($this->graph, file_get_contents($filename), 'turtle', $filename);
+        $this->namespaces = $parser->getNamespaces();
+    }
+
+    /**
+     * Registers RDF namespaces from the vocabularies.ttl file for use by EasyRdf (e.g. serializing)
+     */
+    
+    private function initializeNamespaces() {
+        foreach ($this->namespaces as $prefix => $full_uri) {
+            if ($prefix != '' && EasyRdf_Namespace::get($prefix) === null) // if not already defined
+            {
+                EasyRdf_Namespace::set($prefix, $full_uri);
+            }
         }
     }
 

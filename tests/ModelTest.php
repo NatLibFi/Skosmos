@@ -263,6 +263,16 @@ class ModelTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('http://www.skosmos.skos/test/ta116', $result['results'][0]->getUri());
     $this->assertEquals(1, $result['count']);
   }
+  
+  /**
+   * Test for issue #387: make sure namespaces defined in vocabularies.ttl are used for RDF export
+   * @covers Model::getRDF
+   */
+   
+  public function testGetRdfCustomPrefix() {
+    $result = $this->model->getRDF('prefix', 'http://www.skosmos.skos/prefix/p1', 'text/turtle');
+    $this->assertContains("@prefix my: <http://example.com/myns#> .", $result);
+  }
 
   /**
    * @covers Model::getRDF
