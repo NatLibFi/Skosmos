@@ -231,17 +231,28 @@ $(function() { // DOCUMENT READY
     }
   });
 
+  // the gear spinner shown when ajax loading a concept takes a long time
+  var $delayedSpinner = $("<p class='concept-spinner center-block'>" + loading_text + "&hellip;</p>"); 
+
+  // adds a delay before showing the spinner configured above
+  function delaySpinner(loading) {
+    loading = setTimeout("$('.concept-spinner').show()", 500);
+  }
+
   // event handler for clicking the hierarchy concepts
   $(document).on('click', '.concept-hierarchy a',
       function(event) {
         event.preventDefault();
-        var $content = $('.content');
         var targetUrl = event.target.href;
         var parameters = $.param({'clang' : clang});
         $('#hier-trigger').attr('href', targetUrl);
+        var $content = $('.content').empty().append($delayedSpinner.hide());
+        var loading;
         $.ajax({
             url : targetUrl,
             data: parameters,
+            beforeSend: delaySpinner(loading),
+            complete: clearTimeout(loading),
             success : function(data) {
               $content.empty();
               var response = $('.content', data).html();
@@ -263,17 +274,12 @@ $(function() { // DOCUMENT READY
         $.ajaxQ.abortAll();
         $('.activated-concept').removeClass('activated-concept');
         $(this).addClass('activated-concept');
-        var $delayedSpinner = $("<p class='concept-spinner center-block'>" + loading_text + "&hellip;</p>"); 
         var $content = $('.content').empty().append($delayedSpinner.hide());
         var loading;
         $.ajax({
             url : event.target.href,
-            beforeSend: function() {
-              loading = setTimeout("$('.concept-spinner').show()", 500);
-            },
-            complete: function() {
-              clearTimeout(loading);
-            },
+            beforeSend: delaySpinner(loading),
+            complete: clearTimeout(loading),
             success : function(data) {
               if (window.history.pushState) { window.history.pushState(null, null, event.target.href); }
               $content.empty().append($('.content', data).html());
@@ -388,11 +394,13 @@ $(function() { // DOCUMENT READY
   // event handler for clicking groups
   $(document).on('click','div.group-hierarchy a',
       function(event) {
-        var $content = $('.content');
-        var targetUrl = event.target.href;
+        var $content = $('.content').empty().append($delayedSpinner.hide());
+        var loading;
         // ajaxing the sidebar content
         $.ajax({
-            url : targetUrl,
+            url : event.target.href,
+            beforeSend: delaySpinner(loading),
+            complete: clearTimeout(loading),
             success : function(data) {
               if (!$('#hierarchy').length) { 
                 $('#hierarchy-disabled').attr('id', 'hierarchy'); 
