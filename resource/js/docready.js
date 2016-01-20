@@ -263,9 +263,17 @@ $(function() { // DOCUMENT READY
         $.ajaxQ.abortAll();
         $('.activated-concept').removeClass('activated-concept');
         $(this).addClass('activated-concept');
-        var $content = $('.content');
+        var $delayedSpinner = $("<p class='concept-spinner center-block'>" + loading_text + "&hellip;</p>"); 
+        var $content = $('.content').empty().append($delayedSpinner.hide());
+        var loading;
         $.ajax({
             url : event.target.href,
+            beforeSend: function() {
+              loading = setTimeout("$('.concept-spinner').show()", 500);
+            },
+            complete: function() {
+              clearTimeout(loading);
+            },
             success : function(data) {
               if (window.history.pushState) { window.history.pushState(null, null, event.target.href); }
               $content.empty().append($('.content', data).html());
