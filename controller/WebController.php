@@ -210,13 +210,14 @@ class WebController extends Controller
     {
         $lang = $request->getLang();
         $this->setLanguageProperties($lang);
-        $template = $this->twig->loadTemplate('concept-info.twig');
         $vocab = $request->getVocab();
 
         $langcodes = $vocab->getConfig()->getShowLangCodes();
         $uri = $vocab->getConceptURI($request->getUri()); // make sure it's a full URI
 
         $results = $vocab->getConceptInfo($uri, $request->getContentLang());
+        $template = (in_array('skos:Concept', $results[0]->getType())) ? $this->twig->loadTemplate('concept-info.twig') : $this->twig->loadTemplate('group-contents.twig');
+        
         $crumbs = $vocab->getBreadCrumbs($request->getContentLang(), $uri);
         echo $template->render(array(
             'search_results' => $results,
@@ -516,28 +517,6 @@ class WebController extends Controller
                 'languages' => $this->languages,
                 'stats' => $stats,
                 'vocab' => $vocab,
-                'request' => $request,
-            ));
-    }
-
-    /**
-     * Invokes the vocabulary group contents page template.
-     */
-    public function invokeGroupContents($request)
-    {
-        $lang = $request->getLang();
-        $this->setLanguageProperties($lang);
-        $template = $this->twig->loadTemplate('group-contents.twig');
-        $vocab = $request->getVocab();
-
-        $uri = $vocab->getConceptURI($request->getUri()); // make sure it's a full URI
-        $results = $vocab->getConceptInfo($uri, $request->getContentLang());
-
-        echo $template->render(
-            array(
-                'languages' => $this->languages,
-                'vocab' => $vocab,
-                'search_results' => $results,
                 'request' => $request,
             ));
     }

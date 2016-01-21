@@ -81,10 +81,6 @@ function invokeGroupTree() {
                   if (member.notation) {
                     child.text = '<span class="tree-notation">' + member.notation + '</span> ' + child.text;
                   }
-                  if ($.inArray('skos:Collection', member.type) !== -1) {
-                    child.a_attr.class = 'group';
-                    child.a_attr.href = vocab + '/' + lang + '/groups/?uri=' + encodeURIComponent(member.uri);
-                  }
                   children.push(JSON.parse(JSON.stringify(child)));
                 }
                 cb(JSON.parse(JSON.stringify(children)));
@@ -100,7 +96,7 @@ function invokeGroupTree() {
 }
 
 function createGroupNode(uri, groupObject) {
-  var node = {children : [], a_attr : {'data-uri' : uri, "href" : vocab + '/' + lang + '/groups/?uri=' + encodeURIComponent(uri), "class" : "group" }};
+  var node = {children : [], a_attr : {'data-uri' : uri, "href" : vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(uri), "class" : "group" }};
   node.text = groupObject.prefLabel;
   if (groupObject.hasMembers || groupObject.isSuper)
     node.children = true;

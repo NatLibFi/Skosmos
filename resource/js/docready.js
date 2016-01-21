@@ -573,11 +573,7 @@ $(function() { // DOCUMENT READY
       else if (clang && clang !== lang) { params.clang = clang; }
       var paramstr = $.isEmptyObject(params) ? '' : '?' + $.param(params);
       var base_href = $('base').attr('href'); // see #315
-      if (datum.type && (datum.type.indexOf('skos:Collection') !== -1 || datum.type.indexOf('isothes:ConceptGroup') !== -1)) {
-        location.href = base_href + datum.vocab + '/' + lang + '/groups/' + localname + paramstr;
-      } else {
-        location.href = base_href + datum.vocab + '/' + lang + '/page/' + localname + paramstr;
-      }
+      location.href = base_href + datum.vocab + '/' + lang + '/page/' + localname + paramstr;
     } else {
       $('#parent-limit').attr('data-uri', datum.uri); 
       $('#parent-limit').val(datum.label); 

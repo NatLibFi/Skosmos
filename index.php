@@ -92,22 +92,7 @@ if (sizeof($parts) <= 2) {
                     }
 
                 } elseif ($request->getPage() == 'groups') {
-                    if (sizeof($parts) == 4) {
-                        if ($request->getQueryParam('uri')) {
-                            $request->setUri($request->getQueryParam('uri'));
-                            $controller->invokeGroupContents($request);
-                        } else {
-                            $controller->invokeGroupIndex($request);
-                        }
-                    } else {
-                        ($request->getQueryParam('uri')) ? $request->setUri($request->getQueryParam('uri')) : $request->setUri($parts[4]);
-                        if ($request->getUri() === null) {
-                            $controller->invokeGroupIndex($request);
-                        } else {
-                            $controller->invokeGroupContents($request);
-                        }
-
-                    }
+                    $controller->invokeGroupIndex($request);
                 } elseif ($request->getPage() == 'changes') {
                     $controller->invokeChangeList($request, 'dc:modified');
                 } elseif ($request->getPage() == 'new') {
