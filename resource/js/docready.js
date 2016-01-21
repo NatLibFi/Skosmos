@@ -237,7 +237,7 @@ $(function() { // DOCUMENT READY
         event.preventDefault();
         var $content = $('.content');
         var targetUrl = event.target.href;
-        var parameters = $.param({'clang' : clang});
+        var parameters = (clang !== lang) ? $.param({'clang' : clang}) : $.param({});
         $('#hier-trigger').attr('href', targetUrl);
         $.ajax({
             url : targetUrl,
