@@ -130,7 +130,7 @@ class ConceptSearchParameters
     
     public function getSchemeLimit() 
     {
-        return $this->request->getQueryParam('scheme') !== '' ? explode(' ', $this->request->getQueryParam('scheme')) : null;
+        return $this->request->getQueryParam('scheme') ? explode(' ', $this->request->getQueryParam('scheme')) : null;
     }
 
     public function getOffset() 
