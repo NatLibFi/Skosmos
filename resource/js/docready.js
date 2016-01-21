@@ -244,7 +244,7 @@ $(function() { // DOCUMENT READY
       function(event) {
         event.preventDefault();
         var targetUrl = event.target.href;
-        var parameters = $.param({'clang' : clang});
+        var parameters = (clang !== lang) ? $.param({'clang' : clang}) : $.param({});
         $('#hier-trigger').attr('href', targetUrl);
         var $content = $('.content').empty().append($delayedSpinner.hide());
         var loading;
