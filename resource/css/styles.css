@@ -1590,6 +1590,15 @@ p {
   margin: 10px 0 0 15px;
 }
 
+.concept-spinner {
+  text-align: center;
+  height: 100px;
+  width: 150px;
+  background:url("../pics/gear.gif") no-repeat transparent;
+  background-position: center 100px;
+  padding-top: 180px;
+}
+
 .replaced {
   font-style: italic;
 }

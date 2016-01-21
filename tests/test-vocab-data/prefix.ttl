@@ -1,0 +1,7 @@
+@prefix prefix: <http://www.skosmos.skos/prefix/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix my: <http://example.com/myns#> .
+
+prefix:p1 a skos:Concept ;
+    my:property "value"@en ;
+    skos:prefLabel "Test concept"@en .
