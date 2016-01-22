@@ -17,6 +17,14 @@ class RequestTest extends PHPUnit_Framework_TestCase
     $this->request = new Request($this->model);
   }
   
+  /**
+   * @covers Request::setVocabids
+   * @covers Request::getVocabid
+   */
+  public function testSetVocabids() {
+    $this->request->setVocabids(array('testing', 'setter'));
+    $this->assertEquals(array('testing', 'setter'), $this->request->getVocabid());
+  }
   
   /**
    * @covers Request::setVocab
