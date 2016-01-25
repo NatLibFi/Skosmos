@@ -52,7 +52,7 @@ class ConceptSearchParameters
             return ($vocabs !== null && $vocabs !== '') ? explode(' ', $vocabs) : null;
         }
         $vocabs = $this->getVocabs();
-        if ($vocabs[0]) {
+        if (isset($vocabs[0])) {
             return array($vocabs[0]->getId());
         }
         return null;

@@ -39,4 +39,18 @@ class ConceptSearchParametersTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(array('something'), $params->getVocabs());
     }
   
+    /**
+     * @covers ConceptSearchParameters::getVocabids
+     */
+    public function testGetVocabids() {
+        $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'));
+        $this->assertEquals(null, $params->getVocabids());
+        $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'), true);
+        $this->assertEquals(null, $params->getVocabids());
+        $this->request->method('getQueryParam')->will($this->onConsecutiveCalls('test vocab', 'test')); //$this->returnValue('test vocab'));
+        $this->assertEquals(array('test', 'vocab'), $params->getVocabids());
+        $this->assertEquals(array('test'), $params->getVocabids());
+        //$params->setVocabularies(array('something')); 
+        //$this->assertEquals(array('something'), $params->getVocabs());
+    }
 }
