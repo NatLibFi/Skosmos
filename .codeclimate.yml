@@ -28,4 +28,5 @@ ratings:
   - "**.rb"
 exclude_paths:
 - resource/js/bootstrap-multiselect.js
+- resource/css/jquery.mCustomScrollbar.css
 - tests/*
