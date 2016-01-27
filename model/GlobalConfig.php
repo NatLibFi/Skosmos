@@ -6,15 +6,10 @@
 class GlobalConfig {
     private $languages;
 
-    public function __construct($config_name=null) 
+    public function __construct($config_name='/../config.inc') 
     {
         try {
-            $file_path = dirname(__FILE__);
-            if ($config_name !== null) {
-                $file_path .= $config_name;
-            } else {
-                $file_path .= '/../config.inc';
-            }
+            $file_path = dirname(__FILE__) . $config_name;
             if (!file_exists($file_path)) {
                 throw new Exception('config.inc file is missing, please provide one.');
             }
