@@ -1,8 +1,115 @@
-@import 'fira.css';
-@import '../../vendor/components/jqueryui/themes/cupertino/jquery-ui.min.css';
+/* Font definitions
+ *****************************************/
+li {
+  font-family: 'Fira Sans' !important;
+  font-size: 14px !important;
+}
+
+h1, .prefLabel, .prefLabelLang, .notation {
+  font-family: 'Fira Sans' !important;
+  font-size: 27px !important;
+  font-weight: 400 !important;
+}
+
+.prefLabel, .prefLabelLang, .notation {
+  font-weight: 500 !important;
+}
+
+.prefLabelLang {
+  color: #474b4f;
+}
+
+h1#service-name {
+  font-size: 27px !important;
+  font-family: 'Fira Sans' !important;
+  font-weight: bold !important;
+}
+
+a {
+  color: #00748f !important;
+}
+
+h2 {
+  font-family: 'Fira Sans' !important;
+  font-size: 16px !important;
+}
+
+.navigation-font {
+  color: black;
+  font-family: 'Fira Sans';
+  font-size: 16px !important;
+}
+
+.multiselect span, .multiselect a, .dropdown-toggle, #search-all-button, .qtip-skosmos * {
+  font-family: 'Fira Sans';
+}
+
+.topbar a.navigation-font, .topbar span {
+  color: #394554 !important;
+}
+
+p {
+  color: #474b4f;
+  font-family: 'Fira Sans';
+  font-size: 14px;
+}
+
+.bread-crumb {
+  font-family: 'Fira Sans';
+  font-size: 14px;
+}
+
+.versal {
+  color: #474b4f;
+  font-family: 'Fira Sans';
+  font-size: 14px;
+  font-weight: 400 !important;
+}
+
+.versal-bold {
+  font-family: 'Fira Sans';
+  font-size: 14px;
+  font-weight: bold !important;
+}
+  
+.loading-spinner {
+  margin: 10px 0 0 15px;
+}
+
+.concept-spinner {
+  background-position: center 100px;
+  background:url("../pics/gear.gif") no-repeat transparent;
+  height: 100px;
+  padding-top: 180px;
+  text-align: center;
+  width: 150px;
+}
+
+.replaced {
+  font-style: italic;
+}
+
+a:link,a:visited,a:active,a:hover,a:focus {
+  /* Improves link handling by removing focus borders. Sorry keyboard users! */
+  text-decoration: none;
+  border: 0;
+  outline: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  /* All text links have underlining when hovered. */
+}
+
+#service-logo {
+  max-width: 450px;
+}
+
+/* basics
+ ***************************/
 
 html,body {
-  background-color: #d5dbde !important;
+  background-color: #d5dbde;
   margin: 0;
   min-height: 100%;
   min-width: 100%;
@@ -86,12 +193,12 @@ section {
 
 #language > .dropdown-menu {
   z-index: 9002;
-  position: fixed !important;
+  position: fixed;
   padding-right: 2%;
-  border-radius: 0 !important;
-  margin-top: 0 !important;
-  padding: 0 !important;
-  top: 45px !important;
+  border-radius: 0;
+  margin-top: 0;
+  padding: 0;
+  top: 45px;
   right: 2%;
 }
 
@@ -100,10 +207,10 @@ section {
 }
 
 #language > .dropdown-toggle {
-  background: none !important;
+  background: none;
   border: none;
   border-radius: 0;
-  color: #394554 !important;
+  color: #394554;
   margin-top: -3px;
   padding: 0;
 }
@@ -148,14 +255,14 @@ section {
  *************************/
 
 #lang-dropdown-toggle .caret, .multiselect span > .caret {
-  border-top-color: #ffffff !important;
+  border-top-color: #ffffff;
 }
 
 .navbar-form .dropdown-menu {
-  border-radius: 0 !important;
-  padding: 0 !important;
-  margin-top: 0 !important;
-  top: 40px !important;
+  border-radius: 0;
+  padding: 0;
+  margin-top: 0;
+  top: 40px;
 }
 
 .header-float > .navbar-form {
@@ -167,7 +274,7 @@ ul.dropdown-menu > li:last-child > input {
 }
 
 .multiselect-container {
-  border-radius: 0 !important;
+  border-radius: 0;
 }
 
 .header-float .multiselect > .caret {
@@ -192,7 +299,7 @@ ul.dropdown-menu > li:last-child > input {
 }
 
 .multiselect-container > li.active > a, .multiselect-container > li > a:focus, .dropdown-menu > li:hover > a {
-  background-color: #00748F !important;
+  background-color: #00748F;
   color: #ffffff !important;
 }
 
@@ -1502,112 +1609,6 @@ p.autocomplete-label {
   font-weight: bold;
 }
 
-/* Font definitions
- *****************************************/
-li {
-  font-family: 'Fira Sans' !important;
-  font-size: 14px !important;
-}
-
-h1, .prefLabel, .prefLabelLang, .notation {
-  font-family: 'Fira Sans' !important;
-  font-size: 27px !important;
-  font-weight: 400 !important;
-}
-
-.prefLabel, .prefLabelLang, .notation {
-  font-weight: 500 !important;
-}
-
-.prefLabelLang {
-  color: #474b4f;
-}
-
-h1#service-name {
-  font-size: 27px !important;
-  font-family: 'Fira Sans' !important;
-  font-weight: bold !important;
-}
-
-a {
-  color: #00748f !important;
-}
-
-h2 {
-  font-family: 'Fira Sans' !important;
-  font-size: 16px !important;
-}
-
-.navigation-font {
-  color: black;
-  font-family: 'Fira Sans';
-  font-size: 16px !important;
-}
-
-.multiselect span, .multiselect a, .dropdown-toggle, #search-all-button, .qtip-skosmos * {
-  font-family: 'Fira Sans';
-}
-
-.topbar a.navigation-font, .topbar span {
-  color: #394554 !important;
-}
-
-p {
-  color: #474b4f;
-  font-family: 'Fira Sans';
-  font-size: 14px;
-}
-
-.bread-crumb {
-  font-family: 'Fira Sans';
-  font-size: 14px;
-}
-
-.versal {
-  color: #474b4f;
-  font-family: 'Fira Sans';
-  font-size: 14px;
-  font-weight: 400 !important;
-}
-
-.versal-bold {
-  font-family: 'Fira Sans';
-  font-size: 14px;
-  font-weight: bold !important;
-}
-  
-.loading-spinner {
-  margin: 10px 0 0 15px;
-}
-
-.concept-spinner {
-  background-position: center 100px;
-  background:url("../pics/gear.gif") no-repeat transparent;
-  height: 100px;
-  padding-top: 180px;
-  text-align: center;
-  width: 150px;
-}
-
-.replaced {
-  font-style: italic;
-}
-
-a:link,a:visited,a:active,a:hover,a:focus {
-  /* Improves link handling by removing focus borders. Sorry keyboard users! */
-  text-decoration: none;
-  border: 0;
-  outline: none;
-}
-
-a:hover {
-  text-decoration: underline;
-  /* All text links have underlining when hovered. */
-}
-
-#service-logo {
-  max-width: 450px;
-}
 
 /* Fix for a nasty chromium bug causing the fonts not to render before a redraw.
  * https://code.google.com/p/chromium/issues/detail?id=336476
