@@ -79,7 +79,7 @@ section {
   height: 50px;
   line-height: 70px;
   width: auto;
-  padding-left: 0px;
+  padding-left: 0;
   padding-right: 2%;
   text-align: right;
   line-height: 70px;
@@ -106,7 +106,7 @@ section {
   border-radius: 0;
   color: #394554 !important;
   margin-top: -3px;
-  padding: 0px;
+  padding: 0;
 }
 
 #language > .dropdown-toggle:hover, #language > .dropdown-toggle:focus, #language > .dropdown-toggle:active, #language > .dropdown-toggle:visited {
@@ -116,7 +116,7 @@ section {
 #navigation {
   padding-right: 25px;
   height: 50px;
-  min-width: 0px;
+  min-width: 0;
   max-width: 530px;
   width: auto;
   overflow: hidden;
@@ -470,7 +470,7 @@ ul.dropdown-menu > li:last-child > input {
 #vocabulary-list > div > h2 {
   padding: 15px 0 15px 10px;
   margin-top: 0 !important;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 ul.vocab-category {
@@ -609,7 +609,7 @@ ul.vocab-category {
 
 .special-container {
   position: absolute;
-  left: 0px;
+  left: 0;
   margin-left: 200px;
 
 }
@@ -730,7 +730,7 @@ hr {
 }
 
 div#sidebar-grey > div > div > form.search-options {
-  margin-right: 0px !important;
+  margin-right: 0 !important;
 }
 
 .search-options { 
@@ -1023,15 +1023,12 @@ tr {
   vertical-align: top;
 }
 
-.other-languages > td:first-of-type {
-}
-
 .other-languages > td:last-of-type {
   vertical-align: top;
 }
 
 .other-languages > td {
-  padding-top: 0px !important;
+  padding-top: 0 !important;
 }
 
 .other-languages > td:last-of-type > * {
@@ -1043,7 +1040,7 @@ tr {
 }
 
 .search-results-property-table tr.first-of-language > td {
-  padding-top: 0px !important;
+  padding-top: 0 !important;
 }
 
 .search-results-property-table tbody > tr > td:first-of-type {
@@ -1051,7 +1048,7 @@ tr {
 }
 
 .search-results-property-table tbody > tr.first-of-language:first-child > td {
-  padding-top: 0px !important;
+  padding-top: 0 !important;
 }
 
 .search-results-property-table td.versal-pref, .group-container > p.versal-pref {
@@ -1293,7 +1290,6 @@ ul.nav-tabs > li {
 span.date-info {
   margin-top: 4px;
   font-size: 12px;
-  text-align: bottom;
   float: right;
 }
 
@@ -1331,7 +1327,7 @@ span.date-info {
   width: 100%; //fallback
   width: calc(100% + 50px) !important;
   min-width: calc(100% + 50px) !important;
-  right: 0px !important;
+  right: 0 !important;
   top: 40px !important;
   max-height:302px;
   overflow-y: auto;
@@ -1489,7 +1485,7 @@ p.autocomplete-label {
 
 .jstree-default a { white-space:normal !important; height: auto !important; } 
 .jstree-default li > ins { vertical-align:top; }
-.jstree-default a > .tree-notation { color: #333 !important; };
+.jstree-default a > .tree-notation { color: #333 !important; }
 
 .sidebar-grey .jstree-closed > .jstree-ocl {
   background-position: -100px -8px !important;
@@ -2066,7 +2062,7 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   span.date-info {
-    margin-top: 0px;
+    margin-top: 0;
     font-size: 14px !important;
   }
 
