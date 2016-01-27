@@ -1973,8 +1973,8 @@ body, .versal, h1, h2, p, .versal-bold {
   }
   
   .topbar {
-    margin-bottom: 20px;
     margin: 0 auto;
+    margin-bottom: 20px;
     position: relative;
   }
 
