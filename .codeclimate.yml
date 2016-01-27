@@ -19,14 +19,12 @@ engines:
 ratings:
   paths:
   - "**.css"
-  - "**.inc"
   - "**.js"
-  - "**.jsx"
-  - "**.module"
   - "**.php"
-  - "**.py"
-  - "**.rb"
 exclude_paths:
 - resource/js/bootstrap-multiselect.js
+- resource/js/*min.js
 - resource/css/jquery.mCustomScrollbar.css
+- resource/fonts/*
+- resource/pics/*
 - tests/*
