@@ -22,6 +22,14 @@ class GlobalConfig {
             return;
         }
     }
+    
+    private function getConstant($name, $default)
+    {
+        if (defined($name) && constant($name)) {
+            return constant($name);
+        }
+        return $default;
+    }
 
     /**
      * Returns the UI languages specified in the configuration or defaults to
@@ -43,10 +51,7 @@ class GlobalConfig {
      */
     public function getVocabularyConfigFile() 
     {
-        if (defined('VOCABULARIES_FILE')) {
-            return VOCABULARIES_FILE;
-        }
-        return 'vocabularies.ttl';
+        return $this->getConstant('VOCABULARIES_FILE', 'vocabularies.ttl');
     }
     
     /**
@@ -56,10 +61,7 @@ class GlobalConfig {
      */
     public function getHttpTimeout() 
     {
-        if (defined('HTTP_TIMEOUT')) {
-            return HTTP_TIMEOUT;
-        }
-        return 5;
+        return $this->getConstant('HTTP_TIMEOUT', 5);
     }
     
     /**
@@ -69,10 +71,7 @@ class GlobalConfig {
      */
     public function getDefaultEndpoint() 
     {
-        if (defined('DEFAULT_ENDPOINT')) {
-            return DEFAULT_ENDPOINT;
-        }
-        return 'http://localhost:3030/ds/sparql';
+        return $this->getConstant('DEFAULT_ENDPOINT', 'http://localhost:3030/ds/sparql');
     }
     
     /**
@@ -80,10 +79,7 @@ class GlobalConfig {
      */
     public function getSparqlGraphStore() 
     {
-        if (defined('SPARQL_GRAPH_STORE')) {
-            return SPARQL_GRAPH_STORE;
-        }
-        return null;
+        return $this->getConstant('SPARQL_GRAPH_STORE', null);
     }
     
     /**
@@ -93,10 +89,7 @@ class GlobalConfig {
      */
     public function getDefaultTransitiveLimit() 
     {
-        if (defined('DEFAULT_TRANSITIVE_LIMIT')) {
-            return DEFAULT_TRANSITIVE_LIMIT;
-        }
-        return 1000;
+        return $this->getConstant('DEFAULT_TRANSITIVE_LIMIT', 1000);
     }
     
     /**
@@ -106,10 +99,7 @@ class GlobalConfig {
      */
     public function getDefaultSearchLimit() 
     {
-        if (defined('DEFAULT_SEARCH_LIMIT')) {
-            return DEFAULT_SEARCH_LIMIT;
-        }
-        return 100;
+        return $this->getConstant('DEFAULT_SEARCH_LIMIT', 100);
     }
     
     /**
@@ -119,10 +109,7 @@ class GlobalConfig {
      */
     public function getTemplateCache() 
     {
-        if (defined('TEMPLATE_CACHE')) {
-            return TEMPLATE_CACHE;
-        }
-        return '/tmp/skosmos-template-cache';
+        return $this->getConstant('TEMPLATE_CACHE', '/tmp/skosmos-template-cache');
     }
     
     /**
@@ -132,10 +119,7 @@ class GlobalConfig {
      */
     public function getDefaultSparqlDialect() 
     {
-        if (defined('DEFAULT_SPARQL_DIALECT')) {
-            return DEFAULT_SPARQL_DIALECT;
-        }
-        return 'Generic';
+        return $this->getConstant('DEFAULT_SPARQL_DIALECT', 'Generic');
     }
 
     /**
@@ -144,10 +128,7 @@ class GlobalConfig {
      */
     public function getFeedbackAddress() 
     {
-        if (defined('FEEDBACK_ADDRESS')) {
-            return FEEDBACK_ADDRESS;
-        }
-        return null;
+        return $this->getConstant('FEEDBACK_ADDRESS', null);
     }
     
     /**
@@ -156,10 +137,7 @@ class GlobalConfig {
      */
     public function getLogCaughtExceptions() 
     {
-        if (defined('LOG_CAUGHT_EXCEPTIONS')) {
-            return LOG_CAUGHT_EXCEPTIONS;
-        }
-        return FALSE;
+        return $this->getConstant('LOG_CAUGHT_EXCEPTIONS', FALSE);
     }
     
     /**
@@ -167,10 +145,7 @@ class GlobalConfig {
      */
     public function getServiceName() 
     {
-        if (defined('SERVICE_NAME')) {
-            return SERVICE_NAME;
-        }
-        return 'Skosmos';
+        return $this->getConstant('SERVICE_NAME', 'Skosmos');
     }
     
     /**
@@ -178,10 +153,7 @@ class GlobalConfig {
      */
     public function getServiceTagline() 
     {
-        if (defined('SERVICE_TAGLINE')) {
-            return SERVICE_TAGLINE;
-        }
-        return null;
+        return $this->getConstant('SERVICE_TAGLINE', null);
     }
     
     /**
@@ -189,10 +161,7 @@ class GlobalConfig {
      */
     public function getServiceLogo() 
     {
-        if (defined('SERVICE_LOGO')) {
-            return SERVICE_LOGO;
-        }
-        return null;
+        return $this->getConstant('SERVICE_LOGO', null);
     }
     
     /**
@@ -200,10 +169,7 @@ class GlobalConfig {
      */
     public function getCustomCss() 
     {
-        if (defined('CUSTOM_CSS')) {
-            return CUSTOM_CSS;
-        }
-        return null;
+        return $this->getConstant('CUSTOM_CSS', null);
     }
     
     /**
@@ -211,10 +177,7 @@ class GlobalConfig {
      */
     public function getUiLanguageDropdown() 
     {
-        if (defined('UI_LANGUAGE_DROPDOWN')) {
-            return UI_LANGUAGE_DROPDOWN;
-        }
-        return FALSE;
+        return $this->getConstant('UI_LANGUAGE_DROPDOWN', FALSE);
     }
     
     /**
@@ -222,9 +185,6 @@ class GlobalConfig {
      */
     public function getBaseHref() 
     {
-        if (defined('BASE_HREF')) {
-            return BASE_HREF;
-        }
-        return null;
+        return $this->getConstant('BASE_HREF', null);
     }
 }

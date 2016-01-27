@@ -21,6 +21,7 @@ class GlobalConfigTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GlobalConfig::getHttpTimeout
+   * @covers GlobalConfig::getConstant
    */
   public function testTimeoutDefaultValue() {
     $actual = $this->config->getHttpTimeout();
@@ -29,6 +30,7 @@ class GlobalConfigTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GlobalConfig::getDefaultEndpoint
+   * @covers GlobalConfig::getConstant
    */
   public function testEndpointDefaultValue() {
     $actual = $this->config->getDefaultEndpoint();
@@ -37,6 +39,7 @@ class GlobalConfigTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GlobalConfig::getSparqlGraphStore
+   * @covers GlobalConfig::getConstant
    */
   public function testSparqlGraphDefaultValue() {
     $actual = $this->config->getSparqlGraphStore();
@@ -45,6 +48,7 @@ class GlobalConfigTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GlobalConfig::getDefaultTransitiveLimit
+   * @covers GlobalConfig::getConstant
    */
   public function testTransitiveLimitDefaultValue() {
     $actual = $this->config->getDefaultTransitiveLimit();
@@ -53,6 +57,7 @@ class GlobalConfigTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GlobalConfig::getDefaultSearchLimit
+   * @covers GlobalConfig::getConstant
    */
   public function testSearchLimitDefaultValue() {
     $actual = $this->config->getDefaultSearchLimit();
@@ -61,6 +66,7 @@ class GlobalConfigTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GlobalConfig::getTemplateCache
+   * @covers GlobalConfig::getConstant
    */
   public function testTemplateCacheDefaultValue() {
     $actual = $this->config->getTemplateCache();
@@ -69,6 +75,7 @@ class GlobalConfigTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GlobalConfig::getDefaultSparqlDialect
+   * @covers GlobalConfig::getConstant
    */
   public function testSparqlDialectDefaultValue() {
     $actual = $this->config->getDefaultSparqlDialect();
@@ -77,6 +84,7 @@ class GlobalConfigTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GlobalConfig::getFeedbackAddress
+   * @covers GlobalConfig::getConstant
    */
   public function testFeedbackAddressDefaultValue() {
     $actual = $this->config->getFeedbackAddress();
@@ -85,6 +93,7 @@ class GlobalConfigTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GlobalConfig::getLogCaughtExceptions
+   * @covers GlobalConfig::getConstant
    */
   public function testExceptionLoggingDefaultValue() {
     $actual = $this->config->getLogCaughtExceptions();
@@ -93,6 +102,7 @@ class GlobalConfigTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GlobalConfig::getServiceName
+   * @covers GlobalConfig::getConstant
    */
   public function testServiceNameDefaultValue() {
     $actual = $this->config->getServiceName();
@@ -101,6 +111,7 @@ class GlobalConfigTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GlobalConfig::getServiceTagline
+   * @covers GlobalConfig::getConstant
    */
   public function testgetServiceTaglineDefaultValue() {
     $actual = $this->config->getServiceTagline();
@@ -109,6 +120,7 @@ class GlobalConfigTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GlobalConfig::getServiceLogo
+   * @covers GlobalConfig::getConstant
    */
   public function testServiceLogoDefaultValue() {
     $actual = $this->config->getServiceLogo();
@@ -117,6 +129,7 @@ class GlobalConfigTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GlobalConfig::getCustomCss
+   * @covers GlobalConfig::getConstant
    */
   public function testCustomCssDefaultValue() {
     $actual = $this->config->getCustomCss();
@@ -125,6 +138,7 @@ class GlobalConfigTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GlobalConfig::getUILanguageDropdown
+   * @covers GlobalConfig::getConstant
    */
   public function testDefaultValue() {
     $actual = $this->config->getUILanguageDropdown();
@@ -133,6 +147,7 @@ class GlobalConfigTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GlobalConfig::getBaseHref
+   * @covers GlobalConfig::getConstant
    */
   public function testBaseHrefDefaultValue() {
     $actual = $this->config->getBaseHref();
@@ -141,6 +156,7 @@ class GlobalConfigTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GlobalConfig::getVocabularyConfigFile
+   * @covers GlobalConfig::getConstant
    */
   public function testGetVocabularyConfigFile() {
     $actual = $this->config->getVocabularyConfigFile();
