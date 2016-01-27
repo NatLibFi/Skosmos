@@ -1,7 +1,7 @@
 @import 'fira.css';
 @import '../../vendor/components/jqueryui/themes/cupertino/jquery-ui.min.css';
 
-html, body {
+body, html {
   margin: 0;
   padding: 0;
   min-height: 100%;
@@ -82,7 +82,6 @@ section {
   padding-left: 0;
   padding-right: 2%;
   text-align: right;
-  line-height: 70px;
 }
 
 #language > .dropdown-menu {
@@ -246,7 +245,7 @@ ul.dropdown-menu > li:last-child > input {
 }
 
 .navbar-form {
-  display: inline-block;
+  display: block;
   float: right;
   padding: 0 !important;
   border: 0 !important;
@@ -279,7 +278,6 @@ ul.dropdown-menu > li:last-child > input {
 
 .search-vocab-text {
   margin: 15px 5px 5px 5px;
-  display: inline-block !important;
   float: left;
   text-align: right;
 }
@@ -292,7 +290,6 @@ ul.dropdown-menu > li:last-child > input {
 
 .search-hint {
   display: inline-block !important;
-  text-align: bottom;
   border-bottom: 2px dotted #d6d6d6;
 }
 
@@ -696,7 +693,6 @@ ul.vocab-category {
   position: absolute;
   right: 5px;
   top: 16px;
-  display: inline-block;
 }
 
 .fixed {
@@ -1540,7 +1536,6 @@ a {
 
 h2 {
   font-family: 'Fira Sans' !important;
-  font-style: bold !important;
   font-size: 16px !important;
 }
 
