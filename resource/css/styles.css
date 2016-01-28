@@ -1,43 +1,42 @@
 /* Font definitions
  *****************************************/
 li {
-  font-family: 'Fira Sans' !important;
-  font-size: 14px !important;
+  font-family: 'Fira Sans';
+  font-size: 14px;
 }
 
 h1, .prefLabel, .prefLabelLang, .notation {
-  font-family: 'Fira Sans' !important;
-  font-size: 27px !important;
-  font-weight: 400 !important;
+  font-family: 'Fira Sans';
+  font-size: 27px;
+  font-weight: 400;
 }
 
 .prefLabel, .prefLabelLang, .notation {
-  font-weight: 500 !important;
+  font-weight: 500;
 }
 
 .prefLabelLang {
   color: #474b4f;
 }
 
-h1#service-name {
-  font-size: 27px !important;
-  font-family: 'Fira Sans' !important;
-  font-weight: bold !important;
+#service-name {
+  font-size: 27px;
+  font-weight: bold;
 }
 
 a {
-  color: #00748f !important;
+  color: #00748f;
 }
 
 h2 {
-  font-family: 'Fira Sans' !important;
-  font-size: 16px !important;
+  font-family: 'Fira Sans';
+  font-size: 16px;
 }
 
 .navigation-font {
   color: black;
   font-family: 'Fira Sans';
-  font-size: 16px !important;
+  font-size: 16px;
 }
 
 .multiselect span, .multiselect a, .dropdown-toggle, #search-all-button, .qtip-skosmos * {
@@ -45,7 +44,7 @@ h2 {
 }
 
 .topbar a.navigation-font, .topbar span {
-  color: #394554 !important;
+  color: #394554;
 }
 
 p {
@@ -63,13 +62,13 @@ p {
   color: #474b4f;
   font-family: 'Fira Sans';
   font-size: 14px;
-  font-weight: 400 !important;
+  font-weight: 400;
 }
 
 .versal-bold {
   font-family: 'Fira Sans';
   font-size: 14px;
-  font-weight: bold !important;
+  font-weight: bold;
 }
   
 .loading-spinner {
@@ -300,11 +299,11 @@ ul.dropdown-menu > li:last-child > input {
 
 .multiselect-container > li.active > a, .multiselect-container > li > a:focus, .dropdown-menu > li:hover > a {
   background-color: #00748F;
-  color: #ffffff !important;
+  color: #ffffff;
 }
 
 .multiselect-container > li > a > label {
-   padding: 3px 20px 3px 25px !important;
+   padding: 3px 20px 3px 25px;
    word-wrap: break-word;
    white-space: pre-line;
 }
@@ -1913,7 +1912,7 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   h1 {
-    font-size: 24px !important;
+    font-size: 24px;
   }
 
 }
