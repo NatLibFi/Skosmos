@@ -91,9 +91,9 @@ p {
 
 a:link,a:visited,a:active,a:hover,a:focus {
   /* Improves link handling by removing focus borders. Sorry keyboard users! */
-  text-decoration: none;
   border: 0;
   outline: none;
+  text-decoration: none;
 }
 
 a:hover {
@@ -172,9 +172,9 @@ section {
 
 #service-name {
   left: 30px;
+  line-height: 50px;
   margin: 0;
   position: absolute;
-  line-height: 50px;
 }
 
 .topbar-white > #language, .topbar-white > #navigation {
@@ -260,8 +260,8 @@ section {
 
 .navbar-form .dropdown-menu {
   border-radius: 0;
-  padding: 0;
   margin-top: 0;
+  padding: 0;
   top: 40px;
 }
 
@@ -284,8 +284,8 @@ ul.dropdown-menu > li:last-child > input {
 }
 
 .header-float > .btn-group > button {
-  width: 175px;
   overflow: hidden;
+  width: 175px;
 }
 
 .header-float > .btn-group > .multiselect-container {
@@ -310,11 +310,10 @@ ul.dropdown-menu > li:last-child > input {
 }
 
 .headerbar {
+  height: 50px;
+  margin: 0 auto 20px auto;
   position: relative;
   width: 95%;
-  height: 50px;
-  margin: 0 auto;
-  margin-bottom: 20px;
 }
 
 .headerbar-coloured {
@@ -327,9 +326,9 @@ ul.dropdown-menu > li:last-child > input {
 
 .header-left > h1 {
   background-color: #00748F;
-  position: absolute;
   line-height: 50px;
   margin: 0 0 0 15px;
+  position: absolute;
 }
 
 .header-left > h1 > a {
@@ -560,10 +559,10 @@ ul.dropdown-menu > li:last-child > input {
 }
 
 .vocabulary-separator {
-  width: 125px;
   border-bottom: 2px solid #666666 !important;
   margin-bottom: 10px;
   margin-left: 28%;
+  width: 125px;
 }
 
 #vocabulary-list {
@@ -572,9 +571,9 @@ ul.dropdown-menu > li:last-child > input {
 }
 
 #vocabulary-list > div > h2 {
-  padding: 15px 0 15px 10px;
-  margin-top: 0 !important;
   margin-bottom: 0;
+  margin-top: 0 !important;
+  padding: 15px 0 15px 10px;
 }
 
 ul.vocab-category {
@@ -599,8 +598,8 @@ ul.vocab-category {
 }
 
 .vocab-category > li > h2 {
-  margin-top: 0 !important;
   margin-bottom: 5px !important;
+  margin-top: 0 !important;
 }
 
 .vocab-category > li {
