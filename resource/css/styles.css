@@ -34,7 +34,6 @@ h2 {
 }
 
 .navigation-font {
-  color: black;
   font-family: 'Fira Sans';
   font-size: 16px;
 }
@@ -332,7 +331,7 @@ ul.dropdown-menu > li:last-child > input {
 
 .header-left > h1 > a {
   display: block;
-  color: #ffffff !important;
+  color: #ffffff;
   height: 50px;
   overflow: hidden;
 }
@@ -342,7 +341,7 @@ ul.dropdown-menu > li:last-child > input {
 }
 
 .headerbar-coloured > .header-float > p {
-  color: #ffffff !important;
+  color: #ffffff;
 }
 
 .topbar a.navigation-font:hover {
@@ -350,11 +349,11 @@ ul.dropdown-menu > li:last-child > input {
 }
 
 .navbar-form {
-  border: 0 !important;
+  border: 0;
   display: block;
   float: right;
-  margin: 5px 0 !important;
-  padding: 0 !important;
+  margin: 5px 0;
+  padding: 0;
 }
 
 .search-result-listing {
