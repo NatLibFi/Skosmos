@@ -548,26 +548,26 @@ ul.dropdown-menu > li:last-child > input {
 }
 
 .vocabulary-separator {
-  border-bottom: 2px solid #666666 !important;
+  border-bottom: 2px solid #666;
   margin-bottom: 10px;
   margin-left: 28%;
   width: 125px;
 }
 
 #vocabulary-list {
-  background-color: #ffffff !important;
+  background-color: #fff;
   display: inline-block;
 }
 
 #vocabulary-list > div > h2 {
   margin-bottom: 0;
-  margin-top: 0 !important;
+  margin-top: 0;
   padding: 15px 0 15px 10px;
 }
 
 ul.vocab-category {
   display: inline-block;
-  padding-left: 0 !important;
+  padding-left: 0;
   width: 100%;
 }
 
@@ -583,18 +583,18 @@ ul.vocab-category {
   display: inline-block;
   width: 72%;
   float: right;
-  padding-left: 0 !important;
+  padding-left: 0;
 }
 
 .vocab-category > li > h2 {
-  margin-bottom: 5px !important;
-  margin-top: 0 !important;
+  margin-bottom: 5px;
+  margin-top: 0;
 }
 
 .vocab-category > li {
   display: inline-block;
   float: left;
-  padding: 0 !important;
+  padding: 0;
   width: 25%;
 }
 
