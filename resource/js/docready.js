@@ -470,8 +470,6 @@ $(function() { // DOCUMENT READY
     style: { classes: 'qtip-tipsy qtip-skosmos' } 
   };
   
-  $('.search-hint').qtip(qtip_skosmos);
-  
   $('#navi4').qtip(qtip_skosmos);
     
   $('.property-click').qtip(qtip_skosmos);

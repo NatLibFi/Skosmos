@@ -374,10 +374,10 @@ ul.dropdown-menu > li:last-child > input {
 
 #search-all-button {
   background-color: #394554;
-  border: medium none !important;
-  border-radius: 0 !important;
+  border: medium none;
+  border-radius: 0;
   height: 40px;
-  margin-left: 0 !important;
+  margin-left: 0;
 }
 
 .search-vocab-text {
@@ -390,11 +390,6 @@ ul.dropdown-menu > li:last-child > input {
   color: #fff;
   height: 18px;
   margin: 0;
-}
-
-.search-hint {
-  display: inline-block !important;
-  border-bottom: 2px dotted #d6d6d6;
 }
 
 #example {
