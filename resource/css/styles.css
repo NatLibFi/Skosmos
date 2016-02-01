@@ -464,8 +464,8 @@ ul.dropdown-menu > li:last-child > input {
 }
 
 .multiselect {
-  border: 0 !important;
-  margin: 5px 0 0 0 !important;
+  border: 0;
+  margin: 5px 0 0 0;
 }
 
 #selected-vocabs {
@@ -485,13 +485,13 @@ ul.dropdown-menu > li:last-child > input {
   font-size: 14px;
   font-weight: bold;
   height: 40px;
-  padding-left: 8px !important;
-  padding-right: 22px !important;
-  box-shadow: none !important;
+  padding-left: 8px;
+  padding-right: 22px;
+  box-shadow: none;
 }
   
 #search-field:focus {
-  box-shadow: none !important;
+  box-shadow: none;
 }
 
 .input-group {
@@ -503,12 +503,12 @@ ul.dropdown-menu > li:last-child > input {
 }
 
 .input-group-btn {
-  width: 50px !important;
+  width: 50px;
 }
 
 .qtip-skosmos {
-  background-color: #1E1E1E !important; 
-  border-radius: 0 !important;
+  background-color: #1E1E1E; 
+  border-radius: 0;
   margin-top: 2px;
 }
 
