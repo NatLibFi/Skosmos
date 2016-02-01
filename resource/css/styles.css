@@ -621,17 +621,17 @@ ul.vocab-category {
   display: block;
   left: 200px;
   min-width: 84px;
-  padding-top: 80px;
   position: absolute;
 }
 
 .feedback-box {
+  float: left;
   border-top: 2px solid #394554;
-  min-height: 140px !important;
+  min-height: 140px;
 }
 
 .feedback-box * {
-  border-radius: 0 !important;
+  border-radius: 0;
   box-shadow: none !important;
   margin-bottom: 0;
 }
@@ -648,7 +648,7 @@ ul.vocab-category {
 .feedback-box input, .feedback-box select, .feedback-box textarea {
   background-color: #f6f7f8;
   border: none;
-  color: #00748f !important;
+  color: #00748f;
   margin-bottom: 10px;
   resize: none;
 }
@@ -675,10 +675,6 @@ ul.vocab-category {
   border: none;
   float:right;
   margin: 5px 0 15px 0;
-}
-
-#send-feedback:hover {
-  background-color: #0098ff !important;
 }
 
 /* about page
