@@ -296,7 +296,7 @@ ul.dropdown-menu > li:last-child > input {
   top: 10px;
 }
 
-.multiselect-container > li.active > a, .multiselect-container > li > a:focus, .dropdown-menu > li:hover > a {
+.multiselect-container > li.active > a, .multiselect-container > li > a:focus, .dropdown-menu > li:hover > a, .dropdown-menu > .active:focus > a, .dropdown-menu > .active:hover > a  {
   background-color: #00748F;
   color: #ffffff;
 }
@@ -450,7 +450,7 @@ ul.dropdown-menu > li:last-child > input {
   background-color: #394554;
   border: medium none;
   border-radius: 0;
-  box-shadow: none !important;
+  box-shadow: none;
   color: #FFFFFF;
   height: 40px;
   padding-left: 10px;
