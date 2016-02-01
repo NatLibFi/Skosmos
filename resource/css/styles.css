@@ -392,16 +392,6 @@ ul.dropdown-menu > li:last-child > input {
   margin: 0;
 }
 
-#example {
-  background-color: #fff !important;
-}
-
-#example > button {
-  color: #000 !important;
-  line-height: 50px;
-  margin-right: 4px;
-}
-
 .search-count {
   text-align: right;
 }
