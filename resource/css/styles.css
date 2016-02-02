@@ -630,10 +630,9 @@ ul.vocab-category {
   min-height: 140px;
 }
 
-.feedback-box * {
+.feedback-box textarea, .feedback-box input, .feedback-box select, .feedback-box button, .feedback-box textarea:focus, .feedback-box input:focus, .feedback-box select:focus, .feedback-box button:focus {
   border-radius: 0;
-  box-shadow: none !important;
-  margin-bottom: 0;
+  box-shadow: none;
 }
 
 .feedback-box > p {
@@ -718,7 +717,7 @@ ul.vocab-category {
 .sidebar-grey {
   background-color: #f6f7f8;
   height: 100%;
-  height: calc(100% - 42px) !important;
+  height: calc(100% - 42px);
   overflow-y: auto;
 }
 
@@ -726,15 +725,9 @@ ul.vocab-category {
   padding-left: 0;
 }
 
-#sidebar hr {
-  border: 1px solid #666666 !important;
-  margin: 0 0 0 15px;
-  width: 125px;
-}
-
 #sidebar .multiselect > span, #sidebar .multiselect > span > b.caret {
-  border-top-color: #474b4f !important;
-  color: #474b4f !important;
+  border-top-color: #474b4f;
+  color: #474b4f;
 }
 
 .search-options > .input-group > .btn-group {
@@ -742,8 +735,8 @@ ul.vocab-category {
 }
 
 .search-options > .input-group > .btn-group > .multiselect {
-  background-color: #fff !important;
-  border: 1px solid #ccc !important;
+  background-color: #fff;
+  border: 1px solid #ccc;
   overflow-y: hidden;
 }
 
@@ -756,11 +749,11 @@ ul.vocab-category {
 }
 
 .multiselect-container li {
-  min-height: 26px !important;
+  min-height: 26px;
 }
 
 .multiselect-container li > a > label.checkbox {
-  height: 100% !important;
+  height: 100%;
   margin: 0;
   padding: 3px 5px 3px 25px;
 }
@@ -1264,8 +1257,9 @@ tr.replaced-by > td > ul > li > a {
   padding: 0 !important;
 }
 
-.pagination > li > a, .pagination > li > span {
+.pagination > li > a, #sidebar > .pagination > .active > a, .pagination > li > span {
   background-color: transparent !important;
+  color: #00748f; 
   border: 0 !important;
   padding: 4px 8px !important;
 } 
