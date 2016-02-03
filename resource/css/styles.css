@@ -604,8 +604,8 @@ ul.vocab-category {
 
 /* feedback page
  ***************************/
-.missing-value {
-  border: 1px solid red !important;
+#feedback-fields > .missing-value {
+  border: 1px solid red;
 }
 
 #message {
@@ -771,7 +771,7 @@ ul.vocab-category {
 }
 
 .search-options .multiselect > .caret {
-  color: #474b4f !important;
+  color: #474b4f;
   float: right;
   position: absolute;
   right: 5px;
@@ -797,8 +797,8 @@ ul.vocab-category {
 }
 
 .preflabel-spacer {
-  background: url('../pics/stripe.png') repeat-x 50% center !important;
-  height: 18px !important;
+  background: url('../pics/stripe.png') repeat-x 50% center;
+  height: 18px;
 }
 
 hr {
@@ -1409,12 +1409,15 @@ span.date-info {
   border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, 0.2);
   max-height:302px;
-  min-width: calc(100% + 50px) !important;
   overflow-y: auto;
   right: 0 !important;
   top: 40px !important;
+}
+
+.header-float > .navbar-form > .input-group > .twitter-typeahead > .tt-dropdown-menu {
   width: 100%; //fallback
-  width: calc(100% + 50px) !important;
+  width: calc(100% + 50px);
+  min-width: calc(100% + 50px);
 }
   
 .twitter-typeahead {
@@ -1987,7 +1990,7 @@ body, .versal, h1, h2, p, .versal-bold {
   }
   
   .tt-dropdown-menu {
-    width: 310px;
+    min-width: 310px;
   }
 
   .global-content {
@@ -2040,7 +2043,7 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   .search-options > div.input-group > .twitter-typeahead, .search-options > div.input-group > .twitter-typeahead > .tt-dropdown-menu {
-    width: 370px;
+    min-width: 370px;
   }
 
 }
