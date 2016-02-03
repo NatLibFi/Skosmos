@@ -24,7 +24,7 @@ h1, .prefLabel, .prefLabelLang, .notation {
   font-weight: bold;
 }
 
-a {
+a, .jstree-node > .jstree-anchor {
   color: #00748f;
 }
 
@@ -866,10 +866,10 @@ div.input-group > .input-group-addon {
   margin: 15px 0 0 15px;
 }
 
-.activated-concept, .jstree-clicked {
-  background-color: transparent !important;
+.activated-concept, .jstree-node > .jstree-clicked {
+  background-color: transparent;
   border: 0;
-  color: #474b4f !important;
+  color: #474b4f;
   font-weight: 600;
 }
 
@@ -1495,20 +1495,21 @@ p.autocomplete-label {
 /* jsTree customization
  *****************************************/
 .jstree-leaf > .jstree-ocl {
-  width: 13px !important;
+  width: 13px;
 }
 
 .jstree-closed > .jstree-ocl {
-  width: 24px !important;
+  width: 24px;
 }
 
 .jstree-clicked, .jstree-hovered {
+  background: none !important;
   box-shadow: none !important;
 }
 
 .jstree-default .jstree-node, .jstree-default .jstree-anchor {
-    line-height: 18px !important;
-    min-height: 18px !important;
+    line-height: 18px;
+    min-height: 18px;
 }
 
 .jstree-default .jstree-icon {
@@ -1518,19 +1519,19 @@ p.autocomplete-label {
 }
 
 .jstree-default.jstree-rtl .jstree-node {
-    margin-right: 18px !important;
+    margin-right: 18px;
 }
 
 .jstree-default .jstree-wholerow {
-    min-height: 18px !important;
+    min-height: 18px;
 }
 
 .jstree-open > .jstree-anchor, .jstree-closed > .jstree-anchor {
-  line-height: 18px !important;
+  line-height: 18px;
 }
 
 .jstree-anchor {
-  padding: 0 18px 0 1px !important;
+  padding: 0 18px 0 1px;
 }
 
 .jstree-node {
@@ -1546,19 +1547,15 @@ p.autocomplete-label {
 .jstree-default a > .tree-notation { color: #333 !important; }
 
 .sidebar-grey .jstree-closed > .jstree-ocl {
-  background-position: -100px -8px !important;
+  background-position: -100px -8px;
 }
 
 .sidebar-grey .jstree-open > .jstree-ocl {
-  background-position: -132px -8px !important;
+  background-position: -132px -8px;
 }
 
 .jstree-default .jstree-leaf > .jstree-ocl {
-  background-position: -68px -8px !important;
-}
-
-.yso-concept {
-  color: #474b4f !important;
+  background-position: -68px -8px;
 }
 
 .group {
