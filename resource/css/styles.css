@@ -1,6 +1,6 @@
 /* Font definitions
  *****************************************/
-li {
+li, td > a {
   font-family: 'Fira Sans';
   font-size: 14px;
 }
@@ -1992,7 +1992,7 @@ body, .versal, h1, h2, p, .versal-bold {
     font-size: 27px !important;
   }
 
-  li, .versal, .versal-bold, p, .search-result > .prefLabel, .search-result > .notation, .property-values > .prefLabel {
+  li, .versal, .versal-bold, p, .search-result > .prefLabel, .search-result > .notation, .property-values > .prefLabel, td > a {
     font-size: 16px !important;
   }
 
