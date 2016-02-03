@@ -1583,16 +1583,16 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   .navbar-form {
-    max-width: 300px !important;
+    max-width: 300px;
   }
 
-  .feedback-logo, .about-logo {
-    left: 10px !important;
+  .content > .feedback-logo, .content > .about-logo {
+    left: 10px;
   }
 
-  .feedback-box, #about {
-    margin-left: 120px !important;
-    width: 500px !important;
+  .content > .feedback-box, .content > #about, .content > .credits, .content > .version {
+    margin-left: 120px;
+    width: 500px;
   }
 
   p.search-vocab-text {
@@ -1719,7 +1719,7 @@ body, .versal, h1, h2, p, .versal-bold {
     
   #navigation {
     left: 2.5%;
-    width: auto !important;
+    width: auto;
   }
 
   #navigation > a, #language > a, #navi4 > span {
@@ -1763,16 +1763,16 @@ body, .versal, h1, h2, p, .versal-bold {
     width: 100%;
   }
 
-  .btn-group > .btn {
-    width: 100% !important;
+  .header-float > .btn-group > .btn {
+    width: 100%;
   }
 
   .navbar-form, .input-group, #search-field {
-    width: 100% !important;
+    width: 100%;
   }
   
-  .frontpage-logo .navbar-form {
-    max-width: none !important;
+  .navbar-form {
+    max-width: none;
   }
 }
 
@@ -1794,8 +1794,13 @@ body, .versal, h1, h2, p, .versal-bold {
 }
 
 @media (min-width: 801px) {
+
   .right-box {
     top: 435px !important;
+  }
+
+  .content > .feedback-logo, .content > .about-logo {
+    left: 10px;
   }
 
   .frontpage-alert {
@@ -1804,15 +1809,15 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   .nav > li > a {
-    padding: 10px 10px !important;
+    padding: 10px 10px;
   }
 
   .input-group {
-    max-width: 350px !important;
+    max-width: 350px;
   }
   
   .frontpage-logo .input-group {
-    max-width: 450px !important;
+    max-width: 450px;
   }
   
   .tt-dropdown-menu {
@@ -1824,12 +1829,12 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   #service-logo {
-    display: normal !important;
+    display: normal;
     position: absolute;
   }
 
-  .feedback-box, #about {
-    width: 500px !important;
+  .content > .feedback-box, .content > #about {
+    width: 500px;
   }
 
   .content {
