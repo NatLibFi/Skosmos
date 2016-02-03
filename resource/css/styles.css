@@ -1173,7 +1173,7 @@ table > tbody > tr.other-languages > td {
   right: 10px;
 }
 
-.global-content .shortened-symbol {
+.shortened-symbol {
   right: 160px;
 }
 
@@ -1335,11 +1335,6 @@ ul.nav-tabs > li {
 
 .content {
   margin-left: 350px;
-}
-
-.global-content {
-  margin-left: 150px;
-  margin-right: 150px;
 }
 
 span.date-info {
@@ -1607,15 +1602,11 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   .tt-dropdown {
-    max-width: 240px !important;
+    max-width: 240px;
   }
 
   .content {
     margin-left: 300px;
-  }
-
-  #sidebar {
-    width: 270px !important;
   }
 
   .property-divider {
@@ -1623,27 +1614,27 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   h1 {
-    font-size: 22px !important;
+    font-size: 22px;
   }
 
   #sidebar {
     display: none;
   }
 
-  .content, .global-content {
+  .content {
     margin: 0 auto;
   }
 
   .welcome-box, .right-box {
     float: left;
-    width: 200px !important;
+    width: 200px;
   }
 
   #vocabulary-list {
     float: right;
     margin-left: 15px;
     position: relative;
-    width: calc(100% - 220px) !important;
+    width: calc(100% - 220px);
   }
 
   .vocab-category > ul, .vocab-category > li {
@@ -1682,16 +1673,16 @@ body, .versal, h1, h2, p, .versal-bold {
 @media (max-width: 640px) {
 
   .welcome-box, .right-box {
-    display: none !important;
+    display: none;
   }
 
-  #vocabulary-list {
-    margin: 0 !important;
-    width: 100% !important;
+  #vocabulary-list, .twitter-typeahead {
+    margin: 0;
+    width: 100%;
   }
 
   .headerbar {
-    width: 95% !important;
+    width: 95%;
   }
 
   .content {
@@ -1699,18 +1690,19 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   .search-vocab-text{
-    display: none !important;
+    display: none;
   }
 
 }
 
-@media (max-width: 500px) {
-  
-}
-
 @media (max-width: 800px) {
+
   input#search-field {
     max-width: 130px;
+  }
+  
+  .twitter-typeahead {
+    width: 100%;
   }
 
 }
@@ -1721,8 +1713,8 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   #navi1, #navi2, #navi3, #navi4 {
-    background-image: none !important;
-    padding-left: 0 !important;
+    background-image: none;
+    padding-left: 0;
   }
     
   #navigation {
@@ -1743,7 +1735,7 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   #service-logo {
-    height: 200px !important;
+    height: 200px;
     position: absolute;
     right: 3%;
   }
@@ -1759,7 +1751,7 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   #navigation {
-    padding-right: 0 !important;
+    padding-right: 0;
     position: absolute;
   }
 
@@ -1786,13 +1778,13 @@ body, .versal, h1, h2, p, .versal-bold {
 
 @media (min-width: 640px) {
   #service-logo {
-    display: inline !important;
+    display: inline;
   }
 
   .right-box {
-    display: inline !important;
+    display: inline;
     left: 0;
-    top: 425px !important;
+    top: 425px;
   }
 
   .crumb-path:first-of-type {
@@ -1866,12 +1858,6 @@ body, .versal, h1, h2, p, .versal-bold {
     font-size: 24px;
   }
 
-}
-
-@media (max-width: 900px) {
-  .global-content {
-    margin-right: 0 !important;
-  }
 }
 
 @media (max-width: 1259px) {
@@ -1961,12 +1947,7 @@ body, .versal, h1, h2, p, .versal-bold {
     min-width: 310px;
   }
 
-  .global-content {
-    margin-left: 180px;
-    margin-right: 245px;
-  }
-
-  .global-content .shortened-symbol {
+  .shortened-symbol {
     right: 255px;
   }
 
