@@ -41,8 +41,14 @@ class Model
     public function __construct($config)
     {
         $this->global_config = $config;
-        $this->initializeVocabularies();
-        $this->initializeNamespaces();
+        try {
+          $this->initializeVocabularies();
+          $this->initializeNamespaces();
+        } catch (Exception $e) {
+            header("HTTP/1.0 404 Not Found");
+            echo("Error: Vocabularies configuration file 'vocabularies.ttl' not found.");
+            return;
+        }
     }
 
     /**
