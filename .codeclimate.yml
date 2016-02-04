@@ -2,6 +2,9 @@
 engines:
   csslint:
     enabled: true
+    checks:
+      ids:
+        enabled: false
   duplication:
     enabled: true
     config:
