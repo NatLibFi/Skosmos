@@ -39,6 +39,7 @@ exclude_paths:
 - README.md
 - composer.json 
 - config.inc.dist
+- vocabularies.ttl.dist
 - favicon.ico 
 - phpdoc.sh 
 - phpunit.xml
