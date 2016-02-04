@@ -73,4 +73,26 @@ class ConceptSearchParametersTest extends PHPUnit_Framework_TestCase
         $this->request->method('getQueryParam')->will($this->returnValue('isothes:ThesaurusArray+skos:Collection'));
         $this->assertEquals(array('isothes:ThesaurusArray', 'skos:Collection'), $params->getTypeLimit());
     }
+  
+    /**
+     * @covers ConceptSearchParameters::getUnique
+     * @covers ConceptSearchParameters::setUnique
+     */
+    public function testGetAndSetUnique() {
+        $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'));
+        $this->assertEquals(false, $params->getUnique());
+        $params->setUnique(true);
+        $this->assertEquals(true, $params->getUnique());
+    }
+  
+    /**
+     * @covers ConceptSearchParameters::getHidden
+     * @covers ConceptSearchParameters::setHidden
+     */
+    public function testGetAndSetHidden() {
+        $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'));
+        $this->assertEquals(true, $params->getHidden());
+        $params->setHidden(false);
+        $this->assertEquals(false, $params->getHidden());
+    }
 }
