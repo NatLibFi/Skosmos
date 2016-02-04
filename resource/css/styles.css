@@ -1975,24 +1975,24 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   h1 {
-    font-size: 27px !important;
+    font-size: 27px;
   }
 
   li, .versal, .versal-bold, p, .search-result > .prefLabel, .search-result > .notation, .property-values > .prefLabel, td > a {
-    font-size: 16px !important;
+    font-size: 16px;
   }
 
   .search-result > div > span.uri-input-box {
-    font-size: 14px !important;
+    font-size: 14px;
   }
   
   .appendix-vocab-label {
-    font-size: 14px !important;
+    font-size: 14px;
     line-height: 23px;
   }
 
   span.date-info {
-    font-size: 14px !important;
+    font-size: 14px;
     margin-top: 0;
   }
 
@@ -2005,7 +2005,7 @@ body, .versal, h1, h2, p, .versal-bold {
 @media (min-width: 1520px) {
   
   section, .headerbar, .topbar {
-    width: 1240px !important;
+    width: 1240px;
   }
   
   .frontpage-alert {
@@ -2018,18 +2018,15 @@ body, .versal, h1, h2, p, .versal-bold {
     width: 710px !important;
   }
 
-  .right-box {
-    width: 240px !important;
+  .frontpage > .right-box {
+    width: 240px;
   }
 
-  .welcome-box {
-    margin-left: 0 !important;
-    width: 240px !important;
+  .frontpage > .welcome-box {
+    margin-left: 0;
+    width: 240px;
   }
 
-  #sidebar {
-    width: 400px !important;
-  }
 }
 
 <!--[if IE]>
