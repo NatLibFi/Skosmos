@@ -25,4 +25,5 @@ exclude_paths:
 - resource/css/jquery.mCustomScrollbar.css
 - resource/fonts/**/*
 - resource/pics/**/*
+- resource/translations/**/*
 - tests/**/*
