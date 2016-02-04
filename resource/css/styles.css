@@ -1280,7 +1280,7 @@ ul.nav-tabs > li {
   border: 0;
   margin: 0;
   outline: none;
-  padding: 10px 15px;
+  padding: 10px;
   text-align: center;
 }
 
@@ -1295,6 +1295,9 @@ ul.nav-tabs > li {
 
 #alpha {
   width: 34%;
+}
+
+#alpha > a {
 }
 
 .nav-four-wide > li {
