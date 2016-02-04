@@ -118,19 +118,26 @@ class ConceptSearchParameters
         return $type;
     }
 
+    private function getQueryParam($name, $explode=false) {
+        if ($explode) {
+            return $this->request->getQueryParam($name) ? explode(' ', $this->request->getQueryParam($name)) : null;
+        }
+        return $this->request->getQueryParam($name) !== '' ? $this->request->getQueryParam($name) : null;
+    }
+
     public function getGroupLimit() 
     {
-        return $this->request->getQueryParam('group') !== '' ? $this->request->getQueryParam('group') : null;
+        return $this->getQueryParam('group');
     }
     
     public function getParentLimit() 
     {
-        return $this->request->getQueryParam('parent') !== '' ? $this->request->getQueryParam('parent') : null;
+        return $this->getQueryParam('parent');
     }
     
     public function getSchemeLimit() 
     {
-        return $this->request->getQueryParam('scheme') ? explode(' ', $this->request->getQueryParam('scheme')) : null;
+        return $this->getQueryParam('scheme', true);
     }
 
     public function getOffset() 
@@ -152,7 +159,7 @@ class ConceptSearchParameters
     }
 
     public function getAdditionalFields() {
-        return $this->request->getQueryParam('fields') ? explode(' ', $this->request->getQueryParam('fields')) : null;
+        return $this->getQueryParam('fields', true);
     }
     
     public function getHidden() {
