@@ -113,4 +113,15 @@ class ConceptSearchParametersTest extends PHPUnit_Framework_TestCase
         $params->setVocabularies(array($this->model->getVocabulary('test')));
         $this->assertEquals('http://purl.org/iso25964/skos-thes#ThesaurusArray', $params->getArrayClass());
     }
+  
+    /**
+     * @covers ConceptSearchParameters::getSchemes
+     * @covers ConceptSearchParameters::getQueryParam
+     */
+    public function testGetSchemeLimit() {
+        $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'));
+        $this->assertEquals(null, $params->getSchemeLimit());
+        $this->request->method('getQueryParam')->will($this->returnValue('http://www.skosmos.skos/test/ http://www.skosmos.skos/date/'));
+        $this->assertEquals(array(0 => 'http://www.skosmos.skos/test/', 1 => 'http://www.skosmos.skos/date/'), $params->getSchemeLimit());
+    }
 }
