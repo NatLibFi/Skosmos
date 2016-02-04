@@ -22,6 +22,9 @@ ratings:
   - "resource/css/*.css"
   - "resource/js/*.js"
   - "model/**/*.php"
+  - "controller/**/*.php"
+  - "index.php"
+  - "rest.php"
 exclude_paths:
 - resource/js/bootstrap-multiselect.js
 - resource/js/*min.js
@@ -30,3 +33,12 @@ exclude_paths:
 - resource/pics/**/*
 - resource/translations/**/*
 - tests/**/*
+- view/**/*
+- tools/**/*
+- LICENSE
+- README.md
+- composer.json 
+- config.inc.dist
+- favicon.ico 
+- phpdoc.sh 
+- phpunit.xml
