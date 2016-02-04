@@ -9,6 +9,7 @@ class ConceptSearchParametersTest extends PHPUnit_Framework_TestCase
         putenv("LC_ALL=en_GB.utf8");
         setlocale(LC_ALL, 'en_GB.utf8');
         $this->request = $this->getMockBuilder('Request')->disableOriginalConstructor()->getMock();
+        $this->model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     }
     
     protected function tearDown() {
@@ -94,5 +95,22 @@ class ConceptSearchParametersTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(true, $params->getHidden());
         $params->setHidden(false);
         $this->assertEquals(false, $params->getHidden());
+    }
+  
+    /**
+     * @covers ConceptSearchParameters::getArrayClass
+     */
+    public function testGetArrayClassWithoutVocabulary() {
+        $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'));
+        $this->assertEquals(null, $params->getArrayClass());
+    }
+  
+    /**
+     * @covers ConceptSearchParameters::getArrayClass
+     */
+    public function testGetArrayClass() {
+        $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'));
+        $params->setVocabularies(array($this->model->getVocabulary('test')));
+        $this->assertEquals('http://purl.org/iso25964/skos-thes#ThesaurusArray', $params->getArrayClass());
     }
 }
