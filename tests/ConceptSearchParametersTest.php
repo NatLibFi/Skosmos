@@ -115,7 +115,7 @@ class ConceptSearchParametersTest extends PHPUnit_Framework_TestCase
     }
   
     /**
-     * @covers ConceptSearchParameters::getSchemes
+     * @covers ConceptSearchParameters::getSchemeLimit
      * @covers ConceptSearchParameters::getQueryParam
      */
     public function testGetSchemeLimit() {
