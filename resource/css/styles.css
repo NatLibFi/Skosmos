@@ -1770,7 +1770,7 @@ body, .versal, h1, h2, p, .versal-bold {
     width: 100%;
   }
 
-  .navbar-form, .input-group, #search-field {
+  .frontpage-spacing > .header-float > .navbar-form, .input-group, #search-field {
     width: 100%;
   }
   
