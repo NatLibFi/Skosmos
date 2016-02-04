@@ -1795,8 +1795,8 @@ body, .versal, h1, h2, p, .versal-bold {
 
 @media (min-width: 801px) {
 
-  .right-box {
-    top: 435px !important;
+  .frontpage > .right-box {
+    top: 435px;
   }
 
   .content > .feedback-logo, .content > .about-logo {
@@ -1842,15 +1842,15 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   #sidebar {
-    width: 310px !important;
+    width: 310px;
   }
 
   .property-divider {
     width: 17%;
   }
 
-  .welcome-box, .right-box {
-    width: 200px !important;
+  .frontpage > .welcome-box, .frontpage > .right-box {
+    width: 200px;
   }
 
   #vocabulary-list {
@@ -1868,14 +1868,14 @@ body, .versal, h1, h2, p, .versal-bold {
 @media (max-width: 1259px) {
 
   .search-result-listing .prefLabel, .search-result-listing .notation {
-    font-size: 14px !important;
+    font-size: 14px;
   }
 
 }
 
 @media (min-width: 1260px) {
   section, .headerbar, .topbar {
-    width: 1190px !important;
+    width: 1190px;
   }
 
   #service-name {
@@ -1890,12 +1890,12 @@ body, .versal, h1, h2, p, .versal-bold {
     height: calc(100% - 150px) !important;
   }
 
-  .search-options .multiselect {
-    width: 370px !important;
+  .sidebar-grey > .search-options > .input-group > .btn-group > .multiselect {
+    width: 370px;
   }
   
-  .search-options .multiselect-container {
-    width: 370px !important;
+  .sidebar-grey > .search-options > .input-group > .btn-group > .multiselect-container {
+    width: 370px;
   }
   
   .search-options .multiselect > span {
@@ -1903,8 +1903,8 @@ body, .versal, h1, h2, p, .versal-bold {
   }
   
   .pagination {
-    padding: 6px 10px !important;
-    top: 183px !important;
+    padding: 6px 10px;
+    top: 183px;
     width: 400px;
   }
   
@@ -1925,7 +1925,7 @@ body, .versal, h1, h2, p, .versal-bold {
   }
   
   #language > .dropdown-menu { 
-    position: absolute !important;
+    position: absolute;
     right: 0;
   }
 
@@ -1934,18 +1934,18 @@ body, .versal, h1, h2, p, .versal-bold {
     position: relative;
   }
 
-  .welcome-box, .right-box {
-    width: 210px !important;
+  .frontpage > .welcome-box, .frontpage > .right-box {
+    width: 210px;
   }
 
-  .right-box {
+  .frontpage > .right-box {
     display: inline-block;
-    left: auto !important;
-    top: 0 !important;
+    left: auto;
+    top: 0;
   }
 
-  .feedback-box, #about {
-    width: 600px !important;
+  .content > .feedback-box, .content > #about, .content > .credits {
+    width: 600px;
   }
   
   .tt-dropdown-menu {
@@ -1961,7 +1961,7 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   input#search-field {
-    width: 260px !important;
+    width: 260px;
   }
 
   #vocabulary-list {
@@ -1971,7 +1971,7 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   #sidebar {
-    width: 400px !important;
+    width: 400px;
   }
 
   h1 {
