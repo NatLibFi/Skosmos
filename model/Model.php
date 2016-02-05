@@ -71,6 +71,7 @@ class Model
         try {
             // use APC user cache to store parsed vocabularies.ttl configuration
             if (function_exists('apc_store') && function_exists('apc_fetch')) {
+                // @codeCoverageIgnoreStart
                 $key = realpath($this->getConfig()->getVocabularyConfigFile()) . ", " . filemtime($this->getConfig()->getVocabularyConfigFile());
                 $nskey = "namespaces of " . $key;
                 $this->graph = apc_fetch($key);
@@ -80,6 +81,7 @@ class Model
                     apc_store($key, $this->graph);
                     apc_store($nskey, $this->namespaces);
                 }
+                // @codeCoverageIgnoreEnd
             } else { // APC not available, parse on every request
                 $this->parseVocabularies($this->getConfig()->getVocabularyConfigFile());
             }
