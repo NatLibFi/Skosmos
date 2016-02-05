@@ -147,6 +147,9 @@ class ConceptSearchParameters
 
     public function getSearchLimit()
     {
+        if ($this->rest) {
+            return ($this->request->getQueryParam('maxhits')) ? $this->request->getQueryParam('maxhits') : 0;
+        }
         return $this->config->getDefaultSearchLimit();
     }
 
