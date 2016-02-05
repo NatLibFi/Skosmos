@@ -229,9 +229,9 @@ class Model
      * @param boolean $unique restrict results to unique concepts (default: false)
      * @return array search results
      */
-    public function searchConcepts($term, $vocids, $lang, $search_lang, $type = null, $parent = null, $group = null, $offset = 0, $limit = null, $hidden = true, $fields = null, $unique = false)
+    public function searchConcepts($term, $vocids, $lang, $search_lang, $type = null, $parent = null, $group = null, $offset = 0, $limit = 0, $hidden = true, $fields = null, $unique = false)
     {
-        if ($limit === null) {
+        if ($limit === 0) {
             $limit = $this->getConfig()->getDefaultSearchLimit();
         }
         $term = trim($term);
