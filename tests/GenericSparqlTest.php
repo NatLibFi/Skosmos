@@ -228,6 +228,20 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    * @covers GenericSparql::queryConceptInfo
    * @covers GenericSparql::generateConceptInfoQuery
    * @covers GenericSparql::transformConceptInfoResults
+   * @covers GenericSparql::filterDuplicateVocabs
+   */
+  public function testQueryConceptInfoWithMultipleSameVocabs()
+  {
+    $actual = $this->sparql->queryConceptInfo(array('http://www.skosmos.skos/test/ta123'), null, array($this->vocab, $this->vocab, $this->vocab, $this->vocab, $this->vocab), false, 'en');
+    $this->assertInstanceOf('Concept', $actual[0]);
+    $this->assertEquals('http://www.skosmos.skos/test/ta123', $actual[0]->getUri());
+    $this->assertEquals(1, sizeof($actual));
+  }
+
+  /**
+   * @covers GenericSparql::queryConceptInfo
+   * @covers GenericSparql::generateConceptInfoQuery
+   * @covers GenericSparql::transformConceptInfoResults
    * @covers GenericSparql::formatValues
    */
   public function testQueryConceptInfoWithOneURI()
