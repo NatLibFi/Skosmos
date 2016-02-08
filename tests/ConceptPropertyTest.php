@@ -16,6 +16,15 @@ class ConceptPropertyTest extends PHPUnit_Framework_TestCase
   }
 
   /**
+   * @covers ConceptProperty::__construct
+   * @covers ConceptProperty::getLabel
+   */
+  public function testGetConstructAndLabel() {
+    $prop = new ConceptProperty('skosmos:testLabel', 'Test label');
+    $this->assertEquals('Test label', $prop->getLabel());
+  }
+
+  /**
    * @covers Concept::getProperties
    * @covers ConceptProperty::getValues
    * @covers ConceptProperty::getLabel
