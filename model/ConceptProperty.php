@@ -33,8 +33,11 @@ class ConceptProperty
     public function getLabel()
     {
         // first see if we have a translation
-        $label = gettext($this->prop);
-        if ($label != $this->prop) {
+        // we don't maintain DC 1.1 translations separate from DC Terms
+        $prop = (substr($this->prop, 0, 5) == 'dc11:') ?
+            str_replace('dc11:', 'dc:', $this->prop) : $this->prop;
+        $label = gettext($prop);
+        if ($label != $prop) {
             return $label;
         }
 
