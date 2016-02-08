@@ -20,6 +20,14 @@ class ConceptPropertyValueLiteralTest extends PHPUnit_Framework_TestCase
     $this->concept = reset($results);
   }
 
+  /**
+   * @covers ConceptPropertyValueLiteral::__construct
+   */
+  public function testConstructor() {
+    $litmock = $this->getMockBuilder('EasyRdf_Literal')->disableOriginalConstructor()->getMock();
+    $prop = new ConceptPropertyValueLiteral($litmock, 'skosmos:someProperty');
+    $this->assertEquals(null, $prop->__toString());
+  }
 
   /**
    * @covers ConceptPropertyValueLiteral::getLabel

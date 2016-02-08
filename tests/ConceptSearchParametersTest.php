@@ -15,6 +15,15 @@ class ConceptSearchParametersTest extends PHPUnit_Framework_TestCase
     protected function tearDown() {
         $this->params = null;
     }
+
+    /**
+     * @covers ConceptSearchParameters::__construct
+     * @covers ConceptSearchParameters::getSearchLimit
+     */
+    public function testConstructorAndSearchLimit() {
+        $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'), true);
+        $this->assertEquals(0, $params->getSearchLimit());
+    }
   
     /**
      * @covers ConceptSearchParameters::getLang
