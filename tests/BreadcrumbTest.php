@@ -5,17 +5,21 @@ class BreadcrumbTest extends PHPUnit_Framework_TestCase
   
   /**
    * @covers Breadcrumb::__construct
+   * @covers Breadcrumb::getUri
    */
   public function testConstruct() {
     $bc = new Breadcrumb('http://skosmos.skos/onto/test/t001', 'testLabel');
     $this->assertInstanceOf('Breadcrumb', $bc);
+    $this->assertEquals('http://skosmos.skos/onto/test/t001', $bc->getUri());
   }
 
   /**
    * @covers Breadcrumb::hideLabel
+   * @covers Breadcrumb::getPrefLabel
    */
   public function testHideLabel() {
     $bc = new Breadcrumb('http://skosmos.skos/onto/test/t001', 'testLabel');
+    $this->assertEquals('testLabel', $bc->getPrefLabel());
     $bc->hideLabel();
     $this->assertEquals('...', $bc->getPrefLabel());
   }
