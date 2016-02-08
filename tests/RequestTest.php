@@ -18,6 +18,18 @@ class RequestTest extends PHPUnit_Framework_TestCase
   }
   
   /**
+   * @covers Request::getVocabList
+   */
+  public function testGetVocabList() {
+    $list = $this->request->getVocabList();
+    foreach ($list as $cat) {
+      foreach ($cat as $voc) {
+        $this->assertInstanceOf('Vocabulary', $voc);
+      }
+    }
+  }
+  
+  /**
    * @covers Request::setVocabids
    * @covers Request::getVocabid
    */
@@ -33,6 +45,15 @@ class RequestTest extends PHPUnit_Framework_TestCase
   public function testSetVocab() {
     $this->request->setVocab('test');
     $this->assertInstanceOf('Vocabulary', $this->request->getVocab());
+  }
+  
+  /**
+   * @covers Request::setVocab
+   * @covers Request::getVocabid
+   */
+  public function testSetVocabWithMultipleVocabularies() {
+    $this->request->setVocab('test dates');
+    $this->assertEquals('test dates', $this->request->getVocabid());
   }
   
   /**
