@@ -266,5 +266,48 @@ class VocabularyConfigTest extends PHPUnit_Framework_TestCase
     $vocab = $this->model->getVocabulary('dates');
     $this->assertEquals(false, $vocab->getConfig()->hasMultiLingualProperty('skos:exactMatch'));
   }
+  
+  /**
+   * @covers VocabularyConfig::getTitle
+   */
+  public function testGetTitle() {
+    $vocab = $this->model->getVocabulary('test');
+    $this->assertEquals('Test ontology', $vocab->getConfig()->getTitle('en'));
+  }
 
+  /**
+   * @covers VocabularyConfig::showChangeList
+   * @covers VocabularyConfig::getBoolean
+   */
+  public function testShowChangeListDefaultValue() {
+    $vocab = $this->model->getVocabulary('test');
+    $this->assertEquals(false, $vocab->getConfig()->showChangeList());
+  }
+
+  /**
+   * @covers VocabularyConfig::sortByNotation
+   * @covers VocabularyConfig::getBoolean
+   */
+  public function testShowSortByNotationDefaultValue() {
+    $vocab = $this->model->getVocabulary('test');
+    $this->assertEquals(false, $vocab->getConfig()->sortByNotation());
+  }
+
+  /**
+   * @covers VocabularyConfig::showConceptSchemesInHierarchy
+   * @covers VocabularyConfig::getBoolean
+   */
+  public function testShowConceptSchemesInHierarchy() {
+    $vocab = $this->model->getVocabulary('test');
+    $this->assertEquals(false, $vocab->getConfig()->showConceptSchemesInHierarchy());
+  }
+
+  /**
+   * @covers VocabularyConfig::getShowStatistics
+   * @covers VocabularyConfig::getBoolean
+   */
+  public function testShowStatisticsDefaultValue() {
+    $vocab = $this->model->getVocabulary('test');
+    $this->assertEquals(true, $vocab->getConfig()->getShowStatistics());
+  }
 }
