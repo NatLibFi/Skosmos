@@ -54,9 +54,8 @@ class DataObject
             $results = $exsparql->queryLabel($exuri, $lang);
 
             return isset($results[$lang]) ? $results[$lang] : null;
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**
@@ -66,19 +65,16 @@ class DataObject
     protected function arbitrarySort($sortable)
     {
         // sorting the result list to a arbitrary order defined below in mycompare()
-        if ($sortable === null) {
-            return $sortable;
-        }
+        if ($sortable !== null) {
+            uksort($sortable, array($this, 'mycompare'));
+            foreach ($sortable as $prop => $vals) {
+                if (is_array($prop)) // the ConceptProperty objects have their own sorting methods
+                {
+                    ksort($sortable[$prop]);
+                }
 
-        uksort($sortable, array($this, 'mycompare'));
-        foreach ($sortable as $prop => $vals) {
-            if (is_array($prop)) // the ConceptProperty objects have their own sorting methods
-            {
-                ksort($sortable[$prop]);
             }
-
         }
-
         return $sortable;
     }
 
@@ -90,7 +86,7 @@ class DataObject
      */
     protected function mycompare($a, $b)
     {
-        if ($a == $b) {
+        if ($a === $b) {
             return 0;
         }
         $order = $this->order;
