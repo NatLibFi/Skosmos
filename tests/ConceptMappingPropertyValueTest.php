@@ -21,6 +21,15 @@ class ConceptMappingPropertyValueTest extends PHPUnit_Framework_TestCase
     $this->concept = $concepts[0];
     $this->props = $this->concept->getMappingProperties();
   }
+  
+  /**
+   * @covers ConceptMappingPropertyValue::__construct
+   */
+  public function testConstructor() {
+    $resourcestub = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
+    $mapping = new ConceptMappingPropertyValue($this->model, $this->vocab, $resourcestub, 'skos:exactMatch');
+    $this->assertEquals('skos:exactMatch', $mapping->getType());
+  }
 
   /**
    * @covers ConceptMappingPropertyValue::getLabel
