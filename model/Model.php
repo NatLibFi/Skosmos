@@ -558,12 +558,14 @@ class Model
         EasyRdf_Format::unregister('json'); // prevent parsing errors for sources which return invalid JSON
         // using apc cache for the resource if available
         if (function_exists('apc_store') && function_exists('apc_fetch')) {
+            // @codeCoverageIgnoreStart
             $key = 'fetch: ' . EasyRdf_Utils::removeFragmentFromUri($uri);
             $resource = apc_fetch($key);
             if ($resource === null || $resource === false) { // was not found in cache, or previous request failed
                 $resource = $this->fetchResourceFromUri($uri);
                 apc_store($key, $resource, $this->URI_FETCH_TTL);
             }
+            // @codeCoverageIgnoreEnd
         } else { // APC not available, parse on every request
             $resource = $this->fetchResourceFromUri($uri);
         }
