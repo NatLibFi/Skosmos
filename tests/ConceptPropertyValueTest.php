@@ -95,4 +95,33 @@ class ConceptPropertyValueTest extends PHPUnit_Framework_TestCase
     $propvals = $props['skos:broader']->getValues();
     $this->assertEquals('Carp', (string)$propvals['Carphttp://www.skosmos.skos/test/ta112']);
   }
+
+  /**
+   * @covers ConceptPropertyValue::addSubMember
+   * @covers ConceptPropertyValue::sortSubMembers
+   * @covers ConceptPropertyValue::getSubMembers
+   */
+  public function testSubmemberSorting() {
+    $results = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta121', 'en');
+    $concept = reset($results);
+    $props = $concept->getProperties();
+    $propvals = $props['skos:broader']->getValues();
+    $prop = reset($propvals);
+    $val1 = $this->getMockBuilder('ConceptPropertyValue')->disableOriginalConstructor()->getMock();
+    $lit1 = $this->getMockBuilder('EasyRdf_Literal')->disableOriginalConstructor()->getMock();
+    $lit1->method('getValue')->will($this->returnValue('elephant'));
+    $val1->method('getLabel')->will($this->returnValue($lit1));
+    $val2 = $this->getMockBuilder('ConceptPropertyValue')->disableOriginalConstructor()->getMock();
+    $lit2 = $this->getMockBuilder('EasyRdf_Literal')->disableOriginalConstructor()->getMock();
+    $lit2->method('getValue')->will($this->returnValue('cat'));
+    $val2->method('getLabel')->will($this->returnValue($lit2));
+    $val3 = $this->getMockBuilder('ConceptPropertyValue')->disableOriginalConstructor()->getMock();
+    $lit3 = $this->getMockBuilder('EasyRdf_Literal')->disableOriginalConstructor()->getMock();
+    $lit3->method('getValue')->will($this->returnValue('cheetah'));
+    $val3->method('getLabel')->will($this->returnValue($lit3));
+    $prop->addSubMember($val1);
+    $prop->addSubMember($val2);
+    $prop->addSubMember($val3);
+    $this->assertEquals(array('cat', 'cheetah', 'elephant'), array_keys($prop->getSubMembers()));
+  }
 }
