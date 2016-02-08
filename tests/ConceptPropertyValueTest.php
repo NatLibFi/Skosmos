@@ -20,6 +20,15 @@ class ConceptPropertyValueTest extends PHPUnit_Framework_TestCase
   }
 
   /**
+   * @covers ConceptPropertyValue::__construct
+   */
+  public function testConstructor() {
+    $mockres = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
+    $propval = new ConceptPropertyValue($this->model, $this->vocab, $mockres, 'skosmos:testProp', 'en');
+    $this->assertInstanceOf('ConceptPropertyValue', $propval);
+  }
+
+  /**
    * @covers ConceptPropertyValue::getLabel
    */
   public function testGetLabel() {
