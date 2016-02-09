@@ -150,12 +150,28 @@ class ConceptSearchParametersTest extends PHPUnit_Framework_TestCase
      */
     public function testGetSearchLang() {
         $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'));
-        $this->assertEquals(null, $params->getContentLang());
+        $this->assertEquals(null, $params->getSearchLang());
         $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'));
         $this->request->method('getContentLang')->will($this->returnValue('en'));
         $this->request->method('getQueryParam')->will($this->returnValue('on')); //anylang=on
-        $this->assertEquals('en', $params->getContentLang());
-        $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'), true);
-        $this->assertEquals('en', $params->getContentLang());
+        $this->assertEquals('', $params->getSearchLang());
+    }
+  
+    /**
+     * @covers ConceptSearchParameters::getOffset
+     */
+    public function testGetOffsetNonNumeric() {
+        $this->request->method('getQueryParam')->will($this->returnValue('notvalid'));
+        $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'));
+        $this->assertEquals(0, $params->getOffset());
+    }
+  
+    /**
+     * @covers ConceptSearchParameters::getOffset
+     */
+    public function testGetOffsetValid() {
+        $this->request->method('getQueryParam')->will($this->returnValue(25));
+        $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'));
+        $this->assertEquals(25, $params->getOffset());
     }
 }
