@@ -135,4 +135,27 @@ class ConceptSearchParametersTest extends PHPUnit_Framework_TestCase
         $this->request->method('getQueryParam')->will($this->returnValue('http://www.skosmos.skos/test/ http://www.skosmos.skos/date/'));
         $this->assertEquals(array(0 => 'http://www.skosmos.skos/test/', 1 => 'http://www.skosmos.skos/date/'), $params->getSchemeLimit());
     }
+  
+    /**
+     * @covers ConceptSearchParameters::getContentLang
+     */
+    public function testGetContentLang() {
+        $this->request->method('getContentLang')->will($this->returnValue('de'));
+        $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'));
+        $this->assertEquals('de', $params->getContentLang());
+    }
+  
+    /**
+     * @covers ConceptSearchParameters::getSearchLang
+     */
+    public function testGetSearchLang() {
+        $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'));
+        $this->assertEquals(null, $params->getContentLang());
+        $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'));
+        $this->request->method('getContentLang')->will($this->returnValue('en'));
+        $this->request->method('getQueryParam')->will($this->returnValue('on')); //anylang=on
+        $this->assertEquals('en', $params->getContentLang());
+        $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'), true);
+        $this->assertEquals('en', $params->getContentLang());
+    }
 }
