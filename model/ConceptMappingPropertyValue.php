@@ -95,6 +95,7 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
         if ($exvocab) {
             return $exvocab->getTitle();
         } else {
+            // @codeCoverageIgnoreStart
             $scheme = $this->resource->get('skos:inScheme');
             if ($scheme) {
                 $schemeResource = $this->model->getResourceFromUri($scheme->getUri());
@@ -105,6 +106,7 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
             }
             // got a label for the concept, but not the scheme - use the host name as scheme label
             return parse_url($this->resource->getUri(), PHP_URL_HOST);
+            // @codeCoverageIgnoreEnd
         }
     }
 
