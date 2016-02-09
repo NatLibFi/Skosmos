@@ -158,4 +158,22 @@ class ConceptSearchParametersTest extends PHPUnit_Framework_TestCase
         $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'), true);
         $this->assertEquals('en', $params->getContentLang());
     }
+  
+    /**
+     * @covers ConceptSearchParameters::getOffset
+     */
+    public function testGetOffsetNonNumeric() {
+        $this->request->method('getQueryParam')->will($this->returnValue('notvalid'));
+        $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'));
+        $this->assertEquals(0, $params->getOffset());
+    }
+  
+    /**
+     * @covers ConceptSearchParameters::getOffset
+     */
+    public function testGetOffsetValid() {
+        $this->request->method('getQueryParam')->will($this->returnValue(25));
+        $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'));
+        $this->assertEquals(25, $params->getOffset());
+    }
 }
