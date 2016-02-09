@@ -33,6 +33,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers ConceptMappingPropertyValue::getLabel
+   * @covers ConceptMappingPropertyValue::queryLabel
    * @covers DataObject::getExternalLabel
    */
   public function testGetLabelFromExternalVocabulary() {
