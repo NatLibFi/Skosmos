@@ -40,6 +40,7 @@ class GenericSparql {
         // if special cache control (typically no-cache) was requested by the
         // client, set the same type of cache control headers also in subsequent
         // in the SPARQL requests (this is useful for performance testing)
+        // @codeCoverageIgnoreStart
         $cache_control = filter_input(INPUT_SERVER, 'HTTP_CACHE_CONTROL', FILTER_SANITIZE_STRING);
         $pragma = filter_input(INPUT_SERVER, 'HTTP_PRAGMA', FILTER_SANITIZE_STRING);
         if ($cache_control !== null || $pragma !== null) {
@@ -49,6 +50,7 @@ class GenericSparql {
             $httpclient->setHeaders('Cache-Control', $val);
             EasyRdf_Http::setDefaultHttpClient($httpclient); // actually redundant..
         }
+        // @codeCoverageIgnoreEnd
 
         // create the EasyRDF SPARQL client instance to use
         $this->client = new EasyRdf_Sparql_Client($endpoint);
