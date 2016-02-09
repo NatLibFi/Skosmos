@@ -2,6 +2,6 @@
 {% block title %}: Error page{% endblock %}
 {% block error %}
   <div class="alert frontpage-alert">
-    <h3>404 Error: {% if not message %}{% trans %}The page {{ requested_page }} cannot be found.{% endtrans %}{% else %}{{ message }}{% endif %}</h3>
+    <h3>{% if not message %}{% trans %}404 Error: The page {{ requested_page }} cannot be found.{% endtrans %}{% else %}{{ message }}{% endif %}</h3>
   </div>
 {% endblock %}
