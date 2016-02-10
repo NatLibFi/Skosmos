@@ -84,6 +84,15 @@ class ConceptPropertyValueTest extends PHPUnit_Framework_TestCase
     $propvals = $props['skos:broader']->getValues();
     $this->assertEquals(665, $propvals['Carphttp://www.skosmos.skos/test/ta112']->getNotation());
   }
+
+  /**
+   * @covers ConceptPropertyValue::getNotation
+   */
+  public function testGetNotationWhenThereIsNone() {
+    $mockres = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
+    $propval = new ConceptPropertyValue($this->model, $this->vocab, $mockres, 'en');
+    $this->assertEquals(null, $propval->getNotation());
+  }
   
   /**
    * @covers ConceptPropertyValue::__toString
@@ -123,5 +132,14 @@ class ConceptPropertyValueTest extends PHPUnit_Framework_TestCase
     $prop->addSubMember($val2);
     $prop->addSubMember($val3);
     $this->assertEquals(array('cat', 'cheetah', 'elephant'), array_keys($prop->getSubMembers()));
+  }
+
+  /**
+   * @covers ConceptPropertyValue::getSubMembers
+   */
+  public function testGetSubMembersEmpty() {
+    $mockres = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
+    $propval = new ConceptPropertyValue($this->model, $this->vocab, $mockres, 'en');
+    $this->assertEquals(null, $propval->getSubMembers());
   }
 }
