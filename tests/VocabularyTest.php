@@ -311,4 +311,13 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
     $this->assertEquals(array('December 2011', 'February 2010', 'January 2000'), array_keys($months));
     $this->assertEquals($expected, $months['February 2010']);
   }
+  
+  /**
+   * @covers Vocabulary::verifyVocabularyLanguage
+   */
+  public function testVerifyVocabularyLanguage() {
+    $vocab = $this->model->getVocabulary('test');
+    $this->assertEquals('en', $vocab->verifyVocabularyLanguage('en'));
+    $this->assertEquals('en', $vocab->verifyVocabularyLanguage('de'));
+  }
 }

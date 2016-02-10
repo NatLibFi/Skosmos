@@ -506,5 +506,32 @@ test:ta125
     $this->assertInstanceOf('EasyRdf_Resource', $resource);
     $this->assertEquals('http://www.yso.fi/onto/yso/p19378', $resource->getURI());
   }
+  
+  /**
+   * @covers Model::getResourceLabel
+   */
+  public function testGetResourceLabelAcceptAnyLanguageWhenDesiredNotFound() {
+    $mockres = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
+    $labelmap = array(
+      array('en', null),
+      array(null, 'test value')
+    );
+    $mockres->method('label')->will($this->returnValueMap($labelmap));
+    $this->assertEquals('test value', $this->model->getResourceLabel($mockres, 'en'));
+  }
+  
+  /**
+   * @covers Model::getResourceLabel
+   */
+  public function testGetResourceLabelCorrectLanguage() {
+    $mockres = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
+    $labelmap = array(
+      array('en', 'test value'),
+      array('fi', 'testiarvo')
+    );
+    $mockres->method('label')->will($this->returnValueMap($labelmap));
+    $this->assertEquals('test value', $this->model->getResourceLabel($mockres, 'en'));
+    $this->assertEquals('testiarvo', $this->model->getResourceLabel($mockres, 'fi'));
+  }
 
 }
