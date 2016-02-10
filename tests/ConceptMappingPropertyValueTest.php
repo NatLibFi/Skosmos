@@ -42,6 +42,28 @@ class ConceptMappingPropertyValueTest extends PHPUnit_Framework_TestCase
   }
 
   /**
+   * @covers ConceptMappingPropertyValue::getLabel
+   * @covers ConceptMappingPropertyValue::queryLabel
+   */
+  public function testGetLabelResortsToUri() {
+    $mockres = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
+    $labelmap = array(
+      array('en', null),
+      array(null, null)
+    );
+    $mockres->method('label')->will($this->returnValueMap($labelmap));
+    $litmap = array(
+      array('rdf:value', 'en', null),
+      array('rdf:value', null)
+    );
+    $mockres->method('getLiteral')->will($this->returnValueMap($litmap));
+    $mockres->method('getUri')->will($this->returnValue('http://thisdoesntexistatalland.sefsf/2j2h4/'));
+    $mapping = new ConceptMappingPropertyValue($this->model, $this->vocab, $mockres, null);
+    $mapping->getLabel();
+    $this->assertEquals('http://thisdoesntexistatalland.sefsf/2j2h4/', $mapping->getLabel());
+  }
+
+  /**
    * @covers ConceptMappingPropertyValue::getExVocab
    */
   public function testGetExVocab() {
@@ -89,4 +111,5 @@ class ConceptMappingPropertyValueTest extends PHPUnit_Framework_TestCase
     $propvals = $this->props['skos:exactMatch']->getValues();
     $this->assertEquals('Eel', $propvals['Eelhttp://www.skosmos.skos/test/ta115']->__toString());
   }
+
 }

@@ -29,7 +29,6 @@ class ModelTest extends PHPUnit_Framework_TestCase
   /**
    * @covers Model::getVersion
    */
-
   public function testGetVersion() {
     $version = $this->model->getVersion();
     $this->assertNotEmpty($version);

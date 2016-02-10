@@ -174,4 +174,5 @@ class ConceptSearchParametersTest extends PHPUnit_Framework_TestCase
         $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'));
         $this->assertEquals(25, $params->getOffset());
     }
+    
 }
