@@ -320,4 +320,29 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('en', $vocab->verifyVocabularyLanguage('en'));
     $this->assertEquals('en', $vocab->verifyVocabularyLanguage('de'));
   }
+  
+  /**
+   * @covers Vocabulary::getShortName
+   */
+  public function testGetShortName() {
+    $vocab = $this->model->getVocabulary('test');
+    $this->assertEquals('Test short', $vocab->getShortName());
+  }
+  
+  /**
+   * @covers Vocabulary::getConceptLabel
+   */
+  public function testGetConceptLabel() {
+    $vocab = $this->model->getVocabulary('test');
+    $lits = $vocab->getConceptLabel('http://www.skosmos.skos/test/ta112', 'en');
+    $this->assertEquals('Carp', $lits['en']->getValue());
+  }
+  
+  /**
+   * @covers Vocabulary::getConfig
+   */
+  public function testGetConfig() {
+    $vocab = $this->model->getVocabulary('test');
+    $this->assertInstanceOf('VocabularyConfig', $vocab->getConfig());
+  }
 }
