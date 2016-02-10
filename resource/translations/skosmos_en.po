@@ -354,7 +354,7 @@ msgstr "Relation"
 
 #: /tmp/cache/56b9d7518f0f6/ab/ab1484fc33ab99f6361ff848e9d2cbbd49e41c8c3182cfc74a87a5d2e30f6a02.php:67
 msgid "dc:replaces"
-msgstr "replaces"
+msgstr "Replaces"
 
 #: /tmp/cache/56b9d7518f0f6/ab/ab1484fc33ab99f6361ff848e9d2cbbd49e41c8c3182cfc74a87a5d2e30f6a02.php:69
 msgid "dc:rights"
