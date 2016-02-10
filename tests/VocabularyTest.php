@@ -345,4 +345,24 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
     $vocab = $this->model->getVocabulary('test');
     $this->assertInstanceOf('VocabularyConfig', $vocab->getConfig());
   }
+  
+  /**
+   * @covers Vocabulary::listConceptGroups
+   */
+  public function testListConceptGroupsNoGroupsDefined() {
+    $mockres = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
+    $mockres->method('getLiteral')->will($this->returnValue(null));
+    $vocab = new Vocabulary($this->model, $mockres);
+    $this->assertEquals(array(), $vocab->listConceptGroups());
+  }
+  
+  /**
+   * @covers Vocabulary::listConceptGroupContents
+   */
+  public function testListConceptGroupContentsNoGroupFound() {
+    $mockres = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
+    $mockres->method('getLiteral')->will($this->returnValue(null));
+    $vocab = new Vocabulary($this->model, $mockres);
+    $this->assertEquals(array(), $vocab->listConceptGroups());
+  }
 }
