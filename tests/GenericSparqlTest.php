@@ -323,14 +323,52 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
     $this->assertEquals(1, sizeof($actual));
     $this->assertEquals('Bass', $actual[0]['prefLabel']);
   }
+
+  /**
+   * @covers GenericSparql::queryConcepts
+   * @covers GenericSparql::generateConceptSearchQueryCondition
+   * @covers GenericSparql::generateConceptSearchQueryInner
+   * @covers GenericSparql::generateConceptSearchQuery
+   * @covers GenericSparql::transformConceptSearchResults
+   */
+  public function testQueryConceptsExactTerm()
+  {
+    $voc = $this->model->getVocabulary('test');
+    $this->params->method('getSearchTerm')->will($this->returnValue('bass'));
+    $this->params->method('getVocabIds')->will($this->returnValue(array('test')));
+    $actual = $this->sparql->queryConcepts(array($voc), null, null, $this->params);
+    $this->assertEquals(1, sizeof($actual));
+    $this->assertEquals('Bass', $actual[0]['prefLabel']);
+  }
   
   /**
    * @covers GenericSparql::queryConcepts
+   * @covers GenericSparql::generateConceptSearchQueryCondition
+   * @covers GenericSparql::generateConceptSearchQueryInner
+   * @covers GenericSparql::generateConceptSearchQuery
+   * @covers GenericSparql::transformConceptSearchResults
    */
   public function testQueryConceptsAsteriskBeforeTerm()
   {
     $voc = $this->model->getVocabulary('test');
     $this->params->method('getSearchTerm')->will($this->returnValue('*bass'));
+    $actual = $this->sparql->queryConcepts(array($voc), null, null, $this->params);
+    $this->assertEquals(3, sizeof($actual));
+    foreach($actual as $match)
+      $this->assertContains('bass', $match['prefLabel'], '',true);
+  }
+  
+  /**
+   * @covers GenericSparql::queryConcepts
+   * @covers GenericSparql::generateConceptSearchQueryCondition
+   * @covers GenericSparql::generateConceptSearchQueryInner
+   * @covers GenericSparql::generateConceptSearchQuery
+   * @covers GenericSparql::transformConceptSearchResults
+   */
+  public function testQueryConceptsAsteriskBeforeAndAfterTerm()
+  {
+    $voc = $this->model->getVocabulary('test');
+    $this->params->method('getSearchTerm')->will($this->returnValue('*bass*'));
     $actual = $this->sparql->queryConcepts(array($voc), null, null, $this->params);
     $this->assertEquals(3, sizeof($actual));
     foreach($actual as $match)

@@ -310,4 +310,14 @@ class VocabularyConfigTest extends PHPUnit_Framework_TestCase
     $vocab = $this->model->getVocabulary('test');
     $this->assertEquals(true, $vocab->getConfig()->getShowStatistics());
   }
+
+  /**
+   * @covers VocabularyConfig::getId
+   */
+  public function testGetIdWithSlashNamespace() {
+    $mockres = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
+    $mockres->method('getUri')->will($this->returnValue('http://www.skosmos.skos/onto/test'));
+    $conf = new VocabularyConfig($mockres);
+    $this->assertEquals('test', $conf->getId());
+  }
 }
