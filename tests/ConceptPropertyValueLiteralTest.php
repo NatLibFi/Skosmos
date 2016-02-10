@@ -90,9 +90,27 @@ class ConceptPropertyValueLiteralTest extends PHPUnit_Framework_TestCase
   /**
    * @covers ConceptPropertyValueLiteral::__toString
    */
-  public function testGetToString() {
+  public function testToString() {
     $props = $this->concept->getProperties();
     $propvals = $props['skos:scopeNote']->getValues();
     $this->assertEquals('Carp are oily freshwater fish', $propvals['Carp are oily freshwater fish']);
+  }
+
+  /**
+   * @covers ConceptPropertyValueLiteral::__toString
+   */
+  public function testToStringEmpty() {
+    $litmock = $this->getMockBuilder('EasyRdf_Literal')->disableOriginalConstructor()->getMock();
+    $lit = new ConceptPropertyValueLiteral($litmock, 'skosmos:testType');
+    $this->assertEquals('', $lit);
+  }
+
+  /**
+   * @covers ConceptPropertyValueLiteral::getNotation
+   */
+  public function testGetNotation() {
+    $litmock = $this->getMockBuilder('EasyRdf_Literal')->disableOriginalConstructor()->getMock();
+    $lit = new ConceptPropertyValueLiteral($litmock, 'skosmos:testType');
+    $this->assertEquals(null, $lit->getNotation());
   }
 }
