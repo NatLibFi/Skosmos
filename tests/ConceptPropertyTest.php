@@ -53,6 +53,14 @@ class ConceptPropertyTest extends PHPUnit_Framework_TestCase
   }
 
   /**
+   * @covers ConceptProperty::getLabel
+   */
+  public function testGetLabelReturnsNullWhenThereIsNoLabel() {
+    $prop = new ConceptProperty('skosmos:type', null);
+    $this->assertEquals(null, $prop->getLabel());
+  }
+
+  /**
    * @covers Concept::getProperties
    * @covers ConceptProperty::getType
    */

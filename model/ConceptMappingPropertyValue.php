@@ -102,7 +102,6 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
             if ($schemeResource) {
                 return $schemeResource->label()->getValue();
             }
-
         }
         // got a label for the concept, but not the scheme - use the host name as scheme label
         return parse_url($this->resource->getUri(), PHP_URL_HOST);
@@ -114,7 +113,6 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
         if ($this->resource->get('skos:notation')) {
             return $this->resource->get('skos:notation')->getValue();
         }
-
     }
 
 }
