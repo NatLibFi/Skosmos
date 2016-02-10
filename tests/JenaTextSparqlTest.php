@@ -160,4 +160,18 @@ class JenaTextSparqlTest extends PHPUnit_Framework_TestCase
     foreach($actual as $match)
       $this->assertContains('bass', $match['prefLabel'], '',true);
   }
+
+  /**
+   * @covers JenaTextSparql::createTextQueryCondition
+   * @covers JenaTextSparql::generateConceptSearchQueryCondition
+   */
+  public function testQueryConceptsDefaultGraph()
+  {
+    $this->params->method('getSearchTerm')->will($this->returnValue('bass*'));
+    $this->params->method('getVocabIds')->will($this->returnValue(null));
+    $actual = $this->sparql->queryConcepts(array(), null, null, $this->params);
+    $this->assertEquals(1, sizeof($actual));
+    $this->assertEquals('Bass', $actual[0]['prefLabel']);
+  }
+
 }
