@@ -95,6 +95,7 @@ class VocabularyConfigTest extends PHPUnit_Framework_TestCase
   
   /**
    * @covers VocabularyConfig::getDefaultLanguage
+   * @covers VocabularyConfig::getLiteral
    */
   public function testGetDefaultLanguage() {
     $vocab = $this->model->getVocabulary('test');
@@ -131,6 +132,7 @@ class VocabularyConfigTest extends PHPUnit_Framework_TestCase
   
   /**
    * @covers VocabularyConfig::getShortName
+   * @covers VocabularyConfig::getLiteral
    */
   public function testGetShortName() {
     $vocab = $this->model->getVocabulary('test');

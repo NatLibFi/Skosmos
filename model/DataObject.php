@@ -115,6 +115,6 @@ class DataObject
     public function getEnvLang()    
     {
        // get language from locale, same as used by gettext, set by Controller
-       return substr(getenv("LC_ALL"), 0, 2);
+       return substr(getenv("LC_ALL"), 0, 2); // @codeCoverageIgnore
     }
 }
