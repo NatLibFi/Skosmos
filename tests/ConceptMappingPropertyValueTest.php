@@ -102,6 +102,22 @@ class ConceptMappingPropertyValueTest extends PHPUnit_Framework_TestCase
   }
 
   /**
+   * @covers ConceptMappingPropertyValue::getNotation
+   */
+  public function testGetNotation() {
+    $mockres = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
+    $mocklit = $this->getMockBuilder('EasyRdf_Literal')->disableOriginalConstructor()->getMock();
+    $mocklit->method('getValue')->will($this->returnValue('666'));
+    $map = array(
+        array('skos:notation', null, null, $mocklit),
+        array(null,null,null,null),
+    );
+    $mockres->method('get')->will($this->returnValueMap($map));
+    $mapping = new ConceptMappingPropertyValue($this->model, $this->vocab, $mockres, null);
+    $this->assertEquals(666, $mapping->getNotation());
+  }
+
+  /**
    * @covers ConceptMappingPropertyValue::getExVocab
    */
   public function testGetExVocab() {
