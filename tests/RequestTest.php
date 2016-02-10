@@ -18,6 +18,20 @@ class RequestTest extends PHPUnit_Framework_TestCase
   }
   
   /**
+   * @covers Request::__construct
+   */
+  public function testConstructor() {
+      $this->assertInstanceOf('Request', new Request($this->model));
+  }
+  
+  /**
+   * @covers Request::getQueryParamBoolean
+   */
+  public function testGetQueryParamBooleanDefaultValue() {
+      $this->assertTrue($this->request->getQueryParamBoolean('notfoundatall', true));
+  }
+  
+  /**
    * @covers Request::getVocabList
    */
   public function testGetVocabList() {

@@ -35,7 +35,7 @@ class Request
 
     public function getQueryParamBoolean($param_name, $default)
     {
-        $val = filter_input(INPUT_GET, $param_name, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        $val = filter_input(INPUT_GET, $param_name, FILTER_VALIDATE_BOOLEAN);
         return ($val !== null) ? $val : $default;
     }
 
