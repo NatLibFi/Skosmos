@@ -59,8 +59,46 @@ class ConceptMappingPropertyValueTest extends PHPUnit_Framework_TestCase
     $mockres->method('getLiteral')->will($this->returnValueMap($litmap));
     $mockres->method('getUri')->will($this->returnValue('http://thisdoesntexistatalland.sefsf/2j2h4/'));
     $mapping = new ConceptMappingPropertyValue($this->model, $this->vocab, $mockres, null);
-    $mapping->getLabel();
     $this->assertEquals('http://thisdoesntexistatalland.sefsf/2j2h4/', $mapping->getLabel());
+  }
+
+  /**
+   * @covers ConceptMappingPropertyValue::getLabel
+   * @covers ConceptMappingPropertyValue::queryLabel
+   */
+  public function testGetLabelWithAndWithoutLang() {
+    $mockres = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
+    $labelmap = array(
+      array('en', 'english'),
+      array(null, 'default')
+    );
+    $mockres->method('label')->will($this->returnValueMap($labelmap));
+    $mockres->method('getUri')->will($this->returnValue('http://thisdoesntexistatalland.sefsf/2j2h4/'));
+    $mapping = new ConceptMappingPropertyValue($this->model, $this->vocab, $mockres, null);
+    $this->assertEquals('english', $mapping->getLabel('en'));
+    $this->assertEquals('default', $mapping->getLabel());
+  }
+
+  /**
+   * @covers ConceptMappingPropertyValue::getLabel
+   * @covers ConceptMappingPropertyValue::queryLabel
+   */
+  public function testGetLabelWithLiteralAndLang() {
+    $mockres = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
+    $labelmap = array(
+      array('en', null),
+      array(null, null)
+    );
+    $mockres->method('label')->will($this->returnValueMap($labelmap));
+    $litmap = array(
+      array('rdf:value', 'en', 'english lit'),
+      array('rdf:value', null, 'default lit')
+    );
+    $mockres->method('getLiteral')->will($this->returnValueMap($litmap));
+    $mockres->method('getUri')->will($this->returnValue('http://thisdoesntexistatalland.sefsf/2j2h4/'));
+    $mapping = new ConceptMappingPropertyValue($this->model, $this->vocab, $mockres, null);
+    $this->assertEquals('english lit', $mapping->getLabel('en'));
+    $this->assertEquals('default lit', $mapping->getLabel());
   }
 
   /**
