@@ -9,17 +9,13 @@ class VocabularyCategoryTest extends PHPUnit_Framework_TestCase
     require_once 'testconfig.inc';
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');
-    //bindtextdomain('skosmos', 'resource/translations');
-    //bind_textdomain_codeset('skosmos', 'UTF-8');
-    //textdomain('skosmos');
-
     $this->model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $this->mockres = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
     $this->mockres->method('localName')->will($this->returnValue('local name'));
   }
   
   /**
-   * @covers VocabularyCategoryTest::__construct
+   * @covers VocabularyCategory::__construct
    * @expectedException Exception
    * @expectedExceptionMessage Invalid constructor parameter given to DataObject. 
    */
@@ -28,7 +24,7 @@ class VocabularyCategoryTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @covers VocabularyCategoryTest::__construct
+   * @covers VocabularyCategory::__construct
    */
   public function testConstructor() {
     $cat = new VocabularyCategory($this->model, $this->mockres);
@@ -36,7 +32,7 @@ class VocabularyCategoryTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @covers VocabularyCategoryTest::getVocabularies
+   * @covers VocabularyCategory::getVocabularies
    */
   public function testGetVocabularies() {
     $cat = new VocabularyCategory($this->model, null);
@@ -47,7 +43,7 @@ class VocabularyCategoryTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @covers VocabularyCategoryTest::getTitle
+   * @covers VocabularyCategory::getTitle
    */
   public function testGetTitle() {
     $cat = new VocabularyCategory($this->model, $this->mockres);
@@ -55,7 +51,7 @@ class VocabularyCategoryTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @covers VocabularyCategoryTest::getTitle
+   * @covers VocabularyCategory::getTitle
    */
   public function testGetTitleWhenNoResourceGiven() {
     $cat = new VocabularyCategory($this->model, null);
