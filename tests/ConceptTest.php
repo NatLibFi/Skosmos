@@ -17,6 +17,17 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $results = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en');
     $this->concept = reset($results);
   }
+
+  /**
+   * @covers Concept::__construct
+   */
+  public function testConstructor()
+  {
+    $mockres = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
+    $concept = new Concept($this->model, $this->vocab, $mockres, 'http://skosmos.skos/test', 'en');
+    $this->assertInstanceOf('Concept', $concept);
+    $this->assertEquals('Test ontology', $concept->getVocabTitle());
+  }
   
   /**
    * @covers Concept::getUri
