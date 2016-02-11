@@ -200,6 +200,16 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
     $info = $vocab->getInfo();
     $this->assertEquals(array("dc:title" => array('Test ontology'), 'dc:modified' => array ('Wednesday, October 1, 2014 16:29:03'), "rdf:type" => array('http://www.w3.org/2004/02/skos/core#ConceptScheme'), "owl:versionInfo" => array('The latest and greatest version')), $info);
   }
+
+  /**
+   * @covers Vocabulary::getInfo
+   * @covers Vocabulary::parseVersionInfo
+   */
+  public function testGetInfoWithVersionInfo() {
+    $vocab = $this->model->getVocabulary('dates');
+    $info = $vocab->getInfo();
+    $this->assertEquals(array('2016-02-11j14:05:26Z someone@skosmos.skos (r1197)'), $info['owl:versionInfo']);
+  }
   
   /**
    * @covers Vocabulary::getInfo

@@ -22,3 +22,6 @@ date:d2 a skos:Concept, meta:TestClass ;
 date:ownDate
   rdfs:label "This is also a dateTime" .
 
+<http://www.skosmos.skos/date/> a owl:Ontology ;
+    rdfs:label "<http://www.skosmos.skos/date/>"^^xsd:string ;
+    owl:versionInfo "$Id: date.ttl 1197 2016-02-11j14:05:26Z someone@skosmos.skos $"^^xsd:string .

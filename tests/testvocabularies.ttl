@@ -85,7 +85,8 @@
 	skosmos:language "en";
 	skosmos:showPropertyInSearch skos:exactMatch;
   skosmos:hasMultiLingualProperty skos:altLabel ;
-	skosmos:sparqlGraph <http://www.skosmos.skos/date/> .
+	skosmos:sparqlGraph <http://www.skosmos.skos/date/> ;
+	skosmos:mainConceptScheme <http://www.skosmos.skos/date/> .
 
 :mapping a skosmos:Vocabulary, void:Dataset ;
 	dc11:title "Vocabulary with mappings"@en ;
