@@ -36,6 +36,27 @@ class ConceptPropertyValueTest extends PHPUnit_Framework_TestCase
     $propvals = $props['skos:narrower']->getValues();
     $this->assertEquals('Crucian carp', $propvals['Crucian carphttp://www.skosmos.skos/test/ta121']->getLabel());
   }
+
+  /**
+   * @covers ConceptPropertyValue::getLabel
+   */
+  public function testGetLabelLiteral() {
+    $mockres = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
+    $labelmap = array(
+      array('en', null),
+      array(null, null)
+    );
+    $mockres->method('label')->will($this->returnValueMap($labelmap));
+    $litmap = array(
+      array('rdf:value', 'en', 'english lit'),
+      array('rdf:value', null, 'default lit')
+    );
+    $mockres->method('getLiteral')->will($this->returnValueMap($litmap));
+    $mockres->method('getUri')->will($this->returnValue('http://thisdoesntexistatalland.sefsf/2j2h4/'));
+    $mapping = new ConceptPropertyValue($this->model, $this->vocab, $mockres, null);
+    $this->assertEquals('english lit', $mapping->getLabel('en'));
+    $this->assertEquals('default lit', $mapping->getLabel());
+  }
   
   /**
    * @covers ConceptPropertyValue::getType
@@ -97,12 +118,30 @@ class ConceptPropertyValueTest extends PHPUnit_Framework_TestCase
   /**
    * @covers ConceptPropertyValue::__toString
    */
-  public function testGetToStringWhenSortByNotationNotSet() {
+  public function testToStringWhenSortByNotationNotSet() {
     $results = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta121', 'en');
     $concept = reset($results);
     $props = $concept->getProperties();
     $propvals = $props['skos:broader']->getValues();
     $this->assertEquals('Carp', (string)$propvals['Carphttp://www.skosmos.skos/test/ta112']);
+  }
+  
+  /**
+   * @covers ConceptPropertyValue::__toString
+   */
+  public function testToStringWithNotation() {
+    $mockres = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
+    $mockvoc = $this->getMockBuilder('Vocabulary')->disableOriginalConstructor()->getMock();
+    $mockconf = $this->getMockBuilder('VocabularyConfig')->disableOriginalConstructor()->getMock();
+    $mocklit = $this->getMockBuilder('EasyRDF_literal')->disableOriginalConstructor()->getMock();
+    $mocklit->method('getValue')->will($this->returnValue('T3ST'));
+    $mockconf->method('sortByNotation')->will($this->returnValue(true));
+    $mockvoc->method('getConfig')->will($this->returnValue($mockconf));
+    $mockres->method('label')->will($this->returnValue('Term label'));
+    $mockres->method('get')->will($this->returnValue($mocklit));
+    $mockres->method('getUri')->will($this->returnValue('http://thisdoesntexistatalland.sefsf/2j2h4/'));
+    $propval = new ConceptPropertyValue($this->model, $mockvoc, $mockres, null);
+    $this->assertEquals('T3STTerm label', (string)$propval);
   }
 
   /**
