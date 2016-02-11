@@ -59,8 +59,15 @@ class ConceptSearchParametersTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(array('test'), $params->getVocabids());
         $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'), true);
         $this->assertEquals(null, $params->getVocabids());
-        $this->request->method('getQueryParam')->will($this->onConsecutiveCalls('test vocab', 'test')); //$this->returnValue('test vocab'));
-        $this->assertEquals(array('test', 'vocab'), $params->getVocabids());
+        $mockreq = $this->getMockBuilder('Request')->disableOriginalConstructor()->getMock();
+        $qparams = array(
+            array('vocab', 'test'),
+            array('vocabs', 'test dates')
+        );
+        $mockreq->method('getQueryParam')->will($this->returnValueMap($qparams));
+        $params = new ConceptSearchParameters($mockreq, new GlobalConfig('/../tests/testconfig.inc'));
+        $this->assertEquals(array('test', 'dates'), $params->getVocabids());
+        $params = new ConceptSearchParameters($mockreq, new GlobalConfig('/../tests/testconfig.inc'), true);
         $this->assertEquals(array('test'), $params->getVocabids());
     }
   
@@ -74,6 +81,16 @@ class ConceptSearchParametersTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('test*', $params->getSearchTerm());
         $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'), true);
         $this->assertEquals('test', $params->getSearchTerm());
+    }
+  
+    /**
+     * @covers ConceptSearchParameters::getTypeLimit
+     */
+    public function testGetTypeLimitNoQueryParam() {
+        $mockreq = $this->getMockBuilder('Request')->disableOriginalConstructor()->getMock();
+        $mockreq->method('getVocab')->will($this->returnValue($this->model->getVocabulary('test')));
+        $params = new ConceptSearchParameters($mockreq, new GlobalConfig('/../tests/testconfig.inc'));
+        $this->assertEquals(array('skos:Concept', 'http://purl.org/iso25964/skos-thes#ThesaurusArray', 'http://www.w3.org/2004/02/skos/core#Collection'), $params->getTypeLimit());
     }
   
     /**
