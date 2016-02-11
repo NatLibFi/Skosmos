@@ -104,6 +104,15 @@ class ConceptSearchParametersTest extends PHPUnit_Framework_TestCase
     }
   
     /**
+     * @covers ConceptSearchParameters::getTypeLimit
+     */
+    public function testGetTypeLimitOnlyOne() {
+        $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'));
+        $this->request->method('getQueryParam')->will($this->returnValue('skos:Collection'));
+        $this->assertEquals(array('skos:Collection'), $params->getTypeLimit());
+    }
+  
+    /**
      * @covers ConceptSearchParameters::getUnique
      * @covers ConceptSearchParameters::setUnique
      */
@@ -192,4 +201,27 @@ class ConceptSearchParametersTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(25, $params->getOffset());
     }
     
+    /**
+     * @covers ConceptSearchParameters::getAdditionalFields
+     */
+    public function testGetAdditionalField() {
+        $map = array(
+            array('fields', 'broader')
+        );
+        $this->request->method('getQueryParam')->will($this->returnValueMap($map));
+        $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'));
+        $this->assertEquals(array('broader'), $params->getAdditionalFields());
+    }
+    
+    /**
+     * @covers ConceptSearchParameters::getAdditionalFields
+     */
+    public function testGetAdditionalFields() {
+        $map = array(
+            array('fields', 'broader prefLabel')
+        );
+        $this->request->method('getQueryParam')->will($this->returnValueMap($map));
+        $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'));
+        $this->assertEquals(array('broader', 'prefLabel'), $params->getAdditionalFields());
+    }
 }
