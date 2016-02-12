@@ -385,4 +385,27 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
     $vocab = new Vocabulary($this->model, $mockres);
     $this->assertEquals(array(), $vocab->listConceptGroups());
   }
+  
+  /**
+   * @covers Vocabulary::getConceptNarrowers
+   */
+  public function testGetConceptNarrowers() {
+    $vocab = $this->model->getVocabulary('test');
+    $narrowers = $vocab->getConceptNarrowers('http://www.skosmos.skos/test/ta112', 'en');
+    var_export($narrowers);
+    $this->assertEquals(array('http://www.skosmos.skos/test/ta121' => array('label' => 'Crucian carp')), $narrowers);
+    $this->assertEquals(1, sizeof($narrowers));
+  }
+  
+  /**
+   * @covers Vocabulary::getConceptBroaders
+   */
+  public function testGetConceptBroaders() {
+    $vocab = $this->model->getVocabulary('test');
+    $broaders = $vocab->getConceptBroaders('http://www.skosmos.skos/test/ta112', 'en');
+    $this->assertEquals(array('http://www.skosmos.skos/test/ta1' => array('label' => 'Fish')), $broaders);
+    $this->assertEquals(1, sizeof($broaders));
+  }
+
 }
+
