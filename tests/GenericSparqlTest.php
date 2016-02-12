@@ -359,11 +359,12 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
     $voc = $this->model->getVocabulary('test');
     $voc2 = $this->model->getVocabulary('groups');
     $this->params->method('getSearchTerm')->will($this->returnValue('Carp'));
-    $this->params->method('getVocabIds')->will($this->returnValue(array('test', 'groups')));
+    $this->params->method('getVocabs')->will($this->returnValue(array($voc, $voc2)));
     $sparql = new GenericSparql('http://localhost:3030/ds/sparql', '?graph', $this->model);
     $actual = $sparql->queryConcepts(array($voc, $voc2), null, null, $this->params);
     $this->assertEquals(2, sizeof($actual));
-    $this->assertEquals('Carp', $actual[0]['prefLabel']);
+    $this->assertEquals('http://www.skosmos.skos/groups/ta112', $actual[0]['uri']);
+    $this->assertEquals('http://www.skosmos.skos/test/ta112', $actual[1]['uri']);
   }
 
   /**
