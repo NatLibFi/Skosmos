@@ -412,8 +412,8 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
    */
   public function testGetConceptInfo() {
     $vocab = $this->model->getVocabulary('test');
-    $concept = $vocab->getConceptBroaders('http://www.skosmos.skos/test/ta112', 'en');
-    $this->assertEquals(array('http://www.skosmos.skos/test/ta1' => array('label' => 'Fish')), $concept);
+    $concept = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en');
+    $this->assertInstanceOf('Concept', $concept[0]);
     $this->assertEquals(1, sizeof($concept));
   }
 
