@@ -250,6 +250,24 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    * @covers GenericSparql::generateConceptInfoQuery
    * @covers GenericSparql::transformConceptInfoResults
    * @covers GenericSparql::filterDuplicateVocabs
+   * @covers GenericSparql::getVocabGraphs
+   * @covers GenericSparql::formatValuesGraph
+   */
+  public function testQueryConceptInfoWithAllVocabs()
+  {
+    $this->sparql = new GenericSparql('http://localhost:3030/ds/sparql', '?graph', $this->model);
+    $actual = $this->sparql->queryConceptInfo(array('http://www.skosmos.skos/test/ta121', 'http://www.skosmos.skos/groups/ta111'), null, null, false, 'en');
+    $this->assertInstanceOf('Concept', $actual[0]);
+    $this->assertEquals('http://www.skosmos.skos/test/ta121', $actual[0]->getUri());
+    $this->assertEquals('http://www.skosmos.skos/groups/ta111', $actual[1]->getUri());
+    $this->assertEquals(2, sizeof($actual));
+  }
+
+  /**
+   * @covers GenericSparql::queryConceptInfo
+   * @covers GenericSparql::generateConceptInfoQuery
+   * @covers GenericSparql::transformConceptInfoResults
+   * @covers GenericSparql::filterDuplicateVocabs
    */
   public function testQueryConceptInfoWithMultipleSameVocabs()
   {
@@ -333,6 +351,27 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    * @covers GenericSparql::generateConceptSearchQueryCondition
    * @covers GenericSparql::generateConceptSearchQueryInner
    * @covers GenericSparql::generateConceptSearchQuery
+   * @covers GenericSparql::formatFilterGraph
+   * @covers GenericSparql::transformConceptSearchResults
+   */
+  public function testQueryConceptsMultipleVocabs()
+  {
+    $voc = $this->model->getVocabulary('test');
+    $voc2 = $this->model->getVocabulary('groups');
+    $this->params->method('getSearchTerm')->will($this->returnValue('Carp'));
+    $this->params->method('getVocabIds')->will($this->returnValue(array('test', 'groups')));
+    $sparql = new GenericSparql('http://localhost:3030/ds/sparql', '?graph', $this->model);
+    $actual = $sparql->queryConcepts(array($voc, $voc2), null, null, $this->params);
+    $this->assertEquals(2, sizeof($actual));
+    $this->assertEquals('Carp', $actual[0]['prefLabel']);
+  }
+
+  /**
+   * @covers GenericSparql::queryConcepts
+   * @covers GenericSparql::generateConceptSearchQueryCondition
+   * @covers GenericSparql::generateConceptSearchQueryInner
+   * @covers GenericSparql::generateConceptSearchQuery
+   * @covers GenericSparql::formatFilterGraph
    * @covers GenericSparql::transformConceptSearchResults
    */
   public function testQueryConcepts()
