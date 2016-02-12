@@ -390,6 +390,25 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    * @covers GenericSparql::generateConceptSearchQueryCondition
    * @covers GenericSparql::generateConceptSearchQueryInner
    * @covers GenericSparql::generateConceptSearchQuery
+   * @covers GenericSparql::formatFilterGraph
+   * @covers GenericSparql::formatBroader
+   */
+  public function testQueryConceptsAdditionalFields()
+  {
+    $voc = $this->model->getVocabulary('test');
+    $this->params->method('getSearchTerm')->will($this->returnValue('bass*'));
+    $this->params->method('getVocabIds')->will($this->returnValue(array('test')));
+    $actual = $this->sparql->queryConcepts(array($voc), array('broader'), null, $this->params);
+    $this->assertEquals(1, sizeof($actual));
+    $this->assertEquals('Bass', $actual[0]['prefLabel']);
+    $this->assertEquals('http://www.skosmos.skos/test/ta1', $actual[0]['broader'][0]['uri']);
+  }
+
+  /**
+   * @covers GenericSparql::queryConcepts
+   * @covers GenericSparql::generateConceptSearchQueryCondition
+   * @covers GenericSparql::generateConceptSearchQueryInner
+   * @covers GenericSparql::generateConceptSearchQuery
    * @covers GenericSparql::transformConceptSearchResults
    */
   public function testQueryConceptsExactTerm()

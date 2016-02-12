@@ -78,7 +78,10 @@
 	skosmos:sparqlGraph <http://www.skosmos.skos/dup/> .
 
 :dates a skosmos:Vocabulary, void:Dataset ;
+	dc:title "Date information vocabulary"@en ;
 	dc11:title "Date information vocabulary"@en ;
+	skos:prefLabel "Date information vocabulary"@en ;
+	rdfs:label "Date information vocabulary"@en ;
 	dc:subject :cat_general ;
 	void:uriSpace "http://www.skosmos.skos/onto/date/";
 	void:sparqlEndpoint <http://localhost:3030/ds/sparql> ;
