@@ -229,6 +229,27 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    * @covers GenericSparql::generateConceptInfoQuery
    * @covers GenericSparql::transformConceptInfoResults
    * @covers GenericSparql::filterDuplicateVocabs
+   * @covers GenericSparql::getVocabGraphs
+   * @covers GenericSparql::formatValuesGraph
+   */
+  public function testQueryConceptInfoWithMultipleVocabs()
+  {
+    $this->sparql = new GenericSparql('http://localhost:3030/ds/sparql', '?graph', $this->model);
+    $voc2 = $this->model->getVocabulary('test');
+    $voc3 = $this->model->getVocabulary('dates');
+    $voc4 = $this->model->getVocabulary('groups');
+    $actual = $this->sparql->queryConceptInfo(array('http://www.skosmos.skos/test/ta121', 'http://www.skosmos.skos/groups/ta111'), null, array($voc2, $voc3, $voc4), false, 'en');
+    $this->assertInstanceOf('Concept', $actual[0]);
+    $this->assertEquals('http://www.skosmos.skos/test/ta121', $actual[0]->getUri());
+    $this->assertEquals('http://www.skosmos.skos/groups/ta111', $actual[1]->getUri());
+    $this->assertEquals(2, sizeof($actual));
+  }
+
+  /**
+   * @covers GenericSparql::queryConceptInfo
+   * @covers GenericSparql::generateConceptInfoQuery
+   * @covers GenericSparql::transformConceptInfoResults
+   * @covers GenericSparql::filterDuplicateVocabs
    */
   public function testQueryConceptInfoWithMultipleSameVocabs()
   {
