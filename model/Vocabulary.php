@@ -151,6 +151,7 @@ class Vocabulary extends DataObject
 
         foreach ($conceptscheme->properties() as $prop) {
             foreach ($conceptscheme->allLiterals($prop, $lang) as $val) {
+                $prop = (substr($prop, 0, 5) == 'dc11:') ? str_replace('dc11:', 'dc:', $prop) : $prop;
                 $ret[$prop][$val->getValue()] = $val;
             }
             if (!isset($ret[$prop]) || sizeof($ret[$prop]) == 0) { // not found with language tag
@@ -163,6 +164,7 @@ class Vocabulary extends DataObject
                 }
             }
             foreach ($conceptscheme->allResources($prop) as $val) {
+                $prop = (substr($prop, 0, 5) == 'dc11:') ? str_replace('dc11:', 'dc:', $prop) : $prop;
                 $exvocab = $this->model->guessVocabularyFromURI($val->getURI());
                 $exlabel = $this->getExternalLabel($exvocab, $val->getURI(), $lang);
                 if (isset($exlabel)) {
