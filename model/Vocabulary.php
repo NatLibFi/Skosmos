@@ -151,7 +151,7 @@ class Vocabulary extends DataObject
 
         foreach ($conceptscheme->properties() as $prop) {
             foreach ($conceptscheme->allLiterals($prop, $lang) as $val) {
-                $ret[$prop][] = $val;
+                $ret[$prop][$val->getValue()] = $val;
             }
             if (!isset($ret[$prop]) || sizeof($ret[$prop]) == 0) { // not found with language tag
                 foreach ($conceptscheme->allLiterals($prop, null) as $val) {
@@ -169,7 +169,11 @@ class Vocabulary extends DataObject
                     $val->add('skosmos:vocab', $exvocab->getId());
                     $val->add('skosmos:label', $exlabel);
                 }
-                $ret[$prop][] = $val;
+                $label = $val->label($lang) ? $val->label($lang) : $val->getUri();
+                $ret[$prop][$exlabel ? $exlabel->getValue() : $label] = $val;
+            }
+            if (isset($ret[$prop])) {
+                ksort($ret[$prop]);
             }
         }
         if (isset($ret['owl:versionInfo'])) { // if version info availible for vocabulary convert it to a more readable format
