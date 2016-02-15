@@ -1,7 +1,7 @@
 {% extends "light.twig" %}
 {% block title %}: Error page{% endblock %}
 {% block error %}
-  <div class="alert frontpage-alert">
+  <div class="alert {% if request.vocabid != '' or request.page == 'feedback' or request.page == 'about' %}page-alert{% else %}frontpage-alert{% endif %}">
     <h3>{% if not message %}{% trans %}404 Error: The page {{ requested_page }} cannot be found.{% endtrans %}{% else %}{{ message }}{% endif %}</h3>
   </div>
 {% endblock %}

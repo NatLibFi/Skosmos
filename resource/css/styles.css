@@ -956,6 +956,12 @@ tr {
   display: inline-block;
 }
 
+.page-alert {
+  display: inline-block;
+  position: absolute;
+  right: 0;
+}
+
 .alert h2 {
   margin: 5px 0 5px 0;
 }
@@ -1807,6 +1813,10 @@ body, .versal, h1, h2, p, .versal-bold {
     width: calc(100% - 375px);
   }
 
+  .page-alert {
+    width: calc(100% - 335px);
+  }
+
   .nav > li > a {
     padding: 10px 10px;
   }
@@ -1883,6 +1893,10 @@ body, .versal, h1, h2, p, .versal-bold {
   
   .frontpage-alert {
     width: calc(100% - 610px);
+  }
+  
+  .page-alert {
+    width: calc(100% - 425px);
   }
 
   .sidebar-grey-alpha {

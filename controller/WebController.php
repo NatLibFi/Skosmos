@@ -216,6 +216,10 @@ class WebController extends Controller
         $uri = $vocab->getConceptURI($request->getUri()); // make sure it's a full URI
 
         $results = $vocab->getConceptInfo($uri, $request->getContentLang());
+        if (!$results) {
+            $this->invokeGenericErrorPage($request);
+            return;
+        }
         $template = (in_array('skos:Concept', $results[0]->getType())) ? $this->twig->loadTemplate('concept-info.twig') : $this->twig->loadTemplate('group-contents.twig');
         
         $crumbs = $vocab->getBreadCrumbs($request->getContentLang(), $uri);
