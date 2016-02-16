@@ -784,7 +784,7 @@ EOQ;
      */
     protected function generateConceptSearchQuery($fields, $unique, $params) {
         $gc = $this->graphClause;
-        $limitandoffset = $this->formatLimitAndOffset($params->getSearchLimit(), $params->getOffset());
+        $limitandoffset = $this->formatLimitAndOffset(null, $params->getOffset());
         $formattedtype = $this->formatTypes($params->getTypeLimit());
         $formattedbroader = $this->formatBroader($params->getLang(), $fields);
         $extravars = $formattedbroader['extravars'];
