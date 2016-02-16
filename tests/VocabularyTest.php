@@ -198,7 +198,6 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   public function testGetInfo() {
     $vocab = $this->model->getVocabulary('test');
     $info = $vocab->getInfo();
-    //var_export($info);
     $this->assertEquals(array("dc:title" => array('Test ontology'), 'dc:modified' => array ('Wednesday, October 1, 2014 16:29:03'), "rdf:type" => array('http://www.w3.org/2004/02/skos/core#ConceptScheme' => 'http://www.w3.org/2004/02/skos/core#ConceptScheme'), "owl:versionInfo" => array('The latest and greatest version')), $info);
   }
 
@@ -393,7 +392,6 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
   public function testGetConceptNarrowers() {
     $vocab = $this->model->getVocabulary('test');
     $narrowers = $vocab->getConceptNarrowers('http://www.skosmos.skos/test/ta112', 'en');
-    var_export($narrowers);
     $this->assertEquals(array('http://www.skosmos.skos/test/ta121' => array('label' => 'Crucian carp')), $narrowers);
     $this->assertEquals(1, sizeof($narrowers));
   }
