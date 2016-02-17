@@ -14,7 +14,9 @@ var hiertrans = "{% trans "Hier-nav" %}";
 var lang = "{{ request.lang }}";
 var content_lang = "{{ request.contentLang }}";
 var vocab = "{{ request.vocabid }}";
+{% if parameters %}
 var waypoint_results = {{ parameters.searchLimit }};
+{% endif %}
 </script>
 
 <script type="text/javascript" src="vendor/components/jquery/jquery.min.js"></script>
