@@ -754,7 +754,7 @@ $(function() { // DOCUMENT READY
   
   // search-results waypoint
   if (number_of_hits > 0) { // if we are in the search page with some results
-    if (number_of_hits < waypoint_results * offcount) { 
+    if (number_of_hits === parseInt($('.search-count p').text().substr(0, $('.search-count p').text().indexOf(' ')), 10)) {
       $('.search-result-listing').append($ready);
     }
     else {
@@ -806,29 +806,30 @@ $(function() { // DOCUMENT READY
 
   function waypointCallback() {
     var number_of_hits = $(".search-result").length;
-    if (number_of_hits >= waypoint_results * offcount) { $('.search-result-listing').append($loading); }
-    var typeLimit = $('#type-limit').val();
-    var schemeLimit = $('#scheme-limit').val();
-    var groupLimit = $('#group-limit').val();
-    var parentLimit = $('#parent-limit').attr('data-uri');
-    var parameters = $.param({'q' : searchTerm, 'vocabs' : vocabSelectionString, 'offset' : offcount * waypoint_results, 'clang' : content_lang, 'type' : typeLimit, 'group' : groupLimit, 'parent': parentLimit, anylang: getUrlParams().anylang, 'scheme' : schemeLimit });
-    $.ajax({
-      url : window.location.pathname,
-      data : parameters,
-      success : function(data) {
-        $loading.detach();
-        if ($(data).find('.search-result').length === 0) {
-          $('.search-result-listing').append($ready);
-          return false;
+    if (number_of_hits < parseInt($('.search-count p').text().substr(0, $('.search-count p').text().indexOf(' ')), 10)) { $('.search-result-listing').append($loading);
+      var typeLimit = $('#type-limit').val();
+      var schemeLimit = $('#scheme-limit').val();
+      var groupLimit = $('#group-limit').val();
+      var parentLimit = $('#parent-limit').attr('data-uri');
+      var parameters = $.param({'q' : searchTerm, 'vocabs' : vocabSelectionString, 'offset' : offcount * waypoint_results, 'clang' : content_lang, 'type' : typeLimit, 'group' : groupLimit, 'parent': parentLimit, anylang: getUrlParams().anylang, 'scheme' : schemeLimit });
+      $.ajax({
+        url : window.location.pathname,
+        data : parameters,
+        success : function(data) {
+          $loading.detach();
+          $('.search-result-listing').append($(data).find('.search-result'));
+          number_of_hits = $('.uri-input-box').length;
+          $ready = $("<p class='search-count'>" + results_disp.replace('%d',$(".search-result").length) +"</p>");
+          offcount++;
+          shortenProperties();
+          if (number_of_hits === parseInt($('.search-count p').text().substr(0, $('.search-count p').text().indexOf(' ')), 10)) { $('.search-result-listing');
+            $('.search-result-listing').append($ready);
+            return false;
+          }
+          $('.search-result:nth-last-of-type(4)').waypoint(function() { waypointCallback(); }, options );
         }
-        $('.search-result-listing').append($(data).find('.search-result'));
-        number_of_hits = $('.uri-input-box').length;
-        $ready = $("<p class='search-count'>" + results_disp.replace('%d',$(".search-result").length) +"</p>");
-        offcount++;
-        shortenProperties();
-        $('.search-result:nth-last-of-type(4)').waypoint(function() { waypointCallback(); }, options );
-      }
-    });
+      });
+    }
   }
 
   // activating the custom autocomplete 
