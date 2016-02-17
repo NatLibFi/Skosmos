@@ -334,16 +334,20 @@ class ConceptTest extends PHPUnit_Framework_TestCase
   }
   
   /**
+   * @covers Concept::getArrayProperties
    * @covers Concept::getGroupProperties
+   * @covers Concept::getReverseResources
    */
   public function testGetGroupProperties()
   {
     $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $vocab = $model->getVocabulary('groups');
     $concept = $vocab->getConceptInfo("http://www.skosmos.skos/groups/ta111", "en");
+    $arrays = $concept[0]->getArrayProperties();
+    $this->assertArrayHasKey("Saltwater fish", $arrays);
+    $this->assertArrayHasKey("Submarine-like fish", $arrays);
     $groups = $concept[0]->getGroupProperties();
-    $this->assertArrayHasKey("Saltwater fish", $groups);
-    $this->assertArrayHasKey("Submarine-like fish", $groups);
+    $this->assertEmpty($groups);
   }
 
   /**

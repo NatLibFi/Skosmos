@@ -101,29 +101,24 @@
       {% endfor %}
       {% if concept.groupProperties %}<tr><td><span class="versal property-click" title="{% trans "skosmos:memberOf_help" %}" >{{ 'skosmos:memberOf'|trans|upper }}</span></td><td>
           <ul>
-          {% set arrays = false %}
           {% for group in concept.groupProperties %}
-            {% if group.type != 'skosmos:memberOfArray' %}
               {% if group.type != 'skosmos:memberOfSuper' and not superFound %}<li>{% endif %}
                 <a href="{{ group.uri | link_url(group.vocab,request.lang,'groups',request.contentLang) }}">{% if group.notation %}<span class="versal">{{ group.notation }}</span>{% endif %}{{ group.label(request.contentLang) }}</a>
                 {% if group.type == 'skosmos:memberOfSuper' %}{% set superFound = true %}<span class="versal"> &#62; </span>{% endif %}
               {% if group.type != 'skosmos:memberOfSuper' and not superFound %}</li>{% endif %}
-            {% else %}
-                {% set arrays = true %}
-            {% endif %}
           {% endfor %}
           </ul>
-          {% if arrays %}<tr><td><span class="versal property-click" title="{% trans "skosmos:memberOfArray_help" %}" >{{ 'skosmos:memberOfArray'|trans|upper }}</span></td><td>
-          <ul>
-          {% for group in concept.groupProperties %}
-            {% if group.type == 'skosmos:memberOfArray' %}
-                <li><a href="{{ group.uri | link_url(group.vocab,request.lang,'groups',request.contentLang) }}">{% if group.notation %}<span class="versal">{{ group.notation }}</span>{% endif %}{{ group.label(request.contentLang) }}</a></li>
-            {% else %}
-            {% endif %}
-          {% endfor %}
-          </ul>
-          {% endif %}
         </td>
+      {% endif %}
+      {% if concept.arrayProperties %}<tr><td><span class="versal property-click" title="{% trans "skosmos:memberOfArray_help" %}" >{{ 'skosmos:memberOfArray'|trans|upper }}</span></td><td>
+      <ul>
+      {% for group in concept.arrayProperties %}
+        {% if group.type == 'skosmos:memberOfArray' %}
+            <li><a href="{{ group.uri | link_url(group.vocab,request.lang,'groups',request.contentLang) }}">{% if group.notation %}<span class="versal">{{ group.notation }}</span>{% endif %}{{ group.label(request.contentLang) }}</a></li>
+        {% else %}
+        {% endif %}
+      {% endfor %}
+      </ul>
       {% endif %}
       {% if concept.foreignLabels %}<tr><td><span class="versal property-click" title="{% trans "foreign prefLabel help" %}" >{{ 'foreign prefLabels'|trans|upper }}</span></td><td>
           {% set prevlang = '' %}{# Only displaying the language when it appears for the very first time #}
