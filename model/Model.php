@@ -555,8 +555,15 @@ class Model
 
     public function getResourceFromUri($uri)
     {
-        EasyRdf_Format::unregister('json'); // prevent parsing errors for sources which return invalid JSON
-        EasyRdf_Format::unregister('jsonld'); // prevent errors for sources which return invalid JSON-LD, see #447
+        // prevent parsing errors for sources which return invalid JSON (see #447)
+        // 1. Unregister the legacy RDF/JSON parser, we don't want to use it
+        EasyRdf_Format::unregister('json'); 
+        // 2. Add "application/json" as a possible MIME type for the JSON-LD format
+        $jsonld = EasyRdf_Format::getFormat('jsonld');
+        $mimetypes = $jsonld->getMimeTypes();
+        $mimetypes['application/json'] = 0.5;
+        $jsonld->setMimeTypes($mimetypes);
+        
         // using apc cache for the resource if available
         if (function_exists('apc_store') && function_exists('apc_fetch')) {
             // @codeCoverageIgnoreStart
