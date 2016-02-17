@@ -1,0 +1,42 @@
+#!/bin/sh
+
+# Munin plugin to measure Skosmos REST API response time
+
+# PERFPATH should be set with munin environment variables!
+
+. $PERFPATH/config.sh
+
+URLFILE=$PERFPATH/urls/rest-vocabSearch.txt.gz
+RESPONSELOG=$LOGDIR/rest-responsetime.log
+TIME=20S
+
+# categories of rest response time benchmark
+CATS=`grep ' D' $RESPONSELOG |awk '{ print $2 }'|cut -c 2-|sort|uniq`
+
+if [ "$1" = "config" ]; then
+  echo 'graph_title Skosmos REST API response time'
+  echo 'graph_vlabel seconds'
+  echo 'graph_category skosmos'
+  
+  echo 'current_vocabsearch.label current vocabSearch'
+  
+  # other categories determined from log file
+  for cat in $CATS; do
+    echo "$cat.label $cat"
+  done
+  
+  exit 0
+fi
+
+# print values from last run
+for cat in $CATS; do
+  echo -n "$cat.value "
+  grep -A 1 " D$cat " $RESPONSELOG |tail -n 1|cut -d ',' -f 5|tr -d ' '
+done
+
+# determine current value for web page requests
+echo -n "current_vocabsearch.value "
+echo "BASEURL=$RESTBASEURL" | \
+  zcat -f - $URLFILE | \
+    siege --rc=/dev/null -c 1 -H 'Pragma: no-cache' --log=/dev/null -t $TIME -i -f /dev/stdin \
+      2>&1 >/dev/null| grep 'Response time'|awk '{ print $3 }'
