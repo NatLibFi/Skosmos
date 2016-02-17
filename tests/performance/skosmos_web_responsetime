@@ -14,7 +14,7 @@ TIME=20S
 CATS=`grep ' D' $RESPONSELOG |awk '{ print $2 }'|cut -c 2-|sort|uniq`
 
 if [ "$1" = "config" ]; then
-  echo 'graph_title Skosmos web page response time'
+  echo "graph_title Skosmos web page response time: $WEBBASEURL"
   echo 'graph_vlabel seconds'
   echo 'graph_category skosmos'
   
