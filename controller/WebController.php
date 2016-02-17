@@ -396,6 +396,7 @@ class WebController extends Controller
                 'vocab_list' => $vocabList,
                 'sorted_vocabs' => $sortedVocabs,
                 'request' => $request,
+                'parameters' => $parameters
             ));
     }
 
