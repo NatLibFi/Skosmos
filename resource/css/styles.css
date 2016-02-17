@@ -75,8 +75,8 @@ p {
 }
 
 .concept-spinner {
-  background-position: center 100px;
-  background:url("../pics/gear.gif") no-repeat transparent;
+  background:url("../pics/alt.gif") no-repeat transparent;
+  background-position: center 130px;
   height: 100px;
   padding-top: 180px;
   text-align: center;
