@@ -799,7 +799,7 @@ EOQ;
 
         // extra conditions for parent and group, if specified
         $parentcond = ($params->getParentLimit()) ? "?s skos:broader+ <" . $params->getParentLimit() . "> ." : "";
-        $groupcond = ($params->getGroupLimit()) ? "<$params->getGroupLimit()> skos:member ?s ." : "";
+        $groupcond = ($params->getGroupLimit()) ? "<" . $params->getGroupLimit() . "> skos:member ?s ." : "";
         $pgcond = $parentcond . $groupcond;
 
         $orderextra = $this->isDefaultEndpoint() ? $this->graph : '';
