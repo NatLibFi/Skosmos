@@ -784,7 +784,6 @@ EOQ;
      */
     protected function generateConceptSearchQuery($fields, $unique, $params) {
         $gc = $this->graphClause;
-        $limitandoffset = $this->formatLimitAndOffset(null, $params->getOffset());
         $formattedtype = $this->formatTypes($params->getTypeLimit());
         $formattedbroader = $this->formatBroader($params->getLang(), $fields);
         $extravars = $formattedbroader['extravars'];
@@ -845,7 +844,7 @@ $innerquery
  $filter_graph
 }
 GROUP BY ?s ?match ?label ?plabel ?alabel ?hlabel ?graph
-ORDER BY LCASE(STR(?match)) LANG(?match) $orderextra $limitandoffset
+ORDER BY LCASE(STR(?match)) LANG(?match) $orderextra
 EOQ;
         return $query;
     }
