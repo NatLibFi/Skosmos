@@ -380,8 +380,12 @@ class RestController extends Controller
      */
     public function types($request)
     {
-        $this->setLanguageProperties($request->getLang());
         $vocid = $request->getVocab() ? $request->getVocab()->getId() : null;
+        if ($vocid === null && !$request->getLang()) {
+            return $this->returnError(400, "Bad Request", "lang parameter missing");
+        }
+        $this->setLanguageProperties($request->getLang());
+        
         $queriedtypes = $this->model->getTypes($vocid, $request->getLang());
 
         $types = array();
