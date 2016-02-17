@@ -556,6 +556,7 @@ class Model
     public function getResourceFromUri($uri)
     {
         EasyRdf_Format::unregister('json'); // prevent parsing errors for sources which return invalid JSON
+        EasyRdf_Format::unregister('jsonld'); // prevent errors for sources which return invalid JSON-LD, see #447
         // using apc cache for the resource if available
         if (function_exists('apc_store') && function_exists('apc_fetch')) {
             // @codeCoverageIgnoreStart
