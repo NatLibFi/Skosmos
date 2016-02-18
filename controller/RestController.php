@@ -45,20 +45,21 @@ class RestController extends Controller
      */
     private function returnJson($data)
     {
+        // wrap with JSONP callback if requested
         if (filter_input(INPUT_GET, 'callback', FILTER_SANITIZE_STRING)) {
             header("Content-type: application/javascript; charset=utf-8");
-            // wrap with JSONP callback
             echo filter_input(INPUT_GET, 'callback', FILTER_UNSAFE_RAW) . "(" . json_encode($data) . ");";
-        } else {
-            // negotiate suitable format
-            $negotiator = new \Negotiation\FormatNegotiator();
-            $priorities = array('application/json', 'application/ld+json');
-            $best = filter_input(INPUT_SERVER, 'HTTP_ACCEPT', FILTER_SANITIZE_STRING) ? $negotiator->getBest(filter_input(INPUT_SERVER, 'HTTP_ACCEPT', FILTER_SANITIZE_STRING), $priorities) : null;
-            $format = ($best !== null) ? $best->getValue() : $priorities[0];
-            header("Content-type: $format; charset=utf-8");
-            header("Vary: Accept"); // inform caches that we made a choice based on Accept header
-            echo json_encode($data);
+            return;
         }
+        
+        // otherwise negotiate suitable format for the response and return that
+        $negotiator = new \Negotiation\FormatNegotiator();
+        $priorities = array('application/json', 'application/ld+json');
+        $best = filter_input(INPUT_SERVER, 'HTTP_ACCEPT', FILTER_SANITIZE_STRING) ? $negotiator->getBest(filter_input(INPUT_SERVER, 'HTTP_ACCEPT', FILTER_SANITIZE_STRING), $priorities) : null;
+        $format = ($best !== null) ? $best->getValue() : $priorities[0];
+        header("Content-type: $format; charset=utf-8");
+        header("Vary: Accept"); // inform caches that we made a choice based on Accept header
+        echo json_encode($data);
     }
 
     /**
@@ -90,12 +91,13 @@ class RestController extends Controller
             if (!in_array($format, $choices)) {
                 return null;
             }
-
-        } else {
-            header('Vary: Accept'); // inform caches that a decision was made based on Accept header
-            $best = $this->negotiator->getBest($accept, $choices);
-            $format = ($best !== null) ? $best->getValue() : null;
+            return $format;
         }
+        
+        // if there was no proposed format, negotiate a suitable format
+        header('Vary: Accept'); // inform caches that a decision was made based on Accept header
+        $best = $this->negotiator->getBest($accept, $choices);
+        $format = ($best !== null) ? $best->getValue() : null;
         return $format;
     }
 
