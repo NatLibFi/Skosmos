@@ -535,13 +535,14 @@ class RestController extends Controller
 
             header("Location: " . $urls[$format]);
             return;
-        } else {
-            return $this->returnError(400, 'Bad Request', "uri parameter missing");
         }
 
         $format = $this->negotiateFormat(explode(' ', self::$supportedMIMETypes), $request->getServerConstant('HTTP_ACCEPT'), $format);
         if (!$format) {
             return $this->returnError(406, 'Not Acceptable', "Unsupported format. Supported MIME types are: " . self::$supportedMIMETypes);
+        }
+        if (!isset($uri) && !isset($urls)) {
+            return $this->returnError(400, 'Bad Request', "uri parameter missing");
         }
 
         $vocid = $vocab ? $vocab->getId() : null;
