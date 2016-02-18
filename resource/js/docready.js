@@ -822,7 +822,7 @@ $(function() { // DOCUMENT READY
           $ready = $("<p class='search-count'>" + results_disp.replace('%d',$(".search-result").length) +"</p>");
           offcount++;
           shortenProperties();
-          if (number_of_hits === parseInt($('.search-count p').text().substr(0, $('.search-count p').text().indexOf(' ')), 10)) { $('.search-result-listing');
+          if ($(data).find('.search-result').length === 0 || number_of_hits === parseInt($('.search-count p').text().substr(0, $('.search-count p').text().indexOf(' ')), 10)) { $('.search-result-listing');
             $('.search-result-listing').append($ready);
             return false;
           }
