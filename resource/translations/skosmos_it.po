@@ -1,14 +1,14 @@
 # 
 # Translators:
-# Armando Stellato <stellato@info.uniroma2.it>, 2015
+# Armando Stellato <stellato@info.uniroma2.it>, 2015-2016
 # osma <osma.suominen@helsinki.fi>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-02-16 15:42+0200\n"
-"PO-Revision-Date: 2016-02-17 08:29+0000\n"
-"Last-Translator: osma <osma.suominen@helsinki.fi>\n"
+"PO-Revision-Date: 2016-02-17 17:02+0000\n"
+"Last-Translator: Armando Stellato <stellato@info.uniroma2.it>\n"
 "Language-Team: Italian (http://www.transifex.com/national-library-of-finland/skosmos/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -44,7 +44,7 @@ msgstr "ultima modifica"
 
 #: model/VocabularyCategory.php:44
 msgid "Vocabularies"
-msgstr ""
+msgstr "Vocabolari"
 
 #: /tmp/cache/56c32743c4105/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:26
 msgid "%search_count% results for '%term%'"
@@ -86,7 +86,7 @@ msgstr "per concetto padre"
 
 #: /tmp/cache/56c32743c4105/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:430
 msgid "By scheme"
-msgstr ""
+msgstr "Per sottovocabolario"
 
 #: /tmp/cache/56c32743c4105/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:469
 msgid "By type"
@@ -246,27 +246,27 @@ msgstr "è richiesto un valore non nullo"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:25
 msgid "cc:attributionName"
-msgstr ""
+msgstr "Nome dell'autore"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:27
 msgid "cc:attributionUrl"
-msgstr ""
+msgstr "URL dell'autore"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:23
 msgid "cc:license"
-msgstr ""
+msgstr "Licenza"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:29
 msgid "cc:morePermissions"
-msgstr ""
+msgstr "Ulteriori Licenze"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:31
 msgid "cc:useGuidelines"
-msgstr ""
+msgstr "Guide d'uso"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:33
 msgid "dc:conformsTo"
-msgstr ""
+msgstr "Conforme a"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:35
 msgid "dc:contributor"
@@ -274,7 +274,7 @@ msgstr "Collaboratore"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:37
 msgid "dc:coverage"
-msgstr ""
+msgstr "Copertura"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:39
 msgid "dc:created"
@@ -294,19 +294,19 @@ msgstr "Descrizione"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:47
 msgid "dc:format"
-msgstr ""
+msgstr "Formato"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:49
 msgid "dc:identifier"
-msgstr ""
+msgstr "Identificatore"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:51
 msgid "dc:isReplacedBy"
-msgstr ""
+msgstr "è sostituito da"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:53
 msgid "dc:isRequiredBy"
-msgstr ""
+msgstr "è richiesto da"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:55
 msgid "dc:issued"
@@ -334,7 +334,7 @@ msgstr "Relazione"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:67
 msgid "dc:replaces"
-msgstr ""
+msgstr "sostituisce"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:69
 msgid "dc:rights"
@@ -342,7 +342,7 @@ msgstr "Diritti"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:71
 msgid "dc:rightsHolder"
-msgstr ""
+msgstr "Detentore dei diritti"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:73
 msgid "dc:source"
@@ -350,7 +350,7 @@ msgstr "Sorgente"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:75
 msgid "dc:source_help"
-msgstr ""
+msgstr "Sorgente per la descrizione del concetto"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:77
 msgid "dc:subject"
@@ -362,7 +362,7 @@ msgstr "Titolo"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:81
 msgid "dc:type"
-msgstr ""
+msgstr "Tipo"
 
 #: /tmp/cache/56c32743c4105/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:256
 #: /tmp/cache/56c32743c4105/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:36
@@ -375,7 +375,7 @@ msgstr "Pagina principale"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:85
 msgid "foaf:page"
-msgstr ""
+msgstr "Pagina"
 
 #: /tmp/cache/56c32743c4105/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:542
 #: /tmp/cache/56c32743c4105/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:577
@@ -408,27 +408,27 @@ msgstr "Array di concetti fratelli"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:93
 msgid "isothes:broaderGeneric"
-msgstr ""
+msgstr "Concetti più generali"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:95
 msgid "isothes:broaderInstantial"
-msgstr ""
+msgstr "Concetti più generali (Istanziativi)"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:97
 msgid "isothes:broaderPartitive"
-msgstr ""
+msgstr "Concetti più generali (partitivi)"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:99
 msgid "isothes:narrowerGeneric"
-msgstr ""
+msgstr "Concetti più specifici"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:101
 msgid "isothes:narrowerInstantial"
-msgstr ""
+msgstr "Concetti più specifici (istanziativi)"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:103
 msgid "isothes:narrowerPartitive"
-msgstr ""
+msgstr "Concetti più specifici (partitivi)"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:89
 msgid "isothes:superGroup"
@@ -448,7 +448,7 @@ msgstr "padre"
 
 #: /tmp/cache/56c32743c4105/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:81
 msgid "limited to scheme"
-msgstr ""
+msgstr "limitato allo schema"
 
 #: /tmp/cache/56c32743c4105/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:29
 msgid "limited to type"
@@ -639,11 +639,11 @@ msgstr "Appartiene al gruppo"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:199
 msgid "skosmos:memberOfArray"
-msgstr ""
+msgstr "Appartiene all'array"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:201
 msgid "skosmos:memberOfArray_help"
-msgstr ""
+msgstr "Array al quale il concetto appartiene"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:197
 #: /tmp/cache/56c32743c4105/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:519
@@ -652,7 +652,7 @@ msgstr "Gruppo cui il concetto appartiene"
 
 #: /tmp/cache/56c3274433ffc/7f/7f812c317d71ba3939846b0c115ea3547fa8a5795b5c750d8bae5adbffa23be0.php:48
 msgid "404 Error: The page %requested_page% cannot be found."
-msgstr ""
+msgstr "Errore 404: La pagina %requested_page% non può essere trovata."
 
 #: /tmp/cache/56c3274433ffc/10/10f444be3f922f429458b575ce02fb8a17b62e4cd4a21e4d9c238192dec5d3b8.php:168
 msgid "About page"
