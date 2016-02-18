@@ -11,6 +11,9 @@ $(function() { // DOCUMENT READY
   var selectedVocabs = [];
   var vocabId;
   var vocabSelectionString = getUrlParams().vocabs ? getUrlParams().vocabs.replace(/\+/g,' ') : readCookie('SKOSMOS_SELECTED');
+  if ($('.global-content').length && getUrlParams().vocabs === '') {
+    vocabSelectionString = null;
+  }
   $('#selected-vocabs').val(vocabSelectionString);
   var clang = content_lang !== '' ? content_lang : lang;
 
@@ -853,6 +856,10 @@ $(function() { // DOCUMENT READY
   if (vocabSelectionString !== null) {
     $.each(vocabSelectionString.split(' '), function(index, vocabId) {
       $('option[value="' + vocabId + '"]').prop('selected', 'true');
+    });
+  } else {
+    $.each($('option'), function(i, opt) {
+      $(opt).prop('selected', null);
     });
   }
 
