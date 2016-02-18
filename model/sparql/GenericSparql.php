@@ -93,12 +93,12 @@ class GenericSparql {
      * @return string sparql query
      */
     private function generateCountConceptsQuery($array, $group) {
-        $gc = $this->graphClause;
+        $gcl = $this->graphClause;
         $optional = $array ? "UNION { ?type rdfs:subClassOf* <$array> }" : '';
         $optional .= $group ? "UNION { ?type rdfs:subClassOf* <$group> }" : '';
         $query = <<<EOQ
       SELECT (COUNT(?conc) as ?c) ?type ?typelabel WHERE {
-        $gc {
+        $gcl {
           { ?conc a ?type .
           { ?type rdfs:subClassOf* skos:Concept . } UNION { ?type rdfs:subClassOf* skos:Collection . } $optional }
           OPTIONAL { ?type rdfs:label ?typelabel . }
@@ -148,7 +148,7 @@ EOQ;
      * @return string sparql query
      */
     private function generateCountLangConceptsQuery($langs, $classes, $props) {
-        $gc = $this->graphClause;
+        $gcl = $this->graphClause;
         $classes = ($classes) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
 
         $values = $this->formatValues('?type', $classes, 'uri');
@@ -159,7 +159,7 @@ EOQ;
 SELECT ?lang ?prop
   (COUNT(?label) as ?count)
 WHERE {
-  $gc {
+  $gcl {
     ?conc a ?type .
     ?conc ?prop ?label .
     FILTER (langMatches(lang(?label), ?lang))
@@ -261,7 +261,7 @@ EOQ;
      * @return string sparql query
      */
     private function generateConceptInfoQuery($uris, $arrayClass, $vocabs) {
-        $gc = $this->graphClause;
+        $gcl = $this->graphClause;
         $values = $this->formatValues('?uri', $uris, 'uri');
         $unique_vocabs = $this->filterDuplicateVocabs($vocabs);
         $values_graph = $this->formatValuesGraph($unique_vocabs);
@@ -300,7 +300,7 @@ CONSTRUCT {
  ?item skos:prefLabel ?il .
  ?group a ?grouptype . $construct
 } WHERE {
- $gc {
+ $gcl {
   {
     ?s ?p ?uri .
     FILTER(!isBlank(?s))
@@ -401,11 +401,11 @@ EOQ;
      * @return string sparql query
      */
     private function generateQueryTypesQuery($lang) {
-        $gc = $this->graphClause;
+        $gcl = $this->graphClause;
         $query = <<<EOQ
 SELECT DISTINCT ?type ?label ?superclass
 WHERE {
-  $gc {
+  $gcl {
     {
       { BIND( skos:Concept as ?type ) }
       UNION
@@ -475,12 +475,12 @@ EOQ;
      * @return string sparql query
      */
     private function generateQueryConceptSchemeQuery($conceptscheme) {
-        $gc = $this->graphClause;
+        $gcl = $this->graphClause;
         $query = <<<EOQ
 CONSTRUCT {
   <$conceptscheme> ?property ?value .
 } WHERE {
-  $gc {
+  $gcl {
     <$conceptscheme> ?property ?value .
     FILTER (?property != skos:hasTopConcept)
   }
@@ -505,11 +505,11 @@ EOQ;
      * @return string sparql query
      */
     private function generateQueryConceptSchemesQuery($lang) {
-        $gc = $this->graphClause;
+        $gcl = $this->graphClause;
         $query = <<<EOQ
 SELECT ?cs ?label ?preflabel ?title
 WHERE {
- $gc {
+ $gcl {
    ?cs a skos:ConceptScheme .
    OPTIONAL {
      ?cs rdfs:label ?label .
@@ -783,7 +783,7 @@ EOQ;
      * @return string sparql query
      */
     protected function generateConceptSearchQuery($fields, $unique, $params) {
-        $gc = $this->graphClause;
+        $gcl = $this->graphClause;
         $formattedtype = $this->formatTypes($params->getTypeLimit());
         $formattedbroader = $this->formatBroader($params->getLang(), $fields);
         $extravars = $formattedbroader['extravars'];
@@ -824,7 +824,7 @@ EOQ;
 SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph (GROUP_CONCAT(DISTINCT ?type) as ?types)
 $extravars
 WHERE {
- $gc {
+ $gcl {
   {
 $innerquery
   }
@@ -980,7 +980,7 @@ EOQ;
      * @return string sparql query
      */
     protected function generateAlphabeticalListQuery($letter, $lang, $limit, $offset, $classes) {
-        $gc = $this->graphClause;
+        $gcl = $this->graphClause;
         $classes = ($classes) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
         $values = $this->formatValues('?type', $classes, 'uri');
         $limitandoffset = $this->formatLimitAndOffset($limit, $offset);
@@ -991,7 +991,7 @@ EOQ;
         $query = <<<EOQ
 SELECT DISTINCT ?s ?label ?alabel
 WHERE {
-  $gc {
+  $gcl {
     {
       ?s skos:prefLabel ?label .
       FILTER (
@@ -1076,12 +1076,12 @@ EOQ;
      * @return string sparql query
      */
     private function generateFirstCharactersQuery($lang, $classes) {
-        $gc = $this->graphClause;
+        $gcl = $this->graphClause;
         $classes = (sizeof($classes) > 0) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
         $values = $this->formatValues('?type', $classes, 'uri');
         $query = <<<EOQ
 SELECT DISTINCT (substr(ucase(str(?label)), 1, 1) as ?l) WHERE {
-  $gc {
+  $gcl {
     ?c skos:prefLabel ?label .
     ?c a ?type
     FILTER(langMatches(lang(?label), '$lang'))
@@ -1122,12 +1122,12 @@ EOQ;
      * @return string sparql query string
      */
     private function generateLabelQuery($uri, $lang) {
-        $gc = $this->graphClause;
+        $gcl = $this->graphClause;
         $labelcond_label = ($lang) ? "FILTER( langMatches(lang(?label), '$lang') )" : "";
         $query = <<<EOQ
 SELECT ?label
 WHERE {
-  $gc {
+  $gcl {
     <$uri> a ?type .
     OPTIONAL {
       <$uri> skos:prefLabel ?label .
@@ -1188,13 +1188,13 @@ EOQ;
      * @return string sparql query
      */
     private function generatePropertyQuery($uri, $prop, $lang, $anylang) {
-        $gc = $this->graphClause;
+        $gcl = $this->graphClause;
         $anylang = $anylang ? "OPTIONAL { ?object skos:prefLabel ?label }" : "";
 
         $query = <<<EOQ
 SELECT *
 WHERE {
-  $gc {
+  $gcl {
     <$uri> a skos:Concept .
     OPTIONAL {
       <$uri> $prop ?object .
@@ -1272,7 +1272,7 @@ EOQ;
      */
     private function generateTransitivePropertyQuery($uri, $prop, $lang, $limit, $anylang) {
         $uri = is_array($uri) ? $uri[0] : $uri;
-        $gc = $this->graphClause;
+        $gcl = $this->graphClause;
         $filter = $anylang ? "" : "FILTER (langMatches(lang(?label), \"$lang\"))";
         // need to do a SPARQL subquery because LIMIT needs to be applied /after/
         // the direct relationships have been collapsed into one string
@@ -1281,7 +1281,7 @@ SELECT *
 WHERE {
   SELECT ?object ?label (GROUP_CONCAT(?dir) as ?direct)
   WHERE {
-    $gc {
+    $gcl {
       <$uri> a skos:Concept .
       OPTIONAL {
         <$uri> $prop* ?object .
@@ -1381,10 +1381,10 @@ EOQ;
      */
     private function generateNarrowerQuery($uri, $lang, $fallback) {
         $uri = is_array($uri) ? $uri[0] : $uri;
-        $gc = $this->graphClause;
+        $gcl = $this->graphClause;
         $query = <<<EOQ
 SELECT ?child ?label ?child ?grandchildren ?notation WHERE {
-  $gc {
+  $gcl {
     <$uri> a skos:Concept .
     OPTIONAL {
       <$uri> skos:narrower ?child .
@@ -1479,10 +1479,10 @@ EOQ;
 
         $values = $this->formatValues('?topuri', $conceptSchemes, 'uri');
 
-        $gc = $this->graphClause;
+        $gcl = $this->graphClause;
         $query = <<<EOQ
 SELECT DISTINCT ?top ?topuri ?label ?notation ?children WHERE {
-  $gc {
+  $gcl {
   ?top skos:topConceptOf ?topuri .
   ?top skos:prefLabel ?label .
   FILTER (langMatches(lang(?label), "$lang"))
@@ -1516,12 +1516,12 @@ EOQ;
      * @return string sparql query
      */
     private function generateParentListQuery($uri, $lang, $fallback) {
-        $gc = $this->graphClause;
+        $gcl = $this->graphClause;
         $query = <<<EOQ
 SELECT ?broad ?parent ?member ?children ?grandchildren
 (SAMPLE(?lab) as ?label) (SAMPLE(?childlab) as ?childlabel) (SAMPLE(?topcs) AS ?top) (SAMPLE(?nota) as ?notation) (SAMPLE(?childnota) as ?childnotation)
 WHERE {
-    $gc {
+    $gcl {
       <$uri> a skos:Concept .
       OPTIONAL {
       <$uri> skos:broader* ?broad .
@@ -1663,11 +1663,11 @@ EOQ;
      * @return string sparql query
      */
     private function generateConceptGroupsQuery($groupClass, $lang) {
-        $gc = $this->graphClause;
+        $gcl = $this->graphClause;
         $query = <<<EOQ
 SELECT ?group (GROUP_CONCAT(DISTINCT STR(?child)) as ?children) ?label ?members ?notation
 WHERE {
- $gc {
+ $gcl {
    ?group a <$groupClass> .
    OPTIONAL { ?group skos:member|isothes:subGroup ?child .
               ?child a <$groupClass> }
@@ -1738,11 +1738,11 @@ EOQ;
      * @return string sparql query
      */
     private function generateConceptGroupContentsQuery($groupClass, $group, $lang) {
-        $gc = $this->graphClause;
+        $gcl = $this->graphClause;
         $query = <<<EOQ
 SELECT ?conc ?super ?label ?members ?type ?notation
 WHERE {
- $gc {
+ $gcl {
    <$group> a <$groupClass> .
    { <$group> skos:member ?conc . } UNION { ?conc isothes:superGroup <$group> }
    FILTER NOT EXISTS { ?conc owl:deprecated true }
@@ -1821,13 +1821,13 @@ EOQ;
      * @return string sparql query
      */
     private function generateChangeListQuery($lang, $offset, $prop) {
-        $gc = $this->graphClause;
+        $gcl = $this->graphClause;
         $offset = ($offset) ? 'OFFSET ' . $offset : '';
 
         $query = <<<EOQ
 SELECT DISTINCT ?concept ?date ?label
 WHERE {
-  $gc {
+  $gcl {
     ?concept a skos:Concept .
     ?concept $prop ?date .
     ?concept skos:prefLabel ?label .
