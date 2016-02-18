@@ -196,7 +196,7 @@ $(function() { // DOCUMENT READY
         for (var i in data.subTypes) {
           var sub = data.subTypes[i];
           var label = sub.label ? sub.label : sub.type;
-          typeStats += '<tr><td class="count-type versal">' + label + '</td>' + '<td class="versal">' + sub.count + '</td></tr>';
+          typeStats += '<tr><td class="count-type versal">' + label + '</td><td class="versal">' + sub.count + '</td></tr>';
         }
         if (data.conceptGroups) {
           typeStats += '<tr><td class="count-type versal">' + data.conceptGroups.label + '</td><td class="versal">' + data.conceptGroups.count +'</td></tr>';
@@ -239,7 +239,7 @@ $(function() { // DOCUMENT READY
 
   // adds a delay before showing the spinner configured above
   function delaySpinner(loading) {
-    loading = setTimeout("$('.concept-spinner').show()", 500);
+    loading = setTimeout(function() { $('.concept-spinner').show() }, 500);
   }
 
   // event handler for clicking the hierarchy concepts
@@ -687,7 +687,7 @@ $(function() { // DOCUMENT READY
     '{{# if replaced }}<p class="replaced">{{replaced}}{{# if lang}} ({{lang}}){{/if}} &rarr; </p>{{/if}}',
     '<p class="autocomplete-label">{{label}}{{# if lang}}{{# unless matched }}<p>({{lang}})</p>{{/unless}}{{/if}}</p>',
     '{{# if typeLabel }}<span class="concept-type">{{typeLabel}}</span>{{/if}}',
-    '<div class="vocab">{{vocabLabel}}</div>',
+    '<div class="vocab">{{vocabLabel}}</div>'
   ].join('');
 
   if ($('.headerbar').length > 0) {
