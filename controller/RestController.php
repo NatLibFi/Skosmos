@@ -16,7 +16,7 @@ require_once 'controller/Controller.php';
 class RestController extends Controller
 {
     /* supported MIME types that can be used to return RDF data */
-    private static $SUPPORTED_MIME_TYPES = 'application/rdf+xml text/turtle application/ld+json application/json';
+    private static $supportedMIMETypes = 'application/rdf+xml text/turtle application/ld+json application/json';
     /* context array template */
     private $context = array(
         '@context' => array(
@@ -263,10 +263,10 @@ class RestController extends Controller
         $this->setLanguageProperties($request->getLang());
         $arrayClass = $request->getVocab()->getConfig()->getArrayClassURI(); 
         $groupClass = $request->getVocab()->getConfig()->getGroupClassURI(); 
-        $vocab_stats = $request->getVocab()->getStatistics($request->getQueryParam('lang'), $arrayClass, $groupClass);
+        $vocabStats = $request->getVocab()->getStatistics($request->getQueryParam('lang'), $arrayClass, $groupClass);
         $types = array('http://www.w3.org/2004/02/skos/core#Concept', 'http://www.w3.org/2004/02/skos/core#Collection', $arrayClass, $groupClass);
         $subTypes = array();
-        foreach ($vocab_stats as $subtype) {
+        foreach ($vocabStats as $subtype) {
             if (!in_array($subtype['type'], $types)) {
                 $subTypes[] = $subtype;
             }
@@ -294,28 +294,28 @@ class RestController extends Controller
             'concepts' => array(
                 'class' => 'http://www.w3.org/2004/02/skos/core#Concept',
                 'label' => gettext('skos:Concept'),
-                'count' => $vocab_stats['http://www.w3.org/2004/02/skos/core#Concept']['count'],
+                'count' => $vocabStats['http://www.w3.org/2004/02/skos/core#Concept']['count'],
             ),
             'subTypes' => $subTypes,
         );
 
-        if (isset($vocab_stats['http://www.w3.org/2004/02/skos/core#Collection'])) {
+        if (isset($vocabStats['http://www.w3.org/2004/02/skos/core#Collection'])) {
             $ret['conceptGroups'] = array(
                 'class' => 'http://www.w3.org/2004/02/skos/core#Collection',
                 'label' => gettext('skos:Collection'),
-                'count' => $vocab_stats['http://www.w3.org/2004/02/skos/core#Collection']['count'],
+                'count' => $vocabStats['http://www.w3.org/2004/02/skos/core#Collection']['count'],
             );
-        } else if (isset($vocab_stats[$groupClass])) {
+        } else if (isset($vocabStats[$groupClass])) {
             $ret['conceptGroups'] = array(
                 'class' => $groupClass,
-                'label' => isset($vocab_stats[$groupClass]['label']) ? $vocab_stats[$groupClass]['label'] : gettext(EasyRdf_Namespace::shorten($groupClass)),
-                'count' => $vocab_stats[$groupClass]['count'],
+                'label' => isset($vocabStats[$groupClass]['label']) ? $vocabStats[$groupClass]['label'] : gettext(EasyRdf_Namespace::shorten($groupClass)),
+                'count' => $vocabStats[$groupClass]['count'],
             );
-        } else if (isset($vocab_stats[$arrayClass])) {
+        } else if (isset($vocabStats[$arrayClass])) {
             $ret['arrays'] = array(
                 'class' => $arrayClass,
-                'label' => isset($vocab_stats[$arrayClass]['label']) ? $vocab_stats[$arrayClass]['label'] : gettext(EasyRdf_Namespace::shorten($arrayClass)),
-                'count' => $vocab_stats[$arrayClass]['count'],
+                'label' => isset($vocabStats[$arrayClass]['label']) ? $vocabStats[$arrayClass]['label'] : gettext(EasyRdf_Namespace::shorten($arrayClass)),
+                'count' => $vocabStats[$arrayClass]['count'],
             );
         }
 
@@ -330,11 +330,11 @@ class RestController extends Controller
     {
         $lang = $request->getLang();
         $this->setLanguageProperties($request->getLang());
-        $vocab_stats = $request->getVocab()->getLabelStatistics();
+        $vocabStats = $request->getVocab()->getLabelStatistics();
 
         /* encode the results in a JSON-LD compatible array */
         $counts = array();
-        foreach ($vocab_stats['terms'] as $proplang => $properties) {
+        foreach ($vocabStats['terms'] as $proplang => $properties) {
             $langdata = array('language' => $proplang);
             if ($lang) {
                 $langdata['literal'] = Punic\Language::getName($proplang, $lang);
@@ -537,9 +537,9 @@ class RestController extends Controller
             return $this->returnError(400, 'Bad Request', "uri parameter missing");
         }
 
-        $format = $this->negotiateFormat(explode(' ', self::$SUPPORTED_MIME_TYPES), $request->getServerConstant('HTTP_ACCEPT'), $format);
+        $format = $this->negotiateFormat(explode(' ', self::$supportedMIMETypes), $request->getServerConstant('HTTP_ACCEPT'), $format);
         if (!$format) {
-            return $this->returnError(406, 'Not Acceptable', "Unsupported format. Supported MIME types are: " . self::$SUPPORTED_MIME_TYPES);
+            return $this->returnError(406, 'Not Acceptable', "Unsupported format. Supported MIME types are: " . self::$supportedMIMETypes);
         }
 
         $vocid = $vocab ? $vocab->getId() : null;
@@ -568,8 +568,8 @@ class RestController extends Controller
                 'related' => 'skos:related',
                 'inScheme' => 'skos:inScheme',
             );
-            $compact_jsonld = \ML\JsonLD\JsonLD::compact($results, json_encode($context));
-            $results = \ML\JsonLD\JsonLD::toString($compact_jsonld);
+            $compactJsonLD = \ML\JsonLD\JsonLD::compact($results, json_encode($context));
+            $results = \ML\JsonLD\JsonLD::toString($compactJsonLD);
         }
 
         header("Content-type: $format; charset=utf-8");
