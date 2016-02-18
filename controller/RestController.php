@@ -219,7 +219,7 @@ class RestController extends Controller
 
         /* encode the results in a JSON-LD compatible array */
         $conceptschemes = array();
-        foreach ($vocab->getConceptSchemes() as $uri => $csdata) {
+        foreach ($vocab->getConceptSchemes($request->getLang()) as $uri => $csdata) {
             $csdata['uri'] = $uri;
             $csdata['type'] = 'skos:ConceptScheme';
             $conceptschemes[] = $csdata;
