@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-02-16 15:42+0200\n"
-"PO-Revision-Date: 2016-02-17 08:29+0000\n"
-"Last-Translator: osma <osma.suominen@helsinki.fi>\n"
+"PO-Revision-Date: 2016-02-17 17:14+0000\n"
+"Last-Translator: Thomas Francart <thomas.francart@sparna.fr>\n"
 "Language-Team: French (http://www.transifex.com/national-library-of-finland/skosmos/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -205,7 +205,7 @@ msgstr "Pas de vocabulaire spécifique"
 
 #: /tmp/cache/56c32743c4105/fa/faa08236ede4d85b682688874617f65c5ff881bc49af67a226bcb2e5e9de0068.php:218
 msgid "Search"
-msgstr "Rechercher"
+msgstr "Chercher"
 
 #: /tmp/cache/56c32743c4105/fa/faa08236ede4d85b682688874617f65c5ff881bc49af67a226bcb2e5e9de0068.php:203
 msgid "Search language: any"
@@ -639,11 +639,11 @@ msgstr "Appartient au groupe"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:199
 msgid "skosmos:memberOfArray"
-msgstr ""
+msgstr "Appartient au tableau"
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:201
 msgid "skosmos:memberOfArray_help"
-msgstr ""
+msgstr "Le tableau de concepts auquel ce concept appartient."
 
 #: /tmp/cache/56c32743c4105/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:197
 #: /tmp/cache/56c32743c4105/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:519
