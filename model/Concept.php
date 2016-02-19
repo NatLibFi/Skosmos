@@ -461,7 +461,15 @@ class Concept extends VocabularyDataObject
             }
         } catch (Exception $e) {
             trigger_error($e->getMessage(), E_USER_WARNING);
-            return gettext('skosmos:modified') . ' ' . (string) $this->resource->get('dc:modified') . ' ' . gettext('skosmos:created') . ' ' . (string) $this->resource->get('dc:created');
+            $ret = '';
+            if ($this->resource->get('dc11:modified') || $this->resource->get('dc:modified')) {
+                $modified = $this->resource->get('dc11:modified') ? (string) $this->resource->get('dc11:modified') : (string) $this->resource->get('dc:modified');
+                $ret = gettext('skosmos:modified') . ' ' . $modified; 
+            }
+            if ($this->resource->get('dc11:created') || $this->resource->get('dc:created')) {
+                $created .= $this->resource->get('dc11:created') ? (string) $this->resource->get('dc11:created') : (string) $this->resource->get('dc:created');
+                $ret .= ' ' . gettext('skosmos:created') . ' ' . $created; 
+            }
         }
         return $ret;
     }
