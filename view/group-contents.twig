@@ -1,6 +1,7 @@
 {% extends "light.twig" %}
 
-{% block title %}: {{ vocab.config.shortName }}: {{ label }}{% endblock %}
+{% set group_label = '' %}{% for group in search_results %}{% set group_label = group.label %}{% endfor %}
+{% block title %}: {{ vocab.config.shortName }}: {{ group_label }}{% endblock %}
 
 {% block sidebar %}
 <div class="sidebar-buttons">
