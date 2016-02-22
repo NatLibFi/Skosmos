@@ -96,7 +96,8 @@ function invokeGroupTree() {
 }
 
 function createGroupNode(uri, groupObject) {
-  var node = {children : [], a_attr : {'data-uri' : uri, "href" : vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(uri), "class" : "group" }};
+  var groupPage = uri.indexOf(uriSpace) !== -1 ? uri.substr(uriSpace.length) : '?uri=' + encodeURIComponent(uri); 
+  var node = {children : [], a_attr : {'data-uri' : uri, "href" : vocab + '/' + lang + '/page/' + groupPage, "class" : "group" }};
   node.text = groupObject.prefLabel;
   if (groupObject.hasMembers || groupObject.isSuper)
     node.children = true;
