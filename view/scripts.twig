@@ -19,6 +19,8 @@ var waypoint_results = {{ parameters.searchLimit }};
 {% endif %}
 {% if request.page == 'page' and search_results and search_results|length == 1 %}
 var uri = "{{ search_results|first.uri }}";
+{% endif %}
+{% if request.vocab and request.vocab.uriSpace %}
 var uriSpace = "{{ request.vocab.uriSpace }}";
 {% endif %}
 </script>

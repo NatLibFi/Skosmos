@@ -248,6 +248,7 @@ $(function() { // DOCUMENT READY
         event.preventDefault();
         var targetUrl = event.target.href;
         var parameters = (clang !== lang) ? $.param({'clang' : clang}) : $.param({});
+        var historyUrl = (clang !== lang) ? targetUrl + '?' + parameters : targetUrl;
         $('#hier-trigger').attr('href', targetUrl);
         var $content = $('.content').empty().append($delayedSpinner.hide());
         var loading;
@@ -259,7 +260,7 @@ $(function() { // DOCUMENT READY
             success : function(data) {
               $content.empty();
               var response = $('.content', data).html();
-              if (window.history.pushState) { window.history.pushState({url: targetUrl + '&' + parameters}, '', targetUrl + '&' + parameters); }
+              if (window.history.pushState) { window.history.pushState({url: historyUrl}, '', historyUrl); }
               $content.append(response);
               updateTitle(data);
               updateTopbarLang(data);
