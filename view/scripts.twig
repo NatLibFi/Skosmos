@@ -17,6 +17,10 @@ var vocab = "{{ request.vocabid }}";
 {% if parameters %}
 var waypoint_results = {{ parameters.searchLimit }};
 {% endif %}
+{% if request.page == 'page' and search_results and search_results|length == 1 %}
+var uri = "{{ search_results|first.uri }}";
+var uriSpace = "{{ request.vocab.uriSpace }}";
+{% endif %}
 </script>
 
 <script type="text/javascript" src="vendor/components/jquery/jquery.min.js"></script>
