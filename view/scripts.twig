@@ -20,7 +20,6 @@ var waypoint_results = {{ parameters.searchLimit }};
 {% if request.page == 'page' and search_results and search_results|length == 1 %}
 var uri = "{{ search_results|first.uri }}";
 var prefLabels = [{'lang': '{{ search_results|first.label.lang }}','label': '{{ search_results|first.label }}'}{% for lang in search_results|first.foreignLabels %}{% for literal in lang %}{% if literal.type == 'skos:prefLabel' %},{'lang': '{{literal.lang}}', 'label': '{{literal.label}}'}{% endif %}{% endfor %}{% endfor %}];
-console.log(prefLabels);
 {% endif %}
 {% if request.vocab and request.vocab.uriSpace %}
 var uriSpace = "{{ request.vocab.uriSpace }}";
