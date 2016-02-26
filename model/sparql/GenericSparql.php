@@ -189,7 +189,7 @@ EOQ;
         }
         foreach ($result as $row) {
             if (isset($row->lang) && isset($row->prop) && isset($row->count)) {
-                $ret[$row->lang->getValue()][$row->prop->shorten()] =
+                $ret[$row->lang->getValue()][$row->prop->shorten()] += 
                 $row->count->getValue();
             }
 
