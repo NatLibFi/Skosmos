@@ -144,7 +144,7 @@ function buildParentTree(uri, parentData, schemes) {
     /* if a node has the property topConceptOf set it as the root node. 
      * Or just setting the last node as a root if nothing else has been found 
      */
-    if (parentData[conceptUri].top || ( loopIndex == Object.size(parentData)-1) && !rootNode || !currentNode.parents && !rootNode) { 
+    if (parentData[conceptUri].top || ( loopIndex === Object.size(parentData)-1) && !rootNode || !currentNode.parents && !rootNode) { 
       if (!rootNode) {  
         branchHelper = currentNode;
       }
