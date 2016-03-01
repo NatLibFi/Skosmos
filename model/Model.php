@@ -274,6 +274,9 @@ class Model
         }
 
         $results = $sparql->queryConcepts($vocabs, $params->getAdditionalFields(), $params->getUnique(), $params);
+        if ($results && $params->getSearchLimit() !== 0) {
+          $results = array_slice($results, $params->getOffset(), $params->getSearchLimit());
+        }
         $ret = array();
 
         foreach ($results as $hit) {
