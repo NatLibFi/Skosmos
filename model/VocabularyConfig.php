@@ -354,7 +354,7 @@ class VocabularyConfig extends DataObject
      */
     public function getPluginsCSS()
     {
-        $plugins = $this->resource->getLiteral('skosmos:plugins');
+        $plugins = $this->resource->getLiteral('skosmos:usePlugin');
         if ($plugins) {
             return $this->plugins->getPluginsCSS(array($plugins->getValue()));
         }
@@ -367,7 +367,7 @@ class VocabularyConfig extends DataObject
      */
     public function getPluginsJS()
     {
-        $plugins = $this->resource->getLiteral('skosmos:plugins');
+        $plugins = $this->resource->getLiteral('skosmos:usePlugin');
         if ($plugins) {
             return $this->plugins->getPluginsJS(array($plugins->getValue()));
         }
