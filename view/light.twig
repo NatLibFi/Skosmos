@@ -14,7 +14,7 @@
 {% if ServiceCustomCss %}
 <link href="{{ ServiceCustomCss }}" media="screen, print" rel="stylesheet" type="text/css">
 {% endif %}
-
+{% for file in request.vocab.config.pluginsCSS %}<link href="{{ file }}" media="screen, print" rel="stylesheet" type="text/css">{% endfor %}
 
 <title>{{ ServiceName }}{% block title %}{% endblock %}</title>
 </head>

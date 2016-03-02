@@ -5,9 +5,12 @@
  */
 class VocabularyConfig extends DataObject
 {
+    private $plugins;
+
     public function __construct($resource) 
     {
       $this->resource = $resource;
+      $this->plugins = new Plugins();
     }
 
     /**
@@ -344,4 +347,31 @@ class VocabularyConfig extends DataObject
     public function getShowStatistics() {
         return $this->getBoolean('skosmos:showStatistics', true);
     }
+
+    /**
+     *
+     * @return array
+     */
+    public function getPluginsCSS()
+    {
+        $plugins = $this->resource->getLiteral('skosmos:plugins');
+        if ($plugins) {
+            return $this->plugins->getPluginsCSS(array($plugins->getValue()));
+        }
+        return null;
+    }
+
+    /**
+     *
+     * @return array
+     */
+    public function getPluginsJS()
+    {
+        $plugins = $this->resource->getLiteral('skosmos:plugins');
+        if ($plugins) {
+            return $this->plugins->getPluginsJS(array($plugins->getValue()));
+        }
+        return null;
+    }
+
 }
