@@ -75,7 +75,7 @@ function invokeGroupTree() {
                 for (var i in response.members) {
                   var member = response.members[i];
                   var child = {'text' : member.prefLabel,'parent' : node.a_attr['data-uri'], children : false, a_attr : { 'data-uri' : member.uri, "href" : vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(member.uri)}};
-                  if (member.hasMembers || member.isSuper) {
+                  if (member.hasMembers || member.isSuper) {
                     child.children = true;
                   }
                   if (member.notation) {
