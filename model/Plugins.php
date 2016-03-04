@@ -24,7 +24,10 @@ class Plugins {
         if (!empty($plugins)) {
             foreach ($plugins as $name => $files) {
                 if (isset($files[$type])) {
-                    $ret[$name] = $files[$type];
+                    $ret[$name] = array();
+                    foreach ($files[$type] as $file) {
+                        array_push($ret[$name], 'plugins/' . $name . '/' . $file);
+                    }
                 }
             } 
         }
@@ -66,9 +69,9 @@ class Plugins {
         $templateStrings = array();
         $plugins = $this->getPluginsTemplates($names);
         foreach ($plugins as $folder => $templates) {
-            foreach ($templates as $filename) {
-                $path = 'plugins/' . $folder . '/' . $filename;
+            foreach ($templates as $path) {
                 if (file_exists($path)) {
+                    $filename = explode('/', $path)[sizeof(explode('/', $path))-1];
                     $id = $folder . '-' . substr($filename, 0 , (strrpos($filename, ".")));
                     $templateStrings[$id] = file_get_contents($path);
                 }
