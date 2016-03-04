@@ -10,8 +10,9 @@ class Plugins {
         $plugins = array();
         $pluginconfs = glob('plugins/*/plugin.json');
         foreach ($pluginconfs as $path) {
+            $folder = explode('/', $path)[1];
             if (file_exists($path)) {
-                $plugins = array_merge($plugins, json_decode(file_get_contents($path), true));
+                $plugins[$folder] = json_decode(file_get_contents($path), true);
             }
         }
         return $plugins;
