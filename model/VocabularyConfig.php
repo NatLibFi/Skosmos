@@ -378,11 +378,11 @@ class VocabularyConfig extends DataObject
      *
      * @return array
      */
-    public function getPluginsHTML()
+    public function getPluginsTemplates()
     {
         $plugins = $this->resource->getLiteral('skosmos:usePlugin');
         if ($plugins) {
-            return $this->plugins->getPluginsHTML(array($plugins->getValue()));
+            return $this->plugins->getPluginsTemplates(array($plugins->getValue()));
         }
         return null;
     }

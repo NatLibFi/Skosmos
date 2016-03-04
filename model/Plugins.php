@@ -54,10 +54,10 @@ class Plugins {
         return $this->filterPlugins('css');
     }
 
-    public function getPluginsHTML($names=null) {
+    public function getPluginsTemplates($names=null) {
         if ($names) {
-            return $this->filterPluginsByName('html', $names);
+            return $this->filterPluginsByName('templates', $names);
         }
-        return $this->filterPlugins('html');
+        return $this->filterPlugins('templates');
     }
 }

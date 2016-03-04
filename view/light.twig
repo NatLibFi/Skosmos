@@ -145,6 +145,6 @@
   </section>
   {% include 'scripts.twig' %}
   {% include 'footer.inc' ignore missing %}
-  {% for name, plugin in request.vocab.config.pluginsHTML %}<script id="{{ name }}-template" type="text/x-handlebars-template">{% include plugin %}</script>{% endfor %}
+  {% for name, plugin in request.vocab.config.pluginsTemplates %}<script id="{{ name }}-template" type="text/x-handlebars-template">{% for file in plugin %}{{ source(file) }}{% endfor %}</script>{% endfor %}
 </body>
 </html>
