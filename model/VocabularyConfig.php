@@ -386,5 +386,14 @@ class VocabularyConfig extends DataObject
         }
         return null;
     }
+    
+    public function getPluginsTemplateContents()
+    {
+        $plugins = $this->resource->getLiteral('skosmos:usePlugin');
+        if ($plugins) {
+            return $this->plugins->readTemplates(array($plugins->getValue()));
+        }
+        return null;
+    }
 
 }

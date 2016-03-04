@@ -60,4 +60,19 @@ class Plugins {
         }
         return $this->filterPlugins('templates');
     }
+
+    public function readTemplates($names=null) {
+        $templateStrings = array();
+        $plugins = $this->getPluginsTemplates($names);
+        foreach ($plugins as $folder => $templates) {
+            foreach ($templates as $filename) {
+                $path = 'plugins/' . $folder . '/' . $filename;
+                if (file_exists($path)) {
+                    $id = $folder . '-' . substr($filename, 0 , (strrpos($filename, ".")));
+                    $templateStrings[$id] = file_get_contents($path);
+                }
+            }
+        }
+        return $templateStrings;
+    }
 }
