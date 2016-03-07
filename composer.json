@@ -10,7 +10,7 @@
         "name": "medialize/uri.js",
         "version": "1.15.1",
         "source": {
-          "url": "git://github.com/medialize/URI.js.git",
+          "url": "https://github.com/medialize/URI.js.git",
           "type": "git",
           "reference": "v.1.15.1"
         }
@@ -22,7 +22,7 @@
         "name": "davidstutz/bootstrap-multiselect",
         "version": "0.9.13",
         "source": {
-          "url": "git://github.com/davidstutz/bootstrap-multiselect.git",
+          "url": "https://github.com/davidstutz/bootstrap-multiselect.git",
           "type": "git",
           "reference": "v0.9.13"
         }
