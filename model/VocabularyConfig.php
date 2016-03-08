@@ -7,10 +7,12 @@ class VocabularyConfig extends DataObject
 {
     private $plugins;
 
-    public function __construct($resource) 
+    public function __construct($resource, $globalPlugins=array()) 
     {
       $this->resource = $resource;
-      $this->plugins = new Plugins();
+      $plugins = $this->resource->getLiteral('skosmos:usePlugin');
+      $pluginArray = $plugins ? array($plugins->getValue()) : array();
+      $this->plugins = new Plugins(array_merge($globalPlugins, $pluginArray));
     }
 
     /**
@@ -348,52 +350,8 @@ class VocabularyConfig extends DataObject
         return $this->getBoolean('skosmos:showStatistics', true);
     }
 
-    /**
-     *
-     * @return array
-     */
-    public function getPluginsCSS()
+    public function getPlugins()
     {
-        $plugins = $this->resource->getLiteral('skosmos:usePlugin');
-        if ($plugins) {
-            return $this->plugins->getPluginsCSS(array($plugins->getValue()));
-        }
-        return null;
+        return $this->plugins;
     }
-
-    /**
-     *
-     * @return array
-     */
-    public function getPluginsJS()
-    {
-        $plugins = $this->resource->getLiteral('skosmos:usePlugin');
-        if ($plugins) {
-            return $this->plugins->getPluginsJS(array($plugins->getValue()));
-        }
-        return null;
-    }
-
-    /**
-     *
-     * @return array
-     */
-    public function getPluginsTemplates()
-    {
-        $plugins = $this->resource->getLiteral('skosmos:usePlugin');
-        if ($plugins) {
-            return $this->plugins->getPluginsTemplates(array($plugins->getValue()));
-        }
-        return null;
-    }
-    
-    public function getPluginsTemplateContents()
-    {
-        $plugins = $this->resource->getLiteral('skosmos:usePlugin');
-        if ($plugins) {
-            return $this->plugins->readTemplates(array($plugins->getValue()));
-        }
-        return null;
-    }
-
 }

@@ -1,6 +1,11 @@
 <?php
 
 class Plugins {
+    private $globalPlugins;
+
+    public function __construct($globalPlugins=array()) {
+        $this->globalPlugins = $globalPlugins;
+    }
     
     /**
      * @return array
@@ -46,26 +51,29 @@ class Plugins {
 
     public function getPluginsJS($names=null) {
         if ($names) {
+            $names = array_merge($this->globalPlugins, $names);
             return $this->filterPluginsByName('js', $names);
         }
-        return $this->filterPlugins('js');
+        return $this->filterPluginsByName('js', $this->globalPlugins);
     }
 
     public function getPluginsCSS($names=null) {
         if ($names) {
+            $names = array_merge($this->globalPlugins, $names);
             return $this->filterPluginsByName('css', $names);
         }
-        return $this->filterPlugins('css');
+        return $this->filterPluginsByName('css', $this->globalPlugins);
     }
 
     public function getPluginsTemplates($names=null) {
         if ($names) {
+            $names = array_merge($this->globalPlugins, $names);
             return $this->filterPluginsByName('templates', $names);
         }
-        return $this->filterPlugins('templates');
+        return $this->filterPluginsByName('templates', $this->globalPlugins);
     }
 
-    public function readTemplates($names=null) {
+    public function getTemplates($names=null) {
         $templateStrings = array();
         $plugins = $this->getPluginsTemplates($names);
         foreach ($plugins as $folder => $templates) {

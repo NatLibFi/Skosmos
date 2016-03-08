@@ -44,4 +44,4 @@ var uriSpace = "{{ request.vocab.uriSpace }}";
 <script type="text/javascript" src="resource/js/jquery.mCustomScrollbar.min.js"></script>
 <script type="text/javascript" src="resource/js/jquery.qtip.min.js"></script>
 <script type="text/javascript" src="resource/js/lscache.min.js"></script>
-{% for files in request.vocab.config.pluginsJS %}{% for file in files %}<script type="text/javascript" src="{{ file }}"></script>{% endfor %}{% endfor %}
+{% for files in request.plugins.pluginsJS %}{% for file in files %}<script type="text/javascript" src="{{ file }}"></script>{% endfor %}{% endfor %}

@@ -187,4 +187,12 @@ class GlobalConfig {
     {
         return $this->getConstant('BASE_HREF', null);
     }
+    
+    /**
+     * @return string
+     */
+    public function getGlobalPlugins() 
+    {
+        return explode(' ', $this->getConstant('GLOBAL_PLUGINS', null));
+    }
 }

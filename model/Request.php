@@ -194,4 +194,10 @@ class Request
         return $this->model->getVocabularyList();
     }
 
+    public function getPlugins() {
+        if ($this->vocab) {
+            return $this->vocab->getConfig()->getPlugins();
+        }
+        return new Plugins($this->model->getConfig()->getGlobalPlugins());
+    }
 }

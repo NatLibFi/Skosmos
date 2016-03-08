@@ -17,7 +17,7 @@ class Vocabulary extends DataObject
     public function __construct($model, $resource)
     {
         parent::__construct($model, $resource);
-        $this->config = new VocabularyConfig($resource);
+        $this->config = new VocabularyConfig($resource, $model->getConfig()->getGlobalPlugins());
     }
 
     /**

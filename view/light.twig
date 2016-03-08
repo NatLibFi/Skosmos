@@ -14,7 +14,7 @@
 {% if ServiceCustomCss %}
 <link href="{{ ServiceCustomCss }}" media="screen, print" rel="stylesheet" type="text/css">
 {% endif %}
-{% for plugin, files in request.vocab.config.pluginsCSS %}{% for file in files %}<link href="{{ file }}" media="screen, print" rel="stylesheet" type="text/css">{% endfor %}{% endfor %}
+{% for plugin, files in request.plugins.pluginsCSS %}{% for file in files %}<link href="{{ file }}" media="screen, print" rel="stylesheet" type="text/css">{% endfor %}{% endfor %}
 
 <title>{{ ServiceName }}{% block title %}{% endblock %}</title>
 </head>
@@ -145,6 +145,6 @@
   </section>
   {% include 'scripts.twig' %}
   {% include 'footer.inc' ignore missing %}
-  {% for id, template in request.vocab.config.pluginsTemplateContents %}<script id="{{ id }}" type="text/x-handlebars-template">{{ template|raw }}</script>{% endfor %}
+  {% for id, template in request.plugins.templates %}<script id="{{ id }}" type="text/x-handlebars-template">{{ template|raw }}</script>{% endfor %}
 </body>
 </html>
