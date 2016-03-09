@@ -9,10 +9,13 @@ class VocabularyConfig extends DataObject
 
     public function __construct($resource, $globalPlugins=array()) 
     {
-      $this->resource = $resource;
-      $plugins = $this->resource->getLiteral('skosmos:usePlugin');
-      $pluginArray = $plugins ? array($plugins->getValue()) : array();
-      $this->plugins = new Plugins(array_merge($globalPlugins, $pluginArray));
+        $this->resource = $resource;
+        $plugins = $this->resource->allLiterals('skosmos:usePlugin');
+        $pluginArray = array();
+        foreach ($plugins as $pluginlit) {
+            $pluginArray[] = $pluginlit->getValue();
+        }
+        $this->plugins = new Plugins(array_merge($globalPlugins, $pluginArray));
     }
 
     /**
