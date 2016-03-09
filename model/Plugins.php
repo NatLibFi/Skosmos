@@ -8,6 +8,7 @@ class Plugins {
     }
     
     /**
+     * Returns the plugin configurations found from plugin folders inside the plugins folder
      * @return array
      */
     private function getPlugins() 
@@ -23,6 +24,12 @@ class Plugins {
         return $plugins;
     }
 
+    /**
+     * Returns the plugin configurations found from plugin folders 
+     * inside the plugins folder filtered by filetype.
+     * @param string $type filetype e.g. 'css', 'js' or 'template'
+     * @return array
+     */
     private function filterPlugins($type) {
         $plugins = $this->getPlugins();
         $ret = array();
@@ -39,6 +46,13 @@ class Plugins {
         return $ret;
     }
 
+    /**
+     * Returns the plugin configurations found from plugin folders 
+     * inside the plugins folder filtered by plugin name (the folder name).
+     * @param string $type filetype e.g. 'css', 'js' or 'template'
+     * @param array $names the plugin name strings (foldernames) in an array 
+     * @return array
+     */
     private function filterPluginsByName($type, $names) {
         $files = $this->filterPlugins($type);
         foreach ($files as $plugin => $filelist) {
@@ -49,6 +63,11 @@ class Plugins {
         return $files;
     }
 
+    /**
+     * Returns an array of javascript filepaths
+     * @param array $names the plugin name strings (foldernames) in an array 
+     * @return array
+     */
     public function getPluginsJS($names=null) {
         if ($names) {
             $names = array_merge($this->globalPlugins, $names);
@@ -57,6 +76,11 @@ class Plugins {
         return $this->filterPluginsByName('js', $this->globalPlugins);
     }
 
+    /**
+     * Returns an array of css filepaths
+     * @param array $names the plugin name strings (foldernames) in an array 
+     * @return array
+     */
     public function getPluginsCSS($names=null) {
         if ($names) {
             $names = array_merge($this->globalPlugins, $names);
@@ -65,6 +89,11 @@ class Plugins {
         return $this->filterPluginsByName('css', $this->globalPlugins);
     }
 
+    /**
+     * Returns an array of template filepaths
+     * @param array $names the plugin name strings (foldernames) in an array 
+     * @return array
+     */
     public function getPluginsTemplates($names=null) {
         if ($names) {
             $names = array_merge($this->globalPlugins, $names);
@@ -73,6 +102,11 @@ class Plugins {
         return $this->filterPluginsByName('templates', $this->globalPlugins);
     }
 
+    /**
+     * Returns an array of template files contents as strings
+     * @param array $names the plugin name strings (foldernames) in an array 
+     * @return array
+     */
     public function getTemplates($names=null) {
         $templateStrings = array();
         $plugins = $this->getPluginsTemplates($names);
