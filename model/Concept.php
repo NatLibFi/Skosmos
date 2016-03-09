@@ -433,16 +433,12 @@ class Concept extends VocabularyDataObject
         $modified = '';
         try {
             // finding the created properties
-            if ($this->resource->get('dc11:created')) {
-                $created = $this->resource->get('dc11:created')->getValue();
-            } else if ($this->resource->get('dc:created')) {
+            if ($this->resource->get('dc:created')) {
                 $created = $this->resource->get('dc:created')->getValue();
             }
 
             // finding the modified properties
-            if ($this->resource->get('dc11:modified')) {
-                $modified = $this->resource->get('dc11:modified')->getValue();
-            } else if ($this->resource->get('dc:modified')) {
+            if ($this->resource->get('dc:modified')) {
                 $modified = $this->resource->get('dc:modified')->getValue();
             }
 
@@ -462,12 +458,12 @@ class Concept extends VocabularyDataObject
         } catch (Exception $e) {
             trigger_error($e->getMessage(), E_USER_WARNING);
             $ret = '';
-            if ($this->resource->get('dc11:modified') || $this->resource->get('dc:modified')) {
-                $modified = $this->resource->get('dc11:modified') ? (string) $this->resource->get('dc11:modified') : (string) $this->resource->get('dc:modified');
+            if ($this->resource->get('dc:modified')) {
+                $modified = (string) $this->resource->get('dc:modified');
                 $ret = gettext('skosmos:modified') . ' ' . $modified; 
             }
-            if ($this->resource->get('dc11:created') || $this->resource->get('dc:created')) {
-                $created .= $this->resource->get('dc11:created') ? (string) $this->resource->get('dc11:created') : (string) $this->resource->get('dc:created');
+            if ($this->resource->get('dc:created')) {
+                $created .= (string) $this->resource->get('dc:created');
                 $ret .= ' ' . gettext('skosmos:created') . ' ' . $created; 
             }
         }
