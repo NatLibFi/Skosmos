@@ -1,10 +1,10 @@
 <?php
 
-class Plugins {
-    private $globalPlugins;
+class PluginRegister {
+    private $requestedPlugins;
 
-    public function __construct($globalPlugins=array()) {
-        $this->globalPlugins = $globalPlugins;
+    public function __construct($requestedPlugins=array()) {
+        $this->requestedPlugins = $requestedPlugins;
     }
     
     /**
@@ -70,10 +70,10 @@ class Plugins {
      */
     public function getPluginsJS($names=null) {
         if ($names) {
-            $names = array_merge($this->globalPlugins, $names);
+            $names = array_merge($this->requestedPlugins, $names);
             return $this->filterPluginsByName('js', $names);
         }
-        return $this->filterPluginsByName('js', $this->globalPlugins);
+        return $this->filterPluginsByName('js', $this->requestedPlugins);
     }
 
     /**
@@ -83,10 +83,10 @@ class Plugins {
      */
     public function getPluginsCSS($names=null) {
         if ($names) {
-            $names = array_merge($this->globalPlugins, $names);
+            $names = array_merge($this->requestedPlugins, $names);
             return $this->filterPluginsByName('css', $names);
         }
-        return $this->filterPluginsByName('css', $this->globalPlugins);
+        return $this->filterPluginsByName('css', $this->requestedPlugins);
     }
 
     /**
@@ -96,10 +96,10 @@ class Plugins {
      */
     public function getPluginsTemplates($names=null) {
         if ($names) {
-            $names = array_merge($this->globalPlugins, $names);
+            $names = array_merge($this->requestedPlugins, $names);
             return $this->filterPluginsByName('templates', $names);
         }
-        return $this->filterPluginsByName('templates', $this->globalPlugins);
+        return $this->filterPluginsByName('templates', $this->requestedPlugins);
     }
 
     /**

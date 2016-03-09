@@ -198,6 +198,6 @@ class Request
         if ($this->vocab) {
             return $this->vocab->getConfig()->getPlugins();
         }
-        return new Plugins($this->model->getConfig()->getGlobalPlugins());
+        return new PluginRegister($this->model->getConfig()->getGlobalPlugins());
     }
 }

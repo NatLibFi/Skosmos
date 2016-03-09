@@ -17,7 +17,7 @@ class VocabularyConfig extends DataObject
                 $pluginArray[] = $pluginlit->getValue();
             }
         }
-        $this->plugins = new Plugins(array_merge($globalPlugins, $pluginArray));
+        $this->plugins = new PluginRegister(array_merge($globalPlugins, $pluginArray));
     }
 
     /**
