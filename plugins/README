@@ -1,0 +1,11 @@
+Place plugins here each one in it's own folder. The folder name will be used as the plugin name.
+Include a file called plugin.json in the root of the plugin's folder e.g. 'Skosmos/plugins/myplugin/plugin.json'.
+Below you will see a sample of what the plugin.json file could look like:
+{
+    "js": ["someJavascript.js"],
+    "css": ["sampleStyles.css"],
+    "templates": ["template.html"]
+}
+The plugin.json tells Skosmos where it can find the files needed for your plugin.
+Filenames should be strings in a javascript array. The above file tells Skosmos
+to look for the plugin's js in 'Skosmos/plugins/myplugin/someJavascript.js'.
