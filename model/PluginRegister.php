@@ -114,7 +114,7 @@ class PluginRegister {
             foreach ($templates as $path) {
                 if (file_exists($path)) {
                     $filename = explode('/', $path);
-                    $filename = $filename[$filename-1];
+                    $filename = $filename[sizeof($filename)-1];
                     $id = $folder . '-' . substr($filename, 0 , (strrpos($filename, ".")));
                     $templateStrings[$id] = file_get_contents($path);
                 }
