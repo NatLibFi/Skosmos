@@ -12,8 +12,10 @@ class VocabularyConfig extends DataObject
         $this->resource = $resource;
         $plugins = $this->resource->allLiterals('skosmos:usePlugin');
         $pluginArray = array();
-        foreach ($plugins as $pluginlit) {
-            $pluginArray[] = $pluginlit->getValue();
+        if ($plugins) {
+            foreach ($plugins as $pluginlit) {
+                $pluginArray[] = $pluginlit->getValue();
+            }
         }
         $this->plugins = new Plugins(array_merge($globalPlugins, $pluginArray));
     }
