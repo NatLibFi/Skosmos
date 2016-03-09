@@ -16,9 +16,9 @@ class Plugins {
         $plugins = array();
         $pluginconfs = glob('plugins/*/plugin.json');
         foreach ($pluginconfs as $path) {
-            $folder = explode('/', $path)[1];
+            $folder = explode('/', $path);
             if (file_exists($path)) {
-                $plugins[$folder] = json_decode(file_get_contents($path), true);
+                $plugins[$folder[1]] = json_decode(file_get_contents($path), true);
             }
         }
         return $plugins;
