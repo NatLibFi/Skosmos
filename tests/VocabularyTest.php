@@ -277,7 +277,7 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
    */
   public function testGetBreadCrumbs() {
     $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
-    $resource = new EasyRdf_Resource('http://www.yso.fi/onto/yso/p14606');
+    $resource = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
     $vocabstub = $this->getMock('Vocabulary', array('getConceptTransitiveBroaders'), array($model, $resource));
     $vocabstub->method('getConceptTransitiveBroaders')->willReturn(array ( 'http://www.yso.fi/onto/yso/p4762' => array ( 'label' => 'objects', ), 'http://www.yso.fi/onto/yso/p1674' => array ( 'label' => 'physical whole', 'direct' => array ( 0 => 'http://www.yso.fi/onto/yso/p4762', ), ), 'http://www.yso.fi/onto/yso/p14606' => array ( 'label' => 'layers', 'direct' => array ( 0 => 'http://www.yso.fi/onto/yso/p1674', ), ), ));
     $result = $vocabstub->getBreadCrumbs('en', 'http://www.yso.fi/onto/yso/p14606');
@@ -292,7 +292,7 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
    */
   public function testGetBreadCrumbsShortening() {
     $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
-    $resource = new EasyRdf_Resource('http://www.yso.fi/onto/yso/p14606');
+    $resource = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
     $vocabstub = $this->getMock('Vocabulary', array('getConceptTransitiveBroaders'), array($model, $resource));
     $vocabstub->method('getConceptTransitiveBroaders')->willReturn(array ( 'http://www.yso.fi/onto/yso/p4762' => array ( 'label' => 'objects', ), 'http://www.yso.fi/onto/yso/p13871' => array ( 'label' => 'thai language', 'direct' => array ( 0 => 'http://www.yso.fi/onto/yso/p10834', ), ), 'http://www.yso.fi/onto/yso/p556' => array ( 'label' => 'languages', 'direct' => array ( 0 => 'http://www.yso.fi/onto/yso/p2881', ), ), 'http://www.yso.fi/onto/yso/p8965' => array ( 'label' => 'Sino-Tibetan languages', 'direct' => array ( 0 => 'http://www.yso.fi/onto/yso/p556', ), ), 'http://www.yso.fi/onto/yso/p3358' => array ( 'label' => 'systems', 'direct' => array ( 0 => 'http://www.yso.fi/onto/yso/p4762', ), ), 'http://www.yso.fi/onto/yso/p10834' => array ( 'label' => 'Tai languages', 'direct' => array ( 0 => 'http://www.yso.fi/onto/yso/p8965', ), ), 'http://www.yso.fi/onto/yso/p2881' => array ( 'label' => 'cultural systems', 'direct' => array ( 0 => 'http://www.yso.fi/onto/yso/p3358', ), ), ) );
     $result = $vocabstub->getBreadCrumbs('en', 'http://www.yso.fi/onto/yso/p13871');
