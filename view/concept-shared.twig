@@ -49,7 +49,7 @@
       </td>
       {% else %}
       <td>{% if concept.notation %}<span class="notation">{{ concept.notation }}</span>{% endif %}
-        <span class="prefLabel conceptlabel" href="{% if concept.type == "skos:Collection" %}{{ concept.uri | link_url(concept.vocab, request.lang, 'groups',request.contentLang) }}{% elseif concept.exvocab is defined%}{{ concept.uri | link_url(concept.exvocab,concept.lang, 'page', request.contentLang) }}{% else %}{{ concept.uri | link_url(concept.vocab,concept.lang,'page',request.contentLang) }}{% endif %}">{{ concept.label }}</span>
+        <span class="prefLabel conceptlabel" href="{% if concept.type == "skos:Collection" %}{{ concept.uri | link_url(concept.vocab, request.lang, 'page',request.contentLang) }}{% elseif concept.exvocab is defined%}{{ concept.uri | link_url(concept.exvocab,concept.lang, 'page', request.contentLang) }}{% else %}{{ concept.uri | link_url(concept.vocab,concept.lang,'page',request.contentLang) }}{% endif %}">{{ concept.label }}</span>
       </td>
       {% endif %}
       </tr>
@@ -73,9 +73,9 @@
             {% if propval.uri and propval.type != 'rdf:type' %} {# resources with URI #}
               {% if propval.label %}
                 {% if propval.exvocab and propval.exvocab != propval.vocab %}{# if the property is located in a another vocabulary #}
-                <a href="{% if propval.type == "skosmos:memberOf" %}{{ propval.uri | link_url(propval.vocab, request.lang, 'groups') }}{% else %}{{ propval.uri | link_url(propval.vocab, request.lang, 'page', request.contentLang) }}{% endif %}">{% if propval.notation %}<span class="versal">{{ propval.notation }}</span>{% endif %}{{ propval.label }}</a>
+                <a href="{% if propval.type == "skosmos:memberOf" %}{{ propval.uri | link_url(propval.vocab, request.lang, 'page') }}{% else %}{{ propval.uri | link_url(propval.vocab, request.lang, 'page', request.contentLang) }}{% endif %}">{% if propval.notation %}<span class="versal">{{ propval.notation }}</span>{% endif %}{{ propval.label }}</a>
                 {% else %}
-                <a href="{% if propval.type == "skosmos:memberOf" %}{{ propval.uri | link_url(propval.vocab, request.lang, 'groups', request.contentLang) }}{% else %}{{ propval.uri | link_url(propval.vocab, request.lang, 'page',request.contentLang) }}{% endif %}">{% if propval.notation %}<span class="versal">{{ propval.notation }} </span>{% endif %}{{ propval.label(request.contentLang) }}</a>
+                <a href="{% if propval.type == "skosmos:memberOf" %}{{ propval.uri | link_url(propval.vocab, request.lang, 'page', request.contentLang) }}{% else %}{{ propval.uri | link_url(propval.vocab, request.lang, 'page',request.contentLang) }}{% endif %}">{% if propval.notation %}<span class="versal">{{ propval.notation }} </span>{% endif %}{{ propval.label(request.contentLang) }}</a>
                   {% if propval.lang and (propval.lang != request.lang or explicit_langcodes) %}<span class="versal"> ({{ propval.label.lang }})</span>{% endif %}
                 {% endif %}
                 {% if propval.SubMembers %}<div class="subvalue"> {# if property is a group concept that has sub properties #}
@@ -102,7 +102,7 @@
           <ul>
           {% for group in concept.groupProperties %}
               {% if group.type != 'skosmos:memberOfSuper' and not superFound %}<li>{% endif %}
-                <a href="{{ group.uri | link_url(group.vocab,request.lang,'groups',request.contentLang) }}">{% if group.notation %}<span class="versal">{{ group.notation }}</span>{% endif %}{{ group.label(request.contentLang) }}</a>
+                <a href="{{ group.uri | link_url(group.vocab,request.lang,'page',request.contentLang) }}">{% if group.notation %}<span class="versal">{{ group.notation }}</span>{% endif %}{{ group.label(request.contentLang) }}</a>
                 {% if group.type == 'skosmos:memberOfSuper' %}{% set superFound = true %}<span class="versal"> &#62; </span>{% endif %}
               {% if group.type != 'skosmos:memberOfSuper' and not superFound %}</li>{% endif %}
           {% endfor %}
@@ -113,7 +113,7 @@
       <ul>
       {% for group in concept.arrayProperties %}
         {% if group.type == 'skosmos:memberOfArray' %}
-            <li><a href="{{ group.uri | link_url(group.vocab,request.lang,'groups',request.contentLang) }}">{% if group.notation %}<span class="versal">{{ group.notation }}</span>{% endif %}{{ group.label(request.contentLang) }}</a></li>
+            <li><a href="{{ group.uri | link_url(group.vocab,request.lang,'page',request.contentLang) }}">{% if group.notation %}<span class="versal">{{ group.notation }}</span>{% endif %}{{ group.label(request.contentLang) }}</a></li>
         {% else %}
         {% endif %}
       {% endfor %}

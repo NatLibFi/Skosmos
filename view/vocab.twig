@@ -19,8 +19,8 @@
   <div class="group-container">
     <ul class="group-index">
       {% for uri, value in groups %}
-      <li><a href="{{ uri | link_url(vocab,request.lang,'groups') }}">{{ value.label }}</a>
-        {% if value.children %}{% for childuri,childlabel in value.children %}<li class="sub-group"><a href="{{ childuri | link_url(vocab,request.lang,'groups') }}">{{ childlabel }}</a></li>{% endfor %}{% endif %}
+      <li><a href="{{ uri | link_url(vocab,request.lang,'page') }}">{{ value.label }}</a>
+        {% if value.children %}{% for childuri,childlabel in value.children %}<li class="sub-group"><a href="{{ childuri | link_url(vocab,request.lang,'page') }}">{{ childlabel }}</a></li>{% endfor %}{% endif %}
       </li>
       {% endfor %}
     </ul>
