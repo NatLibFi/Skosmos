@@ -56,6 +56,7 @@
       <tr><td class="preflabel-spacer" colspan="2"></td></tr>
       {% endspaceless %}
       {% for property in concept.properties %} {# loop through ConceptProperty objects #}
+        {% if property.getSubPropertyOf != 'skos:hiddenLabel' %}
         <tr{% if property.type == 'dc:isReplacedBy' %} class="replaced-by"{% endif%}><td><span class="versal{% if property.type == 'rdf:type' %}-bold{% endif %}{% if not (property.type in property.description and '_help' in property.description) %} property-click" title="{{ property.description }}"{% else %}"{% endif %}>{{ property.label|upper }}</span></td><td><ul>
         {% if request.vocab.hasMultiLingualProperty(property.type) %}
           {% set prevlang = '' %}{# Only displaying the language when it appears for the very first time #}
@@ -96,6 +97,7 @@
             </li>
         {% endfor %}
         </ul></td></tr>
+        {% endif %}
         {% endif %}
       {% endfor %}
       {% if concept.groupProperties %}<tr><td><span class="versal property-click" title="{% trans "skosmos:memberOf_help" %}" >{{ 'skosmos:memberOf'|trans|upper }}</span></td><td>

@@ -115,6 +115,14 @@
 	skosmos:language "en";
 	skosmos:sparqlGraph <http://www.skosmos.skos/prefix/> .
 
+:subclass a skosmos:Vocabulary, void:Dataset ;
+	dc11:title "Subproperties of hiddenLabel"@en ;
+	dc:subject :cat_general ;
+	void:uriSpace "http://www.skosmos.skos/sub/";
+	void:sparqlEndpoint <http://localhost:3030/ds/sparql> ;
+	skosmos:language "en";
+	skosmos:sparqlGraph <http://www.skosmos.skos/sub/> .
+
 <http://skosmos.skos/dump/test/groups> dc:format "application/rdf+xml" .
 
 :cat_science a skos:Concept ;

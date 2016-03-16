@@ -89,4 +89,16 @@ class ConceptPropertyTest extends PHPUnit_Framework_TestCase
       $prevlabel = $label;
     }
   }
+
+  /**
+   * @covers ConceptProperty::getSubPropertyOf
+   */
+  public function testGetPropertiesSubClassOfHiddenLabel()
+  {
+    $vocab = $this->model->getVocabulary('subclass');
+    $results = $vocab->getConceptInfo('http://www.skosmos.skos/sub/d1', 'en'); 
+    $concept = reset($results);
+    $props = $concept->getProperties();
+    $this->assertEquals('skos:hiddenLabel', $props['subclass:prop1']->getSubPropertyOf());
+  }
 }

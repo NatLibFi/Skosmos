@@ -7,6 +7,8 @@ class ConceptProperty
 {
     /** stores the property type */
     private $prop;
+    /** stores the property supertype */
+    private $super;
     /** stores the property label */
     private $label;
     /** stores the property values */
@@ -19,12 +21,13 @@ class ConceptProperty
      * @param string $prop property type eg. 'rdf:type'.
      * @param string $label
      */
-    public function __construct($prop, $label)
+    public function __construct($prop, $label, $super)
     {
         $this->prop = $prop;
         $this->label = $label;
         $this->values = array();
         $this->is_sorted = true;
+        $this->super = $super;
     }
 
     /**
@@ -96,5 +99,14 @@ class ConceptProperty
     public function getType()
     {
         return $this->prop;
+    }
+    
+    /**
+     * Returns property supertype (?property skos:subPropertyOf ?super) as a string.
+     * @return string eg. 'skos:hiddenLabel'.
+     */
+    public function getSubPropertyOf()
+    {
+        return $this->super;
     }
 }
