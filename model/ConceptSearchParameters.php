@@ -173,4 +173,7 @@ class ConceptSearchParameters
         $this->hidden = $hidden;
     }
     
+    public function getRest() {
+        return $this->rest;
+    }
 }
