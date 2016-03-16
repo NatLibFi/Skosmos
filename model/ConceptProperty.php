@@ -21,7 +21,7 @@ class ConceptProperty
      * @param string $prop property type eg. 'rdf:type'.
      * @param string $label
      */
-    public function __construct($prop, $label, $super)
+    public function __construct($prop, $label, $super=null)
     {
         $this->prop = $prop;
         $this->label = $label;
