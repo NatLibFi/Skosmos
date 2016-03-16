@@ -274,7 +274,7 @@ class Model
         }
 
         $results = $sparql->queryConcepts($vocabs, $params->getAdditionalFields(), $params->getUnique(), $params);
-        if ($results && $params->getSearchLimit() !== 0) {
+        if ($params->getRest() && $results && $params->getSearchLimit() !== 0) {
           $results = array_slice($results, $params->getOffset(), $params->getSearchLimit());
         }
         $ret = array();
@@ -318,6 +318,7 @@ class Model
     {
         $params->setUnique(true);
         $allhits = $this->searchConcepts($params);
+        $count = sizeof($allhits);
         $hits = array_slice($allhits, $params->getOffset(), $params->getSearchLimit());
 
         $uris = array();
@@ -359,7 +360,7 @@ class Model
 
         }
 
-        return array('count' => sizeof($allhits), 'results' => $ret);
+        return array('count' => $count, 'results' => $ret);
     }
 
     /**
