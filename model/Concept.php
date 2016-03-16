@@ -324,7 +324,11 @@ class Concept extends VocabularyDataObject
             if (!in_array($prop, $this->DELETED_PROPERTIES)) {
                 $propres = new EasyRdf_Resource($prop, $this->graph);
                 $proplabel = $propres->label($this->getEnvLang()) ? $propres->label($this->getEnvLang()) : $propres->label();
-                $propobj = new ConceptProperty($prop, $proplabel);
+                $superprop = $propres->get('rdfs:subPropertyOf') ? $propres->get('rdfs:subPropertyOf')->getURI() : null;
+                if ($superprop) {
+                    $superprop = EasyRdf_Namespace::shorten($superprop) ? EasyRdf_Namespace::shorten($superprop) : $superprop;
+                }
+                $propobj = new ConceptProperty($prop, $proplabel, $superprop);
 
                 if ($propobj->getLabel() !== null) {
                     // only display properties for which we have a label
