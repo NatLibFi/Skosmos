@@ -11,7 +11,7 @@ class PluginRegister {
      * Returns the plugin configurations found from plugin folders inside the plugins folder
      * @return array
      */
-    private function getPlugins() 
+    protected function getPlugins() 
     {
         $plugins = array();
         $pluginconfs = glob('plugins/*/plugin.json');
