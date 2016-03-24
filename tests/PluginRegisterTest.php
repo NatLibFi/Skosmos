@@ -62,6 +62,17 @@ class PluginRegisterTest extends PHPUnit_Framework_TestCase
     $this->assertEquals(array(), $plugins->getPluginsCSS());
   }
   
+  /**
+   * @covers Concept::getPluginsCSS
+   * @covers Concept::filterPlugins
+   * @covers Concept::filterPluginsByName
+   */
+  public function testGetPluginsCSSWithName()
+  {
+    $plugins = new PluginRegister();
+    $this->assertEquals(array('test-plugin' => array('plugins/test-plugin/stylesheet.css')), $this->mockpr->getPluginsCSS(array('test-plugin')));
+  }
+  
   
   /**
    * @covers Concept::getPluginsTemplates
