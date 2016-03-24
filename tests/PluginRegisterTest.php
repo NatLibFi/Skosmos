@@ -22,7 +22,6 @@ class PluginRegisterTest extends PHPUnit_Framework_TestCase
     $plugins = new PluginRegister();
     $this->assertInstanceOf('PluginRegister', $plugins);
   }
-  //array ( 'finna' => array ( 'js' => array ( 0 => 'widget.js', 1 => 'node_modules/i18next/i18next.min.js', ), 'css' => array ( 0 => 'stylesheet.css', ), 'templates' => array ( 0 => 'template.html', ), ), 'finto' => array ( 'css' => array ( 0 => 'finto.css', ), ), )
   
   /**
    * @covers Concept::getPluginsJS
