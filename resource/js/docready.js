@@ -196,7 +196,7 @@ $(function() { // DOCUMENT READY
         for (var i in data.subTypes) {
           var sub = data.subTypes[i];
           var label = sub.label ? sub.label : sub.type;
-          typeStats += '<tr><td class="count-type versal">' + label + '</td><td class="versal">' + sub.count + '</td></tr>';
+          typeStats += '<tr><td class="count-type versal">&nbsp;&bull;&nbsp;' + label + '</td><td class="versal">' + sub.count + '</td></tr>';
         }
         if (data.conceptGroups) {
           typeStats += '<tr><td class="count-type versal">' + data.conceptGroups.label + '</td><td class="versal">' + data.conceptGroups.count +'</td></tr>';
