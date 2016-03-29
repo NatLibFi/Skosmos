@@ -314,7 +314,6 @@ $(function() { // DOCUMENT READY
             url : targetUrl,
             success : function(data) {
               updateSidebar(data);
-              $('#alpha').after($('#hierarchy'));
               $('.nav').scrollTop(0);
               if (window.history.pushState) { window.history.pushState(null, null, encodeURI(event.target.href)); }
               updateTitle(data);
@@ -338,7 +337,6 @@ $(function() { // DOCUMENT READY
             url : targetUrl,
             success : function(data) {
               updateSidebar(data);
-              $('#changes').after($('#hierarchy'));
               $('.nav').scrollTop(0);
               if (window.history.pushState) { window.history.pushState(null, null, encodeURI(event.target.href)); }
               updateTitle(data);
