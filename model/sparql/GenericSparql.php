@@ -655,33 +655,70 @@ EOQ;
     }
 
     /**
+     * @param string $prop property to include in the result eg. 'broader' or 'narrower'
+     * @return string sparql query clause
+     */
+    private function formatPropertyCsvClause($prop) {
+        # This expression creates a CSV row containing pairs of (uri,prefLabel) values.
+        # The REPLACE is performed for quotes (" -> "") so they don't break the CSV format.
+        $clause = <<<EOV
+(GROUP_CONCAT(DISTINCT CONCAT(
+ '"', STR(?$prop), '"', ',',
+ '"', REPLACE(IF(BOUND(?{$prop}lab),?{$prop}lab,''), '"', '""'), '"'
+); separator='\\n') as ?{$prop}s)
+EOV;
+        return $clause;
+    }
+    
+    /**
+     * @return string sparql query clause
+     */
+    private function formatPrefLabelCsvClause() {
+        # This expression creates a CSV row containing pairs of (prefLabel, lang) values.
+        # The REPLACE is performed for quotes (" -> "") so they don't break the CSV format.
+        $clause = <<<EOV
+(GROUP_CONCAT(DISTINCT CONCAT(
+ '"', STR(?pref), '"', ',', '"', lang(?pref), '"'
+); separator='\\n') as ?preflabels)
+EOV;
+        return $clause;
+    }
+
+    /**
      * @param string $lang language code of the returned labels
      * @param array $fields extra fields to include in the result (array of strings). (default: null = none)
      * @return string sparql query clause
      */
-    protected function formatBroader($lang, $fields) {
-        // extra variable expressions to request
-        $extravars = '';
-        // extra fields to query for
-        $extrafields = '';
+    protected function formatExtraFields($lang, $fields) {
+        // extra variable expressions to request and extra fields to query for
+        $ret = array('extravars' => '', 'extrafields' => '');
 
-        if ($fields !== null && in_array('broader', $fields)) {
-            # This expression creates a CSV row containing pairs of (uri,prefLabel) values.
-            # The REPLACE is performed for quotes (" -> "") so they don't break the CSV format.
-            $extravars = <<<EOV
-(GROUP_CONCAT(DISTINCT CONCAT(
- '"', STR(?broad), '"', ',',
- '"', REPLACE(IF(BOUND(?broadlab),?broadlab,''), '"', '""'), '"'
-); separator='\\n') as ?broaders)
-EOV;
-            $extrafields = <<<EOF
+        if ($fields === null) {
+            return $ret; 
+        }
+
+        if (in_array('prefLabel', $fields)) {
+            $ret['extravars'] .= $this->formatPreflabelCsvClause();
+            $ret['extrafields'] .= <<<EOF
 OPTIONAL {
-  ?s skos:broader ?broad .
-  OPTIONAL { ?broad skos:prefLabel ?broadlab . FILTER(langMatches(lang(?broadlab), '$lang')) }
+  ?s skos:prefLabel ?pref .
+}
+EOF;
+            // removing the prefLabel from the fields since it has been handled separately
+            $fields = array_diff($fields, array('prefLabel'));
+        }
+
+        foreach ($fields as $field) {
+            $ret['extravars'] .= $this->formatPropertyCsvClause($field, $lang);
+            $ret['extrafields'] .= <<<EOF
+OPTIONAL {
+  ?s skos:$field ?$field .
+  OPTIONAL { ?$field skos:prefLabel ?{$field}lab . FILTER(langMatches(lang(?{$field}lab), '$lang')) }
 }
 EOF;
         }
-        return array('extravars' => $extravars, 'extrafields' => $extrafields);
+
+        return $ret;
     }
 
     /**
@@ -785,9 +822,9 @@ EOQ;
     protected function generateConceptSearchQuery($fields, $unique, $params) {
         $gcl = $this->graphClause;
         $formattedtype = $this->formatTypes($params->getTypeLimit());
-        $formattedbroader = $this->formatBroader($params->getLang(), $fields);
-        $extravars = $formattedbroader['extravars'];
-        $extrafields = $formattedbroader['extrafields'];
+        $formattedfields = $this->formatExtraFields($params->getLang(), $fields);
+        $extravars = $formattedfields['extravars'];
+        $extrafields = $formattedfields['extrafields'];
         $schemes = $params->getSchemeLimit();
 
         $schemecond = '';
@@ -890,6 +927,13 @@ EOQ;
                     }
 
                     $hit['broader'][] = $broader;
+                }
+            }
+            
+            if (isset($row->preflabels)) {
+                foreach (explode("\n", $row->preflabels->getValue()) as $line) {
+                    $pref = str_getcsv($line, ',', '"', '"');
+                    $hit['prefLabels'][$pref[1]] = $pref[0];
                 }
             }
 
