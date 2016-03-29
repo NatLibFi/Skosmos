@@ -556,14 +556,16 @@ class Concept extends VocabularyDataObject
         foreach ($this->resource->allLiterals('skos:prefLabel') as $lit) {
             // filtering away subsets of the current language eg. en vs en-GB
             if ($lit->getLang() != $this->clang && strpos($lit->getLang(), $this->getEnvLang() . '-') !== 0) {
-                $labels[Punic\Language::getName($lit->getLang(), $this->getEnvLang())][] = new ConceptPropertyValueLiteral($lit, 'skos:prefLabel');
+                $langName = Punic\Language::getName($lit->getLang(), $this->getEnvLang()) !== $lit->getLang() ? Punic\Language::getName($lit->getLang(), $this->getEnvLang()) : gettext($lit->getLang());
+                $labels[$langName][] = new ConceptPropertyValueLiteral($lit, 'skos:prefLabel');
             }
 
         }
         foreach ($this->resource->allLiterals('skos:altLabel') as $lit) {
             // filtering away subsets of the current language eg. en vs en-GB
             if ($lit->getLang() != $this->clang && strpos($lit->getLang(), $this->getEnvLang() . '-') !== 0) {
-                $labels[Punic\Language::getName($lit->getLang(), $this->getEnvLang())][] = new ConceptPropertyValueLiteral($lit, 'skos:altLabel');
+                $langName = Punic\Language::getName($lit->getLang(), $this->getEnvLang()) ? Punic\Language::getName($lit->getLang(), $this->getEnvLang()) : gettext($lit->getLang());
+                $labels[$langName][] = new ConceptPropertyValueLiteral($lit, 'skos:altLabel');
             }
 
         }
