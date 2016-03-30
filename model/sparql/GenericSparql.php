@@ -892,7 +892,7 @@ EOQ;
      * @param array $vocabs array of Vocabulary objects to search; empty for global search
      * @return array query result object
      */
-    private function transformConceptSearchResults($results, $vocabs) {
+    private function transformConceptSearchResults($results, $vocabs, $fields) {
         $ret = array();
         $qnamecache = array(); // optimization to avoid expensive shorten() calls
 
@@ -918,17 +918,23 @@ EOQ;
                 $hit['type'][] = $qnamecache[$typeuri];
             }
 
-            if (isset($row->broaders)) {
-                foreach (explode("\n", $row->broaders->getValue()) as $line) {
-                    $brdata = str_getcsv($line, ',', '"', '"');
-                    $broader = array('uri' => $brdata[0]);
-                    if ($brdata[1] != '') {
-                        $broader['prefLabel'] = $brdata[1];
-                    }
+            if(!empty($fields)) {
+                foreach ($fields as $prop) {
+                    $propname = $prop . 's';
+                    if (isset($row->$propname)) {
+                        foreach (explode("\n", $row->$propname->getValue()) as $line) {
+                            $rdata = str_getcsv($line, ',', '"', '"');
+                            $propvals = array('uri' => $rdata[0]);
+                            if ($rdata[1] != '') {
+                                $propvals['prefLabel'] = $rdata[1];
+                            }
 
-                    $hit['broader'][] = $broader;
+                            $hit[$prop][] = $propvals;
+                        }
+                    }
                 }
             }
+
             
             if (isset($row->preflabels)) {
                 foreach (explode("\n", $row->preflabels->getValue()) as $line) {
@@ -980,7 +986,7 @@ EOQ;
     public function queryConcepts($vocabs, $fields = null, $unique = false, $params) {
         $query = $this->generateConceptSearchQuery($fields, $unique, $params);
         $results = $this->client->query($query);
-        return $this->transformConceptSearchResults($results, $vocabs);
+        return $this->transformConceptSearchResults($results, $vocabs, $fields);
     }
 
     /**
