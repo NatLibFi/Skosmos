@@ -204,6 +204,13 @@ class RestController extends Controller
             $ret['@context']['prefLabels'] = array('@id' => 'skos:prefLabel', '@container' => '@language');
         }
 
+        if ($request->getQueryParam('fields')) {
+            $fields = explode(' ', $request->getQueryParam('fields'));
+            foreach ($fields as $prop) {
+                $ret['@context'][$prop] = "skos:{$prop}";
+            }
+        }
+
         if ($request->getQueryParam('labellang')) {
             $ret['@context']['@language'] = $request->getQueryParam('labellang');
         } elseif ($request->getQueryParam('lang')) {
