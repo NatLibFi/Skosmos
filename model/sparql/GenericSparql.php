@@ -847,7 +847,7 @@ EOQ;
             $props[] = 'skos:hiddenLabel';
         }
 
-        $filter_graph = $this->formatFilterGraph($params->getVocabs());
+        $filterGraph = $this->formatFilterGraph($params->getVocabs());
 
         // remove futile asterisks from the search term
         $term = $params->getSearchTerm();
@@ -878,7 +878,7 @@ $innerquery
   }
   FILTER NOT EXISTS { ?s owl:deprecated true }
  }
- $filter_graph
+ $filterGraph
 }
 GROUP BY ?s ?match ?label ?plabel ?alabel ?hlabel ?graph
 ORDER BY LCASE(STR(?match)) LANG(?match) $orderextra
