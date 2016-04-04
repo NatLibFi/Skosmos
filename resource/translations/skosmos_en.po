@@ -96,7 +96,7 @@ msgstr "By type"
 #: /tmp/cache/56fa6d7a32a33/6e/6e42e8c53c0a500ee83faf3238b4cb7d22a33fa5cd53c06e8da925a1f0bf7e61.php:118
 #: /tmp/cache/56fa6d7a32a33/e5/e5e30dd1e4f7a5aba208e2abff5f397783b237206ddb689ead55f2201f80691a.php:114
 msgid "Changes-nav"
-msgstr "Changes"
+msgstr "New"
 
 #: /tmp/cache/56fa6d7a32a33/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:122
 msgid "Clear limitations"
