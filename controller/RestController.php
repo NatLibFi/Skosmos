@@ -606,7 +606,8 @@ class RestController extends Controller
         return $this->returnJson($ret);
     }
     
-    private function transformPropertyResults($uri, $lang, $objects, $propname, $propuri) {
+    private function transformPropertyResults($uri, $lang, $objects, $propname, $propuri)
+    {
         foreach ($objects as $objuri => $vals) {
             $results[] = array('uri' => $objuri, 'prefLabel' => $vals['label']);
         }
@@ -617,6 +618,25 @@ class RestController extends Controller
             $propname => $results)
         );
         return $ret;    
+    }
+    
+    private function transformTransitivePropertyResults($uri, $lang, $objects, $tpropname, $tpropuri, $dpropname, $dpropuri)
+    {
+        $results = array();
+        foreach ($objects as $objuri => $vals) {
+            $result = array('uri' => $objuri, 'prefLabel' => $vals['label']);
+            if (isset($vals['direct'])) {
+                $result[$dpropname] = $vals['direct'];
+            }
+            $results[$objuri] = $result;
+        }
+
+        $ret = array_merge_recursive($this->context, array(
+            '@context' => array('prefLabel' => 'skos:prefLabel', $dpropname => array('@id' => $dpropuri, '@type' => '@id'), $tpropname => array('@id' => $tpropuri, '@container' => '@index'), '@language' => $lang),
+            'uri' => $uri,
+            $tpropname => $results)
+        );
+        return $ret;
     }
 
     /**
@@ -642,26 +662,11 @@ class RestController extends Controller
      */
     public function broaderTransitive($request)
     {
-        $results = array();
         $broaders = $request->getVocab()->getConceptTransitiveBroaders($request->getUri(), $this->parseLimit(), false, $request->getLang());
         if (empty($broaders)) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
         }
-
-        foreach ($broaders as $buri => $vals) {
-            $result = array('uri' => $buri, 'prefLabel' => $vals['label']);
-            if (isset($vals['direct'])) {
-                $result['broader'] = $vals['direct'];
-            }
-            $results[$buri] = $result;
-        }
-
-        $ret = array_merge_recursive($this->context, array(
-            '@context' => array('prefLabel' => 'skos:prefLabel', 'broader' => array('@id' => 'skos:broader', '@type' => '@id'), 'broaderTransitive' => array('@id' => 'skos:broaderTransitive', '@container' => '@index'), '@language' => $request->getLang()),
-            'uri' => $request->getUri(),
-            'broaderTransitive' => $results)
-        );
-
+        $ret = $this->transformTransitivePropertyResults($request->getUri(), $request->getLang(), $broaders, "broaderTransitive", "skos:broaderTransitive", "broader", "skos:broader");
         return $this->returnJson($ret);
     }
 
@@ -693,21 +698,7 @@ class RestController extends Controller
         if (empty($narrowers)) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
         }
-
-        foreach ($narrowers as $nuri => $vals) {
-            $result = array('uri' => $nuri, 'prefLabel' => $vals['label']);
-            if (isset($vals['direct'])) {
-                $result['narrower'] = $vals['direct'];
-            }
-            $results[$nuri] = $result;
-        }
-
-        $ret = array_merge_recursive($this->context, array(
-            '@context' => array('prefLabel' => 'skos:prefLabel', 'narrower' => array('@id' => 'skos:narrower', '@type' => '@id'), 'narrowerTransitive' => array('@id' => 'skos:narrowerTransitive', '@container' => '@index'), '@language' => $request->getLang()),
-            'uri' => $request->getUri(),
-            'narrowerTransitive' => $results)
-        );
-
+        $ret = $this->transformTransitivePropertyResults($request->getUri(), $request->getLang(), $narrowers, "narrowerTransitive", "skos:narrowerTransitive", "narrower", "skos:narrower");
         return $this->returnJson($ret);
     }
 
