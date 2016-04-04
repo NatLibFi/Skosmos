@@ -605,6 +605,19 @@ class RestController extends Controller
 
         return $this->returnJson($ret);
     }
+    
+    private function transformPropertyResults($uri, $lang, $objects, $propname, $propuri) {
+        foreach ($objects as $objuri => $vals) {
+            $results[] = array('uri' => $objuri, 'prefLabel' => $vals['label']);
+        }
+
+        $ret = array_merge_recursive($this->context, array(
+            '@context' => array('prefLabel' => 'skos:prefLabel', $propname => $propuri, '@language' => $lang),
+            'uri' => $uri,
+            $propname => $results)
+        );
+        return $ret;    
+    }
 
     /**
      * Used for querying broader relations for a concept.
@@ -618,17 +631,7 @@ class RestController extends Controller
         if ($broaders === null) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
         }
-
-        foreach ($broaders as $object => $vals) {
-            $results[] = array('uri' => $object, 'prefLabel' => $vals['label']);
-        }
-
-        $ret = array_merge_recursive($this->context, array(
-            '@context' => array('prefLabel' => 'skos:prefLabel', 'broader' => 'skos:broader', '@language' => $request->getLang()),
-            'uri' => $request->getUri(),
-            'broader' => $results)
-        );
-
+        $ret = $this->transformPropertyResults($request->getUri(), $request->getLang(), $broaders, "broader", "skos:broader");
         return $this->returnJson($ret);
     }
 
@@ -674,17 +677,7 @@ class RestController extends Controller
         if ($narrowers === null) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
         }
-
-        foreach ($narrowers as $object => $vals) {
-            $results[] = array('uri' => $object, 'prefLabel' => $vals['label']);
-        }
-
-        $ret = array_merge_recursive($this->context, array(
-            '@context' => array('prefLabel' => 'skos:prefLabel', 'narrower' => 'skos:narrower', '@language' => $request->getLang()),
-            'uri' => $request->getUri(),
-            'narrower' => $results)
-        );
-
+        $ret = $this->transformPropertyResults($request->getUri(), $request->getLang(), $narrowers, "narrower", "skos:narrower");
         return $this->returnJson($ret);
     }
 
@@ -834,17 +827,7 @@ class RestController extends Controller
         if ($related === null) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
         }
-
-        foreach ($related as $uri => $vals) {
-            $results[] = array('uri' => $uri, 'prefLabel' => $vals['label']);
-        }
-
-        $ret = array_merge_recursive($this->context, array(
-            '@context' => array('prefLabel' => 'skos:prefLabel', 'related' => 'skos:related', '@language' => $request->getLang()),
-            'uri' => $request->getUri(),
-            'related' => $results)
-        );
-
+        $ret = $this->transformPropertyResults($request->getUri(), $request->getLang(), $related, "related", "skos:related");
         return $this->returnJson($ret);
     }
 }
