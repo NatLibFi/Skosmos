@@ -8,7 +8,6 @@
 /**
  * Importing the dependencies.
  */
-require_once 'controller/Controller.php';
 use \Punic\Language;
 
 /**
@@ -22,8 +21,6 @@ class WebController extends Controller
      * @property object $twig the twig templating engine.
      */
     public $twig;
-
-    public $base_href;
 
     /**
      * Constructor for the WebController.
@@ -50,8 +47,7 @@ class WebController extends Controller
         //ENABLES DUMP() method for easy and fun debugging!
         $this->twig->addExtension(new Twig_Extension_Debug());
         // used for setting the base href for the relative urls
-        $this->base_href = ($this->model->getConfig()->getBaseHref() !== null) ? $this->model->getConfig()->getBaseHref() : $this->guessBaseHref();
-        $this->twig->addGlobal("BaseHref", $this->base_href);
+        $this->twig->addGlobal("BaseHref", $this->getBaseHref());
         // setting the service name string from the config.inc
         $this->twig->addGlobal("ServiceName", $this->model->getConfig()->getServiceName());
         // setting the service logo location from the config.inc
@@ -119,25 +115,6 @@ class WebController extends Controller
         });
         $this->twig->addFilter($langFilter);
 
-    }
-
-    private function guessBaseHref()
-    {
-        $script_name = filter_input(INPUT_SERVER, 'SCRIPT_NAME', FILTER_SANITIZE_STRING);
-        $script_filename = filter_input(INPUT_SERVER, 'SCRIPT_FILENAME', FILTER_SANITIZE_STRING);
-        $script_filename = realpath($script_filename); // resolve any symlinks (see #274)
-        $script_filename = str_replace("\\", "/", $script_filename); // fixing windows paths with \ (see #309)
-        $base_dir = __DIR__; // Absolute path to your installation, ex: /var/www/mywebsite
-        $base_dir = str_replace("\\", "/", $base_dir); // fixing windows paths with \ (see #309)
-        $doc_root = preg_replace("!{$script_name}$!", '', $script_filename);
-        $base_url = preg_replace("!^{$doc_root}!", '', $base_dir);
-        $base_url = str_replace('/controller', '/', $base_url);
-        $protocol = filter_input(INPUT_SERVER, 'HTTPS', FILTER_SANITIZE_STRING) === null ? 'http' : 'https';
-        $port = filter_input(INPUT_SERVER, 'SERVER_PORT', FILTER_SANITIZE_STRING);
-        $disp_port = ($protocol == 'http' && $port == 80 || $protocol == 'https' && $port == 443) ? '' : ":$port";
-        $domain = filter_input(INPUT_SERVER, 'SERVER_NAME', FILTER_SANITIZE_STRING);
-        $full_url = "$protocol://{$domain}{$disp_port}{$base_url}";
-        return $full_url;
     }
 
     /**

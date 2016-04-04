@@ -6,17 +6,12 @@
  */
 
 /**
- * Rest controller is an extension of the controller so that must be imported.
- */
-require_once 'controller/Controller.php';
-
-/**
  * RestController is responsible for handling all the requests directed to the /rest address.
  */
 class RestController extends Controller
 {
     /* supported MIME types that can be used to return RDF data */
-    private static $supportedMIMETypes = 'application/rdf+xml text/turtle application/ld+json application/json';
+    const SUPPORTED_FORMATS = 'application/rdf+xml text/turtle application/ld+json application/json';
     /* context array template */
     private $context = array(
         '@context' => array(
@@ -75,31 +70,6 @@ class RestController extends Controller
         return $limit;
     }
 
-    /**
-     * Negotiate a MIME type according to the proposed format, the list of valid
-     * formats, and an optional proposed format.
-     * As a side effect, set the HTTP Vary header if a choice was made based on
-     * the Accept header.
-     * @param array $choices possible MIME types as strings
-     * @param string $accept HTTP Accept header value
-     * @param string $format proposed format
-     * @return string selected format, or null if negotiation failed
-     */
-    private function negotiateFormat($choices, $accept, $format)
-    {
-        if ($format) {
-            if (!in_array($format, $choices)) {
-                return null;
-            }
-            return $format;
-        }
-        
-        // if there was no proposed format, negotiate a suitable format
-        header('Vary: Accept'); // inform caches that a decision was made based on Accept header
-        $best = $this->negotiator->getBest($accept, $choices);
-        $format = ($best !== null) ? $best->getValue() : null;
-        return $format;
-    }
 
 /** Global REST methods **/
 
@@ -143,27 +113,9 @@ class RestController extends Controller
 
         return $this->returnJson($ret);
     }
-
-    /**
-     * Performs the search function calls. And wraps the result in a json-ld object.
-     * @param Request $request
-     */
-    public function search($request)
+    
+    private function constructSearchParameters($request)
     {
-        $maxhits = $request->getQueryParam('maxhits');
-        $offset = $request->getQueryParam('offset');
-        $term = $request->getQueryParam('query');
-
-        if (!$term) {
-            return $this->returnError(400, "Bad Request", "query parameter missing");
-        }
-        if ($maxhits && (!is_numeric($maxhits) || $maxhits <= 0)) {
-            return $this->returnError(400, "Bad Request", "maxhits parameter is invalid");
-        }
-        if ($offset && (!is_numeric($offset) || $offset < 0)) {
-            return $this->returnError(400, "Bad Request", "offset parameter is invalid");
-        }
-
         $parameters = new ConceptSearchParameters($request, $this->model->getConfig(), true);
         
         $vocabs = $request->getQueryParam('vocab'); # optional
@@ -174,8 +126,11 @@ class RestController extends Controller
             $vocabObjects[] = $this->model->getVocabulary($vocid);
         }
         $parameters->setVocabularies($vocabObjects);
+        return $parameters;    
+    }
 
-        $results = $this->model->searchConcepts($parameters);
+    private function transformSearchResults($request, $results)
+    {
         // before serializing to JSON, get rid of the Vocabulary object that came with each resource
         foreach ($results as &$res) {
             unset($res['voc']);
@@ -215,6 +170,32 @@ class RestController extends Controller
         } elseif ($request->getQueryParam('lang')) {
             $ret['@context']['@language'] = $request->getQueryParam('lang');;
         }
+        return $ret;
+    }
+
+    /**
+     * Performs the search function calls. And wraps the result in a json-ld object.
+     * @param Request $request
+     */
+    public function search($request)
+    {
+        $maxhits = $request->getQueryParam('maxhits');
+        $offset = $request->getQueryParam('offset');
+        $term = $request->getQueryParam('query');
+
+        if (!$term) {
+            return $this->returnError(400, "Bad Request", "query parameter missing");
+        }
+        if ($maxhits && (!is_numeric($maxhits) || $maxhits <= 0)) {
+            return $this->returnError(400, "Bad Request", "maxhits parameter is invalid");
+        }
+        if ($offset && (!is_numeric($offset) || $offset < 0)) {
+            return $this->returnError(400, "Bad Request", "offset parameter is invalid");
+        }
+
+        $parameters = $this->constructSearchParameters($request);
+        $results = $this->model->searchConcepts($parameters);
+        $ret = $this->transformSearchResults($request, $results);
 
         return $this->returnJson($ret);
     }
@@ -416,24 +397,9 @@ class RestController extends Controller
 
         return $this->returnJson($ret);
     }
-
-    /**
-     * Used for finding terms by their exact prefLabel. Wraps the result in a json-ld object.
-     * @param Request $request
-     */
-    public function lookup($request)
+    
+    private function findLookupHits($results, $label)
     {
-        $label = $request->getQueryParam('label');
-        if (!$label) {
-            return $this->returnError(400, "Bad Request", "label parameter missing");
-        }
-
-        $lang = $request->getQueryParam('lang');
-
-        $parameters = new ConceptSearchParameters($request, $this->model->getConfig(), true);
-
-        $results = $this->model->searchConcepts($parameters);
-
         $hits = array();
         // case 1: exact match on preferred label
         foreach ($results as $res) {
@@ -441,37 +407,36 @@ class RestController extends Controller
                 $hits[] = $res;
             }
         }
+        if (sizeof($hits) > 0) return $hits;
 
         // case 2: case-insensitive match on preferred label
-        if (sizeof($hits) == 0) { // not yet found
-            foreach ($results as $res) {
-                if (strtolower($res['prefLabel']) == strtolower($label)) {
-                    $hits[] = $res;
-                }
+        foreach ($results as $res) {
+            if (strtolower($res['prefLabel']) == strtolower($label)) {
+                $hits[] = $res;
             }
-
         }
+        if (sizeof($hits) > 0) return $hits;
 
         // case 3: exact match on alternate label
-        if (sizeof($hits) == 0) { // not yet found
-            foreach ($results as $res) {
-                if (isset($res['altLabel']) && $res['altLabel'] == $label) {
-                    $hits[] = $res;
-                }
+        foreach ($results as $res) {
+            if (isset($res['altLabel']) && $res['altLabel'] == $label) {
+                $hits[] = $res;
             }
-
         }
+        if (sizeof($hits) > 0) return $hits;
+
 
         // case 4: case-insensitive match on alternate label
-        if (sizeof($hits) == 0) { // not yet found
-            foreach ($results as $res) {
-                if (isset($res['altLabel']) && strtolower($res['altLabel']) == strtolower($label)) {
-                    $hits[] = $res;
-                }
+        foreach ($results as $res) {
+            if (isset($res['altLabel']) && strtolower($res['altLabel']) == strtolower($label)) {
+                $hits[] = $res;
             }
-
         }
-
+        return $hits;   
+    }
+    
+    private function transformLookupResults($lang, $hits, $label)
+    {
         if (sizeof($hits) == 0) {
             // no matches found
             return $this->returnError(404, 'Not Found', "Could not find label '$label'");
@@ -492,6 +457,25 @@ class RestController extends Controller
             $ret['@context']['@language'] = $lang;
         }
 
+        return $ret;  
+    }
+
+    /**
+     * Used for finding terms by their exact prefLabel. Wraps the result in a json-ld object.
+     * @param Request $request
+     */
+    public function lookup($request)
+    {
+        $label = $request->getQueryParam('label');
+        if (!$label) {
+            return $this->returnError(400, "Bad Request", "label parameter missing");
+        }
+
+        $lang = $request->getQueryParam('lang');
+        $parameters = new ConceptSearchParameters($request, $this->model->getConfig(), true);
+        $results = $this->model->searchConcepts($parameters);
+        $hits = $this->findLookupHits($results, $label);
+        $ret = $this->transformLookupResults($lang, $hits, $label);
         return $this->returnJson($ret);
     }
 
@@ -547,9 +531,9 @@ class RestController extends Controller
             return;
         }
 
-        $format = $this->negotiateFormat(explode(' ', self::$supportedMIMETypes), $request->getServerConstant('HTTP_ACCEPT'), $format);
+        $format = $this->negotiateFormat(explode(' ', self::SUPPORTED_FORMATS), $request->getServerConstant('HTTP_ACCEPT'), $format);
         if (!$format) {
-            return $this->returnError(406, 'Not Acceptable', "Unsupported format. Supported MIME types are: " . self::$supportedMIMETypes);
+            return $this->returnError(406, 'Not Acceptable', "Unsupported format. Supported MIME types are: " . self::SUPPORTED_FORMATS);
         }
         if (!isset($uri) && !isset($urls)) {
             return $this->returnError(400, 'Bad Request', "uri parameter missing");
