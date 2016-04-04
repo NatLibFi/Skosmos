@@ -31,6 +31,12 @@ class GenericSparql {
     protected $model;
 
     /**
+     * Cache used to avoid expensive shorten() calls
+     * @property array $qnamecache
+     */
+    private $qnamecache = array();
+
+    /**
      * Requires the following three parameters.
      * @param string $endpoint SPARQL endpoint address.
      * @param object $graph an EasyRDF SPARQL graph instance.
@@ -87,6 +93,21 @@ class GenericSparql {
     public function getGraph() {
         return $this->graph;
     }
+    
+    /**
+     * Shorten a URI
+     * @param string $uri URI to shorten
+     * @return string shortened URI, or original URI if it cannot be shortened
+     */
+    private function shortenUri($uri) {
+        if (!array_key_exists($uri, $this->qnamecache)) {
+            $res = new EasyRdf_Resource($uri);
+            $qname = $res->shorten(); // returns null on failure
+            $this->qnamecache[$uri] = ($qname !== null) ? $qname : $uri;
+        }
+        return $this->qnamecache[$uri];
+    }
+
 
     /**
      * Generates the sparql query for retrieving concept and collection counts in a vocabulary.
@@ -894,7 +915,6 @@ EOQ;
      */
     private function transformConceptSearchResults($results, $vocabs, $fields) {
         $ret = array();
-        $qnamecache = array(); // optimization to avoid expensive shorten() calls
 
         foreach ($results as $row) {
             if (!isset($row->s)) {
@@ -910,12 +930,7 @@ EOQ;
             }
 
             foreach (explode(" ", $row->types->getValue()) as $typeuri) {
-                if (!array_key_exists($typeuri, $qnamecache)) {
-                    $res = new EasyRdf_Resource($typeuri);
-                    $qname = $res->shorten(); // returns null on failure
-                    $qnamecache[$typeuri] = ($qname !== null) ? $qname : $typeuri;
-                }
-                $hit['type'][] = $qnamecache[$typeuri];
+                $hit['type'][] = $this->shortenUri($typeuri);
             }
 
             if(!empty($fields)) {
