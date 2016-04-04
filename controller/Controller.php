@@ -60,4 +60,53 @@ class Controller
         }
     }
 
+    /**
+     * Negotiate a MIME type according to the proposed format, the list of valid
+     * formats, and an optional proposed format.
+     * As a side effect, set the HTTP Vary header if a choice was made based on
+     * the Accept header.
+     * @param array $choices possible MIME types as strings
+     * @param string $accept HTTP Accept header value
+     * @param string $format proposed format
+     * @return string selected format, or null if negotiation failed
+     */
+    protected function negotiateFormat($choices, $accept, $format)
+    {
+        if ($format) {
+            if (!in_array($format, $choices)) {
+                return null;
+            }
+            return $format;
+        }
+        
+        // if there was no proposed format, negotiate a suitable format
+        header('Vary: Accept'); // inform caches that a decision was made based on Accept header
+        $best = $this->negotiator->getBest($accept, $choices);
+        $format = ($best !== null) ? $best->getValue() : null;
+        return $format;
+    }
+
+    private function guessBaseHref()
+    {
+        $script_name = filter_input(INPUT_SERVER, 'SCRIPT_NAME', FILTER_SANITIZE_STRING);
+        $script_filename = filter_input(INPUT_SERVER, 'SCRIPT_FILENAME', FILTER_SANITIZE_STRING);
+        $script_filename = realpath($script_filename); // resolve any symlinks (see #274)
+        $script_filename = str_replace("\\", "/", $script_filename); // fixing windows paths with \ (see #309)
+        $base_dir = __DIR__; // Absolute path to your installation, ex: /var/www/mywebsite
+        $base_dir = str_replace("\\", "/", $base_dir); // fixing windows paths with \ (see #309)
+        $doc_root = preg_replace("!{$script_name}$!", '', $script_filename);
+        $base_url = preg_replace("!^{$doc_root}!", '', $base_dir);
+        $base_url = str_replace('/controller', '/', $base_url);
+        $protocol = filter_input(INPUT_SERVER, 'HTTPS', FILTER_SANITIZE_STRING) === null ? 'http' : 'https';
+        $port = filter_input(INPUT_SERVER, 'SERVER_PORT', FILTER_SANITIZE_STRING);
+        $disp_port = ($protocol == 'http' && $port == 80 || $protocol == 'https' && $port == 443) ? '' : ":$port";
+        $domain = filter_input(INPUT_SERVER, 'SERVER_NAME', FILTER_SANITIZE_STRING);
+        $full_url = "$protocol://{$domain}{$disp_port}{$base_url}";
+        return $full_url;
+    }
+
+    protected function getBaseHref()
+    {
+        return ($this->model->getConfig()->getBaseHref() !== null) ? $this->model->getConfig()->getBaseHref() : $this->guessBaseHref();
+    }
 }
