@@ -661,7 +661,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    */
   public function testQueryParentList()
   {
-    $actual = $this->sparql->queryParentList('http://www.skosmos.skos/test/ta122', 'en', 'en');
+    $actual = $this->sparql->queryParentList('http://www.skosmos.skos/test/ta122', 'en', 'en', array('skos:broader'));
     $expected = array(
       'http://www.skosmos.skos/test/ta116' => array (
         'uri' => 'http://www.skosmos.skos/test/ta116',
