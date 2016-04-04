@@ -1565,8 +1565,9 @@ EOQ;
      * @param string $fallback language to use if label is not available in the preferred language
      * @return string sparql query
      */
-    private function generateParentListQuery($uri, $lang, $fallback) {
+    private function generateParentListQuery($uri, $lang, $fallback, $props) {
         $gcl = $this->graphClause;
+        $propertyClause = implode('|', $props);
         $query = <<<EOQ
 SELECT ?broad ?parent ?member ?children ?grandchildren
 (SAMPLE(?lab) as ?label) (SAMPLE(?childlab) as ?childlabel) (SAMPLE(?topcs) AS ?top) (SAMPLE(?nota) as ?notation) (SAMPLE(?childnota) as ?childnotation)
@@ -1574,7 +1575,7 @@ WHERE {
     $gcl {
       <$uri> a skos:Concept .
       OPTIONAL {
-      <$uri> skos:broader* ?broad .
+      <$uri> $propertyClause* ?broad .
       OPTIONAL {
         ?broad skos:prefLabel ?lab .
         FILTER (langMatches(lang(?lab), "$lang"))
@@ -1587,7 +1588,7 @@ WHERE {
         ?broad skos:prefLabel ?lab .
       }
       OPTIONAL { ?broad skos:notation ?nota . }
-      OPTIONAL { ?broad skos:broader ?parent . }
+      OPTIONAL { ?broad $propertyClause ?parent . }
       OPTIONAL { ?broad skos:narrower ?children .
         OPTIONAL {
           ?children skos:prefLabel ?childlab .
@@ -1698,10 +1699,11 @@ EOQ;
      * @param string $uri concept uri.
      * @param string $lang
      * @param string $fallback language to use if label is not available in the preferred language
+     * @param array $props the hierarchy property/properties to use
      * @return an array for the REST controller to encode.
      */
-    public function queryParentList($uri, $lang, $fallback) {
-        $query = $this->generateParentListQuery($uri, $lang, $fallback);
+    public function queryParentList($uri, $lang, $fallback, $props) {
+        $query = $this->generateParentListQuery($uri, $lang, $fallback, $props);
         $result = $this->client->query($query);
         return $this->transformParentListResults($result, $lang);
     }
