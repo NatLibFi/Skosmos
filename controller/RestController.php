@@ -113,6 +113,21 @@ class RestController extends Controller
 
         return $this->returnJson($ret);
     }
+    
+    private function constructSearchParameters($request)
+    {
+        $parameters = new ConceptSearchParameters($request, $this->model->getConfig(), true);
+        
+        $vocabs = $request->getQueryParam('vocab'); # optional
+        // convert to vocids array to support multi-vocabulary search
+        $vocids = ($vocabs !== null && $vocabs !== '') ? explode(' ', $vocabs) : array();
+        $vocabObjects = array();
+        foreach($vocids as $vocid) {
+            $vocabObjects[] = $this->model->getVocabulary($vocid);
+        }
+        $parameters->setVocabularies($vocabObjects);
+        return $parameters;    
+    }
 
     private function transformSearchResults($request, $results)
     {
@@ -178,17 +193,7 @@ class RestController extends Controller
             return $this->returnError(400, "Bad Request", "offset parameter is invalid");
         }
 
-        $parameters = new ConceptSearchParameters($request, $this->model->getConfig(), true);
-        
-        $vocabs = $request->getQueryParam('vocab'); # optional
-        // convert to vocids array to support multi-vocabulary search
-        $vocids = ($vocabs !== null && $vocabs !== '') ? explode(' ', $vocabs) : array();
-        $vocabObjects = array();
-        foreach($vocids as $vocid) {
-            $vocabObjects[] = $this->model->getVocabulary($vocid);
-        }
-        $parameters->setVocabularies($vocabObjects);
-
+        $parameters = $this->constructSearchParameters($request);
         $results = $this->model->searchConcepts($parameters);
         $ret = $this->transformSearchResults($request, $results);
 
