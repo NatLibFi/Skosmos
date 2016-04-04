@@ -407,36 +407,31 @@ class RestController extends Controller
                 $hits[] = $res;
             }
         }
+        if (sizeof($hits) > 0) return $hits;
 
         // case 2: case-insensitive match on preferred label
-        if (sizeof($hits) == 0) { // not yet found
-            foreach ($results as $res) {
-                if (strtolower($res['prefLabel']) == strtolower($label)) {
-                    $hits[] = $res;
-                }
+        foreach ($results as $res) {
+            if (strtolower($res['prefLabel']) == strtolower($label)) {
+                $hits[] = $res;
             }
-
         }
+        if (sizeof($hits) > 0) return $hits;
 
         // case 3: exact match on alternate label
-        if (sizeof($hits) == 0) { // not yet found
-            foreach ($results as $res) {
-                if (isset($res['altLabel']) && $res['altLabel'] == $label) {
-                    $hits[] = $res;
-                }
+        foreach ($results as $res) {
+            if (isset($res['altLabel']) && $res['altLabel'] == $label) {
+                $hits[] = $res;
             }
-
         }
+        if (sizeof($hits) > 0) return $hits;
+
 
         // case 4: case-insensitive match on alternate label
-        if (sizeof($hits) == 0) { // not yet found
-            foreach ($results as $res) {
-                if (isset($res['altLabel']) && strtolower($res['altLabel']) == strtolower($label)) {
-                    $hits[] = $res;
-                }
+        foreach ($results as $res) {
+            if (isset($res['altLabel']) && strtolower($res['altLabel']) == strtolower($label)) {
+                $hits[] = $res;
             }
         }
-        
         return $hits;   
     }
     
