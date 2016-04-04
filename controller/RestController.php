@@ -646,7 +646,6 @@ class RestController extends Controller
      */
     public function broader($request)
     {
-        $results = array();
         $broaders = $request->getVocab()->getConceptBroaders($request->getUri(), $request->getLang());
         if ($broaders === null) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
@@ -677,7 +676,6 @@ class RestController extends Controller
      */
     public function narrower($request)
     {
-        $results = array();
         $narrowers = $request->getVocab()->getConceptNarrowers($request->getUri(), $request->getLang());
         if ($narrowers === null) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
@@ -693,7 +691,6 @@ class RestController extends Controller
      */
     public function narrowerTransitive($request)
     {
-        $results = array();
         $narrowers = $request->getVocab()->getConceptTransitiveNarrowers($request->getUri(), $this->parseLimit(), $request->getLang());
         if (empty($narrowers)) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
@@ -813,7 +810,6 @@ class RestController extends Controller
      */
     public function related($request)
     {
-        $results = array();
         $related = $request->getVocab()->getConceptRelateds($request->getUri(), $request->getLang());
         if ($related === null) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
