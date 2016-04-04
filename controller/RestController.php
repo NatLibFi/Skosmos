@@ -504,44 +504,22 @@ class RestController extends Controller
         return $this->returnJson($ret);
     }
 
-    /**
-     * Download a concept as json-ld or redirect to download the whole vocabulary.
-     * @param Request $request
-     * @return object json-ld formatted concept.
-     */
-    public function data($request)
-    {
-        $vocab = $request->getVocab();
-        $format = $request->getQueryParam('format');
-
-        if ($request->getUri()) {
-            $uri = $request->getUri();
-        } else if ($vocab !== null) { // whole vocabulary - redirect to download URL
-            $urls = $vocab->getConfig()->getDataURLs();
-            if (sizeof($urls) == 0) {
-                return $this->returnError('404', 'Not Found', "No download source URL known for vocabulary $vocab");
-            }
-
-            $format = $this->negotiateFormat(array_keys($urls), $request->getServerConstant('HTTP_ACCEPT'), $format);
-            if (!$format) {
-                return $this->returnError(406, 'Not Acceptable', "Unsupported format. Supported MIME types are: " . implode(' ', array_keys($urls)));
-            }
-
-            header("Location: " . $urls[$format]);
-            return;
+    private function redirectToVocabData($request) {
+        $urls = $request->getVocab()->getConfig()->getDataURLs();
+        if (sizeof($urls) == 0) {
+            $vocid = $request->getVocab()->getId();
+            return $this->returnError('404', 'Not Found', "No download source URL known for vocabulary $vocid");
         }
 
-        $format = $this->negotiateFormat(explode(' ', self::SUPPORTED_FORMATS), $request->getServerConstant('HTTP_ACCEPT'), $format);
+        $format = $this->negotiateFormat(array_keys($urls), $request->getServerConstant('HTTP_ACCEPT'), $request->getQueryParam('format'));
         if (!$format) {
-            return $this->returnError(406, 'Not Acceptable', "Unsupported format. Supported MIME types are: " . self::SUPPORTED_FORMATS);
-        }
-        if (!isset($uri) && !isset($urls)) {
-            return $this->returnError(400, 'Bad Request', "uri parameter missing");
+            return $this->returnError(406, 'Not Acceptable', "Unsupported format. Supported MIME types are: " . implode(' ', array_keys($urls)));
         }
 
-        $vocid = $vocab ? $vocab->getId() : null;
-        $results = $this->model->getRDF($vocid, $uri, $format);
-
+        header("Location: " . $urls[$format]);
+    }
+    
+    private function returnDataResults($results, $format) {
         if ($format == 'application/ld+json' || $format == 'application/json') {
             // further compact JSON-LD document using a context
             $context = array(
@@ -571,6 +549,33 @@ class RestController extends Controller
 
         header("Content-type: $format; charset=utf-8");
         echo $results;
+    }
+
+    /**
+     * Download a concept as json-ld or redirect to download the whole vocabulary.
+     * @param Request $request
+     * @return object json-ld formatted concept.
+     */
+    public function data($request)
+    {
+        $vocab = $request->getVocab();
+
+        if ($request->getUri()) {
+            $uri = $request->getUri();
+        } else if ($vocab !== null) { // whole vocabulary - redirect to download URL
+            return $this->redirectToVocabData($request);
+        } else {
+            return $this->returnError(400, 'Bad Request', "uri parameter missing");
+        }
+
+        $format = $this->negotiateFormat(explode(' ', self::SUPPORTED_FORMATS), $request->getServerConstant('HTTP_ACCEPT'), $request->getQueryParam('format'));
+        if (!$format) {
+            return $this->returnError(406, 'Not Acceptable', "Unsupported format. Supported MIME types are: " . self::SUPPORTED_FORMATS);
+        }
+
+        $vocid = $vocab ? $vocab->getId() : null;
+        $results = $this->model->getRDF($vocid, $uri, $format);
+        return $this->returnDataResults($results, $format);
     }
 
     /**
