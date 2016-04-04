@@ -382,7 +382,6 @@ $(function() { // DOCUMENT READY
         $clicked.parent().addClass('active');
         var $pagination = $('.pagination');
         if ($pagination) { $pagination.hide(); }
-        $('#hierarchy').attr('id', 'hierarchy-disabled');
         if ($('.changes-navi')) { $('.changes-navi').hide(); }
         $('.sidebar-grey').remove().prepend(spinner);
         $('#sidebar').append('<div class="sidebar-grey"><div class="group-hierarchy"></div></div>');
