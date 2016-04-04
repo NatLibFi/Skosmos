@@ -1320,9 +1320,10 @@ EOQ;
      * @param boolean $anylang if you want a label even when it isn't available in the language you requested.
      * @return string sparql query
      */
-    private function generateTransitivePropertyQuery($uri, $prop, $lang, $limit, $anylang) {
+    private function generateTransitivePropertyQuery($uri, $props, $lang, $limit, $anylang) {
         $uri = is_array($uri) ? $uri[0] : $uri;
         $gcl = $this->graphClause;
+        $propertyClause = implode('|', $props);
         $filter = $anylang ? "" : "FILTER (langMatches(lang(?label), \"$lang\"))";
         // need to do a SPARQL subquery because LIMIT needs to be applied /after/
         // the direct relationships have been collapsed into one string
@@ -1334,9 +1335,9 @@ WHERE {
     $gcl {
       <$uri> a skos:Concept .
       OPTIONAL {
-        <$uri> $prop* ?object .
+        <$uri> $propertyClause* ?object .
         OPTIONAL {
-          ?object $prop ?dir .
+          ?object $propertyClause ?dir .
         }
       }
       OPTIONAL {
@@ -1409,15 +1410,15 @@ EOQ;
     /**
      * Query a single transitive property of a concept.
      * @param string $uri
-     * @param string $prop the name of the property eg. 'skos:broader'.
+     * @param array $props the property/properties.
      * @param string $lang
      * @param string $fallbacklang language to use if label is not available in the preferred language
      * @param integer $limit
      * @param boolean $anylang if you want a label even when it isn't available in the language you requested.
      * @return array array of property values (key: URI, val: label), or null if concept doesn't exist
      */
-    public function queryTransitiveProperty($uri, $prop, $lang, $limit, $anylang = false, $fallbacklang = '') {
-        $query = $this->generateTransitivePropertyQuery($uri, $prop, $lang, $limit, $anylang);
+    public function queryTransitiveProperty($uri, $props, $lang, $limit, $anylang = false, $fallbacklang = '') {
+        $query = $this->generateTransitivePropertyQuery($uri, $props, $lang, $limit, $anylang);
         $result = $this->client->query($query);
         return $this->transformTransitivePropertyResults($result, $lang, $fallbacklang);
     }
