@@ -435,7 +435,7 @@ class RestController extends Controller
         return $hits;   
     }
     
-    private function transformLookupResults($lang, $hits)
+    private function transformLookupResults($lang, $hits, $label)
     {
         if (sizeof($hits) == 0) {
             // no matches found
@@ -475,7 +475,7 @@ class RestController extends Controller
         $parameters = new ConceptSearchParameters($request, $this->model->getConfig(), true);
         $results = $this->model->searchConcepts($parameters);
         $hits = $this->findLookupHits($results, $label);
-        $ret = $this->transformLookupResults($lang, $hits);
+        $ret = $this->transformLookupResults($lang, $hits, $label);
         return $this->returnJson($ret);
     }
 
