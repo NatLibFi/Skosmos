@@ -194,7 +194,6 @@ class RestController extends Controller
                 'prefLabel' => 'skos:prefLabel',
                 'altLabel' => 'skos:altLabel',
                 'hiddenLabel' => 'skos:hiddenLabel',
-                'broader' => 'skos:broader',
             ),
             'uri' => '',
             'results' => $results,
