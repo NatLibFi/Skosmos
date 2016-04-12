@@ -100,6 +100,10 @@ class ConceptPropertyValue extends VocabularyDataObject
 
     }
 
+    public function isExternal() {
+        return empty($this->resource->propertyUris());
+    }
+
     public function getNotation()
     {
         if ($this->resource->get('skos:notation')) {
