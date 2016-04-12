@@ -353,6 +353,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    * @covers GenericSparql::generateConceptSearchQuery
    * @covers GenericSparql::formatFilterGraph
    * @covers GenericSparql::transformConceptSearchResults
+   * @covers GenericSparql::shortenUri
    */
   public function testQueryConceptsMultipleVocabs()
   {
@@ -374,6 +375,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    * @covers GenericSparql::generateConceptSearchQuery
    * @covers GenericSparql::formatFilterGraph
    * @covers GenericSparql::transformConceptSearchResults
+   * @covers GenericSparql::shortenUri
    */
   public function testQueryConcepts()
   {
@@ -392,6 +394,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    * @covers GenericSparql::generateConceptSearchQuery
    * @covers GenericSparql::formatFilterGraph
    * @covers GenericSparql::transformConceptSearchResults
+   * @covers GenericSparql::shortenUri
    */
   public function testQueryConceptsMatchAltLabel()
   {
@@ -410,6 +413,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    * @covers GenericSparql::generateConceptSearchQuery
    * @covers GenericSparql::formatFilterGraph
    * @covers GenericSparql::transformConceptSearchResults
+   * @covers GenericSparql::shortenUri
    */
   public function testQueryConceptsMatchHiddenLabel()
   {
@@ -428,7 +432,6 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    * @covers GenericSparql::generateConceptSearchQueryInner
    * @covers GenericSparql::generateConceptSearchQuery
    * @covers GenericSparql::formatFilterGraph
-   * @covers GenericSparql::formatBroader
    */
   public function testQueryConceptsAdditionalFields()
   {
@@ -447,6 +450,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    * @covers GenericSparql::generateConceptSearchQueryInner
    * @covers GenericSparql::generateConceptSearchQuery
    * @covers GenericSparql::transformConceptSearchResults
+   * @covers GenericSparql::shortenUri
    */
   public function testQueryConceptsExactTerm()
   {
@@ -464,6 +468,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    * @covers GenericSparql::generateConceptSearchQueryInner
    * @covers GenericSparql::generateConceptSearchQuery
    * @covers GenericSparql::transformConceptSearchResults
+   * @covers GenericSparql::shortenUri
    */
   public function testQueryConceptsAsteriskBeforeTerm()
   {
@@ -481,6 +486,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    * @covers GenericSparql::generateConceptSearchQueryInner
    * @covers GenericSparql::generateConceptSearchQuery
    * @covers GenericSparql::transformConceptSearchResults
+   * @covers GenericSparql::shortenUri
    */
   public function testQueryConceptsAsteriskBeforeAndAfterTerm()
   {

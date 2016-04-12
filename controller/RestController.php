@@ -504,44 +504,22 @@ class RestController extends Controller
         return $this->returnJson($ret);
     }
 
-    /**
-     * Download a concept as json-ld or redirect to download the whole vocabulary.
-     * @param Request $request
-     * @return object json-ld formatted concept.
-     */
-    public function data($request)
-    {
-        $vocab = $request->getVocab();
-        $format = $request->getQueryParam('format');
-
-        if ($request->getUri()) {
-            $uri = $request->getUri();
-        } else if ($vocab !== null) { // whole vocabulary - redirect to download URL
-            $urls = $vocab->getConfig()->getDataURLs();
-            if (sizeof($urls) == 0) {
-                return $this->returnError('404', 'Not Found', "No download source URL known for vocabulary $vocab");
-            }
-
-            $format = $this->negotiateFormat(array_keys($urls), $request->getServerConstant('HTTP_ACCEPT'), $format);
-            if (!$format) {
-                return $this->returnError(406, 'Not Acceptable', "Unsupported format. Supported MIME types are: " . implode(' ', array_keys($urls)));
-            }
-
-            header("Location: " . $urls[$format]);
-            return;
+    private function redirectToVocabData($request) {
+        $urls = $request->getVocab()->getConfig()->getDataURLs();
+        if (sizeof($urls) == 0) {
+            $vocid = $request->getVocab()->getId();
+            return $this->returnError('404', 'Not Found', "No download source URL known for vocabulary $vocid");
         }
 
-        $format = $this->negotiateFormat(explode(' ', self::SUPPORTED_FORMATS), $request->getServerConstant('HTTP_ACCEPT'), $format);
+        $format = $this->negotiateFormat(array_keys($urls), $request->getServerConstant('HTTP_ACCEPT'), $request->getQueryParam('format'));
         if (!$format) {
-            return $this->returnError(406, 'Not Acceptable', "Unsupported format. Supported MIME types are: " . self::SUPPORTED_FORMATS);
-        }
-        if (!isset($uri) && !isset($urls)) {
-            return $this->returnError(400, 'Bad Request', "uri parameter missing");
+            return $this->returnError(406, 'Not Acceptable', "Unsupported format. Supported MIME types are: " . implode(' ', array_keys($urls)));
         }
 
-        $vocid = $vocab ? $vocab->getId() : null;
-        $results = $this->model->getRDF($vocid, $uri, $format);
-
+        header("Location: " . $urls[$format]);
+    }
+    
+    private function returnDataResults($results, $format) {
         if ($format == 'application/ld+json' || $format == 'application/json') {
             // further compact JSON-LD document using a context
             $context = array(
@@ -574,6 +552,33 @@ class RestController extends Controller
     }
 
     /**
+     * Download a concept as json-ld or redirect to download the whole vocabulary.
+     * @param Request $request
+     * @return object json-ld formatted concept.
+     */
+    public function data($request)
+    {
+        $vocab = $request->getVocab();
+
+        if ($request->getUri()) {
+            $uri = $request->getUri();
+        } else if ($vocab !== null) { // whole vocabulary - redirect to download URL
+            return $this->redirectToVocabData($request);
+        } else {
+            return $this->returnError(400, 'Bad Request', "uri parameter missing");
+        }
+
+        $format = $this->negotiateFormat(explode(' ', self::SUPPORTED_FORMATS), $request->getServerConstant('HTTP_ACCEPT'), $request->getQueryParam('format'));
+        if (!$format) {
+            return $this->returnError(406, 'Not Acceptable', "Unsupported format. Supported MIME types are: " . self::SUPPORTED_FORMATS);
+        }
+
+        $vocid = $vocab ? $vocab->getId() : null;
+        $results = $this->model->getRDF($vocid, $uri, $format);
+        return $this->returnDataResults($results, $format);
+    }
+
+    /**
      * Used for querying labels for a uri.
      * @param Request $request
      * @return object json-ld wrapped labels.
@@ -600,6 +605,39 @@ class RestController extends Controller
 
         return $this->returnJson($ret);
     }
+    
+    private function transformPropertyResults($uri, $lang, $objects, $propname, $propuri)
+    {
+        foreach ($objects as $objuri => $vals) {
+            $results[] = array('uri' => $objuri, 'prefLabel' => $vals['label']);
+        }
+
+        $ret = array_merge_recursive($this->context, array(
+            '@context' => array('prefLabel' => 'skos:prefLabel', $propname => $propuri, '@language' => $lang),
+            'uri' => $uri,
+            $propname => $results)
+        );
+        return $ret;    
+    }
+    
+    private function transformTransitivePropertyResults($uri, $lang, $objects, $tpropname, $tpropuri, $dpropname, $dpropuri)
+    {
+        $results = array();
+        foreach ($objects as $objuri => $vals) {
+            $result = array('uri' => $objuri, 'prefLabel' => $vals['label']);
+            if (isset($vals['direct'])) {
+                $result[$dpropname] = $vals['direct'];
+            }
+            $results[$objuri] = $result;
+        }
+
+        $ret = array_merge_recursive($this->context, array(
+            '@context' => array('prefLabel' => 'skos:prefLabel', $dpropname => array('@id' => $dpropuri, '@type' => '@id'), $tpropname => array('@id' => $tpropuri, '@container' => '@index'), '@language' => $lang),
+            'uri' => $uri,
+            $tpropname => $results)
+        );
+        return $ret;
+    }
 
     /**
      * Used for querying broader relations for a concept.
@@ -608,22 +646,11 @@ class RestController extends Controller
      */
     public function broader($request)
     {
-        $results = array();
         $broaders = $request->getVocab()->getConceptBroaders($request->getUri(), $request->getLang());
         if ($broaders === null) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
         }
-
-        foreach ($broaders as $object => $vals) {
-            $results[] = array('uri' => $object, 'prefLabel' => $vals['label']);
-        }
-
-        $ret = array_merge_recursive($this->context, array(
-            '@context' => array('prefLabel' => 'skos:prefLabel', 'broader' => 'skos:broader', '@language' => $request->getLang()),
-            'uri' => $request->getUri(),
-            'broader' => $results)
-        );
-
+        $ret = $this->transformPropertyResults($request->getUri(), $request->getLang(), $broaders, "broader", "skos:broader");
         return $this->returnJson($ret);
     }
 
@@ -634,26 +661,11 @@ class RestController extends Controller
      */
     public function broaderTransitive($request)
     {
-        $results = array();
         $broaders = $request->getVocab()->getConceptTransitiveBroaders($request->getUri(), $this->parseLimit(), false, $request->getLang());
         if (empty($broaders)) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
         }
-
-        foreach ($broaders as $buri => $vals) {
-            $result = array('uri' => $buri, 'prefLabel' => $vals['label']);
-            if (isset($vals['direct'])) {
-                $result['broader'] = $vals['direct'];
-            }
-            $results[$buri] = $result;
-        }
-
-        $ret = array_merge_recursive($this->context, array(
-            '@context' => array('prefLabel' => 'skos:prefLabel', 'broader' => array('@id' => 'skos:broader', '@type' => '@id'), 'broaderTransitive' => array('@id' => 'skos:broaderTransitive', '@container' => '@index'), '@language' => $request->getLang()),
-            'uri' => $request->getUri(),
-            'broaderTransitive' => $results)
-        );
-
+        $ret = $this->transformTransitivePropertyResults($request->getUri(), $request->getLang(), $broaders, "broaderTransitive", "skos:broaderTransitive", "broader", "skos:broader");
         return $this->returnJson($ret);
     }
 
@@ -664,22 +676,11 @@ class RestController extends Controller
      */
     public function narrower($request)
     {
-        $results = array();
         $narrowers = $request->getVocab()->getConceptNarrowers($request->getUri(), $request->getLang());
         if ($narrowers === null) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
         }
-
-        foreach ($narrowers as $object => $vals) {
-            $results[] = array('uri' => $object, 'prefLabel' => $vals['label']);
-        }
-
-        $ret = array_merge_recursive($this->context, array(
-            '@context' => array('prefLabel' => 'skos:prefLabel', 'narrower' => 'skos:narrower', '@language' => $request->getLang()),
-            'uri' => $request->getUri(),
-            'narrower' => $results)
-        );
-
+        $ret = $this->transformPropertyResults($request->getUri(), $request->getLang(), $narrowers, "narrower", "skos:narrower");
         return $this->returnJson($ret);
     }
 
@@ -690,26 +691,11 @@ class RestController extends Controller
      */
     public function narrowerTransitive($request)
     {
-        $results = array();
         $narrowers = $request->getVocab()->getConceptTransitiveNarrowers($request->getUri(), $this->parseLimit(), $request->getLang());
         if (empty($narrowers)) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
         }
-
-        foreach ($narrowers as $nuri => $vals) {
-            $result = array('uri' => $nuri, 'prefLabel' => $vals['label']);
-            if (isset($vals['direct'])) {
-                $result['narrower'] = $vals['direct'];
-            }
-            $results[$nuri] = $result;
-        }
-
-        $ret = array_merge_recursive($this->context, array(
-            '@context' => array('prefLabel' => 'skos:prefLabel', 'narrower' => array('@id' => 'skos:narrower', '@type' => '@id'), 'narrowerTransitive' => array('@id' => 'skos:narrowerTransitive', '@container' => '@index'), '@language' => $request->getLang()),
-            'uri' => $request->getUri(),
-            'narrowerTransitive' => $results)
-        );
-
+        $ret = $this->transformTransitivePropertyResults($request->getUri(), $request->getLang(), $narrowers, "narrowerTransitive", "skos:narrowerTransitive", "narrower", "skos:narrower");
         return $this->returnJson($ret);
     }
 
@@ -824,22 +810,11 @@ class RestController extends Controller
      */
     public function related($request)
     {
-        $results = array();
         $related = $request->getVocab()->getConceptRelateds($request->getUri(), $request->getLang());
         if ($related === null) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
         }
-
-        foreach ($related as $uri => $vals) {
-            $results[] = array('uri' => $uri, 'prefLabel' => $vals['label']);
-        }
-
-        $ret = array_merge_recursive($this->context, array(
-            '@context' => array('prefLabel' => 'skos:prefLabel', 'related' => 'skos:related', '@language' => $request->getLang()),
-            'uri' => $request->getUri(),
-            'related' => $results)
-        );
-
+        $ret = $this->transformPropertyResults($request->getUri(), $request->getLang(), $related, "related", "skos:related");
         return $this->returnJson($ret);
     }
 }

@@ -15,7 +15,7 @@ class PluginRegisterTest extends PHPUnit_Framework_TestCase
   }
 
   /**
-   * @covers Concept::__construct
+   * @covers PluginRegister::__construct
    */
   public function testConstructor()
   {
@@ -24,7 +24,7 @@ class PluginRegisterTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @covers Concept::getPluginsJS
+   * @covers PluginRegister::getPluginsJS
    */
   public function testGetPluginsJS()
   {
@@ -33,9 +33,9 @@ class PluginRegisterTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @covers Concept::getPluginsJS
-   * @covers Concept::filterPlugins
-   * @covers Concept::filterPluginsByName
+   * @covers PluginRegister::getPluginsJS
+   * @covers PluginRegister::filterPlugins
+   * @covers PluginRegister::filterPluginsByName
    */
   public function testGetPluginsJSWithName()
   {
@@ -43,9 +43,9 @@ class PluginRegisterTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @covers Concept::getPluginsJS
-   * @covers Concept::filterPlugins
-   * @covers Concept::filterPluginsByName
+   * @covers PluginRegister::getPluginsJS
+   * @covers PluginRegister::filterPlugins
+   * @covers PluginRegister::filterPluginsByName
    */
   public function testGetPluginsJSWithGlobalPlugin()
   {
@@ -53,7 +53,7 @@ class PluginRegisterTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @covers Concept::getPluginsCSS
+   * @covers PluginRegister::getPluginsCSS
    */
   public function testGetPluginsCSS()
   {
@@ -62,9 +62,9 @@ class PluginRegisterTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @covers Concept::getPluginsCSS
-   * @covers Concept::filterPlugins
-   * @covers Concept::filterPluginsByName
+   * @covers PluginRegister::getPluginsCSS
+   * @covers PluginRegister::filterPlugins
+   * @covers PluginRegister::filterPluginsByName
    */
   public function testGetPluginsCSSWithName()
   {
@@ -74,7 +74,7 @@ class PluginRegisterTest extends PHPUnit_Framework_TestCase
   
   
   /**
-   * @covers Concept::getPluginsTemplates
+   * @covers PluginRegister::getPluginsTemplates
    */
   public function testGetPluginsTemplates()
   {

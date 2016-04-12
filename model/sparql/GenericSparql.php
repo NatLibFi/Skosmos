@@ -31,6 +31,12 @@ class GenericSparql {
     protected $model;
 
     /**
+     * Cache used to avoid expensive shorten() calls
+     * @property array $qnamecache
+     */
+    private $qnamecache = array();
+
+    /**
      * Requires the following three parameters.
      * @param string $endpoint SPARQL endpoint address.
      * @param object $graph an EasyRDF SPARQL graph instance.
@@ -41,10 +47,10 @@ class GenericSparql {
         // client, set the same type of cache control headers also in subsequent
         // in the SPARQL requests (this is useful for performance testing)
         // @codeCoverageIgnoreStart
-        $cache_control = filter_input(INPUT_SERVER, 'HTTP_CACHE_CONTROL', FILTER_SANITIZE_STRING);
+        $cacheControl = filter_input(INPUT_SERVER, 'HTTP_CACHE_CONTROL', FILTER_SANITIZE_STRING);
         $pragma = filter_input(INPUT_SERVER, 'HTTP_PRAGMA', FILTER_SANITIZE_STRING);
-        if ($cache_control !== null || $pragma !== null) {
-            $val = $pragma !== null ? $pragma : $cache_control;
+        if ($cacheControl !== null || $pragma !== null) {
+            $val = $pragma !== null ? $pragma : $cacheControl;
             // configure the HTTP client used by EasyRdf_Sparql_Client
             $httpclient = EasyRdf_Http::getDefaultHttpClient();
             $httpclient->setHeaders('Cache-Control', $val);
@@ -87,6 +93,21 @@ class GenericSparql {
     public function getGraph() {
         return $this->graph;
     }
+    
+    /**
+     * Shorten a URI
+     * @param string $uri URI to shorten
+     * @return string shortened URI, or original URI if it cannot be shortened
+     */
+    private function shortenUri($uri) {
+        if (!array_key_exists($uri, $this->qnamecache)) {
+            $res = new EasyRdf_Resource($uri);
+            $qname = $res->shorten(); // returns null on failure
+            $this->qnamecache[$uri] = ($qname !== null) ? $qname : $uri;
+        }
+        return $this->qnamecache[$uri];
+    }
+
 
     /**
      * Generates the sparql query for retrieving concept and collection counts in a vocabulary.
@@ -152,8 +173,8 @@ EOQ;
         $classes = ($classes) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
 
         $values = $this->formatValues('?type', $classes, 'uri');
-        $values_lang = $this->formatValues('?lang', $langs, 'literal');
-        $values_prop = $this->formatValues('?prop', $props, null);
+        $valuesLang = $this->formatValues('?lang', $langs, 'literal');
+        $valuesProp = $this->formatValues('?prop', $props, null);
 
         $query = <<<EOQ
 SELECT ?lang ?prop
@@ -163,8 +184,8 @@ WHERE {
     ?conc a ?type .
     ?conc ?prop ?label .
     FILTER (langMatches(lang(?label), ?lang))
-    $values_lang
-    $values_prop
+    $valuesLang
+    $valuesProp
   }
   $values
 }
@@ -243,14 +264,14 @@ EOQ;
      */
     private function filterDuplicateVocabs($vocabs) {
         // filtering duplicates
-        $unique_vocabs = array();
+        $uniqueVocabs = array();
         if (sizeof($vocabs) > 0) {
             foreach ($vocabs as $voc) {
-                $unique_vocabs[$voc->getId()] = $voc;
+                $uniqueVocabs[$voc->getId()] = $voc;
             }
         }
 
-        return $unique_vocabs;
+        return $uniqueVocabs;
     }
 
     /**
@@ -263,8 +284,8 @@ EOQ;
     private function generateConceptInfoQuery($uris, $arrayClass, $vocabs) {
         $gcl = $this->graphClause;
         $values = $this->formatValues('?uri', $uris, 'uri');
-        $unique_vocabs = $this->filterDuplicateVocabs($vocabs);
-        $values_graph = $this->formatValuesGraph($unique_vocabs);
+        $uniqueVocabs = $this->filterDuplicateVocabs($vocabs);
+        $valuesGraph = $this->formatValuesGraph($uniqueVocabs);
 
         if ($arrayClass === null) {
             $construct = $optional = "";
@@ -344,7 +365,7 @@ CONSTRUCT {
  }
  $values
 }
-$values_graph
+$valuesGraph
 EOQ;
         return $query;
     }
@@ -372,11 +393,11 @@ EOQ;
      * @param mixed $uris concept URI (string) or array of URIs
      * @param string|null $arrayClass the URI for thesaurus array class, or null if not used
      * @param \Vocabulary[]|null $vocabs array of Vocabulary object
-     * @param boolean $as_graph whether to return a graph (true) or array of Concepts (false)
+     * @param boolean $asGraph whether to return a graph (true) or array of Concepts (false)
      * @param string|null $clang content language
      * @return mixed query result graph (EasyRdf_Graph), or array of Concept objects
      */
-    public function queryConceptInfo($uris, $arrayClass = null, $vocabs = array(), $as_graph = false, $clang = null) {
+    public function queryConceptInfo($uris, $arrayClass = null, $vocabs = array(), $asGraph = false, $clang = null) {
         // if just a single URI is given, put it in an array regardless
         if (!is_array($uris)) {
             $uris = array($uris);
@@ -384,7 +405,7 @@ EOQ;
 
         $query = $this->generateConceptInfoQuery($uris, $arrayClass, $vocabs);
         $result = $this->client->query($query);
-        if ($as_graph) {
+        if ($asGraph) {
             return $result;
         }
 
@@ -643,15 +664,15 @@ EOQ;
      * @return string sparql query clause
      */
     protected function formatTypes($types) {
-        $type_patterns = array();
+        $typePatterns = array();
         if (!empty($types)) {
             foreach ($types as $type) {
                 $unprefixed = EasyRdf_Namespace::expand($type);
-                $type_patterns[] = "{ ?s a <$unprefixed> }";
+                $typePatterns[] = "{ ?s a <$unprefixed> }";
             }
         }
 
-        return implode(' UNION ', $type_patterns);;
+        return implode(' UNION ', $typePatterns);;
     }
 
     /**
@@ -724,10 +745,10 @@ EOF;
     /**
      * Generate condition for matching labels in SPARQL
      * @param string $term search term
-     * @param string $search_lang language code used for matching labels (null means any language)
+     * @param string $searchLang language code used for matching labels (null means any language)
      * @return string sparql query snippet
      */
-    protected function generateConceptSearchQueryCondition($term, $search_lang)
+    protected function generateConceptSearchQueryCondition($term, $searchLang)
     {
         # use appropriate matching function depending on query type: =, strstarts, strends or full regex
         if (preg_match('/^[^\*]+$/', $term)) { // exact query
@@ -752,9 +773,9 @@ EOF;
             $filtercond = "REGEX(STR(?match), '^$term$', 'i')";
         }
 
-        $labelcond_match = ($search_lang) ? "&& LANGMATCHES(lang(?match), '$search_lang')" : "";
+        $labelcondMatch = ($searchLang) ? "&& LANGMATCHES(lang(?match), '$searchLang')" : "";
         
-        return "?s ?prop ?match . FILTER ($filtercond $labelcond_match)";
+        return "?s ?prop ?match . FILTER ($filtercond $labelcondMatch)";
     }
 
 
@@ -762,21 +783,21 @@ EOF;
      * Inner query for concepts using a search term.
      * @param string $term search term
      * @param string $lang language code of the returned labels
-     * @param string $search_lang language code used for matching labels (null means any language)
+     * @param string $searchLang language code used for matching labels (null means any language)
      * @param string[] $props properties to target e.g. array('skos:prefLabel','skos:altLabel')
      * @param boolean $unique restrict results to unique concepts (default: false)
      * @return string sparql query
      */
-    protected function generateConceptSearchQueryInner($term, $lang, $search_lang, $props, $unique)
+    protected function generateConceptSearchQueryInner($term, $lang, $searchLang, $props, $unique)
     {
-        $values_prop = $this->formatValues('?prop', $props);
-        $textcond = $this->generateConceptSearchQueryCondition($term, $search_lang);
+        $valuesProp = $this->formatValues('?prop', $props);
+        $textcond = $this->generateConceptSearchQueryCondition($term, $searchLang);
 
         // extra conditions for label language, if specified
-        $labelcond_label = ($lang) ? "LANGMATCHES(lang(?label), '$lang')" : "LANGMATCHES(lang(?label), lang(?match))";
+        $labelcondLabel = ($lang) ? "LANGMATCHES(lang(?label), '$lang')" : "LANGMATCHES(lang(?label), lang(?match))";
         // if search language and UI/display language differ, must also consider case where there is no prefLabel in
         // the display language; in that case, should use the label with the same language as the matched label
-        $labelcond_fallback = ($search_lang != $lang) ?
+        $labelcondFallback = ($searchLang != $lang) ?
           "OPTIONAL { # in case previous OPTIONAL block gives no labels\n" .
           "?s skos:prefLabel ?label . FILTER (LANGMATCHES(LANG(?label), LANG(?match))) }" : "";
 
@@ -795,14 +816,14 @@ EOF;
         $query = <<<EOQ
    SELECT DISTINCT ?s ?label $hitvar
    WHERE {
-    $values_prop
+    $valuesProp
     VALUES (?prop ?pri) { (skos:prefLabel 1) (skos:altLabel 3) (skos:hiddenLabel 5)}
     $textcond
     ?s ?prop ?match
     OPTIONAL {
      ?s skos:prefLabel ?label .
-     FILTER ($labelcond_label)
-    } $labelcond_fallback
+     FILTER ($labelcondLabel)
+    } $labelcondFallback
     BIND(IF(langMatches(LANG(?match),'$lang'), ?pri, ?pri+1) AS ?npri)
     BIND(CONCAT(STR(?npri), LANG(?match), '@', STR(?match)) AS ?matchstr)
    }
@@ -847,7 +868,7 @@ EOQ;
             $props[] = 'skos:hiddenLabel';
         }
 
-        $filter_graph = $this->formatFilterGraph($params->getVocabs());
+        $filterGraph = $this->formatFilterGraph($params->getVocabs());
 
         // remove futile asterisks from the search term
         $term = $params->getSearchTerm();
@@ -878,7 +899,7 @@ $innerquery
   }
   FILTER NOT EXISTS { ?s owl:deprecated true }
  }
- $filter_graph
+ $filterGraph
 }
 GROUP BY ?s ?match ?label ?plabel ?alabel ?hlabel ?graph
 ORDER BY LCASE(STR(?match)) LANG(?match) $orderextra
@@ -894,7 +915,6 @@ EOQ;
      */
     private function transformConceptSearchResults($results, $vocabs, $fields) {
         $ret = array();
-        $qnamecache = array(); // optimization to avoid expensive shorten() calls
 
         foreach ($results as $row) {
             if (!isset($row->s)) {
@@ -910,12 +930,7 @@ EOQ;
             }
 
             foreach (explode(" ", $row->types->getValue()) as $typeuri) {
-                if (!array_key_exists($typeuri, $qnamecache)) {
-                    $res = new EasyRdf_Resource($typeuri);
-                    $qname = $res->shorten(); // returns null on failure
-                    $qnamecache[$typeuri] = ($qname !== null) ? $qname : $typeuri;
-                }
-                $hit['type'][] = $qnamecache[$typeuri];
+                $hit['type'][] = $this->shortenUri($typeuri);
             }
 
             if(!empty($fields)) {
@@ -995,29 +1010,29 @@ EOQ;
      * @return array of sparql query clause strings
      */
     private function formatFilterConditions($letter) {
-        $use_regex = false;
+        $useRegex = false;
 
         if ($letter == '*') {
             $letter = '.*';
-            $use_regex = true;
+            $useRegex = true;
         } elseif ($letter == '0-9') {
             $letter = '[0-9].*';
-            $use_regex = true;
+            $useRegex = true;
         } elseif ($letter == '!*') {
             $letter = '[^\\\\p{L}\\\\p{N}].*';
-            $use_regex = true;
+            $useRegex = true;
         }
 
         # make text query clause
         $lcletter = mb_strtolower($letter, 'UTF-8'); // convert to lower case, UTF-8 safe
-        if ($use_regex) {
-            $filtercond_label = "regex(str(?label), '^$letter$', 'i')";
-            $filtercond_alabel = "regex(str(?alabel), '^$letter$', 'i')";
+        if ($useRegex) {
+            $filtercondLabel = "regex(str(?label), '^$letter$', 'i')";
+            $filtercondALabel = "regex(str(?alabel), '^$letter$', 'i')";
         } else {
-            $filtercond_label = "strstarts(lcase(str(?label)), '$lcletter')";
-            $filtercond_alabel = "strstarts(lcase(str(?alabel)), '$lcletter')";
+            $filtercondLabel = "strstarts(lcase(str(?label)), '$lcletter')";
+            $filtercondALabel = "strstarts(lcase(str(?alabel)), '$lcletter')";
         }
-        return array('filterpref' => $filtercond_label, 'filteralt' => $filtercond_alabel);
+        return array('filterpref' => $filtercondLabel, 'filteralt' => $filtercondALabel);
     }
 
     /**
@@ -1035,8 +1050,8 @@ EOQ;
         $values = $this->formatValues('?type', $classes, 'uri');
         $limitandoffset = $this->formatLimitAndOffset($limit, $offset);
         $conditions = $this->formatFilterConditions($letter);
-        $filtercond_label = $conditions['filterpref'];
-        $filtercond_alabel = $conditions['filteralt'];
+        $filtercondLabel = $conditions['filterpref'];
+        $filtercondALabel = $conditions['filteralt'];
 
         $query = <<<EOQ
 SELECT DISTINCT ?s ?label ?alabel
@@ -1045,7 +1060,7 @@ WHERE {
     {
       ?s skos:prefLabel ?label .
       FILTER (
-        $filtercond_label
+        $filtercondLabel
         && langMatches(lang(?label), '$lang')
       )
     }
@@ -1054,7 +1069,7 @@ WHERE {
       {
         ?s skos:altLabel ?alabel .
         FILTER (
-          $filtercond_alabel
+          $filtercondALabel
           && langMatches(lang(?alabel), '$lang')
         )
       }
@@ -1173,7 +1188,7 @@ EOQ;
      */
     private function generateLabelQuery($uri, $lang) {
         $gcl = $this->graphClause;
-        $labelcond_label = ($lang) ? "FILTER( langMatches(lang(?label), '$lang') )" : "";
+        $labelcondLabel = ($lang) ? "FILTER( langMatches(lang(?label), '$lang') )" : "";
         $query = <<<EOQ
 SELECT ?label
 WHERE {
@@ -1181,19 +1196,19 @@ WHERE {
     <$uri> a ?type .
     OPTIONAL {
       <$uri> skos:prefLabel ?label .
-      $labelcond_label
+      $labelcondLabel
     }
     OPTIONAL {
       <$uri> rdfs:label ?label .
-      $labelcond_label
+      $labelcondLabel
     }
     OPTIONAL {
       <$uri> dc:title ?label .
-      $labelcond_label
+      $labelcondLabel
     }
     OPTIONAL {
       <$uri> dc11:title ?label .
-      $labelcond_label
+      $labelcondLabel
     }
   }
 }
@@ -1483,16 +1498,16 @@ EOQ;
                 }
 
             }
-            $child_array = array(
+            $childArray = array(
                 'uri' => $row->child->getUri(),
                 'prefLabel' => $label,
                 'hasChildren' => filter_var($row->grandchildren->getValue(), FILTER_VALIDATE_BOOLEAN),
             );
             if (isset($row->notation)) {
-                $child_array['notation'] = $row->notation->getValue();
+                $childArray['notation'] = $row->notation->getValue();
             }
 
-            $ret[] = $child_array;
+            $ret[] = $childArray;
         }
         if (sizeof($ret) > 0) {
             return $ret;
@@ -1651,17 +1666,17 @@ EOQ;
 
                 }
 
-                $child_arr = array(
+                $childArr = array(
                     'uri' => $row->children->getUri(),
                     'label' => $label,
                     'hasChildren' => filter_var($row->grandchildren->getValue(), FILTER_VALIDATE_BOOLEAN),
                 );
                 if (isset($row->childnotation)) {
-                    $child_arr['notation'] = $row->childnotation->getValue();
+                    $childArr['notation'] = $row->childnotation->getValue();
                 }
 
-                if (!in_array($child_arr, $ret[$uri]['narrower'])) {
-                    $ret[$uri]['narrower'][] = $child_arr;
+                if (!in_array($childArr, $ret[$uri]['narrower'])) {
+                    $ret[$uri]['narrower'][] = $childArr;
                 }
 
             }
