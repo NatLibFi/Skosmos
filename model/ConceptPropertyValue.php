@@ -101,7 +101,8 @@ class ConceptPropertyValue extends VocabularyDataObject
     }
 
     public function isExternal() {
-        return empty($this->resource->propertyUris());
+        $propertyUris = $this->resource->propertyUris();
+        return empty($propertyUris);
     }
 
     public function getNotation()
