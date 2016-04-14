@@ -55,6 +55,9 @@ class EntityController extends Controller
         } else {
             // guess vocabulary based on URI
             $vocab = $this->model->guessVocabularyFromURI($request->getUri());
+            if ($vocab === null) {
+                return $this->returnError('404', 'Not Found', 'Unrecognized URI ' . $request->getUri());
+            }
             $request->setVocab($vocab->getId());
         }
 

@@ -22,19 +22,6 @@ class RestController extends Controller
     );
 
     /**
-     * Echos an error message when the request can't be fulfilled.
-     * @param string $code
-     * @param string $status
-     * @param string $message
-     */
-    private function returnError($code, $status, $message)
-    {
-        header("HTTP/1.0 $code $status");
-        header("Content-type: text/plain; charset=utf-8");
-        echo "$code $status : $message";
-    }
-
-    /**
      * Handles json encoding, adding the content type headers and optional callback function.
      * @param array $data the data to be returned.
      */

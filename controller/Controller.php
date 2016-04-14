@@ -109,4 +109,17 @@ class Controller
     {
         return ($this->model->getConfig()->getBaseHref() !== null) ? $this->model->getConfig()->getBaseHref() : $this->guessBaseHref();
     }
+
+    /**
+     * Echos an error message when the request can't be fulfilled.
+     * @param string $code
+     * @param string $status
+     * @param string $message
+     */
+    protected function returnError($code, $status, $message)
+    {
+        header("HTTP/1.0 $code $status");
+        header("Content-type: text/plain; charset=utf-8");
+        echo "$code $status : $message";
+    }
 }
