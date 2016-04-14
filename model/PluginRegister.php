@@ -122,4 +122,20 @@ class PluginRegister {
         }
         return $templateStrings;
     }
+
+    /**
+     * Returns an array of javascript function names to call when loading a new concept 
+     * @return array
+     */
+    public function getCallbacks() {
+        $ret = array();
+        $plugins = $this->filterPluginsByName('callback', $this->requestedPlugins);
+        foreach ($plugins as $callbacks) {
+            foreach ($callbacks as $callback) {
+                $split = explode('/', $callback);
+                $ret[] = $split[2];
+            }
+        }
+        return $ret;
+    }
 }
