@@ -33,6 +33,11 @@ class Request
         return filter_input(INPUT_GET, $param_name, FILTER_SANITIZE_STRING);
     }
 
+    public function getQueryParamPOST($param_name)
+    {
+        return filter_input(INPUT_POST, $param_name, FILTER_SANITIZE_STRING);
+    }
+
     public function getQueryParamBoolean($param_name, $default)
     {
         $val = $this->getQueryParam($param_name);
