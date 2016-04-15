@@ -44,6 +44,7 @@
 	skosmos:explicitLanguageTags "true";
 	skosmos:defaultSidebarView "groups";
 	skosmos:showTopConcepts "false";
+    skosmos:hierarchyProperty isothes:broaderGeneric;
 	skosmos:sparqlGraph <http://www.skosmos.skos/testdiff/> ;
 	skosmos:mainConceptScheme <http://www.skosmos.skos/testdiff#conceptscheme> .
 

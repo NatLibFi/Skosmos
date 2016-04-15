@@ -322,4 +322,20 @@ class VocabularyConfigTest extends PHPUnit_Framework_TestCase
     $conf = new VocabularyConfig($mockres);
     $this->assertEquals('test', $conf->getId());
   }
+
+  /**
+   * @covers VocabularyConfig::getHierarchyProperty
+   */
+  public function testGetHierarchyPropertyDefaultValue() {
+    $vocab = $this->model->getVocabulary('test');
+    $this->assertEquals(array('skos:broader'), $vocab->getConfig()->getHierarchyProperty());
+  }
+
+  /**
+   * @covers VocabularyConfig::getHierarchyProperty
+   */
+  public function testGetHierarchyProperty() {
+    $vocab = $this->model->getVocabulary('testdiff');
+    $this->assertEquals(array('isothes:broaderGeneric'), $vocab->getConfig()->getHierarchyProperty());
+  }
 }
