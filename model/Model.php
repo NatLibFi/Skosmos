@@ -17,7 +17,7 @@ EasyRdf_Namespace::set('mads', 'http://www.loc.gov/mads/rdf/v1#');
 /**
  * Model provides access to the data.
  * @property EasyRdf_Graph $graph
- * @property GlobalConfig $global_config
+ * @property GlobalConfig $globalConfig
  */
 class Model
 {
@@ -26,21 +26,21 @@ class Model
     /** Namespaces from vocabularies configuration file */
     private $namespaces;
     /** cache for Vocabulary objects */
-    private $all_vocabularies = null;
+    private $allVocabularies = null;
     /** cache for Vocabulary objects */
-    private $vocabs_by_graph = null;
+    private $vocabsByGraph = null;
     /** cache for Vocabulary objects */
-    private $vocabs_by_urispace = null;
+    private $vocabsByUriSpace = null;
     /** how long to store retrieved URI information in APC cache */
-    private $URI_FETCH_TTL = 86400; // 1 day
-    private $global_config;
+    const URI_FETCH_TTL = 86400; // 1 day
+    private $globalConfig;
 
     /**
      * Initializes the Model object
      */
     public function __construct($config)
     {
-        $this->global_config = $config;
+        $this->globalConfig = $config;
         try {
           $this->initializeVocabularies();
           $this->initializeNamespaces();
@@ -56,7 +56,7 @@ class Model
      * @return GlobalConfig
      */
     public function getConfig() {
-      return $this->global_config;
+      return $this->globalConfig;
     }
 
     /**
@@ -108,10 +108,10 @@ class Model
      */
     
     private function initializeNamespaces() {
-        foreach ($this->namespaces as $prefix => $full_uri) {
+        foreach ($this->namespaces as $prefix => $fullUri) {
             if ($prefix != '' && EasyRdf_Namespace::get($prefix) === null) // if not already defined
             {
-                EasyRdf_Namespace::set($prefix, $full_uri);
+                EasyRdf_Namespace::set($prefix, $fullUri);
             }
         }
     }
@@ -384,10 +384,10 @@ class Model
      */
     public function getVocabularies()
     {
-        if ($this->all_vocabularies === null) { // initialize cache
+        if ($this->allVocabularies === null) { // initialize cache
             $vocs = $this->graph->allOfType('skosmos:Vocabulary');
-            $this->all_vocabularies = $this->createDataObjects("Vocabulary", $vocs);
-            foreach ($this->all_vocabularies as $voc) {
+            $this->allVocabularies = $this->createDataObjects("Vocabulary", $vocs);
+            foreach ($this->allVocabularies as $voc) {
                 // register vocabulary ids as RDF namespace prefixes
                 $prefix = preg_replace('/\W+/', '', $voc->getId()); // strip non-word characters
                 try {
@@ -402,7 +402,7 @@ class Model
             }
         }
 
-        return $this->all_vocabularies;
+        return $this->allVocabularies;
     }
 
     /**
@@ -472,17 +472,17 @@ class Model
         if ($endpoint === null) {
             $endpoint = $this->getConfig()->getDefaultEndpoint();
         }
-        if ($this->vocabs_by_graph === null) { // initialize cache
-            $this->vocabs_by_graph = array();
+        if ($this->vocabsByGraph === null) { // initialize cache
+            $this->vocabsByGraph = array();
             foreach ($this->getVocabularies() as $voc) {
                 $key = json_encode(array($voc->getGraph(), $voc->getEndpoint()));
-                $this->vocabs_by_graph[$key] = $voc;
+                $this->vocabsByGraph[$key] = $voc;
             }
         }
 
         $key = json_encode(array($graph, $endpoint));
-        if (array_key_exists($key, $this->vocabs_by_graph)) {
-            return $this->vocabs_by_graph[$key];
+        if (array_key_exists($key, $this->vocabsByGraph)) {
+            return $this->vocabsByGraph[$key];
         } else {
             throw new Exception("no vocabulary found for graph $graph and endpoint $endpoint");
         }
@@ -498,22 +498,22 @@ class Model
      */
     public function guessVocabularyFromURI($uri)
     {
-        if ($this->vocabs_by_urispace === null) { // initialize cache
-            $this->vocabs_by_urispace = array();
+        if ($this->vocabsByUriSpace === null) { // initialize cache
+            $this->vocabsByUriSpace = array();
             foreach ($this->getVocabularies() as $voc) {
-                $this->vocabs_by_urispace[$voc->getUriSpace()] = $voc;
+                $this->vocabsByUriSpace[$voc->getUriSpace()] = $voc;
             }
         }
 
         // try to guess the URI space and look it up in the cache
         $res = new EasyRdf_Resource($uri);
         $namespace = substr($uri, 0, -strlen($res->localName()));
-        if (array_key_exists($namespace, $this->vocabs_by_urispace)) {
-            return $this->vocabs_by_urispace[$namespace];
+        if (array_key_exists($namespace, $this->vocabsByUriSpace)) {
+            return $this->vocabsByUriSpace[$namespace];
         }
 
         // didn't work, try to match with each URI space separately
-        foreach ($this->vocabs_by_urispace as $urispace => $voc) {
+        foreach ($this->vocabsByUriSpace as $urispace => $voc) {
             if (strpos($uri, $urispace) === 0) {
                 return $voc;
             }
@@ -575,7 +575,7 @@ class Model
             $resource = apc_fetch($key);
             if ($resource === null || $resource === false) { // was not found in cache, or previous request failed
                 $resource = $this->fetchResourceFromUri($uri);
-                apc_store($key, $resource, $this->URI_FETCH_TTL);
+                apc_store($key, $resource, self::URI_FETCH_TTL);
             }
             // @codeCoverageIgnoreEnd
         } else { // APC not available, parse on every request

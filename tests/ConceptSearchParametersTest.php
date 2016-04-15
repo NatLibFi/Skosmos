@@ -85,6 +85,7 @@ class ConceptSearchParametersTest extends PHPUnit_Framework_TestCase
   
     /**
      * @covers ConceptSearchParameters::getTypeLimit
+     * @covers ConceptSearchParameters::getDefaultTypeLimit
      */
     public function testGetTypeLimitNoQueryParam() {
         $mockreq = $this->getMockBuilder('Request')->disableOriginalConstructor()->getMock();
@@ -95,6 +96,7 @@ class ConceptSearchParametersTest extends PHPUnit_Framework_TestCase
   
     /**
      * @covers ConceptSearchParameters::getTypeLimit
+     * @covers ConceptSearchParameters::getDefaultTypeLimit
      */
     public function testGetTypeLimit() {
         $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'));
@@ -105,6 +107,7 @@ class ConceptSearchParametersTest extends PHPUnit_Framework_TestCase
   
     /**
      * @covers ConceptSearchParameters::getTypeLimit
+     * @covers ConceptSearchParameters::getDefaultTypeLimit
      */
     public function testGetTypeLimitOnlyOne() {
         $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'));

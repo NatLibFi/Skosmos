@@ -97,6 +97,18 @@ class ConceptSearchParameters
         return $this->request->getQueryParam('anylang') ? '' : $this->getContentLang();
     }
 
+    private function getDefaultTypeLimit()
+    {
+        $type = array('skos:Concept');
+        if ($this->request->getVocab() && $this->request->getVocab()->getConfig()->getArrayClassURI()) {
+            array_push($type, $this->request->getVocab()->getConfig()->getArrayClassURI());
+        }
+        if ($this->request->getVocab() && $this->request->getVocab()->getConfig()->getGroupClassURI()) {
+            array_push($type, $this->request->getVocab()->getConfig()->getGroupClassURI());
+        }
+        return $type;
+    }
+
     public function getTypeLimit() 
     {
         $type = $this->request->getQueryParam('type') !== '' ? $this->request->getQueryParam('type') : null;
@@ -107,22 +119,17 @@ class ConceptSearchParameters
             $type = array($type);
         }
         if ($type === null) {
-            $type = array('skos:Concept');
-            if ($this->request->getVocab() && $this->request->getVocab()->getConfig()->getArrayClassURI()) {
-                array_push($type, $this->request->getVocab()->getConfig()->getArrayClassURI());
-            }
-            if ($this->request->getVocab() && $this->request->getVocab()->getConfig()->getGroupClassURI()) {
-                array_push($type, $this->request->getVocab()->getConfig()->getGroupClassURI());
-            }
+            return $this->getDefaultTypeLimit();
         }
         return $type;
     }
 
-    private function getQueryParam($name, $explode=false) {
-        if ($explode) {
-            return $this->request->getQueryParam($name) ? explode(' ', $this->request->getQueryParam($name)) : null;
-        }
+    private function getQueryParam($name) {
         return $this->request->getQueryParam($name) !== '' ? $this->request->getQueryParam($name) : null;
+    }
+
+    private function getQueryParamArray($name) {
+        return $this->request->getQueryParam($name) ? explode(' ', $this->request->getQueryParam($name)) : null;
     }
 
     public function getGroupLimit() 
@@ -137,7 +144,7 @@ class ConceptSearchParameters
     
     public function getSchemeLimit() 
     {
-        return $this->getQueryParam('scheme', true);
+        return $this->getQueryParamArray('scheme');
     }
 
     public function getOffset() 
@@ -162,7 +169,7 @@ class ConceptSearchParameters
     }
 
     public function getAdditionalFields() {
-        return $this->getQueryParam('fields', true);
+        return $this->getQueryParamArray('fields');
     }
     
     public function getHidden() {
