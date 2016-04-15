@@ -1454,7 +1454,7 @@ EOQ;
      * @param string $fallback
      * @return string sparql query
      */
-    private function generateNarrowerQuery($uri, $lang, $fallback, $props) {
+    private function generateChildQuery($uri, $lang, $fallback, $props) {
         $uri = is_array($uri) ? $uri[0] : $uri;
         $gcl = $this->graphClause;
         $propertyClause = implode('|', $props);
@@ -1538,7 +1538,7 @@ EOQ;
      * @return array array of arrays describing each child concept, or null if concept doesn't exist
      */
     public function queryChildren($uri, $lang, $fallback, $props) {
-        $query = $this->generateNarrowerQuery($uri, $lang, $fallback, $props);
+        $query = $this->generateChildQuery($uri, $lang, $fallback, $props);
         $result = $this->client->query($query);
         return $this->transformNarrowerResults($result, $lang);
     }
