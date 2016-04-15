@@ -1344,9 +1344,10 @@ EOQ;
      * @param boolean $anylang if you want a label even when it isn't available in the language you requested.
      * @return string sparql query
      */
-    private function generateTransitivePropertyQuery($uri, $prop, $lang, $limit, $anylang) {
+    private function generateTransitivePropertyQuery($uri, $props, $lang, $limit, $anylang) {
         $uri = is_array($uri) ? $uri[0] : $uri;
         $gcl = $this->graphClause;
+        $propertyClause = implode('|', $props);
         $filter = $anylang ? "" : "FILTER (langMatches(lang(?label), \"$lang\"))";
         // need to do a SPARQL subquery because LIMIT needs to be applied /after/
         // the direct relationships have been collapsed into one string
@@ -1358,9 +1359,9 @@ WHERE {
     $gcl {
       <$uri> a skos:Concept .
       OPTIONAL {
-        <$uri> $prop* ?object .
+        <$uri> $propertyClause* ?object .
         OPTIONAL {
-          ?object $prop ?dir .
+          ?object $propertyClause ?dir .
         }
       }
       OPTIONAL {
@@ -1433,15 +1434,15 @@ EOQ;
     /**
      * Query a single transitive property of a concept.
      * @param string $uri
-     * @param string $prop the name of the property eg. 'skos:broader'.
+     * @param array $props the property/properties.
      * @param string $lang
      * @param string $fallbacklang language to use if label is not available in the preferred language
      * @param integer $limit
      * @param boolean $anylang if you want a label even when it isn't available in the language you requested.
      * @return array array of property values (key: URI, val: label), or null if concept doesn't exist
      */
-    public function queryTransitiveProperty($uri, $prop, $lang, $limit, $anylang = false, $fallbacklang = '') {
-        $query = $this->generateTransitivePropertyQuery($uri, $prop, $lang, $limit, $anylang);
+    public function queryTransitiveProperty($uri, $props, $lang, $limit, $anylang = false, $fallbacklang = '') {
+        $query = $this->generateTransitivePropertyQuery($uri, $props, $lang, $limit, $anylang);
         $result = $this->client->query($query);
         return $this->transformTransitivePropertyResults($result, $lang, $fallbacklang);
     }
@@ -1453,15 +1454,16 @@ EOQ;
      * @param string $fallback
      * @return string sparql query
      */
-    private function generateNarrowerQuery($uri, $lang, $fallback) {
+    private function generateChildQuery($uri, $lang, $fallback, $props) {
         $uri = is_array($uri) ? $uri[0] : $uri;
         $gcl = $this->graphClause;
+        $propertyClause = implode('|', $props);
         $query = <<<EOQ
 SELECT ?child ?label ?child ?grandchildren ?notation WHERE {
   $gcl {
     <$uri> a skos:Concept .
     OPTIONAL {
-      <$uri> skos:narrower ?child .
+      ?child $propertyClause <$uri> .
       OPTIONAL {
         ?child skos:prefLabel ?label .
         FILTER (langMatches(lang(?label), "$lang"))
@@ -1476,7 +1478,7 @@ SELECT ?child ?label ?child ?grandchildren ?notation WHERE {
       OPTIONAL {
         ?child skos:notation ?notation .
       }
-      BIND ( EXISTS { ?child skos:narrower ?a . } AS ?grandchildren )
+      BIND ( EXISTS { ?a $propertyClause ?child . } AS ?grandchildren )
     }
   }
 }
@@ -1535,8 +1537,8 @@ EOQ;
      * @param string $fallback
      * @return array array of arrays describing each child concept, or null if concept doesn't exist
      */
-    public function queryChildren($uri, $lang, $fallback) {
-        $query = $this->generateNarrowerQuery($uri, $lang, $fallback);
+    public function queryChildren($uri, $lang, $fallback, $props) {
+        $query = $this->generateChildQuery($uri, $lang, $fallback, $props);
         $result = $this->client->query($query);
         return $this->transformNarrowerResults($result, $lang);
     }
@@ -1589,8 +1591,9 @@ EOQ;
      * @param string $fallback language to use if label is not available in the preferred language
      * @return string sparql query
      */
-    private function generateParentListQuery($uri, $lang, $fallback) {
+    private function generateParentListQuery($uri, $lang, $fallback, $props) {
         $gcl = $this->graphClause;
+        $propertyClause = implode('|', $props);
         $query = <<<EOQ
 SELECT ?broad ?parent ?member ?children ?grandchildren
 (SAMPLE(?lab) as ?label) (SAMPLE(?childlab) as ?childlabel) (SAMPLE(?topcs) AS ?top) (SAMPLE(?nota) as ?notation) (SAMPLE(?childnota) as ?childnotation)
@@ -1598,7 +1601,7 @@ WHERE {
     $gcl {
       <$uri> a skos:Concept .
       OPTIONAL {
-      <$uri> skos:broader* ?broad .
+      <$uri> $propertyClause* ?broad .
       OPTIONAL {
         ?broad skos:prefLabel ?lab .
         FILTER (langMatches(lang(?lab), "$lang"))
@@ -1611,7 +1614,7 @@ WHERE {
         ?broad skos:prefLabel ?lab .
       }
       OPTIONAL { ?broad skos:notation ?nota . }
-      OPTIONAL { ?broad skos:broader ?parent . }
+      OPTIONAL { ?broad $propertyClause ?parent . }
       OPTIONAL { ?broad skos:narrower ?children .
         OPTIONAL {
           ?children skos:prefLabel ?childlab .
@@ -1723,10 +1726,11 @@ EOQ;
      * @param string $uri concept uri.
      * @param string $lang
      * @param string $fallback language to use if label is not available in the preferred language
+     * @param array $props the hierarchy property/properties to use
      * @return an array for the REST controller to encode.
      */
-    public function queryParentList($uri, $lang, $fallback) {
-        $query = $this->generateParentListQuery($uri, $lang, $fallback);
+    public function queryParentList($uri, $lang, $fallback, $props) {
+        $query = $this->generateParentListQuery($uri, $lang, $fallback, $props);
         $result = $this->client->query($query);
         return $this->transformParentListResults($result, $lang);
     }

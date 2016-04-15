@@ -359,4 +359,25 @@ class VocabularyConfig extends DataObject
     {
         return $this->plugins;
     }
+
+    /**
+     * Returns the property/properties used for visualizing concept hierarchies.
+     * @return string array class URI or null
+     */
+
+    public function getHierarchyProperty()
+    {
+        $resources = $this->resource->allResources("skosmos:hierarchyProperty");
+        $ret = array();
+        foreach ($resources as $res) {
+            $prop = $res->getURI();
+            if (EasyRdf_Namespace::shorten($prop) !== null) // prefixing if possible 
+            {
+                $prop = EasyRdf_Namespace::shorten($prop);
+            }
+
+            $ret[] = $prop;
+        }
+        return empty($ret) ? array('skos:broader') : $ret;
+    }
 }

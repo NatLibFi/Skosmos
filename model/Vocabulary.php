@@ -308,7 +308,8 @@ class Vocabulary extends DataObject
     {
         $lang = $lang ? $lang : $this->getEnvLang();
         $fallback = $this->config->getDefaultLanguage();
-        return $this->getSparql()->queryParentList($uri, $lang, $fallback);
+        $props = $this->config->getHierarchyProperty();
+        return $this->getSparql()->queryParentList($uri, $lang, $fallback, $props);
     }
 
     /**
@@ -319,7 +320,8 @@ class Vocabulary extends DataObject
     {
         $lang = $lang ? $lang : $this->getEnvLang();
         $fallback = $this->config->getDefaultLanguage();
-        return $this->getSparql()->queryChildren($uri, $lang, $fallback);
+        $props = $this->config->getHierarchyProperty();
+        return $this->getSparql()->queryChildren($uri, $lang, $fallback, $props);
     }
 
     /**
@@ -367,7 +369,8 @@ class Vocabulary extends DataObject
     {
         $lang = $lang ? $lang : $this->getEnvLang();
         $fallback = $this->config->getDefaultLanguage();
-        return $this->getSparql()->queryTransitiveProperty($uri, 'skos:broader', $lang, $limit, $any, $fallback);
+        $props = $this->config->getHierarchyProperty();
+        return $this->getSparql()->queryTransitiveProperty($uri, $props, $lang, $limit, $any, $fallback);
     }
 
     /**
