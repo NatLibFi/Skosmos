@@ -1644,13 +1644,14 @@ EOQ;
      * @param string $lang
      * @return an array for the REST controller to encode.
      */
-    private function transformParentListResults($result, $lang) {
+    private function transformParentListResults($result, $lang)
+    {
         $ret = array();
         foreach ($result as $row) {
             if (!isset($row->broad)) {
+                // existing concept but no broaders
                 return array();
             }
-            // existing concept but no broaders
             $uri = $row->broad->getUri();
             if (!isset($ret[$uri])) {
                 $ret[$uri] = array('uri' => $uri);
@@ -1708,13 +1709,13 @@ EOQ;
             }
         }
         if (sizeof($ret) > 0) {
+            // existing concept, with children
             return $ret;
         }
-        // existing concept, with children
         else {
+            // nonexistent concept
             return null;
         }
-        // nonexistent concept
     }
 
     /**
