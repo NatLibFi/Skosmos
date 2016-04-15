@@ -344,8 +344,7 @@ class Vocabulary extends DataObject
     public function getConceptTransitiveNarrowers($uri, $limit, $lang)
     {
         $lang = $lang ? $lang : $this->getEnvLang();
-        $props = $this->config->getHierarchyProperty();
-        return $this->getSparql()->queryTransitiveProperty($uri, $props, $lang, $limit);
+        return $this->getSparql()->queryTransitiveProperty($uri, array('skos:narrower'), $lang, $limit);
     }
 
     /**
@@ -370,8 +369,7 @@ class Vocabulary extends DataObject
     {
         $lang = $lang ? $lang : $this->getEnvLang();
         $fallback = $this->config->getDefaultLanguage();
-        $props = $this->config->getHierarchyProperty();
-        return $this->getSparql()->queryTransitiveProperty($uri, $props, $lang, $limit, $any, $fallback);
+        return $this->getSparql()->queryTransitiveProperty($uri, array('skos:broader'), $lang, $limit, $any, $fallback);
     }
 
     /**
