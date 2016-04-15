@@ -20,13 +20,13 @@ class JenaTextSparql extends GenericSparql
      * https://code.google.com/p/onki-light/issues/detail?id=109 (original, set to 1000000000)
      * https://github.com/NatLibFi/Skosmos/issues/41 (reduced to 100000 because of bad performance)
      */
-    private $MAX_N = 100000;
+    const MAX_N = 100000;
 
     /*
      * Characters that need to be quoted for the Lucene query parser.
      * See http://lucene.apache.org/core/4_10_1/queryparser/org/apache/lucene/queryparser/classic/package-summary.html#Escaping_Special_Characters
      */
-    private $LUCENE_ESCAPE_CHARS = ' +-&|!(){}[]^"~?:\\/'; /* note: don't include * because we want wildcard expansion
+    const LUCENE_ESCAPE_CHARS = ' +-&|!(){}[]^"~?:\\/'; /* note: don't include * because we want wildcard expansion
 
     /**
      * Make a jena-text query condition that narrows the amount of search
@@ -43,7 +43,7 @@ class JenaTextSparql extends GenericSparql
 
         // 1. Ensure characters with special meaning in Lucene are escaped
         $lucenemap = array();
-        foreach (str_split($this->LUCENE_ESCAPE_CHARS) as $char) {
+        foreach (str_split(self::LUCENE_ESCAPE_CHARS) as $char) {
             $lucenemap[$char] = '\\' . $char; // escape with a backslash
         }
         $term = strtr($term, $lucenemap);
@@ -54,7 +54,7 @@ class JenaTextSparql extends GenericSparql
 
         $lang_clause = empty($lang) ? '' : "'lang:$lang'";
 
-        $max_results = $this->MAX_N;
+        $max_results = self::MAX_N;
 
         return "(?s ?score ?match) text:query ($property '$term' $lang_clause $max_results) .";
     }
