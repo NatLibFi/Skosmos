@@ -579,7 +579,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    */
   public function testQueryTransitiveProperty()
   {
-    $actual = $this->sparql->queryTransitiveProperty('http://www.skosmos.skos/test/ta111', 'skos:broader', 'en', '10');
+    $actual = $this->sparql->queryTransitiveProperty('http://www.skosmos.skos/test/ta111', array('skos:broader'), 'en', '10');
     $expected = array(
       'http://www.skosmos.skos/test/ta111' => 
         array(
@@ -604,7 +604,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    */
   public function testQueryTransitivePropertyLongerPath()
   {
-    $actual = $this->sparql->queryTransitiveProperty('http://www.skosmos.skos/test/ta122', 'skos:broader', 'en', '10');
+    $actual = $this->sparql->queryTransitiveProperty('http://www.skosmos.skos/test/ta122', array('skos:broader'), 'en', '10');
     $expected = array(
       'http://www.skosmos.skos/test/ta122' => 
         array (
@@ -633,28 +633,28 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GenericSparql::queryChildren
-   * @covers GenericSparql::generateNarrowerQuery
+   * @covers GenericSparql::generateChildQuery
    * @covers GenericSparql::transformNarrowerResults
    */
   public function testQueryChildren()
   {
-    $actual = $this->sparql->queryChildren('http://www.skosmos.skos/test/ta1', 'en', 'en');
+    $actual = $this->sparql->queryChildren('http://www.skosmos.skos/test/ta1', 'en', 'en', array('skos:broader'));
     $actual_uris = array();
     foreach ($actual as $child)
       $actual_uris[$child['uri']] = $child['uri'];
-    $expected = array ('http://www.skosmos.skos/test/ta111','http://www.skosmos.skos/test/ta112','http://www.skosmos.skos/test/ta114','http://www.skosmos.skos/test/ta115','http://www.skosmos.skos/test/ta116','http://www.skosmos.skos/test/ta117','http://www.skosmos.skos/test/ta119','http://www.skosmos.skos/test/ta120','http://www.skosmos.skos/test/ta113');
+    $expected = array ('http://www.skosmos.skos/test/ta111','http://www.skosmos.skos/test/ta112','http://www.skosmos.skos/test/ta114','http://www.skosmos.skos/test/ta115','http://www.skosmos.skos/test/ta116','http://www.skosmos.skos/test/ta117','http://www.skosmos.skos/test/ta119','http://www.skosmos.skos/test/ta120');
     foreach ($expected as $uri)
       $this->assertArrayHasKey($uri, $actual_uris);
   }
   
   /**
    * @covers GenericSparql::queryChildren
-   * @covers GenericSparql::generateNarrowerQuery
+   * @covers GenericSparql::generateChildQuery
    * @covers GenericSparql::transformNarrowerResults
    */
   public function testQueryChildrenOfNonExistentConcept()
   {
-    $actual = $this->sparql->queryChildren('http://notfound', 'en', 'en');
+    $actual = $this->sparql->queryChildren('http://notfound', 'en', 'en', array('skos:broader'));
     $this->assertEquals(null, $actual);
   }
 
