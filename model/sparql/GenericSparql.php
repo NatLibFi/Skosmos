@@ -730,7 +730,7 @@ EOF;
         }
 
         foreach ($fields as $field) {
-            $ret['extravars'] .= $this->formatPropertyCsvClause($field, $lang);
+            $ret['extravars'] .= $this->formatPropertyCsvClause($field);
             $ret['extrafields'] .= <<<EOF
 OPTIONAL {
   ?s skos:$field ?$field .
