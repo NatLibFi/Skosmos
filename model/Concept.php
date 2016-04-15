@@ -218,8 +218,8 @@ class Concept extends VocabularyDataObject
     {
         $ret = array();
 
-        $long_uris = $this->resource->propertyUris();
-        foreach ($long_uris as &$prop) {
+        $longUris = $this->resource->propertyUris();
+        foreach ($longUris as &$prop) {
             if (EasyRdf_Namespace::shorten($prop) !== null) {
                 // shortening property labels if possible
                 $prop = $sprop = EasyRdf_Namespace::shorten($prop);
@@ -275,10 +275,10 @@ class Concept extends VocabularyDataObject
     public function getProperties()
     {
         $properties = array();
-        $narrowers_by_uri = array();
-        $in_a_collection = array();
-        $members_array = array();
-        $long_uris = $this->resource->propertyUris();
+        $narrowersByUri = array();
+        $inCollection = array();
+        $membersArray = array();
+        $longUris = $this->resource->propertyUris();
         $duplicates = array();
         $ret = array();
 
@@ -288,31 +288,31 @@ class Concept extends VocabularyDataObject
             if (sizeof($collections) > 0) {
                 // indexing the narrowers once to avoid iterating all of them with every collection
                 foreach ($this->resource->allResources('skos:narrower') as $narrower) {
-                    $narrowers_by_uri[$narrower->getUri()] = $narrower;
+                    $narrowersByUri[$narrower->getUri()] = $narrower;
                 }
 
                 foreach ($collections as $coll) {
-                    $curr_coll_members = $this->getCollectionMembers($coll, $narrowers_by_uri);
-                    foreach ($curr_coll_members as $collection) {
+                    $currCollMembers = $this->getCollectionMembers($coll, $narrowersByUri);
+                    foreach ($currCollMembers as $collection) {
                         if ($collection->getSubMembers()) {
                             $submembers = $collection->getSubMembers();
                             foreach ($submembers as $member) {
-                                $in_a_collection[$member->getUri()] = true;
+                                $inCollection[$member->getUri()] = true;
                             }
 
                         }
                     }
 
                     if (isset($collection) && $collection->getSubMembers()) {
-                        $members_array = array_merge($curr_coll_members, $members_array);
+                        $membersArray = array_merge($currCollMembers, $membersArray);
                     }
 
                 }
-                $properties['skos:narrower'] = $members_array;
+                $properties['skos:narrower'] = $membersArray;
             }
         }
 
-        foreach ($long_uris as &$prop) {
+        foreach ($longUris as &$prop) {
             if (EasyRdf_Namespace::shorten($prop) !== null) {
                 // shortening property labels if possible
                 $prop = $sprop = EasyRdf_Namespace::shorten($prop);
@@ -354,7 +354,7 @@ class Concept extends VocabularyDataObject
                 // Iterating through every resource and adding these to the data object.
                 foreach ($this->resource->allResources($sprop) as $val) {
                     // skipping narrower concepts which are already shown in a collection
-                    if ($sprop === 'skos:narrower' && array_key_exists($val->getUri(), $in_a_collection)) {
+                    if ($sprop === 'skos:narrower' && array_key_exists($val->getUri(), $inCollection)) {
                         continue;
                     }
 
@@ -482,24 +482,24 @@ class Concept extends VocabularyDataObject
      */
     private function getCollectionMembers($coll, $narrowers)
     {
-        $members_array = array();
-        $coll_label = $coll->label()->getValue($this->clang) ? $coll->label($this->clang) : $coll->label();
-        if ($coll_label) {
-            $coll_label = $coll_label->getValue();
+        $membersArray = array();
+        $collLabel = $coll->label()->getValue($this->clang) ? $coll->label($this->clang) : $coll->label();
+        if ($collLabel) {
+            $collLabel = $collLabel->getValue();
         }
 
-        $members_array[$coll_label] = new ConceptPropertyValue($this->model, $this->vocab, $coll, 'skos:narrower', $this->clang);
+        $membersArray[$collLabel] = new ConceptPropertyValue($this->model, $this->vocab, $coll, 'skos:narrower', $this->clang);
         foreach ($coll->allResources('skos:member') as $member) {
             if (array_key_exists($member->getUri(), $narrowers)) {
                 $narrower = $narrowers[$member->getUri()];
                 if (isset($narrower)) {
-                    $members_array[$coll_label]->addSubMember(new ConceptPropertyValue($this->model, $this->vocab, $narrower, 'skos:member', $this->clang), $this->clang);
+                    $membersArray[$collLabel]->addSubMember(new ConceptPropertyValue($this->model, $this->vocab, $narrower, 'skos:member', $this->clang), $this->clang);
                 }
 
             }
         }
 
-        return $members_array;
+        return $membersArray;
     }
 
     /**
@@ -522,12 +522,12 @@ class Concept extends VocabularyDataObject
             foreach ($reverseResources as $reverseResource) {
                 if (in_array($arrayClass, $reverseResource->types()) === $includeArrays) {
                     $property = in_array($arrayClass, $reverseResource->types()) ? "skosmos:memberOfArray" : "skosmos:memberOf";
-                    $coll_label = $reverseResource->label($this->clang) ? $reverseResource->label($this->clang) : $reverseResource->label();
-                    if ($coll_label) {
-                        $coll_label = $coll_label->getValue();
+                    $collLabel = $reverseResource->label($this->clang) ? $reverseResource->label($this->clang) : $reverseResource->label();
+                    if ($collLabel) {
+                        $collLabel = $collLabel->getValue();
                     }
 
-                    $groups[$coll_label] = new ConceptPropertyValue($this->model, $this->vocab, $reverseResource, $property, $this->clang);
+                    $groups[$collLabel] = new ConceptPropertyValue($this->model, $this->vocab, $reverseResource, $property, $this->clang);
                     ksort($groups);
                     $super = $this->graph->resourcesMatching('skos:member', $reverseResource);
                     while (isset($super) && !empty($super)) {
