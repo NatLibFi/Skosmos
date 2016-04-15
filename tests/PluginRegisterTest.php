@@ -24,6 +24,7 @@ class PluginRegisterTest extends PHPUnit_Framework_TestCase
   }
   
   /**
+   * @covers PluginRegister::getPlugins
    * @covers PluginRegister::getPluginsJS
    */
   public function testGetPluginsJS()
@@ -33,6 +34,7 @@ class PluginRegisterTest extends PHPUnit_Framework_TestCase
   }
   
   /**
+   * @covers PluginRegister::getPlugins
    * @covers PluginRegister::getPluginsJS
    * @covers PluginRegister::filterPlugins
    * @covers PluginRegister::filterPluginsByName
@@ -43,6 +45,7 @@ class PluginRegisterTest extends PHPUnit_Framework_TestCase
   }
   
   /**
+   * @covers PluginRegister::getPlugins
    * @covers PluginRegister::getPluginsJS
    * @covers PluginRegister::filterPlugins
    * @covers PluginRegister::filterPluginsByName
@@ -72,7 +75,6 @@ class PluginRegisterTest extends PHPUnit_Framework_TestCase
     $this->assertEquals(array('test-plugin' => array('plugins/test-plugin/stylesheet.css')), $this->mockpr->getPluginsCSS(array('test-plugin')));
   }
   
-  
   /**
    * @covers PluginRegister::getPluginsTemplates
    */
@@ -81,4 +83,23 @@ class PluginRegisterTest extends PHPUnit_Framework_TestCase
     $plugins = new PluginRegister();
     $this->assertEquals(array(), $plugins->getPluginsTemplates());
   }
+  
+  /**
+   * @covers PluginRegister::getTemplates
+   */
+  public function testGetTemplates()
+  {
+    $plugins = new PluginRegister();
+    $this->assertEquals(array(), $plugins->getTemplates());
+  }
+  
+  /**
+   * @covers PluginRegister::getCallbacks
+   */
+  public function testGetCallbacks()
+  {
+    $plugins = new PluginRegister();
+    $this->assertEquals(array(), $plugins->getCallbacks());
+  }
+
 }

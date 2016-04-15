@@ -223,19 +223,19 @@ class WebController extends Controller
 
         $feedback_sent = false;
         $feedback_msg = null;
-        if (filter_input(INPUT_POST, 'message', FILTER_SANITIZE_STRING)) {
+        if ($request->getQueryParamPOST('message')) {
             $feedback_sent = true;
-            $feedback_msg = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_STRING);
+            $feedback_msg = $request->getQueryParamPOST('message');
         }
-        $feedback_name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
-        $feedback_email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
-        $feedback_vocab = filter_input(INPUT_POST, 'vocab', FILTER_SANITIZE_STRING);
+        $feedback_name = $request->getQueryParamPOST('name');
+        $feedback_email = $request->getQueryParamPOST('email');
+        $feedback_vocab = $request->getQueryParamPOST('vocab');
         $feedback_vocab_email = ($vocab !== null) ? $vocab->getConfig()->getFeedbackRecipient() : null;
 
         // if the hidden field has been set a value we have found a spam bot
         // and we do not actually send the message.
-        if ($feedback_sent && filter_input(INPUT_POST, 'trap', FILTER_SANITIZE_STRING) === '') {
-            $this->sendFeedback($feedback_msg, $feedback_name, $feedback_email, $feedback_vocab, $feedback_vocab_email);
+        if ($feedback_sent && $request->getQueryParamPOST('trap') === '') {
+            $this->sendFeedback($request, $feedback_msg, $feedback_name, $feedback_email, $feedback_vocab, $feedback_vocab_email);
         }
 
         echo $template->render(
@@ -248,21 +248,8 @@ class WebController extends Controller
             ));
     }
 
-    /**
-     * Sends the user entered message through the php's mailer.
-     * @param string $message only required parameter is the actual message.
-     * @param string $fromName senders own name.
-     * @param string $fromEmail senders email adress.
-     * @param string $fromVocab which vocabulary is the feedback related to.
-     */
-    public function sendFeedback($message, $fromName = null, $fromEmail = null, $fromVocab = null, $toMail = null)
+    private function createFeedbackHeaders($fromName, $fromEmail, $toMail)
     {
-        $toAddress = ($toMail) ? $toMail : $this->model->getConfig()->getFeedbackAddress();
-        if ($fromVocab !== null) {
-            $message = 'Feedback from vocab: ' . strtoupper($fromVocab) . "<br />" . $message;
-        }
-
-        $subject = SERVICE_NAME . " feedback";
         $headers = "MIME-Version: 1.0″ . '\r\n";
         $headers .= "Content-type: text/html; charset=UTF-8" . "\r\n";
         if ($toMail) {
@@ -270,20 +257,34 @@ class WebController extends Controller
         }
 
         $headers .= "From: $fromName <$fromEmail>" . "\r\n" . 'X-Mailer: PHP/' . phpversion();
+        return $headers;
+    }
+
+    /**
+     * Sends the user entered message through the php's mailer.
+     * @param string $message only required parameter is the actual message.
+     * @param string $fromName senders own name.
+     * @param string $fromEmail senders email adress.
+     * @param string $fromVocab which vocabulary is the feedback related to.
+     */
+    public function sendFeedback($request, $message, $fromName = null, $fromEmail = null, $fromVocab = null, $toMail = null)
+    {
+        $toAddress = ($toMail) ? $toMail : $this->model->getConfig()->getFeedbackAddress();
+        if ($fromVocab !== null) {
+            $message = 'Feedback from vocab: ' . strtoupper($fromVocab) . "<br />" . $message;
+        }
+
+        $subject = SERVICE_NAME . " feedback";
+        $headers = $this->createFeedbackHeaders($fromName, $fromEmail, $toMail);
         $envelopeSender = FEEDBACK_ENVELOPE_SENDER;
         $params = empty($envelopeSender) ? '' : "-f $envelopeSender";
 
         // adding some information about the user for debugging purposes.
-        $agent = (filter_input(INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_SANITIZE_STRING)) ? filter_input(INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_SANITIZE_STRING) : '';
-        $referer = (filter_input(INPUT_SERVER, 'HTTP_REFERER', FILTER_SANITIZE_STRING)) ? filter_input(INPUT_SERVER, 'HTTP_REFERER', FILTER_SANITIZE_STRING) : '';
-        $ipAddress = (filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_SANITIZE_STRING)) ? filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_SANITIZE_STRING) : '';
-        $timestamp = date(DATE_RFC2822);
-
         $message = $message . "<br /><br /> Debugging information:"
-            . "<br />Timestamp: " . $timestamp
-            . "<br />User agent: " . $agent
-            . "<br />IP address: " . $ipAddress
-            . "<br />Referer: " . $referer;
+            . "<br />Timestamp: " . date(DATE_RFC2822)
+            . "<br />User agent: " . $request->getServerConstant('HTTP_USER_AGENT')
+            . "<br />IP address: " . $request->getServerConstant('REMOTE_ADDR')
+            . "<br />Referer: " . $request->getServerConstant('HTTP_REFERER');
 
         try {
             mail($toAddress, $subject, $message, $headers, $params);

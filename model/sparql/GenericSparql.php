@@ -730,7 +730,7 @@ EOF;
         }
 
         foreach ($fields as $field) {
-            $ret['extravars'] .= $this->formatPropertyCsvClause($field, $lang);
+            $ret['extravars'] .= $this->formatPropertyCsvClause($field);
             $ret['extrafields'] .= <<<EOF
 OPTIONAL {
   ?s skos:$field ?$field .
@@ -908,6 +908,79 @@ EOQ;
     }
 
     /**
+     * Transform a single concept search query results into the skosmos desired return format.
+     * @param $row SPARQL query result row
+     * @param array $vocabs array of Vocabulary objects to search; empty for global search
+     * @return array query result object
+     */
+    private function transformConceptSearchResult($row, $vocabs, $fields)
+    {
+        $hit = array();
+        $hit['uri'] = $row->s->getUri();
+
+        if (isset($row->graph)) {
+            $hit['graph'] = $row->graph->getUri();
+        }
+
+        foreach (explode(" ", $row->types->getValue()) as $typeuri) {
+            $hit['type'][] = $this->shortenUri($typeuri);
+        }
+
+        if(!empty($fields)) {
+            foreach ($fields as $prop) {
+                $propname = $prop . 's';
+                if (isset($row->$propname)) {
+                    foreach (explode("\n", $row->$propname->getValue()) as $line) {
+                        $rdata = str_getcsv($line, ',', '"', '"');
+                        $propvals = array('uri' => $rdata[0]);
+                        if ($rdata[1] != '') {
+                            $propvals['prefLabel'] = $rdata[1];
+                        }
+
+                        $hit[$prop][] = $propvals;
+                    }
+                }
+            }
+        }
+
+        
+        if (isset($row->preflabels)) {
+            foreach (explode("\n", $row->preflabels->getValue()) as $line) {
+                $pref = str_getcsv($line, ',', '"', '"');
+                $hit['prefLabels'][$pref[1]] = $pref[0];
+            }
+        }
+
+        foreach ($vocabs as $vocab) { // looping the vocabulary objects and asking these for a localname for the concept.
+            $localname = $vocab->getLocalName($hit['uri']);
+            if ($localname !== $hit['uri']) { // only passing the result forward if the uri didn't boomerang right back.
+                $hit['localname'] = $localname;
+                break; // stopping the search when we find one that returns something valid.
+            }
+        }
+
+        if (isset($row->label)) {
+            $hit['prefLabel'] = $row->label->getValue();
+        }
+
+        if (isset($row->label)) {
+            $hit['lang'] = $row->label->getLang();
+        }
+
+        if (isset($row->plabel)) {
+            $hit['matchedPrefLabel'] = $row->plabel->getValue();
+            $hit['lang'] = $row->plabel->getLang();
+        } elseif (isset($row->alabel)) {
+            $hit['altLabel'] = $row->alabel->getValue();
+            $hit['lang'] = $row->alabel->getLang();
+        } elseif (isset($row->hlabel)) {
+            $hit['hiddenLabel'] = $row->hlabel->getValue();
+            $hit['lang'] = $row->hlabel->getLang();
+        }
+        return $hit;
+    }
+
+    /**
      * Transform the concept search query results into the skosmos desired return format.
      * @param EasyRdf_Sparql_Result $results
      * @param array $vocabs array of Vocabulary objects to search; empty for global search
@@ -918,74 +991,10 @@ EOQ;
 
         foreach ($results as $row) {
             if (!isset($row->s)) {
+                // don't break if query returns a single dummy result
                 continue;
             }
-            // don't break if query returns a single dummy result
-
-            $hit = array();
-            $hit['uri'] = $row->s->getUri();
-
-            if (isset($row->graph)) {
-                $hit['graph'] = $row->graph->getUri();
-            }
-
-            foreach (explode(" ", $row->types->getValue()) as $typeuri) {
-                $hit['type'][] = $this->shortenUri($typeuri);
-            }
-
-            if(!empty($fields)) {
-                foreach ($fields as $prop) {
-                    $propname = $prop . 's';
-                    if (isset($row->$propname)) {
-                        foreach (explode("\n", $row->$propname->getValue()) as $line) {
-                            $rdata = str_getcsv($line, ',', '"', '"');
-                            $propvals = array('uri' => $rdata[0]);
-                            if ($rdata[1] != '') {
-                                $propvals['prefLabel'] = $rdata[1];
-                            }
-
-                            $hit[$prop][] = $propvals;
-                        }
-                    }
-                }
-            }
-
-            
-            if (isset($row->preflabels)) {
-                foreach (explode("\n", $row->preflabels->getValue()) as $line) {
-                    $pref = str_getcsv($line, ',', '"', '"');
-                    $hit['prefLabels'][$pref[1]] = $pref[0];
-                }
-            }
-
-            foreach ($vocabs as $vocab) { // looping the vocabulary objects and asking these for a localname for the concept.
-                $localname = $vocab->getLocalName($hit['uri']);
-                if ($localname !== $hit['uri']) { // only passing the result forward if the uri didn't boomerang right back.
-                    $hit['localname'] = $localname;
-                    break; // stopping the search when we find one that returns something valid.
-                }
-            }
-
-            if (isset($row->label)) {
-                $hit['prefLabel'] = $row->label->getValue();
-            }
-
-            if (isset($row->label)) {
-                $hit['lang'] = $row->label->getLang();
-            }
-
-            if (isset($row->plabel)) {
-                $hit['matchedPrefLabel'] = $row->plabel->getValue();
-                $hit['lang'] = $row->plabel->getLang();
-            } elseif (isset($row->alabel)) {
-                $hit['altLabel'] = $row->alabel->getValue();
-                $hit['lang'] = $row->alabel->getLang();
-            } elseif (isset($row->hlabel)) {
-                $hit['hiddenLabel'] = $row->hlabel->getValue();
-                $hit['lang'] = $row->hlabel->getLang();
-            }
-
-            $ret[] = $hit;
+            $ret[] = $this->transformConceptSearchResult($row, $vocabs, $fields);
         }
         return $ret;
     }
@@ -1637,13 +1646,14 @@ EOQ;
      * @param string $lang
      * @return an array for the REST controller to encode.
      */
-    private function transformParentListResults($result, $lang) {
+    private function transformParentListResults($result, $lang)
+    {
         $ret = array();
         foreach ($result as $row) {
             if (!isset($row->broad)) {
+                // existing concept but no broaders
                 return array();
             }
-            // existing concept but no broaders
             $uri = $row->broad->getUri();
             if (!isset($ret[$uri])) {
                 $ret[$uri] = array('uri' => $uri);
@@ -1701,13 +1711,13 @@ EOQ;
             }
         }
         if (sizeof($ret) > 0) {
+            // existing concept, with children
             return $ret;
         }
-        // existing concept, with children
         else {
+            // nonexistent concept
             return null;
         }
-        // nonexistent concept
     }
 
     /**
