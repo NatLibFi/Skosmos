@@ -27,7 +27,6 @@ $(function() { // DOCUMENT READY
     }
   );
 
-
   /*
    * Moving the sidenav scrollbar towards the current concept. Aiming the current
    * concept at vertical center of the container. Each concept needs 18px height.
@@ -242,11 +241,16 @@ $(function() { // DOCUMENT READY
     loading = setTimeout(function() { $('.concept-spinner').show() }, 500);
   }
 
-  function makeCallbacks(data) {
-    var variables = data.substring(data.indexOf('var uri ='), data.indexOf('var uriSpace =')).split('\n');
-    var newUri = variables[0].substring(variables[0].indexOf('"')+1, variables[0].indexOf(';')-1);
-    var newPrefs = variables[1].substring(variables[1].indexOf('['), variables[1].indexOf(']')+1);
-    var params = {'uri': newUri, 'prefLabels': JSON.parse(newPrefs)};
+  function makeCallbacks(data, pageType) {
+    if (!pageType) {
+        pageType = 'page';
+    }
+
+    var variables = data ? data.substring(data.indexOf('var uri ='), data.indexOf('var uriSpace =')).split('\n') : '';
+    var newUri = data ? variables[0].substring(variables[0].indexOf('"')+1, variables[0].indexOf(';')-1) : window.uri;
+    var newPrefs = data ? JSON.parse(variables[1].substring(variables[1].indexOf('['), variables[1].indexOf(']')+1)) : window.prefLabels;
+    var params = {'uri': newUri, 'prefLabels': newPrefs, 'page': pageType};
+
     if (window.pluginCallbacks) {
         for (var i in window.pluginCallbacks) {
             var fname = window.pluginCallbacks[i];
@@ -1061,5 +1065,7 @@ $(function() { // DOCUMENT READY
 
   // setting the focus to the search box on default if we are not on the search results page
   if ($('.search-result-listing').length === 0) { $("#search-field").focus(); }
+
+  makeCallbacks();
 
 });

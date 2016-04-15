@@ -38,11 +38,11 @@ var uriSpace = "{{ request.vocab.uriSpace }}";
 <script type="text/javascript" src="resource/js/hierarchy.js"></script>
 <script type="text/javascript" src="resource/js/groups.js"></script>
 <script type="text/javascript" src="vendor/twitter/bootstrap/dist/js/bootstrap.js"></script>
-<script type="text/javascript" src="resource/js/scripts.js"></script>
-<script type="text/javascript" src="resource/js/docready.js"></script>
 <script type="text/javascript" src="resource/js/jquery.mousewheel.min.js"></script>
 <script type="text/javascript" src="resource/js/jquery.mCustomScrollbar.min.js"></script>
 <script type="text/javascript" src="resource/js/jquery.qtip.min.js"></script>
 <script type="text/javascript" src="resource/js/lscache.min.js"></script>
+<script type="text/javascript" src="resource/js/scripts.js"></script>
 {% for files in request.plugins.pluginsJS %}{% for file in files %}<script type="text/javascript" src="{{ file }}"></script>{% endfor %}{% endfor %}
 {% if request.plugins.callbacks %}<script type="text/javascript">var pluginCallbacks = [{% for files in request.plugins.callbacks %}{% for function in request.plugins.callbacks %}{% if not loop.first %}, {% endif %}"{{ function }}"{% endfor %}{% endfor %}];</script>{% endif %}
+<script type="text/javascript" src="resource/js/docready.js"></script>
