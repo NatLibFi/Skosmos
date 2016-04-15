@@ -1454,15 +1454,16 @@ EOQ;
      * @param string $fallback
      * @return string sparql query
      */
-    private function generateNarrowerQuery($uri, $lang, $fallback) {
+    private function generateNarrowerQuery($uri, $lang, $fallback, $props) {
         $uri = is_array($uri) ? $uri[0] : $uri;
         $gcl = $this->graphClause;
+        $propertyClause = implode('|', $props);
         $query = <<<EOQ
 SELECT ?child ?label ?child ?grandchildren ?notation WHERE {
   $gcl {
     <$uri> a skos:Concept .
     OPTIONAL {
-      <$uri> skos:narrower ?child .
+      ?child $propertyClause <$uri> .
       OPTIONAL {
         ?child skos:prefLabel ?label .
         FILTER (langMatches(lang(?label), "$lang"))
@@ -1477,7 +1478,7 @@ SELECT ?child ?label ?child ?grandchildren ?notation WHERE {
       OPTIONAL {
         ?child skos:notation ?notation .
       }
-      BIND ( EXISTS { ?child skos:narrower ?a . } AS ?grandchildren )
+      BIND ( EXISTS { ?a $propertyClause ?child . } AS ?grandchildren )
     }
   }
 }
@@ -1536,8 +1537,8 @@ EOQ;
      * @param string $fallback
      * @return array array of arrays describing each child concept, or null if concept doesn't exist
      */
-    public function queryChildren($uri, $lang, $fallback) {
-        $query = $this->generateNarrowerQuery($uri, $lang, $fallback);
+    public function queryChildren($uri, $lang, $fallback, $props) {
+        $query = $this->generateNarrowerQuery($uri, $lang, $fallback, $props);
         $result = $this->client->query($query);
         return $this->transformNarrowerResults($result, $lang);
     }

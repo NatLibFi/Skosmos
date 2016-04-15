@@ -321,7 +321,8 @@ class Vocabulary extends DataObject
     {
         $lang = $lang ? $lang : $this->getEnvLang();
         $fallback = $this->config->getDefaultLanguage();
-        return $this->getSparql()->queryChildren($uri, $lang, $fallback);
+        $props = $this->config->getHierarchyProperty();
+        return $this->getSparql()->queryChildren($uri, $lang, $fallback, $props);
     }
 
     /**
