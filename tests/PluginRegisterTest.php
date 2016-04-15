@@ -24,6 +24,7 @@ class PluginRegisterTest extends PHPUnit_Framework_TestCase
   }
   
   /**
+   * @covers PluginRegister::getPlugins
    * @covers PluginRegister::getPluginsJS
    */
   public function testGetPluginsJS()
@@ -33,6 +34,7 @@ class PluginRegisterTest extends PHPUnit_Framework_TestCase
   }
   
   /**
+   * @covers PluginRegister::getPlugins
    * @covers PluginRegister::getPluginsJS
    * @covers PluginRegister::filterPlugins
    * @covers PluginRegister::filterPluginsByName
@@ -43,6 +45,7 @@ class PluginRegisterTest extends PHPUnit_Framework_TestCase
   }
   
   /**
+   * @covers PluginRegister::getPlugins
    * @covers PluginRegister::getPluginsJS
    * @covers PluginRegister::filterPlugins
    * @covers PluginRegister::filterPluginsByName
@@ -96,6 +99,7 @@ class PluginRegisterTest extends PHPUnit_Framework_TestCase
   public function testGetCallbacks()
   {
     $plugins = new PluginRegister();
-    $this->assertEquals(array(), $plugins->getPluginsTemplates());
+    $this->assertEquals(array(), $plugins->getCallbacks());
   }
+
 }
