@@ -28,28 +28,28 @@ class Request
         $this->model = $model;
     }
 
-    public function getQueryParam($param_name)
+    public function getQueryParam($paramName)
     {
-        return filter_input(INPUT_GET, $param_name, FILTER_SANITIZE_STRING);
+        return filter_input(INPUT_GET, $paramName, FILTER_SANITIZE_STRING);
     }
 
-    public function getQueryParamPOST($param_name)
+    public function getQueryParamPOST($paramName)
     {
-        return filter_input(INPUT_POST, $param_name, FILTER_SANITIZE_STRING);
+        return filter_input(INPUT_POST, $paramName, FILTER_SANITIZE_STRING);
     }
 
-    public function getQueryParamBoolean($param_name, $default)
+    public function getQueryParamBoolean($paramName, $default)
     {
-        $val = $this->getQueryParam($param_name);
+        $val = $this->getQueryParam($paramName);
         if ($val !== NULL) {
             $val = filter_var($val, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
         }
         return ($val !== null) ? $val : $default;
     }
 
-    public function getServerConstant($param_name)
+    public function getServerConstant($paramName)
     {
-        return filter_input(INPUT_SERVER, $param_name, FILTER_SANITIZE_STRING);
+        return filter_input(INPUT_SERVER, $paramName, FILTER_SANITIZE_STRING);
     }
 
     public function getLang()
