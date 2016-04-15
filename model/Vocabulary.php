@@ -229,11 +229,10 @@ class Vocabulary extends DataObject
         }
 
         // mainConceptScheme not explicitly set, guess it
-        foreach ($this->getConceptSchemes() as $uri => $csdata) {
-            $conceptScheme = $uri; // actually pick the last one
-        }
-
-        return $conceptScheme;
+        $conceptSchemes = $this->getConceptSchemes();
+        $conceptSchemeURIs = array_keys($conceptSchemes);
+        // return the URI of the last concept scheme
+        return array_pop($conceptSchemeURIs);
     }
 
     /**
@@ -529,11 +528,11 @@ class Vocabulary extends DataObject
 
     /**
      * Recursive function for building the breadcrumb paths for the view.
-     * @param array $bT contains the results of the broaderTransitive query.
+     * @param array $bTresult contains the results of the broaderTransitive query.
      * @param string $uri
      * @param array $path
      */
-    private function getCrumbs($bT, $uri, $path = null)
+    private function getCrumbs($bTresult, $uri, $path = null)
     {
         $crumbs = array();
         if (!isset($path)) {
@@ -547,16 +546,16 @@ class Vocabulary extends DataObject
                 return $crumbs;
             }
         }
-        if (isset($bT[$uri]['direct'])) {
-            foreach ($bT[$uri]['direct'] as $broaderUri) {
-                $newpath = array_merge($path, array(new Breadcrumb($uri, $bT[$uri]['label'])));
+        if (isset($bTresult[$uri]['direct'])) {
+            foreach ($bTresult[$uri]['direct'] as $broaderUri) {
+                $newpath = array_merge($path, array(new Breadcrumb($uri, $bTresult[$uri]['label'])));
                 if ($uri !== $broaderUri) {
-                    $crumbs = array_merge($crumbs, $this->getCrumbs($bT, $broaderUri, $newpath));
+                    $crumbs = array_merge($crumbs, $this->getCrumbs($bTresult, $broaderUri, $newpath));
                 }
             }
         } else { // we have reached the end of a path and we need to start a new row in the 'stack'
-            if (isset($bT[$uri])) {
-                $path = array_merge($path, array(new Breadcrumb($uri, $bT[$uri]['label'])));
+            if (isset($bTresult[$uri])) {
+                $path = array_merge($path, array(new Breadcrumb($uri, $bTresult[$uri]['label'])));
             }
 
             $index = 1;
