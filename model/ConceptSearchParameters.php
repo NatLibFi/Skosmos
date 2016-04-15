@@ -97,6 +97,18 @@ class ConceptSearchParameters
         return $this->request->getQueryParam('anylang') ? '' : $this->getContentLang();
     }
 
+    private function getDefaultTypeLimit()
+    {
+        $type = array('skos:Concept');
+        if ($this->request->getVocab() && $this->request->getVocab()->getConfig()->getArrayClassURI()) {
+            array_push($type, $this->request->getVocab()->getConfig()->getArrayClassURI());
+        }
+        if ($this->request->getVocab() && $this->request->getVocab()->getConfig()->getGroupClassURI()) {
+            array_push($type, $this->request->getVocab()->getConfig()->getGroupClassURI());
+        }
+        return $type;
+    }
+
     public function getTypeLimit() 
     {
         $type = $this->request->getQueryParam('type') !== '' ? $this->request->getQueryParam('type') : null;
@@ -107,13 +119,7 @@ class ConceptSearchParameters
             $type = array($type);
         }
         if ($type === null) {
-            $type = array('skos:Concept');
-            if ($this->request->getVocab() && $this->request->getVocab()->getConfig()->getArrayClassURI()) {
-                array_push($type, $this->request->getVocab()->getConfig()->getArrayClassURI());
-            }
-            if ($this->request->getVocab() && $this->request->getVocab()->getConfig()->getGroupClassURI()) {
-                array_push($type, $this->request->getVocab()->getConfig()->getGroupClassURI());
-            }
+            return $this->getDefaultTypeLimit();
         }
         return $type;
     }
