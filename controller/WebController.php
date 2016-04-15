@@ -31,17 +31,17 @@ class WebController extends Controller
         parent::__construct($model);
 
         // initialize Twig templates
-        $tmp_dir = $model->getConfig()->getTemplateCache();
+        $tmpDir = $model->getConfig()->getTemplateCache();
 
         // check if the cache pointed by config.inc exists, if not we create it.
-        if (!file_exists($tmp_dir)) {
-            mkdir($tmp_dir);
+        if (!file_exists($tmpDir)) {
+            mkdir($tmpDir);
         }
 
         // specify where to look for templates and cache
         $loader = new Twig_Loader_Filesystem('view');
         // initialize Twig environment
-        $this->twig = new Twig_Environment($loader, array('cache' => $tmp_dir,
+        $this->twig = new Twig_Environment($loader, array('cache' => $tmpDir,
             'auto_reload' => true, 'debug' => true));
         $this->twig->addExtension(new Twig_Extensions_Extension_I18n());
         //ENABLES DUMP() method for easy and fun debugging!
@@ -120,10 +120,10 @@ class WebController extends Controller
     /**
      * Guess the language of the user. Return a language string that is one
      * of the supported languages defined in the $LANGUAGES setting, e.g. "fi".
-     * @param string $vocab_id identifier for the vocabulary eg. 'yso'.
+     * @param string $vocid identifier for the vocabulary eg. 'yso'.
      * @return string returns the language choice as a numeric string value
      */
-    public function guessLanguage($vocab_id = null)
+    public function guessLanguage($vocid = null)
     {
         // 1. select language based on SKOSMOS_LANGUAGE cookie
         if (filter_input(INPUT_COOKIE, 'SKOSMOS_LANGUAGE', FILTER_SANITIZE_STRING)) {
@@ -131,9 +131,9 @@ class WebController extends Controller
         }
 
         // 2. if vocabulary given, select based on the default language of the vocabulary
-        if ($vocab_id !== null && $vocab_id !== '') {
+        if ($vocid !== null && $vocid !== '') {
             try {
-                $vocab = $this->model->getVocabulary($vocab_id);
+                $vocab = $this->model->getVocabulary($vocid);
                 return $vocab->getConfig()->getDefaultLanguage();
             } catch (Exception $e) {
                 // vocabulary id not found, move on to the next selection method
@@ -221,21 +221,21 @@ class WebController extends Controller
         $vocabList = $this->model->getVocabularyList(false);
         $vocab = $request->getVocab();
 
-        $feedback_sent = false;
-        $feedback_msg = null;
+        $feedbackSent = false;
+        $feedbackMsg = null;
         if ($request->getQueryParamPOST('message')) {
-            $feedback_sent = true;
-            $feedback_msg = $request->getQueryParamPOST('message');
+            $feedbackSent = true;
+            $feedbackMsg = $request->getQueryParamPOST('message');
         }
-        $feedback_name = $request->getQueryParamPOST('name');
-        $feedback_email = $request->getQueryParamPOST('email');
-        $feedback_vocab = $request->getQueryParamPOST('vocab');
-        $feedback_vocab_email = ($vocab !== null) ? $vocab->getConfig()->getFeedbackRecipient() : null;
+        $feedbackName = $request->getQueryParamPOST('name');
+        $feedbackEmail = $request->getQueryParamPOST('email');
+        $feedbackVocab = $request->getQueryParamPOST('vocab');
+        $feedbackVocabEmail = ($vocab !== null) ? $vocab->getConfig()->getFeedbackRecipient() : null;
 
         // if the hidden field has been set a value we have found a spam bot
         // and we do not actually send the message.
-        if ($feedback_sent && $request->getQueryParamPOST('trap') === '') {
-            $this->sendFeedback($request, $feedback_msg, $feedback_name, $feedback_email, $feedback_vocab, $feedback_vocab_email);
+        if ($feedbackSent && $request->getQueryParamPOST('trap') === '') {
+            $this->sendFeedback($request, $feedbackMsg, $feedbackName, $feedbackEmail, $feedbackVocab, $feedbackVocabEmail);
         }
 
         echo $template->render(
@@ -243,7 +243,7 @@ class WebController extends Controller
                 'languages' => $this->languages,
                 'vocab' => $vocab,
                 'vocabList' => $vocabList,
-                'feedback_sent' => $feedback_sent,
+                'feedback_sent' => $feedbackSent,
                 'request' => $request,
             ));
     }
@@ -346,7 +346,7 @@ class WebController extends Controller
         $parameters->setVocabularies($vocabObjects);
 
         try {
-            $count_and_results = $this->model->searchConceptsAndInfo($parameters);
+            $countAndResults = $this->model->searchConceptsAndInfo($parameters);
         } catch (Exception $e) {
             header("HTTP/1.0 404 Not Found");
             if ($this->model->getConfig()->getLogCaughtExceptions()) {
@@ -355,8 +355,8 @@ class WebController extends Controller
             $this->invokeGenericErrorPage($request, $e->getMessage());
             return;
         }
-        $counts = $count_and_results['count'];
-        $search_results = $count_and_results['results'];
+        $counts = $countAndResults['count'];
+        $searchResults = $countAndResults['results'];
         $vocabList = $this->model->getVocabularyList();
         $sortedVocabs = $this->model->getVocabularyList(false, true);
         $langList = $this->model->getLanguages($lang);
@@ -365,7 +365,7 @@ class WebController extends Controller
             array(
                 'search_count' => $counts,
                 'languages' => $this->languages,
-                'search_results' => $search_results,
+                'search_results' => $searchResults,
                 'rest' => $parameters->getOffset()>0,
                 'global_search' => true,
                 'term' => $request->getQueryParam('q'),
@@ -387,7 +387,7 @@ class WebController extends Controller
         $this->setLanguageProperties($request->getLang());
         $vocab = $request->getVocab();
         try {
-            $vocab_types = $this->model->getTypes($request->getVocabid(), $request->getLang());
+            $vocabTypes = $this->model->getTypes($request->getVocabid(), $request->getLang());
         } catch (Exception $e) {
             header("HTTP/1.0 404 Not Found");
             if ($this->model->getConfig()->getLogCaughtExceptions()) {
@@ -406,9 +406,9 @@ class WebController extends Controller
         $parameters = new ConceptSearchParameters($request, $this->model->getConfig());
 
         try {
-            $count_and_results = $this->model->searchConceptsAndInfo($parameters);
-            $counts = $count_and_results['count'];
-            $search_results = $count_and_results['results'];
+            $countAndResults = $this->model->searchConceptsAndInfo($parameters);
+            $counts = $countAndResults['count'];
+            $searchResults = $countAndResults['results'];
         } catch (Exception $e) {
             header("HTTP/1.0 404 Not Found");
             if ($this->model->getConfig()->getLogCaughtExceptions()) {
@@ -427,7 +427,7 @@ class WebController extends Controller
             array(
                 'languages' => $this->languages,
                 'vocab' => $vocab,
-                'search_results' => $search_results,
+                'search_results' => $searchResults,
                 'search_count' => $counts,
                 'rest' => $parameters->getOffset()>0,
                 'limit_parent' => $parameters->getParentLimit(),
@@ -437,7 +437,7 @@ class WebController extends Controller
                 'group_index' => $vocab->listConceptGroups($request->getContentLang()),
                 'parameters' => $parameters,
                 'term' => $request->getQueryParam('q'),
-                'types' => $vocab_types,
+                'types' => $vocabTypes,
                 'explicit_langcodes' => $langcodes,
                 'request' => $request,
             ));
@@ -460,26 +460,26 @@ class WebController extends Controller
             $count = ($offset > 0) ? null : 250;
         }
 
-        $content_lang = $request->getContentLang();
+        $contentLang = $request->getContentLang();
 
-        $all_at_once = $vocab->getConfig()->getAlphabeticalFull();
-        if (!$all_at_once) {
-            $search_results = $vocab->searchConceptsAlphabetical($request->getLetter(), $count, $offset, $content_lang);
-            $letters = $vocab->getAlphabet($content_lang);
+        $allAtOnce = $vocab->getConfig()->getAlphabeticalFull();
+        if (!$allAtOnce) {
+            $searchResults = $vocab->searchConceptsAlphabetical($request->getLetter(), $count, $offset, $contentLang);
+            $letters = $vocab->getAlphabet($contentLang);
         } else {
-            $search_results = $vocab->searchConceptsAlphabetical('*', null, null, $content_lang);
+            $searchResults = $vocab->searchConceptsAlphabetical('*', null, null, $contentLang);
             $letters = null;
         }
 
-        $request->setContentLang($content_lang);
+        $request->setContentLang($contentLang);
 
         echo $template->render(
             array(
                 'languages' => $this->languages,
                 'vocab' => $vocab,
-                'alpha_results' => $search_results,
+                'alpha_results' => $searchResults,
                 'letters' => $letters,
-                'all_letters' => $all_at_once,
+                'all_letters' => $allAtOnce,
                 'request' => $request,
             ));
     }
