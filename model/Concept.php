@@ -89,13 +89,8 @@ class Concept extends VocabularyDataObject
      */
     public function getDeprecated()
     {
-        foreach ($this->resource->all('rdf:type') as $type) {
-            if (strpos($type->getUri(), 'DeprecatedConcept')) {
-                return true;
-            }
-        }
-
-        return false;
+        $deprecatedValue = $this->resource->getLiteral('owl:deprecated');
+        return ($deprecatedValue !== null && filter_var($deprecatedValue->getValue(), FILTER_VALIDATE_BOOLEAN));
     }
 
     /**
