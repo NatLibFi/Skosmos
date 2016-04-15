@@ -595,6 +595,7 @@ class RestController extends Controller
     
     private function transformPropertyResults($uri, $lang, $objects, $propname, $propuri)
     {
+        $results = array();
         foreach ($objects as $objuri => $vals) {
             $results[] = array('uri' => $objuri, 'prefLabel' => $vals['label']);
         }
