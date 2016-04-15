@@ -52,23 +52,23 @@ class JenaTextSparql extends GenericSparql
         $term = str_replace('\\', '\\\\', $term); // escape backslashes
         $term = str_replace("'", "\\'", $term); // escape single quotes
 
-        $lang_clause = empty($lang) ? '' : "'lang:$lang'";
+        $langClause = empty($lang) ? '' : "'lang:$lang'";
 
-        $max_results = self::MAX_N;
+        $maxResults = self::MAX_N;
 
-        return "(?s ?score ?match) text:query ($property '$term' $lang_clause $max_results) .";
+        return "(?s ?score ?match) text:query ($property '$term' $langClause $maxResults) .";
     }
 
     /**
      * Generate jena-text search condition for matching labels in SPARQL
      * @param string $term search term
-     * @param string $search_lang language code used for matching labels (null means any language)
+     * @param string $searchLang language code used for matching labels (null means any language)
      * @return string sparql query snippet
      */
-    protected function generateConceptSearchQueryCondition($term, $search_lang)
+    protected function generateConceptSearchQueryCondition($term, $searchLang)
     {
         # make text query clauses
-        $textcond = $this->createTextQueryCondition($term, '?prop', $search_lang);
+        $textcond = $this->createTextQueryCondition($term, '?prop', $searchLang);
         
         if ($this->isDefaultEndpoint()) {
             # if doing a global search, we should target the union graph instead of a specific graph
@@ -102,22 +102,22 @@ class JenaTextSparql extends GenericSparql
 
         # make text query clause
         $lcletter = mb_strtolower($letter, 'UTF-8'); // convert to lower case, UTF-8 safe
-        $textcond_pref = $this->createTextQueryCondition($letter . '*', 'skos:prefLabel', $lang);
-        $textcond_alt = $this->createTextQueryCondition($letter . '*', 'skos:altLabel', $lang);
+        $textcondPref = $this->createTextQueryCondition($letter . '*', 'skos:prefLabel', $lang);
+        $textcondAlt = $this->createTextQueryCondition($letter . '*', 'skos:altLabel', $lang);
 
         $query = <<<EOQ
 SELECT DISTINCT ?s ?label ?alabel
 WHERE {
   $gc {
     {
-      $textcond_pref
+      $textcondPref
       FILTER(STRSTARTS(LCASE(STR(?match)), '$lcletter'))
       FILTER EXISTS { ?s skos:prefLabel ?match }
       BIND(?match as ?label)
     }
     UNION
     {
-      $textcond_alt
+      $textcondAlt
       FILTER(STRSTARTS(LCASE(STR(?match)), '$lcletter'))
       FILTER EXISTS { ?s skos:altLabel ?match }
       BIND(?match as ?alabel)
