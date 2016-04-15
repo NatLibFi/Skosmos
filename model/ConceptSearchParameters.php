@@ -124,11 +124,12 @@ class ConceptSearchParameters
         return $type;
     }
 
-    private function getQueryParam($name, $explode=false) {
-        if ($explode) {
-            return $this->request->getQueryParam($name) ? explode(' ', $this->request->getQueryParam($name)) : null;
-        }
+    private function getQueryParam($name) {
         return $this->request->getQueryParam($name) !== '' ? $this->request->getQueryParam($name) : null;
+    }
+
+    private function getQueryParamArray($name) {
+        return $this->request->getQueryParam($name) ? explode(' ', $this->request->getQueryParam($name)) : null;
     }
 
     public function getGroupLimit() 
@@ -143,7 +144,7 @@ class ConceptSearchParameters
     
     public function getSchemeLimit() 
     {
-        return $this->getQueryParam('scheme', true);
+        return $this->getQueryParamArray('scheme');
     }
 
     public function getOffset() 
@@ -168,7 +169,7 @@ class ConceptSearchParameters
     }
 
     public function getAdditionalFields() {
-        return $this->getQueryParam('fields', true);
+        return $this->getQueryParamArray('fields');
     }
     
     public function getHidden() {
