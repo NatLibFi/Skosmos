@@ -344,7 +344,8 @@ class Vocabulary extends DataObject
     public function getConceptTransitiveNarrowers($uri, $limit, $lang)
     {
         $lang = $lang ? $lang : $this->getEnvLang();
-        return $this->getSparql()->queryTransitiveProperty($uri, 'skos:narrower', $lang, $limit);
+        $props = $this->config->getHierarchyProperty();
+        return $this->getSparql()->queryTransitiveProperty($uri, $props, $lang, $limit);
     }
 
     /**
