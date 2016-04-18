@@ -304,6 +304,7 @@ CONSTRUCT {
   {
     ?s ?p ?uri .
     FILTER(!isBlank(?s))
+    FILTER(?p != skos:inScheme)
   }
   UNION
   { ?sp ?uri ?op . }
