@@ -29,7 +29,7 @@
           <li><a href="{{ request.lang }}/{{ request.page }}?clang={{langcode}}{% if term %}&q={{ term }}{% endif %}{% if vocabs %}&vocabs={{ vocabs }}{% endif %}" class="lang-button" hreflang="{{ langcode }}">{{ langcode | lang_name(request.lang) }}</a></li>
           {% endfor %}
         {% endif %}
-          <li><a href="{% if not request.vocab %}{{ request.lang }}/{% endif %}{% if request.vocabid %}{{ request.vocabid }}/{{ request.lang }}/{% endif %}{% if request.page and request.page != 'vocab' %}{{ request.page }}/{% endif%}?{% if request.uri %}uri={{ request.uri }}&{% endif %}clang={% if request.contentLang %}{{ request.contentLang }}{% else %}{{ request.lang }}{% endif %}&anylang=on{% if term %}&q={{ term }}{% endif %}{% if vocabs %}&vocabs={{ vocabs }}{% endif %}" class="lang-button lang-button-all">{% trans "Search language: any" %}</a><input name="anylang" type="checkbox"{% if request.queryparam('anylang') %} checked{% endif%}></input></li>
+          <li><a href="{% if not request.vocab %}{{ request.lang }}/{% endif %}{% if request.vocabid %}{{ request.vocabid }}/{{ request.lang }}/{% endif %}{% if request.page and request.page != 'vocab' %}{{ request.page }}/{% endif%}?{% if request.uri %}uri={{ request.uri }}&{% endif %}clang={% if request.contentLang %}{{ request.contentLang }}{% else %}{{ request.lang }}{% endif %}&anylang=on{% if term %}&q={{ term }}{% endif %}{% if vocabs %}&vocabs={{ vocabs }}{% endif %}" class="lang-button lang-button-all">{% trans "Search language: any" %}</a><input name="anylang" type="checkbox"{% if request.queryparam('anylang') %} checked{% endif%}></li>
         </ul>
       </div><!-- /btn-group -->
       <input id="search-field" type="text" class="form-control" name="q" value="{{ term }}">
