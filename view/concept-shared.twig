@@ -158,8 +158,9 @@
                 {% if propval.label.lang and (propval.label.lang != request.contentLang) or (explicit_langcodes and propval.label.lang) %}<span class="propertyvalue"> ({{ propval.label(request.contentLang).lang }})</span>{% endif %}
                 </td>
                 <td>
-                {% if propval.vocabname %}
-                  <p class="appendix-vocab-label">{{ propval.vocabname }}</p>
+                {% set vocabname = propval.vocabname %}
+                {% if vocabname %}
+                  <p class="appendix-vocab-label">{{ vocabname }}</p>
                 {% endif %}
                 </td>
               </tr>
