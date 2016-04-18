@@ -226,6 +226,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GenericSparql::queryConceptInfo
+   * @covers GenericSparql::queryConceptInfoGraph
    * @covers GenericSparql::generateConceptInfoQuery
    * @covers GenericSparql::transformConceptInfoResults
    * @covers GenericSparql::filterDuplicateVocabs
@@ -238,7 +239,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
     $voc2 = $this->model->getVocabulary('test');
     $voc3 = $this->model->getVocabulary('dates');
     $voc4 = $this->model->getVocabulary('groups');
-    $actual = $this->sparql->queryConceptInfo(array('http://www.skosmos.skos/test/ta121', 'http://www.skosmos.skos/groups/ta111'), null, array($voc2, $voc3, $voc4), false, 'en');
+    $actual = $this->sparql->queryConceptInfo(array('http://www.skosmos.skos/test/ta121', 'http://www.skosmos.skos/groups/ta111'), null, array($voc2, $voc3, $voc4), 'en');
     $this->assertInstanceOf('Concept', $actual[0]);
     $this->assertEquals('http://www.skosmos.skos/test/ta121', $actual[0]->getUri());
     $this->assertEquals('http://www.skosmos.skos/groups/ta111', $actual[1]->getUri());
@@ -247,6 +248,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GenericSparql::queryConceptInfo
+   * @covers GenericSparql::queryConceptInfoGraph
    * @covers GenericSparql::generateConceptInfoQuery
    * @covers GenericSparql::transformConceptInfoResults
    * @covers GenericSparql::filterDuplicateVocabs
@@ -256,7 +258,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   public function testQueryConceptInfoWithAllVocabs()
   {
     $this->sparql = new GenericSparql('http://localhost:3030/ds/sparql', '?graph', $this->model);
-    $actual = $this->sparql->queryConceptInfo(array('http://www.skosmos.skos/test/ta121', 'http://www.skosmos.skos/groups/ta111'), null, null, false, 'en');
+    $actual = $this->sparql->queryConceptInfo(array('http://www.skosmos.skos/test/ta121', 'http://www.skosmos.skos/groups/ta111'), null, null, 'en');
     $this->assertInstanceOf('Concept', $actual[0]);
     $this->assertEquals('http://www.skosmos.skos/test/ta121', $actual[0]->getUri());
     $this->assertEquals('http://www.skosmos.skos/groups/ta111', $actual[1]->getUri());
@@ -265,13 +267,14 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GenericSparql::queryConceptInfo
+   * @covers GenericSparql::queryConceptInfoGraph
    * @covers GenericSparql::generateConceptInfoQuery
    * @covers GenericSparql::transformConceptInfoResults
    * @covers GenericSparql::filterDuplicateVocabs
    */
   public function testQueryConceptInfoWithMultipleSameVocabs()
   {
-    $actual = $this->sparql->queryConceptInfo(array('http://www.skosmos.skos/test/ta123'), null, array($this->vocab, $this->vocab, $this->vocab, $this->vocab, $this->vocab), false, 'en');
+    $actual = $this->sparql->queryConceptInfo(array('http://www.skosmos.skos/test/ta123'), null, array($this->vocab, $this->vocab, $this->vocab, $this->vocab, $this->vocab), 'en');
     $this->assertInstanceOf('Concept', $actual[0]);
     $this->assertEquals('http://www.skosmos.skos/test/ta123', $actual[0]->getUri());
     $this->assertEquals(1, sizeof($actual));
@@ -279,26 +282,28 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers GenericSparql::queryConceptInfo
+   * @covers GenericSparql::queryConceptInfoGraph
    * @covers GenericSparql::generateConceptInfoQuery
    * @covers GenericSparql::transformConceptInfoResults
    * @covers GenericSparql::formatValues
    */
   public function testQueryConceptInfoWithOneURI()
   {
-    $actual = $this->sparql->queryConceptInfo(array('http://www.skosmos.skos/test/ta123'), null, array($this->vocab), false, 'en');
+    $actual = $this->sparql->queryConceptInfo(array('http://www.skosmos.skos/test/ta123'), null, array($this->vocab), 'en');
     $this->assertInstanceOf('Concept', $actual[0]);
     $this->assertEquals('http://www.skosmos.skos/test/ta123', $actual[0]->getUri());
   }
 
   /**
    * @covers GenericSparql::queryConceptInfo
+   * @covers GenericSparql::queryConceptInfoGraph
    * @covers GenericSparql::generateConceptInfoQuery
    * @covers GenericSparql::transformConceptInfoResults
    * @covers GenericSparql::formatValues
    */
   public function testQueryConceptInfoWithOneURINotInArray()
   {
-    $actual = $this->sparql->queryConceptInfo('http://www.skosmos.skos/test/ta123', null, array($this->vocab), false, 'en');
+    $actual = $this->sparql->queryConceptInfo('http://www.skosmos.skos/test/ta123', null, array($this->vocab), 'en');
     $this->assertInstanceOf('Concept', $actual[0]);
     $this->assertEquals('http://www.skosmos.skos/test/ta123', $actual[0]->getUri());
   }

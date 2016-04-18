@@ -392,7 +392,7 @@ class Vocabulary extends DataObject
     {
         $sparql = $this->getSparql();
 
-        return $sparql->queryConceptInfo($uri, $this->config->getArrayClassURI(), array($this), null, $clang);
+        return $sparql->queryConceptInfo($uri, $this->config->getArrayClassURI(), array($this), $clang);
     }
 
     /**

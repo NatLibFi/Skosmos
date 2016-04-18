@@ -259,7 +259,7 @@ EOQ;
 
     /**
      * Filters multiple instances of the same vocabulary from the input array.
-     * @param \Vocabulary[] $vocabs array of Vocabulary objects
+     * @param \Vocabulary[]|null $vocabs array of Vocabulary objects
      * @return \Vocabulary[]
      */
     private function filterDuplicateVocabs($vocabs) {
@@ -278,7 +278,7 @@ EOQ;
      * Generates a sparql query for one or more concept URIs
      * @param mixed $uris concept URI (string) or array of URIs
      * @param string|null $arrayClass the URI for thesaurus array class, or null if not used
-     * @param \Vocabulary[] $vocabs array of Vocabulary objects
+     * @param \Vocabulary[]|null $vocabs array of Vocabulary objects
      * @return string sparql query
      */
     private function generateConceptInfoQuery($uris, $arrayClass, $vocabs) {
@@ -374,7 +374,7 @@ EOQ;
     /**
      * Transforms ConceptInfo query results into an array of Concept objects
      * @param EasyRdf_Graph $result query results to be transformed
-     * @param mixed $uris concept URI (string) or array of URIs
+     * @param array $uris concept URIs
      * @param \Vocabulary[] $vocabs array of Vocabulary object
      * @param string|null $clang content language
      * @return mixed query result graph (EasyRdf_Graph), or array of Concept objects
@@ -393,12 +393,11 @@ EOQ;
      * Returns information (as a graph) for one or more concept URIs
      * @param mixed $uris concept URI (string) or array of URIs
      * @param string|null $arrayClass the URI for thesaurus array class, or null if not used
-     * @param \Vocabulary[]|null $vocabs array of Vocabulary object
-     * @param boolean $asGraph whether to return a graph (true) or array of Concepts (false)
+     * @param \Vocabulary[]|null $vocabs vocabularies to target
      * @param string|null $clang content language
-     * @return mixed query result graph (EasyRdf_Graph), or array of Concept objects
+     * @return \Concept[]
      */
-    public function queryConceptInfo($uris, $arrayClass = null, $vocabs = array(), $asGraph = false, $clang = null) {
+    public function queryConceptInfoGraph($uris, $arrayClass = null, $vocabs = array(), $clang = null) {
         // if just a single URI is given, put it in an array regardless
         if (!is_array($uris)) {
             $uris = array($uris);
@@ -406,14 +405,26 @@ EOQ;
 
         $query = $this->generateConceptInfoQuery($uris, $arrayClass, $vocabs);
         $result = $this->client->query($query);
-        if ($asGraph) {
-            return $result;
-        }
+        return $result;
+    }
 
+    /**
+     * Returns information (as an array of Concept objects) for one or more concept URIs
+     * @param mixed $uris concept URI (string) or array of URIs
+     * @param string|null $arrayClass the URI for thesaurus array class, or null if not used
+     * @param \Vocabulary[] $vocabs vocabularies to target
+     * @param string|null $clang content language
+     * @return EasyRdf_Graph
+     */
+    public function queryConceptInfo($uris, $arrayClass = null, $vocabs = array(), $clang = null) {
+        // if just a single URI is given, put it in an array regardless
+        if (!is_array($uris)) {
+            $uris = array($uris);
+        }
+        $result = $this->queryConceptInfoGraph($uris, $arrayClass, $vocabs, $clang);
         if ($result->isEmpty()) {
             return;
         }
-
         return $this->transformConceptInfoResults($result, $uris, $vocabs, $clang);
     }
 
@@ -592,7 +603,7 @@ EOQ;
 
     /**
      * Generate a VALUES clause for limiting the targeted graphs.
-     * @param Vocabulary[] $vocabs the vocabularies to target 
+     * @param Vocabulary[]|null $vocabs the vocabularies to target 
      * @return string[] array of graph URIs
      */
     protected function getVocabGraphs($vocabs) {
@@ -609,7 +620,7 @@ EOQ;
 
     /**
      * Generate a VALUES clause for limiting the targeted graphs.
-     * @param array $vocabs array of Vocabulary objects to target
+     * @param array|null $vocabs array of Vocabulary objects to target
      * @return string VALUES clause, or "" if not necessary to limit
      */
     protected function formatValuesGraph($vocabs) {
@@ -1051,7 +1062,7 @@ EOQ;
      * @param string $lang language of labels
      * @param integer $limit limits the amount of results
      * @param integer $offset offsets the result set
-     * @param array $classes
+     * @param array|null $classes
      * @return string sparql query
      */
     protected function generateAlphabeticalListQuery($letter, $lang, $limit, $offset, $classes) {
