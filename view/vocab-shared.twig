@@ -12,7 +12,7 @@
           <th class="versal">{{ keytrans|trans|upper }}</th>
           <td class="versal">
             {% for val in values %}
-            <div>{% if val.get('skosmos:vocab') %}<a href="{{ val.uri | link_url(val.get('skosmos:vocab').value,request.lang,'page',request.contentLang) }}">{{ val.get('skosmos:label') }}</a>{% elseif val.label %}<a href="{{ val.uri }}">{{ val.label }}</a>{% elseif val matches '|^(https?://)|' %}<a href="{{ val }}">{{ val }}</a>{% else %}{{ val|nl2br }}{% endif %}</div>
+            <div>{% if val.get('skosmos:vocab') %}<a href="{{ val.uri | link_url(val.get('skosmos:vocab').value,request.lang,'page',request.contentLang) }}">{{ val.get('skosmos:label') }}</a>{% elseif val.label %}<a href="{{ val.uri }}">{% if val.label(request.contentLang) %}{{ val.label(request.contentLang) }}{% else %}{{ val.label }}{% endif %}</a>{% elseif val matches '|^(https?://)|' %}<a href="{{ val }}">{{ val }}</a>{% else %}{{ val|nl2br }}{% endif %}</div>
             {% endfor %}
           </td>
         </tr>
