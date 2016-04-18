@@ -265,7 +265,7 @@ EOQ;
     private function filterDuplicateVocabs($vocabs) {
         // filtering duplicates
         $uniqueVocabs = array();
-        if (sizeof($vocabs) > 0) {
+        if ($vocabs !== null && sizeof($vocabs) > 0) {
             foreach ($vocabs as $voc) {
                 $uniqueVocabs[$voc->getId()] = $voc;
             }
@@ -394,10 +394,9 @@ EOQ;
      * @param mixed $uris concept URI (string) or array of URIs
      * @param string|null $arrayClass the URI for thesaurus array class, or null if not used
      * @param \Vocabulary[]|null $vocabs vocabularies to target
-     * @param string|null $clang content language
      * @return \Concept[]
      */
-    public function queryConceptInfoGraph($uris, $arrayClass = null, $vocabs = array(), $clang = null) {
+    public function queryConceptInfoGraph($uris, $arrayClass = null, $vocabs = array()) {
         // if just a single URI is given, put it in an array regardless
         if (!is_array($uris)) {
             $uris = array($uris);
@@ -421,7 +420,7 @@ EOQ;
         if (!is_array($uris)) {
             $uris = array($uris);
         }
-        $result = $this->queryConceptInfoGraph($uris, $arrayClass, $vocabs, $clang);
+        $result = $this->queryConceptInfoGraph($uris, $arrayClass, $vocabs);
         if ($result->isEmpty()) {
             return;
         }
