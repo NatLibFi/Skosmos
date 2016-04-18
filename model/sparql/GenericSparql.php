@@ -1051,7 +1051,7 @@ EOQ;
      * @param string $lang language of labels
      * @param integer $limit limits the amount of results
      * @param integer $offset offsets the result set
-     * @param array $classes
+     * @param array|null $classes
      * @return string sparql query
      */
     protected function generateAlphabeticalListQuery($letter, $lang, $limit, $offset, $classes) {
