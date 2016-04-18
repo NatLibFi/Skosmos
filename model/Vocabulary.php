@@ -172,8 +172,8 @@ class Vocabulary extends DataObject
                     $val->add('skosmos:vocab', $exvocab->getId());
                     $val->add('skosmos:label', $exlabel);
                 }
-                $label = $val->label($lang) ? $val->label($lang) : $val->getUri();
-                $ret[$prop][$exlabel ? $exlabel->getValue() : $label] = $exlabel ? $exlabel->getValue() : $label;
+                $label = $val->label($lang) ? $val->label($lang)->getValue() : $val->getUri();
+                $ret[$prop][$exlabel ? $exlabel->getValue() : $label] = $val;
             }
             if (isset($ret[$prop])) {
                 ksort($ret[$prop]);
