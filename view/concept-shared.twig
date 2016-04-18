@@ -49,7 +49,7 @@
       </td>
       {% else %}
       <td>{% if concept.notation %}<span class="notation">{{ concept.notation }}</span>{% endif %}
-        <span class="prefLabel conceptlabel" href="{% if concept.type == "skos:Collection" %}{{ concept.uri | link_url(concept.vocab, request.lang, 'page',request.contentLang) }}{% elseif concept.exvocab is defined%}{{ concept.uri | link_url(concept.exvocab,concept.lang, 'page', request.contentLang) }}{% else %}{{ concept.uri | link_url(concept.vocab,concept.lang,'page',request.contentLang) }}{% endif %}">{{ concept.label }}</span>
+        <span class="prefLabel conceptlabel">{{ concept.label }}</span>
       </td>
       {% endif %}
       </tr>
