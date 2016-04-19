@@ -619,7 +619,7 @@ EOQ;
 
     /**
      * Generate a VALUES clause for limiting the targeted graphs.
-     * @param array|null $vocabs array of Vocabulary objects to target
+     * @param Vocabulary[]|null $vocabs array of Vocabulary objects to target
      * @return string VALUES clause, or "" if not necessary to limit
      */
     protected function formatValuesGraph($vocabs) {
@@ -718,7 +718,7 @@ EOV;
 
     /**
      * @param string $lang language code of the returned labels
-     * @param array $fields extra fields to include in the result (array of strings). (default: null = none)
+     * @param array|null $fields extra fields to include in the result (array of strings). (default: null = none)
      * @return string sparql query clause
      */
     protected function formatExtraFields($lang, $fields) {
@@ -846,7 +846,7 @@ EOQ;
 
     /**
      * Query for concepts using a search term.
-     * @param array $fields extra fields to include in the result (array of strings). (default: null = none)
+     * @param array|null $fields extra fields to include in the result (array of strings). (default: null = none)
      * @param boolean $unique restrict results to unique concepts (default: false)
      * @param ConceptSearchParameters $params 
      * @return string sparql query
