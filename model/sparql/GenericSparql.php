@@ -1248,20 +1248,19 @@ EOQ;
         $ret = array();
         foreach ($result as $row) {
             if (!isset($row->label)) {
+                // existing concept but no labels
                 return array();
             }
-            // existing concept but no labels
             $ret[$row->label->getLang()] = $row->label;
         }
 
         if (sizeof($ret) > 0) {
+            // existing concept, with label(s)
             return $ret;
-        }
-        // existing concept, with label(s)
-        else {
+        } else {
+            // nonexistent concept
             return null;
         }
-        // nonexistent concept
     }
 
     /**
