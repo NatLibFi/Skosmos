@@ -297,6 +297,10 @@ EOQ;
                       ?x skos:member ?o .
                       ?x a <$arrayClass> .
                       ?x skos:prefLabel ?xl .
+                      FILTER NOT EXISTS {
+                        ?x skos:member ?other .
+                        FILTER NOT EXISTS { ?other skos:broader ?uri }
+                      }
                     }";
         }
         $query = <<<EOQ
