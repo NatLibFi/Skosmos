@@ -45,7 +45,7 @@ class DataObject
      * @param Vocabulary $exvoc external vocabulary to query
      * @param string $exuri resource URI
      * @param string $lang language of label to query for
-     * @return string label, or null if not found in vocabulary
+     * @return EasyRdf_Literal label, or null if not found in vocabulary
      */
     protected function getExternalLabel($exvoc, $exuri, $lang)
     {
