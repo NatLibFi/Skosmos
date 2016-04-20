@@ -126,6 +126,7 @@ class RestController extends Controller
         $ret = array(
             '@context' => array(
                 'skos' => 'http://www.w3.org/2004/02/skos/core#',
+                'isothes' => 'http://purl.org/iso25964/skos-thes#',
                 'onki' => 'http://schema.onki.fi/onki#',
                 'uri' => '@id',
                 'type' => '@type',
