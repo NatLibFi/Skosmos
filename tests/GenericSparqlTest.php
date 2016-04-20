@@ -450,7 +450,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
     $actual = $this->sparql->queryConcepts(array($voc), array('broader'), null, $this->params);
     $this->assertEquals(1, sizeof($actual));
     $this->assertEquals('Bass', $actual[0]['prefLabel']);
-    $this->assertEquals('http://www.skosmos.skos/test/ta1', $actual[0]['broader'][0]['uri']);
+    $this->assertEquals('http://www.skosmos.skos/test/ta1', $actual[0]['skos:broader'][0]['uri']);
   }
 
   /**
