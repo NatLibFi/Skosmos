@@ -563,7 +563,7 @@ $(function() { // DOCUMENT READY
   
   var searchTerm = "";
   if (getUrlParams().q) {
-    searchTerm = decodeURI(getUrlParams().q);
+    searchTerm = decodeURI(getUrlParams().q.replace('+', ' '));
   }
   
   // disables the button with an empty search form 
