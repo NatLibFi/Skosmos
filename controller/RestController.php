@@ -122,7 +122,6 @@ class RestController extends Controller
         foreach ($results as &$res) {
             unset($res['voc']);
         }
-
         $ret = array(
             '@context' => array(
                 'skos' => 'http://www.w3.org/2004/02/skos/core#',
@@ -144,13 +143,6 @@ class RestController extends Controller
         
         if (isset($results[0]['prefLabels'])) {
             $ret['@context']['prefLabels'] = array('@id' => 'skos:prefLabel', '@container' => '@language');
-        }
-
-        if ($request->getQueryParam('fields')) {
-            $fields = explode(' ', $request->getQueryParam('fields'));
-            foreach ($fields as $prop) {
-                $ret['@context'][$prop] = "skos:{$prop}";
-            }
         }
 
         if ($request->getQueryParam('labellang')) {

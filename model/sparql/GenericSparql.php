@@ -699,8 +699,9 @@ EOQ;
         # The REPLACE is performed for quotes (" -> "") so they don't break the CSV format.
         $clause = <<<EOV
 (GROUP_CONCAT(DISTINCT CONCAT(
- '"', STR(?$prop), '"', ',',
- '"', REPLACE(IF(BOUND(?{$prop}lab),?{$prop}lab,''), '"', '""'), '"'
+ '"', IF(isIRI(?$prop),STR(?$prop),''), '"', ',',
+ '"', REPLACE(IF(BOUND(?{$prop}lab),?{$prop}lab,''), '"', '""'), '"', ',',
+ '"', REPLACE(IF(isLiteral(?{$prop}),?{$prop},''), '"', '""'), '"'
 ); separator='\\n') as ?{$prop}s)
 EOV;
         return $clause;
@@ -749,6 +750,7 @@ EOF;
             $ret['extrafields'] .= <<<EOF
 OPTIONAL {
   ?s skos:$field ?$field .
+  FILTER(!isLiteral(?$field)||langMatches(lang(?{$field}), '$lang'))
   OPTIONAL { ?$field skos:prefLabel ?{$field}lab . FILTER(langMatches(lang(?{$field}lab), '$lang')) }
 }
 EOF;
@@ -947,12 +949,18 @@ EOQ;
                 if (isset($row->$propname)) {
                     foreach (explode("\n", $row->$propname->getValue()) as $line) {
                         $rdata = str_getcsv($line, ',', '"', '"');
-                        $propvals = array('uri' => $rdata[0]);
+                        $propvals = array();
+                        if ($rdata[0] != '') {
+                            $propvals['uri'] = $rdata[0];
+                        }
                         if ($rdata[1] != '') {
                             $propvals['prefLabel'] = $rdata[1];
                         }
+                        if ($rdata[2] != '') {
+                            $propvals = $rdata[2];
+                        }
 
-                        $hit[$prop][] = $propvals;
+                        $hit['skos:' . $prop][] = $propvals;
                     }
                 }
             }
