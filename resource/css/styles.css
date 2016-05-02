@@ -136,7 +136,7 @@ ul {
   }
 }
 
-section {
+.main-container {
   position: relative;
   width: 95%;
   margin: 0 auto;
@@ -1587,7 +1587,7 @@ body, .versal, h1, h2, p, .versal-bold {
 /* mediaquery
  ***********************************/
 @media (max-width: 800px) {
-  section, .headerbar {
+  .main-container, .headerbar {
     width: 95% !important;
   }
 
@@ -1758,7 +1758,7 @@ body, .versal, h1, h2, p, .versal-bold {
     width: 100%;
   }
 
-  section.frontpage {
+  .main-container.frontpage {
     overflow: hidden;
     top: 10px;
   }
@@ -1891,7 +1891,7 @@ body, .versal, h1, h2, p, .versal-bold {
 }
 
 @media (min-width: 1260px) {
-  section, .headerbar, .topbar {
+  .main-container, .headerbar, .topbar {
     width: 1190px;
   }
 
@@ -2021,7 +2021,7 @@ body, .versal, h1, h2, p, .versal-bold {
 
 @media (min-width: 1520px) {
   
-  section, .headerbar, .topbar {
+  .main-container, .headerbar, .topbar {
     width: 1240px;
   }
   
