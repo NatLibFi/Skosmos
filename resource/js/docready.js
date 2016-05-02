@@ -985,8 +985,7 @@ $(function() { // DOCUMENT READY
     $.ajax({
       url : urlLangCorrected,
       success : function(data) {
-        $('#sidebar').empty();
-        $('#sidebar').append($(data).find('#sidebar')[0].innerHTML);
+        $('#sidebar').replaceWith($(data).find('#sidebar'));
       }
     });
   }
