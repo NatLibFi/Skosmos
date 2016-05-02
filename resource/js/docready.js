@@ -226,10 +226,12 @@ $(function() { // DOCUMENT READY
   }
 
   $(window).on("popstate", function(e) {
-    if (e.originalEvent.state !== null) {
-      loadPage(e.originalEvent.state.url);
-    } else {
-      loadPage(document.URL);
+    if (window.history.state) { // avoids reloading the page on the safari initial pageload popstate
+        if (e.originalEvent.state && e.originalEvent.state.url) {
+          loadPage(e.originalEvent.state.url);
+        } else {
+          loadPage(document.URL);
+        }
     }
   });
 
@@ -306,7 +308,7 @@ $(function() { // DOCUMENT READY
             beforeSend: delaySpinner(loading),
             complete: clearTimeout(loading),
             success : function(data) {
-              if (window.history.pushState) { window.history.pushState(null, null, event.target.href); }
+              if (window.history.pushState) { window.history.pushState({}, null, event.target.href); }
               $content.empty().append($('.content', data).html());
               if (!$('#hierarchy').length) { 
                 $('#hierarchy-disabled').attr('id', 'hierarchy'); 
@@ -338,7 +340,7 @@ $(function() { // DOCUMENT READY
             success : function(data) {
               updateSidebar(data);
               $('.nav').scrollTop(0);
-              if (window.history.pushState) { window.history.pushState(null, null, encodeURI(event.target.href)); }
+              if (window.history.pushState) { window.history.pushState({}, null, encodeURI(event.target.href)); }
               updateTitle(data);
             }
         });
@@ -361,7 +363,7 @@ $(function() { // DOCUMENT READY
             success : function(data) {
               updateSidebar(data);
               $('.nav').scrollTop(0);
-              if (window.history.pushState) { window.history.pushState(null, null, encodeURI(event.target.href)); }
+              if (window.history.pushState) { window.history.pushState({}, null, encodeURI(event.target.href)); }
               updateTitle(data);
             }
         });
@@ -408,7 +410,7 @@ $(function() { // DOCUMENT READY
         if ($('.changes-navi')) { $('.changes-navi').hide(); }
         $('.sidebar-grey').remove().prepend(spinner);
         $('#sidebar').append('<div class="sidebar-grey"><div class="group-hierarchy"></div></div>');
-        if (window.history.pushState) { window.history.pushState(null, null, encodeURI(event.target.href)); }
+        if (window.history.pushState) { window.history.pushState({}, null, encodeURI(event.target.href)); }
         invokeGroupTree();
         return false;
       }
@@ -435,7 +437,7 @@ $(function() { // DOCUMENT READY
               updateTopbarLang(data);
               $content.empty().append($('.content', data).html());
               $('.nav').scrollTop(0);
-              if (window.history.pushState) { window.history.pushState(null, null, event.target.href); }
+              if (window.history.pushState) { window.history.pushState({}, null, event.target.href); }
               updateTitle(data);
               makeCallbacks(data);
               // take the content language buttons from the response
@@ -460,7 +462,7 @@ $(function() { // DOCUMENT READY
             success : function(data) {
               updateSidebar(data);
               $('.nav').scrollTop(0);
-              if (window.history.pushState) { window.history.pushState(null, null, encodeURI(event.target.href)); }
+              if (window.history.pushState) { window.history.pushState({}, null, encodeURI(event.target.href)); }
               updateTitle(data);
               // take the content language buttons from the response
               $('.header-float .dropdown-menu').empty().append($('.header-float .dropdown-menu', data).html());
@@ -475,7 +477,7 @@ $(function() { // DOCUMENT READY
         return false;
       }
   );
-  
+
   // Event handlers for the language selection links for setting the cookie
   $('#language a').each( function(index, el) { 
     $(el).click(function() { 
