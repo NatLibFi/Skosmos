@@ -488,6 +488,31 @@ class Model
         }
 
     }
+    
+    /**
+     * When multiple vocabularies share same URI namespace, return the
+     * vocabulary in which the URI is actually defined (has a label).
+     *
+     * @param Vocabulary[] $vocabs vocabularies to search
+     * @param string $uri URI to look for
+     * @return Vocabulary the vocabulary with the URI
+     */
+
+    private function disambiguateVocabulary($vocabs, $uri)
+    {
+        // if there is only one candidate vocabulary, return it
+        if (sizeof($vocabs) == 1) {
+            return $vocabs[0];
+        }
+        
+        foreach ($vocabs as $vocab) {
+            if ($vocab->getConceptLabel($uri, null) !== null)
+                return $vocab;
+        }
+
+        // if the URI couldn't be found, fall back to the first vocabulary
+        return $vocabs[0];
+    }
 
     /**
      * Guess which vocabulary a URI originates from, based on the declared
@@ -501,7 +526,7 @@ class Model
         if ($this->vocabsByUriSpace === null) { // initialize cache
             $this->vocabsByUriSpace = array();
             foreach ($this->getVocabularies() as $voc) {
-                $this->vocabsByUriSpace[$voc->getUriSpace()] = $voc;
+                $this->vocabsByUriSpace[$voc->getUriSpace()][] = $voc;
             }
         }
 
@@ -509,13 +534,14 @@ class Model
         $res = new EasyRdf_Resource($uri);
         $namespace = substr($uri, 0, -strlen($res->localName()));
         if (array_key_exists($namespace, $this->vocabsByUriSpace)) {
-            return $this->vocabsByUriSpace[$namespace];
+            $vocabs = $this->vocabsByUriSpace[$namespace];
+            return $this->disambiguateVocabulary($vocabs, $uri);
         }
 
         // didn't work, try to match with each URI space separately
-        foreach ($this->vocabsByUriSpace as $urispace => $voc) {
+        foreach ($this->vocabsByUriSpace as $urispace => $vocabs) {
             if (strpos($uri, $urispace) === 0) {
-                return $voc;
+                return $this->disambiguateVocabulary($vocabs, $uri);
             }
         }
 
