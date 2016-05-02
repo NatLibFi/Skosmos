@@ -330,8 +330,8 @@ ul.dropdown-menu > li:last-child > input {
 }
 
 .header-left > h1 > a {
-  display: block;
   color: #ffffff;
+  display: block;
   height: 50px;
   overflow: hidden;
 }

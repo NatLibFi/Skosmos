@@ -1,4 +1,4 @@
-{% if request.vocabid is defined %}
+{% if request.vocabid %}
 <div class="header-left">
   <h1><a href="{% if request.vocabid != '' %}{{ request.vocabid  }}/{% endif %}{{ request.lang }}/{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{{ request.vocab.title(request.contentLang) }}</a></h1>
 </div>
