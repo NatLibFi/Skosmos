@@ -19,6 +19,9 @@
 <title>{{ ServiceName }}{% block title %}{% endblock %}</title>
 </head>
 <body{% if request.vocabid == '' and request.page != 'feedback' and request.page != 'about' %} class="frontpage-logo"{% else %} class="vocab-{{ request.vocabid }}"{% endif %}>
+  <div id="skiptocontent">
+    <a href="{{ request.langurl }}#maincontent">skip to main content</a>
+  </div>
   {% if request.vocabid != '' or request.page == 'feedback' or request.page == 'about' %}<div class="topbar-white">{% endif %}
     <div class="topbar{% if request.vocabid != '' or request.vocabid == 'feedback' or request.vocabid == 'about' %} topbar-white{% else %} frontpage{% endif %}">
       {% include 'topbar.twig' %}
@@ -133,7 +136,7 @@
       {% if request.vocabid == '' and request.page != 'feedback' and request.page != 'about' and not global_search %}
         {% include 'vocabularylist.twig' %}
       {% endif %}
-      <div class="{% if global_search %}global-{% endif %}content">
+      <div id="maincontent" class="{% if global_search %}global-{% endif %}content">
       {% block content %}
       {% endblock %}
       </div>

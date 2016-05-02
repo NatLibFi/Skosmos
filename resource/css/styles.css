@@ -1342,6 +1342,14 @@ ul.nav-tabs > li {
   margin-left: 350px;
 }
 
+#skiptocontent {
+  height: 1px;
+  width: 1px;
+  position: absolute;
+  overflow: hidden;
+  top: -10px;
+}
+
 span.date-info {
   float: right;
   font-size: 12px;
