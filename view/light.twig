@@ -133,13 +133,15 @@
       {% include 'left.inc' ignore missing %}
     {% endif %}
     {% block error %}
+    <div id="maincontent">
       {% if request.vocabid == '' and request.page != 'feedback' and request.page != 'about' and not global_search %}
         {% include 'vocabularylist.twig' %}
       {% endif %}
-      <div id="maincontent" class="{% if global_search %}global-{% endif %}content">
+      <div class="{% if global_search %}global-{% endif %}content">
       {% block content %}
       {% endblock %}
       </div>
+    </div>
     {% endblock %}
     {% if request.vocabid == '' and not global_search and request.page != 'feedback' and request.page != 'about' %}
       {% include 'right.inc' ignore missing %}

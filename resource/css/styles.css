@@ -555,6 +555,10 @@ ul.dropdown-menu > li:last-child > input {
   width: 125px;
 }
 
+#maincontent {
+  display: inline;
+}
+
 #vocabulary-list {
   background-color: #fff;
   display: inline-block;
