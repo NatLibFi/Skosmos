@@ -9,14 +9,14 @@
   </div>
   <div class="vocabularies">
     {% for vocabClassName,vocabArray in request.vocabList %}
-    <ul class="vocab-category">
-      <li><h2>{{ vocabClassName|upper }}</h2></li>
-    <ul>
+    <div class="vocab-category">
+      <h2>{{ vocabClassName|upper }}</h2>
+      <ul>
       {% for vocab in vocabArray %}
         <li><a class="navigation-font" href="{{ vocab.id }}/{{ request.lang }}/{% if request.contentLang != request.lang and request.contentLang != '' %}?clang={{ request.contentLang }}{% endif %}">{{ vocab.title }}</a></li>
       {% endfor %}
       </ul>
-    </ul>
+    </div>
     {% if not loop.last %}<div class="vocabulary-separator"></div>{% endif %}
     {% endfor %}
   </div>

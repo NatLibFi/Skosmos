@@ -566,14 +566,18 @@ ul.dropdown-menu > li:last-child > input {
   padding: 15px 0 15px 10px;
 }
 
-ul.vocab-category {
+.vocab-category {
   display: inline-block;
   padding-left: 0;
   width: 100%;
 }
 
-.vocab-category > ul > li, .vocab-category > li {
+.vocab-category > ul > li, .vocab-category > h2 {
   display: inline-block;
+}
+
+.vocab-category > h2 {
+  margin: 0 0 5px 0;
 }
 
 .vocab-category > ul > li {
