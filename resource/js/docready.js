@@ -243,27 +243,6 @@ $(function() { // DOCUMENT READY
     loading = setTimeout(function() { $('.concept-spinner').show() }, 500);
   }
 
-  function makeCallbacks(data, pageType) {
-    if (!pageType) {
-        pageType = 'page';
-    }
-
-    var variables = data ? data.substring(data.indexOf('var uri ='), data.indexOf('var uriSpace =')).split('\n') : '';
-    var newUri = data ? variables[0].substring(variables[0].indexOf('"')+1, variables[0].indexOf(';')-1) : window.uri;
-    var newPrefs = data ? JSON.parse(variables[1].substring(variables[1].indexOf('['), variables[1].indexOf(']')+1)) : window.prefLabels;
-    var params = {'uri': newUri, 'prefLabels': newPrefs, 'page': pageType};
-
-    if (window.pluginCallbacks) {
-        for (var i in window.pluginCallbacks) {
-            var fname = window.pluginCallbacks[i];
-            var callback = window[fname];
-            if (typeof callback === 'function') {
-                callback(params);
-            }
-        }
-    }
-  }
-
   // event handler for clicking the hierarchy concepts
   $(document).on('click', '.concept-hierarchy a',
       function(event) {
