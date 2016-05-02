@@ -25,7 +25,7 @@ The latest development version is also available at
 
 Skosmos is implemented using PHP, with Twig templates and e.g. jQuery and
 jsTree used to build the web interface, and EasyRdf for SPARQL and RDF data
-access.
+access. We use BrowserStack for making sure Skosmos works consistently with different browsers.
 
 The code is open source under the MIT license. See 
 [Installation](https://github.com/NatLibFi/Skosmos/wiki/Installation) in the 
