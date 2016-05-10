@@ -1,0 +1,85 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Skosmos API",
+        "version": "v1"
+    },
+    "host": "api.finto.fi",
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "basePath": "/rest/v1/",
+    "produces": [
+        "application/rdf+xml",
+        "text/turtle",
+        "application/ld+json",
+        "application/json"
+    ],
+    "paths": {
+        "/vocabularies": {
+            "get": {
+                "summary": "list vocabularies",
+                "parameters": [
+                    {
+                        "name": "lang",
+                        "in": "query",
+                        "description": "language of labels, e.g. \"en\" or \"fi\"",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "a list of vocabularies on the server",
+                        "schema": {
+                            "$ref": "#/definitions/VocabularyList"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "VocabularyList": {
+            "type": "object",
+            "properties": {
+                "uri": {
+                    "type": "string"
+                },
+                "vocabularies": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Vocabulary"
+                    }
+                }
+            },
+            "required": [
+                "uri",
+                "vocabularies"
+            ]
+        },
+        "Vocabulary": {
+            "type": "object",
+            "properties": {
+                "uri": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "uri",
+                "id",
+                "title"
+            ]
+        }
+    }
+}
