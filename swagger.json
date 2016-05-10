@@ -41,6 +41,41 @@
                     }
                 }
             }
+        },
+        "/data": {
+            "get": {
+                "summary": "RDF data of the requested concept",
+                "parameters": [
+                    {
+                        "name": "uri",
+                        "in": "query",
+                        "description": "URI of the concept whose data to return",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "format",
+                        "in": "query",
+                        "description": "the MIME type of the serialization format, e.g. \"text/turtle\" or \"application/rdf+xml\"",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/rdf+xml",
+                    "text/turtle",
+                    "application/ld+json",
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "the data of the requested concept"
+                    },
+                    "404": {
+                        "description": "the URI did not match any known concept"
+                    }
+                }
+            }
         }
     },
     "definitions": {
