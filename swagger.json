@@ -42,6 +42,87 @@
                 }
             }
         },
+        "/search": {
+            "get": {
+                "summary": "Returns a list of search results",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "the term to search for e.g. \"cat*\"",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "lang",
+                        "in": "query",
+                        "description": "language of labels to match, e.g. \"en\" or \"fi\"",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "labellang",
+                        "in": "query",
+                        "description": "language of labels to return, e.g. \"en\" or \"fi\"",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "vocab",
+                        "in": "query",
+                        "description": "vocabulary to limit search to, e.g. \"yso\"",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "limit search to concepts of the given type, e.g. \"skos:Concept\".",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "parent",
+                        "in": "query",
+                        "description": "limit search to concepts which have the given concept (specified by URI) as parent in their transitive broader hierarchy",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "group",
+                        "in": "query",
+                        "description": "limit search to concepts in the given group (specified by URI)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "space-separated list of extra fields to include in the results. e.g. \"related\" or \"prefLabel\" or any other skos property.",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "unique",
+                        "in": "query",
+                        "description": "boolean flag to indicate that each concept should be returned only once, instead of returning all the different ways it could match (for example both via prefLabel and altLabel).",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "data of the concepts matching the search term",
+                        "schema": {
+                            "$ref": "#/definitions/SearchResults"
+                        }
+                    }
+                }
+            }
+        },
         "/data": {
             "get": {
                 "summary": "RDF data of the requested concept",
@@ -90,7 +171,7 @@
                     }
                 ],
                 "produces": [
-                    "application/json"
+                    "application/ld+json"
                 ],
                 "responses": {
                     "200": {
@@ -165,6 +246,59 @@
                     "type": "string"
                 },
                 "superclass": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "uri"
+            ]
+        },
+        "SearchResults": {
+            "type": "object",
+            "properties": {
+                "uri": {
+                    "type": "string"
+                },
+                "vocabularies": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/SearchResult"
+                    }
+                }
+            },
+            "required": [
+                "uri",
+                "vocabularies"
+            ]
+        },
+        "SearchResult": {
+            "type": "object",
+            "properties": {
+                "uri": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "prefLabel": {
+                    "type": "string"
+                },
+                "altLabel": {
+                    "type": "string"
+                },
+                "hiddenLabel": {
+                    "type": "string"
+                },
+                "lang": {
+                    "type": "string"
+                },
+                "vocab": {
+                    "type": "string"
+                },
+                "exvocab": {
                     "type": "string"
                 }
             },
