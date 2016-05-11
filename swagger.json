@@ -76,6 +76,31 @@
                     }
                 }
             }
+        },
+        "/types": {
+            "get": {
+                "summary": "Return information about the types (classes) of objects contained in all the vocabularies",
+                "parameters": [
+                    {
+                        "name": "lang",
+                        "in": "query",
+                        "description": "language of labels, e.g. \"en\" or \"fi\"",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "the data of the requested concept",
+                        "schema": {
+                            "$ref": "#/definitions/TypeList"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -114,6 +139,37 @@
                 "uri",
                 "id",
                 "title"
+            ]
+        },
+        "TypeList": {
+            "type": "object",
+            "properties": {
+                "uri": {
+                    "type": "string"
+                },
+                "types": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Type"
+                    }
+                }
+            }
+        },
+        "Type": {
+            "type": "object",
+            "properties": {
+                "uri": {
+                    "type": "string"
+                },
+                "label": {
+                    "type": "string"
+                },
+                "superclass": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "uri"
             ]
         }
     }
