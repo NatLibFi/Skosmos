@@ -882,11 +882,11 @@
             "properties": {
                 "language": {
                     "type": "string",
-                    "description": "Language code"
+                    "description": "Language code e.g. \"fi\" or \"en\""
                 },
                 "literal": {
                     "type": "string",
-                    "description": "Literal for the language"
+                    "description": "language name e.g. \"Finnish\" or \"English\" (if lang parameter was used)"
                 },
                 "properties": {
                     "type": "array",
@@ -904,10 +904,12 @@
             "type": "object",
             "properties": {
                 "property": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "property identifier, either \"skos:prefLabel\" or \"skos:altLabel\" or \"skos:hiddenLabel\""
                 },
                 "labels": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "number of labels with the specified property in the given language"
                 }
             }
         }
