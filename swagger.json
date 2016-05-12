@@ -284,8 +284,43 @@
                     "200": {
                         "description": "type information about the requested vocabulary",
                         "schema": {
-                            "$ref": "#/definitions/TypeList"
+                            "$ref": "#/definitions/TopConcepts"
                         }
+                    },
+                    "404": {
+                        "description": "no vocabulary could be found with the requested id"
+                    }
+                }
+            }
+        },
+        "/{vocid}/data": {
+            "get": {
+                "summary": "Returns the RDF data of the vocabulary. If the format is not specified, HTTP content negotiation (based on the Accept header) is used to determine a suitable serialization format from among the available ones.",
+                "parameters": [
+                    {
+                        "name": "vocid",
+                        "in": "path",
+                        "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "format",
+                        "in": "query",
+                        "description": "the MIME type of the serialization format, e.g \"text/turtle\" or \"application/rdf+xml\"",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/rdf+xml",
+                    "text/turtle",
+                    "application/ld+json",
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "the RDF data of the requested vocabulary"
                     },
                     "404": {
                         "description": "no vocabulary could be found with the requested id"
