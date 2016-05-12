@@ -345,6 +345,13 @@
                         "description": "the MIME type of the serialization format, e.g \"text/turtle\" or \"application/rdf+xml\"",
                         "required": false,
                         "type": "string"
+                    },
+                    {
+                        "name": "uri",
+                        "in": "query",
+                        "description": "URI of concept. When no uri parameter is given, the whole vocabulary is returned instead.",
+                        "required": false,
+                        "type": "string"
                     }
                 ],
                 "produces": [
@@ -355,14 +362,15 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "the RDF data of the requested vocabulary"
+                        "description": "the RDF data of the requested vocabulary/concept"
                     },
                     "404": {
-                        "description": "no vocabulary could be found with the requested id"
+                        "description": "no vocabulary/concept could be found with the requested id/uri"
                     }
                 },
                 "tags": [
-                    "Vocabulary-specific methods"
+                    "Vocabulary-specific methods",
+                    "Concept-specific methods"
                 ]
             }
         },
