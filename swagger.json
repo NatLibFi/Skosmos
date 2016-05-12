@@ -182,6 +182,41 @@
                     }
                 }
             }
+        },
+        "/{vocid}/": {
+            "get": {
+                "summary": "Return general information about the vocabulary",
+                "parameters": [
+                    {
+                        "name": "vocid",
+                        "in": "path",
+                        "description": "The Skosmos vocabulary id e.g. stw or yso",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "lang",
+                        "in": "query",
+                        "description": "language of labels, e.g. \"en\" or \"fi\"",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/ld+json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "information about the requested vocabulary",
+                        "schema": {
+                            "$ref": "#/definitions/VocabularyInfo"
+                        }
+                    },
+                    "404": {
+                        "description": "no vocabulary could be found with the requested id"
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -305,6 +340,60 @@
             "required": [
                 "uri"
             ]
+        },
+        "VocabularyInfo": {
+            "type": "object",
+            "properties": {
+                "uri": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "defaultLanguage": {
+                    "type": "string"
+                },
+                "languages": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "conceptschemes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ConceptScheme"
+                    }
+                }
+            },
+            "required": [
+                "uri",
+                "id",
+                "title",
+                "defaultLanguage",
+                "languages",
+                "conceptschemes"
+            ]
+        },
+        "ConceptScheme": {
+            "type": "object",
+            "properties": {
+                "label": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "uri": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
         }
     }
 }
