@@ -39,7 +39,10 @@
                             "$ref": "#/definitions/VocabularyList"
                         }
                     }
-                }
+                },
+                "tags": [
+                    "Global methods"
+                ]
             }
         },
         "/search": {
@@ -134,7 +137,10 @@
                             "$ref": "#/definitions/SearchResults"
                         }
                     }
-                }
+                },
+                "tags": [
+                    "Global methods"
+                ]
             }
         },
         "/data": {
@@ -169,7 +175,10 @@
                     "404": {
                         "description": "the URI did not match any known concept"
                     }
-                }
+                },
+                "tags": [
+                    "Global methods"
+                ]
             }
         },
         "/types": {
@@ -194,7 +203,10 @@
                             "$ref": "#/definitions/TypeList"
                         }
                     }
-                }
+                },
+                "tags": [
+                    "Global methods"
+                ]
             }
         },
         "/{vocid}/": {
@@ -563,6 +575,51 @@
                 },
                 "tags": [
                     "Vocabulary-specific methods"
+                ]
+            }
+        },
+        "/{vocid}/label": {
+            "get": {
+                "summary": "Returns the preferred label of the requested concept.",
+                "parameters": [
+                    {
+                        "name": "vocid",
+                        "in": "path",
+                        "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "uri",
+                        "in": "query",
+                        "description": "URI of the concept whose label to return",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "lang",
+                        "in": "query",
+                        "description": "search language, e.g. \"en\" or \"fi\"",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/ld+json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "type information about the requested vocabulary",
+                        "schema": {
+                            "$ref": "#/definitions/LabelResult"
+                        }
+                    },
+                    "404": {
+                        "description": "no concept could be found with the requested URI"
+                    }
+                },
+                "tags": [
+                    "Concept-specific methods"
                 ]
             }
         }
@@ -936,6 +993,23 @@
                     "description": "number of labels with the specified property in the given language"
                 }
             }
+        },
+        "LabelResult": {
+            "type": "object",
+            "properties": {
+                "uri": {
+                    "type": "string",
+                    "description": "URI of the concept"
+                },
+                "prefLabel": {
+                    "type": "string",
+                    "description": "Preferred label of concept"
+                }
+            },
+            "required": [
+                "uri",
+                "prefLabel"
+            ]
         }
     }
 }
