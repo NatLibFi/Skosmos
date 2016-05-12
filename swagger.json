@@ -217,6 +217,41 @@
                     }
                 }
             }
+        },
+        "/{vocid}/types": {
+            "get": {
+                "summary": "Return information about the types (classes) of objects contained in the vocabulary, including possible subclasses of SKOS Concept, Collection and other standard classes.",
+                "parameters": [
+                    {
+                        "name": "vocid",
+                        "in": "path",
+                        "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "lang",
+                        "in": "query",
+                        "description": "language of labels, e.g. \"en\" or \"fi\"",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/ld+json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "type information about the requested vocabulary",
+                        "schema": {
+                            "$ref": "#/definitions/TypeList"
+                        }
+                    },
+                    "404": {
+                        "description": "no vocabulary could be found with the requested id"
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -382,16 +417,24 @@
             "type": "object",
             "properties": {
                 "label": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Label of concept scheme (rdfs:label)"
+                },
+                "prefLabel": {
+                    "type": "string",
+                    "description": "Preferred label of concept scheme (skos:prefLabel)"
                 },
                 "title": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Title of concept scheme (dc:title)"
                 },
                 "uri": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Concept scheme URI"
                 },
                 "type": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Type of object (currently always \"skos:ConceptScheme\")"
                 }
             }
         }
