@@ -471,6 +471,41 @@
                     }
                 }
             }
+        },
+        "/{vocid}/vocabularyStatistics": {
+            "get": {
+                "summary": "Returns the number of Concepts, Collections and their sub classes in the vocabulary.",
+                "parameters": [
+                    {
+                        "name": "vocid",
+                        "in": "path",
+                        "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "lang",
+                        "in": "query",
+                        "description": "language of labels, e.g. \"en\" or \"fi\"",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/ld+json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "the concept and group counts for the vocabulary",
+                        "schema": {
+                            "$ref": "#/definitions/VocabularyStatistics"
+                        }
+                    },
+                    "404": {
+                        "description": "no vocabulary could be found with the requested id"
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -718,6 +753,63 @@
             },
             "required": [
                 "result"
+            ]
+        },
+        "VocabularyStatistics": {
+            "type": "object",
+            "properties": {
+                "concepts": {
+                    "$ref": "#/definitions/CountObject"
+                },
+                "subTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/TypeCountObject"
+                    }
+                },
+                "conceptsGroups": {
+                    "$ref": "#/definitions/CountObject"
+                }
+            }
+        },
+        "CountObject": {
+            "type": "object",
+            "properties": {
+                "class": {
+                    "type": "string",
+                    "description": "Class/type of concepts"
+                },
+                "label": {
+                    "type": "string",
+                    "description": "Label of the class"
+                },
+                "count": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "count",
+                "class"
+            ]
+        },
+        "TypeCountObject": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "Class/type of concepts"
+                },
+                "label": {
+                    "type": "string",
+                    "description": "Label of the type"
+                },
+                "count": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "count",
+                "type"
             ]
         }
     }
