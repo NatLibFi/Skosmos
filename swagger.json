@@ -429,6 +429,48 @@
                     }
                 }
             }
+        },
+        "/{vocid}/lookup": {
+            "get": {
+                "summary": "Returns the best matching concept(s) for the given label in JSON-LD format. In case the label matches several concepts with the same precedence, all of them are returned.",
+                "parameters": [
+                    {
+                        "name": "vocid",
+                        "in": "path",
+                        "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "label",
+                        "in": "query",
+                        "description": "the label to look for, e.g. \"cat\" or \"dog\"",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "lang",
+                        "in": "query",
+                        "description": "search language, e.g. \"en\" or \"fi\"",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/ld+json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "type information about the requested vocabulary",
+                        "schema": {
+                            "$ref": "#/definitions/LookupResults"
+                        }
+                    },
+                    "404": {
+                        "description": "no concept could be found with the requested label"
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -662,6 +704,20 @@
             "required": [
                 "uri",
                 "hasChildren"
+            ]
+        },
+        "LookupResults": {
+            "type": "object",
+            "properties": {
+                "result": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/SearchResult"
+                    }
+                }
+            },
+            "required": [
+                "result"
             ]
         }
     }
