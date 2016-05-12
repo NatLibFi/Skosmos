@@ -5,6 +5,8 @@ RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^entity$ entity.php [L]
 
+RewriteRule ^rest/v1/swagger.json$ swagger.json [L]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^rest/v1/(.*)$ rest.php/$1 [L]
 
