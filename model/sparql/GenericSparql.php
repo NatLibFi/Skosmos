@@ -809,6 +809,7 @@ EOF;
     {
         $valuesProp = $this->formatValues('?prop', $props);
         $textcond = $this->generateConceptSearchQueryCondition($term, $searchLang);
+        $rawterm = str_replace('*', '', $term);
 
         // extra conditions for label language, if specified
         $labelcondLabel = ($lang) ? "LANGMATCHES(lang(?label), '$lang')" : "LANGMATCHES(lang(?label), lang(?match))";
@@ -835,8 +836,10 @@ EOF;
    WHERE {
     $valuesProp
     VALUES (?prop ?pri) { (skos:prefLabel 1) (skos:altLabel 3) (skos:hiddenLabel 5)}
-    $textcond
-    ?s ?prop ?match
+    { $textcond
+    ?s ?prop ?match }
+    UNION
+    { ?s skos:notation "$rawterm" }
     OPTIONAL {
      ?s skos:prefLabel ?label .
      FILTER ($labelcondLabel)
