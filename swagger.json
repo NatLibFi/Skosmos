@@ -506,6 +506,41 @@
                     }
                 }
             }
+        },
+        "/{vocid}/labelStatistics": {
+            "get": {
+                "summary": "Returns a list of label (skos:prefLabel, skos:altLabel and skos:hiddenLabel) counts in all the different languages.",
+                "parameters": [
+                    {
+                        "name": "vocid",
+                        "in": "path",
+                        "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "lang",
+                        "in": "query",
+                        "description": "language of labels, e.g. \"en\" or \"fi\"",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/ld+json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "the concept and group counts for the vocabulary",
+                        "schema": {
+                            "$ref": "#/definitions/LabelStatistics"
+                        }
+                    },
+                    "404": {
+                        "description": "no vocabulary could be found with the requested id"
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -758,6 +793,14 @@
         "VocabularyStatistics": {
             "type": "object",
             "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Skosmos vocabulary identifier"
+                },
+                "title": {
+                    "type": "string",
+                    "description": "Vocabulary title"
+                },
                 "concepts": {
                     "$ref": "#/definitions/CountObject"
                 },
@@ -811,6 +854,62 @@
                 "count",
                 "type"
             ]
+        },
+        "LabelStatistics": {
+            "type": "object",
+            "properties": {
+                "uri": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string",
+                    "description": "Skosmos vocabulary identifier"
+                },
+                "title": {
+                    "type": "string",
+                    "description": "Vocabulary title"
+                },
+                "languages": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/LanguageObject"
+                    }
+                }
+            }
+        },
+        "LanguageObject": {
+            "type": "object",
+            "properties": {
+                "language": {
+                    "type": "string",
+                    "description": "Language code"
+                },
+                "literal": {
+                    "type": "string",
+                    "description": "Literal for the language"
+                },
+                "properties": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/LabelCount"
+                    }
+                }
+            },
+            "required": [
+                "language",
+                "properties"
+            ]
+        },
+        "LabelCount": {
+            "type": "object",
+            "properties": {
+                "property": {
+                    "type": "string"
+                },
+                "labels": {
+                    "type": "integer"
+                }
+            }
         }
     }
 }
