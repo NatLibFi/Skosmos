@@ -220,7 +220,7 @@ class RestController extends Controller
             'id' => $vocab->getId(),
             'title' => $vocab->getConfig()->getTitle($request->getLang()),
             'defaultLanguage' => $vocab->getConfig()->getDefaultLanguage(),
-            'languages' => $vocab->getConfig()->getLanguages(),
+            'languages' => array_values($vocab->getConfig()->getLanguages()),
             'conceptschemes' => $conceptschemes,
         );
 
