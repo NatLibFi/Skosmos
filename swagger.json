@@ -622,7 +622,97 @@
                     "200": {
                         "description": "type information about the requested vocabulary",
                         "schema": {
-                            "$ref": "#/definitions/LabelResult"
+                            "$ref": "#/definitions/PrefAndUri"
+                        }
+                    },
+                    "404": {
+                        "description": "no concept could be found with the requested URI"
+                    }
+                },
+                "tags": [
+                    "Concept-specific methods"
+                ]
+            }
+        },
+        "/{vocid}/broader": {
+            "get": {
+                "summary": "Finds the broader concept of the requested concept",
+                "parameters": [
+                    {
+                        "name": "vocid",
+                        "in": "path",
+                        "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "uri",
+                        "in": "query",
+                        "description": "URI of the concept whose label to return",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "lang",
+                        "in": "query",
+                        "description": "search language, e.g. \"en\" or \"fi\"",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/ld+json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "the broader concept(s) of the requested concept or an empty array if there are none",
+                        "schema": {
+                            "$ref": "#/definitions/BroaderResult"
+                        }
+                    },
+                    "404": {
+                        "description": "no concept could be found with the requested URI"
+                    }
+                },
+                "tags": [
+                    "Concept-specific methods"
+                ]
+            }
+        },
+        "/{vocid}/narrower": {
+            "get": {
+                "summary": "Finds the narrower concept of the requested concept",
+                "parameters": [
+                    {
+                        "name": "vocid",
+                        "in": "path",
+                        "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "uri",
+                        "in": "query",
+                        "description": "URI of the concept whose label to return",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "lang",
+                        "in": "query",
+                        "description": "search language, e.g. \"en\" or \"fi\"",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/ld+json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "the narrower concept(s) of the requested concept or an empty array if there are none",
+                        "schema": {
+                            "$ref": "#/definitions/NarrowerResult"
                         }
                     },
                     "404": {
@@ -1005,7 +1095,7 @@
                 }
             }
         },
-        "LabelResult": {
+        "PrefAndUri": {
             "type": "object",
             "properties": {
                 "uri": {
@@ -1020,6 +1110,44 @@
             "required": [
                 "uri",
                 "prefLabel"
+            ]
+        },
+        "BroaderResult": {
+            "type": "object",
+            "properties": {
+                "uri": {
+                    "type": "string",
+                    "description": "URI of the concept"
+                },
+                "broader": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/PrefAndUri"
+                    }
+                }
+            },
+            "required": [
+                "uri",
+                "broader"
+            ]
+        },
+        "NarrowerResult": {
+            "type": "object",
+            "properties": {
+                "uri": {
+                    "type": "string",
+                    "description": "URI of the concept"
+                },
+                "narrower": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/PrefAndUri"
+                    }
+                }
+            },
+            "required": [
+                "uri",
+                "narrower"
             ]
         }
     }
