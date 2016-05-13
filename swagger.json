@@ -903,6 +903,44 @@
                     "Concept-specific methods"
                 ]
             }
+        },
+        "/{vocid}/groups": {
+            "get": {
+                "summary": "Lists concept groups in the vocabulary",
+                "parameters": [
+                    {
+                        "name": "vocid",
+                        "in": "path",
+                        "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "lang",
+                        "in": "query",
+                        "description": "label language, e.g. \"en\" or \"fi\"",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/ld+json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "concept groups of the vocabulary",
+                        "schema": {
+                            "$ref": "#/definitions/GroupResult"
+                        }
+                    },
+                    "404": {
+                        "description": "no concept could be found with the requested URI"
+                    }
+                },
+                "tags": [
+                    "Concept-specific methods"
+                ]
+            }
         }
     },
     "definitions": {
@@ -1478,6 +1516,58 @@
             "required": [
                 "uri",
                 "narrower"
+            ]
+        },
+        "GroupResult": {
+            "type": "object",
+            "properties": {
+                "uri": {
+                    "type": "string",
+                    "description": "URI of the concept"
+                },
+                "groups": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/PrefAndUriAndMembers"
+                    }
+                }
+            },
+            "required": [
+                "uri",
+                "groups"
+            ]
+        },
+        "PrefAndUriAndMembers": {
+            "type": "object",
+            "properties": {
+                "uri": {
+                    "type": "string",
+                    "description": "URI of the concept"
+                },
+                "childGroups": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "Member URI"
+                    }
+                },
+                "hasMembers": {
+                    "type": "boolean",
+                    "description": "Indicates whether the group has members"
+                },
+                "prefLabel": {
+                    "type": "string",
+                    "description": "Preferred label of concept"
+                },
+                "notation": {
+                    "type": "string",
+                    "description": "Notation code"
+                }
+            },
+            "required": [
+                "uri",
+                "prefLabel",
+                "hasMembers"
             ]
         }
     }
