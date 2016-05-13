@@ -858,6 +858,51 @@
                     "Concept-specific methods"
                 ]
             }
+        },
+        "/{vocid}/children": {
+            "get": {
+                "summary": "Finds the narrower concepts of the requested concept",
+                "parameters": [
+                    {
+                        "name": "vocid",
+                        "in": "path",
+                        "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "uri",
+                        "in": "query",
+                        "description": "URI of the concept whose label to return",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "lang",
+                        "in": "query",
+                        "description": "label language, e.g. \"en\" or \"fi\"",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/ld+json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns the children of the requested concept. The data is intended to be used in a hierarchical display.",
+                        "schema": {
+                            "$ref": "#/definitions/ChildrenResult"
+                        }
+                    },
+                    "404": {
+                        "description": "no concept could be found with the requested URI"
+                    }
+                },
+                "tags": [
+                    "Concept-specific methods"
+                ]
+            }
         }
     },
     "definitions": {
@@ -1388,6 +1433,51 @@
             "required": [
                 "uri",
                 "narrowerTransitive"
+            ]
+        },
+        "PrefAndUriAndChildren": {
+            "type": "object",
+            "properties": {
+                "uri": {
+                    "type": "string",
+                    "description": "URI of the concept"
+                },
+                "hasChildren": {
+                    "type": "boolean",
+                    "description": "Indicates whether the concept has children of its' own (narrower concepts)"
+                },
+                "prefLabel": {
+                    "type": "string",
+                    "description": "Preferred label of concept"
+                },
+                "notation": {
+                    "type": "string",
+                    "description": "Notation code"
+                }
+            },
+            "required": [
+                "uri",
+                "prefLabel",
+                "hasChildren"
+            ]
+        },
+        "ChildrenResult": {
+            "type": "object",
+            "properties": {
+                "uri": {
+                    "type": "string",
+                    "description": "URI of the concept"
+                },
+                "narrower": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/PrefAndUriAndChildren"
+                    }
+                }
+            },
+            "required": [
+                "uri",
+                "narrower"
             ]
         }
     }
