@@ -1011,7 +1011,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "concept groups of the vocabulary",
+                        "description": "Returns the hierarchical context of the requested concept. The hierarchy is intended to be used in a hierarchical display.",
                         "schema": {
                             "$ref": "#/definitions/Hierarchy"
                         }
