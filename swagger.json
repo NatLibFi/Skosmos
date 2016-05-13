@@ -19,7 +19,7 @@
     "paths": {
         "/vocabularies": {
             "get": {
-                "summary": "list vocabularies",
+                "summary": "Returns a list of vocabularies available",
                 "parameters": [
                     {
                         "name": "lang",
@@ -47,7 +47,7 @@
         },
         "/search": {
             "get": {
-                "summary": "Returns a list of search results",
+                "summary": "Finds concepts and collections by query term",
                 "parameters": [
                     {
                         "name": "query",
@@ -145,7 +145,7 @@
         },
         "/data": {
             "get": {
-                "summary": "RDF data of the requested concept",
+                "summary": "Returns the RDF data of the requested concept",
                 "parameters": [
                     {
                         "name": "uri",
@@ -211,7 +211,7 @@
         },
         "/{vocid}/": {
             "get": {
-                "summary": "Return general information about the vocabulary",
+                "summary": "General information about the vocabulary",
                 "parameters": [
                     {
                         "name": "vocid",
@@ -249,7 +249,7 @@
         },
         "/{vocid}/types": {
             "get": {
-                "summary": "Return information about the types (classes) of objects contained in the vocabulary, including possible subclasses of SKOS Concept, Collection and other standard classes.",
+                "summary": "Information about the types (classes) of objects in the vocabulary",
                 "parameters": [
                     {
                         "name": "vocid",
@@ -287,7 +287,7 @@
         },
         "/{vocid}/topConcepts": {
             "get": {
-                "summary": "Return the top concepts of the vocabulary in JSON-LD format.",
+                "summary": "Gets the top concepts of the vocabulary",
                 "parameters": [
                     {
                         "name": "vocid",
@@ -330,7 +330,7 @@
         },
         "/{vocid}/data": {
             "get": {
-                "summary": "Returns the RDF data of the vocabulary. If the format is not specified, HTTP content negotiation (based on the Accept header) is used to determine a suitable serialization format from among the available ones.",
+                "summary": "Gets the RDF data of the vocabulary",
                 "parameters": [
                     {
                         "name": "vocid",
@@ -342,7 +342,7 @@
                     {
                         "name": "format",
                         "in": "query",
-                        "description": "the MIME type of the serialization format, e.g \"text/turtle\" or \"application/rdf+xml\"",
+                        "description": "The MIME type of the serialization format, e.g \"text/turtle\" or \"application/rdf+xml\". If not specified, HTTP content negotiation (based on the Accept header) is used to determine a suitable serialization format from among the available ones.",
                         "required": false,
                         "type": "string"
                     },
@@ -376,7 +376,8 @@
         },
         "/{vocid}/search": {
             "get": {
-                "summary": "Returns a list of search results. The search is performed as a case-insensitive pattern, where an asterisk (*) may be used as wildcard. E.g. \"cat*\" may return results such as \"CATCH-22\" and \"categorization\". If decoded into RDF, the result is a vocabulary fragment expressed as SKOS.",
+                "summary": "Finds concepts and collections from a vocabulary by query term",
+                "description": "Returns a list of search results. The search is performed as a case-insensitive pattern, where an asterisk (*) may be used as wildcard. E.g. \"cat*\" may return results such as \"CATCH-22\" and \"categorization\". If decoded into RDF, the result is a vocabulary fragment expressed as SKOS.",
                 "parameters": [
                     {
                         "name": "vocid",
@@ -467,7 +468,8 @@
         },
         "/{vocid}/lookup": {
             "get": {
-                "summary": "Returns the best matching concept(s) for the given label in JSON-LD format. In case the label matches several concepts with the same precedence, all of them are returned.",
+                "summary": "Finds concepts by label",
+                "description": "Returns the best matching concept(s) for the given label in JSON-LD format. In case the label matches several concepts with the same precedence, all of them are returned.",
                 "parameters": [
                     {
                         "name": "vocid",
@@ -512,7 +514,7 @@
         },
         "/{vocid}/vocabularyStatistics": {
             "get": {
-                "summary": "Returns the number of Concepts, Collections and their sub classes in the vocabulary.",
+                "summary": "Gets the number of Concepts and Collections in the vocabulary",
                 "parameters": [
                     {
                         "name": "vocid",
@@ -550,7 +552,8 @@
         },
         "/{vocid}/labelStatistics": {
             "get": {
-                "summary": "Returns a list of label (skos:prefLabel, skos:altLabel and skos:hiddenLabel) counts in all the different languages.",
+                "summary": "Counts labels by language",
+                "description": "Returns a list of label (skos:prefLabel, skos:altLabel and skos:hiddenLabel) counts in all the different languages.",
                 "parameters": [
                     {
                         "name": "vocid",
