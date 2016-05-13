@@ -934,11 +934,94 @@
                         }
                     },
                     "404": {
-                        "description": "no concept could be found with the requested URI"
+                        "description": "no vocabulary could be found with the requested id"
                     }
                 },
                 "tags": [
                     "Vocabulary-specific methods"
+                ]
+            }
+        },
+        "/{vocid}/groupMembers": {
+            "get": {
+                "summary": "Lists members of the requested concept group",
+                "parameters": [
+                    {
+                        "name": "vocid",
+                        "in": "path",
+                        "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "lang",
+                        "in": "query",
+                        "description": "label language, e.g. \"en\" or \"fi\"",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/ld+json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "concept groups of the vocabulary",
+                        "schema": {
+                            "$ref": "#/definitions/GroupMembers"
+                        }
+                    },
+                    "404": {
+                        "description": "no concept group could be found with the requested URI"
+                    }
+                },
+                "tags": [
+                    "Concept-specific methods"
+                ]
+            }
+        },
+        "/{vocid}/hierarchy": {
+            "get": {
+                "summary": "The hierarchical context of the requested concept",
+                "parameters": [
+                    {
+                        "name": "vocid",
+                        "in": "path",
+                        "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "uri",
+                        "in": "query",
+                        "description": "URI of the concept whose label to return",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "lang",
+                        "in": "query",
+                        "description": "label language, e.g. \"en\" or \"fi\"",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/ld+json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "concept groups of the vocabulary",
+                        "schema": {
+                            "$ref": "#/definitions/Hierarchy"
+                        }
+                    },
+                    "404": {
+                        "description": "no concept group could be found with the requested URI"
+                    }
+                },
+                "tags": [
+                    "Concept-specific methods"
                 ]
             }
         }
@@ -1568,6 +1651,149 @@
                 "uri",
                 "prefLabel",
                 "hasMembers"
+            ]
+        },
+        "MembersList": {
+            "type": "object",
+            "properties": {
+                "uri": {
+                    "type": "string",
+                    "description": "URI of the concept"
+                },
+                "type": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "isSuper": {
+                    "type": "boolean",
+                    "description": "Indicates whether the group is a superGroup to an another group"
+                },
+                "hasMembers": {
+                    "type": "boolean",
+                    "description": "Indicates whether the group has members"
+                },
+                "prefLabel": {
+                    "type": "string",
+                    "description": "Preferred label of concept"
+                },
+                "notation": {
+                    "type": "string",
+                    "description": "Notation code"
+                }
+            },
+            "required": [
+                "uri",
+                "prefLabel",
+                "hasMembers"
+            ]
+        },
+        "GroupMembers": {
+            "type": "object",
+            "properties": {
+                "uri": {
+                    "type": "string",
+                    "description": "URI of the concept"
+                },
+                "members": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/MembersList"
+                    }
+                }
+            },
+            "required": [
+                "uri",
+                "members"
+            ]
+        },
+        "Hierarchy": {
+            "type": "object",
+            "properties": {
+                "uri": {
+                    "type": "string",
+                    "description": "URI of the concept"
+                },
+                "broaderTransitive": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/HierarchyResult"
+                    }
+                }
+            },
+            "required": [
+                "uri",
+                "broaderTransitive"
+            ]
+        },
+        "HierarchyResult": {
+            "type": "object",
+            "properties": {
+                "uri": {
+                    "type": "string",
+                    "description": "URI of the concept"
+                },
+                "broader": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "broader concept URI"
+                    }
+                },
+                "narrower": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/LabelAndUriAndChildren"
+                    }
+                },
+                "hasChildren": {
+                    "type": "boolean",
+                    "description": "Indicates whether the concept has narrower concepts"
+                },
+                "prefLabel": {
+                    "type": "string",
+                    "description": "Preferred label of concept"
+                },
+                "notation": {
+                    "type": "string",
+                    "description": "Notation code"
+                },
+                "top": {
+                    "type": "string",
+                    "description": "This field is present if the current concept is a toplevel concept in the vocabulary and contains the concept scheme URI"
+                }
+            },
+            "required": [
+                "uri",
+                "hasChildren",
+                "prefLabel"
+            ]
+        },
+        "LabelAndUriAndChildren": {
+            "type": "object",
+            "properties": {
+                "uri": {
+                    "type": "string",
+                    "description": "URI of the concept"
+                },
+                "hasChildren": {
+                    "type": "boolean",
+                    "description": "Indicates whether the concept has children of its' own (narrower concepts)"
+                },
+                "label": {
+                    "type": "string",
+                    "description": "Preferred label of concept"
+                },
+                "notation": {
+                    "type": "string",
+                    "description": "Notation code"
+                }
+            },
+            "required": [
+                "uri",
+                "label",
+                "hasChildren"
             ]
         }
     }
