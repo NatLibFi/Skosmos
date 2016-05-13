@@ -813,6 +813,51 @@
                     "Concept-specific methods"
                 ]
             }
+        },
+        "/{vocid}/related": {
+            "get": {
+                "summary": "Finds the related concepts of the requested concept",
+                "parameters": [
+                    {
+                        "name": "vocid",
+                        "in": "path",
+                        "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "uri",
+                        "in": "query",
+                        "description": "URI of the concept whose label to return",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "lang",
+                        "in": "query",
+                        "description": "label language, e.g. \"en\" or \"fi\"",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/ld+json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "the related concept(s) of the requested concept or an empty array if there are none",
+                        "schema": {
+                            "$ref": "#/definitions/RelatedResult"
+                        }
+                    },
+                    "404": {
+                        "description": "no concept could be found with the requested URI"
+                    }
+                },
+                "tags": [
+                    "Concept-specific methods"
+                ]
+            }
         }
     },
     "definitions": {
@@ -1305,6 +1350,25 @@
             "required": [
                 "uri",
                 "narrower"
+            ]
+        },
+        "RelatedResult": {
+            "type": "object",
+            "properties": {
+                "uri": {
+                    "type": "string",
+                    "description": "URI of the concept"
+                },
+                "related": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/PrefAndUri"
+                    }
+                }
+            },
+            "required": [
+                "uri",
+                "related"
             ]
         },
         "NarrowerTransitiveResult": {
