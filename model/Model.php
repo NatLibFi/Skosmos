@@ -247,7 +247,9 @@ class Model
         }
         $result = $sparql->queryConceptInfoGraph($uri, $arrayClass, $vocabs);
 
-        return $serialiser->serialise($result, $retform);
+        if (!$result->isEmpty()) {
+            return $serialiser->serialise($result, $retform);
+        }
     }
 
     /**
