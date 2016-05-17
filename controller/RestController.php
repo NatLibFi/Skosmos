@@ -555,6 +555,9 @@ class RestController extends Controller
 
         $vocid = $vocab ? $vocab->getId() : null;
         $results = $this->model->getRDF($vocid, $uri, $format);
+        if (empty($results)) {
+            return $this->returnError(404, 'Bad Request', "no concept found with given uri");
+        }
         return $this->returnDataResults($results, $format);
     }
 
