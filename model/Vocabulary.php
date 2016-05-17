@@ -391,12 +391,8 @@ class Vocabulary extends DataObject
     public function getConceptInfo($uri, $clang)
     {
         $sparql = $this->getSparql();
-        try {
-            return $sparql->queryConceptInfo($uri, $this->config->getArrayClassURI(), array($this), $clang);
-        } catch (Exception $e) {
-            header("HTTP/1.0 404 Not Found");
-            return;
-        }
+
+        return $sparql->queryConceptInfo($uri, $this->config->getArrayClassURI(), array($this), $clang);
     }
 
     /**
