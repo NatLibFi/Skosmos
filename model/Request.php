@@ -146,13 +146,13 @@ class Request
     }
 
     /**
-     * Sets the page id variable eg. 'groups'
+     * Sets the uri variable
      * @param string $uri
      */
     public function setURI($uri)
     {
         if ($uri !== '') {
-            $this->uri = $uri;
+            $this->uri = rtrim($uri);
         }
 
     }
