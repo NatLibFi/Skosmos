@@ -61,7 +61,8 @@ if (sizeof($parts) <= 2) {
         }
         if (sizeof($parts) == 3) { // language code missing
             $lang = $controller->guessLanguage();
-            header("Location: " . $lang . "/");
+            $newurl = $controller->getBaseHref() . $vocab . "/" . $lang . "/";
+            header("Location: " . $newurl);
         } else {
             if (array_key_exists($parts[2], $config->getLanguages())) {
                 $lang = $parts[2];
@@ -102,9 +103,12 @@ if (sizeof($parts) <= 2) {
                 }
             } else { // language code missing, redirect to some language version
                 $lang = $controller->guessLanguage($vocab);
-                $pattern = '|' . preg_quote("/$vocab/") . '|';
-                $location = preg_replace($pattern, "/$vocab/$lang/", $request->getServerConstant('REQUEST_URI'), 1);
-                header("Location: $location");
+                $newurl = $controller->getBaseHref() . $vocab . "/" . $lang . "/" . implode('/', array_slice($parts, 2));
+                $qs = $request->getServerConstant('QUERY_STRING');
+                if ($qs) {
+                    $newurl .= "?" . $qs;
+                }
+                header("Location: $newurl");
             }
         }
     }

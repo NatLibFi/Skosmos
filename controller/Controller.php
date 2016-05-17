@@ -105,7 +105,7 @@ class Controller
         return $full_url;
     }
 
-    protected function getBaseHref()
+    public function getBaseHref()
     {
         return ($this->model->getConfig()->getBaseHref() !== null) ? $this->model->getConfig()->getBaseHref() : $this->guessBaseHref();
     }
