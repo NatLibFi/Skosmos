@@ -100,6 +100,7 @@ class ConceptTest extends PHPUnit_Framework_TestCase
   
   /**
    * @covers Concept::getForeignLabels
+   * @covers Concept::literalLanguageToString
    */
   public function testGetForeignLabels()
   {
