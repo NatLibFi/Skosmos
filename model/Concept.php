@@ -543,6 +543,21 @@ class Concept extends VocabularyDataObject
     }
 
     /**
+     * Reads the literal language code and gets a name for it from Punic or alternatively
+     * tries to search for a gettext translation.
+     * @param EasyRdf_Literal $lit
+     * @return string e.g. 'English'
+     */
+    private function literalLanguageToString($lit) {
+        // using empty string as the language literal when there is no langcode set
+        $langName = '';
+        if ($lit->getLang()) {
+            $langName = Punic\Language::getName($lit->getLang(), $this->getEnvLang()) !== $lit->getLang() ? Punic\Language::getName($lit->getLang(), $this->getEnvLang()) : gettext($lit->getLang());
+        }
+        return $langName;
+    }
+
+    /**
      * Gets the values for the property in question in all other languages than the ui language.
      */
     public function getForeignLabels()
@@ -551,26 +566,14 @@ class Concept extends VocabularyDataObject
         foreach ($this->resource->allLiterals('skos:prefLabel') as $lit) {
             // filtering away subsets of the current language eg. en vs en-GB
             if ($lit->getLang() != $this->clang && strpos($lit->getLang(), $this->getEnvLang() . '-') !== 0) {
-                // using empty string as the language literal when there is no langcode set
-                $langName = '';
-                if ($lit->getLang()) {
-                    $langName = Punic\Language::getName($lit->getLang(), $this->getEnvLang()) !== $lit->getLang() ? Punic\Language::getName($lit->getLang(), $this->getEnvLang()) : gettext($lit->getLang());
-                }
-                $labels[$langName][] = new ConceptPropertyValueLiteral($lit, 'skos:prefLabel');
+                $labels[$this->literalLanguageToString($lit)][] = new ConceptPropertyValueLiteral($lit, 'skos:prefLabel');
             }
-
         }
         foreach ($this->resource->allLiterals('skos:altLabel') as $lit) {
             // filtering away subsets of the current language eg. en vs en-GB
             if ($lit->getLang() != $this->clang && strpos($lit->getLang(), $this->getEnvLang() . '-') !== 0) {
-                // using empty string as the language literal when there is no langcode set
-                $langName = '';
-                if ($lit->getLang()) {
-                    $langName = Punic\Language::getName($lit->getLang(), $this->getEnvLang()) ? Punic\Language::getName($lit->getLang(), $this->getEnvLang()) : gettext($lit->getLang());
-                }
-                $labels[$langName][] = new ConceptPropertyValueLiteral($lit, 'skos:altLabel');
+                $labels[$this->literalLanguageToString($lit)][] = new ConceptPropertyValueLiteral($lit, 'skos:altLabel');
             }
-
         }
         ksort($labels);
         return $labels;
