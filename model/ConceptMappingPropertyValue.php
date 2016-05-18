@@ -99,7 +99,7 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
         $scheme = $this->resource->get('skos:inScheme');
         if ($scheme) {
             $schemeResource = $this->model->getResourceFromUri($scheme->getUri());
-            if ($schemeResource) {
+            if ($schemeResource && $schemeResource->label()) {
                 return $schemeResource->label()->getValue();
             }
         }
