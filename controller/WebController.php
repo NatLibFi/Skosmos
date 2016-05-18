@@ -95,7 +95,7 @@ class WebController extends Controller
             if ($localname !== $uri && $localname === urlencode($localname)) {
                 // check that the prefix stripping worked, and there are no problematic chars in localname
                 $paramstr = sizeof($params) > 0 ? '?' . http_build_query($params) : '';
-                if ($type && $type !== '' && $type !== 'vocab') {
+                if ($type && $type !== '' && $type !== 'vocab' && !($localname === '' && $type === 'page')) {
                     return "$vocid/$lang/$type/$localname" . $paramstr;
                 }
 
