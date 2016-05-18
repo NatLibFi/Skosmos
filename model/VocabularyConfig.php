@@ -380,4 +380,13 @@ class VocabularyConfig extends DataObject
         }
         return empty($ret) ? array('skos:broader') : $ret;
     }
+
+    /**
+     * Returns a boolean value set in the vocabularies.ttl config.
+     * @return boolean
+     */
+    public function showNotation()
+    {
+        return $this->getBoolean('skosmos:showNotation', true);
+    }
 }

@@ -132,7 +132,7 @@ class Concept extends VocabularyDataObject
     public function getNotation()
     {
         $notation = $this->resource->get('skos:notation');
-        if ($notation !== null) {
+        if ($this->vocab->getConfig()->showNotation() && $notation !== null) {
             return $notation->getValue();
         }
 

@@ -107,7 +107,7 @@ class ConceptPropertyValue extends VocabularyDataObject
 
     public function getNotation()
     {
-        if ($this->resource->get('skos:notation')) {
+        if ($this->vocab->getConfig()->showNotation() && $this->resource->get('skos:notation')) {
             return $this->resource->get('skos:notation')->getValue();
         }
 

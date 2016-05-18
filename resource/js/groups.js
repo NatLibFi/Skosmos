@@ -78,7 +78,7 @@ function invokeGroupTree() {
                   if (member.hasMembers || member.isSuper) {
                     child.children = true;
                   }
-                  if (member.notation) {
+                  if (showNotation && member.notation) {
                     child.text = '<span class="tree-notation">' + member.notation + '</span> ' + child.text;
                   }
                   children.push(JSON.parse(JSON.stringify(child)));
@@ -101,7 +101,7 @@ function createGroupNode(uri, groupObject) {
   node.text = groupObject.prefLabel;
   if (groupObject.hasMembers || groupObject.isSuper)
     node.children = true;
-  if (groupObject.notation)
+  if (showNotation && groupObject.notation)
     node.text = '<span class="tree-notation">' + groupObject.notation + '</span> ' + node.text;
   return node;
 }

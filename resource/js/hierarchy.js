@@ -87,7 +87,7 @@ function createConceptObject(conceptUri, conceptData) {
   }
   // if we are at a concept page we want to highlight that node and mark it as to be initially opened.
   if (newNode.uri === $('.uri-input-box').html()) { newNode.li_attr = { class: 'jstree-leaf-proper' }; }
-  if (conceptData.notation)
+  if (showNotation && conceptData.notation)
     newNode.text = '<span class="tree-notation">' + conceptData.notation + '</span> ' + newNode.text;
   if (conceptData.narrower) { // filtering out the ones that don't have labels 
     var childArray = [];
@@ -102,7 +102,7 @@ function createConceptObject(conceptUri, conceptData) {
         parents: conceptUri,
         state: { opened: true }
       };
-      if (conceptData.narrower[child].notation)
+      if (showNotation && conceptData.narrower[child].notation)
         childObject.text = '<span class="tree-notation">' + conceptData.narrower[child].notation + '</span> ' + childObject.text;
       // if the childConcept hasn't got any children the state is not needed.
       if (hasChildren) {
@@ -201,7 +201,7 @@ function vocabRoot(topConcepts) {
     };
     if (conceptData.hasChildren)
       childObject.children = true;
-    if (conceptData.notation)
+    if (showNotation && conceptData.notation)
       childObject.text = '<span class="tree-notation">' + conceptData.notation + '</span> ' + childObject.text;
     setNode(childObject);
     topArray.push(childObject);
@@ -245,7 +245,7 @@ function createObjectsFromNarrowers(narrowerResponse) {
       parents: narrowerResponse.uri,
       state: { opened: false, disabled: false, selected: false }
     };
-    if (conceptObject.notation)
+    if (showNotation && conceptObject.notation)
       childObject.text = '<span class="tree-notation">' + conceptObject.notation + '</span> ' + childObject.text;
     if (hasChildren) {
       childObject.children = true;
@@ -304,7 +304,7 @@ function topConceptsToSchemes(topConcepts, schemes) {
       uri: conceptObject.uri,
       state: { opened: false, disabled: false, selected: false }
     };
-    if (conceptObject.notation)
+    if (showNotation && conceptObject.notation)
       childObject.text = '<span class="tree-notation">' + conceptObject.notation + '</span> ' + childObject.text;
     if (hasChildren) {
       childObject.children = true;
