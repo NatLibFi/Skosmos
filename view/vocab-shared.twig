@@ -18,6 +18,10 @@
         </tr>
         <tr><td class="property-divider"></td></tr>
         {% endfor %}
+        <tr>
+          <th class="versal">URI</th>
+          <td class="versal"><span class="uri-input-box">{{ vocab.defaultConceptScheme }}</span></td>
+        </tr>
       </table>
     </div>
     {% if vocab.config.showStatistics %}
