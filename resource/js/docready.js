@@ -360,7 +360,7 @@ $(function() { // DOCUMENT READY
         return false;
       }
       var $content = $('#sidebar');
-      if($('.uri-input-box').length === 0) { // if on the vocabulary front page
+      if($('#vocab-info').length) { // if on the vocabulary front page
         $('.sidebar-grey').remove();
         $('.active').removeClass('active');
         $('#hier-trigger').parent().addClass('active');
