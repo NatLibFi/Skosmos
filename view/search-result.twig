@@ -11,11 +11,11 @@
     <span class="prefLabel conceptlabel redirected-vocab-id" title="{{ concept.vocabTitle }}">{{ concept.shortName }}: </span>
     {% endif %}
     {% if concept.foundBy %} {# hit has been found through an alt/hidden/another language label #}
-      {% if concept.foundByType != 'lang' %}<span class="versal replaced">{{ concept.foundBy }}{% if explicit_langcodes or request.queryparam('anylang') %} ({{ concept.contentLang }}){% endif %}</span><span class="versal"> &rarr;&nbsp;</span>{% if concept.notation %}<span class="notation">{{ concept.notation }}</span>{% endif %}
+      {% if concept.foundByType != 'lang' and concept.foundByType != 'hidden' %}<span class="versal replaced">{{ concept.foundBy }}{% if explicit_langcodes or request.queryparam('anylang') %} ({{ concept.contentLang }}){% endif %}</span><span class="versal"> &rarr;&nbsp;</span>{% if concept.notation %}<span class="notation">{{ concept.notation }}</span>{% endif %}
       <a class="prefLabel" href="{% if 'isothes:ConceptGroup' in concept.type %}{{ concept.uri | link_url(concept.vocab,request.lang,'page',concept.contentLang) }}{% else %}{{ concept.uri | link_url(concept.vocab,request.lang,'page',concept.contentLang) }}{% endif %}">{{ concept.label(request.contentLang) }}</a>{% if explicit_langcodes or request.queryparam('anylang') %}<span class="versal"> ({{ concept.contentLang }})</span>{% endif %}</span>
-      
+ 
       {% else %}{% if concept.notation %}<span class="notation">{{ concept.notation }}</span>{% endif %}
-      <a class="prefLabel" href="{% if "isothes:ConceptGroup" in concept.type %}{{ concept.uri | link_url(concept.vocab,request.lang,'page',concept.contentLang) }}{% else %}{{ concept.uri | link_url(concept.vocab,request.lang,'page',concept.contentLang) }}{% endif %}">{{ concept.foundBy }}</a>{% if explicit_langcodes or request.queryparam('anylang') %}<span class="versal"> ({{ concept.contentLang }})</span>{% endif %}
+      <a class="prefLabel" href="{% if "isothes:ConceptGroup" in concept.type %}{{ concept.uri | link_url(concept.vocab,request.lang,'page',concept.contentLang) }}{% else %}{{ concept.uri | link_url(concept.vocab,request.lang,'page',concept.contentLang) }}{% endif %}">{{ concept.label(request.contentLang) }}</a>{% if explicit_langcodes or request.queryparam('anylang') %}<span class="versal"> ({{ concept.contentLang }})</span>{% endif %}
       {% endif %}
     {% else %}
     {% if concept.notation %}<span class="notation">{{ concept.notation }}</span>{% endif %}

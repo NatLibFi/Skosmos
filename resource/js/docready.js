@@ -635,6 +635,14 @@ $(function() { // DOCUMENT READY
       },
       // changes the response so it can be easily displayed in the handlebars template.
       filter: function(data) {
+        // looping the matches to see if there are hits where the concept has been hit by a property other than hiddenLabel
+        var hasNonHiddenMatch = {};
+        for (var i = 0; i < data.results.length; i++) {
+            var hit = data.results[i];
+            if (!hit.hiddenLabel) {
+                hasNonHiddenMatch[hit.uri] = true;
+            }
+        }
         var context = data['@context'];
         return ($.map(data.results.filter(
           function() {
@@ -650,7 +658,8 @@ $(function() { // DOCUMENT READY
             // combining all the matched properties.
             if (item.matchedPrefLabel) { item.label = item.matchedPrefLabel; }
             if (item.altLabel) { item.replaced = item.altLabel; }
-            if (item.hiddenLabel) { item.replaced = item.hiddenLabel; }
+            // not showing hiddenLabel matches when there are better matches to show for the same concept
+            if (item.hiddenLabel && hasNonHiddenMatch[item.uri]) { return null; }
             // do not show the label language when it's same or in the same subset as the ui language.
             if (item.lang && (item.lang === qlang || item.lang.indexOf(qlang + '-') === 0)) { delete(item.lang); }
             if (item.type) {
