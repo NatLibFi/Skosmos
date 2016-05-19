@@ -136,12 +136,32 @@ class ConceptPropertyValueTest extends PHPUnit_Framework_TestCase
     $mocklit = $this->getMockBuilder('EasyRDF_literal')->disableOriginalConstructor()->getMock();
     $mocklit->method('getValue')->will($this->returnValue('T3ST'));
     $mockconf->method('sortByNotation')->will($this->returnValue(true));
+    $mockconf->method('showNotation')->will($this->returnValue(true));
     $mockvoc->method('getConfig')->will($this->returnValue($mockconf));
     $mockres->method('label')->will($this->returnValue('Term label'));
     $mockres->method('get')->will($this->returnValue($mocklit));
     $mockres->method('getUri')->will($this->returnValue('http://thisdoesntexistatalland.sefsf/2j2h4/'));
     $propval = new ConceptPropertyValue($this->model, $mockvoc, $mockres, null);
     $this->assertEquals('T3STTerm label', (string)$propval);
+  }
+   
+  /**
+   * @covers ConceptPropertyValue::__toString
+   */
+  public function testToStringWhenNotationExistsButIsConfiguredOff() {
+    $mockres = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
+    $mockvoc = $this->getMockBuilder('Vocabulary')->disableOriginalConstructor()->getMock();
+    $mockconf = $this->getMockBuilder('VocabularyConfig')->disableOriginalConstructor()->getMock();
+    $mocklit = $this->getMockBuilder('EasyRDF_literal')->disableOriginalConstructor()->getMock();
+    $mocklit->method('getValue')->will($this->returnValue('T3ST'));
+    $mockconf->method('sortByNotation')->will($this->returnValue(true));
+    $mockconf->method('showNotation')->will($this->returnValue(false));
+    $mockvoc->method('getConfig')->will($this->returnValue($mockconf));
+    $mockres->method('label')->will($this->returnValue('Term label'));
+    $mockres->method('get')->will($this->returnValue($mocklit));
+    $mockres->method('getUri')->will($this->returnValue('http://thisdoesntexistatalland.sefsf/2j2h4/'));
+    $propval = new ConceptPropertyValue($this->model, $mockvoc, $mockres, null);
+    $this->assertEquals('Term label', (string)$propval);
   }
 
   /**
