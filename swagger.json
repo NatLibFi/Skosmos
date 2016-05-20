@@ -2,7 +2,8 @@
     "swagger": "2.0",
     "info": {
         "title": "Skosmos API",
-        "version": "v1"
+        "version": "v1",
+        "description": "The Skosmos REST API is a read-only interface to the data stored in the vocabulary server. The URL namespace is the URL of the Skosmos instance, e.g. http://api.finto.fi (at the National Library of Finland, running the latest Skosmos release). REST URLs begin with /rest/v1."
     },
     "host": "api.finto.fi",
     "schemes": [
@@ -19,7 +20,7 @@
     "paths": {
         "/vocabularies": {
             "get": {
-                "summary": "Lists the available vocabularies",
+                "summary": "Available vocabularies",
                 "parameters": [
                     {
                         "name": "lang",
@@ -287,7 +288,7 @@
         },
         "/{vocid}/topConcepts": {
             "get": {
-                "summary": "Gets the top concepts of the vocabulary",
+                "summary": "Top concepts of the vocabulary",
                 "parameters": [
                     {
                         "name": "vocid",
@@ -591,7 +592,7 @@
         },
         "/{vocid}/label": {
             "get": {
-                "summary": "Gets the preferred label of the requested concept",
+                "summary": "Preferred label for the requested concept",
                 "parameters": [
                     {
                         "name": "vocid",
@@ -636,7 +637,7 @@
         },
         "/{vocid}/broader": {
             "get": {
-                "summary": "Finds the broader concept of the requested concept",
+                "summary": "Broader concepts of the requested concept",
                 "parameters": [
                     {
                         "name": "vocid",
@@ -726,7 +727,7 @@
         },
         "/{vocid}/narrower": {
             "get": {
-                "summary": "Finds the narrower concept of the requested concept",
+                "summary": "The narrower concepts of the requested concept",
                 "parameters": [
                     {
                         "name": "vocid",
@@ -816,7 +817,7 @@
         },
         "/{vocid}/related": {
             "get": {
-                "summary": "Finds the related concepts of the requested concept",
+                "summary": "The related concepts of the requested concept",
                 "parameters": [
                     {
                         "name": "vocid",
@@ -861,7 +862,7 @@
         },
         "/{vocid}/children": {
             "get": {
-                "summary": "Finds the narrower concepts of the requested concept",
+                "summary": "Narrower concepts of the requested concept",
                 "parameters": [
                     {
                         "name": "vocid",
@@ -906,7 +907,7 @@
         },
         "/{vocid}/groups": {
             "get": {
-                "summary": "Lists concept groups in the vocabulary",
+                "summary": "Concept groups in the vocabulary",
                 "parameters": [
                     {
                         "name": "vocid",
@@ -944,7 +945,7 @@
         },
         "/{vocid}/groupMembers": {
             "get": {
-                "summary": "Lists members of the requested concept group",
+                "summary": "Members of the requested concept group",
                 "parameters": [
                     {
                         "name": "vocid",
@@ -982,7 +983,7 @@
         },
         "/{vocid}/hierarchy": {
             "get": {
-                "summary": "The hierarchical context of the requested concept",
+                "summary": "Hierarchical context of the requested concept",
                 "parameters": [
                     {
                         "name": "vocid",
