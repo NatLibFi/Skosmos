@@ -10,7 +10,7 @@
         "http",
         "https"
     ],
-    "basePath": "/rest/v1/",
+    "basePath": "/rest/v1",
     "produces": [
         "application/rdf+xml",
         "text/turtle",
