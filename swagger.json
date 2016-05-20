@@ -621,7 +621,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "type information about the requested vocabulary",
+                        "description": "preferred label for the requested concept",
                         "schema": {
                             "$ref": "#/definitions/PrefAndUri"
                         }
@@ -727,7 +727,7 @@
         },
         "/{vocid}/narrower": {
             "get": {
-                "summary": "The narrower concepts of the requested concept",
+                "summary": "Narrower concepts of the requested concept",
                 "parameters": [
                     {
                         "name": "vocid",
@@ -817,7 +817,7 @@
         },
         "/{vocid}/related": {
             "get": {
-                "summary": "The related concepts of the requested concept",
+                "summary": "Related concepts of the requested concept",
                 "parameters": [
                     {
                         "name": "vocid",
