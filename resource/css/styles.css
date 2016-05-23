@@ -1303,7 +1303,7 @@ ul.nav-tabs > li {
   width: 33%;
 }
 
-#alpha {
+.nav-tabs > li:first-of-type {
   width: 34%;
 }
 
@@ -1348,6 +1348,10 @@ ul.nav-tabs > li {
 
 .content {
   margin-left: 350px;
+}
+
+.wide-content {
+  margin-left: 0px;
 }
 
 #skiptocontent {

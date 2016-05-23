@@ -329,6 +329,13 @@ class VocabularyConfig extends DataObject
             }
 
         }
+        if ($this->showAlphabeticalIndex() === false) { 
+            if ($this->getShowHierarchy()) {
+                return 'hierarchy';
+            } else if ($this->getGroupClassURI()) {
+                return 'groups';
+            }
+        }
         return 'alphabetical'; // if not defined displaying the alphabetical index
     }
 
@@ -388,5 +395,14 @@ class VocabularyConfig extends DataObject
     public function showNotation()
     {
         return $this->getBoolean('skosmos:showNotation', true);
+    }
+
+    /**
+     * Returns a boolean value set in the vocabularies.ttl config.
+     * @return boolean
+     */
+    public function showAlphabeticalIndex()
+    {
+        return $this->getBoolean('skosmos:showAlphabeticalIndex', true);
     }
 }
