@@ -76,7 +76,11 @@
                 {% if propval.isExternal %}
                 <a href="{{ propval.uri }}">{{ propval.uri }}</a>
                 {% else %}
-                <a href="{{ propval.uri | link_url(propval.vocab, request.lang, 'page', request.contentLang) }}">{% if propval.notation %}<span class="versal">{{ propval.notation }} </span>{% endif %} {{ propval.label(request.contentLang) }}</a>
+                {% if propval.isReified %} {# e.g. skos:definition's with resource values #}
+                    <span class="versal">{% if propval.notation %}<span class="versal">{{ propval.notation }} </span>{% endif %} {{ propval.label(request.contentLang) }}</span>
+                {% else %}
+                    <a href="{{ propval.uri | link_url(propval.vocab, request.lang, 'page', request.contentLang) }}">{% if propval.notation %}<span class="versal">{{ propval.notation }} </span>{% endif %} {{ propval.label(request.contentLang) }}</a>
+                {% endif %}
                 {% endif %}
                 {% if propval.lang and (propval.lang != request.lang or explicit_langcodes) %}<span class="versal"> ({{ propval.label.lang }})</span>{% endif %}
                 {% if propval.SubMembers %}<div class="subvalue"> {# if property is a group concept that has sub properties #}
