@@ -514,8 +514,14 @@ class Concept extends VocabularyDataObject
         if (isset($reverseResources)) {
             $arrayClassURI = $this->vocab !== null ? $this->vocab->getConfig()->getArrayClassURI() : null;
             $arrayClass = $arrayClassURI !== null ? EasyRdf_Namespace::shorten($arrayClassURI) : null;
+            $superGroups = $this->resource->all('isothes:superGroup');
+            $superGroupUris = array_map(function($obj) { return $obj->getUri(); }, $superGroups);
             foreach ($reverseResources as $reverseResource) {
                 if (in_array($arrayClass, $reverseResource->types()) === $includeArrays) {
+                    // not adding the memberOf if the reverse resource is already covered by isothes:superGroup see issue #433
+                    if (in_array($reverseResource->getUri(), $superGroupUris)) {
+                        continue;
+                    }
                     $property = in_array($arrayClass, $reverseResource->types()) ? "skosmos:memberOfArray" : "skosmos:memberOf";
                     $collLabel = $reverseResource->label($this->clang) ? $reverseResource->label($this->clang) : $reverseResource->label();
                     if ($collLabel) {
