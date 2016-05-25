@@ -5,10 +5,11 @@
 {% endif %}
 <div class="header-float">
 {% if request.page != 'About' and request.page != 'Feedback' %}
-  
+
   {% if request.page != '' %}<div class="search-vocab-text"><p>{% trans "Content language" %}</p></div>{% endif %}
   {% if sorted_vocabs is defined %}
-    <select class="multiselect" multiple="multiple">
+    <label class="screen-reader-label" for="multiselect">Search from vocabulary</label>
+    <select class="multiselect" id="multiselect" multiple="multiple">
     {% for vocab in sorted_vocabs %}
       <option value="{{ vocab.id }}" data-voc-shortname="{{ vocab.shortname }}" data-label="{{ vocab.title }}" title="{{ vocab.title }}">{{ vocab.shortname }}</option>
     {% endfor %}
@@ -18,6 +19,7 @@
     <input style="display: none" name="clang" value="{% if request.contentLang %}{{ request.contentLang }}{% else %}{{ request.lang }}{% endif %}" id="lang-input">
     <div class="input-group">
       <div class="input-group-btn">
+        <label class="screen-reader-label" for="lang-dropdown-toggle">Content and search language</label>
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="lang-dropdown-toggle">{{ request.lang | lang_name(request.lang) }}</button>
         <ul class="dropdown-menu">
         {% if request.vocab %}
@@ -32,8 +34,10 @@
           <li><a href="{% if not request.vocab %}{{ request.lang }}/{% endif %}{% if request.vocabid %}{{ request.vocabid }}/{{ request.lang }}/{% endif %}{% if request.page and request.page != 'vocab' %}{{ request.page }}/{% endif%}?{% if request.uri %}uri={{ request.uri }}&{% endif %}clang={% if request.contentLang %}{{ request.contentLang }}{% else %}{{ request.lang }}{% endif %}&anylang=on{% if term %}&q={{ term }}{% endif %}{% if vocabs %}&vocabs={{ vocabs }}{% endif %}" class="lang-button lang-button-all">{% trans "Search language: any" %}</a><input name="anylang" type="checkbox"{% if request.queryparam('anylang') %} checked{% endif%}></li>
         </ul>
       </div><!-- /btn-group -->
-      <input id="search-field" type="text" class="form-control" name="q" value="{{ term }}">
+      <label class="screen-reader-label" for="search-field">Enter search term</label>
+      <input id="search-field" type="text" class="form-control" name="q" value="{{ term }}" title="queryterm">
       <div class="input-group-btn">
+        <label class="screen-reader-label" for="search-all-button">Submit search</label>
         <button id="search-all-button" type="submit" class="btn btn-primary">{% trans "Search" %}</button>
       </div>
     </div>

@@ -69,7 +69,7 @@ p {
   font-size: 14px;
   font-weight: bold;
 }
-  
+
 .loading-spinner {
   margin: 10px 0 0 15px;
 }
@@ -143,7 +143,7 @@ ul {
   margin-bottom: 20px;
 }
 
-.spinner { 
+.spinner {
   background:url("../pics/spinner.gif") no-repeat transparent;
   display:inline-block;
   height: 25px;
@@ -229,7 +229,7 @@ ul {
 }
 
 #navigation *, #language * {
-  margin: auto 4px;  
+  margin: auto 4px;
 }
 
 #language-en {
@@ -365,7 +365,7 @@ ul.dropdown-menu > li:last-child > input {
 }
 
 .search-result-listing > .search-result:last-of-type {
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
 }
 
 #search-from-all-vocabularies-radio-buttons {
@@ -490,7 +490,7 @@ ul.dropdown-menu > li:last-child > input {
   padding-right: 22px;
   box-shadow: none;
 }
-  
+
 #search-field:focus {
   box-shadow: none;
 }
@@ -508,7 +508,7 @@ ul.dropdown-menu > li:last-child > input {
 }
 
 .qtip-skosmos {
-  background-color: #1E1E1E; 
+  background-color: #1E1E1E;
   border-radius: 0;
   margin-top: 2px;
 }
@@ -519,7 +519,7 @@ ul.dropdown-menu > li:last-child > input {
   border: 3px solid #75889F;
 }
 
-/* front page stuff 
+/* front page stuff
  ***************************/
 .welcome-box, .right-box, #vocabulary-list {
   vertical-align: top;
@@ -821,25 +821,25 @@ div#sidebar-grey > div > div > form.search-options {
   margin-right: 0;
 }
 
-.search-options { 
+.search-options {
   padding-left: 15px;
 }
-  
-.search-options > .input-group * { 
+
+.search-options > .input-group * {
   border-radius: 0;
 }
 
-.search-options > .btn-default { 
+.search-options > .btn-default {
   border-radius: 0;
 }
-  
+
 .search-result-listing .btn-default {
   position: absolute;
   right: 10px;
   top: 10px;
 }
 
-.search-options .mCSB_container > li > a > .radio { 
+.search-options .mCSB_container > li > a > .radio {
   margin: 0;
   padding-left: 25px;
 }
@@ -852,15 +852,15 @@ form.search-options > .input-group > .form-control {
   width: 280px;
 }
 
-form.search-options div.input-group:first-child { 
+form.search-options div.input-group:first-child {
   padding-top: 5px;
 }
 
-form.search-options div.input-group { 
+form.search-options div.input-group {
   padding-bottom: 15px;
 }
 
-div.input-group > .input-group-addon { 
+div.input-group > .input-group-addon {
   min-width: 65px;
 }
 
@@ -946,7 +946,7 @@ tr {
   padding-right: 20px;
 }
 
-/* alerts 
+/* alerts
  ****************************/
 .alert {
   background-color: #ed0d6c;
@@ -1003,7 +1003,7 @@ tr {
 }
 
 .deprecated-concept * {
-  color: #888; 
+  color: #888;
 }
 
 .concept-info li, .concept-info ul {
@@ -1121,7 +1121,7 @@ table > tbody > tr.other-languages > td {
 }
 
 .other-languages > td:last-of-type > * {
-  padding-left: 15px; 
+  padding-left: 15px;
 }
 
 .search-results-property-table > tbody > tr > td.empty {
@@ -1157,7 +1157,7 @@ table > tbody > tr.other-languages > td {
 
 .shortened-property {
   display: inline-block;
-  height: 18px; 
+  height: 18px;
   overflow: hidden;
   position: relative;
   white-space: nowrap;
@@ -1181,7 +1181,7 @@ table > tbody > tr.other-languages > td {
 .shortened-symbol {
   background-color: #ffffff;
   display: inline-block;
-  height: 20px; 
+  height: 20px;
   padding: 0 0 0 2px;
   position: absolute;
   right: 10px;
@@ -1248,10 +1248,10 @@ tr.replaced-by > td > ul > li > a {
 
 .pagination > li > a, .pagination > li > a:hover, #sidebar > .pagination > .active > a, .pagination > li > span {
   background-color: transparent;
-  color: #00748f; 
+  color: #00748f;
   border: 0;
   padding: 4px 8px;
-} 
+}
 
 .pagination > li:last-child > a, .pagination > li:last-child > span, .pagination > li:first-child > a {
   border-radius: 0;
@@ -1265,14 +1265,14 @@ tr.replaced-by > td > ul > li > a {
   width: auto;
 }
 
-.pagination { 
+.pagination {
   background-color: #F6F7F8;
   border-bottom: 1px solid #999999;
   border-radius: 0;
   margin: 0 0 -5px 0;
   padding: 0 0 0 10px;
   width: 310px;
-} 
+}
 
 .nav-tabs, #groups > a {
   background-color: #e0e4e7;
@@ -1369,7 +1369,7 @@ span.date-info {
 }
 
 .concept-download-links > a {
- margin-right: 1px; 
+ margin-right: 1px;
 }
 
 /* typeahead.js
@@ -1414,7 +1414,7 @@ span.date-info {
   width: calc(100% + 68px);
   min-width: calc(100% + 68px);
 }
-  
+
 .tt-dropdown-menu.mCustomScrollbar {
   border-right: 0;
 }
@@ -1469,8 +1469,8 @@ span.date-info {
   color: #CCCCCC;
   cursor: pointer;
   font-size: 24px;
-  position: absolute; 
-  right: 8px; 
+  position: absolute;
+  right: 8px;
   top: 4px;
   z-index: 9001;
 }
@@ -1558,7 +1558,7 @@ p.autocomplete-label {
   margin-left: 2px;
 }
 
-#sidebar .jstree-default a { white-space:normal; height: auto; } 
+#sidebar .jstree-default a { white-space:normal; height: auto; }
 #sidebar .jstree-default li > ins { vertical-align:top; }
 #sidebar .jstree-default a > .tree-notation { color: #333; }
 
@@ -1578,6 +1578,14 @@ p.autocomplete-label {
   font-weight: bold;
 }
 
+.screen-reader-label {
+  position:absolute;
+  left:-10000px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
 
 /* Fix for a nasty chromium bug causing the fonts not to render before a redraw.
  * https://code.google.com/p/chromium/issues/detail?id=336476
@@ -1666,7 +1674,7 @@ body, .versal, h1, h2, p, .versal-bold {
     left: 0;
     width: 100%;
   }
-  
+
   .vocabulary-separator {
     margin-left: 0;
   }
@@ -1680,19 +1688,19 @@ body, .versal, h1, h2, p, .versal-bold {
 }
 
 @media (max-width: 550px) {
-  
+
   #navigation {
     left: 3.5%;
   }
-  
+
   .topbar > a {
     display: none;
   }
-  
+
   .topbar.frontpage > a {
     display: inline;
   }
-  
+
 }
 
 @media (max-width: 640px) {
@@ -1725,7 +1733,7 @@ body, .versal, h1, h2, p, .versal-bold {
   input#search-field {
     max-width: 130px;
   }
-  
+
   .twitter-typeahead {
     width: 100%;
   }
@@ -1741,7 +1749,7 @@ body, .versal, h1, h2, p, .versal-bold {
     background-image: none;
     padding-left: 0;
   }
-    
+
   #navigation {
     left: 2.5%;
     width: auto;
@@ -1783,7 +1791,7 @@ body, .versal, h1, h2, p, .versal-bold {
   input#search-field {
     max-width: none;
   }
-  
+
   .btn-group {
     width: 100%;
   }
@@ -1795,7 +1803,7 @@ body, .versal, h1, h2, p, .versal-bold {
   .frontpage-spacing > .header-float > .navbar-form, .input-group, #search-field {
     width: 100%;
   }
-  
+
   .navbar-form {
     max-width: none;
   }
@@ -1844,11 +1852,11 @@ body, .versal, h1, h2, p, .versal-bold {
   .input-group {
     max-width: 350px;
   }
-  
+
   .frontpage-logo .input-group {
     max-width: 450px;
   }
-  
+
   .tt-dropdown-menu {
     width: 234px;
   }
@@ -1910,11 +1918,11 @@ body, .versal, h1, h2, p, .versal-bold {
   #service-name {
     left: 0 !important;
   }
-  
+
   .frontpage-alert {
     width: calc(100% - 610px);
   }
-  
+
   .page-alert {
     width: calc(100% - 425px);
   }
@@ -1926,38 +1934,38 @@ body, .versal, h1, h2, p, .versal-bold {
   .sidebar-grey > .search-options > .input-group > .btn-group > .multiselect {
     width: 370px;
   }
-  
+
   .sidebar-grey > .search-options > .input-group > .btn-group > .multiselect-container {
     width: 370px;
   }
-  
+
   .search-options .multiselect > span {
     width: 340px;
   }
-  
+
   .pagination {
     padding: 6px 10px;
     top: 183px;
     width: 400px;
   }
-  
+
   .pagination > li > a {
     width: 26px;
   }
-  
+
   .topbar {
     margin: 0 auto;
     margin-bottom: 20px;
     position: relative;
   }
 
-  #language { 
+  #language {
     padding-left: 25px;
     padding-right: 0;
     right: 0;
   }
-  
-  #language > .dropdown-menu { 
+
+  #language > .dropdown-menu {
     position: absolute;
     right: 0;
   }
@@ -1980,7 +1988,7 @@ body, .versal, h1, h2, p, .versal-bold {
   .content > .feedback-box, .content > #about, .content > .credits {
     width: 600px;
   }
-  
+
   .tt-dropdown-menu {
     min-width: 310px;
   }
@@ -2014,7 +2022,7 @@ body, .versal, h1, h2, p, .versal-bold {
   .search-result > div > span.uri-input-box {
     font-size: 14px;
   }
-  
+
   .appendix-vocab-label {
     font-size: 14px;
     line-height: 23px;
@@ -2032,11 +2040,11 @@ body, .versal, h1, h2, p, .versal-bold {
 }
 
 @media (min-width: 1520px) {
-  
+
   .main-container, .headerbar, .topbar {
     width: 1240px;
   }
-  
+
   .frontpage-alert {
     width: calc(100% - 530px);
   }
@@ -2063,4 +2071,3 @@ body, .versal, h1, h2, p, .versal-bold {
   border: 2px dashed #62729f !important;
 }
 <![endif]-->
-
