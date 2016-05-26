@@ -124,6 +124,14 @@
 	skosmos:language "en";
 	skosmos:sparqlGraph <http://www.skosmos.skos/sub/> .
 
+:dupgroup a skosmos:Vocabulary, void:Dataset ;
+	dc11:title "SuperGroup and member relationship double trouble"@en ;
+	dc:subject :cat_general ;
+	void:uriSpace "http://www.skosmos.skos/onto/dupgroup/";
+	void:sparqlEndpoint <http://localhost:3030/ds/sparql> ;
+	skosmos:language "en";
+	skosmos:sparqlGraph <http://www.skosmos.skos/dupgroup/> .
+
 <http://skosmos.skos/dump/test/groups> dc:format "application/rdf+xml" .
 
 :cat_science a skos:Concept ;

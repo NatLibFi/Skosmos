@@ -350,6 +350,19 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $groups = $concept[0]->getGroupProperties();
     $this->assertEmpty($groups);
   }
+  
+  /**
+   * @covers Concept::getGroupProperties
+   * @covers Concept::getReverseResources
+   */
+  public function testGetGroupPropertiesWithDuplicatedInformationFilteredOut()
+  {
+    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
+    $vocab = $model->getVocabulary('dupgroup');
+    $concept = $vocab->getConceptInfo("http://www.skosmos.skos/dupgroup/c1", "en");
+    $groups = $concept[0]->getGroupProperties();
+    $this->assertEquals(0, sizeof($groups));
+  }
 
   /**
    * @covers Concept::getProperties
