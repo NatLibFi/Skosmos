@@ -129,13 +129,9 @@ function buildParentTree(uri, parentData, schemes) {
 
   var loopIndex = 0, // for adding the last concept as a root if no better candidates have been found.
     currentNode,
-    rootArray = [],
+    rootArray = (schemes.length > 1) ? schemes : [],
     schemeOpened = false,
     rootNode;
-
-  if (schemes.length > 1) {
-    rootArray = schemes;
-  }
 
   for(var conceptUri in parentData) {
     var branchHelper, 
@@ -192,7 +188,7 @@ function vocabRoot(topConcepts) {
   var topArray = [];
   for (var i = 0; i < topConcepts.length; i++) {
     var conceptData = topConcepts[i];
-    var schemePage = conceptData.uri.indexOf(uriSpace) !== -1 ? conceptData.uri.substr(uriSpace.length) : '?uri=' + encodeURIComponent(conceptData.uri); 
+    var schemePage = conceptData.uri.indexOf(window.uriSpace) !== -1 ? conceptData.uri.substr(window.uriSpace.length) : '?uri=' + encodeURIComponent(conceptData.uri); 
     var childObject = {
       text: conceptData.label, 
       a_attr : { "href" : vocab + '/' + lang + '/page/' + schemePage },
@@ -201,7 +197,7 @@ function vocabRoot(topConcepts) {
     };
     if (conceptData.hasChildren)
       childObject.children = true;
-    if (showNotation && conceptData.notation)
+    if (window.showNotation && conceptData.notation)
       childObject.text = '<span class="tree-notation">' + conceptData.notation + '</span> ' + childObject.text;
     setNode(childObject);
     topArray.push(childObject);
@@ -217,7 +213,7 @@ function appendChildrenToParents() {
     var current = treeIndex[j];
     for (var index in current.parents) {
       var parentNode = getNode(current.parents[index]);
-      if (parentNode !== current && parentNode && $.inArray(current, parentNode.children) === -1) {
+      if (parentNode && parentNode !== current && $.inArray(current, parentNode.children) === -1) {
         for(var sibling in parentNode.children) {
           if(parentNode.children[sibling].uri === current.uri){ 
             // if the concept has already been found enrich the previous one with the additional information.
@@ -236,7 +232,7 @@ function createObjectsFromNarrowers(narrowerResponse) {
   for (var child in narrowerResponse.narrower) {
     var conceptObject = narrowerResponse.narrower[child];
     var hasChildren = conceptObject.hasChildren; 
-    var childPage = conceptObject.uri.indexOf(uriSpace) !== -1 ? conceptObject.uri.substr(uriSpace.length) : '?uri=' + encodeURIComponent(conceptObject.uri); 
+    var childPage = conceptObject.uri.indexOf(window.uriSpace) !== -1 ? conceptObject.uri.substr(window.uriSpace.length) : '?uri=' + encodeURIComponent(conceptObject.uri); 
     var childObject = {
       text : conceptObject.prefLabel, 
       a_attr : { "href" : vocab + '/' + lang + '/page/' + childPage },
@@ -244,7 +240,7 @@ function createObjectsFromNarrowers(narrowerResponse) {
       parents: narrowerResponse.uri,
       state: { opened: false, disabled: false, selected: false }
     };
-    if (showNotation && conceptObject.notation)
+    if (window.showNotation && conceptObject.notation)
       childObject.text = '<span class="tree-notation">' + conceptObject.notation + '</span> ' + childObject.text;
     if (hasChildren) {
       childObject.children = true;
@@ -257,22 +253,27 @@ function createObjectsFromNarrowers(narrowerResponse) {
 }
 
 function getParams(node) {
-  var nodeId = (node.id === '#') ? window.uri : node.original.uri;
+  var nodeId = (node.id === '#' && window.uri) ? window.uri : node.original.uri;
   var clang = content_lang !== '' ? content_lang : lang;
   return $.param({'uri' : nodeId, 'lang' : clang});
+}
+
+function pickLabelFromScheme(scheme) {
+  var label = '';
+  if (scheme.prefLabel)
+    label = scheme.prefLabel;
+  else if (scheme.label)
+    label = scheme.label;
+  else if (scheme.title)
+    label = scheme.title;
+  return label;
 }
 
 function schemeRoot(schemes) {
   var topArray = [];
   for (var i = 0; i < schemes.length; i++) {
     var scheme = schemes[i];
-    var label = '';
-    if (scheme.prefLabel)
-      label = scheme.prefLabel;
-    else if (scheme.label)
-      label = scheme.label;
-    else if (scheme.title)
-      label = scheme.title;
+    var label = pickLabelFromScheme(scheme);
     if (label !== '') { // hiding schemes without a label/title
       var schemeObject = {
         text: label, 
@@ -346,7 +347,7 @@ function getTreeConfiguration() {
               schemeObjects = schemeRoot(response.conceptschemes);
               // if there are multiple concept schemes display those at the top level
               if (schemeObjects.length > 1 && node.id === '#' && $('#vocab-info').length) {
-                cb(schemeObjects);
+                return cb(schemeObjects);
               } 
               // if there was only one concept scheme display it's top concepts at the top level 
               else if(node.id === '#' && $('#vocab-info').length) { 
@@ -354,7 +355,7 @@ function getTreeConfiguration() {
                   data: $.param({'lang': clang}),
                   url: rest_base_url + vocab + '/topConcepts', 
                   success: function (response) {
-                    cb(vocabRoot(response.topconcepts));
+                    return cb(vocabRoot(response.topconcepts));
                   }
                 });
               }
@@ -386,11 +387,11 @@ function getTreeConfiguration() {
                 url: json_url, 
                 success: function (response) {
                   if (response.broaderTransitive) { // the default hierarchy query that fires when a page loads.
-                    cb(buildParentTree(nodeId, response.broaderTransitive, schemeObjects));
+                    return cb(buildParentTree(nodeId, response.broaderTransitive, schemeObjects));
                   } else if (response.topconcepts) {
-                    cb(topConceptsToSchemes(response.topconcepts, schemeObjects));
+                    return cb(topConceptsToSchemes(response.topconcepts, schemeObjects));
                   } else {
-                    cb(createObjectsFromNarrowers(response));
+                    return cb(createObjectsFromNarrowers(response));
                   }
                 }
                 });
