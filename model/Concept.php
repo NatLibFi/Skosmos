@@ -592,13 +592,8 @@ class Concept extends VocabularyDataObject
     public function getAllLabels($property)
     {
         $labels = array();
-        if (EasyRdf_Namespace::shorten($property) !== null) {
-            // shortening property labels if possible
-            $property = EasyRdf_Namespace::shorten($property);
-        } else {
-            $property = "<$property>";
-        }
-        // EasyRdf requires full URIs to be in angle brackets
+        // shortening property labels if possible, EasyRdf requires full URIs to be in angle brackets
+        $property = (EasyRdf_Namespace::shorten($property) !== null) ? EasyRdf_Namespace::shorten($property) : "<$property>";
         foreach ($this->resource->allLiterals($property) as $lit) {
             $labels[Punic\Language::getName($lit->getLang(), $this->getEnvLang())][] = new ConceptPropertyValueLiteral($lit, $property);
         }
