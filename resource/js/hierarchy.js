@@ -217,17 +217,16 @@ function appendChildrenToParents() {
     var current = treeIndex[j];
     for (var index in current.parents) {
       var parentNode = getNode(current.parents[index]);
-      if (parentNode !== current)
-        if (parentNode && $.inArray(current, parentNode.children) === -1) {
-          for(var sibling in parentNode.children) {
-            if(parentNode.children[sibling].uri === current.uri){ 
-              // if the concept has already been found enrich the previous one with the additional information.
-              parentNode.children[sibling].children = current.children;
-              parentNode.children[sibling].state = current.state;
-              parentNode.children[sibling].li_attr = current.li_attr;
-            }
+      if (parentNode !== current && parentNode && $.inArray(current, parentNode.children) === -1) {
+        for(var sibling in parentNode.children) {
+          if(parentNode.children[sibling].uri === current.uri){ 
+            // if the concept has already been found enrich the previous one with the additional information.
+            parentNode.children[sibling].children = current.children;
+            parentNode.children[sibling].state = current.state;
+            parentNode.children[sibling].li_attr = current.li_attr;
           }
         }
+      }
     }
   }
 }
@@ -258,11 +257,7 @@ function createObjectsFromNarrowers(narrowerResponse) {
 }
 
 function getParams(node) {
-  var nodeId;
-  if (node.id === '#')
-    nodeId = $('.uri-input-box').html(); // using the real uri of the concept from the view.
-  else
-    nodeId = node.original.uri;
+  var nodeId = (node.id === '#') ? window.uri : node.original.uri;
   var clang = content_lang !== '' ? content_lang : lang;
   return $.param({'uri' : nodeId, 'lang' : clang});
 }
@@ -286,7 +281,6 @@ function schemeRoot(schemes) {
         children: true,
         state: { opened: false } 
       };
-      //setNode(schemeObject);
       topArray.push(schemeObject);
     }
   }
