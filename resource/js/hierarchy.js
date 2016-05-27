@@ -71,10 +71,9 @@ function getLeafOffset() {
  */
 function createConceptObject(conceptUri, conceptData) {
   var prefLabel = conceptData.prefLabel; // the json narrower response has a different structure.
-  var page = conceptUri.indexOf(window.uriSpace) !== -1 ? conceptUri.substr(window.uriSpace.length) : '?uri=' + encodeURIComponent(conceptUri); 
   var newNode = { 
     text: prefLabel, 
-    a_attr: { "href" : vocab + '/' + lang + '/page/' + page},
+    a_attr: getConceptHref(conceptData),
     uri: conceptUri,
     parents: conceptData.broader,
     state: { opened: true },
@@ -94,10 +93,9 @@ function createConceptObject(conceptUri, conceptData) {
     for (var child in conceptData.narrower) {
       var conceptObject = conceptData.narrower[child];
       var hasChildren = conceptObject.hasChildren; 
-      var childPage = conceptObject.uri.indexOf(window.uriSpace) !== -1 ? conceptObject.uri.substr(window.uriSpace.length) : '?uri=' + encodeURIComponent(conceptObject.uri); 
       var childObject = {
         text: conceptObject.label, 
-        a_attr: { "href" : vocab + '/' + lang + '/page/' + childPage },
+        a_attr: getConceptHref(conceptObject),
         uri: conceptData.narrower[child].uri,
         parents: conceptUri,
         state: { opened: true }
@@ -184,14 +182,18 @@ function buildParentTree(uri, parentData, schemes) {
   return JSON.parse(JSON.stringify(rootArray));
 }
 
+function getConceptHref(conceptData) {
+  var page = conceptData.uri.indexOf(window.uriSpace) !== -1 ? conceptData.uri.substr(window.uriSpace.length) : '?uri=' + encodeURIComponent(conceptData.uri);
+  return { "href" : vocab + '/' + lang + '/page/' + page };
+}
+
 function vocabRoot(topConcepts) {
   var topArray = [];
   for (var i = 0; i < topConcepts.length; i++) {
     var conceptData = topConcepts[i];
-    var schemePage = conceptData.uri.indexOf(window.uriSpace) !== -1 ? conceptData.uri.substr(window.uriSpace.length) : '?uri=' + encodeURIComponent(conceptData.uri); 
     var childObject = {
       text: conceptData.label, 
-      a_attr : { "href" : vocab + '/' + lang + '/page/' + schemePage },
+      a_attr : getConceptHref(conceptData),
       uri: conceptData.uri,
       state: { opened: false } 
     };
@@ -231,10 +233,9 @@ function createObjectsFromNarrowers(narrowerResponse) {
   var childArray = [];
   for (var child in narrowerResponse.narrower) {
     var conceptObject = narrowerResponse.narrower[child];
-    var childPage = conceptObject.uri.indexOf(window.uriSpace) !== -1 ? conceptObject.uri.substr(window.uriSpace.length) : '?uri=' + encodeURIComponent(conceptObject.uri); 
     var childObject = {
       text : conceptObject.prefLabel, 
-      a_attr : { "href" : vocab + '/' + lang + '/page/' + childPage },
+      a_attr : getConceptHref(conceptObject),
       uri: conceptObject.uri,
       parents: narrowerResponse.uri,
       state: { opened: false, disabled: false, selected: false }
