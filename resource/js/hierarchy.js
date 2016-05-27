@@ -5,6 +5,13 @@
  */
 var treeIndex = {}; 
 var urlToUri = {};
+var hierTreeConf ={ 
+  alwaysShowScrollbar: 1,
+  scrollInertia: 0, 
+  mouseWheel:{ scrollAmount: 105 },
+  snapAmount: 18,
+  snapOffset: 1
+};
 
 /* 
  * For legacy browsers that don't natively support Object.size().
@@ -38,13 +45,7 @@ function invokeParentTree(tree) {
 
   $treeObject.on('loaded.jstree', function() {
     if ($('.mCustomScrollbar').length === 0) {
-      $(".sidebar-grey").mCustomScrollbar({ 
-        alwaysShowScrollbar: 1,
-        scrollInertia: 0, 
-        mouseWheel:{ scrollAmount: 105 },
-        snapAmount: 18,
-        snapOffset: 1
-      });
+      $(".sidebar-grey").mCustomScrollbar(hierTreeConf);
     }
     if ($('.jstree-leaf-proper').length > 0) {
       $('.sidebar-grey').jstree('select_node', $('.jstree-leaf-proper').toArray());
@@ -99,17 +100,15 @@ function createConceptObject(conceptUri, conceptData) {
   if (conceptData.narrower) { // filtering out the ones that don't have labels 
     var childArray = [];
     for (var i = 0; i < conceptData.narrower.length; i++) {
-      var conceptObject = conceptData.narrower[i];
-      var hasChildren = conceptObject.hasChildren; 
       var childObject = {
-        text: getLabel(conceptObject), 
-        a_attr: getConceptHref(conceptObject),
+        text: getLabel(conceptData.narrower[i]), 
+        a_attr: getConceptHref(conceptData.narrower[i]),
         uri: conceptData.narrower[i].uri,
         parents: conceptUri,
         state: { opened: true }
       };
       // if the childConcept hasn't got any children the state is not needed.
-      if (hasChildren) {
+      if (conceptData.narrower[i].hasChildren) {
         childObject.children = true;
         childObject.state.opened = false;
       }
