@@ -64,15 +64,25 @@ function getLeafOffset() {
   }
 }
 
+function getLabel(object) {
+  var labelProp = 'prefLabel';
+  if (!object.prefLabel) {
+    labelProp = 'label';
+  }
+  if (window.showNotation && object.notation) {
+    return '<span class="tree-notation">' + object.notation + '</span> ' + object[labelProp];
+  }
+  return object.label;
+}
+
 /*
  * Creates a concept object from the data returned by a rest query.
  * @param
  * @param
  */
 function createConceptObject(conceptUri, conceptData) {
-  var prefLabel = conceptData.prefLabel; // the json narrower response has a different structure.
   var newNode = { 
-    text: prefLabel, 
+    text: getLabel(conceptData), 
     a_attr: getConceptHref(conceptData),
     uri: conceptUri,
     parents: conceptData.broader,
@@ -86,22 +96,18 @@ function createConceptObject(conceptUri, conceptData) {
   }
   // if we are at a concept page we want to highlight that node and mark it as to be initially opened.
   if (newNode.uri === window.uri) { newNode.li_attr = { class: 'jstree-leaf-proper' }; }
-  if (window.showNotation && conceptData.notation)
-    newNode.text = '<span class="tree-notation">' + conceptData.notation + '</span> ' + newNode.text;
   if (conceptData.narrower) { // filtering out the ones that don't have labels 
     var childArray = [];
     for (var i = 0; i < conceptData.narrower.length; i++) {
       var conceptObject = conceptData.narrower[i];
       var hasChildren = conceptObject.hasChildren; 
       var childObject = {
-        text: conceptObject.label, 
+        text: getLabel(conceptObject), 
         a_attr: getConceptHref(conceptObject),
         uri: conceptData.narrower[i].uri,
         parents: conceptUri,
         state: { opened: true }
       };
-      if (window.showNotation && conceptData.narrower[i].notation)
-        childObject.text = '<span class="tree-notation">' + conceptData.narrower[i].notation + '</span> ' + childObject.text;
       // if the childConcept hasn't got any children the state is not needed.
       if (hasChildren) {
         childObject.children = true;
@@ -240,14 +246,12 @@ function createObjectsFromNarrowers(narrowerResponse) {
   for (var i = 0; i < narrowerResponse.narrower.length; i++) {
     var conceptObject = narrowerResponse.narrower[i];
     var childObject = {
-      text : conceptObject.prefLabel, 
+      text : getLabel(conceptObject), 
       a_attr : getConceptHref(conceptObject),
       uri: conceptObject.uri,
       parents: narrowerResponse.uri,
       state: { opened: false, disabled: false, selected: false }
     };
-    if (window.showNotation && conceptObject.notation)
-      childObject.text = '<span class="tree-notation">' + conceptObject.notation + '</span> ' + childObject.text;
     childObject.children = conceptObject.hasChildren ? true : false;
     setNode(childObject);
     childArray.push(childObject);
@@ -311,13 +315,11 @@ function topConceptsToSchemes(topConcepts, schemes) {
     var topConcept = topConcepts[i];
     var hasChildren = topConcept.hasChildren; 
     var childObject = {
-      text : topConcept.label, 
+      text : getLabel(topConcept), 
       a_attr : { "href" : vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(topConcept.uri) },
       uri: topConcept.uri,
       state: { opened: false, disabled: false, selected: false }
     };
-    if (showNotation && topConcept.notation)
-      childObject.text = '<span class="tree-notation">' + topConcept.notation + '</span> ' + childObject.text;
     if (hasChildren) {
       childObject.children = true;
       childObject.state.opened = false;
