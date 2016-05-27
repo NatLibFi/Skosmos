@@ -90,18 +90,18 @@ function createConceptObject(conceptUri, conceptData) {
     newNode.text = '<span class="tree-notation">' + conceptData.notation + '</span> ' + newNode.text;
   if (conceptData.narrower) { // filtering out the ones that don't have labels 
     var childArray = [];
-    for (var child in conceptData.narrower) {
-      var conceptObject = conceptData.narrower[child];
+    for (var i = 0; i < conceptData.narrower.length; i++) {
+      var conceptObject = conceptData.narrower[i];
       var hasChildren = conceptObject.hasChildren; 
       var childObject = {
         text: conceptObject.label, 
         a_attr: getConceptHref(conceptObject),
-        uri: conceptData.narrower[child].uri,
+        uri: conceptData.narrower[i].uri,
         parents: conceptUri,
         state: { opened: true }
       };
-      if (window.showNotation && conceptData.narrower[child].notation)
-        childObject.text = '<span class="tree-notation">' + conceptData.narrower[child].notation + '</span> ' + childObject.text;
+      if (window.showNotation && conceptData.narrower[i].notation)
+        childObject.text = '<span class="tree-notation">' + conceptData.narrower[i].notation + '</span> ' + childObject.text;
       // if the childConcept hasn't got any children the state is not needed.
       if (hasChildren) {
         childObject.children = true;
@@ -132,48 +132,50 @@ function buildParentTree(uri, parentData, schemes) {
     rootNode;
 
   for(var conceptUri in parentData) {
-    var branchHelper, 
-      exactMatchFound;
-    currentNode = createConceptObject(conceptUri, parentData[conceptUri]);
-    /* if a node has the property topConceptOf set it as the root node. 
-     * Or just setting the last node as a root if nothing else has been found 
-     */
-    if (parentData[conceptUri].top || ( loopIndex === Object.size(parentData)-1) && !rootNode || !currentNode.parents && !rootNode) { 
-      if (!rootNode) {  
-        branchHelper = currentNode;
-      }
-      // if there are multiple concept schemes attach the topConcepts to the concept schemes
-      if (schemes.length > 1 && (parentData[conceptUri].top)) {
-        for (var i in schemes) {
-          if (schemes[i].uri === parentData[conceptUri].top) {
-            if(Object.prototype.toString.call(schemes[i].children) !== '[object Array]' ) {
-              schemes[i].children = [];
-            }
-            schemes[i].children.push(currentNode);
-            // the hierarchy response contains the parent info before the topConcepts so it's a safe to open the first one without broaders 
-            if (schemeOpened === false && !currentNode.broader) {
-              schemes[i].state = currentNode.state;
-              schemeOpened = true;
+    if (parentData.hasOwnProperty(conceptUri)) {
+      var branchHelper, 
+        exactMatchFound;
+      currentNode = createConceptObject(conceptUri, parentData[conceptUri]);
+      /* if a node has the property topConceptOf set it as the root node. 
+       * Or just setting the last node as a root if nothing else has been found 
+       */
+      if (parentData[conceptUri].top || ( loopIndex === Object.size(parentData)-1) && !rootNode || !currentNode.parents && !rootNode) { 
+        if (!rootNode) {  
+          branchHelper = currentNode;
+        }
+        // if there are multiple concept schemes attach the topConcepts to the concept schemes
+        if (schemes.length > 1 && (parentData[conceptUri].top)) {
+          for (var i = 0; i < schemes.length; i++) {
+            if (schemes[i].uri === parentData[conceptUri].top) {
+              if(Object.prototype.toString.call(schemes[i].children) !== '[object Array]' ) {
+                schemes[i].children = [];
+              }
+              schemes[i].children.push(currentNode);
+              // the hierarchy response contains the parent info before the topConcepts so it's a safe to open the first one without broaders 
+              if (schemeOpened === false && !currentNode.broader) {
+                schemes[i].state = currentNode.state;
+                schemeOpened = true;
+              }
             }
           }
         }
+        else {
+          rootNode = currentNode; 
+          rootArray.push(rootNode);
+        }
       }
-      else {
-        rootNode = currentNode; 
-        rootArray.push(rootNode);
+      if (exactMatchFound) { // combining branches if we have met a exact match during the previous iteration.
+        currentNode.children.push(branchHelper); 
+        branchHelper = undefined;
+        exactMatchFound = false;
       }
+      // here we have iterated far enough to find the merging point of the trees.
+      if (branchHelper && parentData[branchHelper.uri].exact === currentNode.uri) {
+        exactMatchFound = true;
+      } 
+      setNode(currentNode);
+      loopIndex++;
     }
-    if (exactMatchFound) { // combining branches if we have met a exact match during the previous iteration.
-      currentNode.children.push(branchHelper); 
-      branchHelper = undefined;
-      exactMatchFound = false;
-    }
-    // here we have iterated far enough to find the merging point of the trees.
-    if (branchHelper && parentData[branchHelper.uri].exact === currentNode.uri) {
-      exactMatchFound = true;
-    } 
-    setNode(currentNode);
-    loopIndex++;
   }
 
   // Iterating over the nodes to make sure all concepts have their children set.
@@ -211,17 +213,21 @@ function vocabRoot(topConcepts) {
  * Iterates through the tree and fixes all the parents by adding references to their child concepts.
  */
 function appendChildrenToParents() {
-  for (var j in treeIndex) {
-    var current = treeIndex[j];
-    for (var index in current.parents) {
-      var parentNode = getNode(current.parents[index]);
-      if (parentNode && parentNode !== current && $.inArray(current, parentNode.children) === -1) {
-        for(var sibling in parentNode.children) {
-          if(parentNode.children[sibling].uri === current.uri){ 
-            // if the concept has already been found enrich the previous one with the additional information.
-            parentNode.children[sibling].children = current.children;
-            parentNode.children[sibling].state = current.state;
-            parentNode.children[sibling].li_attr = current.li_attr;
+  for (var uri in treeIndex) {
+    if (treeIndex.hasOwnProperty(uri)) {
+      var current = treeIndex[uri];
+      if (current.parents) {
+        for (var i = 0; i < current.parents.length; i++) {
+          var parentNode = getNode(current.parents[i]);
+          if (parentNode && parentNode !== current && $.inArray(current, parentNode.children) === -1) {
+            for(var j = 0; j < parentNode.children.length; j++) {
+              if(parentNode.children[j].uri === current.uri){ 
+                // if the concept has already been found enrich the previous one with the additional information.
+                parentNode.children[j].children = current.children;
+                parentNode.children[j].state = current.state;
+                parentNode.children[j].li_attr = current.li_attr;
+              }
+            }
           }
         }
       }
@@ -231,8 +237,8 @@ function appendChildrenToParents() {
 
 function createObjectsFromNarrowers(narrowerResponse) {
   var childArray = [];
-  for (var child in narrowerResponse.narrower) {
-    var conceptObject = narrowerResponse.narrower[child];
+  for (var i = 0; i < narrowerResponse.narrower.length; i++) {
+    var conceptObject = narrowerResponse.narrower[i];
     var childObject = {
       text : conceptObject.prefLabel, 
       a_attr : getConceptHref(conceptObject),
@@ -287,7 +293,7 @@ function schemeRoot(schemes) {
 
 function addConceptsToScheme(topConcept, childObject, schemes) {
   for (var j in schemes) {
-    if (topConcept.topConceptOf === schemes[j].uri) {
+    if (schemes.hasOwnProperty(j) && topConcept.topConceptOf === schemes[j].uri) {
       if(Object.prototype.toString.call(schemes[j].children) !== '[object Array]' ) {
         schemes[j].children = [];
       }
