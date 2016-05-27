@@ -32,10 +32,10 @@ function buildGroupTree(response) {
     }
   }
   for (var uri in groups) {
-    var groupobj = groups[uri];
-    if (!groupobj.is_child) {
-      fixStates(groupobj);
-      data.push(groupobj);
+    var groupObj = groups[uri];
+    if (!groupObj.is_child) {
+      fixStates(groupObj);
+      data.push(groupObj);
     }
   }
   return JSON.parse(JSON.stringify(data));
@@ -69,7 +69,7 @@ function invokeGroupTree() {
             url: json_url, 
             success: function (response) {
               if (response.groups) { // the default hierarchy query that fires when a page loads.
-                cb(buildGroupTree(response.groups));
+                return cb(buildGroupTree(response.groups));
               } else {
                 var children = [];
                 for (var i in response.members) {
@@ -83,7 +83,7 @@ function invokeGroupTree() {
                   }
                   children.push(JSON.parse(JSON.stringify(child)));
                 }
-                cb(JSON.parse(JSON.stringify(children)));
+                return cb(JSON.parse(JSON.stringify(children)));
               }
             }
           });
