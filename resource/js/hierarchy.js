@@ -36,7 +36,7 @@ function invokeParentTree(tree) {
     $treeObject.jstree('open_node', node.node);
   });
 
-  $treeObject.on('loaded.jstree', function(event, node) {
+  $treeObject.on('loaded.jstree', function() {
     if ($('.mCustomScrollbar').length === 0) {
       $(".sidebar-grey").mCustomScrollbar({ 
         alwaysShowScrollbar: 1,
@@ -71,7 +71,7 @@ function getLeafOffset() {
  */
 function createConceptObject(conceptUri, conceptData) {
   var prefLabel = conceptData.prefLabel; // the json narrower response has a different structure.
-  var page = conceptUri.indexOf(uriSpace) !== -1 ? conceptUri.substr(uriSpace.length) : '?uri=' + encodeURIComponent(conceptUri); 
+  var page = conceptUri.indexOf(window.uriSpace) !== -1 ? conceptUri.substr(window.uriSpace.length) : '?uri=' + encodeURIComponent(conceptUri); 
   var newNode = { 
     text: prefLabel, 
     a_attr: { "href" : vocab + '/' + lang + '/page/' + page},
@@ -86,15 +86,15 @@ function createConceptObject(conceptUri, conceptData) {
     newNode.state.opened = false;
   }
   // if we are at a concept page we want to highlight that node and mark it as to be initially opened.
-  if (newNode.uri === $('.uri-input-box').html()) { newNode.li_attr = { class: 'jstree-leaf-proper' }; }
-  if (showNotation && conceptData.notation)
+  if (newNode.uri === window.uri) { newNode.li_attr = { class: 'jstree-leaf-proper' }; }
+  if (window.showNotation && conceptData.notation)
     newNode.text = '<span class="tree-notation">' + conceptData.notation + '</span> ' + newNode.text;
   if (conceptData.narrower) { // filtering out the ones that don't have labels 
     var childArray = [];
     for (var child in conceptData.narrower) {
       var conceptObject = conceptData.narrower[child];
       var hasChildren = conceptObject.hasChildren; 
-      var childPage = conceptObject.uri.indexOf(uriSpace) !== -1 ? conceptObject.uri.substr(uriSpace.length) : '?uri=' + encodeURIComponent(conceptObject.uri); 
+      var childPage = conceptObject.uri.indexOf(window.uriSpace) !== -1 ? conceptObject.uri.substr(window.uriSpace.length) : '?uri=' + encodeURIComponent(conceptObject.uri); 
       var childObject = {
         text: conceptObject.label, 
         a_attr: { "href" : vocab + '/' + lang + '/page/' + childPage },
@@ -102,7 +102,7 @@ function createConceptObject(conceptUri, conceptData) {
         parents: conceptUri,
         state: { opened: true }
       };
-      if (showNotation && conceptData.narrower[child].notation)
+      if (window.showNotation && conceptData.narrower[child].notation)
         childObject.text = '<span class="tree-notation">' + conceptData.narrower[child].notation + '</span> ' + childObject.text;
       // if the childConcept hasn't got any children the state is not needed.
       if (hasChildren) {
@@ -231,7 +231,6 @@ function createObjectsFromNarrowers(narrowerResponse) {
   var childArray = [];
   for (var child in narrowerResponse.narrower) {
     var conceptObject = narrowerResponse.narrower[child];
-    var hasChildren = conceptObject.hasChildren; 
     var childPage = conceptObject.uri.indexOf(window.uriSpace) !== -1 ? conceptObject.uri.substr(window.uriSpace.length) : '?uri=' + encodeURIComponent(conceptObject.uri); 
     var childObject = {
       text : conceptObject.prefLabel, 
@@ -242,10 +241,7 @@ function createObjectsFromNarrowers(narrowerResponse) {
     };
     if (window.showNotation && conceptObject.notation)
       childObject.text = '<span class="tree-notation">' + conceptObject.notation + '</span> ' + childObject.text;
-    if (hasChildren) {
-      childObject.children = true;
-      childObject.state.opened = false;
-    }
+    childObject.children = conceptObject.hasChildren ? true : false;
     setNode(childObject);
     childArray.push(childObject);
   }
@@ -288,35 +284,40 @@ function schemeRoot(schemes) {
   return topArray;
 }
 
+function addConceptsToScheme(topConcept, childObject, schemes) {
+  for (var j in schemes) {
+    if (topConcept.topConceptOf === schemes[j].uri) {
+      if(Object.prototype.toString.call(schemes[j].children) !== '[object Array]' ) {
+        schemes[j].children = [];
+      }
+      schemes[j].children.push(childObject);
+      schemes[j].state.opened = true;
+      schemes[j].a_attr.class = 'jstree-clicked';
+    }
+  }
+  return schemes;
+}
+
 function topConceptsToSchemes(topConcepts, schemes) {
   var childArray = schemes.length > 1 ? schemes : [];
   for (var i in topConcepts) {
-    var conceptObject = topConcepts[i];
-    var hasChildren = conceptObject.hasChildren; 
+    var topConcept = topConcepts[i];
+    var hasChildren = topConcept.hasChildren; 
     var childObject = {
-      text : conceptObject.label, 
-      a_attr : { "href" : vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(conceptObject.uri) },
-      uri: conceptObject.uri,
+      text : topConcept.label, 
+      a_attr : { "href" : vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(topConcept.uri) },
+      uri: topConcept.uri,
       state: { opened: false, disabled: false, selected: false }
     };
-    if (showNotation && conceptObject.notation)
-      childObject.text = '<span class="tree-notation">' + conceptObject.notation + '</span> ' + childObject.text;
+    if (showNotation && topConcept.notation)
+      childObject.text = '<span class="tree-notation">' + topConcept.notation + '</span> ' + childObject.text;
     if (hasChildren) {
       childObject.children = true;
       childObject.state.opened = false;
     }
     setNode(childObject);
     if (schemes.length > 1) {
-      for (var j in schemes) {
-        if (conceptObject.topConceptOf === schemes[j].uri) {
-          if(Object.prototype.toString.call(schemes[j].children) !== '[object Array]' ) {
-            schemes[j].children = [];
-          }
-          schemes[j].children.push(childObject);
-          schemes[j].state.opened = true;
-          schemes[j].a_attr.class = 'jstree-clicked';
-        }
-      }
+      schemes = addConceptsToScheme(topConcept, childObject, schemes);
     } else {
       childArray.push(childObject);
     }
