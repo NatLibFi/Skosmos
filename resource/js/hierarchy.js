@@ -253,7 +253,7 @@ function createObjectsFromNarrowers(narrowerResponse) {
 }
 
 function getParams(node) {
-  var nodeId = (node.id === '#' && window.uri) ? window.uri : node.original.uri;
+  var nodeId = (node.id === '#') ? window.uri : node.original.uri;
   var clang = content_lang !== '' ? content_lang : lang;
   return $.param({'uri' : nodeId, 'lang' : clang});
 }
