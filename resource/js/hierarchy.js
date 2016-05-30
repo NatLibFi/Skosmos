@@ -76,6 +76,28 @@ function getLabel(object) {
   return object[labelProp];
 }
 
+function createObjectsFromChildren(conceptData, conceptUri) {
+  var childArray = [];
+  for (var i = 0; i < conceptData.narrower.length; i++) {
+    var childObject = {
+      text: getLabel(conceptData.narrower[i]), 
+      a_attr: getConceptHref(conceptData.narrower[i]),
+      uri: conceptData.narrower[i].uri,
+      parents: conceptUri,
+      state: { opened: true }
+    };
+    // if the childConcept hasn't got any children the state is not needed.
+    if (conceptData.narrower[i].hasChildren) {
+      childObject.children = true;
+      childObject.state.opened = false;
+    }
+    if(!childArray[childObject.uri])
+      childArray.push(childObject);
+    storeUri(childObject);
+  }
+  return childArray;
+}
+
 /*
  * Creates a concept object from the data returned by a rest query.
  * @param
@@ -98,25 +120,7 @@ function createConceptObject(conceptUri, conceptData) {
   // if we are at a concept page we want to highlight that node and mark it as to be initially opened.
   if (newNode.uri === window.uri) { newNode.li_attr = { class: 'jstree-leaf-proper' }; }
   if (conceptData.narrower) { // filtering out the ones that don't have labels 
-    var childArray = [];
-    for (var i = 0; i < conceptData.narrower.length; i++) {
-      var childObject = {
-        text: getLabel(conceptData.narrower[i]), 
-        a_attr: getConceptHref(conceptData.narrower[i]),
-        uri: conceptData.narrower[i].uri,
-        parents: conceptUri,
-        state: { opened: true }
-      };
-      // if the childConcept hasn't got any children the state is not needed.
-      if (conceptData.narrower[i].hasChildren) {
-        childObject.children = true;
-        childObject.state.opened = false;
-      }
-      if(!childArray[childObject.uri])
-        childArray.push(childObject);
-      storeUri(childObject);
-    }
-    newNode.children = childArray;
+    newNode.children = createObjectsFromChildren(conceptData, conceptUri);
   }
   
   return newNode;
