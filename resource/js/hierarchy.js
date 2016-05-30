@@ -124,8 +124,32 @@ function createConceptObject(conceptUri, conceptData) {
 
 /*
  * For building a parent hierarchy tree from the leaf concept to the ontology/vocabulary root.
+ * @param {Object} schemes 
+ * @param {Object} currentNode 
+ * @param {Object} parentData 
+ */
+function attachTopConceptsToSchemes(schemes, currentNode, parentData) {
+  for (var i = 0; i < schemes.length; i++) {
+    if (schemes[i].uri === parentData[currentNode.uri].top) {
+      if(Object.prototype.toString.call(schemes[i].children) !== '[object Array]' ) {
+        schemes[i].children = [];
+      }
+      schemes[i].children.push(currentNode);
+      // the hierarchy response contains the parent info before the topConcepts so it's a safe to open the first one without broaders 
+      if (!schemes.opened && !currentNode.broader) {
+        schemes[i].state = currentNode.state;
+        schemes.opened = true;
+      }
+    }
+  }
+  return schemes;
+}
+
+/*
+ * For building a parent hierarchy tree from the leaf concept to the ontology/vocabulary root.
  * @param {String} uri
  * @param {Object} parentData
+ * @param {Object} schemes 
  */
 function buildParentTree(uri, parentData, schemes) {
   if (parentData === undefined || parentData === null) { return; }
@@ -133,7 +157,6 @@ function buildParentTree(uri, parentData, schemes) {
   var loopIndex = 0, // for adding the last concept as a root if no better candidates have been found.
     currentNode,
     rootArray = (schemes.length > 1) ? schemes : [],
-    schemeOpened = false,
     rootNode;
 
   for(var conceptUri in parentData) {
@@ -150,19 +173,7 @@ function buildParentTree(uri, parentData, schemes) {
         }
         // if there are multiple concept schemes attach the topConcepts to the concept schemes
         if (schemes.length > 1 && (parentData[conceptUri].top)) {
-          for (var i = 0; i < schemes.length; i++) {
-            if (schemes[i].uri === parentData[conceptUri].top) {
-              if(Object.prototype.toString.call(schemes[i].children) !== '[object Array]' ) {
-                schemes[i].children = [];
-              }
-              schemes[i].children.push(currentNode);
-              // the hierarchy response contains the parent info before the topConcepts so it's a safe to open the first one without broaders 
-              if (schemeOpened === false && !currentNode.broader) {
-                schemes[i].state = currentNode.state;
-                schemeOpened = true;
-              }
-            }
-          }
+          schemes = attachTopConceptsToSchemes(schemes, currentNode, parentData);
         }
         else {
           rootNode = currentNode; 
