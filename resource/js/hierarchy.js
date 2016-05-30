@@ -73,7 +73,7 @@ function getLabel(object) {
   if (window.showNotation && object.notation) {
     return '<span class="tree-notation">' + object.notation + '</span> ' + object[labelProp];
   }
-  return object.label;
+  return object[labelProp];
 }
 
 /*
@@ -156,8 +156,7 @@ function buildParentTree(uri, parentData, schemes) {
 
   var loopIndex = 0, // for adding the last concept as a root if no better candidates have been found.
     currentNode,
-    rootArray = (schemes.length > 1) ? schemes : [],
-    rootNode;
+    rootArray = (schemes.length > 1) ? schemes : [];
 
   for(var conceptUri in parentData) {
     if (parentData.hasOwnProperty(conceptUri)) {
@@ -167,8 +166,8 @@ function buildParentTree(uri, parentData, schemes) {
       /* if a node has the property topConceptOf set it as the root node. 
        * Or just setting the last node as a root if nothing else has been found 
        */
-      if (parentData[conceptUri].top || ( loopIndex === Object.size(parentData)-1) && !rootNode || !currentNode.parents && !rootNode) { 
-        if (!rootNode) {  
+      if (parentData[conceptUri].top || ( loopIndex === Object.size(parentData)-1) && rootArray.length === 0 || !currentNode.parents && rootArray.length === 0) { 
+        if (rootArray.length === 0) {  
           branchHelper = currentNode;
         }
         // if there are multiple concept schemes attach the topConcepts to the concept schemes
@@ -176,8 +175,7 @@ function buildParentTree(uri, parentData, schemes) {
           schemes = attachTopConceptsToSchemes(schemes, currentNode, parentData);
         }
         else {
-          rootNode = currentNode; 
-          rootArray.push(rootNode);
+          rootArray.push(currentNode);
         }
       }
       if (exactMatchFound) { // combining branches if we have met a exact match during the previous iteration.
