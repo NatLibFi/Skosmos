@@ -617,6 +617,10 @@ ul.vocab-category {
   display: none;
 }
 
+#feedback-fields > .dropdown {
+  margin-bottom: 10px;
+}
+
 #feedback-fields > .open > .dropdown-menu {
   border-radius: 0;
   height: auto;
