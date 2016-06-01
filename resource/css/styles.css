@@ -617,6 +617,36 @@ ul.vocab-category {
   display: none;
 }
 
+#feedback-fields > .open > .dropdown-menu {
+  padding: 0;
+  border-radius: 0;
+  margin-top: 0;
+  width: 100%;
+}
+
+#feedback-fields > .open > .dropdown-menu > li:hover > a {
+  color: #fff !important;
+}
+
+#feedback-vocid {
+  background-color: #F6F7F8;
+  color: #333;
+  width: 100%;
+  text-align: left;
+  border: 0;
+  height: 34px;
+}
+
+#feedback-vocid > .caret {
+  position: absolute;
+  right: 10px;
+  top: 14px;
+}
+
+#feedback-vocid:hover, #feedback-vocid:focus, #feedback-vocid:active {
+  color: #333;
+}
+
 .feedback-logo {
   border-bottom: 2px solid #394554;
   display: block;

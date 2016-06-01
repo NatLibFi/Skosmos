@@ -17,12 +17,17 @@
     <div id="feedback-content">
       <form id="feedback-fields" method="post" action="{% if request.vocab %}{{request.vocab.id}}/{% endif %}{{ request.lang }}/feedback">
         {% if vocabList %}
-        <select class="form-control" name="vocab">
-          <option value="none">{% trans %}Not to a specific vocabulary{% endtrans %}</option>
-            {% for option in vocabList %}
-            <option value="{{ option.id }}"{% if request.vocabid == option.id %} selected="selected"{% endif %}>{{ option.title }}</option>
-            {% endfor %}
-        </select>
+        <input id="feedback-vocid-input" name="vocab" type="hidden"{% if request.vocabid %} value="{{ request.vocabid }}"{% endif %}>
+        <div class="dropdown">
+          <button class="btn btn-default dropdown-toggle" type="button" id="feedback-vocid" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            {% if request.vocabid %}{{ request.vocab.title }}{% else %}{% trans %}Not to a specific vocabulary{% endtrans %}{% endif %}
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><a href="#">{% trans %}Not to a specific vocabulary{% endtrans %}</a></li>
+            {% for option in vocabList %}<li><a href="#" data-vocid="{{ option.id }}">{{ option.title }}</a></li>{% endfor %}
+          </ul>
+        </div>
         {% endif %}
 
         <p>{% trans %}Name:{% endtrans %}</p>
