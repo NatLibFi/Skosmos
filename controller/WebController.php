@@ -270,7 +270,7 @@ class WebController extends Controller
     public function sendFeedback($request, $message, $fromName = null, $fromEmail = null, $fromVocab = null, $toMail = null)
     {
         $toAddress = ($toMail) ? $toMail : $this->model->getConfig()->getFeedbackAddress();
-        if ($fromVocab !== null) {
+        if ($fromVocab && $fromVocab !== '') {
             $message = 'Feedback from vocab: ' . strtoupper($fromVocab) . "<br />" . $message;
         }
 
