@@ -626,9 +626,12 @@ ul.dropdown-menu > li:last-child > input {
 }
 
 #feedback-fields > .open > .dropdown-menu {
-  padding: 0;
   border-radius: 0;
+  height: auto;
   margin-top: 0;
+  max-height: 450px;
+  overflow-x: hidden;
+  padding: 0;
   width: 100%;
 }
 
@@ -638,11 +641,11 @@ ul.dropdown-menu > li:last-child > input {
 
 #feedback-vocid {
   background-color: #F6F7F8;
-  color: #333;
-  width: 100%;
-  text-align: left;
   border: 0;
+  color: #333;
   height: 34px;
+  text-align: left;
+  width: 100%;
 }
 
 #feedback-vocid > .caret {
