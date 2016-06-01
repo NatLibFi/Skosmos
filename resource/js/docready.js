@@ -1,10 +1,10 @@
-/* 
+/*
  * Copyright (c) 2012 Aalto University and University of Helsinki
  * MIT License
  * see LICENSE.txt for more information
  */
 
-$(function() { // DOCUMENT READY 
+$(function() { // DOCUMENT READY
 
   var spinner = '<div class="loading-spinner"><span class="spinner-text">'+ loading_text + '</span><span class="spinner" /></div>';
   var searchString = ''; // stores the search field's value before autocomplete selection changes it
@@ -32,9 +32,9 @@ $(function() { // DOCUMENT READY
    * concept at vertical center of the container. Each concept needs 18px height.
    */
   $(document).ajaxComplete(function(event, xhr, settings) {
-    $('.property-click').qtip({ 
+    $('.property-click').qtip({
       position: { my: 'bottom center', at: 'top center' },
-      style: { classes: 'qtip-tipsy qtip-skosmos' } 
+      style: { classes: 'qtip-tipsy qtip-skosmos' }
     });
     $('#hierarchy-disabled > #hier-trigger').qtip(qtip_skosmos_hierarchy);
     if (settings.url.indexOf('groups') !== -1 || settings.url.indexOf('index') !== -1) {
@@ -48,9 +48,9 @@ $(function() { // DOCUMENT READY
         return removeThese.join(' ');
       });
       if (settings.url.indexOf('index/' !== -1)) {
-        $(".sidebar-grey").mCustomScrollbar({ 
+        $(".sidebar-grey").mCustomScrollbar({
           alwaysShowScrollbar: 1,
-          scrollInertia: 0, 
+          scrollInertia: 0,
           mouseWheel:{ preventDefault: true, scrollAmount: 105 },
           snapAmount: 15,
           snapOffset: 1,
@@ -61,14 +61,14 @@ $(function() { // DOCUMENT READY
     // Sidenav actions only happen when doing other queries than the autocomplete.
     if (settings.url.indexOf('index') !== -1 || settings.url.indexOf('groups') !== -1 || settings.url.indexOf('changes') !== -1 || settings.url.indexOf('new') !== -1) {
       var snap = (settings.url.indexOf('hierarchy') !== -1) ? 18 : 15;
-      $(".sidebar-grey").mCustomScrollbar({ 
+      $(".sidebar-grey").mCustomScrollbar({
         alwaysShowScrollbar: 1,
-        scrollInertia: 0, 
+        scrollInertia: 0,
         mouseWheel:{ scrollAmount: 105 },
         snapAmount: snap,
         snapOffset: 0
       });
-    } 
+    }
     var $autocomplete = $('.tt-dropdown-menu');
     if (settings.url.indexOf('search') !== -1 && $autocomplete.length > 0 && $autocomplete[0].offsetHeight === 302) {
       $(".tt-dropdown-menu").mCustomScrollbar({ alwaysShowScrollbar: 1, scrollInertia: 0 });
@@ -78,7 +78,7 @@ $(function() { // DOCUMENT READY
     hideCrumbs();
   });
 
-  // if the hierarchy tab is active filling the jstree with data 
+  // if the hierarchy tab is active filling the jstree with data
   if ($('#hierarchy').hasClass('active')) { invokeParentTree(getTreeConfiguration()); }
   if ($('#groups').hasClass('active')) { invokeGroupTree(); }
 
@@ -91,14 +91,14 @@ $(function() { // DOCUMENT READY
    */
     $(document).on('click','.prefLabel',
       function() {
-        var text = $('.prefLabel')[0];    
+        var text = $('.prefLabel')[0];
         var range;
         if (document.body.createTextRange) { // ms
           range = document.body.createTextRange();
           range.moveToElementText(text);
           range.select();
         } else if (window.getSelection) { // moz, opera, webkit
-          var selection = window.getSelection();            
+          var selection = window.getSelection();
           range = document.createRange();
           range.selectNodeContents(text);
           selection.removeAllRanges();
@@ -107,20 +107,20 @@ $(function() { // DOCUMENT READY
         return false;
       }
       );
-    
+
   }
-    
+
   $(document).on('click','.uri-input-box',
     function() {
       var $clicked = $(this);
-      var text = $clicked[0];    
+      var text = $clicked[0];
       var range;
       if (document.body.createTextRange) { // ms
         range = document.body.createTextRange();
         range.moveToElementText(text);
         range.select();
       } else if (window.getSelection) { // moz, opera, webkit
-        var selection = window.getSelection();            
+        var selection = window.getSelection();
         range = document.createRange();
         range.selectNodeContents(text);
         selection.removeAllRanges();
@@ -158,7 +158,7 @@ $(function() { // DOCUMENT READY
         $('.search-parameter-highlight').css({'background': 'transparent', 'color': textColor});
       }
   );
- 
+
   // event handling the breadcrumb expansion
   $(document).on('click', '.expand-crumbs',
       function(event){
@@ -169,7 +169,7 @@ $(function() { // DOCUMENT READY
         return false;
       }
   );
-  
+
   // event handling restoring the hidden breadcrumb paths
   $(document).on('click', '.restore-breadcrumbs',
       function(){
@@ -183,7 +183,7 @@ $(function() { // DOCUMENT READY
 
   // ajaxing the concept count and the preflabel counts on the vocabulary front page
   if ($('#vocab-info').length && $('#statistics').length) {
-    // adding the spinners      
+    // adding the spinners
     $('#counts tr:nth-of-type(1)').after('<tr><td><span class="spinner" /></td></td></tr>');
     $('#statistics tr:nth-of-type(1)').after('<tr><td><span class="spinner" /></td></td></tr>');
     $.ajax({
@@ -200,12 +200,12 @@ $(function() { // DOCUMENT READY
         if (data.conceptGroups) {
           typeStats += '<tr><td class="count-type versal">' + data.conceptGroups.label + '</td><td class="versal">' + data.conceptGroups.count +'</td></tr>';
         }
-          
+
         $spinner.after(typeStats);
         $spinner.detach();
       }
     });
-    
+
     $.ajax({
       url : rest_base_url + vocab + '/labelStatistics',
       data: $.param({'lang' : lang}),
@@ -236,7 +236,7 @@ $(function() { // DOCUMENT READY
   });
 
   // the gear spinner shown when ajax loading a concept takes a long time
-  var $delayedSpinner = $("<p class='concept-spinner center-block'>" + loading_text + "&hellip;</p>"); 
+  var $delayedSpinner = $("<p class='concept-spinner center-block'>" + loading_text + "&hellip;</p>");
 
   // adds a delay before showing the spinner configured above
   function delaySpinner(loading) {
@@ -273,7 +273,7 @@ $(function() { // DOCUMENT READY
         return false;
       }
   );
-  
+
   // event handler for clicking the alphabetical/group index concepts
   $(document).on('click', '.side-navi a',
       function(event) {
@@ -289,10 +289,10 @@ $(function() { // DOCUMENT READY
             success : function(data) {
               if (window.history.pushState) { window.history.pushState({}, null, event.target.href); }
               $content.empty().append($('.content', data).html());
-              if (!$('#hierarchy').length) { 
-                $('#hierarchy-disabled').attr('id', 'hierarchy'); 
+              if (!$('#hierarchy').length) {
+                $('#hierarchy-disabled').attr('id', 'hierarchy');
                 $('#hier-trigger').attr('title', '');
-                $('#hier-trigger').qtip('disable'); 
+                $('#hier-trigger').qtip('disable');
               }
               $('#hier-trigger').attr('href', event.target.href);
               updateTitle(data);
@@ -305,8 +305,8 @@ $(function() { // DOCUMENT READY
         return false;
       }
   );
-  
-  // event handler for clicking the alphabetical index tab 
+
+  // event handler for clicking the alphabetical index tab
   $(document).on('click', '#alpha',
       function(event) {
         $.ajaxQ.abortAll();
@@ -326,8 +326,8 @@ $(function() { // DOCUMENT READY
         return false;
       }
   );
-  
-  // event handler for clicking the changes tab 
+
+  // event handler for clicking the changes tab
   $(document).on('click', '#changes',
       function(event) {
         $.ajaxQ.abortAll();
@@ -349,9 +349,9 @@ $(function() { // DOCUMENT READY
         return false;
       }
   );
-  
+
   // event handler for clicking the sidebar hierarchy tab
-  $(document).on('click', '#hier-trigger', 
+  $(document).on('click', '#hier-trigger',
     function () {
       if($(this).parent()[0].id === 'hierarchy-disabled') {
         return false;
@@ -366,7 +366,7 @@ $(function() { // DOCUMENT READY
         $('#hier-trigger').parent().addClass('active');
         $('.pagination').hide();
         $content.append('<div class="sidebar-grey concept-hierarchy"></div>');
-        invokeParentTree(getTreeConfiguration()); 
+        invokeParentTree(getTreeConfiguration());
         $('#hier-trigger').attr('href', '#');
         return false;
       }
@@ -377,7 +377,7 @@ $(function() { // DOCUMENT READY
     }
   );
 
-  // event handler for clicking the group index tab 
+  // event handler for clicking the group index tab
   $(document).on('click', '#groups > a',
       function(event) {
         $.ajaxQ.abortAll();
@@ -394,7 +394,7 @@ $(function() { // DOCUMENT READY
         return false;
       }
   );
- 
+
   // event handler for clicking groups
   $(document).on('click','div.group-hierarchy a',
       function(event) {
@@ -406,10 +406,10 @@ $(function() { // DOCUMENT READY
             beforeSend: delaySpinner(loading),
             complete: clearTimeout(loading),
             success : function(data) {
-              if (!$('#hierarchy').length) { 
-                $('#hierarchy-disabled').attr('id', 'hierarchy'); 
+              if (!$('#hierarchy').length) {
+                $('#hierarchy-disabled').attr('id', 'hierarchy');
                 $('#hier-trigger').attr('title', '');
-                $('#hier-trigger').qtip('disable'); 
+                $('#hier-trigger').qtip('disable');
               }
               $('#hier-trigger').attr('href', event.target.href);
               updateTitle(data);
@@ -426,7 +426,7 @@ $(function() { // DOCUMENT READY
         return false;
       }
   );
-  
+
   // event handler for the alphabetical index letters
   $(document).on('click','.pagination > li > a',
       function(event) {
@@ -458,43 +458,43 @@ $(function() { // DOCUMENT READY
   );
 
   // Event handlers for the language selection links for setting the cookie
-  $('#language a').each( function(index, el) { 
-    $(el).click(function() { 
+  $('#language a').each( function(index, el) {
+    $(el).click(function() {
       var langCode = el.id.substr(el.id.indexOf("-") + 1);
       setLangCookie(langCode);
-    }); 
+    });
   });
 
-  var qtip_skosmos = { 
+  var qtip_skosmos = {
     position: { my: 'top center', at: 'bottom center' },
-    style: { classes: 'qtip-tipsy qtip-skosmos' } 
+    style: { classes: 'qtip-tipsy qtip-skosmos' }
   };
-  
-  var qtip_skosmos_hierarchy = { 
+
+  var qtip_skosmos_hierarchy = {
     position: { my: 'top left', at: 'bottom center' },
-    style: { classes: 'qtip-tipsy qtip-skosmos' } 
+    style: { classes: 'qtip-tipsy qtip-skosmos' }
   };
-  
+
   $('#navi4').qtip(qtip_skosmos);
-    
+
   $('.property-click').qtip(qtip_skosmos);
-  
+
   $('.redirected-vocab-id').qtip(qtip_skosmos);
-  
+
   $('#hierarchy-disabled > #hier-trigger').qtip(qtip_skosmos_hierarchy);
-  
+
   // Setting the language parameters according to the clang parameter or if that's not possible the cookie.
   var search_lang = (content_lang !== '' && !getUrlParams().anylang) ? content_lang : readCookie('SKOSMOS_SEARCH_LANG');
-  
-  var rest_url = rest_base_url; 
+
+  var rest_url = rest_base_url;
   if (rest_url.indexOf('..') === -1 && rest_url.indexOf('http') === -1) { rest_url = encodeURI(location.protocol + '//' + rest_url); }
-  
+
   // qlang is used in REST queries as a parameter. it is either
   // - a language code, e.g. "en", when searching in a specific language
   // - "" when searching in all languages
   var qlang = search_lang;
   var langPretty;
-  
+
   if (search_lang === 'anything' || getUrlParams().anylang === 'on') {
     $('#lang-dropdown-toggle').html($('.lang-button-all').html() + ' <span class="caret"></span>');
     qlang = "";
@@ -511,10 +511,10 @@ $(function() { // DOCUMENT READY
   }
 
   var search_lang_possible = false;
-  $.each($('.input-group-btn a'), function(index, value) { 
+  $.each($('.input-group-btn a'), function(index, value) {
     if(value.hreflang === search_lang) { search_lang_possible = true; }
   });
-  
+
   if (!search_lang_possible && search_lang !== 'anything') {
     langPretty = $('a[hreflang=""]').html();
     $('#lang-dropdown-toggle').html(langPretty + ' <span class="caret"></span>');
@@ -530,7 +530,7 @@ $(function() { // DOCUMENT READY
     createCookie('SKOSMOS_SEARCH_LANG', qlang, 365);
     if (concepts) { concepts.clear(); }
   });
-  
+
   $('.lang-button-all').on('click', function() {
     createCookie('SKOSMOS_SEARCH_LANG', 'anything', 365);
     $('#lang-input').val('');
@@ -541,13 +541,13 @@ $(function() { // DOCUMENT READY
   $('.lang-button, .lang-button-all').click(function() {
     $('#search-field').focus();
   });
-  
+
   var searchTerm = "";
   if (getUrlParams().q) {
     searchTerm = decodeURI(getUrlParams().q.replace(/\+/g, ' '));
   }
-  
-  // disables the button with an empty search form 
+
+  // disables the button with an empty search form
   $('#search-field').keyup(function() {
     var empty = false;
     $('#search-field').each(function() {
@@ -578,8 +578,8 @@ $(function() { // DOCUMENT READY
       var base_href = $('base').attr('href'); // see #315
       location.href = base_href + datum.vocab + '/' + lang + '/page/' + localname + paramstr;
     } else {
-      $('#parent-limit').attr('data-uri', datum.uri); 
-      $('#parent-limit').val(datum.label); 
+      $('#parent-limit').attr('data-uri', datum.uri);
+      $('#parent-limit').val(datum.label);
       parentLimitReady = true;
       return false;
     }
@@ -601,8 +601,8 @@ $(function() { // DOCUMENT READY
 
   // fetch the json from local storage if it has been already cached there.
   var typeJSON = lscache.get('types:' + lang);
-  if (typeJSON) { 
-    processTypeJSON(typeJSON); 
+  if (typeJSON) {
+    processTypeJSON(typeJSON);
   } else { // if not then ajax the rest api and cache the results.
     var typeParam = $.param({'lang' : lang });
     var typeUrl = rest_base_url + 'types';
@@ -613,9 +613,9 @@ $(function() { // DOCUMENT READY
   }
 
   var wildcard = '';
-  
+
   var concepts = new Bloodhound({
-    remote: { 
+    remote: {
       url: rest_base_url + 'search?query=',
       replace: function(url, query) {
         var wildcard = (query.indexOf('*') === -1) ? '*' : '';
@@ -624,7 +624,7 @@ $(function() { // DOCUMENT READY
       ajax: {
         beforeSend: function(jqXHR, settings) {
           wildcard = ($('#search-field').val().indexOf('*') === -1) ? '*' : '';
-          var vocabString = $('.frontpage').length ? vocabSelectionString : vocab; 
+          var vocabString = $('.frontpage').length ? vocabSelectionString : vocab;
           var parameters = $.param({'vocab' : vocabString, 'lang' : qlang, 'labellang' : qlang});
           // if the search has been targeted at all languages by clicking the checkbox
           if ($('input[name=anylang]').is(':checked')) {
@@ -707,8 +707,8 @@ $(function() { // DOCUMENT READY
 
     var $typeahead = $('#search-field').typeahead({ hint: false, highlight: true, minLength: autocomplete_activation },
       {
-        name: 'concept', 
-        displayKey: 'label', 
+        name: 'concept',
+        displayKey: 'label',
         templates: {
           empty: Handlebars.compile([
             '<div><p class="autocomplete-no-results">{{#noresults}}{{/noresults}}</p></div>'
@@ -719,20 +719,20 @@ $(function() { // DOCUMENT READY
     }).on('typeahead:cursorchanged', function() {
       $('.tt-dropdown-menu').mCustomScrollbar("scrollTo", '.tt-cursor');
     }).on('typeahead:selected', onSelection).bind('focus', function() {
-      $('#search-field').typeahead('open'); 
+      $('#search-field').typeahead('open');
     }).after(clearButton).on('keypress', function() {
       if ($typeahead.val().length > 0 && $(this).hasClass('clear-search-dark') === false) {
         $('.clear-search').addClass('clear-search-dark');
       }
     });
   }
-    
-  // storing the search input before autocompletion changes it 
-  $('#search-field').on('input', function() { 
-    searchString = $(this).val(); 
+
+  // storing the search input before autocompletion changes it
+  $('#search-field').on('input', function() {
+    searchString = $(this).val();
   });
 
-  $('.clear-search').on('click', function() { 
+  $('.clear-search').on('click', function() {
     searchString = '';
     $typeahead.val('');
     $typeahead.focus();
@@ -745,7 +745,7 @@ $(function() { // DOCUMENT READY
       $('#message').removeClass('missing-value');
       var emailMessageVal = $("#message").val();
       var emailAddress = $("#email").val();
-      var requiredFields = true;  
+      var requiredFields = true;
       if (emailAddress === '' || emailAddress.indexOf('@') === -1) {
         $("#email").addClass('missing-value');
         requiredFields = false;
@@ -758,14 +758,14 @@ $(function() { // DOCUMENT READY
   });
 
   // Initializes the waypoints plug-in used for the search listings.
-  var $loading = $("<p>" + loading_text + "&hellip;<span class='spinner'/></p>"); 
-  var $trigger = $('.search-result:nth-last-of-type(6)'); 
+  var $loading = $("<p>" + loading_text + "&hellip;<span class='spinner'/></p>");
+  var $trigger = $('.search-result:nth-last-of-type(6)');
   var options = { offset : '100%', continuous: false, triggerOnce: true };
   var alpha_complete = false;
   var offcount = 1;
   var number_of_hits = $(".search-result").length;
   var $ready = $("<p class='search-count'>" + results_disp.replace('%d', number_of_hits) +"</p>");
-  
+
   // search-results waypoint
   if (number_of_hits > 0) { // if we are in the search page with some results
     if (number_of_hits === parseInt($('.search-count p').text().substr(0, $('.search-count p').text().indexOf(' ')), 10)) {
@@ -778,7 +778,7 @@ $(function() { // DOCUMENT READY
 
   function alphaWaypointCallback() {
     // if the pagination is not visible all concepts are already shown
-    if (!alpha_complete && $('.pagination').length === 1) {      
+    if (!alpha_complete && $('.pagination').length === 1) {
       alpha_complete = true;
       $('.alphabetical-search-results').append($loading);
       var parameters = $.param({'offset' : 250, 'clang': content_lang});
@@ -796,7 +796,7 @@ $(function() { // DOCUMENT READY
     }
   }
   var changeOffset = 200;
-  
+
   function changeListWaypointCallback() {
     $('.change-list').append($loading);
     var parameters = $.param({'offset' : changeOffset, 'clang': content_lang});
@@ -846,16 +846,16 @@ $(function() { // DOCUMENT READY
     }
   }
 
-  // activating the custom autocomplete 
+  // activating the custom autocomplete
   function updateVocabParam() {
     vocabSelectionString = '';
     var $vocabs = $('li.active input');
-    $.each($vocabs, 
-      function(index, ob) { 
+    $.each($vocabs,
+      function(index, ob) {
         if (ob.value === 'multiselect-all') {
           return false;
         }
-        vocabSelectionString += ob.value; 
+        vocabSelectionString += ob.value;
         if (index < $vocabs.length - 1) { vocabSelectionString += ' '; }
     });
     // sets the selected vocabularies cookie for the frontpage search.
@@ -877,7 +877,7 @@ $(function() { // DOCUMENT READY
   $('.headerbar .multiselect').multiselect({
     buttonText: function(options) {
       if (options.length === 0 || options.length === ($('.headerbar .multiselect-container li').length - 1)) {
-        return all_vocabs; 
+        return all_vocabs;
       } else {
         if (options.length > this.numberDisplayed) {
           return options.length + ' ' + n_selected;
@@ -900,21 +900,21 @@ $(function() { // DOCUMENT READY
         vocabId = element[0].value;
       } else {
         vocabId = '';
-      } 
+      }
       if (checked && selectedVocabs[vocabId] === undefined) {
         selectedVocabs[vocabId] = vocabId;
       } else if (selectedVocabs[vocabId] !== undefined) {
         delete selectedVocabs[vocabId];
-      } 
+      }
       this.vocabSelectionString = updateVocabParam();
     },
-    maxHeight: 300 
+    maxHeight: 300
   });
-  
+
   $('.sidebar-grey .multiselect').multiselect({
     buttonText: function(options) {
       if (options.length === 0) {
-        return  ''; 
+        return  '';
       } else {
         var selected = '';
         options.each(function() {
@@ -926,28 +926,28 @@ $(function() { // DOCUMENT READY
     },
     numberDisplayed: 2,
     buttonWidth: 'auto',
-    onDropdownShown: function(event) { 
+    onDropdownShown: function(event) {
       var $activeChild = $(event.currentTarget).find('.active');
-      $('.multiselect-container').mCustomScrollbar('scrollTo', $activeChild); 
+      $('.multiselect-container').mCustomScrollbar('scrollTo', $activeChild);
     },
-    maxHeight: 300 
+    maxHeight: 300
   });
 
   if ($('#groups.active').length === 1 || ( $('#alpha.active').length === 1) ) {
-    $(".sidebar-grey").mCustomScrollbar({ 
+    $(".sidebar-grey").mCustomScrollbar({
       alwaysShowScrollbar: 1,
-      scrollInertia: 0, 
+      scrollInertia: 0,
       mouseWheel:{ preventDefault: true, scrollAmount: 105 },
       snapAmount: 15,
       snapOffset: 1,
       callbacks: { alwaysTriggerOffsets: false, onTotalScroll: alphaWaypointCallback, onTotalScrollOffset: 300 }
     });
   }
-  
+
   if ($('#changes.active').length === 1) {
-    $(".sidebar-grey").mCustomScrollbar({ 
+    $(".sidebar-grey").mCustomScrollbar({
       alwaysShowScrollbar: 1,
-      scrollInertia: 0, 
+      scrollInertia: 0,
       mouseWheel:{ preventDefault: true, scrollAmount: 105 },
       snapAmount: 15,
       snapOffset: 1,
@@ -959,32 +959,32 @@ $(function() { // DOCUMENT READY
    *  since that goes haywire if it's done before the ajax complete runs
    */
   if ($('#vocab-info').length === -1 && document.URL.indexOf('/page/') === -1 && $('.search-count').length === 0) {
-    $(".sidebar-grey").mCustomScrollbar({ 
+    $(".sidebar-grey").mCustomScrollbar({
       alwaysShowScrollbar: 1,
-      scrollInertia: 0, 
+      scrollInertia: 0,
       mouseWheel:{ scrollAmount: 105 },
       snapAmount: 15,
       snapOffset: 1
     });
-  } 
-  
+  }
+
   /* adding the replaced by concept href to the alert box when possible.
    */
   var $replaced = $('.replaced-by');
   if ($replaced.length === 1) {
-    var $replacedSpan = $('.replaced-by span'); 
+    var $replacedSpan = $('.replaced-by span');
     var undoUppercasing = $replacedSpan.text().substr(0,1) + $replacedSpan.text().substr(1).toLowerCase();
     var html = '<h2 class="alert-replaced">' + undoUppercasing + ':<a href="' + $('.replaced-by a')[0] + '">' + $('.replaced-by a').html() + '</h2>';
     $('.alert-danger').append(html);
-    $(document).on('click', '#groups', 
+    $(document).on('click', '#groups',
       function() {
-        $('.sidebar-grey').clear(); 
+        $('.sidebar-grey').clear();
           return false;
       }
     );
-  } 
+  }
 
-  /* makes an AJAX query for the alphabetical index contents when landing on 
+  /* makes an AJAX query for the alphabetical index contents when landing on
    * the vocabulary home page.
    */
   if ($('#alpha').hasClass('active') && $('#vocab-info').length === 1 && $('.alphabetical-search-results').length === 0) {
@@ -1021,23 +1021,23 @@ $(function() { // DOCUMENT READY
         parentLimitReady = false;
       }
     });
-    
+
     $(document).on('submit', '.search-options', function() {
       if (parentLimitReady) { loadLimitedResults(loadLimitations()); }
       return false;
     });
 
-    $('.multiselect-container').mCustomScrollbar({ 
+    $('.multiselect-container').mCustomScrollbar({
       alwaysShowScrollbar: 1,
-      scrollInertia: 0, 
+      scrollInertia: 0,
       mouseWheel:{ scrollAmount: 60 },
       snapAmount: 20,
       snapOffset: 1
     });
 
     $('#parent-limit').typeahead({ hint: false, highlight: true, minLength: autocomplete_activation },{
-        name: 'concept', 
-        displayKey: 'label', 
+        name: 'concept',
+        displayKey: 'label',
         templates: {
           empty: Handlebars.compile([
             '<div><p class="autocomplete-no-results">{{#noresults}}{{/noresults}}</p></div>'
@@ -1048,12 +1048,21 @@ $(function() { // DOCUMENT READY
     }).on('typeahead:cursorchanged', function() {
       $('.tt-dropdown-menu').mCustomScrollbar("scrollTo", '.tt-cursor');
     }).on('typeahead:selected', onSelection).bind('focus', function() {
-      $('#search-field').typeahead('open'); 
+      $('#search-field').typeahead('open');
     });
   }
 
   // setting the focus to the search box on default if we are not on the search results page
   if ($('.search-result-listing').length === 0) { $("#search-field").focus(); }
+
+  if ($('#feedback-vocid').length) {
+    $('#feedback-fields > .dropdown > .dropdown-menu > li > a').each(function(index, elem) {
+      $(elem).on('click', function(event) {
+        $('#feedback-vocid-input').val($(this).attr('data-vocid'))
+        $('#feedback-vocid').html($(this).html() + '<span class="caret"></span>');
+        event.preventDefault();
+    })});
+  }
 
   makeCallbacks();
 
