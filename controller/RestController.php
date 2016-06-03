@@ -378,7 +378,7 @@ class RestController extends Controller
         return $this->returnJson($ret);
     }
     
-    private function findLookupHits($results, $label)
+    private function findLookupHits($results, $label, $lang)
     {
         $hits = array();
         // case 1: exact match on preferred label
@@ -396,6 +396,28 @@ class RestController extends Controller
             }
         }
         if (sizeof($hits) > 0) return $hits;
+        
+        if ($lang === null) {
+            // case 1A: exact match on preferred label in any language
+            foreach ($results as $res) {
+                if ($res['matchedPrefLabel'] == $label) {
+                    $res['prefLabel'] = $res['matchedPrefLabel'];
+                    unset($res['matchedPrefLabel']);
+                    $hits[] = $res;
+                }
+            }
+            if (sizeof($hits) > 0) return $hits;
+            
+            // case 2A: case-insensitive match on preferred label in any language
+            foreach ($results as $res) {
+                if (strtolower($res['matchedPrefLabel']) == strtolower($label)) {
+                    $res['prefLabel'] = $res['matchedPrefLabel'];
+                    unset($res['matchedPrefLabel']);
+                    $hits[] = $res;
+                }
+            }
+            if (sizeof($hits) > 0) return $hits;
+        }
 
         // case 3: exact match on alternate label
         foreach ($results as $res) {
@@ -412,6 +434,8 @@ class RestController extends Controller
                 $hits[] = $res;
             }
         }
+        if (sizeof($hits) > 0) return $hits;
+
         return $hits;   
     }
     
@@ -454,7 +478,7 @@ class RestController extends Controller
         $lang = $request->getQueryParam('lang');
         $parameters = new ConceptSearchParameters($request, $this->model->getConfig(), true);
         $results = $this->model->searchConcepts($parameters);
-        $hits = $this->findLookupHits($results, $label);
+        $hits = $this->findLookupHits($results, $label, $lang);
         $ret = $this->transformLookupResults($lang, $hits, $label);
         return $this->returnJson($ret);
     }
