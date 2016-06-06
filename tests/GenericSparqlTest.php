@@ -845,4 +845,32 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
     $actual = $this->sparql->queryConcepts(array($voc), null, true, $this->params);
     $this->assertEquals(1, sizeof($actual));
   }
+
+  /**
+   * @covers GenericSparql::queryConcepts
+   * @covers GenericSparql::generateConceptSearchQueryCondition
+   * @covers GenericSparql::generateConceptSearchQueryInner
+   * @covers GenericSparql::generateConceptSearchQuery
+   * @covers GenericSparql::formatFilterGraph
+   * @covers GenericSparql::transformConceptSearchResults
+   * @covers GenericSparql::transformConceptSearchResult
+   * @covers GenericSparql::shortenUri
+   * @covers GenericSparql::formatExtraFields
+   * @covers GenericSparql::formatPropertyCsvClause
+   * @covers GenericSparql::formatPrefLabelCsvClause
+   */
+  public function testQueryConceptsWithExtraFields()
+  {
+    $voc = $this->model->getVocabulary('test');
+    $this->params->method('getSearchTerm')->will($this->returnValue('bass*'));
+    $this->params->method('getVocabIds')->will($this->returnValue(array('test')));
+    $actual = $this->sparql->queryConcepts(array($voc), array('broader', 'prefLabel'), null, $this->params);
+    $this->assertEquals(1, sizeof($actual));
+    $expected = array('uri' => 'http://www.skosmos.skos/test/ta116', 'type' => array (0 => 'skos:Concept',
+    1 => 'meta:TestClass',
+  ),
+);
+    $this->assertEquals(array('en' => 'Bass'), $actual[0]['prefLabels']);
+    $this->assertEquals(array(0 => array('uri' => 'http://www.skosmos.skos/test/ta1')), $actual[0]['skos:broader']);
+  }
 }
