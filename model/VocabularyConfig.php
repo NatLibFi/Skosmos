@@ -405,4 +405,20 @@ class VocabularyConfig extends DataObject
     {
         return $this->getBoolean('skosmos:showAlphabeticalIndex', true);
     }
+
+    /**
+     * Returns the vocabulary dc:type value(s) with their labels and uris, if set in the vocabulary configuration.
+     * @return array of objects or an empty array
+     */
+    public function getTypes($lang = null)
+    {
+        $resources = $this->resource->allResources("dc:type");
+        $ret = array();
+        foreach ($resources as $res) {
+            $prop = $res->getURI();
+            $label = $res->label($lang) ? $res->label($lang) : $res->label($this->getDefaultLanguage());
+            $ret[] = array('uri' => $prop, 'prefLabel' =>  $label->getValue());
+        }
+        return $ret;
+    }
 }

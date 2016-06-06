@@ -223,6 +223,10 @@ class RestController extends Controller
             'languages' => array_values($vocab->getConfig()->getLanguages()),
             'conceptschemes' => $conceptschemes,
         );
+        
+        if ($vocab->getConfig()->getTypes($request->getLang())) {
+            $ret['type'] = $vocab->getConfig()->getTypes($request->getLang());
+        }
 
         return $this->returnJson($ret);
     }

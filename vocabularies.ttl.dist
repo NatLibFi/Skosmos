@@ -10,14 +10,15 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix skosmos: <http://purl.org/net/skosmos#> .
 @prefix isothes: <http://purl.org/iso25964/skos-thes#> .
+@prefix mdrtype: <http://publications.europa.eu/resource/authority/dataset-type/> .
 @prefix : <#> .
-
 
 :ysa a skosmos:Vocabulary, void:Dataset ;
 	dc:title "YSA - Yleinen suomalainen asiasanasto"@fi,
 		"YSA - Allmän tesaurus på finska"@sv,
 		"YSA - General Finnish thesaurus"@en ;
 	dc:subject :cat_general ;
+    dc:type mdrtype:THESAURUS ;
 	void:uriSpace "http://www.yso.fi/onto/ysa/";
 	skosmos:groupClass skos:Collection;
 	skosmos:language "fi";
@@ -33,6 +34,7 @@
 		"ALLFO - Allmän finländsk ontologi"@sv,
 		"YSO - General Finnish ontology"@en ;
 	dc:subject :cat_general ;
+    dc:type mdrtype:ONTOLOGY ;
 	void:uriSpace "http://www.yso.fi/onto/yso/";
 	skosmos:language "fi", "sv", "en";
 	skosmos:defaultLanguage "fi";
@@ -48,7 +50,6 @@
 	skosmos:sparqlGraph <http://www.yso.fi/onto/yso/> ;
 	skosmos:mainConceptScheme <http://www.yso.fi/onto/yso/> .
 
-
 :categories a skos:ConceptScheme;
 	skos:prefLabel "Skosmos Vocabulary Categories"@en .
 
@@ -58,3 +59,10 @@
 	skos:prefLabel "Yleiskäsitteet"@fi, 
 		"Allmänna begrepp"@sv,
 		"General concepts"@en .
+
+mdrtype:THESAURUS a skos:Concept ;
+	skos:prefLabel "Тезаурус"@bg, "Tezaurus"@cs, "Tesaurus"@da, "Thesaurus"@de, "Θησαυρός"@el, "Thesaurus"@en, "Tesaurus"@et, "Tesaurus"@fi, "Thésaurus"@fr, "Pojmovnik"@hr, "Tezaurusz"@hu, "Tesauro"@it, "Tēzaurs"@lv, "Tezauras"@lt, "Teżawru"@mt, "Thesaurus"@nl, "Tesaurus"@no, "Tezaurus"@pl, "Tesauro"@pt, "Tezaur"@ro, "Synonymický slovník"@sk, "Tezaver"@sl, "Tesauro"@es, "Tesaurus"@sv .
+
+mdrtype:ONTOLOGY a skos:Concept ;
+    skos:prefLabel "Онтология"@bg, "Ontologie"@cs, "Ontologi"@da, "Ontologie"@de, "Οντολογία"@el, "Ontology"@en, "Ontoloogia"@et, "Ontologia"@fi, "Ontologie"@fr, "Ontologija"@hr, "Ontológia"@hu, "Ontologia"@it, "Ontoloģija"@lv, "Ontologija"@lt, "Ontoloġija"@mt, "Ontologie"@nl, "Ontologi"@no, "Struktura pojęciowa"@pl, "Ontologia"@pt, "Ontologie"@ro, "Ontológia"@sk, "Ontologija"@sl, "Ontología"@es, "Ontologi"@sv .
+
