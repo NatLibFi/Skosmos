@@ -1178,6 +1178,13 @@
                     "items": {
                         "$ref": "#/definitions/ConceptScheme"
                     }
+                },
+                "type": {
+                    "description": "Optional vocabulary classification e.g. 'http://publications.europa.eu/resource/authority/dataset-type/ONTOLOGY'",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/PrefAndUri"
+                    }
                 }
             },
             "required": [
