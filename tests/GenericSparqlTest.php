@@ -448,7 +448,6 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   public function testQueryConceptsMatchNotation()
   {
     $voc = $this->model->getVocabulary('test');
-    $this->params->method('getRawSearchTerm')->will($this->returnValue('665'));
     $this->params->method('getSearchTerm')->will($this->returnValue('665*'));
     $this->params->method('getVocabIds')->will($this->returnValue(array('test')));
     $actual = $this->sparql->queryConcepts(array($voc), null, null, $this->params);
