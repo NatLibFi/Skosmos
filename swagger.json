@@ -74,14 +74,14 @@
                     {
                         "name": "vocab",
                         "in": "query",
-                        "description": "vocabulary to limit search to, e.g. \"yso\"",
+                        "description": "vocabulary/vocabularies to limit search to, e.g. \"yso\" or \"yso allars\"",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "type",
                         "in": "query",
-                        "description": "limit search to concepts of the given type, e.g. \"skos:Concept\".",
+                        "description": "limit search to concepts of the given type(s), e.g. \"skos:Concept\".",
                         "required": false,
                         "type": "string"
                     },
@@ -350,7 +350,7 @@
                     {
                         "name": "uri",
                         "in": "query",
-                        "description": "URI of concept. When no uri parameter is given, the whole vocabulary is returned instead.",
+                        "description": "URI of the desired concept. When no uri parameter is given, the whole vocabulary is returned instead.",
                         "required": false,
                         "type": "string"
                     }
@@ -649,7 +649,7 @@
                     {
                         "name": "uri",
                         "in": "query",
-                        "description": "URI of the concept whose label to return",
+                        "description": "URI of the concept whose broader concept to return",
                         "required": true,
                         "type": "string"
                     },
@@ -694,7 +694,7 @@
                     {
                         "name": "uri",
                         "in": "query",
-                        "description": "URI of the concept whose label to return",
+                        "description": "URI of the concept whose broader transitive hierarchy to return",
                         "required": true,
                         "type": "string"
                     },
@@ -739,7 +739,7 @@
                     {
                         "name": "uri",
                         "in": "query",
-                        "description": "URI of the concept whose label to return",
+                        "description": "URI of the concept whose narrower concept to return",
                         "required": true,
                         "type": "string"
                     },
@@ -784,7 +784,7 @@
                     {
                         "name": "uri",
                         "in": "query",
-                        "description": "URI of the concept whose label to return",
+                        "description": "URI of the concept whose narrower transitive hierarchy to return",
                         "required": true,
                         "type": "string"
                     },
@@ -829,7 +829,7 @@
                     {
                         "name": "uri",
                         "in": "query",
-                        "description": "URI of the concept whose label to return",
+                        "description": "URI of the concept whose related concept to return",
                         "required": true,
                         "type": "string"
                     },
@@ -874,7 +874,7 @@
                     {
                         "name": "uri",
                         "in": "query",
-                        "description": "URI of the concept whose label to return",
+                        "description": "URI of the concept whose narrower concepts to return",
                         "required": true,
                         "type": "string"
                     },
@@ -995,7 +995,7 @@
                     {
                         "name": "uri",
                         "in": "query",
-                        "description": "URI of the concept whose label to return",
+                        "description": "URI of the concept whose hierarchical context to return",
                         "required": true,
                         "type": "string"
                     },
