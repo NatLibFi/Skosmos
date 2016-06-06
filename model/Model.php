@@ -356,7 +356,7 @@ class Model
                 $ret[$idx]->setFoundBy($hit['matchedPrefLabel'], 'lang');
             }
 
-            if ($ret[$idx]) {
+            if ($ret[$idx] && isset($hit['lang'])) {
                 $ret[$idx]->setContentLang($hit['lang']);
             }
 
