@@ -73,7 +73,7 @@ function getLabel(object) {
   if (window.showNotation && object.notation) {
     return '<span class="tree-notation">' + object.notation + '</span> ' + object[labelProp];
   }
-  return object[labelProp];
+  return escapeHtml(object[labelProp]);
 }
 
 function createObjectsFromChildren(conceptData, conceptUri) {
