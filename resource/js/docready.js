@@ -480,6 +480,8 @@ $(function() { // DOCUMENT READY
   $('.property-click').qtip(qtip_skosmos);
 
   $('.redirected-vocab-id').qtip(qtip_skosmos);
+  
+  $('.reified-property-value').qtip(qtip_skosmos);
 
   $('#hierarchy-disabled > #hier-trigger').qtip(qtip_skosmos_hierarchy);
 
