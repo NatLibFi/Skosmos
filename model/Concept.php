@@ -33,7 +33,7 @@ class Concept extends VocabularyDataObject
 
         'skos:topConceptOf', # because it's too technical, not relevant for users
         'skos:inScheme', # should be evident in any case
-        'skos:member', # this is shouldn't be shown on the group page
+        'skos:member', # this shouldn't be shown on the group page
         'dc:created', # handled separately
         'dc:modified', # handled separately
     );
@@ -81,6 +81,20 @@ class Concept extends VocabularyDataObject
     public function getType()
     {
         return $this->resource->types();
+    }
+
+
+    /**
+     * Returns a boolean value indicating whether the resource is a group defined in the vocab config as skosmos:groupClass.
+     * @return boolean
+     */
+    public function isGroup() {
+        $groupClass = $this->getVocab()->getConfig()->getGroupClassURI();
+        if ($groupClass) {
+            $groupClass = EasyRdf_Namespace::shorten($groupClass) !== null ? EasyRdf_Namespace::shorten($groupClass) : $groupClass;
+            return in_array($groupClass, $this->getType());
+        }
+        return false;
     }
 
     /**
@@ -316,7 +330,7 @@ class Concept extends VocabularyDataObject
             }
             // EasyRdf requires full URIs to be in angle brackets
 
-            if (!in_array($prop, $this->DELETED_PROPERTIES)) {
+            if (!in_array($prop, $this->DELETED_PROPERTIES) || ($this->isGroup() === false && $prop === 'skos:member')) {
                 $propres = new EasyRdf_Resource($prop, $this->graph);
                 $proplabel = $propres->label($this->getEnvLang()) ? $propres->label($this->getEnvLang()) : $propres->label();
                 $superprop = $propres->get('rdfs:subPropertyOf') ? $propres->get('rdfs:subPropertyOf')->getURI() : null;
