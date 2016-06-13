@@ -65,6 +65,16 @@ class GlobalConfig {
     }
     
     /**
+     * Returns the SPARQL HTTP request timeout in seconds or the default value
+     * of 20 seconds if not specified in the configuration.
+     * @return integer
+     */
+    public function getSparqlTimeout() 
+    {
+        return $this->getConstant('SPARQL_TIMEOUT', 20);
+    }
+    
+    /**
      * Returns the sparql endpoint address defined in the configuration. If
      * not then defaulting to http://localhost:3030/ds/sparql 
      * @return string
