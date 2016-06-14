@@ -474,14 +474,25 @@ $(function() { // DOCUMENT READY
     position: { my: 'top left', at: 'bottom center' },
     style: { classes: 'qtip-tipsy qtip-skosmos' }
   };
-
+  
   $('#navi4').qtip(qtip_skosmos);
 
   $('.property-click').qtip(qtip_skosmos);
 
   $('.redirected-vocab-id').qtip(qtip_skosmos);
   
-  $('.reified-property-value').qtip(qtip_skosmos);
+  $('.reified-property-value').each(function() {
+    $(this).qtip({
+      content: $(this).next('.reified-tooltip'),
+      position: { my: 'top left', at: 'top left' },
+      style: { classes: 'qtip-skosmos' },
+      show: { delay: 100 },
+      hide: {
+        fixed: true,
+        delay: 400
+      }
+    });
+  });
 
   $('#hierarchy-disabled > #hier-trigger').qtip(qtip_skosmos_hierarchy);
 

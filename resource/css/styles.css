@@ -510,13 +510,31 @@ ul.dropdown-menu > li:last-child > input {
 .qtip-skosmos {
   background-color: #1E1E1E;
   border-radius: 0;
-  margin-top: 2px;
+  border: 3px solid #75889F;
+  margin-top: 12px;
+  margin-left: 9px;
+  min-width: 400px;
 }
 
 .qtip-skosmos * {
+  color: #fff;
   font-size: 14px;
   font-weight: 400;
-  border: 3px solid #75889F;
+}
+
+.qtip-skosmos a {
+  color: #00ACD3 !important;
+  width: 100%;
+}
+
+.reified-tooltip {
+  display: none;
+  margin-top: 5px;
+  width: 100%;
+}
+
+.reified-property-value > img {
+  width: 18px;
 }
 
 /* front page stuff
