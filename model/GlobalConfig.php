@@ -103,13 +103,13 @@ class GlobalConfig {
     }
     
     /**
-     * Returns the maximum number of items to return in search queries if defined
-     * in the configuration or the default value of 100.
+     * Returns the maximum number of items to load at a time if defined
+     * in the configuration or the default value of 20.
      * @return integer 
      */
-    public function getDefaultSearchLimit() 
+    public function getSearchResultsSize() 
     {
-        return $this->getConstant('DEFAULT_SEARCH_LIMIT', 100);
+        return $this->getConstant('SEARCH_RESULTS_SIZE', 20);
     }
     
     /**

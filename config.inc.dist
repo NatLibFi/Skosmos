@@ -18,8 +18,8 @@ $LANGUAGES = array(
 // a local Fuseki server is usually on localhost:3030
 define("DEFAULT_ENDPOINT", "http://localhost:3030/ds/sparql");
 
-// how many items (maximum) to retrieve in search methods by default
-define("DEFAULT_SEARCH_LIMIT", 100);
+// how many results (maximum) to load at a time on the search results page
+define("SEARCH_RESULTS_SIZE", 20);
 
 // how many items (maximum) to retrieve in transitive property queries
 define("DEFAULT_TRANSITIVE_LIMIT", 1000);
