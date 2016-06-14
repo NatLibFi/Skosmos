@@ -56,12 +56,12 @@ class GlobalConfigTest extends PHPUnit_Framework_TestCase
   }
 
   /**
-   * @covers GlobalConfig::getDefaultSearchLimit
+   * @covers GlobalConfig::getSearchResultsSize
    * @covers GlobalConfig::getConstant
    */
   public function testSearchLimitDefaultValue() {
-    $actual = $this->config->getDefaultSearchLimit();
-    $this->assertEquals(100, $actual);
+    $actual = $this->config->getSearchResultsSize();
+    $this->assertEquals(20, $actual);
   }
 
   /**
