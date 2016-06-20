@@ -664,7 +664,7 @@ ul.dropdown-menu > li:last-child > input {
 #feedback-vocid {
   background-color: #F6F7F8;
   border: 0;
-  color: #333;
+  color: #00748f;
   height: 34px;
   text-align: left;
   width: 100%;
@@ -677,7 +677,7 @@ ul.dropdown-menu > li:last-child > input {
 }
 
 #feedback-vocid:hover, #feedback-vocid:focus, #feedback-vocid:active {
-  color: #333;
+  color: #00748f;
 }
 
 .feedback-logo {
