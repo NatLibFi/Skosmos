@@ -403,7 +403,7 @@
                     {
                         "name": "type",
                         "in": "query",
-                        "description": "limit search to concepts of the given type, e.g. \"skos:Concept\".",
+                        "description": "limit search to concepts of the given type, e.g. \"skos:Concept\"; multiple types can be specified as a space-separated list",
                         "required": false,
                         "type": "string"
                     },
