@@ -112,7 +112,9 @@ class ConceptSearchParameters
     public function getTypeLimit() 
     {
         $type = $this->request->getQueryParam('type') !== '' ? $this->request->getQueryParam('type') : null;
-        if ($type && strpos($type, '+')) {
+        if ($type && strpos($type, ' ')) {
+            $type = explode(' ', $type);
+        } else if ($type && strpos($type, '+')) {
             $type = explode('+', $type);
         } else if ($type && !is_array($type)) {
             // if only one type param given place it into an array regardless
