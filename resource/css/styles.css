@@ -677,7 +677,7 @@ ul.dropdown-menu > li:last-child > input {
 }
 
 #feedback-vocid:hover, #feedback-vocid:focus, #feedback-vocid:active {
-  color: #333;
+  color: #00748f;
 }
 
 .feedback-logo {
