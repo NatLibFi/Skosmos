@@ -3,7 +3,7 @@
     "info": {
         "title": "Skosmos API",
         "version": "v1",
-        "description": "The Skosmos REST API is a read-only interface to the data stored in the vocabulary server. The URL namespace is the URL of the Skosmos instance, e.g. http://api.finto.fi (at the National Library of Finland, running the latest Skosmos release). REST URLs begin with `/rest/v1`. \n\nMost methods return the data as UTF-8 encoded JSON-LD, served using the `application/json` MIME type. The data consists of a single JSON object which includes JSON-LD context information (in the `@context` field) and one or more fields which contain the actual data. Some methods (`data`) return other formats (RDF/XML, Turtle, RDF/JSON) with the appropriate MIME type.\n\nThe API supports Cross-Origin Resource Sharing by setting the Access-Control-Allow-Origin HTTP header to `\"*\"` for all requests.\n\nThe API supports the JSONP convention of appending a callback parameter to any URL. The returned data will then be wrapped in a JavaScript function call using the function name provided as the callback parameter value. JSONP wrapped data will be served using the `application/javascript` MIME type.\n"
+        "description": "The Skosmos REST API is a read-only interface to the data stored on the vocabulary server. The URL namespace is the base URL of the Skosmos instance followed by `/rest/v1/`. \n\nMost methods return the data as UTF-8 encoded JSON-LD, served using the `application/json` MIME type. The data consists of a single JSON object which includes JSON-LD context information (in the `@context` field) and one or more fields which contain the actual data. Some methods (`data`) return other formats (RDF/XML, Turtle, RDF/JSON) with the appropriate MIME type.\n\nThe API supports Cross-Origin Resource Sharing by setting the Access-Control-Allow-Origin HTTP header to `\"*\"` for all requests.\n\nThe API supports the JSONP convention of appending a callback parameter to any URL. The returned data will then be wrapped in a JavaScript function call using the function name provided as the callback parameter value. JSONP wrapped data will be served using the `application/javascript` MIME type.\n"
     },
     "schemes": [
         "http",
@@ -47,7 +47,7 @@
         },
         "/search": {
             "get": {
-                "summary": "Finds concepts and collections by query term",
+                "summary": "Search concepts and collections by query term",
                 "parameters": [
                     {
                         "name": "query",
@@ -145,7 +145,7 @@
         },
         "/data": {
             "get": {
-                "summary": "Gets the RDF data of the requested concept",
+                "summary": "RDF data of the requested concept",
                 "parameters": [
                     {
                         "name": "uri",
@@ -183,7 +183,7 @@
         },
         "/types": {
             "get": {
-                "summary": "Information about the types (classes) of objects contained in all the vocabularies",
+                "summary": "Information about the types (classes) of objects contained in all  vocabularies",
                 "parameters": [
                     {
                         "name": "lang",
@@ -330,7 +330,7 @@
         },
         "/{vocid}/data": {
             "get": {
-                "summary": "Gets the RDF data of the vocabulary",
+                "summary": "RDF data of the whole vocabulary or a specific concept",
                 "parameters": [
                     {
                         "name": "vocid",
@@ -468,7 +468,7 @@
         },
         "/{vocid}/lookup": {
             "get": {
-                "summary": "Finds concepts by label",
+                "summary": "Look up concepts by label",
                 "description": "Returns the best matching concept(s) for the given label in JSON-LD format. In case the label matches several concepts with the same precedence, all of them are returned.",
                 "parameters": [
                     {
@@ -514,7 +514,7 @@
         },
         "/{vocid}/vocabularyStatistics": {
             "get": {
-                "summary": "Counts the number of Concepts and Collections in the vocabulary",
+                "summary": "Number of Concepts and Collections in the vocabulary",
                 "parameters": [
                     {
                         "name": "vocid",
@@ -552,7 +552,7 @@
         },
         "/{vocid}/labelStatistics": {
             "get": {
-                "summary": "Counts labels by language",
+                "summary": "Number of labels by language",
                 "description": "Returns a list of label (skos:prefLabel, skos:altLabel and skos:hiddenLabel) counts in all the different languages.",
                 "parameters": [
                     {
