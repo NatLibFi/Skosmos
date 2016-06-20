@@ -5,7 +5,6 @@
         "version": "v1",
         "description": "The Skosmos REST API is a read-only interface to the data stored in the vocabulary server. The URL namespace is the URL of the Skosmos instance, e.g. http://api.finto.fi (at the National Library of Finland, running the latest Skosmos release). REST URLs begin with `/rest/v1`. \n\nMost methods return the data as UTF-8 encoded JSON-LD, served using the `application/json` MIME type. The data consists of a single JSON object which includes JSON-LD context information (in the `@context` field) and one or more fields which contain the actual data. Some methods (`data`) return other formats (RDF/XML, Turtle, RDF/JSON) with the appropriate MIME type.\n\nThe API supports Cross-Origin Resource Sharing by setting the Access-Control-Allow-Origin HTTP header to `\"*\"` for all requests.\n\nThe API supports the JSONP convention of appending a callback parameter to any URL. The returned data will then be wrapped in a JavaScript function call using the function name provided as the callback parameter value. JSONP wrapped data will be served using the `application/javascript` MIME type.\n"
     },
-    "host": "api.finto.fi",
     "schemes": [
         "http",
         "https"
