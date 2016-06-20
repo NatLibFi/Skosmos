@@ -1,9 +1,4 @@
 <?php
-/**
- * Copyright (c) 2012-2013 Aalto University and University of Helsinki
- * MIT License
- * see LICENSE.txt for more information
- */
 
 /**
  * Handles all the requests from the user and changes the view accordingly.

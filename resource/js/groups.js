@@ -1,9 +1,3 @@
-/* 
- * Copyright (c) 2012 Aalto University and University of Helsinki
- * MIT License
- * see LICENSE.txt for more information
- */
-
 function buildGroupTree(response) {
   var data = [];
   var groups = {};

@@ -1,9 +1,4 @@
 <?php
-/**
- * Copyright (c) 2016 Aalto University and University of Helsinki
- * MIT License
- * see LICENSE.txt for more information
- */
 
 /**
  * EntityController is responsible for redirecting requests to the /entity address.

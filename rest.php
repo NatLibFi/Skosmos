@@ -1,9 +1,4 @@
 <?php
-/**
- * Copyright (c) 2012 Aalto University and University of Helsinki
- * MIT License
- * see LICENSE.txt for more information
- */
 
 /**
  * Includes the side wide settings.

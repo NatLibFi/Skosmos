@@ -1,9 +1,4 @@
 <?php
-/**
- * Copyright (c) 2016 University of Helsinki
- * MIT License
- * see LICENSE.txt for more information
- */
 
 class NamespaceExposingTurtleParser extends EasyRdf_Parser_Turtle
 {

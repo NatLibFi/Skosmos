@@ -1,9 +1,3 @@
-/*
- * Copyright (c) 2012 Aalto University and University of Helsinki
- * MIT License
- * see LICENSE.txt for more information
- */
-
 $(function() { // DOCUMENT READY
 
   var spinner = '<div class="loading-spinner"><span class="spinner-text">'+ loading_text + '</span><span class="spinner" /></div>';
