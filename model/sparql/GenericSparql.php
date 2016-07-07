@@ -837,10 +837,10 @@ EOF;
          * the structure is unpacked to get back the original string. Phew!
          */
         $hitvar = $unique ? '(MIN(?matchstr) AS ?hit)' : '(?matchstr AS ?hit)';
-        $hitgroup = $unique ? 'GROUP BY ?s ?label' : '';
+        $hitgroup = $unique ? 'GROUP BY ?s ?label ?notation' : '';
          
         $query = <<<EOQ
-   SELECT DISTINCT ?s ?label $hitvar
+   SELECT DISTINCT ?s ?label ?notation $hitvar
    WHERE {
     $graphClause {
      $valuesProp
@@ -855,6 +855,7 @@ EOF;
      } $labelcondFallback
      BIND(IF(langMatches(LANG(?match),'$lang'), ?pri, ?pri+1) AS ?npri)
      BIND(CONCAT(STR(?npri), LANG(?match), '@', STR(?match)) AS ?matchstr)
+     OPTIONAL { ?s skos:notation ?notation }
     }
     $filterGraph
    }
@@ -910,7 +911,7 @@ EOQ;
         $innerquery = $this->generateConceptSearchQueryInner($params->getSearchTerm(), $params->getLang(), $params->getSearchLang(), $props, $unique, $filterGraph);
 
         $query = <<<EOQ
-SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph (GROUP_CONCAT(DISTINCT ?type) as ?types)
+SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph ?notation (GROUP_CONCAT(DISTINCT ?type) as ?types)
 $extravars
 WHERE {
  $gcl {
@@ -932,7 +933,7 @@ $innerquery
  }
  $filterGraph
 }
-GROUP BY ?s ?match ?label ?plabel ?alabel ?hlabel ?graph
+GROUP BY ?s ?match ?label ?plabel ?alabel ?hlabel ?notation ?graph
 ORDER BY LCASE(STR(?match)) LANG(?match) $orderextra
 EOQ;
         return $query;
@@ -1002,6 +1003,10 @@ EOQ;
 
         if (isset($row->label)) {
             $hit['lang'] = $row->label->getLang();
+        }
+
+        if (isset($row->notation)) {
+            $hit['notation'] = $row->notation->getValue();
         }
 
         if (isset($row->plabel)) {
