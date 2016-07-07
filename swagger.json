@@ -1145,6 +1145,9 @@
                 },
                 "exvocab": {
                     "type": "string"
+                },
+                "notation": {
+                    "type": "string"
                 }
             },
             "required": [
