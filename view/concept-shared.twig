@@ -37,7 +37,7 @@
         {% endfor %}
       {% endif %}
       {% spaceless %}
-      <table class=" table search-results-property-table{% if concept.type == 'skosext:DeprecatedConcept' %} deprecated{% endif %}"><tr class="preflabel-container">
+      <table class="table search-results-property-table{% if concept.type == 'skosext:DeprecatedConcept' %} deprecated{% endif %}"><tr class="preflabel-container">
       <td class="preflabel-desc">
         <span class="versal">{{ 'skos:prefLabel'|trans|upper }}</span>
         {% if concept.foundBy %} {# hit has been found through an alternative label #}
@@ -153,10 +153,10 @@
       {% set appendixProperties = concept.mappingProperties %}
       {% if appendixProperties %}
       <div class="concept-appendix">
-        <table class="table search-results-property-table {% if concept.type == 'skosext:DeprecatedConcept' %} deprecated{% endif %}">
+        <div class="row{% if concept.type == 'skosext:DeprecatedConcept' %} deprecated{% endif %}">
         {% for property in appendixProperties %} {# loop through ConceptProperty objects #}
-          <tr><td><span class="versal{% if not (property.type in property.description and '_help' in property.description) %} property-click" title="{{ property.description }}{% endif %}">{{ property.label|upper }}</span></td><td>
-          <div class="appendix-values">
+          <div class="col-md-4"><span class="versal{% if not (property.type in property.description and '_help' in property.description) %} property-click" title="{{ property.description }}{% endif %}">{{ property.label|upper }}</span></div>
+          <div class="col-md-8">
           {% for propval in property.values %} {# loop through ConceptPropertyValue objects #}
             {% if propval.uri %} {# resources with URI #}
               {% if propval.label %}
@@ -176,7 +176,7 @@
           </div>
           </td></tr>
         {% endfor %}
-        </table>
+        </div>
       </div>
       {% endif %}
     </div>

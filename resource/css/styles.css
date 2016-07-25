@@ -1101,10 +1101,6 @@ tr {
   line-height: 21px;
 }
 
-.concept-main > table, .concept-appendix > table {
-  margin-bottom: 0;
-}
-
 .hidden-breadcrumb, .hidden-path {
   display: none;
 }
