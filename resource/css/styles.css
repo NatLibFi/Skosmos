@@ -1150,6 +1150,15 @@ tr {
   border-bottom: 2px solid #d4edeb;
 }
 
+.concept-main > .row > .col-md-8 {
+  border-bottom: 2px solid #d4edeb;
+}
+
+.concept-main > .row:last-child > .col-md-8 {
+  border-bottom: 0;
+}
+
+
 .search-results-property-table tr.other-languages > td:last-child {
   border-bottom: none;
 }

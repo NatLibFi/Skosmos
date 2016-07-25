@@ -139,16 +139,21 @@
             {% endfor %}
           {% endfor %}</td></tr>
       {% endif %}
-        <tr><td><span class="versal">URI</span></td>
-        <td><span class="versal uri-input-box">{{ concept.uri }}</span></tr>
-        <tr><td><span class="versal">{% trans %}Download this concept in SKOS format:{% endtrans %}
-
-        </span></td><td><span class="versal concept-download-links"><a href="rest/v1/{% if concept.vocab %}{{ concept.vocab.id }}{% else %}{{ vocab.id }}{% endif %}/data?uri={{ concept.uri|url_encode }}&amp;format=application/rdf%2Bxml">RDF/XML</a>
+      </table>
+        <div class="row">
+            <div class="col-md-4"><span class="versal">URI</span></div>
+            <div class="col-md-8"><span class="versal uri-input-box">{{ concept.uri }}</span></div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"><span class="versal">{% trans %}Download this concept in SKOS format:{% endtrans %}</div>
+            <div class="col-md-8">
+<span class="versal concept-download-links"><a href="rest/v1/{% if concept.vocab %}{{ concept.vocab.id }}{% else %}{{ vocab.id }}{% endif %}/data?uri={{ concept.uri|url_encode }}&amp;format=application/rdf%2Bxml">RDF/XML</a>
           <a href="rest/v1/{% if concept.vocab %}{{ concept.vocab.id }}{% else %}{{ vocab.id }}{% endif %}/data?uri={{ concept.uri|url_encode }}&amp;format=text/turtle">
             TURTLE</a>
           <a href="rest/v1/{% if concept.vocab %}{{ concept.vocab.id }}{% else %}{{ vocab.id }}{% endif %}/data?uri={{ concept.uri|url_encode }}&amp;format=application/ld%2Bjson">JSON-LD</a>
-        </span>{% if concept.date %}<span class="versal date-info">{{ concept.date }}</span>{% endif %}</td></tr>
-      </table>
+        </span>{% if concept.date %}<span class="versal date-info">{{ concept.date }}</span>{% endif %}
+            </div>
+        </div>
       </div>
       {% set appendixProperties = concept.mappingProperties %}
       {% if appendixProperties %}
