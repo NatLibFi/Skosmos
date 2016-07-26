@@ -1150,6 +1150,10 @@ tr {
   border-bottom: 2px solid #d4edeb;
 }
 
+.concept-main > .row {
+  padding-top: 5px;
+}
+
 .concept-main > .row > .col-md-8 {
   border-bottom: 2px solid #d4edeb;
 }
@@ -1200,7 +1204,7 @@ table > tbody > tr.other-languages > td {
   padding-top: 0;
 }
 
-.search-results-property-table td.versal-pref, .group-container > p.versal-pref {
+.concept-main .versal-pref {
   font-weight: 500;
 }
 
@@ -1247,7 +1251,7 @@ table > tbody > tr.other-languages > td {
   right: 10px;
 }
 
-td > .property-click {
+.col-md-4 > .property-click {
   border-bottom: 2px dotted #CFCFCF;
 }
 

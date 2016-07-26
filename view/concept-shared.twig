@@ -55,14 +55,19 @@
       </tr>
       <tr><td class="preflabel-spacer" colspan="2"></td></tr>
       {% endspaceless %}
+      </table>
       {% for property in concept.properties %} {# loop through ConceptProperty objects #}
         {% if property.getSubPropertyOf != 'skos:hiddenLabel' %}
-        <tr{% if property.type == 'dc:isReplacedBy' %} class="replaced-by"{% endif%}><td><span class="versal{% if property.type == 'rdf:type' %}-bold{% endif %}{% if not (property.type in property.description and '_help' in property.description) %} property-click" title="{{ property.description }}"{% else %}"{% endif %}>{{ property.label|upper }}</span></td><td>
+        <div class="row{% if property.type == 'dc:isReplacedBy' %} replaced-by{% endif%}">
+          <div class="col-md-4">
+            <span class="versal{% if property.type == 'rdf:type' %}-bold{% endif %}{% if not (property.type in property.description and '_help' in property.description) %} property-click" title="{{ property.description }}"{% else %}"{% endif %}>{{ property.label|upper }}</span>
+          </div>
+          <div class="col-md-8">
         {% if request.vocab.config.hasMultiLingualProperty(property.type) %}
           {% set prevlang = '' %}{# Only displaying the language when it appears for the very first time #}
           {% for language,labels in concept.allLabels(property.type) %}
             {% for value in labels %}
-            <div class="row other-languages{% if prevlang != language %} first-of-language{% endif %}"><span class="versal col-xs-6{% if value.type == "skos:altLabel" %} replaced{% endif %}">{{ value.label }}</span><span class="col-xs-6">{% if prevlang != language %} {{ language }}{% endif %}</span></div>
+            <div class="row other-languages{% if prevlang != language %} first-of-language{% endif %}"><span class="versal col-xs-6{% if value.type == "skos:altLabel" %} replaced{% endif %}">{{ value.label }}</span><span class="versal col-xs-6">{% if prevlang != language %} {{ language }}{% endif %}</span></div>
             {% set prevlang = language %}
             {% endfor %}
           {% endfor %}
@@ -101,11 +106,15 @@
             {% endif %}
             </li>
         {% endfor %}
-        </ul></td></tr>
+        </ul>
         {% endif %}
+        </div></div>
         {% endif %}
       {% endfor %}
-      {% if concept.groupProperties %}<tr><td><span class="versal property-click" title="{% trans "skosmos:memberOf_help" %}" >{{ 'skosmos:memberOf'|trans|upper }}</span></td><td>
+      {% if concept.groupProperties %}
+      <div class="row">
+        <div class="col-md-4"><span class="versal property-click" title="{% trans "skosmos:memberOf_help" %}" >{{ 'skosmos:memberOf'|trans|upper }}</span></div>
+        <div class="col-md-8">
           <ul>
           {% for group in concept.groupProperties %}
               {% if (group.type == 'skosmos:memberOfSuper') or (group.type == 'skosmos:memberOf' and not superFound) %}<li>{% endif %}
@@ -115,19 +124,27 @@
               {% if group.type == 'skosmos:memberOfSuper' %}{% set superFound = true %}{% elseif group.type == 'skosmos:memberOf' and superFound %}{% set superFound = false %}{% endif %}
           {% endfor %}
           </ul>
-        </td>
+        </div>
+      </div>
       {% endif %}
-      {% if concept.arrayProperties %}<tr><td><span class="versal property-click" title="{% trans "skosmos:memberOfArray_help" %}" >{{ 'skosmos:memberOfArray'|trans|upper }}</span></td><td>
-      <ul>
-      {% for group in concept.arrayProperties %}
-        {% if group.type == 'skosmos:memberOfArray' %}
-            <li><a href="{{ group.uri | link_url(group.vocab,request.lang,'page',request.contentLang) }}">{% if group.notation %}<span class="versal">{{ group.notation }}</span>{% endif %}{{ group.label(request.contentLang) }}</a></li>
-        {% else %}
-        {% endif %}
-      {% endfor %}
-      </ul>
+      {% if concept.arrayProperties %}
+      <div class="row">
+        <div class="col-md-4"><span class="versal property-click" title="{% trans "skosmos:memberOfArray_help" %}" >{{ 'skosmos:memberOfArray'|trans|upper }}</span></div>
+        <div class="col-md-8">
+          <ul>
+          {% for group in concept.arrayProperties %}
+            {% if group.type == 'skosmos:memberOfArray' %}
+                <li><a href="{{ group.uri | link_url(group.vocab,request.lang,'page',request.contentLang) }}">{% if group.notation %}<span class="versal">{{ group.notation }}</span>{% endif %}{{ group.label(request.contentLang) }}</a></li>
+            {% else %}
+            {% endif %}
+          {% endfor %}
+          </ul>
+      </div>
       {% endif %}
-      {% if concept.foreignLabels %}<tr><td><span class="versal property-click" title="{% trans "foreign prefLabel help" %}" >{{ 'foreign prefLabels'|trans|upper }}</span></td><td>
+      {% if concept.foreignLabels %}
+      <div class="row">
+        <div class="col-md-4"><span class="versal property-click" title="{% trans "foreign prefLabel help" %}" >{{ 'foreign prefLabels'|trans|upper }}</span></div>
+        <div class="col-md-8">
           {% set prevlang = '' %}{# Only displaying the language when it appears for the very first time #}
           {% for language,labels in concept.foreignLabels %}
             {% for value in labels %}
@@ -137,9 +154,10 @@
               </div>
               {% set prevlang = language %}
             {% endfor %}
-          {% endfor %}</td></tr>
+          {% endfor %}
+          </div>
+        </div>
       {% endif %}
-      </table>
         <div class="row">
             <div class="col-md-4"><span class="versal">URI</span></div>
             <div class="col-md-8"><span class="versal uri-input-box">{{ concept.uri }}</span></div>
