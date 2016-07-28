@@ -1775,9 +1775,14 @@ body, .versal, h1, h2, p, .versal-bold {
   .row > .property-value-column {
     width: 100%;
   }
+
+  .row > .property-value-column, .row > .property-value-column  {
+    margin: 5px 0;
+  }
   
   .row:nth-of-type(2) > .property-value-column {
     width: 55%;
+    margin: 0;
   }
   
   .row:nth-of-type(2) > .property-label {
