@@ -160,10 +160,6 @@ ul {
   margin-bottom: 20px;
 }
 
-.topbar > a {
-  position: absolute;
-}
-
 .topbar-white {
   background-color: #ffffff;
 }
