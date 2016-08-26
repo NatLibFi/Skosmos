@@ -1,9 +1,4 @@
 <?php
-/**
- * Copyright (c) 2012-2013 Aalto University and University of Helsinki
- * MIT License
- * see LICENSE.txt for more information
- */
 
 /**
  * Dataobject for a single concept.
@@ -108,7 +103,7 @@ class Concept extends VocabularyDataObject
     }
 
     /**
-     * Returns a label for the concept in the ui language or if not possible in any language.
+     * Returns a label for the concept in the content language or if not possible in any language.
      * @return string
      */
     public function getLabel()
@@ -127,8 +122,8 @@ class Concept extends VocabularyDataObject
         // 3. label in any language
         $label = $this->resource->label();
         // if the label lang code is a subset of the ui lang eg. en-GB
-        if ($label !== null && strpos($label->getLang(), $this->getEnvLang() . '-') === 0) {
-            return $label->getValue();
+        if ($label !== null && strpos($label->getLang(), $lang . '-') === 0) {
+            return EasyRdf_Literal::create($label, $lang);
         }
 
         if ($label !== null) {

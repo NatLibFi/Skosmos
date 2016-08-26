@@ -1,9 +1,3 @@
-/* 
- * Copyright (c) 2012 Aalto University and University of Helsinki
- * MIT License
- * see LICENSE.txt for more information
- */
-
 /* exported getUrlParams, readCookie, createCookie, getUrlParams, debounce, updateContent, updateTopbarLang, updateTitle, updateSidebar, setLangCookie, loadLimitations, loadPage, hideCrumbs, shortenProperties, countAndSetOffset, combineStatistics, loadLimitedResults, naturalCompare, escapeHtml */
 
 /* 

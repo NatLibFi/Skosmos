@@ -1,8 +1,3 @@
-/* Copyright (c) 2012 Aalto University and University of Helsinki
-   MIT License
-   see LICENSE.txt for more information
-*/
-
 // delay for the autocomplete widget's activation
 var autocomplete_delay = 400;
 // how many letters the user has to input before the widget activates.

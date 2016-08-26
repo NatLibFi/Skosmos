@@ -1,9 +1,4 @@
 <?php
-/**
- * Copyright (c) 2012-2013 Aalto University and University of Helsinki
- * MIT License
- * see LICENSE.txt for more information
- */
 
 /* Register text: namespace needed for jena-text queries */
 EasyRdf_Namespace::set('text', 'http://jena.apache.org/text#'); // @codeCoverageIgnore
