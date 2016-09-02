@@ -90,7 +90,7 @@ class JenaTextSparql extends GenericSparql
             return parent::generateAlphabeticalListQuery($letter, $lang, $limit, $offset, $classes);
         }
 
-        $gc = $this->graphClause;
+        $fcl = $this->generateFromClause();
         $classes = ($classes) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
         $values = $this->formatValues('?type', $classes, 'uri');
         $limitandoffset = $this->formatLimitAndOffset($limit, $offset);
@@ -101,29 +101,28 @@ class JenaTextSparql extends GenericSparql
         $textcondAlt = $this->createTextQueryCondition($letter . '*', 'skos:altLabel', $lang);
 
         $query = <<<EOQ
-SELECT DISTINCT ?s ?label ?alabel
+SELECT DISTINCT ?s ?label ?alabel $fcl
 WHERE {
-  $gc {
+  {
+    $textcondPref
+    FILTER(STRSTARTS(LCASE(STR(?match)), '$lcletter'))
+    FILTER EXISTS { ?s skos:prefLabel ?match }
+    BIND(?match as ?label)
+  }
+  UNION
+  {
+    $textcondAlt
+    FILTER(STRSTARTS(LCASE(STR(?match)), '$lcletter'))
+    FILTER EXISTS { ?s skos:altLabel ?match }
+    BIND(?match as ?alabel)
     {
-      $textcondPref
-      FILTER(STRSTARTS(LCASE(STR(?match)), '$lcletter'))
-      FILTER EXISTS { ?s skos:prefLabel ?match }
-      BIND(?match as ?label)
+      ?s skos:prefLabel ?label .
+      FILTER (langMatches(LANG(?label), '$lang'))
     }
-    UNION
-    {
-      $textcondAlt
-      FILTER(STRSTARTS(LCASE(STR(?match)), '$lcletter'))
-      FILTER EXISTS { ?s skos:altLabel ?match }
-      BIND(?match as ?alabel)
-      {
-        ?s skos:prefLabel ?label .
-        FILTER (langMatches(LANG(?label), '$lang'))
-      }
-    }
-    ?s a ?type .
-    FILTER NOT EXISTS { ?s owl:deprecated true }
-  } $values
+  }
+  ?s a ?type .
+  FILTER NOT EXISTS { ?s owl:deprecated true }
+  $values
 }
 ORDER BY LCASE(?match) $limitandoffset
 EOQ;
