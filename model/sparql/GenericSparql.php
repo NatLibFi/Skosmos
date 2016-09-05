@@ -193,7 +193,6 @@ EOQ;
      * @return string sparql query
      */
     private function generateCountLangConceptsQuery($langs, $classes, $props) {
-        $gcl = $this->graphClause;
         $fcl = $this->generateFromClause();
         $classes = ($classes) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
 
@@ -538,15 +537,13 @@ EOQ;
      * @return string sparql query
      */
     private function generateQueryConceptSchemeQuery($conceptscheme) {
-        $gcl = $this->graphClause;
+        $fcl = $this->generateFromClause();
         $query = <<<EOQ
 CONSTRUCT {
   <$conceptscheme> ?property ?value .
-} WHERE {
-  $gcl {
-    <$conceptscheme> ?property ?value .
-    FILTER (?property != skos:hasTopConcept)
-  }
+} $fcl WHERE {
+  <$conceptscheme> ?property ?value .
+  FILTER (?property != skos:hasTopConcept)
 }
 EOQ;
         return $query;
