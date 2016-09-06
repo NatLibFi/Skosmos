@@ -11,6 +11,10 @@
   color: #fff;
 }
 
+.container > h1 > small {
+  color: #555;
+}
+
 .demo-screenshot {
   display: inline-block;
   margin-top: 20px;
