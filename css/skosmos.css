@@ -7,6 +7,28 @@
   font-weight: bold;
 }
 
+header > a > img {
+  position: absolute; 
+  top: 0; 
+  right: 0; 
+  border: 0; 
+  width: 149px; 
+  height: 149px;
+}
+
+.btn-skosmos {
+  background-color: #00748F;
+  border-color: #00748F;
+  border-radius: 0;
+  color: #fff;
+}
+
+.btn-skosmos:active, .btn-skosmos:hover, .btn-skosmos:focus {
+  background-color: #148DA8;
+  border-color: #148DA8;
+  color: #fff;
+}
+
 .gap-left {
   margin-left: 10px;
 }
