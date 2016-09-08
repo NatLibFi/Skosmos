@@ -88,6 +88,7 @@ class RestController extends Controller
                 'vocabularies' => 'onki:hasVocabulary',
                 'id' => 'onki:vocabularyIdentifier',
                 'uri' => '@id',
+                '@base' => $this->getBaseHref() . "rest/v1/vocabularies",
             ),
             'uri' => '',
             'vocabularies' => $results,
@@ -210,6 +211,7 @@ class RestController extends Controller
                 'prefLabel' => 'skos:prefLabel',
                 'title' => 'dct:title',
                 '@language' => $request->getLang(),
+                '@base' => $this->getBaseHref() . "rest/v1/" . $vocab->getId() . "/",
             ),
             'uri' => '',
             'id' => $vocab->getId(),
@@ -259,6 +261,7 @@ class RestController extends Controller
                 'subTypes' => array('@id' => 'void:class', '@type' => '@id'),
                 'count' => 'void:entities',
                 '@language' => $request->getLang(),
+                '@base' => $this->getBaseHref() . "rest/v1/" . $request->getVocab()->getId() . "/",
             ),
             'uri' => '',
             'id' => $request->getVocab()->getId(),
@@ -332,6 +335,7 @@ class RestController extends Controller
                 'language' => 'void-ext:language',
                 'properties' => 'void:propertyPartition',
                 'labels' => 'void:triples',
+                '@base' => $this->getBaseHref() . "rest/v1/" . $request->getVocab()->getId() . "/",
             ),
             'uri' => '',
             'id' => $request->getVocab()->getId(),
@@ -369,7 +373,15 @@ class RestController extends Controller
         }
 
         $ret = array_merge_recursive($this->context, array(
-            '@context' => array('rdfs' => 'http://www.w3.org/2000/01/rdf-schema#', 'onki' => 'http://schema.onki.fi/onki#', 'label' => 'rdfs:label', 'superclass' => array('@id' => 'rdfs:subClassOf', '@type' => '@id'), 'types' => 'onki:hasType', '@language' => $request->getLang()),
+            '@context' => array(
+                'rdfs' => 'http://www.w3.org/2000/01/rdf-schema#',
+                'onki' => 'http://schema.onki.fi/onki#',
+                'label' => 'rdfs:label',
+                'superclass' => array('@id' => 'rdfs:subClassOf', '@type' => '@id'),
+                'types' => 'onki:hasType',
+                '@language' => $request->getLang(),
+                '@base' => $this->getBaseHref() . "rest/v1/" . $request->getVocab()->getId() . "/",
+            ),
             'uri' => '',
             'types' => $types)
         );
