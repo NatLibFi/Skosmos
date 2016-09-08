@@ -342,6 +342,7 @@ CONSTRUCT {
  ?o rdf:value ?ov .
  ?o skos:notation ?on .
  ?o ?oprop ?oval .
+ ?o ?xlprop ?xlval .
  ?directgroup skos:member ?uri .
  ?parent skos:member ?group .
  ?group skos:prefLabel ?grouplabel .
@@ -393,6 +394,9 @@ CONSTRUCT {
      }
      UNION
      { ?o skos:notation ?on . }
+     UNION
+     { ?o a skosxl:Label .
+       ?o ?xlprop ?xlval }
    } $optional
   }
  }
