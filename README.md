@@ -5,8 +5,7 @@
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/ca1939e4-919d-4429-95e7-d63e0a35f9a1/mini.png)](https://insight.sensiolabs.com/projects/ca1939e4-919d-4429-95e7-d63e0a35f9a1)
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/c41550cd00fe4962ba766f8b5fe4a5ff)](https://www.codacy.com/app/NatLibFi/Skosmos)
 
-Skosmos
-=======
+# Skosmos
 
 Skosmos is a web-based tool providing services for accessing controlled
 vocabularies, which are used by indexers describing documents and searchers
@@ -29,12 +28,10 @@ access. We use [BrowserStack](https://www.browserstack.com) for making sure Skos
 
 The code is open source under the MIT license. See 
 [Installation](https://github.com/NatLibFi/Skosmos/wiki/Installation) in the 
-wiki for details on obtaining the source and running your own instance of 
-Skosmos.
+wiki for details on obtaining the source and running your own instance of Skosmos.
 
 For information about released versions, see 
-[Release Notes](https://github.com/NatLibFi/Skosmos/wiki/Release-Notes) in 
-the wiki.
+[Release Notes](https://github.com/NatLibFi/Skosmos/wiki/Release-Notes) in the wiki.
 
 Skosmos was formerly known as ONKI Light.
 
