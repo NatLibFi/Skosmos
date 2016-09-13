@@ -37,5 +37,5 @@ Skosmos was formerly known as ONKI Light.
 
 ## Reporting issues
 
-If you have found a bug please use the provided template and create a new issue:
-[Report an issue](https://github.com/NatLibFi/Skosmos/issues/new?body=%23%23%20At%20which%20URL%20did%20you%20encounter%20the%20problem%3F%0A%0A%23%23%20What%20steps%20will%20reproduce%20the%20problem%3F%0A1.%0A2.%0A3.%0A%0A%23%23%20What%20is%20the%20expected%20output%3F%20What%20do%20you%20see%20instead%3F%0A%0A%23%23%20What%20browser%20did%20you%20use%3F%20(eg.%20Firefox%2C%20Chrome%2C%20Safari%2C%20Internet%20explorer)%0A)
+If you have found a bug please create a new issue using the provided template:
+[Report an issue](https://github.com/NatLibFi/Skosmos/issues/new)
