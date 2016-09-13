@@ -19,7 +19,7 @@ If you'd like to provide translation help the instructions at the [translation w
 ### Contributing code
 
 #### Development cycles and use of milestones
- Skosmos development is done in cycles lasting roughly two months. The planned work (issues) for the next/current cycle have a milestone indicating the version number of the planned release. The issues marked in the milestone next tasks are issues we haven't yet scheduled for a specific release but we'd like resolve in the near future. Issues marked blue sky are things we've decided to postpone for now. The milestones and open issues are evaluated after each release.
+ Skosmos development is done in cycles lasting roughly two months. The planned work (issues) for the next/current cycle have a milestone indicating the version number of the planned release eg. **1.8**. The issues marked in the milestone **Next tasks** are issues we haven't yet scheduled for a specific release but we'd like resolve in the near future. Issues marked **Blue sky** are issues we've decided to postpone for now. The milestones and open issues are evaluated after each release.
  
 #### Making a commit
 If you see an issue that you'd like to fix feel free to do so. If possible let us know you're working on an issue by leaving a comment on it so we'll be able to avoid doing the same work twice. This is especially useful if the issue has been marked for a release (in a milestone with a version number eg. "1.8") since it's more likely someone might be already working on it.
