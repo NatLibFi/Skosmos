@@ -78,7 +78,7 @@ class GenericSparql {
             }
         }
         foreach ($graphs as $graph) {
-            $clause .= "FROM <$graph> "; 
+            $clause .= "FROM NAMED <$graph> "; 
         }
         return $clause;
     }
@@ -894,7 +894,9 @@ EOQ;
      * @return string sparql query
      */
     protected function generateConceptSearchQuery($fields, $unique, $params) {
+        $vocabs = $params->getVocabs();
         $gcl = $this->graphClause;
+        $fcl = empty($vocabs) ? '' : $this->generateFromClause($vocabs);
         $formattedtype = $this->formatTypes($params->getTypeLimit());
         $formattedfields = $this->formatExtraFields($params->getLang(), $fields);
         $extravars = $formattedfields['extravars'];
@@ -921,7 +923,7 @@ EOQ;
             $props[] = 'skos:hiddenLabel';
         }
 
-        $filterGraph = $this->formatFilterGraph($params->getVocabs());
+        $filterGraph = empty($vocabs) ? $this->formatFilterGraph($vocabs) : '';
 
         // remove futile asterisks from the search term
         $term = $params->getSearchTerm();
@@ -932,8 +934,8 @@ EOQ;
         $innerquery = $this->generateConceptSearchQueryInner($params->getSearchTerm(), $params->getLang(), $params->getSearchLang(), $props, $unique, $filterGraph);
 
         $query = <<<EOQ
-SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph ?notation (GROUP_CONCAT(DISTINCT ?type) as ?types)
-$extravars
+SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph ?notation (GROUP_CONCAT(DISTINCT ?type) as ?types) $extravars 
+$fcl
 WHERE {
  $gcl {
   {
