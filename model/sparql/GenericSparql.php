@@ -308,9 +308,10 @@ EOQ;
      */
     private function generateConceptInfoQuery($uris, $arrayClass, $vocabs) {
         $gcl = $this->graphClause;
+        $fcl = empty($vocabs) ? '' : $this->generateFromClause($vocabs);
         $values = $this->formatValues('?uri', $uris, 'uri');
         $uniqueVocabs = $this->filterDuplicateVocabs($vocabs);
-        $valuesGraph = $this->formatValuesGraph($uniqueVocabs);
+        $valuesGraph = empty($vocabs) ? $this->formatValuesGraph($uniqueVocabs) : '';
 
         if ($arrayClass === null) {
             $construct = $optional = "";
@@ -351,7 +352,7 @@ CONSTRUCT {
  ?item a ?it .
  ?item skos:prefLabel ?il .
  ?group a ?grouptype . $construct
-} WHERE {
+} $fcl WHERE {
  $gcl {
   {
     ?s ?p ?uri .
