@@ -372,6 +372,8 @@ class RestController extends Controller
             $types[] = $type;
         }
 
+        $base = $request->getVocab() ? $this->getBaseHref() . "rest/v1/" . $request->getVocab()->getId() . "/" : $this->getBaseHref() . "rest/v1/";
+
         $ret = array_merge_recursive($this->context, array(
             '@context' => array(
                 'rdfs' => 'http://www.w3.org/2000/01/rdf-schema#',
@@ -380,7 +382,7 @@ class RestController extends Controller
                 'superclass' => array('@id' => 'rdfs:subClassOf', '@type' => '@id'),
                 'types' => 'onki:hasType',
                 '@language' => $request->getLang(),
-                '@base' => $this->getBaseHref() . "rest/v1/" . $request->getVocab()->getId() . "/",
+                '@base' => $base,
             ),
             'uri' => '',
             'types' => $types)
