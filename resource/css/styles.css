@@ -24,10 +24,6 @@ h1, .prefLabel, .prefLabelLang, .notation {
   font-weight: bold;
 }
 
-a, .jstree-node > .jstree-anchor {
-  color: #00748f;
-}
-
 h2 {
   font-family: 'Fira Sans';
   font-size: 16px;
@@ -68,6 +64,10 @@ p {
   font-family: 'Fira Sans';
   font-size: 14px;
   font-weight: bold;
+}
+
+a, .jstree-node > .jstree-anchor {
+  color: #00748f;
 }
 
 .loading-spinner {
