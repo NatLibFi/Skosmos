@@ -8,11 +8,11 @@
       "type": "package",
       "package": {
         "name": "medialize/uri.js",
-        "version": "1.15.1",
+        "version": "1.18.2",
         "source": {
           "url": "https://github.com/medialize/URI.js.git",
           "type": "git",
-          "reference": "v.1.15.1"
+          "reference": "v1.18.2"
         }
       }
     },
@@ -43,7 +43,7 @@
     "vakata/jstree": "3.3.*",
     "punic/punic": "1.6.0",
     "ml/json-ld": "1.*",
-    "medialize/uri.js": "1.15.1",
+    "medialize/uri.js": "1.18.2",
     "ext-gettext": "*"
   },
   "require-dev": {
