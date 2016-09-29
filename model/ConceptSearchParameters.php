@@ -94,7 +94,10 @@ class ConceptSearchParameters
         if ($this->rest) {
             return $this->request->getQueryParam('lang');
         }
-        return $this->request->getQueryParam('anylang') ? '' : $this->getContentLang();
+        if ($this->request->getCookie('SKOSMOS_ANYLANG') === '1' || $this->request->getQueryParam('anylang')) {
+          return '';
+        }
+        return  $this->getContentLang();
     }
 
     private function getDefaultTypeLimit()

@@ -47,6 +47,11 @@ class Request
         return filter_input(INPUT_SERVER, $paramName, FILTER_SANITIZE_STRING);
     }
 
+    public function getCookie($cookieName)
+    {
+        return filter_input(INPUT_COOKIE, $cookieName, FILTER_SANITIZE_STRING);
+    }
+
     public function getLang()
     {
         return $this->lang;
