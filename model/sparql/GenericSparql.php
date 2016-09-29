@@ -193,7 +193,7 @@ EOQ;
      * @return string sparql query
      */
     private function generateCountLangConceptsQuery($langs, $classes, $props) {
-        $fcl = $this->generateFromClause();
+        $gcl = $this->graphClause;
         $classes = ($classes) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
 
         $values = $this->formatValues('?type', $classes, 'uri');
@@ -203,9 +203,8 @@ EOQ;
         $query = <<<EOQ
 SELECT ?lang ?prop
   (COUNT(?label) as ?count)
-$fcl
 WHERE {
-  {
+  $gcl {
     ?conc a ?type .
     ?conc ?prop ?label .
     FILTER (langMatches(lang(?label), ?lang))
