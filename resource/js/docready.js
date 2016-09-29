@@ -494,7 +494,7 @@ $(function() { // DOCUMENT READY
   $('#hierarchy-disabled > #hier-trigger').qtip(qtip_skosmos_hierarchy);
 
   // Setting the language parameters according to the clang parameter or if that's not possible the cookie.
-  var search_lang = (content_lang !== '' && !getUrlParams().anylang) ? content_lang : readCookie('SKOSMOS_SEARCH_LANG');
+  var search_lang = (content_lang !== '' && !getUrlParams().anylang && vocab !== '') ? content_lang : readCookie('SKOSMOS_SEARCH_LANG');
 
   var rest_url = rest_base_url;
   if (rest_url.indexOf('..') === -1 && rest_url.indexOf('http') === -1) { rest_url = encodeURI(location.protocol + '//' + rest_url); }
@@ -533,18 +533,12 @@ $(function() { // DOCUMENT READY
   }
 
   $('.lang-button').click(function() {
-    qlang = $(this)[0].attributes.hreflang.value;
-    if (qlang === '') { qlang = 'anything'; }
+    qlang = $(this)[0].attributes.hreflang ? $(this)[0].attributes.hreflang.value : 'anything';
+    var any = (qlang === 'anything') ? '1' : '0';
     $('#lang-dropdown-toggle').html($(this).html() + ' <span class="caret"></span>');
     $('#lang-input').val(qlang);
     createCookie('SKOSMOS_SEARCH_LANG', qlang, 365);
-    if (concepts) { concepts.clear(); }
-  });
-
-  $('.lang-button-all').on('click', function() {
-    createCookie('SKOSMOS_SEARCH_LANG', 'anything', 365);
-    $('#lang-input').val('');
-    $('#lang-dropdown-toggle').html($('.lang-button-all').html() + ' <span class="caret"></span>');
+    createCookie('SKOSMOS_ANYLANG', any, 365);
     if (concepts) { concepts.clear(); }
   });
 
