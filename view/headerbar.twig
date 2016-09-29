@@ -42,10 +42,7 @@
       </div>
     </div>
     <div id="search-from-all-vocabularies-radio-buttons">
-      <input type="radio" name="all" id="all-languages-false" value="0"
-      onClick="createCookie('SKOSMOS_SEARCH_ALL', this.value , 365);" />
-      <input type="radio"
-      id="all-languages-true" name="all" value="1"
+      <input type="radio" id="all-languages-true" name="anylang" value="on"
       onClick="createCookie('SKOSMOS_SEARCH_ALL', this.value , 365);" />
     </div>
     {% if request.page == '' or request.page == 'search' %}<input id="selected-vocabs" type="text" name="vocabs">{% endif %}

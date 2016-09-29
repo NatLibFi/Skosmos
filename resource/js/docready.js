@@ -495,6 +495,9 @@ $(function() { // DOCUMENT READY
 
   // Setting the language parameters according to the clang parameter or if that's not possible the cookie.
   var search_lang = (content_lang !== '' && !getUrlParams().anylang && vocab !== '') ? content_lang : readCookie('SKOSMOS_SEARCH_LANG');
+  if (vocab === '' && readCookie('SKOSMOS_SEARCH_LANG') === 'anything') {
+    $('#all-languages-true').click();
+  }
 
   var rest_url = rest_base_url;
   if (rest_url.indexOf('..') === -1 && rest_url.indexOf('http') === -1) { rest_url = encodeURI(location.protocol + '//' + rest_url); }
