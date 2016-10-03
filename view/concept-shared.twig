@@ -163,7 +163,7 @@
             <div class="property-value-column"><div class="property-value-wrapper"><span class="versal uri-input-box">{{ concept.uri }}</span></div></div>
         </div>
         <div class="row">
-            <div class="property-label"><span class="versal">{% trans %}Download this concept in SKOS format:{% endtrans %}</div>
+            <div class="property-label"><span class="versal">{% trans %}Download this concept in SKOS format:{% endtrans %}</span></div>
             <div class="property-value-column">
 <span class="versal concept-download-links"><a href="rest/v1/{% if concept.vocab %}{{ concept.vocab.id }}{% else %}{{ vocab.id }}{% endif %}/data?uri={{ concept.uri|url_encode }}&amp;format=application/rdf%2Bxml">RDF/XML</a>
           <a href="rest/v1/{% if concept.vocab %}{{ concept.vocab.id }}{% else %}{{ vocab.id }}{% endif %}/data?uri={{ concept.uri|url_encode }}&amp;format=text/turtle">
@@ -176,8 +176,8 @@
       {% set appendixProperties = concept.mappingProperties %}
       {% if appendixProperties %}
       <div class="concept-appendix">
-        <div class="row{% if concept.type == 'skosext:DeprecatedConcept' %} deprecated{% endif %}">
         {% for property in appendixProperties %} {# loop through ConceptProperty objects #}
+        <div class="row{% if concept.type == 'skosext:DeprecatedConcept' %} deprecated{% endif %}">
           <div class="property-label"><span class="versal{% if not (property.type in property.description and '_help' in property.description) %} property-click" title="{{ property.description }}{% endif %}">{{ property.label|upper }}</span></div>
           <div class="property-value-column">
           {% for propval in property.values %} {# loop through ConceptPropertyValue objects #}
@@ -187,7 +187,7 @@
                 <div class="col-xs-5">
                   <a class="versal" href="{{ propval.uri | link_url(propval.exvocab, request.lang, 'page', request.contentLang) }}">{{ propval.label(request.contentLang) }}</a>
                 {% if propval.label.lang and (propval.label.lang != request.contentLang) or (explicit_langcodes and propval.label.lang) %}<span class="propertyvalue"> ({{ propval.label(request.contentLang).lang }})</span>{% endif %}
-                </div>
+              </div>
                 {% set vocabname = propval.vocabname %}
                 {% if vocabname %}
                   <span class="appendix-vocab-label col-xs-7">{{ vocabname }}</span>
@@ -197,8 +197,8 @@
             {% endif %}
           {% endfor %}
           </div>
-        {% endfor %}
         </div>
+        {% endfor %}
       </div>
       {% endif %}
     </div>
