@@ -1166,7 +1166,7 @@ tr {
   border-bottom: 2px solid #d4edeb;
 }
 
-.concept-main > .row {
+.concept-main > .row, .concept-appendix > .row {
   padding-top: 5px;
 }
 
