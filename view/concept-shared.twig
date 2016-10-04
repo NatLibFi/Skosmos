@@ -38,7 +38,7 @@
       {% endif %}
       {% spaceless %}
       <div class="row{% if concept.type == 'skosext:DeprecatedConcept' %} deprecated{% endif %}">
-        <div class="property-label">
+        <div class="property-label property-label-pref">
           <span class="versal">{{ 'skos:prefLabel'|trans|upper }}</span>
         </div>
         {% if concept.foundBy %} {# hit has been found through an alternative label #}
