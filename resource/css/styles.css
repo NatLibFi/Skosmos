@@ -856,7 +856,7 @@ ul.dropdown-menu > li:last-child > input {
           box-shadow: none !important;
 }
 
-.concept-main > .row:nth-of-type(2) > .property-label > .versal {
+.concept-main > .row > .property-label-pref {
   line-height: 40px;
 }
 
