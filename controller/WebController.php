@@ -163,6 +163,7 @@ class WebController extends Controller
         $categoryLabel = $this->model->getClassificationLabel($request->getLang());
         $sortedVocabs = $this->model->getVocabularyList(false, true);
         $langList = $this->model->getLanguages($request->getLang());
+        $listStyle = !file_exists('view/left.inc') && !file_exists('view/right.inc') ? '-wide' : '';
 
         // render template
         echo $template->render(
@@ -172,6 +173,7 @@ class WebController extends Controller
                 'languages' => $this->languages,
                 'lang_list' => $langList,
                 'request' => $request,
+                'list_style' => $listStyle
             ));
     }
 

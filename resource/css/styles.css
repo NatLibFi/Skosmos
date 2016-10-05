@@ -573,12 +573,16 @@ ul.dropdown-menu > li:last-child > input {
   display: inline;
 }
 
-#vocabulary-list {
+#vocabulary-list, #vocabulary-list-wide {
   background-color: #fff;
   display: inline-block;
 }
 
-#vocabulary-list > div > h2 {
+#vocabulary-list-wide {
+  width: 100%;
+}
+
+#vocabulary-list > div > h2, #vocabulary-list-wide > div > h2 {
   margin-bottom: 0;
   margin-top: 0;
   padding: 15px 0 15px 10px;
