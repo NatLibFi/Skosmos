@@ -48,11 +48,11 @@
           {% if vocab.config.groupClassURI %}
           <li id="groups"><a href="{{ request.vocabid }}/{{ request.lang }}/groups{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Group-nav" %}</a></li>
           {% endif %}
+          {% if vocab.config.showChangeList %}
+            <li id="changes"><a href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Changes-nav" %}</a></li>
+          {% endif %}
         {% else %}
           <li id="limit"><p>{% trans "Search options" %}</p></li>
-        {% endif %}
-        {% if vocab.config.showChangeList %}
-          <li id="changes"><a href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Changes-nav" %}</a></li>
         {% endif %}
         </ul>
       </div>
