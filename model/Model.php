@@ -256,7 +256,7 @@ class Model
     public function searchConcepts($params)
     {
         // don't even try to search for empty prefix if no other search criteria (group or parent concept) has been set
-        if ($params->getSearchTerm() === "" || !preg_match('/[^*]/', $params->getSearchTerm()) && !$params->getGroupLimit() && !$params->getParentLimit()) {
+        if (($params->getSearchTerm() === "" || !preg_match('/[^*]/', $params->getSearchTerm())) && !$params->getGroupLimit() && !$params->getParentLimit()) {
             return array();
         }
 
