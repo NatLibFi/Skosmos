@@ -40,7 +40,7 @@
       {% if request.vocabid != '' or request.page == 'feedback' or request.page == 'about' %}
       <div class="sidebar-buttons">
         <ul class="nav nav-tabs{% if vocab.config.showChangeList and vocab.config.groupClassURI and vocab.config.showAlphabeticalIndex %} nav-four-wide{% endif %}">
-        {% if not term %}
+        {% if request.page != 'search' %}
           {% if request.vocab.config.showAlphabeticalIndex %}
           <li id="alpha"{% if search_results|length != 1 or (term and search_results|length == 1) %} class ="active"{% endif %}><a href="{{ request.vocabid }}/{{ request.lang }}/index{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% if vocab.config.showChangeList and vocab.config.groupClassURI %}{% trans'A-Z'%}{% else %}{% trans "Alpha-nav" %}{% endif %}</a></li>
           {% endif %}
@@ -84,7 +84,7 @@
             </ul>
           {% endif %}
         </div>
-        {% if term %}
+        {% if request.page == 'search' %}
         <form class="search-options">
           {% set conceptSchemes = vocab.conceptSchemes %}
           {% if conceptSchemes|length > 1 %}
