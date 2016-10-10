@@ -851,7 +851,8 @@ EOF;
         //  Including the labels if there is no query term given.
         if ($rawterm === '') {
           $labelClause = "?s skos:prefLabel ?label .";
-          return ($lang) ? $labelClause . " FILTER (LANGMATCHES(LANG(?label), '$lang'))" : $labelClause . "";
+          $labelClause = ($lang) ? $labelClause . " FILTER (LANGMATCHES(LANG(?label), '$lang'))" : $labelClause . "";
+          return $labelClause . " BIND(?label AS ?match)";
         }
 
         /*
