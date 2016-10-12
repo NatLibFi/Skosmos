@@ -100,7 +100,7 @@
             {% elseif property.type == 'rdf:type' %}<p>{{ propval.label|trans }}</p>
             {% else %} {# Literals (no URI), eg. alternative labels as properties #}
                 {% if propval.lang == request.contentLang or propval.lang == null or not request.contentLang and propval.lang == request.lang %}
-                <p{% if property.type == 'skos:altLabel' %} class="replaced"{% endif %}>{{ propval.label }}{% if propval.lang and (request.contentLang and propval.lang != request.contentLang or explicit_langcodes) %} ({{ propval.lang }}){% endif %}</p>
+                <p{% if property.type == 'skos:altLabel' %} class="replaced"{% endif %}>{% if propval.containsHtml %}{{ propval.label|raw }}{% else %}{{ propval.label }}{% endif %}{% if propval.lang and (request.contentLang and propval.lang != request.contentLang or explicit_langcodes) %} ({{ propval.lang }}){% endif %}</p>
                 {% endif %}
             {% endif %}
             </li>

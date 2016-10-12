@@ -1,0 +1,44 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dc11: <http://purl.org/dc/elements/1.1/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix nolang: <http://www.skosmos.skos/nolang/> .
+@prefix meta: <http://www.skosmos.skos/nolang-meta/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix skosmos: <http://www.skosmos.skos/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+skos:prefLabel a rdf:Property ;
+    rdfs:label "preferred label"@en .
+
+skos:altLabel a rdf:Property ;
+    rdfs:label "alternative label"@en .
+
+skos:scopeNote a rdf:Property ;
+    rdfs:label "scope note"@en .
+
+skos:broader a rdf:Property ;
+    rdfs:label "has broader"@en .
+
+skos:narrower a rdf:Property ;
+    rdfs:label "has narrower"@en .
+
+nolang:no1 a skos:Concept ;
+  skos:prefLabel "No language code" .
+
+nolang:no2 a skos:Concept ;
+  skos:prefLabel "This doesn't have a language code" .
+
+nolang:no3 a skos:Concept ;
+  skos:related nolang:no2 ;
+  skos:scopeNote "There is some HTML inlined <a href=\"http://www.wikipedia.org/\">here</a>"@en ;
+  skos:prefLabel "No language codes here either" .
+
+nolang:conceptscheme a skos:ConceptScheme ;
+    rdfs:label "No language codes conceptscheme"@en ;
+    dct:modified "2016-10-01T16:29:03+00:00"^^xsd:dateTime ;
+    skos:hasTopConcept nolang:no1 .
+
