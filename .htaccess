@@ -17,3 +17,14 @@ RewriteRule ^(.*)$ index.php/$1 [L]
 RewriteCond $0 ^favicon.ico$
 RewriteCond custom-favicon.ico -F
 RewriteRule ^favicon.ico$ custom-favicon.ico [L] 
+
+<Files ~ "\.ttl$">
+    <IfModule mod_authz_core.c> 
+        # Apache 2.4 
+        Require all denied
+    </IfModule> 
+    <IfModule !mod_authz_core.c> 
+        Order allow,deny 
+        Deny from all 
+    </IfModule> 
+</Files>

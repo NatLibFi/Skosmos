@@ -236,7 +236,7 @@ function naturalCompare(a, b) {
   while(ax.length && bx.length) {
     var an = ax.shift();
     var bn = bx.shift();
-    var nn = (an[0] - bn[0]) || an[1].localeCompare(bn[1]);
+    var nn = (an[0] - bn[0]) || an[1].localeCompare(bn[1], lang);
     if(nn) return nn;
   }
 
