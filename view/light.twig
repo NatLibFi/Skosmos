@@ -33,7 +33,7 @@
     {% include 'headerbar.twig' %}
   </div>
   {% endblock %}
-  <div class="main-container{% if request.vocabid == '' or global_search %} frontpage{% endif %}">
+  <div class="main-container{% if request.vocabid == '' or global_search %} frontpage{% if list_style %} {{ list_style }}{% endif %}{% endif %}">
     {% if not request.vocabid == '' %}
     <div id="sidebar">
     {% block sidebar %}

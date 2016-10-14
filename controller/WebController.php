@@ -150,6 +150,23 @@ class WebController extends Controller
     }
 
     /**
+     * Determines a css class that controls width and positioning of the vocabulary list element. 
+     * The layout is wider if the left/right box templates have not been provided.
+     * @return string css class for the container eg. 'voclist-wide' or 'voclist-right'
+     */
+    private function listStyle() {
+        $left = file_exists('view/left.inc');
+        $right = file_exists('view/right.inc');
+        $ret = 'voclist';
+        if (!$left && !$right) {
+            $ret .= '-wide';
+        } else if (!($left && $right) && ($right || $left)) {
+            $ret .= ($right) ? '-left' : '-right';
+        }
+        return $ret;
+    }
+
+    /**
      * Loads and renders the view containing all the vocabularies.
      * @param Request $request
      */
@@ -163,7 +180,7 @@ class WebController extends Controller
         $categoryLabel = $this->model->getClassificationLabel($request->getLang());
         $sortedVocabs = $this->model->getVocabularyList(false, true);
         $langList = $this->model->getLanguages($request->getLang());
-        $listStyle = !file_exists('view/left.inc') && !file_exists('view/right.inc') ? '-wide' : '';
+        $listStyle = $this->listStyle(); 
 
         // render template
         echo $template->render(

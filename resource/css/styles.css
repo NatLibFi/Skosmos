@@ -538,11 +538,12 @@ ul.dropdown-menu > li:last-child > input {
 .welcome-box, .right-box, #vocabulary-list {
   vertical-align: top;
 }
-
+  
 .welcome-box {
   background-color: #ffffff;
   display: inline-block;
   padding: 15px;
+  min-height: 370px;
 }
 
 .welcome-box > h1, .right-box > h1 {
@@ -573,13 +574,13 @@ ul.dropdown-menu > li:last-child > input {
   display: inline;
 }
 
-#vocabulary-list, #vocabulary-list-wide {
+#vocabulary-list, #vocabulary-list-wide, #vocabulary-list-left, #vocabulary-list-right {
   background-color: #fff;
   display: inline-block;
 }
 
-#vocabulary-list-wide {
-  width: 100%;
+.voclist-wide #vocabulary-list {
+  width: 100% !important;
 }
 
 #vocabulary-list > div > h2, #vocabulary-list-wide > div > h2 {
@@ -1691,7 +1692,7 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   .navbar-form {
-    max-width: 300px;
+    max-width: 320px;
   }
 
   .content > .feedback-logo, .content > .about-logo {
@@ -1738,7 +1739,7 @@ body, .versal, h1, h2, p, .versal-bold {
     width: 200px;
   }
 
-  #vocabulary-list {
+  #vocabulary-list, #vocabulary-list-right {
     float: right;
     margin-left: 15px;
     position: relative;
@@ -1796,7 +1797,7 @@ body, .versal, h1, h2, p, .versal-bold {
     display: none;
   }
 
-  #vocabulary-list, .twitter-typeahead {
+  #vocabulary-list, #vocabulary-list-left, #vocabulary-list-right, .twitter-typeahead {
     margin: 0;
     width: 100%;
   }
@@ -1824,6 +1825,10 @@ body, .versal, h1, h2, p, .versal-bold {
   .twitter-typeahead {
     width: 100%;
   }
+
+  .right-box {
+    left: 0;
+  }
 
 }
 
@@ -1909,6 +1914,9 @@ body, .versal, h1, h2, p, .versal-bold {
 
   .right-box {
     display: inline;
+  }
+  
+  .voclist-wide > .right-box {
     left: 0;
     top: 425px;
   }
@@ -1920,10 +1928,6 @@ body, .versal, h1, h2, p, .versal-bold {
 }
 
 @media (min-width: 801px) {
-
-  .frontpage > .right-box {
-    top: 435px;
-  }
 
   .content > .feedback-logo, .content > .about-logo {
     left: 10px;
@@ -1982,12 +1986,28 @@ body, .versal, h1, h2, p, .versal-bold {
   .frontpage > .welcome-box, .frontpage > .right-box {
     width: 200px;
   }
-
-  #vocabulary-list {
+    
+  .voclist #vocabulary-list {
+    margin-left: 20px;
+    width: calc(100% - 225px);
+  }
+  
+   .voclist-right #vocabulary-list {
     margin-left: 20px;
     width: auto;
-    width: calc(100% - 225px) !important;
+    width: calc(100% - 225px);
   }
+
+  .voclist-left #vocabulary-list{
+    margin-left: 0;
+    width: auto;
+    width: calc(100% - 225px);
+  }
+
+  .voclist-left > .right-box {
+    top: 0;
+    right: 0;
+  }
 
   h1 {
     font-size: 24px;
@@ -1999,6 +2019,11 @@ body, .versal, h1, h2, p, .versal-bold {
 
   .search-result-listing .prefLabel, .search-result-listing .notation {
     font-size: 14px;
+  }
+
+  .voclist > .right-box {
+    top: 435px;
+    left: 0;
   }
 
 }
@@ -2094,10 +2119,14 @@ body, .versal, h1, h2, p, .versal-bold {
     width: 260px;
   }
 
-  #vocabulary-list {
+  .voclist #vocabulary-list {
     display: inline-block;
     position: relative;
-    width: 720px !important;
+    width: 720px;
+  }
+  
+  .voclist-left #vocabulary-list, .voclist-right #vocabulary-list {
+    width: 955px !important;
   }
 
   #sidebar {
@@ -2146,6 +2175,10 @@ body, .versal, h1, h2, p, .versal-bold {
     display: inline-block;
     position: relative;
     width: 710px !important;
+  }
+  
+  .voclist-left #vocabulary-list, .voclist-right #vocabulary-list {
+    width: 975px !important;
   }
 
   .frontpage > .right-box {
