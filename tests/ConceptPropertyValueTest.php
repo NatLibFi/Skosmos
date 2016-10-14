@@ -103,7 +103,7 @@ class ConceptPropertyValueTest extends PHPUnit_Framework_TestCase
     $concept = reset($results);
     $props = $concept->getProperties();
     $propvals = $props['skos:broader']->getValues();
-    $this->assertEquals(665, $propvals['Carphttp://www.skosmos.skos/test/ta112']->getNotation());
+    $this->assertEquals(665, $propvals['665Carphttp://www.skosmos.skos/test/ta112']->getNotation());
   }
 
   /**
@@ -123,7 +123,7 @@ class ConceptPropertyValueTest extends PHPUnit_Framework_TestCase
     $concept = reset($results);
     $props = $concept->getProperties();
     $propvals = $props['skos:broader']->getValues();
-    $this->assertEquals('Carp', (string)$propvals['Carphttp://www.skosmos.skos/test/ta112']);
+    $this->assertEquals('Carp', (string)$propvals['665Carphttp://www.skosmos.skos/test/ta112']);
   }
   
   /**
