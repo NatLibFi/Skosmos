@@ -1757,7 +1757,7 @@ EOQ;
             }
             if (isset($row->label)) {
                 $preflabel = $row->label->getValue();
-                if ($row->label->getLang() !== $lang && strpos($row->label->getLang(), $lang) !== 0) {
+                if ($row->label->getLang() && $row->label->getLang() !== $lang && strpos($row->label->getLang(), $lang) !== 0) {
                     $preflabel .= ' (' . $row->label->getLang() . ')';
                 }
 
