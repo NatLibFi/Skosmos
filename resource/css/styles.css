@@ -2159,6 +2159,14 @@ body, .versal, h1, h2, p, .versal-bold {
     min-width: 370px;
   }
 
+  .row > .property-label {
+    width: 235px;
+  }
+
+  .row > .property-value-column {
+    width: calc(100% - 235px);
+  }
+
 }
 
 @media (min-width: 1520px) {
