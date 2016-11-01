@@ -864,9 +864,10 @@ EOF;
    SELECT DISTINCT ?s ?label ?notation $hitvar
    WHERE {
     $graphClause {
+     { 
      $valuesProp
      VALUES (?prop ?pri) { (skos:prefLabel 1) (skos:altLabel 3) (skos:hiddenLabel 5)}
-     { $textcond
+     $textcond
      ?s ?prop ?match }
      UNION
      { ?s skos:notation "$rawterm" }
