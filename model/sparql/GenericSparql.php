@@ -69,7 +69,7 @@ class GenericSparql {
         $graphs = array();
         $clause = '';
         if (!$vocabs) {
-            return $this->graph !== '?graph' ? "FROM <$this->graph>" : '';
+            return $this->graph !== '?graph' && $this->graph !== NULL ? "FROM <$this->graph>" : '';
         }
         foreach($vocabs as $vocab) {
             $graph = $vocab->getGraph();
@@ -78,7 +78,8 @@ class GenericSparql {
             }
         }
         foreach ($graphs as $graph) {
-            $clause .= "FROM NAMED <$graph> "; 
+            if($graph !== NULL)
+                $clause .= "FROM NAMED <$graph> "; 
         }
         return $clause;
     }
