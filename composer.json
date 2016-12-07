@@ -27,16 +27,31 @@
           "reference": "v0.9.13"
         }
       }
-    } 
+    } ,
+	 "netage-easyrdf": {
+        "type":"package",
+        "package": {
+          "name": "netage/easyrdf",
+          "version":"0.9.1",
+          "source": {
+              "url": "https://github.com/netage/easyrdf.git",
+              "type": "git",
+              "reference":"0.9.x"
+            },
+            "autoload": {
+                    "classmap": ["lib"]
+                }
+        }
+    }
   },
   "require": {
     "components/jquery": "1.12.*",
     "components/jqueryui": "1.12.*",
     "components/handlebars.js": "v1.3.0",
     "davidstutz/bootstrap-multiselect": "v0.9.13",
-    "easyrdf/easyrdf": "0.9.*",
-    "twig/twig": "1.25.*",
-    "twig/extensions": "1.*",
+    "netage/easyrdf": "0.9.*",
+    "twig/twig": "1.22.*",
+    "twig/extensions": "1.3.*",
     "twitter/bootstrap": "3.2.*",
     "twitter/typeahead.js": "v0.10.5",
     "willdurand/negotiation": "1.5.*",
