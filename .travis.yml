@@ -19,3 +19,9 @@ after_script:
 addons:
   code_climate:
     repo_token: fb98170a5c7ea9cc2bbab19ff26268335e6a11a4f8267ca935e5e8ff4624886c
+env:
+  - FUSEKI_VERSION=1.4.0
+  - FUSEKI_VERSION=1.4.1
+matrix:
+  allow_failures:
+  - env: FUSEKI_VERSION=1.4.1
