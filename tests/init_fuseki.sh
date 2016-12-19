@@ -2,9 +2,19 @@
 
 FUSEKI_VERSION=${FUSEKI_VERSION:-1.3.0}
 
+if [ "$FUSEKI_VERSION" = "SNAPSHOT" ]; then
+	# find out the latest snapshot version and its download URL by parsing Apache directory listings
+	snapshotdir="https://repository.apache.org/content/repositories/snapshots/org/apache/jena/jena-fuseki1/"
+	latestdir=`wget -q -O- "$snapshotdir" | grep 'a href=' | cut -d '"' -f 2 | grep SNAPSHOT | tail -n 1`
+	FUSEKI_VERSION=`basename $latestdir`
+	fusekiurl=`wget -q -O- "$latestdir" | grep 'a href=' | cut -d '"' -f 2 | grep 'distribution\.tar\.gz$' | tail -n 1`
+else
+	fusekiurl="http://archive.apache.org/dist/jena/binaries/jena-fuseki1-$FUSEKI_VERSION-distribution.tar.gz"
+fi
+
 if [ ! -f jena-fuseki1-$FUSEKI_VERSION/fuseki-server ]; then
   echo "fuseki server file not found - downloading it"
-  wget --output-document=fuseki-dist.tar.gz http://archive.apache.org/dist/jena/binaries/jena-fuseki1-$FUSEKI_VERSION-distribution.tar.gz 
+  wget --output-document=fuseki-dist.tar.gz "$fusekiurl"
   tar -zxvf fuseki-dist.tar.gz
 fi
 
