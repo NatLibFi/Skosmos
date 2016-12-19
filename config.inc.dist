@@ -40,6 +40,12 @@ define("FEEDBACK_ENVELOPE_SENDER", "");
 // whether or not to log caught exceptions
 define ("LOG_CAUGHT_EXCEPTIONS", FALSE);
 
+// set to TRUE to enable logging into browser console
+define ("LOG_BROWSER_CONSOLE", FALSE);
+
+// set to a logfile path to enable logging into log file
+define ("LOG_FILE_NAME", NULL);
+
 # customize the service name
 define("SERVICE_NAME", "Skosmos");
 

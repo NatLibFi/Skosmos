@@ -39,6 +39,7 @@ class Model
         try {
           $this->initializeVocabularies();
           $this->initializeNamespaces();
+          $this->initializeLogging();
         } catch (Exception $e) {
             header("HTTP/1.0 404 Not Found");
             echo("Error: Vocabularies configuration file 'vocabularies.ttl' not found.");
@@ -109,6 +110,38 @@ class Model
                 EasyRdf_Namespace::set($prefix, $fullUri);
             }
         }
+    }
+    
+    /**
+     * Configures the logging facility
+     */
+    private function initializeLogging() {
+        $this->logger = new \Monolog\Logger('general');
+        $formatter = new \Monolog\Formatter\LineFormatter("[%datetime%] %level_name% %message%\n");
+        $formatter->allowInlineLineBreaks(true);
+        if ($this->getConfig()->getLoggingBrowserConsole()) {
+            $browserHandler = new \Monolog\Handler\BrowserConsoleHandler(\Monolog\Logger::INFO);
+            $browserHandler->setFormatter($formatter);
+            $this->logger->pushHandler($browserHandler);
+        }
+        if ($this->getConfig()->getLoggingFilename() !== null) {
+            $streamHandler = new \Monolog\Handler\StreamHandler($this->getConfig()->getLoggingFilename(), \Monolog\Logger::INFO);
+            $streamHandler->setFormatter($formatter);
+            $this->logger->pushHandler($streamHandler);
+        }
+        if (!$this->logger->getHandlers()) {
+            // add a NullHandler to suppress the default Monolog logging to stderr
+            $nullHandler = new \Monolog\Handler\NullHandler();
+            $this->logger->pushHandler($nullHandler);
+        }
+    }
+    
+    /**
+     * Return the logging facility
+     * @return object logger
+     */
+    public function getLogger() {
+        return $this->logger;
     }
 
     /**

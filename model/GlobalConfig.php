@@ -151,6 +151,24 @@ class GlobalConfig {
     }
     
     /**
+     * Returns true if browser console logging has been enabled,
+     * @return boolean
+     */
+    public function getLoggingBrowserConsole()
+    {
+        return $this->getConstant('LOG_BROWSER_CONSOLE', FALSE);
+    }
+
+    /**
+     * Returns the name of a log file if configured, or NULL otherwise.
+     * @return string
+     */
+    public function getLoggingFilename()
+    {
+        return $this->getConstant('LOG_FILE_NAME', null);
+    }
+
+    /**
      * @return string
      */
     public function getServiceName() 
@@ -205,4 +223,5 @@ class GlobalConfig {
     {
         return explode(' ', $this->getConstant('GLOBAL_PLUGINS', null));
     }
+    
 }

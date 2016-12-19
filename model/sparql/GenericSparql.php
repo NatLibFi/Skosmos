@@ -58,7 +58,29 @@ class GenericSparql {
         }
 
     }
-
+    
+    /**
+     * Execute the SPARQL query using the SPARQL client, logging it as well.
+     * @param string $query SPARQL query to perform
+     * @return object query result
+     */
+    protected function query($query) {
+        $queryId = sprintf("%05d", rand(0, 99999));
+        $logger = $this->model->getLogger();
+        $logger->info("[qid $queryId] SPARQL query:\n$query\n");
+        $starttime = microtime();
+        $result = $this->client->query($query);
+        $elapsed = intval(round((microtime() - $starttime) * 1000));
+        if(method_exists($result, 'numRows')) {
+            $numRows = $result->numRows();
+            $logger->info("[qid $queryId] result: $numRows rows returned in $elapsed ms");
+        } else { // graph result
+            $numTriples = $result->countTriples();
+            $logger->info("[qid $queryId] result: $numTriples triples returned in $elapsed ms");
+        }
+        return $result;
+    }
+    
     
     /**
      * Generates FROM clauses for the queries 
@@ -184,7 +206,7 @@ EOQ;
      */
     public function countConcepts($lang = null, $array = null, $group = null) {
         $query = $this->generateCountConceptsQuery($array, $group);
-        $result = $this->client->query($query);
+        $result = $this->query($query);
         return $this->transformCountConceptsResults($result, $lang);
     }
 
@@ -253,7 +275,7 @@ EOQ;
         $props = array('skos:prefLabel', 'skos:altLabel', 'skos:hiddenLabel');
         $query = $this->generateCountLangConceptsQuery($langs, $classes, $props);
         // Count the number of terms in each language
-        $result = $this->client->query($query);
+        $result = $this->query($query);
         return $this->transformCountLangConceptsResults($result, $langs, $props);
     }
 
@@ -440,7 +462,7 @@ EOQ;
         }
 
         $query = $this->generateConceptInfoQuery($uris, $arrayClass, $vocabs);
-        $result = $this->client->query($query);
+        $result = $this->query($query);
         return $result;
     }
 
@@ -532,7 +554,7 @@ EOQ;
      */
     public function queryTypes($lang) {
         $query = $this->generateQueryTypesQuery($lang);
-        $result = $this->client->query($query);
+        $result = $this->query($query);
         return $this->transformQueryTypesResults($result);
     }
 
@@ -561,7 +583,7 @@ EOQ;
      */
     public function queryConceptScheme($conceptscheme) {
         $query = $this->generateQueryConceptSchemeQuery($conceptscheme);
-        return $this->client->query($query);
+        return $this->query($query);
     }
 
     /**
@@ -627,7 +649,7 @@ EOQ;
      */
     public function queryConceptSchemes($lang) {
         $query = $this->generateQueryConceptSchemesQuery($lang);
-        $result = $this->client->query($query);
+        $result = $this->query($query);
         return $this->transformQueryConceptSchemesResults($result);
     }
 
@@ -1089,7 +1111,7 @@ EOQ;
      */
     public function queryConcepts($vocabs, $fields = null, $unique = false, $params) {
         $query = $this->generateConceptSearchQuery($fields, $unique, $params);
-        $results = $this->client->query($query);
+        $results = $this->query($query);
         return $this->transformConceptSearchResults($results, $vocabs, $fields);
     }
 
@@ -1217,7 +1239,7 @@ EOQ;
      */
     public function queryConceptsAlphabetical($letter, $lang, $limit = null, $offset = null, $classes = null) {
         $query = $this->generateAlphabeticalListQuery($letter, $lang, $limit, $offset, $classes);
-        $results = $this->client->query($query);
+        $results = $this->query($query);
         return $this->transformAlphabeticalListResults($results);
     }
 
@@ -1261,7 +1283,7 @@ EOQ;
      */
     public function queryFirstCharacters($lang, $classes = null) {
         $query = $this->generateFirstCharactersQuery($lang, $classes);
-        $result = $this->client->query($query);
+        $result = $this->query($query);
         return $this->transformFirstCharactersResults($result);
     }
 
@@ -1306,7 +1328,7 @@ EOQ;
      */
     public function queryLabel($uri, $lang) {
         $query = $this->generateLabelQuery($uri, $lang);
-        $result = $this->client->query($query);
+        $result = $this->query($query);
         $ret = array();
         foreach ($result as $row) {
             if (!isset($row->label)) {
@@ -1401,7 +1423,7 @@ EOQ;
     public function queryProperty($uri, $prop, $lang, $anylang = false) {
         $uri = is_array($uri) ? $uri[0] : $uri;
         $query = $this->generatePropertyQuery($uri, $prop, $lang, $anylang);
-        $result = $this->client->query($query);
+        $result = $this->query($query);
         return $this->transformPropertyQueryResults($result, $lang);
     }
 
@@ -1511,7 +1533,7 @@ EOQ;
      */
     public function queryTransitiveProperty($uri, $props, $lang, $limit, $anylang = false, $fallbacklang = '') {
         $query = $this->generateTransitivePropertyQuery($uri, $props, $lang, $limit, $anylang);
-        $result = $this->client->query($query);
+        $result = $this->query($query);
         return $this->transformTransitivePropertyResults($result, $lang, $fallbacklang);
     }
 
@@ -1605,7 +1627,7 @@ EOQ;
      */
     public function queryChildren($uri, $lang, $fallback, $props) {
         $query = $this->generateChildQuery($uri, $lang, $fallback, $props);
-        $result = $this->client->query($query);
+        $result = $this->query($query);
         return $this->transformNarrowerResults($result, $lang);
     }
 
@@ -1632,7 +1654,7 @@ SELECT DISTINCT ?top ?topuri ?label ?notation ?children $fcl WHERE {
   $values
 }
 EOQ;
-        $result = $this->client->query($query);
+        $result = $this->query($query);
         $ret = array();
         foreach ($result as $row) {
             if (isset($row->top) && isset($row->label)) {
@@ -1793,7 +1815,7 @@ EOQ;
      */
     public function queryParentList($uri, $lang, $fallback, $props) {
         $query = $this->generateParentListQuery($uri, $lang, $fallback, $props);
-        $result = $this->client->query($query);
+        $result = $this->query($query);
         return $this->transformParentListResults($result, $lang);
     }
 
@@ -1865,7 +1887,7 @@ EOQ;
      */
     public function listConceptGroups($groupClass, $lang) {
         $query = $this->generateConceptGroupsQuery($groupClass, $lang);
-        $result = $this->client->query($query);
+        $result = $this->query($query);
         return $this->transformConceptGroupsResults($result);
     }
 
@@ -1947,7 +1969,7 @@ EOQ;
      */
     public function listConceptGroupContents($groupClass, $group, $lang) {
         $query = $this->generateConceptGroupContentsQuery($groupClass, $group, $lang);
-        $result = $this->client->query($query);
+        $result = $this->query($query);
         return $this->transformConceptGroupContentsResults($result, $lang);
     }
 
@@ -2005,7 +2027,7 @@ EOQ;
      */
     public function queryChangeList($lang, $offset, $prop) {
         $query = $this->generateChangeListQuery($lang, $offset, $prop);
-        $result = $this->client->query($query);
+        $result = $this->query($query);
         return $this->transformChangeListResults($result);
     }
 }

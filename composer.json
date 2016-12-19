@@ -44,7 +44,8 @@
     "punic/punic": "1.6.0",
     "ml/json-ld": "1.*",
     "medialize/uri.js": "1.18.2",
-    "ext-gettext": "*"
+    "ext-gettext": "*",
+    "monolog/monolog": "^1.22"
   },
   "require-dev": {
     "phpunit/phpunit": "4.8 - 5.1",
