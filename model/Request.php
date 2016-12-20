@@ -23,9 +23,25 @@ class Request
         $this->model = $model;
     }
 
+    /**
+     * Return the requested GET query parameter as a string. Backslashes are stripped for security reasons.
+     * @param string $paramName parameter name
+     * @return string parameter content, or null if no parameter found
+     */
     public function getQueryParam($paramName)
     {
-        return filter_input(INPUT_GET, $paramName, FILTER_SANITIZE_STRING);
+        $val = filter_input(INPUT_GET, $paramName, FILTER_SANITIZE_STRING);
+        return ($val !== null ? str_replace('\\', '', $val) : null);
+    }
+
+    /**
+     * Return the requested GET query parameter as a string, with no sanitizing.
+     * @param string $paramName parameter name
+     * @return string parameter content, or null if no parameter found
+     */
+    public function getQueryParamRaw($paramName)
+    {
+        return filter_input(INPUT_GET, $paramName, FILTER_UNSAFE_RAW);
     }
 
     public function getQueryParamPOST($paramName)
@@ -35,7 +51,7 @@ class Request
 
     public function getQueryParamBoolean($paramName, $default)
     {
-        $val = $this->getQueryParam($paramName);
+        $val = $this->getQueryParamRaw($paramName);
         if ($val !== NULL) {
             $val = filter_var($val, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
         }

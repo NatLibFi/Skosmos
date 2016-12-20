@@ -77,7 +77,7 @@ class ConceptSearchParametersTest extends PHPUnit_Framework_TestCase
     public function testGetSearchTerm() {
         $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'));
         $this->assertEquals('*', $params->getSearchTerm());
-        $this->request->method('getQueryParam')->will($this->returnValue('test'));
+        $this->request->method('getQueryParamRaw')->will($this->returnValue('test'));
         $this->assertEquals('test*', $params->getSearchTerm());
         $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'), true);
         $this->assertEquals('test', $params->getSearchTerm());

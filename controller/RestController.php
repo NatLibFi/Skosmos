@@ -157,7 +157,7 @@ class RestController extends Controller
     {
         $maxhits = $request->getQueryParam('maxhits');
         $offset = $request->getQueryParam('offset');
-        $term = $request->getQueryParam('query');
+        $term = $request->getQueryParamRaw('query');
 
         if (!$term) {
             return $this->returnError(400, "Bad Request", "query parameter missing");
