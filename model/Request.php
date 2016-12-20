@@ -23,9 +23,24 @@ class Request
         $this->model = $model;
     }
 
+    /**
+     * Return the requested GET query parameter as a string. Backslashes are stripped for security reasons.
+     * @param string $paramName parameter name
+     * @return string parameter content
+     */
     public function getQueryParam($paramName)
     {
-        return filter_input(INPUT_GET, $paramName, FILTER_SANITIZE_STRING);
+        return str_replace('\\', '', filter_input(INPUT_GET, $paramName, FILTER_SANITIZE_STRING));
+    }
+
+    /**
+     * Return the requested GET query parameter as a string, with no sanitizing.
+     * @param string $paramName parameter name
+     * @return string parameter content
+     */
+    public function getQueryParamRaw($paramName)
+    {
+        return filter_input(INPUT_GET, $paramName, FILTER_UNSAFE_RAW);
     }
 
     public function getQueryParamPOST($paramName)
