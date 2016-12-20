@@ -13,9 +13,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Swedish\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Basepath: ../..\n"
+"X-Generator: Poedit 1.8.7.1\n"
 "X-Poedit-SearchPath-0: view\n"
 "X-Poedit-SearchPath-1: controller\n"
 "X-Poedit-SearchPath-2: model\n"
@@ -32,14 +32,11 @@ msgstr "Samling"
 msgid "in_this_language"
 msgstr "på svenska"
 
-#: model/Concept.php:446
-#: model/Concept.php:466
+#: model/Concept.php:446 model/Concept.php:466
 msgid "skosmos:created"
 msgstr "Skapad"
 
-#: model/Concept.php:451
-#: model/Concept.php:453
-#: model/Concept.php:462
+#: model/Concept.php:451 model/Concept.php:453 model/Concept.php:462
 msgid "skosmos:modified"
 msgstr "senast editerad"
 
@@ -506,7 +503,7 @@ msgstr "valda"
 
 #: /tmp/cache/5755722cd816a/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:139
 msgid "skos:altLabel"
-msgstr "Ersatta termer"
+msgstr "Hänvisningsterm"
 
 #: /tmp/cache/5755722cd816a/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:175
 msgid "skos:altLabel_help"
@@ -810,9 +807,7 @@ msgstr "Du kan bestämma sökordets trunkering genom att använda asterisk (*). 
 #~ msgstr "Ändringsdatum"
 
 #~ msgid "language_changed_message"
-#~ msgstr ""
-#~ "Språket som du valt stöds inte i den här vokabulären. Därför visas sidan "
-#~ "inte på svenska."
+#~ msgstr "Språket som du valt stöds inte i den här vokabulären. Därför visas sidan inte på svenska."
 
 #~ msgid "Show matches in any language"
 #~ msgstr "Visa även träffar på andra språk"

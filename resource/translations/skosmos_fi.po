@@ -13,10 +13,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Finnish\n"
-"X-Poedit-Country: FINLAND\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Basepath: ../..\n"
+"X-Generator: Poedit 1.8.7.1\n"
 "X-Poedit-SearchPath-0: view\n"
 "X-Poedit-SearchPath-1: controller\n"
 "X-Poedit-SearchPath-2: model\n"
@@ -33,14 +32,11 @@ msgstr "Kokoelma"
 msgid "in_this_language"
 msgstr "suomeksi"
 
-#: model/Concept.php:446
-#: model/Concept.php:466
+#: model/Concept.php:446 model/Concept.php:466
 msgid "skosmos:created"
 msgstr "Luotu"
 
-#: model/Concept.php:451
-#: model/Concept.php:453
-#: model/Concept.php:462
+#: model/Concept.php:451 model/Concept.php:453 model/Concept.php:462
 msgid "skosmos:modified"
 msgstr "viimeksi muokattu"
 
@@ -507,7 +503,7 @@ msgstr "sanastosta"
 
 #: /tmp/cache/575571f99fedc/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:139
 msgid "skos:altLabel"
-msgstr "Korvatut termit"
+msgstr "Ohjaustermit"
 
 #: /tmp/cache/575571f99fedc/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:175
 msgid "skos:altLabel_help"
@@ -814,9 +810,7 @@ msgstr "Voit määrittää hakusanan katkaisun käyttämällä tähtimerkkiä. K
 #~ msgstr "Muokkauspäivä"
 
 #~ msgid "language_changed_message"
-#~ msgstr ""
-#~ "Valitsemaasi kieltä ei ollut tuettuna tässä sanastossa. Siksi emme näytä "
-#~ "sivua suomeksi."
+#~ msgstr "Valitsemaasi kieltä ei ollut tuettuna tässä sanastossa. Siksi emme näytä sivua suomeksi."
 
 #~ msgid "Show matches in any language"
 #~ msgstr "Näytä myös muunkieliset osumat"

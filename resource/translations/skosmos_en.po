@@ -10,9 +10,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: English\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Basepath: ../..\n"
+"X-Generator: Poedit 1.8.7.1\n"
 "X-Poedit-SearchPath-0: view\n"
 "X-Poedit-SearchPath-1: controller\n"
 "X-Poedit-SearchPath-2: model\n"
@@ -29,14 +29,11 @@ msgstr "Collection"
 msgid "in_this_language"
 msgstr "in English"
 
-#: model/Concept.php:446
-#: model/Concept.php:466
+#: model/Concept.php:446 model/Concept.php:466
 msgid "skosmos:created"
 msgstr "Created"
 
-#: model/Concept.php:451
-#: model/Concept.php:453
-#: model/Concept.php:462
+#: model/Concept.php:451 model/Concept.php:453 model/Concept.php:462
 msgid "skosmos:modified"
 msgstr "last modified"
 
@@ -503,7 +500,7 @@ msgstr "selected"
 
 #: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:139
 msgid "skos:altLabel"
-msgstr "Alternative label"
+msgstr "Entry term"
 
 #: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:175
 msgid "skos:altLabel_help"
