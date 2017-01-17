@@ -33,7 +33,7 @@ The code is open source under the MIT license. See
 wiki for details on obtaining the source and running your own instance of Skosmos.
 
 For information about released versions, see 
-[Release Notes](https://github.com/NatLibFi/Skosmos/wiki/Release-Notes) in the wiki.
+[Release Notes](https://github.com/NatLibFi/Skosmos/releases).
 
 Skosmos was formerly known as ONKI Light.
 
