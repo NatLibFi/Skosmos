@@ -243,12 +243,13 @@ class Vocabulary extends DataObject
         if ($lang === '') {
             $lang = $this->getEnvLang();
         }
+        $fallback = $this->config->getDefaultLanguage();
 
         if ($conceptScheme === null || $conceptScheme == '') {
             $conceptScheme = $this->getDefaultConceptScheme();
         }
 
-        return $this->getSparql()->queryTopConcepts($conceptScheme, $lang);
+        return $this->getSparql()->queryTopConcepts($conceptScheme, $lang, $fallback);
     }
 
     /**
