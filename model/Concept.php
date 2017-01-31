@@ -119,13 +119,17 @@ class Concept extends VocabularyDataObject
             return $this->resource->label($this->vocab->getConfig()->getDefaultLanguage());
         }
 
-        // 3. label in any language
-        $label = $this->resource->label();
-        // if the label lang code is a subset of the ui lang eg. en-GB
-        if ($label !== null && strpos($label->getLang(), $lang . '-') === 0) {
-            return EasyRdf_Literal::create($label, $lang);
+        // 3. label in a subtag of the current language
+        // We need to check all the labels in case one of them matches a subtag of the current language
+        foreach($this->resource->allLiterals('skos:prefLabel') as $label) {
+            // the label lang code is a subtag of the UI lang eg. en-GB - create a new literal with the main language
+            if ($label !== null && strpos($label->getLang(), $lang . '-') === 0) {
+                return EasyRdf_Literal::create($label, $lang);
+            }
         }
-
+        
+        // 4. label in any language, including literal with empty language tag
+        $label = $this->resource->label();
         if ($label !== null) {
             return $label->getValue() . " (" . $label->getLang() . ")";
         }
