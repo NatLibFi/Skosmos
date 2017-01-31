@@ -198,7 +198,16 @@ function buildParentTree(uri, parentData, schemes) {
 }
 
 function getConceptHref(conceptData) {
-  var page = conceptData.uri.indexOf(window.uriSpace) !== -1 ? conceptData.uri.substr(window.uriSpace.length) : '?uri=' + encodeURIComponent(conceptData.uri);
+  if (conceptData.uri.indexOf(window.uriSpace) !== -1) {
+    var page = conceptData.uri.substr(window.uriSpace.length);
+    if (/[^a-zA-Z0-9\.]/.test(page)) {
+      // contains special characters - fall back to full URI
+      page = '?uri=' + encodeURIComponent(conceptData.uri);
+    }
+  } else {
+    // not within URI space - fall back to full URI
+    page = '?uri=' + encodeURIComponent(conceptData.uri);
+  }
   return { "href" : vocab + '/' + lang + '/page/' + page };
 }
 
