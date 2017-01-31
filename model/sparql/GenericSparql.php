@@ -1557,7 +1557,7 @@ EOQ;
 
             $label = null;
             if (isset($row->label)) {
-                if ($row->label->getLang() == $lang) {
+                if ($row->label->getLang() == $lang || strpos($row->label->getLang(), $lang . "-") == 0) {
                     $label = $row->label->getValue();
                 } else {
                     $label = $row->label->getValue() . " (" . $row->label->getLang() . ")";
@@ -1636,7 +1636,7 @@ EOQ;
         foreach ($result as $row) {
             if (isset($row->top) && isset($row->label)) {
                 $label = $row->label->getValue();
-                if ($row->label->getLang() && $row->label->getLang() !== $lang && strpos($row->label->getLang(), $lang) !== 0) {
+                if ($row->label->getLang() && $row->label->getLang() !== $lang && strpos($row->label->getLang(), $lang . "-") !== 0) {
                     $label .= ' (' . $row->label->getLang() . ')';
                 }
                 $top = array('uri' => $row->top->getUri(), 'topConceptOf' => $row->topuri->getUri(), 'label' => $label, 'hasChildren' => filter_var($row->children->getValue(), FILTER_VALIDATE_BOOLEAN));
@@ -1738,7 +1738,7 @@ EOQ;
                 $label = null;
                 if (isset($row->childlabel)) {
                     $label = $row->childlabel->getValue();
-                    if ($row->childlabel->getLang() !== $lang) {
+                    if ($row->childlabel->getLang() !== $lang && strpos($row->childlabel->getLang(), $lang . "-") !== 0) {
                         $label .= " (" . $row->childlabel->getLang() . ")";
                     }
 
@@ -1760,7 +1760,7 @@ EOQ;
             }
             if (isset($row->label)) {
                 $preflabel = $row->label->getValue();
-                if ($row->label->getLang() !== $lang && strpos($row->label->getLang(), $lang) !== 0) {
+                if ($row->label->getLang() && $row->label->getLang() !== $lang && strpos($row->label->getLang(), $lang . "-") !== 0) {
                     $preflabel .= ' (' . $row->label->getLang() . ')';
                 }
 
@@ -1918,7 +1918,7 @@ EOQ;
                     'type' => array($row->type->shorten()),
                 );
                 if (isset($row->label)) {
-                    if ($row->label->getLang() == $lang) {
+                    if ($row->label->getLang() == $lang || strpos($row->label->getLang(), $lang . "-") == 0) {
                         $values[$row->conc->getURI()]['prefLabel'] = $row->label->getValue();
                     } else {
                         $values[$row->conc->getURI()]['prefLabel'] = $row->label->getValue() . " (" . $row->label->getLang() . ")";
