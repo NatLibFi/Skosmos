@@ -1771,7 +1771,7 @@ EOQ;
                 $label = null;
                 if (isset($row->childlabel)) {
                     $label = $row->childlabel->getValue();
-                    if ($row->childlabel->getLang() !== $lang || strpos($row->childlabel->getLang(), $lang . "-") == 0) {
+                    if ($row->childlabel->getLang() !== $lang && strpos($row->childlabel->getLang(), $lang . "-") !== 0) {
                         $label .= " (" . $row->childlabel->getLang() . ")";
                     }
 
