@@ -688,8 +688,26 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    */
   public function testQueryTopConcepts()
   {
-    $actual = $this->sparql->queryTopConcepts('http://www.skosmos.skos/test/conceptscheme', 'en');
+    $actual = $this->sparql->queryTopConcepts('http://www.skosmos.skos/test/conceptscheme', 'en', 'en');
     $this->assertEquals(array (0 => array ('uri' => 'http://www.skosmos.skos/test/ta1','label' => 'Fish','hasChildren' => true, 'topConceptOf' => 'http://www.skosmos.skos/test/conceptscheme')), $actual);
+  }
+
+  /**
+   * @covers GenericSparql::queryTopConcepts
+   */
+  public function testQueryTopConceptsFallbackLanguage()
+  {
+    $actual = $this->sparql->queryTopConcepts('http://www.skosmos.skos/test/conceptscheme', 'fi', 'en');
+    $this->assertEquals(array (0 => array ('uri' => 'http://www.skosmos.skos/test/ta1','label' => 'Fish (en)','hasChildren' => true, 'topConceptOf' => 'http://www.skosmos.skos/test/conceptscheme')), $actual);
+  }
+
+  /**
+   * @covers GenericSparql::queryTopConcepts
+   */
+  public function testQueryTopConceptsOtherLanguage()
+  {
+    $actual = $this->sparql->queryTopConcepts('http://www.skosmos.skos/test/conceptscheme', 'fi', 'fi');
+    $this->assertEquals(array (0 => array ('uri' => 'http://www.skosmos.skos/test/ta1','label' => 'Fish (en)','hasChildren' => true, 'topConceptOf' => 'http://www.skosmos.skos/test/conceptscheme')), $actual);
   }
 
   /**

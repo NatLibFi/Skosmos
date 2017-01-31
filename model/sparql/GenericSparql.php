@@ -1635,8 +1635,9 @@ EOQ;
      * Query the top concepts of a vocabulary.
      * @param string $conceptSchemes concept schemes whose top concepts to query for
      * @param string $lang language of labels
+     * @param string $fallback language to use if label is not available in the preferred language
      */
-    public function queryTopConcepts($conceptSchemes, $lang) {
+    public function queryTopConcepts($conceptSchemes, $lang, $fallback) {
         if (!is_array($conceptSchemes)) {
             $conceptSchemes = array($conceptSchemes);
         }
@@ -1647,8 +1648,17 @@ EOQ;
         $query = <<<EOQ
 SELECT DISTINCT ?top ?topuri ?label ?notation ?children $fcl WHERE {
   ?top skos:topConceptOf ?topuri .
-  ?top skos:prefLabel ?label .
-  FILTER (langMatches(lang(?label), "$lang"))
+  OPTIONAL {
+    ?top skos:prefLabel ?label .
+    FILTER (langMatches(lang(?label), "$lang"))
+  }
+  OPTIONAL {
+    ?top skos:prefLabel ?label .
+    FILTER (langMatches(lang(?label), "$fallback"))
+  }
+  OPTIONAL { # fallback - other language case
+    ?top skos:prefLabel ?label .
+  }
   OPTIONAL { ?top skos:notation ?notation . }
   BIND ( EXISTS { ?top skos:narrower ?a . } AS ?children )
   $values
@@ -1658,7 +1668,11 @@ EOQ;
         $ret = array();
         foreach ($result as $row) {
             if (isset($row->top) && isset($row->label)) {
-                $top = array('uri' => $row->top->getUri(), 'topConceptOf' => $row->topuri->getUri(), 'label' => $row->label->getValue(), 'hasChildren' => filter_var($row->children->getValue(), FILTER_VALIDATE_BOOLEAN));
+                $label = $row->label->getValue();
+                if ($row->label->getLang() && $row->label->getLang() !== $lang && strpos($row->label->getLang(), $lang) !== 0) {
+                    $label .= ' (' . $row->label->getLang() . ')';
+                }
+                $top = array('uri' => $row->top->getUri(), 'topConceptOf' => $row->topuri->getUri(), 'label' => $label, 'hasChildren' => filter_var($row->children->getValue(), FILTER_VALIDATE_BOOLEAN));
                 if (isset($row->notation)) {
                     $top['notation'] = $row->notation->getValue();
                 }
