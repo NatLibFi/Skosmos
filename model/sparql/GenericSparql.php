@@ -1440,7 +1440,7 @@ EOQ;
         $uri = is_array($uri) ? $uri[0] : $uri;
         $fcl = $this->generateFromClause();
         $propertyClause = implode('|', $props);
-        $filter = $anylang ? "" : "FILTER (langMatches(lang(?label), \"$lang\"))";
+        $otherlang = $anylang ? "OPTIONAL { ?object skos:prefLabel ?label }" : "";
         // need to do a SPARQL subquery because LIMIT needs to be applied /after/
         // the direct relationships have been collapsed into one string
         $query = <<<EOQ
@@ -1457,8 +1457,9 @@ WHERE {
     }
     OPTIONAL {
       ?object skos:prefLabel ?label .
-      $filter
+      FILTER (langMatches(lang(?label), "$lang"))
     }
+    $otherlang
   }
   GROUP BY ?object ?label
 }
