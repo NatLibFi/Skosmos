@@ -513,11 +513,11 @@ msgstr "Termini alternativi per il concetto"
 
 #: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:129
 msgid "skos:broadMatch"
-msgstr "skos:broadMatch"
+msgstr "Concetti più generali compatibili"
 
 #: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:187
 msgid "skos:broadMatch_help"
-msgstr "Concetti più generali compatibii in un altro vocabolario"
+msgstr "Concetti più generali compatibili in un altro vocabolario"
 
 #: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:125
 msgid "skos:broader"
