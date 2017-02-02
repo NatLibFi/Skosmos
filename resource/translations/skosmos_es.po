@@ -514,7 +514,7 @@ msgstr "Términos alternativos para el concepto."
 
 #: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:129
 msgid "skos:broadMatch"
-msgstr "skos:broadMatch"
+msgstr "Concepto genérico concordante"
 
 #: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:187
 msgid "skos:broadMatch_help"
