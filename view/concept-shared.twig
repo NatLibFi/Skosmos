@@ -116,10 +116,10 @@
         <div class="property-value-column"><div class="property-value-wrapper">
           <ul>
           {% for group in concept.groupProperties %}
-              {% if (group.type == 'skosmos:memberOfSuper') or (group.type == 'skosmos:memberOf' and not superFound) %}<li>{% endif %}
-                <a href="{{ group.uri | link_url(group.vocab,request.lang,'page',request.contentLang) }}">{% if group.notation %}<span class="versal">{{ group.notation }}</span>{% endif %}{{ group.label(request.contentLang) }}</a>
+              {% if (group.type == 'skosmos:memberOfSuper' and not superFound) or (group.type == 'skosmos:memberOf' and not superFound) %}<li>{% endif %}
+                <a class="versal" href="{{ group.uri | link_url(group.vocab,request.lang,'page',request.contentLang) }}">{% if group.notation %}<span class="versal">{{ group.notation }}</span>{% endif %}{{ group.label(request.contentLang) }}</a>
                 {% if group.type == 'skosmos:memberOfSuper' %}<span class="versal"> &#62; </span>{% endif %}
-              {% if (group.type == 'skosmos:memberOfSuper' and superFound) or (group.type == 'skosmos:memberOf' and not superFound) %}</li>{% endif %}
+              {% if group.type == 'skosmos:memberOf' or loop.last %}</li>{% endif %}
               {% if group.type == 'skosmos:memberOfSuper' %}{% set superFound = true %}{% elseif group.type == 'skosmos:memberOf' and superFound %}{% set superFound = false %}{% endif %}
           {% endfor %}
           </ul>
