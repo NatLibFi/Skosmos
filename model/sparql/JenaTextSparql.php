@@ -47,7 +47,7 @@ class JenaTextSparql extends GenericSparql
         $term = str_replace('\\', '\\\\', $term); // escape backslashes
         $term = str_replace("'", "\\'", $term); // escape single quotes
 
-        $langClause = empty($lang) ? '' : "'lang:$lang'";
+        $langClause = empty($lang) ? '' : "'lang:$lang*'";
 
         $maxResults = self::MAX_N;
 
