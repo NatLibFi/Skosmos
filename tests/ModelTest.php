@@ -254,6 +254,21 @@ class ModelTest extends PHPUnit_Framework_TestCase
   }
   
   /**
+   * @covers Model::searchConcepts
+   */
+  public function testSearchConceptsWithOneVocabLanguageSubtag() {
+    $params = $this->getMockBuilder('ConceptSearchParameters')->disableOriginalConstructor()->getMock();
+    $params->method('getSearchTerm')->will($this->returnValue('neighbour'));
+    $params->method('getSearchLang')->will($this->returnValue('en'));
+    $params->method('getLang')->will($this->returnValue('en'));
+    $params->method('getVocabs')->will($this->returnValue(array($this->model->getVocabulary('subtag'))));
+    $result = $this->model->searchConcepts($params);
+    $this->assertCount(1, $result);
+    $this->assertEquals('http://www.skosmos.skos/subtag/p1', $result[0]['uri']);
+    $this->assertEquals('Neighbour', $result[0]['prefLabel']);
+  }
+  
+  /**
    * @covers Model::searchConceptsAndInfo
    */
   public function testSearchConceptsAndInfoWithOneVocabCaseInsensitivity() {

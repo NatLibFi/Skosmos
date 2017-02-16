@@ -134,6 +134,16 @@
 	skosmos:language "en";
 	skosmos:sparqlGraph <http://www.skosmos.skos/dupgroup/> .
 
+:subtag a skosmos:Vocabulary, void:Dataset ;
+	dc11:title "A vocabulary for testing language subtags"@en ;
+	dc:subject :cat_general ;
+	void:uriSpace "http://www.skosmos.skos/subtag/";
+	void:sparqlEndpoint <http://localhost:3030/ds/sparql> ;
+	skosmos:language "en";
+	skosmos:sparqlGraph <http://www.skosmos.skos/subtag/> ;
+	skosmos:sparqlDialect "JenaText" .
+
+
 <http://skosmos.skos/dump/test/groups> dc:format "application/rdf+xml" .
 
 :cat_science a skos:Concept ;

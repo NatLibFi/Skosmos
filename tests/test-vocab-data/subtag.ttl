@@ -1,0 +1,5 @@
+@prefix subtag: <http://www.skosmos.skos/subtag/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+subtag:p1 a skos:Concept ;
+    skos:prefLabel "Neighbour"@en-gb .
