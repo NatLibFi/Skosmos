@@ -29,6 +29,7 @@ class Model
     /** how long to store retrieved URI information in APC cache */
     const URI_FETCH_TTL = 86400; // 1 day
     private $globalConfig;
+    private $cache;
 
     /**
      * Initializes the Model object
@@ -37,6 +38,7 @@ class Model
     {
         $this->globalConfig = $config;
         try {
+          $this->cache = new Cache();
           $this->initializeVocabularies();
           $this->initializeNamespaces();
           $this->initializeLogging();
@@ -66,16 +68,16 @@ class Model
 
         try {
             // use APC user cache to store parsed vocabularies.ttl configuration
-            if (function_exists('apc_store') && function_exists('apc_fetch')) {
+            if ($this->cache->isAvailable()) {
                 // @codeCoverageIgnoreStart
                 $key = realpath($this->getConfig()->getVocabularyConfigFile()) . ", " . filemtime($this->getConfig()->getVocabularyConfigFile());
                 $nskey = "namespaces of " . $key;
-                $this->graph = apc_fetch($key);
-                $this->namespaces = apc_fetch($nskey);
+                $this->graph = $this->cache->fetch($key);
+                $this->namespaces = $this->cache->fetch($nskey);
                 if ($this->graph === false || $this->namespaces === false) { // was not found in cache
                     $this->parseVocabularies($this->getConfig()->getVocabularyConfigFile());
-                    apc_store($key, $this->graph);
-                    apc_store($nskey, $this->namespaces);
+                    $this->cache->store($key, $this->graph);
+                    $this->cache->store($nskey, $this->namespaces);
                 }
                 // @codeCoverageIgnoreEnd
             } else { // APC not available, parse on every request
@@ -625,13 +627,13 @@ class Model
         $jsonld->setMimeTypes($mimetypes);
         
         // using apc cache for the resource if available
-        if (function_exists('apc_store') && function_exists('apc_fetch')) {
+        if ($this->cache->isAvailable()) {
             // @codeCoverageIgnoreStart
             $key = 'fetch: ' . EasyRdf_Utils::removeFragmentFromUri($uri);
-            $resource = apc_fetch($key);
+            $resource = $this->cache->fetch($key);
             if ($resource === null || $resource === false) { // was not found in cache, or previous request failed
                 $resource = $this->fetchResourceFromUri($uri);
-                apc_store($key, $resource, self::URI_FETCH_TTL);
+                $this->cache->store($key, $resource, self::URI_FETCH_TTL);
             }
             // @codeCoverageIgnoreEnd
         } else { // APC not available, parse on every request
