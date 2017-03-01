@@ -394,7 +394,7 @@ function getTreeConfiguration() {
                   schemeObjects = []; 
                 } 
                 // concept scheme page
-                else if (node.id === '#' && $('tbody > tr:nth-of-type(3) p').html() === 'skos:ConceptScheme') {
+                else if (node.id === '#' && $('.property-value-wrapper:first() p').html() === 'skos:ConceptScheme') {
                   nodeId = $('.uri-input-box').html(); // using the real uri of the concept from the view.
                   json_url = (rest_base_url + vocab + '/topConcepts');
                   params = $.param({'scheme': nodeId, 'lang' : clang});

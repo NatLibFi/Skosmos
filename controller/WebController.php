@@ -192,7 +192,7 @@ class WebController extends Controller
             $this->invokeGenericErrorPage($request);
             return;
         }
-        $template = (in_array('skos:Concept', $results[0]->getType())) ? $this->twig->loadTemplate('concept-info.twig') : $this->twig->loadTemplate('group-contents.twig');
+        $template = (in_array('skos:Concept', $results[0]->getType()) || in_array('skos:ConceptScheme', $results[0]->getType())) ? $this->twig->loadTemplate('concept-info.twig') : $this->twig->loadTemplate('group-contents.twig');
         
         $crumbs = $vocab->getBreadCrumbs($request->getContentLang(), $uri);
         echo $template->render(array(
