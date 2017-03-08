@@ -304,36 +304,46 @@ ul.dropdown-menu > li:last-child > input {
 }
 
 .headerbar {
-  height: 50px;
-  margin: 0 auto 20px auto;
+  margin: 0 auto;
   position: relative;
   width: 95%;
 }
 
 .headerbar-coloured {
+  position: absolute;
   background-color: #00748F;
+  width: 100%;
+  margin: 0 0 0 15px;
+  height: 50px;
 }
 
 .header-left {
   float: left;
+  margin: 0 0 0 15px;
 }
 
 .header-left > h1 {
   background-color: #00748F;
   line-height: 50px;
   margin: 0 0 0 15px;
-  position: absolute;
+  opacity: 0.99;
+  overflow: hidden;
 }
 
 .header-left > h1 > a {
   color: #ffffff;
   display: block;
   height: 50px;
-  overflow: hidden;
 }
 
 .header-float {
   float: right;
+  margin: 5px 15px 19px 5px;
+}
+  
+.frontpage-spacing > .header-float {
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .headerbar-coloured > .header-float > p {
@@ -348,7 +358,7 @@ ul.dropdown-menu > li:last-child > input {
   border: 0;
   display: block;
   float: right;
-  margin: 5px 0;
+  margin: 0;
   padding: 0;
 }
 
@@ -377,16 +387,25 @@ ul.dropdown-menu > li:last-child > input {
   width: 68px;
 }
 
+#search-all-button.disabled, #search-all-button[disabled], fieldset[disabled] #search-all-button, #search-all-button.disabled:hover, #search-all-button[disabled]:hover, fieldset[disabled] #search-all-button:hover, #search-all-button.disabled:focus, #search-all-button[disabled]:focus, fieldset[disabled] #search-all-button:focus, #search-all-button.disabled:active, #search-all-button[disabled]:active, fieldset[disabled] #search-all-button:active, #search-all-button.disabled.active, #search-all-button.active[disabled], fieldset[disabled] #search-all-button.active {
+  background-color: #3c535b;
+  opacity: 0.99;
+  color: #afafaf;
+}
+
 .search-vocab-text {
-  margin: 15px 5px 5px 5px;
+  background-color: #3c535b;
+  opacity: 0.95;
+  height: 40px;
   float: left;
   text-align: right;
+  line-height: 40px;
 }
 
 .search-vocab-text > p {
   color: #fff;
-  height: 18px;
-  margin: 0;
+  margin: 0 5px;
+  font-size: 14px !important;
 }
 
 .search-count {
@@ -462,7 +481,6 @@ ul.dropdown-menu > li:last-child > input {
 
 .multiselect {
   border: 0;
-  margin: 5px 0 0 0;
 }
 
 #selected-vocabs {
@@ -1495,7 +1513,7 @@ span.date-info {
 }
 
 .header-float > .navbar-form > .input-group > .twitter-typeahead > .tt-dropdown-menu {
-  width: 100%; //fallback
+  width: 100%; /* fallback */
   width: calc(100% + 68px);
   min-width: calc(100% + 68px);
 }
@@ -1687,14 +1705,6 @@ body, .versal, h1, h2, p, .versal-bold {
     width: 95% !important;
   }
 
-  .headerbar {
-    margin-bottom: 15px !important;
-  }
-
-  .navbar-form {
-    max-width: 320px;
-  }
-
   .content > .feedback-logo, .content > .about-logo {
     left: 10px;
   }
@@ -1702,12 +1712,6 @@ body, .versal, h1, h2, p, .versal-bold {
   .content > .feedback-box, .content > #about, .content > .credits, .content > .version {
     margin-left: 120px;
     width: 500px;
-  }
-
-  p.search-vocab-text {
-    overflow: hidden;
-    text-indent: -100%;
-    white-space: nowrap;
   }
 
   .tt-dropdown {
@@ -1789,9 +1793,18 @@ body, .versal, h1, h2, p, .versal-bold {
   .row:nth-of-type(2) > .property-label {
     width: 45%;
   }
+
+  .search-vocab-text{
+    display: none;
+  }
+
 }
 
 @media (max-width: 640px) {
+
+  .header-float {
+    margin-left: 15px;
+  }
 
   .welcome-box, .right-box {
     display: none;
@@ -1801,6 +1814,10 @@ body, .versal, h1, h2, p, .versal-bold {
     margin: 0;
     width: 100%;
   }
+  
+  .headerbar-coloured {
+    overflow: hidden;
+  }
 
   .headerbar {
     width: 95%;
@@ -1809,19 +1826,11 @@ body, .versal, h1, h2, p, .versal-bold {
   .content {
     overflow: hidden;
   }
-
-  .search-vocab-text{
-    display: none;
-  }
-
+  
 }
 
 @media (max-width: 800px) {
-
-  input#search-field {
-    max-width: 130px;
-  }
-
+  
   .twitter-typeahead {
     width: 100%;
   }
@@ -1889,7 +1898,7 @@ body, .versal, h1, h2, p, .versal-bold {
     max-width: none;
   }
 
-  .btn-group {
+  .btn-group, .input-group, #search-field {
     width: 100%;
   }
 
@@ -1897,12 +1906,12 @@ body, .versal, h1, h2, p, .versal-bold {
     width: 100%;
   }
 
-  .frontpage-spacing > .header-float > .navbar-form, .input-group, #search-field {
+  .frontpage-spacing > .header-float > .navbar-form {
     width: 100%;
   }
-
-  .navbar-form {
-    max-width: none;
+  
+  .frontpage-spacing > .header-float > .navbar-form > .input-group {
+    margin-top: 5px;
   }
 
 }

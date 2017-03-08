@@ -1,3 +1,4 @@
+{% if request.vocabid != '' or request.page == 'feedback' or request.page == 'about' %}<div class="row"><div class="headerbar-coloured"></div>{% endif %}
 {% if request.vocabid %}
 <div class="header-left">
   <h1><a href="{% if request.vocabid != '' %}{{ request.vocabid  }}/{% endif %}{{ request.lang }}/{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{{ request.vocab.title(request.contentLang) }}</a></h1>
@@ -49,3 +50,4 @@
   </form>
 {% endif %}
 </div>
+{% if request.vocabid != '' or request.page == 'feedback' or request.page == 'about' %}</div>{% endif %}
