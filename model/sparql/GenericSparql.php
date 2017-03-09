@@ -405,7 +405,8 @@ CONSTRUCT {
      { ?p rdfs:label ?proplabel . }
      UNION
      { ?p rdfs:subPropertyOf ?pp . }
-     UNION
+   }
+   OPTIONAL {
      { ?o a ?ot . }
      UNION
      { ?o skos:prefLabel ?opl . }
