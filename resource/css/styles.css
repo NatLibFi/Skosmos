@@ -1112,7 +1112,7 @@ tr {
   position: relative;
 }
 
-.property-value-column > .row > .col-xs-5.versal {
+.property-value-column > .row > .col-xs-5 > .versal {
   word-wrap: break-word;
 }
 
