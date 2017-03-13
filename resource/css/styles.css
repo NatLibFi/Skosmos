@@ -307,6 +307,7 @@ ul.dropdown-menu > li:last-child > input {
   margin: 0 auto;
   position: relative;
   width: 95%;
+  min-height: 50px;
 }
 
 .headerbar-coloured {
