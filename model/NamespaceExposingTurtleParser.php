@@ -54,7 +54,7 @@ class NamespaceExposingTurtleParser extends EasyRdf_Parser_Turtle
     }
 
     /**
-     * Steps back, restoring the previous character or statement read() to the input buffer
+     * Steps back, restoring the previous character or statement read() to the input buffer.
      */
     protected function unread($chars)
     {
@@ -67,4 +67,72 @@ class NamespaceExposingTurtleParser extends EasyRdf_Parser_Turtle
             $this->column = 1;
         }
     }
+
+
+    /**
+     * Reverse skips through whitespace in 4 byte increments.
+     * (Keeps the byte pointer accurate when unreading.)
+     * @ignore
+     */
+    protected function unskipWS()
+    {
+        if ($this->bytePos - 4 > 0) {
+            $slice = substr($this->data, $this->bytePos - 4, 4);
+            while($slice != '') {
+                if (!self::isWhitespace(mb_substr($slice, -1, 1, "UTF-8"))) {
+                    return;
+                }
+                $slice = substr($slice, 0, -1);
+                $this->bytePos -= 1;
+            }
+            // This 4 byte slice was full of whitespace.
+            // We need to check that there isn't more in the next slice.
+            $this->unSkipWS();
+        }
+    }
+
+    /**
+     * Parse triples with unskipWS (doesn't loose the pointer position in blank nodes).
+     * @ignore
+     */
+    protected function parseTriples()
+    {
+        $c = $this->peek();
+
+        // If the first character is an open bracket we need to decide which of
+        // the two parsing methods for blank nodes to use
+        if ($c == '[') {
+            $c = $this->read();
+            $this->skipWSC();
+            $c = $this->peek();
+            if ($c == ']') {
+                $c = $this->read();
+                $this->subject = $this->createBNode();
+                $this->skipWSC();
+                $this->parsePredicateObjectList();
+            } else {
+                $this->unskipWS();
+                $this->unread('[');
+                $this->subject = $this->parseImplicitBlank();
+            }
+            $this->skipWSC();
+            $c = $this->peek();
+
+            // if this is not the end of the statement, recurse into the list of
+            // predicate and objects, using the subject parsed above as the subject
+            // of the statement.
+            if ($c != '.') {
+                $this->parsePredicateObjectList();
+            }
+        } else {
+            $this->parseSubject();
+            $this->skipWSC();
+            $this->parsePredicateObjectList();
+        }
+
+        $this->subject = null;
+        $this->predicate = null;
+        $this->object = null;
+    }
+
 }
