@@ -58,12 +58,13 @@ class NamespaceExposingTurtleParser extends EasyRdf_Parser_Turtle
      */
     protected function unread($chars)
     {
-        if ($this->column > 0) {
-            $this->column -= mb_strlen($chars, "UTF-8");
-            $this->bytePos -= strlen($chars);
-            if ($this->bytePos < 0) {
-                $this->bytePos = 0;
-            }
+        $this->column -= mb_strlen($chars, "UTF-8");
+        $this->bytePos -= strlen($chars);
+        if ($this->bytePos < 0) {
+            $this->bytePos = 0;
+        }
+        if ($this->column < 1) {
+            $this->column = 1;
         }
     }
 }
