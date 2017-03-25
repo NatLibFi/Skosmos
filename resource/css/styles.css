@@ -658,10 +658,6 @@ ul.dropdown-menu > li:last-child > input {
   height: 150px;
 }
 
-#feedback-fields > input:last-of-type {
-  display: none;
-}
-
 #feedback-fields > .dropdown {
   margin-bottom: 10px;
 }

@@ -110,6 +110,12 @@ class WebController extends Controller
         });
         $this->twig->addFilter($langFilter);
 
+        // create the honeypot
+        $this->honeypot = new \Honeypot();
+        if (!$this->model->getConfig()->getHoneypotEnabled()) {
+            $this->honeypot->disable();
+        }
+        $this->twig->addGlobal('honeypot', $this->honeypot);
     }
 
     /**
@@ -248,7 +254,8 @@ class WebController extends Controller
 
         // if the hidden field has been set a value we have found a spam bot
         // and we do not actually send the message.
-        if ($feedbackSent && $request->getQueryParamPOST('trap') === '') {
+        if ($this->honeypot->validateHoneypot($request->getQueryParamPOST('item-description')) &&
+            $this->honeypot->validateHoneytime($request->getQueryParamPOST('user-captcha'), $this->model->getConfig()->getHoneypotTime())) {
             $this->sendFeedback($request, $feedbackMsg, $feedbackName, $feedbackEmail, $feedbackVocab, $feedbackVocabEmail);
         }
 
