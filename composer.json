@@ -51,7 +51,9 @@
     "phpunit/phpunit": "4.8 - 5.1",
     "umpirsky/twig-gettext-extractor": "1.1.*",
     "phpdocumentor/phpdocumentor": "2.*",
-    "codeclimate/php-test-reporter": "0.3.2"
+    "codeclimate/php-test-reporter": "0.3.2",
+    "symfony/dom-crawler": "3.2.6",
+    "mockery/mockery": "1.0.0-alpha1"
   },
   "autoload": {
     "classmap": ["controller/", "model/", "model/sparql/"]

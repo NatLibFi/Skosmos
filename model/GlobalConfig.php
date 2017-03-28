@@ -224,4 +224,20 @@ class GlobalConfig {
         return explode(' ', $this->getConstant('GLOBAL_PLUGINS', null));
     }
     
+    /**
+     * @return boolean
+     */
+    public function getHoneypotEnabled()
+    {
+        return $this->getConstant('UI_HONEYPOT_ENABLED', TRUE);
+    }
+
+    /**
+     * @return integer
+     */
+    public function getHoneypotTime()
+    {
+        return $this->getConstant('UI_HONEYPOT_TIME', 5);
+    }
+    
 }
