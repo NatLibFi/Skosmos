@@ -456,7 +456,7 @@ class RestController extends Controller
     {
         if (sizeof($hits) == 0) {
             // no matches found
-            return $this->returnError(404, 'Not Found', "Could not find label '$label'");
+            return;
         }
 
         // did find some matches!
@@ -493,6 +493,9 @@ class RestController extends Controller
         $results = $this->model->searchConcepts($parameters);
         $hits = $this->findLookupHits($results, $label, $lang);
         $ret = $this->transformLookupResults($lang, $hits, $label);
+        if ($ret === null) {
+            return $this->returnError(404, 'Not Found', "Could not find label '$label'");
+        }
         return $this->returnJson($ret);
     }
 
