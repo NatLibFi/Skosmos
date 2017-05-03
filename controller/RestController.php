@@ -483,7 +483,7 @@ class RestController extends Controller
      */
     public function lookup($request)
     {
-        $label = $request->getQueryParam('label');
+        $label = $request->getQueryParamRaw('label');
         if (!$label) {
             return $this->returnError(400, "Bad Request", "label parameter missing");
         }
