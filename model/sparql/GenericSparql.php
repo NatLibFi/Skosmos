@@ -966,12 +966,11 @@ EOQ;
         $labelpriority = <<<EOQ
   FILTER(BOUND(?s))
   BIND(STR(SUBSTR(?hit,1,1)) AS ?pri)
-  BIND(STRLANG(STRAFTER(?hit, '@'), SUBSTR(STRBEFORE(?hit, '@'),2)) AS ?match)
+  BIND(IF((SUBSTR(STRBEFORE(?hit, '@'),1) != ?pri), STRLANG(STRAFTER(?hit, '@'), SUBSTR(STRBEFORE(?hit, '@'),2)), STRAFTER(?hit, '@')) AS ?match)
   BIND(IF((?pri = "1" || ?pri = "2") && ?match != ?label, ?match, ?unbound) as ?plabel)
   BIND(IF((?pri = "3" || ?pri = "4"), ?match, ?unbound) as ?alabel)
   BIND(IF((?pri = "5" || ?pri = "6"), ?match, ?unbound) as ?hlabel)
 EOQ;
-        
         $innerquery = $this->generateConceptSearchQueryInner($params->getSearchTerm(), $params->getLang(), $params->getSearchLang(), $props, $unique, $filterGraph);
         if ($params->getSearchTerm() === '*' || $params->getSearchTerm() === '') { 
           $labelpriority = ''; 
