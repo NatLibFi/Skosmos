@@ -53,7 +53,7 @@ $(function() { // DOCUMENT READY
       }
     }
     // Sidenav actions only happen when doing other queries than the autocomplete.
-    if (settings.url.indexOf('index') !== -1 || settings.url.indexOf('groups') !== -1 || settings.url.indexOf('changes') !== -1 || settings.url.indexOf('new') !== -1) {
+    if (settings.url.indexOf('index') !== -1 || settings.url.indexOf('groups') !== -1) {
       // initializing the mCustomScrollbar before the jstree has properly loaded causes a crash
       if ($('.sidebar-grey').hasClass('jstree-loading') === false) {
         var snap = (settings.url.indexOf('hierarchy') !== -1) ? 18 : 15;
@@ -341,6 +341,14 @@ $(function() { // DOCUMENT READY
               $('.nav').scrollTop(0);
               if (window.history.pushState) { window.history.pushState({}, null, encodeURI(event.target.href)); }
               updateTitle(data);
+              $(".sidebar-grey").mCustomScrollbar({
+                alwaysShowScrollbar: 1,
+                scrollInertia: 0,
+                mouseWheel:{ preventDefault: true, scrollAmount: 105 },
+                snapAmount: 15,
+                snapOffset: 1,
+                callbacks: { alwaysTriggerOffsets: false, onTotalScroll: changeListWaypointCallback, onTotalScrollOffset: 300 }
+              });
             }
         });
         return false;
@@ -941,7 +949,7 @@ $(function() { // DOCUMENT READY
     maxHeight: 300
   });
 
-  if ($('#groups.active').length === 1 || ( $('#alpha.active').length === 1) ) {
+  if ($('#alpha.active').length === 1) {
     $(".sidebar-grey").mCustomScrollbar({
       alwaysShowScrollbar: 1,
       scrollInertia: 0,
