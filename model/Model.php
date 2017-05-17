@@ -354,7 +354,6 @@ class Model
             if ($ret[$idx] && isset($hit['lang'])) {
                 $ret[$idx]->setContentLang($hit['lang']);
             }
-
         }
 
         return array('count' => $count, 'results' => $ret);
