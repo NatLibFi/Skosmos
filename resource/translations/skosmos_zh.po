@@ -1,12 +1,13 @@
 # 
 # Translators:
 # hyu623 <hyu623@163.com>, 2015
+# osma <osma.suominen@helsinki.fi>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-06 15:51+0200\n"
-"PO-Revision-Date: 2016-06-07 09:03+0000\n"
+"POT-Creation-Date: 2017-01-16 10:26+0200\n"
+"PO-Revision-Date: 2017-05-30 07:46+0000\n"
 "Last-Translator: osma <osma.suominen@helsinki.fi>\n"
 "Language-Team: Chinese (http://www.transifex.com/national-library-of-finland/skosmos/language/zh/)\n"
 "MIME-Version: 1.0\n"
@@ -14,733 +15,745 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: zh\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 1.8.7.1\n"
 "X-Poedit-Basepath: ../..\n"
-"X-Poedit-Language: English\n"
 "X-Poedit-SearchPath-0: view\n"
 "X-Poedit-SearchPath-1: controller\n"
 "X-Poedit-SearchPath-2: model\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: controller/RestController.php:273
-msgid "skos:Concept"
-msgstr "概念"
-
-#: controller/RestController.php:282
-msgid "skos:Collection"
-msgstr "收藏，集"
-
-#: controller/Controller.php:43
+#: controller/Controller.php:38
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:21
 msgid "in_this_language"
 msgstr "英语"
 
-#: model/Concept.php:446 model/Concept.php:466
+#: controller/RestController.php:271
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:125
+msgid "skos:Concept"
+msgstr "概念"
+
+#: controller/RestController.php:280
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:127
+msgid "skos:Collection"
+msgstr "收藏，集"
+
+#: model/Concept.php:455 model/Concept.php:475
 msgid "skosmos:created"
 msgstr "创建的"
 
-#: model/Concept.php:451 model/Concept.php:453 model/Concept.php:462
+#: model/Concept.php:460 model/Concept.php:462 model/Concept.php:471
 msgid "skosmos:modified"
 msgstr "最后修改"
 
-#: model/VocabularyCategory.php:44
+#: model/VocabularyCategory.php:39
 msgid "Vocabularies"
 msgstr ""
 
-#: /tmp/cache/575571e08078d/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:26
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:26
 msgid "%search_count% results for '%term%'"
 msgstr "搜索...术语结果计数"
 
-#: /tmp/cache/575571e08078d/89/8918fbbc730e25498fb2a90c43f7cc896ff81dd4b89b4de856b33d54a90d5de1.php:75
-#: /tmp/cache/575571e08078d/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:269
-#: /tmp/cache/575571e08078d/92/92eb6a21e41647d1308c2509b8404473d4d555e9a0706b46ba6366280ab84f55.php:64
-#: /tmp/cache/575571e08078d/6e/6e42e8c53c0a500ee83faf3238b4cb7d22a33fa5cd53c06e8da925a1f0bf7e61.php:68
-#: /tmp/cache/575571e08078d/e5/e5e30dd1e4f7a5aba208e2abff5f397783b237206ddb689ead55f2201f80691a.php:62
+#: /tmp/cache/587c83c09abaa/23/23c9862892c34daf7bea11b6d50990145b73a83c0947ae60c3d729fe591a06ec.php:48
+msgid "404 Error: The page %requested_page% cannot be found."
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:62
+#: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:75
+#: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:64
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:274
+#: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:68
 msgid "A-Z"
 msgstr "全部，A到Z（按字母顺序排列的）索引"
 
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:19
-#: /tmp/cache/575571e08078d/4c/4c9e7290b4865c2bb9ac100068af08280f5e46261b439083d3982ee19f3cfafb.php:46
+#: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:46
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:19
 msgid "About"
 msgstr "关于"
 
-#: /tmp/cache/575571e08078d/cf/cf3ee7d4c923770745328cd04df267b541825922e29a4a579961a2601c61474a.php:35
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:35
 #, php-format
 msgid "All %d results displayed"
 msgstr "所有...%d的结果已显示。"
 
-#: /tmp/cache/575571e08078d/89/8918fbbc730e25498fb2a90c43f7cc896ff81dd4b89b4de856b33d54a90d5de1.php:77
-#: /tmp/cache/575571e08078d/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:271
-#: /tmp/cache/575571e08078d/92/92eb6a21e41647d1308c2509b8404473d4d555e9a0706b46ba6366280ab84f55.php:66
-#: /tmp/cache/575571e08078d/6e/6e42e8c53c0a500ee83faf3238b4cb7d22a33fa5cd53c06e8da925a1f0bf7e61.php:70
-#: /tmp/cache/575571e08078d/e5/e5e30dd1e4f7a5aba208e2abff5f397783b237206ddb689ead55f2201f80691a.php:64
+#: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:64
+#: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:77
+#: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:66
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:276
+#: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:70
 msgid "Alpha-nav"
 msgstr "按照字母顺序的"
 
-#: /tmp/cache/575571e08078d/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:550
-msgid "By group"
-msgstr "按组"
-
-#: /tmp/cache/575571e08078d/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:582
-msgid "By parent"
-msgstr "根据隶属关系"
-
-#: /tmp/cache/575571e08078d/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:472
-msgid "By scheme"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:511
-msgid "By type"
-msgstr "按类型"
-
-#: /tmp/cache/575571e08078d/89/8918fbbc730e25498fb2a90c43f7cc896ff81dd4b89b4de856b33d54a90d5de1.php:128
-#: /tmp/cache/575571e08078d/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:335
-#: /tmp/cache/575571e08078d/92/92eb6a21e41647d1308c2509b8404473d4d555e9a0706b46ba6366280ab84f55.php:117
-#: /tmp/cache/575571e08078d/6e/6e42e8c53c0a500ee83faf3238b4cb7d22a33fa5cd53c06e8da925a1f0bf7e61.php:125
-#: /tmp/cache/575571e08078d/e5/e5e30dd1e4f7a5aba208e2abff5f397783b237206ddb689ead55f2201f80691a.php:119
-msgid "Changes-nav"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:122
-msgid "Clear limitations"
-msgstr "明确限定"
-
-#: /tmp/cache/575571e08078d/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:74
-msgid "Contact us!"
-msgstr "联系我们！"
-
-#: /tmp/cache/575571e08078d/fa/faa08236ede4d85b682688874617f65c5ff881bc49af67a226bcb2e5e9de0068.php:108
-msgid "Content and search language"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/fa/faa08236ede4d85b682688874617f65c5ff881bc49af67a226bcb2e5e9de0068.php:51
-msgid "Content language"
-msgstr "内容语言"
-
-#: /tmp/cache/575571e08078d/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:687
-msgid "Download this concept in SKOS format:"
-msgstr "下载此概念"
-
-#: /tmp/cache/575571e08078d/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:144
-msgid "E-mail:"
-msgstr "电子邮件"
-
-#: /tmp/cache/575571e08078d/fa/faa08236ede4d85b682688874617f65c5ff881bc49af67a226bcb2e5e9de0068.php:220
-msgid "Enter search term"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:148
-msgid "Enter your e-mail address"
-msgstr "输入您的电子邮件地址"
-
-#: /tmp/cache/575571e08078d/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:140
-msgid "Enter your name"
-msgstr "输入您的姓名"
-
-#: /tmp/cache/575571e08078d/30/308a7807f1f84793e0f9a856050d3d52b74ec8842357022a77c3c398008fbf98.php:69
-#: /tmp/cache/575571e08078d/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:857
-msgid "Error: Requested vocabulary not found!"
-msgstr "错误：请求的词汇未找到！"
-
-#: /tmp/cache/575571e08078d/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:847
-msgid "Error: Term \"%term%\" not found in vocabulary!"
-msgstr "错误：术语...不存在词汇表中！"
-
-#: /tmp/cache/575571e08078d/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:34
-#: /tmp/cache/575571e08078d/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:54
-msgid "Feedback"
-msgstr "意见反馈"
-
-#: /tmp/cache/575571e08078d/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:64
-msgid "Feedback has been sent!"
-msgstr "反馈已发送！"
-
-#: /tmp/cache/575571e08078d/92/92eb6a21e41647d1308c2509b8404473d4d555e9a0706b46ba6366280ab84f55.php:35
-msgid "Group index"
-msgstr "分组指数"
-
-#: /tmp/cache/575571e08078d/89/8918fbbc730e25498fb2a90c43f7cc896ff81dd4b89b4de856b33d54a90d5de1.php:110
-#: /tmp/cache/575571e08078d/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:308
-#: /tmp/cache/575571e08078d/92/92eb6a21e41647d1308c2509b8404473d4d555e9a0706b46ba6366280ab84f55.php:99
-#: /tmp/cache/575571e08078d/6e/6e42e8c53c0a500ee83faf3238b4cb7d22a33fa5cd53c06e8da925a1f0bf7e61.php:107
-#: /tmp/cache/575571e08078d/e5/e5e30dd1e4f7a5aba208e2abff5f397783b237206ddb689ead55f2201f80691a.php:101
-msgid "Group-nav"
-msgstr "组别，群组"
-
-#: /tmp/cache/575571e08078d/89/8918fbbc730e25498fb2a90c43f7cc896ff81dd4b89b4de856b33d54a90d5de1.php:94
-#: /tmp/cache/575571e08078d/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:292
-#: /tmp/cache/575571e08078d/cf/cf3ee7d4c923770745328cd04df267b541825922e29a4a579961a2601c61474a.php:55
-#: /tmp/cache/575571e08078d/92/92eb6a21e41647d1308c2509b8404473d4d555e9a0706b46ba6366280ab84f55.php:83
-#: /tmp/cache/575571e08078d/6e/6e42e8c53c0a500ee83faf3238b4cb7d22a33fa5cd53c06e8da925a1f0bf7e61.php:91
-#: /tmp/cache/575571e08078d/e5/e5e30dd1e4f7a5aba208e2abff5f397783b237206ddb689ead55f2201f80691a.php:85
-msgid "Hier-nav"
-msgstr "层级，层次结构"
-
-#: /tmp/cache/575571e08078d/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:157
-msgid "Leave this field blank"
-msgstr "保留此字段为空"
-
-#: /tmp/cache/575571e08078d/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:589
-msgid "Limit search"
-msgstr "限定检索"
-
-#: /tmp/cache/575571e08078d/cf/cf3ee7d4c923770745328cd04df267b541825922e29a4a579961a2601c61474a.php:31
-msgid "Loading"
-msgstr "加载中"
-
-#: /tmp/cache/575571e08078d/cf/cf3ee7d4c923770745328cd04df267b541825922e29a4a579961a2601c61474a.php:27
-msgid "Loading more items"
-msgstr "加载更多条目"
-
-#: /tmp/cache/575571e08078d/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:152
-msgid "Message:"
-msgstr "消息"
-
-#: /tmp/cache/575571e08078d/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:136
-msgid "Name:"
-msgstr "姓名"
-
-#: /tmp/cache/575571e08078d/cf/cf3ee7d4c923770745328cd04df267b541825922e29a4a579961a2601c61474a.php:23
-msgid "No results"
-msgstr "没有结果"
-
-#: /tmp/cache/575571e08078d/80/804f6e9fbb43aed16175bcf88cb91f7ba7b685f17a100a28e0e56402e7e8f141.php:26
-msgid "No vocabularies on the server!"
-msgstr "该服务器上没有词汇表！"
-
-#: /tmp/cache/575571e08078d/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:103
-#: /tmp/cache/575571e08078d/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:111
-msgid "Not to a specific vocabulary"
-msgstr "不符合特定的词汇表"
-
-#: /tmp/cache/575571e08078d/fa/faa08236ede4d85b682688874617f65c5ff881bc49af67a226bcb2e5e9de0068.php:233
-msgid "Search"
-msgstr "检索"
-
-#: /tmp/cache/575571e08078d/fa/faa08236ede4d85b682688874617f65c5ff881bc49af67a226bcb2e5e9de0068.php:59
-msgid "Search from vocabulary"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/fa/faa08236ede4d85b682688874617f65c5ff881bc49af67a226bcb2e5e9de0068.php:210
-msgid "Search language: any"
-msgstr "任何语言"
-
-#: /tmp/cache/575571e08078d/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:317
-msgid "Search options"
-msgstr "搜索选项"
-
-#: /tmp/cache/575571e08078d/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:161
-msgid "Send feedback"
-msgstr "发送反馈"
-
-#: /tmp/cache/575571e08078d/cf/cf3ee7d4c923770745328cd04df267b541825922e29a4a579961a2601c61474a.php:51
-msgid "Show all breadcrumb paths"
-msgstr "显示所有路径"
-
-#: /tmp/cache/575571e08078d/4c/4c9e7290b4865c2bb9ac100068af08280f5e46261b439083d3982ee19f3cfafb.php:72
-msgid "Skosmos version %version%"
-msgstr "Skosmos版本"
-
-#: /tmp/cache/575571e08078d/fa/faa08236ede4d85b682688874617f65c5ff881bc49af67a226bcb2e5e9de0068.php:229
-msgid "Submit search"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:68
-msgid "Thank you for your feedback"
-msgstr "谢谢您的反馈。我们努力尽快回复所有反馈。"
-
-#: /tmp/cache/575571e08078d/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:129
-msgid "The search provided no results."
-msgstr "该检索没有结果。"
-
-#: /tmp/cache/575571e08078d/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:48
-msgid "There is no term for this concept in this language"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/cf/cf3ee7d4c923770745328cd04df267b541825922e29a4a579961a2601c61474a.php:47
-#: /tmp/cache/575571e08078d/c9/c99a6be02cdf3909740f66f94e76bd1d4ce12eb573de6b10c78bf28f11e234c6.php:173
-msgid "Value is required and can not be empty"
-msgstr "需要赋值，不能为空。"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:27
-msgid "cc:attributionName"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:29
-msgid "cc:attributionUrl"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:25
-msgid "cc:license"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:31
-msgid "cc:morePermissions"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:33
-msgid "cc:useGuidelines"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:35
-msgid "dc:conformsTo"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:37
-msgid "dc:contributor"
-msgstr "其他责任者"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:39
-msgid "dc:coverage"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:41
-msgid "dc:created"
-msgstr "创建的"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:43
-msgid "dc:creator"
-msgstr "创建者"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:45
-msgid "dc:date"
-msgstr "日期"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:47
-msgid "dc:description"
-msgstr "描述，说明"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:49
-msgid "dc:format"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:51
-msgid "dc:identifier"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:53
-msgid "dc:isReplacedBy"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:55
-msgid "dc:isRequiredBy"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:57
-msgid "dc:issued"
-msgstr "发行日期"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:59
-msgid "dc:language"
-msgstr "语言"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:61
-msgid "dc:license"
-msgstr "许可"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:63
-msgid "dc:modified"
-msgstr "最后修改"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:65
-msgid "dc:publisher"
-msgstr "出版者"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:67
-msgid "dc:relation"
-msgstr "关系"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:69
-msgid "dc:replaces"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:71
-msgid "dc:rights"
-msgstr "权限"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:73
-msgid "dc:rightsHolder"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:75
-msgid "dc:source"
-msgstr "来源"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:77
-msgid "dc:source_help"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:79
-msgid "dc:subject"
-msgstr "主题"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:81
-msgid "dc:title"
-msgstr "题名"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:83
-msgid "dc:type"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:256
-#: /tmp/cache/575571e08078d/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:36
-msgid "deprecated"
-msgstr "此概念已弃用，请不要使用用于注释。"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:85
-msgid "foaf:homepage"
-msgstr "主页"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:87
-msgid "foaf:page"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:542
-#: /tmp/cache/575571e08078d/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:622
-msgid "foreign prefLabel help"
-msgstr "其它语言中概念术语"
-
-#: /tmp/cache/575571e08078d/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:624
-msgid "foreign prefLabels"
-msgstr "其它语言"
-
-#: /tmp/cache/575571e08078d/cf/cf3ee7d4c923770745328cd04df267b541825922e29a4a579961a2601c61474a.php:39
-msgid "from all"
-msgstr "全部源自，所有来源"
-
-#: /tmp/cache/575571e08078d/89/8918fbbc730e25498fb2a90c43f7cc896ff81dd4b89b4de856b33d54a90d5de1.php:90
-#: /tmp/cache/575571e08078d/d3/d35a8caa8e5726e4a1e1daf3c0e8ae47cc9dac425ba19d1b55d2183c93e9339d.php:288
-#: /tmp/cache/575571e08078d/92/92eb6a21e41647d1308c2509b8404473d4d555e9a0706b46ba6366280ab84f55.php:79
-#: /tmp/cache/575571e08078d/6e/6e42e8c53c0a500ee83faf3238b4cb7d22a33fa5cd53c06e8da925a1f0bf7e61.php:87
-#: /tmp/cache/575571e08078d/e5/e5e30dd1e4f7a5aba208e2abff5f397783b237206ddb689ead55f2201f80691a.php:81
-msgid "hierarchy-disabled-help"
-msgstr "该词汇表不显示顶级类层级。"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:89
-msgid "isothes:ConceptGroup"
-msgstr "概念组"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:93
-msgid "isothes:ThesaurusArray"
-msgstr "同位叙词概念类组"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:95
-msgid "isothes:broaderGeneric"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:97
-msgid "isothes:broaderInstantial"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:99
-msgid "isothes:broaderPartitive"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:101
-msgid "isothes:narrowerGeneric"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:103
-msgid "isothes:narrowerInstantial"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:105
-msgid "isothes:narrowerPartitive"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:91
-msgid "isothes:superGroup"
-msgstr "超级组"
-
-#: /tmp/cache/575571e08078d/4c/4c9e7290b4865c2bb9ac100068af08280f5e46261b439083d3982ee19f3cfafb.php:66
-msgid "layout designed by Hahmo"
-msgstr "依据Hahmo Design公司设计的版面/布局"
-
-#: /tmp/cache/575571e08078d/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:74
-msgid "limited to group"
-msgstr "组"
-
-#: /tmp/cache/575571e08078d/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:67
-msgid "limited to parent"
-msgstr "隶属关系"
-
-#: /tmp/cache/575571e08078d/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:81
-msgid "limited to scheme"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:29
-msgid "limited to type"
-msgstr "类型"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:109
-msgid "owl:sameAs"
-msgstr "同等概念"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:107
-msgid "owl:versionInfo"
-msgstr "版本"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:111
-msgid "rdf:type"
-msgstr "类型"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:113
-msgid "rdf:type_help"
-msgstr "实体类型"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:119
-msgid "rdfs:comment"
-msgstr "描述，说明"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:115
-msgid "rdfs:label"
-msgstr "标签"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:117
-msgid "rdfs:seeAlso"
-msgstr "参见"
-
-#: /tmp/cache/575571e08078d/cf/cf3ee7d4c923770745328cd04df267b541825922e29a4a579961a2601c61474a.php:43
-msgid "selected"
-msgstr "所选的，选择的"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:139
-msgid "skos:altLabel"
-msgstr "交替标签"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:175
-msgid "skos:altLabel_help"
-msgstr "此概念交替术语"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:129
-msgid "skos:broadMatch"
-msgstr "简单知识组织系统：广泛匹配"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:187
-msgid "skos:broadMatch_help"
-msgstr "在另一词汇表中匹配的上位概念"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:125
-msgid "skos:broader"
-msgstr "上位概念"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:167
-msgid "skos:broader_help"
-msgstr "上位概念"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:165
-msgid "skos:changeNote"
-msgstr "变更注释，变更说明"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:143
-msgid "skos:closeMatch"
-msgstr "紧密匹配的概念"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:185
-msgid "skos:closeMatch_help"
-msgstr "在另一词汇表中紧密匹配的概念"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:157
-msgid "skos:definition"
-msgstr "定义"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:181
-msgid "skos:definition_help"
-msgstr "某概念特定涵义的完全解释"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:163
-msgid "skos:editorialNote"
-msgstr "编者按"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:141
-msgid "skos:exactMatch"
-msgstr "精确匹配"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:183
-msgid "skos:exactMatch_help"
-msgstr "在另一词汇表中精确匹配的概念"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:159
-msgid "skos:example"
-msgstr "实例"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:151
-msgid "skos:hasTopConcept"
-msgstr "有顶层概念"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:161
-msgid "skos:historyNote"
-msgstr "历史注解"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:147
-msgid "skos:inScheme"
-msgstr "概念结构"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:145
-msgid "skos:member"
-msgstr "小组成员"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:177
-msgid "skos:member_help"
-msgstr "小组成员"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:131
-msgid "skos:narrowMatch"
-msgstr "狭义匹配概念"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:189
-msgid "skos:narrowMatch_help"
-msgstr "在另一词汇表中匹配的狭义概念"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:127
-msgid "skos:narrower"
-msgstr "狭义概念"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:169
-msgid "skos:narrower_help"
-msgstr "狭义概念"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:153
-msgid "skos:note"
-msgstr "注释，说明"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:171
-msgid "skos:note_help"
-msgstr "注释，说明（复数）"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:137
-#: /tmp/cache/575571e08078d/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:234
-msgid "skos:prefLabel"
-msgstr "优选词，正式主题词"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:133
-msgid "skos:related"
-msgstr "相关概念"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:135
-msgid "skos:relatedMatch"
-msgstr "其他词汇表中相关概念"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:179
-msgid "skos:related_help"
-msgstr "与本概念相关的概念"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:155
-msgid "skos:scopeNote"
-msgstr "范围注释，叙词含义说明"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:173
-msgid "skos:scopeNote_help"
-msgstr "概念使用与范围的说明"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:149
-msgid "skos:topConceptOf"
-msgstr "属于词汇表"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:193
-msgid "skosext:DeprecatedConcept"
-msgstr "已弃用概念"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:191
-msgid "skosext:partOf"
-msgstr "是...部分"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:195
-msgid "skosext:partOf_help"
-msgstr "该概念为的整体一部分"
-
-#: /tmp/cache/575571e08078d/43/43ae8b071e870ca40c63edc1e78a5288e71e3ce97147ac5ece451b8a5c25990b.php:449
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:197
-#: /tmp/cache/575571e08078d/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:523
-msgid "skosmos:memberOf"
-msgstr "属于组"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:201
-#: /tmp/cache/575571e08078d/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:581
-msgid "skosmos:memberOfArray"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:203
-#: /tmp/cache/575571e08078d/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:579
-msgid "skosmos:memberOfArray_help"
-msgstr ""
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:199
-#: /tmp/cache/575571e08078d/eb/eb8a55993e3222d6485e4a4ffbfff89e1656b3c19f84994d0e8cb0dbd995cd05.php:521
-msgid "skosmos:memberOf_help"
-msgstr "概念归属的组"
-
-#: /tmp/cache/575571e08078d/fb/fb996452a37173e7a3e0e1052079f6364ec5d05f60515c4f600ee5591f25fb39.php:23
-msgid "zxx-x-taxon"
-msgstr ""
-
-#: /tmp/cache/575571e1a0860/7f/7f812c317d71ba3939846b0c115ea3547fa8a5795b5c750d8bae5adbffa23be0.php:48
-msgid "404 Error: The page %requested_page% cannot be found."
-msgstr ""
-
-#: /tmp/cache/575571e1a0860/10/10f444be3f922f429458b575ce02fb8a17b62e4cd4a21e4d9c238192dec5d3b8.php:168
-msgid "About page"
-msgstr "关于"
-
-#: /tmp/cache/575571e1a0860/48/48716bd86a4d17f8a6f006070280cdb6a8267fc20fa0418f6e34d9ab4835ad2f.php:34
+#: /tmp/cache/587c83c09abaa/cf/cf0b3d87d2eb48f38f5f339303d5509c7535d13d7b010ad4840ee824430f7fe6.php:34
 msgid "Alphabetical index"
 msgstr "字顺索引（按字母顺序排列）"
 
-#: /tmp/cache/575571e1a0860/d1/d1b825103fbbbc387877af3f3dff368cc6d44fdce3031ee7049605601f24f8c1.php:136
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:555
+msgid "By group"
+msgstr "按组"
+
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:587
+msgid "By parent"
+msgstr "根据隶属关系"
+
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:477
+msgid "By scheme"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:516
+msgid "By type"
+msgstr "按类型"
+
+#: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:119
+#: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:132
+#: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:117
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:331
+#: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:125
+msgid "Changes-nav"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:122
+msgid "Clear limitations"
+msgstr "明确限定"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:74
+msgid "Contact us!"
+msgstr "联系我们！"
+
+#: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:108
+msgid "Content and search language"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:51
+msgid "Content language"
+msgstr "内容语言"
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:732
+msgid "Download this concept in SKOS format:"
+msgstr "下载此概念"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:144
+msgid "E-mail:"
+msgstr "电子邮件"
+
+#: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:220
+msgid "Enter search term"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:148
+msgid "Enter your e-mail address"
+msgstr "输入您的电子邮件地址"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:140
+msgid "Enter your name"
+msgstr "输入您的姓名"
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:900
+#: /tmp/cache/587c83c13194c/5c/5c060d2297f64d66beb101ee34831f917ed8d33f97dadeca144430a1561433ec.php:69
+msgid "Error: Requested vocabulary not found!"
+msgstr "错误：请求的词汇未找到！"
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:890
+msgid "Error: Term \"%term%\" not found in vocabulary!"
+msgstr "错误：术语...不存在词汇表中！"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:34
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:54
+#: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:194
+msgid "Feedback"
+msgstr "意见反馈"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:64
+msgid "Feedback has been sent!"
+msgstr "反馈已发送！"
+
+#: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:35
+msgid "Group index"
+msgstr "分组指数"
+
+#: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:101
+#: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:114
+#: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:99
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:313
+#: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:107
+msgid "Group-nav"
+msgstr "组别，群组"
+
+#: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:85
+#: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:94
+#: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:83
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:297
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:55
+#: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:91
+msgid "Hier-nav"
+msgstr "层级，层次结构"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:157
+msgid "Leave this field blank"
+msgstr "保留此字段为空"
+
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:594
+msgid "Limit search"
+msgstr "限定检索"
+
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:31
+msgid "Loading"
+msgstr "加载中"
+
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:27
+msgid "Loading more items"
+msgstr "加载更多条目"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:152
+msgid "Message:"
+msgstr "消息"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:136
+msgid "Name:"
+msgstr "姓名"
+
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:23
+msgid "No results"
+msgstr "没有结果"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:103
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:111
+msgid "Not to a specific vocabulary"
+msgstr "不符合特定的词汇表"
+
+#: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:233
+msgid "Search"
+msgstr "检索"
+
+#: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:59
+msgid "Search from vocabulary"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:210
+msgid "Search language: any"
+msgstr "任何语言"
+
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:340
+msgid "Search options"
+msgstr "搜索选项"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:161
+msgid "Send feedback"
+msgstr "发送反馈"
+
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:51
+msgid "Show all breadcrumb paths"
+msgstr "显示所有路径"
+
+#: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:72
+msgid "Skosmos version %version%"
+msgstr "Skosmos版本"
+
+#: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:229
+msgid "Submit search"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:68
+msgid "Thank you for your feedback"
+msgstr "谢谢您的反馈。我们努力尽快回复所有反馈。"
+
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:129
+msgid "The search provided no results."
+msgstr "该检索没有结果。"
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:48
+msgid "There is no term for this concept in this language"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:173
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:47
+msgid "Value is required and can not be empty"
+msgstr "需要赋值，不能为空。"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:27
+msgid "cc:attributionName"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:29
+msgid "cc:attributionUrl"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:25
+msgid "cc:license"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:31
+msgid "cc:morePermissions"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:33
+msgid "cc:useGuidelines"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:35
+msgid "dc:conformsTo"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:37
+msgid "dc:contributor"
+msgstr "其他责任者"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:39
+msgid "dc:coverage"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:41
+msgid "dc:created"
+msgstr "创建的"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:43
+msgid "dc:creator"
+msgstr "创建者"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:45
+msgid "dc:date"
+msgstr "日期"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:47
+msgid "dc:description"
+msgstr "描述，说明"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:49
+msgid "dc:format"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:51
+msgid "dc:identifier"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:53
+msgid "dc:isReplacedBy"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:55
+msgid "dc:isRequiredBy"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:57
+msgid "dc:issued"
+msgstr "发行日期"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:59
+msgid "dc:language"
+msgstr "语言"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:61
+msgid "dc:license"
+msgstr "许可"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:63
+msgid "dc:modified"
+msgstr "最后修改"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:65
+msgid "dc:publisher"
+msgstr "出版者"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:67
+msgid "dc:relation"
+msgstr "关系"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:69
+msgid "dc:replaces"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:71
+msgid "dc:rights"
+msgstr "权限"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:73
+msgid "dc:rightsHolder"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:75
+msgid "dc:source"
+msgstr "来源"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:77
+msgid "dc:source_help"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:79
+msgid "dc:spatial"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:81
+msgid "dc:subject"
+msgstr "主题"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:83
+msgid "dc:temporal"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:85
+msgid "dc:title"
+msgstr "题名"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:87
+msgid "dc:type"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:36
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:256
+msgid "deprecated"
+msgstr "此概念已弃用，请不要使用用于注释。"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:89
+msgid "foaf:homepage"
+msgstr "主页"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:91
+msgid "foaf:page"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:658
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:542
+msgid "foreign prefLabel help"
+msgstr "其它语言中概念术语"
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:660
+msgid "foreign prefLabels"
+msgstr "其它语言"
+
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:39
+msgid "from all"
+msgstr "全部源自，所有来源"
+
+#: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:81
+#: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:90
+#: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:79
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:293
+#: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:87
+msgid "hierarchy-disabled-help"
+msgstr "该词汇表不显示顶级类层级。"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:93
+msgid "isothes:ConceptGroup"
+msgstr "概念组"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:97
+msgid "isothes:ThesaurusArray"
+msgstr "同位叙词概念类组"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:99
+msgid "isothes:broaderGeneric"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:101
+msgid "isothes:broaderInstantial"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:103
+msgid "isothes:broaderPartitive"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:105
+msgid "isothes:narrowerGeneric"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:107
+msgid "isothes:narrowerInstantial"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:109
+msgid "isothes:narrowerPartitive"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:95
+msgid "isothes:superGroup"
+msgstr "超级组"
+
+#: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:66
+msgid "layout designed by Hahmo"
+msgstr "依据Hahmo Design公司设计的版面/布局"
+
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:74
+msgid "limited to group"
+msgstr "组"
+
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:67
+msgid "limited to parent"
+msgstr "隶属关系"
+
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:81
+msgid "limited to scheme"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:29
+msgid "limited to type"
+msgstr "类型"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:113
+msgid "owl:sameAs"
+msgstr "同等概念"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:111
+msgid "owl:versionInfo"
+msgstr "版本"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:115
+msgid "rdf:type"
+msgstr "类型"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:117
+msgid "rdf:type_help"
+msgstr "实体类型"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:123
+msgid "rdfs:comment"
+msgstr "描述，说明"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:119
+msgid "rdfs:label"
+msgstr "标签"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:121
+msgid "rdfs:seeAlso"
+msgstr "参见"
+
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:43
+msgid "selected"
+msgstr "所选的，选择的"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:143
+msgid "skos:altLabel"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:179
+msgid "skos:altLabel_help"
+msgstr "此概念交替术语"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:133
+msgid "skos:broadMatch"
+msgstr "简单知识组织系统：广泛匹配"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:191
+msgid "skos:broadMatch_help"
+msgstr "在另一词汇表中匹配的上位概念"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:129
+msgid "skos:broader"
+msgstr "上位概念"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:171
+msgid "skos:broader_help"
+msgstr "上位概念"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:169
+msgid "skos:changeNote"
+msgstr "变更注释，变更说明"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:147
+msgid "skos:closeMatch"
+msgstr "紧密匹配的概念"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:189
+msgid "skos:closeMatch_help"
+msgstr "在另一词汇表中紧密匹配的概念"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:161
+msgid "skos:definition"
+msgstr "定义"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:185
+msgid "skos:definition_help"
+msgstr "某概念特定涵义的完全解释"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:167
+msgid "skos:editorialNote"
+msgstr "编者按"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:145
+msgid "skos:exactMatch"
+msgstr "精确匹配"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:187
+msgid "skos:exactMatch_help"
+msgstr "在另一词汇表中精确匹配的概念"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:163
+msgid "skos:example"
+msgstr "实例"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:155
+msgid "skos:hasTopConcept"
+msgstr "有顶层概念"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:165
+msgid "skos:historyNote"
+msgstr "历史注解"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:151
+msgid "skos:inScheme"
+msgstr "概念结构"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:149
+msgid "skos:member"
+msgstr "小组成员"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:181
+msgid "skos:member_help"
+msgstr "小组成员"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:135
+msgid "skos:narrowMatch"
+msgstr "狭义匹配概念"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:193
+msgid "skos:narrowMatch_help"
+msgstr "在另一词汇表中匹配的狭义概念"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:131
+msgid "skos:narrower"
+msgstr "狭义概念"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:173
+msgid "skos:narrower_help"
+msgstr "狭义概念"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:157
+msgid "skos:note"
+msgstr "注释，说明"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:175
+msgid "skos:note_help"
+msgstr "注释，说明（复数）"
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:234
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:141
+msgid "skos:prefLabel"
+msgstr "优选词，正式主题词"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:137
+msgid "skos:related"
+msgstr "相关概念"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:139
+msgid "skos:relatedMatch"
+msgstr "其他词汇表中相关概念"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:183
+msgid "skos:related_help"
+msgstr "与本概念相关的概念"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:159
+msgid "skos:scopeNote"
+msgstr "范围注释，叙词含义说明"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:177
+msgid "skos:scopeNote_help"
+msgstr "概念使用与范围的说明"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:153
+msgid "skos:topConceptOf"
+msgstr "属于词汇表"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:197
+msgid "skosext:DeprecatedConcept"
+msgstr "已弃用概念"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:195
+msgid "skosext:partOf"
+msgstr "是...部分"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:199
+msgid "skosext:partOf_help"
+msgstr "该概念为的整体一部分"
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:548
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:201
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:449
+msgid "skosmos:memberOf"
+msgstr "属于组"
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:611
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:205
+msgid "skosmos:memberOfArray"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:609
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:207
+msgid "skosmos:memberOfArray_help"
+msgstr ""
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:546
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:203
+msgid "skosmos:memberOf_help"
+msgstr "概念归属的组"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:23
+msgid "zxx-x-taxon"
+msgstr ""
+
+#: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:168
+msgid "About page"
+msgstr "关于"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:138
 msgid "Alternate terms"
 msgstr "交替术语"
 
-#: /tmp/cache/575571e1a0860/d1/d1b825103fbbbc387877af3f3dff368cc6d44fdce3031ee7049605601f24f8c1.php:128
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:130
 msgid "Concept language"
 msgstr "语言"
 
-#: /tmp/cache/575571e1a0860/d1/d1b825103fbbbc387877af3f3dff368cc6d44fdce3031ee7049605601f24f8c1.php:116
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:118
 msgid "Count"
 msgstr "计数"
 
-#: /tmp/cache/575571e1a0860/d1/d1b825103fbbbc387877af3f3dff368cc6d44fdce3031ee7049605601f24f8c1.php:155
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:157
 msgid "Download this vocabulary as SKOS/RDF:"
 msgstr "以SKOS或RDF格式下载此词汇表"
 
-#: /tmp/cache/575571e1a0860/10/10f444be3f922f429458b575ce02fb8a17b62e4cd4a21e4d9c238192dec5d3b8.php:205
+#: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:205
 msgid "Help"
 msgstr "帮助"
 
-#: /tmp/cache/575571e1a0860/d1/d1b825103fbbbc387877af3f3dff368cc6d44fdce3031ee7049605601f24f8c1.php:140
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:142
 msgid "Hidden terms"
 msgstr "隐藏术语"
 
-#: /tmp/cache/575571e1a0860/10/10f444be3f922f429458b575ce02fb8a17b62e4cd4a21e4d9c238192dec5d3b8.php:58
+#: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:58
 msgid "Interface language"
 msgstr "界面语言"
 
-#: /tmp/cache/575571e1a0860/d1/d1b825103fbbbc387877af3f3dff368cc6d44fdce3031ee7049605601f24f8c1.php:132
+#: /tmp/cache/587c83c13194c/f9/f9c816822168f230ef0bfed735f5923aab99d389ce8b2c6b2f5fcd5d400bc275.php:26
+msgid "No vocabularies on the server!"
+msgstr "该服务器上没有词汇表！"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:134
 msgid "Preferred terms"
 msgstr "优选词，正式主题词"
 
-#: /tmp/cache/575571e1a0860/d1/d1b825103fbbbc387877af3f3dff368cc6d44fdce3031ee7049605601f24f8c1.php:109
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:111
 msgid "Resource counts by type"
 msgstr "按类型资源计数"
 
-#: /tmp/cache/575571e1a0860/d1/d1b825103fbbbc387877af3f3dff368cc6d44fdce3031ee7049605601f24f8c1.php:122
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:124
 msgid "Term counts by language"
 msgstr "按语言术语计数"
 
-#: /tmp/cache/575571e1a0860/d1/d1b825103fbbbc387877af3f3dff368cc6d44fdce3031ee7049605601f24f8c1.php:114
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:116
 msgid "Type"
 msgstr "类型"
 
-#: /tmp/cache/575571e1a0860/10/10f444be3f922f429458b575ce02fb8a17b62e4cd4a21e4d9c238192dec5d3b8.php:146
+#: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:146
 msgid "Vocabularies-nav"
 msgstr "词汇表"
 
-#: /tmp/cache/575571e1a0860/d1/d1b825103fbbbc387877af3f3dff368cc6d44fdce3031ee7049605601f24f8c1.php:24
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:24
 msgid "Vocabulary information"
 msgstr "词汇表信息"
 
-#: /tmp/cache/575571e1a0860/10/10f444be3f922f429458b575ce02fb8a17b62e4cd4a21e4d9c238192dec5d3b8.php:199
+#: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:199
 msgid "helper_help"
 msgstr "用点下划线在文本上悬停鼠标，以查看属性说明"
 
-#: /tmp/cache/575571e1a0860/10/10f444be3f922f429458b575ce02fb8a17b62e4cd4a21e4d9c238192dec5d3b8.php:201
+#: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:201
 msgid "search_example_text"
 msgstr "对于截词检索，请使用符号*作为*动物或*专利。对于检索词的结尾，检索将会自动截词，即使截词符号没有自动输入，因此输入cat将会产生和输入cat*同样的结果。"
 
