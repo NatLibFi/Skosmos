@@ -96,7 +96,7 @@ class Model
     private function parseVocabularies($filename)
     {
         $this->graph = new EasyRdf_Graph();
-        $parser = new NamespaceExposingTurtleParser();
+        $parser = new SkosmosTurtleParser();
         $parser->parse($this->graph, file_get_contents($filename), 'turtle', $filename);
         $this->namespaces = $parser->getNamespaces();
     }
