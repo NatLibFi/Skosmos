@@ -61,7 +61,7 @@ define("CUSTOM_CSS", "resource/css/stylesheet.css");
 // whether to display the ui language selection as a dropdown (useful for cases where there are more than 3 languages) 
 define("UI_LANGUAGE_DROPDOWN", FALSE);
 
-// whether to enable the spam honey pot or not
+// whether to enable the spam honey pot or not, enabled by default
 define("UI_HONEYPOT_ENABLED", TRUE);
 
 // default time a user must wait before submitting a form
