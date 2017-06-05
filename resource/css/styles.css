@@ -1786,12 +1786,15 @@ body, .versal, h1, h2, p, .versal-bold {
   }
   
   .row:nth-of-type(2) > .property-value-column {
-    width: 55%;
-    margin: 0;
+    margin: 2px 0 0 0;
+    height: 30px;
+    line-height: 30px;
   }
   
-  .row:nth-of-type(2) > .property-label {
-    width: 45%;
+  .concept-main > .row > .property-label-pref {
+      margin-top: 10px;
+      height: 20px;
+      line-height: 20px;
   }
 
   .search-vocab-text{
