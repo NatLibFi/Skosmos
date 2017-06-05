@@ -986,11 +986,15 @@ $(function() { // DOCUMENT READY
 
   /* adding the replaced by concept href to the alert box when possible.
    */
-  var $replaced = $('.replaced-by');
-  if ($replaced.length === 1) {
+  var $replaced = $('.replaced-by a');
+  if ($replaced.length > 0) {
     var $replacedSpan = $('.replaced-by span');
     var undoUppercasing = $replacedSpan.text().substr(0,1) + $replacedSpan.text().substr(1).toLowerCase();
-    var html = '<h2 class="alert-replaced">' + undoUppercasing + ':<a href="' + $('.replaced-by a')[0] + '">' + $('.replaced-by a').html() + '</h2>';
+    var html = ''
+    for (var i = 0; i < $replaced.length; i++) {
+        var replacedBy = '<a href="' + $replaced[i] + '">' + $replaced[i].innerHTML + '</a>';
+        html += '<h2 class="alert-replaced">' + undoUppercasing + ': ' + replacedBy + '</h2>';
+    }
     $('.alert-danger').append(html);
     $(document).on('click', '#groups',
       function() {
