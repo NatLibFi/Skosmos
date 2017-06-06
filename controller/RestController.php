@@ -452,15 +452,14 @@ class RestController extends Controller
         return $hits;   
     }
     
-    private function transformLookupResults($lang, $hits, $label)
+    private function transformLookupResults($lang, $hits)
     {
         if (sizeof($hits) == 0) {
             // no matches found
             return;
         }
 
-        // did find some matches!
-        // get rid of Vocabulary objects
+        // found matches, getting rid of Vocabulary objects
         foreach ($hits as &$res) {
             unset($res['voc']);
         }
@@ -492,7 +491,7 @@ class RestController extends Controller
         $parameters = new ConceptSearchParameters($request, $this->model->getConfig(), true);
         $results = $this->model->searchConcepts($parameters);
         $hits = $this->findLookupHits($results, $label, $lang);
-        $ret = $this->transformLookupResults($lang, $hits, $label);
+        $ret = $this->transformLookupResults($lang, $hits);
         if ($ret === null) {
             return $this->returnError(404, 'Not Found', "Could not find label '$label'");
         }
