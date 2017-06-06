@@ -94,13 +94,12 @@ class ConceptSearchParameters
     private function getDefaultTypeLimit()
     {
         $type = array('skos:Concept');
-        if ($this->request->getVocab() && $this->request->getVocab()->getConfig()->getArrayClassURI()) {
-            array_push($type, $this->request->getVocab()->getConfig()->getArrayClassURI());
+        if ($this->request->getVocab()) {
+            $conf = $this->request->getVocab()->getConfig();
+            $type[] = $conf->getArrayClassURI();
+            $type[] = $conf->getGroupClassURI();
         }
-        if ($this->request->getVocab() && $this->request->getVocab()->getConfig()->getGroupClassURI()) {
-            array_push($type, $this->request->getVocab()->getConfig()->getGroupClassURI());
-        }
-        return $type;
+        return array_filter($type, 'strlen');
     }
 
     public function getTypeLimit() 
