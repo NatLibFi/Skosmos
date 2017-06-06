@@ -43,19 +43,13 @@ class ConceptSearchParameters
 
     public function getVocabIds()
     {
-        if ($this->rest) {
-            $vocabs = $this->request->getQueryParam('vocab');
-            return ($vocabs !== null && $vocabs !== '') ? explode(' ', $vocabs) : null;
-        }
-        if ($this->request->getQueryParam('vocabs')) {
-            $vocabs = $this->request->getQueryParam('vocabs'); 
+        if ($this->rest || $this->request->getQueryParam('vocabs')) {
+            $vocabs = $this->rest ? $this->request->getQueryParam('vocab') : $this->request->getQueryParam('vocabs');
             return ($vocabs !== null && $vocabs !== '') ? explode(' ', $vocabs) : null;
         }
         $vocabs = $this->getVocabs();
-        if (isset($vocabs[0])) {
-            return array($vocabs[0]->getId());
-        }
-        return null;
+        $ret = isset($vocabs[0]) ? array($vocabs[0]->getId()) : null;
+        return $ret;
     }
 
     public function setVocabularies($vocabs) 
