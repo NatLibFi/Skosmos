@@ -151,10 +151,9 @@ class Vocabulary extends DataObject
             }
             if (!isset($ret[$prop]) || sizeof($ret[$prop]) == 0) { // not found with language tag
                 foreach ($conceptscheme->allLiterals($prop, null) as $val) {
-                $prop = (substr($prop, 0, 5) == 'dc11:') ? str_replace('dc11:', 'dc:', $prop) : $prop;
-                    $value = $val->getValue();
-                    if ($value instanceof DateTime) {
-                        $val = Punic\Calendar::formatDate($value, 'full', $lang) . ' ' . Punic\Calendar::format($value, 'HH:mm:ss', $lang);
+                    $prop = (substr($prop, 0, 5) == 'dc11:') ? str_replace('dc11:', 'dc:', $prop) : $prop;
+                    if ($val->getValue() instanceof DateTime) {
+                        $val = Punic\Calendar::formatDate($val->getValue(), 'full', $lang) . ' ' . Punic\Calendar::format($val->getValue(), 'HH:mm:ss', $lang);
                     }
                     $ret[$prop][] = $val;
                 }
