@@ -8,6 +8,7 @@ install:
 cache:
   directories:
     - $HOME/.composer 
+    - vendor
 before_script:
   - cd tests
   - sh ./init_fuseki.sh
