@@ -37,11 +37,8 @@ class WebController extends Controller
         // specify where to look for templates and cache
         $loader = new Twig_Loader_Filesystem('view');
         // initialize Twig environment
-        $this->twig = new Twig_Environment($loader, array('cache' => $tmpDir,
-            'auto_reload' => true, 'debug' => true));
+        $this->twig = new Twig_Environment($loader, array('cache' => $tmpDir,'auto_reload' => true));
         $this->twig->addExtension(new Twig_Extensions_Extension_I18n());
-        //ENABLES DUMP() method for easy and fun debugging!
-        $this->twig->addExtension(new Twig_Extension_Debug());
         // used for setting the base href for the relative urls
         $this->twig->addGlobal("BaseHref", $this->getBaseHref());
         // setting the service name string from the config.inc
@@ -65,44 +62,7 @@ class WebController extends Controller
 
         // register a Twig filter for generating URLs for vocabulary resources (concepts and groups)
         $controller = $this; // for use by anonymous function below
-        $urlFilter = new Twig_SimpleFilter('link_url', function ($uri, $vocab, $lang, $type = 'page', $clang = null, $term = null) use ($controller) {
-            // $vocab can either be null, a vocabulary id (string) or a Vocabulary object
-            if ($vocab === null) {
-                // target vocabulary is unknown, best bet is to link to the plain URI
-                return $uri;
-            } elseif (is_string($vocab)) {
-                $vocid = $vocab;
-                $vocab = $controller->model->getVocabulary($vocid);
-            } else {
-                $vocid = $vocab->getId();
-            }
-
-            $params = array();
-            if (isset($clang) && $clang !== $lang) {
-                $params['clang'] = $clang;
-            }
-
-            if (isset($term)) {
-                $params['q'] = $term;
-            }
-
-            // case 1: URI within vocabulary namespace: use only local name
-            $localname = $vocab->getLocalName($uri);
-            if ($localname !== $uri && $localname === urlencode($localname)) {
-                // check that the prefix stripping worked, and there are no problematic chars in localname
-                $paramstr = sizeof($params) > 0 ? '?' . http_build_query($params) : '';
-                if ($type && $type !== '' && $type !== 'vocab' && !($localname === '' && $type === 'page')) {
-                    return "$vocid/$lang/$type/$localname" . $paramstr;
-                }
-
-                return "$vocid/$lang/$localname" . $paramstr;
-            }
-
-            // case 2: URI outside vocabulary namespace, or has problematic chars
-            // pass the full URI as parameter instead
-            $params['uri'] = $uri;
-            return "$vocid/$lang/$type/?" . http_build_query($params);
-        });
+        $urlFilter = new Twig_SimpleFilter('link_url', array($this, 'linkUrlFilter'));
         $this->twig->addFilter($urlFilter);
 
         // register a Twig filter for generating strings from language codes with CLDR
@@ -117,6 +77,54 @@ class WebController extends Controller
             $this->honeypot->disable();
         }
         $this->twig->addGlobal('honeypot', $this->honeypot);
+    }
+
+    /**
+     * Creates Skosmos links from uris.
+     * @param string $uri
+     * @param Vocabulary $vocab
+     * @param string $lang
+     * @param string $type
+     * @param string $clang content
+     * @param string $term
+     */
+    public function linkUrlFilter($uri, $vocab, $lang, $type = 'page', $clang = null, $term = null) {
+        // $vocab can either be null, a vocabulary id (string) or a Vocabulary object
+        if ($vocab === null) {
+            // target vocabulary is unknown, best bet is to link to the plain URI
+            return $uri;
+        } elseif (is_string($vocab)) {
+            $vocid = $vocab;
+            $vocab = $this->model->getVocabulary($vocid);
+        } else {
+            $vocid = $vocab->getId();
+        }
+
+        $params = array();
+        if (isset($clang) && $clang !== $lang) {
+            $params['clang'] = $clang;
+        }
+
+        if (isset($term)) {
+            $params['q'] = $term;
+        }
+
+        // case 1: URI within vocabulary namespace: use only local name
+        $localname = $vocab->getLocalName($uri);
+        if ($localname !== $uri && $localname === urlencode($localname)) {
+            // check that the prefix stripping worked, and there are no problematic chars in localname
+            $paramstr = sizeof($params) > 0 ? '?' . http_build_query($params) : '';
+            if ($type && $type !== '' && $type !== 'vocab' && !($localname === '' && $type === 'page')) {
+                return "$vocid/$lang/$type/$localname" . $paramstr;
+            }
+
+            return "$vocid/$lang/$localname" . $paramstr;
+        }
+
+        // case 2: URI outside vocabulary namespace, or has problematic chars
+        // pass the full URI as parameter instead
+        $params['uri'] = $uri;
+        return "$vocid/$lang/$type/?" . http_build_query($params);
     }
 
     /**
