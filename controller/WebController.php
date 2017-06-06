@@ -16,6 +16,7 @@ class WebController extends Controller
      * @property object $twig the twig templating engine.
      */
     public $twig;
+    public $honeypot;
 
     /**
      * Constructor for the WebController.
@@ -291,7 +292,7 @@ class WebController extends Controller
     public function sendFeedback($request, $message, $fromName = null, $fromEmail = null, $fromVocab = null, $toMail = null)
     {
         $toAddress = ($toMail) ? $toMail : $this->model->getConfig()->getFeedbackAddress();
-        if ($fromVocab && $fromVocab !== '') {
+        if ($fromVocab !== null && $fromVocab !== '') {
             $message = 'Feedback from vocab: ' . strtoupper($fromVocab) . "<br />" . $message;
         }
 
