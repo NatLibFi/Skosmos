@@ -576,7 +576,7 @@ class Concept extends VocabularyDataObject
     private function literalLanguageToString($lit) {
         // using empty string as the language literal when there is no langcode set
         $langName = '';
-        if ($lit->getLang()) {
+        if ($lit->getLang() !== null) {
             $langName = Punic\Language::getName($lit->getLang(), $this->getEnvLang()) !== $lit->getLang() ? Punic\Language::getName($lit->getLang(), $this->getEnvLang()) : gettext($lit->getLang());
         }
         return $langName;
