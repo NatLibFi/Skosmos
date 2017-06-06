@@ -61,9 +61,7 @@ class WebController extends Controller
         $this->twig->addGlobal("PreferredProperties", array('skos:prefLabel', 'skos:narrower', 'skos:broader', 'skosmos:memberOf', 'skos:altLabel', 'skos:related'));
 
         // register a Twig filter for generating URLs for vocabulary resources (concepts and groups)
-        $controller = $this; // for use by anonymous function below
-        $urlFilter = new Twig_SimpleFilter('link_url', array($this, 'linkUrlFilter'));
-        $this->twig->addFilter($urlFilter);
+        $this->twig->addFilter(new Twig_SimpleFilter('link_url', array($this, 'linkUrlFilter')));
 
         // register a Twig filter for generating strings from language codes with CLDR
         $langFilter = new Twig_SimpleFilter('lang_name', function ($langcode, $lang) {
