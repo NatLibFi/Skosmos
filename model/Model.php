@@ -30,6 +30,7 @@ class Model
     const URI_FETCH_TTL = 86400; // 1 day
     private $globalConfig;
     private $cache;
+    private $logger;
 
     /**
      * Initializes the Model object
