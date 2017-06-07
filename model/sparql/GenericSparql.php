@@ -1430,7 +1430,7 @@ EOQ;
     /**
      * Query a single transitive property of a concept.
      * @param string $uri
-     * @param string $prop the name of the property eg. 'skos:broader'.
+     * @param array $props the name of the property eg. 'skos:broader'.
      * @param string $lang
      * @param integer $limit
      * @param boolean $anylang if you want a label even when it isn't available in the language you requested.
