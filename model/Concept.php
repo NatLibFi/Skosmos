@@ -587,21 +587,18 @@ class Concept extends VocabularyDataObject
      */
     public function getForeignLabels()
     {
-        $labels = array();
-        foreach ($this->resource->allLiterals('skos:prefLabel') as $lit) {
+        $prefLabels = $this->resource->allLiterals('skos:prefLabel');
+        $labels = array_merge($prefLabels, $this->resource->allLiterals('skos:altLabel'));
+        $ret = array();
+        foreach ($labels as $lit) {
             // filtering away subsets of the current language eg. en vs en-GB
             if ($lit->getLang() != $this->clang && strpos($lit->getLang(), $this->getEnvLang() . '-') !== 0) {
-                $labels[$this->literalLanguageToString($lit)][] = new ConceptPropertyValueLiteral($lit, 'skos:prefLabel');
+                $prop = in_array($lit, $prefLabels) ? 'skos:prefLabel' : 'skos:altLabel'; 
+                $ret[$this->literalLanguageToString($lit)][] = new ConceptPropertyValueLiteral($lit, $prop);
             }
         }
-        foreach ($this->resource->allLiterals('skos:altLabel') as $lit) {
-            // filtering away subsets of the current language eg. en vs en-GB
-            if ($lit->getLang() != $this->clang && strpos($lit->getLang(), $this->getEnvLang() . '-') !== 0) {
-                $labels[$this->literalLanguageToString($lit)][] = new ConceptPropertyValueLiteral($lit, 'skos:altLabel');
-            }
-        }
-        ksort($labels);
-        return $labels;
+        ksort($ret);
+        return $ret;
     }
 
     /**
