@@ -258,7 +258,7 @@ ul {
   padding: 0;
   top: 40px;
   max-height: 290px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .header-float > .navbar-form {
