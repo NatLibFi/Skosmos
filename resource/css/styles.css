@@ -1960,10 +1960,6 @@ body, .versal, h1, h2, p, .versal-bold {
     padding: 10px 10px;
   }
 
-  .input-group {
-    max-width: 350px;
-  }
-
   .frontpage-logo .input-group {
     max-width: 450px;
   }
