@@ -1141,7 +1141,7 @@ EOQ;
             $filtercondALabel = $lang ? "regex(str(?alabel), '^$letter$', 'i') && langMatches(lang(?alabel), '$lang')" : "regex(str(?alabel), '^$letter$', 'i')";
         } else {
             $filtercondLabel = $lang ? "strstarts(lcase(str(?label)), '$lcletter') && langMatches(lang(?label), '$lang')" : "strstarts(lcase(str(?label)), '$lcletter')";
-            $filtercondALabel = $lang ? "strstarts(lcase(str(?alabel)), '$lcletter') && langMatches(lang(?label), '$lang')" : "strstarts(lcase(str(?alabel)), '$lcletter')";
+            $filtercondALabel = $lang ? "strstarts(lcase(str(?alabel)), '$lcletter') && langMatches(lang(?alabel), '$lang')" : "strstarts(lcase(str(?alabel)), '$lcletter')";
         }
         return array('filterpref' => $filtercondLabel, 'filteralt' => $filtercondALabel);
     }
