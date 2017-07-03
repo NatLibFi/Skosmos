@@ -68,9 +68,9 @@ class GenericSparql {
         $queryId = sprintf("%05d", rand(0, 99999));
         $logger = $this->model->getLogger();
         $logger->info("[qid $queryId] SPARQL query:\n$query\n");
-        $starttime = microtime();
+        $starttime = microtime(true);
         $result = $this->client->query($query);
-        $elapsed = intval(round((microtime() - $starttime) * 1000));
+        $elapsed = intval(round((microtime(true) - $starttime) * 1000));
         if(method_exists($result, 'numRows')) {
             $numRows = $result->numRows();
             $logger->info("[qid $queryId] result: $numRows rows returned in $elapsed ms");
