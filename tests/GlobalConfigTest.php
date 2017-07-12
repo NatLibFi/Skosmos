@@ -162,5 +162,13 @@ class GlobalConfigTest extends PHPUnit_Framework_TestCase
     $actual = $this->config->getVocabularyConfigFile();
     $this->assertEquals('tests/testvocabularies.ttl', $actual);
   }
+
+  /**
+   * @covers GlobalConfig::getCollationEnabled
+   */
+  public function testGetCollationEnabled() {
+    $actual = $this->config->getCollationEnabled();
+    $this->assertFalse($actual);
+  }
 }
 

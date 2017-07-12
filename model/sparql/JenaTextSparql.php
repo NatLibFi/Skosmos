@@ -2,6 +2,7 @@
 
 /* Register text: namespace needed for jena-text queries */
 EasyRdf_Namespace::set('text', 'http://jena.apache.org/text#'); // @codeCoverageIgnore
+EasyRdf_Namespace::set('arq', 'http://jena.apache.org/ARQ/function#'); // @codeCoverageIgnore
 
 /**
  * Provides functions tailored to the JenaTextSparql extensions for the Fuseki SPARQL index.
@@ -74,6 +75,21 @@ class JenaTextSparql extends GenericSparql
     }
 
     /**
+     * Generates sparql query clauses used for ordering by an expression. Uses a special collation function
+     * if configuration for it is enabled.
+     * @param string $expression the expression used for ordering the results
+     * @param string $lang language
+     * @return string sparql order by clause
+     */
+    private function formatOrderBy($expression, $lang) {
+        if(!$this->model->getConfig()->getCollationEnabled()) {
+            return $expression;
+        }
+        $orderby = sprintf('arq:collation(\'%2$s\', %1$s)', $expression, $lang);
+        return $orderby;
+    }
+
+    /**
      * Generates the jena-text-specific sparql query used for rendering the alphabetical index.
      * @param string $letter the letter (or special class) to search for
      * @param string $lang language of labels
@@ -99,6 +115,7 @@ class JenaTextSparql extends GenericSparql
         $lcletter = mb_strtolower($letter, 'UTF-8'); // convert to lower case, UTF-8 safe
         $textcondPref = $this->createTextQueryCondition($letter . '*', 'skos:prefLabel', $lang);
         $textcondAlt = $this->createTextQueryCondition($letter . '*', 'skos:altLabel', $lang);
+        $orderbyclause = $this->formatOrderBy("LCASE(?match)", $lang);
 
         $query = <<<EOQ
 SELECT DISTINCT ?s ?label ?alabel
@@ -125,7 +142,7 @@ WHERE {
     FILTER NOT EXISTS { ?s owl:deprecated true }
   } $values
 }
-ORDER BY LCASE(?match) $limitandoffset
+ORDER BY $orderbyclause $limitandoffset
 EOQ;
         return $query;
     }

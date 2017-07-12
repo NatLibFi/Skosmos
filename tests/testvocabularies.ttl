@@ -143,6 +143,14 @@
 	skosmos:sparqlGraph <http://www.skosmos.skos/subtag/> ;
 	skosmos:sparqlDialect "JenaText" .
 
+:collation a skosmos:Vocabulary, void:Dataset ;
+    dc11:title "A vocabulary for test SPARQL with collation"@en ;
+    dc:subject :cat_general ;
+    void:uriSpace "http://www.skosmos.skos/collation/";
+    void:sparqlEndpoint <http://localhost:3030/ds/sparql> ;
+    skosmos:language "fi";
+    skosmos:sparqlGraph <http://www.skosmos.skos/collation/> .
+
 
 <http://skosmos.skos/dump/test/groups> dc:format "application/rdf+xml" .
 
