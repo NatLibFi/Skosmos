@@ -519,7 +519,7 @@ msgstr "selected"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:143
 msgid "skos:altLabel"
-msgstr "Entry term"
+msgstr "Entry terms"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:179
 msgid "skos:altLabel_help"
