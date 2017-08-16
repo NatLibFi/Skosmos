@@ -26,7 +26,7 @@
     {% if property.type in PreferredProperties or property.type in concept.vocab.config.additionalSearchProperties  or property.type in concept.vocab.config.hierarchyProperty %}
     <div class="property">
       <span class="property-click" title="{{ property.description }}">
-        <img class="property-hover" src="resource/pics/{% if property.type == 'skos:broader' %}broader{% elseif property.type == 'skos:narrower' %}narrower{% elseif property.type == 'skos:altLabel' %}replaced{% elseif property.type == 'skos:related' %}cloud{% elseif property.type == 'skosmos:memberOf' %}group{% else %}globe{% endif %}.gif">
+        <img class="property-hover" src="resource/pics/{% if property.type == 'skos:broader' %}broader{% elseif property.type == 'skos:narrower' %}narrower{% elseif property.type == 'skos:altLabel' %}replaced{% elseif property.type == 'skos:related' %}cloud{% elseif property.type == 'skosmos:memberOf' %}group{% elseif property.type == 'skos:note' %}note{% else %}globe{% endif %}.gif">
       </span>
       <div class="property-values">
       {% set previous = false %}
