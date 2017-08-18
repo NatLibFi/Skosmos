@@ -1277,6 +1277,7 @@ table > tbody > tr.other-languages > td {
 
 .property-click > img {
   vertical-align: top;
+  margin-top: 3px;
 }
 
 .help-box.property-click > img {
