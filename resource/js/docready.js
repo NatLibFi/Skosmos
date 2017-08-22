@@ -930,25 +930,15 @@ $(function() { // DOCUMENT READY
     maxHeight: 300
   });
 
-  if ($('#alpha.active').length === 1) {
+  if ($('#alpha.active').length === 1 || $('#changes.active').length === 1) {
+    var scrollCB = ($('#changes.active').length === 1) ? changeListWaypointCallback : alphaWaypointCallback;
     $(".sidebar-grey").mCustomScrollbar({
       alwaysShowScrollbar: 1,
       scrollInertia: 0,
       mouseWheel:{ preventDefault: true, scrollAmount: 105 },
       snapAmount: 15,
       snapOffset: 1,
-      callbacks: { alwaysTriggerOffsets: false, onTotalScroll: alphaWaypointCallback, onTotalScrollOffset: 300 }
-    });
-  }
-
-  if ($('#changes.active').length === 1) {
-    $(".sidebar-grey").mCustomScrollbar({
-      alwaysShowScrollbar: 1,
-      scrollInertia: 0,
-      mouseWheel:{ preventDefault: true, scrollAmount: 105 },
-      snapAmount: 15,
-      snapOffset: 1,
-      callbacks: { alwaysTriggerOffsets: false, onTotalScroll: changeListWaypointCallback, onTotalScrollOffset: 300 }
+      callbacks: { alwaysTriggerOffsets: false, onTotalScroll: scrollCB, onTotalScrollOffset: 300 }
     });
   }
 
