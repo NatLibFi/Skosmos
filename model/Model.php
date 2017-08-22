@@ -629,7 +629,7 @@ class Model
         // using apc cache for the resource if available
         if ($this->cache->isAvailable()) {
             // @codeCoverageIgnoreStart
-            $key = 'fetch: ' . EasyRdf_Utils::removeFragmentFromUri($uri);
+            $key = 'fetch: ' . $uri;
             $resource = $this->cache->fetch($key);
             if ($resource === null || $resource === false) { // was not found in cache, or previous request failed
                 $resource = $this->fetchResourceFromUri($uri);
