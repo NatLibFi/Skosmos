@@ -82,50 +82,31 @@ $(function() { // DOCUMENT READY
   var textColor = $('.search-parameter-highlight').css('color');
   countAndSetOffset();
 
+  // Make a selection of an element for copy pasting.
+  function makeSelection() {
+    var $clicked = $(this);
+    var text = $clicked[0];
+    var range;
+    if (document.body.createTextRange) { // ms
+      range = document.body.createTextRange();
+      range.moveToElementText(text);
+      range.select();
+    } else if (window.getSelection) { // moz, opera, webkit
+      var selection = window.getSelection();
+      range = document.createRange();
+      range.selectNodeContents(text);
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+    return false;
+  }
+
   if($('.search-result-listing').length === 0) { // Disabled if on the search results page.
-  /*
-   * Event handler for clicking the preflabel and making a selection of it for copy pasting.
-   */
-    $(document).on('click','.prefLabel',
-      function() {
-        var text = $('.prefLabel')[0];
-        var range;
-        if (document.body.createTextRange) { // ms
-          range = document.body.createTextRange();
-          range.moveToElementText(text);
-          range.select();
-        } else if (window.getSelection) { // moz, opera, webkit
-          var selection = window.getSelection();
-          range = document.createRange();
-          range.selectNodeContents(text);
-          selection.removeAllRanges();
-          selection.addRange(range);
-        }
-        return false;
-      }
-      );
+    $(document).on('click','.prefLabel', makeSelection);
 
   }
 
-  $(document).on('click','.uri-input-box',
-    function() {
-      var $clicked = $(this);
-      var text = $clicked[0];
-      var range;
-      if (document.body.createTextRange) { // ms
-        range = document.body.createTextRange();
-        range.moveToElementText(text);
-        range.select();
-      } else if (window.getSelection) { // moz, opera, webkit
-        var selection = window.getSelection();
-        range = document.createRange();
-        range.selectNodeContents(text);
-        selection.removeAllRanges();
-        selection.addRange(range);
-      }
-      return false;
-    }
-  );
+  $(document).on('click','.uri-input-box', makeSelection);
 
   var sidebarResizer = debounce(function() {
     countAndSetOffset();
