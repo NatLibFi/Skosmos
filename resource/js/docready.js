@@ -101,6 +101,14 @@ $(function() { // DOCUMENT READY
     return false;
   }
 
+  function initHierarchyQtip() {
+      if (!$('#hierarchy').length) {
+          $('#hierarchy-disabled').attr('id', 'hierarchy');
+          $('#hier-trigger').attr('title', '');
+          $('#hier-trigger').qtip('disable');
+      }
+  }
+
   if($('.search-result-listing').length === 0) { // Disabled if on the search results page.
     $(document).on('click','.prefLabel', makeSelection);
 
@@ -267,11 +275,7 @@ $(function() { // DOCUMENT READY
             success : function(data) {
               if (window.history.pushState) { window.history.pushState({}, null, event.target.href); }
               $content.empty().append($('.content', data).html());
-              if (!$('#hierarchy').length) {
-                $('#hierarchy-disabled').attr('id', 'hierarchy');
-                $('#hier-trigger').attr('title', '');
-                $('#hier-trigger').qtip('disable');
-              }
+              initHierarchyQtip();
               $('#hier-trigger').attr('href', event.target.href);
               updateTitle(data);
               updateTopbarLang(data);
@@ -392,11 +396,7 @@ $(function() { // DOCUMENT READY
             beforeSend: delaySpinner(loading),
             complete: clearTimeout(loading),
             success : function(data) {
-              if (!$('#hierarchy').length) {
-                $('#hierarchy-disabled').attr('id', 'hierarchy');
-                $('#hier-trigger').attr('title', '');
-                $('#hier-trigger').qtip('disable');
-              }
+              initHierarchyQtip();
               $('#hier-trigger').attr('href', event.target.href);
               updateTitle(data);
               updateTopbarLang(data);
