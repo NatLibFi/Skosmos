@@ -1373,7 +1373,6 @@ EOQ;
     public function queryNotation($uri) {
         $query = $this->generateNotationQuery($uri);
         $result = $this->query($query);
-        $ret = array();
         foreach ($result as $row) {
             if (isset($row->notation)) {
                 return $row->notation->getValue();
