@@ -1347,6 +1347,41 @@ EOQ;
         }
     }
 
+
+    /**
+     * Generates a sparql query for queryNotation.
+     * @param string $uri
+     * @return string sparql query
+     */
+    private function generateNotationQuery($uri) {
+        $fcl = $this->generateFromClause();
+
+        $query = <<<EOQ
+SELECT * $fcl
+WHERE {
+  <$uri> skos:notation ?notation .
+}
+EOQ;
+        return $query;
+    }
+
+    /**
+     * Query for the notation of the concept (skos:notation) of a resource.
+     * @param string $uri
+     * @return string notation or null if it doesn't exist
+     */
+    public function queryNotation($uri) {
+        $query = $this->generateNotationQuery($uri);
+        $result = $this->query($query);
+        $ret = array();
+        foreach ($result as $row) {
+            if (isset($row->notation)) {
+                return $row->notation->getValue();
+            }
+        }
+        return null;
+    }
+
     /**
      * Generates a sparql query for queryProperty.
      * @param string $uri

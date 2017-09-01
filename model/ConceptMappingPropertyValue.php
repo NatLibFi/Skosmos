@@ -112,6 +112,14 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
         if ($this->resource->get('skos:notation')) {
             return $this->resource->get('skos:notation')->getValue();
         }
+
+        $exvocab = $this->getExvocab();
+
+        // if the resource is from a another vocabulary known by the skosmos instance
+        if ($exvocab) {
+            return $this->getExternalNotation($exvocab, $this->getUri());
+        }
+        return null;
     }
 
 }

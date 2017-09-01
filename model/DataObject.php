@@ -54,6 +54,22 @@ class DataObject
     }
 
     /**
+     * Generates and makes a query into a external vocabulary for the notation of an exact
+     * match for a particular concept.
+     * @param Vocabulary $exvoc external vocabulary to query
+     * @param string $exuri resource URI
+     */
+    protected function getExternalNotation($exvoc, $exuri)
+    {
+        if ($exvoc) {
+            $exsparql = $exvoc->getSparql();
+            $results = $exsparql->queryNotation($exuri);
+            return isset($results) ? $results : null;
+        }
+        return null;
+    }
+
+    /**
      * Sorting the result list to a arbitrary order defined below in mycompare()
      * @param array $sortable
      */
@@ -67,7 +83,6 @@ class DataObject
                 {
                     ksort($sortable[$prop]);
                 }
-
             }
         }
         return $sortable;
