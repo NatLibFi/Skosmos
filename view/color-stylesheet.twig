@@ -1,7 +1,0 @@
-{% for vocab in vocabList %}
-.vocab-{{ vocab.id }} { background-color: rgba({{ vocab.color }},0.2); }
-.vocab-{{ vocab.id }}-background { background-color: rgba({{ vocab.color }},0.1); }
-.{{ vocab.id }}-concept-background { background-color: rgba({{ vocab.color }},0.6) !important; }
-.{{ vocab.id }}-concept-border { border-color:rgba({{ vocab.color }},0.6) !important; }
-{% endfor %}
-#service-logo { background: url('{{ ServiceLogo|raw }}') no-repeat center; }
