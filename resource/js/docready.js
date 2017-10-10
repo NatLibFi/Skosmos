@@ -376,7 +376,8 @@ $(function() { // DOCUMENT READY
         return false;
       }
       var uri = $('.uri-input-box').html();
-      var redirectUrl = vocab + '/' + lang + '/page/?uri=' + uri;
+      var base_href = $('base').attr('href'); // see #315, #633
+      var redirectUrl = base_href + vocab + '/' + lang + '/page/?uri=' + uri;
       window.location.replace(encodeURI(redirectUrl));
       return false;
     }
