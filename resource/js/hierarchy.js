@@ -144,6 +144,7 @@ function attachTopConceptsToSchemes(schemes, currentNode, parentData) {
   return schemes;
 }
 
+
 /*
  * For building a parent hierarchy tree from the leaf concept to the ontology/vocabulary root.
  * @param {String} uri
@@ -156,6 +157,7 @@ function buildParentTree(uri, parentData, schemes) {
   var loopIndex = 0, // for adding the last concept as a root if no better candidates have been found.
     currentNode,
     rootArray = (schemes.length > 1) ? schemes : [];
+    var domains=[];
 
   for(var conceptUri in parentData) {
     if (parentData.hasOwnProperty(conceptUri)) {
@@ -172,6 +174,7 @@ function buildParentTree(uri, parentData, schemes) {
         // if there are multiple concept schemes attach the topConcepts to the concept schemes
         if (schemes.length > 1 && (parentData[conceptUri].top)) {
           schemes = attachTopConceptsToSchemes(schemes, currentNode, parentData);
+          
         }
         else {
           rootArray.push(currentNode);
@@ -294,20 +297,78 @@ function pickLabelFromScheme(scheme) {
 
 function schemeRoot(schemes) {
   var topArray = [];
+  
+  
+  // Step 1 : find domain list
+  var domains=[];
   for (var i = 0; i < schemes.length; i++) {
-    var scheme = schemes[i];
-    var label = pickLabelFromScheme(scheme);
-    if (label !== '') { // hiding schemes without a label/title
-      var schemeObject = {
-        text: label, 
-        a_attr : { "href" : vocab + '/' + lang + '/page/?uri=' + scheme.uri, 'class': 'scheme'},
-        uri: scheme.uri,
-        children: true,
-        state: { opened: false } 
-      };
-      topArray.push(schemeObject);
+    if(schemes[i].subject != null) {
+        var schemeDomain = schemes[i].subject.uri;
+
+        // test if domain was already found  
+        var found = false;
+        for (var k = 0; k < domains.length; k++) {
+          if(domains[k].uri===schemeDomain){
+            found = true;
+            break;
+          }
+        }
+
+        // if not found, store it in domain list
+        if(!found) {
+          domains.push(schemes[i].subject);
+        }
     }
   }
+  
+  // console.log(domains);
+
+  // Step 2 : create tree nodes for each domain
+  for (var i = 0; i < domains.length; i++) {
+    var theDomain = domains[i];
+    // Step 2.1 : create domain node without children
+    var domainObject = {
+      text: theDomain.prefLabel, 
+      a_attr : { "href" : vocab + '/' + lang + '/page/?uri=' + theDomain.uri, 'class': 'domain'},
+      uri: theDomain.uri,
+      children: [],
+      state: { opened: false } 
+    };
+
+    // Step 2.2 : find the concept schemes in this domain and add them as children
+    for (var k = 0; k < schemes.length; k++) {
+        var theScheme = schemes[k];        
+        if((theScheme.subject) != null && (theScheme.subject.uri===theDomain.uri)) {
+            domainObject.children.push(
+                    {
+                      text:theScheme.prefLabel,
+                      a_attr:{ "href" : vocab + '/' + lang + '/page/?uri=' + theScheme.uri, 'class': 'scheme'},
+                      uri: theScheme.uri,
+                      children: true,
+                      state: { opened: false } 
+                    }
+            );
+        }
+    }
+    topArray.push(domainObject);
+  }
+
+   // Step 3 : add the schemes without subjects
+   for (var k = 0; k < schemes.length; k++) {
+        var theScheme = schemes[k];        
+        if(theScheme.subject == null) {
+            topArray.push(
+                    {
+                      text:theScheme.prefLabel,
+                      a_attr:{ "href" : vocab + '/' + lang + '/page/?uri=' + theScheme.uri, 'class': 'scheme'},
+                      uri: theScheme.uri,
+                      children: true,
+                      state: { opened: false } 
+                    }
+            );
+        }
+    }
+
   return topArray;
 }
 
@@ -324,6 +385,7 @@ function addConceptsToScheme(topConcept, childObject, schemes) {
   }
   return schemes;
 }
+
 
 function topConceptsToSchemes(topConcepts, schemes) {
   var childArray = schemes.length > 1 ? schemes : [];

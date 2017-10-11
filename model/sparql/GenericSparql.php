@@ -595,9 +595,14 @@ EOQ;
     private function generateQueryConceptSchemesQuery($lang) {
         $fcl = $this->generateFromClause();
         $query = <<<EOQ
-SELECT ?cs ?label ?preflabel ?title $fcl
+SELECT ?cs ?label ?preflabel ?title ?domaine ?domaineLabel $fcl
 WHERE {
  ?cs a skos:ConceptScheme .
+ OPTIONAL{
+    ?cs dcterms:subject ?domaine.
+    ?domaine skos:prefLabel ?domaineLabel.
+    FILTER(langMatches(lang(?domaineLabel), '$lang'))
+}
  OPTIONAL {
    ?cs rdfs:label ?label .
    FILTER(langMatches(lang(?label), '$lang'))
@@ -612,7 +617,8 @@ WHERE {
    { ?cs dc:title ?title }
    FILTER(langMatches(lang(?title), '$lang'))
  }
-} ORDER BY ?cs
+} 
+ORDER BY ?cs
 EOQ;
         return $query;
     }
@@ -624,7 +630,9 @@ EOQ;
      */
     private function transformQueryConceptSchemesResults($result) {
         $ret = array();
+    
         foreach ($result as $row) {
+
             $conceptscheme = array();
             if (isset($row->label)) {
                 $conceptscheme['label'] = $row->label->getValue();
@@ -636,6 +644,11 @@ EOQ;
 
             if (isset($row->title)) {
                 $conceptscheme['title'] = $row->title->getValue();
+            }
+            //ajout des dcterms:subject et leurs libellés dans le retour json
+            if(isset($row->domaine)&&isset($row->domaineLabel)){
+                $conceptscheme['subject']['uri']=$row->domaine->getURI();
+                $conceptscheme['subject']['prefLabel']=$row->domaineLabel->getValue();
             }
 
             $ret[$row->cs->getURI()] = $conceptscheme;
@@ -1060,6 +1073,7 @@ EOQ;
         if (isset($row->label)) {
             $hit['prefLabel'] = $row->label->getValue();
         }
+
 
         if (isset($row->label)) {
             $hit['lang'] = $row->label->getLang();

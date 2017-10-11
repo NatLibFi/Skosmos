@@ -1,0 +1,56 @@
+@prefix skos: <http://www.w3.org/2004/02/skos/core#>.
+@prefix ex: <http://exemple.fr/>.
+@prefix dcterms: <http://purl.org/dc/terms/>.
+
+ex:thesaurus a skos:ConceptScheme ;
+	skos:prefLabel "The Thesaurus"@en .
+
+ex:mt1 a skos:ConceptScheme ;
+	skos:prefLabel "Micro-Thesaurus 1"@en ;
+	dcterms:subject ex:d1 .
+
+ex:mt2 a skos:ConceptScheme ;
+	skos:prefLabel "Micro-Thesaurus 2"@en ;
+	dcterms:subject ex:d1 .
+
+ex:mt3 a skos:ConceptScheme ;
+	skos:prefLabel "Micro-Thesaurus 3"@en ;
+	dcterms:subject ex:d2 .
+
+### Begin Domains
+
+ex:domains a skos:ConceptScheme ;
+	skos:prefLabel "Special 'Domains' Concept Scheme"@en .
+
+ex:d1 a skos:Concept ;
+	skos:inScheme ex:domains ;
+	skos:topConceptOf ex:domains ;
+	skos:prefLabel "Domain 1"@en .
+
+ex:d2 a skos:Concept ;
+	skos:inScheme ex:domains ;
+	skos:topConceptOf ex:domains ;
+	skos:prefLabel "Domain 2"@en .
+
+#### End Domains
+
+ex:c1 a skos:Concept ;
+	skos:prefLabel "Concept 1"@en ;
+	skos:inScheme ex:thesaurus , ex:mt1 ;
+	skos:topConceptOf ex:thesaurus , ex:mt1 ;
+	skos:narrower ex:c1.1 .
+
+ex:c1.1 a skos:Concept ;
+	skos:prefLabel "Concept 1.1"@en ;
+	skos:inScheme ex:thesaurus , ex:mt1 ;
+	skos:broader ex:c1 .
+
+ex:c2 a skos:Concept ;
+	skos:prefLabel "Concept 2"@en ;
+	skos:inScheme ex:thesaurus , ex:mt2 ;
+	skos:topConceptOf ex:thesaurus , ex:mt2 .
+
+ex:c3 a skos:Concept ;
+	skos:prefLabel "Concept 3"@en ;
+	skos:inScheme ex:thesaurus , ex:mt3 ;
+	skos:topConceptOf ex:thesaurus , ex:mt3 .
