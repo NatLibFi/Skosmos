@@ -128,19 +128,53 @@ function createConceptObject(conceptUri, conceptData) {
  * @param {Object} parentData 
  */
 function attachTopConceptsToSchemes(schemes, currentNode, parentData) {
+  console.log('I am in');
+  var foundFirstLevel = false;
   for (var i = 0; i < schemes.length; i++) {
-    if (schemes[i].uri === parentData[currentNode.uri].top) {
-      if(Object.prototype.toString.call(schemes[i].children) !== '[object Array]' ) {
-        schemes[i].children = [];
+
+      //search if top concept uri is equal to scheme uri on (first level)
+      for (var h = 0; h < parentData[currentNode.uri].top.length; h++) {
+         console.log('scheme uri: '+schemes[i].uri +' currentNodeUri: '+parentData[currentNode.uri].top[h]);
+        if(schemes[i].uri===parentData[currentNode.uri].top[h]){
+          foundFirstLevel = true;
+          if(Object.prototype.toString.call(schemes[i].children) !== '[object Array]' ) {
+            schemes[i].children = [];
+          }
+          schemes[i].children.push(currentNode);
+        // the hierarchy response contains the parent info before the topConcepts so it's a safe to open the first one without broaders 
+        if (!schemes[i].opened && !currentNode.broader) {
+          schemes[i].state = currentNode.state;
+          schemes.opened = true;
+        }
+        
+        }
       }
-      schemes[i].children.push(currentNode);
-      // the hierarchy response contains the parent info before the topConcepts so it's a safe to open the first one without broaders 
-      if (!schemes.opened && !currentNode.broader) {
-        schemes[i].state = currentNode.state;
-        schemes.opened = true;
+      // search if top concept uri is equal to scheme children uri, if there are children(second Level)
+      for (var h = 0; h <schemes[i].children.length; h++) {
+        for (var k = 0; k < parentData[currentNode.uri].top.length; k++) {
+          console.log('scheme children: '+schemes[i].children[h].uri+' currentNodeUri: '+parentData[currentNode.uri].uri);
+          if(schemes[i].children[h]){
+          if(schemes[i].children[h].uri===parentData[currentNode.uri].top[k]){
+              if(Object.prototype.toString.call(schemes[i].children[h].children) !== '[object Array]' ) {
+                schemes[i].children[h].children = [];
+              }
+          schemes[i].children[h].children.push(currentNode);
+        // the hierarchy response contains the parent info before the topConcepts so it's a safe to open the first one without broaders 
+        if (!schemes[i].children[h].opened && !currentNode.broader) {
+          schemes[i].state = currentNode.state;
+          schemes[i].children[h].state=schemes[i].state;
+          schemes[i].children[h].opened=true;
+          schemes[i].children[h].children.opened=true;
+        
+        }
+          }
+        }
+        }
       }
-    }
+       
   }
+  
+
   return schemes;
 }
 
@@ -262,19 +296,22 @@ function appendChildrenToParents() {
 
 function createObjectsFromNarrowers(narrowerResponse) {
   var childArray = [];
-  for (var i = 0; i < narrowerResponse.narrower.length; i++) {
-    var conceptObject = narrowerResponse.narrower[i];
-    var childObject = {
-      text : getLabel(conceptObject), 
-      a_attr : getConceptHref(conceptObject),
-      uri: conceptObject.uri,
-      parents: narrowerResponse.uri,
-      state: { opened: false, disabled: false, selected: false }
-    };
-    childObject.children = conceptObject.hasChildren ? true : false;
-    setNode(childObject);
-    childArray.push(childObject);
-  }
+     
+        for (var i = 0; i < narrowerResponse.narrower.length; i++) {
+        var conceptObject = narrowerResponse.narrower[i];
+        var childObject = {
+          text : getLabel(conceptObject), 
+          a_attr : getConceptHref(conceptObject),
+          uri: conceptObject.uri,
+          parents: narrowerResponse.uri,
+          state: { opened: false, disabled: false, selected: false }
+        };
+        childObject.children = conceptObject.hasChildren ? true : false;
+        setNode(childObject);
+        childArray.push(childObject);
+      }
+
+  
   return childArray;
 }
 
@@ -324,6 +361,7 @@ function schemeRoot(schemes) {
   // console.log(domains);
 
   // Step 2 : create tree nodes for each domain
+ 
   for (var i = 0; i < domains.length; i++) {
     var theDomain = domains[i];
     // Step 2.1 : create domain node without children
@@ -353,7 +391,7 @@ function schemeRoot(schemes) {
     topArray.push(domainObject);
   }
 
-   // Step 3 : add the schemes without subjects
+  // Step 3 : add the schemes without subjects
    for (var k = 0; k < schemes.length; k++) {
         var theScheme = schemes[k];        
         if(theScheme.subject == null) {

@@ -1745,7 +1745,8 @@ EOQ;
         $propertyClause = implode('|', $props);
         $query = <<<EOQ
 SELECT ?broad ?parent ?member ?children ?grandchildren
-(SAMPLE(?lab) as ?label) (SAMPLE(?childlab) as ?childlabel) (SAMPLE(?topcs) AS ?top) (SAMPLE(?nota) as ?notation) (SAMPLE(?childnota) as ?childnotation) $fcl
+(SAMPLE(?lab) as ?label) (SAMPLE(?childlab) as ?childlabel) (GROUP_CONCAT(?topcs; separator=" ") as ?top) 
+(SAMPLE(?nota) as ?notation) (SAMPLE(?childnota) as ?childnotation) $fcl
 WHERE {
   <$uri> a skos:Concept .
   OPTIONAL {
@@ -1758,7 +1759,8 @@ WHERE {
       ?broad skos:prefLabel ?lab .
       FILTER (langMatches(lang(?lab), "$fallback"))
     }
-    OPTIONAL { # fallback - other language case
+    OPTIONAL { 
+        # fallback - other language case#
       ?broad skos:prefLabel ?lab .
     }
     OPTIONAL { ?broad skos:notation ?nota . }
@@ -1772,7 +1774,8 @@ WHERE {
         ?children skos:prefLabel ?childlab .
         FILTER (langMatches(lang(?childlab), "$fallback"))
       }
-      OPTIONAL { # fallback - other language case
+      OPTIONAL { 
+        # fallback - other language case#
         ?children skos:prefLabel ?childlab .
       }
       OPTIONAL {
@@ -1810,7 +1813,8 @@ EOQ;
                 $ret[$uri]['exact'] = $row->exact->getUri();
             }
             if (isset($row->top)) {
-                $ret[$uri]['top'] = $row->top->getUri();
+                //$ret[$uri]['top']=$row->top->getValue();
+               $ret[$uri]['top'] = explode(" ", $row->top->getValue());
             }
             if (isset($row->children)) {
                 if (!isset($ret[$uri]['narrower'])) {
