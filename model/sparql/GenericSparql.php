@@ -595,13 +595,13 @@ EOQ;
     private function generateQueryConceptSchemesQuery($lang) {
         $fcl = $this->generateFromClause();
         $query = <<<EOQ
-SELECT ?cs ?label ?preflabel ?title ?domain ?domainLabel $fcl
+SELECT ?cs ?label ?preflabel ?title ?domaine ?domaineLabel $fcl
 WHERE {
  ?cs a skos:ConceptScheme .
  OPTIONAL{
-    ?cs dcterms:subject ?domain.
-    ?domain skos:prefLabel ?domainLabel.
-    FILTER(langMatches(lang(?domainLabel), '$lang'))
+    ?cs dcterms:subject ?domaine.
+    ?domaine skos:prefLabel ?domaineLabel.
+    FILTER(langMatches(lang(?domaineLabel), '$lang'))
 }
  OPTIONAL {
    ?cs rdfs:label ?label .
@@ -646,9 +646,9 @@ EOQ;
                 $conceptscheme['title'] = $row->title->getValue();
             }
             //ajout des dcterms:subject et leurs libellés dans le retour json
-            if(isset($row->domain)&&isset($row->domainLabel)){
-                $conceptscheme['subject']['uri']=$row->domain->getURI();
-                $conceptscheme['subject']['prefLabel']=$row->domainLabel->getValue();
+            if(isset($row->domaine)&&isset($row->domaineLabel)){
+                $conceptscheme['subject']['uri']=$row->domaine->getURI();
+                $conceptscheme['subject']['prefLabel']=$row->domaineLabel->getValue();
             }
 
             $ret[$row->cs->getURI()] = $conceptscheme;
