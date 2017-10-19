@@ -646,7 +646,7 @@ EOQ;
                 $conceptscheme['title'] = $row->title->getValue();
             }
             //ajout des dcterms:subject et leurs libellés dans le retour json
-            if(isset($row->domaine)&&isset($row->domaineLabel)){
+            if(isset($row->domain)&&isset($row->domainLabel)){
                 $conceptscheme['subject']['uri']=$row->domain->getURI();
                 $conceptscheme['subject']['prefLabel']=$row->domainLabel->getValue();
             }
