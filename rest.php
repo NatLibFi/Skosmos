@@ -59,7 +59,9 @@ try {
             $controller->label($request);
         } elseif ($parts[2] == 'lookup') {
             $controller->lookup($request);
-        } elseif ($parts[2] == 'broader') {
+        } elseif ($parts[2] == 'history') {
+            $controller->history($request);
+        }elseif ($parts[2] == 'broader') {
             $controller->broader($request);
         } elseif ($parts[2] == 'broaderTransitive') {
             $controller->broaderTransitive($request);

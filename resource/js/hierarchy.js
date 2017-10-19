@@ -508,6 +508,7 @@ function getTreeConfiguration() {
                   nodeId = node.uri;
                   json_url = (rest_base_url + vocab + '/children');
                 }
+
                 $.ajax({
                   data: params,
                 url: json_url, 
@@ -521,6 +522,7 @@ function getTreeConfiguration() {
                   }
                 }
                 });
+                
               }
             }
           });
