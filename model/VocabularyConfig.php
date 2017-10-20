@@ -121,14 +121,6 @@ class VocabularyConfig extends DataObject
     {
         return $this->getLiteral('dc:title', $lang);
     }
-    public function version($lang = null)
-    {
-        return $this->getLiteral('pav:hasVersion');
-    }
-    public function versionDate($lang = null)
-    {
-        return $this->getLiteral('pav:createdOn');
-    }
 
     /**
      * Returns a boolean value set in the vocabularies.ttl config.

@@ -96,62 +96,7 @@ class RestController extends Controller
 
         return $this->returnJson($ret);
     }
-    //gives the history of thesaurus versions
-    public function history($request){
-
-         $vocabMatch=array();
-         $vocabId= $request->getVocab()->getId();
-         $uriConcept=$request->getUri();
-         $vocabVersion=$request->getVocab()->getConfig()->version();
-         $vocabVersionDate=$request->getVocab()->getConfig()->versionDate();
-         $lang = $request->getLang();
-         $graph=array();
-         $graph['uri']=$uriConcept;
-         foreach ($this->model->getVocabularies() as $voc) {
-            if($voc->getConceptInfo($uriConcept, $lang)!=null){
-                array_push($vocabMatch, $voc);
-            }
-        }
-        foreach ($vocabMatch as $v) {
-            $iscurrent=false;
-            if($v->getId()==$vocabId)
-            {
-                $iscurrent=true;
-            }
-             $graph['hasVersion'][]=array(
-                        'skosmosVocab'=>$v->getId(), 
-                        'version'=>$v->getConfig()->version(),
-                        'createdOn'=>$v->getConfig()->versionDate(),
-                        'iscurrent'=>$iscurrent
-                    );
-            }
-
-        $ret = array_merge_recursive($this->context, array(
-            '@context' => array(
-                'rdfs' => 'http://www.w3.org/2000/01/rdf-schema#',
-                'onki' => 'http://schema.onki.fi/onki#',
-                'dct' => 'http://purl.org/dc/terms/',
-                'dcterms' =>'http://purl.org/dc/terms/',
-                'altLabel' => 'skos:altLabel', 
-                'broader' => 'skos:broader', 
-                'dc11' => 'http://purl.org/dc/elements/1.1/',
-                'dct' => 'http://purl.org/dc/terms/',
-                'graph' => '@graph', 
-                'pav' => 'http://purl.org/pav/', 
-                'hiddenLabel' => 'skos:hiddenLabel', 
-                'inScheme' => 'skos:inScheme',
-                'isothes' => 'http://purl.org/iso25964/skos-thes#',
-                'prefLabel' => 'skos:prefLabel',
-                'owl'=>'http://www.w3.org/2002/07/owl#',
-                'lang'=>'@language',
-                'related'=>'skos:related',
-                'value'=>'@value'
-            ),
-            'graph' => array($graph))
-        );
-
-        return $this->returnJson($ret);
-    }
+    
     private function constructSearchParameters($request)
     {
         $parameters = new ConceptSearchParameters($request, $this->model->getConfig(), true);
