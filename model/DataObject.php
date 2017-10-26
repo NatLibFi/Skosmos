@@ -21,11 +21,11 @@ class DataObject
     /**
      * Initializes the DataObject
      * @param Model $model
-     * @param EasyRdf_Resource $resource
+     * @param EasyRdf\Resource $resource
      */
     public function __construct($model, $resource)
     {
-        if (!($model instanceof Model) || !($resource instanceof EasyRdf_Resource)) {
+        if (!($model instanceof Model) || !($resource instanceof EasyRdf\Resource)) {
             throw new Exception('Invalid constructor parameter given to DataObject.');
         }
 
@@ -40,7 +40,7 @@ class DataObject
      * @param Vocabulary $exvoc external vocabulary to query
      * @param string $exuri resource URI
      * @param string $lang language of label to query for
-     * @return EasyRdf_Literal label, or null if not found in vocabulary
+     * @return EasyRdf\Literal label, or null if not found in vocabulary
      */
     protected function getExternalLabel($exvoc, $exuri, $lang)
     {

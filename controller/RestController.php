@@ -283,13 +283,13 @@ class RestController extends Controller
         } else if (isset($vocabStats[$groupClass])) {
             $ret['conceptGroups'] = array(
                 'class' => $groupClass,
-                'label' => isset($vocabStats[$groupClass]['label']) ? $vocabStats[$groupClass]['label'] : gettext(EasyRdf_Namespace::shorten($groupClass)),
+                'label' => isset($vocabStats[$groupClass]['label']) ? $vocabStats[$groupClass]['label'] : gettext(EasyRdf\RdfNamespace::shorten($groupClass)),
                 'count' => $vocabStats[$groupClass]['count'],
             );
         } else if (isset($vocabStats[$arrayClass])) {
             $ret['arrays'] = array(
                 'class' => $arrayClass,
-                'label' => isset($vocabStats[$arrayClass]['label']) ? $vocabStats[$arrayClass]['label'] : gettext(EasyRdf_Namespace::shorten($arrayClass)),
+                'label' => isset($vocabStats[$arrayClass]['label']) ? $vocabStats[$arrayClass]['label'] : gettext(EasyRdf\RdfNamespace::shorten($arrayClass)),
                 'count' => $vocabStats[$arrayClass]['count'],
             );
         }

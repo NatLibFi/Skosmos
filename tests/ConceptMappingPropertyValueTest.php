@@ -26,7 +26,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit_Framework_TestCase
    * @covers ConceptMappingPropertyValue::__construct
    */
   public function testConstructor() {
-    $resourcestub = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
+    $resourcestub = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
     $mapping = new ConceptMappingPropertyValue($this->model, $this->vocab, $resourcestub, 'skos:exactMatch');
     $this->assertEquals('skos:exactMatch', $mapping->getType());
   }
@@ -46,7 +46,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit_Framework_TestCase
    * @covers ConceptMappingPropertyValue::queryLabel
    */
   public function testGetLabelResortsToUri() {
-    $mockres = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
+    $mockres = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
     $labelmap = array(
       array('en', null),
       array(null, null)
@@ -67,7 +67,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit_Framework_TestCase
    * @covers ConceptMappingPropertyValue::queryLabel
    */
   public function testGetLabelWithAndWithoutLang() {
-    $mockres = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
+    $mockres = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
     $labelmap = array(
       array('en', 'english'),
       array(null, 'default')
@@ -84,7 +84,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit_Framework_TestCase
    * @covers ConceptMappingPropertyValue::queryLabel
    */
   public function testGetLabelWithLiteralAndLang() {
-    $mockres = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
+    $mockres = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
     $labelmap = array(
       array('en', null),
       array(null, null)
@@ -105,8 +105,8 @@ class ConceptMappingPropertyValueTest extends PHPUnit_Framework_TestCase
    * @covers ConceptMappingPropertyValue::getNotation
    */
   public function testGetNotation() {
-    $mockres = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
-    $mocklit = $this->getMockBuilder('EasyRdf_Literal')->disableOriginalConstructor()->getMock();
+    $mockres = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
+    $mocklit = $this->getMockBuilder('EasyRdf\Literal')->disableOriginalConstructor()->getMock();
     $mocklit->method('getValue')->will($this->returnValue('666'));
     $map = array(
         array('skos:notation', null, null, $mocklit),

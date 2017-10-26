@@ -317,7 +317,7 @@ class VocabularyConfigTest extends PHPUnit_Framework_TestCase
    * @covers VocabularyConfig::getId
    */
   public function testGetIdWithSlashNamespace() {
-    $mockres = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
+    $mockres = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
     $mockres->method('getUri')->will($this->returnValue('http://www.skosmos.skos/onto/test'));
     $conf = new VocabularyConfig($mockres);
     $this->assertEquals('test', $conf->getId());

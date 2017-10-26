@@ -23,7 +23,7 @@ class ConceptPropertyValueTest extends PHPUnit_Framework_TestCase
    * @covers ConceptPropertyValue::__construct
    */
   public function testConstructor() {
-    $mockres = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
+    $mockres = $this->getMockBuilder('EasyRdf\\Resource')->disableOriginalConstructor()->getMock();
     $propval = new ConceptPropertyValue($this->model, $this->vocab, $mockres, 'skosmos:testProp', 'en');
     $this->assertInstanceOf('ConceptPropertyValue', $propval);
   }
@@ -41,7 +41,7 @@ class ConceptPropertyValueTest extends PHPUnit_Framework_TestCase
    * @covers ConceptPropertyValue::getLabel
    */
   public function testGetLabelLiteral() {
-    $mockres = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
+    $mockres = $this->getMockBuilder('EasyRdf\\Resource')->disableOriginalConstructor()->getMock();
     $labelmap = array(
       array('en', null),
       array(null, null)
@@ -110,7 +110,7 @@ class ConceptPropertyValueTest extends PHPUnit_Framework_TestCase
    * @covers ConceptPropertyValue::getNotation
    */
   public function testGetNotationWhenThereIsNone() {
-    $mockres = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
+    $mockres = $this->getMockBuilder('EasyRdf\\Resource')->disableOriginalConstructor()->getMock();
     $propval = new ConceptPropertyValue($this->model, $this->vocab, $mockres, 'en');
     $this->assertEquals(null, $propval->getNotation());
   }
@@ -130,10 +130,10 @@ class ConceptPropertyValueTest extends PHPUnit_Framework_TestCase
    * @covers ConceptPropertyValue::__toString
    */
   public function testToStringWithNotation() {
-    $mockres = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
+    $mockres = $this->getMockBuilder('EasyRdf\\Resource')->disableOriginalConstructor()->getMock();
     $mockvoc = $this->getMockBuilder('Vocabulary')->disableOriginalConstructor()->getMock();
     $mockconf = $this->getMockBuilder('VocabularyConfig')->disableOriginalConstructor()->getMock();
-    $mocklit = $this->getMockBuilder('EasyRDF_literal')->disableOriginalConstructor()->getMock();
+    $mocklit = $this->getMockBuilder('EasyRdf\\Literal')->disableOriginalConstructor()->getMock();
     $mocklit->method('getValue')->will($this->returnValue('T3ST'));
     $mockconf->method('sortByNotation')->will($this->returnValue(true));
     $mockconf->method('showNotation')->will($this->returnValue(true));
@@ -149,10 +149,10 @@ class ConceptPropertyValueTest extends PHPUnit_Framework_TestCase
    * @covers ConceptPropertyValue::__toString
    */
   public function testToStringWhenNotationExistsButIsConfiguredOff() {
-    $mockres = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
+    $mockres = $this->getMockBuilder('EasyRdf\\Resource')->disableOriginalConstructor()->getMock();
     $mockvoc = $this->getMockBuilder('Vocabulary')->disableOriginalConstructor()->getMock();
     $mockconf = $this->getMockBuilder('VocabularyConfig')->disableOriginalConstructor()->getMock();
-    $mocklit = $this->getMockBuilder('EasyRDF_literal')->disableOriginalConstructor()->getMock();
+    $mocklit = $this->getMockBuilder('EasyRdf\\Literal')->disableOriginalConstructor()->getMock();
     $mocklit->method('getValue')->will($this->returnValue('T3ST'));
     $mockconf->method('sortByNotation')->will($this->returnValue(true));
     $mockconf->method('showNotation')->will($this->returnValue(false));
@@ -176,15 +176,15 @@ class ConceptPropertyValueTest extends PHPUnit_Framework_TestCase
     $propvals = $props['skos:broader']->getValues();
     $prop = reset($propvals);
     $val1 = $this->getMockBuilder('ConceptPropertyValue')->disableOriginalConstructor()->getMock();
-    $lit1 = $this->getMockBuilder('EasyRdf_Literal')->disableOriginalConstructor()->getMock();
+    $lit1 = $this->getMockBuilder('EasyRdf\\Literal')->disableOriginalConstructor()->getMock();
     $lit1->method('getValue')->will($this->returnValue('elephant'));
     $val1->method('getLabel')->will($this->returnValue($lit1));
     $val2 = $this->getMockBuilder('ConceptPropertyValue')->disableOriginalConstructor()->getMock();
-    $lit2 = $this->getMockBuilder('EasyRdf_Literal')->disableOriginalConstructor()->getMock();
+    $lit2 = $this->getMockBuilder('EasyRdf\\Literal')->disableOriginalConstructor()->getMock();
     $lit2->method('getValue')->will($this->returnValue('cat'));
     $val2->method('getLabel')->will($this->returnValue($lit2));
     $val3 = $this->getMockBuilder('ConceptPropertyValue')->disableOriginalConstructor()->getMock();
-    $lit3 = $this->getMockBuilder('EasyRdf_Literal')->disableOriginalConstructor()->getMock();
+    $lit3 = $this->getMockBuilder('EasyRdf\\Literal')->disableOriginalConstructor()->getMock();
     $lit3->method('getValue')->will($this->returnValue('cheetah'));
     $val3->method('getLabel')->will($this->returnValue($lit3));
     $prop->addSubMember($val1);
@@ -197,7 +197,7 @@ class ConceptPropertyValueTest extends PHPUnit_Framework_TestCase
    * @covers ConceptPropertyValue::getSubMembers
    */
   public function testGetSubMembersEmpty() {
-    $mockres = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
+    $mockres = $this->getMockBuilder('EasyRdf\\Resource')->disableOriginalConstructor()->getMock();
     $propval = new ConceptPropertyValue($this->model, $this->vocab, $mockres, 'en');
     $this->assertEquals(null, $propval->getSubMembers());
   }

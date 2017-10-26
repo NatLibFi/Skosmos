@@ -13,7 +13,7 @@ class Concept extends VocabularyDataObject
     private $foundby;
     /** Type of foundby match: 'alt', 'hidden' or 'lang' */
     private $foundbytype;
-    /** the EasyRdf_Graph object of the concept */
+    /** the EasyRdf\Graph object of the concept */
     private $graph;
     private $clang;
 
@@ -48,8 +48,8 @@ class Concept extends VocabularyDataObject
      * Initializing the concept object requires the following parameters.
      * @param Model $model
      * @param Vocabulary $vocab
-     * @param EasyRdf_Resource $resource
-     * @param EasyRdf_Graph $graph
+     * @param EasyRdf\Resource $resource
+     * @param EasyRdf\Graph $graph
      */
     public function __construct($model, $vocab, $resource, $graph, $clang)
     {
@@ -86,7 +86,7 @@ class Concept extends VocabularyDataObject
     public function isGroup() {
         $groupClass = $this->getVocab()->getConfig()->getGroupClassURI();
         if ($groupClass) {
-            $groupClass = EasyRdf_Namespace::shorten($groupClass) !== null ? EasyRdf_Namespace::shorten($groupClass) : $groupClass;
+            $groupClass = EasyRdf\RdfNamespace::shorten($groupClass) !== null ? EasyRdf\RdfNamespace::shorten($groupClass) : $groupClass;
             return in_array($groupClass, $this->getType());
         }
         return false;
@@ -124,7 +124,7 @@ class Concept extends VocabularyDataObject
         foreach($this->resource->allLiterals('skos:prefLabel') as $label) {
             // the label lang code is a subtag of the UI lang eg. en-GB - create a new literal with the main language
             if ($label !== null && strpos($label->getLang(), $lang . '-') === 0) {
-                return EasyRdf_Literal::create($label, $lang);
+                return EasyRdf\Literal::create($label, $lang);
             }
         }
         
@@ -228,16 +228,16 @@ class Concept extends VocabularyDataObject
 
         $longUris = $this->resource->propertyUris();
         foreach ($longUris as &$prop) {
-            if (EasyRdf_Namespace::shorten($prop) !== null) {
+            if (EasyRdf\RdfNamespace::shorten($prop) !== null) {
                 // shortening property labels if possible
-                $prop = $sprop = EasyRdf_Namespace::shorten($prop);
+                $prop = $sprop = EasyRdf\RdfNamespace::shorten($prop);
             } else {
                 $sprop = "<$prop>";
             }
             // EasyRdf requires full URIs to be in angle brackets
 
             if (in_array($prop, $this->MAPPING_PROPERTIES) && !in_array($prop, $this->DELETED_PROPERTIES)) {
-                $propres = new EasyRdf_Resource($prop, $this->graph);
+                $propres = new EasyRdf\Resource($prop, $this->graph);
                 $proplabel = $propres->label($this->getEnvLang()) ? $propres->label($this->getEnvLang()) : $propres->label(); // current language
                 $propobj = new ConceptProperty($prop, $proplabel);
                 if ($propobj->getLabel() !== null) {
@@ -321,20 +321,20 @@ class Concept extends VocabularyDataObject
         }
 
         foreach ($longUris as &$prop) {
-            if (EasyRdf_Namespace::shorten($prop) !== null) {
+            if (EasyRdf\RdfNamespace::shorten($prop) !== null) {
                 // shortening property labels if possible
-                $prop = $sprop = EasyRdf_Namespace::shorten($prop);
+                $prop = $sprop = EasyRdf\RdfNamespace::shorten($prop);
             } else {
                 $sprop = "<$prop>";
             }
             // EasyRdf requires full URIs to be in angle brackets
 
             if (!in_array($prop, $this->DELETED_PROPERTIES) || ($this->isGroup() === false && $prop === 'skos:member')) {
-                $propres = new EasyRdf_Resource($prop, $this->graph);
+                $propres = new EasyRdf\Resource($prop, $this->graph);
                 $proplabel = $propres->label($this->getEnvLang()) ? $propres->label($this->getEnvLang()) : $propres->label();
                 $superprop = $propres->get('rdfs:subPropertyOf') ? $propres->get('rdfs:subPropertyOf')->getURI() : null;
                 if ($superprop) {
-                    $superprop = EasyRdf_Namespace::shorten($superprop) ? EasyRdf_Namespace::shorten($superprop) : $superprop;
+                    $superprop = EasyRdf\RdfNamespace::shorten($superprop) ? EasyRdf\RdfNamespace::shorten($superprop) : $superprop;
                 }
                 $propobj = new ConceptProperty($prop, $proplabel, $superprop);
 
@@ -345,7 +345,7 @@ class Concept extends VocabularyDataObject
 
                 // searching for subproperties of literals too
                 foreach ($this->graph->allResources($prop, 'rdfs:subPropertyOf') as $subi) {
-                    $suburi = EasyRdf_Namespace::shorten($subi->getUri()) ? EasyRdf_Namespace::shorten($subi->getUri()) : $subi->getUri();
+                    $suburi = EasyRdf\RdfNamespace::shorten($subi->getUri()) ? EasyRdf\RdfNamespace::shorten($subi->getUri()) : $subi->getUri();
                     $duplicates[$suburi] = $prop;
                 }
 
@@ -491,7 +491,7 @@ class Concept extends VocabularyDataObject
     /**
      * Gets the members of a specific collection.
      * @param $coll
-     * @param array containing all narrowers as EasyRdf_Resource
+     * @param array containing all narrowers as EasyRdf\Resource
      * @return array containing ConceptPropertyValue objects
      */
     private function getCollectionMembers($coll, $narrowers)
@@ -532,7 +532,7 @@ class Concept extends VocabularyDataObject
         $reverseResources = $this->graph->resourcesMatching('skos:member', $this->resource);
         if (isset($reverseResources)) {
             $arrayClassURI = $this->vocab !== null ? $this->vocab->getConfig()->getArrayClassURI() : null;
-            $arrayClass = $arrayClassURI !== null ? EasyRdf_Namespace::shorten($arrayClassURI) : null;
+            $arrayClass = $arrayClassURI !== null ? EasyRdf\RdfNamespace::shorten($arrayClassURI) : null;
             $superGroups = $this->resource->all('isothes:superGroup');
             $superGroupUris = array_map(function($obj) { return $obj->getUri(); }, $superGroups);
             foreach ($reverseResources as $reverseResource) {
@@ -570,7 +570,7 @@ class Concept extends VocabularyDataObject
     /**
      * Reads the literal language code and gets a name for it from Punic or alternatively
      * tries to search for a gettext translation.
-     * @param EasyRdf_Literal $lit
+     * @param EasyRdf\Literal $lit
      * @return string e.g. 'English'
      */
     private function literalLanguageToString($lit) {
@@ -609,7 +609,7 @@ class Concept extends VocabularyDataObject
     {
         $labels = array();
         // shortening property labels if possible, EasyRdf requires full URIs to be in angle brackets
-        $property = (EasyRdf_Namespace::shorten($property) !== null) ? EasyRdf_Namespace::shorten($property) : "<$property>";
+        $property = (EasyRdf\RdfNamespace::shorten($property) !== null) ? EasyRdf\RdfNamespace::shorten($property) : "<$property>";
         foreach ($this->resource->allLiterals($property) as $lit) {
             $labels[Punic\Language::getName($lit->getLang(), $this->getEnvLang())][] = new ConceptPropertyValueLiteral($lit, $property);
         }

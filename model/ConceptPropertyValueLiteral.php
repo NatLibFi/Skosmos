@@ -42,7 +42,7 @@ class ConceptPropertyValueLiteral
     public function getLabel()
     {
         // if the property is a date object converting it to a human readable representation.
-        if ($this->literal instanceof EasyRdf_Literal_Date) {
+        if ($this->literal instanceof EasyRdf\Literal\Date) {
             try {
                 $val = $this->literal->getValue();
                 return Punic\Calendar::formatDate($val, 'short');
