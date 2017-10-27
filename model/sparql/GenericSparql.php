@@ -976,7 +976,7 @@ EOQ;
           $labelpriority = ''; 
         }
         $query = <<<EOQ
-SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph ?notation (GROUP_CONCAT(DISTINCT ?type) as ?types) $extravars 
+SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph ?notation (GROUP_CONCAT(DISTINCT STR(?type);separator=' ') as ?types) $extravars 
 $fcl
 WHERE {
  $gcl {
@@ -1480,7 +1480,7 @@ EOQ;
         $query = <<<EOQ
 SELECT * $fcl
 WHERE {
-  SELECT ?object ?label (GROUP_CONCAT(?dir) as ?direct)
+  SELECT ?object ?label (GROUP_CONCAT(STR(?dir);separator=' ') as ?direct)
   WHERE {
     <$uri> a skos:Concept .
     OPTIONAL {
@@ -1877,7 +1877,7 @@ EOQ;
     private function generateConceptGroupsQuery($groupClass, $lang) {
         $fcl = $this->generateFromClause();
         $query = <<<EOQ
-SELECT ?group (GROUP_CONCAT(DISTINCT STR(?child)) as ?children) ?label ?members ?notation $fcl
+SELECT ?group (GROUP_CONCAT(DISTINCT STR(?child);separator=' ') as ?children) ?label ?members ?notation $fcl
 WHERE {
   ?group a <$groupClass> .
   OPTIONAL { ?group skos:member|isothes:subGroup ?child .
