@@ -71,7 +71,7 @@
             <ul class="list-group alphabetical-search-results side-navi">
               {% for key,value in alpha_results %}
               {% if all_letters == true %}
-                {% set alpha = value.prefLabel|upper|first %}{% if alpha != previous %}<li class="alphabet-header" name="{{ alpha }}"><h5>{{ alpha }}</h5></li>{% set previous = alpha %}{% endif %}
+                {% set alpha = (value.altLabel ?? value.prefLabel)|upper|first %}{% if alpha != previous %}<li class="alphabet-header" name="{{ alpha }}"><h5>{{ alpha }}</h5></li>{% set previous = alpha %}{% endif %}
               {% endif %}
               <li>
               {% if value.altLabel %}
