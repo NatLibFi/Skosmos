@@ -131,11 +131,8 @@ function attachTopConceptsToSchemes(schemes, currentNode, parentData) {
   console.log('I am in');
   var foundFirstLevel = false;
   for (var i = 0; i < schemes.length; i++) {
-
       //search if top concept uri is equal to scheme uri on (first level)
-      for (var h = 0; h < parentData[currentNode.uri].top.length; h++) {
-         console.log('scheme uri: '+schemes[i].uri +' currentNodeUri: '+parentData[currentNode.uri].top[h]);
-        if(schemes[i].uri===parentData[currentNode.uri].top[h]){
+        if(schemes[i].uri===parentData[currentNode.uri].top){
           foundFirstLevel = true;
           if(Object.prototype.toString.call(schemes[i].children) !== '[object Array]' ) {
             schemes[i].children = [];
@@ -148,13 +145,12 @@ function attachTopConceptsToSchemes(schemes, currentNode, parentData) {
         }
         
         }
-      }
+    
       // search if top concept uri is equal to scheme children uri, if there are children(second Level)
       for (var h = 0; h <schemes[i].children.length; h++) {
-        for (var k = 0; k < parentData[currentNode.uri].top.length; k++) {
           console.log('scheme children: '+schemes[i].children[h].uri+' currentNodeUri: '+parentData[currentNode.uri].uri);
           if(schemes[i].children[h]){
-          if(schemes[i].children[h].uri===parentData[currentNode.uri].top[k]){
+          if(schemes[i].children[h].uri===parentData[currentNode.uri].top){
               if(Object.prototype.toString.call(schemes[i].children[h].children) !== '[object Array]' ) {
                 schemes[i].children[h].children = [];
               }
@@ -169,11 +165,10 @@ function attachTopConceptsToSchemes(schemes, currentNode, parentData) {
         }
           }
         }
-        }
+        
       }
        
   }
-  
 
   return schemes;
 }

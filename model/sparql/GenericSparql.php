@@ -1,5 +1,6 @@
 <?php
 
+require_once 'controller/RestController.php';
 /**
  * Generates SPARQL queries and provides access to the SPARQL endpoint.
  */
@@ -30,6 +31,9 @@ class GenericSparql {
      * @property array $qnamecache
      */
     private $qnamecache = array();
+
+
+    
 
     /**
      * Requires the following three parameters.
@@ -1745,7 +1749,7 @@ EOQ;
         $propertyClause = implode('|', $props);
         $query = <<<EOQ
 SELECT ?broad ?parent ?member ?children ?grandchildren
-(SAMPLE(?lab) as ?label) (SAMPLE(?childlab) as ?childlabel) (GROUP_CONCAT(?topcs; separator=" ") as ?top) 
+(SAMPLE(?lab) as ?label) (SAMPLE(?childlab) as ?childlabel) (GROUP_CONCAT(?topcs; separator=" ") as ?tops) 
 (SAMPLE(?nota) as ?notation) (SAMPLE(?childnota) as ?childnotation) $fcl
 WHERE {
   <$uri> a skos:Concept .
@@ -1800,6 +1804,7 @@ EOQ;
     private function transformParentListResults($result, $lang)
     {
         $ret = array();
+        $conceptschemeList=array();
         foreach ($result as $row) {
             if (!isset($row->broad)) {
                 // existing concept but no broaders
@@ -1812,9 +1817,34 @@ EOQ;
             if (isset($row->exact)) {
                 $ret[$uri]['exact'] = $row->exact->getUri();
             }
-            if (isset($row->top)) {
-                //$ret[$uri]['top']=$row->top->getValue();
-               $ret[$uri]['top'] = explode(" ", $row->top->getValue());
+            if (isset($row->tops)) {
+               $exist=false;
+               $topConceptsList=explode(" ", $row->tops->getValue());
+               sort($topConceptsList);
+               $ret[$uri]['tops'] =$topConceptsList[0];
+               //check if defaultTopConcept is set
+               foreach ($this->model->getVocabularies() as $voc) {
+                    if($voc->getId()==$this->model->getRequest()->getVocab()->getId()){
+                        if($voc->defaultConceptScheme()!=null){
+                                $ret[$uri]['top'] =$voc->defaultTopConcept();
+                                foreach ($topConceptsList as $value) {
+                                    if($ret[$uri]['top']==$value){
+                                        $exist=true;
+                                        break;
+                                    }
+                                }
+                            //if the Topconcept set is not in the topconceptsList, we take the first
+                            //conceptscheme in the list
+                            if(!$exist){
+                               $ret[$uri]['top']=$ret[$uri]['tops']; 
+                            }     
+
+                        }else{
+                             
+                            $ret[$uri]['top'] =$ret[$uri]['tops'];
+                        } 
+                    }
+                }
             }
             if (isset($row->children)) {
                 if (!isset($ret[$uri]['narrower'])) {
