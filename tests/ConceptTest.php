@@ -23,7 +23,7 @@ class ConceptTest extends PHPUnit_Framework_TestCase
    */
   public function testConstructor()
   {
-    $mockres = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
+    $mockres = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
     $concept = new Concept($this->model, $this->vocab, $mockres, 'http://skosmos.skos/test', 'en');
     $this->assertInstanceOf('Concept', $concept);
     $this->assertEquals('Test ontology', $concept->getVocabTitle());

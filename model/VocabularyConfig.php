@@ -159,7 +159,7 @@ class VocabularyConfig extends DataObject
             if ($mimetypelit !== null) {
                 $mimetype = $mimetypelit->getValue();
             } else {
-                $format = EasyRdf_Format::guessFormat(null, $url->getURI());
+                $format = EasyRdf\Format::guessFormat(null, $url->getURI());
                 if ($format === null) {
                     trigger_error("Could not guess format for <$url>.", E_USER_WARNING);
                     continue;
@@ -215,9 +215,9 @@ class VocabularyConfig extends DataObject
         $ret = array();
         foreach ($resources as $res) {
             $prop = $res->getURI();
-            if (EasyRdf_Namespace::shorten($prop) !== null) // shortening property labels if possible
+            if (EasyRdf\RdfNamespace::shorten($prop) !== null) // shortening property labels if possible
             {
-                $prop = EasyRdf_Namespace::shorten($prop);
+                $prop = EasyRdf\RdfNamespace::shorten($prop);
             }
 
             $ret[] = $prop;
@@ -235,9 +235,9 @@ class VocabularyConfig extends DataObject
         $resources = $this->resource->allResources("skosmos:hasMultiLingualProperty");
         foreach ($resources as $res) {
             $prop = $res->getURI();
-            if (EasyRdf_Namespace::shorten($prop) !== null) // shortening property labels if possible
+            if (EasyRdf\RdfNamespace::shorten($prop) !== null) // shortening property labels if possible
             {
-                $prop = EasyRdf_Namespace::shorten($prop);
+                $prop = EasyRdf\RdfNamespace::shorten($prop);
             }
 
             if ($prop === $property) {
@@ -378,9 +378,9 @@ class VocabularyConfig extends DataObject
         $ret = array();
         foreach ($resources as $res) {
             $prop = $res->getURI();
-            if (EasyRdf_Namespace::shorten($prop) !== null) // prefixing if possible 
+            if (EasyRdf\RdfNamespace::shorten($prop) !== null) // prefixing if possible 
             {
-                $prop = EasyRdf_Namespace::shorten($prop);
+                $prop = EasyRdf\RdfNamespace::shorten($prop);
             }
 
             $ret[] = $prop;

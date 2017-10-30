@@ -1,7 +1,7 @@
 <?php
 
 /* Register text: namespace needed for jena-text queries */
-EasyRdf_Namespace::set('text', 'http://jena.apache.org/text#'); // @codeCoverageIgnore
+EasyRdf\RdfNamespace::set('text', 'http://jena.apache.org/text#'); // @codeCoverageIgnore
 
 /**
  * Provides functions tailored to the JenaTextSparql extensions for the Fuseki SPARQL index.

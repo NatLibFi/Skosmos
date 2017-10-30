@@ -6,7 +6,7 @@
 class GenericSparql {
     /**
      * A SPARQL Client eg. an EasyRDF instance.
-     * @property EasyRdf_Sparql_Client $client
+     * @property EasyRdf\Sparql\Client $client
      */
     protected $client;
     /**
@@ -43,7 +43,7 @@ class GenericSparql {
 
         // create the EasyRDF SPARQL client instance to use
         $this->initializeHttpClient();
-        $this->client = new EasyRdf_Sparql_Client($endpoint);
+        $this->client = new EasyRdf\Sparql\Client($endpoint);
 
         // set graphClause so that it can be used by all queries
         if ($this->isDefaultEndpoint()) // default endpoint; query any graph (and catch it in a variable)
@@ -107,8 +107,8 @@ class GenericSparql {
     }
 
     protected function initializeHttpClient() {
-        // configure the HTTP client used by EasyRdf_Sparql_Client
-        $httpclient = EasyRdf_Http::getDefaultHttpClient();
+        // configure the HTTP client used by EasyRdf\Sparql\Client
+        $httpclient = EasyRdf\Http::getDefaultHttpClient();
         $httpclient->setConfig(array('timeout' => $this->model->getConfig()->getSparqlTimeout()));
 
         // if special cache control (typically no-cache) was requested by the
@@ -123,7 +123,7 @@ class GenericSparql {
         }
         // @codeCoverageIgnoreEnd
 
-        EasyRdf_Http::setDefaultHttpClient($httpclient); // actually redundant..
+        EasyRdf\Http::setDefaultHttpClient($httpclient); // actually redundant..
     }
 
     /**
@@ -150,7 +150,7 @@ class GenericSparql {
      */
     private function shortenUri($uri) {
         if (!array_key_exists($uri, $this->qnamecache)) {
-            $res = new EasyRdf_Resource($uri);
+            $res = new EasyRdf\Resource($uri);
             $qname = $res->shorten(); // returns null on failure
             $this->qnamecache[$uri] = ($qname !== null) ? $qname : $uri;
         }
@@ -179,7 +179,7 @@ EOQ;
 
     /**
      * Used for transforming the concept count query results.
-     * @param EasyRdf_Sparql_Result $result query results to be transformed
+     * @param EasyRdf\Sparql\Result $result query results to be transformed
      * @param string $lang language of labels
      * @return Array containing the label counts
      */
@@ -243,7 +243,7 @@ EOQ;
 
     /**
      * Transforms the CountLangConcepts results into an array of label counts.
-     * @param EasyRdf_Sparql_Result $result query results to be transformed
+     * @param EasyRdf\Sparql\Result $result query results to be transformed
      * @param array $langs Languages to query for
      * @param string[] $props property names
      */
@@ -433,11 +433,11 @@ EOQ;
 
     /**
      * Transforms ConceptInfo query results into an array of Concept objects
-     * @param EasyRdf_Graph $result query results to be transformed
+     * @param EasyRdf\Graph $result query results to be transformed
      * @param array $uris concept URIs
      * @param \Vocabulary[] $vocabs array of Vocabulary object
      * @param string|null $clang content language
-     * @return mixed query result graph (EasyRdf_Graph), or array of Concept objects
+     * @return mixed query result graph (EasyRdf\Graph), or array of Concept objects
      */
     private function transformConceptInfoResults($result, $uris, $vocabs, $clang) {
         $conceptArray = array();
@@ -473,7 +473,7 @@ EOQ;
      * @param string|null $arrayClass the URI for thesaurus array class, or null if not used
      * @param \Vocabulary[] $vocabs vocabularies to target
      * @param string|null $clang content language
-     * @return EasyRdf_Graph
+     * @return EasyRdf\Graph
      */
     public function queryConceptInfo($uris, $arrayClass = null, $vocabs = array(), $clang = null) {
         // if just a single URI is given, put it in an array regardless
@@ -528,7 +528,7 @@ EOQ;
 
     /**
      * Transforms the results into an array format.
-     * @param EasyRdf_Sparql_Result $result
+     * @param EasyRdf\Sparql\Result $result
      * @return array Array with URIs (string) as key and array of (label, superclassURI) as value
      */
     private function transformQueryTypesResults($result) {
@@ -619,7 +619,7 @@ EOQ;
 
     /**
      * Transforms the queryConceptScheme results into an array format.
-     * @param EasyRdf_Sparql_Result $result
+     * @param EasyRdf\Sparql\Result $result
      * @return array
      */
     private function transformQueryConceptSchemesResults($result) {
@@ -732,7 +732,7 @@ EOQ;
         $typePatterns = array();
         if (!empty($types)) {
             foreach ($types as $type) {
-                $unprefixed = EasyRdf_Namespace::expand($type);
+                $unprefixed = EasyRdf\RdfNamespace::expand($type);
                 $typePatterns[] = "{ ?s a <$unprefixed> }";
             }
         }
@@ -976,7 +976,7 @@ EOQ;
           $labelpriority = ''; 
         }
         $query = <<<EOQ
-SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph ?notation (GROUP_CONCAT(DISTINCT ?type) as ?types) $extravars 
+SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph ?notation (GROUP_CONCAT(DISTINCT STR(?type);separator=' ') as ?types) $extravars 
 $fcl
 WHERE {
  $gcl {
@@ -1084,7 +1084,7 @@ EOQ;
 
     /**
      * Transform the concept search query results into the skosmos desired return format.
-     * @param EasyRdf_Sparql_Result $results
+     * @param EasyRdf\Sparql\Result $results
      * @param array $vocabs array of Vocabulary objects to search; empty for global search
      * @return array query result object
      */
@@ -1197,7 +1197,7 @@ EOQ;
 
     /**
      * Transforms the alphabetical list query results into an array format.
-     * @param EasyRdf_Sparql_Result $results
+     * @param EasyRdf\Sparql\Result $results
      * @return array
      */
     private function transformAlphabeticalListResults($results) {
@@ -1265,7 +1265,7 @@ EOQ;
 
     /**
      * Transforms the first characters query results into an array format.
-     * @param EasyRdf_Sparql_Result $result
+     * @param EasyRdf\Sparql\Result $result
      * @return array
      */
     private function transformFirstCharactersResults($result) {
@@ -1416,7 +1416,7 @@ EOQ;
 
     /**
      * Transforms the sparql query result into an array or null if the concept doesn't exist.
-     * @param EasyRdf_Sparql_Result $result
+     * @param EasyRdf\Sparql\Result $result
      * @param string $lang
      * @return array array of property values (key: URI, val: label), or null if concept doesn't exist
      */
@@ -1480,7 +1480,7 @@ EOQ;
         $query = <<<EOQ
 SELECT * $fcl
 WHERE {
-  SELECT ?object ?label (GROUP_CONCAT(?dir) as ?direct)
+  SELECT ?object ?label (GROUP_CONCAT(STR(?dir);separator=' ') as ?direct)
   WHERE {
     <$uri> a skos:Concept .
     OPTIONAL {
@@ -1504,7 +1504,7 @@ EOQ;
 
     /**
      * Transforms the sparql query result object into an array.
-     * @param EasyRdf_Sparql_Result $result
+     * @param EasyRdf\Sparql\Result $result
      * @param string $lang
      * @param string $fallbacklang language to use if label is not available in the preferred language
      * @return array of property values (key: URI, val: label), or null if concept doesn't exist
@@ -1611,7 +1611,7 @@ EOQ;
 
     /**
      * Transforms the sparql result object into an array.
-     * @param EasyRdf_Sparql_Result $result
+     * @param EasyRdf\Sparql\Result $result
      * @param string $lang
      * @return array array of arrays describing each child concept, or null if concept doesn't exist
      */
@@ -1776,7 +1776,7 @@ EOQ;
 
     /**
      * Transforms the result into an array.
-     * @param EasyRdf_Sparql_Result
+     * @param EasyRdf\Sparql\Result
      * @param string $lang
      * @return an array for the REST controller to encode.
      */
@@ -1877,7 +1877,7 @@ EOQ;
     private function generateConceptGroupsQuery($groupClass, $lang) {
         $fcl = $this->generateFromClause();
         $query = <<<EOQ
-SELECT ?group (GROUP_CONCAT(DISTINCT STR(?child)) as ?children) ?label ?members ?notation $fcl
+SELECT ?group (GROUP_CONCAT(DISTINCT STR(?child);separator=' ') as ?children) ?label ?members ?notation $fcl
 WHERE {
   ?group a <$groupClass> .
   OPTIONAL { ?group skos:member|isothes:subGroup ?child .
@@ -1896,7 +1896,7 @@ EOQ;
 
     /**
      * Transforms the sparql query result into an array.
-     * @param EasyRdf_Sparql_Result $result
+     * @param EasyRdf\Sparql\Result $result
      * @return array
      */
     private function transformConceptGroupsResults($result) {
@@ -1970,7 +1970,7 @@ EOQ;
 
     /**
      * Transforms the sparql query result into an array.
-     * @param EasyRdf_Sparql_Result $result
+     * @param EasyRdf\Sparql\Result $result
      * @param string $lang language of labels to return
      * @return array
      */
@@ -2048,7 +2048,7 @@ EOQ;
 
     /**
      * Transforms the sparql query result into an array.
-     * @param EasyRdf_Sparql_Result $result
+     * @param EasyRdf\Sparql\Result $result
      * @return array
      */
     private function transformChangeListResults($result) {

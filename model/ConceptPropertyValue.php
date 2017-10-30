@@ -121,7 +121,7 @@ class ConceptPropertyValue extends VocabularyDataObject
         $ret = array();
         $props = $this->resource->propertyUris();
         foreach($props as $prop) {
-            $prop = (EasyRdf_Namespace::shorten($prop) !== null) ? EasyRdf_Namespace::shorten($prop) : $prop;
+            $prop = (EasyRdf\RdfNamespace::shorten($prop) !== null) ? EasyRdf\RdfNamespace::shorten($prop) : $prop;
             foreach ($this->resource->allLiterals($prop) as $val) {
                 if ($prop !== 'rdf:value' && $this->resource->get($prop)) { // shown elsewhere
                     $ret[gettext($prop)] = new ConceptPropertyValueLiteral($this->resource->get($prop), $prop);

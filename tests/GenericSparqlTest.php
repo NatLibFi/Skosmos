@@ -333,7 +333,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
   public function testQueryConceptScheme()
   {
     $actual = $this->sparql->queryConceptScheme('http://www.skosmos.skos/test/conceptscheme');
-    $this->assertInstanceOf('EasyRdf_Graph', $actual);
+    $this->assertInstanceOf('EasyRdf\Graph', $actual);
     $this->assertEquals('http://localhost:3030/ds/sparql', $actual->getUri());
   }
 

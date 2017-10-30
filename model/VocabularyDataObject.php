@@ -15,7 +15,7 @@ class VocabularyDataObject extends DataObject
      * Needs the following parameters.
      * @param Model $model
      * @param Vocabulary $vocab
-     * @param EasyRdf_Resource $resource
+     * @param EasyRdf\Resource $resource
      */
     public function __construct($model, $vocab, $resource)
     {

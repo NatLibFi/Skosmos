@@ -1,6 +1,6 @@
 <?php
 
-class SkosmosTurtleParser extends EasyRdf_Parser_Turtle
+class SkosmosTurtleParser extends EasyRdf\Parser\Turtle
 {
     private $bytePos = 0;
     private $dataLength = null;

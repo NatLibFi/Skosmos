@@ -293,7 +293,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
    */
   public function testGetRDFWithVocidAndURIasTurtle() {
     $result = $this->model->getRDF('test', 'http://www.skosmos.skos/test/ta116', 'text/turtle');
-    $resultGraph = new EasyRdf_Graph();
+    $resultGraph = new EasyRdf\Graph();
     $resultGraph->parse($result, "turtle");
 
     $expected = '@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
@@ -324,9 +324,9 @@ test:ta116
   a owl:Class .
 
 ';
-    $expectedGraph = new EasyRdf_Graph();
+    $expectedGraph = new EasyRdf\Graph();
     $expectedGraph->parse($expected, "turtle");
-    $this->assertTrue(EasyRdf_Isomorphic::isomorphic($resultGraph, $expectedGraph));
+    $this->assertTrue(EasyRdf\Isomorphic::isomorphic($resultGraph, $expectedGraph));
   }
   
   /**
@@ -334,7 +334,7 @@ test:ta116
    */
   public function testGetRDFWithURIasTurtle() {
     $result = $this->model->getRDF(null, 'http://www.skosmos.skos/test/ta116', 'text/turtle');
-    $resultGraph = new EasyRdf_Graph();
+    $resultGraph = new EasyRdf\Graph();
     $resultGraph->parse($result, "turtle");
     $expected = '@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -365,9 +365,9 @@ test:ta116
 
 ';
 
-    $expectedGraph = new EasyRdf_Graph();
+    $expectedGraph = new EasyRdf\Graph();
     $expectedGraph->parse($expected, "turtle");
-    $this->assertTrue(EasyRdf_Isomorphic::isomorphic($resultGraph, $expectedGraph));
+    $this->assertTrue(EasyRdf\Isomorphic::isomorphic($resultGraph, $expectedGraph));
   }
 
   /**
@@ -376,12 +376,12 @@ test:ta116
   public function testGetRDFWithVocidAndURIasJSON() {
     $result = $this->model->getRDF('test', 'http://www.skosmos.skos/test/ta116', 'application/json');
     
-    $resultGraph = new EasyRdf_Graph();
+    $resultGraph = new EasyRdf\Graph();
     $resultGraph->parse($result, "jsonld");
     $expected = '[{"@id":"http://www.skosmos.skos/test-meta/TestClass","http://www.w3.org/2000/01/rdf-schema#label":[{"@value":"Test class","@language":"en"}],"@type":["http://www.w3.org/2002/07/owl#Class"]},{"@id":"http://www.skosmos.skos/test/conceptscheme","http://www.w3.org/2000/01/rdf-schema#label":[{"@value":"Test conceptscheme","@language":"en"}],"@type":["http://www.w3.org/2004/02/skos/core#ConceptScheme"]},{"@id":"http://www.skosmos.skos/test/ta1","http://www.w3.org/2004/02/skos/core#prefLabel":[{"@value":"Fish","@language":"en"}],"@type":["http://www.skosmos.skos/test-meta/TestClass","http://www.w3.org/2004/02/skos/core#Concept"],"http://www.w3.org/2004/02/skos/core#narrower":[{"@id":"http://www.skosmos.skos/test/ta116"}]},{"@id":"http://www.skosmos.skos/test/ta116","http://www.w3.org/2004/02/skos/core#inScheme":[{"@id":"http://www.skosmos.skos/test/conceptscheme"}],"http://www.w3.org/2004/02/skos/core#broader":[{"@id":"http://www.skosmos.skos/test/ta1"}],"http://www.w3.org/2004/02/skos/core#prefLabel":[{"@value":"Bass","@language":"en"}],"@type":["http://www.skosmos.skos/test-meta/TestClass","http://www.w3.org/2004/02/skos/core#Concept"]},{"@id":"http://www.skosmos.skos/test/ta122","http://www.w3.org/2004/02/skos/core#broader":[{"@id":"http://www.skosmos.skos/test/ta116"}]},{"@id":"http://www.w3.org/2002/07/owl#Class"},{"@id":"http://www.w3.org/2004/02/skos/core#Concept"},{"@id":"http://www.w3.org/2004/02/skos/core#ConceptScheme"},{"@id":"http://www.w3.org/2004/02/skos/core#broader","http://www.w3.org/2000/01/rdf-schema#label":[{"@value":"has broader","@language":"en"}]},{"@id":"http://www.w3.org/2004/02/skos/core#prefLabel","http://www.w3.org/2000/01/rdf-schema#label":[{"@value":"preferred label","@language":"en"}]}]';
-    $expectedGraph = new EasyRdf_Graph();
+    $expectedGraph = new EasyRdf\Graph();
     $expectedGraph->parse($expected, "jsonld");
-    $this->assertTrue(EasyRdf_Isomorphic::isomorphic($resultGraph, $expectedGraph));
+    $this->assertTrue(EasyRdf\Isomorphic::isomorphic($resultGraph, $expectedGraph));
   }
 
   /**
@@ -389,7 +389,7 @@ test:ta116
    */
   public function testGetRDFWithVocidAndURIasRDFXML() {
     $result = $this->model->getRDF('test', 'http://www.skosmos.skos/test/ta116', 'application/rdf+xml');
-    $resultGraph = new EasyRdf_Graph();
+    $resultGraph = new EasyRdf\Graph();
     $resultGraph->parse($result, "rdfxml");
     $expected = '<?xml version="1.0" encoding="utf-8" ?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -433,9 +433,9 @@ test:ta116
   </owl:Class>
 
 </rdf:RDF>';
-    $expectedGraph = new EasyRdf_Graph();
+    $expectedGraph = new EasyRdf\Graph();
     $expectedGraph->parse($expected, "rdfxml");
-    $this->assertTrue(EasyRdf_Isomorphic::isomorphic($resultGraph, $expectedGraph));
+    $this->assertTrue(EasyRdf\Isomorphic::isomorphic($resultGraph, $expectedGraph));
   }
 
   /**
@@ -444,7 +444,7 @@ test:ta116
    */
   public function testGetRDFShouldIncludeLists() {
     $result = $this->model->getRDF('test', 'http://www.skosmos.skos/test/ta124', 'text/turtle');
-    $resultGraph = new EasyRdf_Graph();
+    $resultGraph = new EasyRdf\Graph();
     $resultGraph->parse($result, "turtle");
 
     $expected = '@prefix test: <http://www.skosmos.skos/test/> .
@@ -469,9 +469,9 @@ test:ta126
 
 ';
 
-    $expectedGraph = new EasyRdf_Graph();
+    $expectedGraph = new EasyRdf\Graph();
     $expectedGraph->parse($expected, "turtle");
-    $this->assertTrue(EasyRdf_Isomorphic::isomorphic($resultGraph, $expectedGraph));
+    $this->assertTrue(EasyRdf\Isomorphic::isomorphic($resultGraph, $expectedGraph));
   }
 
   /**
@@ -482,7 +482,7 @@ test:ta126
   public function testGetRDFShouldNotIncludeExtraBlankNodesFromLists() {
     $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     $result = $model->getRDF('test', 'http://www.skosmos.skos/test/ta125', 'text/turtle');
-    $resultGraph = new EasyRdf_Graph();
+    $resultGraph = new EasyRdf\Graph();
     $resultGraph->parse($result, "turtle");
 
     $expected = '@prefix test: <http://www.skosmos.skos/test/> .
@@ -497,9 +497,9 @@ test:ta125
   skos:prefLabel "Vadefugler"@nb .
 ';
 
-    $expectedGraph = new EasyRdf_Graph();
+    $expectedGraph = new EasyRdf\Graph();
     $expectedGraph->parse($expected, "turtle");
-    $this->assertTrue(EasyRdf_Isomorphic::isomorphic($resultGraph, $expectedGraph));
+    $this->assertTrue(EasyRdf\Isomorphic::isomorphic($resultGraph, $expectedGraph));
   }
 
   /**
@@ -518,7 +518,7 @@ test:ta125
    */
   public function testGetResourceFromUri() {
     $resource = $this->model->getResourceFromUri('http://www.yso.fi/onto/yso/p19378');
-    $this->assertInstanceOf('EasyRdf_Resource', $resource);
+    $this->assertInstanceOf('EasyRdf\Resource', $resource);
     $this->assertEquals('http://www.yso.fi/onto/yso/p19378', $resource->getURI());
   }
   
@@ -526,7 +526,7 @@ test:ta125
    * @covers Model::getResourceLabel
    */
   public function testGetResourceLabelAcceptAnyLanguageWhenDesiredNotFound() {
-    $mockres = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
+    $mockres = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
     $labelmap = array(
       array('en', null),
       array(null, 'test value')
@@ -539,7 +539,7 @@ test:ta125
    * @covers Model::getResourceLabel
    */
   public function testGetResourceLabelCorrectLanguage() {
-    $mockres = $this->getMockBuilder('EasyRdf_Resource')->disableOriginalConstructor()->getMock();
+    $mockres = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
     $labelmap = array(
       array('en', 'test value'),
       array('fi', 'testiarvo')
