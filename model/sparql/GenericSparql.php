@@ -1804,7 +1804,7 @@ EOQ;
     private function transformParentListResults($result, $lang)
     {
         $ret = array();
-        $conceptschemeList=array();
+        $topConceptsList=array();
         foreach ($result as $row) {
             if (!isset($row->broad)) {
                 // existing concept but no broaders
@@ -1818,27 +1818,15 @@ EOQ;
                 $ret[$uri]['exact'] = $row->exact->getUri();
             }
             if (isset($row->tops)) {
-               $exist=false;
                $topConceptsList=explode(" ", $row->tops->getValue());
                sort($topConceptsList);
                $ret[$uri]['tops'] =$topConceptsList[0];
                //check if defaultTopConcept is set
                foreach ($this->model->getVocabularies() as $voc) {
                     if($voc->getId()==$this->model->getRequest()->getVocab()->getId()){
-                        if($voc->defaultConceptScheme()!=null){
-                                $ret[$uri]['top'] =$voc->defaultTopConcept();
-                                foreach ($topConceptsList as $value) {
-                                    if($ret[$uri]['top']==$value){
-                                        $exist=true;
-                                        break;
-                                    }
-                                }
-                            //if the Topconcept set is not in the topconceptsList, we take the first
-                            //conceptscheme in the list
-                            if(!$exist){
-                               $ret[$uri]['top']=$ret[$uri]['tops']; 
-                            }     
-
+                        if($voc->defaultTopConcept()!=null){
+                            $ret[$uri]['top'] =$voc->defaultTopConcept();
+                            
                         }else{
                              
                             $ret[$uri]['top'] =$ret[$uri]['tops'];
