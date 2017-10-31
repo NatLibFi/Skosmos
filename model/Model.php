@@ -31,6 +31,7 @@ class Model
     private $globalConfig;
     private $cache;
     private $logger;
+    private $request;
 
     /**
      * Initializes the Model object
@@ -58,6 +59,12 @@ class Model
       return $this->globalConfig;
     }
 
+    public function getRequest(){
+        return $this->request;
+    }
+    public function setRequest($request){
+       $this->request=$request;
+    }
     /**
      * Initializes the configuration from the vocabularies.ttl file
      */
