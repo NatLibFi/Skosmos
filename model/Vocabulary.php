@@ -229,6 +229,15 @@ class Vocabulary extends DataObject
         return array_pop($conceptSchemeURIs);
     }
 
+    public function defaultTopConcept(){
+        $conceptScheme = $this->resource->get("skosmos:mainConceptScheme");
+        if ($conceptScheme) {
+            return $conceptScheme->getUri();
+        }else{
+            return null;
+        }
+    }
+
     /**
      * Return the top concepts of a concept scheme in the vocabulary.
      * @param string $conceptScheme URI of concept scheme whose top concepts to return. If not set,

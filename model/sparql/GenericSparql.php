@@ -1,5 +1,6 @@
 <?php
 
+require_once 'controller/RestController.php';
 /**
  * Generates SPARQL queries and provides access to the SPARQL endpoint.
  */
@@ -30,6 +31,9 @@ class GenericSparql {
      * @property array $qnamecache
      */
     private $qnamecache = array();
+
+
+    
 
     /**
      * Requires the following three parameters.
@@ -595,9 +599,14 @@ EOQ;
     private function generateQueryConceptSchemesQuery($lang) {
         $fcl = $this->generateFromClause();
         $query = <<<EOQ
-SELECT ?cs ?label ?preflabel ?title $fcl
+SELECT ?cs ?label ?preflabel ?title ?domaine ?domaineLabel $fcl
 WHERE {
  ?cs a skos:ConceptScheme .
+ OPTIONAL{
+    ?cs dcterms:subject ?domaine.
+    ?domaine skos:prefLabel ?domaineLabel.
+    FILTER(langMatches(lang(?domaineLabel), '$lang'))
+}
  OPTIONAL {
    ?cs rdfs:label ?label .
    FILTER(langMatches(lang(?label), '$lang'))
@@ -612,7 +621,8 @@ WHERE {
    { ?cs dc:title ?title }
    FILTER(langMatches(lang(?title), '$lang'))
  }
-} ORDER BY ?cs
+} 
+ORDER BY ?cs
 EOQ;
         return $query;
     }
@@ -624,7 +634,9 @@ EOQ;
      */
     private function transformQueryConceptSchemesResults($result) {
         $ret = array();
+    
         foreach ($result as $row) {
+
             $conceptscheme = array();
             if (isset($row->label)) {
                 $conceptscheme['label'] = $row->label->getValue();
@@ -636,6 +648,11 @@ EOQ;
 
             if (isset($row->title)) {
                 $conceptscheme['title'] = $row->title->getValue();
+            }
+            //ajout des dcterms:subject et leurs libellés dans le retour json
+            if(isset($row->domaine)&&isset($row->domaineLabel)){
+                $conceptscheme['subject']['uri']=$row->domaine->getURI();
+                $conceptscheme['subject']['prefLabel']=$row->domaineLabel->getValue();
             }
 
             $ret[$row->cs->getURI()] = $conceptscheme;
@@ -1060,6 +1077,7 @@ EOQ;
         if (isset($row->label)) {
             $hit['prefLabel'] = $row->label->getValue();
         }
+
 
         if (isset($row->label)) {
             $hit['lang'] = $row->label->getLang();
@@ -1731,7 +1749,8 @@ EOQ;
         $propertyClause = implode('|', $props);
         $query = <<<EOQ
 SELECT ?broad ?parent ?member ?children ?grandchildren
-(SAMPLE(?lab) as ?label) (SAMPLE(?childlab) as ?childlabel) (SAMPLE(?topcs) AS ?top) (SAMPLE(?nota) as ?notation) (SAMPLE(?childnota) as ?childnotation) $fcl
+(SAMPLE(?lab) as ?label) (SAMPLE(?childlab) as ?childlabel) (GROUP_CONCAT(?topcs; separator=" ") as ?tops) 
+(SAMPLE(?nota) as ?notation) (SAMPLE(?childnota) as ?childnotation) $fcl
 WHERE {
   <$uri> a skos:Concept .
   OPTIONAL {
@@ -1744,7 +1763,8 @@ WHERE {
       ?broad skos:prefLabel ?lab .
       FILTER (langMatches(lang(?lab), "$fallback"))
     }
-    OPTIONAL { # fallback - other language case
+    OPTIONAL { 
+        # fallback - other language case#
       ?broad skos:prefLabel ?lab .
     }
     OPTIONAL { ?broad skos:notation ?nota . }
@@ -1758,7 +1778,8 @@ WHERE {
         ?children skos:prefLabel ?childlab .
         FILTER (langMatches(lang(?childlab), "$fallback"))
       }
-      OPTIONAL { # fallback - other language case
+      OPTIONAL { 
+        # fallback - other language case#
         ?children skos:prefLabel ?childlab .
       }
       OPTIONAL {
@@ -1783,6 +1804,7 @@ EOQ;
     private function transformParentListResults($result, $lang)
     {
         $ret = array();
+        $topConceptsList=array();
         foreach ($result as $row) {
             if (!isset($row->broad)) {
                 // existing concept but no broaders
@@ -1795,8 +1817,22 @@ EOQ;
             if (isset($row->exact)) {
                 $ret[$uri]['exact'] = $row->exact->getUri();
             }
-            if (isset($row->top)) {
-                $ret[$uri]['top'] = $row->top->getUri();
+            if (isset($row->tops)) {
+               $topConceptsList=explode(" ", $row->tops->getValue());
+               sort($topConceptsList);
+               $ret[$uri]['tops'] =$topConceptsList[0];
+               //check if defaultTopConcept is set
+               foreach ($this->model->getVocabularies() as $voc) {
+                    if($voc->getId()==$this->model->getRequest()->getVocab()->getId()){
+                        if($voc->defaultTopConcept()!=null){
+                            $ret[$uri]['top'] =$voc->defaultTopConcept();
+                            
+                        }else{
+                             
+                            $ret[$uri]['top'] =$ret[$uri]['tops'];
+                        } 
+                    }
+                }
             }
             if (isset($row->children)) {
                 if (!isset($ret[$uri]['narrower'])) {
