@@ -128,8 +128,8 @@ function createConceptObject(conceptUri, conceptData) {
  * @param {Object} parentData 
  */
 function attachTopConceptsToSchemes(schemes, currentNode, parentData) {
-  console.log('I am in');
   var foundFirstLevel = false;
+
   for (var i = 0; i < schemes.length; i++) {
       //search if top concept uri is equal to scheme uri on (first level)
         if(schemes[i].uri===parentData[currentNode.uri].top){
@@ -144,8 +144,7 @@ function attachTopConceptsToSchemes(schemes, currentNode, parentData) {
           schemes.opened = true;
         }
         
-        }
-    
+        } 
       // search if top concept uri is equal to scheme children uri, if there are children(second Level)
       for (var h = 0; h <schemes[i].children.length; h++) {
           console.log('scheme children: '+schemes[i].children[h].uri+' currentNodeUri: '+parentData[currentNode.uri].uri);

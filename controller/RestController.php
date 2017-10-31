@@ -734,6 +734,23 @@ class RestController extends Controller
     public function hierarchy($request)
     {
         $results = $request->getVocab()->getConceptHierarchy($request->getUri(), $request->getLang());
+        foreach ($results as $value) {
+            if(isset($value['tops'])){
+
+                if($request->getVocab()->defaultTopConcept()!=null){
+                    foreach ($value['tops'] as $top) {
+                        if($top==$request->getVocab()->defaultTopConcept()){
+                            $results['top'] =$request->getVocab()->defaultTopConcept();
+                        }else{
+                           $results['top'] =$value['tops'][0]; 
+                        }
+                    }    
+                }else{
+                   $results['top'] =$value['tops'][0];
+                } 
+            }
+        }
+
         if (empty($results)) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
         }
@@ -746,12 +763,13 @@ class RestController extends Controller
                 }
 
             }
-
+            
             /* encode the results in a JSON-LD compatible array */
             $topconcepts = $request->getVocab()->getTopConcepts(array_keys($schemes), $request->getLang());
+           
             foreach ($topconcepts as $top) {
                 if (!isset($results[$top['uri']])) {
-                    $results[$top['uri']] = array('uri' => $top['uri'], 'top' => $top['topConceptOf'], 'prefLabel' => $top['label'], 'hasChildren' => $top['hasChildren']);
+                    $results[$top['uri']] = array('uri' => $top['uri'], 'top'=>$top['topConceptOf'], 'prefLabel' => $top['label'], 'hasChildren' => $top['hasChildren']);
                     if (isset($top['notation'])) {
                         $results[$top['uri']]['notation'] = $top['notation'];
                     }

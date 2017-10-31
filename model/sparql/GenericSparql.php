@@ -1,6 +1,5 @@
 <?php
 
-require_once 'controller/RestController.php';
 /**
  * Generates SPARQL queries and provides access to the SPARQL endpoint.
  */
@@ -1820,19 +1819,7 @@ EOQ;
             if (isset($row->tops)) {
                $topConceptsList=explode(" ", $row->tops->getValue());
                sort($topConceptsList);
-               $ret[$uri]['tops'] =$topConceptsList[0];
-               //check if defaultTopConcept is set
-               foreach ($this->model->getVocabularies() as $voc) {
-                    if($voc->getId()==$this->model->getRequest()->getVocab()->getId()){
-                        if($voc->defaultTopConcept()!=null){
-                            $ret[$uri]['top'] =$voc->defaultTopConcept();
-                            
-                        }else{
-                             
-                            $ret[$uri]['top'] =$ret[$uri]['tops'];
-                        } 
-                    }
-                }
+               $ret[$uri]['tops'] =$topConceptsList;
             }
             if (isset($row->children)) {
                 if (!isset($ret[$uri]['narrower'])) {
