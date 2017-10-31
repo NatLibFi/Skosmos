@@ -1254,7 +1254,7 @@ EOQ;
         $classes = (sizeof($classes) > 0) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
         $values = $this->formatValues('?type', $classes, 'uri');
         $query = <<<EOQ
-SELECT DISTINCT (STRDT(substr(ucase(str(?label)), 1, 1), xsd:string) as ?l) $fcl WHERE {
+SELECT DISTINCT (ucase(str(substr(?label, 1, 1))) as ?l) $fcl WHERE {
   ?c skos:prefLabel ?label .
   ?c a ?type
   FILTER(langMatches(lang(?label), '$lang'))
