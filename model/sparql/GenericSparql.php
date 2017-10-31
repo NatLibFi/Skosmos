@@ -1190,7 +1190,7 @@ WHERE {
   FILTER NOT EXISTS { ?s owl:deprecated true }
   $values
 }
-ORDER BY LCASE(IF(BOUND(?alabel), STRDT(STR(?alabel), 'http://www.w3.org/2001/XMLSchema#string'), STRDT(STR(?label), 'http://www.w3.org/2001/XMLSchema#string'))) $limitandoffset
+ORDER BY LCASE(IF(BOUND(?alabel), STRDT(STR(?alabel), xsd:string), STRDT(STR(?label), xsd:string))) $limitandoffset
 EOQ;
         return $query;
     }
@@ -1254,7 +1254,7 @@ EOQ;
         $classes = (sizeof($classes) > 0) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
         $values = $this->formatValues('?type', $classes, 'uri');
         $query = <<<EOQ
-SELECT DISTINCT (STRDT(substr(ucase(str(?label)), 1, 1), 'http://www.w3.org/2001/XMLSchema#string') as ?l) $fcl WHERE {
+SELECT DISTINCT (STRDT(substr(ucase(str(?label)), 1, 1), xsd:string) as ?l) $fcl WHERE {
   ?c skos:prefLabel ?label .
   ?c a ?type
   FILTER(langMatches(lang(?label), '$lang'))
