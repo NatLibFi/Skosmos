@@ -1190,7 +1190,7 @@ WHERE {
   FILTER NOT EXISTS { ?s owl:deprecated true }
   $values
 }
-ORDER BY LCASE(IF(BOUND(?alabel), STRDT(STR(?alabel), xsd:string), STRDT(STR(?label), xsd:string))) $limitandoffset
+ORDER BY STR(LCASE(COALESCE(?alabel, ?label))) $limitandoffset
 EOQ;
         return $query;
     }
