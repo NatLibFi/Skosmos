@@ -734,20 +734,25 @@ class RestController extends Controller
     public function hierarchy($request)
     {
         $results = $request->getVocab()->getConceptHierarchy($request->getUri(), $request->getLang());
+        // set the "top" key from the "tops" key
         foreach ($results as $value) {
-            if(isset($value['tops'])){
-
-                if($request->getVocab()->defaultTopConcept()!=null){
+            if (isset($value['tops'])) {
+                if ($request->getVocab()->getMainConceptScheme() != null) {
                     foreach ($value['tops'] as $top) {
-                        if($top==$request->getVocab()->defaultTopConcept()){
-                            $results['top'] =$request->getVocab()->defaultTopConcept();
-                        }else{
-                           $results['top'] =$value['tops'][0]; 
+                        // if a value in 'tops' matches the main concept scheme, take it
+                        if ($top == $request->getVocab()->getMainConceptScheme()) {
+                            $value['top'] = $top;
+                            break;
                         }
-                    }    
-                }else{
-                   $results['top'] =$value['tops'][0];
-                } 
+                    }
+                    // if the main concept scheme was not found, set 'top' to the first 'tops' (sorted alphabetically on the URIs)
+                    if (! isset($results['top'])) {
+                        $value['top'] = $value['tops'][0];
+                    }
+                } else {
+                    // no main concept scheme set on the vocab, take the first value of 'tops' (sorted alphabetically)
+                    $value['top'] = $value['tops'][0];
+                }
             }
         }
 
