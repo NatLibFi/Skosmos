@@ -297,16 +297,17 @@ class Model
         }
 
         $vocabs = $params->getVocabs();
-
+        $showDeprecated=false;
         if (sizeof($vocabs) === 1) { // search within vocabulary
             $voc = $vocabs[0];
             $sparql = $voc->getSparql();
+            $showDeprecated=$voc->showDeprecated();
         } else { // multi-vocabulary or global search
             $voc = null;
             $sparql = $this->getDefaultSparql();
         }
 
-        $results = $sparql->queryConcepts($vocabs, $params->getAdditionalFields(), $params->getUnique(), $params);
+        $results = $sparql->queryConcepts($vocabs, $params->getAdditionalFields(), $params->getUnique(), $params,$showDeprecated);
         if ($params->getRest() && $results && $params->getSearchLimit() !== 0) {
           $results = array_slice($results, $params->getOffset(), $params->getSearchLimit());
         }

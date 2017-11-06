@@ -791,7 +791,8 @@ class RestController extends Controller
      */
     public function groupMembers($request)
     {
-        $children = $request->getVocab()->listConceptGroupContents($request->getUri(), $request->getLang());
+        $showDeprecated=$request->getVocab()->showDeprecated();
+        $children = $request->getVocab()->listConceptGroupContents($request->getUri(), $request->getLang(),$showDeprecated);
         if (empty($children)) {
             return $this->returnError('404', 'Not Found', "Could not find group <{$request->getUri()}>");
         }

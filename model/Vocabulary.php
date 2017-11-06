@@ -48,6 +48,12 @@ class Vocabulary extends DataObject
 
         return $graph;
     }
+    
+    public  function showDeprecated(){
+        $showDeprecated=false;
+        $showDeprecated= $this->resource->get('skosmos:showDeprecated');
+        return $showDeprecated;
+    }
 
     /**
      * Get the SPARQL implementation for this vocabulary
@@ -482,7 +488,7 @@ class Vocabulary extends DataObject
      */
     public function searchConceptsAlphabetical($letter, $limit = null, $offset = null, $clang = null)
     {
-        return $this->getSparql()->queryConceptsAlphabetical($letter, $clang, $limit, $offset, $this->config->getIndexClasses());
+        return $this->getSparql()->queryConceptsAlphabetical($letter, $clang, $limit, $offset, $this->config->getIndexClasses(),$this->showDeprecated());
     }
 
     /**
