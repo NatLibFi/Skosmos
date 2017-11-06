@@ -48,12 +48,6 @@ class Vocabulary extends DataObject
 
         return $graph;
     }
-    
-    public  function showDeprecated(){
-        $showDeprecated=false;
-        $showDeprecated= $this->resource->get('skosmos:showDeprecated');
-        return $showDeprecated;
-    }
 
     /**
      * Get the SPARQL implementation for this vocabulary
@@ -439,7 +433,7 @@ class Vocabulary extends DataObject
         }
         // no group class defined, so empty result
         $group = $this->getConceptURI($glname);
-        $contents = $this->getSparql()->listConceptGroupContents($gclass, $group, $clang);
+        $contents = $this->getSparql()->listConceptGroupContents($gclass, $group, $clang, $this->config->getShowDeprecated());
         foreach ($contents as $uri => $label) {
             $ret[$uri] = $label;
         }
@@ -488,7 +482,7 @@ class Vocabulary extends DataObject
      */
     public function searchConceptsAlphabetical($letter, $limit = null, $offset = null, $clang = null)
     {
-        return $this->getSparql()->queryConceptsAlphabetical($letter, $clang, $limit, $offset, $this->config->getIndexClasses(),$this->showDeprecated());
+        return $this->getSparql()->queryConceptsAlphabetical($letter, $clang, $limit, $offset, $this->config->getIndexClasses(),$this->config->getShowDeprecated());
     }
 
     /**
@@ -615,4 +609,5 @@ class Vocabulary extends DataObject
     public function getId() {
       return $this->config->getId();
     }
+    
 }

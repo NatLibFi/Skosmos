@@ -301,10 +301,11 @@ class Model
         if (sizeof($vocabs) === 1) { // search within vocabulary
             $voc = $vocabs[0];
             $sparql = $voc->getSparql();
-            $showDeprecated=$voc->showDeprecated();
+            $showDeprecated=$voc->getConfig()->getShowDeprecated();
         } else { // multi-vocabulary or global search
             $voc = null;
             $sparql = $this->getDefaultSparql();
+            // @TODO : in a global search showDeprecated will always be false and cannot be set globally
         }
 
         $results = $sparql->queryConcepts($vocabs, $params->getAdditionalFields(), $params->getUnique(), $params,$showDeprecated);

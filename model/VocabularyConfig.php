@@ -405,6 +405,15 @@ class VocabularyConfig extends DataObject
     {
         return $this->getBoolean('skosmos:showAlphabeticalIndex', true);
     }
+    
+    /**
+     * Returns a boolean value set in the vocabularies.ttl config.
+     * @return boolean
+     */
+    public function getShowDeprecated()
+    {
+        return $this->getBoolean('skosmos:showDeprecated', false);
+    }
 
     /**
      * Returns the vocabulary dc:type value(s) with their labels and uris, if set in the vocabulary configuration.
