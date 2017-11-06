@@ -348,7 +348,7 @@ class VocabularyConfigTest extends PHPUnit_Framework_TestCase
   }
   
   /**
-   * @covers VocabularyConfig::showDeprecated
+   * @covers VocabularyConfig::getShowDeprecated
    */
   public function testShowDeprecated() {
       $vocab = $this->model->getVocabulary('showDeprecated');
