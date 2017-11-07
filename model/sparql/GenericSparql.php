@@ -1190,7 +1190,7 @@ WHERE {
   FILTER NOT EXISTS { ?s owl:deprecated true }
   $values
 }
-ORDER BY LCASE(IF(BOUND(?alabel), STR(?alabel), STR(?label))) $limitandoffset
+ORDER BY STR(LCASE(COALESCE(?alabel, ?label))) $limitandoffset
 EOQ;
         return $query;
     }
@@ -1245,6 +1245,7 @@ EOQ;
 
     /**
      * Creates the query used for finding out which letters should be displayed in the alphabetical index.
+     * Note that we force the datatype of the result variable otherwise Virtuoso does not properly interpret the DISTINCT and we have duplicated results
      * @param string $lang language
      * @return string sparql query
      */
@@ -1253,7 +1254,7 @@ EOQ;
         $classes = (sizeof($classes) > 0) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
         $values = $this->formatValues('?type', $classes, 'uri');
         $query = <<<EOQ
-SELECT DISTINCT (substr(ucase(str(?label)), 1, 1) as ?l) $fcl WHERE {
+SELECT DISTINCT (ucase(str(substr(?label, 1, 1))) as ?l) $fcl WHERE {
   ?c skos:prefLabel ?label .
   ?c a ?type
   FILTER(langMatches(lang(?label), '$lang'))
