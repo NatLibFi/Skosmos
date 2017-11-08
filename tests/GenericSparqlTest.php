@@ -781,7 +781,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
     );
     $props = array (
       'uri' => 'http://www.skosmos.skos/test/ta1',
-      'top' => 'http://www.skosmos.skos/test/conceptscheme',
+      'tops' => array('http://www.skosmos.skos/test/conceptscheme'),
       'prefLabel' => 'Fish',
     );
     $narrowers = array (
