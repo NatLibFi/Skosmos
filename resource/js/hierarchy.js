@@ -131,44 +131,58 @@ function attachTopConceptsToSchemes(schemes, currentNode, parentData) {
   var foundFirstLevel = false;
 
   for (var i = 0; i < schemes.length; i++) {
-        //search if top concept uri is equal to scheme uri on (first level)
-        if(schemes[i].uri===parentData[currentNode.uri].top){
-          foundFirstLevel = true;
-          if(Object.prototype.toString.call(schemes[i].children) !== '[object Array]' ) {
-            schemes[i].children = [];
-          }
-          // append to a first-level node that corresponds to a concept scheme
-          schemes[i].children.push(currentNode);
-          
-          // the hierarchy response contains the parent info before the topConcepts so it's a safe to open the first one without broaders 
-          if (!schemes[i].opened && !currentNode.broader) {
-            schemes[i].state = currentNode.state;
-            schemes.opened = true;
-          }
-        
-        } 
+	  foundFirstLevel = true;
+	  
+	  // search if top concept uri is equal to scheme uri on first level
+	  // search in all the 'tops' key
+	  for (var j = 0; j < parentData[currentNode.uri].tops.length; j++) {
+		  var currentTop = parentData[currentNode.uri].tops[j];
+		  // we found a scheme at the first level that is equal to one of the 'tops' value
+		  if(schemes[i].uri===currentTop){			  
+			  if(Object.prototype.toString.call(schemes[i].children) !== '[object Array]' ) {
+				  schemes[i].children = [];
+			  }
+			  // append to a first-level node that corresponds to a concept scheme
+			  schemes[i].children.push(currentNode);
 
-      // search if top concept uri is equal to scheme children uri, if there are children (second Level)
-      // this may be the case if schemes are organised by subjects : subjects will be first-level nodes, concepts schemes will be second level
-      for (var h = 0; h <schemes[i].children.length; h++) {
-          if(schemes[i].children[h]){
-            if(schemes[i].children[h].uri===parentData[currentNode.uri].top) {
-              if(Object.prototype.toString.call(schemes[i].children[h].children) !== '[object Array]' ) {
-                schemes[i].children[h].children = [];
-              }
-              schemes[i].children[h].children.push(currentNode);
-        
-              // the hierarchy response contains the parent info before the topConcepts so it's a safe to open the first one without broaders 
-              if (!schemes[i].children[h].opened && !currentNode.broader) {
-                // open the first-level node and second-level node
-            	schemes[i].state = currentNode.state;
-                schemes[i].children[h].state=schemes[i].state;
-                schemes[i].children[h].opened=true;
-                schemes[i].children[h].children.opened=true;
-              }
-            }
-          }
-      }
+			  // the hierarchy response contains the parent info before the topConcepts so it's a safe to open the first one without broaders 
+			  if (!schemes[i].opened && !currentNode.broader) {
+				  schemes[i].state = currentNode.state;
+				  schemes.opened = true;
+			  }
+			  break;
+		  }
+	  }
+
+	  // search if top concept uri is equal to scheme children uri, if there are children (second level)
+	  // this may be the case if schemes are organised by subjects : subjects will be first-level nodes, concepts schemes will be second level
+	  for (var h = 0; h <schemes[i].children.length; h++) {
+		  // one of the second-level node, actually corresponding to a concept scheme inside a 'domain' node
+		  var currentScheme = schemes[i].children[h];	
+		  
+		  // search in all the 'tops' key
+		  for (var j = 0; j < parentData[currentNode.uri].tops.length; j++) {
+			  var currentTop = parentData[currentNode.uri].tops[j];
+			  
+			  // we found a scheme at the second level that is equal to one of the 'tops' value
+			  if(currentScheme.uri===currentTop) {
+				  if(Object.prototype.toString.call(currentScheme.children) !== '[object Array]' ) {
+					  currentScheme.children = [];
+				  }
+				  currentScheme.children.push(currentNode);
+
+				  // the hierarchy response contains the parent info before the topConcepts so it's a safe to open the first one without broaders 
+				  if (!currentScheme.opened && !currentNode.broader) {
+					  // open the first-level node and second-level node
+					  schemes[i].state = currentNode.state;
+					  currentScheme.state=schemes[i].state;
+					  currentScheme.opened=true;
+					  currentScheme.children.opened=true;
+				  }
+				  break;
+			  }
+		  }
+	  }
        
   }
 
@@ -183,13 +197,12 @@ function attachTopConceptsToSchemes(schemes, currentNode, parentData) {
  * @param {Object} schemes 
  */
 function buildParentTree(uri, parentData, schemes) {
-	console.log("buildParentTree");
 	if (parentData === undefined || parentData === null) { return; }
 
 	var loopIndex = 0, // for adding the last concept as a root if no better candidates have been found.
 	currentNode,
 	rootArray = (schemes.length > 1) ? schemes : [];
-
+	//	console.log(JSON.stringify(parentData, null, 4));
 	for(var conceptUri in parentData) {
 		if (parentData.hasOwnProperty(conceptUri)) {
 			var branchHelper, 
@@ -368,6 +381,7 @@ function schemeRoot(schemes) {
         // Step 2.1 : create domain node without children
         var domainObject = {
         		text: theDomainLabel, 
+        		// note that the class 'domain' will make sure the node will be sorted _before_ others (see the 'sort' functio nat the end)
         		a_attr : { "href" : vocab + '/' + lang + '/page/?uri=' + theDomain.uri, 'class': 'domain'},
         		uri: theDomain.uri,
         		children: [],
@@ -542,7 +556,29 @@ function getTreeConfiguration() {
         }
     },
     'plugins' : ['sort'],
-    'sort' : function (a,b) { return naturalCompare(this.get_text(a).toLowerCase(), this.get_text(b).toLowerCase()); }
+    'sort' : function (a,b) {
+    	var nodeA = this.get_node(a);
+        var nodeB = this.get_node(b);
+        // make sure the tree nodes with class 'domain' are sorted before the others
+    	if(nodeA.a_attr && nodeA.a_attr['class']) {
+    		if(nodeB.a_attr && nodeB.a_attr['class']) {
+    			if(nodeA.a_attr['class'] == 'domain' && nodeB.a_attr['class'] == 'domain') {
+    				return naturalCompare(this.get_text(a).toLowerCase(), this.get_text(b).toLowerCase());
+    			}
+    			else if(nodeA.a_attr['class'] == 'domain' && nodeB.a_attr['class'] != 'domain') {
+    				return -1;
+    			}
+    			else if(nodeA.a_attr['class'] != 'domain' && nodeB.a_attr['class'] == 'domain') {
+    				return 1;
+    			}
+    		} else {
+    			return naturalCompare(this.get_text(a).toLowerCase(), this.get_text(b).toLowerCase());
+    		}
+    	}  else {
+    		return naturalCompare(this.get_text(a).toLowerCase(), this.get_text(b).toLowerCase());
+    	}
+    	// return naturalCompare(this.get_text(a).toLowerCase(), this.get_text(b).toLowerCase());
+     }
   });
 }
 
