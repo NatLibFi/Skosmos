@@ -229,6 +229,7 @@ function buildParentTree(uri, parentData, schemes) {
 }
 
 function getConceptHref(conceptData) {
+	
   if (conceptData.uri.indexOf(window.uriSpace) !== -1) {
     var page = conceptData.uri.substr(window.uriSpace.length);
     if (/[^a-zA-Z0-9\.]/.test(page)) {
@@ -352,7 +353,7 @@ function schemeRoot(schemes) {
     }
   }
   
-  // console.log(domains);
+  //console.log(domains);
 
   // Step 2 : create tree nodes for each domain
  

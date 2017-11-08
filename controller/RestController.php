@@ -735,6 +735,7 @@ class RestController extends Controller
     {
         $results = $request->getVocab()->getConceptHierarchy($request->getUri(), $request->getLang());
         foreach ($results as $value) {
+            
             if(isset($value['tops'])){
 
                 if($request->getVocab()->defaultTopConcept()!=null){
