@@ -415,15 +415,6 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
     $this->assertInstanceOf('Concept', $concept[0]);
     $this->assertEquals(1, sizeof($concept));
   }
-
-  /**
-   * @covers Vocabulary::getMainConceptScheme
-   */
-  public function testGetConceptInfo() {
-      $vocab = $this->model->getVocabulary('testdiff');
-      $main = $vocab->getMainConceptScheme();
-      $this->assertEquals($main, 'http://www.skosmos.skos/testdiff#conceptscheme');
-  }
   
 }
 
