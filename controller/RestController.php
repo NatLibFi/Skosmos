@@ -209,6 +209,7 @@ class RestController extends Controller
                 'defaultLanguage' => 'onki:defaultLanguage',
                 'languages' => 'onki:language',
                 'label' => 'rdfs:label',
+                'subject' => 'dcterms:subject',
                 'prefLabel' => 'skos:prefLabel',
                 'title' => 'dct:title',
                 '@language' => $request->getLang(),
@@ -739,8 +740,6 @@ class RestController extends Controller
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
         }
         
-        $logger = $this->model->getLogger();
-        
         // set the "top" key from the "tops" key
         foreach ($results as $value) {
             $uri = $value['uri'];
@@ -763,8 +762,6 @@ class RestController extends Controller
                 }
             }
         }
-        
-        $logger->info(json_encode($results, JSON_PRETTY_PRINT));
 
         if ($request->getVocab()->getConfig()->getShowHierarchy()) {
             $schemes = $request->getVocab()->getConceptSchemes($request->getLang());
