@@ -80,10 +80,11 @@ class JenaTextSparql extends GenericSparql
      * @param integer $limit limits the amount of results
      * @param integer $offset offsets the result set
      * @param array|null $classes
+     * @param boolean $showDeprecated whether to include deprecated concepts in the result (default: false)
      * @return string sparql query
      */
 
-    public function generateAlphabeticalListQuery($letter, $lang, $limit = null, $offset = null, $classes = null)
+    public function generateAlphabeticalListQuery($letter, $lang, $limit = null, $offset = null, $classes = null, $showDeprecated = false)
     {
         if ($letter == '*' || $letter == '0-9' || $letter == '!*') {
             // text index cannot support special character queries, use the generic implementation for these
@@ -100,6 +101,11 @@ class JenaTextSparql extends GenericSparql
         $textcondPref = $this->createTextQueryCondition($letter . '*', 'skos:prefLabel', $lang);
         $textcondAlt = $this->createTextQueryCondition($letter . '*', 'skos:altLabel', $lang);
 
+        $filterDeprecated="";
+        if(!$showDeprecated){
+            $filterDeprecated="FILTER NOT EXISTS { ?s owl:deprecated true }";
+        }
+        
         $query = <<<EOQ
 SELECT DISTINCT ?s ?label ?alabel
 WHERE {
@@ -122,7 +128,7 @@ WHERE {
       }
     }
     ?s a ?type .
-    FILTER NOT EXISTS { ?s owl:deprecated true }
+    $filterDeprecated
   } $values
 }
 ORDER BY LCASE(?match) $limitandoffset

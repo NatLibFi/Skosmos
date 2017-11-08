@@ -922,10 +922,11 @@ EOQ;
      * Query for concepts using a search term.
      * @param array|null $fields extra fields to include in the result (array of strings). (default: null = none)
      * @param boolean $unique restrict results to unique concepts (default: false)
+     * @param boolean $showDeprecated whether to include deprecated concepts in search results (default: false)
      * @param ConceptSearchParameters $params 
      * @return string sparql query
      */
-    protected function generateConceptSearchQuery($fields, $unique, $params) {
+    protected function generateConceptSearchQuery($fields, $unique, $params, $showDeprecated = false) {
         $vocabs = $params->getVocabs();
         $gcl = $this->graphClause;
         $fcl = empty($vocabs) ? '' : $this->generateFromClause($vocabs);
@@ -941,7 +942,11 @@ EOQ;
                 $schemecond .= "?s skos:inScheme <$scheme> . ";
             }
         }
-
+        $filterDeprecated="";
+        //show or hide deprecated concepts
+        if(!$showDeprecated){
+            $filterDeprecated="FILTER NOT EXISTS { ?s owl:deprecated true }";
+        }
         // extra conditions for parent and group, if specified
         $parentcond = ($params->getParentLimit()) ? "?s skos:broader+ <" . $params->getParentLimit() . "> ." : "";
         $groupcond = ($params->getGroupLimit()) ? "<" . $params->getGroupLimit() . "> skos:member ?s ." : "";
@@ -989,7 +994,7 @@ WHERE {
    ?s a ?type .
    $extrafields $schemecond
   }
-  FILTER NOT EXISTS { ?s owl:deprecated true }
+  $filterDeprecated
  }
  $filterGraph
 }
@@ -1106,11 +1111,12 @@ EOQ;
      * @param array $vocabs array of Vocabulary objects to search; empty for global search
      * @param array $fields extra fields to include in the result (array of strings). (default: null = none)
      * @param boolean $unique restrict results to unique concepts (default: false)
+     * @param boolean $showDeprecated whether to include deprecated concepts in the result (default: false)
      * @param ConceptSearchParameters $params 
      * @return array query result object
      */
-    public function queryConcepts($vocabs, $fields = null, $unique = false, $params) {
-        $query = $this->generateConceptSearchQuery($fields, $unique, $params);
+    public function queryConcepts($vocabs, $fields = null, $unique = false, $params, $showDeprecated = false) {
+        $query = $this->generateConceptSearchQuery($fields, $unique, $params,$showDeprecated);
         $results = $this->query($query);
         return $this->transformConceptSearchResults($results, $vocabs, $fields);
     }
@@ -1153,9 +1159,10 @@ EOQ;
      * @param integer $limit limits the amount of results
      * @param integer $offset offsets the result set
      * @param array|null $classes
+     * @param boolean $showDeprecated whether to include deprecated concepts in the result (default: false)
      * @return string sparql query
      */
-    protected function generateAlphabeticalListQuery($letter, $lang, $limit, $offset, $classes) {
+    protected function generateAlphabeticalListQuery($letter, $lang, $limit, $offset, $classes, $showDeprecated = false) {
         $fcl = $this->generateFromClause();
         $classes = ($classes) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
         $values = $this->formatValues('?type', $classes, 'uri');
@@ -1163,7 +1170,10 @@ EOQ;
         $conditions = $this->formatFilterConditions($letter, $lang);
         $filtercondLabel = $conditions['filterpref'];
         $filtercondALabel = $conditions['filteralt'];
-
+        $filterDeprecated="";
+        if(!$showDeprecated){
+            $filterDeprecated="FILTER NOT EXISTS { ?s owl:deprecated true }";
+        }
         $query = <<<EOQ
 SELECT DISTINCT ?s ?label ?alabel $fcl
 WHERE {
@@ -1187,7 +1197,7 @@ WHERE {
     }
   }
   ?s a ?type .
-  FILTER NOT EXISTS { ?s owl:deprecated true }
+  $filterDeprecated
   $values
 }
 ORDER BY STR(LCASE(COALESCE(?alabel, ?label))) $limitandoffset
@@ -1236,9 +1246,10 @@ EOQ;
      * @param integer $limit limits the amount of results
      * @param integer $offset offsets the result set
      * @param array $classes
+     * @param boolean $showDeprecated whether to include deprecated concepts in the result (default: false)
      */
-    public function queryConceptsAlphabetical($letter, $lang, $limit = null, $offset = null, $classes = null) {
-        $query = $this->generateAlphabeticalListQuery($letter, $lang, $limit, $offset, $classes);
+    public function queryConceptsAlphabetical($letter, $lang, $limit = null, $offset = null, $classes = null,$showDeprecated = false) {
+        $query = $this->generateAlphabeticalListQuery($letter, $lang, $limit, $offset, $classes,$showDeprecated);
         $results = $this->query($query);
         return $this->transformAlphabeticalListResults($results);
     }
@@ -1946,16 +1957,21 @@ EOQ;
      * @param string $groupClass URI of concept group class
      * @param string $group URI of the concept group instance
      * @param string $lang language of labels to return
+     * @param boolean $showDeprecated whether to include deprecated in the result
      * @return string sparql query
      */
-    private function generateConceptGroupContentsQuery($groupClass, $group, $lang) {
+    private function generateConceptGroupContentsQuery($groupClass, $group, $lang, $showDeprecated = false) {
         $fcl = $this->generateFromClause();
+        $filterDeprecated="";
+        if(!$showDeprecated){
+            $filterDeprecated="  FILTER NOT EXISTS { ?conc owl:deprecated true }";
+        }
         $query = <<<EOQ
 SELECT ?conc ?super ?label ?members ?type ?notation $fcl
 WHERE {
  <$group> a <$groupClass> .
  { <$group> skos:member ?conc . } UNION { ?conc isothes:superGroup <$group> }
- FILTER NOT EXISTS { ?conc owl:deprecated true }
+$filterDeprecated
  ?conc a ?type .
  OPTIONAL { ?conc skos:prefLabel ?label .
   FILTER (langMatches(lang(?label), '$lang'))
@@ -2015,10 +2031,11 @@ EOQ;
      * @param string $groupClass URI of concept group class
      * @param string $group URI of the concept group instance
      * @param string $lang language of labels to return
+     * @param boolean $showDeprecated whether to include deprecated concepts in search results
      * @return array Result array with concept URI as key and concept label as value
      */
-    public function listConceptGroupContents($groupClass, $group, $lang) {
-        $query = $this->generateConceptGroupContentsQuery($groupClass, $group, $lang);
+    public function listConceptGroupContents($groupClass, $group, $lang,$showDeprecated = false) {
+        $query = $this->generateConceptGroupContentsQuery($groupClass, $group, $lang,$showDeprecated);
         $result = $this->query($query);
         return $this->transformConceptGroupContentsResults($result, $lang);
     }
