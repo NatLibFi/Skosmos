@@ -734,31 +734,37 @@ class RestController extends Controller
     public function hierarchy($request)
     {
         $results = $request->getVocab()->getConceptHierarchy($request->getUri(), $request->getLang());
+        
+        if (empty($results)) {
+            return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
+        }
+        
+        $logger = $this->model->getLogger();
+        
         // set the "top" key from the "tops" key
         foreach ($results as $value) {
-            if (isset($value['tops'])) {
+            $uri = $value['uri'];
+            if (isset($value['tops'])) {                
                 if ($request->getVocab()->getMainConceptScheme() != null) {
-                    foreach ($value['tops'] as $top) {
+                    foreach ($results[$uri]['tops'] as $top) {
                         // if a value in 'tops' matches the main concept scheme, take it
                         if ($top == $request->getVocab()->getMainConceptScheme()) {
-                            $value['top'] = $top;
+                            $results[$uri]['top'] = $top;
                             break;
                         }
                     }
                     // if the main concept scheme was not found, set 'top' to the first 'tops' (sorted alphabetically on the URIs)
-                    if (! isset($results['top'])) {
-                        $value['top'] = $value['tops'][0];
+                    if (! isset($results[$uri]['top'])) {
+                        $results[$uri]['top'] = $results[$uri]['tops'][0];
                     }
                 } else {
                     // no main concept scheme set on the vocab, take the first value of 'tops' (sorted alphabetically)
-                    $value['top'] = $value['tops'][0];
+                    $results[$uri]['top'] = $results[$uri]['tops'][0];
                 }
             }
         }
-
-        if (empty($results)) {
-            return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
-        }
+        
+        $logger->info(json_encode($results, JSON_PRETTY_PRINT));
 
         if ($request->getVocab()->getConfig()->getShowHierarchy()) {
             $schemes = $request->getVocab()->getConceptSchemes($request->getLang());
