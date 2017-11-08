@@ -197,16 +197,16 @@ function buildParentTree(uri, parentData, schemes) {
   return JSON.parse(JSON.stringify(rootArray));
 }
 
-function getConceptHref(uri) {
-  if (uri.indexOf(window.uriSpace) !== -1) {
-    var page = uri.substr(window.uriSpace.length);
+function getConceptHref(conceptData) {
+  if (conceptData.uri.indexOf(window.uriSpace) !== -1) {
+    var page = conceptData.uri.substr(window.uriSpace.length);
     if (/[^a-zA-Z0-9\.]/.test(page) || page.indexOf("/") > -1 ) {
       // contains special characters or contains an additionnal '/' - fall back to full URI
-      page = '?uri=' + encodeURIComponent(uri);
+      page = '?uri=' + encodeURIComponent(conceptData.uri);
     }
   } else {
     // not within URI space - fall back to full URI
-    page = '?uri=' + encodeURIComponent(uri);
+    page = '?uri=' + encodeURIComponent(conceptData.uri);
   }
   return { "href" : vocab + '/' + lang + '/page/' + page };
 }
@@ -217,7 +217,7 @@ function vocabRoot(topConcepts) {
     var conceptData = topConcepts[i];
     var childObject = {
       text: conceptData.label, 
-      a_attr : getConceptHref(conceptData.uri),
+      a_attr : getConceptHref(conceptData),
       uri: conceptData.uri,
       state: { opened: false } 
     };
