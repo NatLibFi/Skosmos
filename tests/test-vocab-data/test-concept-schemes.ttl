@@ -20,7 +20,7 @@ ex:mt3 a skos:ConceptScheme ;
 ### Begin Domains
 
 ex:domains a skos:ConceptScheme ;
-	skos:prefLabel "Special 'Domains' Concept Scheme"@en .
+	skos:prefLabel "Special Domains Concept Scheme"@en .
 
 ex:d1 a skos:Concept ;
 	skos:inScheme ex:domains ;
