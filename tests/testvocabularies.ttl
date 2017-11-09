@@ -64,6 +64,21 @@
 	skosmos:indexShowClass meta:TestClass, meta:TestClass2;
 	skosmos:sparqlGraph <http://www.skosmos.skos/groups/> .
 
+
+:showDeprecated a skosmos:Vocabulary, void:Dataset ;
+	dc11:title "Show deprecated test vocabulary"@en ;
+	dc:subject :cat_general ;
+	void:dataDump <http://skosmos.skos/dump/test/groups.ttl>,
+		<http://skosmos.skos/dump/test/groups> ;
+	void:uriSpace "http://www.skosmos.skos/onto/groups/";
+	skosmos:arrayClass isothes:ThesaurusArray ;
+  	skosmos:groupClass skos:Collection ;
+	void:sparqlEndpoint <http://localhost:3030/ds/sparql> ;
+	skosmos:language "fi", "en";
+	skosmos:defaultLanguage "fi";
+	skosmos:showDeprecated "true";
+	skosmos:sparqlGraph <http://www.skosmos.skos/groups/> .
+
 :cycle a skosmos:Vocabulary, void:Dataset ;
 	dc11:title "Cycle test vocabulary"@en ;
 	dc:subject :cat_general ;
