@@ -240,6 +240,25 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('Grouped fish', $concepts[0]['prefLabel']);
     $this->assertEquals('Guppy', $concepts[1]['prefLabel']);
   }
+  
+  /**
+  * @covers Vocabulary::searchConceptsAlphabetical
+  */
+  public function testSearchConceptsAlphabeticalExcludingDeprecated() {
+      $vocab = $this->model->getVocabulary('groups');
+      $concepts = $vocab->searchConceptsAlphabetical('T', null, null, 'en');
+      $this->assertCount(0, $concepts);
+  }
+  
+  /**
+   * @covers Vocabulary::searchConceptsAlphabetical
+   */
+  public function testSearchConceptsAlphabeticalIncludingDeprecated() {
+      $vocab = $this->model->getVocabulary('showDeprecated');
+      $concepts = $vocab->searchConceptsAlphabetical('T', null, null, 'en');
+      $this->assertCount(1, $concepts);
+      $this->assertEquals('Tuna', $concepts[0]['prefLabel']);
+  }
 
   /**
    * @covers Vocabulary::searchConceptsAlphabetical

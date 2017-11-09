@@ -256,6 +256,19 @@ class ModelTest extends PHPUnit_Framework_TestCase
   /**
    * @covers Model::searchConcepts
    */
+  public function testSearchConceptsIncludingDeprecated() {
+      $params = $this->getMockBuilder('ConceptSearchParameters')->disableOriginalConstructor()->getMock();
+      $params->method('getSearchTerm')->will($this->returnValue('Tuna'));
+      $params->method('getVocabIds')->will($this->returnValue('showDeprecated'));
+      $params->method('getVocabs')->will($this->returnValue(array($this->model->getVocabulary('showDeprecated'))));
+      $result = $this->model->searchConcepts($params);
+      $this->assertCount(1, $result);
+      $this->assertEquals('http://www.skosmos.skos/groups/ta111', $result[0]['uri']);
+  }
+  
+  /**
+   * @covers Model::searchConcepts
+   */
   public function testSearchConceptsWithOneVocabLanguageSubtag() {
     $params = $this->getMockBuilder('ConceptSearchParameters')->disableOriginalConstructor()->getMock();
     $params->method('getSearchTerm')->will($this->returnValue('neighbour'));

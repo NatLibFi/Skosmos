@@ -346,6 +346,14 @@ class VocabularyConfigTest extends PHPUnit_Framework_TestCase
     $vocab = $this->model->getVocabulary('test');
     $this->assertEquals(array(0 => array('uri' => 'http://publications.europa.eu/resource/authority/dataset-type/ONTOLOGY', 'prefLabel' => 'Ontology')), $vocab->getConfig()->getTypes('en'));
   }
+  
+  /**
+   * @covers VocabularyConfig::getShowDeprecated
+   */
+  public function testShowDeprecated() {
+      $vocab = $this->model->getVocabulary('showDeprecated');
+      $this->assertEquals(true, $vocab->getConfig()->getShowDeprecated());
+  }
 
   /**
    * @covers VocabularyConfig::getTypes
