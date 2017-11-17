@@ -93,7 +93,7 @@
             <select id="scheme-limit" value="{{ limit-scheme }}" class="form-control multiselect" multiple="multiple">
               <option></option>
               {% for uri,scheme in conceptSchemes %}
-                <option value="{{ uri }}">{% if scheme.label %}{{ scheme.label }}{% else %}{{ uri|trans }}{% endif %}</option>
+                <option value="{{ uri }}">{% if scheme.prefLabel %}{{ scheme.prefLabel }}{% else %}{% if scheme.label %}{{ scheme.label }}{% else %}{% if scheme.title %}{{ scheme.title }}{% else %}{{ uri|trans }}{% endif %}{% endif %}{% endif %}</option>
               {% endfor %}
             </select>
           </div>
