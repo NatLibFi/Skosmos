@@ -1,14 +1,11 @@
-# Finnish translation of ONKI Light
-# Copyright SeCo 2012 (C)
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: ONKI Light\n"
+"Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-16 10:24+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Henri Ylikotila <henri.ylikotila@helsinki.fi>\n"
-"Language-Team: ONKI Team <onki-posti@helsinki.fi>\n"
+"Language-Team: Finto Team <finto-posti@helsinki.fi>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
