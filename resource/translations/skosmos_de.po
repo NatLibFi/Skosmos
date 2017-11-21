@@ -164,7 +164,7 @@ msgstr "Feedback"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:64
 msgid "Feedback has been sent!"
-msgstr "Ihr Feedback wurde versended!"
+msgstr "Ihr Feedback wurde versendet!"
 
 #: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:35
 msgid "Group index"
@@ -218,7 +218,7 @@ msgstr "Keine Ergebnisse"
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:103
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:111
 msgid "Not to a specific vocabulary"
-msgstr "Nicht in einem speziellen Vokabular"
+msgstr "Nicht zu einem speziellen Vokabular"
 
 #: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:233
 msgid "Search"
@@ -242,7 +242,7 @@ msgstr "Sende Feedback"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:51
 msgid "Show all breadcrumb paths"
-msgstr "Zeige alle Brotkrümel Pfade"
+msgstr "Zeige alle Brotkrümel-Pfade"
 
 #: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:72
 msgid "Skosmos version %version%"
