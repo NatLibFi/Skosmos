@@ -1,9 +1,5 @@
 <?php
 
-/**
- * @runTestsInSeparateProcesses
- */
-
 class JenaTextSparqlTest extends PHPUnit_Framework_TestCase
 {
   private $model; 
