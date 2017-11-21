@@ -66,3 +66,6 @@ define("UI_HONEYPOT_ENABLED", TRUE);
 
 // default time a user must wait before submitting a form
 define("UI_HONEYPOT_TIME", 5);
+
+// whether to enable collation in sparql queries
+define("SPARQL_COLLATION_ENABLED", FALSE);
