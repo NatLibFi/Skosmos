@@ -863,7 +863,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
    * @covers GenericSparql::generateConceptGroupContentsQuery
    * @covers GenericSparql::transformConceptGroupContentsResults
    */
-  public function testListConceptGroupContentsIncludingDeprecatedConcept()
+  public function testListConceptGroupContentsExcludingDeprecatedConcept()
   {
     $voc = $this->model->getVocabulary('groups');
     $graph = $voc->getGraph();
@@ -871,6 +871,37 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
     $actual = $sparql->ListConceptGroupContents('http://www.w3.org/2004/02/skos/core#Collection', 'http://www.skosmos.skos/groups/salt', 'en');
     $this->assertEquals('http://www.skosmos.skos/groups/ta113', $actual[0]['uri']);
     $this->assertEquals(1, sizeof($actual));
+  }
+  
+  /**
+   * @covers GenericSparql::listConceptGroupContents
+   * @covers GenericSparql::generateConceptGroupContentsQuery
+   * @covers GenericSparql::transformConceptGroupContentsResults
+   */
+  public function testListConceptGroupContentsIncludingDeprecatedConcept()
+  {
+      $voc = $this->model->getVocabulary('showDeprecated');
+      $graph = $voc->getGraph();
+      $sparql = new GenericSparql('http://localhost:3030/ds/sparql', $graph, $this->model);
+      $actual = $sparql->ListConceptGroupContents('http://www.w3.org/2004/02/skos/core#Collection', 'http://www.skosmos.skos/groups/salt', 'en', $voc->getConfig()->getShowDeprecated());
+      $expected = array (
+          0 => array (
+              'uri' => 'http://www.skosmos.skos/groups/ta113',
+              'isSuper' => false,
+              'hasMembers' => false,
+              'type' => array('skos:Concept'),
+              'prefLabel' => 'Flatfish'
+          ),
+          1 => array (
+              'uri' => 'http://www.skosmos.skos/groups/ta111',
+              'isSuper' => false,
+              'hasMembers' => false,
+              'type' => array('skos:Concept'),
+              'prefLabel' => 'Tuna'
+          )
+      );
+      $this->assertEquals($expected, $actual);
+      $this->assertEquals(2, sizeof($actual));
   }
 
   /**
