@@ -433,7 +433,7 @@ class Vocabulary extends DataObject
         }
         // no group class defined, so empty result
         $group = $this->getConceptURI($glname);
-        $contents = $this->getSparql()->listConceptGroupContents($gclass, $group, $clang);
+        $contents = $this->getSparql()->listConceptGroupContents($gclass, $group, $clang, $this->config->getShowDeprecated());
         foreach ($contents as $uri => $label) {
             $ret[$uri] = $label;
         }
@@ -482,7 +482,7 @@ class Vocabulary extends DataObject
      */
     public function searchConceptsAlphabetical($letter, $limit = null, $offset = null, $clang = null)
     {
-        return $this->getSparql()->queryConceptsAlphabetical($letter, $clang, $limit, $offset, $this->config->getIndexClasses());
+        return $this->getSparql()->queryConceptsAlphabetical($letter, $clang, $limit, $offset, $this->config->getIndexClasses(),$this->config->getShowDeprecated());
     }
 
     /**
@@ -609,4 +609,5 @@ class Vocabulary extends DataObject
     public function getId() {
       return $this->config->getId();
     }
+    
 }
