@@ -434,6 +434,6 @@ class VocabularyTest extends PHPUnit_Framework_TestCase
     $this->assertInstanceOf('Concept', $concept[0]);
     $this->assertEquals(1, sizeof($concept));
   }
-
+  
 }
 

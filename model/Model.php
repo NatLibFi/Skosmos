@@ -57,7 +57,6 @@ class Model
     public function getConfig() {
       return $this->globalConfig;
     }
-
     /**
      * Initializes the configuration from the vocabularies.ttl file
      */

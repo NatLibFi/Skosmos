@@ -230,6 +230,21 @@ class Vocabulary extends DataObject
     }
 
     /**
+     * Return the URI of the default concept scheme of this vocabulary, as set in the vocabulary configuration, or null
+     * if not set.
+     * @return string default concept scheme URI, or null if undefined
+     **/
+
+    public function getMainConceptScheme(){
+        $conceptScheme = $this->resource->get("skosmos:mainConceptScheme");
+        if ($conceptScheme) {
+            return $conceptScheme->getUri();
+        }else{
+            return null;
+        }
+    }
+
+    /**
      * Return the top concepts of a concept scheme in the vocabulary.
      * @param string $conceptScheme URI of concept scheme whose top concepts to return. If not set,
      *                              the default concept scheme of the vocabulary will be used.

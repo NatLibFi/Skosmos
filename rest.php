@@ -7,6 +7,7 @@ require_once 'vendor/autoload.php';
 
 header("Access-Control-Allow-Origin: *"); // enable CORS for the whole REST API
 
+
 try {
     $config = new GlobalConfig();
     $model = new Model($config);

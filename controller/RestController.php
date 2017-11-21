@@ -200,6 +200,7 @@ class RestController extends Controller
                 'skos' => 'http://www.w3.org/2004/02/skos/core#',
                 'onki' => 'http://schema.onki.fi/onki#',
                 'dct' => 'http://purl.org/dc/terms/',
+                'dcterms' =>'http://purl.org/dc/terms/',
                 'uri' => '@id',
                 'type' => '@type',
                 'title' => 'rdfs:label',
@@ -208,6 +209,7 @@ class RestController extends Controller
                 'defaultLanguage' => 'onki:defaultLanguage',
                 'languages' => 'onki:language',
                 'label' => 'rdfs:label',
+                'subject' => 'dcterms:subject',
                 'prefLabel' => 'skos:prefLabel',
                 'title' => 'dct:title',
                 '@language' => $request->getLang(),
@@ -254,6 +256,7 @@ class RestController extends Controller
                 'void' => 'http://rdfs.org/ns/void#',
                 'onki' => 'http://schema.onki.fi/onki#',
                 'uri' => '@id',
+                'dcterms' =>'http://purl.org/dc/terms/',
                 'id' => 'onki:vocabularyIdentifier',
                 'concepts' => 'void:classPartition',
                 'label' => 'rdfs:label',
@@ -549,6 +552,7 @@ class RestController extends Controller
                 'dct' => 'http://purl.org/dc/terms/',
                 'dc11' => 'http://purl.org/dc/elements/1.1/',
                 'uri' => '@id',
+                'dcterms' =>'http://purl.org/dc/terms/',
                 'type' => '@type',
                 'lang' => '@language',
                 'value' => '@value',
@@ -734,6 +738,29 @@ class RestController extends Controller
         if (empty($results)) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
         }
+      
+        // set the "top" key from the "tops" key
+        foreach ($results as $value) {
+            $uri = $value['uri'];
+            if (isset($value['tops'])) {                
+                if ($request->getVocab()->getMainConceptScheme() != null) {
+                    foreach ($results[$uri]['tops'] as $top) {
+                        // if a value in 'tops' matches the main concept scheme, take it
+                        if ($top == $request->getVocab()->getMainConceptScheme()) {
+                            $results[$uri]['top'] = $top;
+                            break;
+                        }
+                    }
+                    // if the main concept scheme was not found, set 'top' to the first 'tops' (sorted alphabetically on the URIs)
+                    if (! isset($results[$uri]['top'])) {
+                        $results[$uri]['top'] = $results[$uri]['tops'][0];
+                    }
+                } else {
+                    // no main concept scheme set on the vocab, take the first value of 'tops' (sorted alphabetically)
+                    $results[$uri]['top'] = $results[$uri]['tops'][0];
+                }
+            }
+        }
 
         if ($request->getVocab()->getConfig()->getShowHierarchy()) {
             $schemes = $request->getVocab()->getConceptSchemes($request->getLang());
@@ -743,12 +770,13 @@ class RestController extends Controller
                 }
 
             }
-
+            
             /* encode the results in a JSON-LD compatible array */
             $topconcepts = $request->getVocab()->getTopConcepts(array_keys($schemes), $request->getLang());
+           
             foreach ($topconcepts as $top) {
                 if (!isset($results[$top['uri']])) {
-                    $results[$top['uri']] = array('uri' => $top['uri'], 'top' => $top['topConceptOf'], 'prefLabel' => $top['label'], 'hasChildren' => $top['hasChildren']);
+                    $results[$top['uri']] = array('uri' => $top['uri'], 'top'=>$top['topConceptOf'], 'tops'=>array($top['topConceptOf']), 'prefLabel' => $top['label'], 'hasChildren' => $top['hasChildren']);
                     if (isset($top['notation'])) {
                         $results[$top['uri']]['notation'] = $top['notation'];
                     }

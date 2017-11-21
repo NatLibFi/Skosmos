@@ -350,6 +350,49 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
       $this->assertEquals('Test conceptscheme', $label['label']);
     }
   }
+  
+  /**
+   * @covers GenericSparql::queryConceptSchemes
+   * @covers GenericSparql::generateQueryConceptSchemesQuery
+   * @covers GenericSparql::transformQueryConceptSchemesResults
+   */
+  public function testQueryConceptSchemesSubject()
+  {
+      $sparql = new GenericSparql('http://localhost:3030/ds/sparql', 'http://www.skosmos.skos/test-concept-schemes/', $this->model);
+      
+      $actual = $sparql->queryConceptSchemes('en');
+      $expected = array(
+          'http://exemple.fr/domains' => array(
+              'prefLabel' => 'Special Domains Concept Scheme'
+          ),
+          'http://exemple.fr/mt1' => array(
+              'prefLabel' => 'Micro-Thesaurus 1',
+              'subject' => array(
+                  'uri' => 'http://exemple.fr/d1',
+                  'prefLabel' => 'Domain 1'
+              )
+          ),
+          'http://exemple.fr/mt2' => array(
+              'prefLabel' => 'Micro-Thesaurus 2',
+              'subject' => array(
+                  'uri' => 'http://exemple.fr/d1',
+                  'prefLabel' => 'Domain 1'
+              )
+          ),
+          'http://exemple.fr/mt3' => array(
+              'prefLabel' => 'Micro-Thesaurus 3',
+              'subject' => array(
+                  'uri' => 'http://exemple.fr/d2',
+                  'prefLabel' => 'Domain 2'
+              )
+          ),
+          'http://exemple.fr/thesaurus' => array(
+              'prefLabel' => 'The Thesaurus'
+          ),
+      );
+      
+      $this->assertEquals($expected, $actual);
+  }
 
   /**
    * @covers GenericSparql::queryConcepts
@@ -738,7 +781,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
     );
     $props = array (
       'uri' => 'http://www.skosmos.skos/test/ta1',
-      'top' => 'http://www.skosmos.skos/test/conceptscheme',
+      'tops' => array('http://www.skosmos.skos/test/conceptscheme'),
       'prefLabel' => 'Fish',
     );
     $narrowers = array (
