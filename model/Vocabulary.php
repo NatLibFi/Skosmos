@@ -217,9 +217,9 @@ class Vocabulary extends DataObject
 
     public function getDefaultConceptScheme()
     {
-        $conceptScheme = $this->resource->get("skosmos:mainConceptScheme");
+        $conceptScheme = $this->config->getMainConceptSchemeURI();
         if ($conceptScheme) {
-            return $conceptScheme->getUri();
+            return $conceptScheme;
         }
 
         // mainConceptScheme not explicitly set, guess it
