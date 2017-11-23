@@ -127,7 +127,7 @@ class Concept extends VocabularyDataObject
                 return EasyRdf\Literal::create($label, $lang);
             }
         }
-        
+
         // 4. label in any language, including literal with empty language tag
         $label = $this->resource->label();
         if ($label !== null) {
@@ -136,6 +136,26 @@ class Concept extends VocabularyDataObject
 
         // empty
         return "";
+    }
+
+    public function hasXlLabel()
+    {
+        if ($this->resource->hasProperty('skosxl:prefLabel')) {
+            return true;
+        }
+        return false;
+    }
+
+    public function getXlLabel()
+    {
+        $labels = $this->resource->allResources('skosxl:prefLabel');
+        foreach($labels as $labres) {
+            $label = $labres->getLiteral('skosxl:literalForm');
+            if ($label->getLang() == $this->clang) {
+                return new LabelSkosXL($this->model, $labres);
+            }
+        }
+        return 'BING';
     }
 
     /**

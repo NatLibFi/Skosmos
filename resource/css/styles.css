@@ -532,7 +532,7 @@ ul.dropdown-menu > li:last-child > input {
   min-width: 400px;
 }
 
-.qtip-skosmos * {
+.qtip-skosmos *, .reified-tooltip > p > span {
   color: #fff;
   font-size: 14px;
   font-weight: 400;
