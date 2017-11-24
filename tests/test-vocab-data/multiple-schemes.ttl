@@ -1,0 +1,42 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dc11: <http://purl.org/dc/elements/1.1/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix multiple-schemes: <http://www.skosmos.skos/multiple-schemes/> .
+@prefix meta: <http://www.skosmos.skos/test-meta/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix skosmos: <http://www.skosmos.skos/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix mads: <http://www.loc.gov/mads/rdf/v1#> .
+
+# 3 concept schemes with one concept in each
+
+multiple-schemes:c1-in-cs1 a skos:Concept ;
+    skos:inScheme multiple-schemes:cs1;
+    skos:topConceptOf multiple-schemes:cs1;
+    skos:prefLabel "concept 1"@en.
+
+multiple-schemes:c2-in-cs2 a skos:Concept ;
+    skos:inScheme multiple-schemes:cs2;
+    skos:topConceptOf multiple-schemes:cs2;
+    skos:prefLabel "concept 2"@en.
+
+multiple-schemes:c3-in-cs3 a skos:Concept ;
+    skos:inScheme multiple-schemes:cs3;
+    skos:topConceptOf multiple-schemes:cs3;
+    skos:prefLabel "concept 3"@en.
+
+multiple-schemes:cs1 a skos:ConceptScheme ;
+    rdfs:label "Concept Scheme 1"@en ;
+    skos:hasTopConcept multiple-schemes:c1 .
+
+multiple-schemes:cs2 a skos:ConceptScheme ;
+    rdfs:label "Concept Scheme 2"@en ;
+    skos:hasTopConcept multiple-schemes:c2 .
+
+multiple-schemes:cs3 a skos:ConceptScheme ;
+    rdfs:label "Concept Scheme 3"@en ;
+    skos:hasTopConcept multiple-schemes:c3 .
