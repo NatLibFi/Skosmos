@@ -939,12 +939,11 @@ EOQ;
         // limit the search to only requested concept schemes
         $schemecond = '';
         if (!empty($schemes)) {
-            $schemecond .= '{';
+            $conditions = array();
             foreach($schemes as $scheme) {
-                $schemecond .= "{?s skos:inScheme <$scheme>} UNION ";
+                $conditions[] = "{?s skos:inScheme <$scheme>}";
             }
-            $schemecond = substr($schemecond, 0, strlen($schemecond) - strlen("UNION "));
-            $schemecond .= '}';
+            $schemecond = '{'.implode(" UNION ",$conditions).'}';
         }
         $filterDeprecated="";
         //show or hide deprecated concepts
