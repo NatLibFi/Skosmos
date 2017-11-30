@@ -936,11 +936,14 @@ EOQ;
         $extrafields = $formattedfields['extrafields'];
         $schemes = $params->getSchemeLimit();
 
+        // limit the search to only requested concept schemes
         $schemecond = '';
         if (!empty($schemes)) {
+            $conditions = array();
             foreach($schemes as $scheme) {
-                $schemecond .= "?s skos:inScheme <$scheme> . ";
+                $conditions[] = "{?s skos:inScheme <$scheme>}";
             }
+            $schemecond = '{'.implode(" UNION ",$conditions).'}';
         }
         $filterDeprecated="";
         //show or hide deprecated concepts
