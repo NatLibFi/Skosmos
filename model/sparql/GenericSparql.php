@@ -1358,6 +1358,48 @@ EOQ;
             return null;
         }
     }
+    
+    /**
+     * Generates a SPARQL query to retrieve the super properties of a given property URI.
+     * Note this must be executed in the graph where this information is available.
+     * @param string $uri
+     * @return string sparql query string
+     */
+    private function generateSubPropertyOfQuery($uri) {
+        $fcl = $this->generateFromClause();
+        $query = <<<EOQ
+SELECT ?superProperty $fcl
+WHERE {
+  <$uri> rdfs:subPropertyOf ?superProperty
+}
+EOQ;
+        return $query;
+    }
+    
+    /**
+     * Query the super properties of a provided property URI.
+     * @param string $uri URI of a propertyes
+     * @return array array super properties, or null if none exist
+     */
+    public function querySuperProperties($uri) {
+        $query = $this->generateSubPropertyOfQuery($uri);
+        $result = $this->query($query);
+        $ret = array();
+        foreach ($result as $row) {
+            if (isset($row->superProperty)) {
+                $ret[] = $row->superProperty->getUri();
+            }
+            
+        }
+        
+        if (sizeof($ret) > 0) {
+            // return result
+            return $ret;
+        } else {
+            // no result, return null
+            return null;
+        }
+    }
 
 
     /**

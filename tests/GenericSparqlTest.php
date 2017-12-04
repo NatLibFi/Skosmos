@@ -922,4 +922,16 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
     $this->assertEquals(array('en' => 'Bass'), $actual[0]['prefLabels']);
     $this->assertEquals(array(0 => array('uri' => 'http://www.skosmos.skos/test/ta1')), $actual[0]['skos:broader']);
   }
+  
+  /**
+   * @covers GenericSparql::querySuperProperties
+   */
+  public function testQuerySuperProperties()
+  {
+      $this->sparql = new GenericSparql('http://localhost:3030/ds/sparql', '?graph', $this->model);
+      $actual = $this->sparql->querySuperProperties('http://example.com/myns#property');
+      $this->assertEquals(1, sizeof($actual));
+      $expected = array('http://example.com/myns#superProperty');
+      $this->assertEquals($actual, $expected);
+  }
 }
