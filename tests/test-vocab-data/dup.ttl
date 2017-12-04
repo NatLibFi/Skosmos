@@ -31,15 +31,18 @@ dup:d5 a skos:Concept ;
     dup:prop4 "Identical property value"@en;
     skos:prefLabel "Not a subproperty"@en .
 
-dup:prop1
+# in order for getLabel query to work, a type has to be declared
+# on the properties
+
+dup:prop1 a owl:DatatypeProperty ;
   rdfs:label "Very nice property"@en .
    
-dup:prop2
+dup:prop2 a owl:DatatypeProperty ;
   rdfs:subPropertyOf dup:prop1 ;
   rdfs:label "Nearly as nice subproperty"@en .
 
-dup:prop3
+dup:prop3 a owl:DatatypeProperty ;
   rdfs:label "Nice-ish property"@en .
    
-dup:prop4
+dup:prop4 a owl:DatatypeProperty ;
   rdfs:label "Not at all a subproperty"@en .
