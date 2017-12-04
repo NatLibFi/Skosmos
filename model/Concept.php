@@ -341,8 +341,7 @@ class Concept extends VocabularyDataObject
                 $superprops = $this->model->getDefaultSparql()->querySuperProperties($longUri);
                 $superprop = ($superprops)?$superprops[0]:null;                
                 if ($superprop) {
-                    $withBrackets = "<".$superprop.">";
-                    $superprop = EasyRdf\RdfNamespace::shorten($withBrackets) ? EasyRdf\RdfNamespace::shorten($withBrackets) : $superprop;
+                    $superprop = EasyRdf\RdfNamespace::shorten($superprop) ? EasyRdf\RdfNamespace::shorten($superprop) : $superprop;
                 }
                 $propobj = new ConceptProperty($prop, $proplabel, $superprop);
 
@@ -354,8 +353,7 @@ class Concept extends VocabularyDataObject
                 // searching for subproperties of literals too
                 if($superprops) {
                     foreach ($superprops as $subi) {
-                        $withBrackets = "<".$subi.">";
-                        $suburi = EasyRdf\RdfNamespace::shorten($withBrackets) ? EasyRdf\RdfNamespace::shorten($withBrackets) : $subi;
+                        $suburi = EasyRdf\RdfNamespace::shorten($subi) ? EasyRdf\RdfNamespace::shorten($subi) : $subi;
                         $duplicates[$suburi] = $prop;
                     }
                 }

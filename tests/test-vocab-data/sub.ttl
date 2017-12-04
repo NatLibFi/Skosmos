@@ -14,6 +14,6 @@ sub:d1 a skos:Concept ;
     skos:prefLabel "Has a hidden property"@en ;
     sub:prop1 "Do not show this"@en .
 
-sub:prop1
+sub:prop1 a owl:DatatypeProperty ;
   rdfs:subPropertyOf skos:hiddenLabel ;
   rdfs:label "This subproperty should not be shown in the UI"@en .
