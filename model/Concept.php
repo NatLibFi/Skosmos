@@ -127,7 +127,7 @@ class Concept extends VocabularyDataObject
                 return EasyRdf\Literal::create($label, $lang);
             }
         }
-        
+
         // 4. label in any language, including literal with empty language tag
         $label = $this->resource->label();
         if ($label !== null) {
@@ -262,6 +262,7 @@ class Concept extends VocabularyDataObject
 
                             if ($response) {
                                 $ret[$prop]->addValue(new ConceptMappingPropertyValue($this->model, $this->vocab, $response, $prop), $this->clang);
+                                $this->graph->parse($response->getGraph()->serialise("rdfxml"), "rdfxml");
                                 continue;
                             }
                         }
@@ -479,11 +480,11 @@ class Concept extends VocabularyDataObject
             $ret = '';
             if ($this->resource->get('dc:modified')) {
                 $modified = (string) $this->resource->get('dc:modified');
-                $ret = gettext('skosmos:modified') . ' ' . $modified; 
+                $ret = gettext('skosmos:modified') . ' ' . $modified;
             }
             if ($this->resource->get('dc:created')) {
                 $created .= (string) $this->resource->get('dc:created');
-                $ret .= ' ' . gettext('skosmos:created') . ' ' . $created; 
+                $ret .= ' ' . gettext('skosmos:created') . ' ' . $created;
             }
         }
         return $ret;
@@ -594,7 +595,7 @@ class Concept extends VocabularyDataObject
         foreach ($labels as $lit) {
             // filtering away subsets of the current language eg. en vs en-GB
             if ($lit->getLang() != $this->clang && strpos($lit->getLang(), $this->getEnvLang() . '-') !== 0) {
-                $prop = in_array($lit, $prefLabels) ? 'skos:prefLabel' : 'skos:altLabel'; 
+                $prop = in_array($lit, $prefLabels) ? 'skos:prefLabel' : 'skos:altLabel';
                 $ret[$this->literalLanguageToString($lit)][] = new ConceptPropertyValueLiteral($lit, $prop);
             }
         }
@@ -616,5 +617,37 @@ class Concept extends VocabularyDataObject
         }
         ksort($labels);
         return $labels;
+    }
+
+    /**
+     * Dump concept graph as JSON-LD.
+     */
+    public function dumpJsonLd() {
+
+        $context = array(
+            'skos' => 'http://www.w3.org/2004/02/skos/core#',
+            'isothes' => 'http://purl.org/iso25964/skos-thes#',
+            'rdfs' => 'http://www.w3.org/2000/01/rdf-schema#',
+            'owl' => 'http://www.w3.org/2002/07/owl#',
+            'dct' => 'http://purl.org/dc/terms/',
+            'dc11' => 'http://purl.org/dc/elements/1.1/',
+            'uri' => '@id',
+            'type' => '@type',
+            'lang' => '@language',
+            'value' => '@value',
+            'graph' => '@graph',
+            'label' => 'rdfs:label',
+            'prefLabel' => 'skos:prefLabel',
+            'altLabel' => 'skos:altLabel',
+            'hiddenLabel' => 'skos:hiddenLabel',
+            'broader' => 'skos:broader',
+            'narrower' => 'skos:narrower',
+            'related' => 'skos:related',
+            'inScheme' => 'skos:inScheme',
+        );
+        $compactJsonLD = \ML\JsonLD\JsonLD::compact($this->graph->serialise('jsonld'), json_encode($context));
+        $results = \ML\JsonLD\JsonLD::toString($compactJsonLD);
+
+        return $results;
     }
 }

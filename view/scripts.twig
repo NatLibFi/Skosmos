@@ -27,6 +27,11 @@ var uriSpace = "{{ request.vocab.uriSpace }}";
 var showNotation = {% if request.vocab and request.vocab.config.showNotation == false %}false{% else %}true{% endif %};
 </script>
 
+{% if request.page == 'page' and search_results and search_results|length == 1 %}
+<script type="application/ld+json">
+{{ search_results|first.dumpJsonLd|raw }}
+</script>
+{% endif %}
 <script type="text/javascript" src="vendor/components/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="vendor/components/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="vendor/components/handlebars.js/handlebars.min.js"></script>
