@@ -529,16 +529,27 @@ class Model
      *
      * @param Vocabulary[] $vocabs vocabularies to search
      * @param string $uri URI to look for
+     * @param $preferredVocabId string ID of the preferred vocabulary to return if more than one is found
      * @return Vocabulary the vocabulary with the URI
      */
 
-    private function disambiguateVocabulary($vocabs, $uri)
+    private function disambiguateVocabulary($vocabs, $uri, $preferredVocabId = null)
     {
         // if there is only one candidate vocabulary, return it
         if (sizeof($vocabs) == 1) {
             return $vocabs[0];
         }
         
+        // if there are multiple vocabularies and one is the preferred vocabulary, return it
+        if($preferredVocabId != null) {
+            foreach ($vocabs as $vocab) {
+                if($vocab->getId() == $preferredVocabId) {
+                    return $vocab;
+                }
+            }
+        }
+        
+        // no preferred vocabulary, or it was not found, search in which vocabulary the concept has a label
         foreach ($vocabs as $vocab) {
             if ($vocab->getConceptLabel($uri, null) !== null)
                 return $vocab;
@@ -553,9 +564,10 @@ class Model
      * vocabulary URI spaces.
      *
      * @param $uri string URI to search
+     * @param $preferredVocabId string ID of the preferred vocabulary to return if more than one is found
      * @return Vocabulary vocabulary of this URI, or null if not found
      */
-    public function guessVocabularyFromURI($uri)
+    public function guessVocabularyFromURI($uri, $preferredVocabId = null)
     {
         if ($this->vocabsByUriSpace === null) { // initialize cache
             $this->vocabsByUriSpace = array();
@@ -569,13 +581,13 @@ class Model
         $namespace = substr($uri, 0, -strlen($res->localName()));
         if (array_key_exists($namespace, $this->vocabsByUriSpace)) {
             $vocabs = $this->vocabsByUriSpace[$namespace];
-            return $this->disambiguateVocabulary($vocabs, $uri);
+            return $this->disambiguateVocabulary($vocabs, $uri, $preferredVocabId);
         }
 
         // didn't work, try to match with each URI space separately
         foreach ($this->vocabsByUriSpace as $urispace => $vocabs) {
             if (strpos($uri, $urispace) === 0) {
-                return $this->disambiguateVocabulary($vocabs, $uri);
+                return $this->disambiguateVocabulary($vocabs, $uri, $preferredVocabId);
             }
         }
 

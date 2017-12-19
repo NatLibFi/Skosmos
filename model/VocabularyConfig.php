@@ -173,6 +173,24 @@ class VocabularyConfig extends DataObject
     }
 
     /**
+     * Returns the main Concept Scheme URI of that Vocabulary,
+     * or null if not set.
+     * @return string concept scheme URI or null
+     */
+    
+    public function getMainConceptSchemeURI()
+    {
+        $val = $this->resource->getResource("skosmos:mainConceptScheme");
+        if ($val) {
+            return $val->getURI();
+        }
+        
+        return null;
+    }
+    
+    
+    
+    /**
      * Returns the class URI used for concept groups in this vocabulary,
      * or null if not set.
      * @return string group class URI or null

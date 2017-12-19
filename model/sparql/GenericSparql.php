@@ -595,9 +595,14 @@ EOQ;
     private function generateQueryConceptSchemesQuery($lang) {
         $fcl = $this->generateFromClause();
         $query = <<<EOQ
-SELECT ?cs ?label ?preflabel ?title $fcl
+SELECT ?cs ?label ?preflabel ?title ?domain ?domainLabel $fcl
 WHERE {
  ?cs a skos:ConceptScheme .
+ OPTIONAL{
+    ?cs dcterms:subject ?domain.
+    ?domain skos:prefLabel ?domainLabel.
+    FILTER(langMatches(lang(?domainLabel), '$lang'))
+}
  OPTIONAL {
    ?cs rdfs:label ?label .
    FILTER(langMatches(lang(?label), '$lang'))
@@ -612,7 +617,8 @@ WHERE {
    { ?cs dc:title ?title }
    FILTER(langMatches(lang(?title), '$lang'))
  }
-} ORDER BY ?cs
+} 
+ORDER BY ?cs
 EOQ;
         return $query;
     }
@@ -636,6 +642,11 @@ EOQ;
 
             if (isset($row->title)) {
                 $conceptscheme['title'] = $row->title->getValue();
+            }
+            // add dct:subject and their labels in the result
+            if(isset($row->domain) && isset($row->domainLabel)){
+                $conceptscheme['subject']['uri']=$row->domain->getURI();
+                $conceptscheme['subject']['prefLabel']=$row->domainLabel->getValue();
             }
 
             $ret[$row->cs->getURI()] = $conceptscheme;
@@ -1736,6 +1747,7 @@ EOQ;
 
     /**
      * Generates a sparql query for finding the hierarchy for a concept.
+	 * A concept may be a top concept in multiple schemes, returned as a single whitespace-separated literal.
      * @param string $uri concept uri.
      * @param string $lang
      * @param string $fallback language to use if label is not available in the preferred language
@@ -1746,7 +1758,8 @@ EOQ;
         $propertyClause = implode('|', $props);
         $query = <<<EOQ
 SELECT ?broad ?parent ?member ?children ?grandchildren
-(SAMPLE(?lab) as ?label) (SAMPLE(?childlab) as ?childlabel) (SAMPLE(?topcs) AS ?top) (SAMPLE(?nota) as ?notation) (SAMPLE(?childnota) as ?childnotation) $fcl
+(SAMPLE(?lab) as ?label) (SAMPLE(?childlab) as ?childlabel) (GROUP_CONCAT(?topcs; separator=" ") as ?tops) 
+(SAMPLE(?nota) as ?notation) (SAMPLE(?childnota) as ?childnotation) $fcl
 WHERE {
   <$uri> a skos:Concept .
   OPTIONAL {
@@ -1810,8 +1823,12 @@ EOQ;
             if (isset($row->exact)) {
                 $ret[$uri]['exact'] = $row->exact->getUri();
             }
-            if (isset($row->top)) {
-                $ret[$uri]['top'] = $row->top->getUri();
+            if (isset($row->tops)) {
+               $topConceptsList=array();
+               $topConceptsList=explode(" ", $row->tops->getValue());
+               // sort to garantee an alphabetical ordering of the URI
+               sort($topConceptsList);
+               $ret[$uri]['tops'] = $topConceptsList;
             }
             if (isset($row->children)) {
                 if (!isset($ret[$uri]['narrower'])) {

@@ -76,6 +76,19 @@
 	skosmos:sparqlGraph <http://www.skosmos.skos/groups/> .
 
 
+:test-concept-schemes a skosmos:Vocabulary, void:Dataset ;
+	dc11:title "Test concept schemes"@en ;
+	dc:subject :cat_general ;
+	void:dataDump <http://skosmos.skos/dump/test/test-concept-schemes.ttl>,
+		<http://skosmos.skos/dump/test/test-concept-schemes> ;
+	void:uriSpace "http://www.exemple.fr/";
+	skosmos:arrayClass isothes:ThesaurusArray ;
+ 	 skosmos:groupClass skos:Collection ;
+	void:sparqlEndpoint <http://localhost:3030/ds/sparql> ;
+	skosmos:language "en";
+	skosmos:defaultLanguage "en";
+	skosmos:sparqlGraph <http://www.skosmos.skos/test-concept-schemes/> .
+
 :showDeprecated a skosmos:Vocabulary, void:Dataset ;
 	dc11:title "Show deprecated test vocabulary"@en ;
 	dc:subject :cat_general ;

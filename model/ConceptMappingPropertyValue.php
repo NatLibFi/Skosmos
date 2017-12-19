@@ -47,7 +47,8 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
             $lang = $this->clang;
         }
 
-        $exvocab = $this->model->guessVocabularyFromURI($this->resource->getUri());
+        // if multiple vocabularies are found, the following method will return in priority the current vocabulary of the mapping
+        $exvocab = $this->model->guessVocabularyFromURI($this->resource->getUri(), $this->vocab->getId());
 
         if ($this->resource->label($lang) !== null) { // current language
             return $this->resource->label($lang);
@@ -79,7 +80,7 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
 
     public function getExVocab()
     {
-        $exvocab = $this->model->guessVocabularyFromURI($this->getUri());
+        $exvocab = $this->model->guessVocabularyFromURI($this->getUri(), $this->vocab->getId());
         return $exvocab;
     }
 
@@ -90,7 +91,8 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
 
     public function getVocabName()
     {
-        $exvocab = $this->model->guessVocabularyFromURI($this->resource->getUri());
+        // if multiple vocabularies are found, the following method will return in priority the current vocabulary of the mapping
+        $exvocab = $this->model->guessVocabularyFromURI($this->resource->getUri(), $this->vocab->getId());
         if ($exvocab) {
             return $exvocab->getTitle();
         }
