@@ -138,9 +138,9 @@ class Concept extends VocabularyDataObject
         return "";
     }
 
-    public function hasXlLabel()
+    public function hasXlLabel($prop = 'prefLabel')
     {
-        if ($this->resource->hasProperty('skosxl:prefLabel')) {
+        if ($this->resource->hasProperty('skosxl:' . $prop)) {
             return true;
         }
         return false;
@@ -155,7 +155,7 @@ class Concept extends VocabularyDataObject
                 return new LabelSkosXL($this->model, $labres);
             }
         }
-        return 'BING';
+        return null;
     }
 
     /**
@@ -371,7 +371,7 @@ class Concept extends VocabularyDataObject
 
                 // Iterating through every literal and adding these to the data object.
                 foreach ($this->resource->allLiterals($sprop) as $val) {
-                    $literal = new ConceptPropertyValueLiteral($val, $prop);
+                    $literal = new ConceptPropertyValueLiteral($this->model, $this->vocab, $this->resource, $val, $prop);
                     // only add literals when they match the content/hit language or have no language defined
                     if (isset($ret[$prop]) && ($literal->getLang() === $this->clang || $literal->getLang() === null)) {
                         $ret[$prop]->addValue($literal);
@@ -613,8 +613,8 @@ class Concept extends VocabularyDataObject
         foreach ($labels as $lit) {
             // filtering away subsets of the current language eg. en vs en-GB
             if ($lit->getLang() != $this->clang && strpos($lit->getLang(), $this->getEnvLang() . '-') !== 0) {
-                $prop = in_array($lit, $prefLabels) ? 'skos:prefLabel' : 'skos:altLabel'; 
-                $ret[$this->literalLanguageToString($lit)][] = new ConceptPropertyValueLiteral($lit, $prop);
+                $prop = in_array($lit, $prefLabels) ? 'skos:prefLabel' : 'skos:altLabel';
+                $ret[$this->literalLanguageToString($lit)][] = new ConceptPropertyValueLiteral($this->model, $this->vocab, $this->resource, $lit, $prop);
             }
         }
         ksort($ret);
@@ -631,7 +631,7 @@ class Concept extends VocabularyDataObject
         // shortening property labels if possible, EasyRdf requires full URIs to be in angle brackets
         $property = (EasyRdf\RdfNamespace::shorten($property) !== null) ? EasyRdf\RdfNamespace::shorten($property) : "<$property>";
         foreach ($this->resource->allLiterals($property) as $lit) {
-            $labels[Punic\Language::getName($lit->getLang(), $this->getEnvLang())][] = new ConceptPropertyValueLiteral($lit, $property);
+            $labels[Punic\Language::getName($lit->getLang(), $this->getEnvLang())][] = new ConceptPropertyValueLiteral($this->model, $this->vocab, $this->resource, $lit, $property);
         }
         ksort($labels);
         return $labels;
