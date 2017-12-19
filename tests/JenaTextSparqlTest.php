@@ -174,4 +174,29 @@ class JenaTextSparqlTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('Bass', $actual[0]['prefLabel']);
   }
 
+  /**
+   * @covers JenaTextSparql::formatOrderBy
+   */
+  public function testQueryConceptsAlphabeticalOrderBy() {
+    $vocab = $this->model->getVocabulary('collation');
+    $graph = $vocab->getGraph();
+    $sparql = new JenaTextSparql('http://localhost:3030/ds/sparql', $graph, $this->model);
+    $actual = $sparql->queryConceptsAlphabetical('t', 'fi');
+    $expected = array (
+      0 => array (
+        'uri' => 'http://www.skosmos.skos/collation/val1',
+        'localname' => 'val1',
+        'prefLabel' => 'tšekin kieli',
+        'lang' => 'fi',
+      ),
+      1 => array (
+        'uri' => 'http://www.skosmos.skos/collation/val2',
+        'localname' => 'val2',
+        'prefLabel' => 'töyhtöhyyppä',
+        'lang' => 'fi',
+      )
+    );
+    $this->assertEquals($expected, $actual);
+  }
+
 }

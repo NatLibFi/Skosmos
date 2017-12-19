@@ -350,6 +350,49 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
       $this->assertEquals('Test conceptscheme', $label['label']);
     }
   }
+  
+  /**
+   * @covers GenericSparql::queryConceptSchemes
+   * @covers GenericSparql::generateQueryConceptSchemesQuery
+   * @covers GenericSparql::transformQueryConceptSchemesResults
+   */
+  public function testQueryConceptSchemesSubject()
+  {
+      $sparql = new GenericSparql('http://localhost:3030/ds/sparql', 'http://www.skosmos.skos/test-concept-schemes/', $this->model);
+      
+      $actual = $sparql->queryConceptSchemes('en');
+      $expected = array(
+          'http://exemple.fr/domains' => array(
+              'prefLabel' => 'Special Domains Concept Scheme'
+          ),
+          'http://exemple.fr/mt1' => array(
+              'prefLabel' => 'Micro-Thesaurus 1',
+              'subject' => array(
+                  'uri' => 'http://exemple.fr/d1',
+                  'prefLabel' => 'Domain 1'
+              )
+          ),
+          'http://exemple.fr/mt2' => array(
+              'prefLabel' => 'Micro-Thesaurus 2',
+              'subject' => array(
+                  'uri' => 'http://exemple.fr/d1',
+                  'prefLabel' => 'Domain 1'
+              )
+          ),
+          'http://exemple.fr/mt3' => array(
+              'prefLabel' => 'Micro-Thesaurus 3',
+              'subject' => array(
+                  'uri' => 'http://exemple.fr/d2',
+                  'prefLabel' => 'Domain 2'
+              )
+          ),
+          'http://exemple.fr/thesaurus' => array(
+              'prefLabel' => 'The Thesaurus'
+          ),
+      );
+      
+      $this->assertEquals($expected, $actual);
+  }
 
   /**
    * @covers GenericSparql::queryConcepts
@@ -374,6 +417,30 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('http://www.skosmos.skos/test/ta112', $actual[1]['uri']);
   }
 
+  /**
+   * @covers GenericSparql::queryConcepts
+   * @covers GenericSparql::generateConceptSearchQueryCondition
+   * @covers GenericSparql::generateConceptSearchQueryInner
+   * @covers GenericSparql::generateConceptSearchQuery
+   * @covers GenericSparql::formatFilterGraph
+   * @covers GenericSparql::transformConceptSearchResults
+   * @covers GenericSparql::transformConceptSearchResult
+   * @covers GenericSparql::shortenUri
+   */
+  public function testQueryConceptsMultipleSchemes()
+  {
+      $voc = $this->model->getVocabulary('multiple-schemes');
+      // returns 3 concepts without the scheme limit, and only 2 with the scheme limit below
+      $this->params->method('getSearchTerm')->will($this->returnValue('concept*'));
+      $this->params->method('getSchemeLimit')->will($this->returnValue(array('http://www.skosmos.skos/multiple-schemes/cs1', 'http://www.skosmos.skos/multiple-schemes/cs2')));
+      $sparql = new GenericSparql('http://localhost:3030/ds/sparql', 'http://www.skosmos.skos/multiple-schemes/', $this->model);
+      $actual = $sparql->queryConcepts(array($voc), null, null, $this->params);
+      $this->assertEquals(2, sizeof($actual));
+      $this->assertEquals('http://www.skosmos.skos/multiple-schemes/c1-in-cs1', $actual[0]['uri']);
+      $this->assertEquals('http://www.skosmos.skos/multiple-schemes/c2-in-cs2', $actual[1]['uri']);
+  }
+  
+  
   /**
    * @covers GenericSparql::queryConcepts
    * @covers GenericSparql::generateConceptSearchQueryCondition
@@ -738,7 +805,7 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
     );
     $props = array (
       'uri' => 'http://www.skosmos.skos/test/ta1',
-      'top' => 'http://www.skosmos.skos/test/conceptscheme',
+      'tops' => array('http://www.skosmos.skos/test/conceptscheme'),
       'prefLabel' => 'Fish',
     );
     $narrowers = array (
@@ -921,5 +988,17 @@ class GenericSparqlTest extends PHPUnit_Framework_TestCase
 );
     $this->assertEquals(array('en' => 'Bass'), $actual[0]['prefLabels']);
     $this->assertEquals(array(0 => array('uri' => 'http://www.skosmos.skos/test/ta1')), $actual[0]['skos:broader']);
+  }
+  
+  /**
+   * @covers GenericSparql::querySuperProperties
+   */
+  public function testQuerySuperProperties()
+  {
+      $this->sparql = new GenericSparql('http://localhost:3030/ds/sparql', '?graph', $this->model);
+      $actual = $this->sparql->querySuperProperties('http://example.com/myns#property');
+      $this->assertEquals(1, sizeof($actual));
+      $expected = array('http://example.com/myns#superProperty');
+      $this->assertEquals($actual, $expected);
   }
 }

@@ -239,5 +239,12 @@ class GlobalConfig {
     {
         return $this->getConstant('UI_HONEYPOT_TIME', 5);
     }
-    
+
+    /**
+     * @return boolean
+     */
+    public function getCollationEnabled()
+    {
+        return $this->getConstant('SPARQL_COLLATION_ENABLED', FALSE);
+    }
 }

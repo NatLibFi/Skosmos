@@ -270,7 +270,8 @@ class Concept extends VocabularyDataObject
                     if (isset($ret[$prop])) {
                         // checking if the target vocabulary can be found at the skosmos endpoint
                         $exuri = $val->getUri();
-                        $exvoc = $this->model->guessVocabularyFromURI($exuri);
+                        // if multiple vocabularies are found, the following method will return in priority the current vocabulary of the concept
+                        $exvoc = $this->model->guessVocabularyFromURI($exuri, $this->vocab->getId());
                         // if not querying the uri itself
                         if (!$exvoc) {
                             $response = null;
