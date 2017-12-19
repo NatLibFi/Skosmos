@@ -1799,7 +1799,7 @@ EOQ;
         $fcl = $this->generateFromClause();
         $propertyClause = implode('|', $props);
         $query = <<<EOQ
-SELECT ?broad ?parent ?member ?children ?grandchildren
+SELECT ?broad ?parent ?children ?grandchildren
 (SAMPLE(?lab) as ?label) (SAMPLE(?childlab) as ?childlabel) (GROUP_CONCAT(?topcs; separator=" ") as ?tops) 
 (SAMPLE(?nota) as ?notation) (SAMPLE(?childnota) as ?childnotation) $fcl
 WHERE {
