@@ -331,14 +331,27 @@ class Concept extends VocabularyDataObject
             }
             // EasyRdf requires full URIs to be in angle brackets
 
-            if (!in_array($prop, $this->DELETED_PROPERTIES) || ($this->isGroup() === false && $prop === 'skos:member')) {
-                // retrieve property label and super properties from default SPARQL endoint
+            if (!in_array($prop, $this->DELETED_PROPERTIES) || ($this->isGroup() === false && $prop === 'skos:member')) {         
+                
+                // retrieve property label and super properties from the current vocabulary first
                 // note that this imply that the property has an rdf:type declared for the query to work
-                $envLangLabels = $this->model->getDefaultSparql()->queryLabel($longUri, $this->getEnvLang());
-                $proplabel = ($envLangLabels)?$envLangLabels[$this->getEnvLang()]:$this->model->getDefaultSparql()->queryLabel($longUri, '')['']; 
+                $envLangLabels = $this->vocab->getSparql()->queryLabel($longUri, $this->getEnvLang());
+                $proplabel = ($envLangLabels)?$envLangLabels[$this->getEnvLang()]:$this->vocab->getSparql()->queryLabel($longUri, '')['']; 
+                
+                // if not found in current vocabulary, look up in the default graph to be able
+                // to read an ontology loaded in a separate graph
+                if(!$proplabel) {
+                    $envLangLabels = $this->model->getDefaultSparql()->queryLabel($longUri, $this->getEnvLang());
+                    $proplabel = ($envLangLabels)?$envLangLabels[$this->getEnvLang()]:$this->model->getDefaultSparql()->queryLabel($longUri, '')[''];
+                }                
+                
+                $superprops = $this->vocab->getSparql()->querySuperProperties($longUri);
+                // also look up superprops in the default graph if not found in current vocabulary
+                if(!$superprops) {
+                    $superprops = $this->model->getDefaultSparql()->querySuperProperties($longUri);
+                }
                 
                 // we're reading only one super property, even if there are multiple ones
-                $superprops = $this->model->getDefaultSparql()->querySuperProperties($longUri);
                 $superprop = ($superprops)?$superprops[0]:null;                
                 if ($superprop) {
                     $superprop = EasyRdf\RdfNamespace::shorten($superprop) ? EasyRdf\RdfNamespace::shorten($superprop) : $superprop;
