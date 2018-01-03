@@ -332,20 +332,24 @@ class Concept extends VocabularyDataObject
             // EasyRdf requires full URIs to be in angle brackets
 
             if (!in_array($prop, $this->DELETED_PROPERTIES) || ($this->isGroup() === false && $prop === 'skos:member')) {         
-                
-                // retrieve property label and super properties from the current vocabulary first
-                // note that this imply that the property has an rdf:type declared for the query to work
-                $envLangLabels = $this->vocab->getSparql()->queryLabel($longUri, $this->getEnvLang());
-                $proplabel = ($envLangLabels)?$envLangLabels[$this->getEnvLang()]:$this->vocab->getSparql()->queryLabel($longUri, '')['']; 
+                // retrieve property label and super properties from the current vocabulary first                
+                $propres = new EasyRdf\Resource($prop, $this->graph);
+                $proplabel = $propres->label($this->getEnvLang()) ? $propres->label($this->getEnvLang()) : $propres->label();
                 
                 // if not found in current vocabulary, look up in the default graph to be able
                 // to read an ontology loaded in a separate graph
+                // note that this imply that the property has an rdf:type declared for the query to work
                 if(!$proplabel) {
                     $envLangLabels = $this->model->getDefaultSparql()->queryLabel($longUri, $this->getEnvLang());
                     $proplabel = ($envLangLabels)?$envLangLabels[$this->getEnvLang()]:$this->model->getDefaultSparql()->queryLabel($longUri, '')[''];
                 }                
                 
-                $superprops = $this->vocab->getSparql()->querySuperProperties($longUri);
+                // look for superproperties in the current graph
+                $superprops = null;
+                foreach ($this->graph->allResources($prop, 'rdfs:subPropertyOf') as $subi) {
+                    $superprops[] = $subi->getUri();
+                }
+                
                 // also look up superprops in the default graph if not found in current vocabulary
                 if(!$superprops) {
                     $superprops = $this->model->getDefaultSparql()->querySuperProperties($longUri);
