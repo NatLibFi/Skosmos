@@ -3,15 +3,16 @@
 /**
  * Class for handling concept property values.
  */
-class ConceptPropertyValueLiteral
+class ConceptPropertyValueLiteral extends VocabularyDataObject
 {
     /** the literal object for the property value */
     private $literal;
     /** property type */
     private $type;
 
-    public function __construct($literal, $prop)
+    public function __construct($model, $vocab, $resource, $literal, $prop)
     {
+        parent::__construct($model, $vocab, $resource);
         $this->literal = $literal;
         $this->type = $prop;
     }
@@ -62,6 +63,31 @@ class ConceptPropertyValueLiteral
     public function getNotation()
     {
         return null;
+    }
+
+    public function hasXlProperties()
+    {
+        $ret = array();
+        $graph = $this->resource->getGraph();
+        $resources = $graph->resourcesMatching('skosxl:literalForm', $this->literal);
+        return !empty($resources);
+    }
+
+    public function getXlProperties()
+    {
+        $ret = array();
+        $graph = $this->resource->getGraph();
+        $resources = $graph->resourcesMatching('skosxl:literalForm', $this->literal);
+        foreach ($resources as $xlres) {
+            foreach ($xlres->properties() as $prop) {
+                foreach($graph->allLiterals($xlres, $prop) as $val) {
+                    if ($prop !== 'rdf:type') {
+                        $ret[$prop] = $val;
+                    }
+                }
+            }
+        }
+        return $ret;
     }
 
 }

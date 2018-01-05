@@ -25,7 +25,8 @@ class ConceptPropertyValueLiteralTest extends PHPUnit_Framework_TestCase
    */
   public function testConstructor() {
     $litmock = $this->getMockBuilder('EasyRdf\Literal')->disableOriginalConstructor()->getMock();
-    $prop = new ConceptPropertyValueLiteral($litmock, 'skosmos:someProperty');
+    $resmock = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
+    $prop = new ConceptPropertyValueLiteral($this->model, $this->vocab, $resmock, $litmock, 'skosmos:someProperty');
     $this->assertEquals(null, $prop->__toString());
   }
 
@@ -101,7 +102,8 @@ class ConceptPropertyValueLiteralTest extends PHPUnit_Framework_TestCase
    */
   public function testToStringEmpty() {
     $litmock = $this->getMockBuilder('EasyRdf\Literal')->disableOriginalConstructor()->getMock();
-    $lit = new ConceptPropertyValueLiteral($litmock, 'skosmos:testType');
+    $resmock = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
+    $lit = new ConceptPropertyValueLiteral($this->model, $this->vocab, $resmock, $litmock, 'skosmos:testType');
     $this->assertEquals('', $lit);
   }
 
@@ -110,7 +112,8 @@ class ConceptPropertyValueLiteralTest extends PHPUnit_Framework_TestCase
    */
   public function testGetNotation() {
     $litmock = $this->getMockBuilder('EasyRdf\Literal')->disableOriginalConstructor()->getMock();
-    $lit = new ConceptPropertyValueLiteral($litmock, 'skosmos:testType');
+    $resmock = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
+    $lit = new ConceptPropertyValueLiteral($this->model, $this->vocab, $resmock, $litmock, 'skosmos:testType');
     $this->assertEquals(null, $lit->getNotation());
   }
 
@@ -120,7 +123,8 @@ class ConceptPropertyValueLiteralTest extends PHPUnit_Framework_TestCase
   public function testGetContainsHtmlWhenThereIsNone() {
     $litmock = $this->getMockBuilder('EasyRdf\Literal')->disableOriginalConstructor()->getMock();
     $litmock->method('getValue')->will($this->returnValue('a regular literal'));
-    $lit = new ConceptPropertyValueLiteral($litmock, 'skosmos:testType');
+    $resmock = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
+    $lit = new ConceptPropertyValueLiteral($this->model, $this->vocab, $resmock, $litmock, 'skosmos:testType');
     $this->assertFalse($lit->getContainsHtml());
   }
   
@@ -130,7 +134,8 @@ class ConceptPropertyValueLiteralTest extends PHPUnit_Framework_TestCase
   public function testGetContainsHtmlWhenThereIsOnlyAOpeningTag() {
     $litmock = $this->getMockBuilder('EasyRdf\Literal')->disableOriginalConstructor()->getMock();
     $litmock->method('getValue')->will($this->returnValue('a <a href=\"http://skosmos.org\"> literal with broken html'));
-    $lit = new ConceptPropertyValueLiteral($litmock, 'skosmos:testType');
+    $resmock = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
+    $lit = new ConceptPropertyValueLiteral($this->model, $this->vocab, $resmock, $litmock, 'skosmos:testType');
     $this->assertFalse($lit->getContainsHtml());
   }
   
@@ -140,7 +145,8 @@ class ConceptPropertyValueLiteralTest extends PHPUnit_Framework_TestCase
   public function testGetContainsHtml() {
     $litmock = $this->getMockBuilder('EasyRdf\Literal')->disableOriginalConstructor()->getMock();
     $litmock->method('getValue')->will($this->returnValue('a <a href=\"http://skosmos.org\">literal</a> with valid html'));
-    $lit = new ConceptPropertyValueLiteral($litmock, 'skosmos:testType');
+    $resmock = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
+    $lit = new ConceptPropertyValueLiteral($this->model, $this->vocab, $resmock, $litmock, 'skosmos:testType');
     $this->assertTrue($lit->getContainsHtml());
   }
 }

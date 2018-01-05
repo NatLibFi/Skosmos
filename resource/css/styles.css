@@ -532,7 +532,7 @@ ul.dropdown-menu > li:last-child > input {
   min-width: 400px;
 }
 
-.qtip-skosmos * {
+.qtip-skosmos *, .reified-tooltip > p > span {
   color: #fff;
   font-size: 14px;
   font-weight: 400;
@@ -547,10 +547,23 @@ ul.dropdown-menu > li:last-child > input {
   display: none;
   margin-top: 5px;
   width: 100%;
+
+}
+
+.reified-property-value {
+  float: left;
 }
 
 .reified-property-value > img {
   width: 18px;
+}
+
+span.xl-label > img {
+  margin: -2px 2px 0 0;
+}
+
+span.xl-pref-label > img {
+  margin: 10px 2px;
 }
 
 /* front page stuff
@@ -1203,6 +1216,13 @@ tr {
   border-bottom: 0;
 }
 
+.other-languages > .col-xs-6.versal.replaced {
+  padding-right: 0;
+}
+
+.other-languages.first-of-language > .col-xs-6.versal-pref {
+  padding-right: 0;
+}
 
 .search-results-property-table tr.other-languages > td:last-child {
   border-bottom: none;
