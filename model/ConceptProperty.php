@@ -86,7 +86,7 @@ class ConceptProperty
     {
         if (!empty($this->values)) {
             uksort($this->values, function($a, $b) {
-                return strnatcasecmp($a,$b);
+                return strcoll(strtolower($a),strtolower($b));
             });
         }
         $this->is_sorted = true;
