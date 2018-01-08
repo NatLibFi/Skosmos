@@ -366,13 +366,13 @@ class Concept extends VocabularyDataObject
                 }                
                 
                 // look for superproperties in the current graph
-                $superprops = null;
+                $superprops = array();
                 foreach ($this->graph->allResources($prop, 'rdfs:subPropertyOf') as $subi) {
                     $superprops[] = $subi->getUri();
                 }
                 
                 // also look up superprops in the default graph if not found in current vocabulary
-                if(!$superprops) {
+                if(!$superprops || empty($superprops)) {
                     $superprops = $this->model->getDefaultSparql()->querySuperProperties($longUri);
                 }
                 
