@@ -119,15 +119,6 @@ class GlobalConfigTest extends PHPUnit_Framework_TestCase
   }
 
   /**
-   * @covers GlobalConfig::getServiceLogo
-   * @covers GlobalConfig::getConstant
-   */
-  public function testServiceLogoDefaultValue() {
-    $actual = $this->config->getServiceLogo();
-    $this->assertEquals(null, $actual);
-  }
-
-  /**
    * @covers GlobalConfig::getCustomCss
    * @covers GlobalConfig::getConstant
    */

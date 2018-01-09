@@ -187,14 +187,6 @@ class GlobalConfig {
     /**
      * @return string
      */
-    public function getServiceLogo() 
-    {
-        return $this->getConstant('SERVICE_LOGO', null);
-    }
-    
-    /**
-     * @return string
-     */
     public function getCustomCss() 
     {
         return $this->getConstant('CUSTOM_CSS', null);

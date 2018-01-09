@@ -43,10 +43,6 @@ class WebController extends Controller
         $this->twig->addGlobal("BaseHref", $this->getBaseHref());
         // setting the service name string from the config.inc
         $this->twig->addGlobal("ServiceName", $this->model->getConfig()->getServiceName());
-        // setting the service logo location from the config.inc
-        if ($this->model->getConfig()->getServiceLogo() !== null) {
-            $this->twig->addGlobal("ServiceLogo", $this->model->getConfig()->getServiceLogo());
-        }
 
         // setting the service custom css file from the config.inc
         if ($this->model->getConfig()->getCustomCss() !== null) {

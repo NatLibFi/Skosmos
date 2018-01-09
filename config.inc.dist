@@ -49,9 +49,6 @@ define ("LOG_FILE_NAME", NULL);
 # customize the service name
 define("SERVICE_NAME", "Skosmos");
 
-// customize the service logo by pointing to your logo here. 
-define("SERVICE_LOGO", "./resource/pics/logo.png");
-
 // customize the css by adding your own stylesheet
 define("CUSTOM_CSS", "resource/css/stylesheet.css");
 
