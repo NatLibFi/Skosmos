@@ -5,3 +5,4 @@ report
 components
 composer.phar
 composer.lock
+tests/jena-fuseki*
