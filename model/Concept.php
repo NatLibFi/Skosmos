@@ -282,6 +282,85 @@ class Concept extends VocabularyDataObject
 
                             if ($response) {
                                 $ret[$prop]->addValue(new ConceptMappingPropertyValue($this->model, $this->vocab, $response, $prop), $this->clang);
+                                //var_dump($ret[$prop]);
+                                //@TODO
+
+                                $ext_longUris = $response->propertyUris();
+                                $search_for_prop = $this->getVocab()->getConfig()->getPlugins()->getExtProperties();
+
+                                /*foreach ($ext_longUris as &$prop2) {
+                                    if (EasyRdf\RdfNamespace::shorten($prop2) !== null) {
+                                        // shortening property labels if possible
+                                        $prop2 = $sprop = EasyRdf\RdfNamespace::shorten($prop2);
+                                    } else {
+                                        $prop2 = $sprop2 = "<$prop2>";
+                                    }
+                                }
+                                // EasyRdf requires full URIs to be in angle brackets
+                                */
+
+                                // either this foreach or hasProperty
+
+                                $save = array($exuri => array());
+
+                                foreach ($ext_longUris as &$prop2) {
+                                    if (in_array($prop2, $search_for_prop)) {
+
+                                        $resList = $response->allResources('<' . $prop2 . '>');
+                                        $readyResList = array();
+                                        array_walk($resList, function(&$value, $key) use (&$readyResList, &$prop2) {
+                                            $value = $value->toRdfPhp();
+                                            $readyResList[$prop2][$key] = $value;
+                                        });
+                                        //var_dump($readyResList);
+                                        $litList = $response->allLiterals('<' . $prop2 . '>');
+                                        array_walk($litList, function(&$value) {
+                                            $value = $value->toRdfPhp();
+                                        });
+
+                                        if (isset($readyResList[$prop2])) {
+                                            $save[$exuri] = $readyResList;
+                                        }
+                                        else {
+                                            $save[$exuri][$prop2] = $litList;
+                                        }
+
+                                        //var_dump($propres2->toRdfPhp());
+                                        //echo $response->getUri();
+                                        //var_dump($prop2);
+                                    }
+                                }
+
+                                //var_dump($save);
+                                //var_dump($response->toRdfPhp());
+                                //var_dump($response->getGraph()->toRdfPhp());
+
+                                $this->graph->parse($save, 'php');
+                                /*
+
+                                var_dump($ext_longUris);
+
+                                foreach ($search_for_prop as $extProp) {
+                                    //$this->graph->parse($response->getGraph()->toRdfPhp(), 'php');
+                                    //echo $extProp;
+                                    //var_dump($response->getGraph()->resourcesMatching($extProp));
+                                    foreach ($response->getGraph()->resourcesMatching($extProp) as $match) {
+                                        echo $extProp;
+                                        var_dump($match->propertyUris());
+                                        var_dump($match);
+                                    }
+                                    //$this->graph->parse($response->getGraph()->resourcesMatching($extProp));
+                                }
+                                //var_dump($response->getGraph()->resources());
+                                var_dump($response->getGraph()->toRdfPhp());
+                                var_dump($response->getGraph());
+                                //var_dump($response);
+                                var_dump($this->resource);
+                                */
+                                //exit();
+                                //exit();
+                                //$this->graph
+                                //$this->graph->parse($response->getGraph()->serialise("rdfxml"),"rdfxml");
                                 continue;
                             }
                         }
@@ -662,5 +741,37 @@ class Concept extends VocabularyDataObject
         }
         ksort($labels);
         return $labels;
+    }
+
+    /**
+     * Dump concept graph as JSON-LD.
+     */
+    public function dumpJsonLd() {
+
+        $context = array(
+            'skos' => 'http://www.w3.org/2004/02/skos/core#',
+            'isothes' => 'http://purl.org/iso25964/skos-thes#',
+            'rdfs' => 'http://www.w3.org/2000/01/rdf-schema#',
+            'owl' => 'http://www.w3.org/2002/07/owl#',
+            'dct' => 'http://purl.org/dc/terms/',
+            'dc11' => 'http://purl.org/dc/elements/1.1/',
+            'uri' => '@id',
+            'type' => '@type',
+            'lang' => '@language',
+            'value' => '@value',
+            'graph' => '@graph',
+            'label' => 'rdfs:label',
+            'prefLabel' => 'skos:prefLabel',
+            'altLabel' => 'skos:altLabel',
+            'hiddenLabel' => 'skos:hiddenLabel',
+            'broader' => 'skos:broader',
+            'narrower' => 'skos:narrower',
+            'related' => 'skos:related',
+            'inScheme' => 'skos:inScheme',
+        );
+        $compactJsonLD = \ML\JsonLD\JsonLD::compact($this->graph->serialise('jsonld'), json_encode($context));
+        $results = \ML\JsonLD\JsonLD::toString($compactJsonLD);
+
+        return $results;
     }
 }
