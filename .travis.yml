@@ -10,19 +10,24 @@ cache:
     - $HOME/.composer 
     - vendor
 before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
   - cd tests
   - sh ./init_fuseki.sh
   - cd ..
+script:
+  - bundle exec rspec
 after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
   - pkill -f 'java -Xmx1200M -jar'
-  - vendor/bin/test-reporter --stdout > codeclimate.json
-  - "curl -X POST -d @codeclimate.json -H 'Content-Type: application/json' -H 'User-Agent: Code Climate (PHP Test Reporter v0.1.1)' https://codeclimate.com/test_reports"
 addons:
   code_climate:
     repo_token: fb98170a5c7ea9cc2bbab19ff26268335e6a11a4f8267ca935e5e8ff4624886c
 env:
   - FUSEKI_VERSION=3.4.0
   - FUSEKI_VERSION=SNAPSHOT
+  - CC_TEST_REPORTER_ID=fb98170a5c7ea9cc2bbab19ff26268335e6a11a4f8267ca935e5e8ff4624886c
 matrix:
   allow_failures:
   - env: FUSEKI_VERSION=SNAPSHOT
