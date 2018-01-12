@@ -34,14 +34,14 @@ var showNotation = {% if request.vocab and request.vocab.config.showNotation == 
 <script type="text/javascript" src="vendor/twitter/typeahead.js/dist/typeahead.bundle.min.js"></script>
 <script type="text/javascript" src="vendor/medialize/uri.js/src/URI.min.js"></script>
 <script type="text/javascript" src="vendor/davidstutz/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
-<script type="text/javascript" src="resource/js/waypoints.min.js"></script>
+<script type="text/javascript" src="vendor/twitter/bootstrap/dist/js/bootstrap.js"></script>
+<script type="text/javascript" src="vendor/grimmlink/qtip2/dist/jquery.qtip.min.js"></script>
+<script type="text/javascript" src="vendor/etdsolutions/waypoints/jquery.waypoints.min.js"></script>
+<script type="text/javascript" src="vendor/newerton/jquery-mousewheel/jquery.mousewheel.min.js"></script>
 <script type="text/javascript" src="resource/js/config.js"></script>
 <script type="text/javascript" src="resource/js/hierarchy.js"></script>
 <script type="text/javascript" src="resource/js/groups.js"></script>
-<script type="text/javascript" src="vendor/twitter/bootstrap/dist/js/bootstrap.js"></script>
-<script type="text/javascript" src="resource/js/jquery.mousewheel.min.js"></script>
 <script type="text/javascript" src="resource/js/jquery.mCustomScrollbar.min.js"></script>
-<script type="text/javascript" src="resource/js/jquery.qtip.min.js"></script>
 <script type="text/javascript" src="resource/js/lscache.min.js"></script>
 <script type="text/javascript" src="resource/js/scripts.js"></script>
 {% for files in request.plugins.pluginsJS %}{% for file in files %}<script type="text/javascript" src="{{ file }}"></script>{% endfor %}{% endfor %}
