@@ -16,8 +16,6 @@ before_script:
   - cd tests
   - sh ./init_fuseki.sh
   - cd ..
-script:
-  - bundle exec rspec
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
   - pkill -f 'java -Xmx1200M -jar'
