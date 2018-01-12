@@ -1,6 +1,6 @@
 <?php
 
-class ConceptPropertyValueTest extends PHPUnit_Framework_TestCase
+class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
 {
   private $model; 
   private $concept;

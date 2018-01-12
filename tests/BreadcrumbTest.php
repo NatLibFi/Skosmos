@@ -1,6 +1,6 @@
 <?php
 
-class BreadcrumbTest extends PHPUnit_Framework_TestCase
+class BreadcrumbTest extends PHPUnit\Framework\TestCase
 {
   
   /**

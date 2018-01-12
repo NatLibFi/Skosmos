@@ -1,6 +1,6 @@
 <?php
 
-class GenericSparqlTest extends PHPUnit_Framework_TestCase
+class GenericSparqlTest extends PHPUnit\Framework\TestCase
 {
   private $model; 
   private $graph; 

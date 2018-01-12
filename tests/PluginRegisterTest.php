@@ -1,6 +1,6 @@
 <?php
 
-class PluginRegisterTest extends PHPUnit_Framework_TestCase
+class PluginRegisterTest extends PHPUnit\Framework\TestCase
 {
   private $model; 
   private $concept;

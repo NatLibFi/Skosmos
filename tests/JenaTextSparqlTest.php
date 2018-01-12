@@ -1,6 +1,6 @@
 <?php
 
-class JenaTextSparqlTest extends PHPUnit_Framework_TestCase
+class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
 {
   private $model; 
   private $graph; 

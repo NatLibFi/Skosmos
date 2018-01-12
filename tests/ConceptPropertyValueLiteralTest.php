@@ -1,6 +1,6 @@
 <?php
 
-class ConceptPropertyValueLiteralTest extends PHPUnit_Framework_TestCase
+class ConceptPropertyValueLiteralTest extends PHPUnit\Framework\TestCase
 {
   private $model; 
   private $concept;
@@ -52,7 +52,7 @@ class ConceptPropertyValueLiteralTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers ConceptPropertyValueLiteral::getLabel
-   * @expectedException PHPUnit_Framework_Error
+   * @expectedException PHPUnit\Framework\Error\Error
    */
   public function testGetLabelThatIsABrokenDate() {
     $vocab = $this->model->getVocabulary('dates');

@@ -1,6 +1,6 @@
 <?php
 
-class GlobalConfigTest extends PHPUnit_Framework_TestCase
+class GlobalConfigTest extends PHPUnit\Framework\TestCase
 {
   
   private $config; 

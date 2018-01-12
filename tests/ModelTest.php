@@ -1,6 +1,6 @@
 <?php
 
-class ModelTest extends PHPUnit_Framework_TestCase
+class ModelTest extends PHPUnit\Framework\TestCase
 {
   private $params;
   private $model;
@@ -161,7 +161,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
   
   /**
    * @covers Model::searchConcepts
-   * @expectedException PHPUnit_Framework_Error
+   * @expectedException PHPUnit\Framework\Error\Error
    */
   public function testSearchWithNoParams() {
     $result = $this->model->searchConcepts();

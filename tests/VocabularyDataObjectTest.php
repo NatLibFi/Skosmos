@@ -1,7 +1,7 @@
 
 <?php
 
-class VocabularyDataObjectTest extends PHPUnit_Framework_TestCase
+class VocabularyDataObjectTest extends PHPUnit\Framework\TestCase
 {
 
   /**
