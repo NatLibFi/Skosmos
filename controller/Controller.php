@@ -21,7 +21,7 @@ class Controller
     public function __construct($model)
     {
         $this->model = $model;
-        $this->negotiator = new \Negotiation\FormatNegotiator();
+        $this->negotiator = new \Negotiation\Negotiator();
 
         // Specify the location of the translation tables
         bindtextdomain('skosmos', 'resource/translations');
