@@ -16,6 +16,30 @@
         }
       }
     },
+    "lscache": {
+      "type": "package",
+      "package": {
+        "name": "pamelafox/lscache",
+        "version": "1.0.5",
+        "source": {
+          "url": "https://github.com/pamelafox/lscache.git",
+          "type": "git",
+          "reference": "1.0.5"
+        }
+      }
+    },
+    "malihu-custom-scrollbar": {
+      "type": "package",
+      "package": {
+        "name": "malihu/malihu-custom-scrollbar-plugin",
+        "version": "3.1.5",
+        "source": {
+          "url": "https://github.com/malihu/malihu-custom-scrollbar-plugin.git",
+          "type": "git",
+          "reference": "3.1.5"
+        }
+      }
+    },
     "bootstrap-multiselect": {
       "type": "package",
       "package": {
@@ -48,6 +72,8 @@
     "ext-gettext": "*",
     "monolog/monolog": "1.23.*",
     "newerton/jquery-mousewheel": "dev-master",
+    "pamelafox/lscache": "1.0.5",
+    "malihu/malihu-custom-scrollbar-plugin": "3.1.5",
     "grimmlink/qtip2": "3.0.3"
   },
   "require-dev": {
