@@ -151,7 +151,7 @@ class Concept extends VocabularyDataObject
         $labels = $this->resource->allResources('skosxl:prefLabel');
         foreach($labels as $labres) {
             $label = $labres->getLiteral('skosxl:literalForm');
-            if ($label->getLang() == $this->clang) {
+            if ($label !== null && $label->getLang() == $this->clang) {
                 return new LabelSkosXL($this->model, $labres);
             }
         }
