@@ -34,7 +34,22 @@ class VocabularyConfig extends DataObject
 
         return $default;
     }
-    
+
+    /**
+     * Returns an array of URIs based on a property from the vocabularies.ttl configuration.
+     * @param string $property the property to query
+     */
+    private function getResources($property)
+    {
+        $resources = $this->resource->allResources($property);
+        $ret = array();
+        foreach ($resources as $res) {
+            $ret[] = $res->getURI();
+        }
+
+        return $ret;
+    }
+
     /**
      * Returns a boolean value based on a literal value from the vocabularies.ttl configuration.
      * @param string $property the property to query
@@ -308,12 +323,12 @@ class VocabularyConfig extends DataObject
      */
     public function getIndexClasses()
     {
-        $resources = $this->resource->allResources("skosmos:indexShowClass");
-        $ret = array();
-        foreach ($resources as $res) {
-            $ret[] = $res->getURI();
-        }
-        return $ret;
+        return $this->getResources("skosmos:indexShowClass");
+    }
+
+    public function getExtProperties()
+    {
+        return $this->getResources("skosmos:externalProperty");
     }
 
     /**

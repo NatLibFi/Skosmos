@@ -161,17 +161,7 @@ class PluginRegister {
      * @return array
      */
     public function getExtProperties() {
-
-        $defaultValues = ["http://purl.org/dc/elements/1.1/title", "http://purl.org/dc/terms/title",
-        "http://www.w3.org/2004/02/skos/core#prefLabel", "http://www.w3.org/2000/01/rdf-schema#label",
-        "http://www.w3.org/2004/02/skos/core#inScheme", "http://www.w3.org/2002/07/owl#sameAs",
-        "http://www.w3.org/2004/02/skos/core#exactMatch", "http://www.w3.org/2004/02/skos/core#closeMatch",
-        "http://rdfs.org/ns/void#inDataset"];
-
-        $ret = array_merge($defaultValues, $this->filterPlugins('ext-properties', true));
-
-        // flatten and remove duplicates
-        return array_unique($this->flatten($ret));
+        return array_unique($this->flatten($this->filterPlugins('ext-properties', true)));
     }
 }
 

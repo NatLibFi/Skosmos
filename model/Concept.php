@@ -44,6 +44,31 @@ class Concept extends VocabularyDataObject
         'owl:sameAs',
     );
 
+    /** default external properties we are interested in saving/displaying from mapped external objects */
+    private $DEFAULT_EXT_PROPERTIES = array(
+        "http://purl.org/dc/elements/1.1/title",
+        "http://purl.org/dc/terms/title",
+        "http://www.w3.org/2004/02/skos/core#prefLabel",
+        "http://www.w3.org/2004/02/skos/core#exactMatch",
+        "http://www.w3.org/2004/02/skos/core#closeMatch",
+        "http://www.w3.org/2004/02/skos/core#inScheme",
+        "http://www.w3.org/2000/01/rdf-schema#label",
+        "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
+        "http://www.w3.org/2002/07/owl#sameAs",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+        "http://rdfs.org/ns/void#inDataset",
+        "http://rdfs.org/ns/void#sparqlEndpoint",
+        "http://rdfs.org/ns/void#uriLookupEndpoint",
+        "http://schema.org/about",
+        "http://schema.org/description",
+        "http://schema.org/inLanguage",
+        "http://schema.org/name",
+        "http://schema.org/isPartOf",
+        "http://www.wikidata.org/prop/direct/P31",
+        "http://www.wikidata.org/prop/direct/P625",
+        "http://wikiba.se/ontology-beta#wikiGroup"
+    );
+
     /**
      * Initializing the concept object requires the following parameters.
      * @param Model $model
@@ -242,6 +267,47 @@ class Concept extends VocabularyDataObject
         return $this->foundbytype;
     }
 
+    public function processExternalResource($response)
+    {
+        $exGraph = $response->getGraph();
+        //d($exGraph->reversePropertyUris($response));
+        // catch external subjects that have $response as object
+        $extSubjects = $exGraph->resourcesMatching("http://schema.org/about", $response);
+
+        $search_for_properties =  array_unique(array_merge(
+            $this->DEFAULT_EXT_PROPERTIES,
+            $this->getVocab()->getConfig()->getExtProperties(),
+            $this->getVocab()->getConfig()->getPlugins()->getExtProperties()
+        ));
+
+        $this->addExternalTriplesToGraph($response, $search_for_properties, False);
+
+        foreach ($extSubjects as $extSubject) {
+           $this->addExternalTriplesToGraph($extSubject, $search_for_properties, True);
+        }
+
+    }
+
+    public function addExternalTriplesToGraph($resource, $properties, $inverse=False)
+    {
+        foreach ($properties as $prop) {
+            if ($resource->hasProperty($prop)) {
+
+                $resList = $resource->allResources('<' . $prop . '>');
+
+                foreach ($resList as $res) {
+                    $this->graph->addResource($resource, $prop,  $res);
+                }
+
+                $litList = $resource->allLiterals('<' . $prop . '>');
+
+                foreach ($litList as $lit) {
+                    $this->graph->addLiteral($resource, $prop, $lit);
+                }
+            }
+        }
+    }
+
     public function getMappingProperties()
     {
         $ret = array();
@@ -282,85 +348,12 @@ class Concept extends VocabularyDataObject
 
                             if ($response) {
                                 $ret[$prop]->addValue(new ConceptMappingPropertyValue($this->model, $this->vocab, $response, $prop), $this->clang);
-                                //var_dump($ret[$prop]);
                                 //@TODO
 
-                                $ext_longUris = $response->propertyUris();
-                                $search_for_prop = $this->getVocab()->getConfig()->getPlugins()->getExtProperties();
+                                Kint::$max_depth = 4;
 
-                                /*foreach ($ext_longUris as &$prop2) {
-                                    if (EasyRdf\RdfNamespace::shorten($prop2) !== null) {
-                                        // shortening property labels if possible
-                                        $prop2 = $sprop = EasyRdf\RdfNamespace::shorten($prop2);
-                                    } else {
-                                        $prop2 = $sprop2 = "<$prop2>";
-                                    }
-                                }
-                                // EasyRdf requires full URIs to be in angle brackets
-                                */
+                                $this->processExternalResource($response);
 
-                                // either this foreach or hasProperty
-
-                                $save = array($exuri => array());
-
-                                foreach ($ext_longUris as &$prop2) {
-                                    if (in_array($prop2, $search_for_prop)) {
-
-                                        $resList = $response->allResources('<' . $prop2 . '>');
-                                        $readyResList = array();
-                                        array_walk($resList, function(&$value, $key) use (&$readyResList, &$prop2) {
-                                            $value = $value->toRdfPhp();
-                                            $readyResList[$prop2][$key] = $value;
-                                        });
-                                        //var_dump($readyResList);
-                                        $litList = $response->allLiterals('<' . $prop2 . '>');
-                                        array_walk($litList, function(&$value) {
-                                            $value = $value->toRdfPhp();
-                                        });
-
-                                        if (isset($readyResList[$prop2])) {
-                                            $save[$exuri] = $readyResList;
-                                        }
-                                        else {
-                                            $save[$exuri][$prop2] = $litList;
-                                        }
-
-                                        //var_dump($propres2->toRdfPhp());
-                                        //echo $response->getUri();
-                                        //var_dump($prop2);
-                                    }
-                                }
-
-                                //var_dump($save);
-                                //var_dump($response->toRdfPhp());
-                                //var_dump($response->getGraph()->toRdfPhp());
-
-                                $this->graph->parse($save, 'php');
-                                /*
-
-                                var_dump($ext_longUris);
-
-                                foreach ($search_for_prop as $extProp) {
-                                    //$this->graph->parse($response->getGraph()->toRdfPhp(), 'php');
-                                    //echo $extProp;
-                                    //var_dump($response->getGraph()->resourcesMatching($extProp));
-                                    foreach ($response->getGraph()->resourcesMatching($extProp) as $match) {
-                                        echo $extProp;
-                                        var_dump($match->propertyUris());
-                                        var_dump($match);
-                                    }
-                                    //$this->graph->parse($response->getGraph()->resourcesMatching($extProp));
-                                }
-                                //var_dump($response->getGraph()->resources());
-                                var_dump($response->getGraph()->toRdfPhp());
-                                var_dump($response->getGraph());
-                                //var_dump($response);
-                                var_dump($this->resource);
-                                */
-                                //exit();
-                                //exit();
-                                //$this->graph
-                                //$this->graph->parse($response->getGraph()->serialise("rdfxml"),"rdfxml");
                                 continue;
                             }
                         }
