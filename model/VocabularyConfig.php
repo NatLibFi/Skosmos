@@ -38,6 +38,7 @@ class VocabularyConfig extends DataObject
     /**
      * Returns an array of URIs based on a property from the vocabularies.ttl configuration.
      * @param string $property the property to query
+     * @return string[] List of URIs
      */
     private function getResources($property)
     {
@@ -326,6 +327,10 @@ class VocabularyConfig extends DataObject
         return $this->getResources("skosmos:indexShowClass");
     }
 
+    /**
+     * Returns skosmos:externalProperty values set in the vocabularies.ttl config.
+     * @return array array of external property URIs (can be empty)
+     */
     public function getExtProperties()
     {
         return $this->getResources("skosmos:externalProperty");

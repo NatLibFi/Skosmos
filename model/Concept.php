@@ -267,42 +267,54 @@ class Concept extends VocabularyDataObject
         return $this->foundbytype;
     }
 
-    public function processExternalResource($response)
+    /**
+     * Processes a single external resource i.e., adds the properties from
+     * 1) $this->$DEFAULT_EXT_PROPERTIES
+     * 2) VocabConfig external properties
+     * 3) Possible plugin defined external properties
+     * to $this->graph
+     * @param EasyRdf\Resource $res
+     */
+    public function processExternalResource($res)
     {
-        $exGraph = $response->getGraph();
-        //d($exGraph->reversePropertyUris($response));
-        // catch external subjects that have $response as object
-        $extSubjects = $exGraph->resourcesMatching("http://schema.org/about", $response);
+        $exGraph = $res->getGraph();
+        // catch external subjects that have $res as object
+        $extSubjects = $exGraph->resourcesMatching("http://schema.org/about", $res);
 
-        $search_for_properties =  array_unique(array_merge(
+        $propList =  array_unique(array_merge(
             $this->DEFAULT_EXT_PROPERTIES,
             $this->getVocab()->getConfig()->getExtProperties(),
             $this->getVocab()->getConfig()->getPlugins()->getExtProperties()
         ));
 
-        $this->addExternalTriplesToGraph($response, $search_for_properties, False);
+        $this->addExternalTriplesToGraph($res, $propList);
 
         foreach ($extSubjects as $extSubject) {
-           $this->addExternalTriplesToGraph($extSubject, $search_for_properties, True);
+           $this->addExternalTriplesToGraph($extSubject, $propList);
         }
 
     }
 
-    public function addExternalTriplesToGraph($resource, $properties, $inverse=False)
+    /**
+     * Adds resource properties to $this->graph
+     * @param EasyRdf\Resource $res
+     * @param string[] $props Property URIs
+     */
+    public function addExternalTriplesToGraph($res, $props)
     {
-        foreach ($properties as $prop) {
-            if ($resource->hasProperty($prop)) {
+        foreach ($props as $prop) {
+            if ($res->hasProperty($prop)) {
 
-                $resList = $resource->allResources('<' . $prop . '>');
+                $resList = $res->allResources('<' . $prop . '>');
 
                 foreach ($resList as $res) {
-                    $this->graph->addResource($resource, $prop,  $res);
+                    $this->graph->addResource($res, $prop,  $res);
                 }
 
-                $litList = $resource->allLiterals('<' . $prop . '>');
+                $litList = $res->allLiterals('<' . $prop . '>');
 
                 foreach ($litList as $lit) {
-                    $this->graph->addLiteral($resource, $prop, $lit);
+                    $this->graph->addLiteral($res, $prop, $lit);
                 }
             }
         }
@@ -348,9 +360,6 @@ class Concept extends VocabularyDataObject
 
                             if ($response) {
                                 $ret[$prop]->addValue(new ConceptMappingPropertyValue($this->model, $this->vocab, $response, $prop), $this->clang);
-                                //@TODO
-
-                                Kint::$max_depth = 4;
 
                                 $this->processExternalResource($response);
 

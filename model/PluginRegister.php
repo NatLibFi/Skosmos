@@ -148,7 +148,8 @@ class PluginRegister {
     /**
      * Returns an array that is flattened from its possibly multidimensional form
      * copied from https://stackoverflow.com/a/1320156
-     * @return array
+     * @param mixed[] $array Flattens this input array
+     * @return array Flattened input
      */
     protected function flatten($array) {
         $return = array();
@@ -158,7 +159,7 @@ class PluginRegister {
 
     /**
      * Returns a flattened array containing the external properties we are interested in saving
-     * @return array
+     * @return string[]
      */
     public function getExtProperties() {
         return array_unique($this->flatten($this->filterPlugins('ext-properties', true)));
