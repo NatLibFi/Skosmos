@@ -1,6 +1,6 @@
 <?php
 
-class ConceptTest extends PHPUnit_Framework_TestCase
+class ConceptTest extends PHPUnit\Framework\TestCase
 {
   private $model; 
   private $concept;
@@ -247,7 +247,7 @@ class ConceptTest extends PHPUnit_Framework_TestCase
    * @covers Concept::getDate
    * @covers ConceptProperty::getValues
    * @covers ConceptPropertyValueLiteral::getLabel
-   * @expectedException PHPUnit_Framework_Error
+   * @expectedException PHPUnit\Framework\Error\Error
    */
 
   public function testGetTimestampInvalidWarning() {

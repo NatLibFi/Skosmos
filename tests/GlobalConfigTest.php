@@ -1,6 +1,6 @@
 <?php
 
-class GlobalConfigTest extends PHPUnit_Framework_TestCase
+class GlobalConfigTest extends PHPUnit\Framework\TestCase
 {
   
   private $config; 
@@ -115,15 +115,6 @@ class GlobalConfigTest extends PHPUnit_Framework_TestCase
    */
   public function testgetServiceTaglineDefaultValue() {
     $actual = $this->config->getServiceTagline();
-    $this->assertEquals(null, $actual);
-  }
-
-  /**
-   * @covers GlobalConfig::getServiceLogo
-   * @covers GlobalConfig::getConstant
-   */
-  public function testServiceLogoDefaultValue() {
-    $actual = $this->config->getServiceLogo();
     $this->assertEquals(null, $actual);
   }
 

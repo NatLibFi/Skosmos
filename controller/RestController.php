@@ -30,7 +30,7 @@ class RestController extends Controller
         }
         
         // otherwise negotiate suitable format for the response and return that
-        $negotiator = new \Negotiation\FormatNegotiator();
+        $negotiator = new \Negotiation\Negotiator();
         $priorities = array('application/json', 'application/ld+json');
         $best = filter_input(INPUT_SERVER, 'HTTP_ACCEPT', FILTER_SANITIZE_STRING) ? $negotiator->getBest(filter_input(INPUT_SERVER, 'HTTP_ACCEPT', FILTER_SANITIZE_STRING), $priorities) : null;
         $format = ($best !== null) ? $best->getValue() : $priorities[0];

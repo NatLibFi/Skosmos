@@ -1,6 +1,6 @@
 <?php
 
-class VocabularyConfigTest extends PHPUnit_Framework_TestCase
+class VocabularyConfigTest extends PHPUnit\Framework\TestCase
 {
   
   private $model; 
@@ -105,7 +105,7 @@ class VocabularyConfigTest extends PHPUnit_Framework_TestCase
   
   /**
    * @covers VocabularyConfig::getDefaultLanguage
-   * @expectedException PHPUnit_Framework_Error 
+   * @expectedException PHPUnit\Framework\Error\Error
    */
   public function testGetDefaultLanguageWhenNotSet() {
     $vocab = $this->model->getVocabulary('testdiff');
@@ -164,7 +164,7 @@ class VocabularyConfigTest extends PHPUnit_Framework_TestCase
 
   /**
    * @covers VocabularyConfig::getDataURLs
-   * @expectedException PHPUnit_Framework_Error_Warning
+   * @expectedException PHPUnit\Framework\Error\Warning
    */
   public function testGetDataURLsNotGuessable() {
     $vocab = $this->model->getVocabulary('test');

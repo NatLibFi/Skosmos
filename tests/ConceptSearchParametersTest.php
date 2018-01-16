@@ -1,6 +1,6 @@
 <?php
 
-class ConceptSearchParametersTest extends PHPUnit_Framework_TestCase
+class ConceptSearchParametersTest extends PHPUnit\Framework\TestCase
 {
     private $model; 
     private $request;

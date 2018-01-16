@@ -1,6 +1,6 @@
 <?php
 
-class VocabularyCategoryTest extends PHPUnit_Framework_TestCase
+class VocabularyCategoryTest extends PHPUnit\Framework\TestCase
 {
   private $model; 
   private $mockres;

@@ -2,7 +2,7 @@
 
 use Symfony\Component\DomCrawler\Crawler;
 
-class FeedbackTest extends PHPUnit_Framework_TestCase
+class FeedbackTest extends PHPUnit\Framework\TestCase
 {
   private $model;
   private $request;

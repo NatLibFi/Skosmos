@@ -1,7 +1,7 @@
 
 <?php
 
-class DataObjectTest extends PHPUnit_Framework_TestCase
+class DataObjectTest extends PHPUnit\Framework\TestCase
 {
 
   /**
