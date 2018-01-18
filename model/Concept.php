@@ -275,7 +275,7 @@ class Concept extends VocabularyDataObject
      * to $this->graph
      * @param EasyRdf\Resource $res
      */
-    public function processExternalResource($res)
+    private function processExternalResource($res)
     {
         $exGraph = $res->getGraph();
         // catch external subjects that have $res as object
@@ -287,10 +287,11 @@ class Concept extends VocabularyDataObject
             $this->getVocab()->getConfig()->getPlugins()->getExtProperties()
         ));
 
-        $this->addExternalTriplesToGraph($res, $propList);
+        $seen = array();
+        $this->addExternalTriplesToGraph($res, $seen, $propList);
 
         foreach ($extSubjects as $extSubject) {
-           $this->addExternalTriplesToGraph($extSubject, $propList);
+           $this->addExternalTriplesToGraph($extSubject, $seen, $propList);
         }
 
     }
@@ -298,23 +299,74 @@ class Concept extends VocabularyDataObject
     /**
      * Adds resource properties to $this->graph
      * @param EasyRdf\Resource $res
-     * @param string[] $props Property URIs
+     * @param string[] $seen Processed resources so far
+     * @param string[] $props (optional) limit to these property URIs
      */
-    public function addExternalTriplesToGraph($res, $props)
+    private function addExternalTriplesToGraph($res, &$seen, $props=null)
     {
-        foreach ($props as $prop) {
-            if ($res->hasProperty($prop)) {
+        if (array_key_exists($res->getUri(), $seen)) {
+            return;
+        }
 
-                $resList = $res->allResources('<' . $prop . '>');
+        $seen[$res->getUri()] = True;
 
-                foreach ($resList as $res) {
-                    $this->graph->addResource($res, $prop,  $res);
+        if ($res->isBNode() || is_null($props)) {
+            foreach ($res->propertyUris() as $prop) {
+                $this->addPropertyValues($res, $prop, $seen);
+            }
+        }
+        else {
+            foreach ($props as $prop) {
+                if ($res->hasProperty($prop)) {
+                    $this->addPropertyValues($res, $prop, $seen);
                 }
+            }
+        }
+    }
 
-                $litList = $res->allLiterals('<' . $prop . '>');
+    /**
+     * Adds values of a single single property of a resource to $this->graph
+     * implements Concise Bounded Description definition
+     * @param EasyRdf\Resource $res
+     * @param string $prop
+     * @param string[] $seen Processed resources so far
+     */
+    private function addPropertyValues($res, $prop, &$seen) {
 
-                foreach ($litList as $lit) {
-                    $this->graph->addLiteral($res, $prop, $lit);
+        $resList = $res->allResources('<' . $prop . '>');
+
+        foreach ($resList as $res2) {
+            if ($res2->isBNode()) {
+                $this->addExternalTriplesToGraph($res2, $seen);
+            }
+            $this->graph->addResource($res, $prop, $res2);
+
+            $pos_reifs = $res->getGraph()->resourcesMatching("http://www.w3.org/1999/02/22-rdf-syntax#object", $res2);
+            foreach ($pos_reifs as $pos_reif) {
+                if ($pos_reif->isA("http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement") &&
+                    $pos_reif->hasProperty("http://www.w3.org/1999/02/22-rdf-syntax#predicate", $prop) &&
+                    $pos_reif->hasProperty("http://www.w3.org/1999/02/22-rdf-syntax#subject", $res)) {
+                   $this->addExternalTriplesToGraph($pos_reif, $seen);
+                }
+            }
+        }
+
+        $litList = $res->allLiterals('<' . $prop . '>');
+
+        foreach ($litList as $lit) {
+            $datatypeRes = $res->getGraph()->resource($lit->getDatatypeUri());
+            if ($datatypeRes->isBNode()) {
+                $this->addExternalTriplesToGraph($datatypeRes, $seen);
+            }
+
+            $this->graph->addLiteral($res, $prop, $lit);
+
+            $pos_reifs = $res->getGraph()->resourcesMatching("http://www.w3.org/1999/02/22-rdf-syntax#object", $lit);
+            foreach ($pos_reifs as $pos_reif) {
+                if ($pos_reif->isA("http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement") &&
+                    $pos_reif->hasProperty("http://www.w3.org/1999/02/22-rdf-syntax#predicate", $prop) &&
+                    $pos_reif->hasProperty("http://www.w3.org/1999/02/22-rdf-syntax#subject", $res)) {
+                   $this->addExternalTriplesToGraph($pos_reif, $seen);
                 }
             }
         }
