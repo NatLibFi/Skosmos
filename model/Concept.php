@@ -331,8 +331,8 @@ class Concept extends VocabularyDataObject
      * @param string $prop
      * @param string[] $seen Processed resources so far
      */
-    private function addPropertyValues($res, $prop, &$seen) {
-
+    private function addPropertyValues($res, $prop, &$seen)
+    {
         $resList = $res->allResources('<' . $prop . '>');
 
         foreach ($resList as $res2) {
@@ -340,15 +340,7 @@ class Concept extends VocabularyDataObject
                 $this->addExternalTriplesToGraph($res2, $seen);
             }
             $this->graph->addResource($res, $prop, $res2);
-
-            $pos_reifs = $res->getGraph()->resourcesMatching("http://www.w3.org/1999/02/22-rdf-syntax#object", $res2);
-            foreach ($pos_reifs as $pos_reif) {
-                if ($pos_reif->isA("http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement") &&
-                    $pos_reif->hasProperty("http://www.w3.org/1999/02/22-rdf-syntax#predicate", $prop) &&
-                    $pos_reif->hasProperty("http://www.w3.org/1999/02/22-rdf-syntax#subject", $res)) {
-                   $this->addExternalTriplesToGraph($pos_reif, $seen);
-                }
-            }
+            $this->addReifications($res, $prop, $res2, $seen);
         }
 
         $litList = $res->allLiterals('<' . $prop . '>');
@@ -360,14 +352,25 @@ class Concept extends VocabularyDataObject
             }
 
             $this->graph->addLiteral($res, $prop, $lit);
+            $this->addReifications($res, $prop, $lit, $seen);
+        }
+    }
 
-            $pos_reifs = $res->getGraph()->resourcesMatching("http://www.w3.org/1999/02/22-rdf-syntax#object", $lit);
-            foreach ($pos_reifs as $pos_reif) {
-                if ($pos_reif->isA("http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement") &&
-                    $pos_reif->hasProperty("http://www.w3.org/1999/02/22-rdf-syntax#predicate", $prop) &&
-                    $pos_reif->hasProperty("http://www.w3.org/1999/02/22-rdf-syntax#subject", $res)) {
-                   $this->addExternalTriplesToGraph($pos_reif, $seen);
-                }
+    /**
+     * Adds reifications of a triple to $this->graph
+     * @param EasyRdf\Resource $sub
+     * @param string $pred
+     * @param EasyRdf\Resource|EasyRdf\Literal $obj
+     * @param string[] $seen Processed resources so far
+     */
+    private function addReifications($sub, $pred, $obj, &$seen)
+    {
+        $pos_reifs = $res->getGraph()->resourcesMatching("http://www.w3.org/1999/02/22-rdf-syntax#object", $obj);
+        foreach ($pos_reifs as $pos_reif) {
+            if ($pos_reif->isA("http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement") &&
+                $pos_reif->hasProperty("http://www.w3.org/1999/02/22-rdf-syntax#predicate", $pred) &&
+                $pos_reif->hasProperty("http://www.w3.org/1999/02/22-rdf-syntax#subject", $sub)) {
+                $this->addExternalTriplesToGraph($pos_reif, $seen);
             }
         }
     }
