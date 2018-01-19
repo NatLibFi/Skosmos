@@ -113,13 +113,8 @@ class Concept extends VocabularyDataObject
         if ($this->resource->label($lang) !== null) {
             return $this->resource->label($lang);
         }
-
-        // 2. label in the vocabulary default language
-        if ($this->resource->label($this->vocab->getConfig()->getDefaultLanguage()) !== null) {
-            return $this->resource->label($this->vocab->getConfig()->getDefaultLanguage());
-        }
-
-        // 3. label in a subtag of the current language
+        
+        // 2. label in a subtag of the current language
         // We need to check all the labels in case one of them matches a subtag of the current language
         foreach($this->resource->allLiterals('skos:prefLabel') as $label) {
             // the label lang code is a subtag of the UI lang eg. en-GB - create a new literal with the main language
@@ -128,7 +123,19 @@ class Concept extends VocabularyDataObject
             }
         }
 
-        // 4. label in any language, including literal with empty language tag
+        // 3. label in the vocabulary default language
+        foreach ($this->vocab->getConfig()->getFallbackLanguages() as $fallback) {
+            if ($this->resource->label($fallback) !== null) {
+                return $this->resource->label($fallback);
+            }
+        }
+
+        // 4. label in the vocabulary default language
+        if ($this->resource->label($this->vocab->getConfig()->getDefaultLanguage()) !== null) {
+            return $this->resource->label($this->vocab->getConfig()->getDefaultLanguage());
+        }
+
+        // 5. label in any language, including literal with empty language tag
         $label = $this->resource->label();
         if ($label !== null) {
             return $label->getLang() ? $label->getValue() . " (" . $label->getLang() . ")" : $label->getValue();

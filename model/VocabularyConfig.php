@@ -448,4 +448,21 @@ class VocabularyConfig extends DataObject
         }
         return $ret;
     }
+
+    /**
+     * Returns an array of fallback languages that is ordered by priority and
+     * defined in the vocabulary configuration as a collection.
+     * @return array of language code strings
+     */
+    public function getFallbackLanguages()
+    {
+        $ret = array();
+        foreach ($this->resource->get('skosmos:fallbackLanguages') as $lang) {
+            $ret[] .= $lang;
+        }
+        if (empty($ret)) { // using the vocabulary default language as a fallback.
+            $ret[] = $this->getDefaultLanguage();
+        }
+        return $ret;
+    }
 }
