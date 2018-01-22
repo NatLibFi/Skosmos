@@ -127,7 +127,7 @@ class Concept extends VocabularyDataObject
             if (!$label->getLang()) {
                 return $label->getValue();
             }
-            return $label->getValue() . " (" . $label->getLang() . ")";
+            return EasyRdf\Literal::create($label->getValue(), $label->getLang());
         }
 
         // empty

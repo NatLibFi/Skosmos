@@ -49,7 +49,7 @@
       </div>
       {% else %}
       <div class="property-value-column">{% if concept.notation %}<span class="notation">{{ concept.notation }}</span>{% endif %}
-        {% if concept.hasXlLabel %}<span class="reified-property-value xl-pref-label"><img src="resource/pics/about.png"></span><div class="reified-tooltip">{% for key, val in concept.xlLabel.properties %}{% if key != 'rdf:type' and key != 'skosxl:literalForm' %}<p>{{ key|trans }}: <span class="versal">{{ val }}</span></p>{% endif %}{% endfor %}</div><span class="prefLabel">{{ concept.xlLabel }}</span>{% else %}<span class="prefLabel conceptlabel">{{ concept.label }}</span>{% if concept.label.lang != request.contentLang %}<span class="prefLabelLang"> ({{ concept.label.lang }})</span>{% endif %}{% endif %}
+        {% if concept.hasXlLabel %}<span class="reified-property-value xl-pref-label"><img src="resource/pics/about.png"></span><div class="reified-tooltip">{% for key, val in concept.xlLabel.properties %}{% if key != 'rdf:type' and key != 'skosxl:literalForm' %}<p>{{ key|trans }}: <span class="versal">{{ val }}</span></p>{% endif %}{% endfor %}</div><span class="prefLabel">{{ concept.xlLabel }}</span>{% else %}<span class="prefLabel conceptlabel">{{ concept.label }}</span>{% if concept.label.lang != request.contentLang and concept.label.lang != '' %}<span class="prefLabelLang"> ({{ concept.label.lang }})</span>{% endif %}{% endif %}
       </div>
       {% endif %}
         <div class="col-md-12"><div class="preflabel-spacer"></div></div>
