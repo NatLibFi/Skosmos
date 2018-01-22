@@ -125,7 +125,7 @@ class Concept extends VocabularyDataObject
         $label = $this->resource->label();
         if ($label !== null) {
             if (!$label->getLang()) {
-                $label->getValue();
+                return $label->getValue();
             }
             return $label->getValue() . " (" . $label->getLang() . ")";
         }
