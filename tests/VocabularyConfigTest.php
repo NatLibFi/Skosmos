@@ -362,4 +362,21 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $vocab = $this->model->getVocabulary('testdiff');
     $this->assertEquals(array(), $vocab->getConfig()->getTypes('en'));
   }
+
+  /**
+   * @covers VocabularyConfig::getLanguageOrder
+   */
+  public function testGetLanguageOrderNotSet() {
+    $vocab = $this->model->getVocabulary('test');
+    $this->assertEquals(array('en'), $vocab->getConfig()->getLanguageOrder('en'));
+  }
+
+  /**
+   * @covers VocabularyConfig::getLanguageOrder
+   */
+  public function testGetLanguageOrder() {
+    $vocab = $this->model->getVocabulary('subtag');
+    $this->assertEquals(array('en', 'fr', 'de', 'sv'), $vocab->getConfig()->getLanguageOrder('en'));
+    $this->assertEquals(array('fi', 'fr', 'de', 'sv', 'en'), $vocab->getConfig()->getLanguageOrder('fi'));
+  }
 }
