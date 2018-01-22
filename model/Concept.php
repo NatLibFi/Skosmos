@@ -108,37 +108,26 @@ class Concept extends VocabularyDataObject
      */
     public function getLabel()
     {
-        $lang = $this->clang;
-        // 1. label in current language
-        if ($this->resource->label($lang) !== null) {
-            return $this->resource->label($lang);
-        }
-        
-        // 2. label in a subtag of the current language
-        // We need to check all the labels in case one of them matches a subtag of the current language
-        foreach($this->resource->allLiterals('skos:prefLabel') as $label) {
-            // the label lang code is a subtag of the UI lang eg. en-GB - create a new literal with the main language
-            if ($label !== null && strpos($label->getLang(), $lang . '-') === 0) {
-                return EasyRdf\Literal::create($label, $lang);
-            }
-        }
-
-        // 3. label in the vocabulary default language
-        foreach ($this->vocab->getConfig()->getFallbackLanguages() as $fallback) {
+        foreach ($this->vocab->getConfig()->getLanguageOrder($this->clang) as $fallback) {
             if ($this->resource->label($fallback) !== null) {
                 return $this->resource->label($fallback);
             }
+            // We need to check all the labels in case one of them matches a subtag of the current language
+            foreach($this->resource->allLiterals('skos:prefLabel') as $label) {
+                // the label lang code is a subtag of the UI lang eg. en-GB - create a new literal with the main language
+                if ($label !== null && strpos($label->getLang(), $fallback . '-') === 0) {
+                    return EasyRdf\Literal::create($label, $fallback);
+                }
+            }
         }
 
-        // 4. label in the vocabulary default language
-        if ($this->resource->label($this->vocab->getConfig()->getDefaultLanguage()) !== null) {
-            return $this->resource->label($this->vocab->getConfig()->getDefaultLanguage());
-        }
-
-        // 5. label in any language, including literal with empty language tag
+        // Last resort: label in any language, including literal with empty language tag
         $label = $this->resource->label();
         if ($label !== null) {
-            return $label->getLang() ? $label->getValue() . " (" . $label->getLang() . ")" : $label->getValue();
+            if (!$label->getLang()) {
+                $label->getValue();
+            }
+            return $label->getValue() . " (" . $label->getLang() . ")";
         }
 
         // empty
