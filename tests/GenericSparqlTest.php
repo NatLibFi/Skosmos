@@ -2,8 +2,8 @@
 
 class GenericSparqlTest extends PHPUnit\Framework\TestCase
 {
-  private $model; 
-  private $graph; 
+  private $model;
+  private $graph;
   private $sparql;
   private $vocab;
   private $params;
@@ -17,7 +17,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     $this->params = $this->getMockBuilder('ConceptSearchParameters')->disableOriginalConstructor()->getMock();
     $this->sparql = new GenericSparql('http://localhost:3030/ds/sparql', $this->graph, $this->model);
   }
- 
+
   /**
    * @covers GenericSparql::__construct
    */
@@ -25,7 +25,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     $gs = new GenericSparql('http://localhost:3030/ds/sparql', $this->graph, $this->model);
     $this->assertInstanceOf('GenericSparql', $gs);
   }
-  
+
   /**
    * @covers GenericSparql::getGraph
    */
@@ -43,7 +43,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     $actual = $this->sparql->countConcepts();
     $this->assertEquals(16, $actual['http://www.w3.org/2004/02/skos/core#Concept']['count']);
   }
-  
+
   /**
    * @covers GenericSparql::countLangConcepts
    * @covers GenericSparql::generateCountLangConceptsQuery
@@ -54,7 +54,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     $this->assertEquals(11, $actual['en']['skos:prefLabel']);
     $this->assertEquals(1, $actual['en']['skos:altLabel']);
   }
-  
+
   /**
    * @covers GenericSparql::countLangConcepts
    * @covers GenericSparql::generateCountLangConceptsQuery
@@ -66,7 +66,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     $this->assertEquals(1, $actual['en']['skos:altLabel']);
     $this->assertEquals(2, $actual['fi']['skos:prefLabel']);
   }
-  
+
   /**
    * @covers GenericSparql::queryFirstCharacters
    * @covers GenericSparql::generateFirstCharactersQuery
@@ -85,7 +85,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     $actual = $this->sparql->queryLabel('http://notfound', null);
     $this->assertEquals(null, $actual);
   }
-  
+
   /**
    * @covers GenericSparql::queryLabel
    */
@@ -93,7 +93,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     $actual = $this->sparql->queryLabel('http://www.skosmos.skos/test/ta120', null);
     $this->assertEquals(array(), $actual);
   }
-  
+
   /**
    * @covers GenericSparql::queryConceptsAlphabetical
    * @covers GenericSparql::generateAlphabeticalListQuery
@@ -124,7 +124,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     );
     $this->assertEquals($expected, $actual);
   }
-  
+
   /**
    * @covers GenericSparql::queryConceptsAlphabetical
    * @covers GenericSparql::generateAlphabeticalListQuery
@@ -150,7 +150,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     );
     $this->assertEquals($expected, $actual);
   }
-  
+
   /**
    * @covers GenericSparql::queryConceptsAlphabetical
    * @covers GenericSparql::generateAlphabeticalListQuery
@@ -176,7 +176,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     );
     $this->assertEquals($expected, $actual);
   }
-  
+
   /**
    * @covers GenericSparql::queryConceptsAlphabetical
    * @covers GenericSparql::generateAlphabeticalListQuery
@@ -200,7 +200,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     $this->assertEquals(1, sizeof($actual));
     $this->assertEquals('-"special" character \\example\\', $actual[0]['prefLabel']);
   }
-  
+
   /**
    * @covers GenericSparql::queryConceptsAlphabetical
    * @covers GenericSparql::generateAlphabeticalListQuery
@@ -212,7 +212,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     $this->assertEquals(1, sizeof($actual));
     $this->assertContains("3D", $actual[0]['prefLabel']);
   }
-  
+
   /**
    * @covers GenericSparql::queryConceptsAlphabetical
    * @covers GenericSparql::generateAlphabeticalListQuery
@@ -350,7 +350,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
       $this->assertEquals('Test conceptscheme', $label['label']);
     }
   }
-  
+
   /**
    * @covers GenericSparql::queryConceptSchemes
    * @covers GenericSparql::generateQueryConceptSchemesQuery
@@ -359,7 +359,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
   public function testQueryConceptSchemesSubject()
   {
       $sparql = new GenericSparql('http://localhost:3030/ds/sparql', 'http://www.skosmos.skos/test-concept-schemes/', $this->model);
-      
+
       $actual = $sparql->queryConceptSchemes('en');
       $expected = array(
           'http://exemple.fr/domains' => array(
@@ -390,7 +390,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
               'prefLabel' => 'The Thesaurus'
           ),
       );
-      
+
       $this->assertEquals($expected, $actual);
   }
 
@@ -439,8 +439,8 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
       $this->assertEquals('http://www.skosmos.skos/multiple-schemes/c1-in-cs1', $actual[0]['uri']);
       $this->assertEquals('http://www.skosmos.skos/multiple-schemes/c2-in-cs2', $actual[1]['uri']);
   }
-  
-  
+
+
   /**
    * @covers GenericSparql::queryConcepts
    * @covers GenericSparql::generateConceptSearchQueryCondition
@@ -558,7 +558,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     $this->assertEquals(1, sizeof($actual));
     $this->assertEquals('Bass', $actual[0]['prefLabel']);
   }
-  
+
   /**
    * @covers GenericSparql::queryConcepts
    * @covers GenericSparql::generateConceptSearchQueryCondition
@@ -577,7 +577,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     foreach($actual as $match)
       $this->assertContains('bass', $match['prefLabel'], '',true);
   }
-  
+
   /**
    * @covers GenericSparql::queryConcepts
    * @covers GenericSparql::generateConceptSearchQueryCondition
@@ -596,7 +596,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     foreach($actual as $match)
       $this->assertContains('bass', $match['prefLabel'], '',true);
   }
-  
+
   /**
    * @covers GenericSparql::queryLabel
    * @covers GenericSparql::generateLabelQuery
@@ -617,7 +617,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     $expected = array('en' => 'Carp');
     $this->assertEquals($expected, $actual);
   }
-  
+
   /**
    * @covers GenericSparql::queryLabel
    * @covers GenericSparql::generateLabelQuery
@@ -640,7 +640,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     $expected = array('http://www.skosmos.skos/test/ta1' => array('label' => 'Fish'));
     $this->assertEquals($expected, $actual);
   }
-  
+
   /**
    * @covers GenericSparql::queryProperty
    * @covers GenericSparql::transformPropertyQueryResults
@@ -652,7 +652,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     $expected = array();
     $this->assertEquals($expected, $actual);
   }
-  
+
   /**
    * @covers GenericSparql::queryProperty
    * @covers GenericSparql::transformPropertyQueryResults
@@ -673,22 +673,22 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
   {
     $actual = $this->sparql->queryTransitiveProperty('http://www.skosmos.skos/test/ta111', array('skos:broader'), 'en', '10');
     $expected = array(
-      'http://www.skosmos.skos/test/ta111' => 
+      'http://www.skosmos.skos/test/ta111' =>
         array(
           'label' => 'Tuna',
-          'direct' => 
+          'direct' =>
           array (
             0 => 'http://www.skosmos.skos/test/ta1',
           ),
         ),
-        'http://www.skosmos.skos/test/ta1' => 
+        'http://www.skosmos.skos/test/ta1' =>
         array (
           'label' => 'Fish',
         )
     );
     $this->assertEquals($expected, $actual);
   }
-  
+
   /**
    * @covers GenericSparql::queryTransitiveProperty
    * @covers GenericSparql::generateTransitivePropertyQuery
@@ -698,22 +698,22 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
   {
     $actual = $this->sparql->queryTransitiveProperty('http://www.skosmos.skos/test/ta122', array('skos:broader'), 'en', '10');
     $expected = array(
-      'http://www.skosmos.skos/test/ta122' => 
+      'http://www.skosmos.skos/test/ta122' =>
         array (
           'label' => 'Black sea bass',
-          'direct' => 
+          'direct' =>
           array (
             0 => 'http://www.skosmos.skos/test/ta116',
           ),
         ),
-        'http://www.skosmos.skos/test/ta1' => 
+        'http://www.skosmos.skos/test/ta1' =>
         array (
           'label' => 'Fish',
         ),
-        'http://www.skosmos.skos/test/ta116' => 
+        'http://www.skosmos.skos/test/ta116' =>
         array (
           'label' => 'Bass',
-          'direct' => 
+          'direct' =>
           array (
             0 => 'http://www.skosmos.skos/test/ta1',
           ),
@@ -738,7 +738,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     foreach ($expected as $uri)
       $this->assertArrayHasKey($uri, $actual_uris);
   }
-  
+
   /**
    * @covers GenericSparql::queryChildren
    * @covers GenericSparql::generateChildQuery
@@ -789,7 +789,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
       'http://www.skosmos.skos/test/ta116' => array (
         'uri' => 'http://www.skosmos.skos/test/ta116',
         'prefLabel' => 'Bass',
-        'broader' => 
+        'broader' =>
         array (
           0 => 'http://www.skosmos.skos/test/ta1',
         ),
@@ -797,7 +797,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
       'http://www.skosmos.skos/test/ta122' => array (
         'uri' => 'http://www.skosmos.skos/test/ta122',
         'prefLabel' => 'Black sea bass',
-        'broader' => 
+        'broader' =>
         array (
           0 => 'http://www.skosmos.skos/test/ta116',
         ),
@@ -896,7 +896,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     $this->assertEquals('http://www.skosmos.skos/groups/ta113', $actual[0]['uri']);
     $this->assertEquals(1, sizeof($actual));
   }
-  
+
   /**
    * @covers GenericSparql::listConceptGroupContents
    * @covers GenericSparql::generateConceptGroupContentsQuery
@@ -989,7 +989,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     $this->assertEquals(array('en' => 'Bass'), $actual[0]['prefLabels']);
     $this->assertEquals(array(0 => array('uri' => 'http://www.skosmos.skos/test/ta1')), $actual[0]['skos:broader']);
   }
-  
+
   /**
    * @covers GenericSparql::querySuperProperties
    */

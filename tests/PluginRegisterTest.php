@@ -2,7 +2,7 @@
 
 class PluginRegisterTest extends PHPUnit\Framework\TestCase
 {
-  private $model; 
+  private $model;
   private $concept;
   private $mockpr;
 
@@ -22,7 +22,7 @@ class PluginRegisterTest extends PHPUnit\Framework\TestCase
     $plugins = new PluginRegister();
     $this->assertInstanceOf('PluginRegister', $plugins);
   }
-  
+
   /**
    * @covers PluginRegister::getPlugins
    * @covers PluginRegister::getPluginsJS
@@ -32,7 +32,7 @@ class PluginRegisterTest extends PHPUnit\Framework\TestCase
     $plugins = new PluginRegister();
     $this->assertEquals(array(), $plugins->getPluginsJS());
   }
-  
+
   /**
    * @covers PluginRegister::getPlugins
    * @covers PluginRegister::getPluginsJS
@@ -43,7 +43,7 @@ class PluginRegisterTest extends PHPUnit\Framework\TestCase
   {
     $this->assertEquals(array('global-plugin' => array('plugins/global-plugin/everywhere.js'), 'test-plugin' => array('plugins/test-plugin/first.js', 'plugins/test-plugin/second.min.js')), $this->mockpr->getPluginsJS(array('test-plugin')));
   }
-  
+
   /**
    * @covers PluginRegister::getPlugins
    * @covers PluginRegister::getPluginsJS
@@ -54,7 +54,7 @@ class PluginRegisterTest extends PHPUnit\Framework\TestCase
   {
     $this->assertEquals(array('global-plugin' => array('plugins/global-plugin/everywhere.js')), $this->mockpr->getPluginsJS());
   }
-  
+
   /**
    * @covers PluginRegister::getPluginsCSS
    */
@@ -63,7 +63,7 @@ class PluginRegisterTest extends PHPUnit\Framework\TestCase
     $plugins = new PluginRegister();
     $this->assertEquals(array(), $plugins->getPluginsCSS());
   }
-  
+
   /**
    * @covers PluginRegister::getPluginsCSS
    * @covers PluginRegister::filterPlugins
@@ -74,7 +74,7 @@ class PluginRegisterTest extends PHPUnit\Framework\TestCase
     $plugins = new PluginRegister();
     $this->assertEquals(array('test-plugin' => array('plugins/test-plugin/stylesheet.css')), $this->mockpr->getPluginsCSS(array('test-plugin')));
   }
-  
+
   /**
    * @covers PluginRegister::getPluginsTemplates
    */
@@ -83,7 +83,7 @@ class PluginRegisterTest extends PHPUnit\Framework\TestCase
     $plugins = new PluginRegister();
     $this->assertEquals(array(), $plugins->getPluginsTemplates());
   }
-  
+
   /**
    * @covers PluginRegister::getTemplates
    */
@@ -92,7 +92,7 @@ class PluginRegisterTest extends PHPUnit\Framework\TestCase
     $plugins = new PluginRegister();
     $this->assertEquals(array(), $plugins->getTemplates());
   }
-  
+
   /**
    * @covers PluginRegister::getCallbacks
    */

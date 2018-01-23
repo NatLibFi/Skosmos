@@ -2,7 +2,7 @@
 
 class ConceptTest extends PHPUnit\Framework\TestCase
 {
-  private $model; 
+  private $model;
   private $concept;
 
   protected function setUp() {
@@ -28,7 +28,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     $this->assertInstanceOf('Concept', $concept);
     $this->assertEquals('Test ontology', $concept->getVocabTitle());
   }
-  
+
   /**
    * @covers Concept::getUri
    */
@@ -37,7 +37,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     $uri = $this->concept->getURI();
     $this->assertEquals('http://www.skosmos.skos/test/ta112', $uri);
   }
-  
+
   /**
    * @covers Concept::getDeprecated
    */
@@ -46,7 +46,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     $deprecated = $this->concept->getDeprecated();
     $this->assertEquals(false, $deprecated);
   }
-  
+
   /**
    * @covers Concept::getVocab
    */
@@ -55,7 +55,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     $voc = $this->concept->getVocab();
     $this->assertInstanceOf('Vocabulary', $voc);
   }
-  
+
   /**
    * @covers Concept::getVocabTitle
    */
@@ -64,7 +64,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     $title = $this->concept->getVocabTitle();
     $this->assertEquals('Test ontology', $title);
   }
-  
+
   /**
    * @covers Concept::getShortName
    */
@@ -82,7 +82,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     $fb = $this->concept->getFoundBy();
     $this->assertEquals(null, $fb);
   }
-  
+
   /**
    * @covers Concept::setFoundBy
    * @covers Concept::getFoundByType
@@ -97,7 +97,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     $this->assertEquals('testing matched label', $fb);
     $this->assertEquals('alt', $fbtype);
   }
-  
+
   /**
    * @covers Concept::getForeignLabels
    * @covers Concept::literalLanguageToString
@@ -108,7 +108,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
 
     $this->assertEquals('Karppi', $labels['Finnish'][0]->getLabel());
   }
-  
+
   /**
    * @covers Concept::getAllLabels
    */
@@ -120,7 +120,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     $this->assertEquals('Iljettävä limanuljaska', $labels['Finnish'][0]->getLabel());
     $this->assertEquals('any fish belonging to the order Anguilliformes', $labels['English'][0]->getLabel());
   }
-  
+
   /**
    * @covers Concept::getProperties
    * @covers ConceptProperty::getValues
@@ -143,7 +143,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
   public function testGetPropertiesCorrectNumberOfProperties()
   {
     $props = $this->concept->getProperties();
- 
+
     $this->assertEquals(6, sizeof($props));
   }
 
@@ -159,9 +159,9 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     $props = $this->concept->getProperties();
     $expected = array (0 => 'rdf:type', 1=> 'skos:broader',2 => 'skos:narrower',3 => 'skos:altLabel',4 => 'skos:scopeNote',5 => 'http://www.skosmos.skos/testprop');
     $this->assertEquals($expected, array_keys($props));
- 
+
   }
-  
+
   /**
    * @covers Concept::getProperties
    * @covers ConceptProperty::getValues
@@ -169,7 +169,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
    */
   public function testGetPropertiesAlphabeticalSortingOfPropertyValues()
   {
-    $results = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta1', 'en'); 
+    $results = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta1', 'en');
     $concept = reset($results);
     $props = $concept->getProperties();
     $prevlabel;
@@ -180,7 +180,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
       $prevlabel = $label;
     }
   }
-  
+
   /**
    * @covers Concept::getMappingProperties
    * @covers ConceptProperty::getValues
@@ -193,7 +193,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     $values = $props['skos:closeMatch']->getValues();
     $this->assertCount(2, $values);
   }
-  
+
   /**
    * @covers Concept::removeDuplicatePropertyValues
    * @covers Concept::getProperties
@@ -205,7 +205,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     $props = $concept->getProperties();
     $this->assertCount(1, $props);
   }
-  
+
   /**
    * @covers Concept::removeDuplicatePropertyValues
    * @covers Concept::getProperties
@@ -283,7 +283,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     $this->assertEquals('Test class', $propvals['Test classhttp://www.skosmos.skos/test-meta/TestClass']->getLabel());
     $this->assertEquals('http://www.skosmos.skos/test-meta/TestClass', $propvals['Test classhttp://www.skosmos.skos/test-meta/TestClass']->getUri());
   }
-  
+
   /**
    * @covers Concept::getNotation
    */
@@ -294,7 +294,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     $concept = $concepts[0];
     $this->assertEquals(null, $concept->getNotation());
   }
-  
+
   /**
    * @covers Concept::getNotation
    */
@@ -302,7 +302,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
   {
     $this->assertEquals('665', $this->concept->getNotation());
   }
-  
+
   /**
    * @covers Concept::getLabel
    */
@@ -310,7 +310,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
   {
     $this->assertEquals('Carp', $this->concept->getLabel()->getValue());
   }
-  
+
   /**
    * @covers Concept::getLabel
    */
@@ -321,7 +321,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     $concept = $vocab->getConceptInfo("http://www.skosmos.skos/test/ta120", "en");
     $this->assertEquals(null, $concept[0]->getLabel());
   }
-  
+
   /**
    * @covers Concept::getLabel
    * @covers Concept::setContentLang
@@ -333,7 +333,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     $this->assertEquals('pl', $this->concept->getContentLang());
     $this->assertEquals('Carp', $this->concept->getLabel()->getValue());
   }
-  
+
   /**
    * @covers Concept::getArrayProperties
    * @covers Concept::getGroupProperties
@@ -350,7 +350,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     $groups = $concept[0]->getGroupProperties();
     $this->assertEmpty($groups);
   }
-  
+
   /**
    * @covers Concept::getGroupProperties
    * @covers Concept::getReverseResources
@@ -391,7 +391,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
       }
     }
   }
-  
+
   /**
    * @covers Concept::getProperties
    */
@@ -408,7 +408,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
    * @covers Concept::getProperties
    * @covers ConceptProperty::getValues
    */
-  
+
   public function testGetPropertiesDefinitionResource() {
     $vocab = $this->model->getVocabulary('test');
     $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta122', 'en');

@@ -6,12 +6,12 @@ class PluginRegister {
     public function __construct($requestedPlugins=array()) {
         $this->requestedPlugins = $requestedPlugins;
     }
-    
+
     /**
      * Returns the plugin configurations found from plugin folders inside the plugins folder
      * @return array
      */
-    protected function getPlugins() 
+    protected function getPlugins()
     {
         $plugins = array();
         $pluginconfs = glob('plugins/*/plugin.json');
@@ -25,7 +25,7 @@ class PluginRegister {
     }
 
     /**
-     * Returns the plugin configurations found from plugin folders 
+     * Returns the plugin configurations found from plugin folders
      * inside the plugins folder filtered by filetype.
      * @param string $type filetype e.g. 'css', 'js' or 'template'
      * @return array
@@ -41,16 +41,16 @@ class PluginRegister {
                         array_push($ret[$name], 'plugins/' . $name . '/' . $file);
                     }
                 }
-            } 
+            }
         }
         return $ret;
     }
 
     /**
-     * Returns the plugin configurations found from plugin folders 
+     * Returns the plugin configurations found from plugin folders
      * inside the plugins folder filtered by plugin name (the folder name).
      * @param string $type filetype e.g. 'css', 'js' or 'template'
-     * @param array $names the plugin name strings (foldernames) in an array 
+     * @param array $names the plugin name strings (foldernames) in an array
      * @return array
      */
     private function filterPluginsByName($type, $names) {
@@ -65,7 +65,7 @@ class PluginRegister {
 
     /**
      * Returns an array of javascript filepaths
-     * @param array $names the plugin name strings (foldernames) in an array 
+     * @param array $names the plugin name strings (foldernames) in an array
      * @return array
      */
     public function getPluginsJS($names=null) {
@@ -78,7 +78,7 @@ class PluginRegister {
 
     /**
      * Returns an array of css filepaths
-     * @param array $names the plugin name strings (foldernames) in an array 
+     * @param array $names the plugin name strings (foldernames) in an array
      * @return array
      */
     public function getPluginsCSS($names=null) {
@@ -91,7 +91,7 @@ class PluginRegister {
 
     /**
      * Returns an array of template filepaths
-     * @param array $names the plugin name strings (foldernames) in an array 
+     * @param array $names the plugin name strings (foldernames) in an array
      * @return array
      */
     public function getPluginsTemplates($names=null) {
@@ -104,7 +104,7 @@ class PluginRegister {
 
     /**
      * Returns an array of template files contents as strings
-     * @param array $names the plugin name strings (foldernames) in an array 
+     * @param array $names the plugin name strings (foldernames) in an array
      * @return array
      */
     public function getTemplates($names=null) {
@@ -124,7 +124,7 @@ class PluginRegister {
     }
 
     /**
-     * Returns an array of javascript function names to call when loading a new concept 
+     * Returns an array of javascript function names to call when loading a new concept
      * @return array
      */
     public function getCallbacks() {

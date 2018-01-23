@@ -583,9 +583,9 @@ class Vocabulary extends DataObject
 
     /**
      * Returns a list of recently changed or entirely new concepts.
-     * @param string $clang content language for the labels 
+     * @param string $clang content language for the labels
      * @param string $lang UI language for the dates
-     * @return Array 
+     * @return Array
      */
     public function getChangeList($prop, $clang, $lang, $offset)
     {
@@ -601,13 +601,13 @@ class Vocabulary extends DataObject
     public function getTitle($lang=null) {
       return $this->config->getTitle($lang);
     }
-    
+
     public function getShortName() {
       return $this->config->getShortName();
     }
-    
+
     public function getId() {
       return $this->config->getId();
     }
-    
+
 }

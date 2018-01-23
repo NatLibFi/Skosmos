@@ -2,7 +2,7 @@
 
 class ConceptPropertyTest extends PHPUnit\Framework\TestCase
 {
-  private $model; 
+  private $model;
 
   protected function setUp() {
     require_once 'testconfig.inc';
@@ -96,7 +96,7 @@ class ConceptPropertyTest extends PHPUnit\Framework\TestCase
   public function testGetPropertiesSubClassOfHiddenLabel()
   {
     $vocab = $this->model->getVocabulary('subclass');
-    $results = $vocab->getConceptInfo('http://www.skosmos.skos/sub/d1', 'en'); 
+    $results = $vocab->getConceptInfo('http://www.skosmos.skos/sub/d1', 'en');
     $concept = reset($results);
     $props = $concept->getProperties();
     $this->assertEquals('skos:hiddenLabel', $props['subclass:prop1']->getSubPropertyOf());

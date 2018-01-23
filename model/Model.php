@@ -105,7 +105,7 @@ class Model
     /**
      * Registers RDF namespaces from the vocabularies.ttl file for use by EasyRdf (e.g. serializing)
      */
-    
+
     private function initializeNamespaces() {
         foreach ($this->namespaces as $prefix => $fullUri) {
             if ($prefix != '' && EasyRdf\RdfNamespace::get($prefix) === null) // if not already defined
@@ -114,7 +114,7 @@ class Model
             }
         }
     }
-    
+
     /**
      * Configures the logging facility
      */
@@ -138,7 +138,7 @@ class Model
             $this->logger->pushHandler($nullHandler);
         }
     }
-    
+
     /**
      * Return the logging facility
      * @return object logger
@@ -170,7 +170,7 @@ class Model
      * Return all the vocabularies available.
      * @param boolean $categories whether you want everything included in a subarray of
      * a category.
-     * @param boolean $shortname set to true if you want the vocabularies sorted by 
+     * @param boolean $shortname set to true if you want the vocabularies sorted by
      * their shortnames instead of ther titles.
      */
     public function getVocabularyList($categories = true, $shortname = false)
@@ -522,7 +522,7 @@ class Model
         }
 
     }
-    
+
     /**
      * When multiple vocabularies share same URI namespace, return the
      * vocabulary in which the URI is actually defined (has a label).
@@ -539,7 +539,7 @@ class Model
         if (sizeof($vocabs) == 1) {
             return $vocabs[0];
         }
-        
+
         // if there are multiple vocabularies and one is the preferred vocabulary, return it
         if($preferredVocabId != null) {
             foreach ($vocabs as $vocab) {
@@ -548,7 +548,7 @@ class Model
                 }
             }
         }
-        
+
         // no preferred vocabulary, or it was not found, search in which vocabulary the concept has a label
         foreach ($vocabs as $vocab) {
             if ($vocab->getConceptLabel($uri, null) !== null)
@@ -633,13 +633,13 @@ class Model
     {
         // prevent parsing errors for sources which return invalid JSON (see #447)
         // 1. Unregister the legacy RDF/JSON parser, we don't want to use it
-        EasyRdf\Format::unregister('json'); 
+        EasyRdf\Format::unregister('json');
         // 2. Add "application/json" as a possible MIME type for the JSON-LD format
         $jsonld = EasyRdf\Format::getFormat('jsonld');
         $mimetypes = $jsonld->getMimeTypes();
         $mimetypes['application/json'] = 0.5;
         $jsonld->setMimeTypes($mimetypes);
-        
+
         // using apc cache for the resource if available
         if ($this->cache->isAvailable()) {
             // @codeCoverageIgnoreStart

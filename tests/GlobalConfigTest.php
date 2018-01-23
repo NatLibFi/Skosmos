@@ -2,8 +2,8 @@
 
 class GlobalConfigTest extends PHPUnit\Framework\TestCase
 {
-  
-  private $config; 
+
+  private $config;
 
   protected function setUp() {
     putenv("LC_ALL=en_GB.utf8");

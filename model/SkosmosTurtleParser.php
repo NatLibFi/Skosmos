@@ -15,7 +15,7 @@ class SkosmosTurtleParser extends EasyRdf\Parser\Turtle
     }
 
     /**
-     * A lot faster since we're now only reading the next 4 bytes 
+     * A lot faster since we're now only reading the next 4 bytes
      * instead of the whole string.
      * Gets the next character to be returned by read().
      */

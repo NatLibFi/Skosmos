@@ -133,7 +133,7 @@ class ConceptPropertyValue extends VocabularyDataObject
     public function isReified() {
         return (!$this->resource->label() && $this->resource->getLiteral('rdf:value'));
     }
-    
+
     public function getReifiedPropertyValues() {
         $ret = array();
         $props = $this->resource->propertyUris();

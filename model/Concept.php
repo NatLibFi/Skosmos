@@ -128,7 +128,7 @@ class Concept extends VocabularyDataObject
                 return $label->getValue();
             }
             return EasyRdf\Literal::create($label->getValue(), $label->getLang());
-        }
+
 
         // empty
         return "";
@@ -336,7 +336,7 @@ class Concept extends VocabularyDataObject
                 $properties['skos:narrower'] = $membersArray;
             }
         }
-        
+
         foreach ($longUris as &$prop) {
             // storing full URI without brackets in a separate variable
             $longUri = $prop;
@@ -348,32 +348,32 @@ class Concept extends VocabularyDataObject
             }
             // EasyRdf requires full URIs to be in angle brackets
 
-            if (!in_array($prop, $this->DELETED_PROPERTIES) || ($this->isGroup() === false && $prop === 'skos:member')) {         
-                // retrieve property label and super properties from the current vocabulary first                
+            if (!in_array($prop, $this->DELETED_PROPERTIES) || ($this->isGroup() === false && $prop === 'skos:member')) {
+                // retrieve property label and super properties from the current vocabulary first
                 $propres = new EasyRdf\Resource($prop, $this->graph);
                 $proplabel = $propres->label($this->getEnvLang()) ? $propres->label($this->getEnvLang()) : $propres->label();
-                
+
                 // if not found in current vocabulary, look up in the default graph to be able
                 // to read an ontology loaded in a separate graph
                 // note that this imply that the property has an rdf:type declared for the query to work
                 if(!$proplabel) {
                     $envLangLabels = $this->model->getDefaultSparql()->queryLabel($longUri, $this->getEnvLang());
                     $proplabel = ($envLangLabels)?$envLangLabels[$this->getEnvLang()]:$this->model->getDefaultSparql()->queryLabel($longUri, '')[''];
-                }                
-                
+                }
+
                 // look for superproperties in the current graph
                 $superprops = array();
                 foreach ($this->graph->allResources($prop, 'rdfs:subPropertyOf') as $subi) {
                     $superprops[] = $subi->getUri();
                 }
-                
+
                 // also look up superprops in the default graph if not found in current vocabulary
                 if(!$superprops || empty($superprops)) {
                     $superprops = $this->model->getDefaultSparql()->querySuperProperties($longUri);
                 }
-                
+
                 // we're reading only one super property, even if there are multiple ones
-                $superprop = ($superprops)?$superprops[0]:null;                
+                $superprop = ($superprops)?$superprops[0]:null;
                 if ($superprop) {
                     $superprop = EasyRdf\RdfNamespace::shorten($superprop) ? EasyRdf\RdfNamespace::shorten($superprop) : $superprop;
                 }
@@ -521,11 +521,11 @@ class Concept extends VocabularyDataObject
             $ret = '';
             if ($this->resource->get('dc:modified')) {
                 $modified = (string) $this->resource->get('dc:modified');
-                $ret = gettext('skosmos:modified') . ' ' . $modified; 
+                $ret = gettext('skosmos:modified') . ' ' . $modified;
             }
             if ($this->resource->get('dc:created')) {
                 $created .= (string) $this->resource->get('dc:created');
-                $ret .= ' ' . gettext('skosmos:created') . ' ' . $created; 
+                $ret .= ' ' . gettext('skosmos:created') . ' ' . $created;
             }
         }
         return $ret;

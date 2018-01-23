@@ -2,8 +2,8 @@
 
 class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
 {
-  private $model; 
-  private $graph; 
+  private $model;
+  private $graph;
   private $sparql;
   private $vocab;
   private $params;
@@ -17,7 +17,7 @@ class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
     $this->params = $this->getMockBuilder('ConceptSearchParameters')->disableOriginalConstructor()->getMock();
     $this->sparql = new JenaTextSparql('http://localhost:3030/ds/sparql', $this->graph, $this->model);
   }
- 
+
   /**
    * @covers JenaTextSparql::__construct
    */
@@ -25,7 +25,7 @@ class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
     $gs = new JenaTextSparql('http://localhost:3030/ds/sparql', $this->graph, $this->model);
     $this->assertInstanceOf('JenaTextSparql', $gs);
   }
-  
+
   /**
    * @covers JenaTextSparql::generateAlphabeticalListQuery
    */
@@ -53,7 +53,7 @@ class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
     );
     $this->assertEquals($expected, $actual);
   }
-  
+
   /**
    * @covers JenaTextSparql::generateAlphabeticalListQuery
    */
@@ -75,7 +75,7 @@ class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
     );
     $this->assertEquals($expected, $actual);
   }
-  
+
   /**
    * @covers JenaTextSparql::generateAlphabeticalListQuery
    */
@@ -97,7 +97,7 @@ class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
     );
     $this->assertEquals($expected, $actual);
   }
-  
+
   /**
    * @covers JenaTextSparql::generateAlphabeticalListQuery
    */
@@ -115,7 +115,7 @@ class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
     $this->assertEquals(1, sizeof($actual));
     $this->assertEquals('-"special" character \\example\\', $actual[0]['prefLabel']);
   }
-  
+
   /**
    * @covers JenaTextSparql::generateAlphabeticalListQuery
    */
@@ -124,7 +124,7 @@ class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
     $this->assertEquals(1, sizeof($actual));
     $this->assertContains("3D", $actual[0]['prefLabel']);
   }
-  
+
   /**
    * @covers JenaTextSparql::generateAlphabeticalListQuery
    */
@@ -146,7 +146,7 @@ class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
     $this->assertEquals(1, sizeof($actual));
     $this->assertEquals('Bass', $actual[0]['prefLabel']);
   }
-  
+
   /**
    * @covers JenaTextSparql::createTextQueryCondition
    * @covers JenaTextSparql::generateConceptSearchQueryCondition

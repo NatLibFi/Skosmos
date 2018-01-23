@@ -2,7 +2,7 @@
 
 class VocabularyCategoryTest extends PHPUnit\Framework\TestCase
 {
-  private $model; 
+  private $model;
   private $mockres;
 
   protected function setUp() {
@@ -12,16 +12,16 @@ class VocabularyCategoryTest extends PHPUnit\Framework\TestCase
     $this->mockres = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
     $this->mockres->method('localName')->will($this->returnValue('local name'));
   }
-  
+
   /**
    * @covers VocabularyCategory::__construct
    * @expectedException Exception
-   * @expectedExceptionMessage Invalid constructor parameter given to DataObject. 
+   * @expectedExceptionMessage Invalid constructor parameter given to DataObject.
    */
   public function testConstructorWithInvalidParameters() {
     new VocabularyCategory('invalid', 'invalid');
   }
-  
+
   /**
    * @covers VocabularyCategory::__construct
    */
@@ -29,7 +29,7 @@ class VocabularyCategoryTest extends PHPUnit\Framework\TestCase
     $cat = new VocabularyCategory($this->model, $this->mockres);
     $this->assertInstanceOf('VocabularyCategory', $cat);
   }
-  
+
   /**
    * @covers VocabularyCategory::getVocabularies
    */
@@ -40,7 +40,7 @@ class VocabularyCategoryTest extends PHPUnit\Framework\TestCase
       $this->assertInstanceOf('Vocabulary', $voc);
     }
   }
-  
+
   /**
    * @covers VocabularyCategory::getTitle
    */
@@ -48,7 +48,7 @@ class VocabularyCategoryTest extends PHPUnit\Framework\TestCase
     $cat = new VocabularyCategory($this->model, $this->mockres);
     $this->assertEquals('local name', $cat->getTitle());
   }
-  
+
   /**
    * @covers VocabularyCategory::getTitle
    */

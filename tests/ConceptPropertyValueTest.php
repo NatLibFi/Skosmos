@@ -2,10 +2,10 @@
 
 class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
 {
-  private $model; 
+  private $model;
   private $concept;
   private $vocab;
-    
+
   protected function setUp() {
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');
@@ -57,7 +57,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
     $this->assertEquals('english lit', $mapping->getLabel('en'));
     $this->assertEquals('default lit', $mapping->getLabel());
   }
-  
+
   /**
    * @covers ConceptPropertyValue::getType
    */
@@ -66,7 +66,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
     $propvals = $props['skos:narrower']->getValues();
     $this->assertEquals('skos:narrower', $propvals['Crucian carphttp://www.skosmos.skos/test/ta121']->getType());
   }
-  
+
   /**
    * @covers ConceptPropertyValue::getUri
    */
@@ -75,7 +75,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
     $propvals = $props['skos:narrower']->getValues();
     $this->assertEquals('http://www.skosmos.skos/test/ta121', $propvals['Crucian carphttp://www.skosmos.skos/test/ta121']->getUri());
   }
-  
+
   /**
    * @covers ConceptPropertyValue::getVocab
    */
@@ -114,7 +114,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
     $propval = new ConceptPropertyValue($this->model, $this->vocab, $mockres, 'en');
     $this->assertEquals(null, $propval->getNotation());
   }
-  
+
   /**
    * @covers ConceptPropertyValue::__toString
    */
@@ -125,7 +125,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
     $propvals = $props['skos:broader']->getValues();
     $this->assertEquals('Carp', (string)$propvals['665Carphttp://www.skosmos.skos/test/ta112']);
   }
-  
+
   /**
    * @covers ConceptPropertyValue::__toString
    */
@@ -144,7 +144,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
     $propval = new ConceptPropertyValue($this->model, $mockvoc, $mockres, null);
     $this->assertEquals('T3STTerm label', (string)$propval);
   }
-   
+
   /**
    * @covers ConceptPropertyValue::__toString
    */
