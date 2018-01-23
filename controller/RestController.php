@@ -28,7 +28,7 @@ class RestController extends Controller
             echo filter_input(INPUT_GET, 'callback', FILTER_UNSAFE_RAW) . "(" . json_encode($data) . ");";
             return;
         }
-        
+
         // otherwise negotiate suitable format for the response and return that
         $negotiator = new \Negotiation\Negotiator();
         $priorities = array('application/json', 'application/ld+json');
@@ -96,11 +96,11 @@ class RestController extends Controller
 
         return $this->returnJson($ret);
     }
-    
+
     private function constructSearchParameters($request)
     {
         $parameters = new ConceptSearchParameters($request, $this->model->getConfig(), true);
-        
+
         $vocabs = $request->getQueryParam('vocab'); # optional
         // convert to vocids array to support multi-vocabulary search
         $vocids = ($vocabs !== null && $vocabs !== '') ? explode(' ', $vocabs) : array();
@@ -109,7 +109,7 @@ class RestController extends Controller
             $vocabObjects[] = $this->model->getVocabulary($vocid);
         }
         $parameters->setVocabularies($vocabObjects);
-        return $parameters;    
+        return $parameters;
     }
 
     private function transformSearchResults($request, $results)
@@ -136,7 +136,7 @@ class RestController extends Controller
             'uri' => '',
             'results' => $results,
         );
-        
+
         if (isset($results[0]['prefLabels'])) {
             $ret['@context']['prefLabels'] = array('@id' => 'skos:prefLabel', '@container' => '@language');
         }
@@ -220,7 +220,7 @@ class RestController extends Controller
             'languages' => array_values($vocab->getConfig()->getLanguages()),
             'conceptschemes' => $conceptschemes,
         );
-        
+
         if ($vocab->getConfig()->getTypes($request->getLang())) {
             $ret['type'] = $vocab->getConfig()->getTypes($request->getLang());
         }
@@ -235,8 +235,8 @@ class RestController extends Controller
     public function vocabularyStatistics($request)
     {
         $this->setLanguageProperties($request->getLang());
-        $arrayClass = $request->getVocab()->getConfig()->getArrayClassURI(); 
-        $groupClass = $request->getVocab()->getConfig()->getGroupClassURI(); 
+        $arrayClass = $request->getVocab()->getConfig()->getArrayClassURI();
+        $groupClass = $request->getVocab()->getConfig()->getGroupClassURI();
         $vocabStats = $request->getVocab()->getStatistics($request->getQueryParam('lang'), $arrayClass, $groupClass);
         $types = array('http://www.w3.org/2004/02/skos/core#Concept', 'http://www.w3.org/2004/02/skos/core#Collection', $arrayClass, $groupClass);
         $subTypes = array();
@@ -361,7 +361,7 @@ class RestController extends Controller
             return $this->returnError(400, "Bad Request", "lang parameter missing");
         }
         $this->setLanguageProperties($request->getLang());
-        
+
         $queriedtypes = $this->model->getTypes($vocid, $request->getLang());
 
         $types = array();
@@ -390,7 +390,7 @@ class RestController extends Controller
 
         return $this->returnJson($ret);
     }
-    
+
     private function findLookupHits($results, $label, $lang)
     {
         $hits = array();
@@ -409,7 +409,7 @@ class RestController extends Controller
             }
         }
         if (sizeof($hits) > 0) return $hits;
-        
+
         if ($lang === null) {
             // case 1A: exact match on preferred label in any language
             foreach ($results as $res) {
@@ -420,7 +420,7 @@ class RestController extends Controller
                 }
             }
             if (sizeof($hits) > 0) return $hits;
-            
+
             // case 2A: case-insensitive match on preferred label in any language
             foreach ($results as $res) {
                 if (strtolower($res['matchedPrefLabel']) == strtolower($label)) {
@@ -449,9 +449,9 @@ class RestController extends Controller
         }
         if (sizeof($hits) > 0) return $hits;
 
-        return $hits;   
+        return $hits;
     }
-    
+
     private function transformLookupResults($lang, $hits)
     {
         if (sizeof($hits) == 0) {
@@ -473,7 +473,7 @@ class RestController extends Controller
             $ret['@context']['@language'] = $lang;
         }
 
-        return $ret;  
+        return $ret;
     }
 
     /**
@@ -537,7 +537,7 @@ class RestController extends Controller
 
         header("Location: " . $urls[$format]);
     }
-    
+
     private function returnDataResults($results, $format) {
         if ($format == 'application/ld+json' || $format == 'application/json') {
             // further compact JSON-LD document using a context
@@ -627,7 +627,7 @@ class RestController extends Controller
 
         return $this->returnJson($ret);
     }
-    
+
     private function transformPropertyResults($uri, $lang, $objects, $propname, $propuri)
     {
         $results = array();
@@ -640,9 +640,9 @@ class RestController extends Controller
             'uri' => $uri,
             $propname => $results)
         );
-        return $ret;    
+        return $ret;
     }
-    
+
     private function transformTransitivePropertyResults($uri, $lang, $objects, $tpropname, $tpropuri, $dpropname, $dpropuri)
     {
         $results = array();
@@ -734,12 +734,12 @@ class RestController extends Controller
         if (empty($results)) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
         }
- 
-        
+
+
         // set the "top" key from the "tops" key
         foreach ($results as $value) {
             $uri = $value['uri'];
-            if (isset($value['tops'])) {                
+            if (isset($value['tops'])) {
                 if ($request->getVocab()->getConfig()->getMainConceptSchemeURI() != null) {
                     foreach ($results[$uri]['tops'] as $top) {
                         // if a value in 'tops' matches the main concept scheme of the vocabulary, take it

@@ -2,7 +2,7 @@
 
 class ConceptPropertyValueLiteralTest extends PHPUnit\Framework\TestCase
 {
-  private $model; 
+  private $model;
   private $concept;
   private $vocab;
 
@@ -127,7 +127,7 @@ class ConceptPropertyValueLiteralTest extends PHPUnit\Framework\TestCase
     $lit = new ConceptPropertyValueLiteral($this->model, $this->vocab, $resmock, $litmock, 'skosmos:testType');
     $this->assertFalse($lit->getContainsHtml());
   }
-  
+
   /**
    * @covers ConceptPropertyValueLiteral::getContainsHtml
    */
@@ -138,7 +138,7 @@ class ConceptPropertyValueLiteralTest extends PHPUnit\Framework\TestCase
     $lit = new ConceptPropertyValueLiteral($this->model, $this->vocab, $resmock, $litmock, 'skosmos:testType');
     $this->assertFalse($lit->getContainsHtml());
   }
-  
+
   /**
    * @covers ConceptPropertyValueLiteral::getContainsHtml
    */

@@ -3,7 +3,7 @@
 /**
  * Wrapper class for key-value caching. Currently supports APC and APCu.
  */
-class Cache 
+class Cache
 {
 
     /**
@@ -25,12 +25,12 @@ class Cache
     public function store($key, $value, $ttl=3600) {
         if (function_exists('apc_store')) {
             return apc_store($key, $value);
-        } 
+        }
         else if (function_exists('apcu_store')) {
             return apcu_store($key, $value, $ttl);
         }
     }
-    
+
     public function isAvailable() {
         return ((function_exists('apc_store') && function_exists('apc_fetch')) || (function_exists('apcu_store') && function_exists('apcu_fetch')));
     }

@@ -100,7 +100,7 @@ class ConceptProperty
     {
         return $this->prop;
     }
-    
+
     /**
      * Returns property supertype (?property skos:subPropertyOf ?super) as a string.
      * @return string eg. 'skos:hiddenLabel'.

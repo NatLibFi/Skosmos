@@ -12,8 +12,8 @@ try {
     $model = new Model($config);
     $controller = new EntityController($model);
     $request = new Request($model);
-    
-    
+
+
     $controller->redirect($request);
 
 } catch (Exception $e) {

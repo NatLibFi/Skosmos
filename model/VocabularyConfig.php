@@ -7,7 +7,7 @@ class VocabularyConfig extends DataObject
 {
     private $plugins;
 
-    public function __construct($resource, $globalPlugins=array()) 
+    public function __construct($resource, $globalPlugins=array())
     {
         $this->resource = $resource;
         $plugins = $this->resource->allLiterals('skosmos:usePlugin');
@@ -111,7 +111,7 @@ class VocabularyConfig extends DataObject
     public function getShortName()
     {
         $shortname = $this->getLiteral('skosmos:shortName');
-        if ($shortname) 
+        if ($shortname)
           return $shortname;
 
         // if no shortname exists fall back to the id
@@ -146,7 +146,7 @@ class VocabularyConfig extends DataObject
     {
         return $this->getBoolean('skosmos:sortByNotation');
     }
-    
+
     /**
      * Returns a boolean value set in the vocabularies.ttl config.
      * @return boolean
@@ -193,19 +193,17 @@ class VocabularyConfig extends DataObject
      * or null if not set.
      * @return string concept scheme URI or null
      */
-    
+
     public function getMainConceptSchemeURI()
     {
         $val = $this->resource->getResource("skosmos:mainConceptScheme");
         if ($val) {
             return $val->getURI();
         }
-        
+
         return null;
     }
-    
-    
-    
+
     /**
      * Returns the class URI used for concept groups in this vocabulary,
      * or null if not set.
@@ -367,7 +365,7 @@ class VocabularyConfig extends DataObject
             }
 
         }
-        if ($this->showAlphabeticalIndex() === false) { 
+        if ($this->showAlphabeticalIndex() === false) {
             if ($this->getShowHierarchy()) {
                 return 'hierarchy';
             } else if ($this->getGroupClassURI()) {
@@ -416,7 +414,7 @@ class VocabularyConfig extends DataObject
         $ret = array();
         foreach ($resources as $res) {
             $prop = $res->getURI();
-            if (EasyRdf\RdfNamespace::shorten($prop) !== null) // prefixing if possible 
+            if (EasyRdf\RdfNamespace::shorten($prop) !== null) // prefixing if possible
             {
                 $prop = EasyRdf\RdfNamespace::shorten($prop);
             }
@@ -443,7 +441,7 @@ class VocabularyConfig extends DataObject
     {
         return $this->getBoolean('skosmos:showAlphabeticalIndex', true);
     }
-    
+
     /**
      * Returns a boolean value set in the vocabularies.ttl config.
      * @return boolean
@@ -465,6 +463,29 @@ class VocabularyConfig extends DataObject
             $prop = $res->getURI();
             $label = $res->label($lang) ? $res->label($lang) : $res->label($this->getDefaultLanguage());
             $ret[] = array('uri' => $prop, 'prefLabel' =>  $label->getValue());
+        }
+        return $ret;
+    }
+
+    /**
+     * Returns an array of fallback languages that is ordered by priority and
+     * defined in the vocabulary configuration as a collection.
+     * Additionally, the chosen content language is inserted with the highest priority
+     * and the vocab default language is inserted with the lowest priority.
+     * @param string $clang
+     * @return array of language code strings
+     */
+    public function getLanguageOrder($clang)
+    {
+        $ret = array($clang);
+        $fallbacks = !empty($this->resource->get('skosmos:fallbackLanguages')) ? $this->resource->get('skosmos:fallbackLanguages') : array();
+        foreach ($fallbacks as $lang) {
+            if (!in_array($lang, $ret)) {
+                $ret[] = (string)$lang; // Literal to string conversion
+            }
+        }
+        if (!in_array($this->getDefaultLanguage(), $ret)) {
+            $ret[] = (string)$this->getDefaultLanguage();
         }
         return $ret;
     }

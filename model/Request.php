@@ -124,7 +124,7 @@ class Request
     {
         return $this->getServerConstant('HTTP_HOST') . $this->getServerConstant('REQUEST_URI');
     }
-    
+
     /**
      * Returns the relative page url eg. '/yso/fi/search?clang=en&q=cat'
      * @return string the relative url of the page

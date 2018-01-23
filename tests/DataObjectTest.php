@@ -12,7 +12,7 @@ class DataObjectTest extends PHPUnit\Framework\TestCase
    */
   public function testConstructorNoArguments()
   {
-    new DataObject(null, null); 
+    new DataObject(null, null);
   }
-  
+
 }

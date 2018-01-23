@@ -2,8 +2,8 @@
 
 class VocabularyConfigTest extends PHPUnit\Framework\TestCase
 {
-  
-  private $model; 
+
+  private $model;
 
   protected function setUp() {
     putenv("LC_ALL=en_GB.utf8");
@@ -19,7 +19,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $actual = $vocab->getConfig()->getIndexClasses();
     $this->assertEquals(array(), $actual);
   }
-  
+
   /**
    * @covers VocabularyConfig::getIndexClasses
    */
@@ -29,7 +29,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $expected = array('http://www.skosmos.skos/test-meta/TestClass','http://www.skosmos.skos/test-meta/TestClass2');
     $this->assertEquals($expected, $actual);
   }
-  
+
   /**
    * @covers VocabularyConfig::getLanguages
    */
@@ -38,7 +38,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $langs = $vocab->getConfig()->getLanguages();
     $this->assertEquals(2, sizeof($langs));
   }
-  
+
   /**
    * @covers VocabularyConfig::getFeedbackRecipient
    */
@@ -47,7 +47,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $email = $vocab->getConfig()->getFeedbackRecipient();
     $this->assertEquals('developer@vocabulary.org', $email);
   }
-  
+
   /**
    * @covers VocabularyConfig::getExternalResourcesLoading
    */
@@ -56,7 +56,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $external = $vocab->getConfig()->getExternalResourcesLoading();
     $this->assertTrue($external);
   }
-  
+
   /**
    * @covers VocabularyConfig::getDefaultSidebarView
    */
@@ -74,7 +74,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $default = $vocab->getConfig()->getDefaultSidebarView();
     $this->assertEquals('alphabetical', $default);
   }
-  
+
   /**
    * @covers VocabularyConfig::getShowLangCodes
    */
@@ -83,7 +83,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $codes = $vocab->getConfig()->getShowLangCodes();
     $this->assertTrue($codes);
   }
-  
+
   /**
    * @covers VocabularyConfig::getShowLangCodes
    */
@@ -92,7 +92,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $codes = $vocab->getConfig()->getShowLangCodes();
     $this->assertFalse($codes);
   }
-  
+
   /**
    * @covers VocabularyConfig::getDefaultLanguage
    * @covers VocabularyConfig::getLiteral
@@ -102,7 +102,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $lang = $vocab->getConfig()->getDefaultLanguage();
     $this->assertEquals('en', $lang);
   }
-  
+
   /**
    * @covers VocabularyConfig::getDefaultLanguage
    * @expectedException PHPUnit\Framework\Error\Error
@@ -111,7 +111,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $vocab = $this->model->getVocabulary('testdiff');
     $lang = $vocab->getConfig()->getDefaultLanguage();
   }
-  
+
   /**
    * @covers VocabularyConfig::getAlphabeticalFull
    */
@@ -120,7 +120,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $boolean = $vocab->getConfig()->getAlphabeticalFull();
     $this->assertEquals(true, $boolean);
   }
-  
+
   /**
    * @covers VocabularyConfig::getAlphabeticalFull
    */
@@ -129,7 +129,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $boolean = $vocab->getConfig()->getAlphabeticalFull();
     $this->assertEquals(false, $boolean);
   }
-  
+
   /**
    * @covers VocabularyConfig::getShortName
    * @covers VocabularyConfig::getLiteral
@@ -139,7 +139,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $name = $vocab->getConfig()->getShortName();
     $this->assertEquals('Test short', $name);
   }
-  
+
   /**
    * @covers VocabularyConfig::getShortName
    */
@@ -148,17 +148,17 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $name = $vocab->getConfig()->getShortName();
     $this->assertEquals('testdiff', $name);
   }
-  
+
   /**
    * @covers VocabularyConfig::getDataURLs
    */
   public function testGetDataURLs() {
     $vocab = $this->model->getVocabulary('groups');
     $url = $vocab->getConfig()->getDataURLs();
-    ksort($url); // sort by mime type to make order deterministic 
+    ksort($url); // sort by mime type to make order deterministic
     $this->assertEquals(array(
-        'application/rdf+xml' => 'http://skosmos.skos/dump/test/groups', 
-        'text/turtle' => 'http://skosmos.skos/dump/test/groups.ttl', 
+        'application/rdf+xml' => 'http://skosmos.skos/dump/test/groups',
+        'text/turtle' => 'http://skosmos.skos/dump/test/groups.ttl',
       ), $url);
   }
 
@@ -170,7 +170,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $vocab = $this->model->getVocabulary('test');
     $url = $vocab->getConfig()->getDataURLs();
   }
-  
+
   /**
    * @covers VocabularyConfig::getDataURLs
    */
@@ -188,7 +188,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $uri = $vocab->getConfig()->getGroupClassURI();
     $this->assertEquals('http://www.w3.org/2004/02/skos/core#Collection', $uri);
   }
-  
+
   /**
    * @covers VocabularyConfig::getGroupClassURI
    */
@@ -197,7 +197,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $uri = $vocab->getConfig()->getGroupClassURI();
     $this->assertEquals(null, $uri);
   }
-  
+
   /**
    * @covers VocabularyConfig::getArrayClassURI
    */
@@ -206,7 +206,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $uri = $vocab->getConfig()->getArrayClassURI();
     $this->assertEquals('http://purl.org/iso25964/skos-thes#ThesaurusArray', $uri);
   }
-  
+
   /**
    * @covers VocabularyConfig::getArrayClassURI
    */
@@ -215,7 +215,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $uri = $vocab->getConfig()->getArrayClassURI();
     $this->assertEquals(null, $uri);
   }
-  
+
   /**
    * @covers VocabularyConfig::getShowHierarchy
    */
@@ -225,7 +225,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $this->assertEquals(true, $uri);
   }
 
- 
+
   /**
    * @covers VocabularyConfig::getShowHierarchy
    */
@@ -234,7 +234,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $uri = $vocab->getConfig()->getShowHierarchy();
     $this->assertEquals(false, $uri);
   }
-  
+
   /**
    * @covers VocabularyConfig::getShowHierarchy
    */
@@ -243,7 +243,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $uri = $vocab->getConfig()->getShowHierarchy();
     $this->assertEquals(false, $uri);
   }
-  
+
   /**
    * @covers VocabularyConfig::getAdditionalSearchProperties
    */
@@ -260,7 +260,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $vocab = $this->model->getVocabulary('dates');
     $this->assertEquals(true, $vocab->getConfig()->hasMultiLingualProperty('skos:altLabel'));
   }
-  
+
   /**
    * @covers VocabularyConfig::hasMultiLingualProperty
    */
@@ -268,7 +268,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $vocab = $this->model->getVocabulary('dates');
     $this->assertEquals(false, $vocab->getConfig()->hasMultiLingualProperty('skos:exactMatch'));
   }
-  
+
   /**
    * @covers VocabularyConfig::getTitle
    */
@@ -346,7 +346,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $vocab = $this->model->getVocabulary('test');
     $this->assertEquals(array(0 => array('uri' => 'http://publications.europa.eu/resource/authority/dataset-type/ONTOLOGY', 'prefLabel' => 'Ontology')), $vocab->getConfig()->getTypes('en'));
   }
-  
+
   /**
    * @covers VocabularyConfig::getShowDeprecated
    */
@@ -361,5 +361,22 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
   public function testGetTypesWhenNotSet() {
     $vocab = $this->model->getVocabulary('testdiff');
     $this->assertEquals(array(), $vocab->getConfig()->getTypes('en'));
+  }
+
+  /**
+   * @covers VocabularyConfig::getLanguageOrder
+   */
+  public function testGetLanguageOrderNotSet() {
+    $vocab = $this->model->getVocabulary('test');
+    $this->assertEquals(array('en'), $vocab->getConfig()->getLanguageOrder('en'));
+  }
+
+  /**
+   * @covers VocabularyConfig::getLanguageOrder
+   */
+  public function testGetLanguageOrder() {
+    $vocab = $this->model->getVocabulary('subtag');
+    $this->assertEquals(array('en', 'fr', 'de', 'sv'), $vocab->getConfig()->getLanguageOrder('en'));
+    $this->assertEquals(array('fi', 'fr', 'de', 'sv', 'en'), $vocab->getConfig()->getLanguageOrder('fi'));
   }
 }

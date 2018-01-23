@@ -73,7 +73,7 @@ class Controller
             }
             return $format;
         }
-        
+
         // if there was no proposed format, negotiate a suitable format
         header('Vary: Accept'); // inform caches that a decision was made based on Accept header
         $best = $this->negotiator->getBest($accept, $choices);

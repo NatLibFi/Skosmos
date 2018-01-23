@@ -32,10 +32,10 @@ class LabelSkosXL extends DataObject
     }
 
     public function getLiteral() {
-        return $this->resource->getLiteral('skosxl:literalForm')->getValue(); 
+        return $this->resource->getLiteral('skosxl:literalForm')->getValue();
     }
 
     public function __toString() {
-        return $this->resource->getLiteral('skosxl:literalForm')->getValue(); 
+        return $this->resource->getLiteral('skosxl:literalForm')->getValue();
     }
 }

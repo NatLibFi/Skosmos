@@ -179,6 +179,7 @@
 	void:uriSpace "http://www.skosmos.skos/subtag/";
 	void:sparqlEndpoint <http://localhost:3030/ds/sparql> ;
 	skosmos:language "en";
+    skosmos:fallbackLanguages ( "fr" "de" "sv" ) ;
 	skosmos:sparqlGraph <http://www.skosmos.skos/subtag/> ;
 	skosmos:sparqlDialect "JenaText" .
 

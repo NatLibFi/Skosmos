@@ -19,7 +19,7 @@ class EntityController extends Controller
         $url = $baseurl . "rest/v1/$vocid/data?$query";
         $this->redirect303($url);
     }
-    
+
     private function redirectWeb($vocab, $uri)
     {
         $baseurl = $this->getBaseHref();
@@ -65,7 +65,7 @@ class EntityController extends Controller
         $requestedFormat = $request->getQueryParam('format');
 
         $targetFormat = $this->negotiateFormat($supportedFormats, $request->getServerConstant('HTTP_ACCEPT'), $requestedFormat);
-        
+
         if (in_array($targetFormat, $restFormats)) {
             $this->redirectREST($request->getVocab(), $request->getUri(), $targetFormat);
         } else {

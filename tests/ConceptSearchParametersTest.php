@@ -2,7 +2,7 @@
 
 class ConceptSearchParametersTest extends PHPUnit\Framework\TestCase
 {
-    private $model; 
+    private $model;
     private $request;
 
     protected function setUp() {
@@ -11,7 +11,7 @@ class ConceptSearchParametersTest extends PHPUnit\Framework\TestCase
         $this->request = $this->getMockBuilder('Request')->disableOriginalConstructor()->getMock();
         $this->model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
     }
-    
+
     protected function tearDown() {
         $this->params = null;
     }
@@ -24,7 +24,7 @@ class ConceptSearchParametersTest extends PHPUnit\Framework\TestCase
         $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'), true);
         $this->assertEquals(0, $params->getSearchLimit());
     }
-  
+
     /**
      * @covers ConceptSearchParameters::getLang
      */
@@ -45,10 +45,10 @@ class ConceptSearchParametersTest extends PHPUnit\Framework\TestCase
         $this->assertEquals(array(), $params->getVocabs());
         $this->request->method('getVocab')->will($this->returnValue('vocfromrequest'));
         $this->assertEquals(array('vocfromrequest'), $params->getVocabs());
-        $params->setVocabularies(array('something')); 
+        $params->setVocabularies(array('something'));
         $this->assertEquals(array('something'), $params->getVocabs());
     }
-  
+
     /**
      * @covers ConceptSearchParameters::getVocabids
      */
@@ -70,7 +70,7 @@ class ConceptSearchParametersTest extends PHPUnit\Framework\TestCase
         $params = new ConceptSearchParameters($mockreq, new GlobalConfig('/../tests/testconfig.inc'), true);
         $this->assertEquals(array('test'), $params->getVocabids());
     }
-  
+
     /**
      * @covers ConceptSearchParameters::getSearchTerm
      */
@@ -82,7 +82,7 @@ class ConceptSearchParametersTest extends PHPUnit\Framework\TestCase
         $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'), true);
         $this->assertEquals('test', $params->getSearchTerm());
     }
-  
+
     /**
      * @covers ConceptSearchParameters::getTypeLimit
      * @covers ConceptSearchParameters::getDefaultTypeLimit
@@ -93,7 +93,7 @@ class ConceptSearchParametersTest extends PHPUnit\Framework\TestCase
         $params = new ConceptSearchParameters($mockreq, new GlobalConfig('/../tests/testconfig.inc'));
         $this->assertEquals(array('skos:Concept', 'http://purl.org/iso25964/skos-thes#ThesaurusArray', 'http://www.w3.org/2004/02/skos/core#Collection'), $params->getTypeLimit());
     }
-  
+
     /**
      * @covers ConceptSearchParameters::getTypeLimit
      * @covers ConceptSearchParameters::getDefaultTypeLimit
@@ -104,7 +104,7 @@ class ConceptSearchParametersTest extends PHPUnit\Framework\TestCase
         $this->request->method('getQueryParam')->will($this->returnValue('isothes:ThesaurusArray+skos:Collection'));
         $this->assertEquals(array('isothes:ThesaurusArray', 'skos:Collection'), $params->getTypeLimit());
     }
-  
+
     /**
      * @covers ConceptSearchParameters::getTypeLimit
      * @covers ConceptSearchParameters::getDefaultTypeLimit
@@ -114,7 +114,7 @@ class ConceptSearchParametersTest extends PHPUnit\Framework\TestCase
         $this->request->method('getQueryParam')->will($this->returnValue('skos:Collection'));
         $this->assertEquals(array('skos:Collection'), $params->getTypeLimit());
     }
-  
+
     /**
      * @covers ConceptSearchParameters::getUnique
      * @covers ConceptSearchParameters::setUnique
@@ -125,7 +125,7 @@ class ConceptSearchParametersTest extends PHPUnit\Framework\TestCase
         $params->setUnique(true);
         $this->assertEquals(true, $params->getUnique());
     }
-  
+
     /**
      * @covers ConceptSearchParameters::getHidden
      * @covers ConceptSearchParameters::setHidden
@@ -136,7 +136,7 @@ class ConceptSearchParametersTest extends PHPUnit\Framework\TestCase
         $params->setHidden(false);
         $this->assertEquals(false, $params->getHidden());
     }
-  
+
     /**
      * @covers ConceptSearchParameters::getArrayClass
      */
@@ -144,7 +144,7 @@ class ConceptSearchParametersTest extends PHPUnit\Framework\TestCase
         $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'));
         $this->assertEquals(null, $params->getArrayClass());
     }
-  
+
     /**
      * @covers ConceptSearchParameters::getArrayClass
      */
@@ -153,7 +153,7 @@ class ConceptSearchParametersTest extends PHPUnit\Framework\TestCase
         $params->setVocabularies(array($this->model->getVocabulary('test')));
         $this->assertEquals('http://purl.org/iso25964/skos-thes#ThesaurusArray', $params->getArrayClass());
     }
-  
+
     /**
      * @covers ConceptSearchParameters::getSchemeLimit
      * @covers ConceptSearchParameters::getQueryParam
@@ -164,7 +164,7 @@ class ConceptSearchParametersTest extends PHPUnit\Framework\TestCase
         $this->request->method('getQueryParam')->will($this->returnValue('http://www.skosmos.skos/test/ http://www.skosmos.skos/date/'));
         $this->assertEquals(array(0 => 'http://www.skosmos.skos/test/', 1 => 'http://www.skosmos.skos/date/'), $params->getSchemeLimit());
     }
-  
+
     /**
      * @covers ConceptSearchParameters::getContentLang
      */
@@ -173,7 +173,7 @@ class ConceptSearchParametersTest extends PHPUnit\Framework\TestCase
         $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'));
         $this->assertEquals('de', $params->getContentLang());
     }
-  
+
     /**
      * @covers ConceptSearchParameters::getSearchLang
      */
@@ -185,7 +185,7 @@ class ConceptSearchParametersTest extends PHPUnit\Framework\TestCase
         $this->request->method('getQueryParam')->will($this->returnValue('on')); //anylang=on
         $this->assertEquals('', $params->getSearchLang());
     }
-  
+
     /**
      * @covers ConceptSearchParameters::getOffset
      */
@@ -194,7 +194,7 @@ class ConceptSearchParametersTest extends PHPUnit\Framework\TestCase
         $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'));
         $this->assertEquals(0, $params->getOffset());
     }
-  
+
     /**
      * @covers ConceptSearchParameters::getOffset
      */
@@ -203,7 +203,7 @@ class ConceptSearchParametersTest extends PHPUnit\Framework\TestCase
         $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'));
         $this->assertEquals(25, $params->getOffset());
     }
-    
+
     /**
      * @covers ConceptSearchParameters::getAdditionalFields
      */
@@ -215,7 +215,7 @@ class ConceptSearchParametersTest extends PHPUnit\Framework\TestCase
         $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'));
         $this->assertEquals(array('broader'), $params->getAdditionalFields());
     }
-    
+
     /**
      * @covers ConceptSearchParameters::getAdditionalFields
      */
