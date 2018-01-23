@@ -1,0 +1,44 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix cbd: <http://www.skosmos.skos/cbd/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+
+cbd:aboutTest schema:about cbd:test1 ;
+    rdfs:label "Schema about test" ;
+    rdfs:comment "CONTAINS due to schema about link to cbd:test1" .
+
+cbd:test2 rdf:type skos:Concept ;
+    skos:prefLabel "concept"@en ;
+    rdfs:comment "The concept to test the tests against (i.e., Concept)" .
+
+_:person schema:about cbd:test1 ;
+    rdfs:isDefinedBy [ a foaf:Person ;
+    foaf:name "OS"@en ] .
+
+cbd:test1 dc:contributor [ a foaf:Person ;
+        foaf:name "HY"@en ] ;
+    dc:creator [ a foaf:Person ;
+            foaf:name "AK"@en ] ;
+    rdf:type skos:Concept ;
+    skos:prefLabel "cbd blank node test"@en .
+
+[] a rdf:Statement ;
+    rdf:subject cbd:test1 ;
+    rdf:predicate skos:prefLabel ;
+    rdf:object "cbd blank node test"@en ;
+    dc:contributor _:person .
+
+[] a rdf:Statement ;
+    rdf:subject cbd:test1 ;
+    rdf:predicate skos:prefLabel ;
+    rdf:object "cbd blank node test" ;
+    rdfs:comment "REIFICATION_ERROR due to missing language tag." .
+
+[] a rdf:Statement ;
+    rdf:subject cbd:test1 ;
+    rdf:predicate skos:prefLabel ;
+    rdf:object "cbd blank node test"@fi ;
+    rdfs:comment "REIFICATION_ERROR due to wrong language tag." .

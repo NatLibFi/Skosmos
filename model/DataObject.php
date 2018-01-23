@@ -127,4 +127,12 @@ class DataObject
        // get language from locale, same as used by gettext, set by Controller
        return substr(getenv("LC_ALL"), 0, 2); // @codeCoverageIgnore
     }
+
+    /**
+     * Getter function for retrieving the resource.
+     */
+    public function getResource()
+    {
+        return $this->resource;
+    }
 }

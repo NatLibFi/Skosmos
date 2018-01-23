@@ -275,7 +275,7 @@ class Concept extends VocabularyDataObject
      * to $this->graph
      * @param EasyRdf\Resource $res
      */
-    private function processExternalResource($res)
+    public function processExternalResource($res)
     {
         $exGraph = $res->getGraph();
         // catch external subjects that have $res as object
@@ -307,7 +307,6 @@ class Concept extends VocabularyDataObject
         if (array_key_exists($res->getUri(), $seen)) {
             return;
         }
-
         $seen[$res->getUri()] = True;
 
         if ($res->isBNode() || is_null($props)) {
@@ -340,36 +339,54 @@ class Concept extends VocabularyDataObject
                 $this->addExternalTriplesToGraph($res2, $seen);
             }
             $this->graph->addResource($res, $prop, $res2);
-            $this->addReifications($res, $prop, $res2, $seen);
+            $this->addResourceReifications($res, $prop, $res2, $seen);
         }
 
         $litList = $res->allLiterals('<' . $prop . '>');
 
         foreach ($litList as $lit) {
-            $datatypeRes = $res->getGraph()->resource($lit->getDatatypeUri());
-            if ($datatypeRes->isBNode()) {
-                $this->addExternalTriplesToGraph($datatypeRes, $seen);
-            }
-
             $this->graph->addLiteral($res, $prop, $lit);
-            $this->addReifications($res, $prop, $lit, $seen);
+            $this->addLiteralReifications($res, $prop, $lit, $seen);
         }
     }
 
     /**
-     * Adds reifications of a triple to $this->graph
+     * Adds reifications of a triple having a literal object to $this->graph
      * @param EasyRdf\Resource $sub
      * @param string $pred
-     * @param EasyRdf\Resource|EasyRdf\Literal $obj
+     * @param EasyRdf\Literal $obj
      * @param string[] $seen Processed resources so far
      */
-    private function addReifications($sub, $pred, $obj, &$seen)
+    private function addLiteralReifications($sub, $pred, $obj, &$seen)
     {
-        $pos_reifs = $res->getGraph()->resourcesMatching("http://www.w3.org/1999/02/22-rdf-syntax#object", $obj);
+        $pos_reifs = $sub->getGraph()->resourcesMatching("rdf:subject", $sub);
         foreach ($pos_reifs as $pos_reif) {
-            if ($pos_reif->isA("http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement") &&
-                $pos_reif->hasProperty("http://www.w3.org/1999/02/22-rdf-syntax#predicate", $pred) &&
-                $pos_reif->hasProperty("http://www.w3.org/1999/02/22-rdf-syntax#subject", $sub)) {
+            $lit = $pos_reif->getLiteral("rdf:object", $obj->getLang());
+
+            if (!is_null($lit) && $lit->getValue() === $obj->getValue() &&
+                $pos_reif->isA("rdf:Statement") &&
+                $pos_reif->hasProperty("rdf:predicate", new EasyRdf\Resource($pred, $sub->getGraph())))
+            {
+                $this->addExternalTriplesToGraph($pos_reif, $seen);
+            }
+        }
+    }
+
+    /**
+     * Adds reifications of a triple having a resource object to $this->graph
+     * @param EasyRdf\Resource $sub
+     * @param string $pred
+     * @param EasyRdf\Resource $obj
+     * @param string[] $seen Processed resources so far
+     */
+    private function addResourceReifications($sub, $pred, $obj, &$seen)
+    {
+        $pos_reifs = $sub->getGraph()->resourcesMatching("rdf:subject", $sub);
+        foreach ($pos_reifs as $pos_reif) {
+            if ($pos_reif->isA("rdf:Statement") &&
+                $pos_reif->hasProperty("rdf:object", $obj) &&
+                $pos_reif->hasProperty("rdf:predicate", new EasyRdf\Resource($pred, $sub->getGraph())))
+            {
                 $this->addExternalTriplesToGraph($pos_reif, $seen);
             }
         }

@@ -4,6 +4,8 @@ class ConceptTest extends PHPUnit\Framework\TestCase
 {
   private $model; 
   private $concept;
+  private $cbdVocab;
+  private $cbdGraph;
 
   protected function setUp() {
     putenv("LC_ALL=en_GB.utf8");
@@ -16,6 +18,11 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     $this->vocab = $this->model->getVocabulary('test');
     $results = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en');
     $this->concept = reset($results);
+
+    $this->cbdVocab = $this->model->getVocabulary('cbd');
+    $this->cbdGraph =  new EasyRdf\Graph();
+    $this->cbdGraph->parseFile("tests/test-vocab-data/cbd.ttl", "turtle");
+
   }
 
   /**
@@ -391,7 +398,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
       }
     }
   }
-  
+
   /**
    * @covers Concept::getProperties
    */
@@ -408,7 +415,6 @@ class ConceptTest extends PHPUnit\Framework\TestCase
    * @covers Concept::getProperties
    * @covers ConceptProperty::getValues
    */
-  
   public function testGetPropertiesDefinitionResource() {
     $vocab = $this->model->getVocabulary('test');
     $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta122', 'en');
@@ -416,5 +422,40 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     $props = $concept->getProperties();
     $propvals = $props['skos:definition']->getValues();
     $this->assertEquals('The black sea bass (Centropristis striata) is an exclusively marine fish.', $propvals['The black sea bass (Centropristis striata) is an exclusively marine fish.http://www.skosmos.skos/test/black_sea_bass_def']->getLabel());
+  }
+
+  /**
+   * @covers Concept::addResourceReifications
+   * @covers Concept::addLiteralReifications
+   */
+  public function testExternalResourceReifications() {
+    $concepts = $this->cbdVocab->getConceptInfo('http://www.skosmos.skos/cbd/test2', 'en');
+    $concept = $concepts[0];
+
+    $res = $this->cbdGraph->resource('http://www.skosmos.skos/cbd/test1');
+
+    $concept->processExternalResource($res);
+    $json =  $concept->dumpJsonLd();
+    $error_count = substr_count($json, "REIFICATION_ERROR");
+    $this->assertEquals($error_count, 0);
+  }
+
+  /**
+   * @covers Concept::processExternalResource
+   * @covers Concept::addExternalTriplesToGraph
+   * @covers Concept::addPropertyValues
+   */
+  public function testProcessExternalResource() {
+    $concepts = $this->cbdVocab->getConceptInfo('http://www.skosmos.skos/cbd/test2', 'en');
+    $concept = $concepts[0];
+
+    $res = $this->cbdGraph->resource('http://www.skosmos.skos/cbd/test1');
+
+    $concept->processExternalResource($res);
+    $json =  $concept->dumpJsonLd();
+    $this->assertContains('HY', $json);
+    $this->assertContains('AK', $json);
+    $this->assertContains('OS', $json);
+    $this->assertContains("CONTAINS", $json);
   }
 }
