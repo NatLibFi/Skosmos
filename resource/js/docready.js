@@ -649,6 +649,11 @@ $(function() { // DOCUMENT READY
             var hit = data.results[i];
             if (!hit.hiddenLabel) {
                 hasNonHiddenMatch[hit.uri] = true;
+            } else if (hit.hiddenLabel) {
+                if (hasNonHiddenMatch[hit.uri] === false) {
+                    delete data.results[i];
+                }
+                hasNonHiddenMatch[hit.uri] = false;
             }
         }
         var context = data['@context'];
