@@ -314,7 +314,7 @@ class Vocabulary extends DataObject
     public function getConceptChildren($uri, $lang)
     {
         $lang = $lang ? $lang : $this->getEnvLang();
-        $fallback = $this->config->getDefaultLanguage();
+        $fallback = count($this->config->getLanguageOrder($lang)) > 1 ? $this->config->getLanguageOrder($lang)[1] : $this->config->getDefaultLanguage();
         $props = $this->config->getHierarchyProperty();
         return $this->getSparql()->queryChildren($uri, $lang, $fallback, $props);
     }
