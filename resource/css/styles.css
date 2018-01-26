@@ -1784,7 +1784,17 @@ body, .versal, h1, h2, p, .versal-bold {
 
 }
 
+@media (max-width: 340px) {
+  .vocab-info-literals > table > tbody > tr > th {
+    max-width: 120px;
+  }
+  .vocab-info-literals > table > tbody > tr > td {
+    max-width: 180px;
+  }
+}
+
 @media (max-width: 400px) {
+
   #navi3 {
     display: none;
   }
