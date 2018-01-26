@@ -650,7 +650,7 @@ $(function() { // DOCUMENT READY
             if (!hit.hiddenLabel) {
                 hasNonHiddenMatch[hit.uri] = true;
             } else if (hit.hiddenLabel) {
-                if (hasNonHiddenMatch[hit.uri] === false) {
+                if (hasNonHiddenMatch[hit.uri]) {
                     delete data.results[i];
                 }
                 hasNonHiddenMatch[hit.uri] = false;
