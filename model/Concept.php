@@ -46,27 +46,26 @@ class Concept extends VocabularyDataObject
 
     /** default external properties we are interested in saving/displaying from mapped external objects */
     private $DEFAULT_EXT_PROPERTIES = array(
-        "http://purl.org/dc/elements/1.1/title",
-        "http://purl.org/dc/terms/title",
-        "http://www.w3.org/2004/02/skos/core#prefLabel",
-        "http://www.w3.org/2004/02/skos/core#exactMatch",
-        "http://www.w3.org/2004/02/skos/core#closeMatch",
-        "http://www.w3.org/2004/02/skos/core#inScheme",
-        "http://www.w3.org/2000/01/rdf-schema#label",
-        "http://www.w3.org/2000/01/rdf-schema#isDefinedBy",
-        "http://www.w3.org/2002/07/owl#sameAs",
-        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
-        "http://rdfs.org/ns/void#inDataset",
-        "http://rdfs.org/ns/void#sparqlEndpoint",
-        "http://rdfs.org/ns/void#uriLookupEndpoint",
-        "http://schema.org/about",
-        "http://schema.org/description",
-        "http://schema.org/inLanguage",
-        "http://schema.org/name",
-        "http://schema.org/isPartOf",
-        "http://www.wikidata.org/prop/direct/P31",
-        "http://www.wikidata.org/prop/direct/P625",
-        "http://wikiba.se/ontology-beta#wikiGroup"
+        "dc11:title",
+        "dcterms:title",
+        "skos:prefLabel",
+        "skos:exactMatch",
+        "skos:closeMatch",
+        "skos:inScheme",
+        "rdfs:label",
+        "rdfs:isDefinedBy",
+        "owl:sameAs",
+        "rdf:type",
+        "void:inDataset",
+        "void:sparqlEndpoint",
+        "void:uriLookupEndpoint",
+        "schema:about",
+        "schema:description",
+        "schema:inLanguage",
+        "schema:name",
+        "schema:isPartOf",
+        "wdt:P31",
+        "wdt:P625"
     );
 
     /**
@@ -275,7 +274,7 @@ class Concept extends VocabularyDataObject
     {
         $exGraph = $res->getGraph();
         // catch external subjects that have $res as object
-        $extSubjects = $exGraph->resourcesMatching("http://schema.org/about", $res);
+        $extSubjects = $exGraph->resourcesMatching("schema:about", $res);
 
         $propList =  array_unique(array_merge(
             $this->DEFAULT_EXT_PROPERTIES,
@@ -285,9 +284,13 @@ class Concept extends VocabularyDataObject
 
         $seen = array();
         $this->addExternalTriplesToGraph($res, $seen, $propList);
-
         foreach ($extSubjects as $extSubject) {
-           $this->addExternalTriplesToGraph($extSubject, $seen, $propList);
+            if ($extSubject->isBNode() && array_key_exists($extSubject->getUri(), $seen)) {
+                // already processed, skip
+                continue;
+            }
+            $seen[$extSubject->getUri()] = 1;
+            $this->addExternalTriplesToGraph($extSubject, $seen, $propList);
         }
 
     }
@@ -300,10 +303,10 @@ class Concept extends VocabularyDataObject
      */
     private function addExternalTriplesToGraph($res, &$seen, $props=null)
     {
-        if (array_key_exists($res->getUri(), $seen)) {
+        if (array_key_exists($res->getUri(), $seen) && $seen[$res->getUri()] === 0) {
             return;
         }
-        $seen[$res->getUri()] = True;
+        $seen[$res->getUri()] = 0;
 
         if ($res->isBNode() || is_null($props)) {
             foreach ($res->propertyUris() as $prop) {
@@ -817,14 +820,13 @@ class Concept extends VocabularyDataObject
      * Dump concept graph as JSON-LD.
      */
     public function dumpJsonLd() {
-
         $context = array(
-            'skos' => 'http://www.w3.org/2004/02/skos/core#',
-            'isothes' => 'http://purl.org/iso25964/skos-thes#',
-            'rdfs' => 'http://www.w3.org/2000/01/rdf-schema#',
-            'owl' => 'http://www.w3.org/2002/07/owl#',
-            'dct' => 'http://purl.org/dc/terms/',
-            'dc11' => 'http://purl.org/dc/elements/1.1/',
+            'skos' => EasyRdf\RdfNamespace::get("skos"),
+            'isothes' => EasyRdf\RdfNamespace::get("isothes"),
+            'rdfs' => EasyRdf\RdfNamespace::get("rdfs"),
+            'owl' =>EasyRdf\RdfNamespace::get("owl"),
+            'dct' => EasyRdf\RdfNamespace::get("dcterms"),
+            'dc11' => EasyRdf\RdfNamespace::get("dc11"),
             'uri' => '@id',
             'type' => '@type',
             'lang' => '@language',
@@ -838,7 +840,25 @@ class Concept extends VocabularyDataObject
             'narrower' => 'skos:narrower',
             'related' => 'skos:related',
             'inScheme' => 'skos:inScheme',
+            'schema' => EasyRdf\RdfNamespace::get("schema"),
+            'wd' => EasyRdf\RdfNamespace::get("wd"),
+            'wdt' => EasyRdf\RdfNamespace::get("wdt"),
         );
+        $vocabPrefix = preg_replace('/\W+/', '', $this->vocab->getId()); // strip non-word characters
+        $vocabUriSpace = $this->vocab->getUriSpace();
+
+        if (!in_array($vocabUriSpace, $context, true)) {
+            if (!isset($context[$vocabPrefix])) {
+                $context[$vocabPrefix] = $vocabUriSpace;
+            }
+            else if ($context[$vocabPrefix] !== $vocabUriSpace) {
+                $i = 2;
+                while (isset($context[$vocabPrefix . $i]) && $context[$vocabPrefix . $i] !== $vocabUriSpace) {
+                    $i += 1;
+                }
+                $context[$vocabPrefix . $i] = $vocabUriSpace;
+            }
+        }
         $compactJsonLD = \ML\JsonLD\JsonLD::compact($this->graph->serialise('jsonld'), json_encode($context));
         $results = \ML\JsonLD\JsonLD::toString($compactJsonLD);
 

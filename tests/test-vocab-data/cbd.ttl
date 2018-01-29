@@ -1,4 +1,4 @@
-@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dc11: <http://purl.org/dc/elements/1.1/> .
 @prefix cbd: <http://www.skosmos.skos/cbd/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
@@ -10,6 +10,14 @@ cbd:aboutTest schema:about cbd:test1 ;
     rdfs:label "Schema about test" ;
     rdfs:comment "CONTAINS due to schema about link to cbd:test1" .
 
+_:seenTest rdfs:label "Seen test" ;
+    rdfs:comment "CONTAINS; Just to checl that the $seen works properly" .
+
+_:aboutBlankTest schema:about cbd:test1;
+    rdfs:label "Schema about blank test" ;
+    rdfs:comment "CONTAINS; Already referenced from cbd:test1" ;
+    dc11:relation _:seenTest .
+
 cbd:test2 rdf:type skos:Concept ;
     skos:prefLabel "concept"@en ;
     rdfs:comment "The concept to test the tests against (i.e., Concept)" .
@@ -18,18 +26,20 @@ _:person schema:about cbd:test1 ;
     rdfs:isDefinedBy [ a foaf:Person ;
     foaf:name "OS"@en ] .
 
-cbd:test1 dc:contributor [ a foaf:Person ;
+cbd:test1 dc11:contributor [ a foaf:Person ;
         foaf:name "HY"@en ] ;
-    dc:creator [ a foaf:Person ;
+    dc11:creator [ a foaf:Person ;
             foaf:name "AK"@en ] ;
     rdf:type skos:Concept ;
-    skos:prefLabel "cbd blank node test"@en .
+    skos:prefLabel "cbd blank node test"@en ;
+    dc11:relation _:aboutBlankTest ;
+    dc11:relation _:seenTest .
 
 [] a rdf:Statement ;
     rdf:subject cbd:test1 ;
     rdf:predicate skos:prefLabel ;
     rdf:object "cbd blank node test"@en ;
-    dc:contributor _:person .
+    dc11:contributor _:person .
 
 [] a rdf:Statement ;
     rdf:subject cbd:test1 ;

@@ -197,6 +197,7 @@
     void:uriSpace "http://www.skosmos.skos/cbd/";
     skosmos:externalProperty dc11:contributor ;
     skosmos:externalProperty dc11:creator ;
+    skosmos:externalProperty dc11:relation ;
     skosmos:externalProperty rdfs:comment ;
     void:sparqlEndpoint <http://localhost:3030/ds/sparql> ;
     skosmos:language "en";

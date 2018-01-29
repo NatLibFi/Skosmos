@@ -456,6 +456,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     $this->assertContains('HY', $json);
     $this->assertContains('AK', $json);
     $this->assertContains('OS', $json);
-    $this->assertContains("CONTAINS", $json);
+    $contains_count = substr_count($json, "CONTAINS");
+    $this->assertEquals($contains_count, 3);
   }
 }

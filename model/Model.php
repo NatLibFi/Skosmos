@@ -4,10 +4,11 @@
  * Setting some often needed namespace prefixes
  */
 EasyRdf\RdfNamespace::set('skosmos', 'http://purl.org/net/skosmos#');
-EasyRdf\RdfNamespace::set('void', 'http://rdfs.org/ns/void#');
 EasyRdf\RdfNamespace::set('skosext', 'http://purl.org/finnonto/schema/skosext#');
 EasyRdf\RdfNamespace::set('isothes', 'http://purl.org/iso25964/skos-thes#');
 EasyRdf\RdfNamespace::set('mads', 'http://www.loc.gov/mads/rdf/v1#');
+EasyRdf\RdfNamespace::set('wd', 'http://www.wikidata.org/entity/');
+EasyRdf\RdfNamespace::set('wdt', 'http://www.wikidata.org/prop/direct/');
 
 /**
  * Model provides access to the data.
