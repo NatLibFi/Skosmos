@@ -41,26 +41,22 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
         return $label;
     }
 
-    private function queryLabel($lang)
+    private function queryLabel($lang = '')
     {
         if ($this->clang) {
             $lang = $this->clang;
         }
 
+
+        $label = $this->getResourceLabel($this->resource, $lang);
+        if ($label) {
+            return $label;
+        }
+
         // if multiple vocabularies are found, the following method will return in priority the current vocabulary of the mapping
         $exvocab = $this->model->guessVocabularyFromURI($this->resource->getUri(), $this->vocab->getId());
 
-        if ($this->resource->label($lang) !== null) { // current language
-            return $this->resource->label($lang);
-        } elseif ($this->resource->label() !== null) { // any language
-            return $this->resource->label();
-        } elseif ($this->resource->getLiteral('rdf:value', $lang) !== null) { // current language
-            return $this->resource->getLiteral('rdf:value', $lang);
-        } elseif ($this->resource->getLiteral('rdf:value') !== null) { // any language
-            return $this->resource->getLiteral('rdf:value');
-        }
-
-        // if the resource is from a another vocabulary known by the skosmos instance
+        // if the resource is from another vocabulary known by the skosmos instance
         if ($exvocab) {
             $label = $this->getExternalLabel($exvocab, $this->getUri(), $lang) ? $this->getExternalLabel($exvocab, $this->getUri(), $lang) : $this->getExternalLabel($exvocab, $this->getUri(), $exvocab->getConfig()->getDefaultLanguage());
             if ($label) {
@@ -71,6 +67,24 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
         // using URI as label if nothing else has been found.
         $label = $this->resource->shorten() ? $this->resource->shorten() : $this->resource->getUri();
         return $label;
+    }
+
+    private function getResourceLabel($res, $lang = '') {
+
+        if ($this->clang) {
+            $lang = $this->clang;
+        }
+
+        if ($res->label($lang) !== null) { // current language
+            return $res->label($lang);
+        } elseif ($res->label() !== null) { // any language
+            return $res->label();
+        } elseif ($res->getLiteral('rdf:value', $lang) !== null) { // current language
+            return $res->getLiteral('rdf:value', $lang);
+        } elseif ($res->getLiteral('rdf:value') !== null) { // any language
+            return $res->getLiteral('rdf:value');
+        }
+        return null;
     }
 
     public function getUri()
@@ -89,19 +103,29 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
         return $this->vocab;
     }
 
-    public function getVocabName()
+    public function getVocabName($lang = '')
     {
+
+        if ($this->clang) {
+            $lang = $this->clang;
+        }
+
         // if multiple vocabularies are found, the following method will return in priority the current vocabulary of the mapping
         $exvocab = $this->model->guessVocabularyFromURI($this->resource->getUri(), $this->vocab->getId());
         if ($exvocab) {
-            return $exvocab->getTitle();
+            return $exvocab->getTitle($lang);
         }
+
         // @codeCoverageIgnoreStart
         $scheme = $this->resource->get('skos:inScheme');
         if ($scheme) {
             $schemeResource = $this->model->getResourceFromUri($scheme->getUri());
-            if ($schemeResource && $schemeResource->label()) {
-                return $schemeResource->label()->getValue();
+            if ($schemeResource) {
+                $schemaName = $this->getResourceLabel($schemeResource);
+                if ($schemaName) {
+                    //var_dump($schemaName);
+                    return $schemaName;
+                }
             }
         }
         // got a label for the concept, but not the scheme - use the host name as scheme label
@@ -125,3 +149,4 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
     }
 
 }
+

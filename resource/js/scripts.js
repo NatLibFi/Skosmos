@@ -251,7 +251,9 @@ function makeCallbacks(data, pageType) {
   var variables = data ? data.substring(data.indexOf('var uri ='), data.indexOf('var uriSpace =')).split('\n') : '';
   var newUri = data ? variables[0].substring(variables[0].indexOf('"')+1, variables[0].indexOf(';')-1) : window.uri;
   var newPrefs = data ? JSON.parse(variables[1].substring(variables[1].indexOf('['), variables[1].lastIndexOf(']')+1)) : window.prefLabels;
-  var params = {'uri': newUri, 'prefLabels': newPrefs, 'page': pageType};
+  var embeddedJsonLd  = $('script[type="application/ld+json"]')[0] ? JSON.parse($('script[type="application/ld+json"]')[0].innerHTML) : {};
+
+  var params = {'uri': newUri, 'prefLabels': newPrefs, 'page': pageType, "json-ld": embeddedJsonLd};
 
   if (window.pluginCallbacks) {
     for (var i in window.pluginCallbacks) {
