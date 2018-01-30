@@ -191,6 +191,17 @@
     skosmos:language "fi";
     skosmos:sparqlGraph <http://www.skosmos.skos/collation/> .
 
+:cbd a skosmos:Vocabulary, void:Dataset ;
+    dc11:title "A vocabulary for testing blank node processing and reification"@en ;
+    dc:subject :cat_general ;
+    void:uriSpace "http://www.skosmos.skos/cbd/";
+    skosmos:externalProperty dc11:contributor ;
+    skosmos:externalProperty dc11:creator ;
+    skosmos:externalProperty dc11:relation ;
+    skosmos:externalProperty rdfs:comment ;
+    void:sparqlEndpoint <http://localhost:3030/ds/sparql> ;
+    skosmos:language "en";
+    skosmos:sparqlGraph <http://www.skosmos.skos/cbd/> .
 
 <http://skosmos.skos/dump/test/groups> dc:format "application/rdf+xml" .
 

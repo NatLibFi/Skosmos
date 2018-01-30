@@ -28,17 +28,23 @@ class PluginRegister {
      * Returns the plugin configurations found from plugin folders
      * inside the plugins folder filtered by filetype.
      * @param string $type filetype e.g. 'css', 'js' or 'template'
+     * @param boolean $raw interpret $type values as raw text instead of files
      * @return array
      */
-    private function filterPlugins($type) {
+    private function filterPlugins($type, $raw=false) {
         $plugins = $this->getPlugins();
         $ret = array();
         if (!empty($plugins)) {
             foreach ($plugins as $name => $files) {
                 if (isset($files[$type])) {
                     $ret[$name] = array();
-                    foreach ($files[$type] as $file) {
-                        array_push($ret[$name], 'plugins/' . $name . '/' . $file);
+                    if ($raw) {
+                        $ret[$name] = $files[$type];
+                    }
+                    else {
+                        foreach ($files[$type] as $file) {
+                            array_push($ret[$name], 'plugins/' . $name . '/' . $file);
+                        }
                     }
                 }
             }
@@ -138,4 +144,25 @@ class PluginRegister {
         }
         return $ret;
     }
+ 
+    /**
+     * Returns an array that is flattened from its possibly multidimensional form
+     * copied from https://stackoverflow.com/a/1320156
+     * @param mixed[] $array Flattens this input array
+     * @return array Flattened input
+     */
+    protected function flatten($array) {
+        $return = array();
+        array_walk_recursive($array, function($a) use (&$return) { $return[] = $a; });
+        return $return;
+    }
+
+    /**
+     * Returns a flattened array containing the external properties we are interested in saving
+     * @return string[]
+     */
+    public function getExtProperties() {
+        return array_unique($this->flatten($this->filterPlugins('ext-properties', true)));
+    }
 }
+

@@ -44,6 +44,30 @@ class Concept extends VocabularyDataObject
         'owl:sameAs',
     );
 
+    /** default external properties we are interested in saving/displaying from mapped external objects */
+    private $DEFAULT_EXT_PROPERTIES = array(
+        "dc11:title",
+        "dcterms:title",
+        "skos:prefLabel",
+        "skos:exactMatch",
+        "skos:closeMatch",
+        "skos:inScheme",
+        "rdfs:label",
+        "rdfs:isDefinedBy",
+        "owl:sameAs",
+        "rdf:type",
+        "void:inDataset",
+        "void:sparqlEndpoint",
+        "void:uriLookupEndpoint",
+        "schema:about",
+        "schema:description",
+        "schema:inLanguage",
+        "schema:name",
+        "schema:isPartOf",
+        "wdt:P31",
+        "wdt:P625"
+    );
+
     /**
      * Initializing the concept object requires the following parameters.
      * @param Model $model
@@ -238,6 +262,135 @@ class Concept extends VocabularyDataObject
         return $this->foundbytype;
     }
 
+    /**
+     * Processes a single external resource i.e., adds the properties from
+     * 1) $this->$DEFAULT_EXT_PROPERTIES
+     * 2) VocabConfig external properties
+     * 3) Possible plugin defined external properties
+     * to $this->graph
+     * @param EasyRdf\Resource $res
+     */
+    public function processExternalResource($res)
+    {
+        $exGraph = $res->getGraph();
+        // catch external subjects that have $res as object
+        $extSubjects = $exGraph->resourcesMatching("schema:about", $res);
+
+        $propList =  array_unique(array_merge(
+            $this->DEFAULT_EXT_PROPERTIES,
+            $this->getVocab()->getConfig()->getExtProperties(),
+            $this->getVocab()->getConfig()->getPlugins()->getExtProperties()
+        ));
+
+        $seen = array();
+        $this->addExternalTriplesToGraph($res, $seen, $propList);
+        foreach ($extSubjects as $extSubject) {
+            if ($extSubject->isBNode() && array_key_exists($extSubject->getUri(), $seen)) {
+                // already processed, skip
+                continue;
+            }
+            $seen[$extSubject->getUri()] = 1;
+            $this->addExternalTriplesToGraph($extSubject, $seen, $propList);
+        }
+
+    }
+
+    /**
+     * Adds resource properties to $this->graph
+     * @param EasyRdf\Resource $res
+     * @param string[] $seen Processed resources so far
+     * @param string[] $props (optional) limit to these property URIs
+     */
+    private function addExternalTriplesToGraph($res, &$seen, $props=null)
+    {
+        if (array_key_exists($res->getUri(), $seen) && $seen[$res->getUri()] === 0) {
+            return;
+        }
+        $seen[$res->getUri()] = 0;
+
+        if ($res->isBNode() || is_null($props)) {
+            foreach ($res->propertyUris() as $prop) {
+                $this->addPropertyValues($res, $prop, $seen);
+            }
+        }
+        else {
+            foreach ($props as $prop) {
+                if ($res->hasProperty($prop)) {
+                    $this->addPropertyValues($res, $prop, $seen);
+                }
+            }
+        }
+    }
+
+    /**
+     * Adds values of a single single property of a resource to $this->graph
+     * implements Concise Bounded Description definition
+     * @param EasyRdf\Resource $res
+     * @param string $prop
+     * @param string[] $seen Processed resources so far
+     */
+    private function addPropertyValues($res, $prop, &$seen)
+    {
+        $resList = $res->allResources('<' . $prop . '>');
+
+        foreach ($resList as $res2) {
+            if ($res2->isBNode()) {
+                $this->addExternalTriplesToGraph($res2, $seen);
+            }
+            $this->graph->addResource($res, $prop, $res2);
+            $this->addResourceReifications($res, $prop, $res2, $seen);
+        }
+
+        $litList = $res->allLiterals('<' . $prop . '>');
+
+        foreach ($litList as $lit) {
+            $this->graph->addLiteral($res, $prop, $lit);
+            $this->addLiteralReifications($res, $prop, $lit, $seen);
+        }
+    }
+
+    /**
+     * Adds reifications of a triple having a literal object to $this->graph
+     * @param EasyRdf\Resource $sub
+     * @param string $pred
+     * @param EasyRdf\Literal $obj
+     * @param string[] $seen Processed resources so far
+     */
+    private function addLiteralReifications($sub, $pred, $obj, &$seen)
+    {
+        $pos_reifs = $sub->getGraph()->resourcesMatching("rdf:subject", $sub);
+        foreach ($pos_reifs as $pos_reif) {
+            $lit = $pos_reif->getLiteral("rdf:object", $obj->getLang());
+
+            if (!is_null($lit) && $lit->getValue() === $obj->getValue() &&
+                $pos_reif->isA("rdf:Statement") &&
+                $pos_reif->hasProperty("rdf:predicate", new EasyRdf\Resource($pred, $sub->getGraph())))
+            {
+                $this->addExternalTriplesToGraph($pos_reif, $seen);
+            }
+        }
+    }
+
+    /**
+     * Adds reifications of a triple having a resource object to $this->graph
+     * @param EasyRdf\Resource $sub
+     * @param string $pred
+     * @param EasyRdf\Resource $obj
+     * @param string[] $seen Processed resources so far
+     */
+    private function addResourceReifications($sub, $pred, $obj, &$seen)
+    {
+        $pos_reifs = $sub->getGraph()->resourcesMatching("rdf:subject", $sub);
+        foreach ($pos_reifs as $pos_reif) {
+            if ($pos_reif->isA("rdf:Statement") &&
+                $pos_reif->hasProperty("rdf:object", $obj) &&
+                $pos_reif->hasProperty("rdf:predicate", new EasyRdf\Resource($pred, $sub->getGraph())))
+            {
+                $this->addExternalTriplesToGraph($pos_reif, $seen);
+            }
+        }
+    }
+
     public function getMappingProperties()
     {
         $ret = array();
@@ -278,6 +431,9 @@ class Concept extends VocabularyDataObject
 
                             if ($response) {
                                 $ret[$prop]->addValue(new ConceptMappingPropertyValue($this->model, $this->vocab, $response, $prop), $this->clang);
+
+                                $this->processExternalResource($response);
+
                                 continue;
                             }
                         }
@@ -658,5 +814,54 @@ class Concept extends VocabularyDataObject
         }
         ksort($labels);
         return $labels;
+    }
+
+    /**
+     * Dump concept graph as JSON-LD.
+     */
+    public function dumpJsonLd() {
+        $context = array(
+            'skos' => EasyRdf\RdfNamespace::get("skos"),
+            'isothes' => EasyRdf\RdfNamespace::get("isothes"),
+            'rdfs' => EasyRdf\RdfNamespace::get("rdfs"),
+            'owl' =>EasyRdf\RdfNamespace::get("owl"),
+            'dct' => EasyRdf\RdfNamespace::get("dcterms"),
+            'dc11' => EasyRdf\RdfNamespace::get("dc11"),
+            'uri' => '@id',
+            'type' => '@type',
+            'lang' => '@language',
+            'value' => '@value',
+            'graph' => '@graph',
+            'label' => 'rdfs:label',
+            'prefLabel' => 'skos:prefLabel',
+            'altLabel' => 'skos:altLabel',
+            'hiddenLabel' => 'skos:hiddenLabel',
+            'broader' => 'skos:broader',
+            'narrower' => 'skos:narrower',
+            'related' => 'skos:related',
+            'inScheme' => 'skos:inScheme',
+            'schema' => EasyRdf\RdfNamespace::get("schema"),
+            'wd' => EasyRdf\RdfNamespace::get("wd"),
+            'wdt' => EasyRdf\RdfNamespace::get("wdt"),
+        );
+        $vocabPrefix = preg_replace('/\W+/', '', $this->vocab->getId()); // strip non-word characters
+        $vocabUriSpace = $this->vocab->getUriSpace();
+
+        if (!in_array($vocabUriSpace, $context, true)) {
+            if (!isset($context[$vocabPrefix])) {
+                $context[$vocabPrefix] = $vocabUriSpace;
+            }
+            else if ($context[$vocabPrefix] !== $vocabUriSpace) {
+                $i = 2;
+                while (isset($context[$vocabPrefix . $i]) && $context[$vocabPrefix . $i] !== $vocabUriSpace) {
+                    $i += 1;
+                }
+                $context[$vocabPrefix . $i] = $vocabUriSpace;
+            }
+        }
+        $compactJsonLD = \ML\JsonLD\JsonLD::compact($this->graph->serialise('jsonld'), json_encode($context));
+        $results = \ML\JsonLD\JsonLD::toString($compactJsonLD);
+
+        return $results;
     }
 }
