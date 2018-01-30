@@ -356,6 +356,7 @@ class Model
         $count = sizeof($allhits);
         $hits = array_slice($allhits, $params->getOffset(), $params->getSearchLimit());
 
+        $ret = array();
         $uris = array();
         $vocabs = array();
         $uniqueVocabs = array();
@@ -372,7 +373,9 @@ class Model
             $arrayClass = null;
             $sparql = $this->getDefaultSparql();
         }
-        $ret = $sparql->queryConceptInfo($uris, $arrayClass, $vocabs, $params->getSearchLang());
+        if (sizeof($uris) > 0) {
+            $ret = $sparql->queryConceptInfo($uris, $arrayClass, $vocabs, $params->getSearchLang());
+        }
 
         // For marking that the concept has been found through an alternative label, hidden
         // label or a label in another language
