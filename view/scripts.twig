@@ -25,6 +25,9 @@ var prefLabels = [{"lang": "{{ search_results|first.label.lang }}","label": "{{ 
 var uriSpace = "{{ request.vocab.uriSpace }}";
 {% endif %}
 var showNotation = {% if request.vocab and request.vocab.config.showNotation == false %}false{% else %}true{% endif %};
+{% if request.vocab  %}
+var languageOrder = [{% for lang in request.vocab.config.languageOrder(request.contentLang) %}"{{ lang }}"{% if not loop.last %},{% endif %}{% endfor %}];
+{% endif %}
 </script>
 
 {% if request.page == 'page' and search_results and search_results|length == 1 %}
