@@ -88,6 +88,17 @@ function updateContent(data) {
   $('.content').append(response);
 }
 
+function updateJsonLD(data) {
+    var $jsonld = $('script[type="application/ld+json"]');
+    if ($jsonld[0]) {
+        $jsonld[0].innerHTML = "{}";
+        var $newJsonLD = $(data).filter('script[type="application/ld+json"]');
+        if ($newJsonLD[0]) {
+            $jsonld[0].innerHTML = $newJsonLD[0].innerHTML;
+        }
+    }
+}
+
 function updateTopbarLang(data) {
   $('#language').empty();
   var langBut = $('#language', data).html();

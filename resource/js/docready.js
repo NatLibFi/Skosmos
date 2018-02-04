@@ -260,6 +260,8 @@ $(function() { // DOCUMENT READY
               var response = $('.content', data).html();
               if (window.history.pushState) { window.history.pushState({url: historyUrl}, '', historyUrl); }
               $content.append(response);
+
+              updateJsonLD(data);
               updateTitle(data);
               updateTopbarLang(data);
               makeCallbacks(data);
@@ -288,6 +290,7 @@ $(function() { // DOCUMENT READY
               $content.empty().append($('.content', data).html());
               initHierarchyQtip();
               $('#hier-trigger').attr('href', event.target.href);
+              updateJsonLD(data);
               updateTitle(data);
               updateTopbarLang(data);
               makeCallbacks(data);
