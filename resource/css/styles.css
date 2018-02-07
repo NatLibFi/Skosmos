@@ -505,10 +505,14 @@ ul.dropdown-menu > li:last-child > input {
   padding-left: 8px;
   padding-right: 22px;
   box-shadow: none;
+  border: 1px solid #fff;
 }
 
 #search-field:focus {
   box-shadow: none;
+  transition: 258ms border-color ease;
+  border-color: #394554;
+
 }
 
 .input-group {
@@ -614,6 +618,7 @@ span.xl-pref-label > img {
 
 .voclist-wide #vocabulary-list {
   width: 100% !important;
+  padding: 30px;
 }
 
 #vocabulary-list > div > h2, #vocabulary-list-wide > div > h2 {
