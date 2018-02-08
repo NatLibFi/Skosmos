@@ -230,6 +230,30 @@ class Vocabulary extends DataObject
     }
 
     /**
+      * Return all concepts of a concept scheme in the vocabulary.
+      * @param string $conceptScheme URI of concept scheme whose top concepts to return. If not set,
+      *                              the default concept scheme of the vocabulary will be used.
+      * @param string $lang preferred language for the concept labels,
+      * @return array Array with concept URIs (string) as keys and labels (string) as values
+      */
+
+     public function getAllConcepts($conceptScheme = null, $lang = '')
+     {
+         if ($lang === '') {
+             $lang = $this->getEnvLang();
+         }
+         $fallback = $this->config->getDefaultLanguage();
+
+         if ($conceptScheme === null || $conceptScheme == '') {
+             $conceptScheme = $this->getDefaultConceptScheme();
+         }
+
+         return $this->getSparql()->queryAllConcepts($conceptScheme, $lang, $fallback);
+     }
+
+
+
+    /**
      * Return the top concepts of a concept scheme in the vocabulary.
      * @param string $conceptScheme URI of concept scheme whose top concepts to return. If not set,
      *                              the default concept scheme of the vocabulary will be used.

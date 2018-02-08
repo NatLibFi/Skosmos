@@ -497,6 +497,33 @@ class RestController extends Controller
         }
         return $this->returnJson($ret);
     }
+    /**
+     * Queries all concepts of a vocabulary and wraps the results in a json-ld object.
+     * @param Request $request
+     * @return object json-ld object
+     */
+    public function allConcepts($request)
+    {
+        $vocab = $request->getVocab();
+        $scheme = $request->getQueryParam('scheme');
+        if (!$scheme) {
+            $scheme = $vocab->getConfig()->showConceptSchemesInHierarchy() ? array_keys($vocab->getConceptSchemes()) : $vocab->getDefaultConceptScheme();
+        }
+
+         /* encode the results in a JSON-LD compatible array */
+         $allconcepts = $vocab->getAllConcepts($scheme, $request->getLang());
+
+         $ret = array_merge_recursive($this->context, array(
+             '@context' => array('onki' => 'http://schema.onki.fi/onki#', 'notation' => 'skos:notation', 'label' => 'skos:prefLabel', '@language' => $request->getLang()),
+             'uri' => $scheme,
+             'allconcepts' => $allconcepts)
+         );
+
+         return $this->returnJson($ret);
+    }
+
+
+
 
     /**
      * Queries the top concepts of a vocabulary and wraps the results in a json-ld object.
