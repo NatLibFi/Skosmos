@@ -51,6 +51,8 @@ try {
             $controller->types($request);
         } elseif ($parts[2] == 'topConcepts') {
             $controller->topConcepts($request);
+        } elseif ($parts[2] == 'allConcepts') {
+            $controller->allConcepts($request);
         } elseif ($parts[2] == 'data') {
             $controller->data($request);
         } elseif ($parts[2] == 'search') {

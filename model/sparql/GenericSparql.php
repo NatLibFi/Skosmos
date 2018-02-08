@@ -1735,6 +1735,76 @@ EOQ;
     }
 
     /**
+     * Query all concepts of a vocabulary.
+     * @param string $conceptSchemes concept schemes whose top concepts to query for
+     * @param string $lang language of labels
+     * @param string $fallback language to use if label is not available in the preferred language
+     */
+    public function queryAllConcepts($conceptSchemes, $lang, $fallback) {
+        if (!is_array($conceptSchemes)) {
+            $conceptSchemes = array($conceptSchemes);
+        }
+
+
+        $fcl = $this->generateFromClause();
+        # create json-style array string for potentially multi-valued attrs
+
+        # WE NEED TO EXPAND SKOS:DEFINITION TO SCOPENOTE, EXAMPLE, CHANGENOTE
+
+        $query = <<<EOQ
+SELECT DISTINCT ?concept
+                ?label
+                (CONCAT('[',(GROUP_CONCAT(distinct CONCAT('"', ?notations, '"'); separator = ',')), ']') AS ?notation)
+                (CONCAT('[',(GROUP_CONCAT(distinct CONCAT('"', ?altLabels, '"'); separator = ',')), ']') AS ?altLabel)
+                (CONCAT('[',(GROUP_CONCAT(distinct CONCAT('"', ?definitions, '"'); separator = ',')), ']') AS ?definition)
+$fcl WHERE {
+  ?concept rdf:type skos:Concept .
+  OPTIONAL {
+    ?concept skos:prefLabel ?label .
+    FILTER (langMatches(lang(?label), "$lang"))
+  }
+  OPTIONAL {
+    ?concept skos:prefLabel ?label .
+    FILTER (langMatches(lang(?label), "$fallback"))
+  }
+  OPTIONAL { # fallback - other language case
+    ?concept skos:prefLabel ?label .
+  }
+  OPTIONAL { ?concept skos:notation ?notations . }
+  OPTIONAL { ?concept skos:definition ?definitions . }
+  # need to think about lang here, or simply take em all
+  OPTIONAL { ?concept skos:altLabel ?altLabels . }
+} group by ?concept ?label
+EOQ;
+        $result = $this->query($query);
+        $ret = array();
+        $logger = $this->model->getLogger();
+        foreach ($result as $row) {
+            if (isset($row->concept) && isset($row->label)) {
+                $label = $row->label->getValue();
+                if ($row->label->getLang() && $row->label->getLang() !== $lang && strpos($row->label->getLang(), $lang . "-") !== 0) {
+                    $label .= ' (' . $row->label->getLang() . ')';
+                }
+                $top = array('uri' => $row->concept->getUri(), 'label' => $label);
+                if (isset($row->altLabel)) {
+                    $top['altLabel']=   json_decode($row->altLabel->getValue());
+                }
+                if (isset($row->definition)) {
+                    $top['definition'] =json_decode($row->definition->getValue());
+                }
+                if (isset($row->notation)) {
+                    $top['notation'] =  json_decode($row->notation->getValue());
+                }
+
+                $ret[] = $top;
+            }
+        }
+
+        return $ret;
+    }
+
+
+    /**
      * Query the top concepts of a vocabulary.
      * @param string $conceptSchemes concept schemes whose top concepts to query for
      * @param string $lang language of labels
