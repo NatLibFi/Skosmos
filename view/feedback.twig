@@ -5,7 +5,7 @@
 {% block headernav %}{% endblock %}
 {% block content %}
 <div class="feedback-logo">
-  <h1>{% trans "Feedback" %}</h1>
+  <h1 class="feedback">{% trans "Feedback" %}</h1>
 </div>
 <div class="container feedback-box">
   <div class="" id="feedback-form">
@@ -13,7 +13,7 @@
     <h3>{% trans "Feedback has been sent!" %}</h3>
     <p class="feedback-thanks">{% trans "Thank you for your feedback" %}<p>
     {% else %}
-    <span class="versal">{% trans %}Contact us!{% endtrans %}</span>
+    <h4>{% trans %}Contact us!{% endtrans %}</h4>
     <div id="feedback-content">
       <form id="feedback-fields" method="post" action="{% if request.vocab %}{{request.vocab.id}}/{% endif %}{{ request.lang }}/feedback">
         {% if vocabList %}

@@ -10,6 +10,12 @@ h1, .prefLabel, .prefLabelLang, .notation {
   font-size: 27px;
   font-weight: 400;
 }
+h1.about,
+h1.feedback {
+  width: 100%;
+  max-width: 500px;
+  margin: 15px auto;
+}
 
 .prefLabel, .prefLabelLang, .notation {
   font-weight: 500;
@@ -80,7 +86,8 @@ a, a.versal, .jstree-node > .jstree-anchor {
   height: 100px;
   padding-top: 180px;
   text-align: center;
-  width: 150px;
+  width: 64%;
+  position: absolute;
 }
 
 .replaced {
@@ -138,9 +145,14 @@ ul {
 
 .main-container {
   position: relative;
+  display: flex;
+  flex-direction: row;
   width: 95%;
   margin: 0 auto;
   margin-bottom: 20px;
+}
+.main-container.frontpage {
+  display: block !important;
 }
 
 .spinner {
@@ -165,6 +177,7 @@ ul {
 }
 
 #service-name {
+  top: 8px;
   left: 30px;
   line-height: 50px;
   margin: 0;
@@ -398,7 +411,7 @@ ul.dropdown-menu > li:last-child > input {
 .search-vocab-text {
   background-color: #3c535b;
   opacity: 0.95;
-  height: 40px;
+  height: 41px;
   float: left;
   text-align: right;
   line-height: 40px;
@@ -608,7 +621,7 @@ span.xl-pref-label > img {
 }
 
 #maincontent {
-  display: inline;
+  display: block;
 }
 
 #vocabulary-list, #vocabulary-list-wide, #vocabulary-list-left, #vocabulary-list-right {
@@ -715,16 +728,7 @@ span.xl-pref-label > img {
   color: #00748f;
 }
 
-.feedback-logo {
-  border-bottom: 2px solid #394554;
-  display: block;
-  left: 200px;
-  min-width: 84px;
-  position: absolute;
-}
-
 .feedback-box {
-  float: left;
   border-top: 2px solid #394554;
   min-height: 140px;
 }
@@ -782,7 +786,6 @@ span.xl-pref-label > img {
   border-top: 2px solid #394554;
   margin-bottom: 15px;
   padding-bottom: 15px;
-  width: 500px;
 }
 
 .about-content {
@@ -801,16 +804,22 @@ span.xl-pref-label > img {
 
 .credits {
   border-top: 2px solid #394554;
-  width: 500px;
 }
 
 /* sidebar styles
  ***************************/
 
+.sidebar-wrapper {
+  position: relative;
+  margin-right: 15px;
+  min-width: 310px;
+}
+
 #sidebar {
   height: 100%;
-  position: absolute;
   width: 320px;
+  min-width: 310px;
+  min-height: 50vh;
 }
 
 .sidebar-grey {
@@ -824,7 +833,8 @@ span.xl-pref-label > img {
   padding-left: 0;
 }
 
-#sidebar .multiselect > span, #sidebar .multiselect > span > b.caret {
+#sidebar .multiselect > span,
+#sidebar .multiselect > span > b.caret {
   border-top-color: #474b4f;
   color: #474b4f;
 }
@@ -911,7 +921,7 @@ hr {
   margin-top: 5px !important;
 }
 
-div#sidebar-grey > div > div > form.search-options {
+#sidebar-grey > div > div > form.search-options {
   margin-right: 0;
 }
 
@@ -958,10 +968,13 @@ div.input-group > .input-group-addon {
   min-width: 65px;
 }
 
-.alphabetical-search-results li, .group-container > p, .group-container > ul {
+.alphabetical-search-results li,
+.group-container > p,
+.group-container > ul {
   font-size: 14px;
   line-height: 15px;
   list-style-type: none;
+  line-height: 2em;
 }
 
 #alphabetical-menu {
@@ -1022,7 +1035,8 @@ th, td {
 }
 
 tr {
-  border-image: '../pics/stripe.png' 20 20 repeat;
+  display: flex;
+  flex-direction: row;
 }
 
 /* vocabulary
@@ -1360,6 +1374,7 @@ tr.replaced-by > td > ul > li > a {
 
 .table > tbody > tr > th {
   padding-left: 0;
+  min-width: 115px;
 }
 
 .concept-main > .search-results-property-table {
@@ -1402,7 +1417,7 @@ tr.replaced-by > td > ul > li > a {
   border-radius: 0;
   margin: 0 0 -5px 0;
   padding: 0 0 0 10px;
-  width: 310px;
+  width: 100% !important;
 }
 
 .nav-tabs, #groups > a {
@@ -1477,8 +1492,13 @@ ul.nav-tabs > li {
   margin: 0;
 }
 
-.content {
-  margin-left: 350px;
+.content > .feedback-box,
+.content > #about,
+.content > .credits,
+.content > .version {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .wide-content {
@@ -1733,21 +1753,13 @@ body, .versal, h1, h2, p, .versal-bold {
     width: 95% !important;
   }
 
-  .content > .feedback-logo, .content > .about-logo {
+  .content > .feedback-logo,
+  .content > .about-logo {
     left: 10px;
-  }
-
-  .content > .feedback-box, .content > #about, .content > .credits, .content > .version {
-    margin-left: 120px;
-    width: 500px;
   }
 
   .tt-dropdown {
     max-width: 240px;
-  }
-
-  .content {
-    margin-left: 300px;
   }
 
   .property-divider {
@@ -1794,7 +1806,7 @@ body, .versal, h1, h2, p, .versal-bold {
     max-width: 120px;
   }
   .vocab-info-literals > table > tbody > tr > td {
-    max-width: 180px;
+    max-width: 278px;
   }
 }
 
@@ -1871,7 +1883,6 @@ body, .versal, h1, h2, p, .versal-bold {
 }
 
 @media (max-width: 800px) {
-  
   .twitter-typeahead {
     width: 100%;
   }
@@ -1879,17 +1890,20 @@ body, .versal, h1, h2, p, .versal-bold {
   .right-box {
     left: 0;
   }
-
-}
-
-@media (max-width: 700px) {
-
-  .topbar > a {
+  .sidebar-wrapper {
     display: none;
   }
-
+  .concept-spinner {
+    width: 100%;
+  }
+}
+@media (max-width: 700px) {
+  table tr {
+    flex-direction: column;
+  }
   .topbar {
     position: relative;
+    height: 100px;
   }
 
   #navi1, #navi2, #navi3, #navi4 {
@@ -1907,6 +1921,15 @@ body, .versal, h1, h2, p, .versal-bold {
     margin: 2px;
   }
 
+  #navigation,
+  #language {
+    bottom: 0;
+  }
+  #language {
+    position: absolute;
+    right: 0;
+  }
+
   .frontpage #language {
     padding-right: 0;
     position: absolute;
@@ -1915,9 +1938,9 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   #service-logo {
-    height: 200px;
+    height: 50px;
     position: absolute;
-    right: 3%;
+    left: 0;
   }
 
   .frontpage-spacing .header-float {
@@ -1978,7 +2001,6 @@ body, .versal, h1, h2, p, .versal-bold {
 }
 
 @media (min-width: 801px) {
-
   .content > .feedback-logo, .content > .about-logo {
     left: 10px;
   }
@@ -2011,14 +2033,6 @@ body, .versal, h1, h2, p, .versal-bold {
   #service-logo {
     display: normal;
     position: absolute;
-  }
-
-  .content > .feedback-box, .content > #about {
-    width: 500px;
-  }
-
-  .content {
-    margin-left: 330px;
   }
 
   #sidebar {
@@ -2058,7 +2072,6 @@ body, .versal, h1, h2, p, .versal-bold {
   h1 {
     font-size: 24px;
   }
-
 }
 
 @media (max-width: 1259px) {
@@ -2075,6 +2088,9 @@ body, .versal, h1, h2, p, .versal-bold {
 }
 
 @media (min-width: 1260px) {
+  .sidebar-wrapper {
+    min-width: 400px;
+  }
   .main-container, .headerbar, .topbar {
     width: 1190px;
   }
@@ -2155,10 +2171,6 @@ body, .versal, h1, h2, p, .versal-bold {
 
   .tt-dropdown-menu {
     min-width: 310px;
-  }
-
-  .content {
-    margin-left: 425px;
   }
 
   input#search-field {
