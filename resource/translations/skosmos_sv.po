@@ -692,7 +692,7 @@ msgstr "Information"
 
 #: /tmp/cache/587c83509f047/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:138
 msgid "Alternate terms"
-msgstr "Ersatta termer"
+msgstr "Hänvisningstermer"
 
 #: /tmp/cache/587c83509f047/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:130
 msgid "Concept language"

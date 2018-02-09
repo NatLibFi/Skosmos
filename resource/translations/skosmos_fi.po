@@ -693,7 +693,7 @@ msgstr "Tietoja"
 
 #: /tmp/cache/587c830f085e5/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:138
 msgid "Alternate terms"
-msgstr "Korvatut termit"
+msgstr "Ohjaustermit"
 
 #: /tmp/cache/587c830f085e5/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:130
 msgid "Concept language"
