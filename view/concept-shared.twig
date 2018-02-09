@@ -184,7 +184,7 @@
               <div class="row">
                 <div class="col-xs-5">
                   <a class="versal" href="{{ propval.uri | link_url(propval.exvocab, request.lang, 'page', request.contentLang) }}">{% if propval.notation %}<span class="versal">{{ propval.notation }}</span>{% endif %}{{ propval.label(request.contentLang) }}</a>
-                {% if propval.label.lang and (propval.label.lang != request.contentLang) or (explicit_langcodes and propval.label.lang) %}<span class="propertyvalue"> ({{ propval.label(request.contentLang).lang }})</span>{% endif %}
+                {% if propval.label.lang and (propval.label(request.contentLang).lang != request.contentLang) or (explicit_langcodes and propval.label.lang) %}<span class="propertyvalue"> ({{ propval.label(request.contentLang).lang }})</span>{% endif %}
                 </div>
                 {% set vocabname = propval.vocabname %}
                 {% if vocabname %}
