@@ -39,7 +39,7 @@ function invokeParentTree(tree) {
   });
 
   $treeObject.on('loaded.jstree', function() {
-    if ($('.mCustomScrollbar').length === 0) {
+    if ($('#sidebar .mCustomScrollbar').length === 0) {
       $(".sidebar-grey").mCustomScrollbar(hierTreeConf);
     }
     if ($('.jstree-leaf-proper').length > 0) {
