@@ -487,6 +487,11 @@ class VocabularyConfig extends DataObject
         if (!in_array($this->getDefaultLanguage(), $ret)) {
             $ret[] = (string)$this->getDefaultLanguage();
         }
+        foreach ($this->getLanguages() as $lang) {
+            if (!in_array($lang, $ret)) {
+                $ret[] = $lang;
+            }
+        }
         return $ret;
     }
 }
