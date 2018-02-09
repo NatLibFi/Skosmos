@@ -6,7 +6,7 @@
   <ul class="dropdown-menu dropdown-menu-right">
   {% for langcode, langdata in languages %}
   {% if request.lang != langcode %}
-  <li><a id="language-{{ langcode }}" class="versal" href="{{ request.langurl|replace({("#{request.lang}/"): "#{langcode}/"}) }}"> {{langdata.lemma}}</a></li>
+  <li><a id="language-{{ langcode }}" class="versal" href="{{ request.langurl|replace({("/#{request.lang}/"): "/#{langcode}/"}) }}"> {{langdata.lemma}}</a></li>
   {% endif %}
   {% endfor %}
   </ul>
@@ -15,7 +15,7 @@
 <div id="language"><span class="navigation-font">|</span>
   {% for langcode, langdata in languages %}
   {% if request.lang != langcode %}
-  <a id="language-{{ langcode}}" class="navigation-font" href="{{ request.langurl|replace({("#{request.lang}/"): "#{langcode}/"}) }}"> {{langdata.name}}</a>
+  <a id="language-{{ langcode}}" class="navigation-font" href="{{ request.langurl|replace({("/#{request.lang}/"): "/#{langcode}/"}) }}"> {{langdata.lemma}}</a>
   {% endif %}
   {% endfor %}
 </div>
