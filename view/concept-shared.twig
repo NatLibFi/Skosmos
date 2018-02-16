@@ -49,7 +49,8 @@
       </div>
       {% else %}
       <div class="property-value-column">{% if concept.notation %}<span class="notation">{{ concept.notation }}</span>{% endif %}
-        {% if concept.hasXlLabel %}<span class="reified-property-value xl-pref-label"><img src="resource/pics/about.png"></span><div class="reified-tooltip">{% for key, val in concept.xlLabel.properties %}{% if key != 'rdf:type' and key != 'skosxl:literalForm' %}<p>{{ key|trans }}: <span class="versal">{{ val }}</span></p>{% endif %}{% endfor %}</div><span class="prefLabel">{{ concept.xlLabel }}</span>{% else %}<span class="prefLabel conceptlabel">{{ concept.label }}</span>{% if concept.label.lang != request.contentLang and concept.label.lang != '' %}<span class="prefLabelLang"> ({{ concept.label.lang }})</span>{% endif %}{% endif %}
+        {% if concept.hasXlLabel %}<span class="reified-property-value xl-pref-label"><img src="resource/pics/about.png"></span><div class="reified-tooltip">{% for key, val in concept.xlLabel.properties %}{% if key != 'rdf:type' and key != 'skosxl:literalForm' %}<p>{{ key|trans }}: <span class="versal">{{ val }}</span></p>{% endif %}{% endfor %}</div><span class="prefLabel" id="pref-label">{{ concept.xlLabel }}</span>{% else %}<span class="prefLabel conceptlabel" id="pref-label">{{ concept.label }}</span>{% if concept.label.lang != request.contentLang and concept.label.lang != '' %}<span class="prefLabelLang"> ({{ concept.label.lang }})</span>{% endif %}{% endif %}
+        &nbsp;<button type="button" data-toggle="tooltip" data-placement="button" title="Copy to clipboard" class="btn btn-default btn-xs copy-clipboard" for="#pref-label"><span class="glyphicon glyphicon-copy" aria-hidden="true"></span></button>
       </div>
       {% endif %}
         <div class="col-md-12"><div class="preflabel-spacer"></div></div>
@@ -158,7 +159,7 @@
       {% endif %}
         <div class="row">
             <div class="property-label"><span class="versal">URI</span></div>
-            <div class="property-value-column"><div class="property-value-wrapper"><span class="versal uri-input-box">{{ concept.uri }}</span></div></div>
+            <div class="property-value-column"><div class="property-value-wrapper"><span class="versal uri-input-box" id="uri-input-box">{{ concept.uri }}</span> <button type="button" data-toggle="tooltip" data-placement="button" title="Copy to clipboard" class="btn btn-default btn-xs copy-clipboard" for="#uri-input-box"><span class="glyphicon glyphicon-copy" aria-hidden="true"></span></button></div></div>
         </div>
         <div class="row">
             <div class="property-label"><span class="versal">{% trans %}Download this concept in SKOS format:{% endtrans %}</span></div>

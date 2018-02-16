@@ -94,8 +94,8 @@ $(function() { // DOCUMENT READY
   countAndSetOffset();
 
   // Make a selection of an element for copy pasting.
-  function makeSelection() {
-    var $clicked = $(this);
+  function makeSelection(e, elem) {
+    var $clicked = elem || $(this);
     var text = $clicked[0];
     var range;
     if (document.body.createTextRange) { // ms
@@ -126,6 +126,17 @@ $(function() { // DOCUMENT READY
   }
 
   $(document).on('click','.uri-input-box', makeSelection);
+
+  // copy to clipboard
+  function copyToClipboard() {
+    var $btn = $(this);
+    var id = $btn.attr('for');
+    $elem = $(id);
+    makeSelection(undefined, $elem);
+    document.execCommand('copy');
+  }
+
+  $(document).on('click', 'button.copy-clipboard', copyToClipboard);
 
   var sidebarResizer = debounce(function() {
     countAndSetOffset();
