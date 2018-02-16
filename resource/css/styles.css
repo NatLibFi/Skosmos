@@ -1498,6 +1498,28 @@ span.date-info {
  margin-right: 1px;
 }
 
+.copy-clipboard {
+  color: #00748F;
+  border-radius: 0;
+  vertical-align: inherit;
+  font-size: 14px;
+  border: 0;
+}
+
+.copy-clipboard:active, .copy-clipboard:focus {
+  background-color: #fff !important;
+  color: #00748F;
+}
+
+.copy-clipboard:hover {
+  background-color: #fff;
+  color: #23527c;
+}
+
+.property-value-column > .copy-clipboard {
+  font-size: 24px;
+}
+
 /* typeahead.js
  ***********************************/
 
