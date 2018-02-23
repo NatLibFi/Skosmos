@@ -148,7 +148,8 @@ class WebController extends Controller
         header('Vary: Accept-Language'); // inform caches that a decision was made based on Accept header
         $this->negotiator = new \Negotiation\LanguageNegotiator();
         $langcodes = array_keys($this->languages);
-        $acceptLanguage = filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE', FILTER_SANITIZE_STRING) ? filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE', FILTER_SANITIZE_STRING) : '';
+        // using a random language from the configured UI languages when there is no accept language header set
+        $acceptLanguage = filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE', FILTER_SANITIZE_STRING) ? filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE', FILTER_SANITIZE_STRING) : $langcodes[0];
         $bestLang = $this->negotiator->getBest($acceptLanguage, $langcodes);
         if (isset($bestLang) && in_array($bestLang, $langcodes)) {
             return $bestLang->getValue();
