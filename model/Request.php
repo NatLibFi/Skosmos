@@ -136,7 +136,7 @@ class Request
 
     public function getLetter()
     {
-        return (isset($this->letter)) ? $this->letter : 'A';
+        return (isset($this->letter)) ? $this->letter : '';
     }
 
     /**
