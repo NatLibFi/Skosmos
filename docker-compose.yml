@@ -2,6 +2,7 @@ version: '3'
 
 services:
   fuseki:
+    container_name: skosmos-fuseki
     image: stain/jena-fuseki
     environment:
       - ADMIN_PASSWORD=admin
@@ -9,6 +10,7 @@ services:
     ports:
      - 3030:3030
   web:
+    container_name: skosmos-web
     build: .
     volumes:
       - .:/var/www/html
