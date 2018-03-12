@@ -19,13 +19,12 @@ before_script:
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
   - pkill -f 'java -Xmx1200M -jar'
-addons:
-  code_climate:
-    repo_token: fb98170a5c7ea9cc2bbab19ff26268335e6a11a4f8267ca935e5e8ff4624886c
 env:
-  - FUSEKI_VERSION=3.6.0
-  - FUSEKI_VERSION=SNAPSHOT
-  - CC_TEST_REPORTER_ID=fb98170a5c7ea9cc2bbab19ff26268335e6a11a4f8267ca935e5e8ff4624886c
+  global:
+    - CC_TEST_REPORTER_ID=fb98170a5c7ea9cc2bbab19ff26268335e6a11a4f8267ca935e5e8ff4624886c
+  matrix:
+    - FUSEKI_VERSION=3.6.0
+    - FUSEKI_VERSION=SNAPSHOT
 matrix:
   allow_failures:
   - env: FUSEKI_VERSION=SNAPSHOT
