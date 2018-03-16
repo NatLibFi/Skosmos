@@ -1,13 +1,4 @@
 <?php
-ini_set('display_errors', 'On');
- error_reporting(E_ALL);
-
-
-function console_log( $data ){
-  echo '<script>';
-  echo 'console.log('. json_encode( $data ) .')';
-  echo '</script>';
-}
 
 /**
  * Use Composer autoloader to automatically load library classes.
@@ -32,14 +23,10 @@ $path = $request->getServerConstant('PATH_INFO') ? $request->getServerConstant('
 $parts = explode('/', $path);
 
 
-     error_log( $path );
 if (sizeof($parts) <= 2) {
-//     error_log( sizeof($parts) );
-//     error_log( "REDIRECT" );
     // if language code missing, redirect to guessed language
     // in any case, redirect to <lang>/
-    //$lang = sizeof($parts) == 2 && $parts[1] !== '' ? $parts[1] : $controller->guessLanguage();
-    $lang = "en";
+    $lang = sizeof($parts) == 2 && $parts[1] !== '' ? $parts[1] : $controller->guessLanguage();
     header("Location: " . $lang . "/");
 } else {
   if (array_key_exists($parts[1], $config->getLanguages())) { // global pages

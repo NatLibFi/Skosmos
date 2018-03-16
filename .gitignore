@@ -1,16 +1,7 @@
 config.inc
 vocabularies.ttl
-build
 vendor
 report
 components
 composer.phar
 composer.lock
-tests/jena-fuseki*
-testapi/*
-resource/js/waypoints.min.js
-resource/js/jquery.qtip.min.js
-resource/js/jquery.mousewheel.min.js
-resource/js/jquery.mCustomScrollbar.min.js
-resource/js/lscache.min.js
-skosmos.log
