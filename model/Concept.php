@@ -654,17 +654,9 @@ class Concept extends VocabularyDataObject
                 $created = $this->resource->get('dc:created')->getValue();
             }
 
-            if ( ! is_a($created, 'DateTime') ) {
-                $created = (Punic\Calendar::toDateTime($created));
-            }
-
             // finding the modified properties
             if ($this->resource->get('dc:modified')) {
                 $modified = $this->resource->get('dc:modified')->getValue();
-            }
-
-            if ( ! is_a($modified, 'DateTime') ) {
-                $modified = (Punic\Calendar::toDateTime($modified));
             }
 
             // making a human readable string from the timestamps
