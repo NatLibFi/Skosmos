@@ -1,7 +1,9 @@
 config.inc
 vocabularies.ttl
+build
 vendor
 report
 components
 composer.phar
 composer.lock
+tests/jena-fuseki*
