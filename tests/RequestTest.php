@@ -134,7 +134,7 @@ class RequestTest extends PHPUnit\Framework\TestCase
    */
   public function testGetLetterWhenNotSet() {
     $this->request->setVocab('test');
-    $this->assertEquals('A', $this->request->getLetter());
+    $this->assertEquals('', $this->request->getLetter());
   }
 
   /**
