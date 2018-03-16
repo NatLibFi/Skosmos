@@ -14,7 +14,7 @@ services:
   # volumes:
   #  - ${PWD}/fuseki:/fuseki
   web:
-    container_name: skosmos-web
+    container_name: skosmos
     build: .
     volumes:
       - .:/var/www/html
