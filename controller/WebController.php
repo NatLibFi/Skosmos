@@ -489,11 +489,15 @@ class WebController extends Controller
 
         $allAtOnce = $vocab->getConfig()->getAlphabeticalFull();
         if (!$allAtOnce) {
-            $searchResults = $vocab->searchConceptsAlphabetical($request->getLetter(), $count, $offset, $contentLang);
             $letters = $vocab->getAlphabet($contentLang);
+            $letter = $request->getLetter();
+            if ($letter === '') {
+                $letter = $letters[0];
+            }
+            $searchResults = $vocab->searchConceptsAlphabetical($letter, $count, $offset, $contentLang);
         } else {
-            $searchResults = $vocab->searchConceptsAlphabetical('*', null, null, $contentLang);
             $letters = null;
+            $searchResults = $vocab->searchConceptsAlphabetical('*', null, null, $contentLang);
         }
 
         $request->setContentLang($contentLang);
