@@ -533,7 +533,8 @@ class Concept extends VocabularyDataObject
                 if ($superprop) {
                     $superprop = EasyRdf\RdfNamespace::shorten($superprop) ? EasyRdf\RdfNamespace::shorten($superprop) : $superprop;
                 }
-                $propobj = new ConceptProperty($prop, $proplabel, $superprop);
+                $notsort = $this->vocab->getConfig()->sortByNotation();
+                $propobj = new ConceptProperty($prop, $proplabel, $superprop, $notsort);
 
                 if ($propobj->getLabel() !== null) {
                     // only display properties for which we have a label
