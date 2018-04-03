@@ -561,6 +561,11 @@ class RestController extends Controller
                 'narrower' => 'skos:narrower',
                 'related' => 'skos:related',
                 'inScheme' => 'skos:inScheme',
+                'exactMatch' => 'skos:exactMatch',
+                'closeMatch' => 'skos:closeMatch',
+                'broadMatch' => 'skos:broadMatch',
+                'narrowMatch' => 'skos:narrowMatch',
+                'relatedMatch' => 'skos:relatedMatch',
             );
             $compactJsonLD = \ML\JsonLD\JsonLD::compact($results, json_encode($context));
             $results = \ML\JsonLD\JsonLD::toString($compactJsonLD);

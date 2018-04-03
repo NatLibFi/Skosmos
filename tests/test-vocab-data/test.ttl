@@ -74,6 +74,7 @@ test:ta116 a skos:Concept, meta:TestClass ;
 test:ta117 a skos:Concept, meta:TestClass ;
     skos:broader test:ta1 ;
     skos:inScheme test:conceptscheme ;
+    skos:relatedMatch test:ta115 ;
     skos:prefLabel "3D Bass"@en .
 
 test:ta118 a skos:Concept, meta:TestClass ;
