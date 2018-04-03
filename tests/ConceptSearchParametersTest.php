@@ -160,7 +160,7 @@ class ConceptSearchParametersTest extends PHPUnit\Framework\TestCase
      */
     public function testGetSchemeLimit() {
         $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.inc'));
-        $this->assertEquals(null, $params->getSchemeLimit());
+        $this->assertEquals([], $params->getSchemeLimit());
         $this->request->method('getQueryParam')->will($this->returnValue('http://www.skosmos.skos/test/ http://www.skosmos.skos/date/'));
         $this->assertEquals(array(0 => 'http://www.skosmos.skos/test/', 1 => 'http://www.skosmos.skos/date/'), $params->getSchemeLimit());
     }
