@@ -60,6 +60,26 @@ class GenericSparql {
     }
     
     /**
+     * Returns prefix-definitions for a query
+     *
+     * @param string $query
+     * @return string
+    */
+    protected function generateQueryPrefixes($query)
+    {
+        // Check for undefined prefixes
+        $prefixes = '';
+        foreach (EasyRdf\RdfNamespace::namespaces() as $prefix => $uri) {
+            if (strpos($query, "{$prefix}:") !== false and
+                strpos($query, "PREFIX {$prefix}:") === false
+            ) {
+                $prefixes .= "PREFIX {$prefix}: <{$uri}>\n";
+            }
+        }
+        return $prefixes;
+    }
+
+    /**
      * Execute the SPARQL query using the SPARQL client, logging it as well.
      * @param string $query SPARQL query to perform
      * @return object query result
@@ -67,7 +87,7 @@ class GenericSparql {
     protected function query($query) {
         $queryId = sprintf("%05d", rand(0, 99999));
         $logger = $this->model->getLogger();
-        $logger->info("[qid $queryId] SPARQL query:\n$query\n");
+        $logger->info("[qid $queryId] SPARQL query:\n" . $this->generateQueryPrefixes($query) . "\n$query\n");
         $starttime = microtime(true);
         $result = $this->client->query($query);
         $elapsed = intval(round((microtime(true) - $starttime) * 1000));
