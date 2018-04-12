@@ -34,7 +34,7 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
    */
   public function testEndpointDefaultValue() {
     $actual = $this->config->getDefaultEndpoint();
-    $this->assertEquals('http://localhost:3030/ds/sparql', $actual);
+    $this->assertEquals('http://localhost:13030/ds/sparql', $actual);
   }
 
   /**

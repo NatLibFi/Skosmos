@@ -91,7 +91,7 @@ class ModelTest extends PHPUnit\Framework\TestCase
   /**
    * @covers Model::getVocabularyByGraph
    * @expectedException \Exception
-   * @expectedExceptionMessage no vocabulary found for graph http://no/address and endpoint http://localhost:3030/ds/sparql
+   * @expectedExceptionMessage no vocabulary found for graph http://no/address and endpoint http://localhost:13030/ds/sparql
    */
   public function testGetVocabularyByInvalidGraphUri() {
     $vocab = $this->model->getVocabularyByGraph('http://no/address');
@@ -161,7 +161,7 @@ class ModelTest extends PHPUnit\Framework\TestCase
 
   /**
    * @covers Model::searchConcepts
-   * @expectedException PHPUnit\Framework\Error\Error
+   * @expectedException ArgumentCountError
    */
   public function testSearchWithNoParams() {
     $result = $this->model->searchConcepts();
