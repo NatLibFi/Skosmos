@@ -161,9 +161,13 @@ class ModelTest extends PHPUnit\Framework\TestCase
 
   /**
    * @covers Model::searchConcepts
-   * @expectedException ArgumentCountError
    */
   public function testSearchWithNoParams() {
+    if (PHP_VERSION_ID >= 70100) {
+      $this->expectException(ArgumentCountError::class);
+    } else {
+      $this->expectException(PHPUnit\Framework\Error\Error::class);
+    }
     $result = $this->model->searchConcepts();
   }
 
