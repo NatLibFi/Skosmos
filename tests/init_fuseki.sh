@@ -1,7 +1,7 @@
 #!/bin/bash
 # Note: This script must be sourced from within bash, e.g. ". init_fuseki.sh"
 
-FUSEKI_VERSION=${FUSEKI_VERSION:-3.4.0}
+FUSEKI_VERSION=${FUSEKI_VERSION:-3.7.0}
 
 if [ "$FUSEKI_VERSION" = "SNAPSHOT" ]; then
 	# find out the latest snapshot version and its download URL by parsing Apache directory listings
@@ -20,15 +20,15 @@ if [ ! -f "jena-fuseki1-$FUSEKI_VERSION/fuseki-server" ]; then
 fi
 
 cd "jena-fuseki1-$FUSEKI_VERSION"
-./fuseki-server --config ../fuseki-assembler.ttl &
-until curl --output /dev/null --silent --head --fail http://localhost:3030; do
+./fuseki-server --port=13030 --config ../fuseki-assembler.ttl &
+until curl --output /dev/null --silent --head --fail http://localhost:13030; do
   printf '.'
   sleep 2
 done
 
 for fn in ../test-vocab-data/*.ttl; do
   name=$(basename "${fn}" .ttl)
-  $(./s-put http://localhost:3030/ds/data "http://www.skosmos.skos/$name/" "$fn")
+  $(./s-put http://localhost:13030/ds/data "http://www.skosmos.skos/$name/" "$fn")
 done
 
 cd ..
