@@ -28,8 +28,13 @@ env:
     - FUSEKI_VERSION=3.6.0
     - FUSEKI_VERSION=SNAPSHOT
 matrix:
+  exclude:
+  - php: 7.0
+    env: FUSEKI_VERSION=SNAPSHOT
+  - php: 7.2
+    env: FUSEKI_VERSION=SNAPSHOT
   allow_failures:
   - php: 7.2
-  - env: FUSEKI_VERSION=SNAPSHOT
+    env: FUSEKI_VERSION=3.6.0
 notifications:
     slack: finto:5rO9Lp4Tstn6y34grtFBpjJ0
