@@ -37,4 +37,4 @@ matrix:
   - php: 7.2
   - env: FUSEKI_VERSION=SNAPSHOT
 notifications:
-    slack: finto:5rO9Lp4Tstn6y34grtFBpjJ0
+    slack: kansalliskirjasto:9mOKu3Vws1CIddF5jqWgXbli
