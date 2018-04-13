@@ -191,6 +191,15 @@
     skosmos:sparqlGraph <http://www.skosmos.skos/collation/> .
 
 
+:xl a skosmos:Vocabulary, void:Dataset ;
+    dc11:title "A vocabulary for testing SKOS XL"@en ;
+    dc:subject :cat_general ;
+    void:uriSpace "http://www.skosmos.skos/xl/";
+    void:sparqlEndpoint <http://localhost:13030/ds/sparql> ;
+    skosmos:language "en";
+    skosmos:sparqlGraph <http://www.skosmos.skos/xl/> .
+
+
 <http://skosmos.skos/dump/test/groups> dc:format "application/rdf+xml" .
 
 :cat_science a skos:Concept ;

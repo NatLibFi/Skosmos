@@ -201,4 +201,14 @@ class ConceptPropertyValueTest extends PHPUnit_Framework_TestCase
     $propval = new ConceptPropertyValue($this->model, $this->vocab, $mockres, 'en');
     $this->assertEquals(null, $propval->getSubMembers());
   }
+
+  public function testGetReifiedPropertyValues() {
+    $vocab = $this->model->getVocabulary('xl');
+    $concept = $vocab->getConceptInfo('http://www.skosmos.skos/xl/c1', 'en')[0];
+    $props = $concept->getProperties();
+    $vals = $props['skos:definition']->getValues();
+    $val = reset($vals);
+    $reified_vals = $val->getReifiedPropertyValues();
+    $this->assertEquals(2, count($reified_vals));
+  }
 }
