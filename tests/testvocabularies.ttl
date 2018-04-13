@@ -195,7 +195,7 @@
     dc11:title "A vocabulary for testing SKOS XL"@en ;
     dc:subject :cat_general ;
     void:uriSpace "http://www.skosmos.skos/xl/";
-    void:sparqlEndpoint <http://localhost:13030/ds/sparql> ;
+    void:sparqlEndpoint <http://localhost:3030/ds/sparql> ;
     skosmos:language "en";
     skosmos:sparqlGraph <http://www.skosmos.skos/xl/> .
 
