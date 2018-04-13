@@ -112,27 +112,43 @@ class RestController extends Controller
         return $parameters;
     }
 
-    private function transformSearchResults($request, $results)
+    private function transformSearchResults($request, $results, $parameters)
     {
         // before serializing to JSON, get rid of the Vocabulary object that came with each resource
         foreach ($results as &$res) {
             unset($res['voc']);
         }
-        $ret = array(
-            '@context' => array(
-                'skos' => 'http://www.w3.org/2004/02/skos/core#',
-                'isothes' => 'http://purl.org/iso25964/skos-thes#',
-                'onki' => 'http://schema.onki.fi/onki#',
-                'uri' => '@id',
-                'type' => '@type',
-                'results' => array(
-                    '@id' => 'onki:results',
-                    '@container' => '@list',
-                ),
-                'prefLabel' => 'skos:prefLabel',
-                'altLabel' => 'skos:altLabel',
-                'hiddenLabel' => 'skos:hiddenLabel',
+
+        $context = array(
+            'skos' => 'http://www.w3.org/2004/02/skos/core#',
+            'isothes' => 'http://purl.org/iso25964/skos-thes#',
+            'onki' => 'http://schema.onki.fi/onki#',
+            'uri' => '@id',
+            'type' => '@type',
+            'results' => array(
+                '@id' => 'onki:results',
+                '@container' => '@list',
             ),
+            'prefLabel' => 'skos:prefLabel',
+            'altLabel' => 'skos:altLabel',
+            'hiddenLabel' => 'skos:hiddenLabel',
+        );
+        foreach ($parameters->getAdditionalFields() as $field) {
+
+            // Quick-and-dirty compactification
+            $context[$field] = 'skos:' . $field;
+            foreach ($results as &$result) {
+                foreach ($result as $k => $v) {
+                    if ($k == 'skos:' . $field) {
+                        $result[$field] = $v;
+                        unset($result['skos:' . $field]);
+                    }
+                }
+            }
+        }
+
+        $ret = array(
+            '@context' => $context,
             'uri' => '',
             'results' => $results,
         );
@@ -171,7 +187,7 @@ class RestController extends Controller
 
         $parameters = $this->constructSearchParameters($request);
         $results = $this->model->searchConcepts($parameters);
-        $ret = $this->transformSearchResults($request, $results);
+        $ret = $this->transformSearchResults($request, $results, $parameters);
 
         return $this->returnJson($ret);
     }
@@ -561,6 +577,11 @@ class RestController extends Controller
                 'narrower' => 'skos:narrower',
                 'related' => 'skos:related',
                 'inScheme' => 'skos:inScheme',
+                'exactMatch' => 'skos:exactMatch',
+                'closeMatch' => 'skos:closeMatch',
+                'broadMatch' => 'skos:broadMatch',
+                'narrowMatch' => 'skos:narrowMatch',
+                'relatedMatch' => 'skos:relatedMatch',
             );
             $compactJsonLD = \ML\JsonLD\JsonLD::compact($results, json_encode($context));
             $results = \ML\JsonLD\JsonLD::toString($compactJsonLD);

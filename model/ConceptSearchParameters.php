@@ -124,7 +124,7 @@ class ConceptSearchParameters
     }
 
     private function getQueryParamArray($name) {
-        return $this->request->getQueryParam($name) ? explode(' ', urldecode($this->request->getQueryParam($name))) : null;
+        return $this->request->getQueryParam($name) ? explode(' ', urldecode($this->request->getQueryParam($name))) : [];
     }
 
     public function getGroupLimit()
