@@ -1,0 +1,28 @@
+@prefix xl: <http://www.skosmos.skos/xl/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix skosxl: <http://www.w3.org/2008/05/skos-xl#> .
+
+xl:c1 a skos:Concept ;
+    skos:prefLabel "Concept"@en ;
+    skos:altLabel "Conceptual entity"@en ;
+    skos:definition xl:d1 ;
+    skosxl:prefLabel xl:l1 ;
+    skosxl:altLabel xl:l2 .
+
+xl:l1 a skosxl:Label ;
+    skosxl:literalForm "Concept"@en ;
+    dct:modified "2018-04-13T10:29:03+00:00"^^xsd:dateTime ;
+    skosxl:labelRelation xl:l2 .
+
+xl:l2 a skosxl:Label ;
+    skosxl:literalForm "Conceptual entity"@en ;
+    dct:description "alternate label for Concept"@en ;
+    skosxl:labelRelation xl:l1 .
+
+xl:d1
+    rdf:value "Unit of thought"@en ;
+    dct:modified "2018-04-13T10:29:03+00:00"^^xsd:dateTime ;
+    dct:source <https://en.wikipedia.org/wiki/Concept> .
