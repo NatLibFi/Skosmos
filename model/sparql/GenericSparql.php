@@ -890,8 +890,8 @@ EOF;
     {
         $valuesProp = $this->formatValues('?prop', $props);
         $textcond = $this->generateConceptSearchQueryCondition($term, $searchLang);
-        $rawterm = str_replace('\\', '\\\\', str_replace('*', '', $term));
-        
+
+        $rawterm = str_replace(array('\\', '*', '"'), array('\\\\', '', '\"'), $term);
         // graph clause, if necessary
         $graphClause = $filterGraph != '' ? 'GRAPH ?graph' : '';
 

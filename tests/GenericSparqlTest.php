@@ -598,6 +598,23 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
   }
 
   /**
+   * @covers GenericSparql::queryConcepts
+   * @covers GenericSparql::generateConceptSearchQueryCondition
+   * @covers GenericSparql::generateConceptSearchQueryInner
+   * @covers GenericSparql::generateConceptSearchQuery
+   * @covers GenericSparql::transformConceptSearchResults
+   * @covers GenericSparql::transformConceptSearchResult
+   * @covers GenericSparql::shortenUri
+   */
+  public function testQueryConceptsDoubleQuotesTerm()
+  {
+    $voc = $this->model->getVocabulary('test');
+    $this->params->method('getSearchTerm')->will($this->returnValue('"'));
+    $actual = $this->sparql->queryConcepts(array($voc), null, null, $this->params);
+    $this->assertEquals(0, sizeof($actual));
+  }
+
+  /**
    * @covers GenericSparql::queryLabel
    * @covers GenericSparql::generateLabelQuery
    */
