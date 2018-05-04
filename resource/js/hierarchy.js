@@ -129,7 +129,7 @@ function createConceptObject(conceptUri, conceptData) {
  */
 function attachTopConceptsToSchemes(schemes, currentNode, parentData) {
   for (var i = 0; i < schemes.length; i++) {
-    if (schemes[i].uri === parentData[currentNode.uri].top) {
+    if (parentData[currentNode.uri].tops.indexOf(schemes[i].uri) != -1) {
       if(Object.prototype.toString.call(schemes[i].children) !== '[object Array]' ) {
         schemes[i].children = [];
       }
@@ -137,7 +137,6 @@ function attachTopConceptsToSchemes(schemes, currentNode, parentData) {
       // the hierarchy response contains the parent info before the topConcepts so it's a safe to open the first one without broaders 
       if (!schemes.opened && !currentNode.broader) {
         schemes[i].state = currentNode.state;
-        schemes.opened = true;
       }
     }
   }
