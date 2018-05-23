@@ -142,6 +142,24 @@ class GlobalConfig {
     }
     
     /**
+     * Returns the feedback sender address defined in the configuration.
+     * @return string
+     */
+    public function getFeedbackSender()
+    {
+        return $this->getConstant('FEEDBACK_SENDER', null);
+    }
+
+    /**
+     * Returns the feedback envelope sender address defined in the configuration.
+     * @return string
+     */
+    public function getFeedbackEnvelopeSender()
+    {
+        return $this->getConstant('FEEDBACK_ENVELOPE_SENDER', null);
+    }
+
+    /**
      * Returns true if exception logging has been configured.
      * @return boolean 
      */

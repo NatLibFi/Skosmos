@@ -276,15 +276,19 @@ class WebController extends Controller
             ));
     }
 
-    private function createFeedbackHeaders($fromName, $fromEmail, $toMail)
+    private function createFeedbackHeaders($fromName, $fromEmail, $toMail, $sender)
     {
         $headers = "MIME-Version: 1.0″ . '\r\n";
         $headers .= "Content-type: text/html; charset=UTF-8" . "\r\n";
-        if ($toMail) {
+        if (!empty($toMail)) {
             $headers .= "Cc: " . $this->model->getConfig()->getFeedbackAddress() . "\r\n";
         }
+        if (!empty($fromEmail)) {
+            $headers .= "Reply-To: $fromName <$fromEmail>\r\n";
+        }
 
-        $headers .= "From: $fromName <$fromEmail>" . "\r\n" . 'X-Mailer: PHP/' . phpversion();
+        $service = $this->model->getConfig()->getServiceName();
+        $headers .= "From: $fromName via $service <$sender>";
         return $headers;
     }
 
@@ -302,16 +306,23 @@ class WebController extends Controller
             $message = 'Feedback from vocab: ' . strtoupper($fromVocab) . "<br />" . $message;
         }
 
-        $subject = SERVICE_NAME . " feedback";
-        $headers = $this->createFeedbackHeaders($fromName, $fromEmail, $toMail);
-        $envelopeSender = FEEDBACK_ENVELOPE_SENDER;
+        $envelopeSender = $this->model->getConfig()->getFeedbackEnvelopeSender();
+        $subject = $this->model->getConfig()->getServiceName() . " feedback";
+        // determine the sender address of the message
+        $sender = $this->model->getConfig()->getFeedbackSender();
+        if (empty($sender)) $sender = $envelopeSender;
+        if (empty($sender)) $sender = $toAddress;
+
+        // determine sender name - default to "anonymous user" if not given by user
+        if (empty($fromName)) $fromName = "anonymous user";
+
+        $headers = $this->createFeedbackHeaders($fromName, $fromEmail, $toMail, $sender);
         $params = empty($envelopeSender) ? '' : "-f $envelopeSender";
 
         // adding some information about the user for debugging purposes.
         $message = $message . "<br /><br /> Debugging information:"
             . "<br />Timestamp: " . date(DATE_RFC2822)
             . "<br />User agent: " . $request->getServerConstant('HTTP_USER_AGENT')
-            . "<br />IP address: " . $request->getServerConstant('REMOTE_ADDR')
             . "<br />Referer: " . $request->getServerConstant('HTTP_REFERER');
 
         try {
