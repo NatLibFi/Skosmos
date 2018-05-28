@@ -311,7 +311,7 @@ class WebController extends Controller
         // determine the sender address of the message
         $sender = $this->model->getConfig()->getFeedbackSender();
         if (empty($sender)) $sender = $envelopeSender;
-        if (empty($sender)) $sender = $toAddress;
+        if (empty($sender)) $sender = $this->model->getConfig()->getFeedbackAddress();
 
         // determine sender name - default to "anonymous user" if not given by user
         if (empty($fromName)) $fromName = "anonymous user";
