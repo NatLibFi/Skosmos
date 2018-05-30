@@ -1,0 +1,277 @@
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix dc11: <http://purl.org/dc/elements/1.1/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wv: <http://vocab.org/waiver/terms/norms> .
+@prefix sd: <http://www.w3.org/ns/sparql-service-description#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix skosmos: <http://purl.org/net/skosmos#> .
+@prefix isothes: <http://purl.org/iso25964/skos-thes#>.
+@prefix meta: <http://www.skosmos.skos/test-meta/> .
+@prefix my: <http://example.com/myns#> .
+@prefix mdrtype: <http://publications.europa.eu/resource/authority/dataset-type/> .
+@prefix : <#> .
+
+# Skosmos main configuration
+
+:config a skosmos:Configuration ;
+    # SPARQL endpoint
+    # a local Fuseki server is usually on localhost:3030
+    skosmos:sparqlEndpoint "http://localhost:13030/ds/sparql" ;
+    # sparql-query extension, or "Generic" for plain SPARQL 1.1
+    # set to "JenaText" instead if you use Fuseki with jena-text index
+    skosmos:sparqlDialect "Generic" ;
+    # whether to enable collation in sparql queries
+    skosmos:sparqlCollationEnabled false ;
+    # HTTP client configuration
+    skosmos:sparqlTimeout 20 ;
+    skosmos:httpTimeout 5 ;
+    # customize the service name
+    skosmos:serviceName "Skosmos" ;
+    # customize the base element. Set this if the automatic base url detection doesn't work. For example setups behind a proxy.
+    # skosmos:baseHref "http://localhost/Skosmos/" ;
+    # interface languages available, and the corresponding system locales
+    skosmos:languages [ :name "en" ; :value "en_GB.utf8" ] ;
+    # how many results (maximum) to load at a time on the search results page
+    skosmos:searchResultsSize 20 ;
+    # how many items (maximum) to retrieve in transitive property queries
+    skosmos:transitiveLimit 1000 ;
+    # whether or not to log caught exceptions
+    skosmos:logCaughtExceptions false ;
+    # set to TRUE to enable logging into browser console
+    skosmos:logBrowserConsole false ;
+    # set to a logfile path to enable logging into log file
+    # skosmos:logFileName "" ;
+    # a default location for Twig template rendering
+    skosmos:templateCache "/tmp/skosmos-template-cache" ;
+    # customize the css by adding your own stylesheet
+    # skosmos:customCss "resource/css/stylesheet.css" ;
+    # default email address where to send the feedback
+    skosmos:feedbackAddress "" ;
+    # email address to set as the sender for feedback messages
+    skosmos:feedbackSender "" ;
+    # email address to set as the envelope sender for feedback messages
+    skosmos:feedbackEnvelopeSender "" ;
+    # whether to display the ui language selection as a dropdown (useful for cases where there are more than 3 languages) 
+    skosmos:uiLanguageDropdown false ;
+    # whether to enable the spam honey pot or not, enabled by default
+    skosmos:uiHoneypotEnabled true ;
+    # default time a user must wait before submitting a form
+    skosmos:uiHoneypotTime 5 .
+
+# Skosmos vocabularies
+
+:test a skosmos:Vocabulary, void:Dataset ;
+	dc:title "Test ontology"@en ;
+	dc:subject :cat_science ;
+    dc:type mdrtype:ONTOLOGY ;
+	void:dataDump <http://skosmos.skos/dump/test/> ;
+	void:sparqlEndpoint <http://localhost:13030/ds/sparql> ;
+	void:uriSpace "http://www.skosmos.skos/test/";
+    skos:prefLabel "Test ontology"@en ;
+	skosmos:arrayClass isothes:ThesaurusArray ;
+	skosmos:defaultLanguage "en";
+    skosmos:feedbackRecipient "developer@vocabulary.org";
+	skosmos:groupClass skos:Collection;
+	skosmos:language "en";
+	skosmos:showTopConcepts "true";
+	skosmos:shortName "Test short",
+                    "Testi lyhyt"@fi;
+	skosmos:sparqlGraph <http://www.skosmos.skos/test/> .
+
+:multiple-schemes a skosmos:Vocabulary, void:Dataset ;
+	skos:prefLabel "Mutiple Schemes vocabulary"@en ;
+	dc:title "Mutiple Schemes vocabulary"@en ;
+    dc:type mdrtype:ONTOLOGY ;
+	void:sparqlEndpoint <http://localhost:13030/ds/sparql> ;
+	void:uriSpace "http://www.skosmos.skos/multiple-schemes/";
+	skosmos:defaultLanguage "en";
+	skosmos:language "en";
+	skosmos:showTopConcepts "true";
+	skosmos:sparqlGraph <http://www.skosmos.skos/multiple-schemes/> .
+
+:testdiff a skosmos:Vocabulary, void:Dataset ;
+	dc11:title "Test ontology 2"@en ;
+	dc:subject :cat_general ;
+	void:uriSpace "http://www.skosmos.skos/onto/testdiff#";
+	void:sparqlEndpoint <http://localhost:13030/ds/sparql> ;
+	skosmos:language "fi", "en";
+	skosmos:sparqlDialect "JenaText";
+	skosmos:fullAlphabeticalIndex "true";
+	skosmos:explicitLanguageTags "true";
+	skosmos:defaultSidebarView "groups";
+	skosmos:showTopConcepts "false";
+    skosmos:hierarchyProperty isothes:broaderGeneric;
+	skosmos:sparqlGraph <http://www.skosmos.skos/testdiff/> ;
+	skosmos:mainConceptScheme <http://www.skosmos.skos/testdiff#conceptscheme> .
+
+:groups a skosmos:Vocabulary, void:Dataset ;
+	dc11:title "Group test onto"@en ;
+	dc:subject :cat_general ;
+	void:dataDump <http://skosmos.skos/dump/test/groups.ttl>,
+		<http://skosmos.skos/dump/test/groups> ;
+	void:uriSpace "http://www.skosmos.skos/onto/groups/";
+	skosmos:arrayClass isothes:ThesaurusArray ;
+    skosmos:groupClass skos:Collection ;
+	void:sparqlEndpoint <http://localhost:13030/ds/sparql> ;
+	skosmos:language "fi", "en";
+	skosmos:defaultLanguage "fi";
+	skosmos:indexShowClass meta:TestClass, meta:TestClass2;
+	skosmos:sparqlGraph <http://www.skosmos.skos/groups/> .
+
+
+:test-concept-schemes a skosmos:Vocabulary, void:Dataset ;
+	dc11:title "Test concept schemes"@en ;
+	dc:subject :cat_general ;
+	void:dataDump <http://skosmos.skos/dump/test/test-concept-schemes.ttl>,
+		<http://skosmos.skos/dump/test/test-concept-schemes> ;
+	void:uriSpace "http://www.exemple.fr/";
+	skosmos:arrayClass isothes:ThesaurusArray ;
+ 	skosmos:groupClass skos:Collection ;
+	void:sparqlEndpoint <http://localhost:13030/ds/sparql> ;
+	skosmos:language "en";
+	skosmos:defaultLanguage "en";
+	skosmos:sparqlGraph <http://www.skosmos.skos/test-concept-schemes/> .
+
+:showDeprecated a skosmos:Vocabulary, void:Dataset ;
+	dc11:title "Show deprecated test vocabulary"@en ;
+	dc:subject :cat_general ;
+	void:dataDump <http://skosmos.skos/dump/test/groups.ttl>,
+		<http://skosmos.skos/dump/test/groups> ;
+	void:uriSpace "http://www.skosmos.skos/onto/groups/";
+	skosmos:arrayClass isothes:ThesaurusArray ;
+  	skosmos:groupClass skos:Collection ;
+	void:sparqlEndpoint <http://localhost:13030/ds/sparql> ;
+	skosmos:language "fi", "en";
+	skosmos:defaultLanguage "fi";
+	skosmos:showDeprecated "true";
+	skosmos:sparqlGraph <http://www.skosmos.skos/groups/> .
+
+:cycle a skosmos:Vocabulary, void:Dataset ;
+	dc11:title "Cycle test vocabulary"@en ;
+	dc:subject :cat_general ;
+	void:uriSpace "http://www.skosmos.skos/onto/cycle/";
+	void:sparqlEndpoint <http://localhost:13030/ds/sparql> ;
+	skosmos:language "en";
+	skosmos:sparqlGraph <http://www.skosmos.skos/cycle/> .
+
+:duplicates a skosmos:Vocabulary, void:Dataset ;
+	dc11:title "Duplicate labels test vocabulary"@en ;
+	dc:subject :cat_general ;
+	void:uriSpace "http://www.skosmos.skos/onto/dup/";
+	void:sparqlEndpoint <http://localhost:13030/ds/sparql> ;
+	skosmos:language "en";
+	skosmos:sparqlGraph <http://www.skosmos.skos/dup/> .
+
+:dates a skosmos:Vocabulary, void:Dataset ;
+	dc:title "Date information vocabulary"@en ;
+	dc11:title "Date information vocabulary"@en ;
+	skos:prefLabel "Date information vocabulary"@en ;
+	rdfs:label "Date information vocabulary"@en ;
+	dc:subject :cat_general ;
+	void:uriSpace "http://www.skosmos.skos/onto/date/";
+	void:sparqlEndpoint <http://localhost:13030/ds/sparql> ;
+	skosmos:language "en";
+	skosmos:showPropertyInSearch skos:exactMatch;
+    skosmos:hasMultiLingualProperty skos:altLabel ;
+	skosmos:sparqlGraph <http://www.skosmos.skos/date/> ;
+	skosmos:mainConceptScheme <http://www.skosmos.skos/date/> .
+
+:mapping a skosmos:Vocabulary, void:Dataset ;
+	dc11:title "Vocabulary with mappings"@en ;
+	dc:subject :cat_general ;
+	void:uriSpace "http://www.skosmos.skos/onto/mapping/";
+	void:sparqlEndpoint <http://localhost:13030/ds/sparql> ;
+	skosmos:language "en";
+	skosmos:sparqlGraph <http://www.skosmos.skos/mapping/> .
+
+:changes a skosmos:Vocabulary, void:Dataset ;
+	dc11:title "A vocabulary for testing the change list creation"@en ;
+	dc:subject :cat_general ;
+	void:uriSpace "http://www.skosmos.skos/changes/";
+	void:sparqlEndpoint <http://localhost:13030/ds/sparql> ;
+	skosmos:language "en";
+	skosmos:sparqlGraph <http://www.skosmos.skos/changes/> .
+
+:prefix a skosmos:Vocabulary, void:Dataset ;
+	dc11:title "A vocabulary for testing custom prefixes"@en ;
+	dc:subject :cat_general ;
+	void:uriSpace "http://www.skosmos.skos/prefix/";
+	void:sparqlEndpoint <http://localhost:13030/ds/sparql> ;
+	skosmos:language "en";
+	skosmos:sparqlGraph <http://www.skosmos.skos/prefix/> .
+
+:subclass a skosmos:Vocabulary, void:Dataset ;
+	dc11:title "Subproperties of hiddenLabel"@en ;
+	dc:subject :cat_general ;
+	void:uriSpace "http://www.skosmos.skos/sub/";
+	void:sparqlEndpoint <http://localhost:13030/ds/sparql> ;
+	skosmos:language "en";
+	skosmos:sparqlGraph <http://www.skosmos.skos/sub/> .
+
+:dupgroup a skosmos:Vocabulary, void:Dataset ;
+	dc11:title "SuperGroup and member relationship double trouble"@en ;
+	dc:subject :cat_general ;
+	void:uriSpace "http://www.skosmos.skos/onto/dupgroup/";
+	void:sparqlEndpoint <http://localhost:13030/ds/sparql> ;
+	skosmos:language "en";
+	skosmos:sparqlGraph <http://www.skosmos.skos/dupgroup/> .
+
+:subtag a skosmos:Vocabulary, void:Dataset ;
+	dc11:title "A vocabulary for testing language subtags"@en ;
+	dc:subject :cat_general ;
+	void:uriSpace "http://www.skosmos.skos/subtag/";
+	void:sparqlEndpoint <http://localhost:13030/ds/sparql> ;
+	skosmos:language "en";
+    skosmos:fallbackLanguages ( "fr" "de" "sv" ) ;
+	skosmos:sparqlGraph <http://www.skosmos.skos/subtag/> ;
+	skosmos:sparqlDialect "JenaText" .
+
+:collation a skosmos:Vocabulary, void:Dataset ;
+    dc11:title "A vocabulary for test SPARQL with collation"@en ;
+    dc:subject :cat_general ;
+    void:uriSpace "http://www.skosmos.skos/collation/";
+    void:sparqlEndpoint <http://localhost:13030/ds/sparql> ;
+    skosmos:language "fi";
+    skosmos:sparqlGraph <http://www.skosmos.skos/collation/> .
+
+:cbd a skosmos:Vocabulary, void:Dataset ;
+    dc11:title "A vocabulary for testing blank node processing and reification"@en ;
+    dc:subject :cat_general ;
+    void:uriSpace "http://www.skosmos.skos/cbd/";
+    skosmos:externalProperty dc11:contributor ;
+    skosmos:externalProperty dc11:creator ;
+    skosmos:externalProperty dc11:relation ;
+    skosmos:externalProperty rdfs:comment ;
+    void:sparqlEndpoint <http://localhost:13030/ds/sparql> ;
+    skosmos:language "en";
+    skosmos:sparqlGraph <http://www.skosmos.skos/cbd/> .
+
+:xl a skosmos:Vocabulary, void:Dataset ;
+    dc11:title "A vocabulary for testing SKOS XL"@en ;
+    dc:subject :cat_general ;
+    void:uriSpace "http://www.skosmos.skos/xl/";
+    void:sparqlEndpoint <http://localhost:13030/ds/sparql> ;
+    skosmos:language "en";
+    skosmos:sparqlGraph <http://www.skosmos.skos/xl/> .
+
+
+<http://skosmos.skos/dump/test/groups> dc:format "application/rdf+xml" .
+
+:cat_science a skos:Concept ;
+	skos:topConceptOf :categories ;
+	skos:inScheme :categories ;
+	skos:prefLabel "Luonnontieteet ja lääketiede"@fi,
+	"Naturvetenskap och medicin"@sv,
+	"Science and medicine"@en .
+
+mdrtype:THESAURUS a skos:Concept ;
+	skos:prefLabel "Тезаурус"@bg, "Tezaurus"@cs, "Tesaurus"@da, "Thesaurus"@de, "Θησαυρός"@el, "Thesaurus"@en, "Tesaurus"@et, "Tesaurus"@fi, "Thésaurus"@fr, "Pojmovnik"@hr, "Tezaurusz"@hu, "Tesauro"@it, "Tēzaurs"@lv, "Tezauras"@lt, "Teżawru"@mt, "Thesaurus"@nl, "Tesaurus"@no, "Tezaurus"@pl, "Tesauro"@pt, "Tezaur"@ro, "Synonymický slovník"@sk, "Tezaver"@sl, "Tesauro"@es, "Tesaurus"@sv .
+
+mdrtype:ONTOLOGY a skos:Concept ;
+    skos:prefLabel "Онтология"@bg, "Ontologie"@cs, "Ontologi"@da, "Ontologie"@de, "Οντολογία"@el, "Ontology"@en, "Ontoloogia"@et, "Ontologia"@fi, "Ontologie"@fr, "Ontologija"@hr, "Ontológia"@hu, "Ontologia"@it, "Ontoloģija"@lv, "Ontologija"@lt, "Ontoloġija"@mt, "Ontologie"@nl, "Ontologi"@no, "Struktura pojęciowa"@pl, "Ontologia"@pt, "Ontologie"@ro, "Ontológia"@sk, "Ontologija"@sl, "Ontología"@es, "Ontologi"@sv .
+

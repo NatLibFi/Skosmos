@@ -1,16 +1,6 @@
 <?php
 
 /**
- * Setting some often needed namespace prefixes
- */
-EasyRdf\RdfNamespace::set('skosmos', 'http://purl.org/net/skosmos#');
-EasyRdf\RdfNamespace::set('skosext', 'http://purl.org/finnonto/schema/skosext#');
-EasyRdf\RdfNamespace::set('isothes', 'http://purl.org/iso25964/skos-thes#');
-EasyRdf\RdfNamespace::set('mads', 'http://www.loc.gov/mads/rdf/v1#');
-EasyRdf\RdfNamespace::set('wd', 'http://www.wikidata.org/entity/');
-EasyRdf\RdfNamespace::set('wdt', 'http://www.wikidata.org/prop/direct/');
-
-/**
  * Model provides access to the data.
  * @property EasyRdf\Graph $graph
  * @property GlobalConfig $globalConfig
@@ -19,8 +9,6 @@ class Model
 {
     /** EasyRdf\Graph graph instance */
     private $graph;
-    /** Namespaces from vocabularies configuration file */
-    private $namespaces;
     /** cache for Vocabulary objects */
     private $allVocabularies = null;
     /** cache for Vocabulary objects */
@@ -30,7 +18,6 @@ class Model
     /** how long to store retrieved URI information in APC cache */
     const URI_FETCH_TTL = 86400; // 1 day
     private $globalConfig;
-    private $cache;
     private $logger;
 
     /**
@@ -39,16 +26,7 @@ class Model
     public function __construct($config)
     {
         $this->globalConfig = $config;
-        try {
-          $this->cache = new Cache();
-          $this->initializeVocabularies();
-          $this->initializeNamespaces();
-          $this->initializeLogging();
-        } catch (Exception $e) {
-            header("HTTP/1.0 404 Not Found");
-            echo("Error: Vocabularies configuration file 'vocabularies.ttl' not found.");
-            return;
-        }
+        $this->initializeLogging();
     }
 
     /**
@@ -57,63 +35,6 @@ class Model
      */
     public function getConfig() {
       return $this->globalConfig;
-    }
-
-    /**
-     * Initializes the configuration from the vocabularies.ttl file
-     */
-    private function initializeVocabularies()
-    {
-        if (!file_exists($this->getConfig()->getVocabularyConfigFile())) {
-            throw new Exception($this->getConfig()->getVocabularyConfigFile() . ' is missing, please provide one.');
-        }
-
-        try {
-            // use APC user cache to store parsed vocabularies.ttl configuration
-            if ($this->cache->isAvailable()) {
-                // @codeCoverageIgnoreStart
-                $key = realpath($this->getConfig()->getVocabularyConfigFile()) . ", " . filemtime($this->getConfig()->getVocabularyConfigFile());
-                $nskey = "namespaces of " . $key;
-                $this->graph = $this->cache->fetch($key);
-                $this->namespaces = $this->cache->fetch($nskey);
-                if ($this->graph === false || $this->namespaces === false) { // was not found in cache
-                    $this->parseVocabularies($this->getConfig()->getVocabularyConfigFile());
-                    $this->cache->store($key, $this->graph);
-                    $this->cache->store($nskey, $this->namespaces);
-                }
-                // @codeCoverageIgnoreEnd
-            } else { // APC not available, parse on every request
-                $this->parseVocabularies($this->getConfig()->getVocabularyConfigFile());
-            }
-        } catch (Exception $e) {
-            echo "Error: " . $e->getMessage();
-        }
-    }
-
-    /**
-     * Parses vocabulary configuration and RDF namespaces from the vocabularies.ttl file
-     * @param string $filename path to vocabularies.ttl file
-     */
-
-    private function parseVocabularies($filename)
-    {
-        $this->graph = new EasyRdf\Graph();
-        $parser = new SkosmosTurtleParser();
-        $parser->parse($this->graph, file_get_contents($filename), 'turtle', $filename);
-        $this->namespaces = $parser->getNamespaces();
-    }
-
-    /**
-     * Registers RDF namespaces from the vocabularies.ttl file for use by EasyRdf (e.g. serializing)
-     */
-
-    private function initializeNamespaces() {
-        foreach ($this->namespaces as $prefix => $fullUri) {
-            if ($prefix != '' && EasyRdf\RdfNamespace::get($prefix) === null) // if not already defined
-            {
-                EasyRdf\RdfNamespace::set($prefix, $fullUri);
-            }
-        }
     }
 
     /**
@@ -423,7 +344,7 @@ class Model
     public function getVocabularies()
     {
         if ($this->allVocabularies === null) { // initialize cache
-            $vocs = $this->graph->allOfType('skosmos:Vocabulary');
+            $vocs = $this->globalConfig->getGraph()->allOfType('skosmos:Vocabulary');
             $this->allVocabularies = $this->createDataObjects("Vocabulary", $vocs);
             foreach ($this->allVocabularies as $voc) {
                 // register vocabulary ids as RDF namespace prefixes
@@ -450,8 +371,7 @@ class Model
      */
     public function getVocabulariesInCategory($cat)
     {
-        $vocs = $this->graph->resourcesMatching('dc:subject', $cat);
-
+        $vocs = $this->globalConfig->getGraph()->resourcesMatching('dc:subject', $cat);
         return $this->createDataObjects("Vocabulary", $vocs);
     }
 
@@ -461,7 +381,7 @@ class Model
      */
     public function getVocabularyCategories()
     {
-        $cats = $this->graph->allOfType('skos:Concept');
+        $cats = $this->globalConfig->getGraph()->allOfType('skos:Concept');
         if(empty($cats)) {
             return array(new VocabularyCategory($this, null));
         }
@@ -476,7 +396,7 @@ class Model
      */
     public function getClassificationLabel($lang)
     {
-        $cats = $this->graph->allOfType('skos:ConceptScheme');
+        $cats = $this->globalConfig->getGraph()->allOfType('skos:ConceptScheme');
         $label = $cats ? $cats[0]->label($lang) : null;
 
         return $label;
@@ -645,13 +565,13 @@ class Model
         $jsonld->setMimeTypes($mimetypes);
 
         // using apc cache for the resource if available
-        if ($this->cache->isAvailable()) {
+        if ($this->globalConfig->getCache()->isAvailable()) {
             // @codeCoverageIgnoreStart
             $key = 'fetch: ' . $uri;
-            $resource = $this->cache->fetch($key);
+            $resource = $this->globalConfig->getCache()->fetch($key);
             if ($resource === null || $resource === false) { // was not found in cache, or previous request failed
                 $resource = $this->fetchResourceFromUri($uri);
-                $this->cache->store($key, $resource, self::URI_FETCH_TTL);
+                $this->globalConfig->getCache()->store($key, $resource, self::URI_FETCH_TTL);
             }
             // @codeCoverageIgnoreEnd
         } else { // APC not available, parse on every request

@@ -3,7 +3,7 @@
 /**
  * VocabularyConfig provides access to the vocabulary configuration defined in vocabularies.ttl.
  */
-class VocabularyConfig extends DataObject
+class VocabularyConfig extends BaseConfig
 {
     private $plugins;
 
@@ -18,59 +18,6 @@ class VocabularyConfig extends DataObject
             }
         }
         $this->plugins = new PluginRegister(array_merge($globalPlugins, $pluginArray));
-    }
-
-    /**
-     * Returns a boolean value based on a literal value from the vocabularies.ttl configuration.
-     * @param string $property the property to query
-     * @param boolean $default the default value if the value is not set in configuration
-     */
-    private function getBoolean($property, $default = false)
-    {
-        $val = $this->resource->getLiteral($property);
-        if ($val) {
-            return filter_var($val->getValue(), FILTER_VALIDATE_BOOLEAN);
-        }
-
-        return $default;
-    }
-
-    /**
-     * Returns an array of URIs based on a property from the vocabularies.ttl configuration.
-     * @param string $property the property to query
-     * @return string[] List of URIs
-     */
-    private function getResources($property)
-    {
-        $resources = $this->resource->allResources($property);
-        $ret = array();
-        foreach ($resources as $res) {
-            $ret[] = $res->getURI();
-        }
-
-        return $ret;
-    }
-
-    /**
-     * Returns a boolean value based on a literal value from the vocabularies.ttl configuration.
-     * @param string $property the property to query
-     * @param string $lang preferred language for the literal,
-     */
-    private function getLiteral($property, $lang=null)
-    {
-        if (!isset($lang)) {;
-            $lang = $this->getEnvLang();
-        }
-
-        $literal = $this->resource->getLiteral($property, $lang);
-        if ($literal) {
-            return $literal->getValue();
-        }
-
-        // not found with selected language, try any language
-        $literal = $this->resource->getLiteral($property);
-        if ($literal)
-          return $literal->getValue();
     }
 
     /**
