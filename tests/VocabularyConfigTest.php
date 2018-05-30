@@ -8,7 +8,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
   protected function setUp() {
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');
-    $this->model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
+    $this->model = new Model(new GlobalConfig('/../tests/testconfig.ttl'));
   }
 
   /**

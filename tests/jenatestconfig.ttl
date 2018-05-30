@@ -16,6 +16,54 @@
 @prefix mdrtype: <http://publications.europa.eu/resource/authority/dataset-type/> .
 @prefix : <#> .
 
+# Skosmos main configuration
+
+:config a skosmos:Configuration ;
+    # SPARQL endpoint
+    # a local Fuseki server is usually on localhost:3030
+    skosmos:sparqlEndpoint "http://localhost:3030/ds/sparql" ;
+    # sparql-query extension, or "Generic" for plain SPARQL 1.1
+    # set to "JenaText" instead if you use Fuseki with jena-text index
+    skosmos:sparqlDialect "JenaText" ;
+    # whether to enable collation in sparql queries
+    skosmos:sparqlCollationEnabled true ;
+    # HTTP client configuration
+    skosmos:sparqlTimeout 20 ;
+    skosmos:httpTimeout 5 ;
+    # customize the service name
+    skosmos:serviceName "Skosmos" ;
+    # customize the base element. Set this if the automatic base url detection doesn't work. For example setups behind a proxy.
+    # skosmos:baseHref "http://localhost/Skosmos/" ;
+    # interface languages available, and the corresponding system locales
+    skosmos:languages [ :name "en" ; :value "en_GB.utf8" ] ;
+    # how many results (maximum) to load at a time on the search results page
+    skosmos:searchResultsSize 20 ;
+    # how many items (maximum) to retrieve in transitive property queries
+    skosmos:transitiveLimit 1000 ;
+    # whether or not to log caught exceptions
+    skosmos:logCaughtExceptions false ;
+    # set to TRUE to enable logging into browser console
+    skosmos:logBrowserConsole false ;
+    # set to a logfile path to enable logging into log file
+    # skosmos:logFileName "" ;
+    # a default location for Twig template rendering
+    skosmos:templateCache "/tmp/skosmos-template-cache" ;
+    # customize the css by adding your own stylesheet
+    # skosmos:customCss "resource/css/stylesheet.css" ;
+    # default email address where to send the feedback
+    skosmos:feedbackAddress "" ;
+    # email address to set as the sender for feedback messages
+    skosmos:feedbackSender "" ;
+    # email address to set as the envelope sender for feedback messages
+    skosmos:feedbackEnvelopeSender "" ;
+    # whether to display the ui language selection as a dropdown (useful for cases where there are more than 3 languages) 
+    skosmos:uiLanguageDropdown false ;
+    # whether to enable the spam honey pot or not, enabled by default
+    skosmos:uiHoneypotEnabled true ;
+    # default time a user must wait before submitting a form
+    skosmos:uiHoneypotTime 5 .
+
+# Skosmos vocabularies
 
 :test a skosmos:Vocabulary, void:Dataset ;
 	dc:title "Test ontology"@en ;
@@ -24,10 +72,10 @@
 	void:dataDump <http://skosmos.skos/dump/test/> ;
 	void:sparqlEndpoint <http://localhost:13030/ds/sparql> ;
 	void:uriSpace "http://www.skosmos.skos/test/";
-  skos:prefLabel "Test ontology"@en ;
+    skos:prefLabel "Test ontology"@en ;
 	skosmos:arrayClass isothes:ThesaurusArray ;
 	skosmos:defaultLanguage "en";
-  skosmos:feedbackRecipient "developer@vocabulary.org";
+    skosmos:feedbackRecipient "developer@vocabulary.org";
 	skosmos:groupClass skos:Collection;
 	skosmos:language "en";
 	skosmos:showTopConcepts "true";
@@ -68,7 +116,7 @@
 		<http://skosmos.skos/dump/test/groups> ;
 	void:uriSpace "http://www.skosmos.skos/onto/groups/";
 	skosmos:arrayClass isothes:ThesaurusArray ;
-  skosmos:groupClass skos:Collection ;
+    skosmos:groupClass skos:Collection ;
 	void:sparqlEndpoint <http://localhost:13030/ds/sparql> ;
 	skosmos:language "fi", "en";
 	skosmos:defaultLanguage "fi";
@@ -83,7 +131,7 @@
 		<http://skosmos.skos/dump/test/test-concept-schemes> ;
 	void:uriSpace "http://www.exemple.fr/";
 	skosmos:arrayClass isothes:ThesaurusArray ;
- 	 skosmos:groupClass skos:Collection ;
+ 	skosmos:groupClass skos:Collection ;
 	void:sparqlEndpoint <http://localhost:13030/ds/sparql> ;
 	skosmos:language "en";
 	skosmos:defaultLanguage "en";
@@ -129,7 +177,7 @@
 	void:sparqlEndpoint <http://localhost:13030/ds/sparql> ;
 	skosmos:language "en";
 	skosmos:showPropertyInSearch skos:exactMatch;
-  skosmos:hasMultiLingualProperty skos:altLabel ;
+    skosmos:hasMultiLingualProperty skos:altLabel ;
 	skosmos:sparqlGraph <http://www.skosmos.skos/date/> ;
 	skosmos:mainConceptScheme <http://www.skosmos.skos/date/> .
 
