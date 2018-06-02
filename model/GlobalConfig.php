@@ -21,6 +21,8 @@ class GlobalConfig extends BaseConfig {
     private $filePath;
     /** Namespaces from vocabularies configuration file. */
     private $namespaces;
+    /** EasyRdf\Graph graph */
+    private $graph;
 
     public function __construct($config_name='/../config.ttl')
     {
@@ -124,12 +126,12 @@ class GlobalConfig extends BaseConfig {
     public function getLanguages()
     {
         $languageResources = $this->getResource()->allResources('skosmos:languages');
-        if ($languageResources) {
+        if (!is_null($languageResources) && !empty($languageResources)) {
             $languages = array();
             foreach ($languageResources as $idx => $languageResource) {
                 $languageName = $languageResource->getLiteral('emptyns:name');
                 $languageValue = $languageResource->getLiteral('emptyns:value');
-                if ($languageName and $languageValue) {
+                if ($languageName && $languageValue) {
                     $languages[$languageName->getValue()] = $languageValue->getValue();
                 }
             }
