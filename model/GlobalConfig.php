@@ -125,10 +125,10 @@ class GlobalConfig extends BaseConfig {
      */
     public function getLanguages()
     {
-        $languageResources = $this->getResource()->allResources('skosmos:languages');
+        $languageResources = $this->getResource()->getResource('skosmos:languages');
         if (!is_null($languageResources) && !empty($languageResources)) {
             $languages = array();
-            foreach ($languageResources as $idx => $languageResource) {
+            foreach ($languageResources as $languageResource) {
                 $languageName = $languageResource->getLiteral('emptyns:name');
                 $languageValue = $languageResource->getLiteral('emptyns:value');
                 if ($languageName && $languageValue) {
