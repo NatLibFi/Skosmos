@@ -7,8 +7,6 @@
  */
 class Model
 {
-    /** EasyRdf\Graph graph instance */
-    private $graph;
     /** cache for Vocabulary objects */
     private $allVocabularies = null;
     /** cache for Vocabulary objects */
