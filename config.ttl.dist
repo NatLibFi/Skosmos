@@ -33,9 +33,9 @@
     # skosmos:baseHref "http://localhost/Skosmos/" ;
     # interface languages available, and the corresponding system locales
     skosmos:languages (
-        [ :name "fi" ; :value "fi_FI.utf8" ]
-        [ :name "sv" ; :value "sv_SE.utf8" ]
-        [ :name "en" ; :value "en_GB.utf8" ]
+        [ rdfs:label "fi" ; rdf:value "fi_FI.utf8" ]
+        [ rdfs:label "sv" ; rdf:value "sv_SE.utf8" ]
+        [ rdfs:label "en" ; rdf:value "en_GB.utf8" ]
     ) ;
     # how many results (maximum) to load at a time on the search results page
     skosmos:searchResultsSize 20 ;

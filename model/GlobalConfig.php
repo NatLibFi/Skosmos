@@ -60,16 +60,12 @@ class GlobalConfig extends BaseConfig {
                 $this->graph = $this->cache->fetch($key);
                 $this->namespaces = $this->cache->fetch($nskey);
                 if ($this->graph === false || $this->namespaces === false) { // was not found in cache
-                    # EasyRDF appears to prepend the file location# to the nodes without a namespace
-                    EasyRdf\RdfNamespace::set('emptyns', $this->filePath . '#');
                     $this->parseConfig($this->filePath);
                     $this->cache->store($key, $this->graph);
                     $this->cache->store($nskey, $this->namespaces);
                 }
                 // @codeCoverageIgnoreEnd
             } else { // APC not available, parse on every request
-                # EasyRDF appears to prepend the file location# to the nodes without a namespace
-                EasyRdf\RdfNamespace::set('emptyns', $this->filePath . '#');
                 $this->parseConfig($this->filePath);
             }
 
@@ -129,8 +125,8 @@ class GlobalConfig extends BaseConfig {
         if (!is_null($languageResources) && !empty($languageResources)) {
             $languages = array();
             foreach ($languageResources as $languageResource) {
-                $languageName = $languageResource->getLiteral('emptyns:name');
-                $languageValue = $languageResource->getLiteral('emptyns:value');
+                $languageName = $languageResource->getLiteral('rdfs:label');
+                $languageValue = $languageResource->getLiteral('rdf:value');
                 if ($languageName && $languageValue) {
                     $languages[$languageName->getValue()] = $languageValue->getValue();
                 }
