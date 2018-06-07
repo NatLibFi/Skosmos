@@ -130,7 +130,7 @@ class PluginRegister {
     }
 
     /**
-     * Returns an array of javascript function names to call when loading a new concept
+     * Returns an array of javascript function names to call when loading pages
      * @return array
      */
     public function getCallbacks() {

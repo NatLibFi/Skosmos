@@ -298,7 +298,14 @@ class GlobalConfig extends BaseConfig {
      */
     public function getGlobalPlugins()
     {
-        return explode(' ', $this->getLiteral('skosmos:globalPlugins', null));
+        $globalPlugins = array();
+        $globalPluginsResource =  $this->getResource()->getResource("skosmos:globalPlugins");
+        if ($globalPluginsResource) {
+            foreach ($globalPluginsResource as $resource) {
+                $globalPlugins[] = $resource->getValue();
+            }
+        }
+        return $globalPlugins;
     }
 
     /**
