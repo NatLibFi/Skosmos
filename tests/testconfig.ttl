@@ -61,7 +61,9 @@
     # whether to enable the spam honey pot or not, enabled by default
     skosmos:uiHoneypotEnabled true ;
     # default time a user must wait before submitting a form
-    skosmos:uiHoneypotTime 5 .
+    skosmos:uiHoneypotTime 5 ;
+    # plugins to activate for the whole installation (including all vocabularies)
+    skosmos:globalPlugins ("alpha" "Bravo" "charlie") .
 
 # Skosmos vocabularies
 
