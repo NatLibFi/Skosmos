@@ -64,7 +64,7 @@
     # default time a user must wait before submitting a form
     skosmos:uiHoneypotTime 5 ;
     # plugins to activate for the whole installation (including all vocabularies)
-    skosmos:globalPlugins "" .
+    skosmos:globalPlugins () .
 
 # Skosmos vocabularies
 

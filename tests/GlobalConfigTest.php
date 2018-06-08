@@ -122,5 +122,13 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
     $actual = $this->config->getCollationEnabled();
     $this->assertFalse($actual);
   }
+
+  /**
+   * @covers GlobalConfig::getGlobalPlugins
+   */
+  public function testGetGlobalPlugins() {
+    $actual = $this->config->getGlobalPlugins();
+    $this->assertEquals(array("alpha", "Bravo", "charlie"), $actual);
+  }
 }
 
