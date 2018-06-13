@@ -111,6 +111,16 @@
       {% endfor %}
     {% endif %}
   {% endif %}
+  <div class="property">
+    <span class="property-click" title="{% trans "concept_types" %}">
+      <img class="property-hover" src="resource/pics/list.png">
+    </span>
+    <div class="property-values">
+      {% for concepttype in concept.type %} {# loop through concept types #}
+      <span class="versal value">{{ concepttype }}</span>{% if loop.last == false %}<span class="versal">, </span>{% endif %}
+      {% endfor %}
+    </div>
+  </div>
   {% if concept.uri %}
     <div><span class="versal uri-input-box">{{ concept.uri }}</span></div>
   {% endif %}
