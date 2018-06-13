@@ -765,3 +765,6 @@ msgid "feedback_enter_name_email"
 msgstr ""
 "Please enter your name and email address if you wish to receive a direct "
 "response. You also have the option to submit your feedback anonymously."
+
+msgid "concept_types"
+msgstr "Concept types"
