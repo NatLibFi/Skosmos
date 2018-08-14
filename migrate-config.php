@@ -52,32 +52,32 @@ if (!is_file($configFile)) {
     throw new \Exception("Invalid configuration file: $configFile");
 }
 include($configFile);
-$endpoint = defined('DEFAULT_ENDPOINT') ? DEFAULT_ENDPOINT : "";
-$dialect = defined('DEFAULT_SPARQL_DIALECT') ? DEFAULT_SPARQL_DIALECT : "";
-$collationEnabled = defined('SPARQL_COLLATION_ENABLED') ? (SPARQL_COLLATION_ENABLED ? "true" : "false") : "";
-$sparqlTimeout = defined('SPARQL_TIMEOUT') ? SPARQL_TIMEOUT : "";
-$httpTimeout = defined('HTTP_TIMEOUT') ? HTTP_TIMEOUT : "";
-$serviceName = defined('SERVICE_NAME') ? SERVICE_NAME : "";
-$baseHref = defined('BASE_HREF') ? BASE_HREF : "";
+$endpoint = defined('DEFAULT_ENDPOINT') ? DEFAULT_ENDPOINT : "?";
+$dialect = defined('DEFAULT_SPARQL_DIALECT') ? DEFAULT_SPARQL_DIALECT : "?";
+$collationEnabled = defined('SPARQL_COLLATION_ENABLED') ? (SPARQL_COLLATION_ENABLED ? "true" : "false") : "?";
+$sparqlTimeout = defined('SPARQL_TIMEOUT') ? SPARQL_TIMEOUT : "?";
+$httpTimeout = defined('HTTP_TIMEOUT') ? HTTP_TIMEOUT : "?";
+$serviceName = defined('SERVICE_NAME') ? SERVICE_NAME : "?";
+$baseHref = defined('BASE_HREF') ? BASE_HREF : "?";
 $languages = "";
 if (isset($LANGUAGES) && !is_null($LANGUAGES) && is_array($LANGUAGES) && !empty($LANGUAGES)) {
     foreach ($LANGUAGES as $code => $name) {
         $languages .= "        [ rdfs:label \"$code\" ; rdf:value \"$name\" ]\n";
     }
 }
-$searchResultsSize = defined('SEARCH_RESULTS_SIZE') ? SEARCH_RESULTS_SIZE : "";
-$transitiveLimit = defined('DEFAULT_TRANSITIVE_LIMIT') ? DEFAULT_TRANSITIVE_LIMIT : "";
-$logCaughtExceptions = defined('LOG_CAUGHT_EXCEPTIONS') ? (LOG_CAUGHT_EXCEPTIONS ? "true" : "false") : "";
-$logBrowserConsole = defined('LOG_BROWSER_CONSOLE') ? (LOG_BROWSER_CONSOLE ? "true" : "false") : "";
-$logFileName = defined('LOG_FILE_NAME') ? LOG_FILE_NAME : "";
-$templateCache = defined('TEMPLATE_CACHE') ? TEMPLATE_CACHE : "";
-$customCss = defined('CUSTOM_CSS') ? CUSTOM_CSS : "";
-$feedbackAddress = defined('FEEDBACK_ADDRESS') ? FEEDBACK_ADDRESS : "";
-$feedbackSender = defined('FEEDBACK_SENDER') ? FEEDBACK_SENDER : "";
-$feedbackEnvelopeSender = defined('FEEDBACK_ENVELOPE_SENDER') ? FEEDBACK_ENVELOPE_SENDER : "";
-$uiLanguageDropdown = defined('UI_LANGUAGE_DROPDOWN') ? (UI_LANGUAGE_DROPDOWN ? "true" : "false") : "";
-$uiHoneypotEnabled = defined('UI_HONEYPOT_ENABLED') ? (UI_HONEYPOT_ENABLED ? "true" : "false") : "";
-$uiHoneypotTime = defined('UI_HONEYPOT_TIME') ? UI_HONEYPOT_TIME : "";
+$searchResultsSize = defined('SEARCH_RESULTS_SIZE') ? SEARCH_RESULTS_SIZE : "?";
+$transitiveLimit = defined('DEFAULT_TRANSITIVE_LIMIT') ? DEFAULT_TRANSITIVE_LIMIT : "?";
+$logCaughtExceptions = defined('LOG_CAUGHT_EXCEPTIONS') ? (LOG_CAUGHT_EXCEPTIONS ? "true" : "false") : "?";
+$logBrowserConsole = defined('LOG_BROWSER_CONSOLE') ? (LOG_BROWSER_CONSOLE ? "true" : "false") : "?";
+$logFileName = defined('LOG_FILE_NAME') ? LOG_FILE_NAME : "?";
+$templateCache = defined('TEMPLATE_CACHE') ? TEMPLATE_CACHE : "?";
+$customCss = defined('CUSTOM_CSS') ? CUSTOM_CSS : "?";
+$feedbackAddress = defined('FEEDBACK_ADDRESS') ? FEEDBACK_ADDRESS : "?";
+$feedbackSender = defined('FEEDBACK_SENDER') ? FEEDBACK_SENDER : "?";
+$feedbackEnvelopeSender = defined('FEEDBACK_ENVELOPE_SENDER') ? FEEDBACK_ENVELOPE_SENDER : "?";
+$uiLanguageDropdown = defined('UI_LANGUAGE_DROPDOWN') ? (UI_LANGUAGE_DROPDOWN ? "true" : "false") : "?";
+$uiHoneypotEnabled = defined('UI_HONEYPOT_ENABLED') ? (UI_HONEYPOT_ENABLED ? "true" : "false") : "?";
+$uiHoneypotTime = defined('UI_HONEYPOT_TIME') ? UI_HONEYPOT_TIME : "?";
 $globalPluginsArray = [];
 $globalPlugins = "";
 if (defined('GLOBAL_PLUGINS') && !is_null(GLOBAL_PLUGINS) && is_string(GLOBAL_PLUGINS) && !empty(trim(GLOBAL_PLUGINS))) {
@@ -91,7 +91,7 @@ if (defined('GLOBAL_PLUGINS') && !is_null(GLOBAL_PLUGINS) && is_string(GLOBAL_PL
 echo $vocabs['prefixes'];
 
 # print the global config using a string template
-echo <<<EOT
+$globalConfig = <<<EOT
 
 # Skosmos main configuration
 
@@ -144,6 +144,8 @@ $languages    ) ;
     skosmos:globalPlugins ($globalPlugins) .
 
 EOT;
+
+echo preg_replace('/(\\s*)(.*\\?[\\"]?[\s]*;.*)/', "\\1# \\2", $globalConfig);
 
 echo "\n# Skosmos vocabularies\n";
 
