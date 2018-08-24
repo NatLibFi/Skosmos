@@ -22,14 +22,14 @@ class ConceptProperty
      * @param string $prop property type eg. 'rdf:type'.
      * @param string $label
      */
-    public function __construct($prop, $label, $super=null, $notsort=false)
+    public function __construct($prop, $label, $super=null, $sort_by_notation=false)
     {
         $this->prop = $prop;
         $this->label = $label;
         $this->values = array();
         $this->is_sorted = true;
         $this->super = $super;
-        $this->sort_by_notation = $notsort;
+        $this->sort_by_notation = $sort_by_notation;
     }
 
     /**
