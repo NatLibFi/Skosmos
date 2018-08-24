@@ -76,7 +76,7 @@ class Model
     {
         $ver = null;
         if (file_exists('.git')) {
-            $ver = shell_exec('git describe --tags');
+            $ver = shell_exec('git describe --tags --always');
         }
 
         if ($ver === null) {

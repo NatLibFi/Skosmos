@@ -25,7 +25,7 @@ env:
   global:
     - CC_TEST_REPORTER_ID=fb98170a5c7ea9cc2bbab19ff26268335e6a11a4f8267ca935e5e8ff4624886c
   matrix:
-    - FUSEKI_VERSION=3.7.0
+    - FUSEKI_VERSION=3.8.0
     - FUSEKI_VERSION=SNAPSHOT
 matrix:
   exclude:
