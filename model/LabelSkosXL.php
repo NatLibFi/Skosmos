@@ -9,7 +9,7 @@ class LabelSkosXL extends DataObject
     }
 
     public function getPrefLabel() {
-        $label;
+        $label = null;
         $labels = $this->resource->allResources('skosxl:prefLabel');
         foreach($labels as $labres) {
             $label = $labres->getLiteral('skosxl:literalForm');
