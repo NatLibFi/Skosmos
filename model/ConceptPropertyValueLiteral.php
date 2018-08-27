@@ -67,7 +67,6 @@ class ConceptPropertyValueLiteral extends VocabularyDataObject
 
     public function hasXlProperties()
     {
-        $ret = array();
         $graph = $this->resource->getGraph();
         $resources = $graph->resourcesMatching('skosxl:literalForm', $this->literal);
         return !empty($resources);
