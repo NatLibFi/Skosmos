@@ -82,7 +82,7 @@ class ConceptPropertyTest extends PHPUnit\Framework\TestCase
     $props = $concept->getProperties();
     $prevlabel;
     foreach($props['skos:narrower'] as $val) {
-      $label = is_string($val->getLabel()) ? $val->getLabel() : $val->getLabel()-getValue();
+      $label = is_string($val->getLabel()) ? $val->getLabel() : $val->getLabel()->getValue();
       if ($prevlabel)
         $this->assertEquals(1, strnatcmp($prevlabel, $label));
       $prevlabel = $label;
