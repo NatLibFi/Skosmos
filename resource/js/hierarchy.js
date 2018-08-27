@@ -129,7 +129,7 @@ function createConceptObject(conceptUri, conceptData) {
  */
 function attachTopConceptsToSchemes(schemes, currentNode, parentData) {
   for (var i = 0; i < schemes.length; i++) {
-    if (parentData[currentNode.uri].tops.indexOf(schemes[i].uri) != -1) {
+    if (parentData[currentNode.uri].tops.indexOf(schemes[i].uri) !== -1) {
       if(Object.prototype.toString.call(schemes[i].children) !== '[object Array]' ) {
         schemes[i].children = [];
       }
