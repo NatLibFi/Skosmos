@@ -80,7 +80,7 @@ class ConceptPropertyTest extends PHPUnit\Framework\TestCase
     $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta1', 'en');
     $concept = $concepts[0];
     $props = $concept->getProperties();
-    $prevlabel;
+    $prevlabel = null;
     foreach($props['skos:narrower'] as $val) {
       $label = is_string($val->getLabel()) ? $val->getLabel() : $val->getLabel()->getValue();
       if ($prevlabel)

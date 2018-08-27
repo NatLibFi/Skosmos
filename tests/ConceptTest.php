@@ -179,7 +179,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     $results = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta1', 'en');
     $concept = reset($results);
     $props = $concept->getProperties();
-    $prevlabel;
+    $prevlabel = null;
     foreach($props['skos:narrower'] as $val) {
       $label = is_string($val->getLabel()) ? $val->getLabel() : $val->getLabel()->getValue();
       if ($prevlabel)
