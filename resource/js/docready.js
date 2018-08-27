@@ -387,7 +387,8 @@ $(function() { // DOCUMENT READY
       }
       var uri = $('.uri-input-box').html();
       var base_href = $('base').attr('href'); // see #315, #633
-      var redirectUrl = base_href + vocab + '/' + lang + '/page/?uri=' + uri;
+      var clangIfSet = clang !== lang ? "&clang=" + clang : ""; // see #714
+      var redirectUrl = base_href + vocab + '/' + lang + '/page/?uri=' + uri + clangIfSet;
       window.location.replace(encodeURI(redirectUrl));
       return false;
     }
