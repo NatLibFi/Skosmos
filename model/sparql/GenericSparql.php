@@ -768,7 +768,7 @@ EOQ;
             }
         }
 
-        return implode(' UNION ', $typePatterns);;
+        return implode(' UNION ', $typePatterns);
     }
 
     /**
