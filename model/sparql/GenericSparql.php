@@ -1886,7 +1886,6 @@ EOQ;
                 $ret[$uri]['exact'] = $row->exact->getUri();
             }
             if (isset($row->tops)) {
-               $topConceptsList=array();
                $topConceptsList=explode(" ", $row->tops->getValue());
                // sort to garantee an alphabetical ordering of the URI
                sort($topConceptsList);
