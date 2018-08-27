@@ -15,19 +15,21 @@ class ConceptProperty
     private $values;
     /** flag whether the values are sorted, as we do lazy sorting */
     private $is_sorted;
+    private $sort_by_notation;
 
     /**
      * Label parameter seems to be optional in this phase.
      * @param string $prop property type eg. 'rdf:type'.
      * @param string $label
      */
-    public function __construct($prop, $label, $super=null)
+    public function __construct($prop, $label, $super=null, $sort_by_notation=false)
     {
         $this->prop = $prop;
         $this->label = $label;
         $this->values = array();
         $this->is_sorted = true;
         $this->super = $super;
+        $this->sort_by_notation = $sort_by_notation;
     }
 
     /**
@@ -86,7 +88,7 @@ class ConceptProperty
     {
         if (!empty($this->values)) {
             uksort($this->values, function($a, $b) {
-                return strcoll(strtolower($a),strtolower($b));
+                return $this->sort_by_notation ? strnatcasecmp($a, $b) : strcoll(strtolower($a),strtolower($b));
             });
         }
         $this->is_sorted = true;
