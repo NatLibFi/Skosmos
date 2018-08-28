@@ -164,7 +164,12 @@ class GlobalConfig extends BaseConfig {
      */
     public function getDefaultEndpoint()
     {
-        return $this->getLiteral('skosmos:sparqlEndpoint', 'http://localhost:3030/ds/sparql');
+        $endpoint = $this->resource->get('skosmos:sparqlEndpoint');
+        if ($endpoint) {
+            return $endpoint->getUri();
+        } else {
+            return 'http://localhost:3030/ds/sparql';
+        }
     }
 
     /**

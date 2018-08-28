@@ -98,7 +98,7 @@ $globalConfig = <<<EOT
 :config a skosmos:Configuration ;
     # SPARQL endpoint
     # a local Fuseki server is usually on localhost:3030
-    skosmos:sparqlEndpoint "$endpoint" ;
+    skosmos:sparqlEndpoint <$endpoint> ;
     # sparql-query extension, or "Generic" for plain SPARQL 1.1
     # set to "JenaText" instead if you use Fuseki with jena-text index
     skosmos:sparqlDialect "$dialect" ;
