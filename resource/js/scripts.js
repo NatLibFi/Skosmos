@@ -90,11 +90,18 @@ function updateContent(data) {
 
 function updateJsonLD(data) {
     var $jsonld = $('script[type="application/ld+json"]');
+    var $newJsonLD = $(data).filter('script[type="application/ld+json"]');
     if ($jsonld[0]) {
         $jsonld[0].innerHTML = "{}";
-        var $newJsonLD = $(data).filter('script[type="application/ld+json"]');
         if ($newJsonLD[0]) {
             $jsonld[0].innerHTML = $newJsonLD[0].innerHTML;
+        }
+    }
+    else if ($newJsonLD[0]) {
+        // insert after the first JS script as it is in the template
+        var elemBefore = $('script[type="text/javascript"]')[0];
+        if (elemBefore) {
+            $newJsonLD.insertAfter(elemBefore);
         }
     }
 }
