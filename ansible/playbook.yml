@@ -8,9 +8,6 @@
     - fuseki
     - skosmos
   pre_tasks:
-    - name: Install Python 2.7 for Ansible
-      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
-      changed_when: False
     - name: Install Zip and Unzip for Ansible
       raw: sudo apt-get install zip unzip
     - setup: # aka gather_facts
