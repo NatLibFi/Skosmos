@@ -19,7 +19,7 @@ Vagrant.configure(2) do |config|
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "ansible/playbook.yml"
 	ansible.extra_vars = { ansible_python_interpreter:"/usr/bin/python3" }
-	ansible.verbose = "vvv"
+	ansible.verbose = "v"
 	ansible.compatibility_mode = "2.0"
   end
 
