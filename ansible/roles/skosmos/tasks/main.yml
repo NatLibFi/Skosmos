@@ -36,7 +36,7 @@
 - name: Install composer
   shell: cat /home/vagrant/composer-installer | php -- --install-dir=/usr/local/bin
 
-- name: rename composer.phar to composer
+- name: Rename composer.phar to composer
   shell: mv /usr/local/bin/composer.phar /usr/local/bin/composer
   args:
     creates: /usr/local/bin/composer
@@ -52,8 +52,9 @@
 
 - name: Copy global and vocabulary-specific configurations
   copy:
-    src: files/config.ttl.dist
+    src: /var/www/html/Skosmos/config.ttl.dist
     dest: /var/www/html/Skosmos/config.ttl
+    remote_src : yes
 
 - name: Generate locales, if necessary
   shell: "locale-gen {{ item }}"
