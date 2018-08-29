@@ -1,3 +1,4 @@
+.DS_Store
 config.inc
 config.ttl
 vocabularies.ttl
@@ -8,3 +9,4 @@ components
 composer.phar
 composer.lock
 tests/jena-fuseki*
+.vagrant
