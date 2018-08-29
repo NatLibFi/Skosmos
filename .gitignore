@@ -1,4 +1,3 @@
-.DS_Store
 config.ttl
 build
 vendor
@@ -9,3 +8,4 @@ composer.lock
 tests/jena-fuseki*
 .vagrant
 .project
+.DS_Store
