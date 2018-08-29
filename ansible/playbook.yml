@@ -1,0 +1,10 @@
+---
+- hosts: all
+  become: True
+  gather_facts: False
+  roles:
+    - skosmos
+  pre_tasks:
+    - name: Install Zip and Unzip for Ansible
+      raw: sudo apt-get install zip unzip
+    - setup: # aka gather_facts
