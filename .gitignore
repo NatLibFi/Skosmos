@@ -1,7 +1,6 @@
 .DS_Store
 config.inc
 config.ttl
-vocabularies.ttl
 build
 vendor
 report
@@ -10,3 +9,4 @@ composer.phar
 composer.lock
 tests/jena-fuseki*
 .vagrant
+.project
