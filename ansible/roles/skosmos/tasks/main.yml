@@ -1,4 +1,9 @@
 
+- name: Update apt cache
+  become: true
+  apt:
+    update_cache: yes
+
 - name: Install required Skosmos dependencies
   apt:
     name: "{{ item }}"
