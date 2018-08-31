@@ -24,44 +24,44 @@
     skosmos:sparqlEndpoint <http://localhost:13030/ds/sparql> ;
     # sparql-query extension, or "Generic" for plain SPARQL 1.1
     # set to "JenaText" instead if you use Fuseki with jena-text index
-    skosmos:sparqlDialect "Generic" ;
+    skosmos:sparqlDialect "JenaText" ;
     # whether to enable collation in sparql queries
-    skosmos:sparqlCollationEnabled false ;
+    skosmos:sparqlCollationEnabled true ;
     # HTTP client configuration
-    skosmos:sparqlTimeout 20 ;
-    skosmos:httpTimeout 5 ;
+    skosmos:sparqlTimeout 10 ;
+    skosmos:httpTimeout 2 ;
     # customize the service name
-    skosmos:serviceName "Skosmos" ;
+    skosmos:serviceName "Skosmos being tested" ;
     # customize the base element. Set this if the automatic base url detection doesn't work. For example setups behind a proxy.
-    # skosmos:baseHref "http://localhost/Skosmos/" ;
+    skosmos:baseHref "http://tests.localhost/Skosmos/" ;
     # interface languages available, and the corresponding system locales
     skosmos:languages ( [ rdfs:label "en" ; rdf:value "en_GB.utf8" ] ) ;
     # how many results (maximum) to load at a time on the search results page
-    skosmos:searchResultsSize 20 ;
+    skosmos:searchResultsSize 5 ;
     # how many items (maximum) to retrieve in transitive property queries
-    skosmos:transitiveLimit 1000 ;
+    skosmos:transitiveLimit 100 ;
     # whether or not to log caught exceptions
-    skosmos:logCaughtExceptions false ;
+    skosmos:logCaughtExceptions true ;
     # set to TRUE to enable logging into browser console
-    skosmos:logBrowserConsole false ;
+    skosmos:logBrowserConsole true ;
     # set to a logfile path to enable logging into log file
-    # skosmos:logFileName "" ;
+    skosmos:logFileName "/tmp/test_skosmos.log" ;
     # a default location for Twig template rendering
-    skosmos:templateCache "/tmp/skosmos-template-cache" ;
+    skosmos:templateCache "/tmp/skosmos-template-cache/tests" ;
     # customize the css by adding your own stylesheet
-    # skosmos:customCss "resource/css/stylesheet.css" ;
+    skosmos:customCss "resource/css/tests-stylesheet.css" ;
     # default email address where to send the feedback
-    skosmos:feedbackAddress "" ;
+    skosmos:feedbackAddress "tests@skosmos.test" ;
     # email address to set as the sender for feedback messages
-    skosmos:feedbackSender "" ;
+    skosmos:feedbackSender "tests skosmos" ;
     # email address to set as the envelope sender for feedback messages
-    skosmos:feedbackEnvelopeSender "" ;
+    skosmos:feedbackEnvelopeSender "skosmos tests" ;
     # whether to display the ui language selection as a dropdown (useful for cases where there are more than 3 languages) 
-    skosmos:uiLanguageDropdown false ;
+    skosmos:uiLanguageDropdown true ;
     # whether to enable the spam honey pot or not, enabled by default
-    skosmos:uiHoneypotEnabled true ;
+    skosmos:uiHoneypotEnabled false ;
     # default time a user must wait before submitting a form
-    skosmos:uiHoneypotTime 5 ;
+    skosmos:uiHoneypotTime 2 ;
     # plugins to activate for the whole installation (including all vocabularies)
     skosmos:globalPlugins ("alpha" "Bravo" "charlie") .
 
