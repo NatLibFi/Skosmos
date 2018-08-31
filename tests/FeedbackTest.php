@@ -8,7 +8,7 @@ class FeedbackTest extends PHPUnit\Framework\TestCase
   private $request;
 
   protected function setUp() {
-    $config = new GlobalConfig('/../tests/testconfig.ttl');
+    $config = new GlobalConfig('/../tests/testconfig-fordefaults.ttl');
     $this->model = new Model($config);
     $this->request = \Mockery::mock('Request', array($this->model))->makePartial();
     $this->request->setLang('en');
