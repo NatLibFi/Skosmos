@@ -128,7 +128,7 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
 
     public function testGetGlobalPlugins()
     {
-        $this->assertEquals(["widget"], $this->config->getGlobalPlugins());
+        $this->assertEquals(["alpha", "Bravo", "charlie"], $this->config->getGlobalPlugins());
     }
 
     // --- tests for the exception paths
