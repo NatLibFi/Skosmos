@@ -84,6 +84,7 @@ class GlobalConfig extends BaseConfig {
     /**
      * Parses configuration from the config.ttl file
      * @param string $filename path to config.ttl file
+     * @throws \EasyRdf\Exception
      */
     private function parseConfig($filename)
     {
@@ -95,7 +96,7 @@ class GlobalConfig extends BaseConfig {
 
     /**
      * Returns the graph created after parsing the configuration file.
-     * @return Graph
+     * @return \EasyRdf\Graph
      */
     public function getGraph()
     {
@@ -125,7 +126,9 @@ class GlobalConfig extends BaseConfig {
         if (!is_null($languageResources) && !empty($languageResources)) {
             $languages = array();
             foreach ($languageResources as $languageResource) {
+                /** @var \EasyRdf\Literal $languageName */
                 $languageName = $languageResource->getLiteral('rdfs:label');
+                /** @var \EasyRdf\Literal $languageValue */
                 $languageValue = $languageResource->getLiteral('rdf:value');
                 if ($languageName && $languageValue) {
                     $languages[$languageName->getValue()] = $languageValue->getValue();
@@ -199,7 +202,7 @@ class GlobalConfig extends BaseConfig {
      */
     public function getTemplateCache()
     {
-        return $this->getLiteral('TEMPLATE_CACHE', '/tmp/skosmos-template-cache');
+        return $this->getLiteral('skosmos:templateCache', '/tmp/skosmos-template-cache');
     }
 
     /**
@@ -209,7 +212,7 @@ class GlobalConfig extends BaseConfig {
      */
     public function getDefaultSparqlDialect()
     {
-        return $this->getLiteral('DEFAULT_SPARQL_DIALECT', 'Generic');
+        return $this->getLiteral('skosmos:sparqlDialect', 'Generic');
     }
 
     /**
@@ -218,7 +221,7 @@ class GlobalConfig extends BaseConfig {
      */
     public function getFeedbackAddress()
     {
-        return $this->getLiteral('FEEDBACK_ADDRESS', null);
+        return $this->getLiteral('skosmos:feedbackAddress', null);
     }
 
     /**
@@ -227,7 +230,7 @@ class GlobalConfig extends BaseConfig {
      */
     public function getFeedbackSender()
     {
-        return $this->getLiteral('FEEDBACK_SENDER', null);
+        return $this->getLiteral('skosmos:feedbackSender', null);
     }
 
     /**
@@ -236,7 +239,7 @@ class GlobalConfig extends BaseConfig {
      */
     public function getFeedbackEnvelopeSender()
     {
-        return $this->getLiteral('FEEDBACK_ENVELOPE_SENDER', null);
+        return $this->getLiteral('skosmos:feedbackEnvelopeSender', null);
     }
 
     /**
@@ -299,7 +302,7 @@ class GlobalConfig extends BaseConfig {
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getGlobalPlugins()
     {
