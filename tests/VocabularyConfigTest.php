@@ -2,13 +2,18 @@
 
 class VocabularyConfigTest extends PHPUnit\Framework\TestCase
 {
-
+  /** @var Model */
   private $model;
 
+  /**
+   * @covers VocabularyConfig::getConfig
+   * @throws Exception
+   */
   protected function setUp() {
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');
     $this->model = new Model(new GlobalConfig('/../tests/testconfig.ttl'));
+    $this->assertNotNull($this->model->getVocabulary('test')->getConfig()->getPlugins(), "The PluginRegister of the model was not initialized!");
   }
 
   /**
@@ -378,5 +383,47 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $vocab = $this->model->getVocabulary('subtag');
     $this->assertEquals(array('en', 'fr', 'de', 'sv'), $vocab->getConfig()->getLanguageOrder('en'));
     $this->assertEquals(array('fi', 'fr', 'de', 'sv', 'en'), $vocab->getConfig()->getLanguageOrder('fi'));
+  }
+
+  /**
+   * @covers VocabularyConfig::showAlphabeticalIndex
+   */
+  public function testShowAlphabeticalIndex() {
+    $vocab = $this->model->getVocabulary('testdiff');
+    $this->assertTrue($vocab->getConfig()->showAlphabeticalIndex());
+  }
+
+  /**
+   * @covers VocabularyConfig::showNotation
+   */
+  public function testShowNotation() {
+    $vocab = $this->model->getVocabulary('test');
+    $this->assertTrue($vocab->getConfig()->showNotation());
+  }
+
+  /**
+   * @covers VocabularyConfig::getId
+   */
+  public function testGetId() {
+    $vocab = $this->model->getVocabulary('testdiff');
+    $this->assertEquals('testdiff' , $vocab->getConfig()->getId());
+  }
+
+  /**
+   * @covers VocabularyConfig::getMainConceptSchemeURI
+   */
+  public function testGetMainConceptSchemeURI() {
+    $vocab = $this->model->getVocabulary('testdiff');
+    $this->assertEquals('http://www.skosmos.skos/testdiff#conceptscheme' , $vocab->getConfig()->getMainConceptSchemeURI());
+    $vocab = $this->model->getVocabulary('test');
+    $this->assertNull(null , $vocab->getConfig()->getMainConceptSchemeURI());
+  }
+
+  /**
+   * @covers VocabularyConfig::getExtProperties
+   */
+  public function testGetExtProperties() {
+    $vocab = $this->model->getVocabulary('cbd');
+    $this->assertEquals(4 , count($vocab->getConfig()->getExtProperties()));
   }
 }
