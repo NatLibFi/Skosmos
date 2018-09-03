@@ -52,7 +52,7 @@ class JenaTextSparql extends GenericSparql
 
         $maxResults = self::MAX_N;
 
-        return "(?s ?score ?match) text:query ($property '$term' $langClause $maxResults) .";
+        return "(?s ?score ?match) text:query ($property '$term' $maxResults $langClause) .";
     }
 
     /**
