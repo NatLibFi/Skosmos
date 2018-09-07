@@ -29,7 +29,7 @@ class WebController extends Controller
         // initialize Twig templates
         $tmpDir = $model->getConfig()->getTemplateCache();
 
-        // check if the cache pointed by config.inc exists, if not we create it.
+        // check if the cache pointed by config.ttl exists, if not we create it.
         if (!file_exists($tmpDir)) {
             mkdir($tmpDir);
         }
@@ -41,10 +41,10 @@ class WebController extends Controller
         $this->twig->addExtension(new Twig_Extensions_Extension_I18n());
         // used for setting the base href for the relative urls
         $this->twig->addGlobal("BaseHref", $this->getBaseHref());
-        // setting the service name string from the config.inc
+        // setting the service name string from the config.ttl
         $this->twig->addGlobal("ServiceName", $this->model->getConfig()->getServiceName());
 
-        // setting the service custom css file from the config.inc
+        // setting the service custom css file from the config.ttl
         if ($this->model->getConfig()->getCustomCss() !== null) {
             $this->twig->addGlobal("ServiceCustomCss", $this->model->getConfig()->getCustomCss());
         }

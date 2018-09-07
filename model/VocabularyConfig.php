@@ -1,7 +1,7 @@
 <?php
 
 /**
- * VocabularyConfig provides access to the vocabulary configuration defined in vocabularies.ttl.
+ * VocabularyConfig provides access to the vocabulary configuration defined in config.ttl.
  */
 class VocabularyConfig extends BaseConfig
 {
@@ -86,7 +86,7 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
-     * Returns a boolean value set in the vocabularies.ttl config.
+     * Returns a boolean value set in the config.ttl config.
      * @return boolean
      */
     public function sortByNotation()
@@ -95,7 +95,7 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
-     * Returns a boolean value set in the vocabularies.ttl config.
+     * Returns a boolean value set in the config.ttl config.
      * @return boolean
      */
     public function showChangeList()
@@ -228,7 +228,7 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
-     * Returns a boolean value set in the vocabularies.ttl config.
+     * Returns a boolean value set in the config.ttl config.
      * @return boolean
      */
     public function getShowHierarchy()
@@ -237,7 +237,7 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
-     * Returns a boolean value set in the vocabularies.ttl config.
+     * Returns a boolean value set in the config.ttl config.
      * @return boolean
      */
     public function showConceptSchemesInHierarchy()
@@ -246,7 +246,7 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
-     * Returns a boolean value set in the vocabularies.ttl config.
+     * Returns a boolean value set in the config.ttl config.
      * @return boolean defaults to true if fetching hasn't been explicitly denied.
      */
     public function getExternalResourcesLoading()
@@ -255,7 +255,7 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
-     * Returns a boolean value set in the vocabularies.ttl config.
+     * Returns a boolean value set in the config.ttl config.
      * @return boolean
      */
     public function getShowLangCodes()
@@ -264,7 +264,7 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
-     * Returns a boolean value set in the vocabularies.ttl config.
+     * Returns a boolean value set in the config.ttl config.
      * @return array array of concept class URIs (can be empty)
      */
     public function getIndexClasses()
@@ -273,7 +273,7 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
-     * Returns skosmos:externalProperty values set in the vocabularies.ttl config.
+     * Returns skosmos:externalProperty values set in the config.ttl config.
      * @return array array of external property URIs (can be empty)
      */
     public function getExtProperties()
@@ -372,7 +372,7 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
-     * Returns a boolean value set in the vocabularies.ttl config.
+     * Returns a boolean value set in the config.ttl config.
      * @return boolean
      */
     public function showNotation()
@@ -381,7 +381,7 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
-     * Returns a boolean value set in the vocabularies.ttl config.
+     * Returns a boolean value set in the config.ttl config.
      * @return boolean
      */
     public function showAlphabeticalIndex()
@@ -390,7 +390,7 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
-     * Returns a boolean value set in the vocabularies.ttl config.
+     * Returns a boolean value set in the config.ttl config.
      * @return boolean
      */
     public function getShowDeprecated()

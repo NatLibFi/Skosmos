@@ -388,7 +388,7 @@ class Model
     }
 
     /**
-     * Returns the label defined in vocabularies.ttl with the appropriate language.
+     * Returns the label defined in config.ttl with the appropriate language.
      * @param string $lang language code of returned labels, eg. 'fi'
      * @return string the label for vocabulary categories.
      */
@@ -592,7 +592,7 @@ class Model
     }
 
     /**
-     * Returns a SPARQL endpoint object using the default implementation set in the config.inc.
+     * Returns a SPARQL endpoint object using the default implementation set in the config.ttl.
      */
     public function getDefaultSparql()
     {

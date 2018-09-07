@@ -8,7 +8,7 @@ abstract class BaseConfig extends DataObject
 {
 
 	/**
-     * Returns a boolean value based on a literal value from the vocabularies.ttl configuration.
+     * Returns a boolean value based on a literal value from the config.ttl configuration.
      * @param string $property the property to query
      * @param boolean $default the default value if the value is not set in configuration
      */
@@ -22,7 +22,7 @@ abstract class BaseConfig extends DataObject
     }
 
     /**
-     * Returns an array of URIs based on a property from the vocabularies.ttl configuration.
+     * Returns an array of URIs based on a property from the config.ttl configuration.
      * @param string $property the property to query
      * @return string[] List of URIs
      */
@@ -37,7 +37,7 @@ abstract class BaseConfig extends DataObject
     }
 
     /**
-     * Returns a boolean value based on a literal value from the vocabularies.ttl configuration.
+     * Returns a boolean value based on a literal value from the config.ttl configuration.
      * @param string $property the property to query
      * @param string $default default value
      * @param string $lang preferred language for the literal

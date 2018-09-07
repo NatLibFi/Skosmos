@@ -296,7 +296,7 @@ class ModelTest extends PHPUnit\Framework\TestCase
   }
 
   /**
-   * Test for issue #387: make sure namespaces defined in vocabularies.ttl are used for RDF export
+   * Test for issue #387: make sure namespaces defined in config.ttl are used for RDF export
    * @covers Model::getRDF
    */
 

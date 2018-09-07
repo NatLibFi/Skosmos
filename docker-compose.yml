@@ -27,4 +27,4 @@ services:
 # 1. create dataset
 # >curl -I -u admin:admin -XPOST --data "dbName=skosmos&dbType=tdb" -G http://localhost:3030/$/datasets/
 # 2. load example vocabulary
-# >curl -I -X POST -H Content-Type:text/turtle -T vocabularies.ttl -G http://localhost:3030/skosmos/data
+# >curl -I -X POST -H Content-Type:text/turtle -T config.ttl -G http://localhost:3030/skosmos/data
