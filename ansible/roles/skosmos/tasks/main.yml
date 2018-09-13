@@ -52,13 +52,13 @@
 
 - name: Copy global and vocabulary-specific configurations
   copy:
-    src: /var/www/html/Skosmos/config.ttl.dist
+    src: files/config.ttl
     dest: /var/www/html/Skosmos/config.ttl
-    remote_src : yes
 
 - name: Generate locales, if necessary
   shell: "locale-gen {{ item }}"
   with_items:
     - en_GB.utf8
-    - fi_FI.utf8
-    - sv_SE.utf8
+    - de_DE.utf8
+    # - fi_FI.utf8
+    # - sv_SE.utf8

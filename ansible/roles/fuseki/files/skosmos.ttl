@@ -1,0 +1,58 @@
+@prefix :      <http://base/#> .
+@prefix tdb:   <http://jena.hpl.hp.com/2008/tdb#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ja:    <http://jena.hpl.hp.com/2005/11/Assembler#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix fuseki: <http://jena.apache.org/fuseki#> .
+@prefix text:  <http://jena.apache.org/text#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+:service_tdb_all  a                   fuseki:Service ;
+        rdfs:label                    "TDB+text skosmos" ;
+        fuseki:dataset                :text_dataset ;
+        fuseki:name                   "skosmos" ;
+        fuseki:serviceQuery           "query" , "sparql" ;
+        fuseki:serviceReadGraphStore  "get" ;
+        fuseki:serviceReadWriteGraphStore
+                "data" ;
+        fuseki:serviceUpdate          "update" ;
+        fuseki:serviceUpload          "upload" .
+
+:text_dataset a text:TextDataset ;
+	text:dataset :tdb_dataset_readwrite ;
+#	tdb:unionDefaultGraph true ;
+	text:index :index_lucene .
+
+:tdb_dataset_readwrite
+        a tdb:DatasetTDB ;
+        tdb:location  "/etc/fuseki/databases/skosmos" .
+
+:index_lucene a text:TextIndexLucene ;
+	text:directory <file:/etc/fuseki/databases/skosmos/text> ;
+	text:entityMap :entity_map ;
+	text:storeValues true .
+
+# Text index configuration for Skosmos 1.4 and above (requires Fuseki 1.3.0+ or 2.3.0+)
+:entity_map a text:EntityMap ;
+    text:entityField      "uri" ;
+    text:graphField       "graph" ;
+    text:defaultField     "pref" ;
+    text:uidField         "uid" ;
+    text:langField        "lang" ;
+    text:map (
+         # skos:prefLabel
+         [ text:field "pref" ;
+           text:predicate skos:prefLabel ;
+           text:analyzer [ a text:LowerCaseKeywordAnalyzer ]
+         ]
+         # skos:altLabel
+         [ text:field "alt" ;
+           text:predicate skos:altLabel ;
+           text:analyzer [ a text:LowerCaseKeywordAnalyzer ]
+         ]
+         # skos:hiddenLabel
+         [ text:field "hidden" ;
+           text:predicate skos:hiddenLabel ;
+           text:analyzer [ a text:LowerCaseKeywordAnalyzer ]
+         ]
+     ) .

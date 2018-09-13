@@ -1,0 +1,5 @@
+
+- name: Add 'openjdk' repository
+  apt_repository:
+    repo: ppa:openjdk-r/ppa
+    state: present
