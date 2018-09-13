@@ -3,8 +3,11 @@
   become: True
   gather_facts: False
   roles:
+    - base
+    - openjdk
+    - fuseki
     - skosmos
   pre_tasks:
-    - name: Install Zip and Unzip for Ansible
-      raw: sudo apt-get install zip unzip
+    - name: Install Unzip for Ansible
+      raw: sudo apt-get install unzip
     - setup: # aka gather_facts

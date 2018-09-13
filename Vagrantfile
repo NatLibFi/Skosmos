@@ -4,8 +4,9 @@
 Vagrant.configure(2) do |config|
 
   config.vm.box = "ubuntu/xenial64"
-  config.vm.network "forwarded_port", guest: 80, host: 8040
-  config.vm.post_up_message = "Skosmos up and running at localhost:8040/Skosmos"
+  config.vm.network "forwarded_port", guest: 80, host: 8010
+  config.vm.network "forwarded_port", guest: 3030, host: 3030
+  config.vm.post_up_message = "Skosmos up and running at localhost:8010/Skosmos, Fuseki at localhost:3030"
 
   config.vm.synced_folder "", "/var/www/html/Skosmos"
 
