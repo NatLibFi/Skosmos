@@ -1,5 +1,7 @@
 <?php
 
+use EasyRdf\Resource;
+
 /**
  * Class for handling concept property values.
  */
@@ -7,12 +9,24 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
 {
     /** property type */
     private $type;
+    private $source;
     private $clang;
     private $labelcache;
 
-    public function __construct($model, $vocab, $resource, $prop, $clang = '')
+    /**
+     * ConceptMappingPropertyValue constructor.
+     *
+     * @param Model $model
+     * @param Vocabulary $vocab  Target vocabulary
+     * @param Resource $target   Target concept resource
+     * @param Resource $source   Source concept resource
+     * @param string $prop       Mapping property
+     * @param ?string $clang     Preferred label language (nullable)
+     */
+    public function __construct(Model $model, Vocabulary $vocab, Resource $target, Resource $source, string $prop, $clang = '')
     {
-        parent::__construct($model, $vocab, $resource);
+        parent::__construct($model, $vocab, $target);
+        $this->source = $source;
         $this->type = $prop;
         $this->clang = $clang;
         $this->labelcache = array();
@@ -146,6 +160,59 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
             return $this->getExternalNotation($exvocab, $this->getUri());
         }
         return null;
+    }
+
+    /**
+     * Return the mapping as a JSKOS-compatible array.
+     * @return array
+     */
+    public function asJskos()
+    {
+        $ret = [
+            'type' => [$this->type],
+            'from' => [
+                'memberSet' => [
+                    [
+                        'uri' => (string) $this->source->getUri(),
+                    ]
+                ]
+            ],
+            'to' => [
+                'memberSet' => [
+                    [
+                        'uri' => (string) $this->getUri()
+                    ]
+                ]
+            ]
+        ];
+
+        $fromScheme = $this->vocab->getDefaultConceptScheme();
+        if (isset($fromScheme)) {
+            $ret['fromScheme'] = [
+                'uri' => (string) $fromScheme,
+            ];
+        }
+
+        $exvocab = $this->getExvocab();
+        if (isset($exvocab)) {
+            $ret['toScheme'] = [
+                'uri' => (string) $exvocab->getDefaultConceptScheme(),
+            ];
+        }
+
+        $notation = $this->getNotation();
+        if (isset($notation)) {
+            $ret['to']['memberSet'][0]['notation'] = (string) $notation;
+        }
+
+        $label = $this->getLabel();
+        if (isset($label)) {
+            $ret['to']['memberSet'][0]['prefLabel'] = [
+                $label->getLang() => $label->getValue(),
+            ];
+        }
+
+        return $ret;
     }
 
 }

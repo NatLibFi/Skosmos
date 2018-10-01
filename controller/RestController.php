@@ -622,6 +622,34 @@ class RestController extends Controller
     }
 
     /**
+     * Get the mappings associated with a concept, enriched with labels and notations.
+     * Returns a JSKOS-compatible JSON object.
+     * @param Request $request
+     */
+    public function mappings(Request $request)
+    {
+        $vocab = $request->getVocab();
+
+        if ($request->getUri()) {
+            $uri = $request->getUri();
+        } else {
+            return $this->returnError(400, 'Bad Request', "uri parameter missing");
+        }
+
+        $results = $vocab->getConceptInfo($uri, $request->getContentLang());
+        $concept = $results[0];
+
+        $ret = [];
+        foreach ($concept->getMappingProperties() as $mappingProperty) {
+            foreach ($mappingProperty->getValues() as $mappingPropertyValue) {
+                $ret[] = $mappingPropertyValue->asJskos();
+            }
+        }
+
+        return $this->returnJson($ret);
+    }
+
+    /**
      * Used for querying labels for a uri.
      * @param Request $request
      * @return object json-ld wrapped labels.
