@@ -31,6 +31,8 @@ try {
         $controller->types($request);
     } elseif ($parts[1] == 'data') {
         $controller->data($request);
+    } elseif ($parts[1] == 'mappings') {
+        $controller->mappings($request);
     } elseif (sizeof($parts) == 2) {
         header("Location: " . $parts[1] . "/");
     } else {

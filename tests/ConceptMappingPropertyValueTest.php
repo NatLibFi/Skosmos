@@ -27,7 +27,8 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
    */
   public function testConstructor() {
     $resourcestub = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
-    $mapping = new ConceptMappingPropertyValue($this->model, $this->vocab, $resourcestub, 'skos:exactMatch');
+    $sourcestub = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
+    $mapping = new ConceptMappingPropertyValue($this->model, $this->vocab, $resourcestub, $sourcestub, 'skos:exactMatch');
     $this->assertEquals('skos:exactMatch', $mapping->getType());
   }
 
@@ -46,6 +47,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
    * @covers ConceptMappingPropertyValue::queryLabel
    */
   public function testGetLabelResortsToUri() {
+    $mocksource = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
     $mockres = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
     $labelmap = array(
       array('en', null),
@@ -58,7 +60,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
     );
     $mockres->method('getLiteral')->will($this->returnValueMap($litmap));
     $mockres->method('getUri')->will($this->returnValue('http://thisdoesntexistatalland.sefsf/2j2h4/'));
-    $mapping = new ConceptMappingPropertyValue($this->model, $this->vocab, $mockres, null);
+    $mapping = new ConceptMappingPropertyValue($this->model, $this->vocab, $mockres, $mocksource, 'skos:exactMatch');
     $this->assertEquals('http://thisdoesntexistatalland.sefsf/2j2h4/', $mapping->getLabel());
   }
 
@@ -67,6 +69,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
    * @covers ConceptMappingPropertyValue::queryLabel
    */
   public function testGetLabelWithAndWithoutLang() {
+    $mocksource = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
     $mockres = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
     $labelmap = array(
       array('en', 'english'),
@@ -74,7 +77,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
     );
     $mockres->method('label')->will($this->returnValueMap($labelmap));
     $mockres->method('getUri')->will($this->returnValue('http://thisdoesntexistatalland.sefsf/2j2h4/'));
-    $mapping = new ConceptMappingPropertyValue($this->model, $this->vocab, $mockres, null);
+    $mapping = new ConceptMappingPropertyValue($this->model, $this->vocab, $mockres, $mocksource, 'skos:exactMatch');
     $this->assertEquals('english', $mapping->getLabel('en'));
     $this->assertEquals('default', $mapping->getLabel());
   }
@@ -84,6 +87,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
    * @covers ConceptMappingPropertyValue::queryLabel
    */
   public function testGetLabelWithLiteralAndLang() {
+    $mocksource = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
     $mockres = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
     $labelmap = array(
       array('en', null),
@@ -96,7 +100,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
     );
     $mockres->method('getLiteral')->will($this->returnValueMap($litmap));
     $mockres->method('getUri')->will($this->returnValue('http://thisdoesntexistatalland.sefsf/2j2h4/'));
-    $mapping = new ConceptMappingPropertyValue($this->model, $this->vocab, $mockres, null);
+    $mapping = new ConceptMappingPropertyValue($this->model, $this->vocab, $mockres, $mocksource, 'skos:exactMatch');
     $this->assertEquals('english lit', $mapping->getLabel('en'));
     $this->assertEquals('default lit', $mapping->getLabel());
   }
@@ -105,6 +109,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
    * @covers ConceptMappingPropertyValue::getNotation
    */
   public function testGetNotation() {
+    $mocksource = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
     $mockres = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
     $mocklit = $this->getMockBuilder('EasyRdf\Literal')->disableOriginalConstructor()->getMock();
     $mocklit->method('getValue')->will($this->returnValue('666'));
@@ -113,7 +118,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
         array(null,null,null,null),
     );
     $mockres->method('get')->will($this->returnValueMap($map));
-    $mapping = new ConceptMappingPropertyValue($this->model, $this->vocab, $mockres, null);
+    $mapping = new ConceptMappingPropertyValue($this->model, $this->vocab, $mockres, $mocksource, 'skos:exactMatch');
     $this->assertEquals(666, $mapping->getNotation());
   }
 
@@ -164,6 +169,38 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
   public function testToString() {
     $propvals = $this->props['skos:exactMatch']->getValues();
     $this->assertEquals('Eel', $propvals['Eelhttp://www.skosmos.skos/test/ta115']->__toString());
+  }
+
+  /**
+   * @covers ConceptMappingPropertyValue::asJskos
+   */
+  public function testAsJskos() {
+    $propvals = $this->props['skos:exactMatch']->getValues();
+    $this->assertEquals([
+      'type' => [
+        'skos:exactMatch',
+      ],
+      'toScheme' => [
+        'uri' => 'http://www.skosmos.skos/test/conceptscheme',
+      ],
+      'from' => [
+        'memberSet' => [
+          [
+            'uri' => 'http://www.skosmos.skos/mapping/m1',
+          ]
+        ]
+      ],
+      'to' => [
+        'memberSet' => [
+          [
+            'uri' => 'http://www.skosmos.skos/test/ta115',
+            'prefLabel' => [
+              'en' => 'Eel',
+            ]
+          ]
+        ]
+      ],
+    ], $propvals['Eelhttp://www.skosmos.skos/test/ta115']->asJskos());
   }
 
 }
