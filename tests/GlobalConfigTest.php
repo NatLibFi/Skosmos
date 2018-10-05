@@ -88,7 +88,7 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
 
     public function testGetTemplateCache()
     {
-        $this->assertEquals("/tmp/skosmos-template-cache/tests", $this->config->getTemplateCache());
+        $this->assertEquals("/tmp/skosmos-template-cache-tests", $this->config->getTemplateCache());
     }
 
     public function testGetCustomCss()
