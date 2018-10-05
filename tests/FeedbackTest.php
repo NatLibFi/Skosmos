@@ -59,7 +59,7 @@ class FeedbackTest extends PHPUnit\Framework\TestCase
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('vocab')
-        ->andReturn('Test vocab');
+        ->andReturn('test');
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('item-description')
@@ -100,7 +100,7 @@ class FeedbackTest extends PHPUnit\Framework\TestCase
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('vocab')
-        ->andReturn('Test vocab');
+        ->andReturn('test');
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('item-description')
@@ -141,7 +141,7 @@ class FeedbackTest extends PHPUnit\Framework\TestCase
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('vocab')
-        ->andReturn('Test vocab');
+        ->andReturn('test');
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('item-description')
@@ -180,7 +180,7 @@ class FeedbackTest extends PHPUnit\Framework\TestCase
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('vocab')
-        ->andReturn('Test vocab');
+        ->andReturn('test');
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('item-description')
