@@ -254,7 +254,9 @@ class WebController extends Controller
         $feedbackName = $request->getQueryParamPOST('name');
         $feedbackEmail = $request->getQueryParamPOST('email');
         $feedbackVocab = $request->getQueryParamPOST('vocab');
-        $feedbackVocabEmail = ($vocab !== null) ? $vocab->getConfig()->getFeedbackRecipient() : null;
+
+        $feedbackVocabEmail = ($feedbackVocab !== null && $feedbackVocab !== '') ?
+            $this->model->getVocabulary($feedbackVocab)->getConfig()->getFeedbackRecipient() : null;
 
         // if the hidden field has been set a value we have found a spam bot
         // and we do not actually send the message.
