@@ -319,6 +319,7 @@ $(function() { // DOCUMENT READY
         $.ajaxQ.abortAll();
         $('.active').removeClass('active');
         $('#alpha').addClass('active');
+        alpha_complete = false;
         $('.sidebar-grey').empty().prepend(spinner);
         var targetUrl = event.target.href;
         $.ajax({
@@ -811,7 +812,7 @@ $(function() { // DOCUMENT READY
       alpha_complete = true;
       $('.alphabetical-search-results').append($loading);
       var parameters = $.param({'offset' : 250, 'clang': content_lang});
-      var letter = '/' + $('.pagination > .active > a')[0].innerHTML;
+      var letter = '/' + ($('.pagination > .active')[0] ? $('.pagination > .active > a')[0].innerHTML : $('.pagination > li > a')[0].innerHTML);
       $.ajax({
         url : vocab + '/' + lang + '/index' + letter,
         data : parameters,
