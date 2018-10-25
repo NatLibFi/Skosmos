@@ -637,6 +637,10 @@ class RestController extends Controller
         }
 
         $results = $vocab->getConceptInfo($uri, $request->getContentLang());
+        if (empty($results)) {
+            return $this->returnError(404, 'Bad Request', "no concept found with given uri");
+        }
+
         $concept = $results[0];
 
         $ret = [];
