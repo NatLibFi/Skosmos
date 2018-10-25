@@ -44,7 +44,7 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
         return $this->type;
     }
 
-    public function getLabel($lang = '')
+    public function getLabel($lang = '', $queryExVocabs = true)
     {
         if (isset($this->labelcache[$lang])) {
             return $this->labelcache[$lang];
@@ -55,7 +55,7 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
         return $label;
     }
 
-    private function queryLabel($lang = '')
+    private function queryLabel($lang = '', $queryExVocabs = true)
     {
         if ($this->clang) {
             $lang = $this->clang;
@@ -68,7 +68,7 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
         }
 
         // if multiple vocabularies are found, the following method will return in priority the current vocabulary of the mapping
-        $exvocab = $this->model->guessVocabularyFromURI($this->resource->getUri(), $this->vocab->getId());
+        $exvocab = $queryExVocabs ? $this->model->guessVocabularyFromURI($this->resource->getUri(), $this->vocab->getId()) : null;
 
         // if the resource is from another vocabulary known by the skosmos instance
         if ($exvocab) {
@@ -171,7 +171,7 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
      * Return the mapping as a JSKOS-compatible array.
      * @return array
      */
-    public function asJskos()
+    public function asJskos($queryExVocabs = true)
     {
         $ret = [
             'type' => [$this->type],
@@ -210,7 +210,7 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
             $ret['to']['memberSet'][0]['notation'] = (string) $notation;
         }
 
-        $label = $this->getLabel();
+        $label = $this->getLabel($queryExVocabs);
         if (isset($label)) {
             if (is_string($label)) {
                 list($labelLang, $labelValue) = ['-', $label];
