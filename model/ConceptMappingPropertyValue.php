@@ -212,9 +212,18 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
 
         $label = $this->getLabel();
         if (isset($label)) {
-            $ret['to']['memberSet'][0]['prefLabel'] = [
-                $label->getLang() => $label->getValue(),
-            ];
+            if (is_string($label)) {
+                list($labelLang, $labelValue) = ['-', $label];
+            } else {
+                list($labelLang, $labelValue) = [$label->getLang(), $label->getValue()];
+            }
+            if ($labelValue != $this->getUri()) {
+                // The `queryLabel()` method above will fallback to returning the URI
+                // if no label was found. We don't want that here.
+                $ret['to']['memberSet'][0]['prefLabel'] = [
+                    $labelLang => $labelValue,
+                ];
+            }
         }
 
         return $ret;
