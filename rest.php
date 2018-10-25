@@ -31,8 +31,6 @@ try {
         $controller->types($request);
     } elseif ($parts[1] == 'data') {
         $controller->data($request);
-    } elseif ($parts[1] == 'mappings') {
-        $controller->mappings($request);
     } elseif (sizeof($parts) == 2) {
         header("Location: " . $parts[1] . "/");
     } else {
@@ -55,6 +53,8 @@ try {
             $controller->topConcepts($request);
         } elseif ($parts[2] == 'data') {
             $controller->data($request);
+        } elseif ($parts[2] == 'mappings') {
+            $controller->mappings($request);
         } elseif ($parts[2] == 'search') {
             $controller->search($request);
         } elseif ($parts[2] == 'label') {
