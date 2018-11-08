@@ -899,7 +899,7 @@ span.xl-pref-label > img {
   height: 18px;
 }
 
-hr {
+#vocab-info hr {
   background: url('../pics/stripe.png') !important;
   border: 1px solid transparent !important;
   margin-bottom: 15px !important;
@@ -1012,11 +1012,11 @@ li.sub-group {
 /* tables
  ****************************/
 
-th, td {
+#vocab-info th, #vocab-info td {
   border-top: none !important;
 }
 
-tr {
+#vocab-info tr {
   border-image: '../pics/stripe.png' 20 20 repeat;
 }
 
@@ -1101,11 +1101,6 @@ tr {
   padding-left: 0;
 }
 
-.concept-info div > table > tbody > tr > td:first-child {
-  max-width: 225px;
-  width: 225px;
-}
-
 .row > .property-label {
   float: left;
   padding-left: 15px;
@@ -1140,16 +1135,6 @@ tr {
   padding: 15px 0;
 }
 
-.search-results-property-table .appendix-values.table {
-  background-color: transparent;
-  margin-bottom: 0;
-}
-
-.appendix-values.table > tbody > tr > td {
-  border-bottom: 0;
-  padding: 0;
-}
-
 .appendix-vocab-label {
   font-size: 12px;
   line-height: 21px;
@@ -1173,35 +1158,9 @@ tr {
   margin-left: 225px;
 }
 
-.preflabel-container, .preflabel-container hr {
-  margin: 10px 0 5px 0;
-}
-
-.search-results-property-table > tbody > .preflabel-container > td:last-child {
-  border: 0;
-}
-
 .preflabel-desc > span {
   position: relative;
   top: 11px;
-}
-
-.search-results-property-table {
-  margin-bottom: 5px;
-}
-
-.search-results-property-table tbody > tr > td {
-  padding: 5px 0 0 0;
-}
-
-.search-results-property-table > tbody > tr > td.preflabel-spacer {
-  border-bottom: 1px solid transparent;
-  margin-bottom: 10px;
-  padding: 0;
-}
-
-.search-results-property-table td:last-child {
-  border-bottom: 2px solid #d4edeb;
 }
 
 .concept-main > .row, .concept-appendix > .row {
@@ -1224,45 +1183,16 @@ tr {
   padding-right: 0;
 }
 
-.search-results-property-table tr.other-languages > td:last-child {
-  border-bottom: none;
-}
-
-.search-results-property-table > tbody > tr:last-child > td {
-  border-bottom: 0;
-}
-
-.search-results-property-table tr.other-languages > td {
-  border: none;
-  vertical-align: top;
-}
-
 .other-languages > td:last-of-type {
   vertical-align: top;
 }
 
-table > tbody > tr.other-languages > td {
+#vocab-info table > tbody > tr.other-languages > td {
   padding-top: 0;
 }
 
 .other-languages > td:last-of-type > * {
   padding-left: 15px;
-}
-
-.search-results-property-table > tbody > tr > td.empty {
-  border: none;
-}
-
-.search-results-property-table tr.first-of-language > td {
-  padding-top: 0;
-}
-
-.search-results-property-table tbody > tr > td:first-of-type {
-  word-wrap: break-word;
-}
-
-.search-results-property-table tbody > tr.first-of-language:first-child > td {
-  padding-top: 0;
 }
 
 .concept-main .versal-pref {
@@ -1347,19 +1277,8 @@ tr.replaced-by > td > ul > li > a {
   width: 14%;
 }
 
-.property-divider hr {
-  border-bottom: 2px solid #3bc2bd;
-  position: absolute;
-  width: 125px;
-}
-
-.table > tbody > tr > th {
+#vocab-info .table > tbody > tr > th {
   padding-left: 0;
-}
-
-.concept-main > .search-results-property-table {
-  margin-bottom: 5px;
-  margin-top: 10px;
 }
 
 #statistics { max-width: 450px; }
@@ -1807,10 +1726,10 @@ body, .versal, h1, h2, p, .versal-bold {
 }
 
 @media (max-width: 340px) {
-  .vocab-info-literals > table > tbody > tr > th {
+  #vocab-info .vocab-info-literals > table > tbody > tr > th {
     max-width: 120px;
   }
-  .vocab-info-literals > table > tbody > tr > td {
+  #vocab-info .vocab-info-literals > table > tbody > tr > td {
     max-width: 180px;
   }
 }
@@ -2187,7 +2106,7 @@ body, .versal, h1, h2, p, .versal-bold {
     position: relative;
     width: 720px;
   }
-  
+
   .voclist-left #vocabulary-list, .voclist-right #vocabulary-list {
     width: 955px !important;
   }
@@ -2247,7 +2166,7 @@ body, .versal, h1, h2, p, .versal-bold {
     position: relative;
     width: 710px !important;
   }
-  
+
   .voclist-left #vocabulary-list, .voclist-right #vocabulary-list {
     width: 975px !important;
   }
