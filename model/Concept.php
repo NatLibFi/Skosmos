@@ -514,7 +514,9 @@ class Concept extends VocabularyDataObject
                 // note that this imply that the property has an rdf:type declared for the query to work
                 if(!$proplabel) {
                     $envLangLabels = $this->model->getDefaultSparql()->queryLabel($longUri, $this->getEnvLang());
-                    $proplabel = ($envLangLabels)?$envLangLabels[$this->getEnvLang()]:$this->model->getDefaultSparql()->queryLabel($longUri, '')[''];
+                    
+                    $defaultGraphPropLabel = $this->model->getDefaultSparql()->queryLabel($longUri, '');
+                    $proplabel = ($envLangLabels)?$envLangLabels[$this->getEnvLang()]:($defaultGraphPropLabel)?$defaultGraphPropLabel['']:null;
                 }
 
                 // look for superproperties in the current graph
