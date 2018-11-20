@@ -9,6 +9,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
   private $params;
 
   protected function setUp() {
+    putenv("LANGUAGE=en_GB.utf8");
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');
     $this->model = new Model(new GlobalConfig('/../tests/testconfig.ttl'));

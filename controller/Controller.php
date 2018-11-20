@@ -48,6 +48,7 @@ class Controller
     {
         if (array_key_exists($lang, $this->languages)) {
             $locale = $this->languages[$lang]['locale'];
+            putenv("LANGUAGE=$locale");
             putenv("LC_ALL=$locale");
             setlocale(LC_ALL, $locale);
         } else {
