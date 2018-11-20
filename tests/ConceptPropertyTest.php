@@ -5,6 +5,7 @@ class ConceptPropertyTest extends PHPUnit\Framework\TestCase
   private $model;
 
   protected function setUp() {
+    putenv("LANGUAGE=en_GB.utf8");
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');
     bindtextdomain('skosmos', 'resource/translations');

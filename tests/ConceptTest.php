@@ -8,6 +8,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
   private $cbdGraph;
 
   protected function setUp() {
+    putenv("LANGUAGE=en_GB.utf8");
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');
     bindtextdomain('skosmos', 'resource/translations');
