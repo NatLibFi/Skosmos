@@ -16,7 +16,7 @@ before_script:
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
   - cd tests
-  - locale -a
+  - export LANGUAGE=fr
   - sh ./init_fuseki.sh
   - cd ..
 after_script:
