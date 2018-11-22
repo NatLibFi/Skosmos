@@ -28,9 +28,9 @@ class RestController extends Controller
             echo filter_input(INPUT_GET, 'callback', FILTER_UNSAFE_RAW) . "(" . json_encode($data) . ");";
             return;
         }
-        
+
         // otherwise negotiate suitable format for the response and return that
-        $negotiator = new \Negotiation\FormatNegotiator();
+        $negotiator = new \Negotiation\Negotiator();
         $priorities = array('application/json', 'application/ld+json');
         $best = filter_input(INPUT_SERVER, 'HTTP_ACCEPT', FILTER_SANITIZE_STRING) ? $negotiator->getBest(filter_input(INPUT_SERVER, 'HTTP_ACCEPT', FILTER_SANITIZE_STRING), $priorities) : null;
         $format = ($best !== null) ? $best->getValue() : $priorities[0];
@@ -96,11 +96,11 @@ class RestController extends Controller
 
         return $this->returnJson($ret);
     }
-    
+
     private function constructSearchParameters($request)
     {
         $parameters = new ConceptSearchParameters($request, $this->model->getConfig(), true);
-        
+
         $vocabs = $request->getQueryParam('vocab'); # optional
         // convert to vocids array to support multi-vocabulary search
         $vocids = ($vocabs !== null && $vocabs !== '') ? explode(' ', $vocabs) : array();
@@ -109,34 +109,50 @@ class RestController extends Controller
             $vocabObjects[] = $this->model->getVocabulary($vocid);
         }
         $parameters->setVocabularies($vocabObjects);
-        return $parameters;    
+        return $parameters;
     }
 
-    private function transformSearchResults($request, $results)
+    private function transformSearchResults($request, $results, $parameters)
     {
         // before serializing to JSON, get rid of the Vocabulary object that came with each resource
         foreach ($results as &$res) {
             unset($res['voc']);
         }
-        $ret = array(
-            '@context' => array(
-                'skos' => 'http://www.w3.org/2004/02/skos/core#',
-                'isothes' => 'http://purl.org/iso25964/skos-thes#',
-                'onki' => 'http://schema.onki.fi/onki#',
-                'uri' => '@id',
-                'type' => '@type',
-                'results' => array(
-                    '@id' => 'onki:results',
-                    '@container' => '@list',
-                ),
-                'prefLabel' => 'skos:prefLabel',
-                'altLabel' => 'skos:altLabel',
-                'hiddenLabel' => 'skos:hiddenLabel',
+
+        $context = array(
+            'skos' => 'http://www.w3.org/2004/02/skos/core#',
+            'isothes' => 'http://purl.org/iso25964/skos-thes#',
+            'onki' => 'http://schema.onki.fi/onki#',
+            'uri' => '@id',
+            'type' => '@type',
+            'results' => array(
+                '@id' => 'onki:results',
+                '@container' => '@list',
             ),
+            'prefLabel' => 'skos:prefLabel',
+            'altLabel' => 'skos:altLabel',
+            'hiddenLabel' => 'skos:hiddenLabel',
+        );
+        foreach ($parameters->getAdditionalFields() as $field) {
+
+            // Quick-and-dirty compactification
+            $context[$field] = 'skos:' . $field;
+            foreach ($results as &$result) {
+                foreach ($result as $k => $v) {
+                    if ($k == 'skos:' . $field) {
+                        $result[$field] = $v;
+                        unset($result['skos:' . $field]);
+                    }
+                }
+            }
+        }
+
+        $ret = array(
+            '@context' => $context,
             'uri' => '',
             'results' => $results,
         );
-        
+
         if (isset($results[0]['prefLabels'])) {
             $ret['@context']['prefLabels'] = array('@id' => 'skos:prefLabel', '@container' => '@language');
         }
@@ -171,7 +187,7 @@ class RestController extends Controller
 
         $parameters = $this->constructSearchParameters($request);
         $results = $this->model->searchConcepts($parameters);
-        $ret = $this->transformSearchResults($request, $results);
+        $ret = $this->transformSearchResults($request, $results, $parameters);
 
         return $this->returnJson($ret);
     }
@@ -220,7 +236,7 @@ class RestController extends Controller
             'languages' => array_values($vocab->getConfig()->getLanguages()),
             'conceptschemes' => $conceptschemes,
         );
-        
+
         if ($vocab->getConfig()->getTypes($request->getLang())) {
             $ret['type'] = $vocab->getConfig()->getTypes($request->getLang());
         }
@@ -235,8 +251,8 @@ class RestController extends Controller
     public function vocabularyStatistics($request)
     {
         $this->setLanguageProperties($request->getLang());
-        $arrayClass = $request->getVocab()->getConfig()->getArrayClassURI(); 
-        $groupClass = $request->getVocab()->getConfig()->getGroupClassURI(); 
+        $arrayClass = $request->getVocab()->getConfig()->getArrayClassURI();
+        $groupClass = $request->getVocab()->getConfig()->getGroupClassURI();
         $vocabStats = $request->getVocab()->getStatistics($request->getQueryParam('lang'), $arrayClass, $groupClass);
         $types = array('http://www.w3.org/2004/02/skos/core#Concept', 'http://www.w3.org/2004/02/skos/core#Collection', $arrayClass, $groupClass);
         $subTypes = array();
@@ -361,7 +377,7 @@ class RestController extends Controller
             return $this->returnError(400, "Bad Request", "lang parameter missing");
         }
         $this->setLanguageProperties($request->getLang());
-        
+
         $queriedtypes = $this->model->getTypes($vocid, $request->getLang());
 
         $types = array();
@@ -390,7 +406,7 @@ class RestController extends Controller
 
         return $this->returnJson($ret);
     }
-    
+
     private function findLookupHits($results, $label, $lang)
     {
         $hits = array();
@@ -409,7 +425,7 @@ class RestController extends Controller
             }
         }
         if (sizeof($hits) > 0) return $hits;
-        
+
         if ($lang === null) {
             // case 1A: exact match on preferred label in any language
             foreach ($results as $res) {
@@ -420,7 +436,7 @@ class RestController extends Controller
                 }
             }
             if (sizeof($hits) > 0) return $hits;
-            
+
             // case 2A: case-insensitive match on preferred label in any language
             foreach ($results as $res) {
                 if (strtolower($res['matchedPrefLabel']) == strtolower($label)) {
@@ -449,9 +465,9 @@ class RestController extends Controller
         }
         if (sizeof($hits) > 0) return $hits;
 
-        return $hits;   
+        return $hits;
     }
-    
+
     private function transformLookupResults($lang, $hits)
     {
         if (sizeof($hits) == 0) {
@@ -473,7 +489,7 @@ class RestController extends Controller
             $ret['@context']['@language'] = $lang;
         }
 
-        return $ret;  
+        return $ret;
     }
 
     /**
@@ -537,7 +553,7 @@ class RestController extends Controller
 
         header("Location: " . $urls[$format]);
     }
-    
+
     private function returnDataResults($results, $format) {
         if ($format == 'application/ld+json' || $format == 'application/json') {
             // further compact JSON-LD document using a context
@@ -561,6 +577,11 @@ class RestController extends Controller
                 'narrower' => 'skos:narrower',
                 'related' => 'skos:related',
                 'inScheme' => 'skos:inScheme',
+                'exactMatch' => 'skos:exactMatch',
+                'closeMatch' => 'skos:closeMatch',
+                'broadMatch' => 'skos:broadMatch',
+                'narrowMatch' => 'skos:narrowMatch',
+                'relatedMatch' => 'skos:relatedMatch',
             );
             $compactJsonLD = \ML\JsonLD\JsonLD::compact($results, json_encode($context));
             $results = \ML\JsonLD\JsonLD::toString($compactJsonLD);
@@ -627,7 +648,7 @@ class RestController extends Controller
 
         return $this->returnJson($ret);
     }
-    
+
     private function transformPropertyResults($uri, $lang, $objects, $propname, $propuri)
     {
         $results = array();
@@ -640,9 +661,9 @@ class RestController extends Controller
             'uri' => $uri,
             $propname => $results)
         );
-        return $ret;    
+        return $ret;
     }
-    
+
     private function transformTransitivePropertyResults($uri, $lang, $objects, $tpropname, $tpropuri, $dpropname, $dpropuri)
     {
         $results = array();
@@ -735,6 +756,30 @@ class RestController extends Controller
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
         }
 
+
+        // set the "top" key from the "tops" key
+        foreach ($results as $value) {
+            $uri = $value['uri'];
+            if (isset($value['tops'])) {
+                if ($request->getVocab()->getConfig()->getMainConceptSchemeURI() != null) {
+                    foreach ($results[$uri]['tops'] as $top) {
+                        // if a value in 'tops' matches the main concept scheme of the vocabulary, take it
+                        if ($top == $request->getVocab()->getConfig()->getMainConceptSchemeURI()) {
+                            $results[$uri]['top'] = $top;
+                            break;
+                        }
+                    }
+                    // if the main concept scheme was not found, set 'top' to the first 'tops' (sorted alphabetically on the URIs)
+                    if (! isset($results[$uri]['top'])) {
+                        $results[$uri]['top'] = $results[$uri]['tops'][0];
+                    }
+                } else {
+                    // no main concept scheme set on the vocab, take the first value of 'tops' (sorted alphabetically)
+                    $results[$uri]['top'] = $results[$uri]['tops'][0];
+                }
+            }
+        }
+
         if ($request->getVocab()->getConfig()->getShowHierarchy()) {
             $schemes = $request->getVocab()->getConceptSchemes($request->getLang());
             foreach ($schemes as $scheme) {
@@ -748,7 +793,7 @@ class RestController extends Controller
             $topconcepts = $request->getVocab()->getTopConcepts(array_keys($schemes), $request->getLang());
             foreach ($topconcepts as $top) {
                 if (!isset($results[$top['uri']])) {
-                    $results[$top['uri']] = array('uri' => $top['uri'], 'top' => $top['topConceptOf'], 'prefLabel' => $top['label'], 'hasChildren' => $top['hasChildren']);
+                    $results[$top['uri']] = array('uri' => $top['uri'], 'top'=>$top['topConceptOf'], 'tops'=>array($top['topConceptOf']), 'prefLabel' => $top['label'], 'hasChildren' => $top['hasChildren']);
                     if (isset($top['notation'])) {
                         $results[$top['uri']]['notation'] = $top['notation'];
                     }
@@ -758,7 +803,19 @@ class RestController extends Controller
         }
 
         $ret = array_merge_recursive($this->context, array(
-            '@context' => array('onki' => 'http://schema.onki.fi/onki#', 'prefLabel' => 'skos:prefLabel', 'notation' => 'skos:notation', 'narrower' => array('@id' => 'skos:narrower', '@type' => '@id'), 'broader' => array('@id' => 'skos:broader', '@type' => '@id'), 'broaderTransitive' => array('@id' => 'skos:broaderTransitive', '@container' => '@index'), 'top' => array('@id' => 'skos:topConceptOf', '@type' => '@id'), 'hasChildren' => 'onki:hasChildren', '@language' => $request->getLang()),
+            '@context' => array(
+                'onki' => 'http://schema.onki.fi/onki#',
+                'prefLabel' => 'skos:prefLabel',
+                'notation' => 'skos:notation',
+                'narrower' => array('@id' => 'skos:narrower', '@type' => '@id'),
+                'broader' => array('@id' => 'skos:broader', '@type' => '@id'),
+                'broaderTransitive' => array('@id' => 'skos:broaderTransitive', '@container' => '@index'),
+                'top' => array('@id' => 'skos:topConceptOf', '@type' => '@id'),
+                // the tops key will contain all the concept scheme values, while top (singular) contains a single value
+                'tops' => array('@id' => 'skos:topConceptOf', '@type' => '@id'),
+                'hasChildren' => 'onki:hasChildren',
+                '@language' => $request->getLang()
+            ),
             'uri' => $request->getUri(),
             'broaderTransitive' => $results)
         );

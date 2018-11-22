@@ -1,8 +1,8 @@
 <?php
 
-class BreadcrumbTest extends PHPUnit_Framework_TestCase
+class BreadcrumbTest extends PHPUnit\Framework\TestCase
 {
-  
+
   /**
    * @covers Breadcrumb::__construct
    * @covers Breadcrumb::getUri
@@ -23,7 +23,7 @@ class BreadcrumbTest extends PHPUnit_Framework_TestCase
     $bc->hideLabel();
     $this->assertEquals('...', $bc->getPrefLabel());
   }
-  
+
   /**
    * @covers Breadcrumb::getHiddenLabel
    */

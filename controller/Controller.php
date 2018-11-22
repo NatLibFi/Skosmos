@@ -21,7 +21,7 @@ class Controller
     public function __construct($model)
     {
         $this->model = $model;
-        $this->negotiator = new \Negotiation\FormatNegotiator();
+        $this->negotiator = new \Negotiation\Negotiator();
 
         // Specify the location of the translation tables
         bindtextdomain('skosmos', 'resource/translations');
@@ -48,6 +48,7 @@ class Controller
     {
         if (array_key_exists($lang, $this->languages)) {
             $locale = $this->languages[$lang]['locale'];
+            putenv("LANGUAGE=$locale");
             putenv("LC_ALL=$locale");
             setlocale(LC_ALL, $locale);
         } else {
@@ -73,7 +74,7 @@ class Controller
             }
             return $format;
         }
-        
+
         // if there was no proposed format, negotiate a suitable format
         header('Vary: Accept'); // inform caches that a decision was made based on Accept header
         $best = $this->negotiator->getBest($accept, $choices);
@@ -94,7 +95,7 @@ class Controller
         $base_url = str_replace('/controller', '/', $base_url);
         $protocol = filter_input(INPUT_SERVER, 'HTTPS', FILTER_SANITIZE_STRING) === null ? 'http' : 'https';
         $port = filter_input(INPUT_SERVER, 'SERVER_PORT', FILTER_SANITIZE_STRING);
-        $disp_port = ($protocol == 'http' && $port == 80 || $protocol == 'https' && $port == 443) ? '' : ":$port";
+        $disp_port = ($port == 80 || $port == 443) ? '' : ":$port";
         $domain = filter_input(INPUT_SERVER, 'SERVER_NAME', FILTER_SANITIZE_STRING);
         $full_url = "$protocol://{$domain}{$disp_port}{$base_url}";
         return $full_url;

@@ -1,7 +1,7 @@
 
 <?php
 
-class DataObjectTest extends PHPUnit_Framework_TestCase
+class DataObjectTest extends PHPUnit\Framework\TestCase
 {
 
   /**
@@ -12,7 +12,7 @@ class DataObjectTest extends PHPUnit_Framework_TestCase
    */
   public function testConstructorNoArguments()
   {
-    new DataObject(null, null); 
+    new DataObject(null, null);
   }
-  
+
 }

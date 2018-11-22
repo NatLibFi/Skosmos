@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-16 10:26+0200\n"
-"PO-Revision-Date: 2017-05-30 07:46+0000\n"
+"PO-Revision-Date: 2018-05-23 16:49+0000\n"
 "Last-Translator: osma <osma.suominen@helsinki.fi>\n"
 "Language-Team: Chinese (http://www.transifex.com/national-library-of-finland/skosmos/language/zh/)\n"
 "MIME-Version: 1.0\n"
@@ -757,53 +757,5 @@ msgstr "用点下划线在文本上悬停鼠标，以查看属性说明"
 msgid "search_example_text"
 msgstr "对于截词检索，请使用符号*作为*动物或*专利。对于检索词的结尾，检索将会自动截词，即使截词符号没有自动输入，因此输入cat将会产生和输入cat*同样的结果。"
 
-#~ msgid "dc11:contributor"
-#~ msgstr "Contributor"
-
-#~ msgid "dc11:creator"
-#~ msgstr "Creator"
-
-#~ msgid "dc11:description"
-#~ msgstr "Description"
-
-#~ msgid "dc11:license"
-#~ msgstr "License"
-
-#~ msgid "dc11:publisher"
-#~ msgstr "Publisher"
-
-#~ msgid "dc11:relation"
-#~ msgstr "Relation"
-
-#~ msgid "dc11:rights"
-#~ msgstr "Rights"
-
-#~ msgid "dc11:source"
-#~ msgstr "Source"
-
-#~ msgid "dc11:title"
-#~ msgstr "Title"
-
-#~ msgid "Error: the vocabulary does not contain terms beginning with"
-#~ msgstr "The vocabulary does not contain terms beginning with"
-
-#~ msgid "Vocabularies on the server"
-#~ msgstr "Available vocabularies and ontologies"
-
-#~ msgid "Modified concepts"
-#~ msgstr "Modified concepts"
-
-#~ msgid "New concepts"
-#~ msgstr "New concepts"
-
-#~ msgid "All"
-#~ msgstr "All"
-
-#~ msgid "results"
-#~ msgstr "results:"
-
-#~ msgid "results for"
-#~ msgstr "results for"
-
-#~ msgid "Language literal"
-#~ msgstr "In English"
+msgid "feedback_enter_name_email"
+msgstr ""

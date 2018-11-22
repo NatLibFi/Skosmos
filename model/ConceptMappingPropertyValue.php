@@ -41,25 +41,22 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
         return $label;
     }
 
-    private function queryLabel($lang)
+    private function queryLabel($lang = '')
     {
         if ($this->clang) {
             $lang = $this->clang;
         }
 
-        $exvocab = $this->model->guessVocabularyFromURI($this->resource->getUri());
 
-        if ($this->resource->label($lang) !== null) { // current language
-            return $this->resource->label($lang);
-        } elseif ($this->resource->label() !== null) { // any language
-            return $this->resource->label();
-        } elseif ($this->resource->getLiteral('rdf:value', $lang) !== null) { // current language
-            return $this->resource->getLiteral('rdf:value', $lang);
-        } elseif ($this->resource->getLiteral('rdf:value') !== null) { // any language
-            return $this->resource->getLiteral('rdf:value');
+        $label = $this->getResourceLabel($this->resource, $lang);
+        if ($label) {
+            return $label;
         }
 
-        // if the resource is from a another vocabulary known by the skosmos instance
+        // if multiple vocabularies are found, the following method will return in priority the current vocabulary of the mapping
+        $exvocab = $this->model->guessVocabularyFromURI($this->resource->getUri(), $this->vocab->getId());
+
+        // if the resource is from another vocabulary known by the skosmos instance
         if ($exvocab) {
             $label = $this->getExternalLabel($exvocab, $this->getUri(), $lang) ? $this->getExternalLabel($exvocab, $this->getUri(), $lang) : $this->getExternalLabel($exvocab, $this->getUri(), $exvocab->getConfig()->getDefaultLanguage());
             if ($label) {
@@ -72,6 +69,24 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
         return $label;
     }
 
+    private function getResourceLabel($res, $lang = '') {
+
+        if ($this->clang) {
+            $lang = $this->clang;
+        }
+
+        if ($res->label($lang) !== null) { // current language
+            return $res->label($lang);
+        } elseif ($res->label() !== null) { // any language
+            return $res->label();
+        } elseif ($res->getLiteral('rdf:value', $lang) !== null) { // current language
+            return $res->getLiteral('rdf:value', $lang);
+        } elseif ($res->getLiteral('rdf:value') !== null) { // any language
+            return $res->getLiteral('rdf:value');
+        }
+        return null;
+    }
+
     public function getUri()
     {
         return $this->resource->getUri();
@@ -79,7 +94,7 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
 
     public function getExVocab()
     {
-        $exvocab = $this->model->guessVocabularyFromURI($this->getUri());
+        $exvocab = $this->model->guessVocabularyFromURI($this->getUri(), $this->vocab->getId());
         return $exvocab;
     }
 
@@ -88,18 +103,29 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
         return $this->vocab;
     }
 
-    public function getVocabName()
+    public function getVocabName($lang = '')
     {
-        $exvocab = $this->model->guessVocabularyFromURI($this->resource->getUri());
-        if ($exvocab) {
-            return $exvocab->getTitle();
+
+        if ($this->clang) {
+            $lang = $this->clang;
         }
+
+        // if multiple vocabularies are found, the following method will return in priority the current vocabulary of the mapping
+        $exvocab = $this->model->guessVocabularyFromURI($this->resource->getUri(), $this->vocab->getId());
+        if ($exvocab) {
+            return $exvocab->getTitle($lang);
+        }
+
         // @codeCoverageIgnoreStart
         $scheme = $this->resource->get('skos:inScheme');
         if ($scheme) {
             $schemeResource = $this->model->getResourceFromUri($scheme->getUri());
-            if ($schemeResource && $schemeResource->label()) {
-                return $schemeResource->label()->getValue();
+            if ($schemeResource) {
+                $schemaName = $this->getResourceLabel($schemeResource);
+                if ($schemaName) {
+                    //var_dump($schemaName);
+                    return $schemaName;
+                }
             }
         }
         // got a label for the concept, but not the scheme - use the host name as scheme label
@@ -123,3 +149,4 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
     }
 
 }
+

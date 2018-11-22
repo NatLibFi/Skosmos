@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-16 10:26+0200\n"
-"PO-Revision-Date: 2017-05-30 07:47+0000\n"
+"PO-Revision-Date: 2018-05-23 16:49+0000\n"
 "Last-Translator: osma <osma.suominen@helsinki.fi>\n"
 "Language-Team: Spanish (http://www.transifex.com/national-library-of-finland/skosmos/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -758,53 +758,5 @@ msgstr "Desplace su cursor sobre el texto con el subrayado punteado para ver las
 msgid "search_example_text"
 msgstr "Para la búsqueda por truncamiento, por favor utilice el símbolo * como en *animal o *patente*. Para los sufijos de las palabras de búsqueda, la búsqueda se truncará automáticamente, incluso si el símbolo de truncamiento no se ingresa manualmente: asi, gat producirá los mismos resultados que gat*"
 
-#~ msgid "dc11:contributor"
-#~ msgstr "Contributor"
-
-#~ msgid "dc11:creator"
-#~ msgstr "Creator"
-
-#~ msgid "dc11:description"
-#~ msgstr "Description"
-
-#~ msgid "dc11:license"
-#~ msgstr "License"
-
-#~ msgid "dc11:publisher"
-#~ msgstr "Publisher"
-
-#~ msgid "dc11:relation"
-#~ msgstr "Relation"
-
-#~ msgid "dc11:rights"
-#~ msgstr "Rights"
-
-#~ msgid "dc11:source"
-#~ msgstr "Source"
-
-#~ msgid "dc11:title"
-#~ msgstr "Title"
-
-#~ msgid "Error: the vocabulary does not contain terms beginning with"
-#~ msgstr "The vocabulary does not contain terms beginning with"
-
-#~ msgid "Vocabularies on the server"
-#~ msgstr "Available vocabularies and ontologies"
-
-#~ msgid "Modified concepts"
-#~ msgstr "Modified concepts"
-
-#~ msgid "New concepts"
-#~ msgstr "New concepts"
-
-#~ msgid "All"
-#~ msgstr "All"
-
-#~ msgid "results"
-#~ msgstr "results:"
-
-#~ msgid "results for"
-#~ msgstr "results for"
-
-#~ msgid "Language literal"
-#~ msgstr "In English"
+msgid "feedback_enter_name_email"
+msgstr ""

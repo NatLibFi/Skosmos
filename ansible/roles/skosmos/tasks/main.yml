@@ -1,0 +1,64 @@
+
+- name: Update apt cache
+  become: true
+  apt:
+    update_cache: yes
+
+- name: Install required Skosmos dependencies
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - apache2
+    - libapache2-mod-php7.0
+    - php-xml
+    - php-mbstring
+    - git
+
+- name: Copy modified Apache configuration file
+  copy:
+    src: files/000-default.conf
+    dest: /etc/apache2/sites-enabled/000-default.conf
+
+- name: Enable Apache module mod_rewrite
+  command: a2enmod rewrite
+
+- name: Restart Apache
+  service:
+    name: apache2
+    state: restarted
+
+- name: Download composer
+  get_url:
+    url: https://getcomposer.org/installer
+    dest: /home/vagrant/composer-installer
+
+- name: Install composer
+  shell: cat /home/vagrant/composer-installer | php -- --install-dir=/usr/local/bin
+
+- name: Rename composer.phar to composer
+  shell: mv /usr/local/bin/composer.phar /usr/local/bin/composer
+  args:
+    creates: /usr/local/bin/composer
+
+- name: Make composer executable
+  file:
+    path: /usr/local/bin/composer
+    mode: a+x
+    state: file
+
+- name: Install Skosmos PHP Dependencies
+  command: chdir=/var/www/html/Skosmos composer install
+
+- name: Copy global and vocabulary-specific configurations
+  copy:
+    src: /var/www/html/Skosmos/config.ttl.dist
+    dest: /var/www/html/Skosmos/config.ttl
+    remote_src : yes
+
+- name: Generate locales, if necessary
+  shell: "locale-gen {{ item }}"
+  with_items:
+    - en_GB.utf8
+    - fi_FI.utf8
+    - sv_SE.utf8

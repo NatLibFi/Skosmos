@@ -1,14 +1,15 @@
 <?php
 
-class ModelTest extends PHPUnit_Framework_TestCase
+class ModelTest extends PHPUnit\Framework\TestCase
 {
   private $params;
   private $model;
-  
+
   protected function setUp() {
+    putenv("LANGUAGE=en_GB.utf8");
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');
-    $this->model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
+    $this->model = new Model(new GlobalConfig('/../tests/testconfig.ttl'));
     $this->params = $this->getMockBuilder('ConceptSearchParameters')->disableOriginalConstructor()->getMock();
     $this->params->method('getVocabIds')->will($this->returnValue(array('test')));
     $this->params->method('getVocabs')->will($this->returnValue(array($this->model->getVocabulary('test'))));
@@ -17,15 +18,15 @@ class ModelTest extends PHPUnit_Framework_TestCase
   protected function tearDown() {
     $this->params = null;
   }
-  
+
   /**
    * @covers Model::__construct
    */
   public function testConstructorWithConfig()
   {
-    new Model(new GlobalConfig('/../tests/testconfig.inc'));
+    new Model(new GlobalConfig('/../tests/testconfig.ttl'));
   }
-  
+
   /**
    * @covers Model::getVersion
    */
@@ -33,7 +34,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     $version = $this->model->getVersion();
     $this->assertNotEmpty($version);
   }
-  
+
   /**
    * @covers Model::getVocabularyList
    */
@@ -43,7 +44,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
       foreach($category as $vocab)
         $this->assertInstanceOf('Vocabulary', $vocab);
   }
-  
+
   /**
    * @covers Model::getVocabularyCategories
    */
@@ -52,7 +53,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     foreach($categories as $category)
       $this->assertInstanceOf('VocabularyCategory', $category);
   }
-  
+
   /**
    * @covers Model::getVocabulariesInCategory
    */
@@ -61,7 +62,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     foreach($category as $vocab)
       $this->assertInstanceOf('Vocabulary', $vocab);
   }
-  
+
   /**
    * @covers Model::getVocabulary
    */
@@ -69,11 +70,11 @@ class ModelTest extends PHPUnit_Framework_TestCase
     $vocab = $this->model->getVocabulary('test');
     $this->assertInstanceOf('Vocabulary', $vocab);
   }
-  
+
   /**
    * @covers Model::getVocabulary
    * @expectedException \Exception
-   * @expectedExceptionMessage Vocabulary id 'thisshouldnotbefound' not found in configuration 
+   * @expectedExceptionMessage Vocabulary id 'thisshouldnotbefound' not found in configuration
    */
   public function testGetVocabularyByFalseId() {
     $vocab = $this->model->getVocabulary('thisshouldnotbefound');
@@ -87,17 +88,17 @@ class ModelTest extends PHPUnit_Framework_TestCase
     $vocab = $this->model->getVocabularyByGraph('http://www.skosmos.skos/test/');
     $this->assertInstanceOf('Vocabulary', $vocab);
   }
-  
+
   /**
    * @covers Model::getVocabularyByGraph
    * @expectedException \Exception
-   * @expectedExceptionMessage no vocabulary found for graph http://no/address and endpoint http://localhost:3030/ds/sparql
+   * @expectedExceptionMessage no vocabulary found for graph http://no/address and endpoint http://localhost:13030/ds/sparql
    */
   public function testGetVocabularyByInvalidGraphUri() {
     $vocab = $this->model->getVocabularyByGraph('http://no/address');
     $this->assertInstanceOf('Vocabulary', $vocab);
   }
-  
+
   /**
    * @covers Model::guessVocabularyFromURI
    */
@@ -106,7 +107,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     $this->assertInstanceOf('Vocabulary', $vocab);
     $this->assertEquals('test', $vocab->getId());
   }
-  
+
   /**
    */
   public function testGuessVocabularyFromURIThatIsNotFound() {
@@ -121,7 +122,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     $sparql = $this->model->getDefaultSparql();
     $this->assertInstanceOf('GenericSparql', $sparql);
   }
-  
+
   /**
    * @covers Model::getSparqlImplementation
    */
@@ -129,7 +130,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     $sparql = $this->model->getSparqlImplementation('JenaText', 'http://api.dev.finto.fi/sparql', 'http://www.yso.fi/onto/test/');
     $this->assertInstanceOf('JenaTextSparql', $sparql);
   }
-  
+
   /**
    * @covers Model::searchConcepts
    */
@@ -138,7 +139,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     $result = $this->model->searchConcepts($this->params);
     $this->assertEquals(array(), $result);
   }
-  
+
   /**
    * @covers Model::searchConcepts
    */
@@ -147,7 +148,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     $result = $this->model->searchConcepts($this->params);
     $this->assertEquals(array(), $result);
   }
-  
+
   /**
    * @covers Model::searchConcepts
    */
@@ -158,12 +159,16 @@ class ModelTest extends PHPUnit_Framework_TestCase
     $this->params->method('getSearchTerm')->will($this->returnValue('******'));
     $this->assertEquals(array(), $result);
   }
-  
+
   /**
    * @covers Model::searchConcepts
-   * @expectedException PHPUnit_Framework_Error
    */
   public function testSearchWithNoParams() {
+    if (PHP_VERSION_ID >= 70100) {
+      $this->expectException(ArgumentCountError::class);
+    } else {
+      $this->expectException(PHPUnit\Framework\Error\Error::class);
+    }
     $result = $this->model->searchConcepts();
   }
 
@@ -186,7 +191,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('http://www.skosmos.skos/test/ta116', $result[0]['uri']);
     $this->assertEquals('Bass', $result[0]['prefLabel']);
   }
-  
+
   /**
    * @covers Model::searchConcepts
    */
@@ -208,7 +213,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('http://www.skosmos.skos/test/ta116', $result[0]['uri']);
     $this->assertEquals('Bass', $result[0]['prefLabel']);
   }
-  
+
   /**
    * @covers Model::searchConcepts
    */
@@ -252,7 +257,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     $result = $this->model->searchConcepts($params);
     $this->assertCount(2, $result);
   }
-  
+
   /**
    * @covers Model::searchConcepts
    */
@@ -265,7 +270,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
       $this->assertCount(1, $result);
       $this->assertEquals('http://www.skosmos.skos/groups/ta111', $result[0]['uri']);
   }
-  
+
   /**
    * @covers Model::searchConcepts
    */
@@ -280,7 +285,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('http://www.skosmos.skos/subtag/p1', $result[0]['uri']);
     $this->assertEquals('Neighbour', $result[0]['prefLabel']);
   }
-  
+
   /**
    * @covers Model::searchConceptsAndInfo
    */
@@ -290,12 +295,12 @@ class ModelTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('http://www.skosmos.skos/test/ta116', $result['results'][0]->getUri());
     $this->assertEquals(1, $result['count']);
   }
-  
+
   /**
-   * Test for issue #387: make sure namespaces defined in vocabularies.ttl are used for RDF export
+   * Test for issue #387: make sure namespaces defined in config.ttl are used for RDF export
    * @covers Model::getRDF
    */
-   
+
   public function testGetRdfCustomPrefix() {
     $result = $this->model->getRDF('prefix', 'http://www.skosmos.skos/prefix/p1', 'text/turtle');
     $this->assertContains("@prefix my: <http://example.com/myns#> .", $result);
@@ -341,7 +346,7 @@ test:ta116
     $expectedGraph->parse($expected, "turtle");
     $this->assertTrue(EasyRdf\Isomorphic::isomorphic($resultGraph, $expectedGraph));
   }
-  
+
   /**
    * @covers Model::getRDF
    */
@@ -388,7 +393,7 @@ test:ta116
    */
   public function testGetRDFWithVocidAndURIasJSON() {
     $result = $this->model->getRDF('test', 'http://www.skosmos.skos/test/ta116', 'application/json');
-    
+
     $resultGraph = new EasyRdf\Graph();
     $resultGraph->parse($result, "jsonld");
     $expected = '[{"@id":"http://www.skosmos.skos/test-meta/TestClass","http://www.w3.org/2000/01/rdf-schema#label":[{"@value":"Test class","@language":"en"}],"@type":["http://www.w3.org/2002/07/owl#Class"]},{"@id":"http://www.skosmos.skos/test/conceptscheme","http://www.w3.org/2000/01/rdf-schema#label":[{"@value":"Test conceptscheme","@language":"en"}],"@type":["http://www.w3.org/2004/02/skos/core#ConceptScheme"]},{"@id":"http://www.skosmos.skos/test/ta1","http://www.w3.org/2004/02/skos/core#prefLabel":[{"@value":"Fish","@language":"en"}],"@type":["http://www.skosmos.skos/test-meta/TestClass","http://www.w3.org/2004/02/skos/core#Concept"],"http://www.w3.org/2004/02/skos/core#narrower":[{"@id":"http://www.skosmos.skos/test/ta116"}]},{"@id":"http://www.skosmos.skos/test/ta116","http://www.w3.org/2004/02/skos/core#inScheme":[{"@id":"http://www.skosmos.skos/test/conceptscheme"}],"http://www.w3.org/2004/02/skos/core#broader":[{"@id":"http://www.skosmos.skos/test/ta1"}],"http://www.w3.org/2004/02/skos/core#prefLabel":[{"@value":"Bass","@language":"en"}],"@type":["http://www.skosmos.skos/test-meta/TestClass","http://www.w3.org/2004/02/skos/core#Concept"]},{"@id":"http://www.skosmos.skos/test/ta122","http://www.w3.org/2004/02/skos/core#broader":[{"@id":"http://www.skosmos.skos/test/ta116"}]},{"@id":"http://www.w3.org/2002/07/owl#Class"},{"@id":"http://www.w3.org/2004/02/skos/core#Concept"},{"@id":"http://www.w3.org/2004/02/skos/core#ConceptScheme"},{"@id":"http://www.w3.org/2004/02/skos/core#broader","http://www.w3.org/2000/01/rdf-schema#label":[{"@value":"has broader","@language":"en"}]},{"@id":"http://www.w3.org/2004/02/skos/core#prefLabel","http://www.w3.org/2000/01/rdf-schema#label":[{"@value":"preferred label","@language":"en"}]}]';
@@ -493,7 +498,7 @@ test:ta126
    * Issue: https://github.com/NatLibFi/Skosmos/pull/419
    */
   public function testGetRDFShouldNotIncludeExtraBlankNodesFromLists() {
-    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
+    $model = new Model(new GlobalConfig('/../tests/testconfig.ttl'));
     $result = $model->getRDF('test', 'http://www.skosmos.skos/test/ta125', 'text/turtle');
     $resultGraph = new EasyRdf\Graph();
     $resultGraph->parse($result, "turtle");
@@ -523,7 +528,7 @@ test:ta125
     $expected = array('English' => 'en');
     $this->assertEquals($expected, $languages);
   }
-  
+
   /**
    * @covers Model::getResourceFromUri
    * @covers Model::getResourceLabel
@@ -534,7 +539,7 @@ test:ta125
     $this->assertInstanceOf('EasyRdf\Resource', $resource);
     $this->assertEquals('http://www.yso.fi/onto/yso/p19378', $resource->getURI());
   }
-  
+
   /**
    * @covers Model::getResourceLabel
    */
@@ -547,7 +552,7 @@ test:ta125
     $mockres->method('label')->will($this->returnValueMap($labelmap));
     $this->assertEquals('test value', $this->model->getResourceLabel($mockres, 'en'));
   }
-  
+
   /**
    * @covers Model::getResourceLabel
    */

@@ -217,9 +217,9 @@ class Vocabulary extends DataObject
 
     public function getDefaultConceptScheme()
     {
-        $conceptScheme = $this->resource->get("skosmos:mainConceptScheme");
+        $conceptScheme = $this->config->getMainConceptSchemeURI();
         if ($conceptScheme) {
-            return $conceptScheme->getUri();
+            return $conceptScheme;
         }
 
         // mainConceptScheme not explicitly set, guess it
@@ -302,7 +302,7 @@ class Vocabulary extends DataObject
     public function getConceptHierarchy($uri, $lang)
     {
         $lang = $lang ? $lang : $this->getEnvLang();
-        $fallback = $this->config->getDefaultLanguage();
+        $fallback = count($this->config->getLanguageOrder($lang)) > 1 ? $this->config->getLanguageOrder($lang)[1] : $this->config->getDefaultLanguage();
         $props = $this->config->getHierarchyProperty();
         return $this->getSparql()->queryParentList($uri, $lang, $fallback, $props);
     }
@@ -314,7 +314,7 @@ class Vocabulary extends DataObject
     public function getConceptChildren($uri, $lang)
     {
         $lang = $lang ? $lang : $this->getEnvLang();
-        $fallback = $this->config->getDefaultLanguage();
+        $fallback = count($this->config->getLanguageOrder($lang)) > 1 ? $this->config->getLanguageOrder($lang)[1] : $this->config->getDefaultLanguage();
         $props = $this->config->getHierarchyProperty();
         return $this->getSparql()->queryChildren($uri, $lang, $fallback, $props);
     }
@@ -583,9 +583,9 @@ class Vocabulary extends DataObject
 
     /**
      * Returns a list of recently changed or entirely new concepts.
-     * @param string $clang content language for the labels 
+     * @param string $clang content language for the labels
      * @param string $lang UI language for the dates
-     * @return Array 
+     * @return Array
      */
     public function getChangeList($prop, $clang, $lang, $offset)
     {
@@ -601,13 +601,13 @@ class Vocabulary extends DataObject
     public function getTitle($lang=null) {
       return $this->config->getTitle($lang);
     }
-    
+
     public function getShortName() {
       return $this->config->getShortName();
     }
-    
+
     public function getId() {
       return $this->config->getId();
     }
-    
+
 }

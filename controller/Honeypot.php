@@ -63,7 +63,7 @@ class Honeypot
         if ($this->disabled) {
             return true;
         }
-        
+
         // Get the decrypted time
         $value = $this->decryptTime($value);
         // The current time should be greater than the time the form was built + the speed option

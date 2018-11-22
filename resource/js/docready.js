@@ -70,6 +70,17 @@ $(function() { // DOCUMENT READY
     if (settings.url.indexOf('search') !== -1 && $autocomplete.length > 0 && $autocomplete[0].offsetHeight === 302) {
       $(".tt-dropdown-menu").mCustomScrollbar({ alwaysShowScrollbar: 1, scrollInertia: 0 });
     }
+
+    $('.reified-property-value').each(function() {
+      $(this).qtip({
+        content: $(this).next('.reified-tooltip'),
+        position: { my: 'top left', at: 'top left' },
+        style: { classes: 'qtip-skosmos' },
+        show: { delay: 100 },
+        hide: { fixed: true, delay: 400 }
+      });
+    });
+
     countAndSetOffset();
 
     hideCrumbs();
@@ -83,8 +94,8 @@ $(function() { // DOCUMENT READY
   countAndSetOffset();
 
   // Make a selection of an element for copy pasting.
-  function makeSelection() {
-    var $clicked = $(this);
+  function makeSelection(e, elem) {
+    var $clicked = elem || $(this);
     var text = $clicked[0];
     var range;
     if (document.body.createTextRange) { // ms
@@ -115,6 +126,17 @@ $(function() { // DOCUMENT READY
   }
 
   $(document).on('click','.uri-input-box', makeSelection);
+
+  // copy to clipboard
+  function copyToClipboard() {
+    var $btn = $(this);
+    var id = $btn.attr('for');
+    $elem = $(id);
+    makeSelection(undefined, $elem);
+    document.execCommand('copy');
+  }
+
+  $(document).on('click', 'button.copy-clipboard', copyToClipboard);
 
   var sidebarResizer = debounce(function() {
     countAndSetOffset();
@@ -249,6 +271,8 @@ $(function() { // DOCUMENT READY
               var response = $('.content', data).html();
               if (window.history.pushState) { window.history.pushState({url: historyUrl}, '', historyUrl); }
               $content.append(response);
+
+              updateJsonLD(data);
               updateTitle(data);
               updateTopbarLang(data);
               makeCallbacks(data);
@@ -277,6 +301,7 @@ $(function() { // DOCUMENT READY
               $content.empty().append($('.content', data).html());
               initHierarchyQtip();
               $('#hier-trigger').attr('href', event.target.href);
+              updateJsonLD(data);
               updateTitle(data);
               updateTopbarLang(data);
               makeCallbacks(data);
@@ -294,6 +319,7 @@ $(function() { // DOCUMENT READY
         $.ajaxQ.abortAll();
         $('.active').removeClass('active');
         $('#alpha').addClass('active');
+        alpha_complete = false;
         $('.sidebar-grey').empty().prepend(spinner);
         var targetUrl = event.target.href;
         $.ajax({
@@ -362,7 +388,8 @@ $(function() { // DOCUMENT READY
       }
       var uri = $('.uri-input-box').html();
       var base_href = $('base').attr('href'); // see #315, #633
-      var redirectUrl = base_href + vocab + '/' + lang + '/page/?uri=' + uri;
+      var clangIfSet = clang !== lang ? "&clang=" + clang : ""; // see #714
+      var redirectUrl = base_href + vocab + '/' + lang + '/page/?uri=' + uri + clangIfSet;
       window.location.replace(encodeURI(redirectUrl));
       return false;
     }
@@ -638,6 +665,11 @@ $(function() { // DOCUMENT READY
             var hit = data.results[i];
             if (!hit.hiddenLabel) {
                 hasNonHiddenMatch[hit.uri] = true;
+            } else if (hit.hiddenLabel) {
+                if (hasNonHiddenMatch[hit.uri]) {
+                    delete data.results[i];
+                }
+                hasNonHiddenMatch[hit.uri] = false;
             }
         }
         var context = data['@context'];
@@ -744,7 +776,7 @@ $(function() { // DOCUMENT READY
       var emailMessageVal = $("#message").val();
       var emailAddress = $("#email").val();
       var requiredFields = true;
-      if (emailAddress === '' || emailAddress.indexOf('@') === -1) {
+      if (emailAddress !== '' && emailAddress.indexOf('@') === -1) {
         $("#email").addClass('missing-value');
         requiredFields = false;
       }
@@ -780,7 +812,7 @@ $(function() { // DOCUMENT READY
       alpha_complete = true;
       $('.alphabetical-search-results').append($loading);
       var parameters = $.param({'offset' : 250, 'clang': content_lang});
-      var letter = '/' + $('.pagination > .active > a')[0].innerHTML;
+      var letter = '/' + ($('.pagination > .active')[0] ? $('.pagination > .active > a')[0].innerHTML : $('.pagination > li > a')[0].innerHTML);
       $.ajax({
         url : vocab + '/' + lang + '/index' + letter,
         data : parameters,

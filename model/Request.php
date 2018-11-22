@@ -14,6 +14,9 @@ class Request
     private $uri;
     private $letter;
     private $model;
+    private $queryParams;
+    private $queryParamsPOST;
+    private $serverConstants;
 
     /**
      * Initializes the Request Object
@@ -21,6 +24,47 @@ class Request
     public function __construct($model)
     {
         $this->model = $model;
+
+        // Store GET parameters in a local array, so we can mock them in tests.
+        // We do not apply any filters at this point.
+        $this->queryParams = [];
+        foreach (filter_input_array(INPUT_GET) ?: [] as $key => $val) {
+            $this->queryParams[$key] = $val;
+        }
+
+        // Store POST parameters in a local array, so we can mock them in tests.
+        // We do not apply any filters at this point.
+        $this->queryParamsPOST = [];
+        foreach (filter_input_array(INPUT_POST) ?: [] as $key => $val) {
+            $this->queryParamsPOST[$key] = $val;
+        }
+
+        // Store SERVER parameters in a local array, so we can mock them in tests.
+        // We do not apply any filters at this point.
+        $this->serverConstants = [];
+        foreach (filter_input_array(INPUT_SERVER) ?: [] as $key => $val) {
+            $this->serverConstants[$key] = $val;
+        }
+    }
+
+    /**
+     * Set a GET query parameter to mock it in tests.
+     * @param string $paramName parameter name
+     * @param string $value parameter value
+     */
+    public function setQueryParam($paramName, $value)
+    {
+        $this->queryParams[$paramName] = $value;
+    }
+
+    /**
+     * Set a SERVER constant to mock it in tests.
+     * @param string $paramName parameter name
+     * @param string $value parameter value
+     */
+    public function setServerConstant($paramName, $value)
+    {
+        $this->serverConstants[$paramName] = $value;
     }
 
     /**
@@ -30,7 +74,8 @@ class Request
      */
     public function getQueryParam($paramName)
     {
-        $val = filter_input(INPUT_GET, $paramName, FILTER_SANITIZE_STRING);
+        if (!isset($this->queryParams[$paramName])) return null;
+        $val = filter_var($this->queryParams[$paramName], FILTER_SANITIZE_STRING);
         return ($val !== null ? str_replace('\\', '', $val) : null);
     }
 
@@ -41,12 +86,13 @@ class Request
      */
     public function getQueryParamRaw($paramName)
     {
-        return filter_input(INPUT_GET, $paramName, FILTER_UNSAFE_RAW);
+        return isset($this->queryParams[$paramName]) ? $this->queryParams[$paramName] : null;
     }
 
     public function getQueryParamPOST($paramName)
     {
-        return filter_input(INPUT_POST, $paramName, FILTER_SANITIZE_STRING);
+        if (!isset($this->queryParamsPOST[$paramName])) return null;
+        return filter_var($this->queryParamsPOST[$paramName], FILTER_SANITIZE_STRING);
     }
 
     public function getQueryParamBoolean($paramName, $default)
@@ -60,7 +106,8 @@ class Request
 
     public function getServerConstant($paramName)
     {
-        return filter_input(INPUT_SERVER, $paramName, FILTER_SANITIZE_STRING);
+        if (!isset($this->serverConstants[$paramName])) return null;
+        return filter_var($this->serverConstants[$paramName], FILTER_SANITIZE_STRING);
     }
 
     public function getLang()
@@ -124,7 +171,7 @@ class Request
     {
         return $this->getServerConstant('HTTP_HOST') . $this->getServerConstant('REQUEST_URI');
     }
-    
+
     /**
      * Returns the relative page url eg. '/yso/fi/search?clang=en&q=cat'
      * @return string the relative url of the page
@@ -136,7 +183,7 @@ class Request
 
     public function getLetter()
     {
-        return (isset($this->letter)) ? $this->letter : 'A';
+        return (isset($this->letter)) ? $this->letter : '';
     }
 
     /**

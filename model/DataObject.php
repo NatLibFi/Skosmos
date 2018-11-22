@@ -118,13 +118,21 @@ class DataObject
         //if neither in $order, then a simple alphabetic sort...
         return ($a < $b) ? -1 : 1;
     }
-        
+
     /**
      * Getter function to retrieve the ui language from the locale.
      */
-    public function getEnvLang()    
+    public function getEnvLang()
     {
        // get language from locale, same as used by gettext, set by Controller
        return substr(getenv("LC_ALL"), 0, 2); // @codeCoverageIgnore
+    }
+
+    /**
+     * Getter function for retrieving the resource.
+     */
+    public function getResource()
+    {
+        return $this->resource;
     }
 }

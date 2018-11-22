@@ -5,7 +5,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix dc: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix wv: <http://vocab.org/waiver/terms/norms> .        
+@prefix wv: <http://vocab.org/waiver/terms/norms> .
 @prefix sd: <http://www.w3.org/ns/sparql-service-description#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix skosmos: <http://purl.org/net/skosmos#> .
@@ -13,52 +13,34 @@
 @prefix mdrtype: <http://publications.europa.eu/resource/authority/dataset-type/> .
 @prefix : <#> .
 
-:ysa a skosmos:Vocabulary, void:Dataset ;
-	dc:title "YSA - Yleinen suomalainen asiasanasto"@fi,
-		"YSA - Allmän tesaurus på finska"@sv,
-		"YSA - General Finnish thesaurus"@en ;
-	dc:subject :cat_general ;
-    dc:type mdrtype:THESAURUS ;
-	void:uriSpace "http://www.yso.fi/onto/ysa/";
-	skosmos:groupClass skos:Collection;
-	skosmos:language "fi";
-	skosmos:shortName "YSA";
-  skosmos:feedbackRecipient "vesa-posti@helsinki.fi" ;
-	skosmos:showChangeList "true" ;
-	void:dataDump <http://api.finto.fi/download/ysa/ysa-skos.ttl> ;
-	void:sparqlEndpoint <http://api.dev.finto.fi/sparql> ;
-	skosmos:sparqlGraph <http://www.yso.fi/onto/ysa/> .
+# Skosmos main configuration
 
-:yso a skosmos:Vocabulary, void:Dataset ;
-	dc:title "YSO - Yleinen suomalainen ontologia"@fi,
-		"ALLFO - Allmän finländsk ontologi"@sv,
-		"YSO - General Finnish ontology"@en ;
-	dc:subject :cat_general ;
+:config a skosmos:Configuration .
+
+:test a skosmos:Vocabulary, void:Dataset ;
+	dc:title "Test ontology"@en ;
+	dc:subject :cat_science ;
     dc:type mdrtype:ONTOLOGY ;
-	void:uriSpace "http://www.yso.fi/onto/yso/";
-	skosmos:language "fi", "sv", "en";
-	skosmos:defaultLanguage "fi";
-	skosmos:showTopConcepts "true";
-	skosmos:showStatistics "false";
-	skosmos:loadExternalResources "false";
-	skosmos:shortName "YSO",
-                    "ALLFO"@sv;
-	skosmos:groupClass isothes:ConceptGroup ;
+	void:dataDump <http://skosmos.skos/dump/test/> ;
+	void:sparqlEndpoint <http://localhost:13030/ds/sparql> ;
+	void:uriSpace "http://www.skosmos.skos/test/";
+    skos:prefLabel "Test ontology"@en ;
 	skosmos:arrayClass isothes:ThesaurusArray ;
-	void:dataDump <http://api.finto.fi/download/yso/yso-skos.ttl> ;
-	void:sparqlEndpoint <http://api.dev.finto.fi/sparql> ;
-	skosmos:sparqlGraph <http://www.yso.fi/onto/yso/> ;
-	skosmos:mainConceptScheme <http://www.yso.fi/onto/yso/> .
+	skosmos:defaultLanguage "en";
+    skosmos:feedbackRecipient "developer@vocabulary.org";
+	skosmos:groupClass skos:Collection;
+	skosmos:language "en";
+	skosmos:showTopConcepts "true";
+	skosmos:shortName "Test short",
+                    "Testi lyhyt"@fi;
+	skosmos:sparqlGraph <http://www.skosmos.skos/test/> .
 
-:categories a skos:ConceptScheme;
-	skos:prefLabel "Skosmos Vocabulary Categories"@en .
-
-:cat_general a skos:Concept ;
+:cat_science a skos:Concept ;
 	skos:topConceptOf :categories ;
 	skos:inScheme :categories ;
-	skos:prefLabel "Yleiskäsitteet"@fi, 
-		"Allmänna begrepp"@sv,
-		"General concepts"@en .
+	skos:prefLabel "Luonnontieteet ja lääketiede"@fi,
+	"Naturvetenskap och medicin"@sv,
+	"Science and medicine"@en .
 
 mdrtype:THESAURUS a skos:Concept ;
 	skos:prefLabel "Тезаурус"@bg, "Tezaurus"@cs, "Tesaurus"@da, "Thesaurus"@de, "Θησαυρός"@el, "Thesaurus"@en, "Tesaurus"@et, "Tesaurus"@fi, "Thésaurus"@fr, "Pojmovnik"@hr, "Tezaurusz"@hu, "Tesauro"@it, "Tēzaurs"@lv, "Tezauras"@lt, "Teżawru"@mt, "Thesaurus"@nl, "Tesaurus"@no, "Tezaurus"@pl, "Tesauro"@pt, "Tezaur"@ro, "Synonymický slovník"@sk, "Tezaver"@sl, "Tesauro"@es, "Tesaurus"@sv .
