@@ -761,3 +761,6 @@ msgstr "Pour les recherches avec troncature, utilisez le symbole * , par exemple
 
 msgid "feedback_enter_name_email"
 msgstr ""
+
+msgid "concept_types"
+msgstr ""

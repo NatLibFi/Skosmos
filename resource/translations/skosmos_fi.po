@@ -764,3 +764,6 @@ msgid "feedback_enter_name_email"
 msgstr ""
 "Kerro nimesi ja sähköpostiosoitteesi, niin vastaamme sinulle "
 "henkilökohtaisesti. Voit halutessasi jättää palautteen myös nimettömänä."
+
+msgid "concept_types"
+msgstr "Käsitteen tyypit"

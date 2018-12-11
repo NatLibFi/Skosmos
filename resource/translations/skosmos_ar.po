@@ -758,3 +758,6 @@ msgstr "للبحث الاقتطاعي، الرجاء استخدام الرمز *
 
 msgid "feedback_enter_name_email"
 msgstr ""
+
+msgid "concept_types"
+msgstr ""

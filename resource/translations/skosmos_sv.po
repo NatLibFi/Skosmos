@@ -763,3 +763,6 @@ msgid "feedback_enter_name_email"
 msgstr ""
 "Ange ditt namn och din e-postadress så svarar vi dig personligen. Om du vill "
 "kan du också ge respons anonymt."
+
+msgid "concept_types"
+msgstr ""

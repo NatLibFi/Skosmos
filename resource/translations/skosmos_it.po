@@ -759,3 +759,6 @@ msgstr "Per la ricerca su parole incomplete, usare il simbolo *, come in *animal
 
 msgid "feedback_enter_name_email"
 msgstr ""
+
+msgid "concept_types"
+msgstr ""

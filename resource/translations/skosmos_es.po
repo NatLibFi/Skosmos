@@ -760,3 +760,6 @@ msgstr "Para la búsqueda por truncamiento, por favor utilice el símbolo * como
 
 msgid "feedback_enter_name_email"
 msgstr ""
+
+msgid "concept_types"
+msgstr ""
