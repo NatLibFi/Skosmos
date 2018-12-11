@@ -382,7 +382,9 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     $vocab = $model->getVocabulary('dupgroup');
     $concept = $vocab->getConceptInfo("http://www.skosmos.skos/dupgroup/ta111", "en");
     $groups = $concept[0]->getGroupProperties();
-    $this->assertEquals(0, sizeof($groups));
+    $this->assertEquals(2, sizeof($groups));
+    $this->assertArrayHasKey("Animalia", $groups);
+    $this->assertArrayHasKey("Biology", $groups);
   }
 
   /**
