@@ -15,7 +15,8 @@
 
 # Skosmos main configuration
 
-:config a skosmos:Configuration .
+:config a skosmos:Configuration ;
+    skosmos:templateCache "/tmp/skosmos-template-cache-tests" .
 
 :test a skosmos:Vocabulary, void:Dataset ;
 	dc:title "Test ontology"@en ;

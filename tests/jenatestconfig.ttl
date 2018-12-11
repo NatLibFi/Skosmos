@@ -47,7 +47,7 @@
     # set to a logfile path to enable logging into log file
     # skosmos:logFileName "" ;
     # a default location for Twig template rendering
-    skosmos:templateCache "/tmp/skosmos-template-cache" ;
+    skosmos:templateCache "/tmp/skosmos-template-cache-tests" ;
     # customize the css by adding your own stylesheet
     # skosmos:customCss "resource/css/stylesheet.css" ;
     # default email address where to send the feedback
