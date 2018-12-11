@@ -79,6 +79,7 @@
 	skosmos:defaultLanguage "en";
     skosmos:feedbackRecipient "developer@vocabulary.org";
 	skosmos:groupClass skos:Collection;
+	skosmos:marcSourceCode "ysa/fi"@fi, "allärs/sv"@sv;
 	skosmos:language "en";
 	skosmos:showTopConcepts "true";
 	skosmos:shortName "Test short",
@@ -92,6 +93,7 @@
 	void:sparqlEndpoint <http://localhost:13030/ds/sparql> ;
 	void:uriSpace "http://www.skosmos.skos/multiple-schemes/";
 	skosmos:defaultLanguage "en";
+	skosmos:marcSourceCode "ysa/gen";
 	skosmos:language "en";
 	skosmos:showTopConcepts "true";
 	skosmos:sparqlGraph <http://www.skosmos.skos/multiple-schemes/> .
