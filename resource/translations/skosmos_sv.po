@@ -631,7 +631,7 @@ msgstr "Relaterade begrepp"
 
 #: /tmp/cache/587c83500d6c9/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:139
 msgid "skos:relatedMatch"
-msgstr "Relaterade motsvarande begrepp"
+msgstr "Relaterat begrepp i annan vokabulär"
 
 #: /tmp/cache/587c83500d6c9/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:183
 msgid "skos:related_help"
