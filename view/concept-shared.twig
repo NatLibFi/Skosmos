@@ -131,11 +131,13 @@
         <div class="property-label"><span class="versal property-click" title="{% trans "skosmos:memberOfArray_help" %}" >{{ 'skosmos:memberOfArray'|trans|upper }}</span></div>
         <div class="property-value-column"><div class="property-value-wrapper">
           <ul>
-          {% for group in concept.arrayProperties %}
-            {% if group.type == 'skosmos:memberOfArray' %}
+          {% for grouppath in concept.arrayProperties %}
+            {% for group in grouppath %}
+              {% if group.type == 'skosmos:memberOfArray' %}
                 <li><a href="{{ group.uri | link_url(group.vocab,request.lang,'page',request.contentLang) }}">{% if group.notation %}<span class="versal">{{ group.notation }}</span>{% endif %}{{ group.label(request.contentLang) }}</a></li>
-            {% else %}
-            {% endif %}
+              {% else %}
+              {% endif %}
+            {% endfor %}
           {% endfor %}
           </ul>
         </div></div>
