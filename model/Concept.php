@@ -733,13 +733,13 @@ class Concept extends VocabularyDataObject
      */
     public function getGroupProperties()
     {
-        return $this->getReverseResources(false);
+        return $this->getCollections(false);
     }
 
     /**
      * Gets the groups/arrays the concept belongs to.
      */
-    public function getReverseResources($includeArrays) {
+    private function getCollections($includeArrays) {
         $groups = array();
         $reverseResources = $this->graph->resourcesMatching('skos:member', $this->resource);
         if (isset($reverseResources)) {
@@ -776,7 +776,7 @@ class Concept extends VocabularyDataObject
     }
 
     public function getArrayProperties() {
-        return $this->getReverseResources(true);
+        return $this->getCollections(true);
     }
 
     /**

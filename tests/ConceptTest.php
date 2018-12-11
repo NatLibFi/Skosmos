@@ -345,7 +345,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
   /**
    * @covers Concept::getArrayProperties
    * @covers Concept::getGroupProperties
-   * @covers Concept::getReverseResources
+   * @covers Concept::getCollections
    */
   public function testGetGroupProperties()
   {
@@ -361,13 +361,26 @@ class ConceptTest extends PHPUnit\Framework\TestCase
 
   /**
    * @covers Concept::getGroupProperties
-   * @covers Concept::getReverseResources
+   * @covers Concept::getCollections
    */
   public function testGetGroupPropertiesWithDuplicatedInformationFilteredOut()
   {
     $model = new Model(new GlobalConfig('/../tests/testconfig.ttl'));
     $vocab = $model->getVocabulary('dupgroup');
     $concept = $vocab->getConceptInfo("http://www.skosmos.skos/dupgroup/c1", "en");
+    $groups = $concept[0]->getGroupProperties();
+    $this->assertEquals(0, sizeof($groups));
+  }
+
+  /**
+   * @covers Concept::getGroupProperties
+   * @covers Concept::getCollections
+   */
+  public function testGetGroupPropertiesWithHierarchy()
+  {
+    $model = new Model(new GlobalConfig('/../tests/testconfig.ttl'));
+    $vocab = $model->getVocabulary('dupgroup');
+    $concept = $vocab->getConceptInfo("http://www.skosmos.skos/dupgroup/ta111", "en");
     $groups = $concept[0]->getGroupProperties();
     $this->assertEquals(0, sizeof($groups));
   }
