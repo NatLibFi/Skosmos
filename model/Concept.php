@@ -515,8 +515,15 @@ class Concept extends VocabularyDataObject
                 if(!$proplabel) {
                     $envLangLabels = $this->model->getDefaultSparql()->queryLabel($longUri, $this->getEnvLang());
                     
-                    $defaultGraphPropLabel = $this->model->getDefaultSparql()->queryLabel($longUri, '');
-                    $proplabel = ($envLangLabels)?$envLangLabels[$this->getEnvLang()]:($defaultGraphPropLabel)?$defaultGraphPropLabel['']:null;
+                    $defaultPropLabel = $this->model->getDefaultSparql()->queryLabel($longUri, '');
+
+					if($envLangLabels) {
+						$proplabel = $envLangLabels[$this->getEnvLang()];
+                    } else {
+						if($defaultPropLabel) {
+							$proplabel = $defaultPropLabel[''];
+						}
+					}
                 }
 
                 // look for superproperties in the current graph
