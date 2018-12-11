@@ -231,6 +231,7 @@ class RestController extends Controller
             ),
             'uri' => '',
             'id' => $vocab->getId(),
+            'marcSource' => $vocab->getConfig()->getMarcSourceCode($request->getLang()),
             'title' => $vocab->getConfig()->getTitle($request->getLang()),
             'defaultLanguage' => $vocab->getConfig()->getDefaultLanguage(),
             'languages' => array_values($vocab->getConfig()->getLanguages()),

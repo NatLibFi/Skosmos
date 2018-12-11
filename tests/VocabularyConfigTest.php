@@ -427,4 +427,20 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $vocab = $this->model->getVocabulary('cbd');
     $this->assertEquals(4 , count($vocab->getConfig()->getExtProperties()));
   }
+
+  /**
+   * @covers VocabularyConfig::getMarcSourceCode
+   */
+  public function testGetMarcSourceCode() {
+    $vocab = $this->model->getVocabulary('test');
+    $this->assertEquals("ysa/fi" , $vocab->getConfig()->getMarcSourceCode("fi"));
+  }
+
+ /**
+   * @covers VocabularyConfig::getMarcSourceCode
+   */
+  public function testGetMarcSourceCodeWithoutLang() {
+    $vocab = $this->model->getVocabulary('multiple-schemes');
+    $this->assertEquals("ysa/gen" , $vocab->getConfig()->getMarcSourceCode("fi"));
+  }
 }

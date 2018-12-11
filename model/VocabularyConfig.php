@@ -264,6 +264,15 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
+     * Returns skosmos:marcSourcecode value set in config.ttl.
+     * @return string marcsource name
+     */
+    public function getMarcSourceCode($lang = null)
+    {
+        return $this->getLiteral('skosmos:marcSourceCode', $lang);
+    }
+
+    /**
      * Returns a boolean value set in the config.ttl config.
      * @return array array of concept class URIs (can be empty)
      */
