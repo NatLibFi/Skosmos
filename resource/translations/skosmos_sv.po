@@ -765,4 +765,4 @@ msgstr ""
 "kan du också ge respons anonymt."
 
 msgid "concept_types"
-msgstr ""
+msgstr "Typ av koncept"
