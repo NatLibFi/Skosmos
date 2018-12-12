@@ -761,3 +761,6 @@ msgstr "Für eine Suche mit Trunkierung, nutzen Sie bitte ein * (z.B. *wald oder
 
 msgid "feedback_enter_name_email"
 msgstr "Wenn Sie eine direkte Antwort erhalten möchten, geben Sie bitte Ihren Namen und Ihre E-Mail Adresse an. Sie können aber auch Feedback anonym abgeben."
+
+msgid "concept_types"
+msgstr "Konzept Typ"

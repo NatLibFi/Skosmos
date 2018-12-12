@@ -759,3 +759,6 @@ msgstr "对于截词检索，请使用符号*作为*动物或*专利。对于检
 
 msgid "feedback_enter_name_email"
 msgstr ""
+
+msgid "concept_types"
+msgstr ""

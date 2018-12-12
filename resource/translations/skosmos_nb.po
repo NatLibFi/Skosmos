@@ -759,3 +759,6 @@ msgstr "Du kan trunkere med tegnet *, som i *dyr eller *patent*. Søk uten trunk
 
 msgid "feedback_enter_name_email"
 msgstr ""
+
+msgid "concept_types"
+msgstr ""

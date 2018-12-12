@@ -760,3 +760,6 @@ msgstr "Aby wyszukać fragmenty, użyj symbolu * np *animal lub *patent*. W przy
 
 msgid "feedback_enter_name_email"
 msgstr ""
+
+msgid "concept_types"
+msgstr ""

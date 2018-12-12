@@ -760,3 +760,6 @@ msgstr "Voor een ingekorte zoekopdracht, gelieve het symbool * te gebruiken zoal
 
 msgid "feedback_enter_name_email"
 msgstr ""
+
+msgid "concept_types"
+msgstr ""
