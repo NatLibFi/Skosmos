@@ -395,6 +395,7 @@ CONSTRUCT {
  ?item skos:prefLabel ?il .
  ?group a ?grouptype . $construct
 } $fcl WHERE {
+ $values
  $gcl {
   {
     ?s ?p ?uri .
@@ -444,7 +445,6 @@ CONSTRUCT {
    } $optional
   }
  }
- $values
 }
 $valuesGraph
 EOQ;
