@@ -206,8 +206,10 @@ class WebController extends Controller
 
     /**
      * Invokes the concept page of a single concept in a specific vocabulary.
+     *
+     * @param Request $request
      */
-    public function invokeVocabularyConcept($request)
+    public function invokeVocabularyConcept(Request $request)
     {
         $lang = $request->getLang();
         $this->setLanguageProperties($lang);
@@ -221,6 +223,7 @@ class WebController extends Controller
             $this->invokeGenericErrorPage($request);
             return;
         }
+        /** @var \Twig\Template $template */
         $template = (in_array('skos:Concept', $results[0]->getType()) || in_array('skos:ConceptScheme', $results[0]->getType())) ? $this->twig->loadTemplate('concept-info.twig') : $this->twig->loadTemplate('group-contents.twig');
 
         $crumbs = $vocab->getBreadCrumbs($request->getContentLang(), $uri);
