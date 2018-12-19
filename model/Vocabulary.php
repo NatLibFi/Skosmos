@@ -52,7 +52,7 @@ class Vocabulary extends DataObject
     /**
      * Get the SPARQL implementation for this vocabulary
      *
-     * @return Sparql SPARQL object
+     * @return GenericSparql SPARQL object
      */
     public function getSparql()
     {
@@ -381,7 +381,7 @@ class Vocabulary extends DataObject
     /**
      * Makes a query into the sparql endpoint for a concept.
      * @param string $uri the full URI of the concept
-     * @return array
+     * @return Concept[]
      */
     public function getConceptInfo($uri, $clang)
     {

@@ -82,7 +82,7 @@ class GenericSparql {
     /**
      * Execute the SPARQL query using the SPARQL client, logging it as well.
      * @param string $query SPARQL query to perform
-     * @return object query result
+     * @return Result|\EasyRdf\Graph query result
      */
     protected function query($query) {
         $queryId = sprintf("%05d", rand(0, 99999));
@@ -457,7 +457,7 @@ EOQ;
      * @param array $uris concept URIs
      * @param \Vocabulary[] $vocabs array of Vocabulary object
      * @param string|null $clang content language
-     * @return mixed query result graph (EasyRdf\Graph), or array of Concept objects
+     * @return Concept[] array of Concept objects
      */
     private function transformConceptInfoResults($result, $uris, $vocabs, $clang) {
         $conceptArray = array();
@@ -474,7 +474,7 @@ EOQ;
      * @param mixed $uris concept URI (string) or array of URIs
      * @param string|null $arrayClass the URI for thesaurus array class, or null if not used
      * @param \Vocabulary[]|null $vocabs vocabularies to target
-     * @return \Concept[]
+     * @return \EasyRdf\Graph
      */
     public function queryConceptInfoGraph($uris, $arrayClass = null, $vocabs = array()) {
         // if just a single URI is given, put it in an array regardless
@@ -493,7 +493,7 @@ EOQ;
      * @param string|null $arrayClass the URI for thesaurus array class, or null if not used
      * @param \Vocabulary[] $vocabs vocabularies to target
      * @param string|null $clang content language
-     * @return EasyRdf\Graph
+     * @return Concept[]
      */
     public function queryConceptInfo($uris, $arrayClass = null, $vocabs = array(), $clang = null) {
         // if just a single URI is given, put it in an array regardless
@@ -502,7 +502,7 @@ EOQ;
         }
         $result = $this->queryConceptInfoGraph($uris, $arrayClass, $vocabs);
         if ($result->isEmpty()) {
-            return;
+            return [];
         }
         return $this->transformConceptInfoResults($result, $uris, $vocabs, $clang);
     }

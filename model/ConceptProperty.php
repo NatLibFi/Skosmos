@@ -68,7 +68,7 @@ class ConceptProperty
 
     /**
      * Returns an array of the property values.
-     * @return array containing ConceptPropertyValue objects.
+     * @return ConceptMappingPropertyValue[]
      */
     public function getValues()
     {

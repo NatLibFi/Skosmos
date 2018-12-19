@@ -248,6 +248,9 @@ class Request
 
     }
 
+    /**
+     * @return Vocabulary
+     */
     public function getVocab()
     {
         return $this->vocab;
