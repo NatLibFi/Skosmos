@@ -1098,6 +1098,18 @@ $(function() { // DOCUMENT READY
     })});
   }
 
+  // ajaxing the concept mapping properties on the concept page
+  var $conceptAppendix = $('.concept-appendix');
+  if ($conceptAppendix.length) {
+    var concept = {
+      uri: $conceptAppendix.data('concept-uri'),
+      type: $conceptAppendix.data('concept-type')
+    };
+
+    // Defined in scripts.js. Will load the mapping properties via Ajax request to JSKOS REST service, and render them.
+    loadMappingProperties(concept, lang, $conceptAppendix);
+  }
+
   makeCallbacks();
 
 });

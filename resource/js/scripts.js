@@ -298,3 +298,125 @@ function escapeHtml(string) {
   });
 }
 
+function renderPropertyMappingValues(groupedByType) {
+  var propertyMappingValues = [];
+  var source = document.getElementById("property-mapping-values-template").innerHTML;
+  var template = Handlebars.compile(source);
+  var context = {
+    property: {
+      uri: conceptMappingPropertyValue.uri,
+      label: conceptMappingPropertyValue.prefLabel,
+    }
+  };
+  propertyMappingValues.push({'body': template(context)});
+  return propertyMappingValues;
+}
+
+function renderPropertyMappings(concept, contentLang, properties) {
+  var source = document.getElementById("property-mappings-template").innerHTML;
+  // handlebarjs helper functions
+  Handlebars.registerHelper('ifDeprecated', function(conceptType, value, opts) {
+    if(conceptType == value) {
+      return opts.fn(this);
+    }
+    return opts.inverse(this);
+  });
+  Handlebars.registerHelper('toUpperCase', function(str) {
+    if (str === undefined) {
+      return '';
+    }
+    return str.toUpperCase();
+  });
+  Handlebars.registerHelper('ifNotInDescription', function(type, description, opts) {
+    if (type === undefined) {
+      return opts.inverse(this);
+    }
+    if (description === undefined) {
+      return opts.inverse(this);
+    }
+    if (description.indexOf(type) > 0 && description.indexOf('_help') > 0) {
+      return opts.fn(this);
+    }
+    return opts.inverse(this);
+  });
+  Handlebars.registerHelper('ifDifferentLabelLang', function(labelLang, explicitLangCodes, opts) {
+    if (labelLang !== undefined && labelLang !== '') {
+      if (explicitLangCodes !== undefined && typeof explicitLangCodes === "boolean") {
+        return opts.fn(explicitLangCodes);
+      }
+      if (labelLang !== contentLang) {
+        return opts.fn(this);
+      }
+    }
+    return opts.inverse(this);
+  });
+
+  var template = Handlebars.compile(source);
+
+  var context = {
+    concept: concept,
+    properties: properties
+  };
+
+  return template(context);
+}
+
+/**
+ * Load mapping properties, via the JSKOS REST endpoint. Then, render the concept mapping properties template. This
+ * template is comprised of another template, for concept mapping property values.
+ *
+ * @param concept dictionary/object populated with data from the Concept object
+ * @param htmlElement HTML (a div) parent object. Initially hidden.
+ */
+function loadMappingProperties(concept, contentLang, $htmlElement) {
+  // display with the spinner
+  $htmlElement
+    .removeClass('hidden')
+    .append('<div class="spinner row"></div>');
+  $.ajax({
+    url: rest_base_url + vocab + '/mappings',
+    data: $.param({'uri': concept.uri, lang: contentLang}),
+    success: function(data) {
+      var conceptProperties = [];
+      for (var i = 0; i < data.length; i++) {
+        /**
+         * @var conceptMappingPropertyValue JSKOS transformed ConceptMappingPropertyValue
+         */
+        var conceptMappingPropertyValue = data[i];
+        var found = false;
+        var conceptProperty = null;
+        for (var j = 0; j < conceptProperties.length; j++) {
+          conceptProperty = conceptProperties[j];
+          if (conceptProperty.type === conceptMappingPropertyValue.type[0]) {
+            conceptProperty.values.push(conceptMappingPropertyValue);
+            found = true;
+            break;
+          }
+        }
+
+        if (!found) {
+          console.log(conceptMappingPropertyValue);
+          conceptProperty = {
+            'type': conceptMappingPropertyValue.type[0],
+            'label': conceptMappingPropertyValue.typeLabel,
+            'notation': conceptMappingPropertyValue.notation,
+            'values': []
+          };
+          conceptProperty.values.push(conceptMappingPropertyValue);
+          conceptProperties.push(conceptProperty);
+        }
+      }
+
+      console.log(conceptProperties);
+
+      var template = renderPropertyMappings(concept, contentLang, conceptProperties);
+
+      $htmlElement.empty();
+      $htmlElement.append(template);
+
+    },
+    error: function(data) {
+      console.log("Error retrieving mapping properties for [" + $htmlElement.data('concept-uri') + "]: " + data.responseText);
+    }
+  });
+}
