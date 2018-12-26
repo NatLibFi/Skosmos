@@ -391,6 +391,9 @@ class Concept extends VocabularyDataObject
         }
     }
 
+    /**
+     * @return ConceptProperty[]
+     */
     public function getMappingProperties(array $whitelist = null)
     {
         $ret = array();
