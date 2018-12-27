@@ -328,6 +328,7 @@ function renderPropertyMappings(concept, contentLang, properties) {
     return str.toUpperCase();
   });
   Handlebars.registerHelper('ifNotInDescription', function(type, description, opts) {
+    console.log(type);console.log(description);
     if (type === undefined) {
       return opts.inverse(this);
     }
@@ -335,12 +336,12 @@ function renderPropertyMappings(concept, contentLang, properties) {
       return opts.inverse(this);
     }
     if (description.indexOf(type) > 0 && description.indexOf('_help') > 0) {
-      return opts.fn(this);
+      return opts.inverse(this);
     }
-    return opts.inverse(this);
+    return opts.fn(this);
   });
   Handlebars.registerHelper('ifDifferentLabelLang', function(labelLang, explicitLangCodes, opts) {
-    if (labelLang !== undefined && labelLang !== '') {
+    if (labelLang !== undefined && labelLang !== '' && labelLang !== null) {
       if (explicitLangCodes !== undefined && typeof explicitLangCodes === "boolean") {
         return opts.fn(explicitLangCodes);
       }
@@ -395,11 +396,11 @@ function loadMappingProperties(concept, contentLang, $htmlElement) {
         }
 
         if (!found) {
-          console.log(conceptMappingPropertyValue);
           conceptProperty = {
             'type': conceptMappingPropertyValue.type[0],
             'label': conceptMappingPropertyValue.typeLabel,
             'notation': conceptMappingPropertyValue.notation,
+            'description': conceptMappingPropertyValue.description,
             'values': []
           };
           conceptProperty.values.push(conceptMappingPropertyValue);
