@@ -179,15 +179,11 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
             $propertyLabel = $propertyLabel->getValue();
         }
         $ret = [
+            // JSKOS
             'uri' => $this->source->getUri(),
-            'hrefLink' => $hrefLink,
             'notation' => $this->getNotation(),
             'type' => [$this->type],
             'prefLabel' => $propertyLabel,
-            'lang' => $propertyLang,
-            'typeLabel' => gettext($this->type),
-            'description' => gettext($this->type . "_help"),
-            'vocabName' => (string) $this->getVocabName(),
             'from' => [
                 'memberSet' => [
                     [
@@ -201,7 +197,13 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
                         'uri' => (string) $this->getUri()
                     ]
                 ]
-            ]
+            ],
+            // EXTRA
+            'description' => gettext($this->type . "_help"), // pop-up text
+            'hrefLink' => $hrefLink, // link to resource as displayed in the UI
+            'lang' => $propertyLang, // TBD: could it be part of the prefLabel?
+            'vocabName' => (string) $this->getVocabName(), // vocabulary as displayed in the UI
+            'typeLabel' => gettext($this->type), // a text used in the UI instead of, for example, skos:closeMatch
         ];
 
         $fromScheme = $this->vocab->getDefaultConceptScheme();
