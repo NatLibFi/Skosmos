@@ -170,7 +170,7 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
      * Return the mapping as a JSKOS-compatible array.
      * @return array
      */
-    public function asJskos($queryExVocabs = true, $lang = null, $contentLang = null)
+    public function asJskos($queryExVocabs = true, $lang = null, $hrefLink = null)
     {
         $propertyLabel = $this->getLabel($lang, $queryExVocabs);
         $propertyLang = null;
@@ -180,6 +180,7 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
         }
         $ret = [
             'uri' => $this->source->getUri(),
+            'hrefLink' => $hrefLink,
             'notation' => $this->getNotation(),
             'type' => [$this->type],
             'prefLabel' => $propertyLabel,
