@@ -328,7 +328,6 @@ function renderPropertyMappings(concept, contentLang, properties) {
     return str.toUpperCase();
   });
   Handlebars.registerHelper('ifNotInDescription', function(type, description, opts) {
-    console.log(type);console.log(description);
     if (type === undefined) {
       return opts.inverse(this);
     }
@@ -407,8 +406,6 @@ function loadMappingProperties(concept, contentLang, $htmlElement) {
           conceptProperties.push(conceptProperty);
         }
       }
-
-      console.log(conceptProperties);
 
       var template = renderPropertyMappings(concept, contentLang, conceptProperties);
 
