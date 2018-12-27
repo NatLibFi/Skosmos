@@ -3,7 +3,7 @@
 /**
  * RestController is responsible for handling all the requests directed to the /rest address.
  */
-class RestController extends Controller
+class RestController extends WebController
 {
     /* supported MIME types that can be used to return RDF data */
     const SUPPORTED_FORMATS = 'application/rdf+xml text/turtle application/ld+json application/json application/marcxml+xml';
@@ -657,7 +657,8 @@ class RestController extends Controller
         $ret = [];
         foreach ($concept->getMappingProperties() as $mappingProperty) {
             foreach ($mappingProperty->getValues() as $mappingPropertyValue) {
-                $ret[] = $mappingPropertyValue->asJskos($queryExVocabs, $request->getLang(), $request->getContentLang());
+                $hrefLink = $this->linkUrlFilter($mappingPropertyValue->getUri(), $mappingPropertyValue->getExVocab(), $request->getLang(), 'page', $request->getContentLang());
+                $ret[] = $mappingPropertyValue->asJskos($queryExVocabs, $request->getLang(), $hrefLink);
             }
         }
 
