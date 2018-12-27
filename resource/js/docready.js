@@ -1108,8 +1108,8 @@ $(function() { // DOCUMENT READY
 
     // Defined in scripts.js. Will load the mapping properties via Ajax request to JSKOS REST service, and render them.
     loadMappingProperties(concept, lang, $conceptAppendix);
+  } else {
+    makeCallbacks();
   }
-
-  makeCallbacks();
 
 });
