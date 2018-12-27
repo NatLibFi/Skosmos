@@ -377,12 +377,17 @@ function loadMappingProperties(concept, contentLang, $htmlElement) {
     url: rest_base_url + vocab + '/mappings',
     data: $.param({'uri': concept.uri, lang: contentLang}),
     success: function(data) {
+
+      // The JSKOS REST mapping properties call will have added more resources into the graph. The graph
+      // is returned alongside the mapping properties, so now we just need to replace it on the UI.
+      $('script[type="application/ld+json"]')[0].innerHTML = data.graph;
+
       var conceptProperties = [];
-      for (var i = 0; i < data.length; i++) {
+      for (var i = 0; i < data.mappings.length; i++) {
         /**
          * @var conceptMappingPropertyValue JSKOS transformed ConceptMappingPropertyValue
          */
-        var conceptMappingPropertyValue = data[i];
+        var conceptMappingPropertyValue = data.mappings[i];
         var found = false;
         var conceptProperty = null;
         for (var j = 0; j < conceptProperties.length; j++) {
@@ -415,6 +420,9 @@ function loadMappingProperties(concept, contentLang, $htmlElement) {
     },
     error: function(data) {
       console.log("Error retrieving mapping properties for [" + $htmlElement.data('concept-uri') + "]: " + data.responseText);
+    },
+    complete: function() {
+      makeCallbacks();
     }
   });
 }

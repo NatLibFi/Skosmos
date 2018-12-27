@@ -654,13 +654,18 @@ class RestController extends WebController
 
         $concept = $results[0];
 
-        $ret = [];
+        $mappings = [];
         foreach ($concept->getMappingProperties() as $mappingProperty) {
             foreach ($mappingProperty->getValues() as $mappingPropertyValue) {
                 $hrefLink = $this->linkUrlFilter($mappingPropertyValue->getUri(), $mappingPropertyValue->getExVocab(), $request->getLang(), 'page', $request->getContentLang());
-                $ret[] = $mappingPropertyValue->asJskos($queryExVocabs, $request->getLang(), $hrefLink);
+                $mappings[] = $mappingPropertyValue->asJskos($queryExVocabs, $request->getLang(), $hrefLink);
             }
         }
+
+        $ret = array(
+            'mappings' => $mappings,
+            'graph' => $concept->dumpJsonLd()
+        );
 
         return $this->returnJson($ret);
     }
