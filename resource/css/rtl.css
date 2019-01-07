@@ -13,6 +13,10 @@
 html[dir="rtl"] input {
     direction:rtl;
   }
+html [dir="rtl"] .radio input[type="radio"] {
+  position: initial;
+  margin:initial;
+}
 
 html[dir="rtl"] .dropdown-menu {
     text-align: right;
