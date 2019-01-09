@@ -10,6 +10,11 @@ class GenericSparql {
      */
     protected $client;
     /**
+     * Endpoint uri.
+     * @property string $endpoint
+     */
+    protected $endpoint;
+    /**
      * Graph uri.
      * @property string $graph
      */
@@ -25,6 +30,9 @@ class GenericSparql {
      */
     protected $model;
 
+    /* how long to store query results in APC cache */
+    const QUERY_CACHE_TTL = 60; // 1 minute
+
     /**
      * Cache used to avoid expensive shorten() calls
      * @property array $qnamecache
@@ -38,6 +46,7 @@ class GenericSparql {
      * @param object $model a Model instance.
      */
     public function __construct($endpoint, $graph, $model) {
+        $this->endpoint = $endpoint;
         $this->graph = $graph;
         $this->model = $model;
 
@@ -84,7 +93,7 @@ class GenericSparql {
      * @param string $query SPARQL query to perform
      * @return Result|\EasyRdf\Graph query result
      */
-    protected function query($query) {
+    private function performQuery($query) {
         $queryId = sprintf("%05d", rand(0, 99999));
         $logger = $this->model->getLogger();
         $logger->info("[qid $queryId] SPARQL query:\n" . $this->generateQueryPrefixes($query) . "\n$query\n");
@@ -99,6 +108,26 @@ class GenericSparql {
             $logger->info("[qid $queryId] result: $numTriples triples returned in $elapsed ms");
         }
         return $result;
+    }
+
+    /**
+     * Check whether a cached response for the query exists and return it;
+     *  if not, execute the query and store the result in the cache.
+     * @return Result|\EasyRdf\Graph query result
+     */
+    protected function query($query) {
+        $key = "query {$this->endpoint} : $query";
+        $cache = $this->model->getConfig()->getCache();
+        if ($cache->isAvailable()) {
+            $result = $cache->fetch($key);
+            if ($result === false) { // not found in cache
+                $result = $this->performQuery($query);
+                $cache->store($key, $result, self::QUERY_CACHE_TTL);
+            }
+            return $result;
+        } else { // no cache available, just perform the query without caching it
+            return $this->performQuery($query);
+        }
     }
     
     
