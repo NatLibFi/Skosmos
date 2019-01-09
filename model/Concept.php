@@ -509,10 +509,16 @@ class Concept extends VocabularyDataObject
                 $propres = new EasyRdf\Resource($prop, $this->graph);
                 $proplabel = $propres->label($this->getEnvLang()) ? $propres->label($this->getEnvLang()) : $propres->label();
 
+                // check if the property is one of the well-known properties for which we have a gettext translation
+                // if it is then we can skip the additional lookups in the default graph
+                $propkey = (substr($prop, 0, 5) == 'dc11:') ?
+                    str_replace('dc11:', 'dc:', $prop) : $prop;
+                $is_well_known = (gettext($propkey) != $propkey);
+
                 // if not found in current vocabulary, look up in the default graph to be able
                 // to read an ontology loaded in a separate graph
                 // note that this imply that the property has an rdf:type declared for the query to work
-                if(!$proplabel) {
+                if(!$is_well_known && !$proplabel) {
                     $envLangLabels = $this->model->getDefaultSparql()->queryLabel($longUri, $this->getEnvLang());
                     
                     $defaultPropLabel = $this->model->getDefaultSparql()->queryLabel($longUri, '');
@@ -533,7 +539,7 @@ class Concept extends VocabularyDataObject
                 }
 
                 // also look up superprops in the default graph if not found in current vocabulary
-                if(!$superprops || empty($superprops)) {
+                if(!$is_well_known && (!$superprops || empty($superprops))) {
                     $superprops = $this->model->getDefaultSparql()->querySuperProperties($longUri);
                 }
 
