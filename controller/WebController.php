@@ -223,6 +223,14 @@ class WebController extends Controller
             $this->invokeGenericErrorPage($request);
             return;
         }
+        $useModifiedDate = $vocab->getConfig()->getUseModifiedDate();
+        if ($useModifiedDate) {
+            $modifiedDate = $this->getModifiedDate($results[0], $vocab);
+            // return if the controller sends the not modified header
+            if ($this->sendNotModifiedHeader($modifiedDate)) {
+                return;
+            }
+        }
         /** @var \Twig\Template $template */
         $template = (in_array('skos:Concept', $results[0]->getType()) || in_array('skos:ConceptScheme', $results[0]->getType())) ? $this->twig->loadTemplate('concept-info.twig') : $this->twig->loadTemplate('group-contents.twig');
 
@@ -236,6 +244,27 @@ class WebController extends Controller
             'combined' => $crumbs['combined'],
             'request' => $request)
         );
+    }
+
+    /**
+     * @param Concept $concept
+     * @return DateTime|null
+     */
+    protected function getModifiedDate(Concept $concept, Vocabulary $vocab)
+    {
+        $modifiedDate = $concept->getModifiedDate();
+        if (!$modifiedDate) {
+            $conceptSchemeURI = $vocab->getDefaultConceptScheme();
+            if ($conceptSchemeURI) {
+                $conceptSchemeGraph = $vocab->getConceptScheme($conceptSchemeURI);
+                if (!$conceptSchemeGraph->isEmpty()) {
+                    $literal = $conceptSchemeGraph->getLiteral($conceptSchemeURI, "dc:modified");
+                    $modifiedDate = $literal->getValue();
+                }
+            }
+        }
+        // TODO: validate date before sending it!
+        return $modifiedDate;
     }
 
     /**

@@ -230,6 +230,16 @@ class Vocabulary extends DataObject
     }
 
     /**
+     * Returns the main Concept Scheme of that Vocabulary, or null if not set.
+     * @param string $defaultConceptSchemeURI default concept scheme URI
+     * @return \EasyRdf\Graph
+     */
+    public function getConceptScheme(string $defaultConceptSchemeURI): \EasyRdf\Graph
+    {
+        return $this->getSparql()->queryConceptScheme($defaultConceptSchemeURI);
+    }
+
+    /**
      * Return the top concepts of a concept scheme in the vocabulary.
      * @param string $conceptScheme URI of concept scheme whose top concepts to return. If not set,
      *                              the default concept scheme of the vocabulary will be used.
