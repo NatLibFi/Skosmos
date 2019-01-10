@@ -656,6 +656,21 @@ class Concept extends VocabularyDataObject
     }
 
     /**
+     * @return DateTime|null the modified date, or null if not available
+     */
+    public function getModifiedDate()
+    {
+        $modified = null;
+        // finding the modified properties
+        /** @var \EasyRdf\Resource $modifiedResource */
+        $modifiedResource = $this->resource->get('dc:modified');
+        if ($modifiedResource) {
+            $modified = $modifiedResource->getValue();
+        }
+        return $modified;
+    }
+
+    /**
      * Gets the creation date and modification date if available.
      * @return String containing the date information in a human readable format.
      */
@@ -670,10 +685,7 @@ class Concept extends VocabularyDataObject
                 $created = $this->resource->get('dc:created')->getValue();
             }
 
-            // finding the modified properties
-            if ($this->resource->get('dc:modified')) {
-                $modified = $this->resource->get('dc:modified')->getValue();
-            }
+            $modified = $this->getModifiedDate();
 
             // making a human readable string from the timestamps
             if ($created != '') {

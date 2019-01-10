@@ -118,4 +118,31 @@ class Controller
         header("Content-type: text/plain; charset=utf-8");
         echo "$code $status : $message";
     }
+
+    /**
+     * If the $modifiedDate is a valid DateTime, and if the $_SERVER variable contains the right info, and
+     * if the $modifiedDate is more recent than the latest value in $_SERVER, then this function sets the
+     * HTTP 304 not modified and returns true..
+     *
+     * If the $modifiedDate is still valid, then it sets the Last-Modified header, to be used by the browser for
+     * subsequent requests, and returns false.
+     *
+     * Otherwise, it returns false.
+     *
+     * @param DateTime $modifiedDate the last modified date to be compared against server's modified since information
+     * @return bool whether it sent the HTTP 304 not modified headers or not (useful for sending the response without
+     *              further actions)
+     */
+    protected function sendNotModifiedHeader($modifiedDate): bool
+    {
+        if ($modifiedDate) {
+            if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) &&
+                strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) >= $modifiedDate) {
+                header('HTTP/1.0 304 Not Modified');
+                return true;
+            }
+            header("Last-Modified: " . $modifiedDate->format('Y-m-d H:i:s'));
+        }
+        return false;
+    }
 }
