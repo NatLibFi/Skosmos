@@ -3,7 +3,9 @@
 /**
  * Importing the dependencies.
  */
+use \Punic\Data;
 use \Punic\Language;
+use \Punic\Misc;
 
 /**
  * WebController is an extension of the Controller that handles all
@@ -39,6 +41,7 @@ class WebController extends Controller
         // initialize Twig environment
         $this->twig = new Twig_Environment($loader, array('cache' => $tmpDir,'auto_reload' => true));
         $this->twig->addExtension(new Twig_Extensions_Extension_I18n());
+
         // used for setting the base href for the relative urls
         $this->twig->addGlobal("BaseHref", $this->getBaseHref());
         // setting the service name string from the config.ttl
@@ -71,6 +74,12 @@ class WebController extends Controller
             $this->honeypot->disable();
         }
         $this->twig->addGlobal('honeypot', $this->honeypot);
+
+        $direction_test = new Twig_Function('direction_test', function($locale=''){
+            $data = Data::get('layout', $locale);
+            return $data['characterOrder'];
+        });
+        $this->twig->addFunction($direction_test);
     }
 
     /**

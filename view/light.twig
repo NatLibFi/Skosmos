@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html{% if request.lang == 'ar' %} dir="rtl" {% else %} dir="ltr"{% endif %} lang="{{ request.lang }}">
+<html {% if direction_test(request.lang) == 'right-to-left' %} dir="rtl" {% else %} dir="ltr"{% endif %} lang="{{ request.lang }}">
 <head>
 <base href="{{ BaseHref }}">
 <link rel="shortcut icon" href="favicon.ico">
