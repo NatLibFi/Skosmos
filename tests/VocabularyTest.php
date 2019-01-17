@@ -1,10 +1,11 @@
 <?php
-
 require_once('model/Model.php');
 
 class VocabularyTest extends \PHPUnit\Framework\TestCase
 {
-
+  /**
+   * @var Model
+   */
   private $model;
 
   protected function setUp() {
@@ -436,5 +437,18 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
     $this->assertEquals(1, sizeof($concept));
   }
 
+  /**
+   * @covers Vocabulary::getConceptScheme
+   */
+  public function testGetConceptScheme() {
+    $vocab = $this->model->getVocabulary('http304');
+    $conceptSchemeUri = $vocab->getDefaultConceptScheme();
+    $conceptScheme = $vocab->getConceptScheme($conceptSchemeUri);
+    print($conceptSchemeUri);
+    $this->assertEquals(
+      "Test Main Concept Scheme",
+      $conceptScheme->getLiteral($conceptSchemeUri,"skos:prefLabel")
+    );
+  }
 }
 
