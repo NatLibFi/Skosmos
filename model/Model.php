@@ -403,9 +403,9 @@ class Model
     /**
      * Returns a single cached vocabulary.
      * @param string $vocid the vocabulary id eg. 'mesh'.
-     * @return vocabulary dataobject
+     * @return Vocabulary dataobject
      */
-    public function getVocabulary($vocid)
+    public function getVocabulary($vocid): Vocabulary
     {
         $vocs = $this->getVocabularies();
         foreach ($vocs as $voc) {
