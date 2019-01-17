@@ -443,4 +443,14 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $vocab = $this->model->getVocabulary('multiple-schemes');
     $this->assertEquals("ysa/gen" , $vocab->getConfig()->getMarcSourceCode("fi"));
   }
+
+  /**
+   * @covers VocabularyConfig::getUseModifiedDate
+   */
+  public function testGetVocabularyUseModifiedDate() {
+    $vocab = $this->model->getVocabulary('http304');
+    $this->assertEquals(true , $vocab->getConfig()->getUseModifiedDate());
+    $vocab = $this->model->getVocabulary('http304disabled');
+    $this->assertEquals(false , $vocab->getConfig()->getUseModifiedDate());
+  }
 }
