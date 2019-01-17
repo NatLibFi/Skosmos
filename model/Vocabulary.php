@@ -232,9 +232,9 @@ class Vocabulary extends DataObject
     /**
      * Returns the main Concept Scheme of that Vocabulary, or null if not set.
      * @param string $defaultConceptSchemeURI default concept scheme URI
-     * @return \EasyRdf\Graph
+     * @return \EasyRdf\Graph|mixed
      */
-    public function getConceptScheme(string $defaultConceptSchemeURI): \EasyRdf\Graph
+    public function getConceptScheme(string $defaultConceptSchemeURI)
     {
         return $this->getSparql()->queryConceptScheme($defaultConceptSchemeURI);
     }
