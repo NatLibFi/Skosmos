@@ -22,7 +22,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
 
     $this->cbdVocab = $this->model->getVocabulary('cbd');
     $this->cbdGraph =  new EasyRdf\Graph();
-    $this->cbdGraph->parseFile("tests/test-vocab-data/cbd.ttl", "turtle");
+    $this->cbdGraph->parseFile(__DIR__ . "/test-vocab-data/cbd.ttl", "turtle");
 
   }
 

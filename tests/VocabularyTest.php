@@ -1,5 +1,4 @@
 <?php
-require_once('model/Model.php');
 
 class VocabularyTest extends \PHPUnit\Framework\TestCase
 {
