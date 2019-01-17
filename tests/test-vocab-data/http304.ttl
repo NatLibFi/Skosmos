@@ -1,0 +1,52 @@
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix dc11: <http://purl.org/dc/elements/1.1/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wv: <http://vocab.org/waiver/terms/norms> .
+@prefix sd: <http://www.w3.org/ns/sparql-service-description#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix skosmos: <http://purl.org/net/skosmos#> .
+@prefix isothes: <http://purl.org/iso25964/skos-thes#>.
+@prefix meta: <http://www.skosmos.skos/test-meta/> .
+@prefix my: <http://example.com/myns#> .
+@prefix mdrtype: <http://publications.europa.eu/resource/authority/dataset-type/> .
+@prefix test: <http://www.skosmos.skos/test/> .
+
+test:http304mainconceptscheme a skos:ConceptScheme;
+    skos:prefLabel "Test Main Concept Scheme"@en;
+    dc:modified "2018-12-13T06:28:14+00:00"^^xsd:dateTime .
+
+test:anotherConceptScheme a skos:ConceptScheme;
+    skos:prefLabel "Another Test Concept Scheme"@en;
+    dc:modified "2013-11-01T02:28:14+00:00"^^xsd:dateTime .
+
+test:cat a skos:Concept ;
+	skos:prefLabel "Cat"@en;
+	dc:modified "2018-12-13T06:28:14+00:00"^^xsd:dateTime .
+
+test:dog a skos:Concept ;
+    skos:prefLabel "Dog"@en .
+
+test:owl a skos:Concept ;
+	skos:prefLabel "Owl"@en;
+	dc:modified "20181022"^^xsd:dateTime .
+
+test:parrot a skos:Concept ;
+	skos:prefLabel "Parrot"@en;
+	dc:modified "2018-10-22"^^xsd:dateTime .
+
+test:macaw a skos:Concept ;
+	skos:prefLabel "Macaw"@en;
+	dc:modified "2018-10-22T12:34:45"^^xsd:dateTime .
+
+test:sloth a skos:Concept ;
+	skos:prefLabel "Sloth"@en;
+	dc:modified "2018-10-22T12:34:45+05:30"^^xsd:dateTime .
+
+test:lizard a skos:Concept ;
+	skos:prefLabel "Lizard"@en;
+	dc:modified "2018-00-00"^^xsd:dateTime .
