@@ -475,4 +475,36 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     $contains_count = substr_count($json, "CONTAINS");
     $this->assertEquals($contains_count, 3);
   }
+
+  /**
+   * Data provider for testGetModifiedDate test method.
+   * @return array
+   */
+  public function modifiedDateDataProvider() {
+    return [
+      ["cat", "2018-12-13T06:28:14", "+00:00"],  # set #0
+      ["dog", null, null],  # set #1
+      ["owl", "2018-10-22T00:00:00", "+00:00"],  # set #2
+      ["parrot", "2018-10-22T00:00:00", "+00:00"],  # set #3
+      ["macaw", "2018-10-22T12:34:45", "+00:00"],  # set #4
+      ["sloth", "2018-10-22T12:34:45", "+05:30"],  # set #5
+    ];
+  }
+
+  /**
+   * @covers Concept::getModifiedDate
+   * @dataProvider modifiedDateDataProvider
+   */
+  public function testGetModifiedDate($animal, $expected_time, $expected_timezone) {
+    $vocab = $this->model->getVocabulary('http304');
+    $results = $vocab->getConceptInfo('http://www.skosmos.skos/test/' . $animal, 'en');
+    $concept = reset($results);
+    if (is_null($expected_time)) {
+        $modifiedDate = $concept->getModifiedDate();
+        $this->assertNull($modifiedDate);
+    } else {
+        $modifiedDate = $concept->getModifiedDate();
+        $this->assertEquals($expected_time . $expected_timezone, $modifiedDate->format("c"));
+    }
+  }
 }
