@@ -32,7 +32,7 @@ class Http304Test extends TestCase
      * @param $vocabularyName string name of the vocabulary used for this test
      * @throws Exception if any error occurs during vocabulary creation
      */
-    public function initObjects(string $vocabularyName): void
+    public function initObjects(string $vocabularyName)
     {
         putenv("LANGUAGE=en_GB.utf8");
         putenv("LC_ALL=en_GB.utf8");
@@ -45,6 +45,7 @@ class Http304Test extends TestCase
         $this->controller = Mockery::mock('WebController')
             ->shouldAllowMockingProtectedMethods()
             ->makePartial();
+        $this->controller->model = $this->model;
         $this->request = Mockery::mock('Request');
         $this->request->allows([
             "getLang" => "en",
@@ -155,5 +156,65 @@ class Http304Test extends TestCase
         $this->controller->invokeVocabularyConcept($this->request);
         $content = ob_get_clean();
         $this->assertEquals("rendered", $content);
+    }
+
+    /**
+     * Test that upon receiving a request with the right headers, the controller returns an HTTP 304 response.
+     * @throws Exception
+     */
+    public function testHttp304()
+    {
+        $this->initObjects("http304");
+
+        $this->controller
+            ->shouldReceive("setLanguageProperties")
+            ->withArgs(["en"]);
+        $this->request
+            ->shouldReceive("getURI")
+            ->andReturn("");
+        $this->vocab
+            ->shouldReceive("getConceptURI")
+            ->andReturn("");
+
+        $concepts = [];
+        $concept = Mockery::mock("Concept")->makePartial();
+        $concept->allows([
+            "getType" => ["skos:Concept"]
+        ]);
+        $concepts[] = $concept;
+        $this->vocab
+            ->shouldReceive("getConceptInfo")
+            ->andReturn($concepts);
+        $this->vocab
+            ->shouldReceive("getBreadCrumbs")
+            ->andReturn([
+                "breadcrumbs" => "",
+                "combined" => ""
+            ]);
+
+        // the main logic of this test
+        {
+            $modifiedDate = DateTime::createFromFormat('j-M-Y', '15-Feb-2009');
+            $ifModifiedSince = DateTime::createFromFormat('j-M-Y', '15-Feb-2019');
+            $this->controller
+                ->shouldReceive("getModifiedDate")
+                ->andReturn($modifiedDate);
+            $this->controller
+                ->shouldReceive("getIfModifiedSince")
+                ->andReturn($ifModifiedSince);
+            $this->controller
+                ->shouldReceive("sendHeader")
+                ->withArgs(["Last-Modified: " . $modifiedDate->format('Y-m-d H:i:s')])
+                ->andReturn(true);
+            $this->controller
+                ->shouldReceive("sendHeader")
+                ->withArgs(["HTTP/1.0 304 Not Modified"])
+                ->andReturn(true);
+        }
+
+        ob_start();
+        $this->controller->invokeVocabularyConcept($this->request);
+        $content = ob_get_clean();
+        $this->assertEquals("", $content);
     }
 }
