@@ -248,6 +248,7 @@ class WebController extends Controller
 
     /**
      * @param Concept $concept
+     * @param Vocabulary $vocab
      * @return DateTime|null
      */
     protected function getModifiedDate(Concept $concept, Vocabulary $vocab)

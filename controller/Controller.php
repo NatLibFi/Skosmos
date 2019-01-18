@@ -136,14 +136,22 @@ class Controller
     protected function sendNotModifiedHeader($modifiedDate): bool
     {
         if ($modifiedDate) {
-            if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) &&
-                strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) >= $modifiedDate) {
-                header('HTTP/1.0 304 Not Modified');
+            $ifModifiedSince = $this->getIfModifiedSince();
+            $this->sendHeader("Last-Modified: " . $modifiedDate->format('Y-m-d H:i:s'));
+            if (!is_null($ifModifiedSince) && $ifModifiedSince >= $modifiedDate) {
+                $this->sendHeader("HTTP/1.0 304 Not Modified");
                 return true;
             }
-            $this->sendHeader("Last-Modified: " . $modifiedDate->format('Y-m-d H:i:s'));
         }
         return false;
+    }
+
+    /**
+     * @return DateTime|null a DateTime object if the value exists in the $_SERVER variable, null otherwise
+     */
+    protected function getIfModifiedSince()
+    {
+        return isset($_SERVER["HTTP_IF_MODIFIED_SINCE"]) ? strtotime($_SERVER["HTTP_IF_MODIFIED_SINCE"]) : null;
     }
 
     /**
@@ -152,7 +160,7 @@ class Controller
      *
      * @param $header string header to be sent
      */
-    protected function sendHeader($header): void
+    protected function sendHeader($header)
     {
         header($header);
     }
