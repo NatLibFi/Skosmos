@@ -141,8 +141,19 @@ class Controller
                 header('HTTP/1.0 304 Not Modified');
                 return true;
             }
-            header("Last-Modified: " . $modifiedDate->format('Y-m-d H:i:s'));
+            $this->sendHeader("Last-Modified: " . $modifiedDate->format('Y-m-d H:i:s'));
         }
         return false;
+    }
+
+    /**
+     * Sends HTTP headers. Simply calls PHP built-in header function. But being
+     * a function here, it can easily be tested/mocked.
+     *
+     * @param $header string header to be sent
+     */
+    protected function sendHeader($header): void
+    {
+        header($header);
     }
 }
