@@ -121,7 +121,7 @@ class Controller
 
     /**
      * If the $modifiedDate is a valid DateTime, and if the $_SERVER variable contains the right info, and
-     * if the $modifiedDate is more recent than the latest value in $_SERVER, then this function sets the
+     * if the $modifiedDate is not more recent than the latest value in $_SERVER, then this function sets the
      * HTTP 304 not modified and returns true..
      *
      * If the $modifiedDate is still valid, then it sets the Last-Modified header, to be used by the browser for
