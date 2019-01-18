@@ -264,7 +264,6 @@ class WebController extends Controller
                 }
             }
         }
-        // TODO: validate date before sending it!
         return $modifiedDate;
     }
 
