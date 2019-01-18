@@ -13,6 +13,7 @@
       <directory>vendor</directory>
     </blacklist>
     <whitelist processUncoveredFilesFromWhitelist="true">
+        <directory suffix=".php">controller</directory>
         <directory suffix=".php">model</directory>
         <directory suffix=".php">model/sparql</directory>
     </whitelist>
