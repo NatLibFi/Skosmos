@@ -12,10 +12,50 @@ class WebControllerTest extends TestCase
     public function modifiedDateDataProvider()
     {
         return [
-            [null, null, false, null], # set #0
-            [$this->datetime('15-Feb-2009'), null, false, $this->datetime('15-Feb-2009')], # set #1
-            [null, $this->datetime('01-Feb-2009'), false, $this->datetime('01-Feb-2009')], # set #2
-            [null, $this->datetime('01-Feb-2009'), true, null] # set #3
+            # when there is no modified date for a concept, and there is no modified date for the main concept scheme,
+            # then it returns null.
+            [
+                null, # modified date from the concept
+                null, # modified date from the main concept scheme
+                false, # is the scheme empty?
+                false, # is the literal (dc:modified) null?
+                null # expected returned modified date
+            ], # set #0
+            # when there is a modified date for a concept, it is returned immediately. Other values are unimportant.
+            [
+                $this->datetime('15-Feb-2009'), # modified date from the concept
+                null, # modified date from the main concept scheme
+                false, # is the scheme empty?
+                false, # is the literal (dc:modified) null?
+                $this->datetime('15-Feb-2009') # expected returned modified date
+            ], # set #1
+            # when there is no modified date for a concept, but there is a modified date for the main concept scheme,
+            # this last value is then returned.
+            [
+                null, # modified date from the concept
+                $this->datetime('01-Feb-2009'), # modified date from the main concept scheme
+                false, # is the scheme empty?
+                false, # is the literal (dc:modified) null?
+                $this->datetime('01-Feb-2009') # expected returned modified date
+            ], # set #2
+            # when there is no modified date for a concept, but the concept scheme is returned as empty by the model,
+            # then it returns null.
+            [
+                null, # modified date from the concept
+                $this->datetime('01-Feb-2009'), # modified date from the main concept scheme
+                true, # is the scheme empty?
+                false, # is the literal (dc:modified) null?
+                null # expected returned modified date
+            ], # set #3
+            # when there is no modified date for a concept, there is one non-empty concept scheme, but this one
+            # does not have a dc:modified literal, then it returns null
+            [
+                null, # modified date from the concept
+                $this->datetime('01-Feb-2009'), # modified date from the main concept scheme
+                false, # is the scheme empty?
+                true, # is the literal (dc:modified) null?
+                null # expected returned modified date
+            ]
         ];
     }
 
@@ -36,7 +76,7 @@ class WebControllerTest extends TestCase
      * Finally, if neither of the previous scenarios occur, then it returns null.
      * @dataProvider modifiedDateDataProvider
      */
-    public function testGetModifiedDate($conceptDate, $schemeDate, $isSchemeEmpty, $expected)
+    public function testGetModifiedDate($conceptDate, $schemeDate, $isSchemeEmpty, $isLiteralNull, $expected)
     {
         $concept = Mockery::mock("Concept");
         $concept
@@ -56,13 +96,19 @@ class WebControllerTest extends TestCase
             $scheme
                 ->shouldReceive("isEmpty")
                 ->andReturn($isSchemeEmpty);
-            $literal = Mockery::mock();
-            $scheme
-                ->shouldReceive("getLiteral")
-                ->andReturn($literal);
-            $literal
-                ->shouldReceive("getValue")
-                ->andReturn($schemeDate);
+            if ($isLiteralNull) {
+                $scheme
+                    ->shouldReceive("getLiteral")
+                    ->andReturn(null);
+            } else {
+                $literal = Mockery::mock();
+                $scheme
+                    ->shouldReceive("getLiteral")
+                    ->andReturn($literal);
+                $literal
+                    ->shouldReceive("getValue")
+                    ->andReturn($schemeDate);
+            }
         }
         $controller = Mockery::mock('WebController')
             ->shouldAllowMockingProtectedMethods()

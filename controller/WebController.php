@@ -247,6 +247,14 @@ class WebController extends Controller
     }
 
     /**
+     * Return the modified date. First try to get the modified date from the concept. If found, return this
+     * date.
+     *
+     * Then try to get the modified date from the vocabulary's main concept scheme. If found, then return this
+     * date.
+     *
+     * Finally, if no date found, return null.
+     *
      * @param Concept $concept
      * @param Vocabulary $vocab
      * @return DateTime|null
@@ -260,7 +268,9 @@ class WebController extends Controller
                 $conceptSchemeGraph = $vocab->getConceptScheme($conceptSchemeURI);
                 if (!$conceptSchemeGraph->isEmpty()) {
                     $literal = $conceptSchemeGraph->getLiteral($conceptSchemeURI, "dc:modified");
-                    $modifiedDate = $literal->getValue();
+                    if ($literal) {
+                        $modifiedDate = $literal->getValue();
+                    }
                 }
             }
         }
