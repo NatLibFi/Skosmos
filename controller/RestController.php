@@ -218,7 +218,6 @@ class RestController extends Controller
                 'dct' => 'http://purl.org/dc/terms/',
                 'uri' => '@id',
                 'type' => '@type',
-                'title' => 'rdfs:label',
                 'conceptschemes' => 'onki:hasConceptScheme',
                 'id' => 'onki:vocabularyIdentifier',
                 'defaultLanguage' => 'onki:defaultLanguage',
