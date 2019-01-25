@@ -82,7 +82,7 @@ class VocabularyConfig extends BaseConfig
      */
     public function getTitle($lang = null)
     {
-        return $this->getLiteral('dc:title', $lang);
+        return $this->getLiteral('dc:title', false, $lang);
     }
 
     /**
@@ -269,7 +269,7 @@ class VocabularyConfig extends BaseConfig
      */
     public function getMarcSourceCode($lang = null)
     {
-        return $this->getLiteral('skosmos:marcSourceCode', $lang);
+        return $this->getLiteral('skosmos:marcSourceCode', false, $lang);
     }
 
     /**
