@@ -25,13 +25,19 @@ class EntityController extends Controller
         $baseurl = $this->getBaseHref();
         $vocid = $vocab->getId();
         $localname = $vocab->getLocalName($uri);
-        if ($localname !== $uri && $localname === urlencode($localname)) {
-            // the URI can be shortened
-            $url = $baseurl . "$vocid/page/$localname";
+
+        if (!$localname) {
+            $url = $baseurl . "$vocid/";
         } else {
-            // must use full URI
-            $query = http_build_query(array('uri'=>$uri));
-            $url = $baseurl . "$vocid/page/?" . $query;
+
+   	        if ($localname !== $uri && $localname === urlencode($localname)) {
+   	        // the URI can be shortened
+            $url = $baseurl . "$vocid/page/$localname";
+            } else {
+                // must use full URI
+   	            $query = http_build_query(array('uri'=>$uri));
+                $url = $baseurl . "$vocid/page/?" . $query;
+	        }
         }
         $this->redirect303($url);
     }
