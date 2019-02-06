@@ -169,6 +169,7 @@ html[dir="rtl"] #search-field {
 html[dir="rtl"] .qtip-skosmos {
   margin-right: 9px;
   margin-left: initial;
+  direction: rtl;
 }
 
 html[dir="rtl"] .reified-property-value {
