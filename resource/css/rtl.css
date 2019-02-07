@@ -305,6 +305,11 @@ html[dir="rtl"] .search-options .mCSB_container {
 html[dir="rtl"] #alphabetical-menu {
   margin: 15px 15px 0 0;
 }
+
+html[dir="rtl"] .nav {
+  padding-right:0;
+}
+
 html[dir="rtl"] .group-container {
   margin: 15px 15px 5px 0;
 }
@@ -423,6 +428,9 @@ html[dir="rtl"] .pagination {
   padding: 0 10px 0 0;
 }
 
+html[dir="rtl"] .pagination > li {
+  float:right;
+}
 
 html[dir="rtl"] .wide-content {
   margin-right: 0px;

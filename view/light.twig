@@ -45,28 +45,50 @@
       {% if request.vocabid != '' or request.page == 'feedback' or request.page == 'about' %}
       <div class="sidebar-buttons">
         <ul class="nav nav-tabs{% if vocab.config.showChangeList and vocab.config.groupClassURI and vocab.config.showAlphabeticalIndex %} nav-four-wide{% endif %}">
-        {% if request.page != 'search' %}
-          {% if request.vocab.config.showAlphabeticalIndex %}
-          <li id="alpha"{% if search_results|length != 1 or (term and search_results|length == 1) %} class ="active"{% endif %}><a href="{{ request.vocabid }}/{{ request.lang }}/index{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% if vocab.config.showChangeList and vocab.config.groupClassURI %}{% trans'A-Z'%}{% else %}{% trans "Alpha-nav" %}{% endif %}</a></li>
-          {% endif %}
-          <li id="hierarchy{% if not vocab.config.showHierarchy and not search_results|length == 1 %}-disabled{% endif %}"{% if search_results|length == 1 and not term %} class="active"{% endif %}><a href="#" id="hier-trigger"{% if not vocab.config.showHierarchy and not search_results|length == 1 %} title="{% trans 'hierarchy-disabled-help' %}"{% endif %}>{% trans "Hier-nav" %}</a></li>
-          {% if vocab.config.groupClassURI %}
-          <li id="groups"><a href="{{ request.vocabid }}/{{ request.lang }}/groups{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Group-nav" %}</a></li>
-          {% endif %}
-          {% if vocab.config.showChangeList %}
-            <li id="changes"><a href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Changes-nav" %}</a></li>
-          {% endif %}
-        {% else %}
+          {% if request.page != 'search' %}
+            {% if direction_test(request.lang) == 'right-to-left' %}
+              {% if vocab.config.showChangeList %}
+                <li id="changes"><a href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Changes-nav" %}</a></li>
+              {% endif %}
+              {% if vocab.config.groupClassURI %}
+                <li id="groups"><a href="{{ request.vocabid }}/{{ request.lang }}/groups{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Group-nav" %}</a></li>
+              {% endif %}
+                <li id="hierarchy{% if not vocab.config.showHierarchy and not search_results|length == 1 %}-disabled{% endif %}"{% if search_results|length == 1 and not term %} class="active"{% endif %}><a href="#" id="hier-trigger"{% if not vocab.config.showHierarchy and not search_results|length == 1 %} title="{% trans 'hierarchy-disabled-help' %}"{% endif %}>{% trans "Hier-nav" %}</a></li>
+              {% if request.vocab.config.showAlphabeticalIndex %}
+                <li id="alpha"{% if search_results|length != 1 or (term and search_results|length == 1) %} class ="active"{% endif %}><a href="{{ request.vocabid }}/{{ request.lang }}/index{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% if vocab.config.showChangeList and vocab.config.groupClassURI %}{% trans'A-Z'%}{% else %}{% trans "Alpha-nav" %}{% endif %}</a></li>
+              {% endif %}
+            {% else %}
+              {% if request.vocab.config.showAlphabeticalIndex %}
+                <li id="alpha"{% if search_results|length != 1 or (term and search_results|length == 1) %} class ="active"{% endif %}><a href="{{ request.vocabid }}/{{ request.lang }}/index{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% if vocab.config.showChangeList and vocab.config.groupClassURI %}{% trans'A-Z'%}{% else %}{% trans "Alpha-nav" %}{% endif %}</a></li>
+              {% endif %}
+                <li id="hierarchy{% if not vocab.config.showHierarchy and not search_results|length == 1 %}-disabled{% endif %}"{% if search_results|length == 1 and not term %} class="active"{% endif %}><a href="#" id="hier-trigger"{% if not vocab.config.showHierarchy and not search_results|length == 1 %} title="{% trans 'hierarchy-disabled-help' %}"{% endif %}>{% trans "Hier-nav" %}</a></li>
+              {% if vocab.config.groupClassURI %}
+                <li id="groups"><a href="{{ request.vocabid }}/{{ request.lang }}/groups{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Group-nav" %}</a></li>
+              {% endif %}
+              {% if vocab.config.showChangeList %}
+                <li id="changes"><a href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Changes-nav" %}</a></li>
+              {% endif %}
+            {% endif %}
+          {% else %}
           <li id="limit"><p>{% trans "Search options" %}</p></li>
         {% endif %}
         </ul>
       </div>
-      {% if letters %}
+
+      {% if letters and direction_test(request.lang) == 'right-to-left' %}
+        <ul class="pagination">
+        {% for letter in letters|reverse %} {# looping through all letters #}
+          <li{% if letter == request.letter %} class="active"{% endif %}><a href="{{ request.vocabid }}/{{ request.lang }}/index/{{ letter }}{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{{ letter }}</a></li>
+        {% endfor %}
+        </ul>
+      {% else %}
         <ul class="pagination">
         {% for letter in letters %} {# looping through all letters #}
           <li{% if letter == request.letter %} class="active"{% endif %}><a href="{{ request.vocabid }}/{{ request.lang }}/index/{{ letter }}{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{{ letter }}</a></li>
         {% endfor %}
         </ul>
+
+
       {% endif %}
 
       <div class="sidebar-grey {% if alpha_results %} sidebar-grey-alpha{% elseif search_results|length == 1 and not term %} concept-hierarchy{% endif %}">
