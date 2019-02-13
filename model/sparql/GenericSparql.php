@@ -239,8 +239,11 @@ EOQ;
         $gcl = $this->graphClause;
         $classes = ($classes) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
 
+	$quote_string = function($val) { return "'$val'"; };
+	$quoted_values = array_map($quote_string, $langs);
+	$langFilter = "FILTER(?lang IN (" . implode(',', $quoted_values) . "))";
+
         $values = $this->formatValues('?type', $classes, 'uri');
-        $valuesLang = $this->formatValues('?lang', $langs, 'literal');
         $valuesProp = $this->formatValues('?prop', $props, null);
 
         $query = <<<EOQ
@@ -248,19 +251,19 @@ SELECT ?lang ?prop
   (COUNT(?label) as ?count)
 WHERE {
   $gcl {
+    $values
+    $valuesProp
     ?conc a ?type .
     ?conc ?prop ?label .
-    FILTER (langMatches(lang(?label), ?lang))
-    $valuesLang
-    $valuesProp
+    BIND(LANG(?label) AS ?lang)
+    $langFilter
   }
-  $values
 }
 GROUP BY ?lang ?prop ?type
 EOQ;
         return $query;
     }
-
+	
     /**
      * Transforms the CountLangConcepts results into an array of label counts.
      * @param EasyRdf\Sparql\Result $result query results to be transformed
