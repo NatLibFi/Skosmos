@@ -240,7 +240,7 @@ EOQ;
         $classes = ($classes) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
 
         $values = $this->formatValues('?type', $classes, 'uri');
-        $valuesLang = $this->formatValues('?lang', $langs, 'literal');
+        $valuesLangFilter = $this->formatValuesFilterAndBind('?label', '?lang', $langs);
         $valuesProp = $this->formatValues('?prop', $props, null);
 
         $query = <<<EOQ
@@ -248,17 +248,40 @@ SELECT ?lang ?prop
   (COUNT(?label) as ?count)
 WHERE {
   $gcl {
+    $values
+    $valuesProp
     ?conc a ?type .
     ?conc ?prop ?label .
-    FILTER (langMatches(lang(?label), ?lang))
-    $valuesLang
-    $valuesProp
+    $valuesLangFilter
   }
-  $values
 }
 GROUP BY ?lang ?prop ?type
 EOQ;
         return $query;
+    }
+	
+    /**
+    * Used to generate the BIND + FILTER part related to the languages
+    * @param $varnameInput the name of the variable from which to extract the language
+    * @param $varnameOutput the name of the variable that will contain the language tag
+    * @param array $values languages to use in the FILTER
+    * @return string part of the sparql query dealing wit the languages 
+    */
+    protected function formatValuesFilterAndBind($varnameInput, $varnameOutput, $values) {
+    	  $queryPart = "BIND(lang($varnameInput) AS $varnameOutput)";
+	      $first = true;
+
+	      $queryPart .= "FILTER(" ;
+        foreach ($values as $val) {
+            if($first != true){
+              $queryPart .= ' || ';
+            }
+	      $first = false;
+            $queryPart .= "$varnameOutput = '$val'";
+        }
+	      $queryPart .= ")";
+
+        return $queryPart;
     }
 
     /**
