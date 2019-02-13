@@ -239,8 +239,11 @@ EOQ;
         $gcl = $this->graphClause;
         $classes = ($classes) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
 
+	$quote_string = function($val) { return "'$val'"; };
+	$quoted_values = array_map($quote_string, $langs);
+	$langFilter = "FILTER(?lang IN (" . implode(',', $quoted_values) . "))";
+
         $values = $this->formatValues('?type', $classes, 'uri');
-        $valuesLangFilter = $this->formatValuesFilterAndBind('?label', '?lang', $langs);
         $valuesProp = $this->formatValues('?prop', $props, null);
 
         $query = <<<EOQ
@@ -252,7 +255,8 @@ WHERE {
     $valuesProp
     ?conc a ?type .
     ?conc ?prop ?label .
-    $valuesLangFilter
+    BIND(LANG(?label) AS ?lang)
+    $langFilter
   }
 }
 GROUP BY ?lang ?prop ?type
@@ -260,25 +264,6 @@ EOQ;
         return $query;
     }
 	
-    /**
-    * Used to generate the BIND + FILTER part related to the languages
-    * @param $varnameInput the name of the variable from which to extract the language
-    * @param $varnameOutput the name of the variable that will contain the language tag
-    * @param array $values languages to use in the FILTER
-    * @return string part of the sparql query dealing wit the languages 
-    */
-    protected function formatValuesFilterAndBind($varnameInput, $varnameOutput, $values) {
-	$bindPart = "BIND(lang($varnameInput) AS $varnameOutput)";
-
-	$quoted_values = array();
-	foreach ($values as $val) {
-	    $quoted_values[] = "'$val'";
-	}
-
-	$filterPart = "FILTER($varnameOutput IN (" . implode(',', $quoted_values) . "))";
-        return $bindPart . " " . $filterPart;
-    }
-
     /**
      * Transforms the CountLangConcepts results into an array of label counts.
      * @param EasyRdf\Sparql\Result $result query results to be transformed
