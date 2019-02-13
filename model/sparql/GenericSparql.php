@@ -268,20 +268,15 @@ EOQ;
     * @return string part of the sparql query dealing wit the languages 
     */
     protected function formatValuesFilterAndBind($varnameInput, $varnameOutput, $values) {
-    	  $queryPart = "BIND(lang($varnameInput) AS $varnameOutput)";
-	      $first = true;
+	$bindPart = "BIND(lang($varnameInput) AS $varnameOutput)";
 
-	      $queryPart .= "FILTER(" ;
-        foreach ($values as $val) {
-            if($first != true){
-              $queryPart .= ' || ';
-            }
-	      $first = false;
-            $queryPart .= "$varnameOutput = '$val'";
-        }
-	      $queryPart .= ")";
+	$quoted_values = array();
+	foreach ($values as $val) {
+	    $quoted_values[] = "'$val'";
+	}
 
-        return $queryPart;
+	$filterPart = "FILTER($varnameOutput IN (" . implode(',', $quoted_values) . "))";
+        return $bindPart . " " . $filterPart;
     }
 
     /**
