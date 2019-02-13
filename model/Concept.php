@@ -391,7 +391,7 @@ class Concept extends VocabularyDataObject
         }
     }
 
-    public function getMappingProperties()
+    public function getMappingProperties(array $whitelist = null)
     {
         $ret = array();
 
@@ -401,9 +401,13 @@ class Concept extends VocabularyDataObject
                 // shortening property labels if possible
                 $prop = $sprop = EasyRdf\RdfNamespace::shorten($prop);
             } else {
+                // EasyRdf requires full URIs to be in angle brackets
                 $sprop = "<$prop>";
             }
-            // EasyRdf requires full URIs to be in angle brackets
+            if ($whitelist && !in_array($prop, $whitelist)) {
+                // whitelist in use and this is not a whitelisted property, skipping
+                continue;
+            }
 
             if (in_array($prop, $this->MAPPING_PROPERTIES) && !in_array($prop, $this->DELETED_PROPERTIES)) {
                 $propres = new EasyRdf\Resource($prop, $this->graph);
