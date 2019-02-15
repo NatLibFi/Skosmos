@@ -6,6 +6,7 @@
 class VocabularyConfig extends BaseConfig
 {
     private $plugins;
+    private $languageOrderCache = array();
 
     public function __construct($resource, $globalPlugins=array())
     {
@@ -433,6 +434,9 @@ class VocabularyConfig extends BaseConfig
      */
     public function getLanguageOrder($clang)
     {
+        if (array_key_exists($clang, $this->languageOrderCache)) {
+            return $this->languageOrderCache[$clang];
+        }
         $ret = array($clang);
         $fallbacks = !empty($this->resource->get('skosmos:fallbackLanguages')) ? $this->resource->get('skosmos:fallbackLanguages') : array();
         foreach ($fallbacks as $lang) {
@@ -448,6 +452,8 @@ class VocabularyConfig extends BaseConfig
                 $ret[] = $lang;
             }
         }
+        // store in cache so this doesn't have to be computed again
+        $this->languageOrderCache[$clang] = $ret;
         return $ret;
     }
 
