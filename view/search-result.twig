@@ -22,7 +22,8 @@
     {% endif %}
   {% endspaceless %}
   {% if concept.type == 'skosext:DeprecatedConcept' %}<h2 class="deprecated-alert">{% trans %}deprecated{% endtrans %}</h2>{% endif %}
-  {% for property in concept.properties %} {# loop through ConceptProperty objects #}
+  {% set conceptProperties = concept.properties %}
+  {% for property in conceptProperties %} {# loop through ConceptProperty objects #}
     {% if property.type in PreferredProperties or property.type in concept.vocab.config.additionalSearchProperties  or property.type in concept.vocab.config.hierarchyProperty %}
     <div class="property">
       <span class="property-click" title="{{ property.description }}">
@@ -111,7 +112,7 @@
       <img class="property-hover" src="resource/pics/type.gif">
     </span>
     <div class="property-values">
-      {% for property in concept.properties %} {# loop through ConceptProperty objects #}
+      {% for property in conceptProperties %} {# loop through ConceptProperty objects #}
         {% if property.getSubPropertyOf != 'skos:hiddenLabel' %}
           {% if request.vocab.config.hasMultiLingualProperty(property.type) %}
             {% set prevlang = '' %}{# Only displaying the language when it appears for the very first time #}
