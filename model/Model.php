@@ -237,24 +237,25 @@ class Model
 
         foreach ($results as $hit) {
             if (sizeof($vocabs) == 1) {
+                $hitvoc = $voc;
                 $hit['vocab'] = $vocabs[0]->getId();
             } else {
                 try {
-                    $voc = $this->getVocabularyByGraph($hit['graph']);
-                    $hit['vocab'] = $voc->getId();
+                    $hitvoc = $this->getVocabularyByGraph($hit['graph']);
+                    $hit['vocab'] = $hitvoc->getId();
                 } catch (Exception $e) {
                     trigger_error($e->getMessage(), E_USER_WARNING);
-                    $voc = null;
+                    $hitvoc = null;
                     $hit['vocab'] = "???";
                 }
             }
             unset($hit['graph']);
 
-            $hit['voc'] = $voc;
+            $hit['voc'] = $hitvoc;
 
             // if uri is a external vocab uri that is included in the current vocab
-            $realvoc = $this->guessVocabularyFromURI($hit['uri']);
-            if ($realvoc !== $voc) {
+            $realvoc = $this->guessVocabularyFromURI($hit['uri'], $voc !== null ? $voc->getId() : null);
+            if ($realvoc != $hitvoc) {
                 unset($hit['localname']);
                 $hit['exvocab'] = ($realvoc !== null) ? $realvoc->getId() : "???";
             }
