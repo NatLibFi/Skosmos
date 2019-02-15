@@ -89,7 +89,7 @@
     </div>
   {% endif %}
   {% if concept.vocab.config.additionalSearchProperties %} 
-    {% set mappingProperties = concept.mappingProperties %}
+    {% set mappingProperties = concept.mappingProperties(concept.vocab.config.additionalSearchProperties) %}
     {% if mappingProperties %}
       {% for property in mappingProperties %} {# loop through ConceptProperty objects #}
         {% if property.type in concept.vocab.config.additionalSearchProperties %}
