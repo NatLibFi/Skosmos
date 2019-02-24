@@ -7,7 +7,7 @@ class Controller
 {
     /**
      * The controller has to know the model to access the data stored there.
-     * @param $model contains the Model object.
+     * @var Model $model contains the Model object.
      */
     public $model;
 

@@ -60,6 +60,34 @@ class WebControllerTest extends TestCase
     }
 
     /**
+     * Data for testGetGitModifiedDateCacheEnabled.
+     * @return array
+     */
+    public function gitAndConfigModifiedDateDataProvider()
+    {
+        return [
+            # cache disabled
+            [
+                false, # cache enabled
+                null, # cached value
+                $this->datetime('01-Feb-2009') # modified date time
+            ], # set #0
+            # cache enabled, but nothing fetched
+            [
+                true, # cache enabled
+                null, # cached value
+                $this->datetime('01-Feb-2009') # modified date time
+            ], # set #1
+            # cache enabled, cached value returned
+            [
+                true, # cache enabled
+                $this->datetime('01-Feb-2009'), # cached value
+                null # modified date time
+            ], # set #2
+        ];
+    }
+
+    /**
      * Utility method to create a datetime for data provider.
      * @param string $string
      * @return bool|DateTime
@@ -67,6 +95,58 @@ class WebControllerTest extends TestCase
     private function datetime(string $string)
     {
         return DateTime::createFromFormat("j-M-Y", $string);
+    }
+
+    /**
+     * @param bool $cacheAvailable
+     * @param DateTime|null $cachedValue
+     * @param DateTime|null $modifiedDate
+     * @dataProvider gitModifiedDateDataProvider
+     */
+    public function testGetGitModifiedDate($cacheAvailable, $cachedValue, $modifiedDate)
+    {
+        $cache = Mockery::spy('Cache');
+        $cache->shouldReceive('isAvailable')
+            ->andReturn($cacheAvailable);
+        if ($cacheAvailable) {
+            $cache->shouldReceive('fetch')
+                ->andReturn($cachedValue);
+            if ($modifiedDate) {
+                $cache->shouldReceive('store')
+                    ->andReturn(true);
+            }
+        }
+        $globalConfig = Mockery::mock('GlobalConfig');
+        $globalConfig->shouldReceive('getCache')
+            ->andReturn($cache);
+        $model = Mockery::mock('Model');
+        $model->globalConfig = $globalConfig;
+        $controller = Mockery::mock('WebController')
+            ->shouldAllowMockingProtectedMethods()
+            ->makePartial();
+        $controller->model = $model;
+        if ($modifiedDate) {
+            $controller->shouldReceive('executeGitModifiedDateCommand')
+                ->andReturn($modifiedDate);
+        }
+        $gitModifiedDate = $controller->getGitModifiedDate();
+
+        $this->assertNotNull($gitModifiedDate);
+        $this->assertTrue($gitModifiedDate > (new DateTime())->setTimeStamp(1));
+    }
+
+    /**
+     * Execute the git command and test that it returns a valid date time. It should be safe to execute this, as
+     * Travis-CI and developer environments should have git installed.
+     */
+    public function testExecuteGitModifiedDateCommand()
+    {
+        $controller = Mockery::mock('WebController')
+            ->shouldAllowMockingProtectedMethods()
+            ->makePartial();
+        $gitModifiedDate = $controller->executeGitModifiedDateCommand('git log -1 --date=iso --pretty=format:%cd');
+        $this->assertInstanceOf('DateTime', $gitModifiedDate);
+        $this->assertTrue($gitModifiedDate > (new DateTime())->setTimeStamp(1));
     }
 
     /**

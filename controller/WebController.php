@@ -261,6 +261,24 @@ class WebController extends Controller
      */
     protected function getModifiedDate(Concept $concept, Vocabulary $vocab)
     {
+        $conceptModifiedDate = $this->getConceptModifiedDate($concept, $vocab);
+        $gitModifiedDate = $this->getGitModifiedDate();
+        // TODO get config modified date
+        // TODO return most recent of three
+        return null;
+    }
+
+    /**
+     * Get the concept modified date. Returns the concept modified date if available. Otherwise,
+     * reverts to the modified date of the default concept scheme if available. Lastly, if it could
+     * not get the modified date from the concept nor from the concept scheme, it returns null.
+     *
+     * @param Concept $concept concept used to retrieve modified date
+     * @param Vocabulary $vocab vocabulary used to retrieve modified date
+     * @return DateTime|null|string
+     */
+    protected function getConceptModifiedDate(Concept $concept, Vocabulary $vocab)
+    {
         $modifiedDate = $concept->getModifiedDate();
         if (!$modifiedDate) {
             $conceptSchemeURI = $vocab->getDefaultConceptScheme();
@@ -274,7 +292,52 @@ class WebController extends Controller
                 }
             }
         }
+
         return $modifiedDate;
+    }
+
+    /**
+     * Return the datetime of the latest commit, or null if git is not available or if the command failed
+     * to execute.
+     *
+     * @see https://stackoverflow.com/a/33986403
+     * @return DateTime|null
+     */
+    protected function getGitModifiedDate()
+    {
+        $commitDate = null;
+        $cache = $this->model->globalConfig->getCache();
+        $cacheKey = "git:modified_date";
+        $gitCommand = 'git log -1 --date=iso --pretty=format:%cd';
+        if ($cache->isAvailable()) {
+            $commitDate = $cache->fetch($cacheKey);
+            if (!$commitDate) {
+                $commitDate = $this->executeGitModifiedDateCommand($gitCommand);
+                if ($commitDate) {
+                    $cache->store($cacheKey, $commitDate, Model::URI_FETCH_TTL);
+                }
+            }
+        } else {
+            $commitDate = $this->executeGitModifiedDateCommand($gitCommand);
+        }
+        return $commitDate;
+    }
+
+    /**
+     * Execute the git command and return a parsed date time, or null if the command failed.
+     *
+     * @param string $gitCommand git command line that returns a formatted date time
+     * @return DateTime|null
+     */
+    protected function executeGitModifiedDateCommand($gitCommand)
+    {
+        $commitDate = null;
+        $commandOutput = @exec($gitCommand);
+        if ($commandOutput) {
+            $commitDate = new \DateTime(trim($commandOutput));
+            $commitDate->setTimezone(new \DateTimeZone('UTC'));
+        }
+        return $commitDate;
     }
 
     /**
