@@ -263,7 +263,7 @@ class WebController extends Controller
     {
         $conceptModifiedDate = $this->getConceptModifiedDate($concept, $vocab);
         $gitModifiedDate = $this->getGitModifiedDate();
-        // TODO get config modified date
+        $configModifiedDate = $this->getConfigModifiedDate();
         // TODO return most recent of three
         return null;
     }
@@ -338,6 +338,53 @@ class WebController extends Controller
             $commitDate->setTimezone(new \DateTimeZone('UTC'));
         }
         return $commitDate;
+    }
+
+    /**
+     * Return the datetime of the modified time of the config.ttl file. If the file does not exist, or it
+     * fails to read the modified date time, or if the modified date time is not a valid time, then it returns
+     * null.
+     *
+     * @see http://php.net/manual/en/function.filemtime.php
+     * @return DateTime|null
+     */
+    protected function getConfigModifiedDate()
+    {
+        $dateTime = null;
+        $cache = $this->model->globalConfig->getCache();
+        $cacheKey = "config:modified_date";
+        $filename = realpath(__DIR__ . "/../config.ttl");
+        if ($cache->isAvailable()) {
+            $dateTime = $cache->fetch($cacheKey);
+            if (!$dateTime) {
+                $dateTime = $this->retrieveConfigModifiedDate($filename);
+                if ($dateTime) {
+                    $cache->store($cacheKey, $dateTime, Model::URI_FETCH_TTL);
+                }
+            }
+        } else {
+            $dateTime = $this->retrieveConfigModifiedDate($filename);
+        }
+        return $dateTime;
+    }
+
+    /**
+     * Retrieve the modified date for the configuration file. Return null if the file is not found, or if an
+     * error occurred while reading the file.
+     *
+     * @param string $filename
+     * @return DateTime|null
+     */
+    protected function retrieveConfigModifiedDate($filename)
+    {
+        $dateTime = null;
+        if (file_exists($filename)) {
+            $modifiedTime = filemtime($filename);
+            if (!is_bool($modifiedTime)) {
+                $dateTime = (new DateTime())->setTimestamp($modifiedTime);
+            }
+        }
+        return $dateTime;
     }
 
     /**

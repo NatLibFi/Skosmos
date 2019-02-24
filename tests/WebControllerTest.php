@@ -60,7 +60,10 @@ class WebControllerTest extends TestCase
     }
 
     /**
-     * Data for testGetGitModifiedDateCacheEnabled.
+     * Data for testGetGitModifiedDateCacheEnabled and for testGetConfigModifiedDate. We are able to use the
+     * same data provider in two methods, as they both have similar interface and behaviour. Only difference
+     * being that one retrieves the information from git, and the other from the file system, but as the
+     * methods that perform the action are abstracted away, this data provider works for both.
      * @return array
      */
     public function gitAndConfigModifiedDateDataProvider()
@@ -147,6 +150,59 @@ class WebControllerTest extends TestCase
         $gitModifiedDate = $controller->executeGitModifiedDateCommand('git log -1 --date=iso --pretty=format:%cd');
         $this->assertInstanceOf('DateTime', $gitModifiedDate);
         $this->assertTrue($gitModifiedDate > (new DateTime())->setTimeStamp(1));
+    }
+
+    /**
+     * @param bool $cacheAvailable
+     * @param DateTime|null $cachedValue
+     * @param DateTime|null $modifiedDate
+     * @dataProvider gitModifiedDateDataProvider
+     */
+    public function testGetConfigModifiedDate($cacheAvailable, $cachedValue, $modifiedDate)
+    {
+        $cache = Mockery::spy('Cache');
+        $cache->shouldReceive('isAvailable')
+            ->andReturn($cacheAvailable);
+        if ($cacheAvailable) {
+            $cache->shouldReceive('fetch')
+                ->andReturn($cachedValue);
+            if ($modifiedDate) {
+                $cache->shouldReceive('store')
+                    ->andReturn(true);
+            }
+        }
+        $globalConfig = Mockery::mock('GlobalConfig');
+        $globalConfig->shouldReceive('getCache')
+            ->andReturn($cache);
+        $model = Mockery::mock('Model');
+        $model->globalConfig = $globalConfig;
+        $controller = Mockery::mock('WebController')
+            ->shouldAllowMockingProtectedMethods()
+            ->makePartial();
+        $controller->model = $model;
+        if ($modifiedDate) {
+            $controller->shouldReceive('retrieveConfigModifiedDate')
+                ->andReturn($modifiedDate);
+        }
+        $configModifiedDate = $controller->getConfigModifiedDate();
+
+        $this->assertNotNull($configModifiedDate);
+        $this->assertTrue($configModifiedDate > (new DateTime())->setTimeStamp(1));
+    }
+
+    /**
+     * Retrieve the modified date of the local config.ttl.dist and test that it returns a valid date time. It should
+     * be safe to test this as Travis-CI and developer environments should have a config.ttl.dist file.
+     */
+    public function testRetrieveConfigModifiedDate()
+    {
+        $controller = Mockery::mock('WebController')
+            ->shouldAllowMockingProtectedMethods()
+            ->makePartial();
+        $filename = realpath(__DIR__ . "/../config.ttl.dist");
+        $dateTime = $controller->retrieveConfigModifiedDate($filename);
+        $this->assertInstanceOf('DateTime', $dateTime);
+        $this->assertTrue($dateTime > (new DateTime())->setTimeStamp(1));
     }
 
     /**
