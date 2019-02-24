@@ -6,10 +6,10 @@ class WebControllerTest extends TestCase
 {
 
     /**
-     * Data for testGetModifiedDate.
+     * Data for testConceptGetModifiedDate.
      * @return array
      */
-    public function modifiedDateDataProvider()
+    public function conceptModifiedDateDataProvider()
     {
         return [
             # when there is no modified date for a concept, and there is no modified date for the main concept scheme,
@@ -206,13 +206,13 @@ class WebControllerTest extends TestCase
     }
 
     /**
-     * Test that the behaviour of getModifiedDate works as expected. If there is a concept with a modified
+     * Test that the behaviour of getConceptModifiedDate works as expected. If there is a concept with a modified
      * date, then it will return that value. If there is no modified date in the concept, but the main
      * concept scheme contains a date, then the main concept scheme's modified date will be returned instead.
      * Finally, if neither of the previous scenarios occur, then it returns null.
-     * @dataProvider modifiedDateDataProvider
+     * @dataProvider conceptModifiedDateDataProvider
      */
-    public function testGetModifiedDate($conceptDate, $schemeDate, $isSchemeEmpty, $isLiteralNull, $expected)
+    public function testConceptGetModifiedDate($conceptDate, $schemeDate, $isSchemeEmpty, $isLiteralNull, $expected)
     {
         $concept = Mockery::mock("Concept");
         $concept
@@ -249,7 +249,7 @@ class WebControllerTest extends TestCase
         $controller = Mockery::mock('WebController')
             ->shouldAllowMockingProtectedMethods()
             ->makePartial();
-        $date = $controller->getModifiedDate($concept, $vocab);
+        $date = $controller->getConceptModifiedDate($concept, $vocab);
         $this->assertEquals($expected, $date);
     }
 }
