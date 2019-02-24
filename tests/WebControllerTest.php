@@ -152,7 +152,7 @@ class WebControllerTest extends TestCase
      * @param bool $cacheAvailable
      * @param DateTime|null $cachedValue
      * @param DateTime|null $modifiedDate
-     * @dataProvider gitModifiedDateDataProvider
+     * @dataProvider gitAndConfigModifiedDateDataProvider
      */
     public function testGetGitModifiedDate($cacheAvailable, $cachedValue, $modifiedDate)
     {
@@ -204,7 +204,7 @@ class WebControllerTest extends TestCase
      * @param bool $cacheAvailable
      * @param DateTime|null $cachedValue
      * @param DateTime|null $modifiedDate
-     * @dataProvider gitModifiedDateDataProvider
+     * @dataProvider gitAndConfigModifiedDateDataProvider
      */
     public function testGetConfigModifiedDate($cacheAvailable, $cachedValue, $modifiedDate)
     {
