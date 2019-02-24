@@ -261,11 +261,17 @@ class WebController extends Controller
      */
     protected function getModifiedDate(Concept $concept, Vocabulary $vocab)
     {
+        $modifiedDate = null;
+
         $conceptModifiedDate = $this->getConceptModifiedDate($concept, $vocab);
         $gitModifiedDate = $this->getGitModifiedDate();
         $configModifiedDate = $this->getConfigModifiedDate();
-        // TODO return most recent of three
-        return null;
+
+        // max with an empty list raises an error and returns bool
+        if ($conceptModifiedDate || $gitModifiedDate || $configModifiedDate) {
+            $modifiedDate = max($conceptModifiedDate, $gitModifiedDate, $configModifiedDate);
+        }
+        return $modifiedDate;
     }
 
     /**

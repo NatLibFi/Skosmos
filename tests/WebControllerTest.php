@@ -90,6 +90,54 @@ class WebControllerTest extends TestCase
         ];
     }
 
+    public function modifiedDateDataProvider()
+    {
+        return [
+            # concept has the most recent date time
+            [
+                $this->datetime('01-Feb-2011'), # concept
+                $this->datetime('01-Feb-2002'), # git
+                $this->datetime('01-Feb-2003'), # config
+                $this->datetime('01-Feb-2011')  # returned
+            ], # set #0
+            # concept has the most recent date time
+            [
+                $this->datetime('01-Feb-2011'), # concept
+                null, # git
+                $this->datetime('01-Feb-2003'), # config
+                $this->datetime('01-Feb-2011')  # returned
+            ], # set #1
+            # concept has the most recent date time
+            [
+                $this->datetime('01-Feb-2011'), # concept
+                null, # git
+                null, # config
+                $this->datetime('01-Feb-2011')  # returned
+            ], # set #2
+            # git has the most recent date time
+            [
+                $this->datetime('01-Feb-2001'), # concept
+                $this->datetime('01-Feb-2012'), # git
+                $this->datetime('01-Feb-2003'), # config
+                $this->datetime('01-Feb-2012')  # returned
+            ], # set #3
+            # config has the most recent date time
+            [
+                $this->datetime('01-Feb-2001'), # concept
+                $this->datetime('01-Feb-2002'), # git
+                $this->datetime('01-Feb-2013'), # config
+                $this->datetime('01-Feb-2013')  # returned
+            ], # set #4
+            # no date time found
+            [
+                null, # concept
+                null, # git
+                null, # config
+                null  # returned
+            ], # set #4
+        ];
+    }
+
     /**
      * Utility method to create a datetime for data provider.
      * @param string $string
@@ -203,6 +251,30 @@ class WebControllerTest extends TestCase
         $dateTime = $controller->retrieveConfigModifiedDate($filename);
         $this->assertInstanceOf('DateTime', $dateTime);
         $this->assertTrue($dateTime > (new DateTime())->setTimeStamp(1));
+    }
+
+    /**
+     * @param DateTime|null $concept
+     * @param DateTime|null $git
+     * @param DateTime|null $config
+     * @param DateTime|null $modifiedDate
+     * @dataProvider modifiedDateDataProvider
+     */
+    public function testGetModifiedDate($concept, $git, $config, $modifiedDate)
+    {
+        $controller = Mockery::mock('WebController')
+            ->shouldAllowMockingProtectedMethods()
+            ->makePartial();
+        $controller->shouldReceive('getConceptModifiedDate')
+            ->andReturn($concept);
+        $controller->shouldReceive('getGitModifiedDate')
+            ->andReturn($git);
+        $controller->shouldReceive('getConfigModifiedDate')
+            ->andReturn($config);
+        $concept = Mockery::mock('Concept');
+        $vocabulary = Mockery::mock('Vocabulary');
+        $returnedValue = $controller->getModifiedDate($concept, $vocabulary);
+        $this->assertEquals($modifiedDate, $returnedValue);
     }
 
     /**
