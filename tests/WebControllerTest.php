@@ -171,7 +171,8 @@ class WebControllerTest extends TestCase
         $globalConfig->shouldReceive('getCache')
             ->andReturn($cache);
         $model = Mockery::mock('Model');
-        $model->globalConfig = $globalConfig;
+        $model->shouldReceive('getConfig')
+            ->andReturn($globalConfig);
         $controller = Mockery::mock('WebController')
             ->shouldAllowMockingProtectedMethods()
             ->makePartial();
@@ -223,7 +224,8 @@ class WebControllerTest extends TestCase
         $globalConfig->shouldReceive('getCache')
             ->andReturn($cache);
         $model = Mockery::mock('Model');
-        $model->globalConfig = $globalConfig;
+        $model->shouldReceive('getConfig')
+            ->andReturn($globalConfig);
         $controller = Mockery::mock('WebController')
             ->shouldAllowMockingProtectedMethods()
             ->makePartial();
