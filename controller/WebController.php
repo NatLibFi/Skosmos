@@ -312,7 +312,7 @@ class WebController extends Controller
     protected function getGitModifiedDate()
     {
         $commitDate = null;
-        $cache = $this->model->globalConfig->getCache();
+        $cache = $this->model->getConfig()->getCache();
         $cacheKey = "git:modified_date";
         $gitCommand = 'git log -1 --date=iso --pretty=format:%cd';
         if ($cache->isAvailable()) {
@@ -357,7 +357,7 @@ class WebController extends Controller
     protected function getConfigModifiedDate()
     {
         $dateTime = null;
-        $cache = $this->model->globalConfig->getCache();
+        $cache = $this->model->getConfig()->getCache();
         $cacheKey = "config:modified_date";
         $filename = realpath(__DIR__ . "/../config.ttl");
         if ($cache->isAvailable()) {
