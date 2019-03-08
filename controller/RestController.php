@@ -3,7 +3,7 @@
 /**
  * RestController is responsible for handling all the requests directed to the /rest address.
  */
-class RestController extends WebController
+class RestController extends Controller
 {
     /* supported MIME types that can be used to return RDF data */
     const SUPPORTED_FORMATS = 'application/rdf+xml text/turtle application/ld+json application/json application/marcxml+xml';
@@ -635,6 +635,7 @@ class RestController extends WebController
      * Get the mappings associated with a concept, enriched with labels and notations.
      * Returns a JSKOS-compatible JSON object.
      * @param Request $request
+     * @throws Exception if the vocabulary ID is not found in configuration
      */
     public function mappings(Request $request)
     {
