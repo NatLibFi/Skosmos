@@ -414,10 +414,17 @@ function loadMappingProperties(concept, contentLang, $htmlElement, conceptData) 
         }
       }
 
-      var template = renderPropertyMappings(concept, contentLang, conceptProperties);
+      if (conceptProperties.length > 0) {
+        var template = renderPropertyMappings(concept, contentLang, conceptProperties);
 
-      $htmlElement.empty();
-      $htmlElement.append(template);
+        $htmlElement.empty();
+        $htmlElement.append(template);
+      } else {
+        // No concept properties found
+        $htmlElement.empty();
+        $htmlElement.addClass("hidden");
+      }
+
 
     },
     error: function(data) {
