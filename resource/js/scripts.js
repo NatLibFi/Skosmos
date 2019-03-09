@@ -366,9 +366,11 @@ function renderPropertyMappings(concept, contentLang, properties) {
  * template is comprised of another template, for concept mapping property values.
  *
  * @param concept dictionary/object populated with data from the Concept object
- * @param htmlElement HTML (a div) parent object. Initially hidden.
+ * @param contentLang language to display content
+ * @param $htmlElement HTML (a div) parent object (initially hidden)
+ * @param conceptData concept page data returned via ajax, passed to makeCallback only
  */
-function loadMappingProperties(concept, contentLang, $htmlElement) {
+function loadMappingProperties(concept, contentLang, $htmlElement, conceptData) {
   // display with the spinner
   $htmlElement
     .removeClass('hidden')
@@ -422,7 +424,7 @@ function loadMappingProperties(concept, contentLang, $htmlElement) {
       console.log("Error retrieving mapping properties for [" + $htmlElement.data('concept-uri') + "]: " + data.responseText);
     },
     complete: function() {
-      makeCallbacks();
+      makeCallbacks(conceptData);
     }
   });
 }
