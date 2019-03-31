@@ -209,20 +209,9 @@ class WebControllerTest extends TestCase
      */
     public function testGetConfigModifiedDate($cacheAvailable, $cachedValue, $modifiedDate)
     {
-        $cache = Mockery::spy('Cache');
-        $cache->shouldReceive('isAvailable')
-            ->andReturn($cacheAvailable);
-        if ($cacheAvailable) {
-            $cache->shouldReceive('fetch')
-                ->andReturn($cachedValue);
-            if ($modifiedDate) {
-                $cache->shouldReceive('store')
-                    ->andReturn(true);
-            }
-        }
         $globalConfig = Mockery::mock('GlobalConfig');
-        $globalConfig->shouldReceive('getCache')
-            ->andReturn($cache);
+        $globalConfig->shouldReceive('getConfigModifiedTime')
+            ->andReturn(1);
         $model = Mockery::mock('Model');
         $model->shouldReceive('getConfig')
             ->andReturn($globalConfig);
@@ -237,22 +226,7 @@ class WebControllerTest extends TestCase
         $configModifiedDate = $controller->getConfigModifiedDate();
 
         $this->assertNotNull($configModifiedDate);
-        $this->assertTrue($configModifiedDate > (new DateTime())->setTimeStamp(1));
-    }
-
-    /**
-     * Retrieve the modified date of the local config.ttl.dist and test that it returns a valid date time. It should
-     * be safe to test this as Travis-CI and developer environments should have a config.ttl.dist file.
-     */
-    public function testRetrieveConfigModifiedDate()
-    {
-        $controller = Mockery::mock('WebController')
-            ->shouldAllowMockingProtectedMethods()
-            ->makePartial();
-        $filename = realpath(__DIR__ . "/../config.ttl.dist");
-        $dateTime = $controller->retrieveConfigModifiedDate($filename);
-        $this->assertInstanceOf('DateTime', $dateTime);
-        $this->assertTrue($dateTime > (new DateTime())->setTimeStamp(1));
+        $this->assertEquals((new DateTime())->setTimeStamp(1), $configModifiedDate);
     }
 
     /**

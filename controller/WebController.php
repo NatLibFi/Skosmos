@@ -352,9 +352,9 @@ class WebController extends Controller
     }
 
     /**
-     * Return the datetime of the modified time of the config.ttl file. If the file does not exist, or it
-     * fails to read the modified date time, or if the modified date time is not a valid time, then it returns
-     * null.
+     * Return the datetime of the modified time of the config file. This value is read in the GlobalConfig
+     * for every request, so we simply access that value and if not null, we will return a datetime. Otherwise,
+     * we return a null value.
      *
      * @see http://php.net/manual/en/function.filemtime.php
      * @return DateTime|null
@@ -362,38 +362,9 @@ class WebController extends Controller
     protected function getConfigModifiedDate()
     {
         $dateTime = null;
-        $cache = $this->model->getConfig()->getCache();
-        $cacheKey = "config:modified_date";
-        $filename = realpath(__DIR__ . "/../config.ttl");
-        if ($cache->isAvailable()) {
-            $dateTime = $cache->fetch($cacheKey);
-            if (!$dateTime) {
-                $dateTime = $this->retrieveConfigModifiedDate($filename);
-                if ($dateTime) {
-                    $cache->store($cacheKey, $dateTime, static::READ_MODIFIED_CONFIG_TTL);
-                }
-            }
-        } else {
-            $dateTime = $this->retrieveConfigModifiedDate($filename);
-        }
-        return $dateTime;
-    }
-
-    /**
-     * Retrieve the modified date for the configuration file. Return null if the file is not found, or if an
-     * error occurred while reading the file.
-     *
-     * @param string $filename
-     * @return DateTime|null
-     */
-    protected function retrieveConfigModifiedDate($filename)
-    {
-        $dateTime = null;
-        if (file_exists($filename)) {
-            $modifiedTime = filemtime($filename);
-            if (!is_bool($modifiedTime)) {
-                $dateTime = (new DateTime())->setTimestamp($modifiedTime);
-            }
+        $configModifiedTime = $this->model->getConfig()->getConfigModifiedTime();
+        if (!is_null($configModifiedTime)) {
+            $dateTime = (new DateTime())->setTimestamp($configModifiedTime);
         }
         return $dateTime;
     }
