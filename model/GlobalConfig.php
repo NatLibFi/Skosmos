@@ -23,6 +23,10 @@ class GlobalConfig extends BaseConfig {
     private $namespaces;
     /** EasyRdf\Graph graph */
     private $graph;
+    /**
+     * @var int the time the config file was last modified
+     */
+    private $configModifiedTime = null;
 
     public function __construct($config_name='/../config.ttl')
     {
@@ -45,6 +49,14 @@ class GlobalConfig extends BaseConfig {
     }
 
     /**
+     * @return int the time the config file was last modified
+     */
+    public function getConfigModifiedTime()
+    {
+        return $this->configModifiedTime;
+    }
+
+    /**
      * Initialize configuration, reading the configuration file from the disk,
      * and creating the graph and resources objects. Uses a cache if available,
      * in order to avoid re-loading the complete configuration on each request.
@@ -52,10 +64,15 @@ class GlobalConfig extends BaseConfig {
     private function initializeConfig()
     {
         try {
+            // retrieve last modified time for config file (filemtime returns int|bool!)
+            $configModifiedTime = filemtime($this->filePath);
+            if (!is_bool($configModifiedTime)) {
+                $this->configModifiedTime = $configModifiedTime;
+            }
             // use APC user cache to store parsed config.ttl configuration
-            if ($this->cache->isAvailable()) {
+            if ($this->cache->isAvailable() && !is_null($this->configModifiedTime)) {
                 // @codeCoverageIgnoreStart
-                $key = realpath($this->filePath) . ", " . filemtime($this->filePath);
+                $key = realpath($this->filePath) . ", " . $this->configModifiedTime;
                 $nskey = "namespaces of " . $key;
                 $this->graph = $this->cache->fetch($key);
                 $this->namespaces = $this->cache->fetch($nskey);
