@@ -151,7 +151,12 @@ class Controller
      */
     protected function getIfModifiedSince()
     {
-        return isset($_SERVER["HTTP_IF_MODIFIED_SINCE"]) ? strtotime($_SERVER["HTTP_IF_MODIFIED_SINCE"]) : null;
+        $ifModifiedSince = null;
+        if (isset($_SERVER["HTTP_IF_MODIFIED_SINCE"])) {
+            // example value set by a browser: "2019-04-13 08:28:23"
+            $ifModifiedSince = DateTime::createFromFormat("Y-m-d H:i:s", $_SERVER["HTTP_IF_MODIFIED_SINCE"]);
+        }
+        return $ifModifiedSince;
     }
 
     /**
