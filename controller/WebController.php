@@ -12,10 +12,10 @@ use \Punic\Language;
 class WebController extends Controller
 {
     /**
-     * How long to store retrieved disk configuration for HTTP 304 header,
-     * like git configuration, or file modification date.
+     * How long to store retrieved disk configuration for HTTP 304 header
+     * from git information.
      */
-    const READ_MODIFIED_CONFIG_TTL = 600; // 10 minutes
+    const GIT_MODIFIED_CONFIG_TTL = 600; // 10 minutes
     /**
      * Provides access to the templating engine.
      * @property object $twig the twig templating engine.
@@ -325,7 +325,7 @@ class WebController extends Controller
             if (!$commitDate) {
                 $commitDate = $this->executeGitModifiedDateCommand($gitCommand);
                 if ($commitDate) {
-                    $cache->store($cacheKey, $commitDate, static::READ_MODIFIED_CONFIG_TTL);
+                    $cache->store($cacheKey, $commitDate, static::GIT_MODIFIED_CONFIG_TTL);
                 }
             }
         } else {
