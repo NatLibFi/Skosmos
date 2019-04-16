@@ -22,6 +22,7 @@ class DataObject
      * Initializes the DataObject
      * @param Model $model
      * @param EasyRdf\Resource $resource
+     * @throws Exception
      */
     public function __construct($model, $resource)
     {
