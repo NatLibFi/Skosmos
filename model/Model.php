@@ -201,6 +201,7 @@ class Model
         if (!$result->isEmpty()) {
             return $serialiser->serialise($result, $retform);
         }
+        return "";
     }
 
     /**
