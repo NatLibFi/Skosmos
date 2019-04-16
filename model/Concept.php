@@ -682,7 +682,6 @@ class Concept extends VocabularyDataObject
     {
         $ret = '';
         $created = '';
-        $modified = '';
         try {
             // finding the created properties
             if ($this->resource->get('dc:created')) {
