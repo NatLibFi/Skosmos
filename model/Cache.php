@@ -23,6 +23,7 @@ class Cache
         if (function_exists('apcu_store')) {
             return apcu_store($key, $value, $ttl);
         }
+        return false;
     }
 
     public function isAvailable() {
