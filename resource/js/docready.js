@@ -755,6 +755,16 @@ $(function() { // DOCUMENT READY
         $('.clear-search').addClass('clear-search-dark');
       }
     });
+
+    // monkey-patching TypeAhead's Dropdown object for: https://github.com/NatLibFi/Skosmos/issues/773
+    // Updating typeahead.js to 0.11 requires a few changes that are not really complicated.
+    // However, our dropdown style is broken, and it appears hard to be fixed. typeahead.js
+    // Also does not appear to be maintained, so this temporary fix will prevent
+    // accidental selection of values. TODO: we must fix this in a future release, possibly
+    // using another library.
+    var typeaheadInstance = $typeahead.data("ttTypeahead");
+    typeaheadInstance.dropdown.$menu.off("mouseenter.tt", ".tt-suggestion");
+    typeaheadInstance.dropdown.$menu.off("mouseleave.tt", ".tt-suggestion");
   }
 
   // storing the search input before autocompletion changes it
