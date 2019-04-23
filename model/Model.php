@@ -255,7 +255,7 @@ class Model
 
             // if uri is a external vocab uri that is included in the current vocab
             $realvoc = $this->guessVocabularyFromURI($hit['uri'], $voc !== null ? $voc->getId() : null);
-            if ($realvoc != $hitvoc) {
+            if ($realvoc !== $hitvoc) {
                 unset($hit['localname']);
                 $hit['exvocab'] = ($realvoc !== null) ? $realvoc->getId() : "???";
             }
