@@ -193,14 +193,13 @@ class Controller
      * Finally, if no date found, return null.
      *
      * @param Concept $concept
-     * @param Vocabulary $vocab
      * @return DateTime|null
      */
-    protected function getModifiedDate(Concept $concept, Vocabulary $vocab)
+    protected function getModifiedDate(Concept $concept = null)
     {
         $modifiedDate = null;
 
-        $conceptModifiedDate = $this->getConceptModifiedDate($concept, $vocab);
+        $conceptModifiedDate = $this->getConceptModifiedDate($concept);
         $gitModifiedDate = $this->getGitModifiedDate();
         $configModifiedDate = $this->getConfigModifiedDate();
 
@@ -217,13 +216,16 @@ class Controller
      * not get the modified date from the concept nor from the concept scheme, it returns null.
      *
      * @param Concept $concept concept used to retrieve modified date
-     * @param Vocabulary $vocab vocabulary used to retrieve modified date
-     * @return DateTime|null|string
+     * @return DateTime|null|string|boolean
      */
-    protected function getConceptModifiedDate(Concept $concept, Vocabulary $vocab)
+    protected function getConceptModifiedDate(Concept $concept = null)
     {
+        if (is_null($concept)) {
+            return false;
+        }
         $modifiedDate = $concept->getModifiedDate();
         if (!$modifiedDate) {
+            $vocab = $concept->getVocab();
             $conceptSchemeURI = $vocab->getDefaultConceptScheme();
             if ($conceptSchemeURI) {
                 $conceptSchemeGraph = $vocab->getConceptScheme($conceptSchemeURI);

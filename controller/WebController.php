@@ -177,7 +177,7 @@ class WebController extends Controller
         }
         $useModifiedDate = $this->model->getConfig()->getUseModifiedDate();
         if ($useModifiedDate) {
-            $modifiedDate = $this->getModifiedDate($results[0], $vocab);
+            $modifiedDate = $this->getModifiedDate($results[0]);
             // return if the controller sends the not modified header
             if ($this->sendNotModifiedHeader($modifiedDate)) {
                 return;
