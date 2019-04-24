@@ -706,6 +706,10 @@ class RestController extends Controller
             return $this->returnError(400, "Bad Request", "uri parameter missing");
         }
 
+        if ($this->notModified(null)) {
+            return;
+        }
+
         $results = $request->getVocab()->getConceptLabel($request->getUri(), $request->getLang());
         if ($results === null) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
@@ -818,6 +822,9 @@ class RestController extends Controller
      */
     public function broader($request)
     {
+        if ($this->notModified(null)) {
+            return;
+        }
         $broaders = $request->getVocab()->getConceptBroaders($request->getUri(), $request->getLang());
         if ($broaders === null) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
@@ -833,6 +840,9 @@ class RestController extends Controller
      */
     public function broaderTransitive($request)
     {
+        if ($this->notModified(null)) {
+            return;
+        }
         $broaders = $request->getVocab()->getConceptTransitiveBroaders($request->getUri(), $this->parseLimit(), false, $request->getLang());
         if (empty($broaders)) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
@@ -848,6 +858,9 @@ class RestController extends Controller
      */
     public function narrower($request)
     {
+        if ($this->notModified(null)) {
+            return;
+        }
         $narrowers = $request->getVocab()->getConceptNarrowers($request->getUri(), $request->getLang());
         if ($narrowers === null) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
@@ -863,6 +876,9 @@ class RestController extends Controller
      */
     public function narrowerTransitive($request)
     {
+        if ($this->notModified(null)) {
+            return;
+        }
         $narrowers = $request->getVocab()->getConceptTransitiveNarrowers($request->getUri(), $this->parseLimit(), $request->getLang());
         if (empty($narrowers)) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
@@ -879,11 +895,13 @@ class RestController extends Controller
      */
     public function hierarchy($request)
     {
+        if ($this->notModified(null)) {
+            return;
+        }
         $results = $request->getVocab()->getConceptHierarchy($request->getUri(), $request->getLang());
         if (empty($results)) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
         }
-
 
         // set the "top" key from the "tops" key
         foreach ($results as $value) {
@@ -979,6 +997,9 @@ class RestController extends Controller
      */
     public function groupMembers($request)
     {
+        if ($this->notModified(null)) {
+            return;
+        }
         $children = $request->getVocab()->listConceptGroupContents($request->getUri(), $request->getLang());
         if (empty($children)) {
             return $this->returnError('404', 'Not Found', "Could not find group <{$request->getUri()}>");
@@ -1000,6 +1021,9 @@ class RestController extends Controller
      */
     public function children($request)
     {
+        if ($this->notModified(null)) {
+            return;
+        }
         $children = $request->getVocab()->getConceptChildren($request->getUri(), $request->getLang());
         if ($children === null) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
@@ -1021,6 +1045,9 @@ class RestController extends Controller
      */
     public function related($request)
     {
+        if ($this->notModified(null)) {
+            return;
+        }
         $related = $request->getVocab()->getConceptRelateds($request->getUri(), $request->getLang());
         if ($related === null) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
