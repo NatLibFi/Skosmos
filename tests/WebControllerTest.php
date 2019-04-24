@@ -267,6 +267,9 @@ class WebControllerTest extends TestCase
             ->shouldReceive("getModifiedDate")
             ->andReturn($conceptDate);
         $vocab = Mockery::mock("Vocabulary");
+        $concept
+            ->shouldReceive('getVocab')
+            ->andReturn($vocab);
         // if no scheme date, we return that same value as default concept scheme to stop the flow
         $defaultScheme = (isset($schemeDate) ? "http://test/" : null);
         $vocab

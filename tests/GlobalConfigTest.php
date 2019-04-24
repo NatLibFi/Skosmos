@@ -173,5 +173,9 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
     {
         $this->assertEquals("Skosmos", $this->configWithDefaults->getServiceName());
     }
+
+    public function testGetVocabularyUseModifiedDate() {
+        $this->assertEquals(false ,$this->configWithDefaults->getUseModifiedDate());
+    }
 }
 
