@@ -526,13 +526,4 @@ class VocabularyConfig extends BaseConfig
         $this->languageOrderCache[$clang] = $ret;
         return $ret;
     }
-
-    /**
-     * Returns a boolean value set in the config.ttl config.
-     * @return boolean
-     */
-    public function getUseModifiedDate(): bool
-    {
-        return $this->getBoolean('skosmos:useModifiedDate', false);
-    }
 }

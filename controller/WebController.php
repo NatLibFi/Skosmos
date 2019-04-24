@@ -175,7 +175,7 @@ class WebController extends Controller
             $this->invokeGenericErrorPage($request);
             return;
         }
-        $useModifiedDate = $vocab->getConfig()->getUseModifiedDate();
+        $useModifiedDate = $this->model->getConfig()->getUseModifiedDate();
         if ($useModifiedDate) {
             $modifiedDate = $this->getModifiedDate($results[0], $vocab);
             // return if the controller sends the not modified header
