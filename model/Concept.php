@@ -599,8 +599,8 @@ class Concept extends VocabularyDataObject
                         // create a ConceptPropertyValue first, assuming the resource exists in current vocabulary
                         $value = new ConceptPropertyValue($this->model, $this->vocab, $val, $prop, $this->clang);
                         // check whether we know the label of the resource
-                        $label = $value->getLabel();
-                        if ($label == $value->resource->shorten() || $label == $value->getUri()) {
+                        $label = $value->getLabel('', 'null');
+                        if ($label === null) {
                             // we don't know a label for the resource
                             // checking if the property value is not in the current vocabulary
                             $exvoc = $this->model->guessVocabularyFromURI($val->getUri(), $this->vocab->getId());

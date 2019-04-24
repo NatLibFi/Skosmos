@@ -35,7 +35,7 @@ class ConceptPropertyValue extends VocabularyDataObject
         return $this->getEnvLang();
     }
 
-    public function getLabel($lang = '')
+    public function getLabel($lang = '', $fallback = 'uri')
     {
         if ($this->clang) {
             $lang = $this->clang;
@@ -68,9 +68,13 @@ class ConceptPropertyValue extends VocabularyDataObject
         } elseif ($this->resource->getLiteral('rdf:value') !== null) { // any language
             return $this->resource->getLiteral('rdf:value');
         }
-        // uri if no label is found
-        $label = $this->resource->shorten() ? $this->resource->shorten() : $this->getUri();
-        return $label;
+
+        if ($fallback == 'uri') {
+            // return uri if no label is found
+            $label = $this->resource->shorten() ? $this->resource->shorten() : $this->getUri();
+            return $label;
+        }
+        return null;
     }
 
     public function getType()
