@@ -183,6 +183,17 @@ class Controller
         echo "$code $status : $message";
     }
 
+    protected function notModified(Concept $concept = null)
+    {
+        $notModified = false;
+        $useModifiedDate = $this->model->getConfig()->getUseModifiedDate();
+        if ($useModifiedDate) {
+            $modifiedDate = $this->getModifiedDate($concept);
+            $notModified = $this->sendNotModifiedHeader($modifiedDate);
+        }
+        return $notModified;
+    }
+
     /**
      * Return the modified date. First try to get the modified date from the concept. If found, return this
      * date.
