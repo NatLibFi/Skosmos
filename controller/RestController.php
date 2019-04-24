@@ -64,6 +64,10 @@ class RestController extends Controller
             return $this->returnError(400, "Bad Request", "lang parameter missing");
         }
 
+        if ($this->notModified(null)) {
+            return;
+        }
+
         $this->setLanguageProperties($request->getLang());
 
         $vocabs = array();
@@ -200,6 +204,9 @@ class RestController extends Controller
      */
     public function vocabularyInformation($request)
     {
+        if ($this->notModified(null)) {
+            return;
+        }
         $vocab = $request->getVocab();
 
         /* encode the results in a JSON-LD compatible array */
@@ -250,6 +257,9 @@ class RestController extends Controller
      */
     public function vocabularyStatistics($request)
     {
+        if ($this->notModified(null)) {
+            return;
+        }
         $this->setLanguageProperties($request->getLang());
         $arrayClass = $request->getVocab()->getConfig()->getArrayClassURI();
         $groupClass = $request->getVocab()->getConfig()->getGroupClassURI();
@@ -319,6 +329,9 @@ class RestController extends Controller
      */
     public function labelStatistics($request)
     {
+        if ($this->notModified(null)) {
+            return;
+        }
         $lang = $request->getLang();
         $this->setLanguageProperties($request->getLang());
         $vocabStats = $request->getVocab()->getLabelStatistics();
@@ -376,6 +389,10 @@ class RestController extends Controller
         if ($vocid === null && !$request->getLang()) {
             return $this->returnError(400, "Bad Request", "lang parameter missing");
         }
+        if ($this->notModified(null)) {
+            return;
+        }
+
         $this->setLanguageProperties($request->getLang());
 
         $queriedtypes = $this->model->getTypes($vocid, $request->getLang());
@@ -502,6 +519,9 @@ class RestController extends Controller
         if (!$label) {
             return $this->returnError(400, "Bad Request", "label parameter missing");
         }
+        if ($this->notModified(null)) {
+            return;
+        }
 
         $lang = $request->getQueryParam('lang');
         $parameters = new ConceptSearchParameters($request, $this->model->getConfig(), true);
@@ -521,6 +541,9 @@ class RestController extends Controller
      */
     public function topConcepts($request)
     {
+        if ($this->notModified(null)) {
+            return;
+        }
         $vocab = $request->getVocab();
         $scheme = $request->getQueryParam('scheme');
         if (!$scheme) {
@@ -935,6 +958,9 @@ class RestController extends Controller
      */
     public function groups($request)
     {
+        if ($this->notModified(null)) {
+            return;
+        }
         $results = $request->getVocab()->listConceptGroups($request->getLang());
 
         $ret = array_merge_recursive($this->context, array(
