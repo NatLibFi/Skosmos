@@ -504,9 +504,9 @@ class Concept extends VocabularyDataObject
                 // shortening property labels if possible
                 $prop = $sprop = EasyRdf\RdfNamespace::shorten($prop);
             } else {
+                // EasyRdf requires full URIs to be in angle brackets
                 $sprop = "<$prop>";
             }
-            // EasyRdf requires full URIs to be in angle brackets
 
             if (!in_array($prop, $this->DELETED_PROPERTIES) || ($this->isGroup() === false && $prop === 'skos:member')) {
                 // retrieve property label and super properties from the current vocabulary first
@@ -596,13 +596,19 @@ class Concept extends VocabularyDataObject
                     }
 
                     if (isset($ret[$prop])) {
-                        // checking if the property value is not in the current vocabulary
-                        $exvoc = $this->model->guessVocabularyFromURI($val->getUri(), $this->vocab->getId());
-                        if ($exvoc && $exvoc->getId() !== $this->vocab->getId()) {
-                            $ret[$prop]->addValue(new ConceptMappingPropertyValue($this->model, $this->vocab, $val, $this->resource, $prop, $this->clang), $this->clang);
-                            continue;
+                        // create a ConceptPropertyValue first, assuming the resource exists in current vocabulary
+                        $value = new ConceptPropertyValue($this->model, $this->vocab, $val, $prop, $this->clang);
+                        // check whether we know the label of the resource
+                        $label = $value->getLabel();
+                        if ($label == $value->resource->shorten() || $label == $value->getUri()) {
+                            // we don't know a label for the resource
+                            // checking if the property value is not in the current vocabulary
+                            $exvoc = $this->model->guessVocabularyFromURI($val->getUri(), $this->vocab->getId());
+                            if ($exvoc && $exvoc->getId() !== $this->vocab->getId()) {
+                                $value = new ConceptMappingPropertyValue($this->model, $this->vocab, $val, $this->resource, $prop, $this->clang);
+                            }
                         }
-                        $ret[$prop]->addValue(new ConceptPropertyValue($this->model, $this->vocab, $val, $prop, $this->clang), $this->clang);
+                        $ret[$prop]->addValue($value, $this->clang);
                     }
 
                 }

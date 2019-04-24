@@ -253,11 +253,13 @@ class Model
 
             $hit['voc'] = $hitvoc;
 
-            // if uri is a external vocab uri that is included in the current vocab
-            $realvoc = $this->guessVocabularyFromURI($hit['uri'], $voc !== null ? $voc->getId() : null);
-            if ($realvoc !== $hitvoc) {
-                unset($hit['localname']);
-                $hit['exvocab'] = ($realvoc !== null) ? $realvoc->getId() : "???";
+            if (!$hitvoc->containsURI($hit['uri'])) {
+                // if uri is a external vocab uri that is included in the current vocab
+                $realvoc = $this->guessVocabularyFromURI($hit['uri'], $voc !== null ? $voc->getId() : null);
+                if ($realvoc !== $hitvoc) {
+                    unset($hit['localname']);
+                    $hit['exvocab'] = ($realvoc !== null) ? $realvoc->getId() : "???";
+                }
             }
 
             $ret[] = $hit;
@@ -468,7 +470,13 @@ class Model
         if($preferredVocabId != null) {
             foreach ($vocabs as $vocab) {
                 if($vocab->getId() == $preferredVocabId) {
-                    return $vocab;
+                    // double check that a label exists in the preferred vocabulary
+                    if ($vocab->getConceptLabel($uri, null) !== null) {
+                        return $vocab;
+                    } else {
+                        // not found in preferred vocabulary, fall back to next method
+                        break;
+                    }
                 }
             }
         }

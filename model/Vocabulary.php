@@ -80,6 +80,18 @@ class Vocabulary extends DataObject
     }
 
     /**
+     * Return true if the URI is within the URI space of this vocabulary.
+     *
+     * @param string full URI of concept
+     * @return bool true if URI is within URI namespace, false otherwise
+     */
+
+    public function containsURI($uri)
+    {
+        return (strpos($uri, $this->getUriSpace()) === 0);
+    }
+
+    /**
      * Get the full URI of a concept in a vocabulary. If the passed local
      * name is already a full URI, return it unchanged.
      *
