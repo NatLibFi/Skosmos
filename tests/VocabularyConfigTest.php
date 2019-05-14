@@ -417,7 +417,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $vocab = $this->model->getVocabulary('testdiff');
     $this->assertEquals('http://www.skosmos.skos/testdiff#conceptscheme' , $vocab->getConfig()->getMainConceptSchemeURI());
     $vocab = $this->model->getVocabulary('test');
-    $this->assertNull(null , $vocab->getConfig()->getMainConceptSchemeURI());
+    $this->assertNull($vocab->getConfig()->getMainConceptSchemeURI());
   }
 
   /**
