@@ -186,8 +186,7 @@ class Controller
     protected function notModified(Modifiable $modifiable)
     {
         $notModified = false;
-        $useModifiedDate = $this->model->getConfig()->getUseModifiedDate();
-        if ($useModifiedDate) {
+        if ($modifiable->getUseModifiedDate()) {
             $modifiedDate = $this->getModifiedDate($modifiable);
             $notModified = $this->sendNotModifiedHeader($modifiedDate);
         }

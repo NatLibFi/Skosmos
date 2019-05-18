@@ -526,4 +526,12 @@ class VocabularyConfig extends BaseConfig
         $this->languageOrderCache[$clang] = $ret;
         return $ret;
     }
+
+    /**
+     * @return boolean
+     */
+    public function getUseModifiedDate()
+    {
+        return $this->getBoolean('skosmos:useModifiedDate', false);
+    }
 }

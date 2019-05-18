@@ -356,12 +356,4 @@ class GlobalConfig extends BaseConfig {
     {
         return $this->getBoolean('skosmos:sparqlCollationEnabled', FALSE);
     }
-
-    /**
-     * @return boolean
-     */
-    public function getUseModifiedDate(): bool
-    {
-        return $this->getBoolean('skosmos:useModifiedDate', false);
-    }
 }

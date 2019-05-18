@@ -643,4 +643,9 @@ class Vocabulary extends DataObject implements Modifiable
         }
         return $modified;
     }
+
+    public function getUseModifiedDate()
+    {
+        return $this->getConfig()->getUseModifiedDate();
+    }
 }

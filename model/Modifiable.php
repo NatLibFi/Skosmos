@@ -10,4 +10,9 @@ interface Modifiable {
      */
     public function getModifiedDate();
 
+    /**
+     * @return boolean
+     */
+    public function getUseModifiedDate();
+
 }

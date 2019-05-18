@@ -939,4 +939,9 @@ class Concept extends VocabularyDataObject implements Modifiable
         $compactJsonLD = \ML\JsonLD\JsonLD::compact($this->graph->serialise('jsonld'), json_encode($context));
         return \ML\JsonLD\JsonLD::toString($compactJsonLD);
     }
+
+    public function getUseModifiedDate()
+    {
+        return $this->getVocab()->getUseModifiedDate();
+    }
 }
