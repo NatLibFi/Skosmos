@@ -183,42 +183,35 @@ class Controller
         echo "$code $status : $message";
     }
 
-    protected function notModified(Concept $concept = null)
+    protected function notModified(Modifiable $modifiable)
     {
         $notModified = false;
         $useModifiedDate = $this->model->getConfig()->getUseModifiedDate();
         if ($useModifiedDate) {
-            $modifiedDate = $this->getModifiedDate($concept);
+            $modifiedDate = $this->getModifiedDate($modifiable);
             $notModified = $this->sendNotModifiedHeader($modifiedDate);
         }
         return $notModified;
     }
 
     /**
-     * Return the modified date. First try to get the modified date from the concept. If found, return this
-     * date.
+     * Return the modified date.
      *
-     * Then try to get the modified date from the vocabulary's main concept scheme. If found, then return this
-     * date.
-     *
-     * Finally, if no date found, return null.
-     *
-     * @param Concept $concept
+     * @param Modifiable $modifiable
      * @return DateTime|null
      */
-    protected function getModifiedDate(Concept $concept = null)
+    protected function getModifiedDate(Modifiable $modifiable = null)
     {
-        $modifiedDate = null;
-
-        $conceptModifiedDate = $this->getConceptModifiedDate($concept);
+        $modified = null;
+        $modifiedDate = $modifiable->getModifiedDate();
         $gitModifiedDate = $this->getGitModifiedDate();
         $configModifiedDate = $this->getConfigModifiedDate();
 
         // max with an empty list raises an error and returns bool
-        if ($conceptModifiedDate || $gitModifiedDate || $configModifiedDate) {
-            $modifiedDate = max($conceptModifiedDate, $gitModifiedDate, $configModifiedDate);
+        if ($modifiedDate || $gitModifiedDate || $configModifiedDate) {
+            $modified = max($modifiedDate, $gitModifiedDate, $configModifiedDate);
         }
-        return $modifiedDate;
+        return $modified;
     }
 
     /**
@@ -231,9 +224,6 @@ class Controller
      */
     protected function getConceptModifiedDate(Concept $concept = null)
     {
-        if (is_null($concept)) {
-            return false;
-        }
         $modifiedDate = $concept->getModifiedDate();
         if (!$modifiedDate) {
             $vocab = $concept->getVocab();

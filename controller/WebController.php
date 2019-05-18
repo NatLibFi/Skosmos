@@ -175,13 +175,8 @@ class WebController extends Controller
             $this->invokeGenericErrorPage($request);
             return;
         }
-        $useModifiedDate = $this->model->getConfig()->getUseModifiedDate();
-        if ($useModifiedDate) {
-            $modifiedDate = $this->getModifiedDate($results[0]);
-            // return if the controller sends the not modified header
-            if ($this->sendNotModifiedHeader($modifiedDate)) {
-                return;
-            }
+        if ($this->notModified($results[0])) {
+            return;
         }
         $pluginParameters = $vocab->getConfig()->getPluginParameters();
         /** @var \Twig\Template $template */

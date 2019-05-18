@@ -3,7 +3,7 @@
 /**
  * Vocabulary dataobjects provide access to the vocabularies on the SPARQL endpoint.
  */
-class Vocabulary extends DataObject
+class Vocabulary extends DataObject implements Modifiable
 {
     /** cached value of URI space */
     private $urispace = null;
@@ -632,4 +632,15 @@ class Vocabulary extends DataObject
       return $this->config->getId();
     }
 
+    public function getModifiedDate()
+    {
+        $modified = null;
+        // finding the modified properties
+        /** @var \EasyRdf\Resource $modifiedResource */
+        $modifiedResource = $this->resource->get('dc:modified');
+        if ($modifiedResource) {
+            $modified = $modifiedResource->getValue();
+        }
+        return $modified;
+    }
 }
