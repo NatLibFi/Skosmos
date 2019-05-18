@@ -64,10 +64,6 @@ class RestController extends Controller
             return $this->returnError(400, "Bad Request", "lang parameter missing");
         }
 
-        if ($this->notModified(null)) {
-            return;
-        }
-
         $this->setLanguageProperties($request->getLang());
 
         $vocabs = array();
@@ -204,10 +200,10 @@ class RestController extends Controller
      */
     public function vocabularyInformation($request)
     {
-        if ($this->notModified(null)) {
-            return;
-        }
         $vocab = $request->getVocab();
+        if ($this->notModified($vocab)) {
+            return null;
+        }
 
         /* encode the results in a JSON-LD compatible array */
         $conceptschemes = array();
@@ -257,8 +253,8 @@ class RestController extends Controller
      */
     public function vocabularyStatistics($request)
     {
-        if ($this->notModified(null)) {
-            return;
+        if ($this->notModified($request->getVocab())) {
+            return null;
         }
         $this->setLanguageProperties($request->getLang());
         $arrayClass = $request->getVocab()->getConfig()->getArrayClassURI();
@@ -329,8 +325,8 @@ class RestController extends Controller
      */
     public function labelStatistics($request)
     {
-        if ($this->notModified(null)) {
-            return;
+        if ($this->notModified($request->getVocab())) {
+            return null;
         }
         $lang = $request->getLang();
         $this->setLanguageProperties($request->getLang());
@@ -389,8 +385,8 @@ class RestController extends Controller
         if ($vocid === null && !$request->getLang()) {
             return $this->returnError(400, "Bad Request", "lang parameter missing");
         }
-        if ($this->notModified(null)) {
-            return;
+        if ($this->notModified($request->getVocab())) {
+            return null;
         }
 
         $this->setLanguageProperties($request->getLang());
@@ -519,9 +515,6 @@ class RestController extends Controller
         if (!$label) {
             return $this->returnError(400, "Bad Request", "label parameter missing");
         }
-        if ($this->notModified(null)) {
-            return;
-        }
 
         $lang = $request->getQueryParam('lang');
         $parameters = new ConceptSearchParameters($request, $this->model->getConfig(), true);
@@ -541,10 +534,10 @@ class RestController extends Controller
      */
     public function topConcepts($request)
     {
-        if ($this->notModified(null)) {
-            return;
-        }
         $vocab = $request->getVocab();
+        if ($this->notModified($vocab)) {
+            return null;
+        }
         $scheme = $request->getQueryParam('scheme');
         if (!$scheme) {
             $scheme = $vocab->getConfig()->showConceptSchemesInHierarchy() ? array_keys($vocab->getConceptSchemes()) : $vocab->getDefaultConceptScheme();
@@ -632,6 +625,9 @@ class RestController extends Controller
     public function data($request)
     {
         $vocab = $request->getVocab();
+        if ($this->notModified($request->getVocab())) {
+            return null;
+        }
 
         if ($request->getUri()) {
             $uri = $request->getUri();
@@ -664,6 +660,9 @@ class RestController extends Controller
     {
         $this->setLanguageProperties($request->getLang());
         $vocab = $request->getVocab();
+        if ($this->notModified($vocab)) {
+            return null;
+        }
 
         $uri = $request->getUri();
         if (!$uri) {
@@ -706,8 +705,8 @@ class RestController extends Controller
             return $this->returnError(400, "Bad Request", "uri parameter missing");
         }
 
-        if ($this->notModified(null)) {
-            return;
+        if ($this->notModified($request->getVocab())) {
+            return null;
         }
 
         $results = $request->getVocab()->getConceptLabel($request->getUri(), $request->getLang());
@@ -822,8 +821,8 @@ class RestController extends Controller
      */
     public function broader($request)
     {
-        if ($this->notModified(null)) {
-            return;
+        if ($this->notModified($request->getVocab())) {
+            return null;
         }
         $broaders = $request->getVocab()->getConceptBroaders($request->getUri(), $request->getLang());
         if ($broaders === null) {
@@ -840,8 +839,8 @@ class RestController extends Controller
      */
     public function broaderTransitive($request)
     {
-        if ($this->notModified(null)) {
-            return;
+        if ($this->notModified($request->getVocab())) {
+            return null;
         }
         $broaders = $request->getVocab()->getConceptTransitiveBroaders($request->getUri(), $this->parseLimit(), false, $request->getLang());
         if (empty($broaders)) {
@@ -858,8 +857,8 @@ class RestController extends Controller
      */
     public function narrower($request)
     {
-        if ($this->notModified(null)) {
-            return;
+        if ($this->notModified($request->getVocab())) {
+            return null;
         }
         $narrowers = $request->getVocab()->getConceptNarrowers($request->getUri(), $request->getLang());
         if ($narrowers === null) {
@@ -876,8 +875,8 @@ class RestController extends Controller
      */
     public function narrowerTransitive($request)
     {
-        if ($this->notModified(null)) {
-            return;
+        if ($this->notModified($request->getVocab())) {
+            return null;
         }
         $narrowers = $request->getVocab()->getConceptTransitiveNarrowers($request->getUri(), $this->parseLimit(), $request->getLang());
         if (empty($narrowers)) {
@@ -895,8 +894,8 @@ class RestController extends Controller
      */
     public function hierarchy($request)
     {
-        if ($this->notModified(null)) {
-            return;
+        if ($this->notModified($request->getVocab())) {
+            return null;
         }
         $results = $request->getVocab()->getConceptHierarchy($request->getUri(), $request->getLang());
         if (empty($results)) {
@@ -976,8 +975,8 @@ class RestController extends Controller
      */
     public function groups($request)
     {
-        if ($this->notModified(null)) {
-            return;
+        if ($this->notModified($request->getVocab())) {
+            return null;
         }
         $results = $request->getVocab()->listConceptGroups($request->getLang());
 
@@ -997,8 +996,8 @@ class RestController extends Controller
      */
     public function groupMembers($request)
     {
-        if ($this->notModified(null)) {
-            return;
+        if ($this->notModified($request->getVocab())) {
+            return null;
         }
         $children = $request->getVocab()->listConceptGroupContents($request->getUri(), $request->getLang());
         if (empty($children)) {
@@ -1021,8 +1020,8 @@ class RestController extends Controller
      */
     public function children($request)
     {
-        if ($this->notModified(null)) {
-            return;
+        if ($this->notModified($request->getVocab())) {
+            return null;
         }
         $children = $request->getVocab()->getConceptChildren($request->getUri(), $request->getLang());
         if ($children === null) {
@@ -1045,8 +1044,8 @@ class RestController extends Controller
      */
     public function related($request)
     {
-        if ($this->notModified(null)) {
-            return;
+        if ($this->notModified($request->getVocab())) {
+            return null;
         }
         $related = $request->getVocab()->getConceptRelateds($request->getUri(), $request->getLang());
         if ($related === null) {
