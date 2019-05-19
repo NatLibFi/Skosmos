@@ -2,6 +2,9 @@
 
 class ConceptTest extends PHPUnit\Framework\TestCase
 {
+  /**
+   * @var Model
+   */
   private $model;
   private $concept;
   private $cbdVocab;
@@ -507,7 +510,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
   public function modifiedDateDataProvider() {
     return [
       ["cat", "2018-12-13T06:28:14", "+00:00"],  # set #0
-      ["dog", null, null],  # set #1
+      ["dog", "2018-12-13T06:28:14", "+00:00"],  # set #1
       ["owl", "2018-10-22T00:00:00", "+00:00"],  # set #2
       ["parrot", "2018-10-22T00:00:00", "+00:00"],  # set #3
       ["macaw", "2018-10-22T12:34:45", "+00:00"],  # set #4
@@ -518,6 +521,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
   /**
    * @covers Concept::getModifiedDate
    * @dataProvider modifiedDateDataProvider
+   * @throws Exception if it fails to load the vocabulary
    */
   public function testGetModifiedDate($animal, $expected_time, $expected_timezone) {
     $vocab = $this->model->getVocabulary('http304');

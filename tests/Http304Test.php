@@ -6,10 +6,6 @@ class Http304Test extends TestCase
 {
 
     /**
-     * @var \Mockery\Mock|GlobalConfig
-     */
-    private $globalConfig;
-    /**
      * @var \Mockery\Mock|Model
      */
     private $model;
@@ -44,8 +40,7 @@ class Http304Test extends TestCase
         bindtextdomain('skosmos', 'resource/translations');
         bind_textdomain_codeset('skosmos', 'UTF-8');
         textdomain('skosmos');
-        $this->globalConfig = Mockery::mock(new GlobalConfig('/../tests/testconfig.ttl'));
-        $this->model = Mockery::mock(new Model($this->globalConfig))->makePartial();
+        $this->model = Mockery::mock(new Model(new GlobalConfig('/../tests/testconfig.ttl')))->makePartial();
         $this->vocab = Mockery::mock($this->model->getVocabulary($vocabularyName))->makePartial();
         $this->controller = Mockery::mock('WebController')
             ->shouldAllowMockingProtectedMethods()
@@ -73,14 +68,11 @@ class Http304Test extends TestCase
      */
     public function testHttp304NotUsedWhenDisabled()
     {
-        $this->initObjects("http304");
+        $this->initObjects("http304disabled");
 
         $this->controller
             ->shouldReceive("setLanguageProperties")
             ->withArgs(["en"]);
-        $this->globalConfig
-            ->shouldReceive("getUseModifiedDate")
-            ->andReturn(false);
         $this->request
             ->shouldReceive("getURI")
             ->andReturn("");
@@ -93,6 +85,8 @@ class Http304Test extends TestCase
         $concept->allows([
             "getType" => ["skos:Concept"]
         ]);
+        $concept->shouldReceive("getVocab")
+            ->andReturn($this->vocab);
         $concepts[] = $concept;
         $this->vocab
             ->shouldReceive("getConceptInfo")
@@ -125,9 +119,6 @@ class Http304Test extends TestCase
         $this->controller
             ->shouldReceive("setLanguageProperties")
             ->withArgs(["en"]);
-        $this->globalConfig
-            ->shouldReceive("getUseModifiedDate")
-            ->andReturn(false);
         $this->request
             ->shouldReceive("getURI")
             ->andReturn("");
@@ -140,6 +131,8 @@ class Http304Test extends TestCase
         $concept->allows([
             "getType" => ["skos:Concept"]
         ]);
+        $concept->shouldReceive("getVocab")
+            ->andReturn($this->vocab);
         $concepts[] = $concept;
         $this->vocab
             ->shouldReceive("getConceptInfo")
@@ -180,9 +173,6 @@ class Http304Test extends TestCase
         $this->controller
             ->shouldReceive("setLanguageProperties")
             ->withArgs(["en"]);
-        $this->globalConfig
-            ->shouldReceive("getUseModifiedDate")
-            ->andReturn(true);
         $this->request
             ->shouldReceive("getURI")
             ->andReturn("");
@@ -195,6 +185,8 @@ class Http304Test extends TestCase
         $concept->allows([
             "getType" => ["skos:Concept"]
         ]);
+        $concept->shouldReceive("getVocab")
+            ->andReturn($this->vocab);
         $concepts[] = $concept;
         $this->vocab
             ->shouldReceive("getConceptInfo")

@@ -241,15 +241,16 @@ class WebControllerTest extends TestCase
         $controller = Mockery::mock('WebController')
             ->shouldAllowMockingProtectedMethods()
             ->makePartial();
-        $controller->shouldReceive('getConceptModifiedDate')
+        $modifiable = Mockery::mock('Modifiable')
+            ->shouldAllowMockingProtectedMethods()
+            ->makePartial();
+        $modifiable->shouldReceive('getModifiedDate')
             ->andReturn($concept);
         $controller->shouldReceive('getGitModifiedDate')
             ->andReturn($git);
         $controller->shouldReceive('getConfigModifiedDate')
             ->andReturn($config);
-        $concept = Mockery::mock('Concept');
-        $vocabulary = Mockery::mock('Vocabulary');
-        $returnedValue = $controller->getModifiedDate($concept, $vocabulary);
+        $returnedValue = $controller->getModifiedDate($modifiable);
         $this->assertEquals($modifiedDate, $returnedValue);
     }
 

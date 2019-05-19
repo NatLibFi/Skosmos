@@ -65,9 +65,7 @@
     # default time a user must wait before submitting a form
     skosmos:uiHoneypotTime 2 ;
     # plugins to activate for the whole installation (including all vocabularies)
-    skosmos:globalPlugins ("alpha" "Bravo" "charlie") ;
-    # whether to support modified date for http responses
-    skosmos:useModifiedDate "false".
+    skosmos:globalPlugins ("alpha" "Bravo" "charlie") .
 
 # Skosmos vocabularies
 
@@ -355,6 +353,7 @@
     void:uriSpace "http://www.skosmos.skos/http304enabled/";
     void:sparqlEndpoint <http://localhost:13030/skosmos-test/sparql> ;
     skosmos:language "fi";
+    skosmos:useModifiedDate "true";
     skosmos:sparqlGraph <http://www.skosmos.skos/http304/>;
     skosmos:mainConceptScheme test:http304mainconceptscheme .
 
