@@ -530,7 +530,7 @@ class VocabularyConfig extends BaseConfig
     /**
      * @return boolean
      */
-    public function getUseModifiedDate()
+    public function isUseModifiedDate()
     {
         return $this->getBoolean('skosmos:useModifiedDate', false);
     }

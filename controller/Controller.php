@@ -183,10 +183,10 @@ class Controller
         echo "$code $status : $message";
     }
 
-    protected function notModified(Modifiable $modifiable)
+    protected function notModified(Modifiable $modifiable = null)
     {
         $notModified = false;
-        if ($modifiable->getUseModifiedDate()) {
+        if ($modifiable !== null && $modifiable->isUseModifiedDate()) {
             $modifiedDate = $this->getModifiedDate($modifiable);
             $notModified = $this->sendNotModifiedHeader($modifiedDate);
         }
@@ -297,7 +297,7 @@ class Controller
     {
         $dateTime = null;
         $configModifiedTime = $this->model->getConfig()->getConfigModifiedTime();
-        if (!is_null($configModifiedTime)) {
+        if ($configModifiedTime !== null) {
             $dateTime = (new DateTime())->setTimestamp($configModifiedTime);
         }
         return $dateTime;
@@ -322,7 +322,7 @@ class Controller
         if ($modifiedDate) {
             $ifModifiedSince = $this->getIfModifiedSince();
             $this->sendHeader("Last-Modified: " . $modifiedDate->format('Y-m-d H:i:s'));
-            if (!is_null($ifModifiedSince) && $ifModifiedSince >= $modifiedDate) {
+            if ($ifModifiedSince !== null && $ifModifiedSince >= $modifiedDate) {
                 $this->sendHeader("HTTP/1.0 304 Not Modified");
                 return true;
             }

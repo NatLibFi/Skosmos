@@ -13,6 +13,6 @@ interface Modifiable {
     /**
      * @return boolean
      */
-    public function getUseModifiedDate();
+    public function isUseModifiedDate();
 
 }

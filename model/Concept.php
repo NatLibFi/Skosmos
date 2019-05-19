@@ -940,8 +940,8 @@ class Concept extends VocabularyDataObject implements Modifiable
         return \ML\JsonLD\JsonLD::toString($compactJsonLD);
     }
 
-    public function getUseModifiedDate()
+    public function isUseModifiedDate()
     {
-        return $this->getVocab()->getUseModifiedDate();
+        return $this->getVocab()->isUseModifiedDate();
     }
 }
