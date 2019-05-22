@@ -392,6 +392,9 @@ class WebController extends Controller
         $feedbackVocabEmail = ($feedbackVocab !== null && $feedbackVocab !== '') ?
             $this->model->getVocabulary($feedbackVocab)->getConfig()->getFeedbackRecipient() : null;
 
+	// Check cookie if other pages have been visited before feedback form like on line 138
+	
+	
         // if the hidden field has been set a value we have found a spam bot
         // and we do not actually send the message.
         if ($this->honeypot->validateHoneypot($request->getQueryParamPOST('item-description')) &&
