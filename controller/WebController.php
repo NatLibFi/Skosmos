@@ -392,16 +392,25 @@ class WebController extends Controller
         $feedbackVocabEmail = ($feedbackVocab !== null && $feedbackVocab !== '') ?
             $this->model->getVocabulary($feedbackVocab)->getConfig()->getFeedbackRecipient() : null;
 
-	// Check cookie if other pages have been visited before feedback form like on line 138
 	
 	
         // if the hidden field has been set a value we have found a spam bot
         // and we do not actually send the message.
-        if ($this->honeypot->validateHoneypot($request->getQueryParamPOST('item-description')) &&
-            $this->honeypot->validateHoneytime($request->getQueryParamPOST('user-captcha'), $this->model->getConfig()->getHoneypotTime())) {
-            $this->sendFeedback($request, $feedbackMsg, $feedbackName, $feedbackEmail, $feedbackVocab, $feedbackVocabEmail);
-        }
-
+        //BACKUP
+        //if ($this->honeypot->validateHoneypot($request->getQueryParamPOST('item-description')) &&
+        //    $this->honeypot->validateHoneytime($request->getQueryParamPOST('user-captcha'), $this->model->getConfig()->getHoneypotTime())) {
+        //    $this->sendFeedback($request, $feedbackMsg, $feedbackName, $feedbackEmail, $feedbackVocab, $feedbackVocabEmail);
+        //}
+        //BACKUP
+        
+        //Mika's addings to manipulate spam logic. If SKOSMOS_OMITTER is set and true, feedback should be sent.
+        if ((isset($_COOKIE['SKOSMOS_OMITTER']) && filter_input(INPUT_COOKIE, 'SKOSMOS_OMITTER') == 'TRUE') &&
+        $this->honeypot->validateHoneypot($request->getQueryParamPOST('item-description')) &&
+        $this->honeypot->validateHoneytime($request->getQueryParamPOST('user-captcha'), $this->model->getConfig()->getHoneypotTime())) {
+        $this->sendFeedback($request, $feedbackMsg, $feedbackName, $feedbackEmail, $feedbackVocab, $feedbackVocabEmail);
+    }
+        
+        
         echo $template->render(
             array(
                 'languages' => $this->languages,

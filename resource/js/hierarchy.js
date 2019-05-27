@@ -429,4 +429,3 @@ function getTreeConfiguration() {
     'sort' : function (a,b) { return naturalCompare(this.get_text(a).toLowerCase(), this.get_text(b).toLowerCase()); }
   });
 }
-
