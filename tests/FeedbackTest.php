@@ -14,6 +14,7 @@ class FeedbackTest extends PHPUnit\Framework\TestCase
     $this->request->setLang('en');
     $this->controller = \Mockery::mock('WebController[sendFeedback]', array($this->model))->makePartial();
   }
+    
 
   /**
    * @covers Honeypot::decryptTime
@@ -38,6 +39,18 @@ class FeedbackTest extends PHPUnit\Framework\TestCase
     $decryptedTime = intval($this->controller->honeypot->decryptTime($encryptedTime));
     $this->assertTrue($decryptedTime >= $initialTime);
   }
+    
+    /** Mika's funciton for testing cookie
+     * Kirjoita coversit
+     *
+     * aseta eväste
+     * evaluoidaan toiminta formiss
+     * poista eväste koodilla
+     * ja taas uudelleen evaluointi
+     * assertit ja falset
+     * @covers WebController::invokeFeedbackForm
+     * public funcion testifunktionnimi
+     * 
 
   /**
    * @covers Honeypot::validateHoneypot

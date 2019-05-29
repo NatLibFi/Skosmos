@@ -370,6 +370,18 @@ class WebController extends Controller
     }
 
     /**
+     * Checks if a cookie is set. Not only a cookie name but also the value of the cookie is checked
+     */
+    private function checkIfCookieIsSet($cookieName, $cookieValue) {
+        if (isset($_COOKIE[$cookieName]) && filter_input(INPUT_COOKIE, $cookieName) == $cookieValue) {
+            return true;
+        }  else {
+            return false;
+        }
+    }
+
+
+    /**
      * Invokes the feedback page with information of the users current vocabulary.
      */
     public function invokeFeedbackForm($request)
@@ -391,24 +403,11 @@ class WebController extends Controller
 
         $feedbackVocabEmail = ($feedbackVocab !== null && $feedbackVocab !== '') ?
             $this->model->getVocabulary($feedbackVocab)->getConfig()->getFeedbackRecipient() : null;
-
-	
-	
-        // if the hidden field has been set a value we have found a spam bot
-        // and we do not actually send the message.
-        //BACKUP
-        //if ($this->honeypot->validateHoneypot($request->getQueryParamPOST('item-description')) &&
-        //    $this->honeypot->validateHoneytime($request->getQueryParamPOST('user-captcha'), $this->model->getConfig()->getHoneypotTime())) {
-        //    $this->sendFeedback($request, $feedbackMsg, $feedbackName, $feedbackEmail, $feedbackVocab, $feedbackVocabEmail);
-        //}
-        //BACKUP
-        
-        //Mika's addings to manipulate spam logic. If SKOSMOS_OMITTER is set and true, feedback should be sent.
-        if ((isset($_COOKIE['SKOSMOS_OMITTER']) && filter_input(INPUT_COOKIE, 'SKOSMOS_OMITTER') == 'TRUE') &&
-        $this->honeypot->validateHoneypot($request->getQueryParamPOST('item-description')) &&
-        $this->honeypot->validateHoneytime($request->getQueryParamPOST('user-captcha'), $this->model->getConfig()->getHoneypotTime())) {
-        $this->sendFeedback($request, $feedbackMsg, $feedbackName, $feedbackEmail, $feedbackVocab, $feedbackVocabEmail);
-    }
+        if (($this->checkIfCookieIsSet('NORM_PAGES_VISITED', 'true')) &&
+            $this->honeypot->validateHoneypot($request->getQueryParamPOST('item-description')) &&
+            $this->honeypot->validateHoneytime($request->getQueryParamPOST('user-captcha'), $this->model->getConfig()->getHoneypotTime())) {
+            $this->sendFeedback($request, $feedbackMsg, $feedbackName, $feedbackEmail, $feedbackVocab, $feedbackVocabEmail);
+        }
         
         
         echo $template->render(

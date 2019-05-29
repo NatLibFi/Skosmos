@@ -13,15 +13,16 @@ $(function() { // DOCUMENT READY
 
   shortenProperties();
 
-  //Mika's adding starts
+  /*
+   * Creating a cookie to control submits in forms. Set up a name and value for the cookie. Variable "minutes" defines expiration time   
+   */
   var now = new Date();
   var minutes = 2;
   var lastIndexOfURLPathRaw = window.location.pathname;
   var lastIndexOfURLPath = lastIndexOfURLPathRaw.substr(lastIndexOfURLPathRaw.lastIndexOf("/")+1);
   if (lastIndexOfURLPath != 'feedback'){
-    createCookie('SKOSMOS_OMITTER', 'TRUE', 1/1440*minutes);
+    createCookie('NORM_PAGES_VISITED', 'true', 1/1440*minutes);
   }
-  //Mika's adding ends
 
   // kills the autocomplete after a form submit so we won't have to wait for the ajax to complete.
   $('.navbar-form').submit(
