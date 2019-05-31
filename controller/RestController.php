@@ -6,7 +6,7 @@
 class RestController extends Controller
 {
     /* supported MIME types that can be used to return RDF data */
-    const SUPPORTED_FORMATS = 'application/rdf+xml text/turtle application/ld+json application/json';
+    const SUPPORTED_FORMATS = 'application/rdf+xml text/turtle application/ld+json application/json application/marcxml+xml';
     /* context array template */
     private $context = array(
         '@context' => array(

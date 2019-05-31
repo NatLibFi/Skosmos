@@ -108,7 +108,7 @@ class VocabularyConfig extends BaseConfig
      * get the URLs from which the vocabulary data can be downloaded
      * @return array Array with MIME type as key, URL as value
      */
-    public function getDataURLs()
+    public function getDataURLs($lang = null)
     {
         $ret = array();
         $urls = $this->resource->allResources("void:dataDump");
@@ -119,17 +119,28 @@ class VocabularyConfig extends BaseConfig
                 $mimetypelit = $url->getLiteral('dc11:format');
             }
 
-            // if still not found, guess MIME type using file extension
             if ($mimetypelit !== null) {
-                $mimetype = $mimetypelit->getValue();
-            } else {
-                $format = EasyRdf\Format::guessFormat(null, $url->getURI());
-                if ($format === null) {
-                    trigger_error("Could not guess format for <$url>.", E_USER_WARNING);
-                    continue;
+                if ($lang !== null) {
+                    if ($lang == $mimetypelit->getLang()) {
+                          $mimetype = $mimetypelit->getValue();
+                    }
+                } else {
+                    $mimetype = $mimetypelit->getValue();
                 }
-                $mimetypes = array_keys($format->getMimeTypes());
-                $mimetype = $mimetypes[0];
+            } else {
+
+                //if still not found, try if the MIME type is marc21 xml in case it wasn't specified by dct:format
+                if (preg_match("/\.mrcx/i", $url)) {
+                    $mimetype = "application/marcxml+xml";
+                } else {
+                    $format = EasyRdf\Format::guessFormat(null, $url->getURI());
+                    if ($format === null) {
+                        trigger_error("Could not guess format for <$url>.", E_USER_WARNING);
+                        continue;
+                    }
+                    $mimetypes = array_keys($format->getMimeTypes());
+                    $mimetype = $mimetypes[0];
+                }
             }
             $ret[$mimetype] = $url->getURI();
         }

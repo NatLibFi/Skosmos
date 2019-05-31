@@ -52,6 +52,9 @@
         {% if 'text/turtle' in vocab.config.dataURLs|keys %}
           <a href="rest/v1/{{ request.vocabid }}/data?format=text/turtle">TURTLE</a>
         {% endif %}
+        {% if 'application/marcxml+xml' in vocab.config.dataURLs|keys %}
+          <a href="rest/v1/{{ request.vocabid }}/data?format=application/marcxml%2Bxml">MARC21/XML</a>
+        {% endif %}
       </span>
     </div>
     {% endif %}
