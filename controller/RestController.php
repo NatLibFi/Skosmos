@@ -540,7 +540,7 @@ class RestController extends Controller
     }
 
     private function redirectToVocabData($request) {
-        $urls = $request->getVocab()->getConfig()->getDataURLs();
+        $urls = $request->getVocab()->getConfig()->getDataURLs($request->getLang());
         if (sizeof($urls) == 0) {
             $vocid = $request->getVocab()->getId();
             return $this->returnError('404', 'Not Found', "No download source URL known for vocabulary $vocid");
