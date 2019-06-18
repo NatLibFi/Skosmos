@@ -50,9 +50,9 @@ class FeedbackTest extends PHPUnit\Framework\TestCase
      * assertit ja falset
      * @covers WebController::invokeFeedbackForm
      * public funcion testifunktionnimi
-     * 
+     */
 
-  /**
+    /**
    * @covers Honeypot::validateHoneypot
    * @covers Honeypot::validateHoneytime
    */
