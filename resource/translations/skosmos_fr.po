@@ -3,14 +3,14 @@
 # Nathalie Vedovotto <nathalie.vedovotto@inist.fr>, 2017
 # osma <osma.suominen@helsinki.fi>, 2015,2017
 # Thomas Francart <thomas.francart@sparna.fr>, 2016
-# Thomas Francart <thomas.francart@sparna.fr>, 2015-2016
+# Thomas Francart <thomas.francart@sparna.fr>, 2015-2016,2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-16 10:26+0200\n"
-"PO-Revision-Date: 2017-09-19 07:29+0000\n"
-"Last-Translator: Nathalie Vedovotto <nathalie.vedovotto@inist.fr>\n"
+"PO-Revision-Date: 2018-05-23 16:49+0000\n"
+"Last-Translator: osma <osma.suominen@helsinki.fi>\n"
 "Language-Team: French (http://www.transifex.com/national-library-of-finland/skosmos/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -53,7 +53,7 @@ msgstr "Vocabulaires"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:26
 msgid "%search_count% results for '%term%'"
-msgstr "%search_count% résultats pour '%term%'"
+msgstr "%search_count% résultat(s) pour '%term%'"
 
 #: /tmp/cache/587c83c09abaa/23/23c9862892c34daf7bea11b6d50990145b73a83c0947ae60c3d729fe591a06ec.php:48
 msgid "404 Error: The page %requested_page% cannot be found."
@@ -70,12 +70,12 @@ msgstr "A-Z"
 #: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:46
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:19
 msgid "About"
-msgstr "A propos"
+msgstr "À propos"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:35
 #, php-format
 msgid "All %d results displayed"
-msgstr "Tous les %d résultats sont affichés"
+msgstr "Tous les résultats sont affichés (%d)"
 
 #: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:64
 #: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:77
@@ -693,7 +693,7 @@ msgstr "Nom scientifique"
 
 #: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:168
 msgid "About page"
-msgstr "A propos"
+msgstr "À propos"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:138
 msgid "Alternate terms"
@@ -759,53 +759,8 @@ msgstr "Passer le curseur sur un texte souligné en pointillé pour voir plus d'
 msgid "search_example_text"
 msgstr "Pour les recherches avec troncature, utilisez le symbole * , par exemple *animal ou *brevet*. La recherche utilise automatiquement une troncature en fin de mot, même sans le symbole de troncature : la recherche chat donnera donc les mêmes résultats que chat*."
 
-#~ msgid "dc11:contributor"
-#~ msgstr "Contributor"
+msgid "feedback_enter_name_email"
+msgstr ""
 
-#~ msgid "dc11:creator"
-#~ msgstr "Creator"
-
-#~ msgid "dc11:description"
-#~ msgstr "Description"
-
-#~ msgid "dc11:license"
-#~ msgstr "License"
-
-#~ msgid "dc11:publisher"
-#~ msgstr "Publisher"
-
-#~ msgid "dc11:relation"
-#~ msgstr "Relation"
-
-#~ msgid "dc11:rights"
-#~ msgstr "Rights"
-
-#~ msgid "dc11:source"
-#~ msgstr "Source"
-
-#~ msgid "dc11:title"
-#~ msgstr "Title"
-
-#~ msgid "Error: the vocabulary does not contain terms beginning with"
-#~ msgstr "The vocabulary does not contain terms beginning with"
-
-#~ msgid "Vocabularies on the server"
-#~ msgstr "Available vocabularies and ontologies"
-
-#~ msgid "Modified concepts"
-#~ msgstr "Modified concepts"
-
-#~ msgid "New concepts"
-#~ msgstr "New concepts"
-
-#~ msgid "All"
-#~ msgstr "All"
-
-#~ msgid "results"
-#~ msgstr "results:"
-
-#~ msgid "results for"
-#~ msgstr "results for"
-
-#~ msgid "Language literal"
-#~ msgstr "In English"
+msgid "concept_types"
+msgstr ""

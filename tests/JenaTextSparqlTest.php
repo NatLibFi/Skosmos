@@ -1,31 +1,32 @@
 <?php
 
-class JenaTextSparqlTest extends PHPUnit_Framework_TestCase
+class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
 {
-  private $model; 
-  private $graph; 
+  private $model;
+  private $graph;
   private $sparql;
   private $vocab;
   private $params;
 
   protected function setUp() {
+    putenv("LANGUAGE=en_GB.utf8");
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');
-    $this->model = new Model(new GlobalConfig('/../tests/jenatestconfig.inc'));
+    $this->model = new Model(new GlobalConfig('/../tests/jenatestconfig.ttl'));
     $this->vocab = $this->model->getVocabulary('test');
     $this->graph = $this->vocab->getGraph();
     $this->params = $this->getMockBuilder('ConceptSearchParameters')->disableOriginalConstructor()->getMock();
-    $this->sparql = new JenaTextSparql('http://localhost:3030/ds/sparql', $this->graph, $this->model);
+    $this->sparql = new JenaTextSparql('http://localhost:13030/ds/sparql', $this->graph, $this->model);
   }
- 
+
   /**
    * @covers JenaTextSparql::__construct
    */
   public function testConstructor() {
-    $gs = new JenaTextSparql('http://localhost:3030/ds/sparql', $this->graph, $this->model);
+    $gs = new JenaTextSparql('http://localhost:13030/ds/sparql', $this->graph, $this->model);
     $this->assertInstanceOf('JenaTextSparql', $gs);
   }
-  
+
   /**
    * @covers JenaTextSparql::generateAlphabeticalListQuery
    */
@@ -53,7 +54,7 @@ class JenaTextSparqlTest extends PHPUnit_Framework_TestCase
     );
     $this->assertEquals($expected, $actual);
   }
-  
+
   /**
    * @covers JenaTextSparql::generateAlphabeticalListQuery
    */
@@ -75,7 +76,7 @@ class JenaTextSparqlTest extends PHPUnit_Framework_TestCase
     );
     $this->assertEquals($expected, $actual);
   }
-  
+
   /**
    * @covers JenaTextSparql::generateAlphabeticalListQuery
    */
@@ -97,7 +98,7 @@ class JenaTextSparqlTest extends PHPUnit_Framework_TestCase
     );
     $this->assertEquals($expected, $actual);
   }
-  
+
   /**
    * @covers JenaTextSparql::generateAlphabeticalListQuery
    */
@@ -115,7 +116,7 @@ class JenaTextSparqlTest extends PHPUnit_Framework_TestCase
     $this->assertEquals(1, sizeof($actual));
     $this->assertEquals('-"special" character \\example\\', $actual[0]['prefLabel']);
   }
-  
+
   /**
    * @covers JenaTextSparql::generateAlphabeticalListQuery
    */
@@ -124,7 +125,7 @@ class JenaTextSparqlTest extends PHPUnit_Framework_TestCase
     $this->assertEquals(1, sizeof($actual));
     $this->assertContains("3D", $actual[0]['prefLabel']);
   }
-  
+
   /**
    * @covers JenaTextSparql::generateAlphabeticalListQuery
    */
@@ -146,7 +147,7 @@ class JenaTextSparqlTest extends PHPUnit_Framework_TestCase
     $this->assertEquals(1, sizeof($actual));
     $this->assertEquals('Bass', $actual[0]['prefLabel']);
   }
-  
+
   /**
    * @covers JenaTextSparql::createTextQueryCondition
    * @covers JenaTextSparql::generateConceptSearchQueryCondition
@@ -180,7 +181,7 @@ class JenaTextSparqlTest extends PHPUnit_Framework_TestCase
   public function testQueryConceptsAlphabeticalOrderBy() {
     $vocab = $this->model->getVocabulary('collation');
     $graph = $vocab->getGraph();
-    $sparql = new JenaTextSparql('http://localhost:3030/ds/sparql', $graph, $this->model);
+    $sparql = new JenaTextSparql('http://localhost:13030/ds/sparql', $graph, $this->model);
     $actual = $sparql->queryConceptsAlphabetical('t', 'fi');
     $expected = array (
       0 => array (

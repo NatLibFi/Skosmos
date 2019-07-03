@@ -2,13 +2,13 @@
 
 use Symfony\Component\DomCrawler\Crawler;
 
-class FeedbackTest extends PHPUnit_Framework_TestCase
+class FeedbackTest extends PHPUnit\Framework\TestCase
 {
   private $model;
   private $request;
 
   protected function setUp() {
-    $config = new GlobalConfig('/../tests/testconfig.inc');
+    $config = new GlobalConfig('/../tests/testconfig-fordefaults.ttl');
     $this->model = new Model($config);
     $this->request = \Mockery::mock('Request', array($this->model))->makePartial();
     $this->request->setLang('en');
@@ -59,7 +59,7 @@ class FeedbackTest extends PHPUnit_Framework_TestCase
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('vocab')
-        ->andReturn('Test vocab');
+        ->andReturn('test');
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('item-description')
@@ -100,7 +100,7 @@ class FeedbackTest extends PHPUnit_Framework_TestCase
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('vocab')
-        ->andReturn('Test vocab');
+        ->andReturn('test');
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('item-description')
@@ -141,7 +141,7 @@ class FeedbackTest extends PHPUnit_Framework_TestCase
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('vocab')
-        ->andReturn('Test vocab');
+        ->andReturn('test');
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('item-description')
@@ -180,7 +180,7 @@ class FeedbackTest extends PHPUnit_Framework_TestCase
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('vocab')
-        ->andReturn('Test vocab');
+        ->andReturn('test');
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('item-description')

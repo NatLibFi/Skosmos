@@ -52,7 +52,7 @@ class Vocabulary extends DataObject
     /**
      * Get the SPARQL implementation for this vocabulary
      *
-     * @return Sparql SPARQL object
+     * @return GenericSparql SPARQL object
      */
     public function getSparql()
     {
@@ -77,6 +77,18 @@ class Vocabulary extends DataObject
         }
 
         return $this->urispace;
+    }
+
+    /**
+     * Return true if the URI is within the URI space of this vocabulary.
+     *
+     * @param string full URI of concept
+     * @return bool true if URI is within URI namespace, false otherwise
+     */
+
+    public function containsURI($uri)
+    {
+        return (strpos($uri, $this->getUriSpace()) === 0);
     }
 
     /**
@@ -217,9 +229,9 @@ class Vocabulary extends DataObject
 
     public function getDefaultConceptScheme()
     {
-        $conceptScheme = $this->resource->get("skosmos:mainConceptScheme");
+        $conceptScheme = $this->config->getMainConceptSchemeURI();
         if ($conceptScheme) {
-            return $conceptScheme->getUri();
+            return $conceptScheme;
         }
 
         // mainConceptScheme not explicitly set, guess it
@@ -227,6 +239,16 @@ class Vocabulary extends DataObject
         $conceptSchemeURIs = array_keys($conceptSchemes);
         // return the URI of the last concept scheme
         return array_pop($conceptSchemeURIs);
+    }
+
+    /**
+     * Returns the main Concept Scheme of that Vocabulary, or null if not set.
+     * @param string $defaultConceptSchemeURI default concept scheme URI
+     * @return \EasyRdf\Graph|mixed
+     */
+    public function getConceptScheme(string $defaultConceptSchemeURI)
+    {
+        return $this->getSparql()->queryConceptScheme($defaultConceptSchemeURI);
     }
 
     /**
@@ -302,7 +324,7 @@ class Vocabulary extends DataObject
     public function getConceptHierarchy($uri, $lang)
     {
         $lang = $lang ? $lang : $this->getEnvLang();
-        $fallback = $this->config->getDefaultLanguage();
+        $fallback = count($this->config->getLanguageOrder($lang)) > 1 ? $this->config->getLanguageOrder($lang)[1] : $this->config->getDefaultLanguage();
         $props = $this->config->getHierarchyProperty();
         return $this->getSparql()->queryParentList($uri, $lang, $fallback, $props);
     }
@@ -314,7 +336,7 @@ class Vocabulary extends DataObject
     public function getConceptChildren($uri, $lang)
     {
         $lang = $lang ? $lang : $this->getEnvLang();
-        $fallback = $this->config->getDefaultLanguage();
+        $fallback = count($this->config->getLanguageOrder($lang)) > 1 ? $this->config->getLanguageOrder($lang)[1] : $this->config->getDefaultLanguage();
         $props = $this->config->getHierarchyProperty();
         return $this->getSparql()->queryChildren($uri, $lang, $fallback, $props);
     }
@@ -381,7 +403,7 @@ class Vocabulary extends DataObject
     /**
      * Makes a query into the sparql endpoint for a concept.
      * @param string $uri the full URI of the concept
-     * @return array
+     * @return Concept[]
      */
     public function getConceptInfo($uri, $clang)
     {
@@ -583,9 +605,9 @@ class Vocabulary extends DataObject
 
     /**
      * Returns a list of recently changed or entirely new concepts.
-     * @param string $clang content language for the labels 
+     * @param string $clang content language for the labels
      * @param string $lang UI language for the dates
-     * @return Array 
+     * @return Array
      */
     public function getChangeList($prop, $clang, $lang, $offset)
     {
@@ -601,13 +623,13 @@ class Vocabulary extends DataObject
     public function getTitle($lang=null) {
       return $this->config->getTitle($lang);
     }
-    
+
     public function getShortName() {
       return $this->config->getShortName();
     }
-    
+
     public function getId() {
       return $this->config->getId();
     }
-    
+
 }

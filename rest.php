@@ -53,6 +53,8 @@ try {
             $controller->topConcepts($request);
         } elseif ($parts[2] == 'data') {
             $controller->data($request);
+        } elseif ($parts[2] == 'mappings') {
+            $controller->mappings($request);
         } elseif ($parts[2] == 'search') {
             $controller->search($request);
         } elseif ($parts[2] == 'label') {

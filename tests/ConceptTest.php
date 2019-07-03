@@ -1,21 +1,29 @@
 <?php
 
-class ConceptTest extends PHPUnit_Framework_TestCase
+class ConceptTest extends PHPUnit\Framework\TestCase
 {
-  private $model; 
+  private $model;
   private $concept;
+  private $cbdVocab;
+  private $cbdGraph;
 
   protected function setUp() {
+    putenv("LANGUAGE=en_GB.utf8");
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');
     bindtextdomain('skosmos', 'resource/translations');
     bind_textdomain_codeset('skosmos', 'UTF-8');
     textdomain('skosmos');
 
-    $this->model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
+    $this->model = new Model(new GlobalConfig('/../tests/testconfig.ttl'));
     $this->vocab = $this->model->getVocabulary('test');
     $results = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en');
     $this->concept = reset($results);
+
+    $this->cbdVocab = $this->model->getVocabulary('cbd');
+    $this->cbdGraph =  new EasyRdf\Graph();
+    $this->cbdGraph->parseFile(__DIR__ . "/test-vocab-data/cbd.ttl", "turtle");
+
   }
 
   /**
@@ -28,7 +36,7 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $this->assertInstanceOf('Concept', $concept);
     $this->assertEquals('Test ontology', $concept->getVocabTitle());
   }
-  
+
   /**
    * @covers Concept::getUri
    */
@@ -37,7 +45,7 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $uri = $this->concept->getURI();
     $this->assertEquals('http://www.skosmos.skos/test/ta112', $uri);
   }
-  
+
   /**
    * @covers Concept::getDeprecated
    */
@@ -46,7 +54,7 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $deprecated = $this->concept->getDeprecated();
     $this->assertEquals(false, $deprecated);
   }
-  
+
   /**
    * @covers Concept::getVocab
    */
@@ -55,7 +63,7 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $voc = $this->concept->getVocab();
     $this->assertInstanceOf('Vocabulary', $voc);
   }
-  
+
   /**
    * @covers Concept::getVocabTitle
    */
@@ -64,7 +72,7 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $title = $this->concept->getVocabTitle();
     $this->assertEquals('Test ontology', $title);
   }
-  
+
   /**
    * @covers Concept::getShortName
    */
@@ -82,7 +90,7 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $fb = $this->concept->getFoundBy();
     $this->assertEquals(null, $fb);
   }
-  
+
   /**
    * @covers Concept::setFoundBy
    * @covers Concept::getFoundByType
@@ -97,7 +105,7 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('testing matched label', $fb);
     $this->assertEquals('alt', $fbtype);
   }
-  
+
   /**
    * @covers Concept::getForeignLabels
    * @covers Concept::literalLanguageToString
@@ -108,7 +116,7 @@ class ConceptTest extends PHPUnit_Framework_TestCase
 
     $this->assertEquals('Karppi', $labels['Finnish'][0]->getLabel());
   }
-  
+
   /**
    * @covers Concept::getAllLabels
    */
@@ -120,7 +128,7 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('Iljettävä limanuljaska', $labels['Finnish'][0]->getLabel());
     $this->assertEquals('any fish belonging to the order Anguilliformes', $labels['English'][0]->getLabel());
   }
-  
+
   /**
    * @covers Concept::getProperties
    * @covers ConceptProperty::getValues
@@ -143,7 +151,7 @@ class ConceptTest extends PHPUnit_Framework_TestCase
   public function testGetPropertiesCorrectNumberOfProperties()
   {
     $props = $this->concept->getProperties();
- 
+
     $this->assertEquals(6, sizeof($props));
   }
 
@@ -159,9 +167,9 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $props = $this->concept->getProperties();
     $expected = array (0 => 'rdf:type', 1=> 'skos:broader',2 => 'skos:narrower',3 => 'skos:altLabel',4 => 'skos:scopeNote',5 => 'http://www.skosmos.skos/testprop');
     $this->assertEquals($expected, array_keys($props));
- 
+
   }
-  
+
   /**
    * @covers Concept::getProperties
    * @covers ConceptProperty::getValues
@@ -169,18 +177,18 @@ class ConceptTest extends PHPUnit_Framework_TestCase
    */
   public function testGetPropertiesAlphabeticalSortingOfPropertyValues()
   {
-    $results = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta1', 'en'); 
+    $results = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta1', 'en');
     $concept = reset($results);
     $props = $concept->getProperties();
-    $prevlabel;
+    $prevlabel = null;
     foreach($props['skos:narrower'] as $val) {
-      $label = is_string($val->getLabel()) ? $val->getLabel() : $val->getLabel()-getValue();
+      $label = is_string($val->getLabel()) ? $val->getLabel() : $val->getLabel()->getValue();
       if ($prevlabel)
         $this->assertEquals(1, strnatcmp($prevlabel, $label));
       $prevlabel = $label;
     }
   }
-  
+
   /**
    * @covers Concept::getMappingProperties
    * @covers ConceptProperty::getValues
@@ -193,7 +201,7 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $values = $props['skos:closeMatch']->getValues();
     $this->assertCount(2, $values);
   }
-  
+
   /**
    * @covers Concept::removeDuplicatePropertyValues
    * @covers Concept::getProperties
@@ -205,7 +213,7 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $props = $concept->getProperties();
     $this->assertCount(1, $props);
   }
-  
+
   /**
    * @covers Concept::removeDuplicatePropertyValues
    * @covers Concept::getProperties
@@ -247,7 +255,7 @@ class ConceptTest extends PHPUnit_Framework_TestCase
    * @covers Concept::getDate
    * @covers ConceptProperty::getValues
    * @covers ConceptPropertyValueLiteral::getLabel
-   * @expectedException PHPUnit_Framework_Error
+   * @expectedException PHPUnit\Framework\Error\Error
    */
 
   public function testGetTimestampInvalidWarning() {
@@ -283,7 +291,7 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('Test class', $propvals['Test classhttp://www.skosmos.skos/test-meta/TestClass']->getLabel());
     $this->assertEquals('http://www.skosmos.skos/test-meta/TestClass', $propvals['Test classhttp://www.skosmos.skos/test-meta/TestClass']->getUri());
   }
-  
+
   /**
    * @covers Concept::getNotation
    */
@@ -294,7 +302,7 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $concept = $concepts[0];
     $this->assertEquals(null, $concept->getNotation());
   }
-  
+
   /**
    * @covers Concept::getNotation
    */
@@ -302,7 +310,7 @@ class ConceptTest extends PHPUnit_Framework_TestCase
   {
     $this->assertEquals('665', $this->concept->getNotation());
   }
-  
+
   /**
    * @covers Concept::getLabel
    */
@@ -310,18 +318,18 @@ class ConceptTest extends PHPUnit_Framework_TestCase
   {
     $this->assertEquals('Carp', $this->concept->getLabel()->getValue());
   }
-  
+
   /**
    * @covers Concept::getLabel
    */
   public function testGetLabelWhenNull()
   {
-    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
+    $model = new Model(new GlobalConfig('/../tests/testconfig.ttl'));
     $vocab = $model->getVocabulary('test');
     $concept = $vocab->getConceptInfo("http://www.skosmos.skos/test/ta120", "en");
     $this->assertEquals(null, $concept[0]->getLabel());
   }
-  
+
   /**
    * @covers Concept::getLabel
    * @covers Concept::setContentLang
@@ -333,15 +341,15 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('pl', $this->concept->getContentLang());
     $this->assertEquals('Carp', $this->concept->getLabel()->getValue());
   }
-  
+
   /**
    * @covers Concept::getArrayProperties
    * @covers Concept::getGroupProperties
-   * @covers Concept::getReverseResources
+   * @covers Concept::getCollections
    */
   public function testGetGroupProperties()
   {
-    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
+    $model = new Model(new GlobalConfig('/../tests/testconfig.ttl'));
     $vocab = $model->getVocabulary('groups');
     $concept = $vocab->getConceptInfo("http://www.skosmos.skos/groups/ta111", "en");
     $arrays = $concept[0]->getArrayProperties();
@@ -350,18 +358,33 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $groups = $concept[0]->getGroupProperties();
     $this->assertEmpty($groups);
   }
-  
+
   /**
    * @covers Concept::getGroupProperties
-   * @covers Concept::getReverseResources
+   * @covers Concept::getCollections
    */
   public function testGetGroupPropertiesWithDuplicatedInformationFilteredOut()
   {
-    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
+    $model = new Model(new GlobalConfig('/../tests/testconfig.ttl'));
     $vocab = $model->getVocabulary('dupgroup');
     $concept = $vocab->getConceptInfo("http://www.skosmos.skos/dupgroup/c1", "en");
     $groups = $concept[0]->getGroupProperties();
     $this->assertEquals(0, sizeof($groups));
+  }
+
+  /**
+   * @covers Concept::getGroupProperties
+   * @covers Concept::getCollections
+   */
+  public function testGetGroupPropertiesWithHierarchy()
+  {
+    $model = new Model(new GlobalConfig('/../tests/testconfig.ttl'));
+    $vocab = $model->getVocabulary('dupgroup');
+    $concept = $vocab->getConceptInfo("http://www.skosmos.skos/dupgroup/ta111", "en");
+    $groups = $concept[0]->getGroupProperties();
+    $this->assertEquals(2, sizeof($groups));
+    $this->assertArrayHasKey("Animalia", $groups);
+    $this->assertArrayHasKey("Biology", $groups);
   }
 
   /**
@@ -373,7 +396,7 @@ class ConceptTest extends PHPUnit_Framework_TestCase
    */
   public function testGetPropertiesWithNarrowersPartOfACollection()
   {
-    $model = new Model(new GlobalConfig('/../tests/testconfig.inc'));
+    $model = new Model(new GlobalConfig('/../tests/testconfig.ttl'));
     $vocab = $model->getVocabulary('groups');
     $concept = $vocab->getConceptInfo("http://www.skosmos.skos/groups/ta1", "en");
     $props = $concept[0]->getProperties();
@@ -391,7 +414,7 @@ class ConceptTest extends PHPUnit_Framework_TestCase
       }
     }
   }
-  
+
   /**
    * @covers Concept::getProperties
    */
@@ -408,7 +431,6 @@ class ConceptTest extends PHPUnit_Framework_TestCase
    * @covers Concept::getProperties
    * @covers ConceptProperty::getValues
    */
-  
   public function testGetPropertiesDefinitionResource() {
     $vocab = $this->model->getVocabulary('test');
     $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta122', 'en');
@@ -416,5 +438,73 @@ class ConceptTest extends PHPUnit_Framework_TestCase
     $props = $concept->getProperties();
     $propvals = $props['skos:definition']->getValues();
     $this->assertEquals('The black sea bass (Centropristis striata) is an exclusively marine fish.', $propvals['The black sea bass (Centropristis striata) is an exclusively marine fish.http://www.skosmos.skos/test/black_sea_bass_def']->getLabel());
+  }
+
+  /**
+   * @covers Concept::addResourceReifications
+   * @covers Concept::addLiteralReifications
+   */
+  public function testExternalResourceReifications() {
+    $concepts = $this->cbdVocab->getConceptInfo('http://www.skosmos.skos/cbd/test2', 'en');
+    $concept = $concepts[0];
+
+    $res = $this->cbdGraph->resource('http://www.skosmos.skos/cbd/test1');
+
+    $concept->processExternalResource($res);
+    $json =  $concept->dumpJsonLd();
+    $error_count = substr_count($json, "REIFICATION_ERROR");
+    $this->assertEquals($error_count, 0);
+  }
+
+  /**
+   * @covers Concept::processExternalResource
+   * @covers Concept::addExternalTriplesToGraph
+   * @covers Concept::addPropertyValues
+   */
+  public function testProcessExternalResource() {
+    $concepts = $this->cbdVocab->getConceptInfo('http://www.skosmos.skos/cbd/test2', 'en');
+    $concept = $concepts[0];
+
+    $res = $this->cbdGraph->resource('http://www.skosmos.skos/cbd/test1');
+
+    $concept->processExternalResource($res);
+    $json =  $concept->dumpJsonLd();
+    $this->assertContains('HY', $json);
+    $this->assertContains('AK', $json);
+    $this->assertContains('OS', $json);
+    $contains_count = substr_count($json, "CONTAINS");
+    $this->assertEquals($contains_count, 3);
+  }
+
+  /**
+   * Data provider for testGetModifiedDate test method.
+   * @return array
+   */
+  public function modifiedDateDataProvider() {
+    return [
+      ["cat", "2018-12-13T06:28:14", "+00:00"],  # set #0
+      ["dog", null, null],  # set #1
+      ["owl", "2018-10-22T00:00:00", "+00:00"],  # set #2
+      ["parrot", "2018-10-22T00:00:00", "+00:00"],  # set #3
+      ["macaw", "2018-10-22T12:34:45", "+00:00"],  # set #4
+      ["sloth", "2018-10-22T12:34:45", "+05:30"],  # set #5
+    ];
+  }
+
+  /**
+   * @covers Concept::getModifiedDate
+   * @dataProvider modifiedDateDataProvider
+   */
+  public function testGetModifiedDate($animal, $expected_time, $expected_timezone) {
+    $vocab = $this->model->getVocabulary('http304');
+    $results = $vocab->getConceptInfo('http://www.skosmos.skos/test/' . $animal, 'en');
+    $concept = reset($results);
+    if (is_null($expected_time)) {
+        $modifiedDate = $concept->getModifiedDate();
+        $this->assertNull($modifiedDate);
+    } else {
+        $modifiedDate = $concept->getModifiedDate();
+        $this->assertEquals($expected_time . $expected_timezone, $modifiedDate->format("c"));
+    }
   }
 }

@@ -12,6 +12,11 @@ use \Punic\Language;
 class WebController extends Controller
 {
     /**
+     * How long to store retrieved disk configuration for HTTP 304 header
+     * from git information.
+     */
+    const GIT_MODIFIED_CONFIG_TTL = 600; // 10 minutes
+    /**
      * Provides access to the templating engine.
      * @property object $twig the twig templating engine.
      */
@@ -29,7 +34,7 @@ class WebController extends Controller
         // initialize Twig templates
         $tmpDir = $model->getConfig()->getTemplateCache();
 
-        // check if the cache pointed by config.inc exists, if not we create it.
+        // check if the cache pointed by config.ttl exists, if not we create it.
         if (!file_exists($tmpDir)) {
             mkdir($tmpDir);
         }
@@ -41,14 +46,10 @@ class WebController extends Controller
         $this->twig->addExtension(new Twig_Extensions_Extension_I18n());
         // used for setting the base href for the relative urls
         $this->twig->addGlobal("BaseHref", $this->getBaseHref());
-        // setting the service name string from the config.inc
+        // setting the service name string from the config.ttl
         $this->twig->addGlobal("ServiceName", $this->model->getConfig()->getServiceName());
-        // setting the service logo location from the config.inc
-        if ($this->model->getConfig()->getServiceLogo() !== null) {
-            $this->twig->addGlobal("ServiceLogo", $this->model->getConfig()->getServiceLogo());
-        }
 
-        // setting the service custom css file from the config.inc
+        // setting the service custom css file from the config.ttl
         if ($this->model->getConfig()->getCustomCss() !== null) {
             $this->twig->addGlobal("ServiceCustomCss", $this->model->getConfig()->getCustomCss());
         }
@@ -152,7 +153,8 @@ class WebController extends Controller
         header('Vary: Accept-Language'); // inform caches that a decision was made based on Accept header
         $this->negotiator = new \Negotiation\LanguageNegotiator();
         $langcodes = array_keys($this->languages);
-        $acceptLanguage = filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE', FILTER_SANITIZE_STRING) ? filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE', FILTER_SANITIZE_STRING) : '';
+        // using a random language from the configured UI languages when there is no accept language header set
+        $acceptLanguage = filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE', FILTER_SANITIZE_STRING) ? filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE', FILTER_SANITIZE_STRING) : $langcodes[0];
         $bestLang = $this->negotiator->getBest($acceptLanguage, $langcodes);
         if (isset($bestLang) && in_array($bestLang, $langcodes)) {
             return $bestLang->getValue();
@@ -163,7 +165,7 @@ class WebController extends Controller
     }
 
     /**
-     * Determines a css class that controls width and positioning of the vocabulary list element. 
+     * Determines a css class that controls width and positioning of the vocabulary list element.
      * The layout is wider if the left/right box templates have not been provided.
      * @return string css class for the container eg. 'voclist-wide' or 'voclist-right'
      */
@@ -193,7 +195,7 @@ class WebController extends Controller
         $categoryLabel = $this->model->getClassificationLabel($request->getLang());
         $sortedVocabs = $this->model->getVocabularyList(false, true);
         $langList = $this->model->getLanguages($request->getLang());
-        $listStyle = $this->listStyle(); 
+        $listStyle = $this->listStyle();
 
         // render template
         echo $template->render(
@@ -209,8 +211,10 @@ class WebController extends Controller
 
     /**
      * Invokes the concept page of a single concept in a specific vocabulary.
+     *
+     * @param Request $request
      */
-    public function invokeVocabularyConcept($request)
+    public function invokeVocabularyConcept(Request $request)
     {
         $lang = $request->getLang();
         $this->setLanguageProperties($lang);
@@ -224,8 +228,17 @@ class WebController extends Controller
             $this->invokeGenericErrorPage($request);
             return;
         }
+        $useModifiedDate = $vocab->getConfig()->getUseModifiedDate();
+        if ($useModifiedDate) {
+            $modifiedDate = $this->getModifiedDate($results[0], $vocab);
+            // return if the controller sends the not modified header
+            if ($this->sendNotModifiedHeader($modifiedDate)) {
+                return;
+            }
+        }
+        /** @var \Twig\Template $template */
         $template = (in_array('skos:Concept', $results[0]->getType()) || in_array('skos:ConceptScheme', $results[0]->getType())) ? $this->twig->loadTemplate('concept-info.twig') : $this->twig->loadTemplate('group-contents.twig');
-        
+
         $crumbs = $vocab->getBreadCrumbs($request->getContentLang(), $uri);
         echo $template->render(array(
             'search_results' => $results,
@@ -236,6 +249,124 @@ class WebController extends Controller
             'combined' => $crumbs['combined'],
             'request' => $request)
         );
+    }
+
+    /**
+     * Return the modified date. First try to get the modified date from the concept. If found, return this
+     * date.
+     *
+     * Then try to get the modified date from the vocabulary's main concept scheme. If found, then return this
+     * date.
+     *
+     * Finally, if no date found, return null.
+     *
+     * @param Concept $concept
+     * @param Vocabulary $vocab
+     * @return DateTime|null
+     */
+    protected function getModifiedDate(Concept $concept, Vocabulary $vocab)
+    {
+        $modifiedDate = null;
+
+        $conceptModifiedDate = $this->getConceptModifiedDate($concept, $vocab);
+        $gitModifiedDate = $this->getGitModifiedDate();
+        $configModifiedDate = $this->getConfigModifiedDate();
+
+        // max with an empty list raises an error and returns bool
+        if ($conceptModifiedDate || $gitModifiedDate || $configModifiedDate) {
+            $modifiedDate = max($conceptModifiedDate, $gitModifiedDate, $configModifiedDate);
+        }
+        return $modifiedDate;
+    }
+
+    /**
+     * Get the concept modified date. Returns the concept modified date if available. Otherwise,
+     * reverts to the modified date of the default concept scheme if available. Lastly, if it could
+     * not get the modified date from the concept nor from the concept scheme, it returns null.
+     *
+     * @param Concept $concept concept used to retrieve modified date
+     * @param Vocabulary $vocab vocabulary used to retrieve modified date
+     * @return DateTime|null|string
+     */
+    protected function getConceptModifiedDate(Concept $concept, Vocabulary $vocab)
+    {
+        $modifiedDate = $concept->getModifiedDate();
+        if (!$modifiedDate) {
+            $conceptSchemeURI = $vocab->getDefaultConceptScheme();
+            if ($conceptSchemeURI) {
+                $conceptSchemeGraph = $vocab->getConceptScheme($conceptSchemeURI);
+                if (!$conceptSchemeGraph->isEmpty()) {
+                    $literal = $conceptSchemeGraph->getLiteral($conceptSchemeURI, "dc:modified");
+                    if ($literal) {
+                        $modifiedDate = $literal->getValue();
+                    }
+                }
+            }
+        }
+
+        return $modifiedDate;
+    }
+
+    /**
+     * Return the datetime of the latest commit, or null if git is not available or if the command failed
+     * to execute.
+     *
+     * @see https://stackoverflow.com/a/33986403
+     * @return DateTime|null
+     */
+    protected function getGitModifiedDate()
+    {
+        $commitDate = null;
+        $cache = $this->model->getConfig()->getCache();
+        $cacheKey = "git:modified_date";
+        $gitCommand = 'git log -1 --date=iso --pretty=format:%cd';
+        if ($cache->isAvailable()) {
+            $commitDate = $cache->fetch($cacheKey);
+            if (!$commitDate) {
+                $commitDate = $this->executeGitModifiedDateCommand($gitCommand);
+                if ($commitDate) {
+                    $cache->store($cacheKey, $commitDate, static::GIT_MODIFIED_CONFIG_TTL);
+                }
+            }
+        } else {
+            $commitDate = $this->executeGitModifiedDateCommand($gitCommand);
+        }
+        return $commitDate;
+    }
+
+    /**
+     * Execute the git command and return a parsed date time, or null if the command failed.
+     *
+     * @param string $gitCommand git command line that returns a formatted date time
+     * @return DateTime|null
+     */
+    protected function executeGitModifiedDateCommand($gitCommand)
+    {
+        $commitDate = null;
+        $commandOutput = @exec($gitCommand);
+        if ($commandOutput) {
+            $commitDate = new \DateTime(trim($commandOutput));
+            $commitDate->setTimezone(new \DateTimeZone('UTC'));
+        }
+        return $commitDate;
+    }
+
+    /**
+     * Return the datetime of the modified time of the config file. This value is read in the GlobalConfig
+     * for every request, so we simply access that value and if not null, we will return a datetime. Otherwise,
+     * we return a null value.
+     *
+     * @see http://php.net/manual/en/function.filemtime.php
+     * @return DateTime|null
+     */
+    protected function getConfigModifiedDate()
+    {
+        $dateTime = null;
+        $configModifiedTime = $this->model->getConfig()->getConfigModifiedTime();
+        if (!is_null($configModifiedTime)) {
+            $dateTime = (new DateTime())->setTimestamp($configModifiedTime);
+        }
+        return $dateTime;
     }
 
     /**
@@ -257,7 +388,9 @@ class WebController extends Controller
         $feedbackName = $request->getQueryParamPOST('name');
         $feedbackEmail = $request->getQueryParamPOST('email');
         $feedbackVocab = $request->getQueryParamPOST('vocab');
-        $feedbackVocabEmail = ($vocab !== null) ? $vocab->getConfig()->getFeedbackRecipient() : null;
+
+        $feedbackVocabEmail = ($feedbackVocab !== null && $feedbackVocab !== '') ?
+            $this->model->getVocabulary($feedbackVocab)->getConfig()->getFeedbackRecipient() : null;
 
         // if the hidden field has been set a value we have found a spam bot
         // and we do not actually send the message.
@@ -276,15 +409,19 @@ class WebController extends Controller
             ));
     }
 
-    private function createFeedbackHeaders($fromName, $fromEmail, $toMail)
+    private function createFeedbackHeaders($fromName, $fromEmail, $toMail, $sender)
     {
         $headers = "MIME-Version: 1.0″ . '\r\n";
         $headers .= "Content-type: text/html; charset=UTF-8" . "\r\n";
-        if ($toMail) {
+        if (!empty($toMail)) {
             $headers .= "Cc: " . $this->model->getConfig()->getFeedbackAddress() . "\r\n";
         }
+        if (!empty($fromEmail)) {
+            $headers .= "Reply-To: $fromName <$fromEmail>\r\n";
+        }
 
-        $headers .= "From: $fromName <$fromEmail>" . "\r\n" . 'X-Mailer: PHP/' . phpversion();
+        $service = $this->model->getConfig()->getServiceName();
+        $headers .= "From: $fromName via $service <$sender>";
         return $headers;
     }
 
@@ -302,16 +439,23 @@ class WebController extends Controller
             $message = 'Feedback from vocab: ' . strtoupper($fromVocab) . "<br />" . $message;
         }
 
-        $subject = SERVICE_NAME . " feedback";
-        $headers = $this->createFeedbackHeaders($fromName, $fromEmail, $toMail);
-        $envelopeSender = FEEDBACK_ENVELOPE_SENDER;
+        $envelopeSender = $this->model->getConfig()->getFeedbackEnvelopeSender();
+        $subject = $this->model->getConfig()->getServiceName() . " feedback";
+        // determine the sender address of the message
+        $sender = $this->model->getConfig()->getFeedbackSender();
+        if (empty($sender)) $sender = $envelopeSender;
+        if (empty($sender)) $sender = $this->model->getConfig()->getFeedbackAddress();
+
+        // determine sender name - default to "anonymous user" if not given by user
+        if (empty($fromName)) $fromName = "anonymous user";
+
+        $headers = $this->createFeedbackHeaders($fromName, $fromEmail, $toMail, $sender);
         $params = empty($envelopeSender) ? '' : "-f $envelopeSender";
 
         // adding some information about the user for debugging purposes.
         $message = $message . "<br /><br /> Debugging information:"
             . "<br />Timestamp: " . date(DATE_RFC2822)
             . "<br />User agent: " . $request->getServerConstant('HTTP_USER_AGENT')
-            . "<br />IP address: " . $request->getServerConstant('REMOTE_ADDR')
             . "<br />Referer: " . $request->getServerConstant('HTTP_REFERER');
 
         try {
@@ -396,7 +540,7 @@ class WebController extends Controller
                 'search_results' => $searchResults,
                 'rest' => $parameters->getOffset()>0,
                 'global_search' => true,
-                'term' => $request->getQueryParam('q'),
+                'term' => $request->getQueryParamRaw('q'),
                 'lang_list' => $langList,
                 'vocabs' => str_replace(' ', '+', $vocabs),
                 'vocab_list' => $vocabList,
@@ -464,7 +608,7 @@ class WebController extends Controller
                 'limit_scheme' =>  $request->getQueryParam('scheme') ? explode('+', $request->getQueryParam('scheme')) : null,
                 'group_index' => $vocab->listConceptGroups($request->getContentLang()),
                 'parameters' => $parameters,
-                'term' => $request->getQueryParam('q'),
+                'term' => $request->getQueryParamRaw('q'),
                 'types' => $vocabTypes,
                 'explicit_langcodes' => $langcodes,
                 'request' => $request,
@@ -492,11 +636,15 @@ class WebController extends Controller
 
         $allAtOnce = $vocab->getConfig()->getAlphabeticalFull();
         if (!$allAtOnce) {
-            $searchResults = $vocab->searchConceptsAlphabetical($request->getLetter(), $count, $offset, $contentLang);
             $letters = $vocab->getAlphabet($contentLang);
+            $letter = $request->getLetter();
+            if ($letter === '') {
+                $letter = $letters[0];
+            }
+            $searchResults = $vocab->searchConceptsAlphabetical($letter, $count, $offset, $contentLang);
         } else {
-            $searchResults = $vocab->searchConceptsAlphabetical('*', null, null, $contentLang);
             $letters = null;
+            $searchResults = $vocab->searchConceptsAlphabetical('*', null, null, $contentLang);
         }
 
         $request->setContentLang($contentLang);

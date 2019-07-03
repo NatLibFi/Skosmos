@@ -1,0 +1,763 @@
+# 
+# Translators:
+# Mahmoud Shaarawy <mahmoud.shaarawy@bibalex.org>, 2018
+msgid ""
+msgstr ""
+"Project-Id-Version: Skosmos\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-01-16 10:26+0200\n"
+"PO-Revision-Date: 2018-05-23 16:49+0000\n"
+"Last-Translator: osma <osma.suominen@helsinki.fi>\n"
+"Language-Team: Arabic (http://www.transifex.com/national-library-of-finland/skosmos/language/ar/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ar\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-SearchPath-0: view\n"
+"X-Poedit-SearchPath-1: controller\n"
+"X-Poedit-SearchPath-2: model\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: controller/Controller.php:38
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:21
+msgid "in_this_language"
+msgstr "بالإنجليزية"
+
+#: controller/RestController.php:271
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:125
+msgid "skos:Concept"
+msgstr "مفهوم"
+
+#: controller/RestController.php:280
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:127
+msgid "skos:Collection"
+msgstr "مجموعة"
+
+#: model/Concept.php:455 model/Concept.php:475
+msgid "skosmos:created"
+msgstr "تاريخ الإنشاء"
+
+#: model/Concept.php:460 model/Concept.php:462 model/Concept.php:471
+msgid "skosmos:modified"
+msgstr "آخر تعديل"
+
+#: model/VocabularyCategory.php:39
+msgid "Vocabularies"
+msgstr "مفردات"
+
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:26
+msgid "%search_count% results for '%term%'"
+msgstr "%search_count% نتائج '%term%'"
+
+#: /tmp/cache/587c83c09abaa/23/23c9862892c34daf7bea11b6d50990145b73a83c0947ae60c3d729fe591a06ec.php:48
+msgid "404 Error: The page %requested_page% cannot be found."
+msgstr "خطأ 404: الصفحة المطلوبة %requested_page% غير موجودة."
+
+#: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:62
+#: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:75
+#: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:64
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:274
+#: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:68
+msgid "A-Z"
+msgstr "أ-ي"
+
+#: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:46
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:19
+msgid "About"
+msgstr "حول"
+
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:35
+#, php-format
+msgid "All %d results displayed"
+msgstr "كافة%d النتائج معروضة"
+
+#: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:64
+#: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:77
+#: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:66
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:276
+#: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:70
+msgid "Alpha-nav"
+msgstr "هجائي"
+
+#: /tmp/cache/587c83c09abaa/cf/cf0b3d87d2eb48f38f5f339303d5509c7535d13d7b010ad4840ee824430f7fe6.php:34
+msgid "Alphabetical index"
+msgstr "كشاف هجائي"
+
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:555
+msgid "By group"
+msgstr "وفقا للمجموعة"
+
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:587
+msgid "By parent"
+msgstr "وفقا للأصل"
+
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:477
+msgid "By scheme"
+msgstr "وفقا للمفردات الفرعية"
+
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:516
+msgid "By type"
+msgstr "وفقا للنوع"
+
+#: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:119
+#: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:132
+#: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:117
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:331
+#: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:125
+msgid "Changes-nav"
+msgstr "جديد"
+
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:122
+msgid "Clear limitations"
+msgstr "حذف المحددات"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:74
+msgid "Contact us!"
+msgstr "اتصل بنا"
+
+#: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:108
+msgid "Content and search language"
+msgstr "لغة المحتوى والبحث"
+
+#: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:51
+msgid "Content language"
+msgstr "لغة المحتوى"
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:732
+msgid "Download this concept in SKOS format:"
+msgstr "تحميل هذا المفهوم:"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:144
+msgid "E-mail:"
+msgstr "البريد الإلكتروني:"
+
+#: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:220
+msgid "Enter search term"
+msgstr "أدخل مصطلح البحث"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:148
+msgid "Enter your e-mail address"
+msgstr "أدخل عنوان بريدك الالكتروني"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:140
+msgid "Enter your name"
+msgstr "أدخل اسمك"
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:900
+#: /tmp/cache/587c83c13194c/5c/5c060d2297f64d66beb101ee34831f917ed8d33f97dadeca144430a1561433ec.php:69
+msgid "Error: Requested vocabulary not found!"
+msgstr "خطأ: المفردات المطلوبة غير موجودة!"
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:890
+msgid "Error: Term \"%term%\" not found in vocabulary!"
+msgstr "خطأ: المصطلح \"%term%\" غير موجود في المفردات!"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:34
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:54
+#: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:194
+msgid "Feedback"
+msgstr "تعليقات"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:64
+msgid "Feedback has been sent!"
+msgstr "تم إرسال التعليقات!"
+
+#: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:35
+msgid "Group index"
+msgstr "كشاف المجموعة"
+
+#: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:101
+#: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:114
+#: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:99
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:313
+#: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:107
+msgid "Group-nav"
+msgstr "مجموعات"
+
+#: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:85
+#: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:94
+#: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:83
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:297
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:55
+#: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:91
+msgid "Hier-nav"
+msgstr "تسلسل هرمي"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:157
+msgid "Leave this field blank"
+msgstr "اترك هذا الحقل فارغا"
+
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:594
+msgid "Limit search"
+msgstr "تحديد البحث"
+
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:31
+msgid "Loading"
+msgstr "جار التحميل"
+
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:27
+msgid "Loading more items"
+msgstr "جار تحميل المزيد من العناصر"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:152
+msgid "Message:"
+msgstr "رسالة:"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:136
+msgid "Name:"
+msgstr "الاسم:"
+
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:23
+msgid "No results"
+msgstr "لا توجد نتائج"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:103
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:111
+msgid "Not to a specific vocabulary"
+msgstr "لا تتعلق بمفردات محددة"
+
+#: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:233
+msgid "Search"
+msgstr "البحث"
+
+#: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:59
+msgid "Search from vocabulary"
+msgstr "البحث في المفردات"
+
+#: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:210
+msgid "Search language: any"
+msgstr "أي لغة"
+
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:340
+msgid "Search options"
+msgstr "خيارات البحث"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:161
+msgid "Send feedback"
+msgstr "أرسل التعليقات"
+
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:51
+msgid "Show all breadcrumb paths"
+msgstr "عرض جميع # المسارات"
+
+#: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:72
+msgid "Skosmos version %version%"
+msgstr "إصدارة Skosmos %version%"
+
+#: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:229
+msgid "Submit search"
+msgstr "إرسال البحث"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:68
+msgid "Thank you for your feedback"
+msgstr "شكرا لك على تعليقاتك. نحن نسعى جاهدين للرد على جميع التعليقات في أقرب وقت ممكن."
+
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:129
+msgid "The search provided no results."
+msgstr "البحث لم يقدم أية نتائج."
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:48
+msgid "There is no term for this concept in this language"
+msgstr "لا يوجد مصطلح لهذا المفهوم في هذه اللغة."
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:173
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:47
+msgid "Value is required and can not be empty"
+msgstr "القيمة مطلوبة ولا يمكن أن تترك فارغة"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:27
+msgid "cc:attributionName"
+msgstr "اسم الإسناد"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:29
+msgid "cc:attributionUrl"
+msgstr "Url الإسناد"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:25
+msgid "cc:license"
+msgstr "الترخيص"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:31
+msgid "cc:morePermissions"
+msgstr "المزيد من الأذونات"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:33
+msgid "cc:useGuidelines"
+msgstr "استخدم الأدلة الإرشادية"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:35
+msgid "dc:conformsTo"
+msgstr "يتوافق مع"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:37
+msgid "dc:contributor"
+msgstr "المساهم"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:39
+msgid "dc:coverage"
+msgstr "التغطية"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:41
+msgid "dc:created"
+msgstr "تاريخ الإنشاء"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:43
+msgid "dc:creator"
+msgstr "المنشئ"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:45
+msgid "dc:date"
+msgstr "التاريخ"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:47
+msgid "dc:description"
+msgstr "الوصف"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:49
+msgid "dc:format"
+msgstr "الصيغة"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:51
+msgid "dc:identifier"
+msgstr "المُعَرِّف"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:53
+msgid "dc:isReplacedBy"
+msgstr "حل محله"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:55
+msgid "dc:isRequiredBy"
+msgstr "مطلوب من"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:57
+msgid "dc:issued"
+msgstr "تاريخ الإصدار"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:59
+msgid "dc:language"
+msgstr "اللغة"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:61
+msgid "dc:license"
+msgstr "الترخيص"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:63
+msgid "dc:modified"
+msgstr "آخر تعديل"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:65
+msgid "dc:publisher"
+msgstr "الناشر"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:67
+msgid "dc:relation"
+msgstr "علاقة"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:69
+msgid "dc:replaces"
+msgstr "يحل محل"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:71
+msgid "dc:rights"
+msgstr "حقوق"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:73
+msgid "dc:rightsHolder"
+msgstr "صاحب الحقوق"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:75
+msgid "dc:source"
+msgstr "مصدر"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:77
+msgid "dc:source_help"
+msgstr "مصدر لوصف المفهوم."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:79
+msgid "dc:spatial"
+msgstr "تغطية مكانية"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:81
+msgid "dc:subject"
+msgstr "موضوع"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:83
+msgid "dc:temporal"
+msgstr "تغطية زمنية"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:85
+msgid "dc:title"
+msgstr "عنوان"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:87
+msgid "dc:type"
+msgstr "نوع"
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:36
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:256
+msgid "deprecated"
+msgstr "هذا المفهوم غير متاح للإستخدام. لا تستخدم هذا المفهوم للشرح!"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:89
+msgid "foaf:homepage"
+msgstr "الصفحة الرئيسية"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:91
+msgid "foaf:page"
+msgstr "صفحة"
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:658
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:542
+msgid "foreign prefLabel help"
+msgstr "مصطلحات هذا المفهوم باللغات الأخرى."
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:660
+msgid "foreign prefLabels"
+msgstr "بلغات أخرى"
+
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:39
+msgid "from all"
+msgstr "من كل"
+
+#: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:81
+#: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:90
+#: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:79
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:293
+#: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:87
+msgid "hierarchy-disabled-help"
+msgstr "لا يمكن عرض التسلسل الهرمي للمستوى الأعلى في هذه المفردات."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:93
+msgid "isothes:ConceptGroup"
+msgstr "مجموعة مفاهيم"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:97
+msgid "isothes:ThesaurusArray"
+msgstr "مصفوفة من مفاهيم قريبة"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:99
+msgid "isothes:broaderGeneric"
+msgstr "مفاهيم أوسع"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:101
+msgid "isothes:broaderInstantial"
+msgstr "مفهوم أوسع (آني)"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:103
+msgid "isothes:broaderPartitive"
+msgstr "مفهوم أوسع (جزئي)"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:105
+msgid "isothes:narrowerGeneric"
+msgstr "مفاهيم أضيق"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:107
+msgid "isothes:narrowerInstantial"
+msgstr "مفاهيم أضيق (آنية)"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:109
+msgid "isothes:narrowerPartitive"
+msgstr "مفاهيم أضيق (جزئية)"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:95
+msgid "isothes:superGroup"
+msgstr "مجموعة رئيسية"
+
+#: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:66
+msgid "layout designed by Hahmo"
+msgstr "التصميم بواسطة Hahmo Design"
+
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:74
+msgid "limited to group"
+msgstr "مجموعة"
+
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:67
+msgid "limited to parent"
+msgstr "الأصل"
+
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:81
+msgid "limited to scheme"
+msgstr "يقتصر على المخطط"
+
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:29
+msgid "limited to type"
+msgstr "نوع"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:113
+msgid "owl:sameAs"
+msgstr "المفاهيم المتكافئة"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:111
+msgid "owl:versionInfo"
+msgstr "الإصدارة"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:115
+msgid "rdf:type"
+msgstr "نوع"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:117
+msgid "rdf:type_help"
+msgstr "نوع الكيان"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:123
+msgid "rdfs:comment"
+msgstr "وصف"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:119
+msgid "rdfs:label"
+msgstr "تسمية"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:121
+msgid "rdfs:seeAlso"
+msgstr "انظر أيضا"
+
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:43
+msgid "selected"
+msgstr "محدَّد"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:143
+msgid "skos:altLabel"
+msgstr "مصطلحات الإدخال"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:179
+msgid "skos:altLabel_help"
+msgstr "مصطلحات بديلة للمفهوم."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:133
+msgid "skos:broadMatch"
+msgstr "مفاهيم أوسع مطابقة"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:191
+msgid "skos:broadMatch_help"
+msgstr "مفاهيم أوسع مطابقة في مفردات أخرى."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:129
+msgid "skos:broader"
+msgstr "مفهوم أوسع"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:171
+msgid "skos:broader_help"
+msgstr "مفهوم أوسع"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:169
+msgid "skos:changeNote"
+msgstr "تبصرة تغيير"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:147
+msgid "skos:closeMatch"
+msgstr "مفاهيم متطابقة بشكل وثيق"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:189
+msgid "skos:closeMatch_help"
+msgstr "مفاهيم متطابقة بشكل وثيق في مفردات أخرى."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:161
+msgid "skos:definition"
+msgstr "تعريف"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:185
+msgid "skos:definition_help"
+msgstr "شرح كامل للمعنى المقصود لمفهوم"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:167
+msgid "skos:editorialNote"
+msgstr "تبصرة تحريرية"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:145
+msgid "skos:exactMatch"
+msgstr "مفاهيم مطابقة تماما"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:187
+msgid "skos:exactMatch_help"
+msgstr "مفاهيم مطابقة تماما في مفردات أخرى."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:163
+msgid "skos:example"
+msgstr "مثال"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:155
+msgid "skos:hasTopConcept"
+msgstr "لديه مفهوم أعلى"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:165
+msgid "skos:historyNote"
+msgstr "تبصرة تاريخية"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:151
+msgid "skos:inScheme"
+msgstr "مخطط المفهوم"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:149
+msgid "skos:member"
+msgstr "أعضاء المجموعة"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:181
+msgid "skos:member_help"
+msgstr "أعضاء المجموعة"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:135
+msgid "skos:narrowMatch"
+msgstr "مفاهيم أضيق مطابقة"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:193
+msgid "skos:narrowMatch_help"
+msgstr "مفاهيم أضيق مطابقة في مفردات أخرى."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:131
+msgid "skos:narrower"
+msgstr "مفاهيم أضيق"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:173
+msgid "skos:narrower_help"
+msgstr "مفاهيم أضيق."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:157
+msgid "skos:note"
+msgstr "تبصرة"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:175
+msgid "skos:note_help"
+msgstr "تبصرات"
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:234
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:141
+msgid "skos:prefLabel"
+msgstr "المصطلح المفضل"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:137
+msgid "skos:related"
+msgstr "المفاهيم ذات الصلة"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:139
+msgid "skos:relatedMatch"
+msgstr "المفاهيم المطابقة ذات الصلة"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:183
+msgid "skos:related_help"
+msgstr "المفاهيم المتعلقة بهذا المفهوم."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:159
+msgid "skos:scopeNote"
+msgstr "تبصرة توضيحية"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:177
+msgid "skos:scopeNote_help"
+msgstr "تبصرات حول استخدام ومجال المفهوم."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:153
+msgid "skos:topConceptOf"
+msgstr "ينتمي إلى المفردات"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:197
+msgid "skosext:DeprecatedConcept"
+msgstr "مفهوم غير مستخدم"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:195
+msgid "skosext:partOf"
+msgstr "جزء من"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:199
+msgid "skosext:partOf_help"
+msgstr "الكل الذي يعد المفهوم جزء منه."
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:548
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:201
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:449
+msgid "skosmos:memberOf"
+msgstr "ينتمي إلى المجموعة"
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:611
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:205
+msgid "skosmos:memberOfArray"
+msgstr "ينتمي إلى المصفوفة"
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:609
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:207
+msgid "skosmos:memberOfArray_help"
+msgstr "المصفوفة التي ينتمي إليها المفهوم."
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:546
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:203
+msgid "skosmos:memberOf_help"
+msgstr "المجموعة التي ينتمي إليها المفهوم."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:23
+msgid "zxx-x-taxon"
+msgstr "الاسم العلمي"
+
+#: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:168
+msgid "About page"
+msgstr "حول"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:138
+msgid "Alternate terms"
+msgstr "مصطلحات بديلة"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:130
+msgid "Concept language"
+msgstr "اللغة"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:118
+msgid "Count"
+msgstr "العدد"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:157
+msgid "Download this vocabulary as SKOS/RDF:"
+msgstr "تحميل هذه المفردات في صيغة SKOS/RDF:"
+
+#: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:205
+msgid "Help"
+msgstr "مساعدة"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:142
+msgid "Hidden terms"
+msgstr "مصطلحات مخفية"
+
+#: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:58
+msgid "Interface language"
+msgstr "لغة الواجهة"
+
+#: /tmp/cache/587c83c13194c/f9/f9c816822168f230ef0bfed735f5923aab99d389ce8b2c6b2f5fcd5d400bc275.php:26
+msgid "No vocabularies on the server!"
+msgstr "لا تتوفر مفردات على الخادم!"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:134
+msgid "Preferred terms"
+msgstr "المصطلحات المفضلة"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:111
+msgid "Resource counts by type"
+msgstr "العدد الكلي للمصادر وفقا للنوع"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:124
+msgid "Term counts by language"
+msgstr "العدد الكلي للمصطلحات وفقا للغة"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:116
+msgid "Type"
+msgstr "النوع"
+
+#: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:146
+msgid "Vocabularies-nav"
+msgstr "المفردات"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:24
+msgid "Vocabulary information"
+msgstr "معلومات المفردات"
+
+#: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:199
+msgid "helper_help"
+msgstr "مرر مؤشر الفأرة فوق النص الموضوع أسفله خط منقط لعرض التعليمات حول الموقع."
+
+#: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:201
+msgid "search_example_text"
+msgstr "للبحث الاقتطاعي، الرجاء استخدام الرمز * كما هو الحال في *حيوان أو *براءة*. بالنسبة لنهاية كلمات البحث، سيتم اقتطاع البحث تلقائيًا، حتى إذا لم يتم إدخال رمز الاقتطاع يدويا: وهكذا، سيؤدي البحث عن قُط إلى الحصول على نفس نتائج البحث عن قُط*."
+
+msgid "feedback_enter_name_email"
+msgstr ""
+
+msgid "concept_types"
+msgstr ""

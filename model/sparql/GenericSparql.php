@@ -60,14 +60,34 @@ class GenericSparql {
     }
     
     /**
+     * Returns prefix-definitions for a query
+     *
+     * @param string $query
+     * @return string
+    */
+    protected function generateQueryPrefixes($query)
+    {
+        // Check for undefined prefixes
+        $prefixes = '';
+        foreach (EasyRdf\RdfNamespace::namespaces() as $prefix => $uri) {
+            if (strpos($query, "{$prefix}:") !== false and
+                strpos($query, "PREFIX {$prefix}:") === false
+            ) {
+                $prefixes .= "PREFIX {$prefix}: <{$uri}>\n";
+            }
+        }
+        return $prefixes;
+    }
+
+    /**
      * Execute the SPARQL query using the SPARQL client, logging it as well.
      * @param string $query SPARQL query to perform
-     * @return object query result
+     * @return Result|\EasyRdf\Graph query result
      */
     protected function query($query) {
         $queryId = sprintf("%05d", rand(0, 99999));
         $logger = $this->model->getLogger();
-        $logger->info("[qid $queryId] SPARQL query:\n$query\n");
+        $logger->info("[qid $queryId] SPARQL query:\n" . $this->generateQueryPrefixes($query) . "\n$query\n");
         $starttime = microtime(true);
         $result = $this->client->query($query);
         $elapsed = intval(round((microtime(true) - $starttime) * 1000));
@@ -219,8 +239,11 @@ EOQ;
         $gcl = $this->graphClause;
         $classes = ($classes) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
 
+	$quote_string = function($val) { return "'$val'"; };
+	$quoted_values = array_map($quote_string, $langs);
+	$langFilter = "FILTER(?lang IN (" . implode(',', $quoted_values) . "))";
+
         $values = $this->formatValues('?type', $classes, 'uri');
-        $valuesLang = $this->formatValues('?lang', $langs, 'literal');
         $valuesProp = $this->formatValues('?prop', $props, null);
 
         $query = <<<EOQ
@@ -228,19 +251,19 @@ SELECT ?lang ?prop
   (COUNT(?label) as ?count)
 WHERE {
   $gcl {
+    $values
+    $valuesProp
     ?conc a ?type .
     ?conc ?prop ?label .
-    FILTER (langMatches(lang(?label), ?lang))
-    $valuesLang
-    $valuesProp
+    BIND(LANG(?label) AS ?lang)
+    $langFilter
   }
-  $values
 }
 GROUP BY ?lang ?prop ?type
 EOQ;
         return $query;
     }
-
+	
     /**
      * Transforms the CountLangConcepts results into an array of label counts.
      * @param EasyRdf\Sparql\Result $result query results to be transformed
@@ -347,7 +370,7 @@ EOQ;
                       ?x skos:prefLabel ?xl .
                       FILTER NOT EXISTS {
                         ?x skos:member ?other .
-                        FILTER NOT EXISTS { ?other skos:broader ?uri }
+                        MINUS { ?other skos:broader ?uri }
                       }
                     }";
         }
@@ -375,6 +398,7 @@ CONSTRUCT {
  ?item skos:prefLabel ?il .
  ?group a ?grouptype . $construct
 } $fcl WHERE {
+ $values
  $gcl {
   {
     ?s ?p ?uri .
@@ -424,7 +448,6 @@ CONSTRUCT {
    } $optional
   }
  }
- $values
 }
 $valuesGraph
 EOQ;
@@ -437,13 +460,13 @@ EOQ;
      * @param array $uris concept URIs
      * @param \Vocabulary[] $vocabs array of Vocabulary object
      * @param string|null $clang content language
-     * @return mixed query result graph (EasyRdf\Graph), or array of Concept objects
+     * @return Concept[] array of Concept objects
      */
     private function transformConceptInfoResults($result, $uris, $vocabs, $clang) {
         $conceptArray = array();
         foreach ($uris as $index => $uri) {
             $conc = $result->resource($uri);
-            $vocab = sizeof($vocabs) == 1 ? $vocabs[0] : $vocabs[$index];
+            $vocab = (isset($vocabs) && sizeof($vocabs) == 1) ? $vocabs[0] : $vocabs[$index];
             $conceptArray[] = new Concept($this->model, $vocab, $conc, $result, $clang);
         }
         return $conceptArray;
@@ -454,7 +477,7 @@ EOQ;
      * @param mixed $uris concept URI (string) or array of URIs
      * @param string|null $arrayClass the URI for thesaurus array class, or null if not used
      * @param \Vocabulary[]|null $vocabs vocabularies to target
-     * @return \Concept[]
+     * @return \EasyRdf\Graph
      */
     public function queryConceptInfoGraph($uris, $arrayClass = null, $vocabs = array()) {
         // if just a single URI is given, put it in an array regardless
@@ -473,7 +496,7 @@ EOQ;
      * @param string|null $arrayClass the URI for thesaurus array class, or null if not used
      * @param \Vocabulary[] $vocabs vocabularies to target
      * @param string|null $clang content language
-     * @return EasyRdf\Graph
+     * @return Concept[]
      */
     public function queryConceptInfo($uris, $arrayClass = null, $vocabs = array(), $clang = null) {
         // if just a single URI is given, put it in an array regardless
@@ -482,7 +505,7 @@ EOQ;
         }
         $result = $this->queryConceptInfoGraph($uris, $arrayClass, $vocabs);
         if ($result->isEmpty()) {
-            return;
+            return [];
         }
         return $this->transformConceptInfoResults($result, $uris, $vocabs, $clang);
     }
@@ -595,9 +618,14 @@ EOQ;
     private function generateQueryConceptSchemesQuery($lang) {
         $fcl = $this->generateFromClause();
         $query = <<<EOQ
-SELECT ?cs ?label ?preflabel ?title $fcl
+SELECT ?cs ?label ?preflabel ?title ?domain ?domainLabel $fcl
 WHERE {
  ?cs a skos:ConceptScheme .
+ OPTIONAL{
+    ?cs dcterms:subject ?domain.
+    ?domain skos:prefLabel ?domainLabel.
+    FILTER(langMatches(lang(?domainLabel), '$lang'))
+}
  OPTIONAL {
    ?cs rdfs:label ?label .
    FILTER(langMatches(lang(?label), '$lang'))
@@ -612,7 +640,8 @@ WHERE {
    { ?cs dc:title ?title }
    FILTER(langMatches(lang(?title), '$lang'))
  }
-} ORDER BY ?cs
+} 
+ORDER BY ?cs
 EOQ;
         return $query;
     }
@@ -636,6 +665,11 @@ EOQ;
 
             if (isset($row->title)) {
                 $conceptscheme['title'] = $row->title->getValue();
+            }
+            // add dct:subject and their labels in the result
+            if(isset($row->domain) && isset($row->domainLabel)){
+                $conceptscheme['subject']['uri']=$row->domain->getURI();
+                $conceptscheme['subject']['prefLabel']=$row->domainLabel->getValue();
             }
 
             $ret[$row->cs->getURI()] = $conceptscheme;
@@ -737,7 +771,7 @@ EOQ;
             }
         }
 
-        return implode(' UNION ', $typePatterns);;
+        return implode(' UNION ', $typePatterns);
     }
 
     /**
@@ -859,8 +893,8 @@ EOF;
     {
         $valuesProp = $this->formatValues('?prop', $props);
         $textcond = $this->generateConceptSearchQueryCondition($term, $searchLang);
-        $rawterm = str_replace('\\', '\\\\', str_replace('*', '', $term));
-        
+
+        $rawterm = str_replace(array('\\', '*', '"'), array('\\\\', '', '\"'), $term);
         // graph clause, if necessary
         $graphClause = $filterGraph != '' ? 'GRAPH ?graph' : '';
 
@@ -1265,7 +1299,7 @@ EOQ;
      */
     private function generateFirstCharactersQuery($lang, $classes) {
         $fcl = $this->generateFromClause();
-        $classes = (sizeof($classes) > 0) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
+        $classes = (isset($classes) && sizeof($classes) > 0) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
         $values = $this->formatValues('?type', $classes, 'uri');
         $query = <<<EOQ
 SELECT DISTINCT (ucase(str(substr(?label, 1, 1))) as ?l) $fcl WHERE {
@@ -1358,6 +1392,48 @@ EOQ;
             return $ret;
         } else {
             // nonexistent concept
+            return null;
+        }
+    }
+    
+    /**
+     * Generates a SPARQL query to retrieve the super properties of a given property URI.
+     * Note this must be executed in the graph where this information is available.
+     * @param string $uri
+     * @return string sparql query string
+     */
+    private function generateSubPropertyOfQuery($uri) {
+        $fcl = $this->generateFromClause();
+        $query = <<<EOQ
+SELECT ?superProperty $fcl
+WHERE {
+  <$uri> rdfs:subPropertyOf ?superProperty
+}
+EOQ;
+        return $query;
+    }
+    
+    /**
+     * Query the super properties of a provided property URI.
+     * @param string $uri URI of a propertyes
+     * @return array array super properties, or null if none exist
+     */
+    public function querySuperProperties($uri) {
+        $query = $this->generateSubPropertyOfQuery($uri);
+        $result = $this->query($query);
+        $ret = array();
+        foreach ($result as $row) {
+            if (isset($row->superProperty)) {
+                $ret[] = $row->superProperty->getUri();
+            }
+            
+        }
+        
+        if (sizeof($ret) > 0) {
+            // return result
+            return $ret;
+        } else {
+            // no result, return null
             return null;
         }
     }
@@ -1736,6 +1812,7 @@ EOQ;
 
     /**
      * Generates a sparql query for finding the hierarchy for a concept.
+	 * A concept may be a top concept in multiple schemes, returned as a single whitespace-separated literal.
      * @param string $uri concept uri.
      * @param string $lang
      * @param string $fallback language to use if label is not available in the preferred language
@@ -1745,8 +1822,9 @@ EOQ;
         $fcl = $this->generateFromClause();
         $propertyClause = implode('|', $props);
         $query = <<<EOQ
-SELECT ?broad ?parent ?member ?children ?grandchildren
-(SAMPLE(?lab) as ?label) (SAMPLE(?childlab) as ?childlabel) (SAMPLE(?topcs) AS ?top) (SAMPLE(?nota) as ?notation) (SAMPLE(?childnota) as ?childnotation) $fcl
+SELECT ?broad ?parent ?children ?grandchildren
+(SAMPLE(?lab) as ?label) (SAMPLE(?childlab) as ?childlabel) (GROUP_CONCAT(?topcs; separator=" ") as ?tops) 
+(SAMPLE(?nota) as ?notation) (SAMPLE(?childnota) as ?childnotation) $fcl
 WHERE {
   <$uri> a skos:Concept .
   OPTIONAL {
@@ -1810,8 +1888,11 @@ EOQ;
             if (isset($row->exact)) {
                 $ret[$uri]['exact'] = $row->exact->getUri();
             }
-            if (isset($row->top)) {
-                $ret[$uri]['top'] = $row->top->getUri();
+            if (isset($row->tops)) {
+               $topConceptsList=explode(" ", $row->tops->getValue());
+               // sort to garantee an alphabetical ordering of the URI
+               sort($topConceptsList);
+               $ret[$uri]['tops'] = $topConceptsList;
             }
             if (isset($row->children)) {
                 if (!isset($ret[$uri]['narrower'])) {

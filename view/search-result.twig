@@ -22,7 +22,8 @@
     {% endif %}
   {% endspaceless %}
   {% if concept.type == 'skosext:DeprecatedConcept' %}<h2 class="deprecated-alert">{% trans %}deprecated{% endtrans %}</h2>{% endif %}
-  {% for property in concept.properties %} {# loop through ConceptProperty objects #}
+  {% set conceptProperties = concept.properties %}
+  {% for property in conceptProperties %} {# loop through ConceptProperty objects #}
     {% if property.type in PreferredProperties or property.type in concept.vocab.config.additionalSearchProperties  or property.type in concept.vocab.config.hierarchyProperty %}
     <div class="property">
       <span class="property-click" title="{{ property.description }}">
@@ -66,19 +67,14 @@
         <img class="property-hover" src="resource/pics/group.gif">
       </span>
       <div class="property-values">
-      {% set previous = false %}
-      {% for propval in concept.groupProperties %} {# loop through ConceptPropertyValue objects #}
-        {% set outerLast = loop.last %}
-        {% if propval.uri and propval.type != 'skosmos:memberOfArray'%} {# resources with URI #}
-          {% spaceless %}
-            {% if propval.label %}
-              <span class="versal value">{{ propval.label(request.contentLang) }}</span>
-              {% if propval.lang and (propval.lang != request.lang) or explicit_langcodes %}<span class="versal"> ({{ propval.lang }})</span>{% endif %}
-              {% if propval.type == 'skosmos:memberOfSuper' %}<span class="versal"> > </span> {% elseif not loop.last %},{% endif %}
-            {% endif %}
-          {% endspaceless %}
-        {% endif %}
-      {% endfor %}
+        {% for groupprop in concept.groupProperties %}
+          {% for propval in groupprop %}
+            <span class="versal value">{{ propval.label(request.contentLang) }}</span>
+            {% if propval.lang and (propval.lang != request.lang) or explicit_langcodes %}<span class="versal"> ({{ propval.lang }})</span>{% endif %}
+            {% if not loop.last %}<span class="versal"> &#62; </span>{% endif %}
+          {% endfor %}
+          {%- if not loop.last %},{% endif %}
+        {% endfor %}
       </div>
     </div>
   {% endif %}
@@ -93,7 +89,7 @@
     </div>
   {% endif %}
   {% if concept.vocab.config.additionalSearchProperties %} 
-    {% set mappingProperties = concept.mappingProperties %}
+    {% set mappingProperties = concept.mappingProperties(concept.vocab.config.additionalSearchProperties) %}
     {% if mappingProperties %}
       {% for property in mappingProperties %} {# loop through ConceptProperty objects #}
         {% if property.type in concept.vocab.config.additionalSearchProperties %}
@@ -111,6 +107,32 @@
       {% endfor %}
     {% endif %}
   {% endif %}
+  <div class="property">
+    <span class="property-click" title="{% trans "concept_types" %}">
+      <img class="property-hover" src="resource/pics/type.gif">
+    </span>
+    <div class="property-values">
+      {% for property in conceptProperties %} {# loop through ConceptProperty objects #}
+        {% if property.getSubPropertyOf != 'skos:hiddenLabel' %}
+          {% if request.vocab.config.hasMultiLingualProperty(property.type) %}
+            {% set prevlang = '' %}{# Only displaying the language when it appears for the very first time #}
+            {% for language,labels in concept.allLabels(property.type) %}
+              {% for value in labels %}
+              <div class="row other-languages{% if prevlang != language %} first-of-language{% endif %}"><span class="versal col-xs-6{% if value.type == "skos:altLabel" %} replaced{% endif %}">{{ value.label }}</span><span class="versal col-xs-6">{% if prevlang != language %} {{ language }}{% endif %}</span></div>
+              {% set prevlang = language %}
+              {% endfor %}
+            {% endfor %}
+          {% else %}
+            {% for propval in property.values %} {# loop through ConceptPropertyValue objects #}
+              {% if property.type == 'rdf:type' %}
+                <span class="versal value">{{ propval.label|trans }}</span>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
   {% if concept.uri %}
     <div><span class="versal uri-input-box">{{ concept.uri }}</span></div>
   {% endif %}

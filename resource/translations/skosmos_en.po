@@ -761,53 +761,12 @@ msgstr ""
 "if the truncation symbol is not entered manually: thus, cat will yield the "
 "same results as cat*."
 
-#~ msgid "dc11:contributor"
-#~ msgstr "Contributor"
+msgid "feedback_enter_name_email"
+msgstr ""
+"Please enter your name and email address if you wish to receive a direct "
+"response. You also have the option to submit your feedback anonymously. NB: "
+"Feedback regarding a specific vocabulary is referred directly to its "
+"administrator."
 
-#~ msgid "dc11:creator"
-#~ msgstr "Creator"
-
-#~ msgid "dc11:description"
-#~ msgstr "Description"
-
-#~ msgid "dc11:license"
-#~ msgstr "License"
-
-#~ msgid "dc11:publisher"
-#~ msgstr "Publisher"
-
-#~ msgid "dc11:relation"
-#~ msgstr "Relation"
-
-#~ msgid "dc11:rights"
-#~ msgstr "Rights"
-
-#~ msgid "dc11:source"
-#~ msgstr "Source"
-
-#~ msgid "dc11:title"
-#~ msgstr "Title"
-
-#~ msgid "Error: the vocabulary does not contain terms beginning with"
-#~ msgstr "The vocabulary does not contain terms beginning with"
-
-#~ msgid "Vocabularies on the server"
-#~ msgstr "Available vocabularies and ontologies"
-
-#~ msgid "Modified concepts"
-#~ msgstr "Modified concepts"
-
-#~ msgid "New concepts"
-#~ msgstr "New concepts"
-
-#~ msgid "All"
-#~ msgstr "All"
-
-#~ msgid "results"
-#~ msgstr "results:"
-
-#~ msgid "results for"
-#~ msgstr "results for"
-
-#~ msgid "Language literal"
-#~ msgstr "In English"
+msgid "concept_types"
+msgstr "Concept types"

@@ -26,7 +26,7 @@ The latest development version is also available at
 
 Skosmos is implemented using PHP, with Twig templates and e.g. jQuery and
 jsTree used to build the web interface, and EasyRdf for SPARQL and RDF data
-access. We use [BrowserStack](https://www.browserstack.com) for making sure Skosmos works consistently with different browsers.
+access. 
 
 The code is open source under the MIT license. See 
 [Installation](https://github.com/NatLibFi/Skosmos/wiki/Installation) in the 
@@ -35,7 +35,6 @@ wiki for details on obtaining the source and running your own instance of Skosmo
 For information about released versions, see 
 [Release Notes](https://github.com/NatLibFi/Skosmos/releases).
 
-Skosmos was formerly known as ONKI Light.
 
 ## Reporting issues
 

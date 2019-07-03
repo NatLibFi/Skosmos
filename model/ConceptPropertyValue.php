@@ -35,10 +35,26 @@ class ConceptPropertyValue extends VocabularyDataObject
         return $this->getEnvLang();
     }
 
-    public function getLabel($lang = '')
+    public function getLabel($lang = '', $fallback = 'uri')
     {
         if ($this->clang) {
             $lang = $this->clang;
+        }
+        if ($this->vocab->getConfig()->getLanguageOrder($lang)) {
+            foreach ($this->vocab->getConfig()->getLanguageOrder($lang) as $fallback) {
+                if ($this->resource->label($fallback) !== null) {
+                    return $this->resource->label($fallback);
+                }
+                // We need to check all the labels in case one of them matches a subtag of the current language
+                if ($this->resource->allLiterals('skos:prefLabel')) {
+                    foreach($this->resource->allLiterals('skos:prefLabel') as $label) {
+                        // the label lang code is a subtag of the UI lang eg. en-GB - create a new literal with the main language
+                        if ($label !== null && strpos($label->getLang(), $fallback . '-') === 0) {
+                            return EasyRdf\Literal::create($label, $fallback);
+                        }
+                    }
+                }
+            }
         }
 
         if ($this->resource->label($lang) !== null) { // current language
@@ -52,8 +68,13 @@ class ConceptPropertyValue extends VocabularyDataObject
         } elseif ($this->resource->getLiteral('rdf:value') !== null) { // any language
             return $this->resource->getLiteral('rdf:value');
         }
-        $label = $this->resource->shorten() ? $this->resource->shorten() : $this->getUri();
-        return $label;
+
+        if ($fallback == 'uri') {
+            // return uri if no label is found
+            $label = $this->resource->shorten() ? $this->resource->shorten() : $this->getUri();
+            return $label;
+        }
+        return null;
     }
 
     public function getType()
@@ -116,15 +137,15 @@ class ConceptPropertyValue extends VocabularyDataObject
     public function isReified() {
         return (!$this->resource->label() && $this->resource->getLiteral('rdf:value'));
     }
-    
+
     public function getReifiedPropertyValues() {
         $ret = array();
         $props = $this->resource->propertyUris();
         foreach($props as $prop) {
             $prop = (EasyRdf\RdfNamespace::shorten($prop) !== null) ? EasyRdf\RdfNamespace::shorten($prop) : $prop;
             foreach ($this->resource->allLiterals($prop) as $val) {
-                if ($prop !== 'rdf:value' && $this->resource->get($prop)) { // shown elsewhere
-                    $ret[gettext($prop)] = new ConceptPropertyValueLiteral($this->resource->get($prop), $prop);
+                if ($prop !== 'rdf:value') { // shown elsewhere
+                    $ret[gettext($prop)] = new ConceptPropertyValueLiteral($this->model, $this->vocab, $this->resource, $val, $prop);
                 }
             }
             foreach ($this->resource->allResources($prop) as $val) {
