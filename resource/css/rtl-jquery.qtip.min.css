@@ -1,0 +1,24 @@
+/* Qtips CSS Style - version RTL */
+
+html[dir="rtl"] .qtip-close{
+    left:-9px;
+    right: initial;
+}
+
+html[dir="rtl"] .qtip-titlebar .qtip-close{
+    right: initial;
+    left: 4px;    
+}
+
+html[dir="rtl"] .qtip-bootstrap .qtip-titlebar .qtip-close{
+    right:initial;
+    left: 11px;
+}
+
+html[dir="rtl"] .qtip-bootstrap .qtip-icon .ui-icon{
+    float:left;
+}
+
+html[dir="rtl"] .qtip-content{
+    text-align:right;
+}

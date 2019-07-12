@@ -1,0 +1,696 @@
+/* Font definitions
+ *****************************************/
+
+/* basics
+ ***************************/
+
+
+ html[dir="rtl"] .spinner {
+  margin-right: 5px;
+  margin-left: initial;
+  }
+
+html[dir="rtl"] input {
+    direction:rtl;
+  }
+html [dir="rtl"] .radio input[type="radio"] {
+  position: initial;
+  margin:initial;
+}
+
+html[dir="rtl"] .dropdown-menu {
+    text-align: right;
+  }
+
+/* topbar styles
+ ***************************/
+
+ html[dir="rtl"] #service-name {
+  right: 30px;
+  left:initial;
+  }
+
+  html[dir="rtl"] #language {
+  float: left;
+  padding-right: 0;
+  padding-left: 2%;
+  text-align: left;
+}
+
+html[dir="rtl"] #language > .dropdown-menu {
+  padding-left: 2%;
+  padding-right: initial;
+  left: 2%;
+  right: initial;
+}
+
+html[dir="rtl"] #navigation {
+  float: left;
+  padding-left: 25px;
+  padding-right: initial;
+}
+
+html[dir="rtl"] #navigation *, #language * {
+  margin: auto 4px;
+}
+
+html[dir="rtl"] #language-en {
+  margin-left: 0;
+  margin-right: initial;
+}
+
+html[dir="rtl"] #navigation .link-bg {
+  float: right;
+}
+
+
+/* headerbar stuff
+ *************************/
+
+ html[dir="rtl"] .header-float .multiselect > .caret {
+  left: 5px;
+  right:initial;
+}
+
+html[dir="rtl"] .multiselect > span {
+  left: 20px;
+  right: initial;
+}
+
+html[dir="rtl"] .multiselect-container > li > a > label {
+   padding: 3px 25px 3px 20px;
+}
+
+html[dir="rtl"] .headerbar {
+  margin: 0 auto;
+}
+
+html[dir="rtl"] .headerbar-coloured {
+  margin: 0 15px 0 0;
+}
+
+html[dir="rtl"] .header-left {
+  float: right;
+  margin: 0 15px 0 0;
+}
+
+html[dir="rtl"] .header-left > h1 {
+  margin: 0 15px 0 0;
+}
+
+html[dir="rtl"] .header-float {
+  float: left;
+  margin: 5px 5px 19px 15px;
+}
+
+html[dir="rtl"] .frontpage-spacing > .header-float {
+  margin: 0;
+}
+
+html[dir="rtl"] .navbar-form {
+  float: left;
+}
+
+html[dir="rtl"] .search-result-listing > p:last-of-type {
+  margin-right: 15px;
+  margin-left: initial;
+}
+
+html[dir="rtl"] #search-all-button {
+  margin-right: 0;
+  margin-left: initial;
+}
+
+html[dir="rtl"] .search-vocab-text {
+  float: right;
+  text-align: left;
+}
+
+html[dir="rtl"] .search-count {
+  text-align: left;
+}
+
+html[dir="rtl"] .search-result-listing .search-count {
+  text-align: right;
+  margin-right: 15px;
+  margin-left: initial;
+}
+
+html[dir="rtl"] .search-limited {
+  padding-left: 140px;
+  padding-right: initial;
+}
+
+html[dir="rtl"] .notation {
+  margin-left: 12px;
+  margin-right: initial;
+}
+
+html[dir="rtl"] .search-result > .notation {
+  margin-left: 6px;
+  margin-right: initial;
+}
+
+html[dir="rtl"] #lang-dropdown-toggle, .multiselect {
+  padding-right: 10px;
+  padding-left: 6px;
+  text-align: left;
+}
+
+html[dir="rtl"] .navbar-left > .btn-group {
+  float: right;
+}
+
+html[dir="rtl"] #search-field {
+  padding-right: 8px;
+  padding-left: 22px;
+}
+
+html[dir="rtl"] .qtip-skosmos {
+  margin-right: 9px;
+  margin-left: initial;
+  direction: rtl;
+}
+
+html[dir="rtl"] .reified-property-value {
+  float: right;
+}
+
+
+html[dir="rtl"] span.xl-label > img {
+  margin: -2px 0 0 2px;
+}
+
+/* front page stuff
+ ***************************/  
+
+ html[dir="rtl"] .right-box {
+  left: 0;
+  right: initial;
+}
+
+html[dir="rtl"] .vocabulary-separator {
+  margin-right: 28%;
+  margin-left: initial;
+}
+
+html[dir="rtl"] #vocabulary-list > div > h2, #vocabulary-list-wide > div > h2 {
+  padding: 15px 10px 15px 0;
+}
+
+html[dir="rtl"] .vocab-category {
+  padding-right: 0;
+  padding-left: initial;
+}
+
+html[dir="rtl"] .vocab-category > h2 {
+  margin: 0 0 5px 0;
+}
+
+html[dir="rtl"] .vocab-category > ul {
+  float: left;
+  padding-right: 0;
+}
+
+html[dir="rtl"] .vocab-category > li {
+  float: right;
+}
+
+/* feedback page
+ ***************************/
+html[dir="rtl"] #feedback-vocid {
+  text-align: right;
+}
+
+html[dir="rtl"] #feedback-vocid > .caret {
+  left: 10px;
+  right: initial;
+}
+
+html[dir="rtl"] .feedback-logo {
+  right: 200px;
+  left: initial;
+}
+
+html[dir="rtl"] .feedback-box {
+  float: right;
+}
+
+html[dir="rtl"] #send-feedback {
+  float:left;
+  margin: 5px 0 15px 0;
+}
+
+/* about page
+ ***************************/
+
+html[dir="rtl"] .special-container {
+  right: 0;
+  margin-right: 200px;
+  margin-left: initial;
+}
+
+/* sidebar styles
+ ***************************/
+
+ html[dir="rtl"] .sidebar-grey ul, .sidebar-grey p {
+  padding-right: 0;
+  padding-left: initial;
+}
+
+html[dir="rtl"] .multiselect-container li > a > label.checkbox {
+  padding: 3px 25px 3px 5px;
+}
+
+html[dir="rtl"] .multiselect-container li > a > label.checkbox > input {
+  margin-right:-20px;
+  margin-left: initial;
+}
+
+html[dir="rtl"] .search-options .multiselect > span {
+  float: right;
+  text-align: right;
+}
+
+html[dir="rtl"] .search-options .multiselect > .caret {
+  float: left;
+  left: 5px;
+  right:initial;
+}
+
+html[dir="rtl"] div#sidebar-grey > div > div > form.search-options {
+  margin-left: 0;
+  margin-right: initial;
+}
+
+html[dir="rtl"] .search-options {
+  padding-right: 15px;
+  padding-left: initial;
+}
+
+html[dir="rtl"] .search-result-listing .btn-default {
+  left: 10px;
+}
+
+html[dir="rtl"] .search-options .mCSB_container > li > a > .radio {
+  margin: 0;
+  padding-right: 25px;
+  padding-left: initial;
+}
+
+html[dir="rtl"] .search-options .mCSB_container {
+  text-align: right;
+}
+
+html[dir="rtl"] #alphabetical-menu {
+  margin: 15px 15px 0 0;
+}
+
+html[dir="rtl"] .nav {
+  padding-right:0;
+}
+
+html[dir="rtl"] .group-container {
+  margin: 15px 15px 5px 0;
+}
+
+html[dir="rtl"] li.sub-group {
+  margin-right: 25px;
+  margin-left: initial;
+}
+
+/* scrollbars
+ ****************************/
+html[dir="rtl"] .mCSB_container {
+  margin-left: 15px !important;
+  margin-right: initial;
+}
+
+/* tables
+ ****************************/
+
+/* vocabulary
+ ****************************/
+
+html[dir="rtl"] .count-type {
+  padding-left: 20px;
+  padding-right: initial;
+}
+
+/* alerts
+ ****************************/
+html[dir="rtl"] .page-alert {
+  left: 0;
+}
+
+html[dir="rtl"] .alert-replaced a {
+  margin-left: 5px;
+  margin-right: initial;
+}
+
+html[dir="rtl"] #lang-info > h1 {
+  float: right;
+  margin: -5px 0 0 15px;
+}
+
+/* concept
+ ****************************/
+html[dir="rtl"] .concept-info li, .concept-info ul {
+  padding-right: 0;
+}
+
+html[dir="rtl"] .row > .property-label {
+  float: right;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+html[dir="rtl"] .row > .property-value-column {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+html[dir="rtl"] .restore-breadcrumbs {
+  float: left;
+}
+
+html[dir="rtl"] .crumb-path {
+  float:right;
+}
+
+html[dir="rtl"] .foundby {
+  margin-right: 225px;
+  margin-left: initial;
+}
+
+html[dir="rtl"] .other-languages > .col-xs-6.versal.replaced {
+  padding-left: 0;
+  padding-right:initial;
+}
+
+html[dir="rtl"] .other-languages.first-of-language > .col-xs-6.versal-pref {
+  padding-left: 0;
+  padding-right: initial;
+}
+
+html[dir="rtl"] .other-languages > td:last-of-type > * {
+  padding-right: 15px;
+  padding-left: initial;
+}
+
+html[dir="rtl"] .shortened-symbol {
+  padding: 0 2px 0 0;
+  left: 10px;
+}
+
+html[dir="rtl"] tr .property-hover {
+  margin-right: 5px;
+  margin-left: initial;
+}
+
+html[dir="rtl"] .subvalue {
+  margin-right: 15px;
+  margin-left: initial;
+}
+
+html[dir="rtl"] .property-divider {
+  margin: -20px 0 0 0;
+}
+
+html[dir="rtl"] #vocab-info .table > tbody > tr > th {
+  padding-right: 0;
+  padding-left: initial;
+  text-align: right;
+}
+
+html[dir="rtl"] .pagination {
+  margin: 0 0 -5px 0;
+  padding: 0 10px 0 0;
+}
+
+html[dir="rtl"] .pagination > li {
+  float:right;
+}
+
+html[dir="rtl"] .wide-content {
+  margin-right: 0px;
+  margin-left: initial;
+}
+
+html[dir="rtl"] span.date-info {
+  float: left;
+}
+
+html[dir="rtl"] .concept-download-links > a {
+ margin-left: 1px;
+ margin-right: initial;
+}
+
+
+/* typeahead.js
+ ***********************************/
+html[dir="rtl"] .tt-dropdown-menu {
+  left: 0 !important;
+}
+
+html[dir="rtl"] .tt-dropdown-menu.mCustomScrollbar {
+  border-left: 0;
+}
+
+html[dir="rtl"] .tt-suggestion p {
+  padding-left: 2px;
+  padding-right: initial;
+}
+
+html[dir="rtl"] .tt-suggestion p:last-of-type {
+  padding-left: 0;
+  padding-right: initial;
+}
+
+html[dir="rtl"] .autocomplete-no-results {
+  margin: 0 6px 0 0;
+}
+
+html[dir="rtl"] .twitter-typeahead > .clear-search {
+  left: 8px;
+  direction:ltr;
+}
+
+html[dir="rtl"] .type {
+  float: left;
+}
+
+html[dir="rtl"] .tt-suggestion > .concept-type {
+  float: left;
+}
+
+/* jsTree customization
+ *****************************************/
+html[dir="rtl"] .jstree-default.jstree-rtl .jstree-node {
+  margin-right: 18px;
+  margin-left: initial;
+}
+
+html[dir="rtl"] .jstree-anchor {
+  padding: 0 1px 0 18px;
+}
+
+html[dir="rtl"] #sidebar .jstree-node {
+  margin-right: 10px;
+  margin-left: initial;
+}
+
+html[dir="rtl"] #sidebar .jstree-container-ul > .jstree-node {
+  margin-right: 2px;
+  margin-left: initial;
+}
+
+/* Fix for a nasty chromium bug causing the fonts not to render before a redraw.
+ * https://code.google.com/p/chromium/issues/detail?id=336476
+ ************************************/
+
+/* mediaquery
+ ***********************************/
+@media (max-width: 800px) {
+  html[dir="rtl"] .content > .feedback-logo, .content > .about-logo {
+    right: 10px;
+  }
+  
+  html[dir="rtl"] .content > .feedback-box, .content > #about, .content > .credits, .content > .version {
+    margin-right: 120px;
+    margin-left: initial;
+  }
+
+  html[dir="rtl"] .welcome-box, .right-box {
+    float: right;
+  }
+
+  html[dir="rtl"] #vocabulary-list, #vocabulary-list-right {
+    float: left;
+    margin-right: 15px;
+    margin-left: initial;
+  }
+
+  html[dir="rtl"] .vocab-category > ul, .vocab-category > li {
+    right: 0;
+  }
+
+  html[dir="rtl"] .vocabulary-separator {
+    margin-right: 0;
+    margin-left: initial;
+  }
+
+}
+
+@media (max-width: 550px) {
+
+  html[dir="rtl"] #navigation {
+    right: 3.5%;
+    left: initial;
+  }
+  
+}
+
+@media (max-width: 640px) {
+
+  html[dir="rtl"] .header-float {
+    margin-right: 15px;
+  }
+  
+}
+
+@media (max-width: 800px) {
+
+  html[dir="rtl"] .right-box {
+    right: 0;
+    left:initial;
+  }
+
+}
+
+@media (max-width: 700px) {
+
+  html[dir="rtl"] #navi1, #navi2, #navi3, #navi4 {
+    padding-right: 0;
+    padding-left: initial;
+  }
+
+  html[dir="rtl"] #navigation {
+    right: 2.5%;
+    left: initial;
+  }
+
+  html[dir="rtl"] .frontpage #language {
+    padding-left: 0;
+    padding-right: initial;
+    left: 2.5%;
+    right:initial;
+    text-align: right;
+  }
+
+  html[dir="rtl"] #service-logo {
+    left: 3%;
+    right: initial;
+  }
+
+  html[dir="rtl"] .frontpage-spacing .header-float {
+    float: right;
+  }
+
+  html[dir="rtl"] #navigation {
+    padding-left: 0;
+    padding-right: initial;
+  }
+
+}
+
+@media (min-width: 640px) {
+  html[dir="rtl"] .voclist-wide > .right-box {
+    right: 0;
+    left: initial;
+  }
+
+}
+
+@media (min-width: 801px) {
+
+  html[dir="rtl"] .content > .feedback-logo, .content > .about-logo {
+    right: 10px;
+    left: initial;
+  }
+
+  html[dir="rtl"] .frontpage-alert {
+    margin-right: 20px;
+    margin-left: initial;
+  }
+
+  html[dir="rtl"] .content {
+    margin-right: 330px;
+    margin-left: initial;
+  }
+
+  html[dir="rtl"] .voclist #vocabulary-list {
+    margin-right: 20px;
+    margin-left: initial;
+  }
+  
+  html[dir="rtl"] .voclist-right #vocabulary-list {
+    margin-right: 20px;
+    margin-left: initial;
+  }
+
+  html[dir="rtl"] .voclist-left #vocabulary-list{
+    margin-right: 0;
+    margin-left: initial;
+  }
+
+  html[dir="rtl"] .voclist-left > .right-box {
+    left: 0;
+    right: initial;
+  }
+
+}
+
+@media (max-width: 1259px) {
+
+  html[dir="rtl"] .voclist > .right-box {
+    right: 0;
+    left: initial;
+  }
+
+}
+
+@media (min-width: 1260px) {
+  html[dir="rtl"] #service-name {
+    right: 0 !important;
+    left: initial !important;
+  }
+
+  html[dir="rtl"] #language {
+    padding-right: 25px;
+    padding-left: 0;
+    left: 0;
+    right: initial;
+  }
+
+  html[dir="rtl"] #language > .dropdown-menu {
+    left: 0;
+    right: initial;
+  }
+
+  html[dir="rtl"] #navigation {
+    padding-left: 0;
+    padding-right: initial;
+  }
+
+  html[dir="rtl"] .frontpage > .right-box {
+    right: auto;
+    left: initial;
+  }
+
+  html[dir="rtl"] .content {
+    margin-right: 425px;
+    margin-left:0;
+  }
+
+}
