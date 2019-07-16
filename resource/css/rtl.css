@@ -505,8 +505,8 @@ html[dir="rtl"] #sidebar .jstree-container-ul > .jstree-node {
   margin-left: initial;
 }
 
-html[dir="rtl"] .jstree-default.jstree-rtl .jstree-closed > .jstree-ocl {
-  background-position: -106px -36px;
+html[dir="rtl"] #sidebar .jstree-default .jstree-icon {
+  width: 24px;
 }
 
 /* Fix for a nasty chromium bug causing the fonts not to render before a redraw.
