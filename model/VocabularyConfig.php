@@ -121,7 +121,7 @@ class VocabularyConfig extends BaseConfig
 
             if ($mimetypelit !== null) {
                 if ($lang !== null) {
-                    $dataLang = $url->getLiteral('dct:language');
+                    $dataLang = $url->getLiteral('dc:language');
                     if ($dataLang !== null && $dataLang->getValue() == $lang) {
                         $mimetype = $mimetypelit->getValue();
                         $ret[$mimetype] = $url->getURI();
