@@ -434,7 +434,7 @@ class Concept extends VocabularyDataObject
                             }
 
                             if ($response) {
-                                $ret[$prop]->addValue(new ConceptMappingPropertyValue($this->model, $this->vocab, $response, $this->resource, $prop), $this->clang);
+                                $ret[$prop]->addValue(new ConceptMappingPropertyValue($this->model, $this->vocab, $response, $this->resource, $prop, $this->clang), $this->clang);
 
                                 $this->processExternalResource($response);
 
@@ -524,7 +524,7 @@ class Concept extends VocabularyDataObject
                 // note that this imply that the property has an rdf:type declared for the query to work
                 if(!$is_well_known && !$proplabel) {
                     $envLangLabels = $this->model->getDefaultSparql()->queryLabel($longUri, $this->getEnvLang());
-                    
+
                     $defaultPropLabel = $this->model->getDefaultSparql()->queryLabel($longUri, '');
 
 					if($envLangLabels) {
