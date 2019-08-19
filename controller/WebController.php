@@ -3,7 +3,9 @@
 /**
  * Importing the dependencies.
  */
+use \Punic\Data;
 use \Punic\Language;
+use \Punic\Misc;
 
 /**
  * WebController is an extension of the Controller that handles all
@@ -76,6 +78,13 @@ class WebController extends Controller
             $this->honeypot->disable();
         }
         $this->twig->addGlobal('honeypot', $this->honeypot);
+        
+        $direction_test = new Twig_Function('direction_test', function($locale=''){
+            $data = Data::get('layout', $locale);
+            return $data['characterOrder'];
+        });
+        $this->twig->addFunction($direction_test);
+
     }
 
     /**

@@ -35,7 +35,8 @@ class ConceptPropertyValue extends VocabularyDataObject
         return $this->getEnvLang();
     }
 
-    public function getLabel($lang = '', $fallback = 'uri')
+    public function getLabel($lang = '', $fallbackToUri = 'uri')
+
     {
         if ($this->clang) {
             $lang = $this->clang;
@@ -69,7 +70,7 @@ class ConceptPropertyValue extends VocabularyDataObject
             return $this->resource->getLiteral('rdf:value');
         }
 
-        if ($fallback == 'uri') {
+        if ($fallbackToUri == 'uri') {
             // return uri if no label is found
             $label = $this->resource->shorten() ? $this->resource->shorten() : $this->getUri();
             return $label;
