@@ -64,6 +64,10 @@ class WebController extends Controller
         // register a Twig filter for generating URLs for vocabulary resources (concepts and groups)
         $this->twig->addFilter(new Twig_SimpleFilter('link_url', array($this, 'linkUrlFilter')));
 
+        // register a Twig filter for sorting the foreign language prefLabels and altLabels
+        $labelSorter = new Twig_SimpleFilter('label_sorter', array($this, 'labelSorter'));
+        $this->twig->addFilter($labelSorter);
+
         // register a Twig filter for generating strings from language codes with CLDR
         $langFilter = new Twig_SimpleFilter('lang_name', function ($langcode, $lang) {
             return Language::getName($langcode, $lang);
@@ -124,6 +128,24 @@ class WebController extends Controller
         // pass the full URI as parameter instead
         $params['uri'] = $uri;
         return "$vocid/$lang/$type/?" . http_build_query($params);
+    }
+
+    /**
+     * Sorts a single-language ConceptPropertyValue array first by prefLabel, then by altLabel.
+     * @param ConceptPropertyValue[] $conceptPropertyValueArray
+     */
+    public function labelSorter($conceptPropertyValueArray) {
+        usort($conceptPropertyValueArray, function($lit, $lit2) {
+            if ($lit->getType() === $lit2->getType()) {
+                if ($lit->getLabel() === $lit2->getLabel()) return 0;
+                return $lit->getLabel() < $lit2->getLabel() ? -1 : 1;
+            }
+            else if ($lit->getType() === "skos:prefLabel") {
+                return -1;
+            }
+            return 1;
+        });
+    return $conceptPropertyValueArray;
     }
 
     /**
