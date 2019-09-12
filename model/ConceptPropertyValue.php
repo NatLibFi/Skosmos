@@ -24,7 +24,7 @@ class ConceptPropertyValue extends VocabularyDataObject
     {
         $label = is_string($this->getLabel()) ? $this->getLabel() : $this->getLabel()->getValue();
         if ($this->vocab->getConfig()->sortByNotation()) {
-            $label = $this->getNotation() . ' ' . $label;
+            $label = ltrim($this->getNotation() . ' ') . $label;
         }
 
         return $label;

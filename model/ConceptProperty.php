@@ -80,7 +80,7 @@ class ConceptProperty
 
     public function addValue($value)
     {
-        $this->values[$value->getNotation() . ' ' . $value->getLabel() . ' ' . $value->getUri()] = $value;
+        $this->values[ltrim($value->getNotation() . ' ') . $value->getLabel() . ' ' . $value->getUri()] = $value;
         $this->is_sorted = false;
     }
 
