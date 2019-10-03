@@ -662,7 +662,25 @@ class Concept extends VocabularyDataObject
 
             }
         }
+        // the logic is inverted for skos:prefLabel; remove the more specific property (see #854)
+        if (isset($duplicates["skos:prefLabel"])) {
+            unset($ret[$duplicates["skos:prefLabel"]]);
+        }
         return $ret;
+    }
+
+    /**
+     * @param $lang UI language
+     * @return String|null the translated label of skos:prefLabel subproperty, or null if not available
+     */
+    public function getPreferredSubpropertyLabelTranslation($lang) {
+        $prefLabelProp = $this->graph->resource("skos:prefLabel");
+        $subPrefLabelProps = $this->graph->resourcesMatching('rdfs:subPropertyOf', $prefLabelProp);
+        foreach ($subPrefLabelProps as $subPrefLabelProp) {
+            // return the first available translation
+            if ($subPrefLabelProp->label($lang)) return $subPrefLabelProp->label($lang);
+        }
+        return null;
     }
 
     /**
