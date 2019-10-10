@@ -236,6 +236,7 @@ class WebController extends Controller
                 return;
             }
         }
+        $pluginMessages = $vocab->getConfig()->getPluginMessages();
         /** @var \Twig\Template $template */
         $template = (in_array('skos:Concept', $results[0]->getType()) || in_array('skos:ConceptScheme', $results[0]->getType())) ? $this->twig->loadTemplate('concept-info.twig') : $this->twig->loadTemplate('group-contents.twig');
 
@@ -243,6 +244,7 @@ class WebController extends Controller
         echo $template->render(array(
             'search_results' => $results,
             'vocab' => $vocab,
+            'plugin_messages' => $pluginMessages,
             'languages' => $this->languages,
             'explicit_langcodes' => $langcodes,
             'bread_crumbs' => $crumbs['breadcrumbs'],
