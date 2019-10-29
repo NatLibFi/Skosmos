@@ -288,8 +288,8 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     $props = $this->concept->getProperties();
     $propvals = $props['rdf:type']->getValues();
     $this->assertCount(1, $propvals); // should only have type meta:TestClass, not skos:Concept (see #200)
-    $this->assertEquals('Test class', $propvals['Test classhttp://www.skosmos.skos/test-meta/TestClass']->getLabel());
-    $this->assertEquals('http://www.skosmos.skos/test-meta/TestClass', $propvals['Test classhttp://www.skosmos.skos/test-meta/TestClass']->getUri());
+    $this->assertEquals('Test class', $propvals['Test class http://www.skosmos.skos/test-meta/TestClass']->getLabel());
+    $this->assertEquals('http://www.skosmos.skos/test-meta/TestClass', $propvals['Test class http://www.skosmos.skos/test-meta/TestClass']->getUri());
   }
 
   /**
