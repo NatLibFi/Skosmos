@@ -543,7 +543,7 @@ $(function() { // DOCUMENT READY
   } else if (!search_lang) {
       langPretty = $('a[hreflang=' + lang + ']').html();
       search_lang = lang;
-      if (!langPretty) { langPretty = $('a[hreflang="anything"]').html(); }
+      if (!langPretty) { langPretty = $('.lang-button-all').html(); }
       $('#lang-dropdown-toggle').html(langPretty + ' <span class="caret"></span>');
       qlang = lang;
   } else {
@@ -558,7 +558,7 @@ $(function() { // DOCUMENT READY
   });
 
   if (!search_lang_possible && search_lang !== 'anything') {
-    langPretty = $('a[hreflang=""]').html();
+    langPretty = $('.lang-button-all').html();
     $('#lang-dropdown-toggle').html(langPretty + ' <span class="caret"></span>');
     qlang = '';
     createCookie('SKOSMOS_SEARCH_LANG', qlang, 365);
