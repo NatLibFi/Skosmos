@@ -22,7 +22,6 @@ try {
     if ($request->getQueryParam('lang')) {
         $request->setContentLang($request->getQueryParam('lang'));
     }
-
     if (sizeof($parts) < 2 || $parts[1] == "") {
         header("HTTP/1.0 404 Not Found");
         echo ("404 Not Found");
