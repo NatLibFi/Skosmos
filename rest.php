@@ -19,8 +19,8 @@ try {
     if ($request->getQueryParam('vocab')) {
         $request->setVocab($request->getQueryParam('vocab'));
     }
-    if ($request->getQueryParam('clang')) {
-        $request->setContentLang($request->getQueryParam('clang'));
+    if ($request->getQueryParam('lang')) {
+        $request->setContentLang($request->getQueryParam('lang'));
     }
 
     if (sizeof($parts) < 2 || $parts[1] == "") {
