@@ -190,7 +190,6 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
    * @covers VocabularyConfig::getDataURLs
    */
   public function testGetDataURLsMarc() {
-    $lang = "fi";
     $vocab = $this->model->getVocabulary('test-marc');
     $url = $vocab->getConfig()->getDataURLs();
     $marcArray = $url['application/marcxml+xml'];
@@ -203,7 +202,6 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
    * @expectedException PHPUnit\Framework\Error\Warning
    */
   public function testGetDataURLsMarcNotDefined() {
-    $lang = "fi";
     $vocab = $this->model->getVocabulary('marc-undefined');
     $url = $vocab->getConfig()->getDataURLs();
     $this->assertEquals(array(), $url);
