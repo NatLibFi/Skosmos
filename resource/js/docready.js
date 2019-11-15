@@ -667,7 +667,7 @@ $(function() { // DOCUMENT READY
                 hasNonHiddenMatch[hit.uri] = true;
             } else if (hit.hiddenLabel) {
                 if (hasNonHiddenMatch[hit.uri]) {
-                    delete data.results[i];
+                    data.results.splice(i, 1);
                 }
                 hasNonHiddenMatch[hit.uri] = false;
             }

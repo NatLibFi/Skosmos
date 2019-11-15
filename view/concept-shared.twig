@@ -151,7 +151,7 @@
           {% for language,labels in concept.foreignLabels %}
             {% for value in labels %}
               <div class="row other-languages{% if prevlang != language %} first-of-language{% endif %}">
-                <div class="col-xs-6 versal{% if value.type == "skos:altLabel" %} replaced{%else %} versal-pref{% endif %}">{% if value.hasXlProperties %}<span class="reified-property-value xl-label"><img src="resource/pics/about.png"></span><div class="reified-tooltip">{% for key, val in value.getXlProperties %}{% if key != 'rdf:type' and key != 'skosxl:literalForm' and val != '' %}<p>{{ key|trans }}: <span class="versal">{{ val }}</span></p>{% endif %}{% endfor %}</div>{% endif %}{{ value.label }}</div>
+                <div class="col-xs-6 versal{% if value.type == "skos:altLabel" %} replaced{%else %} versal-pref{% endif %}">{% if value.hasXlProperties %}<span class="reified-property-value xl-label"><img src="resource/pics/about.png"></span><div class="reified-tooltip">{% for key, val in value.getXlProperties %}{% if key != 'rdf:type' and key != 'skosxl:literalForm' and val != '' %}<p>{{ key|trans }}: <span class="versal">{{ val }}</span></p>{% endif %}{% endfor %}</div>{% endif %}{%if value.type == "skos:prefLabel" and value.lang in request.vocab.config.languages %}<a href='{{ concept.uri|link_url(request.vocabid,request.lang, 'page', value.lang) }}' hreflang='{{ value.lang }}'>{{ value.label }}</a>{% else %}{{ value.label }}{%endif%}</div>
                 <div class="col-xs-6 versal">{% if prevlang != language %}<p>{{ language }}</p>{% endif %}</div>
               </div>
               {% set prevlang = language %}
@@ -187,8 +187,11 @@
               {% if propval.label %}
               <div class="row">
                 <div class="col-xs-5">
-                  <a class="versal" href="{{ propval.uri | link_url(propval.exvocab, request.lang, 'page', request.contentLang) }}">{% if propval.notation %}<span class="versal">{{ propval.notation }}</span>{% endif %}{{ propval.label(request.contentLang) }}</a>
-                {% if propval.label.lang and (propval.label(request.contentLang).lang != request.contentLang) or (explicit_langcodes and propval.label.lang) %}<span class="propertyvalue"> ({{ propval.label(request.contentLang).lang }})</span>{% endif %}
+                  <a class="versal" href="{{ propval.uri | link_url(propval.exvocab, request.lang, 'page', request.contentLang) }}">
+                    {% if propval.notation %}<span class="versal">{{ propval.notation }}</span>{% endif %}
+                    {{ propval.label(request.contentLang) }}
+                  </a>
+                  {% if propval.label.lang and (propval.label(request.contentLang).lang != request.contentLang) or (explicit_langcodes and propval.label.lang) %}<span class="propertyvalue"> ({{ propval.label(request.contentLang).lang }})</span>{% endif %}
                 </div>
                 {% set vocabname = propval.vocabname %}
                 {% if vocabname %}
