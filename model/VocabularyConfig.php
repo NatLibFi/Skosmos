@@ -108,7 +108,7 @@ class VocabularyConfig extends BaseConfig
      * get the URLs from which the vocabulary data can be downloaded
      * @return array Array with MIME type as key, URL as value
      */
-    public function getDataURLs($lang = null)
+    public function getDataURLs()
     {
         $ret = array();
         $urls = $this->resource->allResources("void:dataDump");
@@ -120,21 +120,7 @@ class VocabularyConfig extends BaseConfig
             }
 
             if ($mimetypelit !== null) {
-                if ($lang !== null) {
-                    $dataLang = $url->getLiteral('dc:language');
-                    if ($dataLang !== null && $dataLang->getValue() == $lang) {
-                        $mimetype = $mimetypelit->getValue();
-                        $ret[$mimetype] = $url->getURI();
-                    } else if ($dataLang === null) {
-                        //no language was specified for the data
-                        $mimetype = $mimetypelit->getValue();
-                        $ret[$mimetype] = $url->getURI();
-                    }
-                } else {
-                    //no language specified for the page content
-                    $mimetype = $mimetypelit->getValue();
-                    $ret[$mimetype] = $url->getURI();
-                }
+                $mimetype = $mimetypelit->getValue();
             } else {
                 $format = EasyRdf\Format::guessFormat(null, $url->getURI());
                 if ($format === null) {
@@ -143,6 +129,22 @@ class VocabularyConfig extends BaseConfig
                 }
                 $mimetypes = array_keys($format->getMimeTypes());
                 $mimetype = $mimetypes[0];
+            }
+
+            $langLit = $url->getLiteral('dc:language');
+
+            if ($langLit != null) {
+                //when the mimetype has language variants
+                $dataUrlLang = $langLit->getValue();
+
+                if (!isset($ret[$mimetype])) {
+                  $arr = array();
+                } else {
+                  $arr = $ret[$mimetype];
+                }
+                $arr[$dataUrlLang] = $url->getURI();
+                $ret[$mimetype] = $arr;
+            } else {
                 $ret[$mimetype] = $url->getURI();
             }
         }

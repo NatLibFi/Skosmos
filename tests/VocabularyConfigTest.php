@@ -192,8 +192,10 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
   public function testGetDataURLsMarc() {
     $lang = "fi";
     $vocab = $this->model->getVocabulary('test-marc');
-    $url = $vocab->getConfig()->getDataURLs($lang);
-    $this->assertEquals(array( 'application/marcxml+xml' => 'http://skosmos.skos/dump/test/marc-fi.mrcx'), $url);
+    $url = $vocab->getConfig()->getDataURLs();
+    $marcArray = $url['application/marcxml+xml'];
+    $this->assertEquals( ( in_array('http://skosmos.skos/dump/test/marc-fi.mrcx', $marcArray) &&
+                           in_array('http://skosmos.skos/dump/test/marc-sv.mrcx', $marcArray) ), true);
   }
 
   /**
@@ -203,7 +205,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
   public function testGetDataURLsMarcNotDefined() {
     $lang = "fi";
     $vocab = $this->model->getVocabulary('marc-undefined');
-    $url = $vocab->getConfig()->getDataURLs($lang);
+    $url = $vocab->getConfig()->getDataURLs();
     $this->assertEquals(array(), $url);
   }
 

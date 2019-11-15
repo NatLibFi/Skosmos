@@ -19,6 +19,9 @@ try {
     if ($request->getQueryParam('vocab')) {
         $request->setVocab($request->getQueryParam('vocab'));
     }
+    if ($request->getQueryParam('lang')) {
+        $request->setContentLang($request->getQueryParam('lang'));
+    }
 
     if (sizeof($parts) < 2 || $parts[1] == "") {
         header("HTTP/1.0 404 Not Found");
