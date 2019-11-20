@@ -148,7 +148,6 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
 
     public function isExternal() {
         // if we don't know enough of this resource
-        var_dump("HERE");
         return $this->resource->label() == null && $this->resource->get('rdf:value') == null;
     }
 
