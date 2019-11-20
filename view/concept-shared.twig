@@ -78,7 +78,7 @@
             {% if propval.uri and propval.type != 'rdf:type' %} {# resources with URI #}
               {% if propval.label %}
                 {% if propval.isExternal %}
-                <a href="{{ propval.uri | link_url(propval.exvocab, request.lang, 'page', request.contentLang) }}">{{ propval.label }}</a> ({{ propval.vocabname }})
+                <a href="{{ propval.uri | link_url(propval.exvocab, request.lang, 'page', request.contentLang) }}">{{ propval.label }}</a>{% if propval.exvocab %} ({{ propval.vocabname }}){% endif %}
                 {% else %}
                 {% if propval.isReified %} {# e.g. skos:definition's with resource values #}
                 <span class="versal reified-property-value"><img src="resource/pics/about.png">{% if propval.notation %}<span class="versal">{{ propval.notation }} </span>{% endif %} {{ propval.label(request.contentLang) }}</span>

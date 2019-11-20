@@ -137,7 +137,6 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
             if ($schemeResource) {
                 $schemaName = $this->getResourceLabel($schemeResource);
                 if ($schemaName) {
-                    //var_dump($schemaName);
                     return $schemaName;
                 }
             }
@@ -148,8 +147,9 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
     }
 
     public function isExternal() {
-        $propertyUris = $this->resource->propertyUris();
-        return empty($propertyUris);
+        // if we don't know enough of this resource
+        var_dump("HERE");
+        return $this->resource->label() == null && $this->resource->get('rdf:value') == null;
     }
 
     public function getNotation()
