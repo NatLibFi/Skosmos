@@ -45,7 +45,7 @@
     {% endif %}
     {% if vocab.config.dataURLs %}
     <div class="download-links">
-      <span class="versal">{% trans %}Download this vocabulary as SKOS/RDF:{% endtrans %}
+      <span class="versal">{% trans %}Download this vocabulary:{% endtrans %}
         {% if 'application/rdf+xml' in vocab.config.dataURLs|keys %}
           <a href="rest/v1/{{ request.vocabid }}/data?format=application/rdf%2Bxml">RDF/XML</a>
         {% endif %}
@@ -55,7 +55,7 @@
         {% if 'application/marcxml+xml' in vocab.config.dataURLs|keys %}
             {% if vocab.config.dataURLs['application/marcxml+xml'] is iterable %}
                 {% for key, values in vocab.config.dataURLs['application/marcxml+xml'] %}
-                    <a href="rest/v1/{{ request.vocabid }}/data?format=application/marcxml%2Bxml&lang={{key}}">MARCXML/{{key|upper}}</a>
+                    <a href="rest/v1/{{ request.vocabid }}/data?format=application/marcxml%2Bxml&lang={{key}}">MARCXML/{{ key | lang_name(request.lang) }}</a>
                 {% endfor %}
             {% else %}
                 <a href="rest/v1/{{ request.vocabid }}/data?format=application/marcxml%2Bxml">MARCXML</a>
