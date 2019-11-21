@@ -74,11 +74,7 @@
                 {% set alpha = (value.altLabel ?? value.prefLabel)|upper|first %}{% if alpha != previous %}<li class="alphabet-header" name="{{ alpha }}"><h5>{{ alpha }}</h5></li>{% set previous = alpha %}{% endif %}
               {% endif %}
               <li>
-              {% if value.altLabel %}
-              <span class="replaced">{{ value.altLabel }}</span>	&rarr; <a href="{{ value.uri | link_url(vocab,request.lang,'page',request.contentLang) }}">{{ value.prefLabel }}</a>
-              {% else %}
-              <a href="{{ value.uri | link_url(vocab,request.lang,'page',request.contentLang) }}">{{ value.prefLabel }}</a>
-              {% endif %}
+                <a href="{{ value.uri | link_url(vocab,request.lang,'page',request.contentLang) }}">{% if value.altLabel %}<span class="initial-color"><span class="replaced">{{ value.altLabel }}</span> &rarr; </span>{% endif %}{{ value.prefLabel }}</a>
              </li>
               {% endfor %}
             </ul>

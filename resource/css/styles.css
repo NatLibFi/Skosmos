@@ -83,6 +83,10 @@ a, a.versal, .jstree-node > .jstree-anchor {
   width: 150px;
 }
 
+.initial-color {
+  color: initial;
+}
+
 .replaced {
   font-style: italic;
 }
