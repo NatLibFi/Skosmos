@@ -550,15 +550,15 @@ class RestController extends Controller
         if (!$format) {
             return $this->returnError(406, 'Not Acceptable', "Unsupported format. Supported MIME types are: " . implode(' ', array_keys($urls)));
         }
-		if (is_array($urls[$format])) {
-			$arr = $urls[$format];
-			$dataLang = $request->getLang();
-			if (isset($arr[$dataLang])) {
+        if (is_array($urls[$format])) {
+            $arr = $urls[$format];
+            $dataLang = $request->getLang();
+            if (isset($arr[$dataLang])) {
                 header("Location: " . $arr[$dataLang]);
-			} else {
-				$vocid = $request->getVocab()->getId();
-				return $this->returnError('404', 'Not Found', "No download source URL known for vocabulary $vocid in language $dataLang");
-			}
+            } else {
+                $vocid = $request->getVocab()->getId();
+                return $this->returnError('404', 'Not Found', "No download source URL known for vocabulary $vocid in language $dataLang");
+            }
 		} else {
             header("Location: " . $urls[$format]);
 		}

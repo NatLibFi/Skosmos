@@ -88,40 +88,40 @@
 	skosmos:sparqlGraph <http://www.skosmos.skos/test/> .
 
 :test-marc a skosmos:Vocabulary, void:Dataset ;
-	skos:prefLabel "Test marc source"@en ;
-	dc:title "Test marc source"@en ;
+    skos:prefLabel "Test marc source"@en ;
+    dc:title "Test marc source"@en ;
     dc:type mdrtype:ONTOLOGY ;
     void:dataDump <http://skosmos.skos/dump/test/marc-fi.mrcx> ;
     void:dataDump <http://skosmos.skos/dump/test/marc-sv.mrcx> ;
-	void:sparqlEndpoint <http://localhost:13030/ds/sparql> ;
-	void:uriSpace "http://www.skosmos.skos/test-marc/";
-	skosmos:defaultLanguage "fi";
-	skosmos:marcSourceCode "test/fin"@fi, "test/swe"@sv;
-	skosmos:language "fi";
-	skosmos:showTopConcepts "true";
-	skosmos:sparqlGraph <http://www.skosmos.skos/test-marc/> .
-	
+    void:sparqlEndpoint <http://localhost:13030/ds/sparql> ;
+    void:uriSpace "http://www.skosmos.skos/test-marc/";
+    skosmos:defaultLanguage "fi" ;
+    skosmos:marcSourceCode "test/fin"@fi, "test/swe"@sv ;
+    skosmos:language "fi" ;
+    skosmos:showTopConcepts "true" ;
+    skosmos:sparqlGraph <http://www.skosmos.skos/test-marc/> .
+
 :marc-undefined a skosmos:Vocabulary, void:Dataset ;
-	skos:prefLabel "Test undefined marc source"@en ;
-	dc:title "Test undefined marc source"@en ;
+    skos:prefLabel "Test undefined marc source"@en ;
+    dc:title "Test undefined marc source"@en ;
     dc:type mdrtype:ONTOLOGY ;
     void:dataDump <http://skosmos.skos/dump/test/marc-undefined.mrcx> ;
     void:sparqlEndpoint <http://localhost:13030/ds/sparql> ;
-	void:uriSpace "http://www.skosmos.skos/test-marc/";
-	skosmos:defaultLanguage "fi";
-	skosmos:marcSourceCode "test/fin"@fi, "test/swe"@sv;
-	skosmos:language "fi";
-	skosmos:showTopConcepts "true";
-	skosmos:sparqlGraph <http://www.skosmos.skos/test-marc/> .	
-	
+    void:uriSpace "http://www.skosmos.skos/test-marc/" ;
+    skosmos:defaultLanguage "fi" ;
+    skosmos:marcSourceCode "test/fin"@fi, "test/swe"@sv ;
+    skosmos:language "fi" ;
+    skosmos:showTopConcepts "true" ;
+    skosmos:sparqlGraph <http://www.skosmos.skos/test-marc/> .
+
 <http://skosmos.skos/dump/test/marc-fi.mrcx>
-    dc:format "application/marcxml+xml";
+    dc:format "application/marcxml+xml" ;
     dc:language "fi" .
 
 <http://skosmos.skos/dump/test/marc-sv.mrcx>
-    dc:format "application/marcxml+xml";
+    dc:format "application/marcxml+xml" ;
     dc:language "sv" .
-	
+
 :multiple-schemes a skosmos:Vocabulary, void:Dataset ;
 	skos:prefLabel "Mutiple Schemes vocabulary"@en ;
 	dc:title "Mutiple Schemes vocabulary"@en ;
