@@ -6,7 +6,7 @@
 class RestController extends Controller
 {
     /* supported MIME types that can be used to return RDF data */
-    const SUPPORTED_FORMATS = 'application/rdf+xml text/turtle application/ld+json application/json';
+    const SUPPORTED_FORMATS = 'application/rdf+xml text/turtle application/ld+json application/json application/marcxml+xml';
     /* context array template */
     private $context = array(
         '@context' => array(
@@ -550,8 +550,18 @@ class RestController extends Controller
         if (!$format) {
             return $this->returnError(406, 'Not Acceptable', "Unsupported format. Supported MIME types are: " . implode(' ', array_keys($urls)));
         }
-
-        header("Location: " . $urls[$format]);
+        if (is_array($urls[$format])) {
+            $arr = $urls[$format];
+            $dataLang = $request->getLang();
+            if (isset($arr[$dataLang])) {
+                header("Location: " . $arr[$dataLang]);
+            } else {
+                $vocid = $request->getVocab()->getId();
+                return $this->returnError('404', 'Not Found', "No download source URL known for vocabulary $vocid in language $dataLang");
+            }
+		} else {
+            header("Location: " . $urls[$format]);
+		}
     }
 
     private function returnDataResults($results, $format) {

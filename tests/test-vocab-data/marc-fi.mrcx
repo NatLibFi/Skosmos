@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf8"?>
+<collection xmlns="http://www.loc.gov/MARC21/slim">
+	<record>
+		<leader>00000cz  a2200000n  4500</leader>
+		<controlfield tag="003">FI-NL</controlfield>
+		<controlfield tag="008">800101|n|anznnbabn           | ana      </controlfield>
+		<datafield ind1="7" ind2=" " tag="024">
+			<subfield code="a">http://www.yso.fi/onto/yso/p10</subfield>
+			<subfield code="2">uri</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="040">
+			<subfield code="a">FI-NL</subfield>
+			<subfield code="b">fin</subfield>
+			<subfield code="f">yso</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="065">
+			<subfield code="a">18</subfield>
+			<subfield code="c">Luonnonsuojelu. Ympäristönsuojelu. Ympäristö. Jätteet</subfield>
+			<subfield code="0">http://www.yso.fi/onto/yso/p26560</subfield>
+			<subfield code="2">yso</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="150">
+			<subfield code="a">ympäristötietoisuus</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="550">
+			<subfield code="w">g</subfield>
+			<subfield code="a">tietoisuus</subfield>
+			<subfield code="0">http://www.yso.fi/onto/yso/p7672</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="550">
+			<subfield code="w">n</subfield>
+			<subfield code="a">ympäristöaktivismi</subfield>
+			<subfield code="0">http://www.yso.fi/onto/yso/p9</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="550">
+			<subfield code="w">n</subfield>
+			<subfield code="a">ympäristöasenteet</subfield>
+			<subfield code="0">http://www.yso.fi/onto/yso/p24174</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="550">
+			<subfield code="w">n</subfield>
+			<subfield code="a">ympäristökysymykset</subfield>
+			<subfield code="0">http://www.yso.fi/onto/yso/p4339</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="550">
+			<subfield code="w">n</subfield>
+			<subfield code="a">ympäristön saastuminen</subfield>
+			<subfield code="0">http://www.yso.fi/onto/yso/p4340</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="550">
+			<subfield code="w">n</subfield>
+			<subfield code="a">ympäristön tila</subfield>
+			<subfield code="0">http://www.yso.fi/onto/yso/p4342</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="550">
+			<subfield code="w">n</subfield>
+			<subfield code="a">ympäristönsuojelu</subfield>
+			<subfield code="0">http://www.yso.fi/onto/yso/p13</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="688">
+			<subfield code="a">Viimeksi muokattu: 2017-05-10</subfield>
+		</datafield>
+		<datafield ind1=" " ind2="7" tag="750">
+			<subfield code="a">environmental awareness</subfield>
+			<subfield code="4">EQ</subfield>
+			<subfield code="2">yso/eng</subfield>
+			<subfield code="0">http://www.yso.fi/onto/yso/p10</subfield>
+		</datafield>
+		<datafield ind1=" " ind2="7" tag="750">
+			<subfield code="a">miljömedvetande</subfield>
+			<subfield code="4">EQ</subfield>
+			<subfield code="2">yso/swe</subfield>
+			<subfield code="0">http://www.yso.fi/onto/yso/p10</subfield>
+		</datafield>
+	</record>
+	<record>
+		<leader>00000cz  a2200000n  4500</leader>
+		<controlfield tag="003">FI-NL</controlfield>
+		<controlfield tag="008">800101|n|anznnbabn           | ana      </controlfield>
+		<datafield ind1="7" ind2=" " tag="024">
+			<subfield code="a">http://www.yso.fi/onto/yso/p100</subfield>
+			<subfield code="2">uri</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="040">
+			<subfield code="a">FI-NL</subfield>
+			<subfield code="b">fin</subfield>
+			<subfield code="f">yso</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="065">
+			<subfield code="a">73</subfield>
+			<subfield code="c">Sosiaalipolitiikka. Yhteiskuntapolitiikka. Sosiaaliturva. Terveydenhuolto. Asuminen</subfield>
+			<subfield code="0">http://www.yso.fi/onto/yso/p26549</subfield>
+			<subfield code="2">yso</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="150">
+			<subfield code="a">elatusturva</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="450">
+			<subfield code="a">lapsen elatus</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="550">
+			<subfield code="w">g</subfield>
+			<subfield code="a">toimeentuloturva</subfield>
+			<subfield code="0">http://www.yso.fi/onto/yso/p3091</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="550">
+			<subfield code="w">n</subfield>
+			<subfield code="a">elatus</subfield>
+			<subfield code="0">http://www.yso.fi/onto/yso/p97</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="550">
+			<subfield code="w">n</subfield>
+			<subfield code="a">elatusapu</subfield>
+			<subfield code="0">http://www.yso.fi/onto/yso/p14639</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="550">
+			<subfield code="w">n</subfield>
+			<subfield code="a">elatustuki</subfield>
+			<subfield code="0">http://www.yso.fi/onto/yso/p15745</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="550">
+			<subfield code="w">n</subfield>
+			<subfield code="a">elatusvelvollisuus</subfield>
+			<subfield code="0">http://www.yso.fi/onto/yso/p99</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="550">
+			<subfield code="w">n</subfield>
+			<subfield code="a">lapsen huolto</subfield>
+			<subfield code="0">http://www.yso.fi/onto/yso/p98</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="680">
+			<subfield code="i">Tarkoittaa elatusvelvollisuuteen perustuvaa toimeentuloturvaa.</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="688">
+			<subfield code="a">Viimeksi muokattu: 2017-05-10</subfield>
+		</datafield>
+		<datafield ind1=" " ind2="7" tag="750">
+			<subfield code="a">security of child maintenance</subfield>
+			<subfield code="4">EQ</subfield>
+			<subfield code="2">yso/eng</subfield>
+			<subfield code="0">http://www.yso.fi/onto/yso/p100</subfield>
+		</datafield>
+		<datafield ind1=" " ind2="7" tag="750">
+			<subfield code="a">underhållstrygghet</subfield>
+			<subfield code="4">EQ</subfield>
+			<subfield code="2">yso/swe</subfield>
+			<subfield code="0">http://www.yso.fi/onto/yso/p100</subfield>
+		</datafield>
+	</record>
+	<record>
+		<leader>00000cz  a2200000n  4500</leader>
+		<controlfield tag="003">FI-NL</controlfield>
+		<controlfield tag="008">800101|n|anznnbabn           | ana      </controlfield>
+		<datafield ind1="7" ind2=" " tag="024">
+			<subfield code="a">http://www.yso.fi/onto/yso/p9999</subfield>
+			<subfield code="2">uri</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="040">
+			<subfield code="a">FI-NL</subfield>
+			<subfield code="b">fin</subfield>
+			<subfield code="f">yso</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="065">
+			<subfield code="a">02</subfield>
+			<subfield code="c">Filosofia</subfield>
+			<subfield code="0">http://www.yso.fi/onto/yso/p26545</subfield>
+			<subfield code="2">yso</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="150">
+			<subfield code="a">reduktio (filosofia)</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="550">
+			<subfield code="w">g</subfield>
+			<subfield code="a">menetelmät</subfield>
+			<subfield code="0">http://www.yso.fi/onto/yso/p1913</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="550">
+			<subfield code="w">h</subfield>
+			<subfield code="a">eideettinen reduktio</subfield>
+			<subfield code="0">http://www.yso.fi/onto/yso/p29479</subfield>
+		</datafield>
+		<datafield ind1=" " ind2=" " tag="688">
+			<subfield code="a">Viimeksi muokattu: 2018-02-22</subfield>
+		</datafield>
+		<datafield ind1=" " ind2="7" tag="750">
+			<subfield code="a">reduction (philosophy)</subfield>
+			<subfield code="4">EQ</subfield>
+			<subfield code="2">yso/eng</subfield>
+			<subfield code="0">http://www.yso.fi/onto/yso/p9999</subfield>
+		</datafield>
+		<datafield ind1=" " ind2="7" tag="750">
+			<subfield code="a">reduktion (filosofi)</subfield>
+			<subfield code="4">EQ</subfield>
+			<subfield code="2">yso/swe</subfield>
+			<subfield code="0">http://www.yso.fi/onto/yso/p9999</subfield>
+		</datafield>
+	</record>
+</collection>
