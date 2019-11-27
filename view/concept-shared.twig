@@ -78,14 +78,12 @@
             {% if propval.uri and propval.type != 'rdf:type' %} {# resources with URI #}
               {% if propval.label %}
                 {% if propval.isExternal %}
-                <a href="{{ propval.uri | link_url(propval.exvocab, request.lang, 'page', request.contentLang) }}">{{ propval.label }}</a> ({{ propval.vocabname }})
+                  <a href="{{ propval.uri | link_url(propval.exvocab, request.lang, 'page', request.contentLang) }}">{{ propval.label }}</a> ({{ propval.vocabname }})
+                {% elseif propval.isReified %} {# e.g. skos:definition's with resource values #}
+                  <span class="versal reified-property-value"><img src="resource/pics/about.png">{% if propval.notation %}<span class="versal">{{ propval.notation }} </span>{% endif %} {{ propval.label(request.contentLang) }}</span>
+                  <div class="reified-tooltip">{% for key, val in propval.reifiedPropertyValues %}<p>{{ key }}: <a href="{{ val.uri | link_url(val.exvocab, request.lang, 'page', request.contentLang) }}">{{ val.label(request.contentLang) }}</a></p>{% endfor %}</div>
                 {% else %}
-                {% if propval.isReified %} {# e.g. skos:definition's with resource values #}
-                <span class="versal reified-property-value"><img src="resource/pics/about.png">{% if propval.notation %}<span class="versal">{{ propval.notation }} </span>{% endif %} {{ propval.label(request.contentLang) }}</span>
-                <div class="reified-tooltip">{% for key, val in propval.reifiedPropertyValues %}<p>{{ key }}: <a href="{{ val.uri | link_url(val.exvocab, request.lang, 'page', request.contentLang) }}">{{ val.label(request.contentLang) }}</a></p>{% endfor %}</div>
-                {% else %}
-                    <a href="{{ propval.uri | link_url(propval.vocab, request.lang, 'page', request.contentLang) }}">{% if propval.notation %}<span class="versal">{{ propval.notation }} </span>{% endif %} {{ propval.label(request.contentLang) }}</a>
-                {% endif %}
+                  <a href="{{ propval.uri | link_url(propval.vocab, request.lang, 'page', request.contentLang) }}">{% if propval.notation %}<span class="versal">{{ propval.notation }} </span>{% endif %} {{ propval.label(request.contentLang) }}</a>
                 {% endif %}
                 {% if propval.label.lang and (propval.label.lang != request.contentLang or explicit_langcodes) %}<span class="versal"> ({{ propval.label(request.contentLang).lang }})</span>{% endif %}
                 {% if propval.SubMembers %}<div class="subvalue"> {# if property is a group concept that has sub properties #}
@@ -118,6 +116,7 @@
               <li>
               {% for group in grouppath %}
                 <a class="versal" href="{{ group.uri | link_url(group.vocab,request.lang,'page',request.contentLang) }}">{% if group.notation %}<span class="versal">{{ group.notation }}</span>{% endif %}{{ group.label(request.contentLang) }}</a>
+                {% if group.label.lang and (group.label.lang != request.contentLang or explicit_langcodes) %}<span class="versal"> ({{ group.label(request.contentLang).lang }})</span>{% endif %}
                 {% if not loop.last %}<span class="versal"> &#62; </span>{% endif %}
               {% endfor %}
               </li>
@@ -134,7 +133,9 @@
           {% for grouppath in concept.arrayProperties %}
             {% for group in grouppath %}
               {% if group.type == 'skosmos:memberOfArray' %}
-                <li><a href="{{ group.uri | link_url(group.vocab,request.lang,'page',request.contentLang) }}">{% if group.notation %}<span class="versal">{{ group.notation }}</span>{% endif %}{{ group.label(request.contentLang) }}</a></li>
+                <li>
+                  <a href="{{ group.uri | link_url(group.vocab,request.lang,'page',request.contentLang) }}">{% if group.notation %}<span class="versal">{{ group.notation }}</span>{% endif %}{{ group.label(request.contentLang) }}</a>
+                  {% if group.label.lang and (group.label.lang != request.contentLang or explicit_langcodes) %}<span class="versal"> ({{ group.label(request.contentLang).lang }})</span>{% endif %}</li>
               {% else %}
               {% endif %}
             {% endfor %}
@@ -188,7 +189,7 @@
               <div class="row">
                 <div class="col-xs-5">
                   <a class="versal" href="{{ propval.uri | link_url(propval.exvocab, request.lang, 'page', request.contentLang) }}">{% if propval.notation %}<span class="versal">{{ propval.notation }}</span>{% endif %}{{ propval.label(request.contentLang) }}</a>
-                {% if propval.label.lang and (propval.label(request.contentLang).lang != request.contentLang) or (explicit_langcodes and propval.label.lang) %}<span class="propertyvalue"> ({{ propval.label(request.contentLang).lang }})</span>{% endif %}
+                  {% if propval.label.lang and (propval.label(request.contentLang).lang != request.contentLang) or (explicit_langcodes and propval.label.lang) %}<span class="propertyvalue"> ({{ propval.label(request.contentLang).lang }})</span>{% endif %}
                 </div>
                 {% set vocabname = propval.vocabname %}
                 {% if vocabname %}
