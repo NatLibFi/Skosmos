@@ -82,6 +82,15 @@ class Controller
         return $format;
     }
 
+    private function isSecure()
+    {
+        if ($protocol = filter_input(INPUT_SERVER, 'HTTP_X_FORWARDED_PROTO', FILTER_SANITIZE_STRING)) {
+            return \in_array(strtolower($protocol), ['https', 'on', 'ssl', '1'], true);
+        }
+
+        return filter_input(INPUT_SERVER, 'HTTPS', FILTER_SANITIZE_STRING) !== null;
+    }
+
     private function guessBaseHref()
     {
         $script_name = filter_input(INPUT_SERVER, 'SCRIPT_NAME', FILTER_SANITIZE_STRING);
@@ -93,7 +102,7 @@ class Controller
         $doc_root = preg_replace("!{$script_name}$!", '', $script_filename);
         $base_url = preg_replace("!^{$doc_root}!", '', $base_dir);
         $base_url = str_replace('/controller', '/', $base_url);
-        $protocol = filter_input(INPUT_SERVER, 'HTTPS', FILTER_SANITIZE_STRING) === null ? 'http' : 'https';
+        $protocol = $this->isSecure() ? 'https' : 'http';
         $port = filter_input(INPUT_SERVER, 'SERVER_PORT', FILTER_SANITIZE_STRING);
         $disp_port = ($port == 80 || $port == 443) ? '' : ":$port";
         $domain = filter_input(INPUT_SERVER, 'SERVER_NAME', FILTER_SANITIZE_STRING);
