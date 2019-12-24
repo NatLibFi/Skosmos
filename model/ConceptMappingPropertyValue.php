@@ -173,7 +173,7 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
     public function asJskos($queryExVocabs = true, $lang = null, $hrefLink = null)
     {
         $propertyLabel = $this->getLabel($lang, $queryExVocabs);
-        $propertyLang = null;
+        $propertyLang = $lang;
         if (!is_string($propertyLabel)) {
             $propertyLang = $propertyLabel->getLang();
             $propertyLabel = $propertyLabel->getValue();
