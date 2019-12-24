@@ -639,6 +639,7 @@ class RestController extends Controller
      */
     public function mappings(Request $request)
     {
+        $this->setLanguageProperties($request->getLang());
         $vocab = $request->getVocab();
 
         $uri = $request->getUri();
