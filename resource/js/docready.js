@@ -251,6 +251,22 @@ $(function() { // DOCUMENT READY
     loading = setTimeout(function() { $('.concept-spinner').show() }, 500);
   }
 
+  function ajaxConceptMapping(data) {
+    // ajaxing the concept mapping properties on the concept page
+    var $conceptAppendix = $('.concept-appendix');
+    if ($conceptAppendix.length) {
+      var concept = {
+        uri: $conceptAppendix.data('concept-uri'),
+        type: $conceptAppendix.data('concept-type')
+      };
+
+      // Defined in scripts.js. Will load the mapping properties via Ajax request to JSKOS REST service, and render them.
+      loadMappingProperties(concept, clang, $conceptAppendix, data);
+    } else {
+      makeCallbacks(data);
+    }
+  }
+
   // event handler for clicking the hierarchy concepts
   $(document).on('click', '.concept-hierarchy a',
       function(event) {
@@ -275,19 +291,7 @@ $(function() { // DOCUMENT READY
               updateJsonLD(data);
               updateTitle(data);
               updateTopbarLang(data);
-              // ajaxing the concept mapping properties on the concept page
-              var $conceptAppendix = $('.concept-appendix');
-              if ($conceptAppendix.length) {
-                var concept = {
-                  uri: $conceptAppendix.data('concept-uri'),
-                  type: $conceptAppendix.data('concept-type')
-                };
-
-                // Defined in scripts.js. Will load the mapping properties via Ajax request to JSKOS REST service, and render them.
-                loadMappingProperties(concept, clang, $conceptAppendix, data);
-              } else {
-                makeCallbacks(data);
-              }
+              ajaxConceptMapping(data);
               // take the content language buttons from the response
               $('.header-float .dropdown-menu').empty().append($('.header-float .dropdown-menu', data).html());
             }
@@ -316,19 +320,7 @@ $(function() { // DOCUMENT READY
               updateJsonLD(data);
               updateTitle(data);
               updateTopbarLang(data);
-              // ajaxing the concept mapping properties on the concept page
-              var $conceptAppendix = $('.concept-appendix');
-              if ($conceptAppendix.length) {
-                var concept = {
-                  uri: $conceptAppendix.data('concept-uri'),
-                  type: $conceptAppendix.data('concept-type')
-                };
-
-                // Defined in scripts.js. Will load the mapping properties via Ajax request to JSKOS REST service, and render them.
-                loadMappingProperties(concept, clang, $conceptAppendix, data);
-              } else {
-                makeCallbacks(data);
-              }
+              ajaxConceptMapping(data);
               // take the content language buttons from the response
               $('.header-float .dropdown-menu').empty().append($('.header-float .dropdown-menu', data).html());
             }
@@ -456,19 +448,7 @@ $(function() { // DOCUMENT READY
               $('.nav').scrollTop(0);
               if (window.history.pushState) { window.history.pushState({}, null, event.target.href); }
               updateTitle(data);
-              // ajaxing the concept mapping properties on the concept page
-              var $conceptAppendix = $('.concept-appendix');
-              if ($conceptAppendix.length) {
-                var concept = {
-                  uri: $conceptAppendix.data('concept-uri'),
-                  type: $conceptAppendix.data('concept-type')
-                };
-
-                // Defined in scripts.js. Will load the mapping properties via Ajax request to JSKOS REST service, and render them.
-                loadMappingProperties(concept, clang, $conceptAppendix, data);
-              } else {
-                makeCallbacks(data);
-              }
+              ajaxConceptMapping(data);
               // take the content language buttons from the response
               $('.header-float .dropdown-menu').empty().append($('.header-float .dropdown-menu', data).html());
             }
