@@ -261,7 +261,7 @@ $(function() { // DOCUMENT READY
       };
 
       // Defined in scripts.js. Will load the mapping properties via Ajax request to JSKOS REST service, and render them.
-      loadMappingProperties(concept, clang, $conceptAppendix, data);
+      loadMappingProperties(concept, lang, clang, $conceptAppendix, data);
     } else {
       makeCallbacks(data);
     }
@@ -1123,7 +1123,7 @@ $(function() { // DOCUMENT READY
     };
 
     // Defined in scripts.js. Will load the mapping properties via Ajax request to JSKOS REST service, and render them.
-    loadMappingProperties(concept, clang, $conceptAppendix, null);
+    loadMappingProperties(concept, lang, clang, $conceptAppendix, null);
   } else {
     makeCallbacks();
   }

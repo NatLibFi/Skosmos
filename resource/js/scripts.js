@@ -366,18 +366,19 @@ function renderPropertyMappings(concept, contentLang, properties) {
  * template is comprised of another template, for concept mapping property values.
  *
  * @param concept dictionary/object populated with data from the Concept object
- * @param contentLang language to display content
+ * @param lang language used in the UI
+ * @param contentLang the content language
  * @param $htmlElement HTML (a div) parent object (initially hidden)
  * @param conceptData concept page data returned via ajax, passed to makeCallback only
  */
-function loadMappingProperties(concept, contentLang, $htmlElement, conceptData) {
+function loadMappingProperties(concept, lang, contentLang, $htmlElement, conceptData) {
   // display with the spinner
   $htmlElement
     .removeClass('hidden')
     .append('<div class="spinner row"></div>');
   $.ajax({
     url: rest_base_url + vocab + '/mappings',
-    data: $.param({'uri': concept.uri, lang: contentLang}),
+    data: $.param({'uri': concept.uri, lang: lang, clang: contentLang}),
     success: function(data) {
 
       // The JSKOS REST mapping properties call will have added more resources into the graph. The graph
