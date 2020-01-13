@@ -19,7 +19,9 @@ try {
     if ($request->getQueryParam('vocab')) {
         $request->setVocab($request->getQueryParam('vocab'));
     }
-    if ($request->getQueryParam('lang')) {
+    if ($request->getQueryParam('clang')) {
+        $request->setContentLang($request->getQueryParam('clang'));
+    } elseif ($request->getQueryParam('lang')) {
         $request->setContentLang($request->getQueryParam('lang'));
     }
 
