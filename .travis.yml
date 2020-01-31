@@ -36,6 +36,7 @@ matrix:
   - php: 7.1
     env: FUSEKI_VERSION=SNAPSHOT
   allow_failures:
+  - php: 7.4
   - env: FUSEKI_VERSION=SNAPSHOT
 notifications:
     slack: kansalliskirjasto:9mOKu3Vws1CIddF5jqWgXbli
