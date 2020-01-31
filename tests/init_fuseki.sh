@@ -20,6 +20,7 @@ if [ ! -f "apache-jena-fuseki-$FUSEKI_VERSION/fuseki-server" ]; then
 fi
 
 cd "apache-jena-fuseki-$FUSEKI_VERSION"
+chmod +x fuseki-server
 ./fuseki-server --port=13030 --config ../fuseki-assembler.ttl &
 until curl --output /dev/null --silent --head --fail http://localhost:13030; do
     printf '.'
