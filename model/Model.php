@@ -17,6 +17,7 @@ class Model
     const URI_FETCH_TTL = 86400; // 1 day
     private $globalConfig;
     private $logger;
+    private $resolver;
 
     /**
      * Initializes the Model object
@@ -25,6 +26,7 @@ class Model
     {
         $this->globalConfig = $config;
         $this->initializeLogging();
+        $this->resolver = new Resolver();
     }
 
     /**
@@ -546,44 +548,20 @@ class Model
         return $res->label(); // desperate check for label in any language; will return null if even this fails
     }
 
-    private function fetchResourceFromUri($uri)
-    {
-        try {
-            // change the timeout setting for external requests
-            $httpclient = EasyRdf\Http::getDefaultHttpClient();
-            $httpclient->setConfig(array('timeout' => $this->getConfig()->getHttpTimeout()));
-            EasyRdf\Http::setDefaultHttpClient($httpclient);
-
-            $client = EasyRdf\Graph::newAndLoad(EasyRdf\Utils::removeFragmentFromUri($uri));
-            return $client->resource($uri);
-        } catch (Exception $e) {
-            return null;
-        }
-    }
-
     public function getResourceFromUri($uri)
     {
-        // prevent parsing errors for sources which return invalid JSON (see #447)
-        // 1. Unregister the legacy RDF/JSON parser, we don't want to use it
-        EasyRdf\Format::unregister('json');
-        // 2. Add "application/json" as a possible MIME type for the JSON-LD format
-        $jsonld = EasyRdf\Format::getFormat('jsonld');
-        $mimetypes = $jsonld->getMimeTypes();
-        $mimetypes['application/json'] = 0.5;
-        $jsonld->setMimeTypes($mimetypes);
-
         // using apc cache for the resource if available
         if ($this->globalConfig->getCache()->isAvailable()) {
             // @codeCoverageIgnoreStart
             $key = 'fetch: ' . $uri;
             $resource = $this->globalConfig->getCache()->fetch($key);
             if ($resource === null || $resource === false) { // was not found in cache, or previous request failed
-                $resource = $this->fetchResourceFromUri($uri);
+                $resource = $this->resolver->resolve($uri, $this->getConfig()->getHttpTimeout());
                 $this->globalConfig->getCache()->store($key, $resource, self::URI_FETCH_TTL);
             }
             // @codeCoverageIgnoreEnd
         } else { // APC not available, parse on every request
-            $resource = $this->fetchResourceFromUri($uri);
+            $resource = $this->resolver->resolve($uri, $this->getConfig()->getHttpTimeout());
         }
         return $resource;
     }
