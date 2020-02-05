@@ -1,7 +1,7 @@
 #!/bin/bash
 # Note: This script must be sourced from within bash, e.g. ". init_fuseki.sh"
 
-FUSEKI_VERSION=${FUSEKI_VERSION:-3.9.0}
+FUSEKI_VERSION=${FUSEKI_VERSION:-3.14.0}
 
 if [ "$FUSEKI_VERSION" = "SNAPSHOT" ]; then
     # find out the latest snapshot version and its download URL by parsing Apache directory listings
@@ -20,6 +20,7 @@ if [ ! -f "apache-jena-fuseki-$FUSEKI_VERSION/fuseki-server" ]; then
 fi
 
 cd "apache-jena-fuseki-$FUSEKI_VERSION"
+chmod +x fuseki-server bin/s-put
 ./fuseki-server --port=13030 --config ../fuseki-assembler.ttl &
 until curl --output /dev/null --silent --head --fail http://localhost:13030; do
     printf '.'
