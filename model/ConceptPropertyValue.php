@@ -11,13 +11,16 @@ class ConceptPropertyValue extends VocabularyDataObject
     private $type;
     /** content language */
     private $clang;
+    /** whether the property value is external w.r.t. to the subject resource */
+    private $external;
 
-    public function __construct($model, $vocab, $resource, $prop, $clang = '')
+    public function __construct($model, $vocab, $resource, $prop, $clang = '', $external = false)
     {
         parent::__construct($model, $vocab, $resource);
         $this->submembers = array();
         $this->type = $prop;
         $this->clang = $clang;
+        $this->external = $external;
     }
 
     public function __toString()
@@ -137,8 +140,7 @@ class ConceptPropertyValue extends VocabularyDataObject
     }
 
     public function isExternal() {
-        // if we don't know enough of this resource
-        return $this->resource->label() == null && $this->resource->get('rdf:value') == null;
+        return $this->external;
     }
 
     public function getNotation()
