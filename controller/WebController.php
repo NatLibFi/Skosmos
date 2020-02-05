@@ -693,6 +693,7 @@ class WebController extends Controller
         $vocab = $request->getVocab();
 
         $defaultView = $vocab->getConfig()->getDefaultSidebarView();
+        $pluginMessages = $vocab->getConfig()->getPluginMessages();
         // load template
         if ($defaultView === 'groups') {
             $this->invokeGroupIndex($request, true);
@@ -707,6 +708,7 @@ class WebController extends Controller
                 'vocab' => $vocab,
                 'search_letter' => 'A',
                 'active_tab' => $defaultView,
+                'plugin_messages' => $pluginMessages,
                 'request' => $request,
             ));
     }
