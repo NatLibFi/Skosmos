@@ -69,6 +69,12 @@ class ConceptPropertyValue extends VocabularyDataObject
             return $this->resource->getLiteral('rdf:value');
         }
 
+        // see if we can find a label in another vocabulary known by the skosmos instance
+        $label = $this->getExternalLabel($this->vocab, $this->getUri(), $lang);
+        if ($label) {
+            return $label;
+        }
+
         if ($fallbackToUri == 'uri') {
             // return uri if no label is found
             $label = $this->resource->shorten() ? $this->resource->shorten() : $this->getUri();
@@ -85,6 +91,15 @@ class ConceptPropertyValue extends VocabularyDataObject
     public function getUri()
     {
         return $this->resource->getUri();
+    }
+
+    public function getExVocab()
+    {
+        if ($this->isExternal()) {
+            return $this->vocab;
+        } else {
+            return null;
+        }
     }
 
     public function getVocab()
