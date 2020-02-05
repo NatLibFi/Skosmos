@@ -1,6 +1,7 @@
 <?php
 
-class LinkedDataResource implements RemoteResource {
+class LinkedDataResource implements RemoteResource
+{
     private $uri;
 
     public function __construct(string $uri) {

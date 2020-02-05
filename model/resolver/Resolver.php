@@ -1,7 +1,7 @@
 <?php
 
-class Resolver {
-
+class Resolver
+{
 
     /**
      * Resolve the URI using the most appropriate resolver and return the

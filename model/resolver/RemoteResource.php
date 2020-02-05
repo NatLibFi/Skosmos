@@ -1,6 +1,7 @@
 <?php
 
-interface RemoteResource {
+interface RemoteResource
+{
     /**
      * 
      * @param int $timeout timeout value for the resolution attempt, in seconds
