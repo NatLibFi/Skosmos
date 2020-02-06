@@ -200,6 +200,14 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
           ]
         ]
       ],
+      'uri' => 'http://www.skosmos.skos/mapping/m1',
+      'notation' => null,
+      'prefLabel' => 'Eel',
+      'description' => 'Exactly matching concepts in another vocabulary.',
+      'hrefLink' => null,
+      'lang' => 'en',
+      'vocabName' => 'Test ontology',
+      'typeLabel' => 'Exactly matching concepts',
     ], $propvals['Eel http://www.skosmos.skos/test/ta115']->asJskos());
   }
 

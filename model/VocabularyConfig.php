@@ -119,7 +119,6 @@ class VocabularyConfig extends BaseConfig
                 $mimetypelit = $url->getLiteral('dc11:format');
             }
 
-            // if still not found, guess MIME type using file extension
             if ($mimetypelit !== null) {
                 $mimetype = $mimetypelit->getValue();
             } else {
@@ -131,7 +130,23 @@ class VocabularyConfig extends BaseConfig
                 $mimetypes = array_keys($format->getMimeTypes());
                 $mimetype = $mimetypes[0];
             }
-            $ret[$mimetype] = $url->getURI();
+
+            $langLit = $url->getLiteral('dc:language');
+
+            if ($langLit != null) {
+                //when the mimetype has language variants
+                $dataUrlLang = $langLit->getValue();
+
+                if (!isset($ret[$mimetype])) {
+                  $arr = array();
+                } else {
+                  $arr = $ret[$mimetype];
+                }
+                $arr[$dataUrlLang] = $url->getURI();
+                $ret[$mimetype] = $arr;
+            } else {
+                $ret[$mimetype] = $url->getURI();
+            }
         }
         return $ret;
     }

@@ -2,9 +2,10 @@ sudo: required
 dist: trusty
 language: php
 php:
-  - 7.0
   - 7.1
   - 7.2
+  - 7.3
+  - 7.4
 install:
   - composer install
 cache:
@@ -26,15 +27,18 @@ env:
   global:
     - CC_TEST_REPORTER_ID=fb98170a5c7ea9cc2bbab19ff26268335e6a11a4f8267ca935e5e8ff4624886c
   matrix:
-    - FUSEKI_VERSION=3.9.0
+    - FUSEKI_VERSION=3.14.0
     - FUSEKI_VERSION=SNAPSHOT
 matrix:
   exclude:
-  - php: 7.0
-    env: FUSEKI_VERSION=SNAPSHOT
   - php: 7.1
     env: FUSEKI_VERSION=SNAPSHOT
+  - php: 7.2
+    env: FUSEKI_VERSION=SNAPSHOT
+  - php: 7.4
+    env: FUSEKI_VERSION=SNAPSHOT
   allow_failures:
+  - php: 7.4
   - env: FUSEKI_VERSION=SNAPSHOT
 notifications:
     slack: kansalliskirjasto:9mOKu3Vws1CIddF5jqWgXbli

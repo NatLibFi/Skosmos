@@ -137,7 +137,6 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
             if ($schemeResource) {
                 $schemaName = $this->getResourceLabel($schemeResource);
                 if ($schemaName) {
-                    //var_dump($schemaName);
                     return $schemaName;
                 }
             }
@@ -148,8 +147,8 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
     }
 
     public function isExternal() {
-        $propertyUris = $this->resource->propertyUris();
-        return empty($propertyUris);
+        // if we don't know enough of this resource
+        return $this->resource->label() == null && $this->resource->get('rdf:value') == null;
     }
 
     public function getNotation()
@@ -171,10 +170,20 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
      * Return the mapping as a JSKOS-compatible array.
      * @return array
      */
-    public function asJskos($queryExVocabs = true)
+    public function asJskos($queryExVocabs = true, $lang = null, $hrefLink = null)
     {
+        $propertyLabel = $this->getLabel($lang, $queryExVocabs);
+        $propertyLang = $lang;
+        if (!is_string($propertyLabel)) {
+            $propertyLang = $propertyLabel->getLang();
+            $propertyLabel = $propertyLabel->getValue();
+        }
         $ret = [
+            // JSKOS
+            'uri' => $this->source->getUri(),
+            'notation' => $this->getNotation(),
             'type' => [$this->type],
+            'prefLabel' => $propertyLabel,
             'from' => [
                 'memberSet' => [
                     [
@@ -188,7 +197,13 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
                         'uri' => (string) $this->getUri()
                     ]
                 ]
-            ]
+            ],
+            // EXTRA
+            'description' => gettext($this->type . "_help"), // pop-up text
+            'hrefLink' => $hrefLink, // link to resource as displayed in the UI
+            'lang' => $propertyLang, // TBD: could it be part of the prefLabel?
+            'vocabName' => (string) $this->getVocabName(), // vocabulary as displayed in the UI
+            'typeLabel' => gettext($this->type), // a text used in the UI instead of, for example, skos:closeMatch
         ];
 
         $fromScheme = $this->vocab->getDefaultConceptScheme();

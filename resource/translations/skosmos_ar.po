@@ -1,13 +1,13 @@
 # 
 # Translators:
-# Mahmoud Shaarawy <mahmoud.shaarawy@bibalex.org>, 2018
+# Mahmoud Shaarawy <mahmoud.shaarawy@bibalex.org>, 2018-2019
 msgid ""
 msgstr ""
 "Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-16 10:26+0200\n"
-"PO-Revision-Date: 2018-05-23 16:49+0000\n"
-"Last-Translator: osma <osma.suominen@helsinki.fi>\n"
+"PO-Revision-Date: 2019-08-21 08:05+0000\n"
+"Last-Translator: Mahmoud Shaarawy <mahmoud.shaarawy@bibalex.org>\n"
 "Language-Team: Arabic (http://www.transifex.com/national-library-of-finland/skosmos/language/ar/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,12 +29,12 @@ msgstr "بالإنجليزية"
 #: controller/RestController.php:271
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:125
 msgid "skos:Concept"
-msgstr "مفهوم"
+msgstr "المفهوم"
 
 #: controller/RestController.php:280
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:127
 msgid "skos:Collection"
-msgstr "مجموعة"
+msgstr "المجموعة"
 
 #: model/Concept.php:455 model/Concept.php:475
 msgid "skosmos:created"
@@ -46,7 +46,7 @@ msgstr "آخر تعديل"
 
 #: model/VocabularyCategory.php:39
 msgid "Vocabularies"
-msgstr "مفردات"
+msgstr "المفردات"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:26
 msgid "%search_count% results for '%term%'"
@@ -84,7 +84,7 @@ msgstr "هجائي"
 
 #: /tmp/cache/587c83c09abaa/cf/cf0b3d87d2eb48f38f5f339303d5509c7535d13d7b010ad4840ee824430f7fe6.php:34
 msgid "Alphabetical index"
-msgstr "كشاف هجائي"
+msgstr "الكشاف الهجائي"
 
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:555
 msgid "By group"
@@ -159,7 +159,7 @@ msgstr "خطأ: المصطلح \"%term%\" غير موجود في المفردا�
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:54
 #: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:194
 msgid "Feedback"
-msgstr "تعليقات"
+msgstr "التعليقات"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:64
 msgid "Feedback has been sent!"
@@ -354,7 +354,7 @@ msgstr "الناشر"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:67
 msgid "dc:relation"
-msgstr "علاقة"
+msgstr "العلاقة"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:69
 msgid "dc:replaces"
@@ -362,7 +362,7 @@ msgstr "يحل محل"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:71
 msgid "dc:rights"
-msgstr "حقوق"
+msgstr "الحقوق"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:73
 msgid "dc:rightsHolder"
@@ -370,7 +370,7 @@ msgstr "صاحب الحقوق"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:75
 msgid "dc:source"
-msgstr "مصدر"
+msgstr "المصدر"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:77
 msgid "dc:source_help"
@@ -378,11 +378,11 @@ msgstr "مصدر لوصف المفهوم."
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:79
 msgid "dc:spatial"
-msgstr "تغطية مكانية"
+msgstr "التغطية المكانية"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:81
 msgid "dc:subject"
-msgstr "موضوع"
+msgstr "الموضوع"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:83
 msgid "dc:temporal"
@@ -390,11 +390,11 @@ msgstr "تغطية زمنية"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:85
 msgid "dc:title"
-msgstr "عنوان"
+msgstr "العنوان"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:87
 msgid "dc:type"
-msgstr "نوع"
+msgstr "النوع"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:36
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:256
@@ -407,7 +407,7 @@ msgstr "الصفحة الرئيسية"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:91
 msgid "foaf:page"
-msgstr "صفحة"
+msgstr "الصفحة"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:658
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:542
@@ -420,7 +420,7 @@ msgstr "بلغات أخرى"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:39
 msgid "from all"
-msgstr "من كل"
+msgstr "من الكل"
 
 #: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:81
 #: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:90
@@ -464,7 +464,7 @@ msgstr "مفاهيم أضيق (جزئية)"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:95
 msgid "isothes:superGroup"
-msgstr "مجموعة رئيسية"
+msgstr "المجموعة الرئيسة"
 
 #: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:66
 msgid "layout designed by Hahmo"
@@ -472,7 +472,7 @@ msgstr "التصميم بواسطة Hahmo Design"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:74
 msgid "limited to group"
-msgstr "مجموعة"
+msgstr "المجموعة"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:67
 msgid "limited to parent"
@@ -484,7 +484,7 @@ msgstr "يقتصر على المخطط"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:29
 msgid "limited to type"
-msgstr "نوع"
+msgstr "النوع"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:113
 msgid "owl:sameAs"
@@ -496,7 +496,7 @@ msgstr "الإصدارة"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:115
 msgid "rdf:type"
-msgstr "نوع"
+msgstr "النوع"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:117
 msgid "rdf:type_help"
@@ -504,11 +504,11 @@ msgstr "نوع الكيان"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:123
 msgid "rdfs:comment"
-msgstr "وصف"
+msgstr "الوصف"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:119
 msgid "rdfs:label"
-msgstr "تسمية"
+msgstr "التسمية"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:121
 msgid "rdfs:seeAlso"
@@ -694,7 +694,7 @@ msgstr "حول"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:138
 msgid "Alternate terms"
-msgstr "مصطلحات بديلة"
+msgstr "المصطلحات البديلة"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:130
 msgid "Concept language"
@@ -714,7 +714,7 @@ msgstr "مساعدة"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:142
 msgid "Hidden terms"
-msgstr "مصطلحات مخفية"
+msgstr "المصطلحات المخفية"
 
 #: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:58
 msgid "Interface language"
@@ -754,10 +754,10 @@ msgstr "مرر مؤشر الفأرة فوق النص الموضوع أسفله �
 
 #: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:201
 msgid "search_example_text"
-msgstr "للبحث الاقتطاعي، الرجاء استخدام الرمز * كما هو الحال في *حيوان أو *براءة*. بالنسبة لنهاية كلمات البحث، سيتم اقتطاع البحث تلقائيًا، حتى إذا لم يتم إدخال رمز الاقتطاع يدويا: وهكذا، سيؤدي البحث عن قُط إلى الحصول على نفس نتائج البحث عن قُط*."
+msgstr "للبحث الاقتطاعي، الرجاء استخدام الرمز * كما هو الحال في *حيوان أو *براءة*. بالنسبة لنهاية كلمات البحث، سيتم اقتطاع البحث تلقائيًا، حتى إذا لم يتم إدخال رمز الاقتطاع يدويا: وهكذا، سيؤدي البحث عن قط إلى الحصول على نفس نتائج البحث عن قط*."
 
 msgid "feedback_enter_name_email"
-msgstr ""
+msgstr "برجاء إدخال إسمك وعنوان بريدك الإلكترونى إذا كنت ترغب فى تلقي رد مباشر.  لديك أيضًا خيار إرسال تعليقاتك كمجهول. ملحوظة: يتم إحالة الملاحظات المتعلقة بمفردات محددة مباشرة إلى المسؤول عن إدارتها."
 
 msgid "concept_types"
-msgstr ""
+msgstr "أنواع المفاهيم"
