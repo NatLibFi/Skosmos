@@ -997,6 +997,17 @@ EOQ;
             $props[] = 'skos:hiddenLabel';
         }
 
+        //add notations as a searchable datatype
+        $searchByNotation = false;
+        foreach ($vocabs as $vocab) {
+            if ($vocab->getConfig()->searchByNotation()) {
+                $searchByNotation = true;
+            }
+        }
+        if ($searchByNotation) {
+            $props[] = 'skos:notation';
+        }
+
         $filterGraph = empty($vocabs) ? $this->formatFilterGraph($vocabs) : '';
 
         // remove futile asterisks from the search term

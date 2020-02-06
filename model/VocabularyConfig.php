@@ -409,6 +409,15 @@ class VocabularyConfig extends BaseConfig
      * Returns a boolean value set in the config.ttl config.
      * @return boolean
      */
+    public function searchByNotation()
+    {
+        return $this->getBoolean('skosmos:$searchByNotation', true);
+    }
+
+    /**
+     * Returns a boolean value set in the config.ttl config.
+     * @return boolean
+     */
     public function showAlphabeticalIndex()
     {
         return $this->getBoolean('skosmos:showAlphabeticalIndex', true);
