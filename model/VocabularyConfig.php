@@ -411,7 +411,7 @@ class VocabularyConfig extends BaseConfig
      */
     public function searchByNotation()
     {
-        return $this->getBoolean('skosmos:$searchByNotation', true);
+        return $this->getBoolean('skosmos:searchByNotation', false);
     }
 
     /**
