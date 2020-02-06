@@ -302,6 +302,25 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
   }
 
   /**
+   * @covers VocabularyConfig::searchByNotation
+   * @covers VocabularyConfig::getBoolean
+   */
+  public function testShowSearchByNotationDefaultValue() {
+      $vocab = $this->model->getVocabulary('test');
+      $this->assertEquals(false, $vocab->getConfig()->searchByNotation());
+  }
+  
+  /**
+   * @covers VocabularyConfig::searchByNotation
+   * @covers VocabularyConfig::getBoolean
+   */
+  public function testShowSearchByNotationValue() {
+      $vocab = $this->model->getVocabulary('testNotation');
+      $this->assertEquals(true, $vocab->getConfig()->searchByNotation());
+  }
+  
+  
+  /**
    * @covers VocabularyConfig::showConceptSchemesInHierarchy
    * @covers VocabularyConfig::getBoolean
    */
