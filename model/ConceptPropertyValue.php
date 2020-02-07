@@ -80,8 +80,7 @@ class ConceptPropertyValue extends VocabularyDataObject
 
         if ($fallbackToUri == 'uri') {
             // return uri if no label is found
-            $label = $this->resource->shorten() ? $this->resource->shorten() : $this->getUri();
-            return $label;
+            return $this->resource->shorten() ? $this->resource->shorten() : $this->getUri();
         }
         return null;
     }

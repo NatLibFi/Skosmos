@@ -707,12 +707,11 @@ class RestController extends Controller
             $results[] = array('uri' => $objuri, 'prefLabel' => $vals['label']);
         }
 
-        $ret = array_merge_recursive($this->context, array(
+        return array_merge_recursive($this->context, array(
             '@context' => array('prefLabel' => 'skos:prefLabel', $propname => $propuri, '@language' => $lang),
             'uri' => $uri,
             $propname => $results)
         );
-        return $ret;
     }
 
     private function transformTransitivePropertyResults($uri, $lang, $objects, $tpropname, $tpropuri, $dpropname, $dpropuri)
@@ -726,12 +725,11 @@ class RestController extends Controller
             $results[$objuri] = $result;
         }
 
-        $ret = array_merge_recursive($this->context, array(
+        return array_merge_recursive($this->context, array(
             '@context' => array('prefLabel' => 'skos:prefLabel', $dpropname => array('@id' => $dpropuri, '@type' => '@id'), $tpropname => array('@id' => $tpropuri, '@container' => '@index'), '@language' => $lang),
             'uri' => $uri,
             $tpropname => $results)
         );
-        return $ret;
     }
 
     /**

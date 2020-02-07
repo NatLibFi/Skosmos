@@ -78,8 +78,7 @@ class Controller
         // if there was no proposed format, negotiate a suitable format
         header('Vary: Accept'); // inform caches that a decision was made based on Accept header
         $best = $this->negotiator->getBest($accept, $choices);
-        $format = ($best !== null) ? $best->getValue() : null;
-        return $format;
+        return ($best !== null) ? $best->getValue() : null;
     }
 
     private function isSecure()
@@ -106,8 +105,7 @@ class Controller
         $port = filter_input(INPUT_SERVER, 'SERVER_PORT', FILTER_SANITIZE_STRING);
         $disp_port = ($port == 80 || $port == 443) ? '' : ":$port";
         $domain = filter_input(INPUT_SERVER, 'SERVER_NAME', FILTER_SANITIZE_STRING);
-        $full_url = "$protocol://{$domain}{$disp_port}{$base_url}";
-        return $full_url;
+        return "$protocol://{$domain}{$disp_port}{$base_url}";
     }
 
     public function getBaseHref()

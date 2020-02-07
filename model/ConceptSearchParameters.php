@@ -48,8 +48,7 @@ class ConceptSearchParameters
             return ($vocabs !== null && $vocabs !== '') ? explode(' ', $vocabs) : null;
         }
         $vocabs = $this->getVocabs();
-        $ret = isset($vocabs[0]) ? array($vocabs[0]->getId()) : null;
-        return $ret;
+        return isset($vocabs[0]) ? array($vocabs[0]->getId()) : null;
     }
 
     public function setVocabularies($vocabs)
