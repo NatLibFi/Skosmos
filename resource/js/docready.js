@@ -247,8 +247,8 @@ $(function() { // DOCUMENT READY
   var $delayedSpinner = $("<p class='concept-spinner center-block'>" + loading_text + "&hellip;</p>");
 
   // adds a delay before showing the spinner configured above
-  function delaySpinner(loading) {
-    loading = setTimeout(function() { $('.concept-spinner').show() }, 500);
+  function delaySpinner() {
+    return setTimeout(function() { $('.concept-spinner').show() }, 500);
   }
 
   function ajaxConceptMapping(data) {
@@ -276,11 +276,10 @@ $(function() { // DOCUMENT READY
         var historyUrl = (clang !== lang) ? targetUrl + '?' + parameters : targetUrl;
         $('#hier-trigger').attr('href', targetUrl);
         var $content = $('.content').empty().append($delayedSpinner.hide());
-        var loading;
+        var loading = delaySpinner();
         $.ajax({
             url : targetUrl,
             data: parameters,
-            beforeSend: delaySpinner(loading),
             complete: clearTimeout(loading),
             success : function(data) {
               $content.empty();
@@ -307,10 +306,9 @@ $(function() { // DOCUMENT READY
         $('.activated-concept').removeClass('activated-concept');
         $(this).addClass('activated-concept');
         var $content = $('.content').empty().append($delayedSpinner.hide());
-        var loading;
+        var loading = delaySpinner();
         $.ajax({
             url : event.target.href,
-            beforeSend: delaySpinner(loading),
             complete: clearTimeout(loading),
             success : function(data) {
               if (window.history.pushState) { window.history.pushState({}, null, event.target.href); }
@@ -433,12 +431,11 @@ $(function() { // DOCUMENT READY
   $(document).on('click','div.group-hierarchy a',
       function(event) {
         var $content = $('.content').empty().append($delayedSpinner.hide());
-        var loading;
+        var loading = delaySpinner();
         // ajaxing the sidebar content
         $.ajax({
             url : event.target.href,
             beforeSend: delaySpinner(loading),
-            complete: clearTimeout(loading),
             success : function(data) {
               initHierarchyQtip();
               $('#hier-trigger').attr('href', event.target.href);
