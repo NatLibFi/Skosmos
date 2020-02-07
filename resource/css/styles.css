@@ -891,7 +891,14 @@ span.xl-pref-label > img {
 }
 
 .concept-main > .row > .property-label-pref {
-  line-height: 40px;
+  float: unset;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.concept-main > .row > .property-label-pref + div {
+  display: table-cell;
+  vertical-align: middle;
 }
 
 .preflabel-spacer {
@@ -1420,7 +1427,7 @@ span.date-info {
 .copy-clipboard {
   color: #00748F;
   border-radius: 0;
-  vertical-align: inherit;
+  vertical-align: unset;
   font-size: 14px;
   border: 0;
 }

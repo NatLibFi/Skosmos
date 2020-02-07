@@ -39,7 +39,7 @@
       {% spaceless %}
       <div class="row{% if concept.type == 'skosext:DeprecatedConcept' %} deprecated{% endif %}">
         <div class="property-label property-label-pref">
-          <span class="versal">{% if concept.preferredSubpropertyLabelTranslation(request.lang) %}{{ concept.preferredSubpropertyLabelTranslation(request.lang)|upper }}{% else %}{{ 'skos:prefLabel'|trans|upper }}{% endif %}</span>
+          <span class="versal">{% set subPrefLabelTranslation = concept.preferredSubpropertyLabelTranslation(request.lang) %}{% if subPrefLabelTranslation %}{{ subPrefLabelTranslation|upper }}{% else %}{{ 'skos:prefLabel'|trans|upper }}{% endif %}</span>
         </div>
         {% if concept.foundBy %} {# hit has been found through an alternative label #}
         <span class="versal">{{ concept.foundBy }} >></span>

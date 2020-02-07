@@ -665,7 +665,7 @@ class Concept extends VocabularyDataObject
 
             }
         }
-        // the logic is inverted for skos:prefLabel; remove the more specific property (see #854)
+        // handled separately: remove duplicate skos:prefLabel value (#854)
         if (isset($duplicates["skos:prefLabel"])) {
             unset($ret[$duplicates["skos:prefLabel"]]);
         }
