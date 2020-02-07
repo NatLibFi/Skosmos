@@ -7,6 +7,7 @@ php:
   - 7.3
   - 7.4
 install:
+  - phpenv config-rm xdebug.ini
   - composer install
 cache:
   directories:
@@ -20,6 +21,8 @@ before_script:
   - export LANGUAGE=fr
   - sh ./init_fuseki.sh
   - cd ..
+script:
+  - phpdbg -qrr vendor/bin/phpunit
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
   - bash <(curl -s https://codecov.io/bash)
