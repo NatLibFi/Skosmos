@@ -78,7 +78,7 @@ class Concept extends VocabularyDataObject
     public function __construct($model, $vocab, $resource, $graph, $clang)
     {
         parent::__construct($model, $vocab, $resource);
-        $this->order = array("rdf:type", "dc:isReplacedBy", "skos:definition", "skos:broader", "skos:narrower", "skos:related", "skos:altLabel", "skosmos:memberOf", "skos:note", "skos:scopeNote", "skos:historyNote", "rdfs:comment", "dc11:source", "dc:source", "skos:prefLabel");
+        $this->order = array("rdf:type", "dc:isReplacedBy", "skos:definition", "skos:broader", "isothes:broaderGeneric", "isothes:broaderPartitive", "isothes:broaderInstantial", "skos:narrower", "isothes:narrowerGeneric", "isothes:narrowerPartitive", "isothes:narrowerInstantial", "skos:related", "skos:altLabel", "skosmos:memberOf", "skos:note", "skos:scopeNote", "skos:historyNote", "rdfs:comment", "dc11:source", "dc:source", "skos:prefLabel");
         $this->graph = $graph;
         $this->clang = $clang;
         // setting the Punic plugins locale for localized datetime conversions
@@ -391,6 +391,9 @@ class Concept extends VocabularyDataObject
         }
     }
 
+    /**
+     * @return ConceptProperty[]
+     */
     public function getMappingProperties(array $whitelist = null)
     {
         $ret = array();
@@ -434,7 +437,7 @@ class Concept extends VocabularyDataObject
                             }
 
                             if ($response) {
-                                $ret[$prop]->addValue(new ConceptMappingPropertyValue($this->model, $this->vocab, $response, $this->resource, $prop, $this->clang), $this->clang);
+                                $ret[$prop]->addValue(new ConceptMappingPropertyValue($this->model, $this->vocab, $response, $this->resource, $prop), $this->clang);
 
                                 $this->processExternalResource($response);
 
@@ -524,7 +527,7 @@ class Concept extends VocabularyDataObject
                 // note that this imply that the property has an rdf:type declared for the query to work
                 if(!$is_well_known && !$proplabel) {
                     $envLangLabels = $this->model->getDefaultSparql()->queryLabel($longUri, $this->getEnvLang());
-
+                    
                     $defaultPropLabel = $this->model->getDefaultSparql()->queryLabel($longUri, '');
 
 					if($envLangLabels) {

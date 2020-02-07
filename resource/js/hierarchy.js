@@ -78,6 +78,7 @@ function createObjectsFromChildren(conceptData, conceptUri) {
       text: getLabel(conceptData.narrower[i]), 
       a_attr: getConceptHref(conceptData.narrower[i]),
       uri: conceptData.narrower[i].uri,
+      notation: conceptData.narrower[i].notation,
       parents: conceptUri,
       state: { opened: true }
     };
@@ -103,6 +104,7 @@ function createConceptObject(conceptUri, conceptData) {
     text: getLabel(conceptData), 
     a_attr: getConceptHref(conceptData),
     uri: conceptUri,
+    notation: conceptData.notation,
     parents: conceptData.broader,
     state: { opened: true },
     children: []
@@ -218,6 +220,7 @@ function vocabRoot(topConcepts) {
       text: conceptData.label, 
       a_attr : getConceptHref(conceptData),
       uri: conceptData.uri,
+      notation: conceptData.notation,
       state: { opened: false } 
     };
     if (conceptData.hasChildren)
@@ -257,6 +260,7 @@ function appendChildrenToParents() {
 }
 
 function createObjectsFromNarrowers(narrowerResponse) {
+
   var childArray = [];
   for (var i = 0; i < narrowerResponse.narrower.length; i++) {
     var conceptObject = narrowerResponse.narrower[i];
@@ -264,6 +268,7 @@ function createObjectsFromNarrowers(narrowerResponse) {
       text : getLabel(conceptObject), 
       a_attr : getConceptHref(conceptObject),
       uri: conceptObject.uri,
+      notation: conceptObject.notation,
       parents: narrowerResponse.uri,
       state: { opened: false, disabled: false, selected: false }
     };
@@ -301,6 +306,7 @@ function schemeRoot(schemes) {
         text: label, 
         a_attr : { "href" : vocab + '/' + lang + '/page/?uri=' + scheme.uri, 'class': 'scheme'},
         uri: scheme.uri,
+        notation: scheme.notation,
         children: true,
         state: { opened: false } 
       };
@@ -333,6 +339,7 @@ function topConceptsToSchemes(topConcepts, schemes) {
       text : getLabel(topConcept), 
       a_attr : { "href" : vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(topConcept.uri) },
       uri: topConcept.uri,
+      notation: topConcept.notation,
       state: { opened: false, disabled: false, selected: false }
     };
     if (hasChildren) {
@@ -426,7 +433,29 @@ function getTreeConfiguration() {
         }
     },
     'plugins' : ['sort'],
-    'sort' : function (a,b) { return naturalCompare(this.get_text(a).toLowerCase(), this.get_text(b).toLowerCase()); }
+    'sort' : function (a,b) {
+        var aNode = this.get_node(a);
+        var bNode = this.get_node(b);
+
+        if (window.showNotation) {
+            var aNotation = aNode.original.notation;
+            var bNotation = bNode.original.notation;
+
+            if (aNotation) {
+                if (bNotation) {
+                    if (aNotation < bNotation) {
+                        return -1;
+                    }
+                    else if (aNotation > bNotation) {
+                        return 1;
+                    }
+                }
+                else return -1;
+            }
+            else if (bNotation) return 1;
+        }
+        return naturalCompare(aNode.text.toLowerCase(), bNode.text.toLowerCase());
+    }
   });
 }
 

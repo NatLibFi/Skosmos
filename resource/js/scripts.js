@@ -298,3 +298,141 @@ function escapeHtml(string) {
   });
 }
 
+function renderPropertyMappingValues(groupedByType) {
+  var propertyMappingValues = [];
+  var source = document.getElementById("property-mapping-values-template").innerHTML;
+  var template = Handlebars.compile(source);
+  var context = {
+    property: {
+      uri: conceptMappingPropertyValue.uri,
+      label: conceptMappingPropertyValue.prefLabel,
+    }
+  };
+  propertyMappingValues.push({'body': template(context)});
+  return propertyMappingValues;
+}
+
+function renderPropertyMappings(concept, contentLang, properties) {
+  var source = document.getElementById("property-mappings-template").innerHTML;
+  // handlebarjs helper functions
+  Handlebars.registerHelper('ifDeprecated', function(conceptType, value, opts) {
+    if(conceptType == value) {
+      return opts.fn(this);
+    }
+    return opts.inverse(this);
+  });
+  Handlebars.registerHelper('toUpperCase', function(str) {
+    if (str === undefined) {
+      return '';
+    }
+    return str.toUpperCase();
+  });
+  Handlebars.registerHelper('ifNotInDescription', function(type, description, opts) {
+    if (type === undefined) {
+      return opts.inverse(this);
+    }
+    if (description === undefined) {
+      return opts.inverse(this);
+    }
+    if (description.indexOf(type) > 0 && description.indexOf('_help') > 0) {
+      return opts.inverse(this);
+    }
+    return opts.fn(this);
+  });
+  Handlebars.registerHelper('ifDifferentLabelLang', function(labelLang, explicitLangCodes, opts) {
+    if (labelLang !== undefined && labelLang !== '' && labelLang !== null) {
+      if (explicitLangCodes !== undefined && typeof explicitLangCodes === "boolean") {
+        return opts.fn(explicitLangCodes);
+      }
+      if (labelLang !== contentLang) {
+        return opts.fn(this);
+      }
+    }
+    return opts.inverse(this);
+  });
+
+  var template = Handlebars.compile(source);
+
+  var context = {
+    concept: concept,
+    properties: properties
+  };
+
+  return template(context);
+}
+
+/**
+ * Load mapping properties, via the JSKOS REST endpoint. Then, render the concept mapping properties template. This
+ * template is comprised of another template, for concept mapping property values.
+ *
+ * @param concept dictionary/object populated with data from the Concept object
+ * @param lang language used in the UI
+ * @param contentLang the content language
+ * @param $htmlElement HTML (a div) parent object (initially hidden)
+ * @param conceptData concept page data returned via ajax, passed to makeCallback only
+ */
+function loadMappingProperties(concept, lang, contentLang, $htmlElement, conceptData) {
+  // display with the spinner
+  $htmlElement
+    .removeClass('hidden')
+    .append('<div class="spinner row"></div>');
+  $.ajax({
+    url: rest_base_url + vocab + '/mappings',
+    data: $.param({'uri': concept.uri, lang: lang, clang: contentLang}),
+    success: function(data) {
+
+      // The JSKOS REST mapping properties call will have added more resources into the graph. The graph
+      // is returned alongside the mapping properties, so now we just need to replace it on the UI.
+      $('script[type="application/ld+json"]')[0].innerHTML = data.graph;
+
+      var conceptProperties = [];
+      for (var i = 0; i < data.mappings.length; i++) {
+        /**
+         * @var conceptMappingPropertyValue JSKOS transformed ConceptMappingPropertyValue
+         */
+        var conceptMappingPropertyValue = data.mappings[i];
+        var found = false;
+        var conceptProperty = null;
+        for (var j = 0; j < conceptProperties.length; j++) {
+          conceptProperty = conceptProperties[j];
+          if (conceptProperty.type === conceptMappingPropertyValue.type[0]) {
+            conceptProperty.values.push(conceptMappingPropertyValue);
+            found = true;
+            break;
+          }
+        }
+
+        if (!found) {
+          conceptProperty = {
+            'type': conceptMappingPropertyValue.type[0],
+            'label': conceptMappingPropertyValue.typeLabel,
+            'notation': conceptMappingPropertyValue.notation,
+            'description': conceptMappingPropertyValue.description,
+            'values': []
+          };
+          conceptProperty.values.push(conceptMappingPropertyValue);
+          conceptProperties.push(conceptProperty);
+        }
+      }
+
+      if (conceptProperties.length > 0) {
+        var template = renderPropertyMappings(concept, contentLang, conceptProperties);
+
+        $htmlElement.empty();
+        $htmlElement.append(template);
+      } else {
+        // No concept properties found
+        $htmlElement.empty();
+        $htmlElement.addClass("hidden");
+      }
+
+
+    },
+    error: function(data) {
+      console.log("Error retrieving mapping properties for [" + $htmlElement.data('concept-uri') + "]: " + data.responseText);
+    },
+    complete: function() {
+      makeCallbacks(conceptData);
+    }
+  });
+}

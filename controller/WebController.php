@@ -79,54 +79,6 @@ class WebController extends Controller
     }
 
     /**
-     * Creates Skosmos links from uris.
-     * @param string $uri
-     * @param Vocabulary $vocab
-     * @param string $lang
-     * @param string $type
-     * @param string $clang content
-     * @param string $term
-     */
-    public function linkUrlFilter($uri, $vocab, $lang, $type = 'page', $clang = null, $term = null) {
-        // $vocab can either be null, a vocabulary id (string) or a Vocabulary object
-        if ($vocab === null) {
-            // target vocabulary is unknown, best bet is to link to the plain URI
-            return $uri;
-        } elseif (is_string($vocab)) {
-            $vocid = $vocab;
-            $vocab = $this->model->getVocabulary($vocid);
-        } else {
-            $vocid = $vocab->getId();
-        }
-
-        $params = array();
-        if (isset($clang) && $clang !== $lang) {
-            $params['clang'] = $clang;
-        }
-
-        if (isset($term)) {
-            $params['q'] = $term;
-        }
-
-        // case 1: URI within vocabulary namespace: use only local name
-        $localname = $vocab->getLocalName($uri);
-        if ($localname !== $uri && $localname === urlencode($localname)) {
-            // check that the prefix stripping worked, and there are no problematic chars in localname
-            $paramstr = sizeof($params) > 0 ? '?' . http_build_query($params) : '';
-            if ($type && $type !== '' && $type !== 'vocab' && !($localname === '' && $type === 'page')) {
-                return "$vocid/$lang/$type/$localname" . $paramstr;
-            }
-
-            return "$vocid/$lang/$localname" . $paramstr;
-        }
-
-        // case 2: URI outside vocabulary namespace, or has problematic chars
-        // pass the full URI as parameter instead
-        $params['uri'] = $uri;
-        return "$vocid/$lang/$type/?" . http_build_query($params);
-    }
-
-    /**
      * Guess the language of the user. Return a language string that is one
      * of the supported languages defined in the $LANGUAGES setting, e.g. "fi".
      * @param string $vocid identifier for the vocabulary eg. 'yso'.
