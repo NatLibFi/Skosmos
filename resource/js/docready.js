@@ -41,7 +41,7 @@ $(function() { // DOCUMENT READY
         });
         return removeThese.join(' ');
       });
-      if (settings.url.indexOf('index/' !== -1)) {
+      if (settings.url.indexOf('index/') !== -1) {
         $(".sidebar-grey").mCustomScrollbar({
           alwaysShowScrollbar: 1,
           scrollInertia: 0,
