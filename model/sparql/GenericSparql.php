@@ -874,7 +874,7 @@ EOF;
             $filtercond = "REGEX(STR(?match), '^$term$', 'i')";
         }
 
-        $labelcondMatch = ($searchLang) ? "&& LANGMATCHES(lang(?match), '$searchLang')" : "";
+        $labelcondMatch = ($searchLang) ? "&& (?prop = skos:notation || LANGMATCHES(lang(?match), '$searchLang'))" : "";
         
         return "?s ?prop ?match . FILTER ($filtercond $labelcondMatch)";
     }
@@ -931,11 +931,9 @@ EOF;
     $graphClause {
      { 
      $valuesProp
-     VALUES (?prop ?pri) { (skos:prefLabel 1) (skos:altLabel 3) (skos:hiddenLabel 5)}
+     VALUES (?prop ?pri) { (skos:prefLabel 1) (skos:altLabel 3) (skos:hiddenLabel 7) (skos:notation 5)}
      $textcond
      ?s ?prop ?match }
-     UNION
-     { ?s skos:notation "$rawterm" }
      OPTIONAL {
       ?s skos:prefLabel ?label .
       FILTER ($labelcondLabel)
@@ -997,6 +995,19 @@ EOQ;
             $props[] = 'skos:hiddenLabel';
         }
 
+        //add notation into searchable data for the vocabularies which have been configured for it
+        if ($vocabs) {
+            $searchByNotation = false;
+            foreach ($vocabs as $vocab) {
+                if ($vocab->getConfig()->searchByNotation()) {
+                    $searchByNotation = true;
+                }
+            }
+            if ($searchByNotation) {
+                $props[] = 'skos:notation';
+            }
+        }
+        
         $filterGraph = empty($vocabs) ? $this->formatFilterGraph($vocabs) : '';
 
         // remove futile asterisks from the search term
@@ -1011,7 +1022,8 @@ EOQ;
   BIND(IF((SUBSTR(STRBEFORE(?hit, '@'),1) != ?pri), STRLANG(STRAFTER(?hit, '@'), SUBSTR(STRBEFORE(?hit, '@'),2)), STRAFTER(?hit, '@')) AS ?match)
   BIND(IF((?pri = "1" || ?pri = "2") && ?match != ?label, ?match, ?unbound) as ?plabel)
   BIND(IF((?pri = "3" || ?pri = "4"), ?match, ?unbound) as ?alabel)
-  BIND(IF((?pri = "5" || ?pri = "6"), ?match, ?unbound) as ?hlabel)
+  BIND(IF((?pri = "5" || ?pri = "6"), ?match, ?unbound) as ?blabel)          
+  BIND(IF((?pri = "6" || ?pri = "7"), ?match, ?unbound) as ?hlabel)
 EOQ;
         $innerquery = $this->generateConceptSearchQueryInner($params->getSearchTerm(), $params->getLang(), $params->getSearchLang(), $props, $unique, $filterGraph);
         if ($params->getSearchTerm() === '*' || $params->getSearchTerm() === '') { 

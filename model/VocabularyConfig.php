@@ -278,6 +278,15 @@ class VocabularyConfig extends BaseConfig
     {
         return $this->getBoolean('skosmos:explicitLanguageTags');
     }
+    
+    /**
+     * Returns a boolean value set in the config.ttl config.
+     * @return boolean
+     */
+    public function searchByNotation()
+    {
+        return $this->getBoolean('skosmos:searchByNotation');
+    }
 
     /**
      * Returns skosmos:marcSourcecode value set in config.ttl.
