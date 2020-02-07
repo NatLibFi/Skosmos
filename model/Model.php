@@ -26,7 +26,7 @@ class Model
     {
         $this->globalConfig = $config;
         $this->initializeLogging();
-        $this->resolver = new Resolver();
+        $this->resolver = new Resolver($this);
     }
 
     /**

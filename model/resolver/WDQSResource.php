@@ -1,19 +1,12 @@
 <?php
 
-class WDQSResource implements RemoteResource
+class WDQSResource extends RemoteResource
 {
-    private $uri;
-    private $client;
     
     const WDQS_ENDPOINT = "https://query.wikidata.org/sparql";
 
-    public function __construct(string $uri) {
-        $this->uri = $uri;
-        // create the EasyRDF SPARQL client instance to use
-        $this->client = new EasyRdf\Sparql\Client(self::WDQS_ENDPOINT);
-    }
-    
     public function resolve(int $timeout) : ?EasyRdf\Resource {
+        $client = new EasyRdf\Sparql\Client(self::WDQS_ENDPOINT);
         try {
             // unregister the legacy "json" format as it causes problems with CONSTRUCT requests
             EasyRdf\Format::unregister('json');
@@ -41,16 +34,12 @@ WHERE
 }
 EOQ;
 
-            $graph = $this->client->query($query);
+            $client = new EasyRdf\Sparql\Client(self::WDQS_ENDPOINT);
+            $graph = $client->query($query);
             return $graph->resource($this->uri);
         } catch (Exception $e) {
-            // FIXME proper logging needed
-            echo $e;
+            $this->model->getLogger()->info("WDQS resolution failed for <{$this->uri}>: $e");
             return null;
         }
-
     }
-    
 }
-
-

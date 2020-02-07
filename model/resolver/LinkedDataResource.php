@@ -1,13 +1,7 @@
 <?php
 
-class LinkedDataResource implements RemoteResource
+class LinkedDataResource extends RemoteResource
 {
-    private $uri;
-
-    public function __construct(string $uri) {
-        $this->uri = $uri;
-    }
-    
     public function resolve(int $timeout) : ?EasyRdf\Resource {
         // prevent parsing errors for sources which return invalid JSON (see #447)
         // 1. Unregister the legacy RDF/JSON parser, we don't want to use it
@@ -27,7 +21,7 @@ class LinkedDataResource implements RemoteResource
             $graph = EasyRdf\Graph::newAndLoad(EasyRdf\Utils::removeFragmentFromUri($this->uri));
             return $graph->resource($this->uri);
         } catch (Exception $e) {
-            // FIXME proper logging needed
+            $this->model->getLogger()->info("LD resolution failed for <{$this->uri}>: $e");
             return null;
         }
     
