@@ -22,7 +22,7 @@ before_script:
   - sh ./init_fuseki.sh
   - cd ..
 script:
-  - phpdbg -qrr phpunit
+  - phpdbg -qrr vendor/bin/phpunit
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
   - bash <(curl -s https://codecov.io/bash)
