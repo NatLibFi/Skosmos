@@ -11,6 +11,9 @@ var expand = "{% trans %}Show all breadcrumb paths{% endtrans %}";
 var hiertrans = "{% trans "Hier-nav" %}";
 
 <!-- variables passed through to javascript -->
+{% if plugin_messages%}
+var pluginMessages = { {% for lang,message in plugin_messages %} "{{lang}}" : "{{message}}" {% if not loop.last %}, {% endif %}{% endfor %} };
+{% endif %}
 var lang = "{{ request.lang }}";
 var content_lang = "{{ request.contentLang }}";
 var vocab = "{{ request.vocabid }}";
@@ -55,4 +58,3 @@ var languageOrder = [{% for lang in request.vocab.config.languageOrder(request.c
 {% for files in request.plugins.pluginsJS %}{% for file in files %}<script type="text/javascript" src="{{ file }}"></script>{% endfor %}{% endfor %}
 {% if request.plugins.callbacks %}<script type="text/javascript">var pluginCallbacks = [{% for function in request.plugins.callbacks %}{% if not loop.first %}, {% endif %}"{{ function }}"{% endfor %}];</script>{% endif %}
 <script type="text/javascript" src="resource/js/docready.js"></script>
-

@@ -6,6 +6,7 @@
 class VocabularyConfig extends BaseConfig
 {
     private $plugins;
+    private $pluginMessages;
     private $languageOrderCache = array();
 
     public function __construct($resource, $globalPlugins=array())
@@ -13,9 +14,22 @@ class VocabularyConfig extends BaseConfig
         $this->resource = $resource;
         $plugins = $this->resource->allLiterals('skosmos:usePlugin');
         $pluginArray = array();
+        $this->pluginMessages = array();
         if ($plugins) {
             foreach ($plugins as $pluginlit) {
                 $pluginArray[] = $pluginlit->getValue();
+            }
+        }
+        //Get message plugins defined as resources and their respective message literals
+        $pluginResources = $this->resource->allResources('skosmos:useMessagePlugin');
+        if ($pluginResources) {
+            foreach($pluginResources as $pluginResource) {
+                $pluginName = $pluginResource->getLiteral('skosmos:usePlugin')->getValue();
+                $pluginMessageLiterals = $pluginResource->allLiterals('skosmos:pluginMessage');
+                foreach ($pluginMessageLiterals as $message) {
+                    $this->pluginMessages[$message->getLang()] = $message->getValue();
+                }
+                $pluginArray[] = $pluginName;
             }
         }
         $this->plugins = new PluginRegister(array_merge($globalPlugins, $pluginArray));
@@ -375,6 +389,9 @@ class VocabularyConfig extends BaseConfig
         return $this->plugins;
     }
 
+    public function getPluginMessages() {
+        return $this->pluginMessages;
+    }
     /**
      * Returns the property/properties used for visualizing concept hierarchies.
      * @return string array class URI or null
