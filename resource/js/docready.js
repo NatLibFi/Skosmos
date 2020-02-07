@@ -660,7 +660,6 @@ $(function() { // DOCUMENT READY
       },
       ajax: {
         beforeSend: function(jqXHR, settings) {
-          wildcard = ($('#search-field').val().indexOf('*') === -1) ? '*' : '';
           var vocabString = $('.frontpage').length ? vocabSelectionString : vocab;
           var parameters = $.param({'vocab' : vocabString, 'lang' : qlang, 'labellang' : qlang});
           // if the search has been targeted at all languages by clicking the checkbox
