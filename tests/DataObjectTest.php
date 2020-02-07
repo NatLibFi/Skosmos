@@ -12,7 +12,8 @@ class DataObjectTest extends PHPUnit\Framework\TestCase
    */
   public function testConstructorNoArguments()
   {
-    new DataObject(null, null);
+    $obj = new DataObject(null, null);
+    $this->assertNotNull($obj);
   }
 
 }
