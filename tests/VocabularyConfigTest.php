@@ -187,6 +187,27 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
   }
 
   /**
+   * @covers VocabularyConfig::getDataURLs
+   */
+  public function testGetDataURLsMarc() {
+    $vocab = $this->model->getVocabulary('test-marc');
+    $url = $vocab->getConfig()->getDataURLs();
+    $marcArray = $url['application/marcxml+xml'];
+    $this->assertEquals( ( in_array('http://skosmos.skos/dump/test/marc-fi.mrcx', $marcArray) &&
+                           in_array('http://skosmos.skos/dump/test/marc-sv.mrcx', $marcArray) ), true);
+  }
+
+  /**
+   * @covers VocabularyConfig::getDataURLs
+   * @expectedException PHPUnit\Framework\Error\Warning
+   */
+  public function testGetDataURLsMarcNotDefined() {
+    $vocab = $this->model->getVocabulary('marc-undefined');
+    $url = $vocab->getConfig()->getDataURLs();
+    $this->assertEquals(array(), $url);
+  }
+
+  /**
    * @covers VocabularyConfig::getGroupClassURI
    */
   public function testGetGroupClassURI() {

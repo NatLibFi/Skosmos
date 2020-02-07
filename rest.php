@@ -21,6 +21,8 @@ try {
     }
     if ($request->getQueryParam('clang')) {
         $request->setContentLang($request->getQueryParam('clang'));
+    } elseif ($request->getQueryParam('lang')) {
+        $request->setContentLang($request->getQueryParam('lang'));
     }
 
     if (sizeof($parts) < 2 || $parts[1] == "") {

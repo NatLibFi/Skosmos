@@ -82,6 +82,15 @@ class Controller
         return $format;
     }
 
+    private function isSecure()
+    {
+        if ($protocol = filter_input(INPUT_SERVER, 'HTTP_X_FORWARDED_PROTO', FILTER_SANITIZE_STRING)) {
+            return \in_array(strtolower($protocol), ['https', 'on', 'ssl', '1'], true);
+        }
+
+        return filter_input(INPUT_SERVER, 'HTTPS', FILTER_SANITIZE_STRING) !== null;
+    }
+
     private function guessBaseHref()
     {
         $script_name = filter_input(INPUT_SERVER, 'SCRIPT_NAME', FILTER_SANITIZE_STRING);
@@ -93,7 +102,7 @@ class Controller
         $doc_root = preg_replace("!{$script_name}$!", '', $script_filename);
         $base_url = preg_replace("!^{$doc_root}!", '', $base_dir);
         $base_url = str_replace('/controller', '/', $base_url);
-        $protocol = filter_input(INPUT_SERVER, 'HTTPS', FILTER_SANITIZE_STRING) === null ? 'http' : 'https';
+        $protocol = $this->isSecure() ? 'https' : 'http';
         $port = filter_input(INPUT_SERVER, 'SERVER_PORT', FILTER_SANITIZE_STRING);
         $disp_port = ($port == 80 || $port == 443) ? '' : ":$port";
         $domain = filter_input(INPUT_SERVER, 'SERVER_NAME', FILTER_SANITIZE_STRING);
@@ -104,6 +113,56 @@ class Controller
     public function getBaseHref()
     {
         return ($this->model->getConfig()->getBaseHref() !== null) ? $this->model->getConfig()->getBaseHref() : $this->guessBaseHref();
+    }
+
+    /**
+     * Creates Skosmos links from uris.
+     * @param string $uri
+     * @param Vocabulary $vocab
+     * @param string $lang
+     * @param string $type
+     * @param string $clang content
+     * @param string $term
+     * @throws Exception if the vocabulary ID is not found in configuration
+     * @return string containing the Skosmos link
+     */
+    public function linkUrlFilter($uri, $vocab, $lang, $type = 'page', $clang = null, $term = null) {
+        // $vocab can either be null, a vocabulary id (string) or a Vocabulary object
+        if ($vocab === null) {
+            // target vocabulary is unknown, best bet is to link to the plain URI
+            return $uri;
+        } elseif (is_string($vocab)) {
+            $vocid = $vocab;
+            $vocab = $this->model->getVocabulary($vocid);
+        } else {
+            $vocid = $vocab->getId();
+        }
+
+        $params = array();
+        if (isset($clang) && $clang !== $lang) {
+            $params['clang'] = $clang;
+        }
+
+        if (isset($term)) {
+            $params['q'] = $term;
+        }
+
+        // case 1: URI within vocabulary namespace: use only local name
+        $localname = $vocab->getLocalName($uri);
+        if ($localname !== $uri && $localname === urlencode($localname)) {
+            // check that the prefix stripping worked, and there are no problematic chars in localname
+            $paramstr = count($params) > 0 ? '?' . http_build_query($params) : '';
+            if ($type && $type !== '' && $type !== 'vocab' && !($localname === '' && $type === 'page')) {
+                return "$vocid/$lang/$type/$localname" . $paramstr;
+            }
+
+            return "$vocid/$lang/$localname" . $paramstr;
+        }
+
+        // case 2: URI outside vocabulary namespace, or has problematic chars
+        // pass the full URI as parameter instead
+        $params['uri'] = $uri;
+        return "$vocid/$lang/$type/?" . http_build_query($params);
     }
 
     /**

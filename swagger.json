@@ -330,7 +330,7 @@
     },
     "/{vocid}/data": {
       "get": {
-        "summary": "RDF data of the whole vocabulary or a specific concept",
+        "summary": "RDF data of the whole vocabulary or a specific concept. If the vocabulary has support for it, MARCXML data is available for the whole vocabulary in each language.",
         "parameters": [
           {
             "name": "vocid",
@@ -352,17 +352,25 @@
             "description": "URI of the desired concept. When no uri parameter is given, the whole vocabulary is returned instead.",
             "required": false,
             "type": "string"
-          }
+          },
+	  {
+            "name": "lang",
+            "in": "query",
+            "description": "RDF language code when the requested resource for the MIME type is language specific, e.g. \"fi\" or \"en\".",
+            "required": false,
+            "type": "string"
+	  }
         ],
         "produces": [
           "application/rdf+xml",
           "text/turtle",
           "application/ld+json",
-          "application/json"
+          "application/json",
+	  "application/marcxml+xml"
         ],
         "responses": {
           "200": {
-            "description": "the RDF data of the requested vocabulary/concept"
+            "description": "the RDF data of the requested vocabulary/concept, or MARCXML if the vocabulary supports such"
           },
           "404": {
             "description": "no vocabulary/concept could be found with the requested id/uri"

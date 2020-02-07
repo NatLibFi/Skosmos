@@ -1,14 +1,11 @@
-FROM php:7.0-apache
+FROM php:7.3-apache
 
-RUN apt-get update
-
-RUN apt-get -y install locales
-RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
-RUN echo "fr_FR.UTF-8 UTF-8" >> /etc/locale.gen
-RUN echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen
-RUN echo "fi_FI.UTF-8 UTF-8" >> /etc/locale.gen
-RUN echo "sv_SE.UTF-8 UTF-8" >> /etc/locale.gen
-RUN locale-gen
+RUN apt-get update && \
+  apt-get -y install locales && \
+  for locale in en_GB en_US fi_FI fr_FR sv_SE; do \
+    echo "${locale}.UTF-8 UTF-8" >> /etc/locale.gen ; \
+  done && \
+  locale-gen
 
 RUN a2enmod rewrite
 RUN docker-php-ext-install gettext
