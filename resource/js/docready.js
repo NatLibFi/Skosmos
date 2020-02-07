@@ -435,7 +435,6 @@ $(function() { // DOCUMENT READY
         // ajaxing the sidebar content
         $.ajax({
             url : event.target.href,
-            beforeSend: delaySpinner(loading),
             success : function(data) {
               initHierarchyQtip();
               $('#hier-trigger').attr('href', event.target.href);
