@@ -225,7 +225,7 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
             $ret['to']['memberSet'][0]['notation'] = (string) $notation;
         }
 
-        $label = $this->getLabel(null, $queryExVocabs);
+        $label = $this->getLabel($lang, $queryExVocabs);
         if (isset($label)) {
             if (is_string($label)) {
                 list($labelLang, $labelValue) = ['-', $label];
