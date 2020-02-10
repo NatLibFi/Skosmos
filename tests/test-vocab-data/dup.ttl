@@ -33,8 +33,8 @@ dup:d5 a skos:Concept ;
     skos:prefLabel "Not a subproperty"@en .
 
 dup:d6 a skos:Concept ;
-    skos:prefLabel "A label"@en .
-    skos:subPrefLabel "A more accurate label"@en .
+    skos:prefLabel "A label"@en ;
+    dup:subPrefLabel "A more accurate label"@en .
 
 dup:d7 a skos:Concept ;
     dup:subPrefLabel "Identical preferred label and its subproperty"@en;
