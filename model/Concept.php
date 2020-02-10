@@ -451,9 +451,7 @@ class Concept extends VocabularyDataObject
         }
 
         // sorting the properties to a order preferred in the Skosmos concept page.
-        $ret = $this->arbitrarySort($ret);
-
-        return $ret;
+        return $this->arbitrarySort($ret);
     }
 
     /**
@@ -632,8 +630,7 @@ class Concept extends VocabularyDataObject
 
         $ret = $this->removeDuplicatePropertyValues($ret, $duplicates);
         // sorting the properties to the order preferred in the Skosmos concept page.
-        $ret = $this->arbitrarySort($ret);
-        return $ret;
+        return $this->arbitrarySort($ret);
     }
 
     /**
@@ -904,8 +901,6 @@ class Concept extends VocabularyDataObject
             }
         }
         $compactJsonLD = \ML\JsonLD\JsonLD::compact($this->graph->serialise('jsonld'), json_encode($context));
-        $results = \ML\JsonLD\JsonLD::toString($compactJsonLD);
-
-        return $results;
+        return \ML\JsonLD\JsonLD::toString($compactJsonLD);
     }
 }

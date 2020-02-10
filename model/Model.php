@@ -401,9 +401,7 @@ class Model
     public function getClassificationLabel($lang)
     {
         $cats = $this->globalConfig->getGraph()->allOfType('skos:ConceptScheme');
-        $label = $cats ? $cats[0]->label($lang) : null;
-
-        return $label;
+        return $cats ? $cats[0]->label($lang) : null;
     }
 
     /**

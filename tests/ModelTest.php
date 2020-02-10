@@ -24,7 +24,8 @@ class ModelTest extends PHPUnit\Framework\TestCase
    */
   public function testConstructorWithConfig()
   {
-    new Model(new GlobalConfig('/../tests/testconfig.ttl'));
+    $model = new Model(new GlobalConfig('/../tests/testconfig.ttl'));
+    $this->assertNotNull($model);
   }
 
   /**

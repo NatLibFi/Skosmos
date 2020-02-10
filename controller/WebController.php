@@ -373,8 +373,7 @@ class WebController extends Controller
         }
 
         $service = $this->model->getConfig()->getServiceName();
-        $headers .= "From: $fromName via $service <$sender>";
-        return $headers;
+        return $headers . "From: $fromName via $service <$sender>";
     }
 
     /**

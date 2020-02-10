@@ -20,7 +20,8 @@ class VocabularyCategoryTest extends PHPUnit\Framework\TestCase
    * @expectedExceptionMessage Invalid constructor parameter given to DataObject.
    */
   public function testConstructorWithInvalidParameters() {
-    new VocabularyCategory('invalid', 'invalid');
+    $vcat = new VocabularyCategory('invalid', 'invalid');
+    $this->assertNotNull($vcat);
   }
 
   /**

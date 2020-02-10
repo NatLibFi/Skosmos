@@ -138,7 +138,8 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
      */
     public function testInitializeConfigWithoutGraph()
     {
-        new GlobalConfig('/../tests/testconfig-nograph.ttl');
+        $conf = new GlobalConfig('/../tests/testconfig-nograph.ttl');
+        $this->assertNotNull($conf);
     }
 
     /**
@@ -146,7 +147,8 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
      */
     public function testInexistentFile()
     {
-        new GlobalConfig('/../tests/testconfig-idonotexist.ttl');
+        $conf = new GlobalConfig('/../tests/testconfig-idonotexist.ttl');
+        $this->assertNotNull($conf);
     }
 
     // --- tests for some default values

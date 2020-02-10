@@ -79,8 +79,7 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
         }
 
         // using URI as label if nothing else has been found.
-        $label = $this->resource->shorten() ? $this->resource->shorten() : $this->resource->getUri();
-        return $label;
+        return $this->resource->shorten() ? $this->resource->shorten() : $this->resource->getUri();
     }
 
     private function getResourceLabel($res, $lang = '') {
@@ -108,8 +107,7 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
 
     public function getExVocab()
     {
-        $exvocab = $this->model->guessVocabularyFromURI($this->getUri(), $this->vocab->getId());
-        return $exvocab;
+        return $this->model->guessVocabularyFromURI($this->getUri(), $this->vocab->getId());
     }
 
     public function getVocab()
