@@ -37,7 +37,7 @@ class Vocabulary extends DataObject
     /**
      * Get the SPARQL graph URI for this vocabulary
      *
-     * @return string graph URI
+     * @return string|null graph URI
      */
     public function getGraph()
     {
