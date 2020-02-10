@@ -11,6 +11,8 @@ class ResolverTest extends PHPUnit\Framework\TestCase
 
   /**
    * @covers Resolver::resolve
+   * @covers RemoteResource::__construct
+   * @covers LOCResource::resolve
    * @uses Resolver
    */
   public function testResolveLOCZeroTimeout()
@@ -22,6 +24,8 @@ class ResolverTest extends PHPUnit\Framework\TestCase
 
   /**
    * @covers Resolver::resolve
+   * @covers RemoteResource::__construct
+   * @covers WDQSResource::resolve
    * @uses Resolver
    */
   public function testResolveWDQSZeroTimeout()
@@ -33,6 +37,8 @@ class ResolverTest extends PHPUnit\Framework\TestCase
 
   /**
    * @covers Resolver::resolve
+   * @covers RemoteResource::__construct
+   * @covers LinkedDataResource::resolve
    * @uses Resolver
    */
   public function testResolveLDZeroTimeout()
