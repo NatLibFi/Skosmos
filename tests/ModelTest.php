@@ -532,8 +532,6 @@ test:ta125
 
   /**
    * @covers Model::getResourceFromUri
-   * @covers Model::getResourceLabel
-   * @covers Model::fetchResourceFromUri
    */
   public function testGetResourceFromUri() {
     $resource = $this->model->getResourceFromUri('http://www.yso.fi/onto/yso/p19378');
