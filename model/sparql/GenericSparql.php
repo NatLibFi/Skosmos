@@ -730,7 +730,9 @@ EOQ;
         foreach ($graphs as $graph) {
           $values[] = "<$graph>";
         }
-        return "FILTER (?graph IN (" . implode(',', $values) . "))";
+        if (count($values)) {
+          return "FILTER (?graph IN (" . implode(',', $values) . "))";
+        }
     }
 
     /**
