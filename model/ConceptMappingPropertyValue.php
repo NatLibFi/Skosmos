@@ -36,7 +36,7 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
     {
         $label = $this->getLabel();
         $notation = $this->getNotation();
-        return $notation . $label;
+        return ltrim($notation . ' ') . $label;
     }
 
     public function getType()

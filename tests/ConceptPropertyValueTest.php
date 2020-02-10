@@ -35,7 +35,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
   public function testGetLabel() {
     $props = $this->concept->getProperties();
     $propvals = $props['skos:narrower']->getValues();
-    $this->assertEquals('Crucian carp', $propvals['Crucian carphttp://www.skosmos.skos/test/ta121']->getLabel());
+    $this->assertEquals('Crucian carp', $propvals['Crucian carp http://www.skosmos.skos/test/ta121']->getLabel());
   }
 
   /**
@@ -65,7 +65,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
   public function testGetType() {
     $props = $this->concept->getProperties();
     $propvals = $props['skos:narrower']->getValues();
-    $this->assertEquals('skos:narrower', $propvals['Crucian carphttp://www.skosmos.skos/test/ta121']->getType());
+    $this->assertEquals('skos:narrower', $propvals['Crucian carp http://www.skosmos.skos/test/ta121']->getType());
   }
 
   /**
@@ -74,7 +74,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
   public function testGetUri() {
     $props = $this->concept->getProperties();
     $propvals = $props['skos:narrower']->getValues();
-    $this->assertEquals('http://www.skosmos.skos/test/ta121', $propvals['Crucian carphttp://www.skosmos.skos/test/ta121']->getUri());
+    $this->assertEquals('http://www.skosmos.skos/test/ta121', $propvals['Crucian carp http://www.skosmos.skos/test/ta121']->getUri());
   }
 
   /**
@@ -84,7 +84,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
     $props = $this->concept->getProperties();
     $vocab = $this->model->getVocabulary('test');
     $propvals = $props['skos:narrower']->getValues();
-    $this->assertEquals($vocab, $propvals['Crucian carphttp://www.skosmos.skos/test/ta121']->getVocab());
+    $this->assertEquals($vocab, $propvals['Crucian carp http://www.skosmos.skos/test/ta121']->getVocab());
   }
 
   /**
@@ -93,7 +93,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
   public function testGetVocabName() {
     $props = $this->concept->getProperties();
     $propvals = $props['skos:narrower']->getValues();
-    $this->assertEquals('Test ontology', $propvals['Crucian carphttp://www.skosmos.skos/test/ta121']->getVocabName());
+    $this->assertEquals('Test ontology', $propvals['Crucian carp http://www.skosmos.skos/test/ta121']->getVocabName());
   }
 
   /**
@@ -104,7 +104,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
     $concept = reset($results);
     $props = $concept->getProperties();
     $propvals = $props['skos:broader']->getValues();
-    $this->assertEquals(665, $propvals['665Carphttp://www.skosmos.skos/test/ta112']->getNotation());
+    $this->assertEquals(665, $propvals['665 Carp http://www.skosmos.skos/test/ta112']->getNotation());
   }
 
   /**
@@ -124,7 +124,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
     $concept = reset($results);
     $props = $concept->getProperties();
     $propvals = $props['skos:broader']->getValues();
-    $this->assertEquals('Carp', (string)$propvals['665Carphttp://www.skosmos.skos/test/ta112']);
+    $this->assertEquals('Carp', (string)$propvals['665 Carp http://www.skosmos.skos/test/ta112']);
   }
 
   /**
@@ -143,7 +143,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
     $mockres->method('get')->will($this->returnValue($mocklit));
     $mockres->method('getUri')->will($this->returnValue('http://thisdoesntexistatalland.sefsf/2j2h4/'));
     $propval = new ConceptPropertyValue($this->model, $mockvoc, $mockres, null);
-    $this->assertEquals('T3STTerm label', (string)$propval);
+    $this->assertEquals('T3ST Term label', (string)$propval);
   }
 
   /**
