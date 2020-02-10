@@ -6,7 +6,7 @@
 class VocabularyConfig extends BaseConfig
 {
     private $plugins;
-    private $pluginMessages;
+    private $pluginParameters;
     private $languageOrderCache = array();
 
     public function __construct($resource, $globalPlugins=array())
@@ -14,23 +14,47 @@ class VocabularyConfig extends BaseConfig
         $this->resource = $resource;
         $plugins = $this->resource->allLiterals('skosmos:usePlugin');
         $pluginArray = array();
-        $this->pluginMessages = array();
+
         if ($plugins) {
             foreach ($plugins as $pluginlit) {
                 $pluginArray[] = $pluginlit->getValue();
             }
         }
-        //Get message plugins defined as resources and their respective message literals
-        $pluginResources = $this->resource->allResources('skosmos:useMessagePlugin');
-        if ($pluginResources) {
-            foreach($pluginResources as $pluginResource) {
+        // Get parameterized plugins defined as resources and their respective parameters
+        $pluginResource = $this->resource->getResource('skosmos:useParameterPlugin');
+        if ($pluginResource) {
+
                 $pluginName = $pluginResource->getLiteral('skosmos:usePlugin')->getValue();
-                $pluginMessageLiterals = $pluginResource->allLiterals('skosmos:pluginMessage');
-                foreach ($pluginMessageLiterals as $message) {
-                    $this->pluginMessages[$message->getLang()] = $message->getValue();
+                $pluginParameters = $pluginResource->allResources('skosmos:parameters');
+                $jsonData = array(
+                    '@context' => array(
+                        'rdfs' => 'http://www.w3.org/2000/01/rdf-schema#',
+                        'schema' => 'http://schema.org/',
+                        'skosmos' => 'http://purl.org/net/skosmos#'
+                    ),
+                    'parameters' => array()
+                );
+                foreach ($pluginParameters as $parameter) {
+                    $propertyId = $parameter->getLiteral('schema:propertyId')->getValue();
+                    $pluginValues = $parameter->allLiterals('schema:value');
+
+                    if ($propertyId == "message") {
+                        // message literals with language codes
+
+                        foreach ($pluginValues as $value) {
+                            $jsonData['parameters'][$propertyId][$value->getLang()] = $value->getValue();
+                        }
+                    } else {
+                        // generic parameters
+
+                        foreach ($pluginValues as $value) {
+                            $jsonData['parameters'][$propertyId][] = $value;
+                        }
+                    }
                 }
                 $pluginArray[] = $pluginName;
-            }
+                $this->pluginParameters = json_encode($jsonData);
+
         }
         $this->plugins = new PluginRegister(array_merge($globalPlugins, $pluginArray));
     }
@@ -374,8 +398,12 @@ class VocabularyConfig extends BaseConfig
         return $this->plugins;
     }
 
-    public function getPluginMessages() {
-        return $this->pluginMessages;
+    /**
+     * Returns the plugin parameters in Json-LD format
+     * @return string plugin parameters or null
+     */
+    public function getPluginParameters() {
+        return $this->pluginParameters;
     }
     /**
      * Returns the property/properties used for visualizing concept hierarchies.

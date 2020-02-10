@@ -236,7 +236,7 @@ class WebController extends Controller
                 return;
             }
         }
-        $pluginMessages = $vocab->getConfig()->getPluginMessages();
+        $pluginParameters = $vocab->getConfig()->getPluginParameters();
         /** @var \Twig\Template $template */
         $template = (in_array('skos:Concept', $results[0]->getType()) || in_array('skos:ConceptScheme', $results[0]->getType())) ? $this->twig->loadTemplate('concept-info.twig') : $this->twig->loadTemplate('group-contents.twig');
 
@@ -244,7 +244,7 @@ class WebController extends Controller
         echo $template->render(array(
             'search_results' => $results,
             'vocab' => $vocab,
-            'plugin_messages' => $pluginMessages,
+            'plugin_params' => $pluginParameters,
             'languages' => $this->languages,
             'explicit_langcodes' => $langcodes,
             'bread_crumbs' => $crumbs['breadcrumbs'],
@@ -693,7 +693,7 @@ class WebController extends Controller
         $vocab = $request->getVocab();
 
         $defaultView = $vocab->getConfig()->getDefaultSidebarView();
-        $pluginMessages = $vocab->getConfig()->getPluginMessages();
+        $pluginParameters = $vocab->getConfig()->getPluginParameters();
         // load template
         if ($defaultView === 'groups') {
             $this->invokeGroupIndex($request, true);
@@ -708,7 +708,7 @@ class WebController extends Controller
                 'vocab' => $vocab,
                 'search_letter' => 'A',
                 'active_tab' => $defaultView,
-                'plugin_messages' => $pluginMessages,
+                'plugin_params' => $pluginParameters,
                 'request' => $request,
             ));
     }

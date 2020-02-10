@@ -11,9 +11,6 @@ var expand = "{% trans %}Show all breadcrumb paths{% endtrans %}";
 var hiertrans = "{% trans "Hier-nav" %}";
 
 <!-- variables passed through to javascript -->
-{% if plugin_messages%}
-var pluginMessages = { {% for lang,message in plugin_messages %} "{{lang}}" : "{{message}}" {% if not loop.last %}, {% endif %}{% endfor %} };
-{% endif %}
 var lang = "{{ request.lang }}";
 var content_lang = "{{ request.contentLang }}";
 var vocab = "{{ request.vocabid }}";
@@ -32,6 +29,12 @@ var showNotation = {% if request.vocab and request.vocab.config.showNotation == 
 var languageOrder = [{% for lang in request.vocab.config.languageOrder(request.contentLang) %}"{{ lang }}"{% if not loop.last %},{% endif %}{% endfor %}];
 {% endif %}
 </script>
+
+{% if plugin_params%}
+<script type="application/ld+json">
+{{ plugin_params|raw }}
+</script>
+{% endif %}
 
 {% if request.page == 'page' and search_results and search_results|length == 1 %}
 <script type="application/ld+json">
