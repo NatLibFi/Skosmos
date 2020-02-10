@@ -24,13 +24,21 @@ PREFIX schema: <http://schema.org/>
 
 CONSTRUCT {
   <$uri> rdfs:label ?label .
-  ?link schema:about <$uri> .
+  ?link schema:about <$uri> ;
+    a ?linktype ;
+    schema:isPartOf ?whole ;
+    schema:inLanguage ?lang .
 }
 WHERE
 {
   { <$uri> rdfs:label ?label }
   UNION
-  { ?link schema:about <$uri> }
+  {
+    ?link schema:about <$uri> ;
+      a ?linktype ;
+      schema:isPartOf ?whole ;
+      schema:inLanguage ?lang .
+  }
 }
 EOQ;
 
