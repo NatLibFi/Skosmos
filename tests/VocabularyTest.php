@@ -38,7 +38,7 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
   public function testGetEndpoint() {
     $vocab = $this->model->getVocabulary('testdiff');
     $endpoint = $vocab->getEndpoint();
-    $this->assertEquals('http://localhost:13030/ds/sparql', $endpoint);
+    $this->assertEquals('http://localhost:13030/skosmos-test/sparql', $endpoint);
   }
 
   /**

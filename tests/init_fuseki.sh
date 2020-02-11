@@ -29,7 +29,7 @@ done
 
 for fn in ../test-vocab-data/*.ttl; do
     name=$(basename "${fn}" .ttl)
-    $(./bin/s-put http://localhost:13030/ds/data "http://www.skosmos.skos/$name/" "$fn")
+    $(./bin/s-put http://localhost:13030/skosmos-test/data "http://www.skosmos.skos/$name/" "$fn")
 done
 
 cd ..
