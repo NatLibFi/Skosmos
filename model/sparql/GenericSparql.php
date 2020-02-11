@@ -109,7 +109,6 @@ class GenericSparql {
      * @return string
      */
     protected function generateFromClause($vocabs=null) {
-        $graphs = array();
         $clause = '';
         if (!$vocabs) {
             return $this->graph !== '?graph' && $this->graph !== NULL ? "FROM <$this->graph>" : '';
