@@ -50,7 +50,7 @@ class GenericSparql {
         if ($this->isDefaultEndpoint()) // default endpoint; query any graph (and catch it in a variable)
         {
             $this->graphClause = "GRAPH $graph";
-        } elseif ($graph) // query a specific graph
+        } elseif ($graph !== null) // query a specific graph
         {
             $this->graphClause = "GRAPH <$graph>";
         } else // query the default graph
