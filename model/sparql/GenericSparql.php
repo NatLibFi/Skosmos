@@ -34,7 +34,8 @@ class GenericSparql {
     /**
      * Requires the following three parameters.
      * @param string $endpoint SPARQL endpoint address.
-     * @param object $graph an EasyRDF SPARQL graph instance.
+     * @param string|null $graph Which graph to query: Either an URI, the special value "?graph"
+     *                           to use the default graph, or NULL to not use a GRAPH clause.
      * @param object $model a Model instance.
      */
     public function __construct($endpoint, $graph, $model) {
@@ -113,15 +114,9 @@ class GenericSparql {
         if (!$vocabs) {
             return $this->graph !== '?graph' && $this->graph !== NULL ? "FROM <$this->graph>" : '';
         }
-        foreach($vocabs as $vocab) {
-            $graph = $vocab->getGraph();
-            if (!in_array($graph, $graphs)) {
-                array_push($graphs, $graph);
-            }
-        }
+        $graphs = $this->getVocabGraphs($vocabs);
         foreach ($graphs as $graph) {
-            if($graph !== NULL)
-                $clause .= "FROM NAMED <$graph> "; 
+            $clause .= "FROM NAMED <$graph> ";
         }
         return $clause;
     }
@@ -152,7 +147,7 @@ class GenericSparql {
      */
 
     protected function isDefaultEndpoint() {
-        return $this->graph[0] == '?';
+        return !is_null($this->graph) && $this->graph[0] == '?';
     }
 
     /**
@@ -700,7 +695,10 @@ EOQ;
         }
         $graphs = array();
         foreach ($vocabs as $voc) {
-            $graphs[] = $voc->getGraph();
+            $graph = $voc->getGraph();
+            if (!is_null($graph) && !in_array($graph, $graphs)) {
+                $graphs[] = $graph;
+            }
         }
         return $graphs;
     }
@@ -732,7 +730,9 @@ EOQ;
         foreach ($graphs as $graph) {
           $values[] = "<$graph>";
         }
-        return "FILTER (?graph IN (" . implode(',', $values) . "))";
+        if (count($values)) {
+          return "FILTER (?graph IN (" . implode(',', $values) . "))";
+        }
     }
 
     /**

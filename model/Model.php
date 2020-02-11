@@ -568,7 +568,7 @@ class Model
      * Returns a SPARQL endpoint object.
      * @param string $dialect eg. 'JenaText'.
      * @param string $endpoint url address of endpoint
-     * @param string $graph uri for the target graph.
+     * @param string|null $graph uri for the target graph.
      */
     public function getSparqlImplementation($dialect, $endpoint, $graph)
     {
