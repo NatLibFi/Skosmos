@@ -23,7 +23,7 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
 
     public function testGetDefaultEndpoint()
     {
-        $this->assertEquals("http://localhost:13030/ds/sparql", $this->config->getDefaultEndpoint());
+        $this->assertEquals("http://localhost:13030/skosmos-test/sparql", $this->config->getDefaultEndpoint());
     }
 
     public function testGetDefaultSparqlDialect()

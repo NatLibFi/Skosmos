@@ -16,14 +16,14 @@ class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
     $this->vocab = $this->model->getVocabulary('test');
     $this->graph = $this->vocab->getGraph();
     $this->params = $this->getMockBuilder('ConceptSearchParameters')->disableOriginalConstructor()->getMock();
-    $this->sparql = new JenaTextSparql('http://localhost:13030/ds/sparql', $this->graph, $this->model);
+    $this->sparql = new JenaTextSparql('http://localhost:13030/skosmos-test/sparql', $this->graph, $this->model);
   }
 
   /**
    * @covers JenaTextSparql::__construct
    */
   public function testConstructor() {
-    $gs = new JenaTextSparql('http://localhost:13030/ds/sparql', $this->graph, $this->model);
+    $gs = new JenaTextSparql('http://localhost:13030/skosmos-test/sparql', $this->graph, $this->model);
     $this->assertInstanceOf('JenaTextSparql', $gs);
   }
 
@@ -181,7 +181,7 @@ class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
   public function testQueryConceptsAlphabeticalOrderBy() {
     $vocab = $this->model->getVocabulary('collation');
     $graph = $vocab->getGraph();
-    $sparql = new JenaTextSparql('http://localhost:13030/ds/sparql', $graph, $this->model);
+    $sparql = new JenaTextSparql('http://localhost:13030/skosmos-test/sparql', $graph, $this->model);
     $actual = $sparql->queryConceptsAlphabetical('t', 'fi');
     $expected = array (
       0 => array (
