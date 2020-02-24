@@ -363,7 +363,7 @@ class WebController extends Controller
 
     private function createFeedbackHeaders($fromName, $fromEmail, $toMail, $sender)
     {
-        $headers = "MIME-Version: 1.0″ . '\r\n";
+        $headers = "MIME-Version: 1.0" . "\r\n";
         $headers .= "Content-type: text/html; charset=UTF-8" . "\r\n";
         if (!empty($toMail)) {
             $headers .= "Cc: " . $this->model->getConfig()->getFeedbackAddress() . "\r\n";
