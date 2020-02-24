@@ -181,10 +181,10 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     $concept = reset($results);
     $props = $concept->getProperties();
     $prevlabel = null;
-    foreach($props['skos:narrower'] as $val) {
-      $label = is_string($val->getLabel()) ? $val->getLabel() : $val->getLabel()->getValue();
+    foreach($props['skos:narrower']->getValues() as $val) {
+      $label = $val->getLabel();
       if ($prevlabel)
-        $this->assertEquals(1, strnatcmp($prevlabel, $label));
+        $this->assertEquals(-1, strnatcasecmp($prevlabel, $label));
       $prevlabel = $label;
     }
   }
@@ -212,6 +212,30 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     $concept = $concepts[0];
     $props = $concept->getProperties();
     $this->assertCount(1, $props);
+  }
+
+  /**
+   * @covers Concept::removeDuplicatePropertyValues
+   * @covers Concept::getPreferredSubpropertyLabelTranslation
+   */
+  public function testgetPreferredSubpropertyLabelTranslation() {
+    $vocab = $this->model->getVocabulary('duplicates');
+    $concepts = $vocab->getConceptInfo("http://www.skosmos.skos/dup/d6", "en");
+    $concept = $concepts[0];
+    $this->assertEquals($concept->getPreferredSubpropertyLabelTranslation('en'), "Subproperty of skos:prefLabel");
+    $this->assertEquals($concept->getPreferredSubpropertyLabelTranslation('fi'), null);
+  }
+
+  /**
+   * @covers Concept::removeDuplicatePropertyValues
+   * @covers Concept::getProperties
+   */
+  public function testRemoveDuplicateValuesForPreflabel() {
+    $vocab = $this->model->getVocabulary('duplicates');
+    $concepts = $vocab->getConceptInfo("http://www.skosmos.skos/dup/d6", "en");
+    $concept = $concepts[0];
+    $props = $concept->getProperties();
+    $this->assertCount(0, $props);
   }
 
   /**

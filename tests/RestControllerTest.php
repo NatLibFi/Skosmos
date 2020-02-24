@@ -18,6 +18,9 @@ class RestControllerTest extends \PHPUnit\Framework\TestCase
     $this->model = new Model(new GlobalConfig('/../tests/testconfig.ttl'));
     $this->controller = new RestController($this->model);
   }
+  protected function tearDown() {
+    ob_clean();
+  }
 
   /**
    * @covers RestController::data

@@ -609,7 +609,7 @@ class Concept extends VocabularyDataObject
                                 $value = new ConceptPropertyValue($this->model, $exvoc, $val, $prop, $this->clang, true);
                             }
                         }
-                        $ret[$prop]->addValue($value, $this->clang);
+                        $ret[$prop]->addValue($value);
                     }
 
                 }
@@ -618,7 +618,7 @@ class Concept extends VocabularyDataObject
         // adding narrowers part of a collection
         foreach ($properties as $prop => $values) {
             foreach ($values as $value) {
-                $ret[$prop]->addValue($value, $this->clang);
+                $ret[$prop]->addValue($value);
             }
         }
 
@@ -662,7 +662,25 @@ class Concept extends VocabularyDataObject
 
             }
         }
+        // handled separately: remove duplicate skos:prefLabel value (#854)
+        if (isset($duplicates["skos:prefLabel"])) {
+            unset($ret[$duplicates["skos:prefLabel"]]);
+        }
         return $ret;
+    }
+
+    /**
+     * @param $lang UI language
+     * @return String|null the translated label of skos:prefLabel subproperty, or null if not available
+     */
+    public function getPreferredSubpropertyLabelTranslation($lang) {
+        $prefLabelProp = $this->graph->resource("skos:prefLabel");
+        $subPrefLabelProps = $this->graph->resourcesMatching('rdfs:subPropertyOf', $prefLabelProp);
+        foreach ($subPrefLabelProps as $subPrefLabelProp) {
+            // return the first available translation
+            if ($subPrefLabelProp->label($lang)) return $subPrefLabelProp->label($lang);
+        }
+        return null;
     }
 
     /**

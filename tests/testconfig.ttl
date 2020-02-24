@@ -15,7 +15,7 @@
 @prefix my: <http://example.com/myns#> .
 @prefix mdrtype: <http://publications.europa.eu/resource/authority/dataset-type/> .
 @prefix test: <http://www.skosmos.skos/test/> .
-@prefix : <#> .
+@prefix : <http://base/#> .
 
 # Skosmos main configuration
 
@@ -86,6 +86,19 @@
 	skosmos:shortName "Test short",
                     "Testi lyhyt"@fi;
 	skosmos:sparqlGraph <http://www.skosmos.skos/test/> .
+
+:test-notation-sort a skosmos:Vocabulary, void:Dataset ;
+	dc:title "Test notation sort ontology"@en ;
+	dc:subject :cat_science ;
+    dc:type mdrtype:ONTOLOGY ;
+	void:sparqlEndpoint <http://localhost:13030/skosmos-test/sparql> ;
+	void:uriSpace "http://www.skosmos.skos/test-notation-sort/";
+    skos:prefLabel "Test notation sort ontology"@en ;
+	skosmos:defaultLanguage "en";
+    skosmos:feedbackRecipient "developer@vocabulary.org";
+    skosmos:sortByNotation "true";
+	skosmos:language "en";
+	skosmos:sparqlGraph <http://www.skosmos.skos/test-notation-sort/> .
 
 :test-marc a skosmos:Vocabulary, void:Dataset ;
     skos:prefLabel "Test marc source"@en ;

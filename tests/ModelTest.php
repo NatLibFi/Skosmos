@@ -59,7 +59,7 @@ class ModelTest extends PHPUnit\Framework\TestCase
    * @covers Model::getVocabulariesInCategory
    */
   public function testGetVocabulariesInCategory() {
-    $category = $this->model->getVocabulariesInCategory('cat_science');
+    $category = $this->model->getVocabulariesInCategory(new EasyRdf\Resource('http://base/#cat_science'));
     foreach($category as $vocab)
       $this->assertInstanceOf('Vocabulary', $vocab);
   }
@@ -238,6 +238,12 @@ class ModelTest extends PHPUnit\Framework\TestCase
     $this->assertEquals('http://www.skosmos.skos/test/ta123', $result[0]['uri']);
     $this->assertEquals('multiple broaders', $result[0]['prefLabel']);
     $this->assertCount(2, $result[0]['skos:broader']); // two broader concepts
+
+    // sort by URI to ensure their relative order
+    usort($result[0]['skos:broader'], function($a, $b) {
+        return strnatcasecmp($a['uri'], $b['uri']);
+    });
+
     $this->assertEquals('http://www.skosmos.skos/test/ta118', $result[0]['skos:broader'][0]['uri']);
     $this->assertEquals('-"special" character \\example\\', $result[0]['skos:broader'][0]['prefLabel']);
     $this->assertEquals('http://www.skosmos.skos/test/ta119', $result[0]['skos:broader'][1]['uri']);
@@ -253,10 +259,10 @@ class ModelTest extends PHPUnit\Framework\TestCase
     $params->method('getVocabIds')->will($this->returnValue('duplicates'));
     $params->method('getVocabs')->will($this->returnValue(array($this->model->getVocabulary('duplicates'))));
     $result = $this->model->searchConcepts($params);
-    $this->assertCount(3, $result);
+    $this->assertCount(4, $result);
     $params->method('getUnique')->will($this->returnValue(true));
     $result = $this->model->searchConcepts($params);
-    $this->assertCount(2, $result);
+    $this->assertCount(3, $result);
   }
 
   /**
