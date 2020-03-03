@@ -415,6 +415,16 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
+     * Returns the alphabetical list qualifier in this vocabulary,
+     * or null if not set.
+     * @return EasyRdf\Resource|null alphabetical list qualifier resource or null
+     */
+    public function getAlphabeticalListQualifier()
+    {
+        return $this->resource->getResource('skosmos:alphabeticalListQualifier');
+    }
+
+    /**
      * Returns a boolean value set in the config.ttl config.
      * @return boolean
      */

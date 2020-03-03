@@ -97,14 +97,15 @@ class JenaTextSparql extends GenericSparql
      * @param integer $offset offsets the result set
      * @param array|null $classes
      * @param boolean $showDeprecated whether to include deprecated concepts in the result (default: false)
+     * @param \EasyRdf\Resource|null $qualifier alphabetical list qualifier resource or null (default: null)
      * @return string sparql query
      */
 
-    public function generateAlphabeticalListQuery($letter, $lang, $limit = null, $offset = null, $classes = null, $showDeprecated = false)
+    public function generateAlphabeticalListQuery($letter, $lang, $limit = null, $offset = null, $classes = null, $showDeprecated = false, $qualifier = null)
     {
         if ($letter == '*' || $letter == '0-9' || $letter == '!*') {
             // text index cannot support special character queries, use the generic implementation for these
-            return parent::generateAlphabeticalListQuery($letter, $lang, $limit, $offset, $classes);
+            return parent::generateAlphabeticalListQuery($letter, $lang, $limit, $offset, $classes, $showDeprecated, $qualifier);
         }
 
         $gc = $this->graphClause;
@@ -118,13 +119,15 @@ class JenaTextSparql extends GenericSparql
         $textcondAlt = $this->createTextQueryCondition($letter . '*', 'skos:altLabel', $lang);
         $orderbyclause = $this->formatOrderBy("LCASE(?match)", $lang);
 
+        $qualifierClause = $qualifier ? "OPTIONAL { ?s <" . $qualifier->getURI() . "> ?qualifier }" : "";
+
         $filterDeprecated="";
         if(!$showDeprecated){
             $filterDeprecated="FILTER NOT EXISTS { ?s owl:deprecated true }";
         }
         
         $query = <<<EOQ
-SELECT DISTINCT ?s ?label ?alabel
+SELECT DISTINCT ?s ?label ?alabel ?qualifier
 WHERE {
   $gc {
     {
@@ -145,6 +148,7 @@ WHERE {
       }
     }
     ?s a ?type .
+    $qualifierClause
     $filterDeprecated
   } $values
 }

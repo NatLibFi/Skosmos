@@ -504,7 +504,7 @@ class Vocabulary extends DataObject
      */
     public function searchConceptsAlphabetical($letter, $limit = null, $offset = null, $clang = null)
     {
-        return $this->getSparql()->queryConceptsAlphabetical($letter, $clang, $limit, $offset, $this->config->getIndexClasses(),$this->config->getShowDeprecated());
+        return $this->getSparql()->queryConceptsAlphabetical($letter, $clang, $limit, $offset, $this->config->getIndexClasses(), $this->config->getShowDeprecated(), $this->config->getAlphabeticalListQualifier());
     }
 
     /**
