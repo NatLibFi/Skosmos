@@ -83,6 +83,10 @@ a, a.versal, .jstree-node > .jstree-anchor {
   width: 150px;
 }
 
+.initial-color {
+  color: initial;
+}
+
 .replaced {
   font-style: italic;
 }
@@ -957,6 +961,12 @@ div.input-group > .input-group-addon {
   font-size: 14px;
   line-height: 15px;
   list-style-type: none;
+}
+
+.alphabetical-search-results li a {
+  display: inline-block;
+  text-indent: -11px;
+  margin-left: 11px;
 }
 
 #alphabetical-menu {
