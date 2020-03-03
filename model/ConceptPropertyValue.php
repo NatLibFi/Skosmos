@@ -97,11 +97,7 @@ class ConceptPropertyValue extends VocabularyDataObject
 
     public function getExVocab()
     {
-        if ($this->isExternal()) {
-            return $this->vocab;
-        } else {
-            return null;
-        }
+        return $this->model->guessVocabularyFromURI($this->getUri(), $this->vocab->getId());
     }
 
     public function getVocab()

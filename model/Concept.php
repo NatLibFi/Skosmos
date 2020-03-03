@@ -606,8 +606,11 @@ class Concept extends VocabularyDataObject
                             // checking if the property value is not in the current vocabulary
                             $exvoc = $this->model->guessVocabularyFromURI($val->getUri(), $this->vocab->getId());
                             if ($exvoc && $exvoc->getId() !== $this->vocab->getId()) {
-                                $value = new ConceptPropertyValue($this->model, $exvoc, $val, $prop, $this->clang, true);
+                                $voc = $exvoc;
+                            } else {
+                                $voc = $this->vocab;
                             }
+                            $value = new ConceptPropertyValue($this->model, $voc, $val, $prop, $this->clang, true);
                         }
                         $ret[$prop]->addValue($value, $this->clang);
                     }
