@@ -75,9 +75,9 @@
               {% endif %}
               <li>
               {% if value.altLabel %}
-              <span class="replaced">{{ value.altLabel }}</span>	&rarr; <a href="{{ value.uri | link_url(vocab,request.lang,'page',request.contentLang) }}">{{ value.prefLabel }}</a>
+              <span class="replaced">{{ value.altLabel }}</span>	&rarr; <a href="{{ value.uri | link_url(vocab,request.lang,'page',request.contentLang) }}">{{ value.prefLabel }}{% if value.qualifier %} ({{ value.qualifier }}){% endif %}</a>
               {% else %}
-              <a href="{{ value.uri | link_url(vocab,request.lang,'page',request.contentLang) }}">{{ value.prefLabel }}</a>
+              <a href="{{ value.uri | link_url(vocab,request.lang,'page',request.contentLang) }}">{{ value.prefLabel }}{% if value.qualifier %} ({{ value.qualifier }}){% endif %}</a>
               {% endif %}
              </li>
               {% endfor %}

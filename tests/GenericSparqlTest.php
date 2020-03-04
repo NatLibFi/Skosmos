@@ -181,6 +181,133 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
   /**
    * @covers GenericSparql::queryConceptsAlphabetical
    * @covers GenericSparql::generateAlphabeticalListQuery
+   * @covers GenericSparql::transformAlphabeticalListResults
+   */
+  public function testQualifiedNotationAlphabeticalList() {
+    $voc = $this->model->getVocabulary('test-qualified-notation');
+    $res = new EasyRdf\Resource("http://www.w3.org/2004/02/skos/core#notation");
+    $sparql = new GenericSparql('http://localhost:13030/skosmos-test/sparql', $voc->getGraph(), $this->model);
+
+    $actual = $sparql->queryConceptsAlphabetical("a", "en", null, null, null, false, $res);
+
+    $expected = array (
+      0 => array (
+        'uri' => 'http://www.skosmos.skos/test/qn1',
+        'localname' => 'qn1',
+        'prefLabel' => 'A',
+        'lang' => 'en',
+        'qualifier' => 'A'
+      ),
+      1 => array (
+        'uri' => 'http://www.skosmos.skos/test/qn1b',
+        'localname' => 'qn1b',
+        'prefLabel' => 'A',
+        'lang' => 'en',
+        'qualifier' => 'A'
+      ),
+      2 => array (
+        'uri' => 'http://www.skosmos.skos/test/qn1c',
+        'localname' => 'qn1c',
+        'prefLabel' => 'A',
+        'lang' => 'en',
+      ),
+    );
+    $this->assertEquals($expected, $actual);
+
+    $actual = $sparql->queryConceptsAlphabetical("b", "en", null, null, null, false, $res);
+
+    $expected = array (
+      0 => array (
+        'uri' => 'http://www.skosmos.skos/test/qn2',
+        'localname' => 'qn2',
+        'prefLabel' => 'B',
+        'lang' => 'en',
+        'qualifier' => 'B'
+      ),
+      1 => array (
+        'uri' => 'http://www.skosmos.skos/test/qn2',
+        'localname' => 'qn2',
+        'prefLabel' => 'B',
+        'lang' => 'en',
+        'qualifier' => 'C'
+      ),
+      2 => array (
+        'uri' => 'http://www.skosmos.skos/test/qn2b',
+        'localname' => 'qn2b',
+        'prefLabel' => 'B',
+        'lang' => 'en',
+        'qualifier' => 'B'
+      ),
+      3 => array (
+        'uri' => 'http://www.skosmos.skos/test/qn2b',
+        'localname' => 'qn2b',
+        'prefLabel' => 'B',
+        'lang' => 'en',
+        'qualifier' => 'C'
+      ),
+    );
+    $this->assertEquals($expected, $actual);
+  }
+
+  /**
+   * @covers GenericSparql::queryConceptsAlphabetical
+   * @covers GenericSparql::generateAlphabeticalListQuery
+   * @covers GenericSparql::transformAlphabeticalListResults
+   */
+  public function testQualifiedBroaderAlphabeticalList() {
+    $voc = $this->model->getVocabulary('test-qualified-broader');
+    $res = new EasyRdf\Resource("http://www.w3.org/2004/02/skos/core#broader");
+    $sparql = new GenericSparql('http://localhost:13030/skosmos-test/sparql', $voc->getGraph(), $this->model);
+
+    $actual = $sparql->queryConceptsAlphabetical("a", "en", null, null, null, false, $res);
+
+    $expected = array (
+      0 => array (
+        'uri' => 'http://www.skosmos.skos/test/qb1',
+        'localname' => 'qb1',
+        'prefLabel' => 'A',
+        'lang' => 'en',
+      ),
+    );
+    $this->assertEquals($expected, $actual);
+
+    $actual = $sparql->queryConceptsAlphabetical("b", "en", null, null, null, false, $res);
+
+    $expected = array (
+      0 => array (
+        'uri' => 'http://www.skosmos.skos/test/qb2',
+        'localname' => 'qb2',
+        'prefLabel' => 'B',
+        'lang' => 'en',
+        'qualifier' => 'qb1'
+      ),
+    );
+    $this->assertEquals($expected, $actual);
+
+    $actual = $sparql->queryConceptsAlphabetical("c", "en", null, null, null, false, $res);
+
+    $expected = array (
+      0 => array (
+        'uri' => 'http://www.skosmos.skos/test/qb3',
+        'localname' => 'qb3',
+        'prefLabel' => 'C',
+        'lang' => 'en',
+        'qualifier' => 'qb1'
+      ),
+      1 => array (
+        'uri' => 'http://www.skosmos.skos/test/qb3',
+        'localname' => 'qb3',
+        'prefLabel' => 'C',
+        'lang' => 'en',
+        'qualifier' => 'qb2'
+      ),
+    );
+    $this->assertEquals($expected, $actual);
+  }
+
+  /**
+   * @covers GenericSparql::queryConceptsAlphabetical
+   * @covers GenericSparql::generateAlphabeticalListQuery
    * @covers GenericSparql::formatFilterConditions
    * @covers GenericSparql::transformAlphabeticalListResults
    */

@@ -25,7 +25,7 @@
     skosmos:sparqlEndpoint <http://localhost:13030/skosmos-test/sparql> ;
     # sparql-query extension, or "Generic" for plain SPARQL 1.1
     # set to "JenaText" instead if you use Fuseki with jena-text index
-    skosmos:sparqlDialect "JenaText" ;
+    # skosmos:sparqlDialect "JenaText" ;
     # whether to enable collation in sparql queries
     skosmos:sparqlCollationEnabled true ;
     # HTTP client configuration
@@ -86,6 +86,30 @@
 	skosmos:shortName "Test short",
                     "Testi lyhyt"@fi;
 	skosmos:sparqlGraph <http://www.skosmos.skos/test/> .
+
+:test-qualified-broader a skosmos:Vocabulary, void:Dataset ;
+    dc:title "Test qualified alphabetical listing queries (skos:broader)"@en ;
+    dc:subject :cat_science ;
+    dc:type mdrtype:ONTOLOGY ;
+    void:sparqlEndpoint <http://localhost:13030/skosmos-test/sparql> ;
+    void:uriSpace "http://www.skosmos.skos/test-qualified-broader/" ;
+    skosmos:defaultLanguage "en" ;
+    skosmos:groupClass skos:Collection ;
+    skosmos:language "en" ;
+    skosmos:alphabeticalListQualifier skos:broader ;
+    skosmos:sparqlGraph <http://www.skosmos.skos/test-qualified-broader/> .
+
+:test-qualified-notation a skosmos:Vocabulary, void:Dataset ;
+    dc:title "Test qualified alphabetical listing queries (skos:notation)"@en ;
+    dc:subject :cat_science ;
+    dc:type mdrtype:ONTOLOGY ;
+    void:sparqlEndpoint <http://localhost:13030/skosmos-test/sparql> ;
+    void:uriSpace "http://www.skosmos.skos/test-qualified-notation/" ;
+    skosmos:defaultLanguage "en" ;
+    skosmos:groupClass skos:Collection ;
+    skosmos:language "en" ;
+    skosmos:alphabeticalListQualifier skos:notation ;
+    skosmos:sparqlGraph <http://www.skosmos.skos/test-qualified-notation/> .
 
 :test-marc a skosmos:Vocabulary, void:Dataset ;
     skos:prefLabel "Test marc source"@en ;
