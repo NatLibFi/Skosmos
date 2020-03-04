@@ -14,13 +14,21 @@ class ConceptPropertyValue extends VocabularyDataObject
     /** whether the property value is external w.r.t. to the subject resource */
     private $external;
 
-    public function __construct($model, $vocab, $resource, $prop, $clang = '', $external = false)
+    public function __construct($model, $vocab, $resource, $prop, $clang = '')
     {
         parent::__construct($model, $vocab, $resource);
         $this->submembers = array();
         $this->type = $prop;
         $this->clang = $clang;
-        $this->external = $external;
+        // check if the resource is external to the current vocabulary
+        $this->external = ($this->getLabel('', 'null') === null);
+        if ($this->external) {
+            // if we find the resource in another vocabulary, use it instead
+            $exvocab = $this->getExVocab();
+            if ($exvocab !== null) {
+                $this->vocab = $exvocab;
+            }
+        }
     }
 
     public function __toString()
