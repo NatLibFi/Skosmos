@@ -133,20 +133,16 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
 
     // --- tests for the exception paths
 
-    /**
-     * @expectedException
-     */
     public function testInitializeConfigWithoutGraph()
     {
+        $this->expectOutputString('Error: config.ttl must have exactly one skosmos:Configuration');
         $conf = new GlobalConfig('/../tests/testconfig-nograph.ttl');
         $this->assertNotNull($conf);
     }
 
-    /**
-     * @expectedException
-     */
     public function testInexistentFile()
     {
+        $this->expectOutputString('Error: config.ttl file is missing, please provide one.');
         $conf = new GlobalConfig('/../tests/testconfig-idonotexist.ttl');
         $this->assertNotNull($conf);
     }
