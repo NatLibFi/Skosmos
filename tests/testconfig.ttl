@@ -15,7 +15,7 @@
 @prefix my: <http://example.com/myns#> .
 @prefix mdrtype: <http://publications.europa.eu/resource/authority/dataset-type/> .
 @prefix test: <http://www.skosmos.skos/test/> .
-@prefix : <#> .
+@prefix : <http://base/#> .
 
 # Skosmos main configuration
 

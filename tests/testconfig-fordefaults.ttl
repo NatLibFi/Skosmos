@@ -11,7 +11,7 @@
 @prefix skosmos: <http://purl.org/net/skosmos#> .
 @prefix isothes: <http://purl.org/iso25964/skos-thes#> .
 @prefix mdrtype: <http://publications.europa.eu/resource/authority/dataset-type/> .
-@prefix : <#> .
+@prefix : <http://base/#> .
 
 # Skosmos main configuration
 

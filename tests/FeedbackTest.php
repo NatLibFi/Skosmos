@@ -44,6 +44,7 @@ class FeedbackTest extends PHPUnit\Framework\TestCase
    * @covers Honeypot::validateHoneytime
    */
   public function testHoneypotAndHoneypot() {
+    $this->expectNotToPerformAssertions();
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('message')
@@ -84,6 +85,7 @@ class FeedbackTest extends PHPUnit\Framework\TestCase
    * @covers Honeypot::validateHoneytime
    */
   public function testHoneypotAndHoneypotDisabled() {
+    $this->expectNotToPerformAssertions();
     $this->controller->honeypot->disable();
     $this->request
         ->shouldReceive('getQueryParamPOST')
@@ -126,6 +128,7 @@ class FeedbackTest extends PHPUnit\Framework\TestCase
    * @covers Honeypot::validateHoneytime
    */
   public function testHoneytimeTooFast() {
+    $this->expectNotToPerformAssertions();
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('message')
@@ -165,6 +168,7 @@ class FeedbackTest extends PHPUnit\Framework\TestCase
    * @covers Honeypot::validateHoneypot
    */
   public function testHoneypotNotEmpty() {
+    $this->expectNotToPerformAssertions();
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('message')

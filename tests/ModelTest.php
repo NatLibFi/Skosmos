@@ -59,7 +59,7 @@ class ModelTest extends PHPUnit\Framework\TestCase
    * @covers Model::getVocabulariesInCategory
    */
   public function testGetVocabulariesInCategory() {
-    $category = $this->model->getVocabulariesInCategory('cat_science');
+    $category = $this->model->getVocabulariesInCategory(new EasyRdf\Resource('http://base/#cat_science'));
     foreach($category as $vocab)
       $this->assertInstanceOf('Vocabulary', $vocab);
   }
@@ -237,6 +237,12 @@ class ModelTest extends PHPUnit\Framework\TestCase
     $result = $this->model->searchConcepts($this->params);
     $this->assertEquals('http://www.skosmos.skos/test/ta123', $result[0]['uri']);
     $this->assertEquals('multiple broaders', $result[0]['prefLabel']);
+
+    // sort by URI to ensure their relative order
+    usort($result[0]['skos:broader'], function($a, $b) {
+        return strnatcasecmp($a['uri'], $b['uri']);
+    });
+
     $this->assertCount(2, $result[0]['skos:broader']); // two broader concepts
     $this->assertEquals('http://www.skosmos.skos/test/ta118', $result[0]['skos:broader'][0]['uri']);
     $this->assertEquals('-"special" character \\example\\', $result[0]['skos:broader'][0]['prefLabel']);

@@ -443,7 +443,6 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
     $vocab = $this->model->getVocabulary('http304');
     $conceptSchemeUri = $vocab->getDefaultConceptScheme();
     $conceptScheme = $vocab->getConceptScheme($conceptSchemeUri);
-    print($conceptSchemeUri);
     $this->assertEquals(
       "Test Main Concept Scheme",
       $conceptScheme->getLiteral($conceptSchemeUri,"skos:prefLabel")
