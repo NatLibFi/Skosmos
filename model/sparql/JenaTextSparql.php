@@ -117,7 +117,7 @@ class JenaTextSparql extends GenericSparql
         $lcletter = mb_strtolower($letter, 'UTF-8'); // convert to lower case, UTF-8 safe
         $textcondPref = $this->createTextQueryCondition($letter . '*', 'skos:prefLabel', $lang);
         $textcondAlt = $this->createTextQueryCondition($letter . '*', 'skos:altLabel', $lang);
-        $orderbyclause = $this->formatOrderBy("LCASE(?match)", $lang);
+        $orderbyclause = $this->formatOrderBy("LCASE(?match)", $lang) . " STR(?s) LCASE(STR(?qualifier))";
 
         $qualifierClause = $qualifier ? "OPTIONAL { ?s <" . $qualifier->getURI() . "> ?qualifier }" : "";
 

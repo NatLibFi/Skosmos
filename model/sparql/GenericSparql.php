@@ -1239,7 +1239,7 @@ WHERE {
   $filterDeprecated
   $values
 }
-ORDER BY STR(LCASE(COALESCE(?alabel, ?label))) $limitandoffset
+ORDER BY LCASE(STR(COALESCE(?alabel, ?label))) STR(?s) LCASE(STR(?qualifier)) $limitandoffset
 EOQ;
         return $query;
     }
