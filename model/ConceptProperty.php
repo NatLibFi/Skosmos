@@ -86,10 +86,35 @@ class ConceptProperty
 
     private function sortValues()
     {
+        # TODO: sort by URI as last resort
+        # Note that getLabel() returns URIs in case of no label and may return a prefixed value which affects sorting
         if (!empty($this->values)) {
-            uksort($this->values, function($a, $b) {
-                return $this->sort_by_notation ? strnatcasecmp($a, $b) : strcoll(strtolower($a),strtolower($b));
-            });
+            if ($this->sort_by_notation) {
+                uasort($this->values, function($a, $b) {
+                    $anot = $a->getNotation();
+                    $bnot = $b->getNotation();
+                    if ($anot == null) {
+                        if ($bnot == null) {
+                            // assume that labels are unique
+                            return strcoll(strtolower($a->getLabel()), strtolower($b->getLabel()));
+                        }
+                        return 1;
+                    }
+                    else if ($bnot == null) {
+                        return -1;
+                    }
+                    else {
+                        // assume that notations are unique
+                        return strnatcasecmp($anot, $bnot);
+                    }
+                });
+            }
+            else {
+                uasort($this->values, function($a, $b) {
+                    // assume that labels are unique
+                    return strcoll(strtolower($a->getLabel()), strtolower($b->getLabel()));
+                });
+            }
         }
         $this->is_sorted = true;
     }
