@@ -109,7 +109,7 @@ class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
     $res = new EasyRdf\Resource("http://www.w3.org/2004/02/skos/core#notation");
     $sparql = new GenericSparql('http://localhost:13030/skosmos-test/sparql', $voc->getGraph(), $this->model);
 
-    $actual = $sparql->queryConceptsAlphabetical("a", "en", $limit = null, $offset = null, $classes=null, $showDeprecated=false, $qualifier=$res);
+    $actual = $sparql->queryConceptsAlphabetical("a", "en", null, null, null, false, $res);
 
     $expected = array (
       0 => array (
@@ -135,7 +135,7 @@ class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
     );
     $this->assertEquals($expected, $actual);
 
-    $actual = $sparql->queryConceptsAlphabetical("b", "en", $limit = null, $offset = null, $classes=null, $showDeprecated=false, $qualifier=$res);
+    $actual = $sparql->queryConceptsAlphabetical("b", "en", null, null, null, false, $res);
 
     $expected = array (
       0 => array (
@@ -180,7 +180,7 @@ class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
     $res = new EasyRdf\Resource("http://www.w3.org/2004/02/skos/core#broader");
     $sparql = new JenaTextSparql('http://localhost:13030/skosmos-test/sparql', $voc->getGraph(), $this->model);
 
-    $actual = $sparql->queryConceptsAlphabetical("a", "en", $limit = null, $offset = null, $classes=null, $showDeprecated=false, $qualifier=$res);
+    $actual = $sparql->queryConceptsAlphabetical("a", "en", null, null, null, false, $res);
 
     $expected = array (
       0 => array (
@@ -192,7 +192,7 @@ class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
     );
     $this->assertEquals($expected, $actual);
 
-    $actual = $sparql->queryConceptsAlphabetical("b", "en", $limit = null, $offset = null, $classes=null, $showDeprecated=false, $qualifier=$res);
+    $actual = $sparql->queryConceptsAlphabetical("b", "en", null, null, null, false, $res);
 
     $expected = array (
       0 => array (
@@ -205,7 +205,7 @@ class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
     );
     $this->assertEquals($expected, $actual);
 
-    $actual = $sparql->queryConceptsAlphabetical("c", "en", $limit = null, $offset = null, $classes=null, $showDeprecated=false, $qualifier=$res);
+    $actual = $sparql->queryConceptsAlphabetical("c", "en", null, null, null, false, $res);
 
     $expected = array (
       0 => array (
