@@ -25,6 +25,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
    */
   public function testConstructor() {
     $mockres = $this->getMockBuilder('EasyRdf\\Resource')->disableOriginalConstructor()->getMock();
+    $mockres->method('getUri')->willReturn('http://example.org/');
     $propval = new ConceptPropertyValue($this->model, $this->vocab, $mockres, 'skosmos:testProp', 'en');
     $this->assertInstanceOf('ConceptPropertyValue', $propval);
   }
@@ -112,6 +113,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
    */
   public function testGetNotationWhenThereIsNone() {
     $mockres = $this->getMockBuilder('EasyRdf\\Resource')->disableOriginalConstructor()->getMock();
+    $mockres->method('getUri')->willReturn('http://example.org/');
     $propval = new ConceptPropertyValue($this->model, $this->vocab, $mockres, 'en');
     $this->assertEquals(null, $propval->getNotation());
   }
@@ -199,6 +201,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
    */
   public function testGetSubMembersEmpty() {
     $mockres = $this->getMockBuilder('EasyRdf\\Resource')->disableOriginalConstructor()->getMock();
+    $mockres->method('getUri')->willReturn('http://example.org/');
     $propval = new ConceptPropertyValue($this->model, $this->vocab, $mockres, 'en');
     $this->assertEquals(null, $propval->getSubMembers());
   }
