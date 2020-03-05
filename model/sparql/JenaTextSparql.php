@@ -63,15 +63,31 @@ class JenaTextSparql extends GenericSparql
      */
     protected function generateConceptSearchQueryCondition($term, $searchLang)
     {
-        # make text query clauses
-        $textcond = $this->createTextQueryCondition($term, '?prop', $searchLang);
-        
+        if ($searchLang != null) {
+            $textcondLang = $this->createTextQueryCondition($term, '?prop', $searchLang);
+            $textcondNoLang = $this->createTextQueryCondition($term, '?prop', '');
+
+            $textcond = <<<EOW
+{
+    $textcondLang
+    FILTER (?prop != skos:notation)
+} UNION {
+    $textcondNoLang
+    FILTER (?prop = skos:notation)
+}
+EOW;
+
+        } else {
+            # make text query clauses
+            $textcond = $this->createTextQueryCondition($term, '?prop', $searchLang);
+        }
+
         if ($this->isDefaultEndpoint()) {
             # if doing a global search, we should target the union graph instead of a specific graph
             $textcond = "GRAPH <urn:x-arq:UnionGraph> { $textcond }";
         }
-        
-        return $textcond;    
+
+        return $textcond;
     }
 
     /**
@@ -122,7 +138,7 @@ class JenaTextSparql extends GenericSparql
         if(!$showDeprecated){
             $filterDeprecated="FILTER NOT EXISTS { ?s owl:deprecated true }";
         }
-        
+
         $query = <<<EOQ
 SELECT DISTINCT ?s ?label ?alabel
 WHERE {

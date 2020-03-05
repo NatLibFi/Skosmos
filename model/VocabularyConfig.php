@@ -278,7 +278,7 @@ class VocabularyConfig extends BaseConfig
     {
         return $this->getBoolean('skosmos:explicitLanguageTags');
     }
-    
+
     /**
      * Returns a boolean value set in the config.ttl config.
      * @return boolean
