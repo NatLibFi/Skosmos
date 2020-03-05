@@ -82,12 +82,30 @@ class ConceptPropertyTest extends PHPUnit\Framework\TestCase
     $concept = $concepts[0];
     $props = $concept->getProperties();
     $prevlabel = null;
-    foreach($props['skos:narrower'] as $val) {
-      $label = is_string($val->getLabel()) ? $val->getLabel() : $val->getLabel()->getValue();
+    foreach($props['skos:narrower']->getValues() as $val) {
+      $label = $val->getLabel();
       if ($prevlabel)
-        $this->assertEquals(1, strnatcmp($prevlabel, $label));
+        $this->assertEquals(-1, strnatcasecmp($prevlabel, $label));
       $prevlabel = $label;
     }
+  }
+
+  /**
+   * @covers ConceptProperty::addValue
+   * @covers ConceptProperty::sortValues
+   */
+  public function testSortNotatedValues() {
+    $vocab = $this->model->getVocabulary('test-notation-sort');
+    $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta01', 'en');
+    $concept = $concepts[0];
+    $props = $concept->getProperties();
+    $expected = array("test:ta0112", "test:ta0119", "test:ta0117", "test:ta0116", "test:ta0114","test:ta0115","test:ta0113", "test:ta0120", "test:ta0111", );
+    $ret = array();
+
+    foreach($props['skos:narrower']->getValues() as $val) {
+        $ret[] = EasyRdf\RdfNamespace::shorten($val->getUri());
+    }
+    $this->assertEquals($expected, $ret);
   }
 
   /**

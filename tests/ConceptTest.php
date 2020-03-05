@@ -181,10 +181,10 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     $concept = reset($results);
     $props = $concept->getProperties();
     $prevlabel = null;
-    foreach($props['skos:narrower'] as $val) {
-      $label = is_string($val->getLabel()) ? $val->getLabel() : $val->getLabel()->getValue();
+    foreach($props['skos:narrower']->getValues() as $val) {
+      $label = $val->getLabel();
       if ($prevlabel)
-        $this->assertEquals(1, strnatcmp($prevlabel, $label));
+        $this->assertEquals(-1, strnatcasecmp($prevlabel, $label));
       $prevlabel = $label;
     }
   }
