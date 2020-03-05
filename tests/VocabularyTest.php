@@ -12,6 +12,7 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');
     $this->model = new Model(new GlobalConfig('/../tests/testconfig.ttl'));
+    $this->jenamodel = new Model(new GlobalConfig('/../tests/jenatestconfig.ttl'));
   }
 
   /**
@@ -259,6 +260,92 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
       $concepts = $vocab->searchConceptsAlphabetical('T', null, null, 'en');
       $this->assertCount(1, $concepts);
       $this->assertEquals('Tuna', $concepts[0]['prefLabel']);
+  }
+
+  /**
+   * @covers Vocabulary::searchConceptsAlphabetical
+   * @covers GenericSparql::queryConceptsAlphabetical
+   * @covers GenericSparql::generateAlphabeticalListQuery
+   * @covers GenericSparql::transformAlphabeticalListResults
+   */
+  public function testSearchConceptsAlphabeticalQualifiedNotationGeneric() {
+    $vocab = $this->model->getVocabulary('test-qualified-notation');
+
+    $concepts = $vocab->searchConceptsAlphabetical('A', null, null, 'en');
+    $this->assertCount(3, $concepts);
+    $this->assertEquals('A', $concepts[0]['qualifier']);
+    $this->assertEquals('qn1b', $concepts[1]['localname']);
+
+    $concepts = $vocab->searchConceptsAlphabetical('B', null, null, 'en');
+    $this->assertCount(4, $concepts);
+    $this->assertEquals('C', $concepts[3]['qualifier']);
+  }
+
+  /**
+   * @covers Vocabulary::searchConceptsAlphabetical
+   * @covers JenaTextSparql::queryConceptsAlphabetical
+   * @covers JenaTextSparql::generateAlphabeticalListQuery
+   * @covers JenaTextSparql::transformAlphabeticalListResults
+   */
+  public function testSearchConceptsAlphabeticalQualifiedNotation() {
+    $vocab = $this->jenamodel->getVocabulary('test-qualified-notation');
+
+    $concepts = $vocab->searchConceptsAlphabetical('A', null, null, 'en');
+    $this->assertCount(3, $concepts);
+    $this->assertEquals('A', $concepts[0]['qualifier']);
+    $this->assertEquals('qn1b', $concepts[1]['localname']);
+
+    $concepts = $vocab->searchConceptsAlphabetical('B', null, null, 'en');
+    $this->assertCount(4, $concepts);
+    $this->assertEquals('C', $concepts[3]['qualifier']);
+  }
+
+  /**
+   * @covers Vocabulary::searchConceptsAlphabetical
+   * @covers GenericSparql::queryConceptsAlphabetical
+   * @covers GenericSparql::generateAlphabeticalListQuery
+   * @covers GenericSparql::transformAlphabeticalListResults
+   */
+  public function testSearchConceptsAlphabeticalQualifiedBroaderGeneric() {
+    $vocab = $this->model->getVocabulary('test-qualified-broader');
+
+    $concepts = $vocab->searchConceptsAlphabetical('A', null, null, 'en');
+    $this->assertCount(1, $concepts);
+    $this->assertArrayNotHasKey('qualifier', $concepts[0]);
+    $this->assertEquals('qb1', $concepts[0]['localname']);
+
+    $concepts = $vocab->searchConceptsAlphabetical('B', null, null, 'en');
+    $this->assertCount(1, $concepts);
+    $this->assertEquals('qb1', $concepts[0]['qualifier']);
+
+    $concepts = $vocab->searchConceptsAlphabetical('C', null, null, 'en');
+    $this->assertCount(2, $concepts);
+    $this->assertEquals('qb1', $concepts[0]['qualifier']);
+    $this->assertEquals('qb2', $concepts[1]['qualifier']);
+  }
+
+  /**
+   * @covers Vocabulary::searchConceptsAlphabetical
+   * @covers JenaTextSparql::queryConceptsAlphabetical
+   * @covers JenaTextSparql::generateAlphabeticalListQuery
+   * @covers JenaTextSparql::transformAlphabeticalListResults
+   */
+  public function testSearchConceptsAlphabeticalQualifiedBroader() {
+    $vocab = $this->jenamodel->getVocabulary('test-qualified-broader');
+
+    $concepts = $vocab->searchConceptsAlphabetical('A', null, null, 'en');
+    $this->assertCount(1, $concepts);
+    $this->assertArrayNotHasKey('qualifier', $concepts[0]);
+    $this->assertEquals('qb1', $concepts[0]['localname']);
+
+    $concepts = $vocab->searchConceptsAlphabetical('B', null, null, 'en');
+    $this->assertCount(1, $concepts);
+    $this->assertEquals('qb1', $concepts[0]['qualifier']);
+
+    $concepts = $vocab->searchConceptsAlphabetical('C', null, null, 'en');
+    $this->assertCount(2, $concepts);
+    $this->assertEquals('qb1', $concepts[0]['qualifier']);
+    $this->assertEquals('qb2', $concepts[1]['qualifier']);
   }
 
   /**

@@ -28,7 +28,7 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
 
     public function testGetDefaultSparqlDialect()
     {
-        $this->assertEquals("JenaText", $this->config->getDefaultSparqlDialect());
+        $this->assertEquals("Generic", $this->config->getDefaultSparqlDialect());
     }
 
     public function testGetCollationEnabled()

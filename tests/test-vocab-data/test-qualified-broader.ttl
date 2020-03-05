@@ -1,0 +1,24 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dc11: <http://purl.org/dc/elements/1.1/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix test: <http://www.skosmos.skos/test/> .
+@prefix meta: <http://www.skosmos.skos/test-meta/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix skosmos: <http://www.skosmos.skos/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix mads: <http://www.loc.gov/mads/rdf/v1#> .
+
+test:qb1 a skos:Concept, meta:TestClass ;
+    skos:prefLabel "A"@en .
+
+test:qb2 a skos:Concept, meta:TestClass ;
+    skos:broader test:qb1 ;
+    skos:prefLabel "B"@en .
+
+test:qb3 a skos:Concept, meta:TestClass ;
+    skos:broader test:qb1, test:qb2 ;
+    skos:prefLabel "C"@en .

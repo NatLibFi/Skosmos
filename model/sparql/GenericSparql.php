@@ -1196,9 +1196,10 @@ EOQ;
      * @param integer $offset offsets the result set
      * @param array|null $classes
      * @param boolean $showDeprecated whether to include deprecated concepts in the result (default: false)
+     * @param \EasyRdf\Resource|null $qualifier alphabetical list qualifier resource or null (default: null)
      * @return string sparql query
      */
-    protected function generateAlphabeticalListQuery($letter, $lang, $limit, $offset, $classes, $showDeprecated = false) {
+    protected function generateAlphabeticalListQuery($letter, $lang, $limit, $offset, $classes, $showDeprecated = false, $qualifier = null) {
         $fcl = $this->generateFromClause();
         $classes = ($classes) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
         $values = $this->formatValues('?type', $classes, 'uri');
@@ -1206,12 +1207,13 @@ EOQ;
         $conditions = $this->formatFilterConditions($letter, $lang);
         $filtercondLabel = $conditions['filterpref'];
         $filtercondALabel = $conditions['filteralt'];
+        $qualifierClause = $qualifier ? "OPTIONAL { ?s <" . $qualifier->getURI() . "> ?qualifier }" : "";
         $filterDeprecated="";
         if(!$showDeprecated){
             $filterDeprecated="FILTER NOT EXISTS { ?s owl:deprecated true }";
         }
         $query = <<<EOQ
-SELECT DISTINCT ?s ?label ?alabel $fcl
+SELECT DISTINCT ?s ?label ?alabel ?qualifier $fcl
 WHERE {
   {
     ?s skos:prefLabel ?label .
@@ -1233,10 +1235,11 @@ WHERE {
     }
   }
   ?s a ?type .
+  $qualifierClause
   $filterDeprecated
   $values
 }
-ORDER BY STR(LCASE(COALESCE(?alabel, ?label))) $limitandoffset
+ORDER BY LCASE(STR(COALESCE(?alabel, ?label))) STR(?s) LCASE(STR(?qualifier)) $limitandoffset
 EOQ;
         return $query;
     }
@@ -1268,6 +1271,15 @@ EOQ;
                 $hit['lang'] = $row->alabel->getLang();
             }
 
+            if (isset($row->qualifier)) {
+                if ($row->qualifier instanceof EasyRdf\Literal) {
+                    $hit['qualifier'] = $row->qualifier->getValue();
+                }
+                else {
+                    $hit['qualifier'] = $row->qualifier->localName();
+                }
+            }
+
             $ret[] = $hit;
         }
 
@@ -1283,9 +1295,10 @@ EOQ;
      * @param integer $offset offsets the result set
      * @param array $classes
      * @param boolean $showDeprecated whether to include deprecated concepts in the result (default: false)
+     * @param \EasyRdf\Resource|null $qualifier alphabetical list qualifier resource or null (default: null)
      */
-    public function queryConceptsAlphabetical($letter, $lang, $limit = null, $offset = null, $classes = null,$showDeprecated = false) {
-        $query = $this->generateAlphabeticalListQuery($letter, $lang, $limit, $offset, $classes,$showDeprecated);
+    public function queryConceptsAlphabetical($letter, $lang, $limit = null, $offset = null, $classes = null, $showDeprecated = false, $qualifier = null) {
+        $query = $this->generateAlphabeticalListQuery($letter, $lang, $limit, $offset, $classes, $showDeprecated, $qualifier);
         $results = $this->query($query);
         return $this->transformAlphabeticalListResults($results);
     }
