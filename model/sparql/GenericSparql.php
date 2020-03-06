@@ -1008,7 +1008,6 @@ EOQ;
         if ($params->getHidden()) {
             $props[] = 'skos:hiddenLabel';
         }
-
         $filterGraph = empty($vocabs) ? $this->formatFilterGraph($vocabs) : '';
 
         // remove futile asterisks from the search term

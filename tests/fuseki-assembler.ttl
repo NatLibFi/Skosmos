@@ -76,4 +76,8 @@ text:TextIndexLucene  rdfs:subClassOf   text:TextIndex .
          [ text:field "hidden" ;
            text:predicate skos:hiddenLabel ;
            text:analyzer [ a text:LowerCaseKeywordAnalyzer ] ]
+           # skos:notation
+         [ text:field "notation" ;
+           text:predicate skos:notation ;
+           text:analyzer [ a text:LowerCaseKeywordAnalyzer ] ]
          ) .

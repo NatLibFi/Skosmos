@@ -122,6 +122,7 @@ test:ta125
 
 test:ta126
   a mads:Geographic, skos:Concept ;
+  skos:notation "12.34" ;
   skos:prefLabel "Europa"@nb .
 
 test:ta1 a skos:Concept, meta:TestClass ;
