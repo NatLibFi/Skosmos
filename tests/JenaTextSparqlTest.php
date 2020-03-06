@@ -151,15 +151,13 @@ class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
   /**
    * @covers JenaTextSparql::createTextQueryCondition
    * @covers JenaTextSparql::generateConceptSearchQueryCondition
+   * @covers JenaTextSparql::generateConceptSearchQueryInner
    */
   public function testQueryConceptsWitNotation()
   {
-    #$voc = $this->model->getVocabulary('test');
     $this->params->method('getSearchTerm')->will($this->returnValue('12*'));
-    $this->params->method('getVocabIds')->will($this->returnValue(array('test')));
     $this->params->method('getVocabs')->will($this->returnValue(array($this->model->getVocabulary('test'))));
     $actual = $this->sparql->queryConcepts(array($this->vocab), null, null, $this->params);
-
     $this->assertEquals(1, sizeof($actual));
     $this->assertEquals('Europa', $actual[0]['prefLabel']);
   }
