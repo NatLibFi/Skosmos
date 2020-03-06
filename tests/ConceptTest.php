@@ -216,6 +216,30 @@ class ConceptTest extends PHPUnit\Framework\TestCase
 
   /**
    * @covers Concept::removeDuplicatePropertyValues
+   * @covers Concept::getPreferredSubpropertyLabelTranslation
+   */
+  public function testgetPreferredSubpropertyLabelTranslation() {
+    $vocab = $this->model->getVocabulary('duplicates');
+    $concepts = $vocab->getConceptInfo("http://www.skosmos.skos/dup/d6", "en");
+    $concept = $concepts[0];
+    $this->assertEquals($concept->getPreferredSubpropertyLabelTranslation('en'), "Subproperty of skos:prefLabel");
+    $this->assertEquals($concept->getPreferredSubpropertyLabelTranslation('fi'), null);
+  }
+
+  /**
+   * @covers Concept::removeDuplicatePropertyValues
+   * @covers Concept::getProperties
+   */
+  public function testRemoveDuplicateValuesForPreflabel() {
+    $vocab = $this->model->getVocabulary('duplicates');
+    $concepts = $vocab->getConceptInfo("http://www.skosmos.skos/dup/d7", "en");
+    $concept = $concepts[0];
+    $props = $concept->getProperties();
+    $this->assertCount(0, $props);
+  }
+
+  /**
+   * @covers Concept::removeDuplicatePropertyValues
    * @covers Concept::getProperties
    */
   public function testRemoveDuplicatePropertyValuesOtherThanSubpropertyof() {

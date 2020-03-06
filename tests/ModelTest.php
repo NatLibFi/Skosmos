@@ -259,10 +259,10 @@ class ModelTest extends PHPUnit\Framework\TestCase
     $params->method('getVocabIds')->will($this->returnValue('duplicates'));
     $params->method('getVocabs')->will($this->returnValue(array($this->model->getVocabulary('duplicates'))));
     $result = $this->model->searchConcepts($params);
-    $this->assertCount(3, $result);
+    $this->assertCount(4, $result);
     $params->method('getUnique')->will($this->returnValue(true));
     $result = $this->model->searchConcepts($params);
-    $this->assertCount(2, $result);
+    $this->assertCount(3, $result);
   }
 
   /**
