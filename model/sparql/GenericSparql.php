@@ -874,7 +874,7 @@ EOF;
             $filtercond = "REGEX(STR(?match), '^$term$', 'i')";
         }
 
-        $labelcondMatch = ($searchLang) ? "&& (?prop = skos:notation || LANGMATCHES(lang(?match), '$searchLang'))" : "";
+        $labelcondMatch = ($searchLang) ? "&& (?prop = skos:notation || LANGMATCHES(lang(?match), ?langParam))" : "";
 
         return "?s ?prop ?match . FILTER ($filtercond $labelcondMatch)";
     }
@@ -925,13 +925,15 @@ EOF;
         $hitvar = $unique ? '(MIN(?matchstr) AS ?hit)' : '(?matchstr AS ?hit)';
         $hitgroup = $unique ? 'GROUP BY ?s ?label ?notation' : '';
 
+        $langClause = $this->generateLangClause($lang);
+
         $query = <<<EOQ
    SELECT DISTINCT ?s ?label ?notation $hitvar
    WHERE {
     $graphClause {
      { 
      $valuesProp
-     VALUES (?prop ?pri) { (skos:prefLabel 1) (skos:altLabel 3) (skos:notation 5) (skos:hiddenLabel 7)}
+     VALUES (?prop ?pri ?langParam) { (skos:prefLabel 1 $langClause) (skos:altLabel 3 $langClause) (skos:notation 5 '') (skos:hiddenLabel 7 $langClause)}
      $textcond
      ?s ?prop ?match }
      OPTIONAL {
@@ -948,6 +950,14 @@ EOF;
 EOQ;
 
         return $query;
+    }
+    /**
+    *  This function can be overwritten in other SPARQL dialects for the possibility of handling the differenc language clauses
+     * @param string $lang
+     * @return string formatted language clause
+     */
+    protected function generateLangClause($lang) {
+        return "'$lang'";
     }
 
     /**

@@ -30,10 +30,11 @@ class JenaTextSparql extends GenericSparql
      *
      * @param string $term search term
      * @param string $property property to search (e.g. 'skos:prefLabel'), or '' for default
+     * @param string @$searchLang for language code
      * @return string SPARQL text search clause
      */
 
-    private function createTextQueryCondition($term, $property = '', $lang = '')
+    private function createTextQueryCondition($term, $property = '', $searchLang = '')
     {
         // construct the lucene search term for jena-text
 
@@ -48,9 +49,12 @@ class JenaTextSparql extends GenericSparql
         $term = str_replace('\\', '\\\\', $term); // escape backslashes
         $term = str_replace("'", "\\'", $term); // escape single quotes
 
-        $langClause = empty($lang) ? '' : "'lang:$lang*'";
-
         $maxResults = self::MAX_N;
+
+        $langClause = '';
+        if ($searchLang) {
+            $langClause = "?langparam";
+        }
 
         return "(?s ?score ?match) text:query ($property '$term' $maxResults $langClause) .";
     }
@@ -58,29 +62,13 @@ class JenaTextSparql extends GenericSparql
     /**
      * Generate jena-text search condition for matching labels in SPARQL
      * @param string $term search term
-     * @param string $searchLang language code used for matching labels (null means any language)
+     * @param string $langClause language clause used for matching labels (null means any language)
      * @return string sparql query snippet
      */
-    protected function generateConceptSearchQueryCondition($term, $searchLang)
+    protected function generateConceptSearchQueryCondition($term, $langClause)
     {
-        if ($searchLang != null) {
-            $textcondLang = $this->createTextQueryCondition($term, '?prop', $searchLang);
-            $textcondNoLang = $this->createTextQueryCondition($term, '?prop', '');
-
-            $textcond = <<<EOW
-{
-    $textcondLang
-    FILTER (?prop != skos:notation)
-} UNION {
-    $textcondNoLang
-    FILTER (?prop = skos:notation)
-}
-EOW;
-
-        } else {
-            # make text query clauses
-            $textcond = $this->createTextQueryCondition($term, '?prop', $searchLang);
-        }
+        # make text query clauses
+        $textcond = $this->createTextQueryCondition($term, '?prop', $langClause);
 
         if ($this->isDefaultEndpoint()) {
             # if doing a global search, we should target the union graph instead of a specific graph
@@ -89,6 +77,16 @@ EOW;
 
         return $textcond;
     }
+
+    /**
+     *  This function generates jenatext language clauses from the search language tag
+     * @param string $lang
+     * @return string formatted language clause
+     */
+    protected function generateLangClause($lang) {
+        return "'lang:$lang*'";
+    }
+
 
     /**
      * Generates sparql query clauses used for ordering by an expression. Uses a special collation function
