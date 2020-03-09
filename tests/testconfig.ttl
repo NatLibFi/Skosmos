@@ -356,6 +356,19 @@
     skosmos:sparqlGraph <http://www.skosmos.skos/http304/>;
     skosmos:mainConceptScheme test:http304mainconceptscheme .
 
+:testNotation a skosmos:Vocabulary, void:Dataset ;
+    dc11:title "A vocabulary for testing vocabularies with notation features"@en ;
+    dc:subject :cat_general ;
+    void:uriSpace "http://www.skosmos.skos/notationFeatures/";
+    void:sparqlEndpoint <http://localhost:13030/ds/sparql> ;
+    skosmos:language "fi";
+    skosmos:sortByNotation true ;
+    skosmos:searchByNotation true ;
+    skosmos:showNotation true ;
+    skosmos:useModifiedDate "true";
+    skosmos:sparqlGraph <http://www.skosmos.skos/notationFeatures/>;
+    skosmos:mainConceptScheme test:notationMainConceptScheme .
+
 <http://skosmos.skos/dump/test/groups> dc:format "application/rdf+xml" .
 
 :cat_science a skos:Concept ;

@@ -78,6 +78,7 @@
     skosmos:feedbackRecipient "developer@vocabulary.org";
 	skosmos:groupClass skos:Collection;
 	skosmos:language "en";
+	skosmos:searchByNotation "true";
 	skosmos:showTopConcepts "true";
 	skosmos:shortName "Test short",
                     "Testi lyhyt"@fi;
@@ -282,7 +283,6 @@
     void:sparqlEndpoint <http://localhost:13030/skosmos-test/sparql> ;
     skosmos:language "en";
     skosmos:sparqlGraph <http://www.skosmos.skos/xl/> .
-
 
 <http://skosmos.skos/dump/test/groups> dc:format "application/rdf+xml" .
 

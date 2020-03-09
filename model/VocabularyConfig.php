@@ -280,6 +280,15 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
+     * Returns a boolean value set in the config.ttl config.
+     * @return boolean
+     */
+    public function searchByNotation()
+    {
+        return $this->getBoolean('skosmos:searchByNotation');
+    }
+
+    /**
      * Returns skosmos:marcSourcecode value set in config.ttl.
      * @return string marcsource name
      */

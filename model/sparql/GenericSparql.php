@@ -59,7 +59,7 @@ class GenericSparql {
         }
 
     }
-    
+
     /**
      * Returns prefix-definitions for a query
      *
@@ -101,10 +101,10 @@ class GenericSparql {
         }
         return $result;
     }
-    
-    
+
+
     /**
-     * Generates FROM clauses for the queries 
+     * Generates FROM clauses for the queries
      * @param Vocabulary[]|null $vocabs
      * @return string
      */
@@ -156,7 +156,7 @@ class GenericSparql {
     public function getGraph() {
         return $this->graph;
     }
-    
+
     /**
      * Shorten a URI
      * @param string $uri URI to shorten
@@ -257,7 +257,7 @@ GROUP BY ?lang ?prop ?type
 EOQ;
         return $query;
     }
-	
+
     /**
      * Transforms the CountLangConcepts results into an array of label counts.
      * @param EasyRdf\Sparql\Result $result query results to be transformed
@@ -274,7 +274,7 @@ EOQ;
         }
         foreach ($result as $row) {
             if (isset($row->lang) && isset($row->prop) && isset($row->count)) {
-                $ret[$row->lang->getValue()][$row->prop->shorten()] += 
+                $ret[$row->lang->getValue()][$row->prop->shorten()] +=
                 $row->count->getValue();
             }
 
@@ -684,7 +684,7 @@ EOQ;
 
     /**
      * Generate a VALUES clause for limiting the targeted graphs.
-     * @param Vocabulary[]|null $vocabs the vocabularies to target 
+     * @param Vocabulary[]|null $vocabs the vocabularies to target
      * @return string[] array of graph URIs
      */
     protected function getVocabGraphs($vocabs) {
@@ -789,7 +789,7 @@ EOQ;
 EOV;
         return $clause;
     }
-    
+
     /**
      * @return string sparql query clause
      */
@@ -814,7 +814,7 @@ EOV;
         $ret = array('extravars' => '', 'extrafields' => '');
 
         if ($fields === null) {
-            return $ret; 
+            return $ret;
         }
 
         if (in_array('prefLabel', $fields)) {
@@ -873,8 +873,8 @@ EOF;
             $filtercond = "REGEX(STR(?match), '^$term$', 'i')";
         }
 
-        $labelcondMatch = ($searchLang) ? "&& LANGMATCHES(lang(?match), '$searchLang')" : "";
-        
+        $labelcondMatch = ($searchLang) ? "&& (?prop = skos:notation || LANGMATCHES(lang(?match), ?langParam))" : "";
+
         return "?s ?prop ?match . FILTER ($filtercond $labelcondMatch)";
     }
 
@@ -904,7 +904,7 @@ EOF;
         $labelcondFallback = ($searchLang != $lang) ?
           "OPTIONAL { # in case previous OPTIONAL block gives no labels\n" .
           "?s skos:prefLabel ?label . FILTER (LANGMATCHES(LANG(?label), LANG(?match))) }" : "";
-          
+
         //  Including the labels if there is no query term given.
         if ($rawterm === '') {
           $labelClause = "?s skos:prefLabel ?label .";
@@ -923,18 +923,18 @@ EOF;
          */
         $hitvar = $unique ? '(MIN(?matchstr) AS ?hit)' : '(?matchstr AS ?hit)';
         $hitgroup = $unique ? 'GROUP BY ?s ?label ?notation' : '';
-         
+
+        $langClause = $this->generateLangClause($lang);
+
         $query = <<<EOQ
    SELECT DISTINCT ?s ?label ?notation $hitvar
    WHERE {
     $graphClause {
      { 
      $valuesProp
-     VALUES (?prop ?pri) { (skos:prefLabel 1) (skos:altLabel 3) (skos:hiddenLabel 5)}
+     VALUES (?prop ?pri ?langParam) { (skos:prefLabel 1 $langClause) (skos:altLabel 3 $langClause) (skos:notation 5 '') (skos:hiddenLabel 7 $langClause)}
      $textcond
      ?s ?prop ?match }
-     UNION
-     { ?s skos:notation "$rawterm" }
      OPTIONAL {
       ?s skos:prefLabel ?label .
       FILTER ($labelcondLabel)
@@ -950,13 +950,21 @@ EOQ;
 
         return $query;
     }
+    /**
+    *  This function can be overwritten in other SPARQL dialects for the possibility of handling the differenc language clauses
+     * @param string $lang
+     * @return string formatted language clause
+     */
+    protected function generateLangClause($lang) {
+        return "'$lang'";
+    }
 
     /**
      * Query for concepts using a search term.
      * @param array|null $fields extra fields to include in the result (array of strings). (default: null = none)
      * @param boolean $unique restrict results to unique concepts (default: false)
      * @param boolean $showDeprecated whether to include deprecated concepts in search results (default: false)
-     * @param ConceptSearchParameters $params 
+     * @param ConceptSearchParameters $params
      * @return string sparql query
      */
     protected function generateConceptSearchQuery($fields, $unique, $params, $showDeprecated = false) {
@@ -992,10 +1000,23 @@ EOQ;
 
         # make VALUES clauses
         $props = array('skos:prefLabel', 'skos:altLabel');
+
+        //add notation into searchable data for the vocabularies which have been configured for it
+        if ($vocabs) {
+            $searchByNotation = false;
+            foreach ($vocabs as $vocab) {
+                if ($vocab->getConfig()->searchByNotation()) {
+                    $searchByNotation = true;
+                }
+            }
+            if ($searchByNotation) {
+                $props[] = 'skos:notation';
+            }
+        }
+
         if ($params->getHidden()) {
             $props[] = 'skos:hiddenLabel';
         }
-
         $filterGraph = empty($vocabs) ? $this->formatFilterGraph($vocabs) : '';
 
         // remove futile asterisks from the search term
@@ -1010,11 +1031,11 @@ EOQ;
   BIND(IF((SUBSTR(STRBEFORE(?hit, '@'),1) != ?pri), STRLANG(STRAFTER(?hit, '@'), SUBSTR(STRBEFORE(?hit, '@'),2)), STRAFTER(?hit, '@')) AS ?match)
   BIND(IF((?pri = "1" || ?pri = "2") && ?match != ?label, ?match, ?unbound) as ?plabel)
   BIND(IF((?pri = "3" || ?pri = "4"), ?match, ?unbound) as ?alabel)
-  BIND(IF((?pri = "5" || ?pri = "6"), ?match, ?unbound) as ?hlabel)
+  BIND(IF((?pri = "7" || ?pri = "8"), ?match, ?unbound) as ?hlabel)
 EOQ;
         $innerquery = $this->generateConceptSearchQueryInner($params->getSearchTerm(), $params->getLang(), $params->getSearchLang(), $props, $unique, $filterGraph);
-        if ($params->getSearchTerm() === '*' || $params->getSearchTerm() === '') { 
-          $labelpriority = ''; 
+        if ($params->getSearchTerm() === '*' || $params->getSearchTerm() === '') {
+          $labelpriority = '';
         }
         $query = <<<EOQ
 SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph ?notation (GROUP_CONCAT(DISTINCT STR(?type);separator=' ') as ?types) $extravars 
@@ -1082,7 +1103,7 @@ EOQ;
             }
         }
 
-        
+
         if (isset($row->preflabels)) {
             foreach (explode("\n", $row->preflabels->getValue()) as $line) {
                 $pref = str_getcsv($line, ',', '"', '"');
@@ -1148,7 +1169,7 @@ EOQ;
      * @param array $fields extra fields to include in the result (array of strings). (default: null = none)
      * @param boolean $unique restrict results to unique concepts (default: false)
      * @param boolean $showDeprecated whether to include deprecated concepts in the result (default: false)
-     * @param ConceptSearchParameters $params 
+     * @param ConceptSearchParameters $params
      * @return array query result object
      */
     public function queryConcepts($vocabs, $fields = null, $unique = false, $params, $showDeprecated = false) {
@@ -1407,7 +1428,7 @@ EOQ;
             return null;
         }
     }
-    
+
     /**
      * Generates a SPARQL query to retrieve the super properties of a given property URI.
      * Note this must be executed in the graph where this information is available.
@@ -1424,7 +1445,7 @@ WHERE {
 EOQ;
         return $query;
     }
-    
+
     /**
      * Query the super properties of a provided property URI.
      * @param string $uri URI of a propertyes
@@ -1438,9 +1459,9 @@ EOQ;
             if (isset($row->superProperty)) {
                 $ret[] = $row->superProperty->getUri();
             }
-            
+
         }
-        
+
         if (sizeof($ret) > 0) {
             // return result
             return $ret;
