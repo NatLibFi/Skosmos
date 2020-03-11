@@ -924,7 +924,7 @@ EOF;
         $hitvar = $unique ? '(MIN(?matchstr) AS ?hit)' : '(?matchstr AS ?hit)';
         $hitgroup = $unique ? 'GROUP BY ?s ?label ?notation' : '';
 
-        $langClause = $this->generateLangClause($lang);
+        $langClause = $this->generateLangClause($searchLang);
 
         $query = <<<EOQ
    SELECT DISTINCT ?s ?label ?notation $hitvar
