@@ -1288,13 +1288,15 @@ tr.replaced-by > td > ul > li > a {
   padding-left: 0;
 }
 
+#counts { max-width: 300px; }
+
 #statistics { max-width: 450px; }
 
 #statistics .property-divider, #counts .property-divider {
   margin: 0;
 }
 
-#statistics td, #statistics th {
+#statistics td, #statistics th, #counts td, #counts th {
   padding: 0;
 }
 
