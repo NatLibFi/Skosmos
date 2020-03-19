@@ -1,12 +1,13 @@
 # 
 # Translators:
 # Ksenia Zaytseva <ksenia1zaytseva@gmail.com>, 2019
+# osma <osma.suominen@helsinki.fi>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-16 10:26+0200\n"
-"PO-Revision-Date: 2019-11-27 16:03+0000\n"
+"PO-Revision-Date: 2020-03-19 15:05+0000\n"
 "Last-Translator: osma <osma.suominen@helsinki.fi>\n"
 "Language-Team: Russian (http://www.transifex.com/national-library-of-finland/skosmos/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +28,7 @@ msgstr ""
 #: controller/Controller.php:38
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:21
 msgid "in_this_language"
-msgstr "на английском"
+msgstr "на русском"
 
 #: controller/RestController.php:271
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:125
