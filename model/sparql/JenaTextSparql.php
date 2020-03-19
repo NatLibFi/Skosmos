@@ -30,11 +30,11 @@ class JenaTextSparql extends GenericSparql
      *
      * @param string $term search term
      * @param string $property property to search (e.g. 'skos:prefLabel'), or '' for default
-     * @param string @$searchLang for language code
+     * @param string $langClause jena-text clause to limit search by language code
      * @return string SPARQL text search clause
      */
 
-    private function createTextQueryCondition($term, $property = '', $searchLang = '')
+    private function createTextQueryCondition($term, $property = '', $langClause = '')
     {
         // construct the lucene search term for jena-text
 
@@ -51,23 +51,19 @@ class JenaTextSparql extends GenericSparql
 
         $maxResults = self::MAX_N;
 
-        $langClause = '';
-        if ($searchLang) {
-            $langClause = "?langparam";
-        }
-
         return "(?s ?score ?match) text:query ($property '$term' $maxResults $langClause) .";
     }
 
     /**
      * Generate jena-text search condition for matching labels in SPARQL
      * @param string $term search term
-     * @param string $langClause language clause used for matching labels (null means any language)
+     * @param string $searchLang language code used for matching labels (null means any language)
      * @return string sparql query snippet
      */
-    protected function generateConceptSearchQueryCondition($term, $langClause)
+    protected function generateConceptSearchQueryCondition($term, $searchLang)
     {
         # make text query clauses
+        $langClause = $searchLang ? '?langParam' : '';
         $textcond = $this->createTextQueryCondition($term, '?prop', $langClause);
 
         if ($this->isDefaultEndpoint()) {
@@ -129,8 +125,9 @@ class JenaTextSparql extends GenericSparql
 
         # make text query clause
         $lcletter = mb_strtolower($letter, 'UTF-8'); // convert to lower case, UTF-8 safe
-        $textcondPref = $this->createTextQueryCondition($letter . '*', 'skos:prefLabel', $lang);
-        $textcondAlt = $this->createTextQueryCondition($letter . '*', 'skos:altLabel', $lang);
+        $langClause = $this->generateLangClause($lang);
+        $textcondPref = $this->createTextQueryCondition($letter . '*', 'skos:prefLabel', $langClause);
+        $textcondAlt = $this->createTextQueryCondition($letter . '*', 'skos:altLabel', $langClause);
         $orderbyclause = $this->formatOrderBy("LCASE(?match)", $lang) . " STR(?s) LCASE(STR(?qualifier))";
 
         $qualifierClause = $qualifier ? "OPTIONAL { ?s <" . $qualifier->getURI() . "> ?qualifier }" : "";
