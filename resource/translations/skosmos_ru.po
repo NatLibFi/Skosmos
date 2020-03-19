@@ -1,0 +1,766 @@
+# 
+# Translators:
+# Ksenia Zaytseva <ksenia1zaytseva@gmail.com>, 2019
+msgid ""
+msgstr ""
+"Project-Id-Version: Skosmos\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-01-16 10:26+0200\n"
+"PO-Revision-Date: 2019-11-27 16:03+0000\n"
+"Last-Translator: osma <osma.suominen@helsinki.fi>\n"
+"Language-Team: Russian (http://www.transifex.com/national-library-of-finland/skosmos/language/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-SearchPath-0: view\n"
+"X-Poedit-SearchPath-1: controller\n"
+"X-Poedit-SearchPath-2: model\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+msgid "Download this vocabulary:"
+msgstr ""
+
+#: controller/Controller.php:38
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:21
+msgid "in_this_language"
+msgstr "на английском"
+
+#: controller/RestController.php:271
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:125
+msgid "skos:Concept"
+msgstr "Концепция"
+
+#: controller/RestController.php:280
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:127
+msgid "skos:Collection"
+msgstr "Коллекция"
+
+#: model/Concept.php:455 model/Concept.php:475
+msgid "skosmos:created"
+msgstr "Создано"
+
+#: model/Concept.php:460 model/Concept.php:462 model/Concept.php:471
+msgid "skosmos:modified"
+msgstr "последнее изменение"
+
+#: model/VocabularyCategory.php:39
+msgid "Vocabularies"
+msgstr "Словари"
+
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:26
+msgid "%search_count% results for '%term%'"
+msgstr "Всего результатов для %te: %s"
+
+#: /tmp/cache/587c83c09abaa/23/23c9862892c34daf7bea11b6d50990145b73a83c0947ae60c3d729fe591a06ec.php:48
+msgid "404 Error: The page %requested_page% cannot be found."
+msgstr "Ошибка 404: Запрашиваемая страница %requested_page% не найдена"
+
+#: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:62
+#: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:75
+#: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:64
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:274
+#: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:68
+msgid "A-Z"
+msgstr "А-Я"
+
+#: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:46
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:19
+msgid "About"
+msgstr "О проекте"
+
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:35
+#, php-format
+msgid "All %d results displayed"
+msgstr "Все результаты показаны: %d"
+
+#: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:64
+#: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:77
+#: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:66
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:276
+#: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:70
+msgid "Alpha-nav"
+msgstr "По алфавиту"
+
+#: /tmp/cache/587c83c09abaa/cf/cf0b3d87d2eb48f38f5f339303d5509c7535d13d7b010ad4840ee824430f7fe6.php:34
+msgid "Alphabetical index"
+msgstr "Алфавитный индекс"
+
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:555
+msgid "By group"
+msgstr "По группе"
+
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:587
+msgid "By parent"
+msgstr "По родителю"
+
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:477
+msgid "By scheme"
+msgstr "По субсловарю"
+
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:516
+msgid "By type"
+msgstr "По типу"
+
+#: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:119
+#: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:132
+#: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:117
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:331
+#: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:125
+msgid "Changes-nav"
+msgstr "Новые"
+
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:122
+msgid "Clear limitations"
+msgstr "Очистить ограничения поиска"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:74
+msgid "Contact us!"
+msgstr "Свяжитесь с нами!"
+
+#: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:108
+msgid "Content and search language"
+msgstr "Язык контента и поиска"
+
+#: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:51
+msgid "Content language"
+msgstr "Язык контента"
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:732
+msgid "Download this concept in SKOS format:"
+msgstr "Скачать концепцию"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:144
+msgid "E-mail:"
+msgstr "E-mail:"
+
+#: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:220
+msgid "Enter search term"
+msgstr "Введите термин для поиска"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:148
+msgid "Enter your e-mail address"
+msgstr "Введите ваш e-mail"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:140
+msgid "Enter your name"
+msgstr "Введите ваше имя"
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:900
+#: /tmp/cache/587c83c13194c/5c/5c060d2297f64d66beb101ee34831f917ed8d33f97dadeca144430a1561433ec.php:69
+msgid "Error: Requested vocabulary not found!"
+msgstr "Ошибка: Запрашиваемый словарь не найден!"
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:890
+msgid "Error: Term \"%term%\" not found in vocabulary!"
+msgstr "Ошибка: Термин %teне найден в словаре!"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:34
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:54
+#: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:194
+msgid "Feedback"
+msgstr "Обратная связь"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:64
+msgid "Feedback has been sent!"
+msgstr "Ваш отзыв отправлен!"
+
+#: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:35
+msgid "Group index"
+msgstr "Групповой индекс"
+
+#: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:101
+#: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:114
+#: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:99
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:313
+#: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:107
+msgid "Group-nav"
+msgstr "Группы"
+
+#: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:85
+#: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:94
+#: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:83
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:297
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:55
+#: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:91
+msgid "Hier-nav"
+msgstr "Иерархия"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:157
+msgid "Leave this field blank"
+msgstr "Оставьте это поле пустым"
+
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:594
+msgid "Limit search"
+msgstr "Ограничить поиск"
+
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:31
+msgid "Loading"
+msgstr "Загружается"
+
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:27
+msgid "Loading more items"
+msgstr "Загружается"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:152
+msgid "Message:"
+msgstr "Сообщение:"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:136
+msgid "Name:"
+msgstr "Имя:"
+
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:23
+msgid "No results"
+msgstr "Нет результатов"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:103
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:111
+msgid "Not to a specific vocabulary"
+msgstr "Не для определенного словаря"
+
+#: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:233
+msgid "Search"
+msgstr "Поиск"
+
+#: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:59
+msgid "Search from vocabulary"
+msgstr "Поиск по словарю"
+
+#: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:210
+msgid "Search language: any"
+msgstr "Любой язык"
+
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:340
+msgid "Search options"
+msgstr "Опции поиска"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:161
+msgid "Send feedback"
+msgstr "Отправить отзыв"
+
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:51
+msgid "Show all breadcrumb paths"
+msgstr "показать все # пути"
+
+#: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:72
+msgid "Skosmos version %version%"
+msgstr "Skosmos версия %version%"
+
+#: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:229
+msgid "Submit search"
+msgstr "Найти"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:68
+msgid "Thank you for your feedback"
+msgstr "Спасибо за ваш отзыв. Мы стараемся ответить на все отзывы как можно скорее."
+
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:129
+msgid "The search provided no results."
+msgstr "Поиск не дал результатов."
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:48
+msgid "There is no term for this concept in this language"
+msgstr "На этом языке нет термина для этой концепции."
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:173
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:47
+msgid "Value is required and can not be empty"
+msgstr "Значение является обязательным и не может быть пустым"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:27
+msgid "cc:attributionName"
+msgstr "Имя аттрибута"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:29
+msgid "cc:attributionUrl"
+msgstr "URL аттрибута"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:25
+msgid "cc:license"
+msgstr "Лицензия"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:31
+msgid "cc:morePermissions"
+msgstr "Ещё о правах доступа"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:33
+msgid "cc:useGuidelines"
+msgstr "Руководство по использованию"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:35
+msgid "dc:conformsTo"
+msgstr "Соответствует"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:37
+msgid "dc:contributor"
+msgstr "Контрибьютор"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:39
+msgid "dc:coverage"
+msgstr "Покрытие"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:41
+msgid "dc:created"
+msgstr "Создано"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:43
+msgid "dc:creator"
+msgstr "Автор"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:45
+msgid "dc:date"
+msgstr "Дата"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:47
+msgid "dc:description"
+msgstr "Описание"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:49
+msgid "dc:format"
+msgstr "Формат"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:51
+msgid "dc:identifier"
+msgstr "Идентификатор"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:53
+msgid "dc:isReplacedBy"
+msgstr "Заменено"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:55
+msgid "dc:isRequiredBy"
+msgstr "Требуется"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:57
+msgid "dc:issued"
+msgstr "Дата выпуска"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:59
+msgid "dc:language"
+msgstr "Язык"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:61
+msgid "dc:license"
+msgstr "Лицензия"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:63
+msgid "dc:modified"
+msgstr "Последнее изменение"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:65
+msgid "dc:publisher"
+msgstr "Издатель"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:67
+msgid "dc:relation"
+msgstr "Отношение"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:69
+msgid "dc:replaces"
+msgstr "Заменяет"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:71
+msgid "dc:rights"
+msgstr "Права"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:73
+msgid "dc:rightsHolder"
+msgstr "Правообладатель"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:75
+msgid "dc:source"
+msgstr "Источник"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:77
+msgid "dc:source_help"
+msgstr "Источник описания концепции."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:79
+msgid "dc:spatial"
+msgstr "Пространственное покрытие"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:81
+msgid "dc:subject"
+msgstr "Тема"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:83
+msgid "dc:temporal"
+msgstr "Временное покрытие"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:85
+msgid "dc:title"
+msgstr "Название"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:87
+msgid "dc:type"
+msgstr "Тип"
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:36
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:256
+msgid "deprecated"
+msgstr "Данная концепция устарела. Не используйте эту концепцию для аннотации!"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:89
+msgid "foaf:homepage"
+msgstr "Домашняя страница"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:91
+msgid "foaf:page"
+msgstr "Страница"
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:658
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:542
+msgid "foreign prefLabel help"
+msgstr "Термины для концепции на других языках."
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:660
+msgid "foreign prefLabels"
+msgstr "На других языках"
+
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:39
+msgid "from all"
+msgstr "из всех"
+
+#: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:81
+#: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:90
+#: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:79
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:293
+#: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:87
+msgid "hierarchy-disabled-help"
+msgstr "Иерархия верхнего уровня не может быть показана в этом словаре."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:93
+msgid "isothes:ConceptGroup"
+msgstr "Группа концепций"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:97
+msgid "isothes:ThesaurusArray"
+msgstr "Массив родственных концепций"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:99
+msgid "isothes:broaderGeneric"
+msgstr "Концепции более широкого понятия"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:101
+msgid "isothes:broaderInstantial"
+msgstr "Концепция более широкого понятия (примерно)"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:103
+msgid "isothes:broaderPartitive"
+msgstr "Концепции более широкого понятия (частично)"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:105
+msgid "isothes:narrowerGeneric"
+msgstr "Концепции более узкого понятия"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:107
+msgid "isothes:narrowerInstantial"
+msgstr "Концепции более узкого понятия (примерно)"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:109
+msgid "isothes:narrowerPartitive"
+msgstr "Концепции более узкого понятия (частично)"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:95
+msgid "isothes:superGroup"
+msgstr "Супер группа"
+
+#: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:66
+msgid "layout designed by Hahmo"
+msgstr "дизайн разработан Hahmo Design"
+
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:74
+msgid "limited to group"
+msgstr "группа"
+
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:67
+msgid "limited to parent"
+msgstr "родитель"
+
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:81
+msgid "limited to scheme"
+msgstr "по схеме"
+
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:29
+msgid "limited to type"
+msgstr "тип"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:113
+msgid "owl:sameAs"
+msgstr "Эквивалентные концепции"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:111
+msgid "owl:versionInfo"
+msgstr "Версия"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:115
+msgid "rdf:type"
+msgstr "Тип"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:117
+msgid "rdf:type_help"
+msgstr "Тип объекта"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:123
+msgid "rdfs:comment"
+msgstr "Описание"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:119
+msgid "rdfs:label"
+msgstr "Термин"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:121
+msgid "rdfs:seeAlso"
+msgstr "Смотрите также"
+
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:43
+msgid "selected"
+msgstr "выбранно"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:143
+msgid "skos:altLabel"
+msgstr "Термины"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:179
+msgid "skos:altLabel_help"
+msgstr "Альтернативные термины для концепции."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:133
+msgid "skos:broadMatch"
+msgstr "Концепции соотвествия более широкого понятия"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:191
+msgid "skos:broadMatch_help"
+msgstr "Концепции соотвествия более широкого понятия в другом словаре."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:129
+msgid "skos:broader"
+msgstr "Концепция более широкого понятия"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:171
+msgid "skos:broader_help"
+msgstr "Концепция более широкого понятия"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:169
+msgid "skos:changeNote"
+msgstr "Заметка об изменениях"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:147
+msgid "skos:closeMatch"
+msgstr "Концепции близкого соответствия "
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:189
+msgid "skos:closeMatch_help"
+msgstr "Концепции близкого соответствия в другом словаре."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:161
+msgid "skos:definition"
+msgstr "Определение"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:185
+msgid "skos:definition_help"
+msgstr "Полное объяснение предполагаемого значения концепции"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:167
+msgid "skos:editorialNote"
+msgstr "Редакционная заметка"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:145
+msgid "skos:exactMatch"
+msgstr "Концепции точного соответствия"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:187
+msgid "skos:exactMatch_help"
+msgstr "Концепции точного соответствия в другом словаре."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:163
+msgid "skos:example"
+msgstr "Пример"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:155
+msgid "skos:hasTopConcept"
+msgstr "Имеет топ концепцию"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:165
+msgid "skos:historyNote"
+msgstr "Историческая справка"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:151
+msgid "skos:inScheme"
+msgstr "Концептуальная схема"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:149
+msgid "skos:member"
+msgstr "Члены группы"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:181
+msgid "skos:member_help"
+msgstr "Члены группы"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:135
+msgid "skos:narrowMatch"
+msgstr "Концепции соответствия более узкого понятия"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:193
+msgid "skos:narrowMatch_help"
+msgstr "Концепции соответствия более узкого понятия в другом словаре."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:131
+msgid "skos:narrower"
+msgstr "Концепции более узкого понятия"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:173
+msgid "skos:narrower_help"
+msgstr "Концепции более узкого понятия."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:157
+msgid "skos:note"
+msgstr "Заметка"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:175
+msgid "skos:note_help"
+msgstr "Заметки"
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:234
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:141
+msgid "skos:prefLabel"
+msgstr "Предпочитаемый термин"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:137
+msgid "skos:related"
+msgstr "Родственные концепции"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:139
+msgid "skos:relatedMatch"
+msgstr "Концепции родственного соответствия"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:183
+msgid "skos:related_help"
+msgstr "Концепции, связанные с этой концепцией."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:159
+msgid "skos:scopeNote"
+msgstr "Примечание"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:177
+msgid "skos:scopeNote_help"
+msgstr "Заметки об использовании и сфере применения концепции."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:153
+msgid "skos:topConceptOf"
+msgstr "Принадлежит словарю"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:197
+msgid "skosext:DeprecatedConcept"
+msgstr "Устаревшая концепция"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:195
+msgid "skosext:partOf"
+msgstr "Часть"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:199
+msgid "skosext:partOf_help"
+msgstr "Целое, частью которого является концепция."
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:548
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:201
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:449
+msgid "skosmos:memberOf"
+msgstr "Принадлежит к группе"
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:611
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:205
+msgid "skosmos:memberOfArray"
+msgstr "Принадлежит к массиву"
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:609
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:207
+msgid "skosmos:memberOfArray_help"
+msgstr "Массив, которому принадлежит концепция."
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:546
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:203
+msgid "skosmos:memberOf_help"
+msgstr "Группа, которой принадлежит концепция."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:23
+msgid "zxx-x-taxon"
+msgstr "Научное название"
+
+#: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:168
+msgid "About page"
+msgstr "О проекте"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:138
+msgid "Alternate terms"
+msgstr "Альтернативные термины"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:130
+msgid "Concept language"
+msgstr "Язык"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:118
+msgid "Count"
+msgstr "Всего"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:157
+msgid "Download this vocabulary as SKOS/RDF:"
+msgstr "Скачать этот словарь в SKOS/RDF:"
+
+#: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:205
+msgid "Help"
+msgstr "Помощь"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:142
+msgid "Hidden terms"
+msgstr "Скрытые термины"
+
+#: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:58
+msgid "Interface language"
+msgstr "Язык интерфейса"
+
+#: /tmp/cache/587c83c13194c/f9/f9c816822168f230ef0bfed735f5923aab99d389ce8b2c6b2f5fcd5d400bc275.php:26
+msgid "No vocabularies on the server!"
+msgstr "Нет словарей на сервере!"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:134
+msgid "Preferred terms"
+msgstr "Предпочитаемые термины"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:111
+msgid "Resource counts by type"
+msgstr "Количество ресурсов по типу"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:124
+msgid "Term counts by language"
+msgstr "Количество ресурсов по языку"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:116
+msgid "Type"
+msgstr "Тип"
+
+#: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:146
+msgid "Vocabularies-nav"
+msgstr "Словари"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:24
+msgid "Vocabulary information"
+msgstr "Информация о словаре"
+
+#: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:199
+msgid "helper_help"
+msgstr "Наведите указатель мыши на текст с пунктирным подчеркиванием, чтобы увидеть информацию о свойстве."
+
+#: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:201
+msgid "search_example_text"
+msgstr "Для сокращения поиска, пожалуйста, используйте символ * как в *животное или *патент*. В конце поисковых слов, поиск будет сокращён автоматически, даже если символ сокращения не введён вручную: таким образом, кот выдаст те же результаты, что и кот*."
+
+msgid "feedback_enter_name_email"
+msgstr "Пожалуйста, введите ваше имя и адрес электронной почты, если вы хотите получить прямой ответ. У вас также есть возможность отправить свой отзыв анонимно. NB: Отзывы о конкретном словаре направляются непосредственно его администратору."
+
+msgid "concept_types"
+msgstr "Типы концепций"
