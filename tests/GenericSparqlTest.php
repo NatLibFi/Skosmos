@@ -323,6 +323,20 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
    * @covers GenericSparql::formatFilterConditions
    * @covers GenericSparql::transformAlphabeticalListResults
    */
+  public function testQueryConceptsAlphabeticalMatchLanguage() {
+    $actual = $this->sparql->queryConceptsAlphabetical('e', 'en');
+    // there are two prefLabels starting with E, "Eel"@en and "Europa"@nb
+    // checking that only the first one is returned
+    $this->assertEquals(1, sizeof($actual));
+    $this->assertEquals('Eel', $actual[0]['prefLabel']);
+  }
+
+  /**
+   * @covers GenericSparql::queryConceptsAlphabetical
+   * @covers GenericSparql::generateAlphabeticalListQuery
+   * @covers GenericSparql::formatFilterConditions
+   * @covers GenericSparql::transformAlphabeticalListResults
+   */
   public function testQueryConceptsAlphabeticalSpecialChars() {
     $actual = $this->sparql->queryConceptsAlphabetical('!*', 'en');
     $this->assertEquals(1, sizeof($actual));
@@ -587,6 +601,27 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     $actual = $this->sparql->queryConcepts(array($voc), null, null, $this->params);
     $this->assertEquals(1, sizeof($actual));
     $this->assertEquals('Bass', $actual[0]['prefLabel']);
+  }
+
+  /**
+   * @covers GenericSparql::queryConcepts
+   * @covers GenericSparql::generateConceptSearchQueryCondition
+   * @covers GenericSparql::generateConceptSearchQueryInner
+   * @covers GenericSparql::generateConceptSearchQuery
+   * @covers GenericSparql::formatFilterGraph
+   * @covers GenericSparql::transformConceptSearchResults
+   * @covers GenericSparql::transformConceptSearchResult
+   * @covers GenericSparql::shortenUri
+   */
+  public function testQueryConceptsMatchLanguage()
+  {
+    $voc = $this->model->getVocabulary('test');
+    $this->params->method('getSearchTerm')->will($this->returnValue('e*'));
+    $this->params->method('getVocabIds')->will($this->returnValue(array('test')));
+    $this->params->method('getSearchLang')->will($this->returnValue('en'));
+    $actual = $this->sparql->queryConcepts(array($voc), null, null, $this->params);
+    $this->assertEquals(1, sizeof($actual));
+    $this->assertEquals('Eel', $actual[0]['prefLabel']);
   }
 
   /**
