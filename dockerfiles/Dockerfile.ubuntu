@@ -1,0 +1,75 @@
+FROM ubuntu:18.04
+
+ARG DEBIAN_FRONTEND=noninteractive
+ARG SKOSMOS_TARGZ_RELEASE_URL=https://github.com/NatLibFi/Skosmos/archive/v2.4.tar.gz
+
+# git is necessary for some composer packages e.g. davidstutz/bootstrap-multiselect
+RUN apt-get update && apt-get install -y \
+    apache2 \
+    curl \
+    gettext \
+    git \
+    libapache2-mod-php7.2 \
+    locales \
+    php7.2 \
+    php7.2-curl \
+    php7.2-xsl \
+    php7.2-intl \
+    php7.2-mbstring \
+    php-gettext \
+    php-zip \
+    unzip \
+ && rm -rf /var/lib/apt/lists/*
+
+# https://stackoverflow.com/a/28406007
+# fixes warnings like perl: warning: Setting locale failed.
+RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
+    locale-gen \
+        ar_AE.UTF-8 \
+        de_DE.UTF-8 \
+        en_GB.utf8 \
+        en_US.utf8 \
+        es_ES.utf8 \
+        fa_IR \
+        fi_FI.utf8 \
+        fr_FR.utf8 \
+        it_IT.utf8 \
+        nb_NO.utf8 \
+        nl_NL.utf8 \
+        nn_NO.utf8 \
+        pl_PL.utf8 \
+        ru_RU.utf8 \
+        sv_SE.utf8 \
+        zh_CN.utf8
+ENV LANGUAGE=en_US:en  
+ENV LC_ALL=en_US.UTF-8 
+ENV LANG=en_US.UTF-8  
+
+# TODO: timezone
+# RUN sed -i 's/;date.timezone =/date.timezone = "Europe/Helsinki"/g' /etc/php5/fpm/php.ini
+
+COPY config/000-default.conf /etc/apache2/sites-available/000-default.conf
+
+RUN a2enmod rewrite
+RUN a2enmod expires
+
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Install Skosmos
+RUN curl -L --output skosmos.tar.gz ${SKOSMOS_TARGZ_RELEASE_URL}
+RUN rm -rf /var/www/html/* && \
+    tar -zxvf skosmos.tar.gz -C /var/www/html/ --strip-components=1 && \
+	rm -rf /Skosmos* /skosmos.tar.gz
+
+WORKDIR /var/www/html
+
+# Install Skosmos dependencies
+RUN /usr/local/bin/composer install --no-dev --no-interaction
+
+# Configure Skosmos
+COPY config/config.ttl /var/www/html/config.ttl
+
+CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]

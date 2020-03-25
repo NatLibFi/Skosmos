@@ -1,0 +1,34 @@
+version: '3.7'
+
+services:
+  fuseki:
+    container_name: skosmos-fuseki
+    image: stain/jena-fuseki
+    environment:
+      - ADMIN_PASSWORD=admin
+      - JVM_ARGS=-Xmx2g
+    ports:
+     - 3030:3030
+  # You can uncomment the line below to have a local volume bound onto the container, or
+  # visit https://hub.docker.com/r/stain/jena-fuseki/ for other alternatives
+  # volumes:
+  #  - ${PWD}/fuseki:/fuseki
+  skosmos:
+    container_name: skosmos-web
+    build:
+      context: .
+      dockerfile: Dockerfile.ubuntu
+    ports:
+      - 9090:80
+    depends_on:
+      - fuseki
+    volumes:
+      - type: bind
+        source: ./config/config-docker-compose.ttl
+        target: /var/www/html/config.ttl
+
+# once the environment has been created:
+# 1. create dataset
+# >curl -I -u admin:admin -XPOST --data "dbName=skosmos&dbType=tdb" -G http://localhost:3030/$/datasets/
+# 2. load example vocabulary
+# >curl -I -X POST -H Content-Type:text/turtle -T yso.ttl -G http://localhost:3030/skosmos/data
