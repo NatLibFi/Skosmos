@@ -14,6 +14,7 @@
     <div class="concept-info{% if concept.deprecated %} deprecated-concept{% endif %}">
       <div class="concept-main">
       {% if bread_crumbs is defined %}
+        <div class="row">
         {% for path in bread_crumbs %}
         {% if path|length > 1 %}
           {% set crumbId = loop.index %}
@@ -35,6 +36,7 @@
             </div>
           {% endif %}
         {% endfor %}
+        </div>
       {% endif %}
       {% spaceless %}
       <div class="row{% if concept.type == 'skosext:DeprecatedConcept' %} deprecated{% endif %}">
