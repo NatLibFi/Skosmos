@@ -1,12 +1,12 @@
 /* Font definitions
  *****************************************/
 li, td > a {
-  font-family: 'Fira Sans';
+  font-family: 'Fira Sans', sans-serif;
   font-size: 14px;
 }
 
 h1, .prefLabel, .prefLabelLang, .notation {
-  font-family: 'Fira Sans';
+  font-family: 'Fira Sans', sans-serif;;
   font-size: 27px;
   font-weight: 400;
 }
@@ -25,17 +25,17 @@ h1, .prefLabel, .prefLabelLang, .notation {
 }
 
 h2 {
-  font-family: 'Fira Sans';
+  font-family: 'Fira Sans', sans-serif;
   font-size: 16px;
 }
 
 .navigation-font {
-  font-family: 'Fira Sans';
+  font-family: 'Fira Sans', sans-serif;
   font-size: 16px;
 }
 
 .multiselect span, .multiselect a, .dropdown-toggle, #search-all-button, .qtip-skosmos * {
-  font-family: 'Fira Sans';
+  font-family: 'Fira Sans', sans-serif;
 }
 
 .topbar a.navigation-font, .topbar span {
@@ -44,24 +44,24 @@ h2 {
 
 p {
   color: #474b4f;
-  font-family: 'Fira Sans';
+  font-family: 'Fira Sans', sans-serif;
   font-size: 14px;
 }
 
 .bread-crumb {
-  font-family: 'Fira Sans';
+  font-family: 'Fira Sans', sans-serif;
   font-size: 14px;
 }
 
 .versal {
   color: #474b4f;
-  font-family: 'Fira Sans';
+  font-family: 'Fira Sans', sans-serif;
   font-size: 14px;
   font-weight: 400;
 }
 
 .versal-bold {
-  font-family: 'Fira Sans';
+  font-family: 'Fira Sans', sans-serif;
   font-size: 14px;
   font-weight: bold;
 }
