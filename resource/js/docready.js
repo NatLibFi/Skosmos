@@ -131,7 +131,7 @@ $(function() { // DOCUMENT READY
   function copyToClipboard() {
     var $btn = $(this);
     var id = $btn.attr('for');
-    $elem = $(id);
+    var $elem = $(id);
     makeSelection(undefined, $elem);
     document.execCommand('copy');
   }
