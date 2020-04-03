@@ -957,7 +957,7 @@ $(function() { // DOCUMENT READY
       } else if (selectedVocabs[vocabId] !== undefined) {
         delete selectedVocabs[vocabId];
       }
-      this.vocabSelectionString = updateVocabParam();
+      updateVocabParam();
     },
     maxHeight: 300
   });
