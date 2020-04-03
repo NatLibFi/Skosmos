@@ -83,9 +83,10 @@ $.ajaxQ = (function(){
 })();
 
 function updateContent(data) {
-  $('.content').empty();
+  var $content = $('.content');
+  $content.empty();
   var response = $('.content', data).html();
-  $('.content').append(response);
+  $content.append(response);
 }
 
 function updateJsonLD(data) {
@@ -107,9 +108,10 @@ function updateJsonLD(data) {
 }
 
 function updateTopbarLang(data) {
-  $('#language').empty();
+  var $language = $('#language');
+  $language.empty();
   var langBut = $('#language', data).html();
-  $('#language').append(langBut);
+  $language.append(langBut);
 }
 
 function updateTitle(data) {
@@ -118,9 +120,10 @@ function updateTitle(data) {
 }
 
 function updateSidebar(data) {
-  $('#sidebar').empty();
+  var $sidebar = $('#sidebar');
+  $sidebar.empty();
   var response = $('#sidebar', data).html();
-  $('#sidebar').append(response);
+  $sidebar.append(response);
 }
 
 // sets the language cookie for 365 days
@@ -134,10 +137,12 @@ function clearResultsAndAddSpinner() {
 }
   
 function loadLimitations() {
+  var $typeLimit = $('#type-limit');
+  var $schemeLimit = $('#scheme-limit');
   var groupLimit = $('#group-limit').val();
   var parentLimit = $('#parent-limit').attr('data-uri');
-  var typeLimit = $('#type-limit').val() ? $('#type-limit').val().join('+') : $('#type-limit').val();
-  var schemeLimit = $('#scheme-limit').val() ? $('#scheme-limit').val().join('+') : $('#scheme-limit').val();
+  var typeLimit = $typeLimit.val() ? $typeLimit.val().join('+') : $typeLimit.val();
+  var schemeLimit = $schemeLimit.val() ? $schemeLimit.val().join('+') : $schemeLimit.val();
   if (schemeLimit && schemeLimit[0] === '+') { // filtering the empty selection out of the search string
     schemeLimit = schemeLimit.substring(1);
   }
@@ -235,12 +240,14 @@ function countAndSetOffset() {
   $('.sidebar-grey').attr('style', function() {
     var pixels = $('.nav-tabs').height() + 2; // the 2 pixels are for the borders
     if ($('#sidebar > .pagination').is(':visible')) { pixels += $('.pagination').height(); }
-    if ($('.changes-navi').is(':visible')) { pixels += $('.changes-navi').height(); }
+    var $changesNavi = $('.changes-navi');
+    if ($changesNavi.is(':visible')) { pixels += $changesNavi.height(); }
     return 'height: calc(100% - ' + pixels + 'px) !important';
   });
-  if ($('#sidebar').length && !$('#sidebar').hasClass('fixed')) {
-    var yOffset = window.innerHeight - ( $('#sidebar').offset().top - window.pageYOffset);
-    $('#sidebar').css('height', yOffset);
+  var $sidebar = $('#sidebar');
+  if ($sidebar.length && !$sidebar.hasClass('fixed')) {
+    var yOffset = window.innerHeight - ( $sidebar.offset().top - window.pageYOffset);
+    $sidebar.css('height', yOffset);
   }
 }
 
@@ -269,7 +276,8 @@ function makeCallbacks(data, pageType) {
   var variables = data ? data.substring(data.indexOf('var uri ='), data.indexOf('var uriSpace =')).split('\n') : '';
   var newUri = data ? variables[0].substring(variables[0].indexOf('"')+1, variables[0].indexOf(';')-1) : window.uri;
   var newPrefs = data ? JSON.parse(variables[1].substring(variables[1].indexOf('['), variables[1].lastIndexOf(']')+1)) : window.prefLabels;
-  var embeddedJsonLd  = $('script[type="application/ld+json"]')[0] ? JSON.parse($('script[type="application/ld+json"]')[0].innerHTML) : {};
+  var $ldJsonScript = $('script[type="application/ld+json"]');
+  var embeddedJsonLd  = $ldJsonScript[0] ? JSON.parse($ldJsonScript[0].innerHTML) : {};
 
   var params = {'uri': newUri, 'prefLabels': newPrefs, 'page': pageType, "json-ld": embeddedJsonLd};
 

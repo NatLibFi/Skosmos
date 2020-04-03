@@ -50,7 +50,7 @@ function invokeGroupTree() {
     $treeObject.jstree('open_node', node.node);
   });
 
-  $('.group-hierarchy').jstree({ 
+  $treeObject.jstree({
     'plugins' : ['sort'],
     'sort' : function (a,b) { return naturalCompare(this.get_text(a).toLowerCase(), this.get_text(b).toLowerCase()); },
     'core' : { 

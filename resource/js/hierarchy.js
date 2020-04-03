@@ -39,12 +39,14 @@ function invokeParentTree(tree) {
   });
 
   $treeObject.on('loaded.jstree', function() {
+    var $sidebarGrey = $(".sidebar-grey");
     if ($('#sidebar .mCustomScrollbar').length === 0) {
-      $(".sidebar-grey").mCustomScrollbar(hierTreeConf);
+      $sidebarGrey.mCustomScrollbar(hierTreeConf);
     }
-    if ($('.jstree-leaf-proper').length > 0) {
-      $('.sidebar-grey').jstree('select_node', $('.jstree-leaf-proper').toArray());
-      $('.sidebar-grey').mCustomScrollbar('scrollTo', getLeafOffset());
+    var $leafProper = $('.jstree-leaf-proper');
+    if ($leafProper.length > 0) {
+      $sidebarGrey.jstree('select_node', $leafProper.toArray());
+      $sidebarGrey.mCustomScrollbar('scrollTo', getLeafOffset());
     }
   });
 }
@@ -53,8 +55,9 @@ function getLeafOffset() {
   var containerHeight = $('.sidebar-grey').height();
   var conceptCount = Math.floor((containerHeight * 0.66) / 18);
   var scrollAmount = 18 * conceptCount;
-  if ($('.jstree-leaf-proper').length) {
-    var newOffset = $('.jstree-leaf-proper')[0].offsetTop-scrollAmount;
+  var $leafProper = $('.jstree-leaf-proper');
+  if ($leafProper.length) {
+    var newOffset = $leafProper[0].offsetTop-scrollAmount;
     if (newOffset > 0) // only scrolls the view if the concept isn't already at the top.
       return newOffset;
   }
