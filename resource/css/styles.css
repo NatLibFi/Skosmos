@@ -1024,7 +1024,7 @@ li.sub-group {
 }
 
 #vocab-info tr {
-  border-image: '../pics/stripe.png' 20 20 repeat;
+  border-image: url('../pics/stripe.png') 20 20 repeat;
 }
 
 /* vocabulary
