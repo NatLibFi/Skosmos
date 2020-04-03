@@ -205,7 +205,7 @@ function getConceptHref(conceptData) {
   if (conceptData.uri.indexOf(window.uriSpace) !== -1) {
     var page = conceptData.uri.substr(window.uriSpace.length);
     if (/[^a-zA-Z0-9\.]/.test(page) || page.indexOf("/") > -1 ) {
-      // contains special characters or contains an additionnal '/' - fall back to full URI
+      // contains special characters or contains an additional '/' - fall back to full URI
       page = '?uri=' + encodeURIComponent(conceptData.uri);
     }
   } else {

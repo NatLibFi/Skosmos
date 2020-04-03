@@ -43,7 +43,7 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
-     * Wether the alphabetical index is small enough to be shown all at once.
+     * Whether the alphabetical index is small enough to be shown all at once.
      * @return boolean true if all concepts can be shown at once.
      */
     public function getAlphabeticalFull()

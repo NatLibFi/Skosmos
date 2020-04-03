@@ -380,7 +380,7 @@ class WebController extends Controller
      * Sends the user entered message through the php's mailer.
      * @param string $message only required parameter is the actual message.
      * @param string $fromName senders own name.
-     * @param string $fromEmail senders email adress.
+     * @param string $fromEmail senders email address.
      * @param string $fromVocab which vocabulary is the feedback related to.
      */
     public function sendFeedback($request, $message, $fromName = null, $fromEmail = null, $fromVocab = null, $toMail = null)
@@ -447,7 +447,7 @@ class WebController extends Controller
     }
 
     /**
-     * Invokes the search for concepts in all the availible ontologies.
+     * Invokes the search for concepts in all the available ontologies.
      */
     public function invokeGlobalSearch($request)
     {
