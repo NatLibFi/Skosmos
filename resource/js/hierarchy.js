@@ -272,7 +272,7 @@ function createObjectsFromNarrowers(narrowerResponse) {
       parents: narrowerResponse.uri,
       state: { opened: false, disabled: false, selected: false }
     };
-    childObject.children = conceptObject.hasChildren ? true : false;
+    childObject.children = !!conceptObject.hasChildren;
     setNode(childObject);
     childArray.push(childObject);
   }
