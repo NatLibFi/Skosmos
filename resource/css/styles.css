@@ -1956,7 +1956,7 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   #service-logo {
-    display: normal;
+    display: inline;
     position: absolute;
   }
 
