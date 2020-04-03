@@ -1060,11 +1060,7 @@ $(function() { // DOCUMENT READY
     });
 
     $('#parent-limit').focus(function() {
-      if($('#parent-limit').attr('data-uri') !== '') {
-        parentLimitReady = true;
-      } else {
-        parentLimitReady = false;
-      }
+      parentLimitReady = $('#parent-limit').attr('data-uri') !== '';
     });
 
     $(document).on('submit', '.search-options', function() {
