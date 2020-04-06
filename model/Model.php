@@ -93,7 +93,7 @@ class Model
      * @param boolean $categories whether you want everything included in a subarray of
      * a category.
      * @param boolean $shortname set to true if you want the vocabularies sorted by
-     * their shortnames instead of ther titles.
+     * their shortnames instead of their titles.
      */
     public function getVocabularyList($categories = true, $shortname = false)
     {

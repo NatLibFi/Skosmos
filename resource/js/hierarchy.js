@@ -39,12 +39,14 @@ function invokeParentTree(tree) {
   });
 
   $treeObject.on('loaded.jstree', function() {
+    var $sidebarGrey = $(".sidebar-grey");
     if ($('#sidebar .mCustomScrollbar').length === 0) {
-      $(".sidebar-grey").mCustomScrollbar(hierTreeConf);
+      $sidebarGrey.mCustomScrollbar(hierTreeConf);
     }
-    if ($('.jstree-leaf-proper').length > 0) {
-      $('.sidebar-grey').jstree('select_node', $('.jstree-leaf-proper').toArray());
-      $('.sidebar-grey').mCustomScrollbar('scrollTo', getLeafOffset());
+    var $leafProper = $('.jstree-leaf-proper');
+    if ($leafProper.length > 0) {
+      $sidebarGrey.jstree('select_node', $leafProper.toArray());
+      $sidebarGrey.mCustomScrollbar('scrollTo', getLeafOffset());
     }
   });
 }
@@ -53,8 +55,9 @@ function getLeafOffset() {
   var containerHeight = $('.sidebar-grey').height();
   var conceptCount = Math.floor((containerHeight * 0.66) / 18);
   var scrollAmount = 18 * conceptCount;
-  if ($('.jstree-leaf-proper').length) {
-    var newOffset = $('.jstree-leaf-proper')[0].offsetTop-scrollAmount;
+  var $leafProper = $('.jstree-leaf-proper');
+  if ($leafProper.length) {
+    var newOffset = $leafProper[0].offsetTop-scrollAmount;
     if (newOffset > 0) // only scrolls the view if the concept isn't already at the top.
       return newOffset;
   }
@@ -202,7 +205,7 @@ function getConceptHref(conceptData) {
   if (conceptData.uri.indexOf(window.uriSpace) !== -1) {
     var page = conceptData.uri.substr(window.uriSpace.length);
     if (/[^a-zA-Z0-9\.]/.test(page) || page.indexOf("/") > -1 ) {
-      // contains special characters or contains an additionnal '/' - fall back to full URI
+      // contains special characters or contains an additional '/' - fall back to full URI
       page = '?uri=' + encodeURIComponent(conceptData.uri);
     }
   } else {
@@ -272,7 +275,7 @@ function createObjectsFromNarrowers(narrowerResponse) {
       parents: narrowerResponse.uri,
       state: { opened: false, disabled: false, selected: false }
     };
-    childObject.children = conceptObject.hasChildren ? true : false;
+    childObject.children = !!conceptObject.hasChildren;
     setNode(childObject);
     childArray.push(childObject);
   }

@@ -50,7 +50,7 @@ function invokeGroupTree() {
     $treeObject.jstree('open_node', node.node);
   });
 
-  $('.group-hierarchy').jstree({ 
+  $treeObject.jstree({
     'plugins' : ['sort'],
     'sort' : function (a,b) { return naturalCompare(this.get_text(a).toLowerCase(), this.get_text(b).toLowerCase()); },
     'core' : { 
@@ -94,7 +94,7 @@ function createGroupNode(uri, groupObject) {
 	if (uri.indexOf(uriSpace) !== -1) {	
 		groupPage = uri.substr(uriSpace.length);
 		if (/[^a-zA-Z0-9\.]/.test(groupPage) || groupPage.indexOf("/") > -1 ) {
-	      // contains special characters or contains an additionnal '/' - fall back to full URI
+	      // contains special characters or contains an additional '/' - fall back to full URI
 		  groupPage = '?uri=' + encodeURIComponent(uri);
 	    }
 	} else {

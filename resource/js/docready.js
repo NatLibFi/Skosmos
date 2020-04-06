@@ -131,7 +131,7 @@ $(function() { // DOCUMENT READY
   function copyToClipboard() {
     var $btn = $(this);
     var id = $btn.attr('for');
-    $elem = $(id);
+    var $elem = $(id);
     makeSelection(undefined, $elem);
     document.execCommand('copy');
   }
@@ -957,7 +957,7 @@ $(function() { // DOCUMENT READY
       } else if (selectedVocabs[vocabId] !== undefined) {
         delete selectedVocabs[vocabId];
       }
-      this.vocabSelectionString = updateVocabParam();
+      updateVocabParam();
     },
     maxHeight: 300
   });
@@ -1060,11 +1060,7 @@ $(function() { // DOCUMENT READY
     });
 
     $('#parent-limit').focus(function() {
-      if($('#parent-limit').attr('data-uri') !== '') {
-        parentLimitReady = true;
-      } else {
-        parentLimitReady = false;
-      }
+      parentLimitReady = $('#parent-limit').attr('data-uri') !== '';
     });
 
     $(document).on('submit', '.search-options', function() {

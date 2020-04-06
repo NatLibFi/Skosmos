@@ -22,13 +22,14 @@ class Controller
     {
         $this->model = $model;
         $this->negotiator = new \Negotiation\Negotiator();
+        $domain = 'skosmos';
 
         // Specify the location of the translation tables
-        bindtextdomain('skosmos', 'resource/translations');
-        bind_textdomain_codeset('skosmos', 'UTF-8');
+        bindtextdomain($domain, 'resource/translations');
+        bind_textdomain_codeset($domain, 'UTF-8');
 
         // Choose domain for translations
-        textdomain('skosmos');
+        textdomain($domain);
 
         // Build arrays of language information, with 'locale' and 'name' keys
         $this->languages = array();
