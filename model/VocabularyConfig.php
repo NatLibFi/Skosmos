@@ -19,6 +19,7 @@ class VocabularyConfig extends BaseConfig
                 $pluginArray[] = $pluginlit->getValue();
             }
         }
+        $this->plugins = new PluginRegister(array_merge($globalPlugins, $pluginArray)); 
         // Get parameterized plugins defined as resources and their respective parameters
         $pluginResources = $this->resource->allResources('skosmos:useParamPlugin');
         $this->pluginParameters = array();
