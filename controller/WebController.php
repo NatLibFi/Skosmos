@@ -188,6 +188,7 @@ class WebController extends Controller
                 return;
             }
         }
+        $pluginParameters = $vocab->getConfig()->getPluginParameters();
         /** @var \Twig\Template $template */
         $template = (in_array('skos:Concept', $results[0]->getType()) || in_array('skos:ConceptScheme', $results[0]->getType())) ? $this->twig->loadTemplate('concept-info.twig') : $this->twig->loadTemplate('group-contents.twig');
 
@@ -199,7 +200,8 @@ class WebController extends Controller
             'explicit_langcodes' => $langcodes,
             'bread_crumbs' => $crumbs['breadcrumbs'],
             'combined' => $crumbs['combined'],
-            'request' => $request)
+            'request' => $request,
+            'plugin_params' => $pluginParameters)
         );
     }
 
@@ -647,6 +649,7 @@ class WebController extends Controller
             $this->invokeGroupIndex($request, true);
             return;
         }
+        $pluginParameters = $vocab->getConfig()->getPluginParameters();
 
         $template = $this->twig->loadTemplate('vocab.twig');
 
@@ -657,6 +660,7 @@ class WebController extends Controller
                 'search_letter' => 'A',
                 'active_tab' => $defaultView,
                 'request' => $request,
+                'plugin_params' => $pluginParameters
             ));
     }
 
