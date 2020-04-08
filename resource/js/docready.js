@@ -189,6 +189,18 @@ $(function() { // DOCUMENT READY
 
   hideCrumbs();
 
+  // event handling restoring the hidden breadcrumb paths
+  $(document).on('click', '.restore-propvals',
+      function(){
+        console.log($(this));
+        $(this).parent().parent().find('.hidden-propval').removeClass('hidden-propval');
+        $(this).remove();
+        return false;
+      }
+  );
+
+  hidePropertyValues();
+
   // ajaxing the concept count and the preflabel counts on the vocabulary front page
   if ($('#vocab-info').length && $('#statistics').length) {
     // adding the spinners

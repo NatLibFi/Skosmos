@@ -201,6 +201,21 @@ function hideCrumbs() {
   }
 }
 
+// if there are too many property values on the concept page, hide some of them
+function hidePropertyValues() {
+  var maxValues = 10; // hide extras if there are more values than this
+  var $propertyValueLists = $('.property-value-wrapper ul');
+  for (var i = 0; i < $propertyValueLists.length; ++i) {
+    if ($propertyValueLists[i].children.length > maxValues) {
+      var $propertyValues = $($propertyValueLists[i].children);
+      for (var j = maxValues; j < $propertyValues.length; ++j) {
+        $($propertyValues[j]).addClass('hidden-propval');
+      }
+      $($propertyValueLists[i]).after('<li><a class="versal restore-propvals" href="#">[' + 'näytä kaikki # arvoa'.replace('#',$propertyValueLists[i].children.length) + ']</a></li>');
+    }
+  }
+}
+
 // Shortens the properties that don't fit on one row on the search result view.
 function shortenProperties() {
   var $properties = $('.property-values');
