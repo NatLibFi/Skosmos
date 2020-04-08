@@ -1151,6 +1151,10 @@ li.sub-group {
   display: none;
 }
 
+.expand-propvals .hidden-propval {
+  display: list-item;
+}
+
 .restore-breadcrumbs {
   background-color: #fff;
   float: right;

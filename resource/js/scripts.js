@@ -206,12 +206,19 @@ function hidePropertyValues() {
   var maxValues = 10; // hide extras if there are more values than this
   var $propertyValueLists = $('.property-value-wrapper ul');
   for (var i = 0; i < $propertyValueLists.length; ++i) {
-    if ($propertyValueLists[i].children.length > maxValues) {
+    if ($($propertyValueLists[i]).hasClass('expand-propvals')) {
+      continue; // already shortened - and expanded by user
+    }
+    if ($($propertyValueLists[i]).find('.restore-propvals').length > 0) {
+      continue; // already shortened by this function
+    }
+    var nValues = $propertyValueLists[i].children.length;
+    if (nValues > maxValues) {
       var $propertyValues = $($propertyValueLists[i].children);
       for (var j = maxValues; j < $propertyValues.length; ++j) {
         $($propertyValues[j]).addClass('hidden-propval');
       }
-      $($propertyValueLists[i]).after('<li><a class="versal restore-propvals" href="#">[' + 'näytä kaikki # arvoa'.replace('#',$propertyValueLists[i].children.length) + ']</a></li>');
+      $($propertyValueLists[i]).append('<li><a class="restore-propvals" href="#">[' + 'näytä kaikki # arvoa'.replace('#', nValues) + ']</a></li>');
     }
   }
 }

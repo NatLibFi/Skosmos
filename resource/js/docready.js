@@ -84,6 +84,7 @@ $(function() { // DOCUMENT READY
     countAndSetOffset();
 
     hideCrumbs();
+    hidePropertyValues();
   });
 
   // if the hierarchy tab is active filling the jstree with data
@@ -192,8 +193,7 @@ $(function() { // DOCUMENT READY
   // event handling restoring the hidden breadcrumb paths
   $(document).on('click', '.restore-propvals',
       function(){
-        console.log($(this));
-        $(this).parent().parent().find('.hidden-propval').removeClass('hidden-propval');
+        $(this).parent().parent().addClass('expand-propvals');
         $(this).remove();
         return false;
       }
