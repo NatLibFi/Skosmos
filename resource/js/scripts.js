@@ -196,7 +196,7 @@ function hideCrumbs() {
       $($crumbs[i]).addClass('hidden-path');
     }
     if ($('.restore-breadcrumbs').length === 0) {
-      $($crumbs[0]).after('<a class="versal restore-breadcrumbs" href="#">[' + expand.replace('#',($crumbs.length)) + ']</a>');
+      $($crumbs[0]).after('<a class="versal restore-breadcrumbs" href="#">[' + expand_paths.replace('#',($crumbs.length)) + ']</a>');
     }
   }
 }
@@ -218,7 +218,7 @@ function hidePropertyValues() {
       for (var j = maxValues; j < $propertyValues.length; ++j) {
         $($propertyValues[j]).addClass('hidden-propval');
       }
-      $($propertyValueLists[i]).append('<li><a class="restore-propvals" href="#">[' + 'näytä kaikki # arvoa'.replace('#', nValues) + ']</a></li>');
+      $($propertyValueLists[i]).append('<li><a class="restore-propvals" href="#">[' + expand_propvals.replace('#', nValues) + ']</a></li>');
     }
   }
 }
