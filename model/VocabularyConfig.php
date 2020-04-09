@@ -6,6 +6,7 @@
 class VocabularyConfig extends BaseConfig
 {
     private $plugins;
+    private $pluginParameters;
     private $languageOrderCache = array();
 
     public function __construct($resource, $globalPlugins=array())
@@ -19,6 +20,33 @@ class VocabularyConfig extends BaseConfig
             }
         }
         $this->plugins = new PluginRegister(array_merge($globalPlugins, $pluginArray));
+        // Get parameterized plugins defined as resources and their respective parameters
+        $pluginResources = $this->resource->allResources('skosmos:useParamPlugin');
+        $this->pluginParameters = array();
+        if ($pluginResources) {
+            foreach ($pluginResources as $pluginResource) {
+                $pluginName = $pluginResource->getLiteral('skosmos:usePlugin')->getValue();
+                $this->pluginParameters[$pluginName] = array();
+
+                $pluginParams = $pluginResource->allResources('skosmos:parameters');
+                foreach ($pluginParams as $parameter) {
+
+                    $paramLiterals = $parameter->allLiterals('schema:value');
+                    foreach ($paramLiterals as $paramLiteral) {
+                        $paramName = $parameter->getLiteral('schema:propertyID')->getValue();
+                        $paramValue = $paramLiteral->getValue();
+                        $paramLang = $paramLiteral->getLang();
+                        if ($paramLang) {
+                            $paramName .= '_' . $paramLang;
+                        }
+                        $this->pluginParameters[$pluginName][$paramName] = $paramValue;
+                    }
+                }
+                $pluginArray[] = $pluginName;
+            }
+            $this->plugins = new PluginRegister(array_merge($globalPlugins, $pluginArray));
+        }
+
     }
 
     /**
@@ -330,6 +358,14 @@ class VocabularyConfig extends BaseConfig
         ksort($ret);
 
         return $ret;
+    }
+
+    /**
+     * Returns the plugin parameters
+     * @return string plugin parameters or null
+     */
+    public function getPluginParameters() {
+        return json_encode($this->pluginParameters, true);
     }
 
     /**

@@ -29,6 +29,9 @@ var showNotation = {% if request.vocab and request.vocab.config.showNotation == 
 {% if request.vocab  %}
 var languageOrder = [{% for lang in request.vocab.config.languageOrder(request.contentLang) %}"{{ lang }}"{% if not loop.last %},{% endif %}{% endfor %}];
 {% endif %}
+{% if plugin_params%}
+var pluginParameters = {{ plugin_params|raw }};
+{% endif %}
 </script>
 
 {% if request.page == 'page' and search_results and search_results|length == 1 %}

@@ -330,7 +330,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
       $vocab = $this->model->getVocabulary('test');
       $this->assertEquals(false, $vocab->getConfig()->searchByNotation());
   }
-  
+
   /**
    * @covers VocabularyConfig::searchByNotation
    * @covers VocabularyConfig::getBoolean
@@ -339,7 +339,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
       $vocab = $this->model->getVocabulary('testNotation');
       $this->assertEquals(true, $vocab->getConfig()->searchByNotation());
   }
-  
+
   /**
    * @covers VocabularyConfig::showConceptSchemesInHierarchy
    * @covers VocabularyConfig::getBoolean
@@ -492,4 +492,14 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $vocab = $this->model->getVocabulary('http304disabled');
     $this->assertEquals(false , $vocab->getConfig()->getUseModifiedDate());
   }
+
+  /**
+   * @covers VocabularyConfig::getPluginParameters
+   */
+  public function testGetPluginParameters() {
+    $vocab = $this->model->getVocabulary('paramPluginTest');
+    $params = $vocab->getConfig()->getPluginParameters();
+    $this->assertEquals(json_encode(array('imaginaryPlugin' => array('poem_fi' => "Roses are red", 'poem' => "Violets are blue", 'color' => "#800000")),true), $params);
+  }
+
 }
