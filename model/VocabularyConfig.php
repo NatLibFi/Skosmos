@@ -19,7 +19,7 @@ class VocabularyConfig extends BaseConfig
                 $pluginArray[] = $pluginlit->getValue();
             }
         }
-        $this->plugins = new PluginRegister(array_merge($globalPlugins, $pluginArray)); 
+        $this->plugins = new PluginRegister(array_merge($globalPlugins, $pluginArray));
         // Get parameterized plugins defined as resources and their respective parameters
         $pluginResources = $this->resource->allResources('skosmos:useParamPlugin');
         $this->pluginParameters = array();
@@ -27,10 +27,10 @@ class VocabularyConfig extends BaseConfig
             foreach ($pluginResources as $pluginResource) {
                 $pluginName = $pluginResource->getLiteral('skosmos:usePlugin')->getValue();
                 $this->pluginParameters[$pluginName] = array();
- 
+
                 $pluginParams = $pluginResource->allResources('skosmos:parameters');
                 foreach ($pluginParams as $parameter) {
- 
+
                     $paramLiterals = $parameter->allLiterals('schema:value');
                     foreach ($paramLiterals as $paramLiteral) {
                         $paramName = $parameter->getLiteral('schema:propertyID')->getValue();
@@ -365,7 +365,7 @@ class VocabularyConfig extends BaseConfig
      * @return string plugin parameters or null
      */
     public function getPluginParameters() {
-        return $this->pluginParameters;
+        return json_encode($this->pluginParameters, true);
     }
 
     /**
