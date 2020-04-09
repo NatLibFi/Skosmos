@@ -84,6 +84,7 @@ $(function() { // DOCUMENT READY
     countAndSetOffset();
 
     hideCrumbs();
+    hidePropertyValues();
   });
 
   // if the hierarchy tab is active filling the jstree with data
@@ -188,6 +189,17 @@ $(function() { // DOCUMENT READY
   );
 
   hideCrumbs();
+
+  // event handling restoring the hidden breadcrumb paths
+  $(document).on('click', '.restore-propvals',
+      function(){
+        $(this).parent().parent().addClass('expand-propvals');
+        $(this).remove();
+        return false;
+      }
+  );
+
+  hidePropertyValues();
 
   // ajaxing the concept count and the preflabel counts on the vocabulary front page
   if ($('#vocab-info').length && $('#statistics').length) {

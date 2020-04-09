@@ -196,7 +196,30 @@ function hideCrumbs() {
       $($crumbs[i]).addClass('hidden-path');
     }
     if ($('.restore-breadcrumbs').length === 0) {
-      $($crumbs[0]).after('<a class="versal restore-breadcrumbs" href="#">[' + expand.replace('#',($crumbs.length)) + ']</a>');
+      $($crumbs[0]).after('<a class="versal restore-breadcrumbs" href="#">[' + expand_paths.replace('#',($crumbs.length)) + ']</a>');
+    }
+  }
+}
+
+// if there are too many property values on the concept page, hide some of them
+function hidePropertyValues() {
+  var maxValues = 15; // hide extras if there are more values than this
+  var $propertyValueLists = $('.property-value-wrapper ul');
+  for (var i = 0; i < $propertyValueLists.length; ++i) {
+    var $propertyValueList = $($propertyValueLists[i]);
+    if ($propertyValueList.hasClass('expand-propvals')) {
+      continue; // already shortened - and expanded by user
+    }
+    if ($propertyValueList.find('.restore-propvals').length > 0) {
+      continue; // already shortened by this function
+    }
+    var nValues = $propertyValueLists[i].children.length;
+    if (nValues > maxValues) {
+      var $propertyValues = $($propertyValueLists[i].children);
+      for (var j = maxValues; j < $propertyValues.length; ++j) {
+        $($propertyValues[j]).addClass('hidden-propval');
+      }
+      $propertyValueList.append('<li><a class="restore-propvals" href="#">[' + expand_propvals.replace('#', nValues) + ']</a></li>');
     }
   }
 }

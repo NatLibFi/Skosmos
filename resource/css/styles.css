@@ -1147,8 +1147,12 @@ li.sub-group {
   line-height: 21px;
 }
 
-.hidden-breadcrumb, .hidden-path {
+.hidden-breadcrumb, .hidden-path, .hidden-propval {
   display: none;
+}
+
+.expand-propvals .hidden-propval {
+  display: list-item;
 }
 
 .restore-breadcrumbs {
