@@ -107,32 +107,20 @@
       {% endfor %}
     {% endif %}
   {% endif %}
-  <div class="property">
-    <span class="property-click" title="{% trans "concept_types" %}">
-      <img class="property-hover" src="resource/pics/type.gif">
-    </span>
-    <div class="property-values">
-      {% for property in conceptProperties %} {# loop through ConceptProperty objects #}
-        {% if property.getSubPropertyOf != 'skos:hiddenLabel' %}
-          {% if request.vocab.config.hasMultiLingualProperty(property.type) %}
-            {% set prevlang = '' %}{# Only displaying the language when it appears for the very first time #}
-            {% for language,labels in concept.allLabels(property.type) %}
-              {% for value in labels %}
-              <div class="row other-languages{% if prevlang != language %} first-of-language{% endif %}"><span class="versal col-xs-6{% if value.type == "skos:altLabel" %} replaced{% endif %}">{{ value.label }}</span><span class="versal col-xs-6">{% if prevlang != language %} {{ language }}{% endif %}</span></div>
-              {% set prevlang = language %}
-              {% endfor %}
-            {% endfor %}
-          {% else %}
-            {% for propval in property.values %} {# loop through ConceptPropertyValue objects #}
-              {% if property.type == 'rdf:type' %}
-                <span class="versal value">{{ propval.label|trans }}</span>
-              {% endif %}
-            {% endfor %}
-          {% endif %}
-        {% endif %}
-      {% endfor %}
-    </div>
-  </div>
+  {% for property in conceptProperties %} {# loop through ConceptProperty objects #}
+    {% if property.type == 'rdf:type' %}
+      <div class="property">
+        <span class="property-click" title="{% trans "concept_types" %}">
+          <img class="property-hover" src="resource/pics/type.gif">
+        </span>
+        <div class="property-values">
+          {% for propval in property.values %} {# loop through ConceptPropertyValue objects #}
+            <span class="versal value">{{ propval.label|trans }}</span>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
   {% if concept.uri %}
     <div><span class="versal uri-input-box">{{ concept.uri }}</span></div>
   {% endif %}
