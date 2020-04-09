@@ -1,14 +1,14 @@
 # 
 # Translators:
 # Dan Michael O. Heggø <danmichaelo@gmail.com>, 2015-2017,2019-2020
-# osma <osma.suominen@helsinki.fi>, 2017
+# osma <osma.suominen@helsinki.fi>, 2017,2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-16 10:26+0200\n"
-"PO-Revision-Date: 2020-03-16 13:07+0000\n"
-"Last-Translator: Dan Michael O. Heggø <danmichaelo@gmail.com>\n"
+"PO-Revision-Date: 2020-04-09 10:20+0000\n"
+"Last-Translator: osma <osma.suominen@helsinki.fi>\n"
 "Language-Team: Norwegian Bokmål (http://www.transifex.com/national-library-of-finland/skosmos/language/nb/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -244,8 +244,11 @@ msgid "Send feedback"
 msgstr "Gi tilbakemelding"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:51
-msgid "Show all breadcrumb paths"
+msgid "show all # paths"
 msgstr "vis alle # stier"
+
+msgid "show all # values"
+msgstr ""
 
 #: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:72
 msgid "Skosmos version %version%"

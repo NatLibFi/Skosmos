@@ -4,12 +4,13 @@
 # Maxime Van Driessche <spammaxime@hotmail.com>, 2018
 # Maxime Van Driessche <Van-driessche-maxime@hotmail.com>, 2018
 # noho <niels.hoffmann@hotmail.com>, 2019
+# osma <osma.suominen@helsinki.fi>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-16 10:26+0200\n"
-"PO-Revision-Date: 2019-11-27 16:03+0000\n"
+"PO-Revision-Date: 2020-04-09 10:25+0000\n"
 "Last-Translator: osma <osma.suominen@helsinki.fi>\n"
 "Language-Team: Dutch (http://www.transifex.com/national-library-of-finland/skosmos/language/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -246,8 +247,11 @@ msgid "Send feedback"
 msgstr "Stuur feedback"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:51
-msgid "Show all breadcrumb paths"
+msgid "show all # paths"
 msgstr "Toon alle # paden"
+
+msgid "show all # values"
+msgstr ""
 
 #: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:72
 msgid "Skosmos version %version%"
