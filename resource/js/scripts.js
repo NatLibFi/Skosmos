@@ -203,7 +203,7 @@ function hideCrumbs() {
 
 // if there are too many property values on the concept page, hide some of them
 function hidePropertyValues() {
-  var maxValues = 10; // hide extras if there are more values than this
+  var maxValues = 15; // hide extras if there are more values than this
   var $propertyValueLists = $('.property-value-wrapper ul');
   for (var i = 0; i < $propertyValueLists.length; ++i) {
     if ($($propertyValueLists[i]).hasClass('expand-propvals')) {
