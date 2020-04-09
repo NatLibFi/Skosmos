@@ -3,12 +3,14 @@
 # Ismail Kutlu <ismail.kutlu94@gmail.com>, 2018
 # Maxime Van Driessche <spammaxime@hotmail.com>, 2018
 # Maxime Van Driessche <Van-driessche-maxime@hotmail.com>, 2018
+# noho <niels.hoffmann@hotmail.com>, 2019
+# osma <osma.suominen@helsinki.fi>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-16 10:26+0200\n"
-"PO-Revision-Date: 2018-05-23 16:49+0000\n"
+"PO-Revision-Date: 2020-04-09 10:25+0000\n"
 "Last-Translator: osma <osma.suominen@helsinki.fi>\n"
 "Language-Team: Dutch (http://www.transifex.com/national-library-of-finland/skosmos/language/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -22,6 +24,9 @@ msgstr ""
 "X-Poedit-SearchPath-1: controller\n"
 "X-Poedit-SearchPath-2: model\n"
 "X-Poedit-SourceCharset: utf-8\n"
+
+msgid "Download this vocabulary:"
+msgstr ""
 
 #: controller/Controller.php:38
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:21
@@ -130,7 +135,7 @@ msgstr "Content taal"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:732
 msgid "Download this concept in SKOS format:"
-msgstr "Download deze concept:"
+msgstr "Download dit concept:"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:144
 msgid "E-mail:"
@@ -190,7 +195,7 @@ msgstr "Hiërarchie"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:157
 msgid "Leave this field blank"
-msgstr "Laat deze veld leeg"
+msgstr "Laat dit veld leeg"
 
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:594
 msgid "Limit search"
@@ -242,8 +247,11 @@ msgid "Send feedback"
 msgstr "Stuur feedback"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:51
-msgid "Show all breadcrumb paths"
+msgid "show all # paths"
 msgstr "Toon alle # paden"
+
+msgid "show all # values"
+msgstr ""
 
 #: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:72
 msgid "Skosmos version %version%"
@@ -263,7 +271,7 @@ msgstr "De zoekopdracht heeft geen resultaten opgeleverd"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:48
 msgid "There is no term for this concept in this language"
-msgstr "Er is geen term voor deze concept in deze taal."
+msgstr "Er is geen term voor dit concept in deze taal."
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:173
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:47
@@ -762,4 +770,4 @@ msgid "feedback_enter_name_email"
 msgstr ""
 
 msgid "concept_types"
-msgstr ""
+msgstr "Concept types"

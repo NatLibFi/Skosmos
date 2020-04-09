@@ -1,13 +1,14 @@
 # 
 # Translators:
-# Omid Ghiasvand <o.ghiasvand@gmail.com>, 2018
+# Omid Ghiasvand <o.ghiasvand@gmail.com>, 2018-2019
+# osma <osma.suominen@helsinki.fi>, 2020
 # Reza Ghiasvand <teaching.ghiasvand@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-16 10:26+0200\n"
-"PO-Revision-Date: 2018-05-23 16:49+0000\n"
+"PO-Revision-Date: 2020-04-09 10:28+0000\n"
 "Last-Translator: osma <osma.suominen@helsinki.fi>\n"
 "Language-Team: Persian (http://www.transifex.com/national-library-of-finland/skosmos/language/fa/)\n"
 "MIME-Version: 1.0\n"
@@ -21,6 +22,9 @@ msgstr ""
 "X-Poedit-SearchPath-1: controller\n"
 "X-Poedit-SearchPath-2: model\n"
 "X-Poedit-SourceCharset: utf-8\n"
+
+msgid "Download this vocabulary:"
+msgstr ""
 
 #: controller/Controller.php:38
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:21
@@ -39,7 +43,7 @@ msgstr "مجموعه"
 
 #: model/Concept.php:455 model/Concept.php:475
 msgid "skosmos:created"
-msgstr "ایجاد شده"
+msgstr "ساخته شده"
 
 #: model/Concept.php:460 model/Concept.php:462 model/Concept.php:471
 msgid "skosmos:modified"
@@ -51,11 +55,11 @@ msgstr "واژگان"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:26
 msgid "%search_count% results for '%term%'"
-msgstr "%شمار-جست‌وجو% نتیجه برای %اصطلاح%"
+msgstr "%search_count%  شمار نتیجه های جستجو برای اصطلاح %te"
 
 #: /tmp/cache/587c83c09abaa/23/23c9862892c34daf7bea11b6d50990145b73a83c0947ae60c3d729fe591a06ec.php:48
 msgid "404 Error: The page %requested_page% cannot be found."
-msgstr "404 خطا: برگ%برگ‌های درخواست شده% یافت نمی‌شود"
+msgstr "خطا 404: این برگ یافت نشد."
 
 #: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:62
 #: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:75
@@ -63,7 +67,7 @@ msgstr "404 خطا: برگ%برگ‌های درخواست شده% یافت نم�
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:274
 #: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:68
 msgid "A-Z"
-msgstr "الف - ی یا الفبایی"
+msgstr "الف . ی"
 
 #: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:46
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:19
@@ -73,7 +77,7 @@ msgstr "درباره"
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:35
 #, php-format
 msgid "All %d results displayed"
-msgstr "نمایش همه نتایج %d"
+msgstr "همه نتیجه‌ها %d نمایش داده شدند."
 
 #: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:64
 #: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:77
@@ -93,7 +97,7 @@ msgstr "بر پایه گروه"
 
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:587
 msgid "By parent"
-msgstr "بر پایه والد"
+msgstr "بر پایه اصطلاح اعم"
 
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:477
 msgid "By scheme"
@@ -113,7 +117,7 @@ msgstr "جدید"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:122
 msgid "Clear limitations"
-msgstr "پاک کردن محدودیت‌ها"
+msgstr "محدودیت‌ها را بردار"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:74
 msgid "Contact us!"
@@ -121,7 +125,7 @@ msgstr "تماس با ما"
 
 #: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:108
 msgid "Content and search language"
-msgstr "محتوا و زبان جست‌وجو"
+msgstr "زبان جست‌وجو و محتوا"
 
 #: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:51
 msgid "Content language"
@@ -129,7 +133,7 @@ msgstr "زبان محتوا"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:732
 msgid "Download this concept in SKOS format:"
-msgstr "بارگیری این مفهوم"
+msgstr "این مفهوم را بارگیری کن:"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:144
 msgid "E-mail:"
@@ -137,24 +141,24 @@ msgstr "رایانامه"
 
 #: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:220
 msgid "Enter search term"
-msgstr "وارد کردن عبارت جست‌وجو"
+msgstr "برای جست‌وجو اصطلاحی را بنویسید."
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:148
 msgid "Enter your e-mail address"
-msgstr "رایانامه خود را وارد کنید"
+msgstr "رایانامه خود را بنویسید."
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:140
 msgid "Enter your name"
-msgstr "نام خود را وارد کنید"
+msgstr "نام خود را بنویسید."
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:900
 #: /tmp/cache/587c83c13194c/5c/5c060d2297f64d66beb101ee34831f917ed8d33f97dadeca144430a1561433ec.php:69
 msgid "Error: Requested vocabulary not found!"
-msgstr "خطا: واژه درخواست شده یافت نشد"
+msgstr "خطا: واژگانی که خواستید، پیدا نشد!"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:890
 msgid "Error: Term \"%term%\" not found in vocabulary!"
-msgstr "خطا: اصطلاح\"%اصطلاح%\" در واژگان پیدا نشد"
+msgstr "خطا: اصطلاح \"%te rm%\"  در واژگان پیدا نشد!"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:34
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:54
@@ -164,7 +168,7 @@ msgstr "بازخورد"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:64
 msgid "Feedback has been sent!"
-msgstr "بازخورد فرستاده شده است"
+msgstr "بازخورد فرستاده شده!"
 
 #: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:35
 msgid "Group index"
@@ -176,7 +180,7 @@ msgstr "نمایه گروه"
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:313
 #: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:107
 msgid "Group-nav"
-msgstr "گروه ها"
+msgstr "گروه‌ها"
 
 #: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:85
 #: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:94
@@ -189,11 +193,11 @@ msgstr "سلسله مراتب"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:157
 msgid "Leave this field blank"
-msgstr "این فیلد را خالی بگذارید"
+msgstr "این فیلد را پر نکنید."
 
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:594
 msgid "Limit search"
-msgstr "محدود کردن جست‌وجو"
+msgstr "جست‌وجو را محدود کنید."
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:31
 msgid "Loading"
@@ -201,24 +205,24 @@ msgstr "بارگذاری"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:27
 msgid "Loading more items"
-msgstr "در حال بارگذاری اقلام بیشتر"
+msgstr "بارگذاری نمونه‌های بیشتر"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:152
 msgid "Message:"
-msgstr "پیام"
+msgstr "پیام:"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:136
 msgid "Name:"
-msgstr "نام"
+msgstr "نام:"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:23
 msgid "No results"
-msgstr "نتیجه‌ای در بر ندارد"
+msgstr "برون‌دادی نداشت."
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:103
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:111
 msgid "Not to a specific vocabulary"
-msgstr "نه به یک واژگان به‌خصوص"
+msgstr "با یک واژگان خاص پیوند ندارد."
 
 #: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:233
 msgid "Search"
@@ -226,7 +230,7 @@ msgstr "جست‌وجو"
 
 #: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:59
 msgid "Search from vocabulary"
-msgstr "جست‌وجو از واژگان"
+msgstr "جست‌وجو در واژگان"
 
 #: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:210
 msgid "Search language: any"
@@ -241,57 +245,60 @@ msgid "Send feedback"
 msgstr "فرستادن بازخورد"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:51
-msgid "Show all breadcrumb paths"
+msgid "show all # paths"
 msgstr "نمایش همه # مسیرها"
+
+msgid "show all # values"
+msgstr ""
 
 #: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:72
 msgid "Skosmos version %version%"
-msgstr "اسکاسموس نسخه %نسخه%"
+msgstr "اسکاسموس وایرایش %version%"
 
 #: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:229
 msgid "Submit search"
-msgstr "فرستادن جست‌وجو"
+msgstr "جست‌وجو کن"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:68
 msgid "Thank you for your feedback"
-msgstr "از بازخورد شما سپاسگزاریم. به‌زودی به شما پاسخ داده می‌شود"
+msgstr "از بازخورد شما سپاسگزاریم. کوشش می‌کنیم همه بازخوردها را هر چه زودترپاسخ دهیم."
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:129
 msgid "The search provided no results."
-msgstr "جست‌وجو، نتیجه‌ای در بر نداشت"
+msgstr "این جست‌وجو نتیجه‌ای نداشت."
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:48
 msgid "There is no term for this concept in this language"
-msgstr "اصطلاحی برای این مفهوم در این زبان نیست"
+msgstr "برای این اصطلاح، مفهومی در این زبان نیست."
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:173
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:47
 msgid "Value is required and can not be empty"
-msgstr "یک مقدار نیاز است و نمی‌تواند خالی باشد"
+msgstr "به یک ارزش نیاز است و نمی‌تواند تهی باشد."
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:27
 msgid "cc:attributionName"
-msgstr "نام ارجاع"
+msgstr "نام انتساب"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:29
 msgid "cc:attributionUrl"
-msgstr "نشانی وب ارجاع"
+msgstr "یو‌آر‌ال ویژگی"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:25
 msgid "cc:license"
-msgstr "مجوز"
+msgstr "گواهی‌نامه"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:31
 msgid "cc:morePermissions"
-msgstr "مجوزهای بیشتر"
+msgstr "اجازه‌های بیشتر"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:33
 msgid "cc:useGuidelines"
-msgstr "رهنمودها را به‌کار برید"
+msgstr "رهنمودها را به‌کار برید."
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:35
 msgid "dc:conformsTo"
-msgstr "مطابق با"
+msgstr "همخوان با"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:37
 msgid "dc:contributor"
@@ -303,11 +310,11 @@ msgstr "پوشش"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:41
 msgid "dc:created"
-msgstr "ایجاد شده"
+msgstr "ساخته شده"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:43
 msgid "dc:creator"
-msgstr "ایجاد کننده"
+msgstr "سازنده"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:45
 msgid "dc:date"
@@ -315,7 +322,7 @@ msgstr "تاریخ"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:47
 msgid "dc:description"
-msgstr "توضیح، شرح"
+msgstr "شرح"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:49
 msgid "dc:format"
@@ -327,7 +334,7 @@ msgstr "شناسه"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:53
 msgid "dc:isReplacedBy"
-msgstr "جایگزین شده است با"
+msgstr "جایگزین شد با"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:55
 msgid "dc:isRequiredBy"
@@ -343,7 +350,7 @@ msgstr "زبان"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:61
 msgid "dc:license"
-msgstr "مجوز"
+msgstr "گواهی‌نامه"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:63
 msgid "dc:modified"
@@ -375,7 +382,7 @@ msgstr "منبع"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:77
 msgid "dc:source_help"
-msgstr "منبع توضیح مفهوم"
+msgstr "منبع شرح مفهوم"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:79
 msgid "dc:spatial"
@@ -387,7 +394,7 @@ msgstr "موضوع"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:83
 msgid "dc:temporal"
-msgstr "پوشش موقت"
+msgstr "پوشش زمانی"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:85
 msgid "dc:title"
@@ -400,11 +407,11 @@ msgstr "نوع"
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:36
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:256
 msgid "deprecated"
-msgstr "این مفهوم از میان رفته است. این مفهوم را برای یادداشت به‌کار نبرید"
+msgstr "این مفهوم از میان رفته است. آن را برای یادداشت به کار نبرید."
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:89
 msgid "foaf:homepage"
-msgstr "برگ نخست"
+msgstr "آغازه"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:91
 msgid "foaf:page"
@@ -413,7 +420,7 @@ msgstr "برگ"
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:658
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:542
 msgid "foreign prefLabel help"
-msgstr "اصطلاح‌هایی برای این مفهوم در زبان‌های دیگر"
+msgstr "اصطلاح‌ها در زبان‌های دیگر برای این مفهوم"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:660
 msgid "foreign prefLabels"
@@ -429,7 +436,7 @@ msgstr "در همه"
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:293
 #: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:87
 msgid "hierarchy-disabled-help"
-msgstr "در این واژگان، سطح بالای سلسله‌مراتب نشان داده نمی‌شود"
+msgstr "لایه بالای سلسله‌مراتب این واژه‌نامه را نمی‌توان نشان داد."
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:93
 msgid "isothes:ConceptGroup"
@@ -437,7 +444,7 @@ msgstr "گروه مفهومی"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:97
 msgid "isothes:ThesaurusArray"
-msgstr "آرایه مفاهیم خویشاوند"
+msgstr "آرایه مفهوم‌های خویشاوند"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:99
 msgid "isothes:broaderGeneric"
@@ -457,11 +464,11 @@ msgstr "مفاهیم خاص"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:107
 msgid "isothes:narrowerInstantial"
-msgstr "مفاهیم خاص (موردی)"
+msgstr "مفهوم‌های اخص (موردی)"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:109
 msgid "isothes:narrowerPartitive"
-msgstr "مفاهیم خاص (جزئی)"
+msgstr "مفهوم‌های اخص (جزئی)"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:95
 msgid "isothes:superGroup"
@@ -469,7 +476,7 @@ msgstr "ابرگروه"
 
 #: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:66
 msgid "layout designed by Hahmo"
-msgstr "طراحی چیدمان: Hahmo design"
+msgstr "چیدمان با «هامو دیزاین» طراحی شد."
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:74
 msgid "limited to group"
@@ -489,7 +496,7 @@ msgstr "نوع"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:113
 msgid "owl:sameAs"
-msgstr "مفاهیم معادل"
+msgstr "مفهوم‌های برابر"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:111
 msgid "owl:versionInfo"
@@ -501,11 +508,11 @@ msgstr "نوع"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:117
 msgid "rdf:type_help"
-msgstr "نوع موجودیت"
+msgstr "نوع هستار"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:123
 msgid "rdfs:comment"
-msgstr "توصیف"
+msgstr "شرح"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:119
 msgid "rdfs:label"
@@ -513,11 +520,11 @@ msgstr "برچسب"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:121
 msgid "rdfs:seeAlso"
-msgstr "همچنین ببینید"
+msgstr "نیز نگاه کنید به:"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:43
 msgid "selected"
-msgstr "گزیده"
+msgstr "برگزیده"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:143
 msgid "skos:altLabel"
@@ -529,11 +536,11 @@ msgstr "اصطلاح‌های جایگزین برای مفهوم"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:133
 msgid "skos:broadMatch"
-msgstr "مفاهیم منطبق اعم"
+msgstr "مفهوم‌های اعم همخوان"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:191
 msgid "skos:broadMatch_help"
-msgstr "مفاهیم منطبق اعم در واژگان‌های دیگر"
+msgstr "مفهوم‌های اعم همخوان در واژگان دیگر"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:129
 msgid "skos:broader"
@@ -545,15 +552,15 @@ msgstr "مفهوم اعم"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:169
 msgid "skos:changeNote"
-msgstr "یادداشت تغییر"
+msgstr "یادداشت ویرایش"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:147
 msgid "skos:closeMatch"
-msgstr "مفاهیم نزدیک"
+msgstr "مفهوم‌های بسیار نزدیک"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:189
 msgid "skos:closeMatch_help"
-msgstr "مفاهیم نزدیک در واژگان دیگر"
+msgstr "مفهوم‌های بسیار نزدیک در واژگان دیگر"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:161
 msgid "skos:definition"
@@ -561,7 +568,7 @@ msgstr "تعریف"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:185
 msgid "skos:definition_help"
-msgstr " توضیح کاملی از معنی در نظر گرفته شده برای یک مفهوم"
+msgstr "توضیح کامل برای معنی بار شده به یک مفهوم"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:167
 msgid "skos:editorialNote"
@@ -569,11 +576,11 @@ msgstr "یادداشت ویراستار"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:145
 msgid "skos:exactMatch"
-msgstr "مفاهیم کاملاً مطابق"
+msgstr "مفهوم‌های کاملاً برابر"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:187
 msgid "skos:exactMatch_help"
-msgstr "مفاهمی کاملاً مطابق در واژگان دیگر"
+msgstr "مفهوم‌های کاملاً برابر در واژگان دیگر"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:163
 msgid "skos:example"
@@ -581,7 +588,7 @@ msgstr "نمونه"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:155
 msgid "skos:hasTopConcept"
-msgstr "دارای مفهوم بالاست"
+msgstr "مفهوم بالاتر دارد."
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:165
 msgid "skos:historyNote"
@@ -589,7 +596,7 @@ msgstr "یادداشت پیشینه"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:151
 msgid "skos:inScheme"
-msgstr "طرح کلی مفهوم"
+msgstr "طرح مفهوم"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:149
 msgid "skos:member"
@@ -601,19 +608,19 @@ msgstr "اعضای گروه"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:135
 msgid "skos:narrowMatch"
-msgstr "مفاهیم اخص منطبق"
+msgstr "مفهوم‌های اخص برابر"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:193
 msgid "skos:narrowMatch_help"
-msgstr "مفاهیم اخص منطبق در واژگان دیگر."
+msgstr "مفهوم‌های اخص برابر در دیگر واژگان"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:131
 msgid "skos:narrower"
-msgstr "مفاهیم اخص"
+msgstr "مفهوم‌های اخص"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:173
 msgid "skos:narrower_help"
-msgstr "مفاهیم اخص"
+msgstr "مفهوم‌های اخص."
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:157
 msgid "skos:note"
@@ -626,19 +633,19 @@ msgstr "یادداشت‌ها"
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:234
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:141
 msgid "skos:prefLabel"
-msgstr "واژه مرجح"
+msgstr "اصطلاح مرجح"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:137
 msgid "skos:related"
-msgstr "مفاهیم مرتبط"
+msgstr "مفهوم‌های وابسته"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:139
 msgid "skos:relatedMatch"
-msgstr "مفاهیم مرتبط و منطبق"
+msgstr "مفهوم‌های وابسته برابر"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:183
 msgid "skos:related_help"
-msgstr "مفاهیم مرتبط با این مفهوم."
+msgstr "مفهوم‌های وابسته به این مفهوم"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:159
 msgid "skos:scopeNote"
@@ -646,11 +653,11 @@ msgstr "یادداشت دامنه"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:177
 msgid "skos:scopeNote_help"
-msgstr "یادداشت‌ها درباره کاربرد و دامنه مفهوم"
+msgstr "یادداشت‌های کاربرد و دامنه مفهوم"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:153
 msgid "skos:topConceptOf"
-msgstr "از واژگان"
+msgstr "از آنِ واژگان است."
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:197
 msgid "skosext:DeprecatedConcept"
@@ -658,7 +665,7 @@ msgstr "مفهوم منسوخ"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:195
 msgid "skosext:partOf"
-msgstr "هست بخشی از "
+msgstr "بخشی از "
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:199
 msgid "skosext:partOf_help"
@@ -668,22 +675,22 @@ msgstr "کلی که این مفهوم بخشی از آن است."
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:201
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:449
 msgid "skosmos:memberOf"
-msgstr "متعلق به گروه"
+msgstr "از آن گروه است."
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:611
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:205
 msgid "skosmos:memberOfArray"
-msgstr "متعلق به آرایه"
+msgstr "از آن آرایه است."
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:609
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:207
 msgid "skosmos:memberOfArray_help"
-msgstr "آرایه‌ای که این مفهوم از آن است"
+msgstr "آرایه‌ای که مفهوم از آن است"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:546
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:203
 msgid "skosmos:memberOf_help"
-msgstr "گروهی که این مفهوم از آن است"
+msgstr "گروهی که مفهوم از آن است"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:23
 msgid "zxx-x-taxon"
@@ -695,7 +702,7 @@ msgstr "درباره"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:138
 msgid "Alternate terms"
-msgstr "اصطلاح‌های متناوب"
+msgstr "اصطلاح‌های جایگزین"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:130
 msgid "Concept language"
@@ -703,11 +710,11 @@ msgstr "زبان"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:118
 msgid "Count"
-msgstr "قابل شمارش"
+msgstr "شمار"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:157
 msgid "Download this vocabulary as SKOS/RDF:"
-msgstr "دریافت واژگان به‌عنوان SKOS/RDF"
+msgstr "این واژه‌نامه را به عنوان SKOS/RDF بارگیری کنید."
 
 #: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:205
 msgid "Help"
@@ -723,7 +730,7 @@ msgstr "زبان رابط کاربری"
 
 #: /tmp/cache/587c83c13194c/f9/f9c816822168f230ef0bfed735f5923aab99d389ce8b2c6b2f5fcd5d400bc275.php:26
 msgid "No vocabularies on the server!"
-msgstr " واژگان‌ها در سرور نیست"
+msgstr "واژگانی در این سِرور نیست!"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:134
 msgid "Preferred terms"
@@ -731,11 +738,11 @@ msgstr "اصطلاح‌های مرجح"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:111
 msgid "Resource counts by type"
-msgstr "شمارش منبع بر پایه نوع"
+msgstr "شمار منابع بر پایه نوع"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:124
 msgid "Term counts by language"
-msgstr "شمارش اصطلاح بر پایه زبان"
+msgstr "شمار اصطلاح‌ها بر پایه زبان"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:116
 msgid "Type"
@@ -743,22 +750,22 @@ msgstr "نوع"
 
 #: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:146
 msgid "Vocabularies-nav"
-msgstr "واژگان"
+msgstr "واژگان‌"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:24
 msgid "Vocabulary information"
-msgstr "اطلاعات واژگان"
+msgstr "اطلاعات واژه‌نامه‌ها"
 
 #: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:199
 msgid "helper_help"
-msgstr "برای دیدن راهنما، مکان‌نمای خود را روی متن دارای زیرخط نقطه‌چین نگه دارید"
+msgstr "برای دیدن راهنماها، مکان‌نما را روی نوشته‌های زیرخط‌دار نگه دارید."
 
 #: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:201
 msgid "search_example_text"
-msgstr "برای جست‌وجوی کوتاه، نشانه * را مانند *حیوان* یا  *حق ثبت اختراع* به‌کار برید. اگر برای پایان واژه‌ها این نشانه را هم به کار نبرید، خودبه‌خود جست‌وجوی کوتاه انجام خواهد شد. بنابراین جست‌وجوی گربه، نتایجی همانند جست‌وجوی گربه* را خواهد داشت"
+msgstr "برای جست‌وجوی کوتاه، نشان * را مانند *حیوان یا *ثبت اختراع* به کار برید. برای پایان واژه‌ها، خودبه‌خود جست‌وجوی کوتاه انجام می‌شود، اگر چه نشان جست‌وجوی کوتاه را به کار نبرید. بنابراین، جست‌وجوی گربه همان نتیجه‌های جست‌وجوی گربه* را خواهد داشت. "
 
 msgid "feedback_enter_name_email"
-msgstr ""
+msgstr "برای دریافت پاسخ،‌ خواهشمند است نام و نشانی رایانامه خود را بنویسید. می‌توانید دیدگاه‌های خود را ناشناس هم بفرستید. بازخوردهای یک واژگان، مستقیم برای مدیر آن فرستاده می‌شود."
 
 msgid "concept_types"
-msgstr ""
+msgstr "انواع مفهوم"

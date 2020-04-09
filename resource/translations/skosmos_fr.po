@@ -1,7 +1,7 @@
 # 
 # Translators:
 # Nathalie Vedovotto <nathalie.vedovotto@inist.fr>, 2017
-# osma <osma.suominen@helsinki.fi>, 2015,2017
+# osma <osma.suominen@helsinki.fi>, 2015,2017,2020
 # Thomas Francart <thomas.francart@sparna.fr>, 2016
 # Thomas Francart <thomas.francart@sparna.fr>, 2015-2016,2018
 msgid ""
@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-16 10:26+0200\n"
-"PO-Revision-Date: 2018-05-23 16:49+0000\n"
+"PO-Revision-Date: 2020-04-09 10:25+0000\n"
 "Last-Translator: osma <osma.suominen@helsinki.fi>\n"
 "Language-Team: French (http://www.transifex.com/national-library-of-finland/skosmos/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -23,6 +23,9 @@ msgstr ""
 "X-Poedit-SearchPath-1: controller\n"
 "X-Poedit-SearchPath-2: model\n"
 "X-Poedit-SourceCharset: utf-8\n"
+
+msgid "Download this vocabulary:"
+msgstr ""
 
 #: controller/Controller.php:38
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:21
@@ -243,8 +246,11 @@ msgid "Send feedback"
 msgstr "Envoyer un commentaire"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:51
-msgid "Show all breadcrumb paths"
+msgid "show all # paths"
 msgstr "voir tous les # chemins"
+
+msgid "show all # values"
+msgstr ""
 
 #: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:72
 msgid "Skosmos version %version%"
