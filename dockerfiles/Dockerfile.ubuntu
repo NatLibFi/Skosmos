@@ -46,8 +46,8 @@ ENV LANGUAGE=en_US:en
 ENV LC_ALL=en_US.UTF-8 
 ENV LANG=en_US.UTF-8  
 
-# TODO: timezone
-# RUN sed -i 's/;date.timezone =/date.timezone = "Europe/Helsinki"/g' /etc/php5/fpm/php.ini
+# timezone
+RUN sed -i 's/;date.timezone =/date.timezone = "UTC"/g' /etc/php/7.2/apache2/php.ini
 
 COPY ./config/000-default.conf /etc/apache2/sites-available/000-default.conf
 
