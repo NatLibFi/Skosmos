@@ -45,6 +45,10 @@ This `config-docker-compose.ttl` file uses `http://fuseki:3030/ds/sparql` for
 `skosmos:sparqlEndpoint`. You can use this example to start Skosmos pointing
 to any existing Apache Jena, preferably with the Jena Text extension.
 
+Note that `fuseki:3030` is the internal Docker network socket. To the host
+machine, Docker Compose is exposing it as `fuseki:9030` to avoid conflicts
+with another existing Apache Jena instance.
+
 ```bash
 $ docker-compose up -d
 ```
