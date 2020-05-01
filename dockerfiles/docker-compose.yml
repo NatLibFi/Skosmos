@@ -29,6 +29,6 @@ services:
 
 # once the environment has been created:
 # 1. create dataset
-# >curl -I -u admin:admin -XPOST --data "dbName=skosmos&dbType=tdb" -G http://localhost:9030/$/datasets
+# >curl -I -u admin:admin -XPOST --data "dbName=skosmos&dbType=tdb2" -G http://localhost:9030/$/datasets
 # 2. load example vocabulary
 # >curl -I -X POST -H Content-Type:text/turtle -T yso-skos.ttl -G http://localhost:9030/skosmos/data --data-urlencode graph=http://www.yso.fi/onto/yso/
