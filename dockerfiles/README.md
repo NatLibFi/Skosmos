@@ -7,16 +7,16 @@ and run the container. The container name is `skosmos-web`, but you can customiz
 the name, port, and other flags as necessary.
 
 ```bash
-$ docker build -t skosmos:test . -f Dockerfile.ubuntu
-$ docker run -d --rm --name skosmos-web -p 9090:80 skosmos:test
+docker build -t skosmos:test . -f Dockerfile.ubuntu
+docker run -d --rm --name skosmos-web -p 9090:80 skosmos:test
 ```
 
-Now Skosmos should be available at http://localhost:9090/.
+Now Skosmos should be available at `http://localhost:9090/`.
 
 To stop the container:
 
 ```bash
-$ docker stop skosmos-web
+docker stop skosmos-web
 ```
 
 The container created is based on the project
@@ -27,7 +27,6 @@ of Skosmos.
 The Apache virtual host configuration is located at `config/000-default.conf`. And
 the configuration file used for Skosmos is at `config/config.ttl`. Customize these
 two files as necessary.
-
 
 ## Running with docker-compose
 
@@ -50,15 +49,15 @@ machine, Docker Compose is exposing it as `fuseki:9030` to avoid conflicts
 with another existing Apache Jena instance.
 
 ```bash
-$ docker-compose up -d
+docker-compose up -d
 ```
 
-Now Skosmos should be available at http://localhost:9090/.
+Now Skosmos should be available at `http://localhost:9090/`.
 
 To stop:
 
 ```bash
-$ docker-compose down
+docker-compose down
 ```
 
 ## License
