@@ -7,13 +7,16 @@ services:
     environment:
       - ADMIN_PASSWORD=admin
       - JVM_ARGS=-Xmx2g
-      - FUSEKI_DATASET_1=skosmos
     ports:
      - 9030:3030
   # You can uncomment the line below to have a local volume bound onto the container, or
   # visit https://hub.docker.com/r/stain/jena-fuseki/ for other alternatives
   # volumes:
   #  - ${PWD}/fuseki:/fuseki
+    volumes:
+      - type: bind
+        source: ./config/skosmos.ttl
+        target: /fuseki/configuration/skosmos.ttl
   skosmos:
     container_name: skosmos-web
     build:
