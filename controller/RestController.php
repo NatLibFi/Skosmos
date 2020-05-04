@@ -700,6 +700,31 @@ class RestController extends Controller
         return $this->returnJson($ret);
     }
 
+    /**
+     * Query for the available letters in the alphabetical index.
+     * @param Request $request
+     * @return object JSON-LD wrapped list of letters
+     */
+
+    public function indexLetters($request)
+    {
+        $this->setLanguageProperties($request->getLang());
+        $letters = $request->getVocab()->getAlphabet($request->getLang());
+
+        $ret = array_merge_recursive($this->context, array(
+            '@context' => array(
+                'indexLetters' => array(
+                    '@id' => 'skosmos:indexLetters',
+                    '@container' => '@list',
+                    '@language' => $request->getLang()
+                )
+            ),
+            'uri' => '',
+            'indexLetters' => $letters)
+        );
+        return $this->returnJson($ret);
+    }
+
     private function transformPropertyResults($uri, $lang, $objects, $propname, $propuri)
     {
         $results = array();

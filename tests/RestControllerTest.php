@@ -65,4 +65,19 @@ class RestControllerTest extends \PHPUnit\Framework\TestCase
 
     $this->assertJsonStringEqualsJsonString('{"@context":{"skos":"http:\/\/www.w3.org\/2004\/02\/skos\/core#","isothes":"http:\/\/purl.org\/iso25964\/skos-thes#","onki":"http:\/\/schema.onki.fi\/onki#","uri":"@id","type":"@type","results":{"@id":"onki:results","@container":"@list"},"prefLabel":"skos:prefLabel","altLabel":"skos:altLabel","hiddenLabel":"skos:hiddenLabel","broader":"skos:broader","relatedMatch":"skos:relatedMatch"},"uri":"","results":[{"uri":"http:\/\/www.skosmos.skos\/test\/ta117","type":["skos:Concept","meta:TestClass"],"broader":[{"uri":"http:\/\/www.skosmos.skos\/test\/ta1"}],"relatedMatch":[{"uri":"http:\/\/www.skosmos.skos\/test\/ta115"}],"prefLabel":"3D Bass","lang":"en","vocab":"test"},{"uri":"http:\/\/www.skosmos.skos\/test\/ta116","type":["skos:Concept","meta:TestClass"],"broader":[{"uri":"http:\/\/www.skosmos.skos\/test\/ta1"}],"prefLabel":"Bass","lang":"en","vocab":"test"},{"uri":"http:\/\/www.skosmos.skos\/test\/ta122","type":["skos:Concept","meta:TestClass"],"broader":[{"uri":"http:\/\/www.skosmos.skos\/test\/ta116"}],"prefLabel":"Black sea bass","lang":"en","vocab":"test"}]}', $out);
   }
+
+  /**
+   * @covers RestController::indexLetters
+   */
+  public function testIndexLettersJsonLd() {
+    $request = new Request($this->model);
+    $request->setVocab('test');
+    $request->setLang('en');
+    $this->controller->indexLetters($request);
+
+    $out = $this->getActualOutput();
+
+    $this->assertJsonStringEqualsJsonString('{"@context":{"skos":"http:\/\/www.w3.org\/2004\/02\/skos\/core#","uri":"@id","type":"@type","indexLetters":{"@id":"skosmos:indexLetters","@container":"@list","@language":"en"}},"uri":"","indexLetters":["B","C","E","F","M","T","!*","0-9"]}', $out);
+  }
+
 }
