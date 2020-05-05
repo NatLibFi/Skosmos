@@ -1413,13 +1413,35 @@
         "indexConcepts": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/SearchResult"
+            "$ref": "#/definitions/IndexConcept"
           }
         }
       },
       "required": [
         "uri",
         "indexLetters"
+      ]
+    },
+    "IndexConcept": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "prefLabel": {
+          "type": "string"
+        },
+        "altLabel": {
+          "type": "string"
+        },
+        "lang": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "uri",
+        "prefLabel",
+        "lang"
       ]
     },
     "VocabularyStatistics": {
