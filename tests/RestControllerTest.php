@@ -94,4 +94,50 @@ class RestControllerTest extends \PHPUnit\Framework\TestCase
     $this->assertJsonStringEqualsJsonString('{"@context":{"skos":"http:\/\/www.w3.org\/2004\/02\/skos\/core#","uri":"@id","type":"@type","indexConcepts":{"@id":"skosmos:indexConcepts","@container":"@list"}},"uri":"","indexConcepts":[{"uri":"http:\/\/www.skosmos.skos\/test\/ta116","localname":"ta116","prefLabel":"Bass","lang":"en"},{"uri":"http:\/\/www.skosmos.skos\/test\/ta122","localname":"ta122","prefLabel":"Black sea bass","lang":"en"},{"uri":"http:\/\/www.skosmos.skos\/test\/ta114","localname":"ta114","prefLabel":"Buri","lang":"en"}]}', $out);
   }
 
+  /**
+   * @covers RestController::indexConcepts
+   */
+  public function testIndexConceptsJsonLdLimit() {
+    $request = new Request($this->model);
+    $request->setVocab('test');
+    $request->setLang('en');
+    $request->setQueryParam('limit', '2');
+    $this->controller->indexConcepts("B", $request);
+
+    $out = $this->getActualOutput();
+
+    $this->assertJsonStringEqualsJsonString('{"@context":{"skos":"http:\/\/www.w3.org\/2004\/02\/skos\/core#","uri":"@id","type":"@type","indexConcepts":{"@id":"skosmos:indexConcepts","@container":"@list"}},"uri":"","indexConcepts":[{"uri":"http:\/\/www.skosmos.skos\/test\/ta116","localname":"ta116","prefLabel":"Bass","lang":"en"},{"uri":"http:\/\/www.skosmos.skos\/test\/ta122","localname":"ta122","prefLabel":"Black sea bass","lang":"en"}]}', $out);
+  }
+
+  /**
+   * @covers RestController::indexConcepts
+   */
+  public function testIndexConceptsJsonLdOffset() {
+    $request = new Request($this->model);
+    $request->setVocab('test');
+    $request->setLang('en');
+    $request->setQueryParam('offset', '1');
+    $this->controller->indexConcepts("B", $request);
+
+    $out = $this->getActualOutput();
+
+    $this->assertJsonStringEqualsJsonString('{"@context":{"skos":"http:\/\/www.w3.org\/2004\/02\/skos\/core#","uri":"@id","type":"@type","indexConcepts":{"@id":"skosmos:indexConcepts","@container":"@list"}},"uri":"","indexConcepts":[{"uri":"http:\/\/www.skosmos.skos\/test\/ta122","localname":"ta122","prefLabel":"Black sea bass","lang":"en"},{"uri":"http:\/\/www.skosmos.skos\/test\/ta114","localname":"ta114","prefLabel":"Buri","lang":"en"}]}', $out);
+  }
+
+  /**
+   * @covers RestController::indexConcepts
+   */
+  public function testIndexConceptsJsonLdLimitOffset() {
+    $request = new Request($this->model);
+    $request->setVocab('test');
+    $request->setLang('en');
+    $request->setQueryParam('limit', '1');
+    $request->setQueryParam('offset', '1');
+    $this->controller->indexConcepts("B", $request);
+
+    $out = $this->getActualOutput();
+
+    $this->assertJsonStringEqualsJsonString('{"@context":{"skos":"http:\/\/www.w3.org\/2004\/02\/skos\/core#","uri":"@id","type":"@type","indexConcepts":{"@id":"skosmos:indexConcepts","@container":"@list"}},"uri":"","indexConcepts":[{"uri":"http:\/\/www.skosmos.skos\/test\/ta122","localname":"ta122","prefLabel":"Black sea bass","lang":"en"}]}', $out);
+  }
+
 }
