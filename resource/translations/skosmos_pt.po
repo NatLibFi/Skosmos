@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-16 10:26+0200\n"
-"PO-Revision-Date: 2020-05-04 13:41+0000\n"
+"PO-Revision-Date: 2020-05-05 09:04+0000\n"
 "Last-Translator: Bruno Almeida <brunoalmeida@fcsh.unl.pt>\n"
 "Language-Team: Portuguese (http://www.transifex.com/national-library-of-finland/skosmos/language/pt/)\n"
 "MIME-Version: 1.0\n"
@@ -475,7 +475,7 @@ msgstr "Supergrupo"
 
 #: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:66
 msgid "layout designed by Hahmo"
-msgstr "layout por Hahmo Design"
+msgstr "layout criado por Hahmo Design"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:74
 msgid "limited to group"
@@ -713,7 +713,7 @@ msgstr "Número"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:157
 msgid "Download this vocabulary as SKOS/RDF:"
-msgstr "Descarregar este vocabulário em SKOS/RDF:"
+msgstr "Descarregar este vocabulário como SKOS/RDF:"
 
 #: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:205
 msgid "Help"
@@ -764,7 +764,7 @@ msgid "search_example_text"
 msgstr "Para pesquisa com truncatura, utilize o símbolo * como, p. ex., em *medieval ou *social*. A pesquisa utiliza automaticamente a truncatura em final de palavra, mesmo que o símbolo não seja introduzido: hist dará os mesmos resultados que hist*."
 
 msgid "feedback_enter_name_email"
-msgstr "Introduza o seu nome e correio eletrónico se deseja receber uma resposta direta. Também pode submeter os seus comentários anonimamente. Nota: os comentários sobre um vocabulários específico são referidos diretamente ao seu administrador."
+msgstr "Introduza o seu nome e correio eletrónico se deseja receber uma resposta direta. Também pode submeter os seus comentários anonimamente. Nota: os comentários sobre vocabulários específicos são referidos diretamente ao seu administrador."
 
 msgid "concept_types"
 msgstr "Tipos de conceitos"
