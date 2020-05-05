@@ -636,6 +636,52 @@
         ]
       }
     },
+    "/{vocid}/index/{letter}": {
+      "get": {
+        "summary": "Concepts for a given letter in the alphabetical index",
+        "description": "Returns a list of the concepes which have a label (skos:prefLabel or skos:altLabel) starting with the given letter in the given language, or the default language of the vocabulary. The special value \"0-9\" matches labels starting with a number and the value \"!*\" matches labels starting with a special character.",
+        "parameters": [
+          {
+            "name": "vocid",
+            "in": "path",
+            "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "letter",
+            "in": "path",
+            "description": "an initial letter, or one of the special values \"0-9 or \"!*\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "language of labels, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "concepts of the alphabetical index",
+            "schema": {
+              "$ref": "#/definitions/IndexConcepts"
+            }
+          },
+          "404": {
+            "description": "no vocabulary could be found with the requested id"
+          }
+        },
+        "tags": [
+          "Vocabulary-specific methods"
+        ]
+      }
+    },
     "/{vocid}/label": {
       "get": {
         "summary": "Preferred label for the requested concept",
@@ -1351,6 +1397,24 @@
             "0-9",
             "!*"
           ]
+        }
+      },
+      "required": [
+        "uri",
+        "indexLetters"
+      ]
+    },
+    "IndexConcepts": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "indexConcepts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SearchResult"
+          }
         }
       },
       "required": [
