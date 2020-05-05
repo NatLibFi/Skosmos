@@ -737,13 +737,9 @@ class RestController extends Controller
         $this->setLanguageProperties($request->getLang());
 
         $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
-        if ($request->getQueryParam('limit')) {
-            $count = $request->getQueryParam('limit');
-        } else {
-            $count = ($offset > 0) ? null : 250;
-        }
+        $limit = ($request->getQueryParam('limit') && is_numeric($request->getQueryParam('limit')) && $request->getQueryParam('limit') >= 0) ? $request->getQueryParam('limit') : 0;
 
-        $concepts = $request->getVocab()->searchConceptsAlphabetical($letter, $count, $offset, $request->getLang());
+        $concepts = $request->getVocab()->searchConceptsAlphabetical($letter, $limit, $offset, $request->getLang());
 
         $ret = array_merge_recursive($this->context, array(
             '@context' => array(
