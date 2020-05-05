@@ -80,4 +80,18 @@ class RestControllerTest extends \PHPUnit\Framework\TestCase
     $this->assertJsonStringEqualsJsonString('{"@context":{"skos":"http:\/\/www.w3.org\/2004\/02\/skos\/core#","uri":"@id","type":"@type","indexLetters":{"@id":"skosmos:indexLetters","@container":"@list","@language":"en"}},"uri":"","indexLetters":["B","C","E","F","M","T","!*","0-9"]}', $out);
   }
 
+  /**
+   * @covers RestController::indexConcepts
+   */
+  public function testIndexConceptsJsonLd() {
+    $request = new Request($this->model);
+    $request->setVocab('test');
+    $request->setLang('en');
+    $this->controller->indexConcepts("B", $request);
+
+    $out = $this->getActualOutput();
+
+    $this->assertJsonStringEqualsJsonString('{"@context":{"skos":"http:\/\/www.w3.org\/2004\/02\/skos\/core#","uri":"@id","type":"@type","indexConcepts":{"@id":"skosmos:indexConcepts","@container":"@list"}},"uri":"","indexConcepts":[{"uri":"http:\/\/www.skosmos.skos\/test\/ta116","localname":"ta116","prefLabel":"Bass","lang":"en"},{"uri":"http:\/\/www.skosmos.skos\/test\/ta122","localname":"ta122","prefLabel":"Black sea bass","lang":"en"},{"uri":"http:\/\/www.skosmos.skos\/test\/ta114","localname":"ta114","prefLabel":"Buri","lang":"en"}]}', $out);
+  }
+
 }

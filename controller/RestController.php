@@ -725,6 +725,31 @@ class RestController extends Controller
         return $this->returnJson($ret);
     }
 
+    /**
+     * Query for the concepts with terms starting with a given letter in the
+     * alphabetical index.
+     * @param Request $request
+     * @return object JSON-LD wrapped list of terms/concepts
+     */
+
+    public function indexConcepts($letter, $request)
+    {
+        $this->setLanguageProperties($request->getLang());
+        $concepts = $request->getVocab()->searchConceptsAlphabetical($letter, null, null, $request->getLang());
+
+        $ret = array_merge_recursive($this->context, array(
+            '@context' => array(
+                'indexConcepts' => array(
+                    '@id' => 'skosmos:indexConcepts',
+                    '@container' => '@list'
+                )
+            ),
+            'uri' => '',
+            'indexConcepts' => $concepts)
+        );
+        return $this->returnJson($ret);
+    }
+
     private function transformPropertyResults($uri, $lang, $objects, $propname, $propuri)
     {
         $results = array();
