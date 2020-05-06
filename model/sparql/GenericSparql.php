@@ -1402,6 +1402,27 @@ EOQ;
         return $query;
     }
 
+
+    /**
+     * @param string $uri
+     * @param string $lang
+     * @return string sparql query string
+     */
+    private function generateOtherLabelQuery($uri, $lang) {
+        $fcl = $this->generateFromClause();
+        $labelcondLabel = ($lang) ? "FILTER( langMatches(lang(?val), '$lang') )" : "";
+        $query = <<<EOQ
+CONSTRUCT { <$uri> ?prop ?val . } $fcl
+WHERE {
+  <$uri> a ?type .
+  <$uri> ?prop ?val .
+  VALUES ?prop { skos:altLabel skos:hiddenLabel }
+  $labelcondLabel
+}
+EOQ;
+        return $query;
+    }
+
     /**
      * Query for a label (skos:prefLabel, rdfs:label, dc:title, dc11:title) of a resource.
      * @param string $uri
@@ -1427,6 +1448,34 @@ EOQ;
             // nonexistent concept
             return null;
         }
+    }
+
+    /**
+     * Query for skos:altLabels and skos:hiddenLabels of a resource.
+     * @param string $uri
+     * @param string $lang
+     * @return array array of altLabels and hiddenLabels
+     */
+    public function queryOtherLabels($uri, $lang) {
+        $query = $this->generateOtherLabelQuery($uri, $lang);
+        $result = $this->query($query);
+        $ret = array();
+
+        $altLabels = $result->allLiterals($uri, 'skos:altLabel');
+        $hiddenLabels = $result->allLiterals($uri, 'skos:hiddenLabel');
+
+        if (!empty($altLabels)) {
+            $ret['altLabel'] = array();
+            foreach($altLabels as $label) {
+                $ret['altLabel'][] = $label;
+            }
+        }
+        if (!empty($hiddenLabels)) {
+            $ret['hiddenLabel'] = array();
+            foreach($hiddenLabels as $label) {
+                $ret['hiddenLabel'][] = $label;
+            }
+        }return $ret;
     }
 
     /**

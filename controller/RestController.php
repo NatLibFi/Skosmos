@@ -709,18 +709,31 @@ class RestController extends Controller
             return null;
         }
 
-        $results = $request->getVocab()->getConceptLabel($request->getUri(), $request->getLang());
-        if ($results === null) {
+        $prefResults = $request->getVocab()->getConceptLabel($request->getUri(), $request->getLang());
+        if ($prefResults === null) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
         }
+        $otherResults = $request->getVocab()->getOtherConceptLabels($request->getUri(), $request->getLang());
 
         $ret = array_merge_recursive($this->context, array(
-            '@context' => array('prefLabel' => 'skos:prefLabel', '@language' => $request->getLang()),
+            '@context' => array('prefLabel' => 'skos:prefLabel', 'altLabel' => 'skos:altLabel', 'hiddenLabel' => 'skos:hiddenLabel', '@language' => $request->getLang()),
             'uri' => $request->getUri())
         );
 
-        if (isset($results[$request->getLang()])) {
-            $ret['prefLabel'] = $results[$request->getLang()]->getValue();
+        if (isset($prefResults[$request->getLang()])) {
+            $ret['prefLabel'] = $prefResults[$request->getLang()]->getValue();
+        }
+        if (!empty($otherResults['altLabel'])) {
+            $ret['altLabel'] = array();
+            foreach ($otherResults['altLabel'] as $altResult) {
+                $ret['altLabel'][] = $altResult->getValue();
+            }
+        }
+        if (!empty($otherResults['hiddenLabel'])) {
+            $ret['hiddenLabel'] = array();
+            foreach ($otherResults['hiddenLabel'] as $hidResult) {
+                $ret['hiddenLabel'][] = $hidResult->getValue();
+            }
         }
 
         return $this->returnJson($ret);

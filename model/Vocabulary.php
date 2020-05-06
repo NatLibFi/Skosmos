@@ -118,6 +118,16 @@ class Vocabulary extends DataObject implements Modifiable
     }
 
     /**
+     * Asks the sparql implementation to make a label query for a uri.
+     * @param string $uri
+     * @param string $lang
+     * @return array array of altLabels
+     */
+    public function getOtherConceptLabels($uri, $lang)
+    {
+        return $this->getSparql()->queryOtherLabels($uri, $lang);
+    }
+    /**
      * Get the localname of a concept in the vocabulary. If the URI is not
      * in the URI space of this vocabulary, return the full URI.
      *

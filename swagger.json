@@ -705,7 +705,7 @@
     },
     "/{vocid}/label": {
       "get": {
-        "summary": "Preferred label for the requested concept",
+        "summary": "List of labels for the requested concept",
         "parameters": [
           {
             "name": "vocid",
@@ -736,7 +736,7 @@
           "200": {
             "description": "preferred label for the requested concept",
             "schema": {
-              "$ref": "#/definitions/PrefAndUri"
+              "$ref": "#/definitions/LabelsAndUri"
             }
           },
           "304": {
@@ -1683,6 +1683,37 @@
         "prefLabel": {
           "type": "string",
           "description": "Preferred label of concept"
+        }
+      },
+      "required": [
+        "uri",
+        "prefLabel"
+      ]
+    },
+    "LabelsAndUri": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "URI of the concept"
+        },
+        "prefLabel": {
+          "type": "string",
+          "description": "Preferred label of concept"
+        },
+        "altLabel": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Alternative labels for the concept"
+          }
+        },
+        "hiddenLabel": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Hidden labels for the concept"
+          }
         }
       },
       "required": [
