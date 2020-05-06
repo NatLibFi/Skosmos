@@ -700,6 +700,62 @@ class RestController extends Controller
         return $this->returnJson($ret);
     }
 
+    /**
+     * Query for the available letters in the alphabetical index.
+     * @param Request $request
+     * @return object JSON-LD wrapped list of letters
+     */
+
+    public function indexLetters($request)
+    {
+        $this->setLanguageProperties($request->getLang());
+        $letters = $request->getVocab()->getAlphabet($request->getLang());
+
+        $ret = array_merge_recursive($this->context, array(
+            '@context' => array(
+                'indexLetters' => array(
+                    '@id' => 'skosmos:indexLetters',
+                    '@container' => '@list',
+                    '@language' => $request->getLang()
+                )
+            ),
+            'uri' => '',
+            'indexLetters' => $letters)
+        );
+        return $this->returnJson($ret);
+    }
+
+    /**
+     * Query for the concepts with terms starting with a given letter in the
+     * alphabetical index.
+     * @param Request $request
+     * @return object JSON-LD wrapped list of terms/concepts
+     */
+
+    public function indexConcepts($letter, $request)
+    {
+        $this->setLanguageProperties($request->getLang());
+
+        $offset_param = $request->getQueryParam('offset');
+        $offset = (is_numeric($offset_param) && $offset_param >= 0) ? $offset_param : 0;
+        $limit_param = $request->getQueryParam('limit');
+        $limit = (is_numeric($limit_param) && $limit_param >= 0) ? $limit_param : 0;
+
+        $concepts = $request->getVocab()->searchConceptsAlphabetical($letter, $limit, $offset, $request->getLang());
+
+        $ret = array_merge_recursive($this->context, array(
+            '@context' => array(
+                'indexConcepts' => array(
+                    '@id' => 'skosmos:indexConcepts',
+                    '@container' => '@list'
+                )
+            ),
+            'uri' => '',
+            'indexConcepts' => $concepts)
+        );
+        return $this->returnJson($ret);
+    }
+
     private function transformPropertyResults($uri, $lang, $objects, $propname, $propuri)
     {
         $results = array();

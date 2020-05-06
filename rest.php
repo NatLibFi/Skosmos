@@ -66,6 +66,13 @@ try {
             $controller->label($request);
         } elseif ($parts[2] == 'lookup') {
             $controller->lookup($request);
+        } elseif ($parts[2] == 'index' && sizeof($parts) == 4) {
+            $letter = $parts[3];
+            if ($letter == "") {
+                $controller->indexLetters($request);
+            } else {
+                $controller->indexConcepts($letter, $request);
+            }
         } elseif ($parts[2] == 'broader') {
             $controller->broader($request);
         } elseif ($parts[2] == 'broaderTransitive') {
