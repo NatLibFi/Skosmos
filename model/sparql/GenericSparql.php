@@ -1412,11 +1412,11 @@ EOQ;
         $fcl = $this->generateFromClause();
         $labelcondLabel = ($lang) ? "FILTER( langMatches(lang(?val), '$lang') )" : "";
         $query = <<<EOQ
-CONSTRUCT { <$uri> ?prop ?val . } $fcl
+SELECT DISTINCT ?prop ?val $fcl
 WHERE {
   <$uri> a ?type .
   <$uri> ?prop ?val .
-  VALUES ?prop { skos:altLabel skos:hiddenLabel }
+  VALUES ?prop { skos:prefLabel skos:altLabel skos:hiddenLabel }
   $labelcondLabel
 }
 EOQ;
@@ -1451,31 +1451,52 @@ EOQ;
     }
 
     /**
-     * Query for skos:altLabels and skos:hiddenLabels of a resource.
+     * Query for skos:prefLabels, skos:altLabels and skos:hiddenLabels of a resource.
      * @param string $uri
      * @param string $lang
-     * @return array array of altLabels and hiddenLabels
+     * @return array array of prefLabels, altLabels and hiddenLabels - or null if resource doesn't exist
      */
     public function queryOtherLabels($uri, $lang) {
         $query = $this->generateOtherLabelQuery($uri, $lang);
         $result = $this->query($query);
         $ret = array();
 
-        $altLabels = $result->allLiterals($uri, 'skos:altLabel');
-        $hiddenLabels = $result->allLiterals($uri, 'skos:hiddenLabel');
+        $prefLabels = array();
+        $altLabels = array();
+        $hiddenLabels = array();
 
-        if (!empty($altLabels)) {
-            $ret['altLabel'] = array();
-            foreach($altLabels as $label) {
-                $ret['altLabel'][] = $label;
+        foreach ($result as $row) {
+            switch($row->prop){
+                case 'http://www.w3.org/2004/02/skos/core#prefLabel':
+                    $prefLabels[] = $row->val;
+                    break;
+                case 'http://www.w3.org/2004/02/skos/core#altLabel':
+                    $altLabels[] = $row->val;
+                    break;
+                case 'http://www.w3.org/2004/02/skos/core#hiddenLabel':
+                    $hiddenLabels[] = $row->val;
+                    break;
+                default:
             }
         }
+        if (!empty($prefLabels)) {
+            $ret['prefLabel'] = $prefLabels;
+        }
+        if (!empty($altLabels)) {
+            $ret['altLabel'] = $altLabels;
+        }
         if (!empty($hiddenLabels)) {
-            $ret['hiddenLabel'] = array();
-            foreach($hiddenLabels as $label) {
-                $ret['hiddenLabel'][] = $label;
-            }
-        }return $ret;
+            $ret['hiddenLabel'] = $hiddenLabels;
+        }
+
+        if (sizeof($ret) > 0) {
+            // existing concept, with label(s)
+            return $ret;
+        } else {
+            // nonexistent concept
+            return null;
+        }
+
     }
 
     /**
