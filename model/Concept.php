@@ -4,7 +4,7 @@
  * Dataobject for a single concept.
  */
 
-class Concept extends VocabularyDataObject
+class Concept extends VocabularyDataObject implements Modifiable
 {
     /**
      * Stores a label string if the concept has been found through
@@ -676,16 +676,45 @@ class Concept extends VocabularyDataObject
     /**
      * @return DateTime|null the modified date, or null if not available
      */
+
     public function getModifiedDate()
     {
-        $modified = null;
+        $modifiedDate = null;
         // finding the modified properties
         /** @var \EasyRdf\Resource $modifiedResource */
         $modifiedResource = $this->resource->get('dc:modified');
         if ($modifiedResource) {
-            $modified = $modifiedResource->getValue();
+            $modifiedDate = $modifiedResource->getValue();
         }
-        return $modified;
+
+        // if the concept does not have a modified date, we look for it in its
+        // vocabulary
+        if (!$modifiedDate) {
+            $modifiedDate = $this->getVocabularyModifiedDate();
+        }
+
+        return $modifiedDate;
+    }
+
+    /**
+     * Try to locate the dc:modified resource in the vocabulary or its main concept scheme.
+     * @return string|null
+     */
+    protected function getVocabularyModifiedDate()
+    {
+        $modifiedDate = null;
+        $vocab = $this->getVocab();
+        $conceptSchemeURI = $vocab->getDefaultConceptScheme();
+        if ($conceptSchemeURI) {
+            $conceptSchemeGraph = $vocab->getConceptScheme($conceptSchemeURI);
+            if (!$conceptSchemeGraph->isEmpty()) {
+                $literal = $conceptSchemeGraph->getLiteral($conceptSchemeURI, "dc:modified");
+                if ($literal) {
+                    $modifiedDate = $literal->getValue();
+                }
+            }
+        }
+        return $modifiedDate;
     }
 
     /**
@@ -910,5 +939,10 @@ class Concept extends VocabularyDataObject
         }
         $compactJsonLD = \ML\JsonLD\JsonLD::compact($this->graph->serialise('jsonld'), json_encode($context));
         return \ML\JsonLD\JsonLD::toString($compactJsonLD);
+    }
+
+    public function isUseModifiedDate()
+    {
+        return $this->getVocab()->isUseModifiedDate();
     }
 }

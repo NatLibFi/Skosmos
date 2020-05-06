@@ -484,13 +484,13 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
   }
 
   /**
-   * @covers VocabularyConfig::getUseModifiedDate
+   * @covers VocabularyConfig::isUseModifiedDate
    */
   public function testGetVocabularyUseModifiedDate() {
     $vocab = $this->model->getVocabulary('http304');
-    $this->assertEquals(true , $vocab->getConfig()->getUseModifiedDate());
+    $this->assertEquals(true , $vocab->getConfig()->isUseModifiedDate());
     $vocab = $this->model->getVocabulary('http304disabled');
-    $this->assertEquals(false , $vocab->getConfig()->getUseModifiedDate());
+    $this->assertEquals(false , $vocab->getConfig()->isUseModifiedDate());
   }
 
   /**
@@ -501,5 +501,4 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $params = $vocab->getConfig()->getPluginParameters();
     $this->assertEquals(json_encode(array('imaginaryPlugin' => array('poem_fi' => "Roses are red", 'poem' => "Violets are blue", 'color' => "#800000")),true), $params);
   }
-
 }

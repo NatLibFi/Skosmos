@@ -85,6 +85,8 @@ class Http304Test extends TestCase
         $concept->allows([
             "getType" => ["skos:Concept"]
         ]);
+        $concept->shouldReceive("getVocab")
+            ->andReturn($this->vocab);
         $concepts[] = $concept;
         $this->vocab
             ->shouldReceive("getConceptInfo")
@@ -129,6 +131,8 @@ class Http304Test extends TestCase
         $concept->allows([
             "getType" => ["skos:Concept"]
         ]);
+        $concept->shouldReceive("getVocab")
+            ->andReturn($this->vocab);
         $concepts[] = $concept;
         $this->vocab
             ->shouldReceive("getConceptInfo")
@@ -181,6 +185,8 @@ class Http304Test extends TestCase
         $concept->allows([
             "getType" => ["skos:Concept"]
         ]);
+        $concept->shouldReceive("getVocab")
+            ->andReturn($this->vocab);
         $concepts[] = $concept;
         $this->vocab
             ->shouldReceive("getConceptInfo")

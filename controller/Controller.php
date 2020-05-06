@@ -6,6 +6,12 @@
 class Controller
 {
     /**
+     * How long to store retrieved disk configuration for HTTP 304 header
+     * from git information.
+     */
+    const GIT_MODIFIED_CONFIG_TTL = 600; // 10 minutes
+
+    /**
      * The controller has to know the model to access the data stored there.
      * @var Model $model contains the Model object.
      */
@@ -177,6 +183,126 @@ class Controller
         echo "$code $status : $message";
     }
 
+    protected function notModified(Modifiable $modifiable = null)
+    {
+        $notModified = false;
+        if ($modifiable !== null && $modifiable->isUseModifiedDate()) {
+            $modifiedDate = $this->getModifiedDate($modifiable);
+            $notModified = $this->sendNotModifiedHeader($modifiedDate);
+        }
+        return $notModified;
+    }
+
+    /**
+     * Return the modified date.
+     *
+     * @param Modifiable $modifiable
+     * @return DateTime|null
+     */
+    protected function getModifiedDate(Modifiable $modifiable = null)
+    {
+        $modified = null;
+        $modifiedDate = $modifiable->getModifiedDate();
+        $gitModifiedDate = $this->getGitModifiedDate();
+        $configModifiedDate = $this->getConfigModifiedDate();
+
+        // max with an empty list raises an error and returns bool
+        if ($modifiedDate || $gitModifiedDate || $configModifiedDate) {
+            $modified = max($modifiedDate, $gitModifiedDate, $configModifiedDate);
+        }
+        return $modified;
+    }
+
+    /**
+     * Get the concept modified date. Returns the concept modified date if available. Otherwise,
+     * reverts to the modified date of the default concept scheme if available. Lastly, if it could
+     * not get the modified date from the concept nor from the concept scheme, it returns null.
+     *
+     * @param Concept $concept concept used to retrieve modified date
+     * @return DateTime|null|string|boolean
+     */
+    protected function getConceptModifiedDate(Concept $concept = null)
+    {
+        $modifiedDate = $concept->getModifiedDate();
+        if (!$modifiedDate) {
+            $vocab = $concept->getVocab();
+            $conceptSchemeURI = $vocab->getDefaultConceptScheme();
+            if ($conceptSchemeURI) {
+                $conceptSchemeGraph = $vocab->getConceptScheme($conceptSchemeURI);
+                if (!$conceptSchemeGraph->isEmpty()) {
+                    $literal = $conceptSchemeGraph->getLiteral($conceptSchemeURI, "dc:modified");
+                    if ($literal) {
+                        $modifiedDate = $literal->getValue();
+                    }
+                }
+            }
+        }
+
+        return $modifiedDate;
+    }
+
+    /**
+     * Return the datetime of the latest commit, or null if git is not available or if the command failed
+     * to execute.
+     *
+     * @see https://stackoverflow.com/a/33986403
+     * @return DateTime|null
+     */
+    protected function getGitModifiedDate()
+    {
+        $commitDate = null;
+        $cache = $this->model->getConfig()->getCache();
+        $cacheKey = "git:modified_date";
+        $gitCommand = 'git log -1 --date=iso --pretty=format:%cd';
+        if ($cache->isAvailable()) {
+            $commitDate = $cache->fetch($cacheKey);
+            if (!$commitDate) {
+                $commitDate = $this->executeGitModifiedDateCommand($gitCommand);
+                if ($commitDate) {
+                    $cache->store($cacheKey, $commitDate, static::GIT_MODIFIED_CONFIG_TTL);
+                }
+            }
+        } else {
+            $commitDate = $this->executeGitModifiedDateCommand($gitCommand);
+        }
+        return $commitDate;
+    }
+
+    /**
+     * Execute the git command and return a parsed date time, or null if the command failed.
+     *
+     * @param string $gitCommand git command line that returns a formatted date time
+     * @return DateTime|null
+     */
+    protected function executeGitModifiedDateCommand($gitCommand)
+    {
+        $commitDate = null;
+        $commandOutput = @exec($gitCommand);
+        if ($commandOutput) {
+            $commitDate = new \DateTime(trim($commandOutput));
+            $commitDate->setTimezone(new \DateTimeZone('UTC'));
+        }
+        return $commitDate;
+    }
+
+    /**
+     * Return the datetime of the modified time of the config file. This value is read in the GlobalConfig
+     * for every request, so we simply access that value and if not null, we will return a datetime. Otherwise,
+     * we return a null value.
+     *
+     * @see http://php.net/manual/en/function.filemtime.php
+     * @return DateTime|null
+     */
+    protected function getConfigModifiedDate()
+    {
+        $dateTime = null;
+        $configModifiedTime = $this->model->getConfig()->getConfigModifiedTime();
+        if ($configModifiedTime !== null) {
+            $dateTime = (new DateTime())->setTimestamp($configModifiedTime);
+        }
+        return $dateTime;
+    }
+
     /**
      * If the $modifiedDate is a valid DateTime, and if the $_SERVER variable contains the right info, and
      * if the $modifiedDate is not more recent than the latest value in $_SERVER, then this function sets the
@@ -196,7 +322,7 @@ class Controller
         if ($modifiedDate) {
             $ifModifiedSince = $this->getIfModifiedSince();
             $this->sendHeader("Last-Modified: " . $modifiedDate->format('Y-m-d H:i:s'));
-            if (!is_null($ifModifiedSince) && $ifModifiedSince >= $modifiedDate) {
+            if ($ifModifiedSince !== null && $ifModifiedSince >= $modifiedDate) {
                 $this->sendHeader("HTTP/1.0 304 Not Modified");
                 return true;
             }

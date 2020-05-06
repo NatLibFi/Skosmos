@@ -7,6 +7,14 @@ require_once('controller/RestController.php');
 
 class RestControllerTest extends \PHPUnit\Framework\TestCase
 {
+  /**
+   * @var Model
+   */
+  private $model;
+  /**
+   * @var RestController
+   */
+  private $controller;
   protected function setUp() {
     putenv("LANGUAGE=en_GB.utf8");
     putenv("LC_ALL=en_GB.utf8");
@@ -15,7 +23,8 @@ class RestControllerTest extends \PHPUnit\Framework\TestCase
     bind_textdomain_codeset('skosmos', 'UTF-8');
     textdomain('skosmos');
 
-    $this->model = new Model(new GlobalConfig('/../tests/testconfig.ttl'));
+    $globalConfig = new GlobalConfig('/../tests/testconfig.ttl');
+    $this->model = Mockery::mock(new Model($globalConfig));
     $this->controller = new RestController($this->model);
   }
 
@@ -30,6 +39,7 @@ class RestControllerTest extends \PHPUnit\Framework\TestCase
     $request = new Request($this->model);
     $request->setQueryParam('format', 'application/json');
     $request->setURI('http://www.skosmos.skos/test/ta117');
+    $request->setVocab("test");
     $this->controller->data($request);
 
     $out = $this->getActualOutput();

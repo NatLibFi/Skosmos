@@ -201,6 +201,9 @@ class RestController extends Controller
     public function vocabularyInformation($request)
     {
         $vocab = $request->getVocab();
+        if ($this->notModified($vocab)) {
+            return null;
+        }
 
         /* encode the results in a JSON-LD compatible array */
         $conceptschemes = array();
@@ -250,6 +253,9 @@ class RestController extends Controller
      */
     public function vocabularyStatistics($request)
     {
+        if ($this->notModified($request->getVocab())) {
+            return null;
+        }
         $this->setLanguageProperties($request->getLang());
         $arrayClass = $request->getVocab()->getConfig()->getArrayClassURI();
         $groupClass = $request->getVocab()->getConfig()->getGroupClassURI();
@@ -319,6 +325,9 @@ class RestController extends Controller
      */
     public function labelStatistics($request)
     {
+        if ($this->notModified($request->getVocab())) {
+            return null;
+        }
         $lang = $request->getLang();
         $this->setLanguageProperties($request->getLang());
         $vocabStats = $request->getVocab()->getLabelStatistics();
@@ -376,6 +385,10 @@ class RestController extends Controller
         if ($vocid === null && !$request->getLang()) {
             return $this->returnError(400, "Bad Request", "lang parameter missing");
         }
+        if ($this->notModified($request->getVocab())) {
+            return null;
+        }
+
         $this->setLanguageProperties($request->getLang());
 
         $queriedtypes = $this->model->getTypes($vocid, $request->getLang());
@@ -522,6 +535,9 @@ class RestController extends Controller
     public function topConcepts($request)
     {
         $vocab = $request->getVocab();
+        if ($this->notModified($vocab)) {
+            return null;
+        }
         $scheme = $request->getQueryParam('scheme');
         if (!$scheme) {
             $scheme = $vocab->getConfig()->showConceptSchemesInHierarchy() ? array_keys($vocab->getConceptSchemes()) : $vocab->getDefaultConceptScheme();
@@ -609,6 +625,9 @@ class RestController extends Controller
     public function data($request)
     {
         $vocab = $request->getVocab();
+        if ($this->notModified($request->getVocab())) {
+            return null;
+        }
 
         if ($request->getUri()) {
             $uri = $request->getUri();
@@ -641,6 +660,9 @@ class RestController extends Controller
     {
         $this->setLanguageProperties($request->getLang());
         $vocab = $request->getVocab();
+        if ($this->notModified($vocab)) {
+            return null;
+        }
 
         $uri = $request->getUri();
         if (!$uri) {
@@ -681,6 +703,10 @@ class RestController extends Controller
     {
         if (!$request->getUri()) {
             return $this->returnError(400, "Bad Request", "uri parameter missing");
+        }
+
+        if ($this->notModified($request->getVocab())) {
+            return null;
         }
 
         $results = $request->getVocab()->getConceptLabel($request->getUri(), $request->getLang());
@@ -795,6 +821,9 @@ class RestController extends Controller
      */
     public function broader($request)
     {
+        if ($this->notModified($request->getVocab())) {
+            return null;
+        }
         $broaders = $request->getVocab()->getConceptBroaders($request->getUri(), $request->getLang());
         if ($broaders === null) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
@@ -810,6 +839,9 @@ class RestController extends Controller
      */
     public function broaderTransitive($request)
     {
+        if ($this->notModified($request->getVocab())) {
+            return null;
+        }
         $broaders = $request->getVocab()->getConceptTransitiveBroaders($request->getUri(), $this->parseLimit(), false, $request->getLang());
         if (empty($broaders)) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
@@ -825,6 +857,9 @@ class RestController extends Controller
      */
     public function narrower($request)
     {
+        if ($this->notModified($request->getVocab())) {
+            return null;
+        }
         $narrowers = $request->getVocab()->getConceptNarrowers($request->getUri(), $request->getLang());
         if ($narrowers === null) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
@@ -840,6 +875,9 @@ class RestController extends Controller
      */
     public function narrowerTransitive($request)
     {
+        if ($this->notModified($request->getVocab())) {
+            return null;
+        }
         $narrowers = $request->getVocab()->getConceptTransitiveNarrowers($request->getUri(), $this->parseLimit(), $request->getLang());
         if (empty($narrowers)) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
@@ -856,11 +894,13 @@ class RestController extends Controller
      */
     public function hierarchy($request)
     {
+        if ($this->notModified($request->getVocab())) {
+            return null;
+        }
         $results = $request->getVocab()->getConceptHierarchy($request->getUri(), $request->getLang());
         if (empty($results)) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
         }
-
 
         // set the "top" key from the "tops" key
         foreach ($results as $value) {
@@ -935,6 +975,9 @@ class RestController extends Controller
      */
     public function groups($request)
     {
+        if ($this->notModified($request->getVocab())) {
+            return null;
+        }
         $results = $request->getVocab()->listConceptGroups($request->getLang());
 
         $ret = array_merge_recursive($this->context, array(
@@ -953,6 +996,9 @@ class RestController extends Controller
      */
     public function groupMembers($request)
     {
+        if ($this->notModified($request->getVocab())) {
+            return null;
+        }
         $children = $request->getVocab()->listConceptGroupContents($request->getUri(), $request->getLang());
         if (empty($children)) {
             return $this->returnError('404', 'Not Found', "Could not find group <{$request->getUri()}>");
@@ -974,6 +1020,9 @@ class RestController extends Controller
      */
     public function children($request)
     {
+        if ($this->notModified($request->getVocab())) {
+            return null;
+        }
         $children = $request->getVocab()->getConceptChildren($request->getUri(), $request->getLang());
         if ($children === null) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
@@ -995,6 +1044,9 @@ class RestController extends Controller
      */
     public function related($request)
     {
+        if ($this->notModified($request->getVocab())) {
+            return null;
+        }
         $related = $request->getVocab()->getConceptRelateds($request->getUri(), $request->getLang());
         if ($related === null) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
