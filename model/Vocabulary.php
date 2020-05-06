@@ -634,14 +634,20 @@ class Vocabulary extends DataObject implements Modifiable
 
     public function getModifiedDate()
     {
-        $modified = null;
-        // finding the modified properties
-        /** @var \EasyRdf\Resource $modifiedResource */
-        $modifiedResource = $this->resource->get('dc:modified');
-        if ($modifiedResource) {
-            $modified = $modifiedResource->getValue();
+        $modifiedDate = null;
+
+        $conceptSchemeURI = $this->getDefaultConceptScheme();
+        if ($conceptSchemeURI) {
+            $conceptSchemeGraph = $this->getConceptScheme($conceptSchemeURI);
+            if (!$conceptSchemeGraph->isEmpty()) {
+                $literal = $conceptSchemeGraph->getLiteral($conceptSchemeURI, "dc:modified");
+                if ($literal) {
+                    $modifiedDate = $literal->getValue();
+                }
+            }
         }
-        return $modified;
+
+        return $modifiedDate;
     }
 
     public function isUseModifiedDate()
