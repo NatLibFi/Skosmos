@@ -535,4 +535,15 @@ class ConceptTest extends PHPUnit\Framework\TestCase
         $this->assertEquals($expected_time . $expected_timezone, $modifiedDate->format("c"));
     }
   }
+
+  /**
+   * @covers Concept::getModifiedDate
+   */
+  public function testGetModifiedDateFallbackToVocabularyModified() {
+    $vocab = $this->model->getVocabulary('test');
+    $results = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta111', 'en');
+    $concept = reset($results);
+    $modifiedDate = $concept->getModifiedDate();
+    $this->assertEquals(new DateTime("2014-10-01T16:29:03+00:00"), $modifiedDate);
+  }
 }

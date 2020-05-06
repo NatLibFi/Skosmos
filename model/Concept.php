@@ -684,35 +684,12 @@ class Concept extends VocabularyDataObject implements Modifiable
         $modifiedResource = $this->resource->get('dc:modified');
         if ($modifiedResource) {
             $modifiedDate = $modifiedResource->getValue();
+        } else {
+            // if the concept does not have a modified date, we look for it in its
+            // vocabulary
+            $modifiedDate = $this->getVocab()->getModifiedDate();
         }
 
-        // if the concept does not have a modified date, we look for it in its
-        // vocabulary
-        if (!$modifiedDate) {
-            $modifiedDate = $this->getVocabularyModifiedDate();
-        }
-
-        return $modifiedDate;
-    }
-
-    /**
-     * Try to locate the dc:modified resource in the vocabulary or its main concept scheme.
-     * @return string|null
-     */
-    protected function getVocabularyModifiedDate()
-    {
-        $modifiedDate = null;
-        $vocab = $this->getVocab();
-        $conceptSchemeURI = $vocab->getDefaultConceptScheme();
-        if ($conceptSchemeURI) {
-            $conceptSchemeGraph = $vocab->getConceptScheme($conceptSchemeURI);
-            if (!$conceptSchemeGraph->isEmpty()) {
-                $literal = $conceptSchemeGraph->getLiteral($conceptSchemeURI, "dc:modified");
-                if ($literal) {
-                    $modifiedDate = $literal->getValue();
-                }
-            }
-        }
         return $modifiedDate;
     }
 
