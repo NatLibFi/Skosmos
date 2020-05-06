@@ -1161,4 +1161,23 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
       $expected = array('http://example.com/myns#superProperty');
       $this->assertEquals($actual, $expected);
   }
+
+  /**
+   * @covers GenericSparql::queryOtherLabels
+   * @covers GenericSparql::generateOtherLabelQuery
+   * @covers GenericSparql::generateFromClause
+   */
+  public function testQueryOtherLabels()
+  {
+      $voc = $this->model->getVocabulary('test');
+      $graph = $voc->getGraph();
+      $sparql = new GenericSparql('http://localhost:13030/skosmos-test/sparql', $graph, $this->model);
+
+      $actual = $sparql->queryOtherLabels('http://www.skosmos.skos/test/ta112', 'en');
+
+      $this->assertTrue(array_key_exists('altLabel',$actual));
+      $this->assertEquals($actual['altLabel'][0]->getValue(), "Golden crucian");
+
+      $this->assertFalse(array_key_exists('hiddenLabel',$actual));
+  }
 }
