@@ -202,7 +202,7 @@ class Controller
     protected function getModifiedDate(Modifiable $modifiable = null)
     {
         $modified = null;
-        $modifiedDate = $modifiable->getModifiedDate();
+        $modifiedDate = $modifiable !== null ? $modifiable->getModifiedDate() : null;
         $gitModifiedDate = $this->getGitModifiedDate();
         $configModifiedDate = $this->getConfigModifiedDate();
 
@@ -285,7 +285,7 @@ class Controller
      *
      * Otherwise, it returns false.
      *
-     * @param DateTime $modifiedDate the last modified date to be compared against server's modified since information
+     * @param DateTime|null $modifiedDate the last modified date to be compared against server's modified since information
      * @return bool whether it sent the HTTP 304 not modified headers or not (useful for sending the response without
      *              further actions)
      */

@@ -678,19 +678,16 @@ class Concept extends VocabularyDataObject implements Modifiable
      */
     public function getModifiedDate()
     {
-        $modifiedDate = null;
         // finding the modified properties
         /** @var \EasyRdf\Resource $modifiedResource */
         $modifiedResource = $this->resource->get('dc:modified');
         if ($modifiedResource) {
-            $modifiedDate = $modifiedResource->getValue();
-        } else {
-            // if the concept does not have a modified date, we look for it in its
-            // vocabulary
-            $modifiedDate = $this->getVocab()->getModifiedDate();
+            return $modifiedResource->getValue();
         }
 
-        return $modifiedDate;
+        // if the concept does not have a modified date, we look for it in its
+        // vocabulary
+        return $this->getVocab()->getModifiedDate();
     }
 
     /**
