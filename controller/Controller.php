@@ -214,34 +214,6 @@ class Controller
     }
 
     /**
-     * Get the concept modified date. Returns the concept modified date if available. Otherwise,
-     * reverts to the modified date of the default concept scheme if available. Lastly, if it could
-     * not get the modified date from the concept nor from the concept scheme, it returns null.
-     *
-     * @param Concept $concept concept used to retrieve modified date
-     * @return DateTime|null|string|boolean
-     */
-    protected function getConceptModifiedDate(Concept $concept = null)
-    {
-        $modifiedDate = $concept->getModifiedDate();
-        if (!$modifiedDate) {
-            $vocab = $concept->getVocab();
-            $conceptSchemeURI = $vocab->getDefaultConceptScheme();
-            if ($conceptSchemeURI) {
-                $conceptSchemeGraph = $vocab->getConceptScheme($conceptSchemeURI);
-                if (!$conceptSchemeGraph->isEmpty()) {
-                    $literal = $conceptSchemeGraph->getLiteral($conceptSchemeURI, "dc:modified");
-                    if ($literal) {
-                        $modifiedDate = $literal->getValue();
-                    }
-                }
-            }
-        }
-
-        return $modifiedDate;
-    }
-
-    /**
      * Return the datetime of the latest commit, or null if git is not available or if the command failed
      * to execute.
      *
