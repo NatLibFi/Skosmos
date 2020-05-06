@@ -1063,4 +1063,44 @@ class RestController extends Controller
         $ret = $this->transformPropertyResults($request->getUri(), $request->getLang(), $related, "related", "skos:related");
         return $this->returnJson($ret);
     }
+
+    /**
+     * Used for querying new concepts in the vocabulary
+     * @param Request $request
+     * @return object json-ld wrapped list of changed concepts
+     */
+    public function newConcepts($request)
+    {
+        return $this->changed($request);
+    }
+
+    /**
+     * Used for querying modified concepts in the vocabulary
+     * @param Request $request
+     * @return object json-ld wrapped list of changed concepts
+     */
+    public function modifiedConcepts($request)
+    {
+        return $this->changed($request, 'dc:modified');
+    }
+
+    /**
+     * Used for querying changed concepts in the vocabulary
+     * @param Request $request
+     * @return object json-ld wrapped list of changed concepts
+     */
+    private function changed($request, $prop='dc:created')
+    {
+        // set language parameters for gettext
+        //$this->setLanguageProperties($request->getLang());
+        $vocab = $request->getVocab();
+        $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
+        $contentLang = ($request->getContentLang() != null) ? $request->getContentLang() : $request->getLang();
+        $changeList = $vocab->getChangeList($prop, $contentLang, $request->getLang(), $offset);
+
+        return $this->returnJson(array_merge_recursive($this->context,
+                                                        array('@context' => array('@language' => $request->getLang())),
+                                                        array('changeList' => $changeList)));
+
+    }
 }
