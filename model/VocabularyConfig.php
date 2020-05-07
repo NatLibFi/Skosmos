@@ -528,10 +528,9 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
-     * Returns a boolean value set in the config.ttl config.
      * @return boolean
      */
-    public function getUseModifiedDate(): bool
+    public function isUseModifiedDate()
     {
         return $this->getBoolean('skosmos:useModifiedDate', false);
     }

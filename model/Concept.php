@@ -4,7 +4,7 @@
  * Dataobject for a single concept.
  */
 
-class Concept extends VocabularyDataObject
+class Concept extends VocabularyDataObject implements Modifiable
 {
     /**
      * Stores a label string if the concept has been found through
@@ -678,14 +678,16 @@ class Concept extends VocabularyDataObject
      */
     public function getModifiedDate()
     {
-        $modified = null;
         // finding the modified properties
-        /** @var \EasyRdf\Resource $modifiedResource */
+        /** @var \EasyRdf\Resource|\EasyRdf\Literal|null $modifiedResource */
         $modifiedResource = $this->resource->get('dc:modified');
-        if ($modifiedResource) {
-            $modified = $modifiedResource->getValue();
+        if ($modifiedResource && $modifiedResource instanceof \EasyRdf\Literal\Date) {
+            return $modifiedResource->getValue();
         }
-        return $modified;
+
+        // if the concept does not have a modified date, we look for it in its
+        // vocabulary
+        return $this->getVocab()->getModifiedDate();
     }
 
     /**
@@ -910,5 +912,10 @@ class Concept extends VocabularyDataObject
         }
         $compactJsonLD = \ML\JsonLD\JsonLD::compact($this->graph->serialise('jsonld'), json_encode($context));
         return \ML\JsonLD\JsonLD::toString($compactJsonLD);
+    }
+
+    public function isUseModifiedDate()
+    {
+        return $this->getVocab()->isUseModifiedDate();
     }
 }

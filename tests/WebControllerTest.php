@@ -6,60 +6,6 @@ class WebControllerTest extends TestCase
 {
 
     /**
-     * Data for testConceptGetModifiedDate.
-     * @return array
-     */
-    public function conceptModifiedDateDataProvider()
-    {
-        return [
-            # when there is no modified date for a concept, and there is no modified date for the main concept scheme,
-            # then it returns null.
-            [
-                null, # modified date from the concept
-                null, # modified date from the main concept scheme
-                false, # is the scheme empty?
-                false, # is the literal (dc:modified) null?
-                null # expected returned modified date
-            ], # set #0
-            # when there is a modified date for a concept, it is returned immediately. Other values are unimportant.
-            [
-                $this->datetime('15-Feb-2009'), # modified date from the concept
-                null, # modified date from the main concept scheme
-                false, # is the scheme empty?
-                false, # is the literal (dc:modified) null?
-                $this->datetime('15-Feb-2009') # expected returned modified date
-            ], # set #1
-            # when there is no modified date for a concept, but there is a modified date for the main concept scheme,
-            # this last value is then returned.
-            [
-                null, # modified date from the concept
-                $this->datetime('01-Feb-2009'), # modified date from the main concept scheme
-                false, # is the scheme empty?
-                false, # is the literal (dc:modified) null?
-                $this->datetime('01-Feb-2009') # expected returned modified date
-            ], # set #2
-            # when there is no modified date for a concept, but the concept scheme is returned as empty by the model,
-            # then it returns null.
-            [
-                null, # modified date from the concept
-                $this->datetime('01-Feb-2009'), # modified date from the main concept scheme
-                true, # is the scheme empty?
-                false, # is the literal (dc:modified) null?
-                null # expected returned modified date
-            ], # set #3
-            # when there is no modified date for a concept, there is one non-empty concept scheme, but this one
-            # does not have a dc:modified literal, then it returns null
-            [
-                null, # modified date from the concept
-                $this->datetime('01-Feb-2009'), # modified date from the main concept scheme
-                false, # is the scheme empty?
-                true, # is the literal (dc:modified) null?
-                null # expected returned modified date
-            ]
-        ];
-    }
-
-    /**
      * Data for testGetGitModifiedDateCacheEnabled and for testGetConfigModifiedDate. We are able to use the
      * same data provider in two methods, as they both have similar interface and behaviour. Only difference
      * being that one retrieves the information from git, and the other from the file system, but as the
@@ -241,63 +187,16 @@ class WebControllerTest extends TestCase
         $controller = Mockery::mock('WebController')
             ->shouldAllowMockingProtectedMethods()
             ->makePartial();
-        $controller->shouldReceive('getConceptModifiedDate')
+        $modifiable = Mockery::mock('Modifiable')
+            ->shouldAllowMockingProtectedMethods()
+            ->makePartial();
+        $modifiable->shouldReceive('getModifiedDate')
             ->andReturn($concept);
         $controller->shouldReceive('getGitModifiedDate')
             ->andReturn($git);
         $controller->shouldReceive('getConfigModifiedDate')
             ->andReturn($config);
-        $concept = Mockery::mock('Concept');
-        $vocabulary = Mockery::mock('Vocabulary');
-        $returnedValue = $controller->getModifiedDate($concept, $vocabulary);
+        $returnedValue = $controller->getModifiedDate($modifiable);
         $this->assertEquals($modifiedDate, $returnedValue);
-    }
-
-    /**
-     * Test that the behaviour of getConceptModifiedDate works as expected. If there is a concept with a modified
-     * date, then it will return that value. If there is no modified date in the concept, but the main
-     * concept scheme contains a date, then the main concept scheme's modified date will be returned instead.
-     * Finally, if neither of the previous scenarios occur, then it returns null.
-     * @dataProvider conceptModifiedDateDataProvider
-     */
-    public function testConceptGetModifiedDate($conceptDate, $schemeDate, $isSchemeEmpty, $isLiteralNull, $expected)
-    {
-        $concept = Mockery::mock("Concept");
-        $concept
-            ->shouldReceive("getModifiedDate")
-            ->andReturn($conceptDate);
-        $vocab = Mockery::mock("Vocabulary");
-        // if no scheme date, we return that same value as default concept scheme to stop the flow
-        $defaultScheme = (isset($schemeDate) ? "http://test/" : null);
-        $vocab
-            ->shouldReceive("getDefaultConceptScheme")
-            ->andReturn($defaultScheme);
-        if (!is_null($schemeDate)) {
-            $scheme = Mockery::mock("ConceptScheme");
-            $vocab
-                ->shouldReceive("getConceptScheme")
-                ->andReturn($scheme);
-            $scheme
-                ->shouldReceive("isEmpty")
-                ->andReturn($isSchemeEmpty);
-            if ($isLiteralNull) {
-                $scheme
-                    ->shouldReceive("getLiteral")
-                    ->andReturn(null);
-            } else {
-                $literal = Mockery::mock();
-                $scheme
-                    ->shouldReceive("getLiteral")
-                    ->andReturn($literal);
-                $literal
-                    ->shouldReceive("getValue")
-                    ->andReturn($schemeDate);
-            }
-        }
-        $controller = Mockery::mock('WebController')
-            ->shouldAllowMockingProtectedMethods()
-            ->makePartial();
-        $date = $controller->getConceptModifiedDate($concept, $vocab);
-        $this->assertEquals($expected, $date);
     }
 }
