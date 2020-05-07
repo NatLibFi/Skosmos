@@ -238,6 +238,9 @@
               "$ref": "#/definitions/VocabularyInfo"
             }
           },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
           "404": {
             "description": "no vocabulary could be found with the requested id"
           }
@@ -275,6 +278,9 @@
             "schema": {
               "$ref": "#/definitions/TypeList"
             }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
           },
           "404": {
             "description": "no vocabulary could be found with the requested id"
@@ -318,6 +324,9 @@
             "schema": {
               "$ref": "#/definitions/TopConcepts"
             }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
           },
           "404": {
             "description": "no vocabulary could be found with the requested id"
@@ -371,6 +380,9 @@
         "responses": {
           "200": {
             "description": "the RDF data of the requested vocabulary/concept, or MARCXML if the vocabulary supports such"
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
           },
           "404": {
             "description": "no vocabulary/concept could be found with the requested id/uri"
@@ -549,6 +561,9 @@
               "$ref": "#/definitions/VocabularyStatistics"
             }
           },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
           "404": {
             "description": "no vocabulary could be found with the requested id"
           }
@@ -588,6 +603,9 @@
               "$ref": "#/definitions/LabelStatistics"
             }
           },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
           "404": {
             "description": "no vocabulary could be found with the requested id"
           }
@@ -626,6 +644,9 @@
             "schema": {
               "$ref": "#/definitions/IndexLetters"
             }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
           },
           "404": {
             "description": "no vocabulary could be found with the requested id"
@@ -718,6 +739,9 @@
               "$ref": "#/definitions/PrefAndUri"
             }
           },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
           "404": {
             "description": "no concept could be found with the requested URI"
           }
@@ -762,6 +786,9 @@
             "schema": {
               "$ref": "#/definitions/BroaderResult"
             }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
           },
           "404": {
             "description": "no concept could be found with the requested URI"
@@ -808,6 +835,9 @@
               "$ref": "#/definitions/BroaderTransitiveResult"
             }
           },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
           "404": {
             "description": "no concept could be found with the requested URI"
           }
@@ -852,6 +882,9 @@
             "schema": {
               "$ref": "#/definitions/NarrowerResult"
             }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
           },
           "404": {
             "description": "no concept could be found with the requested URI"
@@ -898,6 +931,9 @@
               "$ref": "#/definitions/NarrowerTransitiveResult"
             }
           },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
           "404": {
             "description": "no concept could be found with the requested URI"
           }
@@ -942,6 +978,9 @@
             "schema": {
               "$ref": "#/definitions/RelatedResult"
             }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
           },
           "404": {
             "description": "no concept could be found with the requested URI"
@@ -988,6 +1027,9 @@
               "$ref": "#/definitions/ChildrenResult"
             }
           },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
           "404": {
             "description": "no concept could be found with the requested URI"
           }
@@ -1026,6 +1068,9 @@
               "$ref": "#/definitions/GroupResult"
             }
           },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
           "404": {
             "description": "no vocabulary could be found with the requested id"
           }
@@ -1063,6 +1108,9 @@
             "schema": {
               "$ref": "#/definitions/GroupMembers"
             }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
           },
           "404": {
             "description": "no concept group could be found with the requested URI"
@@ -1108,6 +1156,9 @@
             "schema": {
               "$ref": "#/definitions/Hierarchy"
             }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
           },
           "404": {
             "description": "no concept group could be found with the requested URI"
