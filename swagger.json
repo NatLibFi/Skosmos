@@ -1168,6 +1168,61 @@
           "Concept-specific methods"
         ]
       }
+    },
+    "/{vocid}/mappings": {
+      "get": {
+        "summary": "Mappings associated with the requested concept",
+        "parameters": [
+          {
+            "name": "vocid",
+            "in": "path",
+            "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uri",
+            "in": "query",
+            "description": "URI of the concept whose hierarchical context to return",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "clang",
+            "in": "query",
+            "description": "content language, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "label language, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the mappings associated with the requested concept. The result is a JSKOS-compatible JSON object",
+            "schema": {
+              "$ref": "#/definitions/ConceptMappings"
+            }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
+          "404": {
+            "description": "no concept mappings could be found with the requested URI"
+          }
+        },
+        "tags": [
+          "Concept-specific methods"
+        ]
+      }
     }
   },
   "definitions": {
@@ -2016,6 +2071,133 @@
         "uri",
         "label",
         "hasChildren"
+      ]
+    },
+    "ConceptMapping": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "URI of the concept"
+        },
+        "notation": {
+          "type": "string",
+          "description": "Notation of the concept"
+        },
+        "type": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "mapping type, e.g. \"skos:exactMatch\"."
+          }
+        },
+        "prefLabel": {
+          "type": "string",
+          "description": "Preferred label of concept scheme (skos:prefLabel)"
+        },
+        "from": {
+          "type": "object",
+          "description": "The origin concept in the mapping",
+          "properties": {
+            "memberSet": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "uri": {
+                    "type": "string",
+                    "description": "URI of the concept"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "to": {
+          "type": "object",
+          "description": "The target concept in the mapping",
+          "properties": {
+            "memberSet": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "uri": {
+                    "type": "string",
+                    "description": "URI of the concept"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": {
+          "type": "string",
+          "description": "Mapping description",
+          "example": "Exactly matching concepts in another vocabulary."
+        },
+        "hrefLink": {
+          "type": "string",
+          "description": "Part of the URI of the link, used by the UI to create a href link",
+          "example": "koko/en/page/p55620"
+        },
+        "lang": {
+          "type": "string",
+          "description": "Language of the mappings returned"
+        },
+        "vocabName": {
+          "type": "string",
+          "description": "Vocabulary name"
+        },
+        "typeLabel": {
+          "type": "string",
+          "description": "Label of the type, used by the UI"
+        },
+        "fromScheme": {
+          "type": "object",
+          "description": "The origin scheme in the mapping",
+          "properties": {
+            "uri": {
+              "type": "string",
+              "description": "URI of the vocabulary"
+            }
+          }
+        },
+        "toScheme": {
+          "type": "object",
+          "description": "The target scheme in the mapping",
+          "properties": {
+            "uri": {
+              "type": "string",
+              "description": "URI of the vocabulary"
+            }
+          }
+        }
+      }
+    },
+    "ConceptMappings": {
+      "type": "object",
+      "properties": {
+        "mappings": {
+          "$ref": "#/definitions/ConceptMapping",
+          "description": "The list of mappings for the concept."
+        },
+        "graph": {
+          "type": "string",
+          "description": "Concept Graph object. Can be read back as RDF."
+        }
+      },
+      "required": [
+        "uri",
+        "type",
+        "prefLabel",
+        "from",
+        "to",
+        "description",
+        "hrefLink",
+        "lang",
+        "vocabName",
+        "typeLabel"
       ]
     }
   }
