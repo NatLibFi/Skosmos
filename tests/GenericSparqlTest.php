@@ -1163,17 +1163,17 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
   }
 
   /**
-   * @covers GenericSparql::queryOtherLabels
-   * @covers GenericSparql::generateOtherLabelQuery
+   * @covers GenericSparql::queryAllConceptLabels
+   * @covers GenericSparql::generateAllLabelsQuery
    * @covers GenericSparql::generateFromClause
    */
-  public function testQueryOtherLabels()
+  public function testQueryAllConceptLabels()
   {
       $voc = $this->model->getVocabulary('test');
       $graph = $voc->getGraph();
       $sparql = new GenericSparql('http://localhost:13030/skosmos-test/sparql', $graph, $this->model);
 
-      $actual = $sparql->queryOtherLabels('http://www.skosmos.skos/test/ta112', 'en');
+      $actual = $sparql->queryAllConceptLabels('http://www.skosmos.skos/test/ta112', 'en');
 
       $this->assertTrue(array_key_exists('altLabel',$actual));
       $this->assertEquals($actual['altLabel'][0]->getValue(), "Golden crucian");

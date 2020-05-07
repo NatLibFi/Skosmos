@@ -123,9 +123,9 @@ class Vocabulary extends DataObject implements Modifiable
      * @param string $lang
      * @return array array of altLabels
      */
-    public function getOtherConceptLabels($uri, $lang)
+    public function getAllConceptLabels($uri, $lang)
     {
-        return $this->getSparql()->queryOtherLabels($uri, $lang);
+        return $this->getSparql()->queryAllConceptLabels($uri, $lang);
     }
     /**
      * Get the localname of a concept in the vocabulary. If the URI is not

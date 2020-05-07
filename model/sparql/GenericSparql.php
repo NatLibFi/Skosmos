@@ -1408,13 +1408,12 @@ EOQ;
      * @param string $lang
      * @return string sparql query string
      */
-    private function generateOtherLabelQuery($uri, $lang) {
+    private function generateAllLabelsQuery($uri, $lang) {
         $fcl = $this->generateFromClause();
         $labelcondLabel = ($lang) ? "FILTER( langMatches(lang(?val), '$lang') )" : "";
         $query = <<<EOQ
 SELECT DISTINCT ?prop ?val $fcl
 WHERE {
-  <$uri> a ?type .
   <$uri> ?prop ?val .
   VALUES ?prop { skos:prefLabel skos:altLabel skos:hiddenLabel }
   $labelcondLabel
@@ -1456,37 +1455,17 @@ EOQ;
      * @param string $lang
      * @return array array of prefLabels, altLabels and hiddenLabels - or null if resource doesn't exist
      */
-    public function queryOtherLabels($uri, $lang) {
-        $query = $this->generateOtherLabelQuery($uri, $lang);
+    public function queryAllConceptLabels($uri, $lang) {
+        $query = $this->generateAllLabelsQuery($uri, $lang);
         $result = $this->query($query);
         $ret = array();
 
-        $prefLabels = array();
-        $altLabels = array();
-        $hiddenLabels = array();
-
         foreach ($result as $row) {
-            switch($row->prop){
-                case 'http://www.w3.org/2004/02/skos/core#prefLabel':
-                    $prefLabels[] = $row->val;
-                    break;
-                case 'http://www.w3.org/2004/02/skos/core#altLabel':
-                    $altLabels[] = $row->val;
-                    break;
-                case 'http://www.w3.org/2004/02/skos/core#hiddenLabel':
-                    $hiddenLabels[] = $row->val;
-                    break;
-                default:
+            $labelName = $row->prop->localName();
+            if (!in_array($labelName, $ret)) {
+                $ret[$labelName] = array();
             }
-        }
-        if (!empty($prefLabels)) {
-            $ret['prefLabel'] = $prefLabels;
-        }
-        if (!empty($altLabels)) {
-            $ret['altLabel'] = $altLabels;
-        }
-        if (!empty($hiddenLabels)) {
-            $ret['hiddenLabel'] = $hiddenLabels;
+            $ret[$labelName][] = $row->val;
         }
 
         if (sizeof($ret) > 0) {
