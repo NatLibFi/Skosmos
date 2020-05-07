@@ -710,31 +710,21 @@ class RestController extends Controller
         }
 
         $labelResults = $request->getVocab()->getAllConceptLabels($request->getUri(), $request->getLang());
-
         if ($labelResults === null) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
         }
 
-        $ret = array_merge_recursive($this->context, array(
-            '@context' => array('prefLabel' => 'skos:prefLabel', 'altLabel' => 'skos:altLabel', 'hiddenLabel' => 'skos:hiddenLabel', '@language' => $request->getLang()),
-            'uri' => $request->getUri())
-        );
+        if (!isset($labelResults['prefLabel']) || empty($labelResults['prefLabel'])) {
+            return $this->returnError('404', 'Not Found', "Could not find preferred label for concept <{$request->getUri()}>");
+        }
 
-        if (!empty($labelResults['prefLabel'])) {
-            $ret['prefLabel'] = $labelResults['prefLabel'][0]->getValue();
-        }
-        if (!empty($labelResults['altLabel'])) {
-            $ret['altLabel'] = array();
-            foreach ($labelResults['altLabel'] as $altResult) {
-                $ret['altLabel'][] = $altResult->getValue();
-            }
-        }
-        if (!empty($labelResults['hiddenLabel'])) {
-            $ret['hiddenLabel'] = array();
-            foreach ($labelResults['hiddenLabel'] as $hidResult) {
-                $ret['hiddenLabel'][] = $hidResult->getValue();
-            }
-        }
+        //there should be only one preferred label
+        $labelResults['prefLabel'] = $labelResults['prefLabel'][0];
+
+        $ret = array_merge_recursive($this->context,
+                                    array('@context' => array('prefLabel' => 'skos:prefLabel', 'altLabel' => 'skos:altLabel', 'hiddenLabel' => 'skos:hiddenLabel', '@language' => $request->getLang()),
+                                    'uri' => $request->getUri()),
+                                    $labelResults);
 
         return $this->returnJson($ret);
     }

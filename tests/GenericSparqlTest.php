@@ -1176,7 +1176,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
       $actual = $sparql->queryAllConceptLabels('http://www.skosmos.skos/test/ta112', 'en');
 
       $this->assertTrue(array_key_exists('altLabel',$actual));
-      $this->assertEquals($actual['altLabel'][0]->getValue(), "Golden crucian");
+      $this->assertEquals($actual['altLabel'][0], "Golden crucian");
 
       $this->assertFalse(array_key_exists('hiddenLabel',$actual));
   }

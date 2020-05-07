@@ -1462,10 +1462,7 @@ EOQ;
 
         foreach ($result as $row) {
             $labelName = $row->prop->localName();
-            if (!in_array($labelName, $ret)) {
-                $ret[$labelName] = array();
-            }
-            $ret[$labelName][] = $row->val;
+            $ret[$labelName][] = $row->val->getValue();
         }
 
         if (sizeof($ret) > 0) {
