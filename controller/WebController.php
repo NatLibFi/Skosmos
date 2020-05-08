@@ -563,7 +563,15 @@ class WebController extends Controller
         $this->setLanguageProperties($request->getLang());
         $vocab = $request->getVocab();
         $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
-        $changeList = $vocab->getChangeList($prop, $request->getContentLang(), $request->getLang(), $offset);
+        $changeList = $vocab->getChangeList($prop, $request->getContentLang(), $offset);
+
+        $bydate = array();
+        foreach($changeList as $concept) {
+            $dateTime = Punic\Calendar::toDateTime($concept['date']);
+            $concept['datestring'] = Punic\Calendar::formatDate($dateTime, 'medium', $request->getLang());
+            $bydate[Punic\Calendar::getMonthName($dateTime, 'wide', $request->getLang(), true) . Punic\Calendar::format($dateTime, ' y', $request->getLang()) ][strtolower($concept['prefLabel'])] = $concept;
+        }
+
         // load template
         $template = $this->twig->loadTemplate('changes.twig');
 
@@ -573,7 +581,7 @@ class WebController extends Controller
                 'vocab' => $vocab,
                 'languages' => $this->languages,
                 'request' => $request,
-                'changeList' => $changeList)
+                'changeList' => $bydate)
             );
     }
 

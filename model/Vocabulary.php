@@ -619,15 +619,9 @@ class Vocabulary extends DataObject implements Modifiable
      * @param string $lang UI language for the dates
      * @return Array
      */
-    public function getChangeList($prop, $clang, $lang, $offset)
+    public function getChangeList($prop, $clang, $offset)
     {
-      $changelist = $this->getSparql()->queryChangeList($clang, $offset, $prop);
-      $bydate = array();
-      foreach($changelist as $concept) {
-        $concept['datestring'] = Punic\Calendar::formatDate($concept['date'], 'medium', $lang);
-        $bydate[Punic\Calendar::getMonthName($concept['date'], 'wide', $lang, true) . Punic\Calendar::format($concept['date'], ' y', $lang) ][strtolower($concept['prefLabel'])] = $concept;
-      }
-      return $bydate;
+      return $this->getSparql()->queryChangeList($clang, $offset, $prop);
     }
 
     public function getTitle($lang=null) {

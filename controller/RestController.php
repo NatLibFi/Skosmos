@@ -1095,11 +1095,14 @@ class RestController extends Controller
         //$this->setLanguageProperties($request->getLang());
         $vocab = $request->getVocab();
         $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
-        $contentLang = ($request->getContentLang() != null) ? $request->getContentLang() : $request->getLang();
-        $changeList = $vocab->getChangeList($prop, $contentLang, $request->getLang(), $offset);
+        $changeList = $vocab->getChangeList($prop, $request->getLang(), $offset);
 
         return $this->returnJson(array_merge_recursive($this->context,
-                                                        array('@context' => array('@language' => $request->getLang())),
+                                                        array('@context' => array( '@language' => $request->getLang(),
+                                                                                     'prefLabel' => 'skos:prefLabel',
+                                                                                     'xsd' => 'http://www.w3.org/2001/XMLSchema#',
+                                                                                     'date' => array( '@id' => 'http://purl.org/dc/terms/date', '@type' => 'http://www.w3.org/2001/XMLSchema#date') )
+                                                        ),
                                                         array('changeList' => $changeList)));
 
     }
