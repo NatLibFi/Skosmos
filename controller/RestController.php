@@ -709,19 +709,20 @@ class RestController extends Controller
             return null;
         }
 
-        $results = $request->getVocab()->getConceptLabel($request->getUri(), $request->getLang());
-        if ($results === null) {
+        $labelResults = $request->getVocab()->getAllConceptLabels($request->getUri(), $request->getLang());
+        if ($labelResults === null) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
         }
 
-        $ret = array_merge_recursive($this->context, array(
-            '@context' => array('prefLabel' => 'skos:prefLabel', '@language' => $request->getLang()),
-            'uri' => $request->getUri())
-        );
-
-        if (isset($results[$request->getLang()])) {
-            $ret['prefLabel'] = $results[$request->getLang()]->getValue();
+        // there should be only one preferred label so no need for an array
+        if (array_key_exists('prefLabel', $labelResults)) {
+            $labelResults['prefLabel'] = $labelResults['prefLabel'][0];
         }
+
+        $ret = array_merge_recursive($this->context,
+                                    array('@context' => array('prefLabel' => 'skos:prefLabel', 'altLabel' => 'skos:altLabel', 'hiddenLabel' => 'skos:hiddenLabel', '@language' => $request->getLang()),
+                                    'uri' => $request->getUri()),
+                                    $labelResults);
 
         return $this->returnJson($ret);
     }

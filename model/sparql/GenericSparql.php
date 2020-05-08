@@ -1402,6 +1402,29 @@ EOQ;
         return $query;
     }
 
+
+    /**
+     * @param string $uri
+     * @param string $lang
+     * @return string sparql query string
+     */
+    private function generateAllLabelsQuery($uri, $lang) {
+        $fcl = $this->generateFromClause();
+        $labelcondLabel = ($lang) ? "FILTER( langMatches(lang(?val), '$lang') )" : "";
+        $query = <<<EOQ
+SELECT DISTINCT ?prop ?val $fcl
+WHERE {
+  <$uri> a ?type .
+  OPTIONAL {
+      <$uri> ?prop ?val .
+      $labelcondLabel
+  }
+  VALUES ?prop { skos:prefLabel skos:altLabel skos:hiddenLabel }
+}
+EOQ;
+        return $query;
+    }
+
     /**
      * Query for a label (skos:prefLabel, rdfs:label, dc:title, dc11:title) of a resource.
      * @param string $uri
@@ -1427,6 +1450,31 @@ EOQ;
             // nonexistent concept
             return null;
         }
+    }
+
+    /**
+     * Query for skos:prefLabels, skos:altLabels and skos:hiddenLabels of a resource.
+     * @param string $uri
+     * @param string $lang
+     * @return array array of prefLabels, altLabels and hiddenLabels - or null if resource doesn't exist
+     */
+    public function queryAllConceptLabels($uri, $lang) {
+        $query = $this->generateAllLabelsQuery($uri, $lang);
+        $result = $this->query($query);
+
+        if ($result->numRows() == 0) {
+            // nonexistent concept
+            return null;
+        }
+
+        $ret = array();
+        foreach ($result as $row) {
+            $labelName = $row->prop->localName();
+            if (isset($row->val)) {
+                $ret[$labelName][] = $row->val->getValue();
+            }
+        }
+        return $ret;
     }
 
     /**
