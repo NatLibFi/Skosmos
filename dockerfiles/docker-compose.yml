@@ -20,16 +20,17 @@ services:
   skosmos:
     container_name: skosmos-web
     build:
-      context: .
-      dockerfile: Dockerfile.ubuntu
+      context: ../
+      dockerfile: dockerfiles/Dockerfile.ubuntu
     ports:
       - 9090:80
     depends_on:
       - fuseki
     volumes:
       - type: bind
-        source: ./config/config-docker-compose.ttl
+        source: ../dockerfiles/config/config-docker-compose.ttl
         target: /var/www/html/config.ttl
+      - ..:/var/www/html
 
 # once the environment has been created:
 # 1. create dataset

@@ -1,7 +1,7 @@
 FROM ubuntu:18.04
 
 ARG DEBIAN_FRONTEND=noninteractive
-ARG SKOSMOS_TARGZ_RELEASE_URL=https://github.com/NatLibFi/Skosmos/archive/v2.4.tar.gz
+# ARG SKOSMOS_TARGZ_RELEASE_URL=https://github.com/NatLibFi/Skosmos/archive/v2.4.tar.gz
 
 # git is necessary for some composer packages e.g. davidstutz/bootstrap-multiselect
 RUN apt-get update && apt-get install -y \
@@ -49,7 +49,7 @@ ENV LANG=en_US.UTF-8
 # timezone
 RUN sed -i 's/;date.timezone =/date.timezone = "UTC"/g' /etc/php/7.2/apache2/php.ini
 
-COPY ./config/000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY dockerfiles/config/000-default.conf /etc/apache2/sites-available/000-default.conf
 
 RUN a2enmod rewrite
 RUN a2enmod expires
@@ -60,17 +60,19 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Install Skosmos
-RUN curl -L --output skosmos.tar.gz ${SKOSMOS_TARGZ_RELEASE_URL}
-RUN rm -rf /var/www/html/* && \
-    tar -zxvf skosmos.tar.gz -C /var/www/html/ --strip-components=1 && \
-	rm -rf /Skosmos* /skosmos.tar.gz
+# RUN curl -L --output skosmos.tar.gz ${SKOSMOS_TARGZ_RELEASE_URL}
+# RUN rm -rf /var/www/html/* && \
+#    tar -zxvf skosmos.tar.gz -C /var/www/html/ --strip-components=1 && \
+#	rm -rf /Skosmos* /skosmos.tar.gz
+
+VOLUME ["/var/www/html"]
 
 WORKDIR /var/www/html
 
 # Install Skosmos dependencies
-RUN /usr/local/bin/composer install --no-dev --no-interaction
+# RUN /usr/local/bin/composer install --no-dev --no-interaction
 
 # Configure Skosmos
-COPY config/config-docker.ttl /var/www/html/config.ttl
+COPY dockerfiles/config/config-docker.ttl /var/www/html/config.ttl
 
 CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
