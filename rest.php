@@ -97,9 +97,9 @@ try {
             $controller->groups($request);
         } elseif ($parts[2] == 'groupMembers') {
             $controller->groupMembers($request);
-        } elseif ($parts[2] == 'newConcepts') {
+        } elseif ($parts[2] == 'new') {
             $controller->newConcepts($request);
-        } elseif ($parts[2] == 'modifiedConcepts') {
+        } elseif ($parts[2] == 'modified') {
             $controller->modifiedConcepts($request);
         } else {
             header("HTTP/1.0 404 Not Found");

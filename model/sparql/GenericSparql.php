@@ -2243,7 +2243,7 @@ EOQ;
             }
 
             if (isset($row->date)) {
-                $concept['date'] = $row->date->getValue();
+                $concept['date'] = $row->date->__toString();
             }
 
             $ret[] = $concept;
