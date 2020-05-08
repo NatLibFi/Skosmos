@@ -153,7 +153,7 @@ class RestControllerTest extends \PHPUnit\Framework\TestCase
    /**
    * @covers RestController::label
    */
-  public function testOnePrefOneAltLabel() {
+  public function testLabelOnePrefOneAltLabel() {
       $request = new Request($this->model);
       $request->setQueryParam('format', 'application/json');
       $request->setURI('http://www.skosmos.skos/test/ta112');
@@ -186,7 +186,7 @@ EOD;
   /**
    * @covers RestController::label
    */
-  public function testOnePrefOneHiddenLabel() {
+  public function testLabelOnePrefOneHiddenLabel() {
       $request = new Request($this->model);
       $request->setQueryParam('format', 'application/json');
       $request->setURI('http://www.skosmos.skos/test/ta112');
@@ -219,7 +219,7 @@ EOD;
   /**
    * @covers RestController::label
    */
-  public function testOnePrefLabel() {
+  public function testLabelOnePrefLabel() {
       $request = new Request($this->model);
       $request->setQueryParam('format', 'application/json');
       $request->setURI('http://www.skosmos.skos/test/ta111');
@@ -244,6 +244,52 @@ EOD;
  }
 EOD;
       $this->assertJsonStringEqualsJsonString($expected, $out);
+  }
+
+  /**
+   * @covers RestController::label
+   */
+  public function testLabelNoPrefLabel() {
+      $request = new Request($this->model);
+      $request->setQueryParam('format', 'application/json');
+      $request->setURI('http://www.skosmos.skos/test/ta111');
+      $request->setVocab('test');
+      $request->setLang('sv');
+
+      $this->controller->label($request);
+      $out = $this->getActualOutput();
+
+      $expected = <<<EOD
+ {"@context": {
+         "skos": "http://www.w3.org/2004/02/skos/core#",
+         "uri": "@id",
+         "type": "@type",
+         "prefLabel": "skos:prefLabel",
+         "altLabel": "skos:altLabel",
+        "hiddenLabel": "skos:hiddenLabel",
+        "@language": "sv"
+     },
+    "uri": "http://www.skosmos.skos/test/ta111"
+ }
+EOD;
+      $this->assertJsonStringEqualsJsonString($expected, $out);
+  }
+
+  /**
+   * @covers RestController::label
+   */
+  public function testLabelNoConcept() {
+      $request = new Request($this->model);
+      $request->setQueryParam('format', 'application/json');
+      $request->setURI('http://www.skosmos.skos/test/nonexistent');
+      $request->setVocab('test');
+      $request->setLang('en');
+
+      $this->controller->label($request);
+      $out = $this->getActualOutput();
+
+      $expected = "404 Not Found : Could not find concept <http://www.skosmos.skos/test/nonexistent>";
+      $this->assertEquals($expected, $out);
   }
 
 }

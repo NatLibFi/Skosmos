@@ -1414,9 +1414,12 @@ EOQ;
         $query = <<<EOQ
 SELECT DISTINCT ?prop ?val $fcl
 WHERE {
-  <$uri> ?prop ?val .
+  <$uri> a ?type .
+  OPTIONAL {
+      <$uri> ?prop ?val .
+      $labelcondLabel
+  }
   VALUES ?prop { skos:prefLabel skos:altLabel skos:hiddenLabel }
-  $labelcondLabel
 }
 EOQ;
         return $query;
@@ -1458,21 +1461,20 @@ EOQ;
     public function queryAllConceptLabels($uri, $lang) {
         $query = $this->generateAllLabelsQuery($uri, $lang);
         $result = $this->query($query);
-        $ret = array();
 
-        foreach ($result as $row) {
-            $labelName = $row->prop->localName();
-            $ret[$labelName][] = $row->val->getValue();
-        }
-
-        if (sizeof($ret) > 0) {
-            // existing concept, with label(s)
-            return $ret;
-        } else {
+        if ($result->numRows() == 0) {
             // nonexistent concept
             return null;
         }
 
+        $ret = array();
+        foreach ($result as $row) {
+            $labelName = $row->prop->localName();
+            if (isset($row->val)) {
+                $ret[$labelName][] = $row->val->getValue();
+            }
+        }
+        return $ret;
     }
 
     /**

@@ -714,12 +714,10 @@ class RestController extends Controller
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
         }
 
-        if (!isset($labelResults['prefLabel']) || empty($labelResults['prefLabel'])) {
-            return $this->returnError('404', 'Not Found', "Could not find preferred label for concept <{$request->getUri()}>");
+        // there should be only one preferred label so no need for an array
+        if (array_key_exists('prefLabel', $labelResults)) {
+            $labelResults['prefLabel'] = $labelResults['prefLabel'][0];
         }
-
-        //there should be only one preferred label
-        $labelResults['prefLabel'] = $labelResults['prefLabel'][0];
 
         $ret = array_merge_recursive($this->context,
                                     array('@context' => array('prefLabel' => 'skos:prefLabel', 'altLabel' => 'skos:altLabel', 'hiddenLabel' => 'skos:hiddenLabel', '@language' => $request->getLang()),
