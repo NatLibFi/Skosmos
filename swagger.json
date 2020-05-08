@@ -143,6 +143,47 @@
         ]
       }
     },
+    "/label": {
+      "get": {
+        "summary": "List of labels for the requested concept",
+        "parameters": [
+          {
+            "name": "uri",
+            "in": "query",
+            "description": "URI of the concept whose labels to return",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "search language, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "labels for the requested concept",
+            "schema": {
+              "$ref": "#/definitions/LabelsAndUri"
+            }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
+          "404": {
+            "description": "no concept could be found with the requested URI"
+          }
+        },
+        "tags": [
+          "Global methods"
+        ]
+      }
+    },
     "/data": {
       "get": {
         "summary": "RDF data of the requested concept",
@@ -717,7 +758,7 @@
           {
             "name": "uri",
             "in": "query",
-            "description": "URI of the concept whose label to return",
+            "description": "URI of the concept whose labels to return",
             "required": true,
             "type": "string"
           },
@@ -734,7 +775,7 @@
         ],
         "responses": {
           "200": {
-            "description": "preferred label for the requested concept",
+            "description": "labels for the requested concept",
             "schema": {
               "$ref": "#/definitions/LabelsAndUri"
             }

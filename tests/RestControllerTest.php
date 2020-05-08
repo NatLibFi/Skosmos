@@ -183,6 +183,54 @@ EOD;
       $this->assertJsonStringEqualsJsonString($expected, $out);
   }
 
+   /**
+   * @covers RestController::label
+   */
+  public function testLabelGlobal() {
+      $request = new Request($this->model);
+      $request->setQueryParam('format', 'application/json');
+      $request->setURI('http://www.skosmos.skos/test/ta112');
+      $request->setLang('en');
+
+      $this->controller->label($request);
+      $out = $this->getActualOutput();
+
+      $expected = <<<EOD
+ {"@context": {
+         "skos": "http://www.w3.org/2004/02/skos/core#",
+         "uri": "@id",
+         "type": "@type",
+         "prefLabel": "skos:prefLabel",
+         "altLabel": "skos:altLabel",
+        "hiddenLabel": "skos:hiddenLabel",
+        "@language": "en"
+     },
+    "uri": "http://www.skosmos.skos/test/ta112",
+    "prefLabel": "Carp",
+    "altLabel": [
+        "Golden crucian"
+     ]
+ }
+EOD;
+      $this->assertJsonStringEqualsJsonString($expected, $out);
+  }
+
+   /**
+   * @covers RestController::label
+   */
+  public function testLabelGlobalNonexistentVocab() {
+      $request = new Request($this->model);
+      $request->setQueryParam('format', 'application/json');
+      $request->setURI('http://www.skosmos.skos/nonexistent/vocab');
+      $request->setLang('en');
+
+      $this->controller->label($request);
+      $out = $this->getActualOutput();
+
+      $expected = "404 Not Found : Could not find concept <http://www.skosmos.skos/nonexistent/vocab>";
+      $this->assertEquals($expected, $out);
+  }
+
   /**
    * @covers RestController::label
    */

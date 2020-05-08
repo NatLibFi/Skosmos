@@ -32,6 +32,8 @@ try {
         $controller->vocabularies($request);
     } elseif ($parts[1] == 'search') {
         $controller->search($request);
+    } elseif ($parts[1] == 'label') {
+        $controller->label($request);
     } elseif ($parts[1] == 'types') {
         $controller->types($request);
     } elseif ($parts[1] == 'data') {

@@ -709,7 +709,15 @@ class RestController extends Controller
             return null;
         }
 
-        $labelResults = $request->getVocab()->getAllConceptLabels($request->getUri(), $request->getLang());
+        $vocab = $request->getVocab();
+        if ($vocab === null) {
+            $vocab = $this->model->guessVocabularyFromUri($request->getUri());
+        }
+        if ($vocab === null) {
+            return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
+        }
+
+        $labelResults = $vocab->getAllConceptLabels($request->getUri(), $request->getLang());
         if ($labelResults === null) {
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
         }
