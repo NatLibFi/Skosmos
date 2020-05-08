@@ -434,7 +434,7 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
   public function testGetChangeList() {
     $vocab = $this->model->getVocabulary('changes');
     $changeList = $vocab->getChangeList('dc11:created','en', 0);
-    $expected = array ('uri' => 'http://www.skosmos.skos/changes/d3', 'prefLabel' => 'Hurr Durr', 'date' => '2010-02-12T10:26:39');
+    $expected = array ('uri' => 'http://www.skosmos.skos/changes/d3', 'prefLabel' => 'Hurr Durr', 'date' => DateTime::__set_state(array('date' => '2010-02-12 10:26:39.000000', 'timezone_type' => 3, 'timezone' => 'UTC')));
     $this->assertEquals($expected, $changeList[1]);
   }
 

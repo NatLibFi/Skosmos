@@ -4,6 +4,14 @@ use \PHPUnit\Framework\TestCase;
 
 class WebControllerTest extends TestCase
 {
+    private $controller;
+    private $model;
+
+    protected function setUp() {
+        $globalConfig = new GlobalConfig('/../tests/testconfig.ttl');
+        $this->model = Mockery::mock(new Model($globalConfig));
+        $this->controller = new WebController($this->model);
+    }
 
     /**
      * Data for testGetGitModifiedDateCacheEnabled and for testGetConfigModifiedDate. We are able to use the
@@ -199,4 +207,22 @@ class WebControllerTest extends TestCase
         $returnedValue = $controller->getModifiedDate($modifiable);
         $this->assertEquals($modifiedDate, $returnedValue);
     }
+
+    /**
+     * @covers WebController::formatChangeList
+     */
+    public function testFormatChangeList() {
+        $request = new Request($this->model);
+        $request->setVocab('changes');
+        $request->setLang('en');
+        $request->setContentLang('en');
+        $request->setQueryParam('offset', '0');
+
+        $months =$this->controller->formatChangeList($request, 'dc11:created');
+
+        $expected = array ('hurr durr' => array ('uri' => 'http://www.skosmos.skos/changes/d3', 'prefLabel' => 'Hurr Durr', 'date' => DateTime::__set_state(array('date' => '2010-02-12 10:26:39.000000', 'timezone_type' => 3, 'timezone' => 'UTC')), 'datestring' => 'Feb 12, 2010'), 'second date' => array ('uri' => 'http://www.skosmos.skos/changes/d2', 'prefLabel' => 'Second date', 'date' => DateTime::__set_state(array('date' => '2010-02-12 15:26:39.000000', 'timezone_type' => 3, 'timezone' => 'UTC')), 'datestring' => 'Feb 12, 2010'));
+        $this->assertEquals(array('December 2011', 'February 2010', 'January 2000'), array_keys($months));
+        $this->assertEquals($expected, $months['February 2010']);
+    }
+
 }

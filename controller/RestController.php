@@ -1097,13 +1097,19 @@ class RestController extends Controller
         $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
         $changeList = $vocab->getChangeList($prop, $request->getLang(), $offset);
 
+        $simpleChangeList = array();
+        foreach($changeList as $conceptInfo) {
+            $simpleChangeList[] =  array( 'uri' => $conceptInfo['uri'],
+                                           'prefLabel' => $conceptInfo['prefLabel'],
+                                           'date' => $conceptInfo['date']->format(DateTimeInterface::ISO8601) );
+        }
         return $this->returnJson(array_merge_recursive($this->context,
                                                         array('@context' => array( '@language' => $request->getLang(),
                                                                                      'prefLabel' => 'skos:prefLabel',
                                                                                      'xsd' => 'http://www.w3.org/2001/XMLSchema#',
                                                                                      'date' => array( '@id' => 'http://purl.org/dc/terms/date', '@type' => 'http://www.w3.org/2001/XMLSchema#date') )
                                                         ),
-                                                        array('changeList' => $changeList)));
+                                                        array('changeList' => $simpleChangeList)));
 
     }
 }
