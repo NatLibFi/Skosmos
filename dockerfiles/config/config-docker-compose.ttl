@@ -18,7 +18,7 @@
 :config a skosmos:Configuration ;
     # SPARQL endpoint
     # a local Fuseki server is usually on localhost:3030
-    skosmos:sparqlEndpoint <http://fuseki:3030/skosmos/sparql> ;
+    skosmos:sparqlEndpoint <http://fuseki-cache:80/skosmos/sparql> ;
     # use the dev.finto.fi endpoint where the example vocabularies reside
     # skosmos:sparqlEndpoint <http://api.dev.finto.fi/sparql> ;
     # sparql-query extension, or "Generic" for plain SPARQL 1.1
@@ -80,7 +80,7 @@
     skosmos:showTopConcepts true ;
     skosmos:fullAlphabeticalIndex true ;
     skosmos:groupClass isothes:ConceptGroup ;
-    void:sparqlEndpoint <http://fuseki:3030/skosmos/sparql> ;
+    void:sparqlEndpoint <http://fuseki-cache:80/skosmos/sparql> ;
     skosmos:sparqlGraph <http://skos.um.es/unescothes/> .
 
 :stw a skosmos:Vocabulary, void:Dataset ;
@@ -90,5 +90,5 @@
     void:uriSpace "http://zbw.eu/stw/";
     skosmos:language "en", "de";
     skosmos:defaultLanguage "de";
-    void:sparqlEndpoint <http://fuseki:3030/skosmos/sparql> ;
+    void:sparqlEndpoint <http://fuseki-cache:80/skosmos/sparql> ;
     skosmos:sparqlGraph <http://zbw.eu/stw/> .
