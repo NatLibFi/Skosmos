@@ -149,10 +149,12 @@ class Http304Test extends TestCase
             $modifiedDate = DateTime::createFromFormat('j-M-Y', '15-Feb-2009');
             $this->controller
                 ->shouldReceive("getModifiedDate")
+                ->once()
                 ->andReturn($modifiedDate);
             $this->controller
                 ->shouldReceive("sendHeader")
-                ->withArgs(["Last-Modified: " . $modifiedDate->format('Y-m-d H:i:s')])
+                ->once()
+                ->withArgs(["Last-Modified: " . $modifiedDate->format('D, d M Y H:i:s \G\M\T')])
                 ->andReturn(true);
         }
 
@@ -204,16 +206,20 @@ class Http304Test extends TestCase
             $ifModifiedSince = DateTime::createFromFormat('j-M-Y', '15-Feb-2019');
             $this->controller
                 ->shouldReceive("getModifiedDate")
+                ->once()
                 ->andReturn($modifiedDate);
             $this->controller
                 ->shouldReceive("getIfModifiedSince")
+                ->once()
                 ->andReturn($ifModifiedSince);
             $this->controller
                 ->shouldReceive("sendHeader")
-                ->withArgs(["Last-Modified: " . $modifiedDate->format('Y-m-d H:i:s')])
+                ->once()
+                ->withArgs(["Last-Modified: " . $modifiedDate->format('D, d M Y H:i:s \G\M\T')])
                 ->andReturn(true);
             $this->controller
                 ->shouldReceive("sendHeader")
+                ->once()
                 ->withArgs(["HTTP/1.0 304 Not Modified"])
                 ->andReturn(true);
         }
@@ -222,5 +228,11 @@ class Http304Test extends TestCase
         $this->controller->invokeVocabularyConcept($this->request);
         $content = ob_get_clean();
         $this->assertEquals("", $content);
+    }
+
+    public function tearDown()
+    {
+        parent::tearDown();
+        \Mockery::close();
     }
 }
