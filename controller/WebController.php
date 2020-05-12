@@ -559,7 +559,7 @@ class WebController extends Controller
      */
     public function invokeChangeList($request, $prop='dc:created')
     {
-        $bydate = $this->formatChangeList($request, $prop='dc:created');
+        $bydate = $this->formatChangeList($request, $prop);
 
         // load template
         $template = $this->twig->loadTemplate('changes.twig');
