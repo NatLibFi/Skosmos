@@ -1100,7 +1100,7 @@ class RestController extends Controller
             if (array_key_exists('date', $conceptInfo)) {
                 $simpleChangeList[] =  array( 'uri' => $conceptInfo['uri'],
                                                'prefLabel' => $conceptInfo['prefLabel'],
-                                               'date' => $conceptInfo['date']->format(DateTimeInterface::ISO8601) );
+                                               'date' => $conceptInfo['date']->format("Y-m-d\TH:i:sO") );
             }
         }
         return $this->returnJson(array_merge_recursive($this->context,
