@@ -293,7 +293,7 @@ class Controller
     {
         if ($modifiedDate) {
             $ifModifiedSince = $this->getIfModifiedSince();
-            $this->sendHeader("Last-Modified: " . $modifiedDate->format('Y-m-d H:i:s'));
+            $this->sendHeader("Last-Modified: " . $modifiedDate->format('D, d M Y H:i:s \G\M\T'));
             if ($ifModifiedSince !== null && $ifModifiedSince >= $modifiedDate) {
                 $this->sendHeader("HTTP/1.0 304 Not Modified");
                 return true;
@@ -308,9 +308,10 @@ class Controller
     protected function getIfModifiedSince()
     {
         $ifModifiedSince = null;
-        if (isset($_SERVER["HTTP_IF_MODIFIED_SINCE"])) {
-            // example value set by a browser: "2019-04-13 08:28:23"
-            $ifModifiedSince = DateTime::createFromFormat("Y-m-d H:i:s", $_SERVER["HTTP_IF_MODIFIED_SINCE"]);
+        $ifModSinceHeader = filter_input(INPUT_SERVER, 'HTTP_IF_MODIFIED_SINCE', FILTER_SANITIZE_STRING);
+        if ($ifModSinceHeader) {
+            // example value set by a browser: "Mon, 11 May 2020 10:46:57 GMT"
+            $ifModifiedSince = new DateTime($ifModSinceHeader);
         }
         return $ifModifiedSince;
     }
