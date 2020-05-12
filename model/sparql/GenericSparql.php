@@ -2211,7 +2211,7 @@ EOQ;
      * @param int $offset offset of results to retrieve; 0 for beginning of list
      * @return string sparql query
      */
-    private function generateChangeListQuery($lang, $offset, $prop) {
+    private function generateChangeListQuery($lang, $offset, $prop, $limit=200) {
         $fcl = $this->generateFromClause();
         $offset = ($offset) ? 'OFFSET ' . $offset : '';
 
@@ -2224,7 +2224,7 @@ WHERE {
   FILTER (langMatches(lang(?label), '$lang'))
 }
 ORDER BY DESC(YEAR(?date)) DESC(MONTH(?date)) LCASE(?label)
-LIMIT 200 $offset
+LIMIT $limit $offset
 EOQ;
         return $query;
     }
@@ -2261,8 +2261,8 @@ EOQ;
      * @param int $offset offset of results to retrieve; 0 for beginning of list
      * @return array Result array
      */
-    public function queryChangeList($lang, $offset, $prop) {
-        $query = $this->generateChangeListQuery($lang, $offset, $prop);
+    public function queryChangeList($lang, $offset, $prop, $limit) {
+        $query = $this->generateChangeListQuery($lang, $offset, $prop, $limit);
         $result = $this->query($query);
         return $this->transformChangeListResults($result);
     }

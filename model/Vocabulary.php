@@ -619,9 +619,9 @@ class Vocabulary extends DataObject implements Modifiable
      * @param string $lang UI language for the dates
      * @return Array
      */
-    public function getChangeList($prop, $clang, $offset)
+    public function getChangeList($prop, $clang, $offset, $limit)
     {
-      return $this->getSparql()->queryChangeList($clang, $offset, $prop);
+      return $this->getSparql()->queryChangeList($clang, $offset, $prop, $limit);
     }
 
     public function getTitle($lang=null) {

@@ -1071,7 +1071,7 @@ class RestController extends Controller
      */
     public function newConcepts($request)
     {
-        return $this->changed($request);
+        return $this->changedConcepts($request, 'dc:created');
     }
 
     /**
@@ -1081,7 +1081,7 @@ class RestController extends Controller
      */
     public function modifiedConcepts($request)
     {
-        return $this->changed($request, 'dc:modified');
+        return $this->changedConcepts($request, 'dc:modified');
     }
 
     /**
@@ -1089,11 +1089,12 @@ class RestController extends Controller
      * @param Request $request
      * @return object json-ld wrapped list of changed concepts
      */
-    private function changed($request, $prop='dc:created')
+    private function changedConcepts($request, $prop)
     {
         $vocab = $request->getVocab();
         $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
-        $changeList = $vocab->getChangeList($prop, $request->getLang(), $offset);
+        $limit = ($request->getQueryParam('limit') && is_numeric($request->getQueryParam('limit')) && $request->getQueryParam('limit') >= 0) ? $request->getQueryParam('limit') : 200;
+        $changeList = $vocab->getChangeList($prop, $request->getLang(), $offset, $limit);
 
         $simpleChangeList = array();
         foreach($changeList as $conceptInfo) {
@@ -1107,7 +1108,7 @@ class RestController extends Controller
                                                         array('@context' => array( '@language' => $request->getLang(),
                                                                                      'prefLabel' => 'skos:prefLabel',
                                                                                      'xsd' => 'http://www.w3.org/2001/XMLSchema#',
-                                                                                     'date' => array( '@id' => 'http://purl.org/dc/terms/date', '@type' => 'http://www.w3.org/2001/XMLSchema#date') )
+                                                                                     'date' => array( '@id' => 'http://purl.org/dc/terms/date', '@type' => 'http://www.w3.org/2001/XMLSchema#dateTime') )
                                                         ),
                                                         array('changeList' => $simpleChangeList)));
 
