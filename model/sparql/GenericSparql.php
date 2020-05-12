@@ -2243,7 +2243,11 @@ EOQ;
             }
 
             if (isset($row->date)) {
-                $concept['date'] = $row->date->getValue();
+                try {
+                    $concept['date'] = $row->date->getValue();
+                } catch (Exception $e) {
+                    //don't do anything to malformed dates e.g. 1986-21-00
+                }
             }
 
             $ret[] = $concept;

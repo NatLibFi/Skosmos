@@ -1091,17 +1091,17 @@ class RestController extends Controller
      */
     private function changed($request, $prop='dc:created')
     {
-        // set language parameters for gettext
-        //$this->setLanguageProperties($request->getLang());
         $vocab = $request->getVocab();
         $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
         $changeList = $vocab->getChangeList($prop, $request->getLang(), $offset);
 
         $simpleChangeList = array();
         foreach($changeList as $conceptInfo) {
-            $simpleChangeList[] =  array( 'uri' => $conceptInfo['uri'],
-                                           'prefLabel' => $conceptInfo['prefLabel'],
-                                           'date' => $conceptInfo['date']->format(DateTimeInterface::ISO8601) );
+            if (array_key_exists('date', $conceptInfo)) {
+                $simpleChangeList[] =  array( 'uri' => $conceptInfo['uri'],
+                                               'prefLabel' => $conceptInfo['prefLabel'],
+                                               'date' => $conceptInfo['date']->format(DateTimeInterface::ISO8601) );
+            }
         }
         return $this->returnJson(array_merge_recursive($this->context,
                                                         array('@context' => array( '@language' => $request->getLang(),

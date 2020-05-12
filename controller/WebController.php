@@ -559,7 +559,7 @@ class WebController extends Controller
      */
     public function invokeChangeList($request, $prop='dc:created')
     {
-        $bydate = $this->formatChangeList($request, $prop);
+        $bydate = $this->formatChangeList($request, $prop='dc:created');
 
         // load template
         $template = $this->twig->loadTemplate('changes.twig');
@@ -575,10 +575,8 @@ class WebController extends Controller
     }
 
     public function formatChangeList($request, $prop='dc:created') {
-
         // set language parameters for gettext
         $this->setLanguageProperties($request->getLang());
-
         $vocab = $request->getVocab();
         $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
         $changeList = $vocab->getChangeList($prop, $request->getContentLang(), $offset);

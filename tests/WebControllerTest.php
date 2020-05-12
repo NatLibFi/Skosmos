@@ -4,13 +4,13 @@ use \PHPUnit\Framework\TestCase;
 
 class WebControllerTest extends TestCase
 {
-    private $controller;
+    private $webController;
     private $model;
 
     protected function setUp() {
         $globalConfig = new GlobalConfig('/../tests/testconfig.ttl');
         $this->model = Mockery::mock(new Model($globalConfig));
-        $this->controller = new WebController($this->model);
+        $this->webController = new WebController($this->model);
     }
 
     /**
@@ -218,7 +218,7 @@ class WebControllerTest extends TestCase
         $request->setContentLang('en');
         $request->setQueryParam('offset', '0');
 
-        $months =$this->controller->formatChangeList($request, 'dc11:created');
+        $months =$this->webController->formatChangeList($request, 'dc11:created');
 
         $expected = array ('hurr durr' => array ('uri' => 'http://www.skosmos.skos/changes/d3', 'prefLabel' => 'Hurr Durr', 'date' => DateTime::__set_state(array('date' => '2010-02-12 10:26:39.000000', 'timezone_type' => 3, 'timezone' => 'UTC')), 'datestring' => 'Feb 12, 2010'), 'second date' => array ('uri' => 'http://www.skosmos.skos/changes/d2', 'prefLabel' => 'Second date', 'date' => DateTime::__set_state(array('date' => '2010-02-12 15:26:39.000000', 'timezone_type' => 3, 'timezone' => 'UTC')), 'datestring' => 'Feb 12, 2010'));
         $this->assertEquals(array('December 2011', 'February 2010', 'January 2000'), array_keys($months));
