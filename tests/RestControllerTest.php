@@ -340,4 +340,33 @@ EOD;
       $this->assertEquals($expected, $out);
   }
 
+  /**
+   * @covers RestController::newConcepts
+   */
+  public function testNewConcepts() {
+     $request = new Request($this->model);
+     $request->setVocab('test');
+     $request->setLang('en');
+     $request->setContentLang('en');
+     $request->setQueryParam('offset', '0');
+
+     $this->controller->modifiedConcepts($request);
+     $changeList = $this->getActualOutput();
+
+     $expected = <<<EOD
+ {"@context": {
+         "skos": "http://www.w3.org/2004/02/skos/core#",
+         "uri": "@id",
+         "type": "@type",
+         "@language": "en",
+         "prefLabel": "skos:prefLabel",
+         "xsd": "http://www.w3.org/2001/XMLSchema#",
+         "date": { "@id":"http://purl.org/dc/terms/date","@type":"http://www.w3.org/2001/XMLSchema#date" }
+     },
+    "changeList": [ { "uri":"http://www.skosmos.skos/test/ta123", "prefLabel":"multiple broaders", "date":"2014-10-01T16:29:03+0000" } ]
+ }
+EOD;
+     $this->assertJsonStringEqualsJsonString($changeList, $expected);
+
+  }
 }
