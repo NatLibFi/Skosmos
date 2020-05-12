@@ -573,14 +573,34 @@ class WebController extends Controller
                 'changeList' => $bydate)
             );
     }
-
-    public function formatChangeList($request, $prop='dc:created') {
+    /**
+     * Gets the list of newest concepts for a vocabulary according to timestamp indicated by a property
+     * @param Request $request
+     * @param string $prop the name of the property eg. 'dc:modified'.
+     * @return Array list of concepts
+     */
+    private function getChangeList($request, $prop)
+    {
         // set language parameters for gettext
         $this->setLanguageProperties($request->getLang());
+
         $vocab = $request->getVocab();
         $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
-        $changeList = $vocab->getChangeList($prop, $request->getContentLang(), $offset);
+        $limit = ($request->getQueryParam('limit') && is_numeric($request->getQueryParam('limit')) && $request->getQueryParam('limit') >= 0) ? $request->getQueryParam('limit') : 200;
 
+
+        return $vocab->getChangeList($prop, $request->getContentLang(), $offset, $limit);
+    }
+
+    /**
+    * Formats the list of concepts as labels arranged by modification month
+    * @param Request $request
+    * @param string $prop the name of the property for a time stamp
+    * @return Array list of concept labels
+    */
+    public function formatChangeList($request, $prop)
+    {
+       $changeList = $this->getChangeList($request, $prop);
         $formatByDate = array();
         foreach($changeList as $concept) {
             $concept['datestring'] = Punic\Calendar::formatDate($concept['date'], 'medium', $request->getLang());

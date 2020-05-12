@@ -361,7 +361,7 @@ EOD;
          "@language": "en",
          "prefLabel": "skos:prefLabel",
          "xsd": "http://www.w3.org/2001/XMLSchema#",
-         "date": { "@id":"http://purl.org/dc/terms/date","@type":"http://www.w3.org/2001/XMLSchema#date" }
+         "date": { "@id":"http://purl.org/dc/terms/date","@type":"http://www.w3.org/2001/XMLSchema#dateTime" }
      },
     "changeList": [ { "uri":"http://www.skosmos.skos/test/ta123", "prefLabel":"multiple broaders", "date":"2014-10-01T16:29:03+0000" } ]
  }
