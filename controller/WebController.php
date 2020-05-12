@@ -567,7 +567,7 @@ class WebController extends Controller
         // render template
         echo $template->render(
             array(
-                'vocab' => $vocab,
+                'vocab' => $request->getVocab(),
                 'languages' => $this->languages,
                 'request' => $request,
                 'changeList' => $bydate)
