@@ -1229,7 +1229,7 @@
             "type": "string"
           },
           {
-            "external": "external",
+            "name": "external",
             "in": "query",
             "description": "Indicates whether mappings to external vocabularies should be listed",
             "required": false,
