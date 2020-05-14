@@ -1032,6 +1032,71 @@
           "Concept-specific methods"
         ]
       }
+    },
+    "/{vocid}/mappings": {
+      "get": {
+        "summary": "Mappings associated with the requested concept",
+        "parameters": [
+          {
+            "name": "vocid",
+            "in": "path",
+            "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uri",
+            "in": "query",
+            "description": "URI of the concept whose hierarchical context to return",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "external": "external",
+            "in": "query",
+            "description": "Indicates whether mappings to external vocabularies should be listed",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "clang",
+            "in": "query",
+            "description": "content language, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "label language, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the mappings associated with the requested concept. The result is a JSKOS-compatible JSON object",
+            "schema": {
+              "$ref": "#/definitions/ConceptMappings"
+            }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
+          "400": {
+            "description": "URI parameter is missing"
+          },
+          "404": {
+            "description": "no concept mappings could be found with the requested URI"
+          }
+        },
+        "tags": [
+          "Concept-specific methods"
+        ]
+      }
     }
   },
   "definitions": {
