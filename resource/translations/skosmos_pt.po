@@ -1,0 +1,770 @@
+# 
+# Translators:
+# Bruno Almeida <brunoalmeida@fcsh.unl.pt>, 2020
+# Laureano Macedo <laureanomacedo@gov-madeira.pt>, 2018
+msgid ""
+msgstr ""
+"Project-Id-Version: Skosmos\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-01-16 10:26+0200\n"
+"PO-Revision-Date: 2020-05-05 09:04+0000\n"
+"Last-Translator: Bruno Almeida <brunoalmeida@fcsh.unl.pt>\n"
+"Language-Team: Portuguese (http://www.transifex.com/national-library-of-finland/skosmos/language/pt/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-SearchPath-0: view\n"
+"X-Poedit-SearchPath-1: controller\n"
+"X-Poedit-SearchPath-2: model\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+msgid "Download this vocabulary:"
+msgstr "Descarregar este vocabulário:"
+
+#: controller/Controller.php:38
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:21
+msgid "in_this_language"
+msgstr "em português"
+
+#: controller/RestController.php:271
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:125
+msgid "skos:Concept"
+msgstr "Conceito"
+
+#: controller/RestController.php:280
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:127
+msgid "skos:Collection"
+msgstr "Coleção"
+
+#: model/Concept.php:455 model/Concept.php:475
+msgid "skosmos:created"
+msgstr "Criado por"
+
+#: model/Concept.php:460 model/Concept.php:462 model/Concept.php:471
+msgid "skosmos:modified"
+msgstr "última modificação"
+
+#: model/VocabularyCategory.php:39
+msgid "Vocabularies"
+msgstr "Vocabulários"
+
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:26
+msgid "%search_count% results for '%term%'"
+msgstr "%search_count% resultados para '%term%'"
+
+#: /tmp/cache/587c83c09abaa/23/23c9862892c34daf7bea11b6d50990145b73a83c0947ae60c3d729fe591a06ec.php:48
+msgid "404 Error: The page %requested_page% cannot be found."
+msgstr "404 Erro: A página %requested_page% não foi encontrada"
+
+#: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:62
+#: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:75
+#: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:64
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:274
+#: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:68
+msgid "A-Z"
+msgstr "A-Z"
+
+#: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:46
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:19
+msgid "About"
+msgstr "Sobre"
+
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:35
+#, php-format
+msgid "All %d results displayed"
+msgstr "Mostrando todos os %d resultados"
+
+#: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:64
+#: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:77
+#: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:66
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:276
+#: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:70
+msgid "Alpha-nav"
+msgstr "Alfabético"
+
+#: /tmp/cache/587c83c09abaa/cf/cf0b3d87d2eb48f38f5f339303d5509c7535d13d7b010ad4840ee824430f7fe6.php:34
+msgid "Alphabetical index"
+msgstr "Índice alfabético"
+
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:555
+msgid "By group"
+msgstr "Por grupo"
+
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:587
+msgid "By parent"
+msgstr "Por parentesco"
+
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:477
+msgid "By scheme"
+msgstr "Por subvocabulário"
+
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:516
+msgid "By type"
+msgstr "Por tipo"
+
+#: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:119
+#: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:132
+#: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:117
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:331
+#: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:125
+msgid "Changes-nav"
+msgstr "Novo"
+
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:122
+msgid "Clear limitations"
+msgstr "Desfazer filtros"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:74
+msgid "Contact us!"
+msgstr "Contacte-nos!"
+
+#: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:108
+msgid "Content and search language"
+msgstr "Língua de pesquisa e de conteúdo"
+
+#: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:51
+msgid "Content language"
+msgstr "Língua do conteúdo"
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:732
+msgid "Download this concept in SKOS format:"
+msgstr "Descarregar este conceito:"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:144
+msgid "E-mail:"
+msgstr "Correio eletrónico: "
+
+#: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:220
+msgid "Enter search term"
+msgstr "Pesquisar termo"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:148
+msgid "Enter your e-mail address"
+msgstr "Introduza o seu correio eletrónico"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:140
+msgid "Enter your name"
+msgstr "Introduza o seu nome"
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:900
+#: /tmp/cache/587c83c13194c/5c/5c060d2297f64d66beb101ee34831f917ed8d33f97dadeca144430a1561433ec.php:69
+msgid "Error: Requested vocabulary not found!"
+msgstr "Erro: O vocabulário pedido não foi encontrado!"
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:890
+msgid "Error: Term \"%term%\" not found in vocabulary!"
+msgstr "Erro: O termo \"%term%\" não foi encontrado no vocabulário!"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:34
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:54
+#: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:194
+msgid "Feedback"
+msgstr "Comentários"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:64
+msgid "Feedback has been sent!"
+msgstr "Os comentários foram enviados!"
+
+#: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:35
+msgid "Group index"
+msgstr "Índice de grupo"
+
+#: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:101
+#: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:114
+#: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:99
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:313
+#: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:107
+msgid "Group-nav"
+msgstr "Grupos"
+
+#: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:85
+#: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:94
+#: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:83
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:297
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:55
+#: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:91
+msgid "Hier-nav"
+msgstr "Hierarquia"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:157
+msgid "Leave this field blank"
+msgstr "Deixe este campo em branco"
+
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:594
+msgid "Limit search"
+msgstr "Delimite a pesquisa"
+
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:31
+msgid "Loading"
+msgstr "A carregar"
+
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:27
+msgid "Loading more items"
+msgstr "A carregar mais itens"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:152
+msgid "Message:"
+msgstr "Mensagem:"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:136
+msgid "Name:"
+msgstr "Nome:"
+
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:23
+msgid "No results"
+msgstr "Sem resultados"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:103
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:111
+msgid "Not to a specific vocabulary"
+msgstr "Sem vocabulário específico"
+
+#: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:233
+msgid "Search"
+msgstr "Pesquisar"
+
+#: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:59
+msgid "Search from vocabulary"
+msgstr "Pesquisar no vocabulário"
+
+#: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:210
+msgid "Search language: any"
+msgstr "Qualquer língua"
+
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:340
+msgid "Search options"
+msgstr "Opções de pesquisa"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:161
+msgid "Send feedback"
+msgstr "Enviar comentários"
+
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:51
+msgid "show all # paths"
+msgstr "mostrar todos os # caminhos"
+
+msgid "show all # values"
+msgstr "mostrar todos os # valores"
+
+#: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:72
+msgid "Skosmos version %version%"
+msgstr "Versão Skosmos %version%"
+
+#: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:229
+msgid "Submit search"
+msgstr "Efetuar pesquisa"
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:68
+msgid "Thank you for your feedback"
+msgstr "Obrigado pelos seus comentários. Procuramos dar resposta a todos os comentários assim que possível."
+
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:129
+msgid "The search provided no results."
+msgstr "A pesquisa não deu resultados."
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:48
+msgid "There is no term for this concept in this language"
+msgstr "Não há termo para este conceito na língua selecionada."
+
+#: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:173
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:47
+msgid "Value is required and can not be empty"
+msgstr "Campo obrigatório"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:27
+msgid "cc:attributionName"
+msgstr "Nome de atribuição"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:29
+msgid "cc:attributionUrl"
+msgstr "URL de atribuição"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:25
+msgid "cc:license"
+msgstr "Licença"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:31
+msgid "cc:morePermissions"
+msgstr "Outras autorizações"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:33
+msgid "cc:useGuidelines"
+msgstr "regras de utilização"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:35
+msgid "dc:conformsTo"
+msgstr "Conforme com"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:37
+msgid "dc:contributor"
+msgstr "Contribuidor"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:39
+msgid "dc:coverage"
+msgstr "Cobertura"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:41
+msgid "dc:created"
+msgstr "Data de criação"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:43
+msgid "dc:creator"
+msgstr "Criador"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:45
+msgid "dc:date"
+msgstr "Data"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:47
+msgid "dc:description"
+msgstr "Descrição"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:49
+msgid "dc:format"
+msgstr "Formato"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:51
+msgid "dc:identifier"
+msgstr "Identificador"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:53
+msgid "dc:isReplacedBy"
+msgstr "É substituído por"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:55
+msgid "dc:isRequiredBy"
+msgstr "É exigido por"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:57
+msgid "dc:issued"
+msgstr "Data de publicação"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:59
+msgid "dc:language"
+msgstr "Língua"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:61
+msgid "dc:license"
+msgstr "Licença"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:63
+msgid "dc:modified"
+msgstr "Última modificação"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:65
+msgid "dc:publisher"
+msgstr "Editora"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:67
+msgid "dc:relation"
+msgstr "Relação"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:69
+msgid "dc:replaces"
+msgstr "Substitui"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:71
+msgid "dc:rights"
+msgstr "Direitos"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:73
+msgid "dc:rightsHolder"
+msgstr "Detentor dos direitos"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:75
+msgid "dc:source"
+msgstr "Fonte"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:77
+msgid "dc:source_help"
+msgstr "Fonte da descrição do conceito."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:79
+msgid "dc:spatial"
+msgstr "Cobertura espacial"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:81
+msgid "dc:subject"
+msgstr "Assunto"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:83
+msgid "dc:temporal"
+msgstr "Cobertura temporal"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:85
+msgid "dc:title"
+msgstr "Título"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:87
+msgid "dc:type"
+msgstr "Tipo"
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:36
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:256
+msgid "deprecated"
+msgstr "Este conceito foi tornado obsoleto. Não o utilizar na indexação!"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:89
+msgid "foaf:homepage"
+msgstr "Página inicial"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:91
+msgid "foaf:page"
+msgstr "Página"
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:658
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:542
+msgid "foreign prefLabel help"
+msgstr "Termos para o conceito noutras línguas."
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:660
+msgid "foreign prefLabels"
+msgstr "Em outras línguas"
+
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:39
+msgid "from all"
+msgstr "Todos"
+
+#: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:81
+#: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:90
+#: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:79
+#: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:293
+#: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:87
+msgid "hierarchy-disabled-help"
+msgstr "Os conceitos de topo da hierarquia não podem ser visualizados neste vocabulário."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:93
+msgid "isothes:ConceptGroup"
+msgstr "Grupo de conceitos"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:97
+msgid "isothes:ThesaurusArray"
+msgstr "Conjunto de conceitos coordenados"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:99
+msgid "isothes:broaderGeneric"
+msgstr "Conceitos genéricos"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:101
+msgid "isothes:broaderInstantial"
+msgstr "Conceito genérico (classe-indivíduo)"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:103
+msgid "isothes:broaderPartitive"
+msgstr "Conceito genérico (parte-todo)"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:105
+msgid "isothes:narrowerGeneric"
+msgstr "Conceitos específicos"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:107
+msgid "isothes:narrowerInstantial"
+msgstr "Conceitos específicos (classe-indivíduo)"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:109
+msgid "isothes:narrowerPartitive"
+msgstr "Conceitos específicos (parte-todo)"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:95
+msgid "isothes:superGroup"
+msgstr "Supergrupo"
+
+#: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:66
+msgid "layout designed by Hahmo"
+msgstr "layout criado por Hahmo Design"
+
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:74
+msgid "limited to group"
+msgstr "grupo"
+
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:67
+msgid "limited to parent"
+msgstr "parentesco"
+
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:81
+msgid "limited to scheme"
+msgstr "limitado ao esquema"
+
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:29
+msgid "limited to type"
+msgstr "tipo"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:113
+msgid "owl:sameAs"
+msgstr "Conceitos equivalentes"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:111
+msgid "owl:versionInfo"
+msgstr "Versão"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:115
+msgid "rdf:type"
+msgstr "Tipo"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:117
+msgid "rdf:type_help"
+msgstr "Tipo de entidade"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:123
+msgid "rdfs:comment"
+msgstr "Descrição"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:119
+msgid "rdfs:label"
+msgstr "Etiqueta"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:121
+msgid "rdfs:seeAlso"
+msgstr "Ver também"
+
+#: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:43
+msgid "selected"
+msgstr "selecionado"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:143
+msgid "skos:altLabel"
+msgstr "Termos não preferenciais"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:179
+msgid "skos:altLabel_help"
+msgstr "Termos alternativos para o conceito."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:133
+msgid "skos:broadMatch"
+msgstr "Conceitos superordenados correspondentes"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:191
+msgid "skos:broadMatch_help"
+msgstr "Conceitos mais amplos noutro vocabulário."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:129
+msgid "skos:broader"
+msgstr "Conceito superordenado"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:171
+msgid "skos:broader_help"
+msgstr "Conceito mais amplo na hierarquia."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:169
+msgid "skos:changeNote"
+msgstr "Nota de alteração"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:147
+msgid "skos:closeMatch"
+msgstr "Conceitos próximos correspondentes"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:189
+msgid "skos:closeMatch_help"
+msgstr "Conceitos próximos noutro vocabulário."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:161
+msgid "skos:definition"
+msgstr "Definição"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:185
+msgid "skos:definition_help"
+msgstr "Enunciado explicativo do conceito."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:167
+msgid "skos:editorialNote"
+msgstr "Nota editorial"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:145
+msgid "skos:exactMatch"
+msgstr "Conceitos equivalentes correspondentes"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:187
+msgid "skos:exactMatch_help"
+msgstr "Conceitos equivalentes noutro vocabulário."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:163
+msgid "skos:example"
+msgstr "Exemplo"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:155
+msgid "skos:hasTopConcept"
+msgstr "Tem conceito de topo"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:165
+msgid "skos:historyNote"
+msgstr "Nota de historial"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:151
+msgid "skos:inScheme"
+msgstr "Esquema de conceitos"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:149
+msgid "skos:member"
+msgstr "Membros do grupo"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:181
+msgid "skos:member_help"
+msgstr "Membros do grupo de conceitos."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:135
+msgid "skos:narrowMatch"
+msgstr "Conceitos subordinados correspondentes"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:193
+msgid "skos:narrowMatch_help"
+msgstr "Conceitos mais restritos noutro vocabulário."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:131
+msgid "skos:narrower"
+msgstr "Conceitos subordinados"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:173
+msgid "skos:narrower_help"
+msgstr "Conceitos mais restritos na hierarquia."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:157
+msgid "skos:note"
+msgstr "Nota"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:175
+msgid "skos:note_help"
+msgstr "Notas sobre o conceito."
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:234
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:141
+msgid "skos:prefLabel"
+msgstr "Termo preferencial"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:137
+msgid "skos:related"
+msgstr "Conceitos associados"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:139
+msgid "skos:relatedMatch"
+msgstr "Conceitos associados correspondentes"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:183
+msgid "skos:related_help"
+msgstr "Conceitos relacionados."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:159
+msgid "skos:scopeNote"
+msgstr "Nota de âmbito"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:177
+msgid "skos:scopeNote_help"
+msgstr "Notas sobre o uso e âmbito do conceito."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:153
+msgid "skos:topConceptOf"
+msgstr "Pertence ao vocabulário"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:197
+msgid "skosext:DeprecatedConcept"
+msgstr "Conceito obsoleto"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:195
+msgid "skosext:partOf"
+msgstr "É parte de"
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:199
+msgid "skosext:partOf_help"
+msgstr "O todo do qual o conceito faz parte."
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:548
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:201
+#: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:449
+msgid "skosmos:memberOf"
+msgstr "Pertence ao grupo"
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:611
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:205
+msgid "skosmos:memberOfArray"
+msgstr "Pertence ao conjunto coordenado"
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:609
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:207
+msgid "skosmos:memberOfArray_help"
+msgstr "Conjunto coordenado do qual o conceito faz parte."
+
+#: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:546
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:203
+msgid "skosmos:memberOf_help"
+msgstr "Grupo do qual o conceito faz parte."
+
+#: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:23
+msgid "zxx-x-taxon"
+msgstr "Nome científico"
+
+#: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:168
+msgid "About page"
+msgstr "Sobre"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:138
+msgid "Alternate terms"
+msgstr "Termos não preferenciais"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:130
+msgid "Concept language"
+msgstr "Língua"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:118
+msgid "Count"
+msgstr "Número"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:157
+msgid "Download this vocabulary as SKOS/RDF:"
+msgstr "Descarregar este vocabulário como SKOS/RDF:"
+
+#: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:205
+msgid "Help"
+msgstr "Ajuda"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:142
+msgid "Hidden terms"
+msgstr "Termos ocultos"
+
+#: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:58
+msgid "Interface language"
+msgstr "Idioma"
+
+#: /tmp/cache/587c83c13194c/f9/f9c816822168f230ef0bfed735f5923aab99d389ce8b2c6b2f5fcd5d400bc275.php:26
+msgid "No vocabularies on the server!"
+msgstr "Não existem vocabulários no servidor!"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:134
+msgid "Preferred terms"
+msgstr "Termos preferenciais"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:111
+msgid "Resource counts by type"
+msgstr "Número de entradas por tipo"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:124
+msgid "Term counts by language"
+msgstr "Número de termos por língua"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:116
+msgid "Type"
+msgstr "Tipo"
+
+#: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:146
+msgid "Vocabularies-nav"
+msgstr "Vocabulários"
+
+#: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:24
+msgid "Vocabulary information"
+msgstr "Informação do vocabulário"
+
+#: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:199
+msgid "helper_help"
+msgstr "Passe com o cursor por cima do texto sublinhado para ver informações sobre a propriedade."
+
+#: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:201
+msgid "search_example_text"
+msgstr "Para pesquisa com truncatura, utilize o símbolo * como, p. ex., em *medieval ou *social*. A pesquisa utiliza automaticamente a truncatura em final de palavra, mesmo que o símbolo não seja introduzido: hist dará os mesmos resultados que hist*."
+
+msgid "feedback_enter_name_email"
+msgstr "Introduza o seu nome e correio eletrónico se deseja receber uma resposta direta. Também pode submeter os seus comentários anonimamente. Nota: os comentários sobre vocabulários específicos são referidos diretamente ao seu administrador."
+
+msgid "concept_types"
+msgstr "Tipos de conceitos"

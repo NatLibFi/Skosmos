@@ -32,6 +32,8 @@ try {
         $controller->vocabularies($request);
     } elseif ($parts[1] == 'search') {
         $controller->search($request);
+    } elseif ($parts[1] == 'label') {
+        $controller->label($request);
     } elseif ($parts[1] == 'types') {
         $controller->types($request);
     } elseif ($parts[1] == 'data') {
@@ -66,6 +68,13 @@ try {
             $controller->label($request);
         } elseif ($parts[2] == 'lookup') {
             $controller->lookup($request);
+        } elseif ($parts[2] == 'index' && sizeof($parts) == 4) {
+            $letter = $parts[3];
+            if ($letter == "") {
+                $controller->indexLetters($request);
+            } else {
+                $controller->indexConcepts($letter, $request);
+            }
         } elseif ($parts[2] == 'broader') {
             $controller->broader($request);
         } elseif ($parts[2] == 'broaderTransitive') {

@@ -2,6 +2,9 @@
 
 class ConceptTest extends PHPUnit\Framework\TestCase
 {
+  /**
+   * @var Model
+   */
   private $model;
   private $concept;
   private $cbdVocab;
@@ -279,10 +282,9 @@ class ConceptTest extends PHPUnit\Framework\TestCase
    * @covers Concept::getDate
    * @covers ConceptProperty::getValues
    * @covers ConceptPropertyValueLiteral::getLabel
-   * @expectedException PHPUnit\Framework\Error\Error
    */
-
   public function testGetTimestampInvalidWarning() {
+    $this->expectException(PHPUnit\Framework\Error\Error::class);
     $vocab = $this->model->getVocabulary('test');
     $concepts = $vocab->getConceptInfo("http://www.skosmos.skos/test/ta114", "en");
     $concept = $concepts[0];
@@ -507,7 +509,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
   public function modifiedDateDataProvider() {
     return [
       ["cat", "2018-12-13T06:28:14", "+00:00"],  # set #0
-      ["dog", null, null],  # set #1
+      ["dog", "2018-12-13T06:28:14", "+00:00"],  # set #1
       ["owl", "2018-10-22T00:00:00", "+00:00"],  # set #2
       ["parrot", "2018-10-22T00:00:00", "+00:00"],  # set #3
       ["macaw", "2018-10-22T12:34:45", "+00:00"],  # set #4
@@ -518,6 +520,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
   /**
    * @covers Concept::getModifiedDate
    * @dataProvider modifiedDateDataProvider
+   * @throws Exception if it fails to load the vocabulary
    */
   public function testGetModifiedDate($animal, $expected_time, $expected_timezone) {
     $vocab = $this->model->getVocabulary('http304');
@@ -530,5 +533,16 @@ class ConceptTest extends PHPUnit\Framework\TestCase
         $modifiedDate = $concept->getModifiedDate();
         $this->assertEquals($expected_time . $expected_timezone, $modifiedDate->format("c"));
     }
+  }
+
+  /**
+   * @covers Concept::getModifiedDate
+   */
+  public function testGetModifiedDateFallbackToVocabularyModified() {
+    $vocab = $this->model->getVocabulary('test');
+    $results = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta111', 'en');
+    $concept = reset($results);
+    $modifiedDate = $concept->getModifiedDate();
+    $this->assertEquals(new DateTime("2014-10-01T16:29:03+00:00"), $modifiedDate);
   }
 }

@@ -143,6 +143,47 @@
         ]
       }
     },
+    "/label": {
+      "get": {
+        "summary": "List of labels for the requested concept",
+        "parameters": [
+          {
+            "name": "uri",
+            "in": "query",
+            "description": "URI of the concept whose labels to return",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "search language, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "labels for the requested concept",
+            "schema": {
+              "$ref": "#/definitions/LabelsAndUri"
+            }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
+          "404": {
+            "description": "no concept could be found with the requested URI"
+          }
+        },
+        "tags": [
+          "Global methods"
+        ]
+      }
+    },
     "/data": {
       "get": {
         "summary": "RDF data of the requested concept",
@@ -238,6 +279,9 @@
               "$ref": "#/definitions/VocabularyInfo"
             }
           },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
           "404": {
             "description": "no vocabulary could be found with the requested id"
           }
@@ -275,6 +319,9 @@
             "schema": {
               "$ref": "#/definitions/TypeList"
             }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
           },
           "404": {
             "description": "no vocabulary could be found with the requested id"
@@ -319,6 +366,9 @@
               "$ref": "#/definitions/TopConcepts"
             }
           },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
           "404": {
             "description": "no vocabulary could be found with the requested id"
           }
@@ -353,24 +403,27 @@
             "required": false,
             "type": "string"
           },
-	  {
+          {
             "name": "lang",
             "in": "query",
             "description": "RDF language code when the requested resource for the MIME type is language specific, e.g. \"fi\" or \"en\".",
             "required": false,
             "type": "string"
-	  }
+          }
         ],
         "produces": [
           "application/rdf+xml",
           "text/turtle",
           "application/ld+json",
           "application/json",
-	  "application/marcxml+xml"
+          "application/marcxml+xml"
         ],
         "responses": {
           "200": {
             "description": "the RDF data of the requested vocabulary/concept, or MARCXML if the vocabulary supports such"
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
           },
           "404": {
             "description": "no vocabulary/concept could be found with the requested id/uri"
@@ -549,6 +602,9 @@
               "$ref": "#/definitions/VocabularyStatistics"
             }
           },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
           "404": {
             "description": "no vocabulary could be found with the requested id"
           }
@@ -588,6 +644,97 @@
               "$ref": "#/definitions/LabelStatistics"
             }
           },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
+          "404": {
+            "description": "no vocabulary could be found with the requested id"
+          }
+        },
+        "tags": [
+          "Vocabulary-specific methods"
+        ]
+      }
+    },
+    "/{vocid}/index/": {
+      "get": {
+        "summary": "Initial letters of the alphabetical index",
+        "description": "Returns a list of the initial letters of labels (skos:prefLabel, skos:altLabel) in the given language, or the default language of the vocabulary. The special value \"0-9\" indicates the presence of labels starting with a number and the value \"!*\" indicates labels starting with a special character.",
+        "parameters": [
+          {
+            "name": "vocid",
+            "in": "path",
+            "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "language of labels, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "initial letters of the alphabetical index",
+            "schema": {
+              "$ref": "#/definitions/IndexLetters"
+            }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
+          "404": {
+            "description": "no vocabulary could be found with the requested id"
+          }
+        },
+        "tags": [
+          "Vocabulary-specific methods"
+        ]
+      }
+    },
+    "/{vocid}/index/{letter}": {
+      "get": {
+        "summary": "Concepts for a given letter in the alphabetical index",
+        "description": "Returns a list of the concepes which have a label (skos:prefLabel or skos:altLabel) starting with the given letter in the given language, or the default language of the vocabulary. The special value \"0-9\" matches labels starting with a number and the value \"!*\" matches labels starting with a special character.",
+        "parameters": [
+          {
+            "name": "vocid",
+            "in": "path",
+            "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "letter",
+            "in": "path",
+            "description": "an initial letter, or one of the special values \"0-9 or \"!*\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "language of labels, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "concepts of the alphabetical index",
+            "schema": {
+              "$ref": "#/definitions/IndexConcepts"
+            }
+          },
           "404": {
             "description": "no vocabulary could be found with the requested id"
           }
@@ -599,7 +746,7 @@
     },
     "/{vocid}/label": {
       "get": {
-        "summary": "Preferred label for the requested concept",
+        "summary": "List of labels for the requested concept",
         "parameters": [
           {
             "name": "vocid",
@@ -611,7 +758,7 @@
           {
             "name": "uri",
             "in": "query",
-            "description": "URI of the concept whose label to return",
+            "description": "URI of the concept whose labels to return",
             "required": true,
             "type": "string"
           },
@@ -628,10 +775,13 @@
         ],
         "responses": {
           "200": {
-            "description": "preferred label for the requested concept",
+            "description": "labels for the requested concept",
             "schema": {
-              "$ref": "#/definitions/PrefAndUri"
+              "$ref": "#/definitions/LabelsAndUri"
             }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
           },
           "404": {
             "description": "no concept could be found with the requested URI"
@@ -678,6 +828,9 @@
               "$ref": "#/definitions/BroaderResult"
             }
           },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
           "404": {
             "description": "no concept could be found with the requested URI"
           }
@@ -722,6 +875,9 @@
             "schema": {
               "$ref": "#/definitions/BroaderTransitiveResult"
             }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
           },
           "404": {
             "description": "no concept could be found with the requested URI"
@@ -768,6 +924,9 @@
               "$ref": "#/definitions/NarrowerResult"
             }
           },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
           "404": {
             "description": "no concept could be found with the requested URI"
           }
@@ -812,6 +971,9 @@
             "schema": {
               "$ref": "#/definitions/NarrowerTransitiveResult"
             }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
           },
           "404": {
             "description": "no concept could be found with the requested URI"
@@ -858,6 +1020,9 @@
               "$ref": "#/definitions/RelatedResult"
             }
           },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
           "404": {
             "description": "no concept could be found with the requested URI"
           }
@@ -903,6 +1068,9 @@
               "$ref": "#/definitions/ChildrenResult"
             }
           },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
           "404": {
             "description": "no concept could be found with the requested URI"
           }
@@ -941,6 +1109,9 @@
               "$ref": "#/definitions/GroupResult"
             }
           },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
           "404": {
             "description": "no vocabulary could be found with the requested id"
           }
@@ -978,6 +1149,9 @@
             "schema": {
               "$ref": "#/definitions/GroupMembers"
             }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
           },
           "404": {
             "description": "no concept group could be found with the requested URI"
@@ -1023,6 +1197,9 @@
             "schema": {
               "$ref": "#/definitions/Hierarchy"
             }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
           },
           "404": {
             "description": "no concept group could be found with the requested URI"
@@ -1359,6 +1536,71 @@
         "result"
       ]
     },
+    "IndexLetters": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "indexLetters": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "A",
+            "B",
+            "C",
+            "0-9",
+            "!*"
+          ]
+        }
+      },
+      "required": [
+        "uri",
+        "indexLetters"
+      ]
+    },
+    "IndexConcepts": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "indexConcepts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/IndexConcept"
+          }
+        }
+      },
+      "required": [
+        "uri",
+        "indexLetters"
+      ]
+    },
+    "IndexConcept": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "prefLabel": {
+          "type": "string"
+        },
+        "altLabel": {
+          "type": "string"
+        },
+        "lang": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "uri",
+        "prefLabel",
+        "lang"
+      ]
+    },
     "VocabularyStatistics": {
       "type": "object",
       "properties": {
@@ -1492,6 +1734,37 @@
         "prefLabel": {
           "type": "string",
           "description": "Preferred label of concept"
+        }
+      },
+      "required": [
+        "uri",
+        "prefLabel"
+      ]
+    },
+    "LabelsAndUri": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "URI of the concept"
+        },
+        "prefLabel": {
+          "type": "string",
+          "description": "Preferred label of concept"
+        },
+        "altLabel": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Alternative labels for the concept"
+          }
+        },
+        "hiddenLabel": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Hidden labels for the concept"
+          }
         }
       },
       "required": [
@@ -1880,6 +2153,133 @@
         "uri",
         "label",
         "hasChildren"
+      ]
+    },
+    "ConceptMapping": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "URI of the concept"
+        },
+        "notation": {
+          "type": "string",
+          "description": "Notation of the concept"
+        },
+        "type": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "mapping type, e.g. \"skos:exactMatch\"."
+          }
+        },
+        "prefLabel": {
+          "type": "string",
+          "description": "Preferred label of concept scheme (skos:prefLabel)"
+        },
+        "from": {
+          "type": "object",
+          "description": "The origin concept in the mapping",
+          "properties": {
+            "memberSet": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "uri": {
+                    "type": "string",
+                    "description": "URI of the concept"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "to": {
+          "type": "object",
+          "description": "The target concept in the mapping",
+          "properties": {
+            "memberSet": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "uri": {
+                    "type": "string",
+                    "description": "URI of the concept"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": {
+          "type": "string",
+          "description": "Mapping description",
+          "example": "Exactly matching concepts in another vocabulary."
+        },
+        "hrefLink": {
+          "type": "string",
+          "description": "Part of the URI of the link, used by the UI to create a href link",
+          "example": "koko/en/page/p55620"
+        },
+        "lang": {
+          "type": "string",
+          "description": "Language of the mappings returned"
+        },
+        "vocabName": {
+          "type": "string",
+          "description": "Vocabulary name"
+        },
+        "typeLabel": {
+          "type": "string",
+          "description": "Label of the type, used by the UI"
+        },
+        "fromScheme": {
+          "type": "object",
+          "description": "The origin scheme in the mapping",
+          "properties": {
+            "uri": {
+              "type": "string",
+              "description": "URI of the vocabulary"
+            }
+          }
+        },
+        "toScheme": {
+          "type": "object",
+          "description": "The target scheme in the mapping",
+          "properties": {
+            "uri": {
+              "type": "string",
+              "description": "URI of the vocabulary"
+            }
+          }
+        }
+      }
+    },
+    "ConceptMappings": {
+      "type": "object",
+      "properties": {
+        "mappings": {
+          "$ref": "#/definitions/ConceptMapping",
+          "description": "The list of mappings for the concept."
+        },
+        "graph": {
+          "type": "string",
+          "description": "Concept Graph object. Can be read back as RDF."
+        }
+      },
+      "required": [
+        "uri",
+        "type",
+        "prefLabel",
+        "from",
+        "to",
+        "description",
+        "hrefLink",
+        "lang",
+        "vocabName",
+        "typeLabel"
       ]
     }
   }

@@ -7,6 +7,14 @@ require_once('controller/RestController.php');
 
 class RestControllerTest extends \PHPUnit\Framework\TestCase
 {
+  /**
+   * @var Model
+   */
+  private $model;
+  /**
+   * @var RestController
+   */
+  private $controller;
   protected function setUp() {
     putenv("LANGUAGE=en_GB.utf8");
     putenv("LC_ALL=en_GB.utf8");
@@ -15,7 +23,8 @@ class RestControllerTest extends \PHPUnit\Framework\TestCase
     bind_textdomain_codeset('skosmos', 'UTF-8');
     textdomain('skosmos');
 
-    $this->model = new Model(new GlobalConfig('/../tests/testconfig.ttl'));
+    $globalConfig = new GlobalConfig('/../tests/testconfig.ttl');
+    $this->model = Mockery::mock(new Model($globalConfig));
     $this->controller = new RestController($this->model);
   }
 
@@ -30,6 +39,7 @@ class RestControllerTest extends \PHPUnit\Framework\TestCase
     $request = new Request($this->model);
     $request->setQueryParam('format', 'application/json');
     $request->setURI('http://www.skosmos.skos/test/ta117');
+    $request->setVocab("test");
     $this->controller->data($request);
 
     $out = $this->getActualOutput();
@@ -65,4 +75,269 @@ class RestControllerTest extends \PHPUnit\Framework\TestCase
 
     $this->assertJsonStringEqualsJsonString('{"@context":{"skos":"http:\/\/www.w3.org\/2004\/02\/skos\/core#","isothes":"http:\/\/purl.org\/iso25964\/skos-thes#","onki":"http:\/\/schema.onki.fi\/onki#","uri":"@id","type":"@type","results":{"@id":"onki:results","@container":"@list"},"prefLabel":"skos:prefLabel","altLabel":"skos:altLabel","hiddenLabel":"skos:hiddenLabel","broader":"skos:broader","relatedMatch":"skos:relatedMatch"},"uri":"","results":[{"uri":"http:\/\/www.skosmos.skos\/test\/ta117","type":["skos:Concept","meta:TestClass"],"broader":[{"uri":"http:\/\/www.skosmos.skos\/test\/ta1"}],"relatedMatch":[{"uri":"http:\/\/www.skosmos.skos\/test\/ta115"}],"prefLabel":"3D Bass","lang":"en","vocab":"test"},{"uri":"http:\/\/www.skosmos.skos\/test\/ta116","type":["skos:Concept","meta:TestClass"],"broader":[{"uri":"http:\/\/www.skosmos.skos\/test\/ta1"}],"prefLabel":"Bass","lang":"en","vocab":"test"},{"uri":"http:\/\/www.skosmos.skos\/test\/ta122","type":["skos:Concept","meta:TestClass"],"broader":[{"uri":"http:\/\/www.skosmos.skos\/test\/ta116"}],"prefLabel":"Black sea bass","lang":"en","vocab":"test"}]}', $out);
   }
+
+  /**
+   * @covers RestController::indexLetters
+   */
+  public function testIndexLettersJsonLd() {
+    $request = new Request($this->model);
+    $request->setVocab('test');
+    $request->setLang('en');
+    $this->controller->indexLetters($request);
+
+    $out = $this->getActualOutput();
+
+    $this->assertJsonStringEqualsJsonString('{"@context":{"skos":"http:\/\/www.w3.org\/2004\/02\/skos\/core#","uri":"@id","type":"@type","indexLetters":{"@id":"skosmos:indexLetters","@container":"@list","@language":"en"}},"uri":"","indexLetters":["B","C","E","F","M","T","!*","0-9"]}', $out);
+  }
+
+  /**
+   * @covers RestController::indexConcepts
+   */
+  public function testIndexConceptsJsonLd() {
+    $request = new Request($this->model);
+    $request->setVocab('test');
+    $request->setLang('en');
+    $this->controller->indexConcepts("B", $request);
+
+    $out = $this->getActualOutput();
+
+    $this->assertJsonStringEqualsJsonString('{"@context":{"skos":"http:\/\/www.w3.org\/2004\/02\/skos\/core#","uri":"@id","type":"@type","indexConcepts":{"@id":"skosmos:indexConcepts","@container":"@list"}},"uri":"","indexConcepts":[{"uri":"http:\/\/www.skosmos.skos\/test\/ta116","localname":"ta116","prefLabel":"Bass","lang":"en"},{"uri":"http:\/\/www.skosmos.skos\/test\/ta122","localname":"ta122","prefLabel":"Black sea bass","lang":"en"},{"uri":"http:\/\/www.skosmos.skos\/test\/ta114","localname":"ta114","prefLabel":"Buri","lang":"en"}]}', $out);
+  }
+
+  /**
+   * @covers RestController::indexConcepts
+   */
+  public function testIndexConceptsJsonLdLimit() {
+    $request = new Request($this->model);
+    $request->setVocab('test');
+    $request->setLang('en');
+    $request->setQueryParam('limit', '2');
+    $this->controller->indexConcepts("B", $request);
+
+    $out = $this->getActualOutput();
+
+    $this->assertJsonStringEqualsJsonString('{"@context":{"skos":"http:\/\/www.w3.org\/2004\/02\/skos\/core#","uri":"@id","type":"@type","indexConcepts":{"@id":"skosmos:indexConcepts","@container":"@list"}},"uri":"","indexConcepts":[{"uri":"http:\/\/www.skosmos.skos\/test\/ta116","localname":"ta116","prefLabel":"Bass","lang":"en"},{"uri":"http:\/\/www.skosmos.skos\/test\/ta122","localname":"ta122","prefLabel":"Black sea bass","lang":"en"}]}', $out);
+  }
+
+  /**
+   * @covers RestController::indexConcepts
+   */
+  public function testIndexConceptsJsonLdOffset() {
+    $request = new Request($this->model);
+    $request->setVocab('test');
+    $request->setLang('en');
+    $request->setQueryParam('offset', '1');
+    $this->controller->indexConcepts("B", $request);
+
+    $out = $this->getActualOutput();
+
+    $this->assertJsonStringEqualsJsonString('{"@context":{"skos":"http:\/\/www.w3.org\/2004\/02\/skos\/core#","uri":"@id","type":"@type","indexConcepts":{"@id":"skosmos:indexConcepts","@container":"@list"}},"uri":"","indexConcepts":[{"uri":"http:\/\/www.skosmos.skos\/test\/ta122","localname":"ta122","prefLabel":"Black sea bass","lang":"en"},{"uri":"http:\/\/www.skosmos.skos\/test\/ta114","localname":"ta114","prefLabel":"Buri","lang":"en"}]}', $out);
+  }
+
+  /**
+   * @covers RestController::indexConcepts
+   */
+  public function testIndexConceptsJsonLdLimitOffset() {
+    $request = new Request($this->model);
+    $request->setVocab('test');
+    $request->setLang('en');
+    $request->setQueryParam('limit', '1');
+    $request->setQueryParam('offset', '1');
+    $this->controller->indexConcepts("B", $request);
+
+    $out = $this->getActualOutput();
+
+    $this->assertJsonStringEqualsJsonString('{"@context":{"skos":"http:\/\/www.w3.org\/2004\/02\/skos\/core#","uri":"@id","type":"@type","indexConcepts":{"@id":"skosmos:indexConcepts","@container":"@list"}},"uri":"","indexConcepts":[{"uri":"http:\/\/www.skosmos.skos\/test\/ta122","localname":"ta122","prefLabel":"Black sea bass","lang":"en"}]}', $out);
+  }
+
+   /**
+   * @covers RestController::label
+   */
+  public function testLabelOnePrefOneAltLabel() {
+      $request = new Request($this->model);
+      $request->setQueryParam('format', 'application/json');
+      $request->setURI('http://www.skosmos.skos/test/ta112');
+      $request->setVocab('test');
+      $request->setLang('en');
+
+      $this->controller->label($request);
+      $out = $this->getActualOutput();
+
+      $expected = <<<EOD
+ {"@context": {
+         "skos": "http://www.w3.org/2004/02/skos/core#",
+         "uri": "@id",
+         "type": "@type",
+         "prefLabel": "skos:prefLabel",
+         "altLabel": "skos:altLabel",
+        "hiddenLabel": "skos:hiddenLabel",
+        "@language": "en"
+     },
+    "uri": "http://www.skosmos.skos/test/ta112",
+    "prefLabel": "Carp",
+    "altLabel": [
+        "Golden crucian"
+     ]
+ }
+EOD;
+      $this->assertJsonStringEqualsJsonString($expected, $out);
+  }
+
+   /**
+   * @covers RestController::label
+   */
+  public function testLabelGlobal() {
+      $request = new Request($this->model);
+      $request->setQueryParam('format', 'application/json');
+      $request->setURI('http://www.skosmos.skos/test/ta112');
+      $request->setLang('en');
+
+      $this->controller->label($request);
+      $out = $this->getActualOutput();
+
+      $expected = <<<EOD
+ {"@context": {
+         "skos": "http://www.w3.org/2004/02/skos/core#",
+         "uri": "@id",
+         "type": "@type",
+         "prefLabel": "skos:prefLabel",
+         "altLabel": "skos:altLabel",
+        "hiddenLabel": "skos:hiddenLabel",
+        "@language": "en"
+     },
+    "uri": "http://www.skosmos.skos/test/ta112",
+    "prefLabel": "Carp",
+    "altLabel": [
+        "Golden crucian"
+     ]
+ }
+EOD;
+      $this->assertJsonStringEqualsJsonString($expected, $out);
+  }
+
+   /**
+   * @covers RestController::label
+   */
+  public function testLabelGlobalNonexistentVocab() {
+      $request = new Request($this->model);
+      $request->setQueryParam('format', 'application/json');
+      $request->setURI('http://www.skosmos.skos/nonexistent/vocab');
+      $request->setLang('en');
+
+      $this->controller->label($request);
+      $out = $this->getActualOutput();
+
+      $expected = "404 Not Found : Could not find concept <http://www.skosmos.skos/nonexistent/vocab>";
+      $this->assertEquals($expected, $out);
+  }
+
+  /**
+   * @covers RestController::label
+   */
+  public function testLabelOnePrefOneHiddenLabel() {
+      $request = new Request($this->model);
+      $request->setQueryParam('format', 'application/json');
+      $request->setURI('http://www.skosmos.skos/test/ta112');
+      $request->setVocab('test');
+      $request->setLang('fi');
+
+      $this->controller->label($request);
+      $out = $this->getActualOutput();
+
+      $expected = <<<EOD
+ {"@context": {
+         "skos": "http://www.w3.org/2004/02/skos/core#",
+         "uri": "@id",
+         "type": "@type",
+         "prefLabel": "skos:prefLabel",
+         "altLabel": "skos:altLabel",
+        "hiddenLabel": "skos:hiddenLabel",
+        "@language": "fi"
+     },
+    "uri": "http://www.skosmos.skos/test/ta112",
+    "prefLabel": "Karppi",
+    "hiddenLabel": [
+        "Karpit"
+     ]
+ }
+EOD;
+      $this->assertJsonStringEqualsJsonString($expected, $out);
+  }
+
+  /**
+   * @covers RestController::label
+   */
+  public function testLabelOnePrefLabel() {
+      $request = new Request($this->model);
+      $request->setQueryParam('format', 'application/json');
+      $request->setURI('http://www.skosmos.skos/test/ta111');
+      $request->setVocab('test');
+      $request->setLang('en');
+
+      $this->controller->label($request);
+      $out = $this->getActualOutput();
+
+      $expected = <<<EOD
+ {"@context": {
+         "skos": "http://www.w3.org/2004/02/skos/core#",
+         "uri": "@id",
+         "type": "@type",
+         "prefLabel": "skos:prefLabel",
+         "altLabel": "skos:altLabel",
+        "hiddenLabel": "skos:hiddenLabel",
+        "@language": "en"
+     },
+    "uri": "http://www.skosmos.skos/test/ta111",
+    "prefLabel": "Tuna"
+ }
+EOD;
+      $this->assertJsonStringEqualsJsonString($expected, $out);
+  }
+
+  /**
+   * @covers RestController::label
+   */
+  public function testLabelNoPrefLabel() {
+      $request = new Request($this->model);
+      $request->setQueryParam('format', 'application/json');
+      $request->setURI('http://www.skosmos.skos/test/ta111');
+      $request->setVocab('test');
+      $request->setLang('sv');
+
+      $this->controller->label($request);
+      $out = $this->getActualOutput();
+
+      $expected = <<<EOD
+ {"@context": {
+         "skos": "http://www.w3.org/2004/02/skos/core#",
+         "uri": "@id",
+         "type": "@type",
+         "prefLabel": "skos:prefLabel",
+         "altLabel": "skos:altLabel",
+        "hiddenLabel": "skos:hiddenLabel",
+        "@language": "sv"
+     },
+    "uri": "http://www.skosmos.skos/test/ta111"
+ }
+EOD;
+      $this->assertJsonStringEqualsJsonString($expected, $out);
+  }
+
+  /**
+   * @covers RestController::label
+   */
+  public function testLabelNoConcept() {
+      $request = new Request($this->model);
+      $request->setQueryParam('format', 'application/json');
+      $request->setURI('http://www.skosmos.skos/test/nonexistent');
+      $request->setVocab('test');
+      $request->setLang('en');
+
+      $this->controller->label($request);
+      $out = $this->getActualOutput();
+
+      $expected = "404 Not Found : Could not find concept <http://www.skosmos.skos/test/nonexistent>";
+      $this->assertEquals($expected, $out);
+  }
+
 }

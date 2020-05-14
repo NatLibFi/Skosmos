@@ -535,5 +535,36 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
       $conceptScheme->getLiteral($conceptSchemeUri,"skos:prefLabel")
     );
   }
+
+  /**
+   * @covers Vocabulary::getModifiedDate
+   */
+  public function testGetModifiedDate() {
+    $vocab = $this->model->getVocabulary('http304');
+    $this->assertEquals(
+      new DateTime("2018-12-13T06:28:14+00:00"),
+      $vocab->getModifiedDate()
+    );
+  }
+
+  /**
+   * @covers Vocabulary::getModifiedDate
+   */
+  public function testGetModifiedDateNoConceptScheme() {
+    $vocab = $this->model->getVocabulary('dates');
+    $this->assertNull(
+      $vocab->getModifiedDate()
+    );
+  }
+
+  /**
+   * @covers Vocabulary::getModifiedDate
+   */
+  public function testGetModifiedDateNoTimestampOnConceptScheme() {
+    $vocab = $this->model->getVocabulary('groups');
+    $this->assertNull(
+      $vocab->getModifiedDate()
+    );
+  }
 }
 

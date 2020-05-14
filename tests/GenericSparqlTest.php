@@ -1161,4 +1161,61 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
       $expected = array('http://example.com/myns#superProperty');
       $this->assertEquals($actual, $expected);
   }
+
+  /**
+   * @covers GenericSparql::queryAllConceptLabels
+   * @covers GenericSparql::generateAllLabelsQuery
+   * @covers GenericSparql::generateFromClause
+   */
+  public function testQueryAllConceptLabels()
+  {
+      $voc = $this->model->getVocabulary('test');
+      $graph = $voc->getGraph();
+      $sparql = new GenericSparql('http://localhost:13030/skosmos-test/sparql', $graph, $this->model);
+
+      $actual = $sparql->queryAllConceptLabels('http://www.skosmos.skos/test/ta112', 'en');
+
+      $this->assertTrue(array_key_exists('prefLabel',$actual));
+      $this->assertEquals($actual['prefLabel'][0], "Carp");
+
+      $this->assertTrue(array_key_exists('altLabel',$actual));
+      $this->assertEquals($actual['altLabel'][0], "Golden crucian");
+
+      $this->assertFalse(array_key_exists('hiddenLabel',$actual));
+  }
+
+  /**
+   * @covers GenericSparql::queryAllConceptLabels
+   * @covers GenericSparql::generateAllLabelsQuery
+   * @covers GenericSparql::generateFromClause
+   */
+  public function testQueryAllConceptLabelsNonexistentConcept()
+  {
+      $voc = $this->model->getVocabulary('test');
+      $graph = $voc->getGraph();
+      $sparql = new GenericSparql('http://localhost:13030/skosmos-test/sparql', $graph, $this->model);
+
+      $actual = $sparql->queryAllConceptLabels('http://www.skosmos.skos/test/notfound', 'en');
+
+      $this->assertNull($actual);
+  }
+
+  /**
+   * @covers GenericSparql::queryAllConceptLabels
+   * @covers GenericSparql::generateAllLabelsQuery
+   * @covers GenericSparql::generateFromClause
+   */
+  public function testQueryAllConceptLabelsNoPrefLabel()
+  {
+      $voc = $this->model->getVocabulary('test');
+      $graph = $voc->getGraph();
+      $sparql = new GenericSparql('http://localhost:13030/skosmos-test/sparql', $graph, $this->model);
+
+      $actual = $sparql->queryAllConceptLabels('http://www.skosmos.skos/test/ta112', 'sv');
+
+      $this->assertTrue(is_array($actual));
+      $this->assertFalse(array_key_exists('prefLabel',$actual));
+      $this->assertFalse(array_key_exists('altLabel',$actual));
+      $this->assertFalse(array_key_exists('hiddenLabel',$actual));
+  }
 }

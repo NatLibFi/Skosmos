@@ -3,7 +3,7 @@
 /**
  * Vocabulary dataobjects provide access to the vocabularies on the SPARQL endpoint.
  */
-class Vocabulary extends DataObject
+class Vocabulary extends DataObject implements Modifiable
 {
     /** cached value of URI space */
     private $urispace = null;
@@ -117,6 +117,16 @@ class Vocabulary extends DataObject
         return $this->getSparql()->queryLabel($uri, $lang);
     }
 
+    /**
+     * Asks the sparql implementation to make a label query for a uri.
+     * @param string $uri
+     * @param string $lang
+     * @return array array of altLabels
+     */
+    public function getAllConceptLabels($uri, $lang)
+    {
+        return $this->getSparql()->queryAllConceptLabels($uri, $lang);
+    }
     /**
      * Get the localname of a concept in the vocabulary. If the URI is not
      * in the URI space of this vocabulary, return the full URI.
@@ -632,4 +642,26 @@ class Vocabulary extends DataObject
       return $this->config->getId();
     }
 
+    public function getModifiedDate()
+    {
+        $modifiedDate = null;
+
+        $conceptSchemeURI = $this->getDefaultConceptScheme();
+        if ($conceptSchemeURI) {
+            $conceptSchemeGraph = $this->getConceptScheme($conceptSchemeURI);
+            if (!$conceptSchemeGraph->isEmpty()) {
+                $literal = $conceptSchemeGraph->getLiteral($conceptSchemeURI, "dc:modified");
+                if ($literal) {
+                    $modifiedDate = $literal->getValue();
+                }
+            }
+        }
+
+        return $modifiedDate;
+    }
+
+    public function isUseModifiedDate()
+    {
+        return $this->getConfig()->isUseModifiedDate();
+    }
 }
