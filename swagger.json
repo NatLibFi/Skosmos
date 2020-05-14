@@ -1229,6 +1229,13 @@
             "type": "string"
           },
           {
+            "external": "external",
+            "in": "query",
+            "description": "Indicates whether mappings to external vocabularies should be listed",
+            "required": false,
+            "type": "boolean"
+          },
+          {
             "name": "clang",
             "in": "query",
             "description": "content language, e.g. \"en\" or \"fi\"",
@@ -1255,6 +1262,9 @@
           },
           "304": {
             "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
+          "400": {
+            "description": "URI parameter is missing"
           },
           "404": {
             "description": "no concept mappings could be found with the requested URI"
