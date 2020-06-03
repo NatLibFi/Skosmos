@@ -307,7 +307,7 @@ class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
    * @covers JenaTextSparql::generateConceptSearchQueryCondition
    * @covers JenaTextSparql::generateConceptSearchQueryInner
    */
-  public function testQueryConceptsWitNotation()
+  public function testQueryConceptsWithNotation()
   {
     $this->params->method('getSearchTerm')->will($this->returnValue('12*'));
     $this->params->method('getVocabs')->will($this->returnValue(array($this->model->getVocabulary('test'))));
