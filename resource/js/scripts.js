@@ -372,10 +372,7 @@ function renderPropertyMappings(concept, contentLang, properties) {
   });
   Handlebars.registerHelper('ifDifferentLabelLang', function(labelLang, explicitLangCodes, opts) {
     if (labelLang !== undefined && labelLang !== '' && labelLang !== null) {
-      if (explicitLangCodes !== undefined && typeof explicitLangCodes === "boolean") {
-        return opts.fn(explicitLangCodes);
-      }
-      if (labelLang !== contentLang) {
+      if (explicitLangCodes || labelLang !== contentLang) {
         return opts.fn(this);
       }
     }

@@ -209,7 +209,7 @@
             <div class="row">
                 <div class="col-xs-5">
                     <a class="versal" href="{{hrefLink}}">{{#if notation }}<span class="versal">{{ notation }}</span>{{/if}}{{ prefLabel }}</a>
-                    {{#ifDifferentLabelLang lang explicitLangCodes}}<span class="propertyvalue"> ({{ lang }})</span>{{/ifDifferentLabelLang}}
+                    {{#ifDifferentLabelLang lang {% endverbatim %}{% if explicit_langcodes %}true{% else %}false{% endif %}{% verbatim %} }}<span class="propertyvalue"> ({{ lang }})</span>{{/ifDifferentLabelLang}}
                 </div>
                 {{#if vocabName }}
                     <span class="appendix-vocab-label col-xs-7">{{ vocabName }}</span>
