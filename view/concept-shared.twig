@@ -119,7 +119,7 @@
           {% for grouppath in concept.groupProperties %}
               <li>
               {% for group in grouppath %}
-                <a class="versal" href="{{ group.uri | link_url(group.vocab,request.lang,'page',request.contentLang) }}">{% if group.notation %}<span class="versal">{{ group.notation }}</span>{% endif %}{{ group.label(request.contentLang) }}</a>
+                <a class="versal" href="{{ group.uri | link_url(group.vocab,request.lang,'page',request.contentLang) }}">{% if group.notation %}<span class="versal">{{ group.notation }}</span>{% endif %}{{ group.label(request.contentLang) }}</a>{% if group.label.lang and (group.label.lang != request.contentLang or explicit_langcodes) %} <span class="versal">({{ group.label.lang }})</span>{% endif %}
                 {% if not loop.last %}<span class="versal"> &#62; </span>{% endif %}
               {% endfor %}
               </li>
