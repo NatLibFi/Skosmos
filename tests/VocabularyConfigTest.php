@@ -547,4 +547,19 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $this->assertEquals($property->getValue($vocab->getConfig()), $params);
   }
 
+
+  /**
+   * @covers VocabularyConfig::getPropertyOrder
+   */
+  public function testGetPropertyOrderCustom() {
+    $vocab = $this->model->getVocabulary('testCustomPropertyOrder');
+    $params = $vocab->getConfig()->getPropertyOrder();
+
+    $order = array('rdf:type', 'skos:definition', 'skos:broader',
+    'skos:narrower', 'skos:related', 'skos:altLabel', 'skos:note',
+    'skos:scopeNote', 'skos:historyNote', 'skos:prefLabel');
+
+    $this->assertEquals($order, $params);
+  }
+
 }

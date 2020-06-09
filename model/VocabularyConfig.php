@@ -555,15 +555,28 @@ class VocabularyConfig extends BaseConfig
      */
     public function getPropertyOrder()
     {
-        foreach($this->getResources('skosmos:propertyOrder') as $order) {
-            $short = EasyRdf\RdfNamespace::shorten($order);
-            if ($short == 'skosmos:iso25964PropertyOrder') {
-                return $this->ISO25964_PROPERTY_ORDER;
-            } elseif ($short == 'skosmos:defaultPropertyOrder') {
-                return $this->DEFAULT_PROPERTY_ORDER;
-            }
-            // TODO handle custom order here
+        $order = $this->getResource()->getResource('skosmos:propertyOrder');
+        if ($order === null) {
+            return $this->DEFAULT_PROPERTY_ORDER;
         }
+
+        $short = EasyRdf\RdfNamespace::shorten($order);
+        if ($short == 'skosmos:iso25964PropertyOrder') {
+            return $this->ISO25964_PROPERTY_ORDER;
+        } elseif ($short == 'skosmos:defaultPropertyOrder') {
+            return $this->DEFAULT_PROPERTY_ORDER;
+        }
+        
+        // check for custom order definition
+        $orderList = $order->getResource('rdf:value');
+        if ($orderList !== null && $orderList instanceof EasyRdf\Collection) {
+            $ret = array();
+            foreach ($orderList as $prop) {
+                $ret[] = $prop->shorten(); // FIXME what about unknown namespaces?
+            }
+            return $ret;
+        }
+        
         return $this->DEFAULT_PROPERTY_ORDER;
     }
 }
