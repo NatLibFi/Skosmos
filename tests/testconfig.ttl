@@ -402,6 +402,40 @@
         schema:value    "#800000" ;
     ] .
 
+:testISOPropertyOrder a skosmos:Vocabulary, void:Dataset ;
+	dc:title "ISO 25964 property order"@en ;
+	dc:subject :cat_science ;
+	skosmos:propertyOrder skosmos:iso25964PropertyOrder ;
+	void:dataDump <http://skosmos.skos/dump/test/> ;
+	void:sparqlEndpoint <http://localhost:13030/skosmos-test/sparql> ;
+	void:uriSpace "http://www.skosmos.skos/testOrder/";
+	skosmos:language "en";
+	skosmos:sparqlGraph <http://www.skosmos.skos/testOrder/> .
+
+:testDefaultPropertyOrder a skosmos:Vocabulary, void:Dataset ;
+	dc:title "Default property order"@en ;
+	dc:subject :cat_science ;
+	skosmos:propertyOrder skosmos:defaultPropertyOrder ;
+	void:dataDump <http://skosmos.skos/dump/test/> ;
+	void:sparqlEndpoint <http://localhost:13030/skosmos-test/sparql> ;
+	void:uriSpace "http://www.skosmos.skos/testOrder/";
+	skosmos:language "en";
+	skosmos:sparqlGraph <http://www.skosmos.skos/testOrder/> .
+
+:testCustomPropertyOrder a skosmos:Vocabulary, void:Dataset ;
+	dc:title "Custom property order"@en ;
+	dc:subject :cat_science ;
+	skosmos:propertyOrder [a skosmos:PropertyOrder; rdf:value (
+		rdf:type skos:definition skos:broader skos:narrower
+		skos:related skos:altLabel skos:note skos:scopeNote
+		skos:historyNote skos:prefLabel
+	) ] ;
+	void:dataDump <http://skosmos.skos/dump/test/> ;
+	void:sparqlEndpoint <http://localhost:13030/skosmos-test/sparql> ;
+	void:uriSpace "http://www.skosmos.skos/testOrder/";
+	skosmos:language "en";
+	skosmos:sparqlGraph <http://www.skosmos.skos/testOrder/> .
+
 <http://skosmos.skos/dump/test/groups> dc:format "application/rdf+xml" .
 
 :cat_science a skos:Concept ;

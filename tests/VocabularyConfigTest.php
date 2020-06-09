@@ -502,4 +502,19 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $this->assertEquals(json_encode(array('imaginaryPlugin' => array('poem_fi' => "Roses are red", 'poem' => "Violets are blue", 'color' => "#800000")),true), $params);
   }
 
+  /**
+   * @covers VocabularyConfig::getPropertyOrder
+   */
+  public function testGetPropertyOrderNotSet() {
+    $vocab = $this->model->getVocabulary('test');
+    $params = $vocab->getConfig()->getPropertyOrder();
+
+    // need to use reflection to make the private property accessible
+    $reflector = new ReflectionClass('VocabularyConfig');
+    $property = $reflector->getProperty('DEFAULT_PROPERTY_ORDER');
+    $property->setAccessible(true);
+
+    $this->assertEquals($property->getValue($vocab->getConfig()), $params);
+  }
+
 }

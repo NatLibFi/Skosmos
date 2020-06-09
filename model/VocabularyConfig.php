@@ -9,6 +9,14 @@ class VocabularyConfig extends BaseConfig
     private $pluginParameters;
     private $languageOrderCache = array();
 
+    private $DEFAULT_PROPERTY_ORDER = array("rdf:type", "dc:isReplacedBy",
+    "skos:definition", "skos:broader", "isothes:broaderGeneric",
+    "isothes:broaderPartitive", "isothes:broaderInstantial",
+    "skos:narrower", "isothes:narrowerGeneric", "isothes:narrowerPartitive",
+    "isothes:narrowerInstantial", "skos:related", "skos:altLabel",
+    "skosmos:memberOf", "skos:note", "skos:scopeNote", "skos:historyNote",
+    "rdfs:comment", "dc11:source", "dc:source", "skos:prefLabel");
+
     public function __construct($resource, $globalPlugins=array())
     {
         $this->resource = $resource;
@@ -533,5 +541,14 @@ class VocabularyConfig extends BaseConfig
     public function isUseModifiedDate()
     {
         return $this->getBoolean('skosmos:useModifiedDate', false);
+    }
+
+    /**
+     * @return array
+     */
+    public function getPropertyOrder()
+    {
+        //return $this->getResources('skosmos:propertyOrder');
+        return $this->DEFAULT_PROPERTY_ORDER;
     }
 }
