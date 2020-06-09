@@ -517,4 +517,34 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $this->assertEquals($property->getValue($vocab->getConfig()), $params);
   }
 
+  /**
+   * @covers VocabularyConfig::getPropertyOrder
+   */
+  public function testGetPropertyOrderDefault() {
+    $vocab = $this->model->getVocabulary('testDefaultPropertyOrder');
+    $params = $vocab->getConfig()->getPropertyOrder();
+
+    // need to use reflection to make the private property accessible
+    $reflector = new ReflectionClass('VocabularyConfig');
+    $property = $reflector->getProperty('DEFAULT_PROPERTY_ORDER');
+    $property->setAccessible(true);
+
+    $this->assertEquals($property->getValue($vocab->getConfig()), $params);
+  }
+
+  /**
+   * @covers VocabularyConfig::getPropertyOrder
+   */
+  public function testGetPropertyOrderISO() {
+    $vocab = $this->model->getVocabulary('testISOPropertyOrder');
+    $params = $vocab->getConfig()->getPropertyOrder();
+
+    // need to use reflection to make the private property accessible
+    $reflector = new ReflectionClass('VocabularyConfig');
+    $property = $reflector->getProperty('ISO25964_PROPERTY_ORDER');
+    $property->setAccessible(true);
+
+    $this->assertEquals($property->getValue($vocab->getConfig()), $params);
+  }
+
 }

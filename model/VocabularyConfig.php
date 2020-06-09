@@ -17,6 +17,13 @@ class VocabularyConfig extends BaseConfig
     "skosmos:memberOf", "skos:note", "skos:scopeNote", "skos:historyNote",
     "rdfs:comment", "dc11:source", "dc:source", "skos:prefLabel");
 
+    private $ISO25964_PROPERTY_ORDER = array("rdf:type", "skos:scopeNote",
+    "skos:altLabel", "skos:broader", "isothes:broaderGeneric",
+    "isothes:broaderPartitive", "isothes:broaderInstantial",
+    "skos:narrower", "isothes:narrowerGeneric", "isothes:narrowerPartitive",
+    "isothes:narrowerInstantial", "skos:related", "skos:definition",
+    "skos:historyNote", "skosmos:memberOf");
+
     public function __construct($resource, $globalPlugins=array())
     {
         $this->resource = $resource;
@@ -548,7 +555,15 @@ class VocabularyConfig extends BaseConfig
      */
     public function getPropertyOrder()
     {
-        //return $this->getResources('skosmos:propertyOrder');
+        foreach($this->getResources('skosmos:propertyOrder') as $order) {
+            $short = EasyRdf\RdfNamespace::shorten($order);
+            if ($short == 'skosmos:iso25964PropertyOrder') {
+                return $this->ISO25964_PROPERTY_ORDER;
+            } elseif ($short == 'skosmos:defaultPropertyOrder') {
+                return $this->DEFAULT_PROPERTY_ORDER;
+            }
+            // TODO handle custom order here
+        }
         return $this->DEFAULT_PROPERTY_ORDER;
     }
 }
