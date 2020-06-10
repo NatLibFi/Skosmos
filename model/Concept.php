@@ -818,36 +818,68 @@ class Concept extends VocabularyDataObject implements Modifiable
     }
 
     /**
-     * Reads the literal language code and gets a name for it from Punic or alternatively
+     * Given a language code, gets its name in UI language via Punic or alternatively
      * tries to search for a gettext translation.
-     * @param EasyRdf\Literal $lit
+     * @param string $langCode
      * @return string e.g. 'English'
      */
-    private function literalLanguageToString($lit) {
-        // using empty string as the language literal when there is no langcode set
+    private function langToString($langCode) {
+        // using empty string as the language name when there is no langcode set
         $langName = '';
-        if ($lit->getLang() !== null) {
-            $langName = Punic\Language::getName($lit->getLang(), $this->getEnvLang()) !== $lit->getLang() ? Punic\Language::getName($lit->getLang(), $this->getEnvLang()) : gettext($lit->getLang());
+        if (!empty($langCode)) {
+            $langName = Punic\Language::getName($langCode, $this->getEnvLang()) !== $langCode ? Punic\Language::getName($langCode, $this->getEnvLang()) : gettext($langCode);
         }
         return $langName;
     }
 
     /**
-     * Gets the values for the property in question in all other languages than the ui language.
+     * Gets the values of a property in all other languages than in the current language
+     * and places them in a [langCode][userDefinedKey] array.
+     * @param string $prop The property for which the values are looked upon to
+     * @param string $key User-defined key for accessing the values
+     * @return array LangCode-based multidimensional array ([string][string][ConceptPropertyValueLiteral]) or empty array if no values
      */
-    public function getForeignLabels()
-    {
-        $prefLabels = $this->resource->allLiterals('skos:prefLabel');
-        $labels = array_merge($prefLabels, $this->resource->allLiterals('skos:altLabel'));
+    private function getForeignLabelList($prop, $key) {
         $ret = array();
+        $labels = $this->resource->allLiterals($prop);
+
         foreach ($labels as $lit) {
             // filtering away subsets of the current language eg. en vs en-GB
             if ($lit->getLang() != $this->clang && strpos($lit->getLang(), $this->getEnvLang() . '-') !== 0) {
-                $prop = in_array($lit, $prefLabels) ? 'skos:prefLabel' : 'skos:altLabel';
-                $ret[$this->literalLanguageToString($lit)][] = new ConceptPropertyValueLiteral($this->model, $this->vocab, $this->resource, $lit, $prop);
+                $langCode = $lit->getLang() ? $lit->getLang() : '';
+                $ret[$langCode][$key][] = new ConceptPropertyValueLiteral($this->model, $this->vocab, $this->resource, $lit, $prop);
             }
         }
-        ksort($ret);
+        return $ret;
+    }
+
+    /**
+     * Gets the values of skos:prefLabel and skos:altLabel in all other languages than in the current language.
+     * @return array Language-based multidimensional sorted array ([string][string][ConceptPropertyValueLiteral]) or empty array if no values
+     */
+    public function getForeignLabels()
+    {
+        $ret = $this->getForeignLabelList('skos:prefLabel', 'prefLabel');
+        $ret = array_merge($ret, $this->getForeignLabelList('skos:altLabel', 'altLabel'));
+
+        $langArray = array_keys($ret);
+
+        foreach ($langArray as $lang) {
+            $coll = collator_create($lang);
+            if (isset($ret[$lang]['prefLabel']))
+            {
+                $coll->sort($ret[$lang]['prefLabel'], Collator::SORT_STRING);
+            }
+            if (isset($ret[$lang]['altLabel']))
+            {
+                $coll->sort($ret[$lang]['altLabel'], Collator::SORT_STRING);
+            }
+            if ($lang !== '') {
+                $ret[$this->langToString($lang)] = $ret[$lang];
+                unset($ret[$lang]);
+            }
+        }
+        uksort($ret, 'strcoll');
         return $ret;
     }
 
