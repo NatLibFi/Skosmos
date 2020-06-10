@@ -577,19 +577,16 @@ class WebController extends Controller
      * Gets the list of newest concepts for a vocabulary according to timestamp indicated by a property
      * @param Request $request
      * @param string $prop the name of the property eg. 'dc:modified'.
+     * @param int $offset starting index offset
+     * @param int $limit maximum number of concepts to return
      * @return Array list of concepts
      */
-    private function getChangeList($request, $prop)
+    private function getChangeList($request, $prop, $offset=0, $limit=200)
     {
         // set language parameters for gettext
         $this->setLanguageProperties($request->getLang());
 
-        $vocab = $request->getVocab();
-        $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
-        $limit = ($request->getQueryParam('limit') && is_numeric($request->getQueryParam('limit')) && $request->getQueryParam('limit') >= 0) ? $request->getQueryParam('limit') : 200;
-
-
-        return $vocab->getChangeList($prop, $request->getContentLang(), $offset, $limit);
+        return $request->getVocab()->getChangeList($prop, $request->getContentLang(), $offset, $limit);
     }
 
     /**
@@ -600,7 +597,10 @@ class WebController extends Controller
     */
     public function formatChangeList($request, $prop)
     {
-       $changeList = $this->getChangeList($request, $prop);
+        $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
+        $limit = ($request->getQueryParam('limit') && is_numeric($request->getQueryParam('limit')) && $request->getQueryParam('limit') >= 0) ? $request->getQueryParam('limit') : 200;
+
+        $changeList = $this->getChangeList($request, $prop, $offset, $limit);
         $formatByDate = array();
         foreach($changeList as $concept) {
             $concept['datestring'] = Punic\Calendar::formatDate($concept['date'], 'medium', $request->getLang());

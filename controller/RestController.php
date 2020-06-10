@@ -1071,7 +1071,10 @@ class RestController extends Controller
      */
     public function newConcepts($request)
     {
-        return $this->changedConcepts($request, 'dc:created');
+        $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
+        $limit = ($request->getQueryParam('limit') && is_numeric($request->getQueryParam('limit')) && $request->getQueryParam('limit') >= 0) ? $request->getQueryParam('limit') : 200;
+
+        return $this->changedConcepts($request, 'dc:created', $offset, $limit);
     }
 
     /**
@@ -1081,20 +1084,22 @@ class RestController extends Controller
      */
     public function modifiedConcepts($request)
     {
-        return $this->changedConcepts($request, 'dc:modified');
+        $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
+        $limit = ($request->getQueryParam('limit') && is_numeric($request->getQueryParam('limit')) && $request->getQueryParam('limit') >= 0) ? $request->getQueryParam('limit') : 200;
+
+        return $this->changedConcepts($request, 'dc:modified', $offset, $limit);
     }
 
     /**
      * Used for querying changed concepts in the vocabulary
      * @param Request $request
+     * @param int $offset starting index offset
+     * @param int $limit maximum number of concepts to return
      * @return object json-ld wrapped list of changed concepts
      */
-    private function changedConcepts($request, $prop)
+    private function changedConcepts($request, $prop, $offset, $limit)
     {
-        $vocab = $request->getVocab();
-        $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
-        $limit = ($request->getQueryParam('limit') && is_numeric($request->getQueryParam('limit')) && $request->getQueryParam('limit') >= 0) ? $request->getQueryParam('limit') : 200;
-        $changeList = $vocab->getChangeList($prop, $request->getLang(), $offset, $limit);
+        $changeList = $request->getVocab()->getChangeList($prop, $request->getLang(), $offset, $limit);
 
         $simpleChangeList = array();
         foreach($changeList as $conceptInfo) {

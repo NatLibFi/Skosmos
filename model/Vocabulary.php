@@ -615,8 +615,10 @@ class Vocabulary extends DataObject implements Modifiable
 
     /**
      * Returns a list of recently changed or entirely new concepts.
+     * @param string $prop the property uri pointing to timestamps, eg. 'dc:modified'
      * @param string $clang content language for the labels
-     * @param string $lang UI language for the dates
+     * @param int $offset starting index offset
+     * @param int $limit maximum number of concepts to return
      * @return Array
      */
     public function getChangeList($prop, $clang, $offset, $limit)

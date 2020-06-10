@@ -1121,6 +1121,116 @@
         ]
       }
     },
+    "/{vocid}/new": {
+      "get": {
+        "summary": "New concepts in the vocabulary",
+        "parameters": [
+          {
+            "name": "vocid",
+            "in": "path",
+            "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "label language, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "offset of the starting index",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "maximum number of concepts to return",
+            "required": false,
+            "type": "number"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "list of most recently created concepts of the vocabulary",
+            "schema": {
+              "$ref": "#/definitions/changedConceptsResult"
+            }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
+          "404": {
+            "description": "no vocabulary could be found with the requested id"
+          }
+        },
+        "tags": [
+          "Vocabulary-specific methods"
+        ]
+      }
+    },
+    "/{vocid}/modified": {
+      "get": {
+        "summary": "Modified concepts in the vocabulary",
+        "parameters": [
+          {
+            "name": "vocid",
+            "in": "path",
+            "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "label language, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "offset of the starting index",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "maximum number of concepts to return",
+            "required": false,
+            "type": "number"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "list of most recently created concepts of the vocabulary",
+            "schema": {
+              "$ref": "#/definitions/changedConceptsResult"
+            }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
+          "404": {
+            "description": "no vocabulary could be found with the requested id"
+          }
+        },
+        "tags": [
+          "Vocabulary-specific methods"
+        ]
+      }
+    },
     "/{vocid}/groupMembers": {
       "get": {
         "summary": "Members of the requested concept group",
@@ -2281,6 +2391,40 @@
         "vocabName",
         "typeLabel"
       ]
+    },
+    "changedConceptsResult": {
+      "type": "object",
+      "properties": {
+        "changeList": {
+          "type": "array",
+          "description": "List of changed concepts",
+          "items": {
+            "$ref": "#/definitions/changedConcept"
+          }
+        }
+      },
+      "required": [
+        "changeList"
+      ]
+    },
+    "changedConcept": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "URI of the concept"
+        },
+        "prefLabel": {
+          "type": "string",
+          "description": "Preferred label of the concept"
+        },
+        "date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "time stamp"
+        },
+        "required": "-uri -prefLabel -date"
+      }
     }
   }
 }
