@@ -42,7 +42,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
    */
   public function testCountConcepts() {
     $actual = $this->sparql->countConcepts();
-    $this->assertEquals(16, $actual['http://www.w3.org/2004/02/skos/core#Concept']['count']);
+    $this->assertEquals(17, $actual['http://www.w3.org/2004/02/skos/core#Concept']['count']);
   }
 
   /**
@@ -65,7 +65,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     $actual = $this->sparql->countLangConcepts(array('en','fi'));
     $this->assertEquals(11, $actual['en']['skos:prefLabel']);
     $this->assertEquals(1, $actual['en']['skos:altLabel']);
-    $this->assertEquals(2, $actual['fi']['skos:prefLabel']);
+    $this->assertEquals(3, $actual['fi']['skos:prefLabel']);
   }
 
   /**
