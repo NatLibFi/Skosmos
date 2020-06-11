@@ -522,6 +522,16 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
 
   /**
    * @covers VocabularyConfig::getPropertyOrder
+   * @expectedException PHPUnit\Framework\Error\Error
+   */
+  public function testGetPropertyOrderUnknown() {
+    $vocab = $this->model->getVocabulary('testUnknownPropertyOrder');
+    $params = $vocab->getConfig()->getPropertyOrder();
+    $this->assertEquals(VocabularyConfig::DEFAULT_PROPERTY_ORDER, $params);
+  }
+
+  /**
+   * @covers VocabularyConfig::getPropertyOrder
    */
   public function testGetPropertyOrderISO() {
     $vocab = $this->model->getVocabulary('testISOPropertyOrder');

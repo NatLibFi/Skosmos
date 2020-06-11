@@ -436,6 +436,16 @@
 	skosmos:language "en";
 	skosmos:sparqlGraph <http://www.skosmos.skos/testOrder/> .
 
+:testUnknownPropertyOrder a skosmos:Vocabulary, void:Dataset ;
+	dc:title "Custom property order"@en ;
+	dc:subject :cat_science ;
+	skosmos:propertyOrder skosmos:unknown ;
+	void:dataDump <http://skosmos.skos/dump/test/> ;
+	void:sparqlEndpoint <http://localhost:13030/skosmos-test/sparql> ;
+	void:uriSpace "http://www.skosmos.skos/testOrder/";
+	skosmos:language "en";
+	skosmos:sparqlGraph <http://www.skosmos.skos/testOrder/> .
+
 <http://skosmos.skos/dump/test/groups> dc:format "application/rdf+xml" .
 
 :cat_science a skos:Concept ;

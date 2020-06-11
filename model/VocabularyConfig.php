@@ -579,6 +579,7 @@ class VocabularyConfig extends BaseConfig
             return $ret;
         }
         
-        self::DEFAULT_PROPERTY_ORDER;
+        trigger_error("Property order for vocabulary '{$this->getShortName()}' unknown, using default order", E_USER_WARNING);
+        return self::DEFAULT_PROPERTY_ORDER;
     }
 }
