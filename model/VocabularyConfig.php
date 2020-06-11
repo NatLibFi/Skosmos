@@ -573,7 +573,8 @@ class VocabularyConfig extends BaseConfig
         if ($orderList !== null && $orderList instanceof EasyRdf\Collection) {
             $ret = array();
             foreach ($orderList as $prop) {
-                $ret[] = $prop->shorten(); // FIXME what about unknown namespaces?
+                $short = $prop->shorten();
+                $ret[] = ($short !== null) ? $short : $prop->getURI();
             }
             return $ret;
         }
