@@ -508,13 +508,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
   public function testGetPropertyOrderNotSet() {
     $vocab = $this->model->getVocabulary('test');
     $params = $vocab->getConfig()->getPropertyOrder();
-
-    // need to use reflection to make the private property accessible
-    $reflector = new ReflectionClass('VocabularyConfig');
-    $property = $reflector->getProperty('DEFAULT_PROPERTY_ORDER');
-    $property->setAccessible(true);
-
-    $this->assertEquals($property->getValue($vocab->getConfig()), $params);
+    $this->assertEquals(VocabularyConfig::DEFAULT_PROPERTY_ORDER, $params);
   }
 
   /**
@@ -523,13 +517,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
   public function testGetPropertyOrderDefault() {
     $vocab = $this->model->getVocabulary('testDefaultPropertyOrder');
     $params = $vocab->getConfig()->getPropertyOrder();
-
-    // need to use reflection to make the private property accessible
-    $reflector = new ReflectionClass('VocabularyConfig');
-    $property = $reflector->getProperty('DEFAULT_PROPERTY_ORDER');
-    $property->setAccessible(true);
-
-    $this->assertEquals($property->getValue($vocab->getConfig()), $params);
+    $this->assertEquals(VocabularyConfig::DEFAULT_PROPERTY_ORDER, $params);
   }
 
   /**
@@ -538,13 +526,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
   public function testGetPropertyOrderISO() {
     $vocab = $this->model->getVocabulary('testISOPropertyOrder');
     $params = $vocab->getConfig()->getPropertyOrder();
-
-    // need to use reflection to make the private property accessible
-    $reflector = new ReflectionClass('VocabularyConfig');
-    $property = $reflector->getProperty('ISO25964_PROPERTY_ORDER');
-    $property->setAccessible(true);
-
-    $this->assertEquals($property->getValue($vocab->getConfig()), $params);
+    $this->assertEquals(VocabularyConfig::ISO25964_PROPERTY_ORDER, $params);
   }
 
 

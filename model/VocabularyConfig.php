@@ -9,7 +9,7 @@ class VocabularyConfig extends BaseConfig
     private $pluginParameters;
     private $languageOrderCache = array();
 
-    private $DEFAULT_PROPERTY_ORDER = array("rdf:type", "dc:isReplacedBy",
+    const DEFAULT_PROPERTY_ORDER = array("rdf:type", "dc:isReplacedBy",
     "skos:definition", "skos:broader", "isothes:broaderGeneric",
     "isothes:broaderPartitive", "isothes:broaderInstantial",
     "skos:narrower", "isothes:narrowerGeneric", "isothes:narrowerPartitive",
@@ -18,7 +18,7 @@ class VocabularyConfig extends BaseConfig
     "dc11:source", "dc:source", "skos:prefLabel", "skosmos:memberOf",
     "skosmos:memberOfArray");
 
-    private $ISO25964_PROPERTY_ORDER = array("rdf:type", "skos:scopeNote",
+    const ISO25964_PROPERTY_ORDER = array("rdf:type", "skos:scopeNote",
     "skos:altLabel", "skos:broader", "isothes:broaderGeneric",
     "isothes:broaderPartitive", "isothes:broaderInstantial",
     "skos:narrower", "isothes:narrowerGeneric", "isothes:narrowerPartitive",
@@ -558,14 +558,14 @@ class VocabularyConfig extends BaseConfig
     {
         $order = $this->getResource()->getResource('skosmos:propertyOrder');
         if ($order === null) {
-            return $this->DEFAULT_PROPERTY_ORDER;
+            return self::DEFAULT_PROPERTY_ORDER;
         }
 
         $short = EasyRdf\RdfNamespace::shorten($order);
         if ($short == 'skosmos:iso25964PropertyOrder') {
-            return $this->ISO25964_PROPERTY_ORDER;
+            return self::ISO25964_PROPERTY_ORDER;
         } elseif ($short == 'skosmos:defaultPropertyOrder') {
-            return $this->DEFAULT_PROPERTY_ORDER;
+            return self::DEFAULT_PROPERTY_ORDER;
         }
         
         // check for custom order definition
@@ -579,6 +579,6 @@ class VocabularyConfig extends BaseConfig
             return $ret;
         }
         
-        return $this->DEFAULT_PROPERTY_ORDER;
+        self::DEFAULT_PROPERTY_ORDER;
     }
 }

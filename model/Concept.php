@@ -78,7 +78,11 @@ class Concept extends VocabularyDataObject implements Modifiable
     public function __construct($model, $vocab, $resource, $graph, $clang)
     {
         parent::__construct($model, $vocab, $resource);
-        $this->order = $vocab->getConfig()->getPropertyOrder();
+        if ($vocab !== null) {
+            $this->order = $vocab->getConfig()->getPropertyOrder();
+        } else {
+            $this->order = VocabularyConfig::DEFAULT_PROPERTY_ORDER;
+        }
         $this->graph = $graph;
         $this->clang = $clang;
         // setting the Punic plugins locale for localized datetime conversions
