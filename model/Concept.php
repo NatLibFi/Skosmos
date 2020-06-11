@@ -859,11 +859,11 @@ class Concept extends VocabularyDataObject implements Modifiable
      */
     public function getForeignLabels()
     {
-        $ret = $this->getForeignLabelList('skos:prefLabel', 'prefLabel');
-        $ret = array_merge($ret, $this->getForeignLabelList('skos:altLabel', 'altLabel'));
+        $prefLabels = $this->getForeignLabelList('skos:prefLabel', 'prefLabel');
+        $altLabels = $this->getForeignLabelList('skos:altLabel', 'altLabel');
+        $ret = array_merge_recursive($prefLabels, $altLabels);
 
         $langArray = array_keys($ret);
-
         foreach ($langArray as $lang) {
             $coll = collator_create($lang);
             if (isset($ret[$lang]['prefLabel']))
