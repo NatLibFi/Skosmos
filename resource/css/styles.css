@@ -6,7 +6,7 @@ li, td > a {
 }
 
 h1, .prefLabel, .prefLabelLang, .notation {
-  font-family: 'Fira Sans', sans-serif;;
+  font-family: 'Fira Sans', sans-serif;
   font-size: 27px;
   font-weight: 400;
 }
@@ -1143,6 +1143,7 @@ li.sub-group {
 }
 
 .appendix-vocab-label {
+  font-family: 'Fira Sans', sans-serif;
   font-size: 12px;
   line-height: 21px;
 }
@@ -1424,6 +1425,7 @@ ul.nav-tabs > li {
 
 span.date-info {
   float: right;
+  font-family: 'Fira Sans', sans-serif;
   font-size: 12px;
   margin-top: 4px;
 }
