@@ -15,15 +15,18 @@ class VocabularyConfig extends BaseConfig
     "skos:narrower", "isothes:narrowerGeneric", "isothes:narrowerPartitive",
     "isothes:narrowerInstantial", "skos:related", "skos:altLabel",
     "skos:note", "skos:scopeNote", "skos:historyNote", "rdfs:comment",
-    "dc11:source", "dc:source", "skos:prefLabel", "skosmos:memberOf",
-    "skosmos:memberOfArray");
+    "dc11:source", "dc:source", "skosmos:memberOf", "skosmos:memberOfArray");
 
-    const ISO25964_PROPERTY_ORDER = array("rdf:type", "skos:scopeNote",
-    "skos:altLabel", "skos:broader", "isothes:broaderGeneric",
-    "isothes:broaderPartitive", "isothes:broaderInstantial",
-    "skos:narrower", "isothes:narrowerGeneric", "isothes:narrowerPartitive",
-    "isothes:narrowerInstantial", "skos:related", "skos:definition",
-    "skos:historyNote", "skosmos:memberOf", "skosmos:memberOfArray");
+    const ISO25964_PROPERTY_ORDER = array("rdf:type", "dc:isReplacedBy",
+    // ISO 25964 allows placing all text fields (inc. SN and DEF) together
+    // so we will do that, except for HN, which is clearly administrative
+    "skos:note", "skos:scopeNote", "skos:definition", "rdfs:comment",
+    "dc11:source", "dc:source", "skos:altLabel", "skos:broader",
+    "isothes:broaderGeneric", "isothes:broaderPartitive",
+    "isothes:broaderInstantial", "skos:narrower", "isothes:narrowerGeneric",
+    "isothes:narrowerPartitive", "isothes:narrowerInstantial",
+    "skos:related", "skos:historyNote", "skosmos:memberOf",
+    "skosmos:memberOfArray");
 
     public function __construct($resource, $globalPlugins=array())
     {
