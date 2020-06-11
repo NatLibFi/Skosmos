@@ -14,15 +14,16 @@ class VocabularyConfig extends BaseConfig
     "isothes:broaderPartitive", "isothes:broaderInstantial",
     "skos:narrower", "isothes:narrowerGeneric", "isothes:narrowerPartitive",
     "isothes:narrowerInstantial", "skos:related", "skos:altLabel",
-    "skosmos:memberOf", "skos:note", "skos:scopeNote", "skos:historyNote",
-    "rdfs:comment", "dc11:source", "dc:source", "skos:prefLabel");
+    "skos:note", "skos:scopeNote", "skos:historyNote", "rdfs:comment",
+    "dc11:source", "dc:source", "skos:prefLabel", "skosmos:memberOf",
+    "skosmos:memberOfArray");
 
     private $ISO25964_PROPERTY_ORDER = array("rdf:type", "skos:scopeNote",
     "skos:altLabel", "skos:broader", "isothes:broaderGeneric",
     "isothes:broaderPartitive", "isothes:broaderInstantial",
     "skos:narrower", "isothes:narrowerGeneric", "isothes:narrowerPartitive",
     "isothes:narrowerInstantial", "skos:related", "skos:definition",
-    "skos:historyNote", "skosmos:memberOf");
+    "skos:historyNote", "skosmos:memberOf", "skosmos:memberOfArray");
 
     public function __construct($resource, $globalPlugins=array())
     {

@@ -612,6 +612,22 @@ class Concept extends VocabularyDataObject implements Modifiable
             }
         }
 
+        $groupPropObj = new ConceptProperty('skosmos:memberOf', null);
+        foreach ($this->getGroupProperties() as $propVals) {
+            foreach ($propVals as $propVal) {
+                $groupPropObj->addValue($propVal, $this->clang);
+            }
+        }
+        $ret['skosmos:memberOf'] = $groupPropObj;
+
+        $arrayPropObj = new ConceptProperty('skosmos:memberOfArray', null);
+        foreach ($this->getArrayProperties() as $propVals) {
+            foreach ($propVals as $propVal) {
+                $arrayPropObj->addValue($propVal, $this->clang);
+            }
+        }
+        $ret['skosmos:memberOfArray'] = $arrayPropObj;
+
         foreach ($ret as $key => $prop) {
             if (sizeof($prop->getValues()) === 0) {
                 unset($ret[$key]);
