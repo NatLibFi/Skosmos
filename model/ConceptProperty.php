@@ -11,6 +11,8 @@ class ConceptProperty
     private $super;
     /** stores the property label */
     private $label;
+    /** stores the property tooltip */
+    private $tooltip;
     /** stores the property values */
     private $values;
     /** flag whether the values are sorted, as we do lazy sorting */
@@ -22,11 +24,11 @@ class ConceptProperty
      * @param string $prop property type eg. 'rdf:type'.
      * @param string $label
      */
-    public function __construct($prop, $label, $help=null, $super=null, $sort_by_notation=false)
+    public function __construct($prop, $label, $tooltip=null, $super=null, $sort_by_notation=false)
     {
         $this->prop = $prop;
         $this->label = $label;
-        $this->help = $help;
+        $this->tooltip = $tooltip;
         $this->values = array();
         $this->is_sorted = true;
         $this->super = $super;
@@ -71,11 +73,11 @@ class ConceptProperty
         }
 
        // if not, see if there was a comment/definition for the property in the graph
-        if ($this->help !== null) {
-            return $this->help;
+        if ($this->tooltip !== null) {
+            return $this->tooltip;
         }
 
-        // when nothing is found, don't show the help text at all
+        // when nothing is found, don't show the tooltip at all
         return null;
     }
 
