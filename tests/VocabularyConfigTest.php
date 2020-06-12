@@ -502,4 +502,56 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $this->assertEquals(json_encode(array('imaginaryPlugin' => array('poem_fi' => "Roses are red", 'poem' => "Violets are blue", 'color' => "#800000")),true), $params);
   }
 
+  /**
+   * @covers VocabularyConfig::getPropertyOrder
+   */
+  public function testGetPropertyOrderNotSet() {
+    $vocab = $this->model->getVocabulary('test');
+    $params = $vocab->getConfig()->getPropertyOrder();
+    $this->assertEquals(VocabularyConfig::DEFAULT_PROPERTY_ORDER, $params);
+  }
+
+  /**
+   * @covers VocabularyConfig::getPropertyOrder
+   */
+  public function testGetPropertyOrderDefault() {
+    $vocab = $this->model->getVocabulary('testDefaultPropertyOrder');
+    $params = $vocab->getConfig()->getPropertyOrder();
+    $this->assertEquals(VocabularyConfig::DEFAULT_PROPERTY_ORDER, $params);
+  }
+
+  /**
+   * @covers VocabularyConfig::getPropertyOrder
+   * @expectedException PHPUnit\Framework\Error\Error
+   */
+  public function testGetPropertyOrderUnknown() {
+    $vocab = $this->model->getVocabulary('testUnknownPropertyOrder');
+    $params = $vocab->getConfig()->getPropertyOrder();
+    $this->assertEquals(VocabularyConfig::DEFAULT_PROPERTY_ORDER, $params);
+  }
+
+  /**
+   * @covers VocabularyConfig::getPropertyOrder
+   */
+  public function testGetPropertyOrderISO() {
+    $vocab = $this->model->getVocabulary('testISOPropertyOrder');
+    $params = $vocab->getConfig()->getPropertyOrder();
+    $this->assertEquals(VocabularyConfig::ISO25964_PROPERTY_ORDER, $params);
+  }
+
+
+  /**
+   * @covers VocabularyConfig::getPropertyOrder
+   */
+  public function testGetPropertyOrderCustom() {
+    $vocab = $this->model->getVocabulary('testCustomPropertyOrder');
+    $params = $vocab->getConfig()->getPropertyOrder();
+
+    $order = array('rdf:type', 'skos:definition', 'skos:broader',
+    'skos:narrower', 'skos:related', 'skos:altLabel', 'skos:note',
+    'skos:scopeNote', 'skos:historyNote', 'skos:prefLabel');
+
+    $this->assertEquals($order, $params);
+  }
+
 }

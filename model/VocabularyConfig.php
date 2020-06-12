@@ -9,6 +9,25 @@ class VocabularyConfig extends BaseConfig
     private $pluginParameters;
     private $languageOrderCache = array();
 
+    const DEFAULT_PROPERTY_ORDER = array("rdf:type", "dc:isReplacedBy",
+    "skos:definition", "skos:broader", "isothes:broaderGeneric",
+    "isothes:broaderPartitive", "isothes:broaderInstantial",
+    "skos:narrower", "isothes:narrowerGeneric", "isothes:narrowerPartitive",
+    "isothes:narrowerInstantial", "skos:related", "skos:altLabel",
+    "skos:note", "skos:scopeNote", "skos:historyNote", "rdfs:comment",
+    "dc11:source", "dc:source", "skosmos:memberOf", "skosmos:memberOfArray");
+
+    const ISO25964_PROPERTY_ORDER = array("rdf:type", "dc:isReplacedBy",
+    // ISO 25964 allows placing all text fields (inc. SN and DEF) together
+    // so we will do that, except for HN, which is clearly administrative
+    "skos:note", "skos:scopeNote", "skos:definition", "rdfs:comment",
+    "dc11:source", "dc:source", "skos:altLabel", "skos:broader",
+    "isothes:broaderGeneric", "isothes:broaderPartitive",
+    "isothes:broaderInstantial", "skos:narrower", "isothes:narrowerGeneric",
+    "isothes:narrowerPartitive", "isothes:narrowerInstantial",
+    "skos:related", "skos:historyNote", "skosmos:memberOf",
+    "skosmos:memberOfArray");
+
     public function __construct($resource, $globalPlugins=array())
     {
         $this->resource = $resource;
@@ -533,5 +552,37 @@ class VocabularyConfig extends BaseConfig
     public function isUseModifiedDate()
     {
         return $this->getBoolean('skosmos:useModifiedDate', false);
+    }
+
+    /**
+     * @return array
+     */
+    public function getPropertyOrder()
+    {
+        $order = $this->getResource()->getResource('skosmos:propertyOrder');
+        if ($order === null) {
+            return self::DEFAULT_PROPERTY_ORDER;
+        }
+
+        $short = EasyRdf\RdfNamespace::shorten($order);
+        if ($short == 'skosmos:iso25964PropertyOrder') {
+            return self::ISO25964_PROPERTY_ORDER;
+        } elseif ($short == 'skosmos:defaultPropertyOrder') {
+            return self::DEFAULT_PROPERTY_ORDER;
+        }
+        
+        // check for custom order definition
+        $orderList = $order->getResource('rdf:value');
+        if ($orderList !== null && $orderList instanceof EasyRdf\Collection) {
+            $ret = array();
+            foreach ($orderList as $prop) {
+                $short = $prop->shorten();
+                $ret[] = ($short !== null) ? $short : $prop->getURI();
+            }
+            return $ret;
+        }
+        
+        trigger_error("Property order for vocabulary '{$this->getShortName()}' unknown, using default order", E_USER_WARNING);
+        return self::DEFAULT_PROPERTY_ORDER;
     }
 }

@@ -78,7 +78,11 @@ class Concept extends VocabularyDataObject implements Modifiable
     public function __construct($model, $vocab, $resource, $graph, $clang)
     {
         parent::__construct($model, $vocab, $resource);
-        $this->order = array("rdf:type", "dc:isReplacedBy", "skos:definition", "skos:broader", "isothes:broaderGeneric", "isothes:broaderPartitive", "isothes:broaderInstantial", "skos:narrower", "isothes:narrowerGeneric", "isothes:narrowerPartitive", "isothes:narrowerInstantial", "skos:related", "skos:altLabel", "skosmos:memberOf", "skos:note", "skos:scopeNote", "skos:historyNote", "rdfs:comment", "dc11:source", "dc:source", "skos:prefLabel");
+        if ($vocab !== null) {
+            $this->order = $vocab->getConfig()->getPropertyOrder();
+        } else {
+            $this->order = VocabularyConfig::DEFAULT_PROPERTY_ORDER;
+        }
         $this->graph = $graph;
         $this->clang = $clang;
         // setting the Punic plugins locale for localized datetime conversions
@@ -611,6 +615,22 @@ class Concept extends VocabularyDataObject implements Modifiable
                 $ret[$prop]->addValue($value, $this->clang);
             }
         }
+
+        $groupPropObj = new ConceptProperty('skosmos:memberOf', null);
+        foreach ($this->getGroupProperties() as $propVals) {
+            foreach ($propVals as $propVal) {
+                $groupPropObj->addValue($propVal, $this->clang);
+            }
+        }
+        $ret['skosmos:memberOf'] = $groupPropObj;
+
+        $arrayPropObj = new ConceptProperty('skosmos:memberOfArray', null);
+        foreach ($this->getArrayProperties() as $propVals) {
+            foreach ($propVals as $propVal) {
+                $arrayPropObj->addValue($propVal, $this->clang);
+            }
+        }
+        $ret['skosmos:memberOfArray'] = $arrayPropObj;
 
         foreach ($ret as $key => $prop) {
             if (sizeof($prop->getValues()) === 0) {
