@@ -623,7 +623,7 @@ class Vocabulary extends DataObject implements Modifiable
      */
     public function getChangeList($prop, $clang, $offset, $limit)
     {
-      return $this->getSparql()->queryChangeList($clang, $offset, $prop, $limit);
+      return $this->getSparql()->queryChangeList($prop, $clang, $offset, $limit);
     }
 
     public function getTitle($lang=null) {

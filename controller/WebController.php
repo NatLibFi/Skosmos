@@ -559,7 +559,11 @@ class WebController extends Controller
      */
     public function invokeChangeList($request, $prop='dc:created')
     {
-        $bydate = $this->formatChangeList($request, $prop);
+        $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
+        $limit = ($request->getQueryParam('limit') && is_numeric($request->getQueryParam('limit')) && $request->getQueryParam('limit') >= 0) ? $request->getQueryParam('limit') : 200;
+
+        $changeList = $this->getChangeList($request, $prop, $offset, $limit);
+        $bydate = $this->formatChangeList($changeList, $request->getLang());
 
         // load template
         $template = $this->twig->loadTemplate('changes.twig');
@@ -591,20 +595,15 @@ class WebController extends Controller
 
     /**
     * Formats the list of concepts as labels arranged by modification month
-    * @param Request $request
-    * @param string $prop the name of the property for a time stamp
-    * @return Array list of concept labels
+    * @param Array $changeList
+    * @param string $lang the language for displaying dates in the change list
     */
-    public function formatChangeList($request, $prop)
+    public function formatChangeList($changeList, $lang)
     {
-        $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
-        $limit = ($request->getQueryParam('limit') && is_numeric($request->getQueryParam('limit')) && $request->getQueryParam('limit') >= 0) ? $request->getQueryParam('limit') : 200;
-
-        $changeList = $this->getChangeList($request, $prop, $offset, $limit);
         $formatByDate = array();
         foreach($changeList as $concept) {
-            $concept['datestring'] = Punic\Calendar::formatDate($concept['date'], 'medium', $request->getLang());
-            $formatByDate[Punic\Calendar::getMonthName($concept['date'], 'wide', $request->getLang(), true) . Punic\Calendar::format($concept['date'], ' y', $request->getLang()) ][strtolower($concept['prefLabel'])] = $concept;
+            $concept['datestring'] = Punic\Calendar::formatDate($concept['date'], 'medium', $lang());
+            $formatByDate[Punic\Calendar::getMonthName($concept['date'], 'wide', $lang(), true) . Punic\Calendar::format($concept['date'], ' y', $lang()) ][strtolower($concept['prefLabel'])] = $concept;
         }
         return $formatByDate;
     }

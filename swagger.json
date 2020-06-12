@@ -1164,9 +1164,6 @@
               "$ref": "#/definitions/changedConceptsResult"
             }
           },
-          "304": {
-            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
-          },
           "404": {
             "description": "no vocabulary could be found with the requested id"
           }
@@ -1218,9 +1215,6 @@
             "schema": {
               "$ref": "#/definitions/changedConceptsResult"
             }
-          },
-          "304": {
-            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
           },
           "404": {
             "description": "no vocabulary could be found with the requested id"
@@ -2421,10 +2415,14 @@
         "date": {
           "type": "string",
           "format": "date-time",
-          "description": "time stamp"
-        },
-        "required": "-uri -prefLabel -date"
-      }
+          "description": "Time stamp"
+        }
+      },
+      "required": [
+        "uri",
+        "prefLabel",
+        "date"
+      ]
     }
   }
 }

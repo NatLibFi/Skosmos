@@ -2207,11 +2207,13 @@ EOQ;
 
     /**
      * Generates the sparql query for queryChangeList.
-     * @param string $lang language of labels to return.
+     * @param string $property the property uri pointing to timestamps, eg. 'dc:modified'
+     * @param string $lang language of labels to return
      * @param int $offset offset of results to retrieve; 0 for beginning of list
+     * @param int $limit maximum number of results to return
      * @return string sparql query
      */
-    private function generateChangeListQuery($lang, $offset, $prop, $limit=200) {
+    private function generateChangeListQuery($prop, $lang, $offset, $limit=200) {
         $fcl = $this->generateFromClause();
         $offset = ($offset) ? 'OFFSET ' . $offset : '';
 
@@ -2257,12 +2259,14 @@ EOQ;
 
     /**
      * return a list of recently changed or entirely new concepts
+     * @param string $property the property uri pointing to timestamps, eg. 'dc:modified'
      * @param string $lang language of labels to return
      * @param int $offset offset of results to retrieve; 0 for beginning of list
+     * @param int $limit maximum number of results to return
      * @return array Result array
      */
-    public function queryChangeList($lang, $offset, $prop, $limit) {
-        $query = $this->generateChangeListQuery($lang, $offset, $prop, $limit);
+    public function queryChangeList($prop, $lang, $offset, $limit) {
+        $query = $this->generateChangeListQuery($prop, $lang, $offset, $limit);
         $result = $this->query($query);
         return $this->transformChangeListResults($result);
     }
