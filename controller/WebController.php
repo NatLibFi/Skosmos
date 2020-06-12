@@ -585,7 +585,7 @@ class WebController extends Controller
      * @param int $limit maximum number of concepts to return
      * @return Array list of concepts
      */
-    private function getChangeList($request, $prop, $offset=0, $limit=200)
+    public function getChangeList($request, $prop, $offset=0, $limit=200)
     {
         // set language parameters for gettext
         $this->setLanguageProperties($request->getLang());
@@ -602,8 +602,8 @@ class WebController extends Controller
     {
         $formatByDate = array();
         foreach($changeList as $concept) {
-            $concept['datestring'] = Punic\Calendar::formatDate($concept['date'], 'medium', $lang());
-            $formatByDate[Punic\Calendar::getMonthName($concept['date'], 'wide', $lang(), true) . Punic\Calendar::format($concept['date'], ' y', $lang()) ][strtolower($concept['prefLabel'])] = $concept;
+            $concept['datestring'] = Punic\Calendar::formatDate($concept['date'], 'medium', $lang);
+            $formatByDate[Punic\Calendar::getMonthName($concept['date'], 'wide', $lang, true) . Punic\Calendar::format($concept['date'], ' y', $lang) ][strtolower($concept['prefLabel'])] = $concept;
         }
         return $formatByDate;
     }

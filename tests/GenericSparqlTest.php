@@ -1098,7 +1098,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     $voc = $this->model->getVocabulary('changes');
     $graph = $voc->getGraph();
     $sparql = new GenericSparql('http://localhost:13030/skosmos-test/sparql', $graph, $this->model);
-    $actual = $sparql->queryChangeList('en', 0, 'dc11:created', 10);
+    $actual = $sparql->queryChangeList('dc11:created', 'en', 0, 10);
     $order = array();
     foreach($actual as $concept) {
         array_push($order, $concept['prefLabel']);

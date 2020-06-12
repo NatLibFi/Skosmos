@@ -1,4 +1,4 @@
-@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dc: <http://purl.org/dc/terms/> .
 @prefix changes: <http://www.skosmos.skos/changes/> .
 @prefix meta: <http://www.skosmos.skos/test-meta/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .

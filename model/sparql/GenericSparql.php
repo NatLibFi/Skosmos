@@ -2228,6 +2228,7 @@ WHERE {
 ORDER BY DESC(YEAR(?date)) DESC(MONTH(?date)) LCASE(?label)
 LIMIT $limit $offset
 EOQ;
+
         return $query;
     }
 
@@ -2267,6 +2268,7 @@ EOQ;
      */
     public function queryChangeList($prop, $lang, $offset, $limit) {
         $query = $this->generateChangeListQuery($prop, $lang, $offset, $limit);
+
         $result = $this->query($query);
         return $this->transformChangeListResults($result);
     }
