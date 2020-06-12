@@ -125,6 +125,21 @@ test:ta126
   skos:notation "12.34" ;
   skos:prefLabel "Europa"@nb .
 
+test:ta127
+  a skos:Concept ;
+  skos:definition "For testing sorting and language names of getForeignLabels()"@en ;
+  skos:prefLabel "Test sorting labels 1",
+    "Test sorting labels 2",
+    "A first",
+    "Ä before 'A first' in English (default) collation",
+    "Test prefLabel"@fi;
+
+   skos:altLabel "A sort first"@fi,
+   "B sorts second"@fi,
+   "Ä way after B in Finnish collation"@fi,
+   "Finnish before Swedish in result array"@sv,
+   "No language tag becomes very first in result language array" .
+
 test:ta1 a skos:Concept, meta:TestClass ;
     skos:inScheme test:conceptscheme ;
     skos:narrower test:ta111,
