@@ -22,10 +22,11 @@ class ConceptProperty
      * @param string $prop property type eg. 'rdf:type'.
      * @param string $label
      */
-    public function __construct($prop, $label, $super=null, $sort_by_notation=false)
+    public function __construct($prop, $label, $help=null, $super=null, $sort_by_notation=false)
     {
         $this->prop = $prop;
         $this->label = $label;
+        $this->help = $help;
         $this->values = array();
         $this->is_sorted = true;
         $this->super = $super;
@@ -47,7 +48,7 @@ class ConceptProperty
         }
 
         // if not, see if there was a label for the property in the graph
-        if ($this->label) {
+        if ($this->label !== null) {
             return $this->label;
         }
 
@@ -56,14 +57,26 @@ class ConceptProperty
     }
 
     /**
-     * Returns a gettext translation for the property tooltip.
+     * Returns text for the property tooltip.
      * @return string
      */
     public function getDescription()
     {
         $helpprop = $this->prop . "_help";
 
-        return gettext($helpprop); // can't use string constant, it'd be picked up by xgettext
+        // see if we have a translation with the help text
+        $help = gettext($helpprop);
+        if ($help != $helpprop) {
+            return $help;
+        }
+
+       // if not, see if there was a comment/definition for the property in the graph
+        if ($this->help !== null) {
+            return $this->help;
+        }
+
+        // when nothing is found, don't show the help text at all
+        return null;
     }
 
     /**

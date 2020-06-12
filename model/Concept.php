@@ -514,6 +514,12 @@ class Concept extends VocabularyDataObject implements Modifiable
                 $propres = new EasyRdf\Resource($prop, $this->graph);
                 $proplabel = $propres->label($this->getEnvLang()) ? $propres->label($this->getEnvLang()) : $propres->label();
 
+                $prophelp = $propres->getLiteral('rdfs:comment|skos:definition', $this->getEnvLang());
+                if ($prophelp === null) {
+                    // try again without language restriction
+                    $prophelp = $propres->getLiteral('rdfs:comment|skos:definition');
+                }
+
                 // check if the property is one of the well-known properties for which we have a gettext translation
                 // if it is then we can skip the additional lookups in the default graph
                 $propkey = (substr($prop, 0, 5) == 'dc11:') ?
@@ -554,7 +560,7 @@ class Concept extends VocabularyDataObject implements Modifiable
                     $superprop = EasyRdf\RdfNamespace::shorten($superprop) ? EasyRdf\RdfNamespace::shorten($superprop) : $superprop;
                 }
                 $sort_by_notation = $this->vocab->getConfig()->sortByNotation();
-                $propobj = new ConceptProperty($prop, $proplabel, $superprop, $sort_by_notation);
+                $propobj = new ConceptProperty($prop, $proplabel, $prophelp, $superprop, $sort_by_notation);
 
                 if ($propobj->getLabel() !== null) {
                     // only display properties for which we have a label
