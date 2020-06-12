@@ -17,7 +17,8 @@ meta:TestClass a owl:Class ;
     rdfs:label "Test class"@en .
 
 skosmos:testprop a rdf:Property ;
-    rdfs:label "Skosmos test property"@en .
+    rdfs:label "Skosmos test property"@en ;
+    rdfs:comment "description for Skosmos test property"@en .
 
 skos:prefLabel a rdf:Property ;
     rdfs:label "preferred label"@en .

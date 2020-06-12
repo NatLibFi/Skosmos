@@ -61,6 +61,20 @@ class ConceptPropertyTest extends PHPUnit\Framework\TestCase
   }
 
   /**
+   * @covers ConceptProperty::getLabel
+   * @covers ConceptProperty::getDescription
+   */
+  public function testGetDescriptionAndLabelForCustomProperty() {
+    $vocab = $this->model->getVocabulary('test');
+    $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en');
+    $concept = $concepts[0];
+    $props = $concept->getProperties();
+    $prop = $props["http://www.skosmos.skos/testprop"];
+    $this->assertEquals('Skosmos test property', $prop->getLabel());
+    $this->assertEquals('description for Skosmos test property', $prop->getDescription());
+  }
+
+  /**
    * @covers Concept::getProperties
    * @covers ConceptProperty::getType
    */
