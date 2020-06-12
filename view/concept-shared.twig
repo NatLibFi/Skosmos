@@ -111,7 +111,8 @@
         </div></div></div>
         {% endif %}
       {% endfor %}
-      {% if concept.foreignLabels %}
+      {% set foreignLabels = concept.foreignLabels %}
+      {% if foreignLabels %}
       <div class="row">
         <div class="property-label"><span class="versal property-click" title="{% trans "foreign prefLabel help" %}" >{{ 'foreign prefLabels'|trans|upper }}</span></div>
         <div class="property-value-column"><div class="property-value-wrapper">
