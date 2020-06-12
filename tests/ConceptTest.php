@@ -111,13 +111,33 @@ class ConceptTest extends PHPUnit\Framework\TestCase
 
   /**
    * @covers Concept::getForeignLabels
-   * @covers Concept::literalLanguageToString
+   * @covers Concept::getForeignLabelList
+   * @covers Concept::langToString
    */
   public function testGetForeignLabels()
   {
     $labels = $this->concept->getForeignLabels();
 
-    $this->assertEquals('Karppi', $labels['Finnish'][0]->getLabel());
+    $this->assertEquals('Karppi', $labels['Finnish']['prefLabel'][0]->getLabel());
+    $this->assertArrayNotHasKey('altLabel', $labels['Finnish']);
+    $this->assertArrayNotHasKey('English', $labels);
+
+    $results = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta115', 'en');
+    $concept = reset($results);
+    $this->assertEmpty($concept->getForeignLabels());
+
+    $results = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta127', 'en');
+    $concept = reset($results);
+    $labels = $concept->getForeignLabels();
+    $this->assertEquals(['', 'Finnish', 'Swedish'], array_keys($labels));
+
+    $this->assertEquals("Ä before 'A first' in English (default) collation", $labels['']['prefLabel'][0]->getLabel());
+    $this->assertEquals("Test sorting labels 2", $labels['']['prefLabel'][3]->getLabel());
+
+    $this->assertArrayHasKey('prefLabel', $labels['Finnish']);
+    $fiAltLabels = array_map(function ($elem) {return $elem->getLabel();}, $labels['Finnish']['altLabel']);
+    $fiCorrectSort = ["A sort first", "B sorts second", "Ä way after B in Finnish collation"];
+    $this->assertEquals($fiCorrectSort, $fiAltLabels);
   }
 
   /**
