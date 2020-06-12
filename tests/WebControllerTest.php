@@ -218,7 +218,7 @@ class WebControllerTest extends TestCase
         $request->setContentLang('en');
         $request->setQueryParam('offset', '0');
 
-        $changeList = $this->webController->getChangeList($request, 'dc11:created');
+        $changeList = $this->webController->getChangeList($request, 'dc:created');
         $months =$this->webController->formatChangeList($changeList, 'en');
 
         $expected = array ('hurr durr' => array ('uri' => 'http://www.skosmos.skos/changes/d3', 'prefLabel' => 'Hurr Durr', 'date' => DateTime::__set_state(array('date' => '2010-02-12 10:26:39.000000', 'timezone_type' => 3, 'timezone' => 'UTC')), 'datestring' => 'Feb 12, 2010'), 'second date' => array ('uri' => 'http://www.skosmos.skos/changes/d2', 'prefLabel' => 'Second date', 'date' => DateTime::__set_state(array('date' => '2010-02-12 15:26:39.000000', 'timezone_type' => 3, 'timezone' => 'UTC')), 'datestring' => 'Feb 12, 2010'));
