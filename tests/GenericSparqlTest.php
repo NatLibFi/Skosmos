@@ -1108,6 +1108,23 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
   }
 
   /**
+   * @covers GenericSparql::queryChangeList
+   * @covers GenericSparql::generateChangeListQuery
+   * @covers GenericSparql::transFormChangeListResults
+   */
+  public function testMalformedDates() {
+    $voc = $this->model->getVocabulary('test');
+    $graph = $voc->getGraph();
+    $sparql = new GenericSparql('http://localhost:13030/skosmos-test/sparql', $graph, $this->model);
+    $result = $sparql->queryChangeList('dc:modified', 'en', 0, 10);
+    $uris = array();
+    foreach($result as $concept) {
+      $uris[] = $concept['uri'];
+    }
+    $this->assertNotContains('http://www.skosmos.skos/test/ta114', $uris);
+  }
+
+  /**
    * @covers GenericSparql::formatTypes
    * @covers GenericSparql::queryConcepts
    */

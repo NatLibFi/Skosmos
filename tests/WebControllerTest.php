@@ -209,6 +209,7 @@ class WebControllerTest extends TestCase
     }
 
     /**
+     * @covers WebController::getChangeList
      * @covers WebController::formatChangeList
      */
     public function testFormatChangeList() {
@@ -225,5 +226,4 @@ class WebControllerTest extends TestCase
         $this->assertEquals(array('December 2011', 'February 2010', 'January 2000'), array_keys($months));
         $this->assertEquals($expected, $months['February 2010']);
     }
-
 }
