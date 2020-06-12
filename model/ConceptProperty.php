@@ -22,7 +22,10 @@ class ConceptProperty
     /**
      * Label parameter seems to be optional in this phase.
      * @param string $prop property type eg. 'rdf:type'.
-     * @param string $label
+     * @param string $label property label
+     * @param string $tooltip property tooltip/description
+     * @param string $super URI of superproperty
+     * @param boolean $sort_by_notation whether to sort the property values by their notation code
      */
     public function __construct($prop, $label, $tooltip=null, $super=null, $sort_by_notation=false)
     {
