@@ -1098,13 +1098,30 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     $voc = $this->model->getVocabulary('changes');
     $graph = $voc->getGraph();
     $sparql = new GenericSparql('http://localhost:13030/skosmos-test/sparql', $graph, $this->model);
-    $actual = $sparql->queryChangeList('en', 0, 'dc11:created');
+    $actual = $sparql->queryChangeList('dc:created', 'en', 0, 10);
     $order = array();
     foreach($actual as $concept) {
         array_push($order, $concept['prefLabel']);
     }
     $this->assertEquals(4, sizeof($actual));
     $this->assertEquals(array('Fourth date', 'Hurr Durr', 'Second date', 'A date'), $order);
+  }
+
+  /**
+   * @covers GenericSparql::queryChangeList
+   * @covers GenericSparql::generateChangeListQuery
+   * @covers GenericSparql::transFormChangeListResults
+   */
+  public function testMalformedDates() {
+    $voc = $this->model->getVocabulary('test');
+    $graph = $voc->getGraph();
+    $sparql = new GenericSparql('http://localhost:13030/skosmos-test/sparql', $graph, $this->model);
+    $result = $sparql->queryChangeList('dc:modified', 'en', 0, 10);
+    $uris = array();
+    foreach($result as $concept) {
+      $uris[] = $concept['uri'];
+    }
+    $this->assertNotContains('http://www.skosmos.skos/test/ta114', $uris);
   }
 
   /**

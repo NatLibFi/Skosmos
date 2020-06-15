@@ -615,19 +615,15 @@ class Vocabulary extends DataObject implements Modifiable
 
     /**
      * Returns a list of recently changed or entirely new concepts.
+     * @param string $prop the property uri pointing to timestamps, eg. 'dc:modified'
      * @param string $clang content language for the labels
-     * @param string $lang UI language for the dates
+     * @param int $offset starting index offset
+     * @param int $limit maximum number of concepts to return
      * @return Array
      */
-    public function getChangeList($prop, $clang, $lang, $offset)
+    public function getChangeList($prop, $clang, $offset, $limit)
     {
-      $changelist = $this->getSparql()->queryChangeList($clang, $offset, $prop);
-      $bydate = array();
-      foreach($changelist as $concept) {
-        $concept['datestring'] = Punic\Calendar::formatDate($concept['date'], 'medium', $lang);
-        $bydate[Punic\Calendar::getMonthName($concept['date'], 'wide', $lang, true) . Punic\Calendar::format($concept['date'], ' y', $lang) ][strtolower($concept['prefLabel'])] = $concept;
-      }
-      return $bydate;
+      return $this->getSparql()->queryChangeList($prop, $clang, $offset, $limit);
     }
 
     public function getTitle($lang=null) {

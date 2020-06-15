@@ -559,22 +559,53 @@ class WebController extends Controller
      */
     public function invokeChangeList($request, $prop='dc:created')
     {
-        // set language parameters for gettext
-        $this->setLanguageProperties($request->getLang());
-        $vocab = $request->getVocab();
         $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
-        $changeList = $vocab->getChangeList($prop, $request->getContentLang(), $request->getLang(), $offset);
+        $limit = ($request->getQueryParam('limit') && is_numeric($request->getQueryParam('limit')) && $request->getQueryParam('limit') >= 0) ? $request->getQueryParam('limit') : 200;
+
+        $changeList = $this->getChangeList($request, $prop, $offset, $limit);
+        $bydate = $this->formatChangeList($changeList, $request->getLang());
+
         // load template
         $template = $this->twig->loadTemplate('changes.twig');
 
         // render template
         echo $template->render(
             array(
-                'vocab' => $vocab,
+                'vocab' => $request->getVocab(),
                 'languages' => $this->languages,
                 'request' => $request,
-                'changeList' => $changeList)
+                'changeList' => $bydate)
             );
+    }
+    /**
+     * Gets the list of newest concepts for a vocabulary according to timestamp indicated by a property
+     * @param Request $request
+     * @param string $prop the name of the property eg. 'dc:modified'.
+     * @param int $offset starting index offset
+     * @param int $limit maximum number of concepts to return
+     * @return Array list of concepts
+     */
+    public function getChangeList($request, $prop, $offset=0, $limit=200)
+    {
+        // set language parameters for gettext
+        $this->setLanguageProperties($request->getLang());
+
+        return $request->getVocab()->getChangeList($prop, $request->getContentLang(), $offset, $limit);
+    }
+
+    /**
+    * Formats the list of concepts as labels arranged by modification month
+    * @param Array $changeList
+    * @param string $lang the language for displaying dates in the change list
+    */
+    public function formatChangeList($changeList, $lang)
+    {
+        $formatByDate = array();
+        foreach($changeList as $concept) {
+            $concept['datestring'] = Punic\Calendar::formatDate($concept['date'], 'medium', $lang);
+            $formatByDate[Punic\Calendar::getMonthName($concept['date'], 'wide', $lang, true) . Punic\Calendar::format($concept['date'], ' y', $lang) ][strtolower($concept['prefLabel'])] = $concept;
+        }
+        return $formatByDate;
     }
 
 }

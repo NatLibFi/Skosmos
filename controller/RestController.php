@@ -1063,4 +1063,59 @@ class RestController extends Controller
         $ret = $this->transformPropertyResults($request->getUri(), $request->getLang(), $related, "related", "skos:related");
         return $this->returnJson($ret);
     }
+
+    /**
+     * Used for querying new concepts in the vocabulary
+     * @param Request $request
+     * @return object json-ld wrapped list of changed concepts
+     */
+    public function newConcepts($request)
+    {
+        $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
+        $limit = ($request->getQueryParam('limit') && is_numeric($request->getQueryParam('limit')) && $request->getQueryParam('limit') >= 0) ? $request->getQueryParam('limit') : 200;
+
+        return $this->changedConcepts($request, 'dc:created', $offset, $limit);
+    }
+
+    /**
+     * Used for querying modified concepts in the vocabulary
+     * @param Request $request
+     * @return object json-ld wrapped list of changed concepts
+     */
+    public function modifiedConcepts($request)
+    {
+        $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
+        $limit = ($request->getQueryParam('limit') && is_numeric($request->getQueryParam('limit')) && $request->getQueryParam('limit') >= 0) ? $request->getQueryParam('limit') : 200;
+
+        return $this->changedConcepts($request, 'dc:modified', $offset, $limit);
+    }
+
+    /**
+     * Used for querying changed concepts in the vocabulary
+     * @param Request $request
+     * @param int $offset starting index offset
+     * @param int $limit maximum number of concepts to return
+     * @return object json-ld wrapped list of changed concepts
+     */
+    private function changedConcepts($request, $prop, $offset, $limit)
+    {
+        $changeList = $request->getVocab()->getChangeList($prop, $request->getLang(), $offset, $limit);
+
+        $simpleChangeList = array();
+        foreach($changeList as $conceptInfo) {
+            if (array_key_exists('date', $conceptInfo)) {
+                $simpleChangeList[] =  array( 'uri' => $conceptInfo['uri'],
+                                               'prefLabel' => $conceptInfo['prefLabel'],
+                                               'date' => $conceptInfo['date']->format("Y-m-d\TH:i:sO") );
+            }
+        }
+        return $this->returnJson(array_merge_recursive($this->context,
+                                                        array('@context' => array( '@language' => $request->getLang(),
+                                                                                     'prefLabel' => 'skos:prefLabel',
+                                                                                     'xsd' => 'http://www.w3.org/2001/XMLSchema#',
+                                                                                     'date' => array( '@id' => 'http://purl.org/dc/terms/date', '@type' => 'http://www.w3.org/2001/XMLSchema#dateTime') )
+                                                        ),
+                                                        array('changeList' => $simpleChangeList)));
+
+    }
 }
