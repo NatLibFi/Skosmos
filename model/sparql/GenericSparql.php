@@ -2207,7 +2207,7 @@ EOQ;
 
     /**
      * Generates the sparql query for queryChangeList.
-     * @param string $property the property uri pointing to timestamps, eg. 'dc:modified'
+     * @param string $prop the property uri pointing to timestamps, eg. 'dc:modified'
      * @param string $lang language of labels to return
      * @param int $offset offset of results to retrieve; 0 for beginning of list
      * @param int $limit maximum number of results to return
@@ -2261,7 +2261,7 @@ EOQ;
 
     /**
      * return a list of recently changed or entirely new concepts
-     * @param string $property the property uri pointing to timestamps, eg. 'dc:modified'
+     * @param string $prop the property uri pointing to timestamps, eg. 'dc:modified'
      * @param string $lang language of labels to return
      * @param int $offset offset of results to retrieve; 0 for beginning of list
      * @param int $limit maximum number of results to return
