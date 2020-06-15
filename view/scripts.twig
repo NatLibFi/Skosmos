@@ -29,6 +29,7 @@ var showNotation = {% if request.vocab and request.vocab.config.showNotation == 
 {% if request.vocab  %}
 var languageOrder = [{% for lang in request.vocab.config.languageOrder(request.contentLang) %}"{{ lang }}"{% if not loop.last %},{% endif %}{% endfor %}];
 {% endif %}
+var explicitLangCodes = {{ explicit_langcodes ? 'true' : 'false' }};
 {% if plugin_params%}
 var pluginParameters = {{ plugin_params|raw }};
 {% endif %}
