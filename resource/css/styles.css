@@ -963,10 +963,9 @@ div.input-group > .input-group-addon {
   list-style-type: none;
 }
 
-.alphabetical-search-results li a {
-  display: inline-block;
-  text-indent: -11px;
-  margin-left: 11px;
+.alphabetical-search-results > li {
+    text-indent: -11px;
+    margin-left: 11px;
 }
 
 #alphabetical-menu {
