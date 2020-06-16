@@ -1183,6 +1183,12 @@ li.sub-group {
 
 .concept-main > .row > .property-value-column > .property-value-wrapper {
   border-bottom: 2px solid #d4edeb;
+  text-indent: -20px;
+  padding-left: 20px;
+}
+
+.other-languages.first-of-language > div + div > p {
+  padding-left: 10px;
 }
 
 .concept-main > .row:last-child > .property-value-column {
