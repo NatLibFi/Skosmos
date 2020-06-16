@@ -963,7 +963,7 @@ div.input-group > .input-group-addon {
   list-style-type: none;
 }
 
-.alphabetical-search-results > li {
+.alphabetical-search-results > li, .change-list > li {
     text-indent: -11px;
     margin-left: 11px;
 }
