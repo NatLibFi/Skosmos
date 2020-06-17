@@ -292,7 +292,7 @@ $(function() { // DOCUMENT READY
         $.ajax({
             url : targetUrl,
             data: parameters,
-            complete: clearTimeout(loading),
+            complete: function() { clearTimeout(loading); },
             success : function(data) {
               $content.empty();
               var response = $('.content', data).html();
@@ -321,7 +321,7 @@ $(function() { // DOCUMENT READY
         var loading = delaySpinner();
         $.ajax({
             url : event.target.href,
-            complete: clearTimeout(loading),
+            complete: function() { clearTimeout(loading); },
             success : function(data) {
               if (window.history.pushState) { window.history.pushState({}, null, event.target.href); }
               $content.empty().append($('.content', data).html());
