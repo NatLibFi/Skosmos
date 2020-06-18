@@ -61,23 +61,6 @@
     </div>
     {% endif %}
   {% endfor %}
-  {% if concept.groupProperties %}
-  <div class="property">
-      <span class="property-click" title="{% trans "skosmos:memberOf" %}">
-        <img class="property-hover" src="resource/pics/group.gif">
-      </span>
-      <div class="property-values">
-        {% for groupprop in concept.groupProperties %}
-          {% for propval in groupprop %}
-            <span class="versal value">{{ propval.label(request.contentLang) }}</span>
-            {% if propval.lang and (propval.lang != request.lang) or explicit_langcodes %}<span class="versal"> ({{ propval.lang }})</span>{% endif %}
-            {% if not loop.last %}<span class="versal"> &#62; </span>{% endif %}
-          {% endfor %}
-          {%- if not loop.last %},{% endif %}
-        {% endfor %}
-      </div>
-    </div>
-  {% endif %}
   {% set foreignLabels = concept.foreignLabels %}
   {% if foreignLabels %}
     <div class="property">
