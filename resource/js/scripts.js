@@ -1,4 +1,4 @@
-/* exported getUrlParams, readCookie, createCookie, getUrlParams, debounce, updateContent, updateTopbarLang, updateTitle, updateSidebar, setLangCookie, loadLimitations, loadPage, hideCrumbs, shortenProperties, countAndSetOffset, combineStatistics, loadLimitedResults, naturalCompare, escapeHtml */
+/* exported getUrlParams, getConceptHref, readCookie, createCookie, getUrlParams, debounce, updateContent, updateTopbarLang, updateTitle, updateSidebar, setLangCookie, loadLimitations, loadPage, hideCrumbs, shortenProperties, countAndSetOffset, combineStatistics, loadLimitedResults, naturalCompare, escapeHtml, getConceptHref, renderPropertyMappings, loadMappingProperties /*
 
 /* 
  * Creates a cookie value and stores it for the user. Takes the given
@@ -36,6 +36,31 @@ function getUrlParams() {
     params[key] = value;
   });
   return params;
+}
+
+/**
+ * Get a href value for a concept URI in current vocab urispace
+ *
+ * @param uri string concept URI
+ * @param plainReturnValue boolean indicates whether to return a plain string or a href-key key-value-pair
+ * @return string|object Plain href link (string) or href-key key-value-pair if parameter plainReturnValue evaluates to false
+ *
+ */
+function getHrefForUri(uri, plainReturnValue) {
+  if (uri.indexOf(window.uriSpace) !== -1) {
+    var page = uri.substr(window.uriSpace.length);
+    if (/[^a-zA-Z0-9\.]/.test(page) || page.indexOf("/") > -1 ) {
+      // contains special characters or contains an additional '/' - fall back to full URI
+      page = '?uri=' + encodeURIComponent(uri);
+    }
+  } else {
+    // not within URI space - fall back to full URI
+    page = '?uri=' + encodeURIComponent(uri);
+  }
+
+  var href = window.vocab + '/' + window.lang + '/page/' + page;
+
+  return plainReturnValue ? href : { "href" : href };
 }
 
 // Debounce function from underscore.js
@@ -327,20 +352,6 @@ function escapeHtml(string) {
   return String(string).replace(/[&<>"'\/]/g, function (s) {
     return entityMap[s];
   });
-}
-
-function renderPropertyMappingValues(groupedByType) {
-  var propertyMappingValues = [];
-  var source = document.getElementById("property-mapping-values-template").innerHTML;
-  var template = Handlebars.compile(source);
-  var context = {
-    property: {
-      uri: conceptMappingPropertyValue.uri,
-      label: conceptMappingPropertyValue.prefLabel,
-    }
-  };
-  propertyMappingValues.push({'body': template(context)});
-  return propertyMappingValues;
 }
 
 function renderPropertyMappings(concept, contentLang, properties) {
