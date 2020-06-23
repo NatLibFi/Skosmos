@@ -192,12 +192,18 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
                 ]
             ],
             // EXTRA
-            'description' => gettext($this->type . "_help"), // pop-up text
             'hrefLink' => $hrefLink, // link to resource as displayed in the UI
             'lang' => $propertyLang, // TBD: could it be part of the prefLabel?
             'vocabName' => (string) $this->getVocabName(), // vocabulary as displayed in the UI
             'typeLabel' => gettext($this->type), // a text used in the UI instead of, for example, skos:closeMatch
         ];
+
+        $helpprop = $this->type . "_help";
+        // see if we have a translation for the property help text
+        $help = gettext($helpprop);
+        if ($help != $helpprop) {
+            $ret['description'] = $help;
+        }
 
         $fromScheme = $this->vocab->getDefaultConceptScheme();
         if (isset($fromScheme)) {
@@ -221,10 +227,13 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
         $label = $this->getLabel($lang, $queryExVocabs);
         if (isset($label)) {
             if (is_string($label)) {
-                list($labelLang, $labelValue) = ['-', $label];
+                list($labelLang, $labelValue) = ['', $label];
             } else {
                 list($labelLang, $labelValue) = [$label->getLang(), $label->getValue()];
             }
+            // set the language of the preferred label to be whatever returned
+            $ret['lang'] = $labelLang;
+
             if ($labelValue != $this->getUri()) {
                 // The `queryLabel()` method above will fallback to returning the URI
                 // if no label was found. We don't want that here.
