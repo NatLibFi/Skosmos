@@ -47,18 +47,22 @@ function getUrlParams() {
  *
  */
 function getHrefForUri(uri, plainReturnValue) {
+  var clangParam = (content_lang !== lang) ? "clang=" + content_lang : "";
+  var clangSeparator = "?";
   if (uri.indexOf(window.uriSpace) !== -1) {
     var page = uri.substr(window.uriSpace.length);
-    if (/[^a-zA-Z0-9\.]/.test(page) || page.indexOf("/") > -1 ) {
+    if (/[^a-zA-Z0-9-_\.~]/.test(page) || page.indexOf("/") > -1 ) {
       // contains special characters or contains an additional '/' - fall back to full URI
       page = '?uri=' + encodeURIComponent(uri);
+      clangSeparator = "&";
     }
   } else {
     // not within URI space - fall back to full URI
     page = '?uri=' + encodeURIComponent(uri);
+    clangSeparator = "&";
   }
 
-  var href = window.vocab + '/' + window.lang + '/page/' + page;
+  var href = window.vocab + '/' + window.lang + '/page/' + page + (clangParam !== "" ? clangSeparator + clangParam : "");
 
   return plainReturnValue ? href : { "href" : href };
 }
