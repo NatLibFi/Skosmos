@@ -8,11 +8,11 @@
       "type": "package",
       "package": {
         "name": "medialize/uri.js",
-        "version": "1.19.2",
+        "version": "1.19.0",
         "source": {
           "url": "https://github.com/medialize/URI.js.git",
           "type": "git",
-          "reference": "v1.19.2"
+          "reference": "v1.19.0"
         }
       }
     },
@@ -44,11 +44,11 @@
       "type": "package",
       "package": {
         "name": "davidstutz/bootstrap-multiselect",
-        "version": "0.9.15",
+        "version": "0.9.13",
         "source": {
           "url": "https://github.com/davidstutz/bootstrap-multiselect.git",
           "type": "git",
-          "reference": "v0.9.15"
+          "reference": "v0.9.13"
         }
       }
     } 
@@ -57,7 +57,7 @@
     "components/jquery": "2.2.*",
     "components/jqueryui": "1.12.*",
     "components/handlebars.js": "v4.7.6",
-    "davidstutz/bootstrap-multiselect": "v0.9.15",
+    "davidstutz/bootstrap-multiselect": "v0.9.13",
     "easyrdf/easyrdf": "0.10.0-alpha.1",
     "etdsolutions/waypoints": "4.0.0",
     "twig/twig": "2.4.*",
@@ -68,7 +68,7 @@
     "vakata/jstree": "3.3.*",
     "punic/punic": "3.5.1",
     "ml/json-ld": "1.*",
-    "medialize/uri.js": "1.19.2",
+    "medialize/uri.js": "1.19.0",
     "ext-gettext": "*",
     "ext-intl": "*",
     "ext-mbstring": "*",
