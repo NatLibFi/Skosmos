@@ -58,9 +58,10 @@ class JenaTextSparql extends GenericSparql
      * Generate jena-text search condition for matching labels in SPARQL
      * @param string $term search term
      * @param string $searchLang language code used for matching labels (null means any language)
+     * @param string $lang language code of the returned labels
      * @return string sparql query snippet
      */
-    protected function generateConceptSearchQueryCondition($term, $searchLang)
+    protected function generateConceptSearchQueryCondition($term, $searchLang, $lang)
     {
         # make text query clauses
         $langClause = $searchLang ? '?langParam' : '';
@@ -71,7 +72,10 @@ class JenaTextSparql extends GenericSparql
             $textcond = "GRAPH <urn:x-arq:UnionGraph> { $textcond }";
         }
 
-        return $textcond;
+        // required to fix #908
+        $extraLangTest = ($searchLang) ? " FILTER (langMatches(LANG(?match), '$lang'))" : ' ';
+
+        return $textcond . $extraLangTest;
     }
 
     /**

@@ -852,9 +852,10 @@ EOF;
      * Generate condition for matching labels in SPARQL
      * @param string $term search term
      * @param string $searchLang language code used for matching labels (null means any language)
+     * @param string $lang language code of the returned labels (not needed in GenericSparql; see #908)
      * @return string sparql query snippet
      */
-    protected function generateConceptSearchQueryCondition($term, $searchLang)
+    protected function generateConceptSearchQueryCondition($term, $searchLang, $lang)
     {
         # use appropriate matching function depending on query type: =, strstarts, strends or full regex
         if (preg_match('/^[^\*]+$/', $term)) { // exact query
@@ -897,7 +898,7 @@ EOF;
     protected function generateConceptSearchQueryInner($term, $lang, $searchLang, $props, $unique, $filterGraph)
     {
         $valuesProp = $this->formatValues('?prop', $props);
-        $textcond = $this->generateConceptSearchQueryCondition($term, $searchLang);
+        $textcond = $this->generateConceptSearchQueryCondition($term, $searchLang, $lang);
 
         $rawterm = str_replace(array('\\', '*', '"'), array('\\\\', '', '\"'), $term);
         // graph clause, if necessary
