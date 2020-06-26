@@ -147,6 +147,7 @@ WHERE {
   $gc {
     {
       $textcondPref
+      FILTER (langMatches(LANG(?match), '$lang'))
       FILTER(STRSTARTS(LCASE(STR(?match)), '$lcletter'))
       FILTER EXISTS { ?s skos:prefLabel ?match }
       BIND(?match as ?label)
@@ -154,6 +155,7 @@ WHERE {
     UNION
     {
       $textcondAlt
+      FILTER (langMatches(LANG(?match), '$lang'))
       FILTER(STRSTARTS(LCASE(STR(?match)), '$lcletter'))
       FILTER EXISTS { ?s skos:altLabel ?match }
       BIND(?match as ?alabel)
