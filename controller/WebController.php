@@ -186,6 +186,7 @@ class WebController extends Controller
         echo $template->render(array(
             'search_results' => $results,
             'vocab' => $vocab,
+            'concept_uri' => $uri,
             'languages' => $this->languages,
             'explicit_langcodes' => $langcodes,
             'bread_crumbs' => $crumbs['breadcrumbs'],
