@@ -1126,19 +1126,14 @@ EOQ;
             }
         }
 
-        if (isset($row->label)) {
-            $hit['prefLabel'] = $row->label->getValue();
-        }
-
-        if (isset($row->label)) {
-            $hit['lang'] = $row->label->getLang();
-        }
-
         if (isset($row->notation)) {
             $hit['notation'] = $row->notation->getValue();
         }
 
-        if (isset($row->plabel)) {
+        if (isset($row->label)) {
+            $hit['prefLabel'] = $row->label->getValue();
+            $hit['lang'] = $row->label->getLang();
+        } elseif (isset($row->plabel)) {
             $hit['matchedPrefLabel'] = $row->plabel->getValue();
             $hit['lang'] = $row->plabel->getLang();
         } elseif (isset($row->alabel)) {
