@@ -297,6 +297,7 @@ class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
     $this->params->method('getSearchTerm')->will($this->returnValue('e*'));
     $this->params->method('getVocabIds')->will($this->returnValue(array('test')));
     $this->params->method('getSearchLang')->will($this->returnValue('en'));
+    $this->params->method('getLang')->will($this->returnValue('en'));
     $actual = $this->sparql->queryConcepts(array($voc), null, null, $this->params);
     $this->assertEquals(1, sizeof($actual));
     $this->assertEquals('Eel', $actual[0]['prefLabel']);

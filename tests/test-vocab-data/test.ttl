@@ -65,6 +65,7 @@ test:ta115 a skos:Concept, meta:TestClass ;
     skos:inScheme test:conceptscheme ;
     skos:definition "any fish belonging to the order Anguilliformes"@en, 
       "Iljettävä limanuljaska"@fi ;
+    skos:prefLabel "Eel"@eng ;
     skos:prefLabel "Eel"@en .
 
 test:ta116 a skos:Concept, meta:TestClass ;
