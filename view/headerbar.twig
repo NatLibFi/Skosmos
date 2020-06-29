@@ -27,7 +27,7 @@
         <ul class="dropdown-menu">
         {% if request.vocab %}
           {% for langcode in request.vocab.config.languages %}
-          <li><a href="{{ request.uri | link_url(request.vocabid,request.lang,request.page,langcode,term,letter) }}" class="lang-button" hreflang="{{ langcode }}">{{ langcode | lang_name(request.lang) }}</a></li>
+          <li><a href="{{ concept_uri | link_url(request.vocabid,request.lang,request.page,langcode,term,letter) }}" class="lang-button" hreflang="{{ langcode }}">{{ langcode | lang_name(request.lang) }}</a></li>
           {% endfor %}
         {% else %}
           {% for langcode in lang_list %}
