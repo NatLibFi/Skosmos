@@ -13,7 +13,7 @@
       <h2>{{ vocabClassName|upper }}</h2>
       <ul>
       {% for vocab in vocabArray %}
-        <li><a class="navigation-font" href="{{ vocab.id }}/{{ request.lang }}/{% if request.contentLang != request.lang and request.contentLang != '' %}?clang={{ request.contentLang }}{% endif %}">{{ vocab.title }}</a></li>
+        <li><a class="navigation-font" href="{{ vocab.id }}/{{ request.lang }}/{% if request.contentLang != request.lang and request.contentLang != '' and request.contentLang in vocab.config.languages %}?clang={{ request.contentLang }}{% endif %}">{{ vocab.title }}</a></li>
       {% endfor %}
       </ul>
     </div>
