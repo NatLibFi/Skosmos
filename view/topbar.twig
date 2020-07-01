@@ -1,5 +1,21 @@
 <div id="topbar-service-helper">
-<a {% if request.vocabid == '' and request.page != 'feedback' and request.page != 'about' %}id="service-logo"{% endif %} {% if request.vocabid != '' or request.page == 'feedback' or request.page == 'about' %}class="service-{{ request.lang }}" {% endif %}href="{{ request.lang }}/{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}"><h1 id="service-name">{% if ServiceName is defined  %}{{ ServiceName }}{% else %}Skosmos{% endif %}</h1></a>
+  <a
+    {% if request.vocabid == '' and request.page != 'feedback' and request.page != 'about' %}
+      id="service-logo"
+    {% endif %}
+    {% if request.vocabid != '' or request.page == 'feedback' or request.page == 'about' %}
+      class="service-{{ request.lang }}"
+    {% endif %}
+    href="{{ request.lang }}/
+    {%- set qClang = request.contentLang and request.contentLang != request.lang -%}
+    {%- if qClang -%}
+      ?clang={{ request.contentLang }}
+    {%- endif -%}
+    {%- if request.queryParam('anylang') == 'on' %}
+      {{- qClang ? '&' : '?' -}}
+      anylang=on
+    {%- endif -%}
+    "><h1 id="service-name">{% if ServiceName is defined %}{{ ServiceName }}{% else %}Skosmos{% endif %}</h1></a>
 </div>
 <div id="topbar-language-navigation">
 {% if LanguageDropdown %}
