@@ -21,7 +21,7 @@
     <div class="input-group">
       <div class="input-group-btn">
         <label class="sr-only" for="lang-dropdown-toggle">{% trans "Content and search language" %}</label>
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="lang-dropdown-toggle">{{ request.lang | lang_name(request.lang) }}</button>
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="lang-dropdown-toggle">{{ (request.contentLang ? request.contentLang : request.lang) | lang_name(request.lang) }} <span class="caret"></span></button>
         <ul class="dropdown-menu">
         {% if request.vocab %}
           {% for langcode in request.vocab.config.languages %}
@@ -29,10 +29,50 @@
           {% endfor %}
         {% else %}
           {% for langcode in lang_list %}
-          <li><a href="{{ request.lang }}/{{ request.page }}?clang={{langcode}}{% if term %}&q={{ term }}{% endif %}{% if vocabs %}&vocabs={{ vocabs }}{% endif %}" class="lang-button" hreflang="{{ langcode }}">{{ langcode | lang_name(request.lang) }}</a></li>
+          <li><a href="{{ request.lang }}/{{ request.page -}}
+            {%- if langcode != request.lang -%}
+              ?clang={{langcode}}
+              {%- set paramSeparator = '&' -%}
+            {%- endif %}
+            {%- if term %}{{ paramSeparator }}q={{ term }}{% set paramSeparor = '&' %}{% endif -%}
+            {%- if vocabs %}{{ paramSepartor }}vocabs={{ vocabs }}{% endif -%}
+            " class="lang-button" hreflang="{{ langcode }}">{{ langcode | lang_name(request.lang) }}</a></li>
           {% endfor %}
         {% endif %}
-          <li><a href="{% if not request.vocab %}{{ request.lang }}/{% endif %}{% if request.vocabid %}{{ request.vocabid }}/{{ request.lang }}/{% endif %}{% if request.page and request.page != 'vocab' %}{{ request.page }}/{% endif%}?{% if request.uri %}uri={{ request.uri }}&{% endif %}clang={% if request.contentLang %}{{ request.contentLang }}{% else %}{{ request.lang }}{% endif %}&anylang=on{% if term %}&q={{ term }}{% endif %}{% if vocabs %}&vocabs={{ vocabs }}{% endif %}" class="lang-button lang-button-all">{% trans "Search language: any" %}</a><input name="anylang" type="checkbox"{% if request.queryparam('anylang') %} checked{% endif%}></li>
+          <li>
+            <a href="
+              {%- if not request.vocab -%}
+                  {{ request.lang }}/
+              {%- endif -%}
+              {%- if request.vocabid -%}
+                  {{ request.vocabid }}/{{ request.lang }}/
+              {%- endif -%}
+              {%- set paramSeparator = '?' -%}
+              {%- set uriSet = false -%}
+              {%- if request.page and request.page != 'vocab' -%}
+                  {{ request.page }}/
+                  {%- if request.page == 'page' and request.uri != concept_uri -%}
+                      {{- request.uri -}}
+                      {%- set uriSet = true -%}
+                  {% endif %}
+              {%- endif -%}
+              {%- if not uriSet and request.uri -%}
+                  ?uri={{ request.uri }}
+                  {%- set paramSeparator = '&' -%}
+              {%- endif -%}
+              {{- paramSeparator }}clang={{ request.contentLang ? request.contentLang : request.lang -}}
+              {%- set paramSeparator = '&' -%}
+              {{- paramSeparator }}anylang=on
+              {%- if term %}&q={{ term }}{% endif -%}
+              {%- if vocabs %}&vocabs={{ vocabs }}{% endif -%}
+              "
+              class="lang-button lang-button-all">
+              {%- trans "Search language: any" -%}
+            </a>
+            <input name="anylang" type="checkbox"
+              {%- if request.queryparam('anylang') or (not request.vocab and 'SKOSMOS_SEARCH_LANG=anything' in request.serverConstant('HTTP_COOKIE')) %} checked{% endif -%}
+            >
+          </li>
         </ul>
       </div><!-- /btn-group -->
       <label class="sr-only" for="search-field">{% trans "Enter search term" %}</label>
@@ -41,10 +81,6 @@
         <label class="sr-only" for="search-all-button">{% trans "Submit search" %}</label>
         <button id="search-all-button" type="submit" class="btn btn-primary">{% trans "Search" %}</button>
       </div>
-    </div>
-    <div id="search-from-all-vocabularies-radio-buttons">
-      <input type="radio" id="all-languages-true" name="anylang" value="on"
-      onClick="createCookie('SKOSMOS_SEARCH_ALL', this.value , 365);" />
     </div>
     {% if request.page == '' or request.page == 'search' %}<input id="selected-vocabs" type="text" name="vocabs">{% endif %}
   </form>
