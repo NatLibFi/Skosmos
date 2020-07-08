@@ -378,6 +378,7 @@ function getTreeConfiguration() {
           $.ajax({
             data: $.param({'lang': clang}),
             url: rest_base_url + vocab + '/',
+            req_kind: $.ajaxQ.requestKind.SIDEBAR_PRIVILEGED,
             success: function (response) {
               schemeObjects = schemeRoot(response.conceptschemes);
               // if there are multiple concept schemes display those at the top level
@@ -388,6 +389,7 @@ function getTreeConfiguration() {
               else if(node.id === '#' && $('#vocab-info').length) { 
                 $.ajax({
                   data: $.param({'lang': clang}),
+                  req_kind: $.ajaxQ.requestKind.SIDEBAR_PRIVILEGED,
                   url: rest_base_url + vocab + '/topConcepts', 
                   success: function (response) {
                     return cb(vocabRoot(response.topconcepts));
@@ -420,6 +422,7 @@ function getTreeConfiguration() {
                 $.ajax({
                   data: params,
                 url: json_url, 
+                req_kind: $.ajaxQ.requestKind.SIDEBAR_PRIVILEGED,
                 success: function (response) {
                   if (response.broaderTransitive) { // the default hierarchy query that fires when a page loads.
                     return cb(buildParentTree(nodeId, response.broaderTransitive, schemeObjects));
