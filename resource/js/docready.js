@@ -637,7 +637,7 @@ $(function() { // DOCUMENT READY
     var typeParam = $.param({'lang' : lang });
     var typeUrl = rest_base_url + 'types';
     $.ajax({
-      dataType: json,
+      dataType: 'json',
       url: typeUrl,
       req_kind: $.ajaxQ.requestKind.GLOBAL,
       data: typeParam,

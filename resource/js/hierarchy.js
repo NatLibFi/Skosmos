@@ -43,6 +43,10 @@ function invokeParentTree(tree) {
     if ($('#sidebar .mCustomScrollbar').length === 0) {
       $sidebarGrey.mCustomScrollbar(hierTreeConf);
     }
+    // fix a bug causing throbber.gif not showing whilst ajaxing
+    // TODO: a good fix would mean fixing the underlying DOM structure
+    $('.jstree-container-ul').parent().addClass('jstree-default');
+
     var $leafProper = $('.jstree-leaf-proper');
     if ($leafProper.length > 0) {
       $sidebarGrey.jstree('select_node', $leafProper.toArray());
