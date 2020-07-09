@@ -94,25 +94,6 @@ $(function() { // DOCUMENT READY
   var textColor = $('.search-parameter-highlight').css('color');
   countAndSetOffset();
 
-  // Make a selection of an element for copy pasting.
-  function makeSelection(e, elem) {
-    var $clicked = elem || $(this);
-    var text = $clicked[0];
-    var range;
-    if (document.body.createTextRange) { // ms
-      range = document.body.createTextRange();
-      range.moveToElementText(text);
-      range.select();
-    } else if (window.getSelection) { // moz, opera, webkit
-      var selection = window.getSelection();
-      range = document.createRange();
-      range.selectNodeContents(text);
-      selection.removeAllRanges();
-      selection.addRange(range);
-    }
-    return false;
-  }
-
   function initHierarchyQtip() {
       if (!$('#hierarchy').length) {
           $('#hierarchy-disabled').attr('id', 'hierarchy');
@@ -127,15 +108,6 @@ $(function() { // DOCUMENT READY
   }
 
   $(document).on('click','.uri-input-box', makeSelection);
-
-  // copy to clipboard
-  function copyToClipboard() {
-    var $btn = $(this);
-    var id = $btn.attr('for');
-    var $elem = $(id);
-    makeSelection(undefined, $elem);
-    document.execCommand('copy');
-  }
 
   $(document).on('click', 'button.copy-clipboard', copyToClipboard);
 

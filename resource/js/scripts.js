@@ -1,4 +1,4 @@
-/* exported getUrlParams, readCookie, createCookie, getUrlParams, debounce, updateContent, updateTopbarLang, updateTitle, updateSidebar, setLangCookie, loadLimitations, loadPage, hideCrumbs, shortenProperties, countAndSetOffset, combineStatistics, loadLimitedResults, naturalCompare, escapeHtml */
+/* exported getUrlParams, readCookie, createCookie, getUrlParams, debounce, updateContent, updateTopbarLang, updateTitle, updateSidebar, setLangCookie, loadLimitations, loadPage, hideCrumbs, shortenProperties, countAndSetOffset, combineStatistics, loadLimitedResults, naturalCompare, escapeHtml, makeSelection, copyToClickboard */
 
 /* 
  * Creates a cookie value and stores it for the user. Takes the given
@@ -351,6 +351,34 @@ function escapeHtml(string) {
   return String(string).replace(/[&<>"'\/]/g, function (s) {
     return entityMap[s];
   });
+}
+
+// Make a selection of an element for copy pasting.
+function makeSelection(e, elem) {
+  var $clicked = elem || $(this);
+  var text = $clicked[0];
+  var range;
+  if (document.body.createTextRange) { // ms
+    range = document.body.createTextRange();
+    range.moveToElementText(text);
+    range.select();
+  } else if (window.getSelection) { // moz, opera, webkit
+    var selection = window.getSelection();
+    range = document.createRange();
+    range.selectNodeContents(text);
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }
+  return false;
+}
+
+// copy to clickboard
+function copyToClipboard() {
+  var $btn = $(this);
+  var id = $btn.attr('for');
+  var $elem = $(id);
+  makeSelection(undefined, $elem);
+  document.execCommand('copy');
 }
 
 function renderPropertyMappingValues(groupedByType) {
