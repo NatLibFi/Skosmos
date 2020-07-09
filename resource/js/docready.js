@@ -253,6 +253,50 @@ $(function() { // DOCUMENT READY
     }
   }
 
+  // event handler for clicking row concepts
+  $(document).on('click', '.row a',
+      function(event) {
+        if (window.location.href.indexOf(this.baseURI) == 0) {
+          var locHref = window.location.href.slice(this.baseURI.length);
+          var locSplits = locHref.split('/');
+          var thisSplits = this.attributes.href.nodeValue.split('/');
+          if (locHref.length && locSplits[0] === thisSplits[0] && thisSplits.length >= 3 && thisSplits[2] == 'page') {
+            $.ajaxQ.abortContentQueries();
+            $.ajaxQ.abortSidebarQueries();
+            var targetUrl = event.target.href;
+            var parameters = (clang !== lang) ? $.param({'clang' : clang}) : $.param({});
+            var historyUrl = (clang !== lang) ? targetUrl + '?' + parameters : targetUrl;
+            $('#hier-trigger').attr('href', targetUrl);
+            var $content = $('.content').empty().append($delayedSpinner.hide());
+            var loading = delaySpinner();
+            if ($('#hierarchy,#groups').hasClass('active')) {
+                //TODO: update hierarchy/groups sidebar
+            }
+
+            $.ajax({
+              url : targetUrl,
+              data: parameters,
+              req_kind: $.ajaxQ.requestKind.CONTENT,
+              complete: function() { clearTimeout(loading); },
+              success : function(data) {
+                $content.empty();
+                var response = $('.content', data).html();
+                if (window.history.pushState) { window.history.pushState({url: historyUrl}, '', historyUrl); }
+                $content.append(response);
+
+                updateJsonLD(data);
+                updateTitle(data);
+                updateTopbarLang(data);
+                ajaxConceptMapping(data);
+                // take the content language buttons from the response
+                $('.header-float .dropdown-menu').empty().append($('.header-float .dropdown-menu', data).html());
+              }
+            });
+            return false;
+          }
+        }
+  });
+
   // event handler for clicking the hierarchy concepts
   $(document).on('click', '.concept-hierarchy a',
       function(event) {
