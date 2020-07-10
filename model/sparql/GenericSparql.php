@@ -400,6 +400,7 @@ CONSTRUCT {
     ?s ?p ?uri .
     FILTER(!isBlank(?s))
     FILTER(?p != skos:inScheme)
+    FILTER NOT EXISTS { ?s owl:deprecated true . }
   }
   UNION
   { ?sp ?uri ?op . }
