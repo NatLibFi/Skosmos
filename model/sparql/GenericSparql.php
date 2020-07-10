@@ -71,7 +71,7 @@ class GenericSparql {
         // Check for undefined prefixes
         $prefixes = '';
         foreach (EasyRdf\RdfNamespace::namespaces() as $prefix => $uri) {
-            if (strpos($query, "{$prefix}:") !== false and
+            if (strpos($query, "{$prefix}:") !== false &&
                 strpos($query, "PREFIX {$prefix}:") === false
             ) {
                 $prefixes .= "PREFIX {$prefix}: <{$uri}>\n";
@@ -1791,9 +1791,10 @@ EOQ;
      * Transforms the sparql result object into an array.
      * @param EasyRdf\Sparql\Result $result
      * @param string $lang
+     * @param boolean $explicitLanguageTags Explicitly show (add to label) language tag
      * @return array array of arrays describing each child concept, or null if concept doesn't exist
      */
-    private function transformNarrowerResults($result, $lang) {
+    private function transformNarrowerResults($result, $lang, $explicitLanguageTags = false) {
         $ret = array();
         foreach ($result as $row) {
             if (!isset($row->child)) {
@@ -1803,7 +1804,7 @@ EOQ;
 
             $label = null;
             if (isset($row->label)) {
-                if ($row->label->getLang() == $lang || strpos($row->label->getLang(), $lang . "-") == 0) {
+                if (!$explicitLanguageTags && ($row->label->getLang() == $lang || strpos($row->label->getLang(), $lang . "-") === 0)) {
                     $label = $row->label->getValue();
                 } else {
                     $label = $row->label->getValue() . " (" . $row->label->getLang() . ")";
@@ -1836,12 +1837,13 @@ EOQ;
      * @param string $uri
      * @param string $lang
      * @param string $fallback
+     * @param boolean $explicitLanguageTags Explicitly show language tag
      * @return array array of arrays describing each child concept, or null if concept doesn't exist
      */
-    public function queryChildren($uri, $lang, $fallback, $props) {
+    public function queryChildren($uri, $lang, $fallback, $props, $explicitLanguageTags = false) {
         $query = $this->generateChildQuery($uri, $lang, $fallback, $props);
         $result = $this->query($query);
-        return $this->transformNarrowerResults($result, $lang);
+        return $this->transformNarrowerResults($result, $lang, $explicitLanguageTags);
     }
 
     /**
@@ -1849,8 +1851,9 @@ EOQ;
      * @param string $conceptSchemes concept schemes whose top concepts to query for
      * @param string $lang language of labels
      * @param string $fallback language to use if label is not available in the preferred language
+     * @param boolean $explicitLanguageTags Explicitly show (add to label) language tag
      */
-    public function queryTopConcepts($conceptSchemes, $lang, $fallback) {
+    public function queryTopConcepts($conceptSchemes, $lang, $fallback, $explicitLanguageTags = false) {
         if (!is_array($conceptSchemes)) {
             $conceptSchemes = array($conceptSchemes);
         }
@@ -1882,7 +1885,7 @@ EOQ;
         foreach ($result as $row) {
             if (isset($row->top) && isset($row->label)) {
                 $label = $row->label->getValue();
-                if ($row->label->getLang() && $row->label->getLang() !== $lang && strpos($row->label->getLang(), $lang . "-") !== 0) {
+                if ($explicitLanguageTags || $row->label->getLang() !== $lang && strpos($row->label->getLang(), $lang . "-") !== 0) {
                     $label .= ' (' . $row->label->getLang() . ')';
                 }
                 $top = array('uri' => $row->top->getUri(), 'topConceptOf' => $row->topuri->getUri(), 'label' => $label, 'hasChildren' => filter_var($row->children->getValue(), FILTER_VALIDATE_BOOLEAN));
@@ -1958,9 +1961,10 @@ EOQ;
      * Transforms the result into an array.
      * @param EasyRdf\Sparql\Result
      * @param string $lang
+     * @param boolean $explicitLanguageTags Explicitly show (add to label) language tag
      * @return an array for the REST controller to encode.
      */
-    private function transformParentListResults($result, $lang)
+    private function transformParentListResults($result, $lang, $explicitLanguageTags)
     {
         $ret = array();
         foreach ($result as $row) {
@@ -1989,7 +1993,7 @@ EOQ;
                 $label = null;
                 if (isset($row->childlabel)) {
                     $label = $row->childlabel->getValue();
-                    if ($row->childlabel->getLang() !== $lang && strpos($row->childlabel->getLang(), $lang . "-") !== 0) {
+                    if ($explicitLanguageTags || $row->childlabel->getLang() !== $lang && strpos($row->childlabel->getLang(), $lang . "-") !== 0) {
                         $label .= " (" . $row->childlabel->getLang() . ")";
                     }
 
@@ -2011,7 +2015,7 @@ EOQ;
             }
             if (isset($row->label)) {
                 $preflabel = $row->label->getValue();
-                if ($row->label->getLang() && $row->label->getLang() !== $lang && strpos($row->label->getLang(), $lang . "-") !== 0) {
+                if ($explicitLanguageTags || $row->label->getLang() !== $lang && strpos($row->label->getLang(), $lang . "-") !== 0) {
                     $preflabel .= ' (' . $row->label->getLang() . ')';
                 }
 
@@ -2042,13 +2046,14 @@ EOQ;
      * @param string $uri concept uri.
      * @param string $lang
      * @param string $fallback language to use if label is not available in the preferred language
+     * @param boolean $explicitLanguageTags Explicitly show language tag
      * @param array $props the hierarchy property/properties to use
      * @return an array for the REST controller to encode.
      */
-    public function queryParentList($uri, $lang, $fallback, $props) {
+    public function queryParentList($uri, $lang, $fallback, $props, $explicitLanguageTags = false) {
         $query = $this->generateParentListQuery($uri, $lang, $fallback, $props);
         $result = $this->query($query);
-        return $this->transformParentListResults($result, $lang);
+        return $this->transformParentListResults($result, $lang, $explicitLanguageTags);
     }
 
     /**
@@ -2174,7 +2179,7 @@ EOQ;
                     'type' => array($row->type->shorten()),
                 );
                 if (isset($row->label)) {
-                    if ($row->label->getLang() == $lang || strpos($row->label->getLang(), $lang . "-") == 0) {
+                    if ($row->label->getLang() == $lang || strpos($row->label->getLang(), $lang . "-") === 0) {
                         $values[$row->conc->getURI()]['prefLabel'] = $row->label->getValue();
                     } else {
                         $values[$row->conc->getURI()]['prefLabel'] = $row->label->getValue() . " (" . $row->label->getLang() . ")";

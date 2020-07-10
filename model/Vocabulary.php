@@ -280,7 +280,9 @@ class Vocabulary extends DataObject implements Modifiable
             $conceptScheme = $this->getDefaultConceptScheme();
         }
 
-        return $this->getSparql()->queryTopConcepts($conceptScheme, $lang, $fallback);
+        $explicitLanguageTags = $this->config->getShowLangCodes();
+
+        return $this->getSparql()->queryTopConcepts($conceptScheme, $lang, $fallback, $explicitLanguageTags);
     }
 
     /**
@@ -336,7 +338,8 @@ class Vocabulary extends DataObject implements Modifiable
         $lang = $lang ? $lang : $this->getEnvLang();
         $fallback = count($this->config->getLanguageOrder($lang)) > 1 ? $this->config->getLanguageOrder($lang)[1] : $this->config->getDefaultLanguage();
         $props = $this->config->getHierarchyProperty();
-        return $this->getSparql()->queryParentList($uri, $lang, $fallback, $props);
+        $explicitLanguageTags = $this->config->getShowLangCodes();
+        return $this->getSparql()->queryParentList($uri, $lang, $fallback, $props, $explicitLanguageTags);
     }
 
     /**
@@ -348,7 +351,8 @@ class Vocabulary extends DataObject implements Modifiable
         $lang = $lang ? $lang : $this->getEnvLang();
         $fallback = count($this->config->getLanguageOrder($lang)) > 1 ? $this->config->getLanguageOrder($lang)[1] : $this->config->getDefaultLanguage();
         $props = $this->config->getHierarchyProperty();
-        return $this->getSparql()->queryChildren($uri, $lang, $fallback, $props);
+        $explicitLanguageTags = $this->config->getShowLangCodes();
+        return $this->getSparql()->queryChildren($uri, $lang, $fallback, $props, $explicitLanguageTags);
     }
 
     /**
