@@ -274,13 +274,15 @@ class Vocabulary extends DataObject implements Modifiable
         if ($lang === '') {
             $lang = $this->getEnvLang();
         }
-        $fallback = $this->config->getDefaultLanguage();
+        $languageOrder = $this->config->getLanguageOrder($lang);
 
         if ($conceptScheme === null || $conceptScheme == '') {
             $conceptScheme = $this->getDefaultConceptScheme();
         }
 
-        return $this->getSparql()->queryTopConcepts($conceptScheme, $lang, $fallback);
+        $explicitLanguageTags = $this->config->getShowLangCodes();
+
+        return $this->getSparql()->queryTopConcepts($conceptScheme, $lang, $languageOrder, $explicitLanguageTags);
     }
 
     /**
@@ -334,9 +336,10 @@ class Vocabulary extends DataObject implements Modifiable
     public function getConceptHierarchy($uri, $lang)
     {
         $lang = $lang ? $lang : $this->getEnvLang();
-        $fallback = count($this->config->getLanguageOrder($lang)) > 1 ? $this->config->getLanguageOrder($lang)[1] : $this->config->getDefaultLanguage();
+        $languageOrder = $this->config->getLanguageOrder($lang);
         $props = $this->config->getHierarchyProperty();
-        return $this->getSparql()->queryParentList($uri, $lang, $fallback, $props);
+        $explicitLanguageTags = $this->config->getShowLangCodes();
+        return $this->getSparql()->queryParentList($uri, $lang, $languageOrder, $props, $explicitLanguageTags);
     }
 
     /**
@@ -346,9 +349,10 @@ class Vocabulary extends DataObject implements Modifiable
     public function getConceptChildren($uri, $lang)
     {
         $lang = $lang ? $lang : $this->getEnvLang();
-        $fallback = count($this->config->getLanguageOrder($lang)) > 1 ? $this->config->getLanguageOrder($lang)[1] : $this->config->getDefaultLanguage();
+        $languageOrder = $this->config->getLanguageOrder($lang);
         $props = $this->config->getHierarchyProperty();
-        return $this->getSparql()->queryChildren($uri, $lang, $fallback, $props);
+        $explicitLanguageTags = $this->config->getShowLangCodes();
+        return $this->getSparql()->queryChildren($uri, $lang, $languageOrder, $props, $explicitLanguageTags);
     }
 
     /**

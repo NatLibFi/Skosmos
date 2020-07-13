@@ -71,7 +71,7 @@ class GenericSparql {
         // Check for undefined prefixes
         $prefixes = '';
         foreach (EasyRdf\RdfNamespace::namespaces() as $prefix => $uri) {
-            if (strpos($query, "{$prefix}:") !== false and
+            if (strpos($query, "{$prefix}:") !== false &&
                 strpos($query, "PREFIX {$prefix}:") === false
             ) {
                 $prefixes .= "PREFIX {$prefix}: <{$uri}>\n";
@@ -170,7 +170,6 @@ class GenericSparql {
         }
         return $this->qnamecache[$uri];
     }
-
 
     /**
      * Generates the sparql query for retrieving concept and collection counts in a vocabulary.
@@ -777,6 +776,46 @@ EOQ;
         }
 
         return implode(' UNION ', $typePatterns);
+    }
+
+    /**
+     * Formats sparql query to give results in the language order.
+     * @param string[] $languageOrder An ordered list of languages
+     * @param string $before The query before the language filter
+     * @param string $filterObj The sparql variable name to be used in matching languages
+     * @param string $before The query after the language filter
+     * @param boolean $addWithoutFilter Whether or not to add a general language matching pattern
+     * @return string sparql query clause
+     */
+    protected function formatLanguageOrder($languageOrder, $before, $filterObj, $after = '', $addWithoutFilter = false) {
+        $ret = '';
+        $ltrimmedBefore = ltrim($before);
+        $trimmedBefore = rtrim($ltrimmedBefore);
+        $newLinedBlockIndent = PHP_EOL . substr($before, 0, strlen($before) - strlen($ltrimmedBefore));
+        $newLinedAfterBlockIndent = substr($newLinedBlockIndent, 0, -2);
+        $trimmedAfter = $after ? $newLinedBlockIndent . trim($after) : '';
+        $langClause = 'FILTER (langMatches(lang(' . $filterObj .'), "%s"))';
+
+        foreach ($languageOrder as $lang) {
+            $ret .=
+                'OPTIONAL { ' .
+                $newLinedBlockIndent . $trimmedBefore .
+                $newLinedBlockIndent . sprintf($langClause, $lang) .
+                $trimmedAfter .
+                $newLinedAfterBlockIndent . '}' .
+                $newLinedAfterBlockIndent;
+        }
+
+        if ($addWithoutFilter) {
+            $ret .=
+                'OPTIONAL { ' .
+                $newLinedBlockIndent . $trimmedBefore .
+                $trimmedAfter .
+                $newLinedAfterBlockIndent . '}' .
+                $newLinedAfterBlockIndent;
+        }
+
+        return $ret;
     }
 
     /**
@@ -1753,30 +1792,24 @@ EOQ;
     /**
      * Generates the query for a concepts skos:narrowers.
      * @param string $uri
-     * @param string $lang
-     * @param string $fallback
+     * @param string[] $languageOrder An ordered list of languages
      * @return string sparql query
      */
-    private function generateChildQuery($uri, $lang, $fallback, $props) {
+    private function generateChildQuery($uri, $languageOrder, $props) {
         $uri = is_array($uri) ? $uri[0] : $uri;
         $fcl = $this->generateFromClause();
         $propertyClause = implode('|', $props);
+        $prefLanguageBefore = <<<EOQ
+      ?child skos:prefLabel ?label .
+EOQ;
+        $prefLanguageClause = $this->formatLanguageOrder($languageOrder, $prefLanguageBefore, '?label', '', true);
+
         $query = <<<EOQ
 SELECT ?child ?label ?child ?grandchildren ?notation $fcl WHERE {
   <$uri> a skos:Concept .
   OPTIONAL {
     ?child $propertyClause <$uri> .
-    OPTIONAL {
-      ?child skos:prefLabel ?label .
-      FILTER (langMatches(lang(?label), "$lang"))
-    }
-    OPTIONAL {
-      ?child skos:prefLabel ?label .
-      FILTER (langMatches(lang(?label), "$fallback"))
-    }
-    OPTIONAL { # other language case
-      ?child skos:prefLabel ?label .
-    }
+    $prefLanguageClause
     OPTIONAL {
       ?child skos:notation ?notation .
     }
@@ -1791,9 +1824,10 @@ EOQ;
      * Transforms the sparql result object into an array.
      * @param EasyRdf\Sparql\Result $result
      * @param string $lang
+     * @param boolean $explicitLanguageTags Explicitly show (add to label) language tag
      * @return array array of arrays describing each child concept, or null if concept doesn't exist
      */
-    private function transformNarrowerResults($result, $lang) {
+    private function transformNarrowerResults($result, $lang, $explicitLanguageTags = false) {
         $ret = array();
         foreach ($result as $row) {
             if (!isset($row->child)) {
@@ -1803,7 +1837,7 @@ EOQ;
 
             $label = null;
             if (isset($row->label)) {
-                if ($row->label->getLang() == $lang || strpos($row->label->getLang(), $lang . "-") == 0) {
+                if (!$explicitLanguageTags && ($row->label->getLang() == $lang || strpos($row->label->getLang(), $lang . "-") === 0)) {
                     $label = $row->label->getValue();
                 } else {
                     $label = $row->label->getValue() . " (" . $row->label->getLang() . ")";
@@ -1835,22 +1869,24 @@ EOQ;
      * Query the narrower concepts of a concept.
      * @param string $uri
      * @param string $lang
-     * @param string $fallback
+     * @param string[] $languageOrder An ordered list of languages
+     * @param boolean $explicitLanguageTags Explicitly show language tag
      * @return array array of arrays describing each child concept, or null if concept doesn't exist
      */
-    public function queryChildren($uri, $lang, $fallback, $props) {
-        $query = $this->generateChildQuery($uri, $lang, $fallback, $props);
+    public function queryChildren($uri, $lang, $languageOrder, $props, $explicitLanguageTags = false) {
+        $query = $this->generateChildQuery($uri, $languageOrder, $props);
         $result = $this->query($query);
-        return $this->transformNarrowerResults($result, $lang);
+        return $this->transformNarrowerResults($result, $lang, $explicitLanguageTags);
     }
 
     /**
      * Query the top concepts of a vocabulary.
      * @param string $conceptSchemes concept schemes whose top concepts to query for
      * @param string $lang language of labels
-     * @param string $fallback language to use if label is not available in the preferred language
+     * @param string[] $languageOrder An ordered list of languages
+     * @param boolean $explicitLanguageTags Explicitly show (add to label) language tag
      */
-    public function queryTopConcepts($conceptSchemes, $lang, $fallback) {
+    public function queryTopConcepts($conceptSchemes, $lang, $languageOrder, $explicitLanguageTags = false) {
         if (!is_array($conceptSchemes)) {
             $conceptSchemes = array($conceptSchemes);
         }
@@ -1858,20 +1894,14 @@ EOQ;
         $values = $this->formatValues('?topuri', $conceptSchemes, 'uri');
 
         $fcl = $this->generateFromClause();
+        $prefLanguageBefore = <<<EOQ
+    ?top skos:prefLabel ?label .
+EOQ;
+        $prefLanguageClause = $this->formatLanguageOrder($languageOrder, $prefLanguageBefore, '?label', '', true);
         $query = <<<EOQ
 SELECT DISTINCT ?top ?topuri ?label ?notation ?children $fcl WHERE {
   ?top skos:topConceptOf ?topuri .
-  OPTIONAL {
-    ?top skos:prefLabel ?label .
-    FILTER (langMatches(lang(?label), "$lang"))
-  }
-  OPTIONAL {
-    ?top skos:prefLabel ?label .
-    FILTER (langMatches(lang(?label), "$fallback"))
-  }
-  OPTIONAL { # fallback - other language case
-    ?top skos:prefLabel ?label .
-  }
+  $prefLanguageClause
   OPTIONAL { ?top skos:notation ?notation . }
   BIND ( EXISTS { ?top skos:narrower ?a . } AS ?children )
   $values
@@ -1882,7 +1912,7 @@ EOQ;
         foreach ($result as $row) {
             if (isset($row->top) && isset($row->label)) {
                 $label = $row->label->getValue();
-                if ($row->label->getLang() && $row->label->getLang() !== $lang && strpos($row->label->getLang(), $lang . "-") !== 0) {
+                if ($explicitLanguageTags || $row->label->getLang() !== $lang && strpos($row->label->getLang(), $lang . "-") !== 0) {
                     $label .= ' (' . $row->label->getLang() . ')';
                 }
                 $top = array('uri' => $row->top->getUri(), 'topConceptOf' => $row->topuri->getUri(), 'label' => $label, 'hasChildren' => filter_var($row->children->getValue(), FILTER_VALIDATE_BOOLEAN));
@@ -1901,13 +1931,20 @@ EOQ;
      * Generates a sparql query for finding the hierarchy for a concept.
 	 * A concept may be a top concept in multiple schemes, returned as a single whitespace-separated literal.
      * @param string $uri concept uri.
-     * @param string $lang
-     * @param string $fallback language to use if label is not available in the preferred language
+     * @param string[] $languageOrder An ordered list of languages
      * @return string sparql query
      */
-    private function generateParentListQuery($uri, $lang, $fallback, $props) {
+    private function generateParentListQuery($uri, $languageOrder, $props) {
         $fcl = $this->generateFromClause();
         $propertyClause = implode('|', $props);
+        $prefLanguageBefore = <<<EOQ
+      ?broad skos:prefLabel ?lab .
+EOQ;
+        $cPrefLanguageBefore = <<<EOQ
+        ?children skos:prefLabel ?childlab .
+EOQ;
+        $prefLanguageClause = $this->formatLanguageOrder($languageOrder, $prefLanguageBefore, '?lab', '', true);
+        $cPrefLanguageClause = $this->formatLanguageOrder($languageOrder,  $cPrefLanguageBefore, '?childlab', '', true);
         $query = <<<EOQ
 SELECT ?broad ?parent ?children ?grandchildren
 (SAMPLE(?lab) as ?label) (SAMPLE(?childlab) as ?childlabel) (GROUP_CONCAT(?topcs; separator=" ") as ?tops) 
@@ -1916,31 +1953,11 @@ WHERE {
   <$uri> a skos:Concept .
   OPTIONAL {
     <$uri> $propertyClause* ?broad .
-    OPTIONAL {
-      ?broad skos:prefLabel ?lab .
-      FILTER (langMatches(lang(?lab), "$lang"))
-    }
-    OPTIONAL {
-      ?broad skos:prefLabel ?lab .
-      FILTER (langMatches(lang(?lab), "$fallback"))
-    }
-    OPTIONAL { # fallback - other language case
-      ?broad skos:prefLabel ?lab .
-    }
+    $prefLanguageClause
     OPTIONAL { ?broad skos:notation ?nota . }
     OPTIONAL { ?broad $propertyClause ?parent . }
     OPTIONAL { ?broad skos:narrower ?children .
-      OPTIONAL {
-        ?children skos:prefLabel ?childlab .
-        FILTER (langMatches(lang(?childlab), "$lang"))
-      }
-      OPTIONAL {
-        ?children skos:prefLabel ?childlab .
-        FILTER (langMatches(lang(?childlab), "$fallback"))
-      }
-      OPTIONAL { # fallback - other language case
-        ?children skos:prefLabel ?childlab .
-      }
+      $cPrefLanguageClause
       OPTIONAL {
         ?children skos:notation ?childnota .
       }
@@ -1958,9 +1975,10 @@ EOQ;
      * Transforms the result into an array.
      * @param EasyRdf\Sparql\Result
      * @param string $lang
+     * @param boolean $explicitLanguageTags Explicitly show (add to label) language tag
      * @return an array for the REST controller to encode.
      */
-    private function transformParentListResults($result, $lang)
+    private function transformParentListResults($result, $lang, $explicitLanguageTags)
     {
         $ret = array();
         foreach ($result as $row) {
@@ -1989,7 +2007,7 @@ EOQ;
                 $label = null;
                 if (isset($row->childlabel)) {
                     $label = $row->childlabel->getValue();
-                    if ($row->childlabel->getLang() !== $lang && strpos($row->childlabel->getLang(), $lang . "-") !== 0) {
+                    if ($explicitLanguageTags || $row->childlabel->getLang() !== $lang && strpos($row->childlabel->getLang(), $lang . "-") !== 0) {
                         $label .= " (" . $row->childlabel->getLang() . ")";
                     }
 
@@ -2011,7 +2029,7 @@ EOQ;
             }
             if (isset($row->label)) {
                 $preflabel = $row->label->getValue();
-                if ($row->label->getLang() && $row->label->getLang() !== $lang && strpos($row->label->getLang(), $lang . "-") !== 0) {
+                if ($explicitLanguageTags || $row->label->getLang() !== $lang && strpos($row->label->getLang(), $lang . "-") !== 0) {
                     $preflabel .= ' (' . $row->label->getLang() . ')';
                 }
 
@@ -2041,14 +2059,15 @@ EOQ;
      * Query for finding the hierarchy for a concept.
      * @param string $uri concept uri.
      * @param string $lang
-     * @param string $fallback language to use if label is not available in the preferred language
+     * @param string[] $languageOrder An ordered list of languages
+     * @param boolean $explicitLanguageTags Explicitly show language tag
      * @param array $props the hierarchy property/properties to use
      * @return an array for the REST controller to encode.
      */
-    public function queryParentList($uri, $lang, $fallback, $props) {
-        $query = $this->generateParentListQuery($uri, $lang, $fallback, $props);
+    public function queryParentList($uri, $lang, $languageOrder, $props, $explicitLanguageTags = false) {
+        $query = $this->generateParentListQuery($uri, $languageOrder, $props);
         $result = $this->query($query);
-        return $this->transformParentListResults($result, $lang);
+        return $this->transformParentListResults($result, $lang, $explicitLanguageTags);
     }
 
     /**
@@ -2174,7 +2193,7 @@ EOQ;
                     'type' => array($row->type->shorten()),
                 );
                 if (isset($row->label)) {
-                    if ($row->label->getLang() == $lang || strpos($row->label->getLang(), $lang . "-") == 0) {
+                    if ($row->label->getLang() == $lang || strpos($row->label->getLang(), $lang . "-") === 0) {
                         $values[$row->conc->getURI()]['prefLabel'] = $row->label->getValue();
                     } else {
                         $values[$row->conc->getURI()]['prefLabel'] = $row->label->getValue() . " (" . $row->label->getLang() . ")";
