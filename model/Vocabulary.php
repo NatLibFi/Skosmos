@@ -155,12 +155,19 @@ class Vocabulary extends DataObject implements Modifiable
             }
         }
 
-        // also include ConceptScheme metadata from SPARQL endpoint
-        $defaultcs = $this->getDefaultConceptScheme();
+        try {
+            // also include ConceptScheme metadata from SPARQL endpoint
+            $defaultcs = $this->getDefaultConceptScheme();
 
-        // query everything the endpoint knows about the ConceptScheme
-        $sparql = $this->getSparql();
-        $result = $sparql->queryConceptScheme($defaultcs);
+            // query everything the endpoint knows about the ConceptScheme
+            $sparql = $this->getSparql();
+            $result = $sparql->queryConceptScheme($defaultcs);
+        } catch (EasyRdf\Http\Exception | EasyRdf\Exception $e) {
+             if ($this->model->getConfig()->getLogCaughtExceptions()) {
+                 error_log('Caught exception: ' . $e->getMessage());
+             }
+             return null;
+        }
         $conceptscheme = $result->resource($defaultcs);
         $this->order = array(
             "dc:title", "dc11:title", "skos:prefLabel", "rdfs:label",
