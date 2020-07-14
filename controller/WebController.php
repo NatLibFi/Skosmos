@@ -378,7 +378,7 @@ class WebController extends Controller
         try {
             $vocabTypes = $this->model->getTypes($request->getVocabid(), $request->getLang());
         } catch (Exception $e) {
-            header("HTTP/1.0 206 Partial Content");
+            header("HTTP/1.0 500 Internal Server Error");
             if ($this->model->getConfig()->getLogCaughtExceptions()) {
                 error_log('Caught exception: ' . $e->getMessage());
             }
