@@ -6,9 +6,13 @@
 <div class="search-result-listing">
   <h2 class="sr-only">{% trans "Search results" %}</h2>
   {% include 'search-result.twig' %}
-  {% if request.vocabid == 'null' and not global_search %}
+  {% if not search_results and request.vocabid == 'null' and not global_search %}
   <div class="alert alert-danger">
     <span>{% trans %}Error: Requested vocabulary not found!{% endtrans %}</span>
+  </div>
+  {% elseif not search_results and request.vocabid and not global_search %}
+  <div class="alert alert-danger">
+    <h4>{% trans %}Error: Search failed for vocabulary!{% endtrans %}</h4>
   </div>
   {% endif %}
 </div>
