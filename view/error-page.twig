@@ -1,11 +1,18 @@
 {% extends "light.twig" %}
 {% block title %}: Error page{% endblock %}
 {% block error %}
+{% spaceless %}
+{% set pageError = request.vocabid != '' and request.page == 'page' %}
+{% if pageError %}
 <div id="maincontent">
   <div class="content">
+{% endif %}
     <div class="alert {% if request.vocabid != '' or request.page == 'feedback' or request.page == 'about' %}page-alert{% else %}frontpage-alert{% endif %}">
       <h3>{% if not message %}{% trans %}404 Error: The page {{ requested_page }} cannot be found.{% endtrans %}{% else %}{{ message }}{% endif %}</h3>
     </div>
+{% if pageError %}
   </div>
 </div>
+{% endif %}
+{% endspaceless %}
 {% endblock %}

@@ -1074,7 +1074,7 @@ li.sub-group {
   right: 0;
 }
 
-.page-alert > h3 {
+.frontpage-alert > h3, .page-alert > h3 {
   margin: 10px 0px;
 }
 
