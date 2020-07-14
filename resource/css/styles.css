@@ -422,6 +422,10 @@ ul.dropdown-menu > li:last-child > input {
   margin: 10px 15px;
 }
 
+.search-result-listing > .alert > h4 {
+  margin: 10px 0px;
+}
+
 .search-result-listing .search-count {
   text-align: left;
   margin-left: 15px;
@@ -1068,6 +1072,10 @@ li.sub-group {
   display: inline-block;
   position: absolute;
   right: 0;
+}
+
+.page-alert > h3 {
+  margin: 10px 0px;
 }
 
 .alert h2 {
