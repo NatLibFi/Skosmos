@@ -418,6 +418,10 @@ ul.dropdown-menu > li:last-child > input {
   margin: 15px;
 }
 
+.search-result-listing > .alert {
+  margin: 10px 15px;
+}
+
 .search-result-listing .search-count {
   text-align: left;
   margin-left: 15px;
