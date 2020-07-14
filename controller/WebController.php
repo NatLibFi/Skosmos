@@ -540,6 +540,7 @@ class WebController extends Controller
             array(
                 'languages' => $this->languages,
                 'request' => $request,
+                'vocab' => $request->getVocab(),
                 'message' => $message,
                 'requested_page' => filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_STRING),
             ));

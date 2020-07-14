@@ -1216,7 +1216,7 @@ li.sub-group {
   line-height: 1.1;
 }
 
-.page-alert > h3 {
+.frontpage-alert > h3, .page-alert > h3 {
   margin: 10px 0px;
 }
 
