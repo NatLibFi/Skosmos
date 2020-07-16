@@ -418,6 +418,14 @@ ul.dropdown-menu > li:last-child > input {
   margin: 15px;
 }
 
+.search-result-listing > .alert {
+  margin: 10px 15px;
+}
+
+.search-result-listing > .alert > h4 {
+  margin: 10px 0px;
+}
+
 .search-result-listing .search-count {
   text-align: left;
   margin-left: 15px;
@@ -935,6 +943,21 @@ div#sidebar-grey > div > div > form.search-options {
   top: 10px;
 }
 
+.search-result-listing .alert .btn-default {
+  position: unset;
+  vertical-align: unset;
+  margin-left: 15px;
+  font-size: 18px;
+}
+
+.alert h4, .alert h3  {
+  display: inline;
+}
+
+.search-result-listing .alert-warning h4 {
+  display: block;
+}
+
 .search-options .mCSB_container > li > a > .radio {
   margin: 0;
   padding-left: 25px;
@@ -1064,6 +1087,10 @@ li.sub-group {
   display: inline-block;
   position: absolute;
   right: 0;
+}
+
+.frontpage-alert > h3, .page-alert > h3 {
+  margin: 10px 0px;
 }
 
 .alert h2 {

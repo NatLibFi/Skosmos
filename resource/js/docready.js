@@ -835,7 +835,7 @@ $(function() { // DOCUMENT READY
       $('.search-result-listing').append($ready);
     }
     else {
-      $trigger.waypoint(function() { waypointCallback(); }, options);
+      $trigger.waypoint(function() { waypointCallback(this); }, options);
     }
   }
 
@@ -881,9 +881,13 @@ $(function() { // DOCUMENT READY
     changeOffset += 200;
   }
 
-  function waypointCallback() {
+  function waypointCallback(waypoint) {
+    if ($('.search-result-listing > p .spinner,.search-result-listing .alert-danger').length > 0) {
+      return false;
+    }
     var number_of_hits = $(".search-result").length;
-    if (number_of_hits < parseInt($('.search-count p').text().substr(0, $('.search-count p').text().indexOf(' ')), 10)) { $('.search-result-listing').append($loading);
+    if (number_of_hits < parseInt($('.search-count p').text().substr(0, $('.search-count p').text().indexOf(' ')), 10)) {
+      $('.search-result-listing').append($loading);
       var typeLimit = $('#type-limit').val();
       var schemeLimit = $('#scheme-limit').val();
       var groupLimit = $('#group-limit').val();
@@ -903,7 +907,20 @@ $(function() { // DOCUMENT READY
             $('.search-result-listing').append($ready);
             return false;
           }
-          $('.search-result:nth-last-of-type(4)').waypoint(function() { waypointCallback(); }, options );
+          waypoint.destroy();
+          $('.search-result:nth-last-of-type(4)').waypoint(function() { waypointCallback(this); }, options );
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          $loading.detach();
+          var $failedSearch = $('<div class="alert alert-danger"><h4>Error: Loading for more items failed!</h4></div>');
+          var $retryButton = $('<button class="btn btn-default" type="button">Retry</button>');
+          $retryButton.on('click', function () {
+            $failedSearch.remove();
+            waypointCallback(waypoint);
+            return false;
+          });
+          $failedSearch.append($retryButton)
+          $('.search-result-listing').append($failedSearch);
         }
       });
     }
@@ -1042,9 +1059,9 @@ $(function() { // DOCUMENT READY
   }
 
   /* makes an AJAX query for the alphabetical index contents when landing on
-   * the vocabulary home page.
+   * the vocabulary home page or on the vocabulary concept error page.
    */
-  if ($('#alpha').hasClass('active') && $('#vocab-info').length === 1 && $('.alphabetical-search-results').length === 0) {
+  if ($('#alpha').hasClass('active') && $('#vocab-info,.page-alert').length == 1 && $('.alphabetical-search-results').length == 0) {
     // taking into account the possibility that the lang parameter has been changed by the WebController.
     var urlLangCorrected = vocab + '/' + lang + '/index?limit=250&offset=0&clang=' + clang;
     $('.sidebar-grey').empty().append('<div class="loading-spinner"><span class="spinner-text">'+ loading_text + '</span><span class="spinner" /></div>');

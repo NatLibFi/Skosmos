@@ -46,10 +46,15 @@ class DataObject
     protected function getExternalLabel($exvoc, $exuri, $lang)
     {
         if ($exvoc) {
-            $exsparql = $exvoc->getSparql();
-            $results = $exsparql->queryLabel($exuri, $lang);
-
-            return isset($results[$lang]) ? $results[$lang] : null;
+            try {
+                $exsparql = $exvoc->getSparql();
+                $results = $exsparql->queryLabel($exuri, $lang);
+                return isset($results[$lang]) ? $results[$lang] : null;
+            } catch (EasyRdf\Http\Exception | EasyRdf\Exception | Throwable $e) {
+                if ($this->model->getConfig()->getLogCaughtExceptions()) {
+                    error_log('Caught exception: ' . $e->getMessage());
+                }
+            }
         }
         return null;
     }
@@ -63,9 +68,15 @@ class DataObject
     protected function getExternalNotation($exvoc, $exuri)
     {
         if ($exvoc) {
-            $exsparql = $exvoc->getSparql();
-            $results = $exsparql->queryNotation($exuri);
-            return isset($results) ? $results : null;
+            try {
+                $exsparql = $exvoc->getSparql();
+                $results = $exsparql->queryNotation($exuri);
+                return isset($results) ? $results : null;
+            } catch (EasyRdf\Http\Exception | EasyRdf\Exception | Throwable $e) {
+                if ($this->model->getConfig()->getLogCaughtExceptions()) {
+                    error_log('Caught exception: ' . $e->getMessage());
+                }
+            }
         }
         return null;
     }
