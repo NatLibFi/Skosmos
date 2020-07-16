@@ -5,12 +5,12 @@
 {% block content %}
 <div class="search-result-listing">
   {% include 'search-result.twig' %}
-  {% if search_results is not defined and not global_search %}
+  {% if search_results is null %}
   <div class="alert alert-danger">
-    {% if request.vocabid == 'null' %}
+    {% if request.vocabid == 'null' and not global_search %}
     <h4>{% trans %}Error: Requested vocabulary not found!{% endtrans %}</h4>
     {% else %}
-    <h4>{% trans %}Error: Search failed for vocabulary!{% endtrans %}</h4>
+    <h4>{% trans %}Error: Search failed!{% endtrans %}</h4>
     {% endif %}
   </div>
   {% endif %}

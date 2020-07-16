@@ -337,23 +337,47 @@ class WebController extends Controller
         $vocabObjects = array();
         if ($vocids) {
             foreach($vocids as $vocid) {
-                $vocabObjects[] = $this->model->getVocabulary($vocid);
+                try {
+                    $vocabObjects[] = $this->model->getVocabulary($vocid);
+                } catch (Exception $e) {
+                    // skip vocabularies not found in configuration
+                    // please note that this may result in global search
+                    // NB: should not happen in normal UI interaction
+                }
             }
         }
         $parameters->setVocabularies($vocabObjects);
 
+        $nondefaultEndpointVocs = array();
+
+        if (sizeOf($vocabObjects) != 1) {
+            // global search, either from all (sizeOf($vocabObjects) == 0) or from selected ones
+            if (sizeOf($vocabObjects) == 0) {
+                $vocabObjects = $this->model->getVocabularies();
+            }
+            $defaultEndpoint = $this->model->getConfig()->getDefaultEndpoint();
+            foreach($vocabObjects as $voc) {
+                if ($voc->getEndpoint() !== $defaultEndpoint) {
+                    $nondefaultEndpointVocs[] = $voc;
+                }
+            }
+        }
+
+        $counts = null;
+        $searchResults = null;
+        $errored = false;
+
         try {
             $countAndResults = $this->model->searchConceptsAndInfo($parameters);
+            $counts = $countAndResults['count'];
+            $searchResults = $countAndResults['results'];
         } catch (Exception $e) {
-            header("HTTP/1.0 404 Not Found");
+            $errored = true;
+            header("HTTP/1.0 500 Internal Server Error");
             if ($this->model->getConfig()->getLogCaughtExceptions()) {
                 error_log('Caught exception: ' . $e->getMessage());
             }
-            $this->invokeGenericErrorPage($request, $e->getMessage());
-            return;
         }
-        $counts = $countAndResults['count'];
-        $searchResults = $countAndResults['results'];
         $vocabList = $this->model->getVocabularyList();
         $sortedVocabs = $this->model->getVocabularyList(false, true);
         $langList = $this->model->getLanguages($lang);
@@ -365,6 +389,8 @@ class WebController extends Controller
                 'search_results' => $searchResults,
                 'rest' => $parameters->getOffset()>0,
                 'global_search' => true,
+                'search_failed' => $errored,
+                'skipped_vocabs' => $nondefaultEndpointVocs,
                 'term' => $request->getQueryParamRaw('q'),
                 'lang_list' => $langList,
                 'vocabs' => str_replace(' ', '+', $vocabs),
@@ -383,6 +409,7 @@ class WebController extends Controller
         $template = $this->twig->loadTemplate('vocab-search-listing.twig');
         $this->setLanguageProperties($request->getLang());
         $vocab = $request->getVocab();
+        $searchResults = null;
         try {
             $vocabTypes = $this->model->getTypes($request->getVocabid(), $request->getLang());
         } catch (Exception $e) {
@@ -396,6 +423,7 @@ class WebController extends Controller
                     'languages' => $this->languages,
                     'vocab' => $vocab,
                     'request' => $request,
+                    'search_results' => $searchResults
                 ));
 
             return;
@@ -419,6 +447,7 @@ class WebController extends Controller
                     'languages' => $this->languages,
                     'vocab' => $vocab,
                     'term' => $request->getQueryParam('q'),
+                    'search_results' => $searchResults
                 ));
             return;
         }

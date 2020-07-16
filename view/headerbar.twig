@@ -7,7 +7,7 @@
 <div class="header-float">
 {% if request.page != 'About' and request.page != 'Feedback' %}
 
-  {% if request.page != '' %}<div class="search-vocab-text"><p>{% trans "Content language" %}</p></div>{% endif %}
+  {% if request.page != '' and not global_search %}<div class="search-vocab-text"><p>{% trans "Content language" %}</p></div>{% endif %}
   {% if sorted_vocabs is defined %}
     <label class="sr-only" for="multiselect">{% trans "Search from vocabulary" %}</label>
     <select class="multiselect" id="multiselect" multiple="multiple">
