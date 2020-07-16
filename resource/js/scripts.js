@@ -210,7 +210,8 @@ function loadLimitedResults(parameters) {
   clearResultsAndAddSpinner();
   $.ajax({
     data: parameters,
-    success : function(data) {
+    complete : function(jqXHR, textStatus) {
+      var data = jqXHR.responseText;
       var response = $('.search-result-listing', data).html();
       if (window.history.pushState) { window.history.pushState({url: this.url}, '', this.url); }
       $('.search-result-listing').append(response);

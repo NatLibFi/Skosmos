@@ -2,7 +2,15 @@
 <div class="search-count{% if limit_type or limit_parent or limit_group or limit_scheme %} search-limited{% endif %}"><p>{% trans %}{{ search_count }} results for '{{ term }}'{% endtrans %}{% if limit_type %}, {% trans "limited to type" %} '{% for type in limit_type %}{{ type }}{% if loop.last == false %}, {% endif %}{% endfor %}'{% endif %}{% if limit_parent %}, {% trans "limited to parent" %} '{{ limit_parent }}'{% endif %}{% if limit_group %}, {% trans "limited to group" %} '{{ limit_group }}'{% endif %}{% if limit_scheme %}, {% trans "limited to scheme" %} '{% for scheme in limit_scheme %}{{ scheme }}{% if loop.last == false %}, {% endif %}{% endfor %}'{% endif %}</p>
 </div>{% if limit_type or limit_parent or limit_group or limit_scheme %}<button type="button" class="btn btn-default" id="remove-limits">{% trans "Clear limitations" %}</button>{% endif %}
 {% endif %}
-{% if search_results is defined and search_results|length == 0 %}<p class="no-results">{% trans 'The search provided no results.' %}</p>{% endif %}
+{% if global_search and not search_failed and skipped_vocabs|length > 0 %}
+<div class="alert alert-warning">
+{% for voc in skipped_vocabs %}
+{% set vocTitle = voc.title %}
+<h4>{% trans %}Warning: Skipped searching from '{{vocTitle}}' vocabulary!{% endtrans %}</h4>
+{% endfor %}
+</div>
+{% endif %}
+{% if search_results is not null and search_results|length == 0 %}<p class="no-results">{% trans 'The search provided no results.' %}</p>{% endif %}
 {% for concept in search_results %} {# loop through the hits #}
 <div class="search-result">
   {% spaceless %}

@@ -1068,6 +1068,21 @@ div#sidebar-grey > div > div > form.search-options {
   top: 10px;
 }
 
+.search-result-listing .alert .btn-default {
+  position: unset;
+  vertical-align: unset;
+  margin-left: 15px;
+  font-size: 18px;
+}
+
+.alert h4, .alert h3  {
+  display: inline;
+}
+
+.search-result-listing .alert-warning h4 {
+  display: block;
+}
+
 .search-options .mCSB_container > li > a > .radio {
   margin: 0;
   padding-left: 25px;
