@@ -32,24 +32,26 @@ function storeUri(node) { urlToUri[node.a_attr.href] = node.uri; }
  * Forces node to open when it's clicked.
  * @param {Object} tree
  */
-function invokeParentTree(tree) {
-  var $treeObject = $('.sidebar-grey');
+function invokeParentTree(treeConfiguration) {
+  var $sidebarGrey = $(".sidebar-grey");
+
+  if ($('#sidebar .mCustomScrollbar').length == 0) {
+    $sidebarGrey.mCustomScrollbar(hierTreeConf);
+  }
+
+  var $treeObject = $sidebarGrey.find('.mCSB_container').jstree(treeConfiguration);
   $treeObject.on('activate_node.jstree', function(event, node) {
     $treeObject.jstree('open_node', node.node);
   });
 
   $treeObject.on('loaded.jstree', function() {
-    var $sidebarGrey = $(".sidebar-grey");
-    if ($('#sidebar .mCustomScrollbar').length === 0) {
-      $sidebarGrey.mCustomScrollbar(hierTreeConf);
-    }
     // fix a bug causing throbber.gif not showing whilst ajaxing
     // TODO: a good fix would mean fixing the underlying DOM structure
-    $('.jstree-container-ul').parent().addClass('jstree-default');
+    //$('.jstree-container-ul').parent().addClass('jstree-default');
 
     var $leafProper = $('.jstree-leaf-proper');
     if ($leafProper.length > 0) {
-      $sidebarGrey.jstree('select_node', $leafProper.toArray());
+      $treeObject.jstree('select_node', $leafProper.toArray());
       $sidebarGrey.mCustomScrollbar('scrollTo', getLeafOffset());
     }
   });
@@ -367,7 +369,7 @@ function topConceptsToSchemes(topConcepts, schemes) {
  * Gives you the Skosmos default jsTree configuration.
  */
 function getTreeConfiguration() {
-  $('.sidebar-grey').empty().jstree({ 
+  return {
     'core' : {
       'animation' : 0,
       'themes' : { 'icons': false },
@@ -466,6 +468,6 @@ function getTreeConfiguration() {
         }
         return naturalCompare(aNode.text.toLowerCase(), bNode.text.toLowerCase());
     }
-  });
+  };
 }
 
