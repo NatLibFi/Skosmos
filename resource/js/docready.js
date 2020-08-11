@@ -254,9 +254,10 @@ $(function() { // DOCUMENT READY
   }
 
   // event handler for clicking row concepts
-  $(document).on('click', '.row a',
+  $(document).on('click', '.concept-main .row:not(.concept-foreign-labels,.other-languages,.concept-download-links) a',
       function(event) {
         if (window.location.href.indexOf(this.baseURI) == 0) {
+          event.preventDefault();
           var locHref = window.location.href.slice(this.baseURI.length);
           var locSplits = locHref.split('/');
           var thisSplits = this.attributes.href.nodeValue.split('/');
@@ -264,8 +265,6 @@ $(function() { // DOCUMENT READY
             $.ajaxQ.abortContentQueries();
             $.ajaxQ.abortSidebarQueries();
             var targetUrl = event.target.href;
-            var parameters = (clang !== lang) ? $.param({'clang' : clang}) : $.param({});
-            var historyUrl = (clang !== lang) ? targetUrl + '?' + parameters : targetUrl;
             $('#hier-trigger').attr('href', targetUrl);
             var $content = $('.content').empty().append($delayedSpinner.hide());
             var loading = delaySpinner();
@@ -275,21 +274,19 @@ $(function() { // DOCUMENT READY
 
             $.ajax({
               url : targetUrl,
-              data: parameters,
               req_kind: $.ajaxQ.requestKind.CONTENT,
               complete: function() { clearTimeout(loading); },
               success : function(data) {
                 $content.empty();
                 var response = $('.content', data).html();
-                if (window.history.pushState) { window.history.pushState({url: historyUrl}, '', historyUrl); }
+                if (window.history.pushState) {
+                  window.history.pushState({url: targetUrl}, '', targetUrl);
+                }
                 $content.append(response);
 
                 updateJsonLD(data);
                 updateTitle(data);
-                updateTopbarLang(data);
                 ajaxConceptMapping(data);
-                // take the content language buttons from the response
-                $('.header-float .dropdown-menu').empty().append($('.header-float .dropdown-menu', data).html());
               }
             });
             return false;

@@ -20,7 +20,7 @@
           {% set crumbId = loop.index %}
             <div class="crumb-path">
             {% for crumb in path %}
-            {% if not loop.last %}<a class="propertyvalue bread-crumb{% if crumb.hiddenLabel %} expand-crumbs{% endif %}" href="{{ crumb.uri|link_url(vocab,request.lang,'page',request.contentLang) }}">{{ crumb.prefLabel }}</a><span class="bread-crumb"> > </span>
+            {% if not loop.last %}<a class="propertyvalue bread-crumb{% if crumb.hiddenLabel %} expand-crumbs" href="#{% else %}" href="{{ crumb.uri|link_url(vocab,request.lang,'page',request.contentLang) }}{% endif %}">{{ crumb.prefLabel }}</a><span class="bread-crumb"> > </span>
             {% else %}<span class="bread-crumb propertylabel-pink">{{ crumb.prefLabel }}</span>
             {% endif %}
             {% if crumb.hiddenLabel %}
@@ -113,7 +113,7 @@
       {% endfor %}
       {% set foreignLabels = concept.foreignLabels %}
       {% if foreignLabels %}
-      <div class="row">
+      <div class="row concept-foreign-labels">
         <div class="property-label"><span class="versal property-click" title="{% trans "foreign prefLabel help" %}" >{{ 'foreign prefLabels'|trans|upper }}</span></div>
         <div class="property-value-column"><div class="property-value-wrapper">
           {% for language,labels in foreignLabels %}
@@ -131,10 +131,10 @@
             <div class="property-label"><span class="versal">URI</span></div>
             <div class="property-value-column"><div class="property-value-wrapper"><span class="versal uri-input-box" id="uri-input-box">{{ concept.uri }}</span> <button type="button" data-toggle="tooltip" data-placement="button" title="Copy to clipboard" class="btn btn-default btn-xs copy-clipboard" for="#uri-input-box"><span class="glyphicon glyphicon-copy" aria-hidden="true"></span></button></div></div>
         </div>
-        <div class="row">
+        <div class="row concept-download-links">
             <div class="property-label"><span class="versal">{% trans %}Download this concept in SKOS format:{% endtrans %}</span></div>
             <div class="property-value-column">
-<span class="versal concept-download-links"><a href="rest/v1/{% if concept.vocab %}{{ concept.vocab.id }}{% else %}{{ vocab.id }}{% endif %}/data?uri={{ concept.uri|url_encode }}&amp;format=application/rdf%2Bxml">RDF/XML</a>
+<span class="versal"><a href="rest/v1/{% if concept.vocab %}{{ concept.vocab.id }}{% else %}{{ vocab.id }}{% endif %}/data?uri={{ concept.uri|url_encode }}&amp;format=application/rdf%2Bxml">RDF/XML</a>
           <a href="rest/v1/{% if concept.vocab %}{{ concept.vocab.id }}{% else %}{{ vocab.id }}{% endif %}/data?uri={{ concept.uri|url_encode }}&amp;format=text/turtle">
             TURTLE</a>
           <a href="rest/v1/{% if concept.vocab %}{{ concept.vocab.id }}{% else %}{{ vocab.id }}{% endif %}/data?uri={{ concept.uri|url_encode }}&amp;format=application/ld%2Bjson">JSON-LD</a>
