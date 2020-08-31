@@ -147,4 +147,23 @@ class ConceptPropertyTest extends PHPUnit\Framework\TestCase
     $props = $concept->getProperties();
     $this->assertEquals('skos:hiddenLabel', $props['subclass:prop1']->getSubPropertyOf());
   }
+
+  /**
+   * @covers ConceptProperty::getID
+   */
+  public function testGetIDShortenedURI()
+  {
+    $prop = new ConceptProperty('skosmos:testLabel', 'Test label');
+    $this->assertEquals('skosmos_testLabel', $prop->getID());
+  }
+
+  /**
+   * @covers ConceptProperty::getID
+   */
+  public function testGetIDFullURI()
+  {
+    $prop = new ConceptProperty('http://rdaregistry.info/Elements/a/P50008', 'has hierarchical superior');
+    $this->assertEquals('http___rdaregistry_info_Elements_a_P50008', $prop->getID());
+  }
+
 }

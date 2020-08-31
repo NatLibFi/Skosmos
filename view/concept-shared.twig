@@ -39,7 +39,7 @@
         </div>
       {% endif %}
       {% spaceless %}
-      <div class="row{% if concept.type == 'skosext:DeprecatedConcept' %} deprecated{% endif %}">
+      <div class="row{% if concept.type == 'skosext:DeprecatedConcept' %} deprecated{% endif %} property prop-preflabel">
         <div class="property-label property-label-pref">
           <span class="versal">{% set subPrefLabelTranslation = concept.preferredSubpropertyLabelTranslation(request.lang) %}{% if subPrefLabelTranslation %}{{ subPrefLabelTranslation|upper }}{% else %}{{ 'skos:prefLabel'|trans|upper }}{% endif %}</span>
         </div>
@@ -60,7 +60,7 @@
       {% endspaceless %}
       {% for property in concept.properties %} {# loop through ConceptProperty objects #}
         {% if property.getSubPropertyOf != 'skos:hiddenLabel' %}
-        <div class="row{% if property.type == 'dc:isReplacedBy' %} replaced-by{% endif%}">
+        <div class="row{% if property.type == 'dc:isReplacedBy' %} replaced-by{% endif%} property prop-{{property.ID}}">
           <div class="property-label">
             <span class="versal{% if property.type == 'rdf:type' %}-bold{% endif %}{% if property.description %} property-click" title="{{ property.description }}{% endif %}">{{ property.label|upper }}</span>
           </div>
@@ -113,7 +113,7 @@
       {% endfor %}
       {% set foreignLabels = concept.foreignLabels %}
       {% if foreignLabels %}
-      <div class="row">
+      <div class="row property prop-other-languages">
         <div class="property-label"><span class="versal property-click" title="{% trans "foreign prefLabel help" %}" >{{ 'foreign prefLabels'|trans|upper }}</span></div>
         <div class="property-value-column"><div class="property-value-wrapper">
           {% for language,labels in foreignLabels %}
@@ -127,7 +127,7 @@
           </div>
         </div></div>
       {% endif %}
-        <div class="row">
+        <div class="row property prop-uri">
             <div class="property-label"><span class="versal">URI</span></div>
             <div class="property-value-column"><div class="property-value-wrapper"><span class="versal uri-input-box" id="uri-input-box">{{ concept.uri }}</span> <button type="button" data-toggle="tooltip" data-placement="button" title="Copy to clipboard" class="btn btn-default btn-xs copy-clipboard" for="#uri-input-box"><span class="glyphicon glyphicon-copy" aria-hidden="true"></span></button></div></div>
         </div>
@@ -166,7 +166,7 @@
 {% verbatim %}
 <template id="property-mappings-template">
     {{#each properties}}
-    <div class="row{{#ifDeprecated concept.type 'skosext:DeprecatedConcept'}} deprecated{{/ifDeprecated}}">
+    <div class="row{{#ifDeprecated concept.type 'skosext:DeprecatedConcept'}} deprecated{{/ifDeprecated}} property prop-mapping">
         <div class="property-label"><span class="versal{{#ifNotInDescription type description}} property-click" title="{{ description }}{{/ifNotInDescription}}">{{toUpperCase label}}</span></div>
         <div class="property-value-column">
             {{#each values }} {{! loop through ConceptPropertyValue objects }}
