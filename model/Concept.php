@@ -85,11 +85,6 @@ class Concept extends VocabularyDataObject implements Modifiable
         }
         $this->graph = $graph;
         $this->clang = $clang;
-        // setting the Punic plugins locale for localized datetime conversions
-        if ($this->clang && $this->clang !== '') {
-            Punic\Data::setDefaultLocale($clang);
-        }
-
     }
 
     /**
@@ -734,14 +729,14 @@ class Concept extends VocabularyDataObject implements Modifiable
 
             // making a human readable string from the timestamps
             if ($created != '') {
-                $ret = gettext('skosmos:created') . ' ' . (Punic\Calendar::formatDate($created, 'short'));
+                $ret = gettext('skosmos:created') . ' ' . (Punic\Calendar::formatDate($created, 'short', $this->getEnvLang()));
             }
 
             if ($modified != '') {
                 if ($created != '') {
-                    $ret .= ', ' . gettext('skosmos:modified') . ' ' . (Punic\Calendar::formatDate($modified, 'short'));
+                    $ret .= ', ' . gettext('skosmos:modified') . ' ' . (Punic\Calendar::formatDate($modified, 'short', $this->getEnvLang()));
                 } else {
-                    $ret .= ' ' . ucfirst(gettext('skosmos:modified')) . ' ' . (Punic\Calendar::formatDate($modified, 'short'));
+                    $ret .= ' ' . ucfirst(gettext('skosmos:modified')) . ' ' . (Punic\Calendar::formatDate($modified, 'short', $this->getEnvLang()));
                 }
 
             }
