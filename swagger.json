@@ -1458,7 +1458,7 @@
         "uri": {
           "type": "string"
         },
-        "vocabularies": {
+        "results": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/SearchResult"
@@ -1467,7 +1467,7 @@
       },
       "required": [
         "uri",
-        "vocabularies"
+        "results"
       ]
     },
     "SearchResult": {
