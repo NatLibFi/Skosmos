@@ -1685,9 +1685,10 @@ EOQ;
      * @param EasyRdf\Sparql\Result $result
      * @param string $lang
      * @param string $fallbacklang language to use if label is not available in the preferred language
+     * @param boolean $explicitLanguageTags Explictly show (add to label) language tag
      * @return array of property values (key: URI, val: label), or null if concept doesn't exist
      */
-    private function transformTransitivePropertyResults($result, $lang, $fallbacklang) {
+    private function transformTransitivePropertyResults($result, $lang, $fallbacklang, $explicitLanguageTags=False) {
         $ret = array();
         foreach ($result as $row) {
             if (!isset($row->object)) {
@@ -1696,6 +1697,9 @@ EOQ;
             // existing concept but no properties
             if (isset($row->label)) {
                 $val = array('label' => $row->label->getValue());
+                if ($explicitLanguageTags) {
+                    $val['label'] .= ' (' . $row->label->getLang() . ')';
+                }
             } else {
                 $val = array('label' => null);
             }
@@ -1707,7 +1711,9 @@ EOQ;
                 if (!isset($row->label) || $row->label->getLang() === $lang) {
                     $ret[$row->object->getUri()] = $val;
                 } elseif ($row->label->getLang() === $fallbacklang) {
-                    $val['label'] .= ' (' . $row->label->getLang() . ')';
+                    if (!$explicitLanguageTags) {
+                        $val['label'] .= ' (' . $row->label->getLang() . ')';
+                    }
                     $ret[$row->object->getUri()] = $val;
                 }
             }
@@ -1739,15 +1745,16 @@ EOQ;
      * @param string $uri
      * @param array $props the property/properties.
      * @param string $lang
-     * @param string $fallbacklang language to use if label is not available in the preferred language
      * @param integer $limit
      * @param boolean $anylang if you want a label even when it isn't available in the language you requested.
+     * @param string $fallbacklang language to use if label is not available in the preferred language
+     * @param boolean $explicitLanguageTags Explictly show language tag
      * @return array array of property values (key: URI, val: label), or null if concept doesn't exist
      */
-    public function queryTransitiveProperty($uri, $props, $lang, $limit, $anylang = false, $fallbacklang = '') {
+    public function queryTransitiveProperty($uri, $props, $lang, $limit, $anylang = false, $fallbacklang = '', $explicitLanguageTags = false) {
         $query = $this->generateTransitivePropertyQuery($uri, $props, $lang, $limit, $anylang);
         $result = $this->query($query);
-        return $this->transformTransitivePropertyResults($result, $lang, $fallbacklang);
+        return $this->transformTransitivePropertyResults($result, $lang, $fallbacklang, $explicitLanguageTags);
     }
 
     /**

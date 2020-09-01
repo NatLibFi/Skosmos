@@ -396,7 +396,8 @@ class Vocabulary extends DataObject implements Modifiable
     {
         $lang = $lang ? $lang : $this->getEnvLang();
         $fallback = $this->config->getDefaultLanguage();
-        return $this->getSparql()->queryTransitiveProperty($uri, array('skos:broader'), $lang, $limit, $any, $fallback);
+        $explicitLanguageTags = $this->config->getShowLangCodes();
+        return $this->getSparql()->queryTransitiveProperty($uri, array('skos:broader'), $lang, $limit, $any, $fallback, $explicitLanguageTags);
     }
 
     /**
