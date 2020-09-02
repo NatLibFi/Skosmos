@@ -433,6 +433,7 @@ function loadMappingProperties(concept, lang, contentLang, $htmlElement, concept
         if (!found) {
           conceptProperty = {
             'type': conceptMappingPropertyValue.type[0],
+            'id': conceptMappingPropertyValue.type[0].replace(/[^A-Za-z-]/g, '_'),
             'label': conceptMappingPropertyValue.typeLabel,
             'notation': conceptMappingPropertyValue.notation,
             'description': conceptMappingPropertyValue.description,

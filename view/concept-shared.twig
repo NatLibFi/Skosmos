@@ -166,7 +166,7 @@
 {% verbatim %}
 <template id="property-mappings-template">
     {{#each properties}}
-    <div class="row{{#ifDeprecated concept.type 'skosext:DeprecatedConcept'}} deprecated{{/ifDeprecated}} property prop-mapping">
+    <div class="row{{#ifDeprecated concept.type 'skosext:DeprecatedConcept'}} deprecated{{/ifDeprecated}} property prop-{{ id }}">
         <div class="property-label"><span class="versal{{#ifNotInDescription type description}} property-click" title="{{ description }}{{/ifNotInDescription}}">{{toUpperCase label}}</span></div>
         <div class="property-value-column">
             {{#each values }} {{! loop through ConceptPropertyValue objects }}
