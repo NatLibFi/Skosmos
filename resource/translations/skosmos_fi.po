@@ -775,3 +775,6 @@ msgstr ""
 
 msgid "concept_types"
 msgstr "Käsitteen tyypit"
+
+msgid "Skip to main"
+msgstr "Hyppää sisältöön"

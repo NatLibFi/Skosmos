@@ -773,3 +773,6 @@ msgstr ""
 
 msgid "concept_types"
 msgstr "Typ av koncept"
+
+msgid "Skip to main"
+msgstr "Hoppa till innehållet"
