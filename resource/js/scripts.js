@@ -329,20 +329,6 @@ function escapeHtml(string) {
   });
 }
 
-function renderPropertyMappingValues(groupedByType) {
-  var propertyMappingValues = [];
-  var source = document.getElementById("property-mapping-values-template").innerHTML;
-  var template = Handlebars.compile(source);
-  var context = {
-    property: {
-      uri: conceptMappingPropertyValue.uri,
-      label: conceptMappingPropertyValue.prefLabel,
-    }
-  };
-  propertyMappingValues.push({'body': template(context)});
-  return propertyMappingValues;
-}
-
 function renderPropertyMappings(concept, contentLang, properties) {
   var source = document.getElementById("property-mappings-template").innerHTML;
   // handlebarjs helper functions
