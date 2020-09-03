@@ -60,7 +60,7 @@
     "davidstutz/bootstrap-multiselect": "v0.9.13",
     "easyrdf/easyrdf": "0.10.0-alpha.1",
     "etdsolutions/waypoints": "4.0.0",
-    "twig/twig": "2.4.*",
+    "twig/twig": "2.13.*",
     "twig/extensions": "1.5.*",
     "twitter/bootstrap": "3.3.*",
     "twitter/typeahead.js": "v0.10.5",
