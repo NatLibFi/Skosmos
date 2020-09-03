@@ -152,6 +152,19 @@ ul {
   width: 25px;
 }
 
+/* Generic screen reader class
+ * Code from https://webaim.org/techniques/css/invisiblecontent/
+ ***************************/
+
+.sr-only {
+  position:absolute;
+  left:-10000px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+
 /* topbar styles
  ***************************/
 
