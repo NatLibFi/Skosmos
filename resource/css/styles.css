@@ -88,10 +88,12 @@ a, a.versal, .jstree-node > .jstree-anchor {
 }
 
 a:link,a:visited,a:active,a:hover,a:focus {
-  /* Improves link handling by removing focus borders. Sorry keyboard users! */
-  border: 0;
-  outline: none;
-  text-decoration: none !important;
+  text-decoration: none;
+  outline-offset: 2px;
+}
+
+:focus {
+  outline: 2px solid black;
 }
 
 a:hover {
@@ -252,6 +254,11 @@ ul {
   border-top-color: #ffffff;
 }
 
+#lang-dropdown-toggle:focus, .multiselect:focus, #search-all-button:focus {
+  outline: 3px solid white;
+  background-color: #00748f;
+}
+
 .navbar-form .dropdown-menu {
   border-radius: 0;
   margin-top: 0;
@@ -335,7 +342,6 @@ ul.dropdown-menu > li:last-child > input {
 
 .header-left > h1 > a {
   color: #ffffff;
-  display: block;
   height: 50px;
 }
 
@@ -1342,7 +1348,6 @@ tr.replaced-by > td > ul > li > a {
 
 ul.nav-tabs > li {
   margin-bottom: 0;
-  outline: none;
 }
 
 .nav-tabs > li > a, .nav-tabs > li > p, .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover {
@@ -1350,7 +1355,6 @@ ul.nav-tabs > li {
   border-radius: 0;
   border: 0;
   margin: 0;
-  outline: none;
   padding: 10px;
   text-align: center;
 }
@@ -1420,7 +1424,17 @@ ul.nav-tabs > li {
   width: 1px;
   position: absolute;
   overflow: hidden;
-  top: -10px;
+  top: -100px;
+}
+
+#skiptocontent:focus {
+  top: 0.5em;
+  left: 0.5em;
+  height: auto;
+  width: auto;
+  background-color: white;
+  display: block;
+  z-index: 1;
 }
 
 span.date-info {
@@ -1466,7 +1480,6 @@ span.date-info {
   border: 2px solid #ccc;
   font-size: 14px;
   line-height: 20px;
-  outline: none;
   width: 396px;
 }
 

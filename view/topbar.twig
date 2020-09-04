@@ -30,7 +30,7 @@
   <a href="{% if request.vocabid and vocab.title%}{{ request.vocabid }}/{% endif %}{{ request.lang }}/feedback{% if request.contentLang and request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}" id="navi3" class="navigation-font">
   {% trans "Feedback" %}
   </a>
-  <span id="navi4" title="{% trans "helper_help" %}<br /><br />{% trans "search_example_text" %}">
+  <span id="navi4" tabindex="0" title="{% trans "helper_help" %}<br /><br />{% trans "search_example_text" %}">
     <span class="navigation-font">{% trans "Help" %}</span>
   </span>
 </div>
