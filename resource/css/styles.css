@@ -254,8 +254,9 @@ ul {
   border-top-color: #ffffff;
 }
 
-#lang-dropdown-toggle:focus, .multiselect:focus {
+#lang-dropdown-toggle:focus, .multiselect:focus, #search-all-button:focus {
   outline: 3px solid white;
+  background-color: #00748f;
 }
 
 .navbar-form .dropdown-menu {
