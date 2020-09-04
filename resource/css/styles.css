@@ -1424,8 +1424,8 @@ ul.nav-tabs > li {
 }
 
 #skiptocontent:focus {
-  top: auto;
-  left: 1.5em;
+  top: 0.5em;
+  left: 0.5em;
   height: auto;
   width: auto;
   background-color: white;
