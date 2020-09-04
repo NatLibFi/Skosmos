@@ -254,7 +254,7 @@ ul {
   border-top-color: #ffffff;
 }
 
-#lang-dropdown-toggle:focus {
+#lang-dropdown-toggle:focus, .multiselect:focus {
   outline: 3px solid white;
 }
 
