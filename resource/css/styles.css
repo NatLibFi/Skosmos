@@ -1309,9 +1309,9 @@ tr.replaced-by > td > ul > li > a {
 
 .property-divider {
   border-bottom: 2px solid #666666;
-  margin: 5px 0 0 0;
   position: absolute;
-  width: 50%;
+  width: 95%;
+  bottom: -5px;
 }
 
 #vocab-info .table > tbody > tr > th {
