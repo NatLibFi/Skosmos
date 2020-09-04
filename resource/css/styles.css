@@ -88,10 +88,7 @@ a, a.versal, .jstree-node > .jstree-anchor {
 }
 
 a:link,a:visited,a:active,a:hover,a:focus {
-  /* Improves link handling by removing focus borders. Sorry keyboard users! */
-  border: 0;
-  outline: none;
-  text-decoration: none !important;
+  text-decoration: none;
 }
 
 a:hover {
