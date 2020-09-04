@@ -92,6 +92,10 @@ a:link,a:visited,a:active,a:hover,a:focus {
   outline-offset: 2px;
 }
 
+:focus {
+  outline: 2px solid black;
+}
+
 a:hover {
   text-decoration: underline;
   /* All text links have underlining when hovered. */
