@@ -1307,7 +1307,7 @@ tr.replaced-by > td > ul > li > a {
   border-bottom: 2px solid #666666;
   margin: 5px 0 0 0;
   position: absolute;
-  width: 14%;
+  width: 50%;
 }
 
 #vocab-info .table > tbody > tr > th {
@@ -1995,10 +1995,6 @@ body, .versal, h1, h2, p, .versal-bold {
 
   #sidebar {
     width: 310px;
-  }
-
-  .property-divider {
-    width: 17%;
   }
 
   .frontpage > .welcome-box, .frontpage > .right-box {
