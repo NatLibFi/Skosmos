@@ -1126,7 +1126,6 @@ li.sub-group {
   float: left;
   padding-left: 15px;
   padding-right: 15px;
-  padding-bottom: 15px;
   position: relative;
   width: 225px;
 }
@@ -1136,7 +1135,6 @@ li.sub-group {
   width: calc(100% - 225px);
   padding-left: 15px;
   padding-right: 15px;
-  padding-top: 10px;
   position: relative;
 }
 
@@ -1203,6 +1201,7 @@ li.sub-group {
 
 .concept-main > .row > .property-value-column > .property-value-wrapper {
   border-bottom: 2px solid #d4edeb;
+  padding-bottom: 5px;
 }
 
 .concept-main > .row:last-child > .property-value-column {
@@ -1219,6 +1218,10 @@ li.sub-group {
 
 .other-languages > td:last-of-type {
   vertical-align: top;
+}
+
+.vocab-info-literals > div.table > .row {
+  padding-top: 15px;
 }
 
 #vocab-info table > tbody > tr.other-languages > td {
