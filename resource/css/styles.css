@@ -1415,7 +1415,17 @@ ul.nav-tabs > li {
   width: 1px;
   position: absolute;
   overflow: hidden;
-  top: -10px;
+  top: -100px;
+}
+
+#skiptocontent:focus {
+  top: auto;
+  left: 1.5em;
+  height: auto;
+  width: auto;
+  background-color: white;
+  display: block;
+  z-index: 1;
 }
 
 span.date-info {
