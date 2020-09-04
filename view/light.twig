@@ -132,7 +132,7 @@
       {% include 'left.inc' ignore missing %}
     {% endif %}
     {% block error %}
-    <main id="maincontent">
+    <main id="maincontent" tabindex="-1">
       {% if request.vocabid == '' and request.page != 'feedback' and request.page != 'about' and not global_search %}
         {% include 'vocabularylist.twig' %}
       {% endif %}
