@@ -607,6 +607,20 @@ span.xl-pref-label > img {
   display: inline;
 }
 
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+}
+
 #vocabulary-list, #vocabulary-list-wide, #vocabulary-list-left, #vocabulary-list-right {
   background-color: #fff;
   display: inline-block;
@@ -1112,6 +1126,7 @@ li.sub-group {
   float: left;
   padding-left: 15px;
   padding-right: 15px;
+  padding-bottom: 15px;
   position: relative;
   width: 225px;
 }
@@ -1122,6 +1137,10 @@ li.sub-group {
   padding-left: 15px;
   padding-right: 15px;
   position: relative;
+}
+
+.logo-header {
+  padding-left: 18%;
 }
 
 .property-value-column > .row > .col-xs-5 > .versal {
@@ -1286,7 +1305,7 @@ tr.replaced-by > td > ul > li > a {
 
 .property-divider {
   border-bottom: 2px solid #666666;
-  margin: -20px 0 0 0;
+  margin: 5px 0 0 0;
   position: absolute;
   width: 14%;
 }
@@ -2164,6 +2183,7 @@ body, .versal, h1, h2, p, .versal-bold {
 
   .row > .property-value-column {
     width: calc(100% - 235px);
+    padding-top: 10px;
   }
 
 }
