@@ -9,7 +9,7 @@
         {% for key, values in vocab.info(request.contentLang) %}
         {% set keytrans = key %}
         <div class="row">
-          <div class="property-label versal">{{ keytrans|trans|upper }}</div>
+          <div class="property-label versal">{{ keytrans|trans|upper }}<div class="property-divider"></div></div>
           <div class="property-value-column">
             {% for val in values %}
                 <div class="property-value-wrapper">
@@ -26,7 +26,6 @@
                     {% endif %}
                 </div>
             {% endfor %}
-            <div class="property-divider"></div>
           </div>
         </div>
         {% endfor %}
