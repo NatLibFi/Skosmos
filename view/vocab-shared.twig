@@ -5,24 +5,36 @@
       <hr />
     </div>
     <div class="vocab-info-literals">
-      <table class="table">
+      <div class="table">
         {% for key, values in vocab.info(request.contentLang) %}
         {% set keytrans = key %}
-        <tr>
-          <th class="versal">{{ keytrans|trans|upper }}</th>
-          <td class="versal">
+        <div class="row">
+          <div class="property-label versal">{{ keytrans|trans|upper }}</div>
+          <div class="property-value-column">
             {% for val in values %}
-            <div>{% if val.get('skosmos:vocab') %}<a href="{{ val.uri | link_url(val.get('skosmos:vocab').value,request.lang,'page',request.contentLang) }}">{{ val.get('skosmos:label') }}</a>{% elseif val.label %}<a href="{{ val.uri }}">{% if val.label(request.contentLang) %}{{ val.label(request.contentLang) }}{% else %}{{ val.label }}{% endif %}</a>{% elseif val matches '|^(https?://)|' %}<a href="{{ val }}">{{ val }}</a>{% elseif val matches '|<\\w*\\b[^>]*>|' %}{{ val|raw|nl2br }}{% else %}{{ val|nl2br }}{% endif %}</div>
+                <div class="property-value-wrapper">
+                    {% if val.get('skosmos:vocab') %}
+                        <a href="{{ val.uri | link_url(val.get('skosmos:vocab').value,request.lang,'page',request.contentLang) }}">{{ val.get('skosmos:label') }}</a>
+                    {% elseif val.label %}
+                        <a href="{{ val.uri }}">
+                            {% if val.label(request.contentLang) %}{{ val.label(request.contentLang) }}
+                            {% else %}{{ val.label }}
+                            {% endif %}</a>
+                    {% elseif val matches '|^(https?://)|' %}<a href="{{ val }}">{{ val }}</a>
+                    {% elseif val matches '|<\\w*\\b[^>]*>|' %}{{ val|raw|nl2br }}
+                        {% else %}{{ val|nl2br }}
+                    {% endif %}
+                </div>
             {% endfor %}
-          </td>
-        </tr>
-        <tr><td class="property-divider"></td></tr>
+            <div class="property-divider"></div>
+          </div>
+        </div>
         {% endfor %}
-        <tr>
-          <th class="versal">URI</th>
-          <td class="versal"><span class="uri-input-box">{{ vocab.defaultConceptScheme }}</span></td>
-        </tr>
-      </table>
+        <div class="row">
+          <div class="property-label versal">URI</div>
+          <div class="property-value-column versal"><span class="uri-input-box">{{ vocab.defaultConceptScheme }}</span></td>
+        </div>
+      </div>
     </div>
     {% if vocab.config.showStatistics %}
     <div>
