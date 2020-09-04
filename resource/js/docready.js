@@ -1105,9 +1105,6 @@ $(function() { // DOCUMENT READY
     });
   }
 
-  // setting the focus to the search box on default if we are not on the search results page
-  if ($('.search-result-listing').length === 0) { $("#search-field").focus(); }
-
   if ($('#feedback-vocid').length) {
     $('#feedback-fields > .dropdown > .dropdown-menu > li > a').each(function(index, elem) {
       $(elem).on('click', function(event) {
