@@ -1339,7 +1339,6 @@ tr.replaced-by > td > ul > li > a {
 
 ul.nav-tabs > li {
   margin-bottom: 0;
-  outline: none;
 }
 
 .nav-tabs > li > a, .nav-tabs > li > p, .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover {
@@ -1347,7 +1346,6 @@ ul.nav-tabs > li {
   border-radius: 0;
   border: 0;
   margin: 0;
-  outline: none;
   padding: 10px;
   text-align: center;
 }
@@ -1463,7 +1461,6 @@ span.date-info {
   border: 2px solid #ccc;
   font-size: 14px;
   line-height: 20px;
-  outline: none;
   width: 396px;
 }
 
