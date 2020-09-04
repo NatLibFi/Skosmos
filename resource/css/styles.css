@@ -1136,6 +1136,7 @@ li.sub-group {
   width: calc(100% - 225px);
   padding-left: 15px;
   padding-right: 15px;
+  padding-top: 10px;
   position: relative;
 }
 
@@ -2179,7 +2180,6 @@ body, .versal, h1, h2, p, .versal-bold {
 
   .row > .property-value-column {
     width: calc(100% - 235px);
-    padding-top: 10px;
   }
 
 }
