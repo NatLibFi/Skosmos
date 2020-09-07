@@ -778,3 +778,6 @@ msgstr "Käsitteen tyypit"
 
 msgid "Skip to main"
 msgstr "Hyppää sisältöön"
+
+msgid "Available vocabularies and ontologies"
+msgstr "Sanastot ja ontologiat"

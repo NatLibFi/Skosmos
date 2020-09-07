@@ -24,7 +24,7 @@ h1, .prefLabel, .prefLabelLang, .notation {
   font-weight: bold;
 }
 
-h2 {
+h2, h3 {
   font-family: 'Fira Sans', sans-serif;
   font-size: 16px;
 }
@@ -635,7 +635,7 @@ span.xl-pref-label > img {
   width: 100% !important;
 }
 
-#vocabulary-list > div > h2, #vocabulary-list-wide > div > h2 {
+#vocabulary-list > div > h2, #vocabulary-list > div > h3, #vocabulary-list-wide > div > h2, #vocabulary-list-wide > div > h3 {
   margin-bottom: 0;
   margin-top: 0;
   padding: 15px 0 15px 10px;
@@ -647,11 +647,11 @@ span.xl-pref-label > img {
   width: 100%;
 }
 
-.vocab-category > ul > li, .vocab-category > h2 {
+.vocab-category > ul > li, .vocab-category > h2, .vocab-category > h3 {
   display: inline-block;
 }
 
-.vocab-category > h2 {
+.vocab-category > h2, .vocab-category > h3 {
   margin: 0 0 5px 0;
 }
 
@@ -666,7 +666,7 @@ span.xl-pref-label > img {
   padding-left: 0;
 }
 
-.vocab-category > li > h2 {
+.vocab-category > li > h2, .vocab-category > li > h3 {
   margin-bottom: 5px;
   margin-top: 0;
 }
@@ -1692,7 +1692,7 @@ p.autocomplete-label {
  * https://code.google.com/p/chromium/issues/detail?id=336476
  ************************************/
 
-body, .versal, h1, h2, p, .versal-bold {
+body, .versal, h1, h2, h3, p, .versal-bold {
   -webkit-animation-delay: 0.1s;
   -webkit-animation-name: fontfix;
   -webkit-animation-duration: 0.1s;
