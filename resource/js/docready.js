@@ -505,7 +505,13 @@ $(function() { // DOCUMENT READY
 
   var qtip_skosmos = {
     position: { my: 'top center', at: 'bottom center' },
-    style: { classes: 'qtip-tipsy qtip-skosmos' }
+    style: { classes: 'qtip-tipsy qtip-skosmos' },
+    show: {
+      event: 'mouseenter focusin'
+    },
+    hide: {
+      event: 'mouseleave focusout'
+    }
   };
 
   var qtip_skosmos_hierarchy = {
@@ -1104,9 +1110,6 @@ $(function() { // DOCUMENT READY
       $('#search-field').typeahead('open');
     });
   }
-
-  // setting the focus to the search box on default if we are not on the search results page
-  if ($('.search-result-listing').length === 0) { $("#search-field").focus(); }
 
   if ($('#feedback-vocid').length) {
     $('#feedback-fields > .dropdown > .dropdown-menu > li > a').each(function(index, elem) {
