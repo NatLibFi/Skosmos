@@ -103,6 +103,8 @@ a:hover {
 
 #service-logo {
   max-width: 450px;
+  display: inline-block;
+  margin: 4px;
 }
 
 /* basics
@@ -167,10 +169,10 @@ ul {
 }
 
 #service-name {
-  left: 30px;
   line-height: 50px;
   margin: 0;
-  position: absolute;
+  left: 50px;
+  position: relative;
 }
 
 .topbar-white > #language, .topbar-white > #navigation {
@@ -1870,7 +1872,6 @@ body, .versal, h1, h2, p, .versal-bold {
 
   #navigation > a, #language > a, #navi4 > span {
     font-weight: 500;
-    margin: 2px;
   }
 
   .frontpage #language {
@@ -1881,9 +1882,15 @@ body, .versal, h1, h2, p, .versal-bold {
   }
 
   #service-logo {
-    height: 200px;
     position: absolute;
-    right: 3%;
+    left: 100%;
+    outline-offset: -2px;
+  }
+
+  #service-name {
+    left: 0;
+    padding-right: 4px;
+    padding-left: 4px;
   }
 
   .frontpage-spacing .header-float {
@@ -1924,10 +1931,6 @@ body, .versal, h1, h2, p, .versal-bold {
 }
 
 @media (min-width: 640px) {
-  #service-logo {
-    display: inline;
-  }
-
   .right-box {
     display: inline;
   }
@@ -1972,11 +1975,6 @@ body, .versal, h1, h2, p, .versal-bold {
 
   #navigation > a {
     margin: auto 10px;
-  }
-
-  #service-logo {
-    display: inline;
-    position: absolute;
   }
 
   .content > .feedback-box, .content > #about {
