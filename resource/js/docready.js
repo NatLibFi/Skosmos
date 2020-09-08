@@ -21,6 +21,22 @@ $(function() { // DOCUMENT READY
     }
   );
 
+  $('#skiptocontent').on('click', function(e) {
+    // fixes an issue with screen reader not regaining true focus after Ctrl + Home
+    if (!e.looped) {
+      // loop focus in order to restore normal functionality
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      document.getElementById("footer").focus({preventScroll: true});
+      setTimeout(function() {
+        $(e.target).trigger({type: 'click', looped: true});
+      }, 100);
+      return false;
+    }
+
+    document.getElementById(e.target.hash.slice(1)).focus({preventScroll: true});
+  });
+
   /*
    * Moving the sidenav scrollbar towards the current concept. Aiming the current
    * concept at vertical center of the container. Each concept needs 18px height.
