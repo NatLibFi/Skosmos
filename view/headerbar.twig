@@ -6,15 +6,17 @@
 {% endif %}
 <div class="header-float">
 {% if request.page != 'About' and request.page != 'Feedback' %}
-
-  {% if request.page != '' %}<div class="search-vocab-text"><p>{% trans "Content language" %}</p></div>{% endif %}
   {% if sorted_vocabs is defined %}
-    <label class="sr-only" for="multiselect">{% trans "Search from vocabulary" %}</label>
+    <h2 class="sr-only">{% trans "Search from selected vocabularies" %}</h2>
+    <label class="sr-only" for="multiselect">{% trans "Search from selected vocabularies" %}</label>
     <select class="multiselect" id="multiselect" multiple="multiple">
     {% for vocab in sorted_vocabs %}
       <option value="{{ vocab.id }}" data-voc-shortname="{{ vocab.shortname }}" data-label="{{ vocab.title }}" title="{{ vocab.title }}">{{ vocab.shortname }}</option>
     {% endfor %}
     </select>
+  {% else %}
+    <h2 class="sr-only">{% trans "Search from vocabulary" %}</h2>
+    <div class="search-vocab-text"><p>{% trans "Content language" %}</p></div>
   {% endif %}
   <form class="navbar-form" role="search" name="text-search" action="{% if request.vocabid != '' %}{{ request.vocabid }}/{% endif %}{{ request.lang }}/search">
     <input style="display: none" name="clang" value="{% if request.contentLang %}{{ request.contentLang }}{% else %}{{ request.lang }}{% endif %}" id="lang-input">

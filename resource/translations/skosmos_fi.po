@@ -781,3 +781,6 @@ msgstr "Hyppää sisältöön"
 
 msgid "Available vocabularies and ontologies"
 msgstr "Sanastot ja ontologiat"
+
+msgid "Search from selected vocabularies"
+msgstr "Hae valituista sanastoista"

@@ -779,3 +779,6 @@ msgstr "Hoppa till innehållet"
 
 msgid "Available vocabularies and ontologies"
 msgstr "Tillgängliga tesaurusar och ontologier"
+
+msgid "Search from selected vocabularies"
+msgstr "Sök i utvalda vokabulärer"

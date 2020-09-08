@@ -782,3 +782,6 @@ msgstr "Skip to main content"
 
 msgid "Available vocabularies and ontologies"
 msgstr "Available vocabularies and ontologies"
+
+msgid "Search from selected vocabularies"
+msgstr "Search from selected vocabularies"
