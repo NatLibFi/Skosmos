@@ -1,7 +1,7 @@
 <div class="container">
   <div id="vocab-info">
     <div>
-      <h1>{% trans "Vocabulary information" %}</h1>
+      <h2>{% trans "Vocabulary information" %}</h2>
       <hr />
     </div>
     <div class="vocab-info-literals">
@@ -9,29 +9,29 @@
         {% for key, values in vocab.info(request.contentLang) %}
         {% set keytrans = key %}
         <tr>
-          <th class="versal">{{ keytrans|trans|upper }}</th>
+          <th class="versal"><h3>{{ keytrans|trans|upper }}</h3></th>
           <td class="versal">
             {% for val in values %}
             <div>{% if val.get('skosmos:vocab') %}<a href="{{ val.uri | link_url(val.get('skosmos:vocab').value,request.lang,'page',request.contentLang) }}">{{ val.get('skosmos:label') }}</a>{% elseif val.label %}<a href="{{ val.uri }}">{% if val.label(request.contentLang) %}{{ val.label(request.contentLang) }}{% else %}{{ val.label }}{% endif %}</a>{% elseif val matches '|^(https?://)|' %}<a href="{{ val }}">{{ val }}</a>{% elseif val matches '|<\\w*\\b[^>]*>|' %}{{ val|raw|nl2br }}{% else %}{{ val|nl2br }}{% endif %}</div>
             {% endfor %}
           </td>
         </tr>
-        <tr><td class="property-divider"></td></tr>
+        <tr aria-hidden=true><td class="property-divider"></td></tr>
         {% endfor %}
         <tr>
-          <th class="versal">URI</th>
+          <th class="versal"><h3>URI</h3></th>
           <td class="versal"><span class="uri-input-box">{{ vocab.defaultConceptScheme }}</span></td>
         </tr>
       </table>
     </div>
     {% if vocab.config.showStatistics %}
     <div>
-      <h2>{% trans "Resource counts by type" %}</h2>
+      <h3>{% trans "Resource counts by type" %}</h3>
       <table class="table" id="counts">
         <tr><th class="versal">{% trans "Type" %}</th><th class="versal">{% trans "Count" %}</th></tr>
         <tr><td class="property-divider"></td></tr>
       </table>
-      <h2>{% trans "Term counts by language" %}</h2>
+      <h3>{% trans "Term counts by language" %}</h3>
       <table class="table" id="statistics">
       <tr>
         <th class="versal">{% trans "Concept language" %}</th>

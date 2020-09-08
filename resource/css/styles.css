@@ -1314,6 +1314,22 @@ tr.replaced-by > td > ul > li > a {
   padding-left: 0;
 }
 
+#vocab-info h2 {
+  font-size: 27px;
+  font-weight: 400;
+}
+
+#vocab-info h3 {
+  font-weight: 400;
+  display: initial;
+}
+
+#vocab-info > div > h3 {
+  font-weight: 500;
+  margin-bottom: 10px;
+  display: block;
+}
+
 #counts { max-width: 300px; }
 
 #statistics { max-width: 450px; }
