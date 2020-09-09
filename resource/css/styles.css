@@ -248,6 +248,13 @@ ul {
 /* headerbar stuff
  *************************/
 
+.header-row {
+/* copied from bootstrap's grid-framework.less:18
+ */  
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
 #lang-dropdown-toggle .caret, .multiselect span > .caret {
   border-top-color: #ffffff;
 }
