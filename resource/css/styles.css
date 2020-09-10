@@ -1370,8 +1370,7 @@ tr.replaced-by > td > ul > li > a {
   width: 310px;
 }
 
-.nav-tabs, #groups > a {
-  background-color: #e0e4e7;
+.nav-tabs {
   border-bottom: none;
 }
 
@@ -1379,14 +1378,26 @@ ul.nav-tabs > li {
   margin-bottom: 0;
 }
 
-.nav-tabs > li > a, .nav-tabs > li > p, .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover {
-  background-color: #e6e9eb;
+.sidebar-buttons .nav-tabs > li > a, .sidebar-buttons .nav-tabs > li > p, .sidebar-buttons .nav-tabs > li.active > a {
   border-radius: 0;
   border: 0;
   margin: 0;
   padding: 10px;
   text-align: center;
 }
+
+.nav-tabs > li:nth-of-type(even) > a {
+  background-color: #e0e4e7;
+}
+
+.nav-tabs > li:nth-of-type(odd) > a {
+  background-color: #e6e9eb;
+}
+
+.nav-tabs li > a:hover {
+  background-color: white;
+}
+
 
 #limit {
   margin-top: -1px;
@@ -1399,9 +1410,6 @@ ul.nav-tabs > li {
 
 .nav-tabs > li:first-of-type {
   width: 34%;
-}
-
-#alpha > a {
 }
 
 .nav-four-wide > li {
@@ -1420,10 +1428,6 @@ ul.nav-tabs > li {
   background-color: #B9C1C6;
   color: #74787A;
   cursor: default;
-}
-
-#changes > a {
-  background-color: #DEDFE0;
 }
 
 .nav-tabs > *:hover {
