@@ -1434,14 +1434,8 @@ ul.nav-tabs > li {
   background-color: #ffffff;
 }
 
-
-.change-list > span {
-  display: inline-block;
-  margin-top: 15px;
-}
-
-.change-list > span:first-of-type {
-  margin: 0;
+.change-list > h5 {
+  margin-bottom: 2px;
 }
 
 .content {

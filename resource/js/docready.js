@@ -384,8 +384,8 @@ $(function() { // DOCUMENT READY
         $('.active').removeClass('active');
         $('#changes').addClass('active');
         $('.sidebar-grey').empty().prepend(spinner);
-        var $pagination = $('.pagination');
-        if ($pagination) { $pagination.hide(); }
+        $('.pagination').hide();
+        $('#sidebar > h4.sr-only').hide();
         var targetUrl = event.target.href;
         $.ajax({
             url : targetUrl,
@@ -423,6 +423,7 @@ $(function() { // DOCUMENT READY
         $('.active').removeClass('active');
         $('#hier-trigger').parent().addClass('active');
         $('.pagination').hide();
+        $('#sidebar > h4.sr-only').hide();
         $content.append('<div class="sidebar-grey concept-hierarchy"></div>');
         invokeParentTree(getTreeConfiguration());
         $('#hier-trigger').attr('href', '#');
@@ -444,9 +445,8 @@ $(function() { // DOCUMENT READY
         $('.active').removeClass('active');
         var $clicked = $(this);
         $clicked.parent().addClass('active');
-        var $pagination = $('.pagination');
-        if ($pagination) { $pagination.hide(); }
-        if ($('.changes-navi')) { $('.changes-navi').hide(); }
+        $('.pagination').hide();
+        $('#sidebar > h4.sr-only').hide();
         $('.sidebar-grey').remove().prepend(spinner);
         $('#sidebar').append('<div class="sidebar-grey"><div class="group-hierarchy"></div></div>');
         if (window.history.pushState) { window.history.pushState({}, null, encodeURI(event.target.href)); }
@@ -885,7 +885,7 @@ $(function() { // DOCUMENT READY
   function changeListWaypointCallback() {
     $('.change-list').append($loading);
     var parameters = $.param({'offset' : changeOffset, 'clang': content_lang});
-    var lastdate = $('.change-list > span:last-of-type')[0].innerHTML;
+    var lastdate = $('.change-list > h5:last-of-type')[0].innerHTML;
     $.ajax({
       url : vocab + '/' + lang + '/new',
       data : parameters,
@@ -893,7 +893,7 @@ $(function() { // DOCUMENT READY
         $loading.detach();
         if ($(data).find('.change-list').length === 1) {
           $('.change-list').append($(data).find('.change-list')[0].innerHTML);
-          var $lastdate = $('.change-list > span:contains(' + lastdate + ')');
+          var $lastdate = $('.change-list > h5:contains(' + lastdate + ')');
           if ($lastdate.length === 2)
            $lastdate[1].remove();
           $('.change-list > p:last-of-type').remove();
