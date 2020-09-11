@@ -21,9 +21,9 @@
     {% endif %}
   </ul>
 </div>
+<h4 class="sr-only">{% trans "Listing vocabulary concepts by most recents changes" %}</h4>
 <div class="sidebar-grey">
   <div class="group-container">
-    <h4 class="sr-only">{% trans "Listing vocabulary concepts by most recents changes" %}</h4>
     <ul class="change-list side-navi">
       {% for day,concepts in changeList %}
         <h5 class="versal versal-bold">{{day}}</h5>

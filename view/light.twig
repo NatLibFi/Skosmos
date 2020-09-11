@@ -84,9 +84,9 @@
         </ul>
       {% endif %}
 
+      <h4 class="sr-only">{% trans "Listing vocabulary concepts alphabetically" %}</h4>
       <div class="sidebar-grey {% if alpha_results %} sidebar-grey-alpha{% elseif search_results|length == 1 and not term %} concept-hierarchy{% endif %}">
         <div id="alphabetical-menu">
-          <h4 class="sr-only">{% trans "Listing vocabulary concepts alphabetically" %}</h4>
           {% if alpha_results %}
             {% set previous = '' %}
             <ul class="list-group alphabetical-search-results side-navi">

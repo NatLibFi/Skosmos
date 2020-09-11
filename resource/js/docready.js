@@ -97,6 +97,16 @@ $(function() { // DOCUMENT READY
       });
     });
 
+    var active_tab = $('li.active').attr('id');
+      console.log(active_tab);
+    if (active_tab == 'groups') {
+      $('#sidebar > h4').remove();
+      $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.groups_listing + '</h4>');
+    } else if (active_tab == 'hierarchy') {
+      $('#sidebar > h4').remove();
+      $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.hierarchy_listing + '</h4>');
+    }
+
     countAndSetOffset();
 
     hideCrumbs();
@@ -104,8 +114,16 @@ $(function() { // DOCUMENT READY
   });
 
   // if the hierarchy tab is active filling the jstree with data
-  if ($('#hierarchy').hasClass('active')) { invokeParentTree(getTreeConfiguration()); }
-  if ($('#groups').hasClass('active')) { invokeGroupTree(); }
+  if ($('#hierarchy').hasClass('active')) {
+    $('#sidebar > h4').remove();
+    invokeParentTree(getTreeConfiguration());
+    $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.hierarchical_listing + '</h4>');
+  }
+  if ($('#groups').hasClass('active')) {
+    $('#sidebar > h4').remove();
+    invokeGroupTree();
+    $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.groups_listing + '</h4>');
+  }
 
   var textColor = $('.search-parameter-highlight').css('color');
   countAndSetOffset();
@@ -426,6 +444,7 @@ $(function() { // DOCUMENT READY
         $('#sidebar > h4.sr-only').hide();
         $content.append('<div class="sidebar-grey concept-hierarchy"></div>');
         invokeParentTree(getTreeConfiguration());
+        $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.hierarchy_listing + '</h4>');
         $('#hier-trigger').attr('href', '#');
         return false;
       }
@@ -451,6 +470,7 @@ $(function() { // DOCUMENT READY
         $('#sidebar').append('<div class="sidebar-grey"><div class="group-hierarchy"></div></div>');
         if (window.history.pushState) { window.history.pushState({}, null, encodeURI(event.target.href)); }
         invokeGroupTree();
+        $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.groups_listing + '</h4>');
         return false;
       }
   );
