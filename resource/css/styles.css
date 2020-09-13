@@ -1371,6 +1371,7 @@ tr.replaced-by > td > ul > li > a {
 }
 
 .nav-tabs {
+  background-color: #e0e4e7;
   border-bottom: none;
 }
 
@@ -1379,6 +1380,7 @@ ul.nav-tabs > li {
 }
 
 .sidebar-buttons .nav-tabs > li > a, .sidebar-buttons .nav-tabs > li > p, .sidebar-buttons .nav-tabs > li.active > a {
+  background-color: #e6e9eb;
   border-radius: 0;
   border: 0;
   margin: 0;
@@ -1394,13 +1396,15 @@ ul.nav-tabs > li {
   background-color: #e6e9eb;
 }
 
-.nav-tabs li > a:hover {
+.sidebar-buttons .nav-tabs > li.active > a {
+  background-color: #f6f7f8;
+}
+
+.sidebar-buttons .nav-tabs > li > a:hover {
   background-color: white;
 }
 
-
 #limit {
-  margin-top: -1px;
   width: 33%;
 }
 
@@ -1418,10 +1422,6 @@ ul.nav-tabs > li {
 
 .nav-four-wide > #alpha {
   width: 16%;
-}
-
-.nav-tabs > li.active > a {
-  background-color: #f6f7f8;
 }
 
 #hierarchy-disabled > *, #hierarchy-disabled > *:hover {
