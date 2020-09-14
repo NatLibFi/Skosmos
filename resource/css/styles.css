@@ -250,6 +250,13 @@ ul {
 /* headerbar stuff
  *************************/
 
+.header-row {
+/* copied from bootstrap's grid-framework.less:18
+ */  
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
 #lang-dropdown-toggle .caret, .multiselect span > .caret {
   border-top-color: #ffffff;
 }
@@ -611,6 +618,20 @@ span.xl-pref-label > img {
 
 #maincontent {
   display: inline;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
 }
 
 #vocabulary-list, #vocabulary-list-wide, #vocabulary-list-left, #vocabulary-list-right {
@@ -1130,6 +1151,10 @@ li.sub-group {
   position: relative;
 }
 
+.logo-header {
+  padding-left: 18%;
+}
+
 .property-value-column > .row > .col-xs-5 > .versal {
   word-wrap: break-word;
 }
@@ -1189,6 +1214,7 @@ li.sub-group {
 
 .concept-main > .row > .property-value-column > .property-value-wrapper {
   border-bottom: 2px solid #d4edeb;
+  padding-bottom: 5px;
 }
 
 .concept-main > .row:last-child > .property-value-column {
@@ -1205,6 +1231,10 @@ li.sub-group {
 
 .other-languages > td:last-of-type {
   vertical-align: top;
+}
+
+.vocab-info-literals > div.table > .row {
+  padding-top: 15px;
 }
 
 #vocab-info table > tbody > tr.other-languages > td {
@@ -1292,9 +1322,9 @@ tr.replaced-by > td > ul > li > a {
 
 .property-divider {
   border-bottom: 2px solid #666666;
-  margin: -20px 0 0 0;
   position: absolute;
-  width: 14%;
+  width: 95%;
+  bottom: -5px;
 }
 
 #vocab-info .table > tbody > tr > th {
@@ -1989,10 +2019,6 @@ body, .versal, h1, h2, p, .versal-bold {
 
   #sidebar {
     width: 310px;
-  }
-
-  .property-divider {
-    width: 17%;
   }
 
   .frontpage > .welcome-box, .frontpage > .right-box {
