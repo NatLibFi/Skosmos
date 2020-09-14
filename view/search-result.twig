@@ -21,7 +21,7 @@
     <a class="prefLabel conceptlabel" href="{% if "isothes:ConceptGroup" in concept.type %}{{ concept.uri | link_url(concept.vocab, request.lang, 'page') }}{% elseif concept.exvocab is defined%}{{ concept.uri | link_url(concept.exvocab,concept.contentLang) }}{% else %}{{ concept.uri | link_url(concept.vocab,request.lang,'page',concept.contentLang) }}{% endif %}">{{ concept.label(request.contentLang) }}</a>{% if explicit_langcodes or request.queryparam('anylang') %}<span class="versal"> ({{ concept.contentLang }})</span>{% endif %}
     {% endif %}
   {% endspaceless %}
-  {% if concept.type == 'skosext:DeprecatedConcept' %}<h2 class="deprecated-alert">{% trans %}deprecated{% endtrans %}</h2>{% endif %}
+  {%- if concept.type == 'skosext:DeprecatedConcept' %}<span class="versal deprecated-alert">{% trans %}deprecated{% endtrans %}</span>{% endif -%}
   {% set conceptProperties = concept.properties %}
   {% for property in conceptProperties %} {# loop through ConceptProperty objects #}
     {% if property.type in PreferredProperties or property.type in concept.vocab.config.additionalSearchProperties  or property.type in concept.vocab.config.hierarchyProperty %}

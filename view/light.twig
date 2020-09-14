@@ -37,7 +37,8 @@
     {% block sidebar %}
       {% if request.vocabid != '' or request.page == 'feedback' or request.page == 'about' %}
       <div class="sidebar-buttons">
-        <h2 class="sr-only">{% trans "Sidebar listing: assort and traverse vocabulary contents by a criteria" %}</h2>
+        {% set sidebarHeading = request.page != 'search' ? "Sidebar listing: assort and traverse vocabulary contents by a criterion" : "Sidebar listing: vocabulary search options" %}
+        <h2 class="sr-only">{% trans sidebarHeading %}</h2>
         <ul class="nav nav-tabs{% if vocab.config.showChangeList and vocab.config.groupClassURI and vocab.config.showAlphabeticalIndex %} nav-four-wide{% endif %}">
         {% if request.page != 'search' %}
           {% if request.vocab.config.showAlphabeticalIndex %}
@@ -65,6 +66,7 @@
             <li id="changes"><a href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Changes-nav" %}</a></li>
           {% endif %}
         {% else %}
+          <h3 class="sr-only">{% trans "Search options tab" %}</h3>
           <li id="limit"><p>{% trans "Search options" %}</p></li>
         {% endif %}
         </ul>
@@ -117,11 +119,12 @@
           {% endif %}
         </div>
         {% if request.page == 'search' %}
+        <h4 class="sr-only">{% trans "Limit search" %}</h4>
         <form class="search-options">
           {% set conceptSchemes = vocab.conceptSchemes %}
           {% if conceptSchemes|length > 1 %}
           <div class="input-group">
-            <span class="versal">{% trans "By scheme" %}</span>
+            <label for="scheme-limit" class="versal">{% trans "By scheme" %}</label>
             <select id="scheme-limit" value="{{ limit-scheme }}" class="form-control multiselect" multiple="multiple">
               {% for uri,scheme in conceptSchemes %}
                 <option value="{{ uri }}">{% if scheme.prefLabel %}{{ scheme.prefLabel }}{% elseif scheme.label %}{{ scheme.label }}{% elseif scheme.title %}{{ scheme.title }}{% else %}{{ uri|trans }}{% endif %}</option>
@@ -131,7 +134,7 @@
           {% endif %}
           {% if types|length > 1 %}
           <div class="input-group">
-            <span class="versal">{% trans "By type" %}</span>
+            <label for="type-limit" class="versal">{% trans "By type" %}</label>
             <select id="type-limit" value="{{ limit-type }}" class="form-control multiselect" multiple="multiple">
               {% for uri,type in types %}
                 <option value="{{ uri }}">{% if type.label %}{{ type.label }}{% else %}{{ uri|trans }}{% endif %}</option>
@@ -141,7 +144,7 @@
           {% endif %}
           {% if vocab.config.groupClassURI %}
           <div class="input-group">
-            <span class="versal">{% trans "By group" %}</span>
+            <label for="group-limit" class="versal">{% trans "By group" %}</label>
             <select id="group-limit" value="{{ limit-group }}" class="form-control multiselect">
               <option></option>
               {% for uri,group in group_index %}
@@ -151,7 +154,7 @@
           </div>
           {% endif %}
           <div class="input-group">
-            <span class="versal">{% trans "By parent" %}</span><input type="text" id="parent-limit" class="form-control" value="{{ limit_parent }}">
+            <label for="parent-limit" class="versal">{% trans "By parent" %}</label><input type="text" id="parent-limit" class="form-control" value="{{ limit_parent }}">
           </div>
           <button type="button submit" class="btn btn-default">{% trans "Limit search" %}</button>
         </form>

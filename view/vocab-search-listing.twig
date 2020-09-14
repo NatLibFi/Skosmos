@@ -4,10 +4,11 @@
 {% endblock %}
 {% block content %}
 <div class="search-result-listing">
+  <h2 class="sr-only">{% trans "Search results" %}</h2>
   {% include 'search-result.twig' %}
   {% if request.vocabid == 'null' and not global_search %}
   <div class="alert alert-danger">
-    <h4>{% trans %}Error: Requested vocabulary not found!{% endtrans %}</h4>
+    <span>{% trans %}Error: Requested vocabulary not found!{% endtrans %}</span>
   </div>
   {% endif %}
 </div>

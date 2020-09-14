@@ -1089,6 +1089,15 @@ li.sub-group {
   margin: 5px 0 5px 0;
 }
 
+.alert-danger {
+  font-size: 18px;
+}
+
+.search-result-listing .deprecated-alert {
+  margin-left: 10px;
+  color: #D95F8A;
+}
+
 .alert-replaced a {
   color: #fff;
   display: inline-block;
