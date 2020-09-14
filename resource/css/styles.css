@@ -1357,7 +1357,7 @@ tr.replaced-by > td > ul > li > a {
   width: 25px;
 }
 
-.pagination > li:last-child > a {
+.pagination > li:nth-last-child(2) > a, .pagination > li:last-child > a {
   width: auto;
 }
 
