@@ -98,7 +98,6 @@ $(function() { // DOCUMENT READY
     });
 
     var active_tab = $('li.active').attr('id');
-      console.log(active_tab);
     if (active_tab == 'groups') {
       $('#sidebar > h4').remove();
       $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.groups_listing + '</h4>');
@@ -509,20 +508,20 @@ $(function() { // DOCUMENT READY
           alpha_complete = false;
           var $content = $('.sidebar-grey');
           $content.empty().prepend(spinner);
-          var targetUrl = event.target.href;
+          var targetUrl = event.currentTarget.href;
           $.ajax({
             url : targetUrl,
             success : function(data) {
               updateSidebar(data);
               $('.nav').scrollTop(0);
-              if (window.history.pushState) { window.history.pushState({}, null, encodeURI(event.target.href)); }
+              if (window.history.pushState) { window.history.pushState({}, null, encodeURI(event.currentTarget.href)); }
               updateTitle(data);
               // take the content language buttons from the response
               $('.header-float .dropdown-menu').empty().append($('.header-float .dropdown-menu', data).html());
             }
           });
         } else {
-          var selectedLetter = $(event.target).text().trim();
+          var selectedLetter = $(event.currentTarget).find("span:last-child").text().trim();
           if (document.getElementsByName(selectedLetter).length === 0) { return false; }
           var offset = $('li[name=' + selectedLetter + ']').offset().top - $('body').offset().top - 5;
           $('.nav').scrollTop(offset);
@@ -887,7 +886,7 @@ $(function() { // DOCUMENT READY
       alpha_complete = true;
       $('.alphabetical-search-results').append($loading);
       var parameters = $.param({'offset' : 250, 'clang': content_lang});
-      var letter = '/' + ($('.pagination > .active')[0] ? $('.pagination > .active > a')[0].innerHTML : $('.pagination > li > a')[0].innerHTML);
+      var letter = '/' + ($('.pagination > .active')[0] ? $('.pagination > .active > a > span:last-child')[0].innerHTML : $('.pagination > li > a > span:last-child')[0].innerHTML);
       $.ajax({
         url : vocab + '/' + lang + '/index' + letter,
         data : parameters,
