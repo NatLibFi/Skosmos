@@ -17,7 +17,7 @@
     <li id="groups"><a href="{{ request.vocabid }}/{{ request.lang }}/groups{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Group-nav" %}</a></li>
     {% endif %}
     {% if vocab.config.showChangeList %}
-    <h3 class="sr-only">{% trans "Assort vocabulary concepts by most recent changes" %}</h3>
+    <h3 class="sr-only">{% trans "Assort vocabulary concepts by newest additions" %}</h3>
     <li id="changes"><a href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Changes-nav" %}</a></li>
     {% endif %}
   </ul>
