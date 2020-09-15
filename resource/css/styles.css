@@ -1101,12 +1101,15 @@ li.sub-group {
   right: 0;
 }
 
-.alert h2 {
-  margin: 5px 0 5px 0;
-}
-
 .alert-danger {
   font-size: 18px;
+}
+
+.content .alert-danger p {
+  color: #fff;
+  font-weight: 500;
+  margin: 5px 0 5px 0;
+  line-height: 1.1;
 }
 
 .search-result-listing .deprecated-alert {
@@ -1140,6 +1143,11 @@ li.sub-group {
 .concept-info {
   background-color: #fff;
   margin-bottom: 20px;
+}
+
+.concept-info h3 {
+  margin: 0;
+  line-height: 22.85px;
 }
 
 .deprecated-concept * {

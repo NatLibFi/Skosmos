@@ -1066,12 +1066,12 @@ $(function() { // DOCUMENT READY
    */
   var $replaced = $('.replaced-by a');
   if ($replaced.length > 0) {
-    var $replacedSpan = $('.replaced-by span');
-    var undoUppercasing = $replacedSpan.text().substr(0,1) + $replacedSpan.text().substr(1).toLowerCase();
+    var $replacedElem = $('.replaced-by h3');
+    var undoUppercasing = $replacedElem.text().substr(0,1) + $replacedElem.text().substr(1).toLowerCase();
     var html = ''
     for (var i = 0; i < $replaced.length; i++) {
         var replacedBy = '<a href="' + $replaced[i] + '">' + $replaced[i].innerHTML + '</a>';
-        html += '<h2 class="alert-replaced">' + undoUppercasing + ': ' + replacedBy + '</h2>';
+        html += '<p class="alert-replaced">' + undoUppercasing + ': ' + replacedBy + '</p>';
     }
     $('.alert-danger').append(html);
     $(document).on('click', '#groups',
