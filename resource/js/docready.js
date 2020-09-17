@@ -124,7 +124,6 @@ $(function() { // DOCUMENT READY
     $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.groups_listing + '</h4>');
   }
 
-  var textColor = $('.search-parameter-highlight').css('color');
   countAndSetOffset();
 
   // Make a selection of an element for copy pasting.
@@ -192,14 +191,6 @@ $(function() { // DOCUMENT READY
       }
     }, { offset: -60 }); // when the headerbars bottom margin is at the top of the screen
   }
-
-  // Event handler for restoring the DOM back to normal after the focus is lost from the prefLabel.
-  $(':not(.search-parameter-highlight)').click(
-      function(){
-        $('#temp-textarea').remove();
-        $('.search-parameter-highlight').css({'background': 'transparent', 'color': textColor});
-      }
-  );
 
   // event handling the breadcrumb expansion
   $(document).on('click', '.expand-crumbs',
