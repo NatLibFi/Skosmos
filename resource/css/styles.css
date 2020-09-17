@@ -94,6 +94,7 @@ a:link,a:visited,a:active,a:hover,a:focus {
 
 :focus {
   outline: 2px solid black;
+  z-index: 1;
 }
 
 a:hover {
@@ -103,6 +104,8 @@ a:hover {
 
 #service-logo {
   max-width: 450px;
+  display: inline-block;
+  margin: 4px;
 }
 
 /* basics
@@ -175,15 +178,20 @@ ul {
   margin-bottom: 20px;
 }
 
+.topbar > a {
+  display: inline-block;
+  margin: 4px;
+  left: 2.5%;
+  position: sticky;
+}
+
 .topbar-white {
   background-color: #ffffff;
 }
 
 #service-name {
-  left: 30px;
-  line-height: 50px;
+  line-height: 42px;
   margin: 0;
-  position: absolute;
 }
 
 .topbar-white > #language, .topbar-white > #navigation {
@@ -195,7 +203,7 @@ ul {
   height: 50px;
   line-height: 70px;
   padding-left: 0;
-  padding-right: 2%;
+  padding-right: 2.5%;
   text-align: right;
   width: auto;
 }
@@ -203,12 +211,12 @@ ul {
 #language > .dropdown-menu {
   z-index: 9002;
   position: fixed;
-  padding-right: 2%;
+  padding-right: 2.5%;
   border-radius: 0;
   margin-top: 0;
   padding: 0;
   top: 45px;
-  right: 2%;
+  right: 2.5%;
 }
 
 #language > .dropdown-menu > li, #language > .dropdown-menu > li > a {
@@ -1500,7 +1508,6 @@ ul.nav-tabs > li {
   width: auto;
   background-color: white;
   display: block;
-  z-index: 1;
 }
 
 span.date-info {
@@ -1917,7 +1924,9 @@ body, .versal, h1, h2, h3, p, .versal-bold {
 @media (max-width: 700px) {
 
   .topbar > a {
-    display: none;
+    position: absolute;
+    left: 100%;
+    outline-offset: -2px;
   }
 
   .topbar {
@@ -1936,7 +1945,6 @@ body, .versal, h1, h2, h3, p, .versal-bold {
 
   #navigation > a, #language > a, #navi4 > span {
     font-weight: 500;
-    margin: 2px;
   }
 
   .frontpage #language {
@@ -1947,9 +1955,15 @@ body, .versal, h1, h2, h3, p, .versal-bold {
   }
 
   #service-logo {
-    height: 200px;
     position: absolute;
-    right: 3%;
+    left: 100%;
+    outline-offset: -2px;
+  }
+
+  #service-name {
+    left: 0;
+    padding-right: 4px;
+    padding-left: 4px;
   }
 
   .frontpage-spacing .header-float {
@@ -1990,10 +2004,6 @@ body, .versal, h1, h2, h3, p, .versal-bold {
 }
 
 @media (min-width: 640px) {
-  #service-logo {
-    display: inline;
-  }
-
   .right-box {
     display: inline;
   }
@@ -2038,11 +2048,6 @@ body, .versal, h1, h2, h3, p, .versal-bold {
 
   #navigation > a {
     margin: auto 10px;
-  }
-
-  #service-logo {
-    display: inline;
-    position: absolute;
   }
 
   .content > .feedback-box, .content > #about {
@@ -2105,10 +2110,6 @@ body, .versal, h1, h2, h3, p, .versal-bold {
 @media (min-width: 1260px) {
   .main-container, .headerbar, .topbar {
     width: 1190px;
-  }
-
-  #service-name {
-    left: 0 !important;
   }
 
   .frontpage-alert {
