@@ -1,7 +1,7 @@
 <div class="container">
   <div id="vocab-info">
     <div>
-      <h1>{% trans "Vocabulary information" %}</h1>
+      <h2>{% trans "Vocabulary information" %}</h2>
       <hr />
     </div>
     <div class="vocab-info-literals">
@@ -9,40 +9,40 @@
         {% for key, values in vocab.info(request.contentLang) %}
         {% set keytrans = key %}
         <div class="row">
-          <div class="property-label versal">{{ keytrans|trans|upper }}<div class="property-divider"></div></div>
+          <div class="property-label versal"><h3>{{ keytrans|trans|upper }}</h3><div class="property-divider"></div></div>
           <div class="property-value-column versal">
             {% for val in values %}
-                <div class="property-value-wrapper">
-                    {% if val.get('skosmos:vocab') %}
-                        <a href="{{ val.uri | link_url(val.get('skosmos:vocab').value,request.lang,'page',request.contentLang) }}">{{ val.get('skosmos:label') }}</a>
-                    {% elseif val.label %}
-                        <a href="{{ val.uri }}">
-                            {% if val.label(request.contentLang) %}{{ val.label(request.contentLang) }}
-                            {% else %}{{ val.label }}
-                            {% endif %}</a>
-                    {% elseif val matches '|^(https?://)|' %}<a href="{{ val }}">{{ val }}</a>
-                    {% elseif val matches '|<\\w*\\b[^>]*>|' %}{{ val|raw|nl2br }}
-                        {% else %}{{ val|nl2br }}
-                    {% endif %}
-                </div>
+            <div class="property-value-wrapper">
+              {% if val.get('skosmos:vocab') %}
+              <a href="{{ val.uri | link_url(val.get('skosmos:vocab').value,request.lang,'page',request.contentLang) }}">{{ val.get('skosmos:label') }}</a>
+              {% elseif val.label %}
+              <a href="{{ val.uri }}">
+                {% if val.label(request.contentLang) %}{{ val.label(request.contentLang) }}
+                {% else %}{{ val.label }}
+                {% endif %}
+              </a>
+              {% elseif val matches '|^(https?://)|' %}<a href="{{ val }}">{{ val }}</a>
+              {% elseif val matches '|<\\w*\\b[^>]*>|' %}{{ val|raw|nl2br }}
+              {% else %}{{ val|nl2br }}
+              {% endif %}
+            </div>
             {% endfor %}
           </div>
         </div>
         {% endfor %}
         <div class="row">
-          <div class="property-label versal">URI</div>
-          <div class="property-value-column versal"><span class="uri-input-box">{{ vocab.defaultConceptScheme }}</span></td>
+          <div class="property-label versal"><h3>URI</h3></div>
+          <div class="property-value-column versal"><span class="uri-input-box">{{ vocab.defaultConceptScheme }}</span></div>
         </div>
       </div>
     </div>
     {% if vocab.config.showStatistics %}
     <div>
-      <h2>{% trans "Resource counts by type" %}</h2>
+      <h3>{% trans "Resource counts by type" %}</h3>
       <table class="table" id="counts">
         <tr><th class="versal">{% trans "Type" %}</th><th class="versal">{% trans "Count" %}</th></tr>
-        <tr><td class="property-divider"></td></tr>
       </table>
-      <h2>{% trans "Term counts by language" %}</h2>
+      <h3>{% trans "Term counts by language" %}</h3>
       <table class="table" id="statistics">
       <tr>
         <th class="versal">{% trans "Concept language" %}</th>
@@ -50,11 +50,11 @@
         <th class="versal">{% trans "Alternate terms" %}</th>
         <th class="versal">{% trans "Hidden terms" %}</th>
       </tr>
-      <tr><td class="property-divider"></td></tr>
       </table>
     </div>
     {% endif %}
     {% if vocab.config.dataURLs %}
+    {% apply spaceless %}
     <div class="download-links">
       <span class="versal">{% trans %}Download this vocabulary:{% endtrans %}
         {% if 'application/rdf+xml' in vocab.config.dataURLs|keys %}
@@ -74,6 +74,7 @@
         {% endif %}
       </span>
     </div>
+    {% endapply %}
     {% endif %}
   </div>
 </div>

@@ -24,7 +24,7 @@ h1, .prefLabel, .prefLabelLang, .notation {
   font-weight: bold;
 }
 
-h2 {
+h2, h3 {
   font-family: 'Fira Sans', sans-serif;
   font-size: 16px;
 }
@@ -152,6 +152,19 @@ ul {
   margin-left: 5px;
   vertical-align: middle;
   width: 25px;
+}
+
+/* Generic screen reader class
+ * Code from https://webaim.org/techniques/css/invisiblecontent/
+ ***************************/
+
+.sr-only {
+  position:absolute;
+  left:-10000px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
 }
 
 /* topbar styles
@@ -643,7 +656,7 @@ span.xl-pref-label > img {
   width: 100% !important;
 }
 
-#vocabulary-list > div > h2, #vocabulary-list-wide > div > h2 {
+#vocabulary-list > div > h2, #vocabulary-list > div > h3, #vocabulary-list-wide > div > h2, #vocabulary-list-wide > div > h3 {
   margin-bottom: 0;
   margin-top: 0;
   padding: 15px 0 15px 10px;
@@ -651,30 +664,21 @@ span.xl-pref-label > img {
 
 .vocab-category {
   display: inline-block;
-  padding-left: 0;
   width: 100%;
 }
 
-.vocab-category > ul > li, .vocab-category > h2 {
+.vocab-category > h3 {
   display: inline-block;
-}
-
-.vocab-category > h2 {
   margin: 0 0 5px 0;
 }
 
-.vocab-category > ul > li {
-  display: block;
-}
-
 .vocab-category > ul {
-  display: inline-block;
   width: 72%;
   float: right;
   padding-left: 0;
 }
 
-.vocab-category > li > h2 {
+.vocab-category > li > h3 {
   margin-bottom: 5px;
   margin-top: 0;
 }
@@ -1065,6 +1069,10 @@ li.sub-group {
   margin-bottom: 15px;
 }
 
+.download-links a {
+  margin-left: 5px;
+}
+
 .count-type {
   padding-right: 20px;
 }
@@ -1093,8 +1101,20 @@ li.sub-group {
   right: 0;
 }
 
-.alert h2 {
+.alert-danger {
+  font-size: 18px;
+}
+
+.content .alert-danger p {
+  color: #fff;
+  font-weight: 500;
   margin: 5px 0 5px 0;
+  line-height: 1.1;
+}
+
+.search-result-listing .deprecated-alert {
+  margin-left: 10px;
+  color: #D95F8A;
 }
 
 .alert-replaced a {
@@ -1125,6 +1145,11 @@ li.sub-group {
   margin-bottom: 20px;
 }
 
+.concept-info h3 {
+  margin: 0;
+  line-height: 22.85px;
+}
+
 .deprecated-concept * {
   color: #888;
 }
@@ -1149,10 +1174,6 @@ li.sub-group {
   padding-left: 15px;
   padding-right: 15px;
   position: relative;
-}
-
-.logo-header {
-  padding-left: 18%;
 }
 
 .property-value-column > .row > .col-xs-5 > .versal {
@@ -1331,6 +1352,22 @@ tr.replaced-by > td > ul > li > a {
   padding-left: 0;
 }
 
+#vocab-info h2 {
+  font-size: 27px;
+  font-weight: 400;
+}
+
+#vocab-info h3 {
+  font-weight: 400;
+  display: initial;
+}
+
+#vocab-info > div > h3 {
+  font-weight: 500;
+  margin-bottom: 10px;
+  display: block;
+}
+
 #counts { max-width: 300px; }
 
 #statistics { max-width: 450px; }
@@ -1358,8 +1395,9 @@ tr.replaced-by > td > ul > li > a {
   width: 25px;
 }
 
-.pagination > li:last-child > a {
+.pagination > li:nth-last-child(2) > a, .pagination > li:last-child > a {
   width: auto;
+  min-width: 26px;
 }
 
 .pagination {
@@ -1371,7 +1409,7 @@ tr.replaced-by > td > ul > li > a {
   width: 310px;
 }
 
-.nav-tabs, #groups > a {
+.nav-tabs {
   background-color: #e0e4e7;
   border-bottom: none;
 }
@@ -1380,7 +1418,7 @@ ul.nav-tabs > li {
   margin-bottom: 0;
 }
 
-.nav-tabs > li > a, .nav-tabs > li > p, .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover {
+.sidebar-buttons .nav-tabs > li > a, .sidebar-buttons .nav-tabs > li > p, .sidebar-buttons .nav-tabs > li.active > a {
   background-color: #e6e9eb;
   border-radius: 0;
   border: 0;
@@ -1389,8 +1427,23 @@ ul.nav-tabs > li {
   text-align: center;
 }
 
+.nav-tabs > li:nth-of-type(even) > a {
+  background-color: #e0e4e7;
+}
+
+.nav-tabs > li:nth-of-type(odd) > a {
+  background-color: #e6e9eb;
+}
+
+.sidebar-buttons .nav-tabs > li.active > a {
+  background-color: #f6f7f8;
+}
+
+.sidebar-buttons .nav-tabs > li > a:hover {
+  background-color: white;
+}
+
 #limit {
-  margin-top: -1px;
   width: 33%;
 }
 
@@ -1402,9 +1455,6 @@ ul.nav-tabs > li {
   width: 34%;
 }
 
-#alpha > a {
-}
-
 .nav-four-wide > li {
   width: 28%;
 }
@@ -1413,32 +1463,18 @@ ul.nav-tabs > li {
   width: 16%;
 }
 
-.nav-tabs > li.active > a {
-  background-color: #f6f7f8;
-}
-
 #hierarchy-disabled > *, #hierarchy-disabled > *:hover {
   background-color: #B9C1C6;
   color: #74787A;
   cursor: default;
 }
 
-#changes > a {
-  background-color: #DEDFE0;
-}
-
 .nav-tabs > *:hover {
   background-color: #ffffff;
 }
 
-
-.change-list > span {
-  display: inline-block;
-  margin-top: 15px;
-}
-
-.change-list > span:first-of-type {
-  margin: 0;
+.change-list > h5 {
+  margin-bottom: 2px;
 }
 
 .content {
@@ -1709,7 +1745,7 @@ p.autocomplete-label {
  * https://code.google.com/p/chromium/issues/detail?id=336476
  ************************************/
 
-body, .versal, h1, h2, p, .versal-bold {
+body, .versal, h1, h2, h3, p, .versal-bold {
   -webkit-animation-delay: 0.1s;
   -webkit-animation-name: fontfix;
   -webkit-animation-duration: 0.1s;
@@ -1786,10 +1822,10 @@ body, .versal, h1, h2, p, .versal-bold {
 }
 
 @media (max-width: 340px) {
-  #vocab-info .vocab-info-literals > table > tbody > tr > th {
+  #vocab-info .vocab-info-literals .property-label {
     max-width: 120px;
   }
-  #vocab-info .vocab-info-literals > table > tbody > tr > td {
+  #vocab-info .vocab-info-literals .property-value-column {
     max-width: 180px;
   }
 }

@@ -97,6 +97,15 @@ $(function() { // DOCUMENT READY
       });
     });
 
+    var active_tab = $('li.active').attr('id');
+    if (active_tab == 'groups') {
+      $('#sidebar > h4').remove();
+      $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.groups_listing + '</h4>');
+    } else if (active_tab == 'hierarchy') {
+      $('#sidebar > h4').remove();
+      $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.hierarchy_listing + '</h4>');
+    }
+
     countAndSetOffset();
 
     hideCrumbs();
@@ -104,8 +113,16 @@ $(function() { // DOCUMENT READY
   });
 
   // if the hierarchy tab is active filling the jstree with data
-  if ($('#hierarchy').hasClass('active')) { invokeParentTree(getTreeConfiguration()); }
-  if ($('#groups').hasClass('active')) { invokeGroupTree(); }
+  if ($('#hierarchy').hasClass('active')) {
+    $('#sidebar > h4').remove();
+    invokeParentTree(getTreeConfiguration());
+    $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.hierarchical_listing + '</h4>');
+  }
+  if ($('#groups').hasClass('active')) {
+    $('#sidebar > h4').remove();
+    invokeGroupTree();
+    $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.groups_listing + '</h4>');
+  }
 
   var textColor = $('.search-parameter-highlight').css('color');
   countAndSetOffset();
@@ -384,8 +401,8 @@ $(function() { // DOCUMENT READY
         $('.active').removeClass('active');
         $('#changes').addClass('active');
         $('.sidebar-grey').empty().prepend(spinner);
-        var $pagination = $('.pagination');
-        if ($pagination) { $pagination.hide(); }
+        $('.pagination').hide();
+        $('#sidebar > h4.sr-only').hide();
         var targetUrl = event.target.href;
         $.ajax({
             url : targetUrl,
@@ -423,8 +440,10 @@ $(function() { // DOCUMENT READY
         $('.active').removeClass('active');
         $('#hier-trigger').parent().addClass('active');
         $('.pagination').hide();
+        $('#sidebar > h4.sr-only').hide();
         $content.append('<div class="sidebar-grey concept-hierarchy"></div>');
         invokeParentTree(getTreeConfiguration());
+        $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.hierarchy_listing + '</h4>');
         $('#hier-trigger').attr('href', '#');
         return false;
       }
@@ -444,13 +463,13 @@ $(function() { // DOCUMENT READY
         $('.active').removeClass('active');
         var $clicked = $(this);
         $clicked.parent().addClass('active');
-        var $pagination = $('.pagination');
-        if ($pagination) { $pagination.hide(); }
-        if ($('.changes-navi')) { $('.changes-navi').hide(); }
+        $('.pagination').hide();
+        $('#sidebar > h4.sr-only').hide();
         $('.sidebar-grey').remove().prepend(spinner);
         $('#sidebar').append('<div class="sidebar-grey"><div class="group-hierarchy"></div></div>');
         if (window.history.pushState) { window.history.pushState({}, null, encodeURI(event.target.href)); }
         invokeGroupTree();
+        $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.groups_listing + '</h4>');
         return false;
       }
   );
@@ -489,20 +508,20 @@ $(function() { // DOCUMENT READY
           alpha_complete = false;
           var $content = $('.sidebar-grey');
           $content.empty().prepend(spinner);
-          var targetUrl = event.target.href;
+          var targetUrl = event.currentTarget.href;
           $.ajax({
             url : targetUrl,
             success : function(data) {
               updateSidebar(data);
               $('.nav').scrollTop(0);
-              if (window.history.pushState) { window.history.pushState({}, null, encodeURI(event.target.href)); }
+              if (window.history.pushState) { window.history.pushState({}, null, encodeURI(event.currentTarget.href)); }
               updateTitle(data);
               // take the content language buttons from the response
               $('.header-float .dropdown-menu').empty().append($('.header-float .dropdown-menu', data).html());
             }
           });
         } else {
-          var selectedLetter = $(event.target).text().trim();
+          var selectedLetter = $(event.currentTarget).find("span:last-child").text().trim();
           if (document.getElementsByName(selectedLetter).length === 0) { return false; }
           var offset = $('li[name=' + selectedLetter + ']').offset().top - $('body').offset().top - 5;
           $('.nav').scrollTop(offset);
@@ -867,7 +886,7 @@ $(function() { // DOCUMENT READY
       alpha_complete = true;
       $('.alphabetical-search-results').append($loading);
       var parameters = $.param({'offset' : 250, 'clang': content_lang});
-      var letter = '/' + ($('.pagination > .active')[0] ? $('.pagination > .active > a')[0].innerHTML : $('.pagination > li > a')[0].innerHTML);
+      var letter = '/' + ($('.pagination > .active')[0] ? $('.pagination > .active > a > span:last-child')[0].innerHTML : $('.pagination > li > a > span:last-child')[0].innerHTML);
       $.ajax({
         url : vocab + '/' + lang + '/index' + letter,
         data : parameters,
@@ -885,7 +904,7 @@ $(function() { // DOCUMENT READY
   function changeListWaypointCallback() {
     $('.change-list').append($loading);
     var parameters = $.param({'offset' : changeOffset, 'clang': content_lang});
-    var lastdate = $('.change-list > span:last-of-type')[0].innerHTML;
+    var lastdate = $('.change-list > h5:last-of-type')[0].innerHTML;
     $.ajax({
       url : vocab + '/' + lang + '/new',
       data : parameters,
@@ -893,7 +912,7 @@ $(function() { // DOCUMENT READY
         $loading.detach();
         if ($(data).find('.change-list').length === 1) {
           $('.change-list').append($(data).find('.change-list')[0].innerHTML);
-          var $lastdate = $('.change-list > span:contains(' + lastdate + ')');
+          var $lastdate = $('.change-list > h5:contains(' + lastdate + ')');
           if ($lastdate.length === 2)
            $lastdate[1].remove();
           $('.change-list > p:last-of-type').remove();
@@ -1047,12 +1066,12 @@ $(function() { // DOCUMENT READY
    */
   var $replaced = $('.replaced-by a');
   if ($replaced.length > 0) {
-    var $replacedSpan = $('.replaced-by span');
-    var undoUppercasing = $replacedSpan.text().substr(0,1) + $replacedSpan.text().substr(1).toLowerCase();
+    var $replacedElem = $('.replaced-by h3');
+    var undoUppercasing = $replacedElem.text().substr(0,1) + $replacedElem.text().substr(1).toLowerCase();
     var html = ''
     for (var i = 0; i < $replaced.length; i++) {
         var replacedBy = '<a href="' + $replaced[i] + '">' + $replaced[i].innerHTML + '</a>';
-        html += '<h2 class="alert-replaced">' + undoUppercasing + ': ' + replacedBy + '</h2>';
+        html += '<p class="alert-replaced">' + undoUppercasing + ': ' + replacedBy + '</p>';
     }
     $('.alert-danger').append(html);
     $(document).on('click', '#groups',
