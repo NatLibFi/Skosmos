@@ -758,9 +758,9 @@ span.xl-pref-label > img {
 }
 
 .feedback-box {
-  float: left;
   border-top: 2px solid #394554;
   min-height: 140px;
+  margin: 0;
 }
 
 .feedback-box textarea, .feedback-box input, .feedback-box select, .feedback-box button, .feedback-box textarea:focus, .feedback-box input:focus, .feedback-box select:focus, .feedback-box button:focus {
@@ -820,7 +820,8 @@ span.xl-pref-label > img {
 }
 
 .about-content {
-  margin: 0 15px;
+  padding: 0 15px;
+  width: 100%;
 }
 
 .special-container {
@@ -829,9 +830,12 @@ span.xl-pref-label > img {
   position: absolute;
 }
 
+.about-extra-info {
+  width: 500px;
+}
+
 .credits {
   border-top: 2px solid #394554;
-  width: 500px;
 }
 
 /* sidebar styles
@@ -1482,6 +1486,7 @@ ul.nav-tabs > li {
 }
 
 .content {
+  width: min-content;
   margin-left: 350px;
 }
 
@@ -1772,7 +1777,7 @@ body, .versal, h1, h2, h3, p, .versal-bold {
     left: 10px;
   }
 
-  .content > .feedback-box, .content > #about, .content > .credits, .content > .version {
+  .content > .feedback-box, .content > #about, .content > .about-extra-info {
     margin-left: 120px;
     width: 500px;
   }
@@ -2174,7 +2179,7 @@ body, .versal, h1, h2, h3, p, .versal-bold {
     top: 0;
   }
 
-  .content > .feedback-box, .content > #about, .content > .credits {
+  .content > .feedback-box, .content > #about, .about-extra-info {
     width: 600px;
   }
 
