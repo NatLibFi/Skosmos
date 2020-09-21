@@ -180,7 +180,7 @@ ul {
 
 .topbar > a {
   display: inline-block;
-  margin: 4px;
+  margin-right: 10px;
   left: 2.5%;
   position: sticky;
 }
@@ -190,8 +190,8 @@ ul {
 }
 
 #service-name {
-  line-height: 42px;
-  margin: 0;
+  line-height: 50px;
+  margin: 0px 4px;
 }
 
 .topbar-white > #language, .topbar-white > #navigation {
@@ -1963,8 +1963,6 @@ body, .versal, h1, h2, h3, p, .versal-bold {
 
   #service-name {
     left: 0;
-    padding-right: 4px;
-    padding-left: 4px;
   }
 
   .frontpage-spacing .header-float {
