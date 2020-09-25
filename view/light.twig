@@ -32,10 +32,9 @@
   </div>
   {% endblock %}
   <div class="main-container{% if request.vocabid == '' or global_search %} frontpage{% if list_style %} {{ list_style }}{% endif %}{% endif %}">
-    {% if not request.vocabid == '' %}
+    {% if request.vocabid != '' and request.page != 'feedback'  %}
     <div id="sidebar">
     {% block sidebar %}
-      {% if request.vocabid != '' or request.page == 'feedback' or request.page == 'about' %}
       <div class="sidebar-buttons">
         {% set sidebarHeading = request.page != 'search' ? "Sidebar listing: assort and traverse vocabulary contents by a criterion" : "Sidebar listing: vocabulary search options" %}
         <h2 class="sr-only">{% trans sidebarHeading %}</h2>
@@ -160,7 +159,6 @@
         </form>
         {% endif %}
       </div>
-      {% endif %}
     {% endblock %}
     </div>
     {% endif %}

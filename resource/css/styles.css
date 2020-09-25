@@ -103,9 +103,7 @@ a:hover {
 }
 
 #service-logo {
-  max-width: 450px;
   display: inline-block;
-  margin: 4px;
 }
 
 /* basics
@@ -174,8 +172,24 @@ ul {
  ***************************/
 
 .topbar {
-  height: 50px;
+  display: flex;
+  padding: 0px 2.5%;
+  flex-wrap: wrap;
+  min-height: 50px;
   margin-bottom: 20px;
+}
+
+#topbar-service-helper {
+  display: inline-flex;
+  flex-grow: 1;
+}
+
+#topbar-language-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  align-self: end;
+  padding-bottom: 20px;
+  margin-bottom: -20px;
 }
 
 .topbar > a {
@@ -199,13 +213,9 @@ ul {
 }
 
 #language {
-  float: right;
-  height: 50px;
-  line-height: 70px;
-  padding-left: 0;
-  padding-right: 2.5%;
-  text-align: right;
-  width: auto;
+  display: inline-flex;
+  order: 2;
+  flex-wrap: wrap;
 }
 
 #language > .dropdown-menu {
@@ -237,18 +247,21 @@ ul {
 }
 
 #navigation {
-  float: right;
-  height: 50px;
-  line-height: 70px;
+  display: inline-flex;
+  order: 1;
   max-width: 530px;
   min-width: 0;
-  overflow: hidden;
-  padding-right: 25px;
   width: auto;
+  flex-wrap: wrap;
 }
 
-#navigation *, #language * {
+#navigation .navigation-font, #language * {
   margin: auto 4px;
+  min-width: max-content;
+}
+
+#navigation .navigation-font {
+  margin: auto 8px;
 }
 
 #language-en {
@@ -272,10 +285,10 @@ ul {
  *************************/
 
 .header-row {
-/* copied from bootstrap's grid-framework.less:18
- */  
-  margin-right: -15px;
-  margin-left: -15px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  min-width: 100%;
 }
 
 #lang-dropdown-toggle .caret, .multiselect span > .caret {
@@ -298,6 +311,16 @@ ul {
 
 .header-float > .navbar-form {
   box-shadow: none;
+  display: flex;
+}
+
+.header-float > .navbar-form > .input-group {
+  display: inline-flex;
+}
+
+.header-float > .navbar-form > .input-group > .input-group-btn {
+  display: inline-flex;
+  width: initial;
 }
 
 ul.dropdown-menu > li:last-child > input {
@@ -344,26 +367,31 @@ ul.dropdown-menu > li:last-child > input {
   margin: 0 auto;
   position: relative;
   width: 95%;
-  min-height: 65px;
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.headerbar.frontpage-spacing {
+  margin-bottom: 25px;
 }
 
 .headerbar-coloured {
   position: absolute;
   background-color: #00748F;
   width: 100%;
-  margin: 0 0 0 15px;
   height: 50px;
 }
 
 .header-left {
-  float: left;
-  margin: 0 0 0 15px;
+  margin: 0 15px 0 15px;
+  display: inline-flex;
+  flex-grow: 1;
 }
 
 .header-left > h1 {
   background-color: #00748F;
   line-height: 50px;
-  margin: 0 0 0 15px;
+  margin: 0;
   opacity: 0.99;
   overflow: hidden;
 }
@@ -374,12 +402,13 @@ ul.dropdown-menu > li:last-child > input {
 }
 
 .header-float {
-  float: right;
-  margin: 5px 15px 19px 5px;
+  display: inline-flex;
+  align-items: center;
 }
-  
+
 .frontpage-spacing > .header-float {
   margin: 0;
+  margin-left: auto;
 }
 
 .headerbar-coloured > .header-float > p {
@@ -392,8 +421,6 @@ ul.dropdown-menu > li:last-child > input {
 
 .navbar-form {
   border: 0;
-  display: block;
-  float: right;
   margin: 0;
   padding: 0;
 }
@@ -433,7 +460,6 @@ ul.dropdown-menu > li:last-child > input {
   background-color: #3c535b;
   opacity: 0.95;
   height: 40px;
-  float: left;
   text-align: right;
   line-height: 40px;
 }
@@ -645,7 +671,9 @@ span.xl-pref-label > img {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: 100%;
+  min-width: 100%;
+  margin: 0;
+  word-wrap: break-word;
 }
 
 .column {
@@ -930,14 +958,7 @@ span.xl-pref-label > img {
 }
 
 .concept-main > .row > .property-label-pref {
-  float: unset;
-  display: table-cell;
-  vertical-align: middle;
-}
-
-.concept-main > .row > .property-label-pref + div {
-  display: table-cell;
-  vertical-align: middle;
+  align-self: center;
 }
 
 .preflabel-spacer {
@@ -1151,6 +1172,8 @@ li.sub-group {
 .concept-info {
   background-color: #fff;
   margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .concept-info h3 {
@@ -1169,19 +1192,17 @@ li.sub-group {
 }
 
 .row > .property-label {
-  float: left;
-  padding-left: 15px;
-  padding-right: 15px;
-  position: relative;
   width: 225px;
+  word-break: break-word;
 }
 
 .row > .property-value-column {
-  display: inline-block;
   width: calc(100% - 225px);
-  padding-left: 15px;
-  padding-right: 15px;
-  position: relative;
+  padding-bottom: 5px;
+}
+
+.property-value-column + div {
+  width: 100%;
 }
 
 .property-value-column > .row > .col-xs-5 > .versal {
@@ -1195,17 +1216,18 @@ li.sub-group {
 .concept-appendix {
   background-color: #edf0f2;
   padding: 15px;
+  width: 100%;
 }
 
 .concept-main {
-  margin: 0 15px;
-  padding: 15px 0;
+  padding: 15px;
 }
 
 .appendix-vocab-label {
   font-family: 'Fira Sans', sans-serif;
   font-size: 12px;
   line-height: 21px;
+  padding-left: 15px;
 }
 
 .hidden-breadcrumb, .hidden-path, .hidden-propval {
@@ -1224,8 +1246,6 @@ li.sub-group {
 .crumb-path {
   float:left;
   width: 100%;
-  padding-left: 15px;
-  padding-right: 15px;
 }
 
 .foundby {
@@ -1241,29 +1261,34 @@ li.sub-group {
   padding-top: 5px;
 }
 
-.concept-main > .row > .property-value-column > .property-value-wrapper {
+.concept-main > .row > .property-value-column {
   border-bottom: 2px solid #d4edeb;
-  padding-bottom: 5px;
 }
 
-.concept-main > .row:last-child > .property-value-column {
+.concept-main > .row:last-child > .property-value-column, .concept-main > .row > .property-label-pref + div, .concept-appendix .property-value-column {
   border-bottom: 0;
+  padding-bottom: 0;
 }
 
-.other-languages > .col-xs-6.versal.replaced {
-  padding-right: 0;
+.row > div {
+  padding: 0;
+  word-break: break-word;
 }
 
-.other-languages.first-of-language > .col-xs-6.versal-pref {
-  padding-right: 0;
+.other-languages.first-of-language > div + div {
+  padding-left: 15px;
 }
 
 .other-languages > td:last-of-type {
   vertical-align: top;
 }
 
-.vocab-info-literals > div.table > .row {
+.vocab-info-literals > div.table > .row:nth-child(1) {
   padding-top: 15px;
+}
+
+.vocab-info-literals > div.table > .row {
+  padding-top: 10px;
 }
 
 #vocab-info table > tbody > tr.other-languages > td {
@@ -1276,11 +1301,6 @@ li.sub-group {
 
 .concept-main .versal-pref {
   font-weight: 500;
-}
-
-.property {
-  display: block;
-  width: 100%;
 }
 
 .property-values {
@@ -1350,10 +1370,10 @@ tr.replaced-by > td > ul > li > a {
 }
 
 .property-divider {
-  border-bottom: 2px solid #666666;
-  position: absolute;
+  border-top: 2px solid #666666;
+  position: sticky;
   width: 95%;
-  bottom: -5px;
+  top: 100%;
 }
 
 #vocab-info .table > tbody > tr > th {
@@ -1368,12 +1388,17 @@ tr.replaced-by > td > ul > li > a {
 #vocab-info h3 {
   font-weight: 400;
   display: initial;
+  padding-right: 10px;
 }
 
 #vocab-info > div > h3 {
   font-weight: 500;
   margin-bottom: 10px;
   display: block;
+}
+
+#vocab-info .property-value-wrapper {
+  padding: 0px 8px;
 }
 
 #counts { max-width: 300px; }
@@ -1486,8 +1511,12 @@ ul.nav-tabs > li {
 }
 
 .content {
-  width: min-content;
   margin-left: 350px;
+  width: -moz-fit-content;
+}
+
+#sidebar + main .content {
+  max-width: calc(100% - 350px);
 }
 
 .wide-content {
@@ -1586,6 +1615,10 @@ span.date-info {
   min-width: calc(100% + 68px);
 }
 
+.header-float .twitter-typeahead {
+  display: inline-flex !important;
+}
+
 .tt-dropdown-menu.mCustomScrollbar {
   border-right: 0;
 }
@@ -1626,10 +1659,6 @@ span.date-info {
 .twitter-typeahead > .form-control {
   border-radius: 0;
   height: 30px;
-}
-
-.navbar-form > .input-group > .input-group-btn {
-  vertical-align: top;
 }
 
 .tt-suggestion p {
@@ -1790,6 +1819,11 @@ body, .versal, h1, h2, h3, p, .versal-bold {
     margin-left: 300px;
   }
 
+  #sidebar + main .content {
+    max-width: calc(100% - 300px);
+    display: inline;
+  }
+
   .property-divider {
     width: 17%;
   }
@@ -1862,10 +1896,16 @@ body, .versal, h1, h2, h3, p, .versal-bold {
   .row > .property-value-column, .row > .property-value-column  {
     margin: 5px 0;
   }
-  
+  #vocab-info .property-value-wrapper {
+    padding: 0;
+  }
+
+  .concept-main > .row, .concept-appendix > .row {
+    padding-top: 0px;
+  }
+
   .row:nth-of-type(2) > .property-value-column {
     margin: 2px 0 0 0;
-    height: 30px;
     line-height: 30px;
   }
   
@@ -1882,10 +1922,6 @@ body, .versal, h1, h2, h3, p, .versal-bold {
 }
 
 @media (max-width: 640px) {
-
-  .header-float {
-    margin-left: 15px;
-  }
 
   .welcome-box, .right-box {
     display: none;
@@ -1925,13 +1961,12 @@ body, .versal, h1, h2, h3, p, .versal-bold {
 @media (max-width: 700px) {
 
   .topbar > a {
-    position: absolute;
-    left: 100%;
     outline-offset: -2px;
   }
 
   .topbar {
     position: relative;
+    height: 100%;
   }
 
   #navi1, #navi2, #navi3, #navi4 {
@@ -1950,14 +1985,11 @@ body, .versal, h1, h2, h3, p, .versal-bold {
 
   .frontpage #language {
     padding-right: 0;
-    position: absolute;
     right: 2.5%;
     text-align: left;
   }
 
   #service-logo {
-    position: absolute;
-    left: 100%;
     outline-offset: -2px;
   }
 
@@ -1967,7 +1999,10 @@ body, .versal, h1, h2, h3, p, .versal-bold {
 
   .frontpage-spacing .header-float {
     float: left;
-    width: 100%;
+  }
+
+  .headerbar.frontpage-spacing {
+    margin-bottom: 15px;
   }
 
   .main-container.frontpage {
@@ -1977,27 +2012,14 @@ body, .versal, h1, h2, h3, p, .versal-bold {
 
   #navigation {
     padding-right: 0;
-    position: absolute;
   }
 
   input#search-field {
     max-width: none;
   }
 
-  .btn-group, .input-group, #search-field {
-    width: 100%;
-  }
-
-  .header-float > .btn-group > .btn {
-    width: 100%;
-  }
-
   .frontpage-spacing > .header-float > .navbar-form {
     width: 100%;
-  }
-  
-  .frontpage-spacing > .header-float > .navbar-form > .input-group {
-    margin-top: 5px;
   }
 
 }
@@ -2045,8 +2067,8 @@ body, .versal, h1, h2, h3, p, .versal-bold {
     width: 234px;
   }
 
-  #navigation > a {
-    margin: auto 10px;
+  #navigation > span {
+    margin: auto 0;
   }
 
   .content > .feedback-box, .content > #about {
@@ -2055,6 +2077,10 @@ body, .versal, h1, h2, h3, p, .versal-bold {
 
   .content {
     margin-left: 330px;
+  }
+
+  #sidebar + main .content {
+    max-width: calc(100% - 330px);
   }
 
   #sidebar {
@@ -2187,6 +2213,10 @@ body, .versal, h1, h2, h3, p, .versal-bold {
 
   .content {
     margin-left: 425px;
+  }
+
+  #sidebar + main .content {
+    max-width: calc(100% - 425px);
   }
 
   input#search-field {
