@@ -182,14 +182,16 @@ ul {
 #topbar-service-helper {
   display: inline-flex;
   flex-grow: 1;
+  margin-bottom: -10px;
 }
 
 #topbar-language-navigation {
   display: flex;
   flex-wrap: wrap;
-  align-self: end;
-  padding-bottom: 20px;
-  margin-bottom: -20px;
+  position: relative;
+  margin-top: 20px;
+  margin-bottom: -15px;
+  align-self: center;
 }
 
 .topbar > a {
@@ -216,6 +218,24 @@ ul {
   display: inline-flex;
   order: 2;
   flex-wrap: wrap;
+  padding-bottom: 10px;
+  padding-top: 8px;
+  position: relative;
+  margin-top: -10px;
+}
+
+.topbar:after {
+  content: '';
+  display: block;
+  width: 100%;
+  padding-bottom: 5px;
+}
+
+#topbar-language-navigation:before {
+  content: '';
+  display: block;
+  width: 100%;
+  padding-bottom: 5px;
 }
 
 #language > .dropdown-menu {
@@ -238,7 +258,6 @@ ul {
   border: none;
   border-radius: 0;
   color: #394554;
-  margin-top: -3px;
   padding: 0;
 }
 
@@ -253,6 +272,10 @@ ul {
   min-width: 0;
   width: auto;
   flex-wrap: wrap;
+  padding: 10px 0px;
+  padding-top: 8px;
+  position: relative;
+  margin-top: -10px;
 }
 
 #navigation .navigation-font, #language * {
@@ -1881,10 +1904,6 @@ body, .versal, h1, h2, h3, p, .versal-bold {
 
 @media (max-width: 550px) {
 
-  #navigation {
-    left: 3.5%;
-  }
-
   .topbar.frontpage > a {
     display: inline;
   }
@@ -1974,19 +1993,8 @@ body, .versal, h1, h2, h3, p, .versal-bold {
     padding-left: 0;
   }
 
-  #navigation {
-    left: 2.5%;
-    width: auto;
-  }
-
   #navigation > a, #language > a, #navi4 > span {
     font-weight: 500;
-  }
-
-  .frontpage #language {
-    padding-right: 0;
-    right: 2.5%;
-    text-align: left;
   }
 
   #service-logo {
