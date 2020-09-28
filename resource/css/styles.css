@@ -182,16 +182,22 @@ ul {
 #topbar-service-helper {
   display: inline-flex;
   flex-grow: 1;
+  margin-bottom: -23px;
+}
+
+#topbar-language-navigation:before {
+  content: '';
+  display: flex;
+  width: 100%;
+  align-self: start;
   margin-bottom: -10px;
+  margin-top: 26px;
 }
 
 #topbar-language-navigation {
   display: flex;
   flex-wrap: wrap;
-  position: relative;
-  margin-top: 20px;
-  margin-bottom: -15px;
-  align-self: center;
+  align-self: end;
 }
 
 .topbar > a {
@@ -218,24 +224,23 @@ ul {
   display: inline-flex;
   order: 2;
   flex-wrap: wrap;
-  padding-bottom: 10px;
-  padding-top: 8px;
-  position: relative;
-  margin-top: -10px;
+  align-content: end;
+  margin-top: 5px;
+  margin-bottom: 2px;
+}
+
+#language:after {
+  display: block;
+  content: "";
+  margin-top: 5px;
 }
 
 .topbar:after {
   content: '';
   display: block;
   width: 100%;
-  padding-bottom: 5px;
-}
-
-#topbar-language-navigation:before {
-  content: '';
-  display: block;
-  width: 100%;
-  padding-bottom: 5px;
+  margin-top: -10px;
+  height: 5px;
 }
 
 #language > .dropdown-menu {
@@ -272,10 +277,9 @@ ul {
   min-width: 0;
   width: auto;
   flex-wrap: wrap;
-  padding: 10px 0px;
-  padding-top: 8px;
-  position: relative;
-  margin-top: -10px;
+  align-content: end;
+  margin-top: 5px;
+  margin-bottom: 2px;
 }
 
 #navigation .navigation-font, #language * {
@@ -298,6 +302,7 @@ ul {
 
 #navi4 {
   cursor: default;
+  align-self: center;
 }
 
 #navi4 > span {
@@ -402,7 +407,7 @@ ul.dropdown-menu > li:last-child > input {
   position: absolute;
   background-color: #00748F;
   width: 100%;
-  height: 50px;
+  height: 100%;
 }
 
 .header-left {
@@ -1984,7 +1989,6 @@ body, .versal, h1, h2, h3, p, .versal-bold {
   }
 
   .topbar {
-    position: relative;
     height: 100%;
   }
 
