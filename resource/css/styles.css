@@ -173,9 +173,10 @@ ul {
 
 .topbar {
   display: flex;
-  padding: 0px 2.5%;
+  width: 95%;
   flex-wrap: wrap;
   min-height: 50px;
+  margin: auto;
   margin-bottom: 20px;
 }
 
@@ -246,13 +247,9 @@ ul {
 
 #language > .dropdown-menu {
   z-index: 9002;
-  position: fixed;
-  padding-right: 2.5%;
   border-radius: 0;
-  margin-top: 0;
   padding: 0;
-  top: 45px;
-  right: 2.5%;
+  min-width: 160px;
 }
 
 #language > .dropdown-menu > li, #language > .dropdown-menu > li > a {
