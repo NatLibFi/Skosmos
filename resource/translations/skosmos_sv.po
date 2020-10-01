@@ -782,3 +782,45 @@ msgstr "Tillgängliga tesaurusar och ontologier"
 
 msgid "Search from selected vocabularies"
 msgstr "Sök i utvalda vokabulärer"
+
+msgid "Assort vocabulary concepts alphabetically"
+msgstr "Ordna begrepp alfabetiskt"
+
+msgid "Assort vocabulary concepts and groupings hierarchically"
+msgstr "Ordna begrepp och grupper enligt hierarkin"
+
+msgid "Assort vocabulary concepts by newest additions"
+msgstr "Ordna begrepp enligt de senaste tilläggen"
+
+msgid "Assort vocabulary concepts hierarchically"
+msgstr "Ordna begrepp enligt hierarkin"
+
+msgid "Choose alphabetical listing letter"
+msgstr "Välj en bokstav för alfabetisk lista"
+
+msgid "Concept information"
+msgstr "Begreppsinformation"
+
+msgid "Hierarchical listing of vocabulary concepts"
+msgstr "Hierarkisk lista över begrepp"
+
+msgid "Hierarchical listing of vocabulary concepts and groupings"
+msgstr "Hierarkisk lista av begrepp och grupper"
+
+msgid "Listing vocabulary concepts alphabetically"
+msgstr "Lista begrepp alfabetiskt"
+
+msgid "Listing vocabulary concepts by newest additions"
+msgstr "Lista begrepp enligt de senaste tilläggen"
+
+msgid "Prefer using"
+msgstr "Använd termen"
+
+msgid "Search options tab"
+msgstr "Flik för sökval"
+
+msgid "Search results"
+msgstr "Sökresultat"
+
+msgid "Sidebar listing: assort and traverse vocabulary contents by a criteria"
+msgstr "Sidofältlista: ordna och bläddra begrepp efter kriterier"

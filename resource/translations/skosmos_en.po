@@ -785,3 +785,45 @@ msgstr "Available vocabularies and ontologies"
 
 msgid "Search from selected vocabularies"
 msgstr "Search from selected vocabularies"
+
+msgid "Assort vocabulary concepts alphabetically"
+msgstr "Assort vocabulary concepts alphabetically"
+
+msgid "Assort vocabulary concepts and groupings hierarchically"
+msgstr "Assort vocabulary concepts and groupings hierarchically"
+
+msgid "Assort vocabulary concepts by newest additions"
+msgstr "Assort vocabulary concepts by newest additions"
+
+msgid "Assort vocabulary concepts hierarchically"
+msgstr "Assort vocabulary concepts hierarchically"
+
+msgid "Choose alphabetical listing letter"
+msgstr "Choose alphabetical listing letter"
+
+msgid "Concept information"
+msgstr "Concept information"
+
+msgid "Hierarchical listing of vocabulary concepts"
+msgstr "Hierarchical listing of vocabulary concepts"
+
+msgid "Hierarchical listing of vocabulary concepts and groupings"
+msgstr "Hierarchical listing of vocabulary concepts and groupings"
+
+msgid "Listing vocabulary concepts alphabetically"
+msgstr "Listing vocabulary concepts alphabetically"
+
+msgid "Listing vocabulary concepts by newest additions"
+msgstr "Listing vocabulary concepts by newest additions"
+
+msgid "Prefer using"
+msgstr "Prefer using"
+
+msgid "Search options tab"
+msgstr "Search options tab"
+
+msgid "Search results"
+msgstr "Search results"
+
+msgid "Sidebar listing: assort and traverse vocabulary contents by a criteria"
+msgstr "Sidebar listing: assort and traverse vocabulary contents by a criteria"
