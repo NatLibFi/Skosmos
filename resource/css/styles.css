@@ -1549,7 +1549,6 @@ ul.nav-tabs > li {
 
 .content {
   margin-left: 350px;
-  width: -moz-fit-content;
 }
 
 #sidebar + main .content {
