@@ -89,12 +89,16 @@ a, a.versal, .jstree-node > .jstree-anchor {
 
 a:link,a:visited,a:active,a:hover,a:focus {
   text-decoration: none;
-  outline-offset: 2px;
+  outline-offset: 1px;
 }
 
 :focus {
-  outline: 2px solid black;
+  outline: 2px dotted #474b4f;
   z-index: 1;
+}
+
+#maincontent:focus {
+  outline: none;
 }
 
 a:hover {
