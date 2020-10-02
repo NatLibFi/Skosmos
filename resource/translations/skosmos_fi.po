@@ -786,16 +786,16 @@ msgid "Search from selected vocabularies"
 msgstr "Hae valituista sanastoista"
 
 msgid "Assort vocabulary concepts alphabetically"
-msgstr "Lajittele käsitteet aakkosittain"
+msgstr "Listaa käsitteet aakkosittain"
 
 msgid "Assort vocabulary concepts and groupings hierarchically"
-msgstr "Lajittele käsitteet ja ryhmät hierarkian mukaan"
+msgstr "Listaa käsitteet ja ryhmät hierarkian mukaan"
 
 msgid "Assort vocabulary concepts by newest additions"
-msgstr "Lajittele käsitteet uusimpien lisättyjen mukaan"
+msgstr "Listaa käsitteet uusimpien lisättyjen mukaan"
 
 msgid "Assort vocabulary concepts hierarchically"
-msgstr "Lajittele käsitteet hierarkian mukaan"
+msgstr "Listaa käsitteet hierarkian mukaan"
 
 msgid "Choose alphabetical listing letter"
 msgstr "Valitse aakkosellisen listan kirjain"

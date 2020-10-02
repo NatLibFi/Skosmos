@@ -786,17 +786,17 @@ msgstr "Available vocabularies and ontologies"
 msgid "Search from selected vocabularies"
 msgstr "Search from selected vocabularies"
 
-msgid "Assort vocabulary concepts alphabetically"
-msgstr "Assort vocabulary concepts alphabetically"
+msgid "List vocabulary concepts alphabetically"
+msgstr "List vocabulary concepts alphabetically"
 
-msgid "Assort vocabulary concepts and groupings hierarchically"
-msgstr "Assort vocabulary concepts and groupings hierarchically"
+msgid "List vocabulary concepts and groupings hierarchically"
+msgstr "List vocabulary concepts and groupings hierarchically"
 
-msgid "Assort vocabulary concepts by newest additions"
-msgstr "Assort vocabulary concepts by newest additions"
+msgid "List vocabulary concepts by newest additions"
+msgstr "List vocabulary concepts by newest additions"
 
-msgid "Assort vocabulary concepts hierarchically"
-msgstr "Assort vocabulary concepts hierarchically"
+msgid "List vocabulary concepts hierarchically"
+msgstr "List vocabulary concepts hierarchically"
 
 msgid "Choose alphabetical listing letter"
 msgstr "Choose alphabetical listing letter"

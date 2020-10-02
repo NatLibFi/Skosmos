@@ -783,17 +783,17 @@ msgstr "Tillgängliga tesaurusar och ontologier"
 msgid "Search from selected vocabularies"
 msgstr "Sök i utvalda vokabulärer"
 
-msgid "Assort vocabulary concepts alphabetically"
-msgstr "Ordna begrepp alfabetiskt"
+msgid "List vocabulary concepts alphabetically"
+msgstr "Lista begrepp alfabetiskt"
 
-msgid "Assort vocabulary concepts and groupings hierarchically"
-msgstr "Ordna begrepp och grupper enligt hierarkin"
+msgid "List vocabulary concepts and groupings hierarchically"
+msgstr "Lista begrepp och grupper enligt hierarkin"
 
-msgid "Assort vocabulary concepts by newest additions"
-msgstr "Ordna begrepp enligt de senaste tilläggen"
+msgid "List vocabulary concepts by newest additions"
+msgstr "Lista begrepp enligt de senaste tilläggen"
 
-msgid "Assort vocabulary concepts hierarchically"
-msgstr "Ordna begrepp enligt hierarkin"
+msgid "List vocabulary concepts hierarchically"
+msgstr "Lista begrepp enligt hierarkin"
 
 msgid "Choose alphabetical listing letter"
 msgstr "Välj en bokstav för alfabetisk lista"
