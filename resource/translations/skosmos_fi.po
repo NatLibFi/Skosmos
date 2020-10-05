@@ -824,5 +824,5 @@ msgstr "Hakuvalintojen välilehti"
 msgid "Search results"
 msgstr "Hakutulokset"
 
-msgid "Sidebar listing: list and traverse vocabulary contents by a criteria"
+msgid "Sidebar listing: list and traverse vocabulary contents by a criterion"
 msgstr "Sivupalkin lista: listaa ja selaa käsitteitä eri kriteerien mukaan"
