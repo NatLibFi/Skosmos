@@ -344,13 +344,13 @@ $(function() { // DOCUMENT READY
         var $content = $('.content').empty().append($delayedSpinner.hide());
         var loading = delaySpinner();
         $.ajax({
-            url : event.target.href,
+            url : event.currentTarget.href,
             complete: function() { clearTimeout(loading); },
             success : function(data) {
-              if (window.history.pushState) { window.history.pushState({}, null, event.target.href); }
+              if (window.history.pushState) { window.history.pushState({}, null, event.currentTarget.href); }
               $content.empty().append($('.content', data).html());
               initHierarchyQtip();
-              $('#hier-trigger').attr('href', event.target.href);
+              $('#hier-trigger').attr('href', event.currentTarget.href);
               updateJsonLD(data);
               updateTitle(data);
               updateTopbarLang(data);
@@ -544,13 +544,13 @@ $(function() { // DOCUMENT READY
     position: { my: 'top left', at: 'bottom center' },
     style: { classes: 'qtip-tipsy qtip-skosmos' }
   };
-  
+
   $('#navi4').qtip(qtip_skosmos);
 
   $('.property-click').qtip(qtip_skosmos);
 
   $('.redirected-vocab-id').qtip(qtip_skosmos);
-  
+
   $('.reified-property-value').each(function() {
     $(this).qtip({
       content: $(this).next('.reified-tooltip'),
