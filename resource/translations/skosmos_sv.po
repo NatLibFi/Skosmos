@@ -822,5 +822,5 @@ msgstr "Flik för sökval"
 msgid "Search results"
 msgstr "Sökresultat"
 
-msgid "Sidebar listing: assort and traverse vocabulary contents by a criteria"
+msgid "Sidebar listing: list and traverse vocabulary contents by a criteria"
 msgstr "Sidofältlista: ordna och bläddra begrepp efter kriterier"
