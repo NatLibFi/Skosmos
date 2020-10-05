@@ -784,3 +784,45 @@ msgstr "Sanastot ja ontologiat"
 
 msgid "Search from selected vocabularies"
 msgstr "Hae valituista sanastoista"
+
+msgid "Assort vocabulary concepts alphabetically"
+msgstr "Listaa käsitteet aakkosittain"
+
+msgid "Assort vocabulary concepts and groupings hierarchically"
+msgstr "Listaa käsitteet ja ryhmät hierarkian mukaan"
+
+msgid "Assort vocabulary concepts by newest additions"
+msgstr "Listaa käsitteet uusimpien lisättyjen mukaan"
+
+msgid "Assort vocabulary concepts hierarchically"
+msgstr "Listaa käsitteet hierarkian mukaan"
+
+msgid "Choose alphabetical listing letter"
+msgstr "Valitse aakkosellisen listan kirjain"
+
+msgid "Concept information"
+msgstr "Käsitteen tiedot"
+
+msgid "Hierarchical listing of vocabulary concepts"
+msgstr "Hierarkian mukainen lista käsitteistä"
+
+msgid "Hierarchical listing of vocabulary concepts and groupings"
+msgstr "Hierarkian mukainen lista käsitteistä ja ryhmistä"
+
+msgid "Listing vocabulary concepts alphabetically"
+msgstr "Listaa käsitteet aakkosittain"
+
+msgid "Listing vocabulary concepts by newest additions"
+msgstr "Listaa käsitteet uusimpien lisäysten mukaan"
+
+msgid "Prefer using"
+msgstr "Käytä termiä"
+
+msgid "Search options tab"
+msgstr "Hakuvalintojen välilehti"
+
+msgid "Search results"
+msgstr "Hakutulokset"
+
+msgid "Sidebar listing: assort and traverse vocabulary contents by a criteria"
+msgstr "Sivupalkin lista: lajittele ja selaa käsitteitä eri kriteerien mukaan"
