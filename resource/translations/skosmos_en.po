@@ -825,5 +825,5 @@ msgstr "Search options tab"
 msgid "Search results"
 msgstr "Search results"
 
-msgid "Sidebar listing: assort and traverse vocabulary contents by a criteria"
-msgstr "Sidebar listing: assort and traverse vocabulary contents by a criteria"
+msgid "Sidebar listing: list and traverse vocabulary contents by a criterion"
+msgstr "Sidebar listing: list and traverse vocabulary contents by a criterion"

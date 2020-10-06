@@ -36,16 +36,16 @@
     <div id="sidebar">
     {% block sidebar %}
       <div class="sidebar-buttons">
-        {% set sidebarHeading = request.page != 'search' ? "Sidebar listing: assort and traverse vocabulary contents by a criterion" : "Sidebar listing: vocabulary search options" %}
+        {% set sidebarHeading = request.page != 'search' ? "Sidebar listing: list and traverse vocabulary contents by a criterion" : "Sidebar listing: vocabulary search options" %}
         <h2 class="sr-only">{% trans sidebarHeading %}</h2>
         <ul class="nav nav-tabs{% if vocab.config.showChangeList and vocab.config.groupClassURI and vocab.config.showAlphabeticalIndex %} nav-four-wide{% endif %}">
         {% if request.page != 'search' %}
           {% if request.vocab.config.showAlphabeticalIndex %}
-          <h3 class="sr-only">{% trans "Assort vocabulary concepts alphabetically" %}</h3>
+          <h3 class="sr-only">{% trans "List vocabulary concepts alphabetically" %}</h3>
           <li id="alpha"{% if search_results|length != 1 or (term and search_results|length == 1) %} class ="active"{% endif %}><a href="{{ request.vocabid }}/{{ request.lang }}/index{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% if vocab.config.showChangeList and vocab.config.groupClassURI %}{% trans'A-Z'%}{% else %}{% trans "Alpha-nav" %}{% endif %}</a></li>
           {% endif %}
           {% set disabledHierarchy = not vocab.config.showHierarchy and not search_results|length == 1 %}
-          <h3 class="sr-only">{% trans "Assort vocabulary concepts hierarchically" %}</h3>
+          <h3 class="sr-only">{% trans "List vocabulary concepts hierarchically" %}</h3>
           <li id="hierarchy
             {%- if disabledHierarchy %}-disabled{% endif -%}
             "
@@ -57,11 +57,11 @@
             </a>
           </li>
           {% if vocab.config.groupClassURI %}
-          <h3 class="sr-only">{% trans "Assort vocabulary concepts and groupings hierarchically" %}</h3>
+          <h3 class="sr-only">{% trans "List vocabulary concepts and groupings hierarchically" %}</h3>
           <li id="groups"><a href="{{ request.vocabid }}/{{ request.lang }}/groups{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Group-nav" %}</a></li>
           {% endif %}
           {% if vocab.config.showChangeList %}
-            <h3 class="sr-only">{% trans "Assort vocabulary concepts by newest additions" %}</h3>
+            <h3 class="sr-only">{% trans "List vocabulary concepts by newest additions" %}</h3>
             <li id="changes"><a href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Changes-nav" %}</a></li>
           {% endif %}
         {% else %}
