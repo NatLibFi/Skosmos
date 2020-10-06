@@ -1450,7 +1450,7 @@ tr.replaced-by > td > ul > li > a {
   padding: 0;
 }
 
-.pagination > li > a, .pagination > li > a:hover, #sidebar > .pagination > .active > a, .pagination > li > span {
+.pagination > li > a, .pagination > li > a:hover, #sidebar > .pagination > li > a:focus, #sidebar > .pagination > .active > a, .pagination > li > span {
   background-color: transparent;
   color: #00748f;
   border: 0;
