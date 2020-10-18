@@ -427,6 +427,18 @@ msgstr "Muunkieliset termit"
 msgid "from all"
 msgstr "kaikista sanastoista"
 
+msgid "geo:lat"
+msgstr "Leveysaste"
+
+msgid "geo:lat_help"
+msgstr "Pohjoinen WGS 84 -koordinaatti."
+
+msgid "geo:long"
+msgstr "Pituusaste"
+
+msgid "geo:long_help"
+msgstr "Itäinen WGS 84 -koordinaatti."
+
 #: /tmp/cache/587c830e6b9a0/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:81
 #: /tmp/cache/587c830e6b9a0/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:90
 #: /tmp/cache/587c830e6b9a0/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:79
