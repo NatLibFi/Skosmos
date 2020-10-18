@@ -426,6 +426,18 @@ msgstr "Termer på andra språk"
 msgid "from all"
 msgstr "i alla"
 
+msgid "geo:lat"
+msgstr "Latitud"
+
+msgid "geo:lat_help"
+msgstr "Norra WGS 84 koordinat."
+
+msgid "geo:long"
+msgstr "Longitud"
+
+msgid "geo:long_help"
+msgstr "Östra WGS 84 koordinat."
+
 #: /tmp/cache/587c83500d6c9/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:81
 #: /tmp/cache/587c83500d6c9/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:90
 #: /tmp/cache/587c83500d6c9/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:79

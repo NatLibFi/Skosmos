@@ -5,6 +5,7 @@
  */
 EasyRdf\RdfNamespace::set('skosmos', 'http://purl.org/net/skosmos#');
 EasyRdf\RdfNamespace::set('skosext', 'http://purl.org/finnonto/schema/skosext#');
+EasyRdf\RdfNamespace::set('geo', 'http://www.w3.org/2003/01/geo/wgs84_pos#');
 EasyRdf\RdfNamespace::set('isothes', 'http://purl.org/iso25964/skos-thes#');
 EasyRdf\RdfNamespace::set('mads', 'http://www.loc.gov/mads/rdf/v1#');
 EasyRdf\RdfNamespace::set('wd', 'http://www.wikidata.org/entity/');
