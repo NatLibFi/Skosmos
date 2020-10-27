@@ -115,7 +115,7 @@ class ConceptPropertyValue extends VocabularyDataObject
 
     public function getVocabName()
     {
-        return $this->vocab->getTitle();
+        return $this->vocab->getShortName();
     }
 
     public function addSubMember($member, $lang = '')
