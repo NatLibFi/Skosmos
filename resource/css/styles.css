@@ -1227,6 +1227,10 @@ li.sub-group {
   padding-left: 0;
 }
 
+.concept-info .row > .property-label {
+  padding-right: 20px;
+}
+
 .row > .property-label {
   width: 225px;
   word-break: break-word;
