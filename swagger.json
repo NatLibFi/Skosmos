@@ -108,7 +108,7 @@
           {
             "name": "offset",
             "in": "query",
-            "description": "offset where to start in ther esult set, useful for paging the result. If not given, defaults to 0.",
+            "description": "offset where to start in the result set, useful for paging the result. If not given, defaults to 0.",
             "required": false,
             "type": "integer"
           },
