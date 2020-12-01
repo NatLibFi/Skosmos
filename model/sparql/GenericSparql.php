@@ -1227,7 +1227,7 @@ EOQ;
      * @return string sparql query
      */
     protected function generateAlphabeticalListQuery($letter, $lang, $limit, $offset, $classes, $showDeprecated = false, $qualifier = null) {
-        $fcl = $this->generateFromClause();
+        $gcl = $this->graphClause;
         $classes = ($classes) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
         $values = $this->formatValues('?type', $classes, 'uri');
         $limitandoffset = $this->formatLimitAndOffset($limit, $offset);
@@ -1240,31 +1240,33 @@ EOQ;
             $filterDeprecated="FILTER NOT EXISTS { ?s owl:deprecated true }";
         }
         $query = <<<EOQ
-SELECT DISTINCT ?s ?label ?alabel ?qualifier $fcl
+SELECT DISTINCT ?s ?label ?alabel ?qualifier
 WHERE {
-  {
-    ?s skos:prefLabel ?label .
-    FILTER (
-      $filtercondLabel
-    )
-  }
-  UNION
-  {
-    {
-      ?s skos:altLabel ?alabel .
-      FILTER (
-        $filtercondALabel
-      )
-    }
+  $gcl {
     {
       ?s skos:prefLabel ?label .
-      FILTER (langMatches(lang(?label), '$lang'))
+      FILTER (
+        $filtercondLabel
+      )
     }
+    UNION
+    {
+      {
+        ?s skos:altLabel ?alabel .
+        FILTER (
+          $filtercondALabel
+        )
+      }
+      {
+        ?s skos:prefLabel ?label .
+        FILTER (langMatches(lang(?label), '$lang'))
+      }
+    }
+    ?s a ?type .
+    $qualifierClause
+    $filterDeprecated
+    $values
   }
-  ?s a ?type .
-  $qualifierClause
-  $filterDeprecated
-  $values
 }
 ORDER BY LCASE(STR(COALESCE(?alabel, ?label))) STR(?s) LCASE(STR(?qualifier)) $limitandoffset
 EOQ;
