@@ -1337,15 +1337,17 @@ EOQ;
      * @return string sparql query
      */
     private function generateFirstCharactersQuery($lang, $classes) {
-        $fcl = $this->generateFromClause();
+        $gcl = $this->graphClause;
         $classes = (isset($classes) && sizeof($classes) > 0) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
         $values = $this->formatValues('?type', $classes, 'uri');
         $query = <<<EOQ
-SELECT DISTINCT (ucase(str(substr(?label, 1, 1))) as ?l) $fcl WHERE {
-  ?c skos:prefLabel ?label .
-  ?c a ?type
-  FILTER(langMatches(lang(?label), '$lang'))
-  $values
+SELECT DISTINCT (ucase(str(substr(?label, 1, 1))) as ?l) WHERE {
+  $gcl {
+    ?c skos:prefLabel ?label .
+    ?c a ?type
+    FILTER(langMatches(lang(?label), '$lang'))
+    $values
+  }
 }
 EOQ;
         return $query;
