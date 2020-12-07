@@ -425,7 +425,7 @@ class RestController extends Controller
         $hits = array();
         // case 1: exact match on preferred label
         foreach ($results as $res) {
-            if ($res['prefLabel'] == $label) {
+            if (isset($res['prefLabel']) && $res['prefLabel'] == $label) {
                 $hits[] = $res;
             }
         }
@@ -433,7 +433,7 @@ class RestController extends Controller
 
         // case 2: case-insensitive match on preferred label
         foreach ($results as $res) {
-            if (strtolower($res['prefLabel']) == strtolower($label)) {
+            if (isset($res['prefLabel']) && strtolower($res['prefLabel']) == strtolower($label)) {
                 $hits[] = $res;
             }
         }
