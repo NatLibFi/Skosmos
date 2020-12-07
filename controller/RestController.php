@@ -442,7 +442,7 @@ class RestController extends Controller
         if ($lang === null) {
             // case 1A: exact match on preferred label in any language
             foreach ($results as $res) {
-                if ($res['matchedPrefLabel'] == $label) {
+                if (isset($res['matchedPrefLabel']) && $res['matchedPrefLabel']  == $label) {
                     $res['prefLabel'] = $res['matchedPrefLabel'];
                     unset($res['matchedPrefLabel']);
                     $hits[] = $res;
@@ -452,7 +452,7 @@ class RestController extends Controller
 
             // case 2A: case-insensitive match on preferred label in any language
             foreach ($results as $res) {
-                if (strtolower($res['matchedPrefLabel']) == strtolower($label)) {
+                if (isset($res['matchedPrefLabel']) && strtolower($res['matchedPrefLabel']) == strtolower($label)) {
                     $res['prefLabel'] = $res['matchedPrefLabel'];
                     unset($res['matchedPrefLabel']);
                     $hits[] = $res;
