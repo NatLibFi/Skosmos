@@ -94,7 +94,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
   public function testGetVocabName() {
     $props = $this->concept->getProperties();
     $propvals = $props['skos:narrower']->getValues();
-    $this->assertEquals('Test ontology', $propvals['Crucian carp http://www.skosmos.skos/test/ta121']->getVocabName());
+    $this->assertEquals('Test short', $propvals['Crucian carp http://www.skosmos.skos/test/ta121']->getVocabName());
   }
 
   /**
