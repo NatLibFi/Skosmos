@@ -29,17 +29,33 @@ dup:d4 a skos:Concept ;
 dup:d5 a skos:Concept ;
     dup:prop3 "Identical property value"@en;
     dup:prop4 "Identical property value"@en;
+    dup:subprefLabel "Not a subproperty"@en;
     skos:prefLabel "Not a subproperty"@en .
 
-dup:prop1
+dup:d6 a skos:Concept ;
+    skos:prefLabel "A label"@en ;
+    dup:subPrefLabel "A more accurate label"@en .
+
+dup:d7 a skos:Concept ;
+    dup:subPrefLabel "Identical preferred label and its subproperty"@en;
+    skos:prefLabel "Identical preferred label and its subproperty"@en .
+
+# in order for getLabel query to work, a type has to be declared
+# on the properties
+
+dup:prop1 a owl:DatatypeProperty ;
   rdfs:label "Very nice property"@en .
    
-dup:prop2
+dup:prop2 a owl:DatatypeProperty ;
   rdfs:subPropertyOf dup:prop1 ;
   rdfs:label "Nearly as nice subproperty"@en .
 
-dup:prop3
+dup:prop3 a owl:DatatypeProperty ;
   rdfs:label "Nice-ish property"@en .
    
-dup:prop4
+dup:prop4 a owl:DatatypeProperty ;
   rdfs:label "Not at all a subproperty"@en .
+
+dup:subPrefLabel a owl:DatatypeProperty ;
+  rdfs:subPropertyOf skos:prefLabel ;
+  rdfs:label "Subproperty of skos:prefLabel"@en .

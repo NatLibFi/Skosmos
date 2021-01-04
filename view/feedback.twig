@@ -29,10 +29,11 @@
           </ul>
         </div>
         {% endif %}
+        <p>{% trans "feedback_enter_name_email" %}</p>
 
         <p>{% trans %}Name:{% endtrans %}</p>
         <input id="name" class="form-control" type ="text" size="40" name="name" placeholder="{% trans %}Enter your name{% endtrans %}">
-        <p>{% trans %}E-mail:{% endtrans %} *</p>
+        <p>{% trans %}E-mail:{% endtrans %}</p>
         <input id="email" class="form-control" type ="text" size="40" name="email" placeholder="{% trans %}Enter your e-mail address{% endtrans %}">
         <p>{% trans %}Message:{% endtrans %} *</p>
         <textarea id="message" class="form-control" name="message"></textarea>

@@ -14,6 +14,6 @@
 
 <h4>About</h4>
 <p>Skosmos is a web based open source ontology browser.</p>
-<a href="http://github.com/NatLibFi/Skosmos">Skosmos GitHub -repository</a>
+<a href="http://github.com/NatLibFi/Skosmos">Skosmos GitHub repository</a>
 
 {% endif %}

@@ -3,7 +3,7 @@
 /**
  * Vocabulary dataobjects provide access to the vocabularies on the SPARQL endpoint.
  */
-class Vocabulary extends DataObject
+class Vocabulary extends DataObject implements Modifiable
 {
     /** cached value of URI space */
     private $urispace = null;
@@ -37,7 +37,7 @@ class Vocabulary extends DataObject
     /**
      * Get the SPARQL graph URI for this vocabulary
      *
-     * @return string graph URI
+     * @return string|null graph URI
      */
     public function getGraph()
     {
@@ -52,7 +52,7 @@ class Vocabulary extends DataObject
     /**
      * Get the SPARQL implementation for this vocabulary
      *
-     * @return Sparql SPARQL object
+     * @return GenericSparql SPARQL object
      */
     public function getSparql()
     {
@@ -77,6 +77,18 @@ class Vocabulary extends DataObject
         }
 
         return $this->urispace;
+    }
+
+    /**
+     * Return true if the URI is within the URI space of this vocabulary.
+     *
+     * @param string full URI of concept
+     * @return bool true if URI is within URI namespace, false otherwise
+     */
+
+    public function containsURI($uri)
+    {
+        return (strpos($uri, $this->getUriSpace()) === 0);
     }
 
     /**
@@ -105,6 +117,16 @@ class Vocabulary extends DataObject
         return $this->getSparql()->queryLabel($uri, $lang);
     }
 
+    /**
+     * Asks the sparql implementation to make a label query for a uri.
+     * @param string $uri
+     * @param string $lang
+     * @return array array of altLabels
+     */
+    public function getAllConceptLabels($uri, $lang)
+    {
+        return $this->getSparql()->queryAllConceptLabels($uri, $lang);
+    }
     /**
      * Get the localname of a concept in the vocabulary. If the URI is not
      * in the URI space of this vocabulary, return the full URI.
@@ -217,9 +239,9 @@ class Vocabulary extends DataObject
 
     public function getDefaultConceptScheme()
     {
-        $conceptScheme = $this->resource->get("skosmos:mainConceptScheme");
+        $conceptScheme = $this->config->getMainConceptSchemeURI();
         if ($conceptScheme) {
-            return $conceptScheme->getUri();
+            return $conceptScheme;
         }
 
         // mainConceptScheme not explicitly set, guess it
@@ -227,6 +249,16 @@ class Vocabulary extends DataObject
         $conceptSchemeURIs = array_keys($conceptSchemes);
         // return the URI of the last concept scheme
         return array_pop($conceptSchemeURIs);
+    }
+
+    /**
+     * Returns the main Concept Scheme of that Vocabulary, or null if not set.
+     * @param string $defaultConceptSchemeURI default concept scheme URI
+     * @return \EasyRdf\Graph|mixed
+     */
+    public function getConceptScheme(string $defaultConceptSchemeURI)
+    {
+        return $this->getSparql()->queryConceptScheme($defaultConceptSchemeURI);
     }
 
     /**
@@ -302,7 +334,7 @@ class Vocabulary extends DataObject
     public function getConceptHierarchy($uri, $lang)
     {
         $lang = $lang ? $lang : $this->getEnvLang();
-        $fallback = $this->config->getDefaultLanguage();
+        $fallback = count($this->config->getLanguageOrder($lang)) > 1 ? $this->config->getLanguageOrder($lang)[1] : $this->config->getDefaultLanguage();
         $props = $this->config->getHierarchyProperty();
         return $this->getSparql()->queryParentList($uri, $lang, $fallback, $props);
     }
@@ -314,7 +346,7 @@ class Vocabulary extends DataObject
     public function getConceptChildren($uri, $lang)
     {
         $lang = $lang ? $lang : $this->getEnvLang();
-        $fallback = $this->config->getDefaultLanguage();
+        $fallback = count($this->config->getLanguageOrder($lang)) > 1 ? $this->config->getLanguageOrder($lang)[1] : $this->config->getDefaultLanguage();
         $props = $this->config->getHierarchyProperty();
         return $this->getSparql()->queryChildren($uri, $lang, $fallback, $props);
     }
@@ -381,7 +413,7 @@ class Vocabulary extends DataObject
     /**
      * Makes a query into the sparql endpoint for a concept.
      * @param string $uri the full URI of the concept
-     * @return array
+     * @return Concept[]
      */
     public function getConceptInfo($uri, $clang)
     {
@@ -482,7 +514,7 @@ class Vocabulary extends DataObject
      */
     public function searchConceptsAlphabetical($letter, $limit = null, $offset = null, $clang = null)
     {
-        return $this->getSparql()->queryConceptsAlphabetical($letter, $clang, $limit, $offset, $this->config->getIndexClasses(),$this->config->getShowDeprecated());
+        return $this->getSparql()->queryConceptsAlphabetical($letter, $clang, $limit, $offset, $this->config->getIndexClasses(), $this->config->getShowDeprecated(), $this->config->getAlphabeticalListQualifier());
     }
 
     /**
@@ -583,31 +615,49 @@ class Vocabulary extends DataObject
 
     /**
      * Returns a list of recently changed or entirely new concepts.
-     * @param string $clang content language for the labels 
-     * @param string $lang UI language for the dates
-     * @return Array 
+     * @param string $prop the property uri pointing to timestamps, eg. 'dc:modified'
+     * @param string $clang content language for the labels
+     * @param int $offset starting index offset
+     * @param int $limit maximum number of concepts to return
+     * @return Array
      */
-    public function getChangeList($prop, $clang, $lang, $offset)
+    public function getChangeList($prop, $clang, $offset, $limit)
     {
-      $changelist = $this->getSparql()->queryChangeList($clang, $offset, $prop);
-      $bydate = array();
-      foreach($changelist as $concept) {
-        $concept['datestring'] = Punic\Calendar::formatDate($concept['date'], 'medium', $lang);
-        $bydate[Punic\Calendar::getMonthName($concept['date'], 'wide', $lang, true) . Punic\Calendar::format($concept['date'], ' y', $lang) ][strtolower($concept['prefLabel'])] = $concept;
-      }
-      return $bydate;
+      return $this->getSparql()->queryChangeList($prop, $clang, $offset, $limit);
     }
 
     public function getTitle($lang=null) {
       return $this->config->getTitle($lang);
     }
-    
+
     public function getShortName() {
       return $this->config->getShortName();
     }
-    
+
     public function getId() {
       return $this->config->getId();
     }
-    
+
+    public function getModifiedDate()
+    {
+        $modifiedDate = null;
+
+        $conceptSchemeURI = $this->getDefaultConceptScheme();
+        if ($conceptSchemeURI) {
+            $conceptSchemeGraph = $this->getConceptScheme($conceptSchemeURI);
+            if (!$conceptSchemeGraph->isEmpty()) {
+                $literal = $conceptSchemeGraph->getLiteral($conceptSchemeURI, "dc:modified");
+                if ($literal) {
+                    $modifiedDate = $literal->getValue();
+                }
+            }
+        }
+
+        return $modifiedDate;
+    }
+
+    public function isUseModifiedDate()
+    {
+        return $this->getConfig()->isUseModifiedDate();
+    }
 }

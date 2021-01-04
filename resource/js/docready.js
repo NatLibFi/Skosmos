@@ -21,6 +21,22 @@ $(function() { // DOCUMENT READY
     }
   );
 
+  $('#skiptocontent').on('click', function(e) {
+    // fixes an issue with screen reader not regaining true focus after Ctrl + Home
+    if (!e.looped) {
+      // loop focus in order to restore normal functionality
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      document.getElementById("footer").focus({preventScroll: true});
+      setTimeout(function() {
+        $(e.target).trigger({type: 'click', looped: true});
+      }, 100);
+      return false;
+    }
+
+    document.getElementById(e.target.hash.slice(1)).focus({preventScroll: true});
+  });
+
   /*
    * Moving the sidenav scrollbar towards the current concept. Aiming the current
    * concept at vertical center of the container. Each concept needs 18px height.
@@ -41,7 +57,7 @@ $(function() { // DOCUMENT READY
         });
         return removeThese.join(' ');
       });
-      if (settings.url.indexOf('index/' !== -1)) {
+      if (settings.url.indexOf('index/') !== -1) {
         $(".sidebar-grey").mCustomScrollbar({
           alwaysShowScrollbar: 1,
           scrollInertia: 0,
@@ -70,21 +86,49 @@ $(function() { // DOCUMENT READY
     if (settings.url.indexOf('search') !== -1 && $autocomplete.length > 0 && $autocomplete[0].offsetHeight === 302) {
       $(".tt-dropdown-menu").mCustomScrollbar({ alwaysShowScrollbar: 1, scrollInertia: 0 });
     }
+
+    $('.reified-property-value').each(function() {
+      $(this).qtip({
+        content: $(this).next('.reified-tooltip'),
+        position: { my: 'top left', at: 'top left' },
+        style: { classes: 'qtip-skosmos' },
+        show: { delay: 100 },
+        hide: { fixed: true, delay: 400 }
+      });
+    });
+
+    var active_tab = $('li.active').attr('id');
+    if (active_tab == 'groups') {
+      $('#sidebar > h4').remove();
+      $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.groups_listing + '</h4>');
+    } else if (active_tab == 'hierarchy') {
+      $('#sidebar > h4').remove();
+      $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.hierarchy_listing + '</h4>');
+    }
+
     countAndSetOffset();
 
     hideCrumbs();
+    hidePropertyValues();
   });
 
   // if the hierarchy tab is active filling the jstree with data
-  if ($('#hierarchy').hasClass('active')) { invokeParentTree(getTreeConfiguration()); }
-  if ($('#groups').hasClass('active')) { invokeGroupTree(); }
+  if ($('#hierarchy').hasClass('active')) {
+    $('#sidebar > h4').remove();
+    invokeParentTree(getTreeConfiguration());
+    $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.hierarchical_listing + '</h4>');
+  }
+  if ($('#groups').hasClass('active')) {
+    $('#sidebar > h4').remove();
+    invokeGroupTree();
+    $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.groups_listing + '</h4>');
+  }
 
-  var textColor = $('.search-parameter-highlight').css('color');
   countAndSetOffset();
 
   // Make a selection of an element for copy pasting.
-  function makeSelection() {
-    var $clicked = $(this);
+  function makeSelection(e, elem) {
+    var $clicked = elem || $(this);
     var text = $clicked[0];
     var range;
     if (document.body.createTextRange) { // ms
@@ -116,6 +160,17 @@ $(function() { // DOCUMENT READY
 
   $(document).on('click','.uri-input-box', makeSelection);
 
+  // copy to clipboard
+  function copyToClipboard() {
+    var $btn = $(this);
+    var id = $btn.attr('for');
+    var $elem = $(id);
+    makeSelection(undefined, $elem);
+    document.execCommand('copy');
+  }
+
+  $(document).on('click', 'button.copy-clipboard', copyToClipboard);
+
   var sidebarResizer = debounce(function() {
     countAndSetOffset();
   }, 40);
@@ -136,14 +191,6 @@ $(function() { // DOCUMENT READY
       }
     }, { offset: -60 }); // when the headerbars bottom margin is at the top of the screen
   }
-
-  // Event handler for restoring the DOM back to normal after the focus is lost from the prefLabel.
-  $(':not(.search-parameter-highlight)').click(
-      function(){
-        $('#temp-textarea').remove();
-        $('.search-parameter-highlight').css({'background': 'transparent', 'color': textColor});
-      }
-  );
 
   // event handling the breadcrumb expansion
   $(document).on('click', '.expand-crumbs',
@@ -166,6 +213,17 @@ $(function() { // DOCUMENT READY
   );
 
   hideCrumbs();
+
+  // event handling restoring the hidden breadcrumb paths
+  $(document).on('click', '.restore-propvals',
+      function(){
+        $(this).parent().parent().addClass('expand-propvals');
+        $(this).remove();
+        return false;
+      }
+  );
+
+  hidePropertyValues();
 
   // ajaxing the concept count and the preflabel counts on the vocabulary front page
   if ($('#vocab-info').length && $('#statistics').length) {
@@ -225,8 +283,24 @@ $(function() { // DOCUMENT READY
   var $delayedSpinner = $("<p class='concept-spinner center-block'>" + loading_text + "&hellip;</p>");
 
   // adds a delay before showing the spinner configured above
-  function delaySpinner(loading) {
-    loading = setTimeout(function() { $('.concept-spinner').show() }, 500);
+  function delaySpinner() {
+    return setTimeout(function() { $('.concept-spinner').show() }, 500);
+  }
+
+  function ajaxConceptMapping(data) {
+    // ajaxing the concept mapping properties on the concept page
+    var $conceptAppendix = $('.concept-appendix');
+    if ($conceptAppendix.length) {
+      var concept = {
+        uri: $conceptAppendix.data('concept-uri'),
+        type: $conceptAppendix.data('concept-type')
+      };
+
+      // Defined in scripts.js. Will load the mapping properties via Ajax request to JSKOS REST service, and render them.
+      loadMappingProperties(concept, lang, clang, $conceptAppendix, data);
+    } else {
+      makeCallbacks(data);
+    }
   }
 
   // event handler for clicking the hierarchy concepts
@@ -238,20 +312,21 @@ $(function() { // DOCUMENT READY
         var historyUrl = (clang !== lang) ? targetUrl + '?' + parameters : targetUrl;
         $('#hier-trigger').attr('href', targetUrl);
         var $content = $('.content').empty().append($delayedSpinner.hide());
-        var loading;
+        var loading = delaySpinner();
         $.ajax({
             url : targetUrl,
             data: parameters,
-            beforeSend: delaySpinner(loading),
-            complete: clearTimeout(loading),
+            complete: function() { clearTimeout(loading); },
             success : function(data) {
               $content.empty();
               var response = $('.content', data).html();
               if (window.history.pushState) { window.history.pushState({url: historyUrl}, '', historyUrl); }
               $content.append(response);
+
+              updateJsonLD(data);
               updateTitle(data);
               updateTopbarLang(data);
-              makeCallbacks(data);
+              ajaxConceptMapping(data);
               // take the content language buttons from the response
               $('.header-float .dropdown-menu').empty().append($('.header-float .dropdown-menu', data).html());
             }
@@ -267,19 +342,19 @@ $(function() { // DOCUMENT READY
         $('.activated-concept').removeClass('activated-concept');
         $(this).addClass('activated-concept');
         var $content = $('.content').empty().append($delayedSpinner.hide());
-        var loading;
+        var loading = delaySpinner();
         $.ajax({
-            url : event.target.href,
-            beforeSend: delaySpinner(loading),
-            complete: clearTimeout(loading),
+            url : event.currentTarget.href,
+            complete: function() { clearTimeout(loading); },
             success : function(data) {
-              if (window.history.pushState) { window.history.pushState({}, null, event.target.href); }
+              if (window.history.pushState) { window.history.pushState({}, null, event.currentTarget.href); }
               $content.empty().append($('.content', data).html());
               initHierarchyQtip();
-              $('#hier-trigger').attr('href', event.target.href);
+              $('#hier-trigger').attr('href', event.currentTarget.href);
+              updateJsonLD(data);
               updateTitle(data);
               updateTopbarLang(data);
-              makeCallbacks(data);
+              ajaxConceptMapping(data);
               // take the content language buttons from the response
               $('.header-float .dropdown-menu').empty().append($('.header-float .dropdown-menu', data).html());
             }
@@ -294,6 +369,7 @@ $(function() { // DOCUMENT READY
         $.ajaxQ.abortAll();
         $('.active').removeClass('active');
         $('#alpha').addClass('active');
+        alpha_complete = false;
         $('.sidebar-grey').empty().prepend(spinner);
         var targetUrl = event.target.href;
         $.ajax({
@@ -316,8 +392,8 @@ $(function() { // DOCUMENT READY
         $('.active').removeClass('active');
         $('#changes').addClass('active');
         $('.sidebar-grey').empty().prepend(spinner);
-        var $pagination = $('.pagination');
-        if ($pagination) { $pagination.hide(); }
+        $('.pagination').hide();
+        $('#sidebar > h4.sr-only').hide();
         var targetUrl = event.target.href;
         $.ajax({
             url : targetUrl,
@@ -355,14 +431,17 @@ $(function() { // DOCUMENT READY
         $('.active').removeClass('active');
         $('#hier-trigger').parent().addClass('active');
         $('.pagination').hide();
+        $('#sidebar > h4.sr-only').hide();
         $content.append('<div class="sidebar-grey concept-hierarchy"></div>');
         invokeParentTree(getTreeConfiguration());
+        $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.hierarchy_listing + '</h4>');
         $('#hier-trigger').attr('href', '#');
         return false;
       }
       var uri = $('.uri-input-box').html();
       var base_href = $('base').attr('href'); // see #315, #633
-      var redirectUrl = base_href + vocab + '/' + lang + '/page/?uri=' + uri;
+      var clangIfSet = clang !== lang ? "&clang=" + clang : ""; // see #714
+      var redirectUrl = base_href + vocab + '/' + lang + '/page/?uri=' + uri + clangIfSet;
       window.location.replace(encodeURI(redirectUrl));
       return false;
     }
@@ -375,13 +454,13 @@ $(function() { // DOCUMENT READY
         $('.active').removeClass('active');
         var $clicked = $(this);
         $clicked.parent().addClass('active');
-        var $pagination = $('.pagination');
-        if ($pagination) { $pagination.hide(); }
-        if ($('.changes-navi')) { $('.changes-navi').hide(); }
+        $('.pagination').hide();
+        $('#sidebar > h4.sr-only').hide();
         $('.sidebar-grey').remove().prepend(spinner);
         $('#sidebar').append('<div class="sidebar-grey"><div class="group-hierarchy"></div></div>');
         if (window.history.pushState) { window.history.pushState({}, null, encodeURI(event.target.href)); }
         invokeGroupTree();
+        $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.groups_listing + '</h4>');
         return false;
       }
   );
@@ -390,12 +469,10 @@ $(function() { // DOCUMENT READY
   $(document).on('click','div.group-hierarchy a',
       function(event) {
         var $content = $('.content').empty().append($delayedSpinner.hide());
-        var loading;
+        var loading = delaySpinner();
         // ajaxing the sidebar content
         $.ajax({
             url : event.target.href,
-            beforeSend: delaySpinner(loading),
-            complete: clearTimeout(loading),
             success : function(data) {
               initHierarchyQtip();
               $('#hier-trigger').attr('href', event.target.href);
@@ -405,7 +482,7 @@ $(function() { // DOCUMENT READY
               $('.nav').scrollTop(0);
               if (window.history.pushState) { window.history.pushState({}, null, event.target.href); }
               updateTitle(data);
-              makeCallbacks(data);
+              ajaxConceptMapping(data);
               // take the content language buttons from the response
               $('.header-float .dropdown-menu').empty().append($('.header-float .dropdown-menu', data).html());
             }
@@ -422,20 +499,20 @@ $(function() { // DOCUMENT READY
           alpha_complete = false;
           var $content = $('.sidebar-grey');
           $content.empty().prepend(spinner);
-          var targetUrl = event.target.href;
+          var targetUrl = event.currentTarget.href;
           $.ajax({
             url : targetUrl,
             success : function(data) {
               updateSidebar(data);
               $('.nav').scrollTop(0);
-              if (window.history.pushState) { window.history.pushState({}, null, encodeURI(event.target.href)); }
+              if (window.history.pushState) { window.history.pushState({}, null, encodeURI(event.currentTarget.href)); }
               updateTitle(data);
               // take the content language buttons from the response
               $('.header-float .dropdown-menu').empty().append($('.header-float .dropdown-menu', data).html());
             }
           });
         } else {
-          var selectedLetter = $(event.target).text().trim();
+          var selectedLetter = $(event.currentTarget).find("span:last-child").text().trim();
           if (document.getElementsByName(selectedLetter).length === 0) { return false; }
           var offset = $('li[name=' + selectedLetter + ']').offset().top - $('body').offset().top - 5;
           $('.nav').scrollTop(offset);
@@ -454,20 +531,26 @@ $(function() { // DOCUMENT READY
 
   var qtip_skosmos = {
     position: { my: 'top center', at: 'bottom center' },
-    style: { classes: 'qtip-tipsy qtip-skosmos' }
+    style: { classes: 'qtip-tipsy qtip-skosmos' },
+    show: {
+      event: 'mouseenter focusin'
+    },
+    hide: {
+      event: 'mouseleave focusout'
+    }
   };
 
   var qtip_skosmos_hierarchy = {
     position: { my: 'top left', at: 'bottom center' },
     style: { classes: 'qtip-tipsy qtip-skosmos' }
   };
-  
+
   $('#navi4').qtip(qtip_skosmos);
 
   $('.property-click').qtip(qtip_skosmos);
 
   $('.redirected-vocab-id').qtip(qtip_skosmos);
-  
+
   $('.reified-property-value').each(function() {
     $(this).qtip({
       content: $(this).next('.reified-tooltip'),
@@ -504,7 +587,7 @@ $(function() { // DOCUMENT READY
   } else if (!search_lang) {
       langPretty = $('a[hreflang=' + lang + ']').html();
       search_lang = lang;
-      if (!langPretty) { langPretty = $('a[hreflang="anything"]').html(); }
+      if (!langPretty) { langPretty = $('.lang-button-all').html(); }
       $('#lang-dropdown-toggle').html(langPretty + ' <span class="caret"></span>');
       qlang = lang;
   } else {
@@ -519,7 +602,7 @@ $(function() { // DOCUMENT READY
   });
 
   if (!search_lang_possible && search_lang !== 'anything') {
-    langPretty = $('a[hreflang=""]').html();
+    langPretty = $('.lang-button-all').html();
     $('#lang-dropdown-toggle').html(langPretty + ' <span class="caret"></span>');
     qlang = '';
     createCookie('SKOSMOS_SEARCH_LANG', qlang, 365);
@@ -620,7 +703,6 @@ $(function() { // DOCUMENT READY
       },
       ajax: {
         beforeSend: function(jqXHR, settings) {
-          wildcard = ($('#search-field').val().indexOf('*') === -1) ? '*' : '';
           var vocabString = $('.frontpage').length ? vocabSelectionString : vocab;
           var parameters = $.param({'vocab' : vocabString, 'lang' : qlang, 'labellang' : qlang});
           // if the search has been targeted at all languages by clicking the checkbox
@@ -638,6 +720,11 @@ $(function() { // DOCUMENT READY
             var hit = data.results[i];
             if (!hit.hiddenLabel) {
                 hasNonHiddenMatch[hit.uri] = true;
+            } else if (hit.hiddenLabel) {
+                if (hasNonHiddenMatch[hit.uri]) {
+                    data.results.splice(i, 1);
+                }
+                hasNonHiddenMatch[hit.uri] = false;
             }
         }
         var context = data['@context'];
@@ -723,6 +810,16 @@ $(function() { // DOCUMENT READY
         $('.clear-search').addClass('clear-search-dark');
       }
     });
+
+    // monkey-patching TypeAhead's Dropdown object for: https://github.com/NatLibFi/Skosmos/issues/773
+    // Updating typeahead.js to 0.11 requires a few changes that are not really complicated.
+    // However, our dropdown style is broken, and it appears hard to be fixed. typeahead.js
+    // Also does not appear to be maintained, so this temporary fix will prevent
+    // accidental selection of values. TODO: we must fix this in a future release, possibly
+    // using another library.
+    var typeaheadInstance = $typeahead.data("ttTypeahead");
+    typeaheadInstance.dropdown.$menu.off("mouseenter.tt", ".tt-suggestion");
+    typeaheadInstance.dropdown.$menu.off("mouseleave.tt", ".tt-suggestion");
   }
 
   // storing the search input before autocompletion changes it
@@ -744,7 +841,7 @@ $(function() { // DOCUMENT READY
       var emailMessageVal = $("#message").val();
       var emailAddress = $("#email").val();
       var requiredFields = true;
-      if (emailAddress === '' || emailAddress.indexOf('@') === -1) {
+      if (emailAddress !== '' && emailAddress.indexOf('@') === -1) {
         $("#email").addClass('missing-value');
         requiredFields = false;
       }
@@ -780,7 +877,7 @@ $(function() { // DOCUMENT READY
       alpha_complete = true;
       $('.alphabetical-search-results').append($loading);
       var parameters = $.param({'offset' : 250, 'clang': content_lang});
-      var letter = '/' + $('.pagination > .active > a')[0].innerHTML;
+      var letter = '/' + ($('.pagination > .active')[0] ? $('.pagination > .active > a > span:last-child')[0].innerHTML : $('.pagination > li > a > span:last-child')[0].innerHTML);
       $.ajax({
         url : vocab + '/' + lang + '/index' + letter,
         data : parameters,
@@ -798,7 +895,7 @@ $(function() { // DOCUMENT READY
   function changeListWaypointCallback() {
     $('.change-list').append($loading);
     var parameters = $.param({'offset' : changeOffset, 'clang': content_lang});
-    var lastdate = $('.change-list > span:last-of-type')[0].innerHTML;
+    var lastdate = $('.change-list > h5:last-of-type')[0].innerHTML;
     $.ajax({
       url : vocab + '/' + lang + '/new',
       data : parameters,
@@ -806,7 +903,7 @@ $(function() { // DOCUMENT READY
         $loading.detach();
         if ($(data).find('.change-list').length === 1) {
           $('.change-list').append($(data).find('.change-list')[0].innerHTML);
-          var $lastdate = $('.change-list > span:contains(' + lastdate + ')');
+          var $lastdate = $('.change-list > h5:contains(' + lastdate + ')');
           if ($lastdate.length === 2)
            $lastdate[1].remove();
           $('.change-list > p:last-of-type').remove();
@@ -904,7 +1001,7 @@ $(function() { // DOCUMENT READY
       } else if (selectedVocabs[vocabId] !== undefined) {
         delete selectedVocabs[vocabId];
       }
-      this.vocabSelectionString = updateVocabParam();
+      updateVocabParam();
     },
     maxHeight: 300
   });
@@ -960,12 +1057,12 @@ $(function() { // DOCUMENT READY
    */
   var $replaced = $('.replaced-by a');
   if ($replaced.length > 0) {
-    var $replacedSpan = $('.replaced-by span');
-    var undoUppercasing = $replacedSpan.text().substr(0,1) + $replacedSpan.text().substr(1).toLowerCase();
+    var $replacedElem = $('.replaced-by h3');
+    var undoUppercasing = $replacedElem.text().substr(0,1) + $replacedElem.text().substr(1).toLowerCase();
     var html = ''
     for (var i = 0; i < $replaced.length; i++) {
         var replacedBy = '<a href="' + $replaced[i] + '">' + $replaced[i].innerHTML + '</a>';
-        html += '<h2 class="alert-replaced">' + undoUppercasing + ': ' + replacedBy + '</h2>';
+        html += '<p class="alert-replaced">' + undoUppercasing + ': ' + replacedBy + '</p>';
     }
     $('.alert-danger').append(html);
     $(document).on('click', '#groups',
@@ -1007,11 +1104,7 @@ $(function() { // DOCUMENT READY
     });
 
     $('#parent-limit').focus(function() {
-      if($('#parent-limit').attr('data-uri') !== '') {
-        parentLimitReady = true;
-      } else {
-        parentLimitReady = false;
-      }
+      parentLimitReady = $('#parent-limit').attr('data-uri') !== '';
     });
 
     $(document).on('submit', '.search-options', function() {
@@ -1044,9 +1137,6 @@ $(function() { // DOCUMENT READY
     });
   }
 
-  // setting the focus to the search box on default if we are not on the search results page
-  if ($('.search-result-listing').length === 0) { $("#search-field").focus(); }
-
   if ($('#feedback-vocid').length) {
     $('#feedback-fields > .dropdown > .dropdown-menu > li > a').each(function(index, elem) {
       $(elem).on('click', function(event) {
@@ -1056,6 +1146,18 @@ $(function() { // DOCUMENT READY
     })});
   }
 
-  makeCallbacks();
+  // ajaxing the concept mapping properties on the concept page
+  var $conceptAppendix = $('.concept-appendix');
+  if ($conceptAppendix.length) {
+    var concept = {
+      uri: $conceptAppendix.data('concept-uri'),
+      type: $conceptAppendix.data('concept-type')
+    };
+
+    // Defined in scripts.js. Will load the mapping properties via Ajax request to JSKOS REST service, and render them.
+    loadMappingProperties(concept, lang, clang, $conceptAppendix, null);
+  } else {
+    makeCallbacks();
+  }
 
 });

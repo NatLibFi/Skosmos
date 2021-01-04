@@ -17,6 +17,9 @@ msgstr ""
 "X-Poedit-SearchPath-1: controller\n"
 "X-Poedit-SearchPath-2: model\n"
 
+msgid "Download this vocabulary:"
+msgstr "Download this vocabulary:"
+
 #: controller/Controller.php:38
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:21
 msgid "in_this_language"
@@ -236,8 +239,11 @@ msgid "Send feedback"
 msgstr "Send feedback"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:51
-msgid "Show all breadcrumb paths"
+msgid "show all # paths"
 msgstr "show all # paths"
+
+msgid "show all # values"
+msgstr "show all # values"
 
 #: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:72
 msgid "Skosmos version %version%"
@@ -761,53 +767,63 @@ msgstr ""
 "if the truncation symbol is not entered manually: thus, cat will yield the "
 "same results as cat*."
 
-#~ msgid "dc11:contributor"
-#~ msgstr "Contributor"
+msgid "feedback_enter_name_email"
+msgstr ""
+"Please enter your name and email address if you wish to receive a direct "
+"response. You also have the option to submit your feedback anonymously. NB: "
+"Feedback regarding a specific vocabulary is referred directly to its "
+"administrator."
 
-#~ msgid "dc11:creator"
-#~ msgstr "Creator"
+msgid "concept_types"
+msgstr "Concept types"
 
-#~ msgid "dc11:description"
-#~ msgstr "Description"
+msgid "Skip to main"
+msgstr "Skip to main content"
 
-#~ msgid "dc11:license"
-#~ msgstr "License"
+msgid "Available vocabularies and ontologies"
+msgstr "Available vocabularies and ontologies"
 
-#~ msgid "dc11:publisher"
-#~ msgstr "Publisher"
+msgid "Search from selected vocabularies"
+msgstr "Search from selected vocabularies"
 
-#~ msgid "dc11:relation"
-#~ msgstr "Relation"
+msgid "List vocabulary concepts alphabetically"
+msgstr "List vocabulary concepts alphabetically"
 
-#~ msgid "dc11:rights"
-#~ msgstr "Rights"
+msgid "List vocabulary concepts and groupings hierarchically"
+msgstr "List vocabulary concepts and groupings hierarchically"
 
-#~ msgid "dc11:source"
-#~ msgstr "Source"
+msgid "List vocabulary concepts by newest additions"
+msgstr "List vocabulary concepts by newest additions"
 
-#~ msgid "dc11:title"
-#~ msgstr "Title"
+msgid "List vocabulary concepts hierarchically"
+msgstr "List vocabulary concepts hierarchically"
 
-#~ msgid "Error: the vocabulary does not contain terms beginning with"
-#~ msgstr "The vocabulary does not contain terms beginning with"
+msgid "Choose alphabetical listing letter"
+msgstr "Choose alphabetical listing letter"
 
-#~ msgid "Vocabularies on the server"
-#~ msgstr "Available vocabularies and ontologies"
+msgid "Concept information"
+msgstr "Concept information"
 
-#~ msgid "Modified concepts"
-#~ msgstr "Modified concepts"
+msgid "Hierarchical listing of vocabulary concepts"
+msgstr "Hierarchical listing of vocabulary concepts"
 
-#~ msgid "New concepts"
-#~ msgstr "New concepts"
+msgid "Hierarchical listing of vocabulary concepts and groupings"
+msgstr "Hierarchical listing of vocabulary concepts and groupings"
 
-#~ msgid "All"
-#~ msgstr "All"
+msgid "Listing vocabulary concepts alphabetically"
+msgstr "Listing vocabulary concepts alphabetically"
 
-#~ msgid "results"
-#~ msgstr "results:"
+msgid "Listing vocabulary concepts by newest additions"
+msgstr "Listing vocabulary concepts by newest additions"
 
-#~ msgid "results for"
-#~ msgstr "results for"
+msgid "Prefer using"
+msgstr "Prefer using"
 
-#~ msgid "Language literal"
-#~ msgstr "In English"
+msgid "Search options tab"
+msgstr "Search options tab"
+
+msgid "Search results"
+msgstr "Search results"
+
+msgid "Sidebar listing: list and traverse vocabulary contents by a criterion"
+msgstr "Sidebar listing: list and traverse vocabulary contents by a criterion"

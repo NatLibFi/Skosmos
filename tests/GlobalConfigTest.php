@@ -1,174 +1,177 @@
 <?php
 
-class GlobalConfigTest extends PHPUnit_Framework_TestCase
+/**
+ * Tests for GlobalConfig. Must cover all of its methods, and use at least one file configuratoin that contains
+ * different values than the default ones.
+ */
+class GlobalConfigTest extends PHPUnit\Framework\TestCase
 {
-  
-  private $config; 
+    /** @var GlobalConfig */
+    private $config;
+    /** @var GlobalConfig */
+    private $configWithDefaults;
 
-  protected function setUp() {
-    putenv("LC_ALL=en_GB.utf8");
-    setlocale(LC_ALL, 'en_GB.utf8');
-    $this->config = new GlobalConfig('/../tests/testconfig.inc');
-  }
+    protected function setUp()
+    {
+        $this->config = new GlobalConfig('/../tests/testconfig.ttl');
+        $this->assertNotNull($this->config->getCache());
+        $this->assertNotNull($this->config->getGraph());
+        $this->configWithDefaults = new GlobalConfig('/../tests/testconfig-fordefaults.ttl');
+    }
 
-  /**
-   * @covers GlobalConfig::getLanguages
-   */
-  public function testLanguagesWithoutConfiguration() {
-    $actual = $this->config->getLanguages();
-    $this->assertEquals(array('en' => 'en_GB.utf8'), $actual);
-  }
+    // --- tests for values that are overriding default values
 
-  /**
-   * @covers GlobalConfig::getHttpTimeout
-   * @covers GlobalConfig::getConstant
-   */
-  public function testTimeoutDefaultValue() {
-    $actual = $this->config->getHttpTimeout();
-    $this->assertEquals(5, $actual);
-  }
+    public function testGetDefaultEndpoint()
+    {
+        $this->assertEquals("http://localhost:13030/skosmos-test/sparql", $this->config->getDefaultEndpoint());
+    }
 
-  /**
-   * @covers GlobalConfig::getDefaultEndpoint
-   * @covers GlobalConfig::getConstant
-   */
-  public function testEndpointDefaultValue() {
-    $actual = $this->config->getDefaultEndpoint();
-    $this->assertEquals('http://localhost:3030/ds/sparql', $actual);
-  }
+    public function testGetDefaultSparqlDialect()
+    {
+        $this->assertEquals("Generic", $this->config->getDefaultSparqlDialect());
+    }
 
-  /**
-   * @covers GlobalConfig::getSparqlGraphStore
-   * @covers GlobalConfig::getConstant
-   */
-  public function testSparqlGraphDefaultValue() {
-    $actual = $this->config->getSparqlGraphStore();
-    $this->assertEquals(null, $actual);
-  }
+    public function testGetCollationEnabled()
+    {
+        $this->assertEquals(true, $this->config->getCollationEnabled());
+    }
 
-  /**
-   * @covers GlobalConfig::getDefaultTransitiveLimit
-   * @covers GlobalConfig::getConstant
-   */
-  public function testTransitiveLimitDefaultValue() {
-    $actual = $this->config->getDefaultTransitiveLimit();
-    $this->assertEquals(1000, $actual);
-  }
+    public function testGetSparqlTimeout()
+    {
+        $this->assertEquals(10, $this->config->getSparqlTimeout());
+    }
 
-  /**
-   * @covers GlobalConfig::getSearchResultsSize
-   * @covers GlobalConfig::getConstant
-   */
-  public function testSearchLimitDefaultValue() {
-    $actual = $this->config->getSearchResultsSize();
-    $this->assertEquals(20, $actual);
-  }
+    public function testGetHttpTimeout()
+    {
+        $this->assertEquals(2, $this->config->getHttpTimeout());
+    }
 
-  /**
-   * @covers GlobalConfig::getTemplateCache
-   * @covers GlobalConfig::getConstant
-   */
-  public function testTemplateCacheDefaultValue() {
-    $actual = $this->config->getTemplateCache();
-    $this->assertEquals('/tmp/skosmos-template-cache', $actual);
-  }
+    public function testGetServiceName()
+    {
+        $this->assertEquals("Skosmos being tested", $this->config->getServiceName());
+    }
 
-  /**
-   * @covers GlobalConfig::getDefaultSparqlDialect
-   * @covers GlobalConfig::getConstant
-   */
-  public function testSparqlDialectDefaultValue() {
-    $actual = $this->config->getDefaultSparqlDialect();
-    $this->assertEquals('Generic', $actual);
-  }
+    public function testGetBaseHref()
+    {
+        $this->assertEquals("http://tests.localhost/Skosmos/", $this->config->getBaseHref());
+    }
 
-  /**
-   * @covers GlobalConfig::getFeedbackAddress
-   * @covers GlobalConfig::getConstant
-   */
-  public function testFeedbackAddressDefaultValue() {
-    $actual = $this->config->getFeedbackAddress();
-    $this->assertEquals(null, $actual);
-  }
+    public function testGetLanguages()
+    {
+        $this->assertEquals(array('en' => 'en_GB.utf8'), $this->config->getLanguages());
+    }
 
-  /**
-   * @covers GlobalConfig::getLogCaughtExceptions
-   * @covers GlobalConfig::getConstant
-   */
-  public function testExceptionLoggingDefaultValue() {
-    $actual = $this->config->getLogCaughtExceptions();
-    $this->assertEquals(null, $actual);
-  }
+    public function testGetSearchResultsSize()
+    {
+        $this->assertEquals(5, $this->config->getSearchResultsSize());
+    }
 
-  /**
-   * @covers GlobalConfig::getServiceName
-   * @covers GlobalConfig::getConstant
-   */
-  public function testServiceNameDefaultValue() {
-    $actual = $this->config->getServiceName();
-    $this->assertEquals('Skosmos', $actual);
-  }
+    public function testGetDefaultTransitiveLimit()
+    {
+        $this->assertEquals(100, $this->config->getDefaultTransitiveLimit());
+    }
 
-  /**
-   * @covers GlobalConfig::getServiceTagline
-   * @covers GlobalConfig::getConstant
-   */
-  public function testgetServiceTaglineDefaultValue() {
-    $actual = $this->config->getServiceTagline();
-    $this->assertEquals(null, $actual);
-  }
+    public function testGetLogCaughtExceptions()
+    {
+        $this->assertEquals(true, $this->config->getLogCaughtExceptions());
+    }
 
-  /**
-   * @covers GlobalConfig::getServiceLogo
-   * @covers GlobalConfig::getConstant
-   */
-  public function testServiceLogoDefaultValue() {
-    $actual = $this->config->getServiceLogo();
-    $this->assertEquals(null, $actual);
-  }
+    public function testGetLoggingBrowserConsole()
+    {
+        $this->assertEquals(true, $this->config->getLoggingBrowserConsole());
+    }
 
-  /**
-   * @covers GlobalConfig::getCustomCss
-   * @covers GlobalConfig::getConstant
-   */
-  public function testCustomCssDefaultValue() {
-    $actual = $this->config->getCustomCss();
-    $this->assertEquals(null, $actual);
-  }
+    public function testGetLoggingFilename()
+    {
+        $this->assertEquals("/tmp/test_skosmos.log", $this->config->getLoggingFilename());
+    }
 
-  /**
-   * @covers GlobalConfig::getUILanguageDropdown
-   * @covers GlobalConfig::getConstant
-   */
-  public function testDefaultValue() {
-    $actual = $this->config->getUILanguageDropdown();
-    $this->assertFalse($actual);
-  }
+    public function testGetTemplateCache()
+    {
+        $this->assertEquals("/tmp/skosmos-template-cache-tests", $this->config->getTemplateCache());
+    }
 
-  /**
-   * @covers GlobalConfig::getBaseHref
-   * @covers GlobalConfig::getConstant
-   */
-  public function testBaseHrefDefaultValue() {
-    $actual = $this->config->getBaseHref();
-    $this->assertEquals(null, $actual);
-  }
+    public function testGetCustomCss()
+    {
+        $this->assertEquals("resource/css/tests-stylesheet.css", $this->config->getCustomCss());
+    }
 
-  /**
-   * @covers GlobalConfig::getVocabularyConfigFile
-   * @covers GlobalConfig::getConstant
-   */
-  public function testGetVocabularyConfigFile() {
-    $actual = $this->config->getVocabularyConfigFile();
-    $this->assertEquals('tests/testvocabularies.ttl', $actual);
-  }
+    public function testGetFeedbackAddress()
+    {
+        $this->assertEquals("tests@skosmos.test", $this->config->getFeedbackAddress());
+    }
 
-  /**
-   * @covers GlobalConfig::getCollationEnabled
-   */
-  public function testGetCollationEnabled() {
-    $actual = $this->config->getCollationEnabled();
-    $this->assertFalse($actual);
-  }
+    public function testGetFeedbackSender()
+    {
+        $this->assertEquals("tests skosmos", $this->config->getFeedbackSender());
+    }
+
+    public function testGetFeedbackEnvelopeSender()
+    {
+        $this->assertEquals("skosmos tests", $this->config->getFeedbackEnvelopeSender());
+    }
+
+    public function testGetUiLanguageDropdown()
+    {
+        $this->assertEquals(true, $this->config->getUiLanguageDropdown());
+    }
+
+    public function testGetHoneypotEnabled()
+    {
+        $this->assertEquals(false, $this->config->getHoneypotEnabled());
+    }
+
+    public function testGetHoneypotTime()
+    {
+        $this->assertEquals(2, $this->config->getHoneypotTime());
+    }
+
+    public function testGetGlobalPlugins()
+    {
+        $this->assertEquals(["alpha", "Bravo", "charlie"], $this->config->getGlobalPlugins());
+    }
+
+    // --- tests for the exception paths
+
+    public function testInitializeConfigWithoutGraph()
+    {
+        $this->expectOutputString('Error: config.ttl must have exactly one skosmos:Configuration');
+        $conf = new GlobalConfig('/../tests/testconfig-nograph.ttl');
+        $this->assertNotNull($conf);
+    }
+
+    public function testInexistentFile()
+    {
+        $this->expectOutputString('Error: config.ttl file is missing, please provide one.');
+        $conf = new GlobalConfig('/../tests/testconfig-idonotexist.ttl');
+        $this->assertNotNull($conf);
+    }
+
+    // --- tests for some default values
+
+    public function testsGetDefaultLanguages()
+    {
+        $this->assertEquals(['en' => 'en_GB.utf8'], $this->configWithDefaults->getLanguages());
+    }
+
+    public function testGetDefaultHttpTimeout()
+    {
+        $this->assertEquals(5, $this->configWithDefaults->getHttpTimeout());
+    }
+
+    public function testGetDefaultFeedbackAddress()
+    {
+        $this->assertEquals(null, $this->configWithDefaults->getFeedbackAddress());
+    }
+
+    public function testGetDefaultLogCaughtExceptions()
+    {
+        $this->assertEquals(false, $this->configWithDefaults->getLogCaughtExceptions());
+    }
+
+    public function testGetDefaultServiceName()
+    {
+        $this->assertEquals("Skosmos", $this->configWithDefaults->getServiceName());
+    }
 }
 

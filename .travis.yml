@@ -2,29 +2,47 @@ sudo: required
 dist: trusty
 language: php
 php:
-  - "5.6"
+  - 7.1
+  - 7.2
+  - 7.3
+  - 7.4
 install:
+  - phpenv config-rm xdebug.ini
   - composer install
 cache:
   directories:
     - $HOME/.composer 
     - vendor
 before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
   - cd tests
+  - export LANGUAGE=fr
   - sh ./init_fuseki.sh
   - cd ..
+script:
+  - phpdbg -qrr vendor/bin/phpunit
 after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - bash <(curl -s https://codecov.io/bash)
   - pkill -f 'java -Xmx1200M -jar'
-  - vendor/bin/test-reporter --stdout > codeclimate.json
-  - "curl -X POST -d @codeclimate.json -H 'Content-Type: application/json' -H 'User-Agent: Code Climate (PHP Test Reporter v0.1.1)' https://codeclimate.com/test_reports"
-addons:
-  code_climate:
-    repo_token: fb98170a5c7ea9cc2bbab19ff26268335e6a11a4f8267ca935e5e8ff4624886c
 env:
-  - FUSEKI_VERSION=3.4.0
-  - FUSEKI_VERSION=SNAPSHOT
+  global:
+    - CC_TEST_REPORTER_ID=fb98170a5c7ea9cc2bbab19ff26268335e6a11a4f8267ca935e5e8ff4624886c
+  matrix:
+    - FUSEKI_VERSION=3.14.0
+    - FUSEKI_VERSION=SNAPSHOT
 matrix:
+  exclude:
+  - php: 7.1
+    env: FUSEKI_VERSION=SNAPSHOT
+  - php: 7.2
+    env: FUSEKI_VERSION=SNAPSHOT
+  - php: 7.4
+    env: FUSEKI_VERSION=SNAPSHOT
   allow_failures:
+  - php: 7.4
   - env: FUSEKI_VERSION=SNAPSHOT
 notifications:
-    slack: finto:5rO9Lp4Tstn6y34grtFBpjJ0
+    slack: kansalliskirjasto:9mOKu3Vws1CIddF5jqWgXbli

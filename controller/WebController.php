@@ -29,7 +29,7 @@ class WebController extends Controller
         // initialize Twig templates
         $tmpDir = $model->getConfig()->getTemplateCache();
 
-        // check if the cache pointed by config.inc exists, if not we create it.
+        // check if the cache pointed by config.ttl exists, if not we create it.
         if (!file_exists($tmpDir)) {
             mkdir($tmpDir);
         }
@@ -41,14 +41,10 @@ class WebController extends Controller
         $this->twig->addExtension(new Twig_Extensions_Extension_I18n());
         // used for setting the base href for the relative urls
         $this->twig->addGlobal("BaseHref", $this->getBaseHref());
-        // setting the service name string from the config.inc
+        // setting the service name string from the config.ttl
         $this->twig->addGlobal("ServiceName", $this->model->getConfig()->getServiceName());
-        // setting the service logo location from the config.inc
-        if ($this->model->getConfig()->getServiceLogo() !== null) {
-            $this->twig->addGlobal("ServiceLogo", $this->model->getConfig()->getServiceLogo());
-        }
 
-        // setting the service custom css file from the config.inc
+        // setting the service custom css file from the config.ttl
         if ($this->model->getConfig()->getCustomCss() !== null) {
             $this->twig->addGlobal("ServiceCustomCss", $this->model->getConfig()->getCustomCss());
         }
@@ -78,54 +74,6 @@ class WebController extends Controller
     }
 
     /**
-     * Creates Skosmos links from uris.
-     * @param string $uri
-     * @param Vocabulary $vocab
-     * @param string $lang
-     * @param string $type
-     * @param string $clang content
-     * @param string $term
-     */
-    public function linkUrlFilter($uri, $vocab, $lang, $type = 'page', $clang = null, $term = null) {
-        // $vocab can either be null, a vocabulary id (string) or a Vocabulary object
-        if ($vocab === null) {
-            // target vocabulary is unknown, best bet is to link to the plain URI
-            return $uri;
-        } elseif (is_string($vocab)) {
-            $vocid = $vocab;
-            $vocab = $this->model->getVocabulary($vocid);
-        } else {
-            $vocid = $vocab->getId();
-        }
-
-        $params = array();
-        if (isset($clang) && $clang !== $lang) {
-            $params['clang'] = $clang;
-        }
-
-        if (isset($term)) {
-            $params['q'] = $term;
-        }
-
-        // case 1: URI within vocabulary namespace: use only local name
-        $localname = $vocab->getLocalName($uri);
-        if ($localname !== $uri && $localname === urlencode($localname)) {
-            // check that the prefix stripping worked, and there are no problematic chars in localname
-            $paramstr = sizeof($params) > 0 ? '?' . http_build_query($params) : '';
-            if ($type && $type !== '' && $type !== 'vocab' && !($localname === '' && $type === 'page')) {
-                return "$vocid/$lang/$type/$localname" . $paramstr;
-            }
-
-            return "$vocid/$lang/$localname" . $paramstr;
-        }
-
-        // case 2: URI outside vocabulary namespace, or has problematic chars
-        // pass the full URI as parameter instead
-        $params['uri'] = $uri;
-        return "$vocid/$lang/$type/?" . http_build_query($params);
-    }
-
-    /**
      * Guess the language of the user. Return a language string that is one
      * of the supported languages defined in the $LANGUAGES setting, e.g. "fi".
      * @param string $vocid identifier for the vocabulary eg. 'yso'.
@@ -152,7 +100,8 @@ class WebController extends Controller
         header('Vary: Accept-Language'); // inform caches that a decision was made based on Accept header
         $this->negotiator = new \Negotiation\LanguageNegotiator();
         $langcodes = array_keys($this->languages);
-        $acceptLanguage = filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE', FILTER_SANITIZE_STRING) ? filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE', FILTER_SANITIZE_STRING) : '';
+        // using a random language from the configured UI languages when there is no accept language header set
+        $acceptLanguage = filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE', FILTER_SANITIZE_STRING) ? filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE', FILTER_SANITIZE_STRING) : $langcodes[0];
         $bestLang = $this->negotiator->getBest($acceptLanguage, $langcodes);
         if (isset($bestLang) && in_array($bestLang, $langcodes)) {
             return $bestLang->getValue();
@@ -163,7 +112,7 @@ class WebController extends Controller
     }
 
     /**
-     * Determines a css class that controls width and positioning of the vocabulary list element. 
+     * Determines a css class that controls width and positioning of the vocabulary list element.
      * The layout is wider if the left/right box templates have not been provided.
      * @return string css class for the container eg. 'voclist-wide' or 'voclist-right'
      */
@@ -193,7 +142,7 @@ class WebController extends Controller
         $categoryLabel = $this->model->getClassificationLabel($request->getLang());
         $sortedVocabs = $this->model->getVocabularyList(false, true);
         $langList = $this->model->getLanguages($request->getLang());
-        $listStyle = $this->listStyle(); 
+        $listStyle = $this->listStyle();
 
         // render template
         echo $template->render(
@@ -209,8 +158,10 @@ class WebController extends Controller
 
     /**
      * Invokes the concept page of a single concept in a specific vocabulary.
+     *
+     * @param Request $request
      */
-    public function invokeVocabularyConcept($request)
+    public function invokeVocabularyConcept(Request $request)
     {
         $lang = $request->getLang();
         $this->setLanguageProperties($lang);
@@ -224,8 +175,13 @@ class WebController extends Controller
             $this->invokeGenericErrorPage($request);
             return;
         }
+        if ($this->notModified($results[0])) {
+            return;
+        }
+        $pluginParameters = $vocab->getConfig()->getPluginParameters();
+        /** @var \Twig\Template $template */
         $template = (in_array('skos:Concept', $results[0]->getType()) || in_array('skos:ConceptScheme', $results[0]->getType())) ? $this->twig->loadTemplate('concept-info.twig') : $this->twig->loadTemplate('group-contents.twig');
-        
+
         $crumbs = $vocab->getBreadCrumbs($request->getContentLang(), $uri);
         echo $template->render(array(
             'search_results' => $results,
@@ -234,7 +190,8 @@ class WebController extends Controller
             'explicit_langcodes' => $langcodes,
             'bread_crumbs' => $crumbs['breadcrumbs'],
             'combined' => $crumbs['combined'],
-            'request' => $request)
+            'request' => $request,
+            'plugin_params' => $pluginParameters)
         );
     }
 
@@ -257,7 +214,9 @@ class WebController extends Controller
         $feedbackName = $request->getQueryParamPOST('name');
         $feedbackEmail = $request->getQueryParamPOST('email');
         $feedbackVocab = $request->getQueryParamPOST('vocab');
-        $feedbackVocabEmail = ($vocab !== null) ? $vocab->getConfig()->getFeedbackRecipient() : null;
+
+        $feedbackVocabEmail = ($feedbackVocab !== null && $feedbackVocab !== '') ?
+            $this->model->getVocabulary($feedbackVocab)->getConfig()->getFeedbackRecipient() : null;
 
         // if the hidden field has been set a value we have found a spam bot
         // and we do not actually send the message.
@@ -276,23 +235,26 @@ class WebController extends Controller
             ));
     }
 
-    private function createFeedbackHeaders($fromName, $fromEmail, $toMail)
+    private function createFeedbackHeaders($fromName, $fromEmail, $toMail, $sender)
     {
-        $headers = "MIME-Version: 1.0″ . '\r\n";
+        $headers = "MIME-Version: 1.0" . "\r\n";
         $headers .= "Content-type: text/html; charset=UTF-8" . "\r\n";
-        if ($toMail) {
+        if (!empty($toMail)) {
             $headers .= "Cc: " . $this->model->getConfig()->getFeedbackAddress() . "\r\n";
         }
+        if (!empty($fromEmail)) {
+            $headers .= "Reply-To: $fromName <$fromEmail>\r\n";
+        }
 
-        $headers .= "From: $fromName <$fromEmail>" . "\r\n" . 'X-Mailer: PHP/' . phpversion();
-        return $headers;
+        $service = $this->model->getConfig()->getServiceName();
+        return $headers . "From: $fromName via $service <$sender>";
     }
 
     /**
      * Sends the user entered message through the php's mailer.
      * @param string $message only required parameter is the actual message.
      * @param string $fromName senders own name.
-     * @param string $fromEmail senders email adress.
+     * @param string $fromEmail senders email address.
      * @param string $fromVocab which vocabulary is the feedback related to.
      */
     public function sendFeedback($request, $message, $fromName = null, $fromEmail = null, $fromVocab = null, $toMail = null)
@@ -302,16 +264,23 @@ class WebController extends Controller
             $message = 'Feedback from vocab: ' . strtoupper($fromVocab) . "<br />" . $message;
         }
 
-        $subject = SERVICE_NAME . " feedback";
-        $headers = $this->createFeedbackHeaders($fromName, $fromEmail, $toMail);
-        $envelopeSender = FEEDBACK_ENVELOPE_SENDER;
+        $envelopeSender = $this->model->getConfig()->getFeedbackEnvelopeSender();
+        $subject = $this->model->getConfig()->getServiceName() . " feedback";
+        // determine the sender address of the message
+        $sender = $this->model->getConfig()->getFeedbackSender();
+        if (empty($sender)) $sender = $envelopeSender;
+        if (empty($sender)) $sender = $this->model->getConfig()->getFeedbackAddress();
+
+        // determine sender name - default to "anonymous user" if not given by user
+        if (empty($fromName)) $fromName = "anonymous user";
+
+        $headers = $this->createFeedbackHeaders($fromName, $fromEmail, $toMail, $sender);
         $params = empty($envelopeSender) ? '' : "-f $envelopeSender";
 
         // adding some information about the user for debugging purposes.
         $message = $message . "<br /><br /> Debugging information:"
             . "<br />Timestamp: " . date(DATE_RFC2822)
             . "<br />User agent: " . $request->getServerConstant('HTTP_USER_AGENT')
-            . "<br />IP address: " . $request->getServerConstant('REMOTE_ADDR')
             . "<br />Referer: " . $request->getServerConstant('HTTP_REFERER');
 
         try {
@@ -352,7 +321,7 @@ class WebController extends Controller
     }
 
     /**
-     * Invokes the search for concepts in all the availible ontologies.
+     * Invokes the search for concepts in all the available ontologies.
      */
     public function invokeGlobalSearch($request)
     {
@@ -396,7 +365,7 @@ class WebController extends Controller
                 'search_results' => $searchResults,
                 'rest' => $parameters->getOffset()>0,
                 'global_search' => true,
-                'term' => $request->getQueryParam('q'),
+                'term' => $request->getQueryParamRaw('q'),
                 'lang_list' => $langList,
                 'vocabs' => str_replace(' ', '+', $vocabs),
                 'vocab_list' => $vocabList,
@@ -464,7 +433,7 @@ class WebController extends Controller
                 'limit_scheme' =>  $request->getQueryParam('scheme') ? explode('+', $request->getQueryParam('scheme')) : null,
                 'group_index' => $vocab->listConceptGroups($request->getContentLang()),
                 'parameters' => $parameters,
-                'term' => $request->getQueryParam('q'),
+                'term' => $request->getQueryParamRaw('q'),
                 'types' => $vocabTypes,
                 'explicit_langcodes' => $langcodes,
                 'request' => $request,
@@ -492,11 +461,15 @@ class WebController extends Controller
 
         $allAtOnce = $vocab->getConfig()->getAlphabeticalFull();
         if (!$allAtOnce) {
-            $searchResults = $vocab->searchConceptsAlphabetical($request->getLetter(), $count, $offset, $contentLang);
             $letters = $vocab->getAlphabet($contentLang);
+            $letter = $request->getLetter();
+            if ($letter === '') {
+                $letter = $letters[0];
+            }
+            $searchResults = $vocab->searchConceptsAlphabetical($letter, $count, $offset, $contentLang);
         } else {
-            $searchResults = $vocab->searchConceptsAlphabetical('*', null, null, $contentLang);
             $letters = null;
+            $searchResults = $vocab->searchConceptsAlphabetical('*', null, null, $contentLang);
         }
 
         $request->setContentLang($contentLang);
@@ -548,6 +521,7 @@ class WebController extends Controller
             $this->invokeGroupIndex($request, true);
             return;
         }
+        $pluginParameters = $vocab->getConfig()->getPluginParameters();
 
         $template = $this->twig->loadTemplate('vocab.twig');
 
@@ -558,6 +532,7 @@ class WebController extends Controller
                 'search_letter' => 'A',
                 'active_tab' => $defaultView,
                 'request' => $request,
+                'plugin_params' => $pluginParameters
             ));
     }
 
@@ -584,22 +559,53 @@ class WebController extends Controller
      */
     public function invokeChangeList($request, $prop='dc:created')
     {
-        // set language parameters for gettext
-        $this->setLanguageProperties($request->getLang());
-        $vocab = $request->getVocab();
         $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
-        $changeList = $vocab->getChangeList($prop, $request->getContentLang(), $request->getLang(), $offset);
+        $limit = ($request->getQueryParam('limit') && is_numeric($request->getQueryParam('limit')) && $request->getQueryParam('limit') >= 0) ? $request->getQueryParam('limit') : 200;
+
+        $changeList = $this->getChangeList($request, $prop, $offset, $limit);
+        $bydate = $this->formatChangeList($changeList, $request->getLang());
+
         // load template
         $template = $this->twig->loadTemplate('changes.twig');
 
         // render template
         echo $template->render(
             array(
-                'vocab' => $vocab,
+                'vocab' => $request->getVocab(),
                 'languages' => $this->languages,
                 'request' => $request,
-                'changeList' => $changeList)
+                'changeList' => $bydate)
             );
+    }
+    /**
+     * Gets the list of newest concepts for a vocabulary according to timestamp indicated by a property
+     * @param Request $request
+     * @param string $prop the name of the property eg. 'dc:modified'.
+     * @param int $offset starting index offset
+     * @param int $limit maximum number of concepts to return
+     * @return Array list of concepts
+     */
+    public function getChangeList($request, $prop, $offset=0, $limit=200)
+    {
+        // set language parameters for gettext
+        $this->setLanguageProperties($request->getLang());
+
+        return $request->getVocab()->getChangeList($prop, $request->getContentLang(), $offset, $limit);
+    }
+
+    /**
+    * Formats the list of concepts as labels arranged by modification month
+    * @param Array $changeList
+    * @param string $lang the language for displaying dates in the change list
+    */
+    public function formatChangeList($changeList, $lang)
+    {
+        $formatByDate = array();
+        foreach($changeList as $concept) {
+            $concept['datestring'] = Punic\Calendar::formatDate($concept['date'], 'medium', $lang);
+            $formatByDate[Punic\Calendar::getMonthName($concept['date'], 'wide', $lang, true) . Punic\Calendar::format($concept['date'], ' y', $lang) ][strtolower($concept['prefLabel'])] = $concept;
+        }
+        return $formatByDate;
     }
 
 }

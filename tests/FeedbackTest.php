@@ -2,13 +2,13 @@
 
 use Symfony\Component\DomCrawler\Crawler;
 
-class FeedbackTest extends PHPUnit_Framework_TestCase
+class FeedbackTest extends PHPUnit\Framework\TestCase
 {
   private $model;
   private $request;
 
   protected function setUp() {
-    $config = new GlobalConfig('/../tests/testconfig.inc');
+    $config = new GlobalConfig('/../tests/testconfig-fordefaults.ttl');
     $this->model = new Model($config);
     $this->request = \Mockery::mock('Request', array($this->model))->makePartial();
     $this->request->setLang('en');
@@ -44,6 +44,7 @@ class FeedbackTest extends PHPUnit_Framework_TestCase
    * @covers Honeypot::validateHoneytime
    */
   public function testHoneypotAndHoneypot() {
+    $this->expectNotToPerformAssertions();
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('message')
@@ -59,7 +60,7 @@ class FeedbackTest extends PHPUnit_Framework_TestCase
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('vocab')
-        ->andReturn('Test vocab');
+        ->andReturn('test');
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('item-description')
@@ -84,6 +85,7 @@ class FeedbackTest extends PHPUnit_Framework_TestCase
    * @covers Honeypot::validateHoneytime
    */
   public function testHoneypotAndHoneypotDisabled() {
+    $this->expectNotToPerformAssertions();
     $this->controller->honeypot->disable();
     $this->request
         ->shouldReceive('getQueryParamPOST')
@@ -100,7 +102,7 @@ class FeedbackTest extends PHPUnit_Framework_TestCase
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('vocab')
-        ->andReturn('Test vocab');
+        ->andReturn('test');
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('item-description')
@@ -126,6 +128,7 @@ class FeedbackTest extends PHPUnit_Framework_TestCase
    * @covers Honeypot::validateHoneytime
    */
   public function testHoneytimeTooFast() {
+    $this->expectNotToPerformAssertions();
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('message')
@@ -141,7 +144,7 @@ class FeedbackTest extends PHPUnit_Framework_TestCase
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('vocab')
-        ->andReturn('Test vocab');
+        ->andReturn('test');
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('item-description')
@@ -165,6 +168,7 @@ class FeedbackTest extends PHPUnit_Framework_TestCase
    * @covers Honeypot::validateHoneypot
    */
   public function testHoneypotNotEmpty() {
+    $this->expectNotToPerformAssertions();
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('message')
@@ -180,7 +184,7 @@ class FeedbackTest extends PHPUnit_Framework_TestCase
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('vocab')
-        ->andReturn('Test vocab');
+        ->andReturn('test');
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('item-description')

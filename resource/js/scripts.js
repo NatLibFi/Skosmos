@@ -83,15 +83,35 @@ $.ajaxQ = (function(){
 })();
 
 function updateContent(data) {
-  $('.content').empty();
+  var $content = $('.content');
+  $content.empty();
   var response = $('.content', data).html();
-  $('.content').append(response);
+  $content.append(response);
+}
+
+function updateJsonLD(data) {
+    var $jsonld = $('script[type="application/ld+json"]');
+    var $newJsonLD = $(data).filter('script[type="application/ld+json"]');
+    if ($jsonld[0]) {
+        $jsonld[0].innerHTML = "{}";
+        if ($newJsonLD[0]) {
+            $jsonld[0].innerHTML = $newJsonLD[0].innerHTML;
+        }
+    }
+    else if ($newJsonLD[0]) {
+        // insert after the first JS script as it is in the template
+        var elemBefore = $('script[type="text/javascript"]')[0];
+        if (elemBefore) {
+            $newJsonLD.insertAfter(elemBefore);
+        }
+    }
 }
 
 function updateTopbarLang(data) {
-  $('#language').empty();
+  var $language = $('#language');
+  $language.empty();
   var langBut = $('#language', data).html();
-  $('#language').append(langBut);
+  $language.append(langBut);
 }
 
 function updateTitle(data) {
@@ -100,9 +120,10 @@ function updateTitle(data) {
 }
 
 function updateSidebar(data) {
-  $('#sidebar').empty();
+  var $sidebar = $('#sidebar');
+  $sidebar.empty();
   var response = $('#sidebar', data).html();
-  $('#sidebar').append(response);
+  $sidebar.append(response);
 }
 
 // sets the language cookie for 365 days
@@ -116,10 +137,12 @@ function clearResultsAndAddSpinner() {
 }
   
 function loadLimitations() {
+  var $typeLimit = $('#type-limit');
+  var $schemeLimit = $('#scheme-limit');
   var groupLimit = $('#group-limit').val();
   var parentLimit = $('#parent-limit').attr('data-uri');
-  var typeLimit = $('#type-limit').val() ? $('#type-limit').val().join('+') : $('#type-limit').val();
-  var schemeLimit = $('#scheme-limit').val() ? $('#scheme-limit').val().join('+') : $('#scheme-limit').val();
+  var typeLimit = $typeLimit.val() ? $typeLimit.val().join('+') : $typeLimit.val();
+  var schemeLimit = $schemeLimit.val() ? $schemeLimit.val().join('+') : $schemeLimit.val();
   if (schemeLimit && schemeLimit[0] === '+') { // filtering the empty selection out of the search string
     schemeLimit = schemeLimit.substring(1);
   }
@@ -173,7 +196,30 @@ function hideCrumbs() {
       $($crumbs[i]).addClass('hidden-path');
     }
     if ($('.restore-breadcrumbs').length === 0) {
-      $($crumbs[0]).after('<a class="versal restore-breadcrumbs" href="#">[' + expand.replace('#',($crumbs.length)) + ']</a>');
+      $($crumbs[0]).after('<a class="versal restore-breadcrumbs" href="#">[' + expand_paths.replace('#',($crumbs.length)) + ']</a>');
+    }
+  }
+}
+
+// if there are too many property values on the concept page, hide some of them
+function hidePropertyValues() {
+  var maxValues = 15; // hide extras if there are more values than this
+  var $propertyValueLists = $('.property-value-wrapper ul');
+  for (var i = 0; i < $propertyValueLists.length; ++i) {
+    var $propertyValueList = $($propertyValueLists[i]);
+    if ($propertyValueList.hasClass('expand-propvals')) {
+      continue; // already shortened - and expanded by user
+    }
+    if ($propertyValueList.find('.restore-propvals').length > 0) {
+      continue; // already shortened by this function
+    }
+    var nValues = $propertyValueLists[i].children.length;
+    if (nValues > maxValues) {
+      var $propertyValues = $($propertyValueLists[i].children);
+      for (var j = maxValues; j < $propertyValues.length; ++j) {
+        $($propertyValues[j]).addClass('hidden-propval');
+      }
+      $propertyValueList.append('<li><a class="restore-propvals" href="#">[' + expand_propvals.replace('#', nValues) + ']</a></li>');
     }
   }
 }
@@ -217,12 +263,12 @@ function countAndSetOffset() {
   $('.sidebar-grey').attr('style', function() {
     var pixels = $('.nav-tabs').height() + 2; // the 2 pixels are for the borders
     if ($('#sidebar > .pagination').is(':visible')) { pixels += $('.pagination').height(); }
-    if ($('.changes-navi').is(':visible')) { pixels += $('.changes-navi').height(); }
     return 'height: calc(100% - ' + pixels + 'px) !important';
   });
-  if ($('#sidebar').length && !$('#sidebar').hasClass('fixed')) {
-    var yOffset = window.innerHeight - ( $('#sidebar').offset().top - window.pageYOffset);
-    $('#sidebar').css('height', yOffset);
+  var $sidebar = $('#sidebar');
+  if ($sidebar.length && !$sidebar.hasClass('fixed')) {
+    var yOffset = window.innerHeight - ( $sidebar.offset().top - window.pageYOffset);
+    $sidebar.css('height', yOffset);
   }
 }
 
@@ -251,7 +297,10 @@ function makeCallbacks(data, pageType) {
   var variables = data ? data.substring(data.indexOf('var uri ='), data.indexOf('var uriSpace =')).split('\n') : '';
   var newUri = data ? variables[0].substring(variables[0].indexOf('"')+1, variables[0].indexOf(';')-1) : window.uri;
   var newPrefs = data ? JSON.parse(variables[1].substring(variables[1].indexOf('['), variables[1].lastIndexOf(']')+1)) : window.prefLabels;
-  var params = {'uri': newUri, 'prefLabels': newPrefs, 'page': pageType};
+  var $ldJsonScript = $('script[type="application/ld+json"]');
+  var embeddedJsonLd  = $ldJsonScript[0] ? JSON.parse($ldJsonScript[0].innerHTML) : {};
+
+  var params = {'uri': newUri, 'prefLabels': newPrefs, 'page': pageType, "json-ld": embeddedJsonLd};
 
   if (window.pluginCallbacks) {
     for (var i in window.pluginCallbacks) {
@@ -278,3 +327,125 @@ function escapeHtml(string) {
   });
 }
 
+function renderPropertyMappings(concept, contentLang, properties) {
+  var source = document.getElementById("property-mappings-template").innerHTML;
+  // handlebarjs helper functions
+  Handlebars.registerHelper('ifDeprecated', function(conceptType, value, opts) {
+    if(conceptType == value) {
+      return opts.fn(this);
+    }
+    return opts.inverse(this);
+  });
+  Handlebars.registerHelper('toUpperCase', function(str) {
+    if (str === undefined) {
+      return '';
+    }
+    return str.toUpperCase();
+  });
+  Handlebars.registerHelper('ifNotInDescription', function(type, description, opts) {
+    if (type === undefined) {
+      return opts.inverse(this);
+    }
+    if (description === undefined) {
+      return opts.inverse(this);
+    }
+    if (description.indexOf(type) > 0 && description.indexOf('_help') > 0) {
+      return opts.inverse(this);
+    }
+    return opts.fn(this);
+  });
+  Handlebars.registerHelper('ifDifferentLabelLang', function(labelLang, opts) {
+    if (labelLang !== undefined && labelLang !== '' && labelLang !== null) {
+      if (explicitLangCodes || labelLang !== contentLang) {
+        return opts.fn(this);
+      }
+    }
+    return opts.inverse(this);
+  });
+
+  var template = Handlebars.compile(source);
+
+  var context = {
+    concept: concept,
+    properties: properties
+  };
+
+  return template(context);
+}
+
+/**
+ * Load mapping properties, via the JSKOS REST endpoint. Then, render the concept mapping properties template. This
+ * template is comprised of another template, for concept mapping property values.
+ *
+ * @param concept dictionary/object populated with data from the Concept object
+ * @param lang language used in the UI
+ * @param contentLang the content language
+ * @param $htmlElement HTML (a div) parent object (initially hidden)
+ * @param conceptData concept page data returned via ajax, passed to makeCallback only
+ */
+function loadMappingProperties(concept, lang, contentLang, $htmlElement, conceptData) {
+  // display with the spinner
+  $htmlElement
+    .removeClass('hidden')
+    .append('<div class="spinner row"></div>');
+  $.ajax({
+    url: rest_base_url + vocab + '/mappings',
+    data: $.param({'uri': concept.uri, lang: lang, clang: contentLang}),
+    success: function(data) {
+
+      // The JSKOS REST mapping properties call will have added more resources into the graph. The graph
+      // is returned alongside the mapping properties, so now we just need to replace it on the UI.
+      $('script[type="application/ld+json"]')[0].innerHTML = data.graph;
+
+      var conceptProperties = [];
+      for (var i = 0; i < data.mappings.length; i++) {
+        /**
+         * @var conceptMappingPropertyValue JSKOS transformed ConceptMappingPropertyValue
+         */
+        var conceptMappingPropertyValue = data.mappings[i];
+        var found = false;
+        var conceptProperty = null;
+        for (var j = 0; j < conceptProperties.length; j++) {
+          conceptProperty = conceptProperties[j];
+          if (conceptProperty.type === conceptMappingPropertyValue.type[0]) {
+            conceptProperty.values.push(conceptMappingPropertyValue);
+            found = true;
+            break;
+          }
+        }
+
+        if (!found) {
+          conceptProperty = {
+            'type': conceptMappingPropertyValue.type[0],
+            'id': conceptMappingPropertyValue.type[0].replace(/[^A-Za-z-]/g, '_'),
+            'label': conceptMappingPropertyValue.typeLabel,
+            'notation': conceptMappingPropertyValue.notation,
+            'description': conceptMappingPropertyValue.description,
+            'values': []
+          };
+          conceptProperty.values.push(conceptMappingPropertyValue);
+          conceptProperties.push(conceptProperty);
+        }
+      }
+
+      if (conceptProperties.length > 0) {
+        var template = renderPropertyMappings(concept, contentLang, conceptProperties);
+
+        $htmlElement.empty();
+        $htmlElement.append(template);
+      } else {
+        // No concept properties found
+        $htmlElement.empty();
+        $htmlElement.addClass("hidden");
+      }
+
+
+    },
+    error: function(data) {
+      console.log("Error retrieving mapping properties for [" + $htmlElement.data('concept-uri') + "]: " + data.responseText);
+    },
+    complete: function() {
+      makeCallbacks(conceptData);
+    }
+  });
+}

@@ -1,1810 +1,2428 @@
 {
-    "swagger": "2.0",
-    "info": {
-        "title": "Skosmos API",
-        "version": "v1",
-        "description": "The Skosmos REST API is a read-only interface to the data stored on the vocabulary server. The URL namespace is the base URL of the Skosmos instance followed by `/rest/v1/`. \n\nMost methods return the data as UTF-8 encoded JSON-LD, served using the `application/json` MIME type. The data consists of a single JSON object which includes JSON-LD context information (in the `@context` field) and one or more fields which contain the actual data. Some methods (`data`) return other formats (RDF/XML, Turtle, RDF/JSON) with the appropriate MIME type.\n\nThe API supports Cross-Origin Resource Sharing by setting the Access-Control-Allow-Origin HTTP header to `\"*\"` for all requests.\n\nThe API supports the JSONP convention of appending a callback parameter to any URL. The returned data will then be wrapped in a JavaScript function call using the function name provided as the callback parameter value. JSONP wrapped data will be served using the `application/javascript` MIME type.\n"
+  "swagger": "2.0",
+  "info": {
+    "title": "Skosmos API",
+    "version": "v1",
+    "description": "The Skosmos REST API is a read-only interface to the data stored on the vocabulary server. The URL namespace is the base URL of the Skosmos instance followed by `/rest/v1/`. \n\nMost methods return the data as UTF-8 encoded JSON-LD, served using the `application/json` MIME type. The data consists of a single JSON object which includes JSON-LD context information (in the `@context` field) and one or more fields which contain the actual data. Some methods (`data`) return other formats (RDF/XML, Turtle, RDF/JSON) with the appropriate MIME type.\n\nThe API supports Cross-Origin Resource Sharing by setting the Access-Control-Allow-Origin HTTP header to `\"*\"` for all requests.\n\nThe API supports the JSONP convention of appending a callback parameter to any URL. The returned data will then be wrapped in a JavaScript function call using the function name provided as the callback parameter value. JSONP wrapped data will be served using the `application/javascript` MIME type.\n"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "basePath": "/rest/v1",
+  "produces": [
+    "application/rdf+xml",
+    "text/turtle",
+    "application/ld+json",
+    "application/json"
+  ],
+  "paths": {
+    "/vocabularies": {
+      "get": {
+        "summary": "Available vocabularies",
+        "parameters": [
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "language of labels, e.g. \"en\" or \"fi\"",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "a list of vocabularies on the server",
+            "schema": {
+              "$ref": "#/definitions/VocabularyList"
+            }
+          }
+        },
+        "tags": [
+          "Global methods"
+        ]
+      }
     },
-    "schemes": [
-        "http",
-        "https"
-    ],
-    "basePath": "/rest/v1",
-    "produces": [
-        "application/rdf+xml",
-        "text/turtle",
-        "application/ld+json",
-        "application/json"
-    ],
-    "paths": {
-        "/vocabularies": {
-            "get": {
-                "summary": "Available vocabularies",
-                "parameters": [
-                    {
-                        "name": "lang",
-                        "in": "query",
-                        "description": "language of labels, e.g. \"en\" or \"fi\"",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "a list of vocabularies on the server",
-                        "schema": {
-                            "$ref": "#/definitions/VocabularyList"
-                        }
-                    }
-                },
-                "tags": [
-                    "Global methods"
-                ]
+    "/search": {
+      "get": {
+        "summary": "Search concepts and collections by query term",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "description": "the term to search for e.g. \"cat*\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "language of labels to match, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "labellang",
+            "in": "query",
+            "description": "language of labels to return, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "vocab",
+            "in": "query",
+            "description": "vocabulary/vocabularies to limit search to, e.g. \"yso\" or \"yso allars\"",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "limit search to concepts of the given type(s), e.g. \"skos:Concept\".",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "parent",
+            "in": "query",
+            "description": "limit search to concepts which have the given concept (specified by URI) as parent in their transitive broader hierarchy",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "group",
+            "in": "query",
+            "description": "limit search to concepts in the given group (specified by URI)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "maxhits",
+            "in": "query",
+            "description": "Maximum number of results to return. If not given, maxhits will default to 100. (default settable in config.ttl)",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "offset where to start in the result set, useful for paging the result. If not given, defaults to 0.",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "space-separated list of extra fields to include in the results. e.g. \"related\" or \"prefLabel\" or any other skos property.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "unique",
+            "in": "query",
+            "description": "boolean flag to indicate that each concept should be returned only once, instead of returning all the different ways it could match (for example both via prefLabel and altLabel).",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "data of the concepts matching the search term",
+            "schema": {
+              "$ref": "#/definitions/SearchResults"
             }
+          }
         },
-        "/search": {
-            "get": {
-                "summary": "Search concepts and collections by query term",
-                "parameters": [
-                    {
-                        "name": "query",
-                        "in": "query",
-                        "description": "the term to search for e.g. \"cat*\"",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "lang",
-                        "in": "query",
-                        "description": "language of labels to match, e.g. \"en\" or \"fi\"",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "labellang",
-                        "in": "query",
-                        "description": "language of labels to return, e.g. \"en\" or \"fi\"",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "vocab",
-                        "in": "query",
-                        "description": "vocabulary/vocabularies to limit search to, e.g. \"yso\" or \"yso allars\"",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "type",
-                        "in": "query",
-                        "description": "limit search to concepts of the given type(s), e.g. \"skos:Concept\".",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "parent",
-                        "in": "query",
-                        "description": "limit search to concepts which have the given concept (specified by URI) as parent in their transitive broader hierarchy",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "group",
-                        "in": "query",
-                        "description": "limit search to concepts in the given group (specified by URI)",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "maxhits",
-                        "in": "query",
-                        "description": "Maximum number of results to return. If not given, maxhits will default to 100. (default settable in config.inc)",
-                        "required": false,
-                        "type": "integer"
-                    },
-                    {
-                        "name": "offset",
-                        "in": "query",
-                        "description": "offset where to start in ther esult set, useful for paging the result. If not given, defaults to 0.",
-                        "required": false,
-                        "type": "integer"
-                    },
-                    {
-                        "name": "fields",
-                        "in": "query",
-                        "description": "space-separated list of extra fields to include in the results. e.g. \"related\" or \"prefLabel\" or any other skos property.",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "unique",
-                        "in": "query",
-                        "description": "boolean flag to indicate that each concept should be returned only once, instead of returning all the different ways it could match (for example both via prefLabel and altLabel).",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "data of the concepts matching the search term",
-                        "schema": {
-                            "$ref": "#/definitions/SearchResults"
-                        }
-                    }
-                },
-                "tags": [
-                    "Global methods"
-                ]
-            }
-        },
-        "/data": {
-            "get": {
-                "summary": "RDF data of the requested concept",
-                "parameters": [
-                    {
-                        "name": "uri",
-                        "in": "query",
-                        "description": "URI of the concept whose data to return",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "format",
-                        "in": "query",
-                        "description": "the MIME type of the serialization format, e.g. \"text/turtle\" or \"application/rdf+xml\"",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "produces": [
-                    "application/rdf+xml",
-                    "text/turtle",
-                    "application/ld+json",
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "the data of the requested concept"
-                    },
-                    "404": {
-                        "description": "the URI did not match any known concept"
-                    }
-                },
-                "tags": [
-                    "Global methods"
-                ]
-            }
-        },
-        "/types": {
-            "get": {
-                "summary": "Information about the types (classes) of objects contained in all  vocabularies",
-                "parameters": [
-                    {
-                        "name": "lang",
-                        "in": "query",
-                        "description": "language of labels, e.g. \"en\" or \"fi\"",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "produces": [
-                    "application/ld+json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "the data of the requested concept",
-                        "schema": {
-                            "$ref": "#/definitions/TypeList"
-                        }
-                    }
-                },
-                "tags": [
-                    "Global methods"
-                ]
-            }
-        },
-        "/{vocid}/": {
-            "get": {
-                "summary": "General information about the vocabulary",
-                "parameters": [
-                    {
-                        "name": "vocid",
-                        "in": "path",
-                        "description": "The Skosmos vocabulary id e.g. stw or yso",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "lang",
-                        "in": "query",
-                        "description": "language of labels, e.g. \"en\" or \"fi\"",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "produces": [
-                    "application/ld+json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "information about the requested vocabulary",
-                        "schema": {
-                            "$ref": "#/definitions/VocabularyInfo"
-                        }
-                    },
-                    "404": {
-                        "description": "no vocabulary could be found with the requested id"
-                    }
-                },
-                "tags": [
-                    "Vocabulary-specific methods"
-                ]
-            }
-        },
-        "/{vocid}/types": {
-            "get": {
-                "summary": "Information about the types (classes) of objects in the vocabulary",
-                "parameters": [
-                    {
-                        "name": "vocid",
-                        "in": "path",
-                        "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "lang",
-                        "in": "query",
-                        "description": "language of labels, e.g. \"en\" or \"fi\"",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "produces": [
-                    "application/ld+json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "type information about the requested vocabulary",
-                        "schema": {
-                            "$ref": "#/definitions/TypeList"
-                        }
-                    },
-                    "404": {
-                        "description": "no vocabulary could be found with the requested id"
-                    }
-                },
-                "tags": [
-                    "Vocabulary-specific methods"
-                ]
-            }
-        },
-        "/{vocid}/topConcepts": {
-            "get": {
-                "summary": "Top concepts of the vocabulary",
-                "parameters": [
-                    {
-                        "name": "vocid",
-                        "in": "path",
-                        "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "lang",
-                        "in": "query",
-                        "description": "language of labels, e.g. \"en\" or \"fi\"",
-                        "type": "string"
-                    },
-                    {
-                        "name": "scheme",
-                        "in": "query",
-                        "description": "concept scheme whose top concepts to return. If not given, the default concept scheme of the vocabulary will be used.",
-                        "type": "string"
-                    }
-                ],
-                "produces": [
-                    "application/ld+json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "type information about the requested vocabulary",
-                        "schema": {
-                            "$ref": "#/definitions/TopConcepts"
-                        }
-                    },
-                    "404": {
-                        "description": "no vocabulary could be found with the requested id"
-                    }
-                },
-                "tags": [
-                    "Vocabulary-specific methods"
-                ]
-            }
-        },
-        "/{vocid}/data": {
-            "get": {
-                "summary": "RDF data of the whole vocabulary or a specific concept",
-                "parameters": [
-                    {
-                        "name": "vocid",
-                        "in": "path",
-                        "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "format",
-                        "in": "query",
-                        "description": "The MIME type of the serialization format, e.g \"text/turtle\" or \"application/rdf+xml\". If not specified, HTTP content negotiation (based on the Accept header) is used to determine a suitable serialization format from among the available ones.",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "uri",
-                        "in": "query",
-                        "description": "URI of the desired concept. When no uri parameter is given, the whole vocabulary is returned instead.",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "produces": [
-                    "application/rdf+xml",
-                    "text/turtle",
-                    "application/ld+json",
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "the RDF data of the requested vocabulary/concept"
-                    },
-                    "404": {
-                        "description": "no vocabulary/concept could be found with the requested id/uri"
-                    }
-                },
-                "tags": [
-                    "Vocabulary-specific methods",
-                    "Concept-specific methods"
-                ]
-            }
-        },
-        "/{vocid}/search": {
-            "get": {
-                "summary": "Finds concepts and collections from a vocabulary by query term",
-                "description": "Returns a list of search results. The search is performed as a case-insensitive pattern, where an asterisk (*) may be used as wildcard. E.g. \"cat*\" may return results such as \"CATCH-22\" and \"categorization\". If decoded into RDF, the result is a vocabulary fragment expressed as SKOS.",
-                "parameters": [
-                    {
-                        "name": "vocid",
-                        "in": "path",
-                        "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "query",
-                        "in": "query",
-                        "description": "the term to search for e.g. \"cat*\"",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "lang",
-                        "in": "query",
-                        "description": "language of labels to match, e.g. \"en\" or \"fi\"",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "type",
-                        "in": "query",
-                        "description": "limit search to concepts of the given type, e.g. \"skos:Concept\"; multiple types can be specified as a space-separated list",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "parent",
-                        "in": "query",
-                        "description": "limit search to concepts which have the given concept (specified by URI) as parent in their transitive broader hierarchy",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "group",
-                        "in": "query",
-                        "description": "limit search to concepts in the given group (specified by URI)",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "maxhits",
-                        "in": "query",
-                        "description": "Maximum number of results to return. If not given, maxhits will default to 100. (default settable in config.inc)",
-                        "required": false,
-                        "type": "integer"
-                    },
-                    {
-                        "name": "offset",
-                        "in": "query",
-                        "description": "offset where to start in ther esult set, useful for paging the result. If not given, defaults to 0.",
-                        "required": false,
-                        "type": "integer"
-                    },
-                    {
-                        "name": "fields",
-                        "in": "query",
-                        "description": "space-separated list of extra fields to include in the results. e.g. \"related\" or \"prefLabel\" or any other skos property.",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "unique",
-                        "in": "query",
-                        "description": "boolean flag to indicate that each concept should be returned only once, instead of returning all the different ways it could match (for example both via prefLabel and altLabel).",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "data of the concepts matching the search term",
-                        "schema": {
-                            "$ref": "#/definitions/SearchResults"
-                        }
-                    }
-                },
-                "tags": [
-                    "Vocabulary-specific methods"
-                ]
-            }
-        },
-        "/{vocid}/lookup": {
-            "get": {
-                "summary": "Look up concepts by label",
-                "description": "Returns the best matching concept(s) for the given label in JSON-LD format. In case the label matches several concepts with the same precedence, all of them are returned.",
-                "parameters": [
-                    {
-                        "name": "vocid",
-                        "in": "path",
-                        "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "label",
-                        "in": "query",
-                        "description": "the label to look for, e.g. \"cat\" or \"dog\"",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "lang",
-                        "in": "query",
-                        "description": "search language, e.g. \"en\" or \"fi\"",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "produces": [
-                    "application/ld+json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "type information about the requested vocabulary",
-                        "schema": {
-                            "$ref": "#/definitions/LookupResults"
-                        }
-                    },
-                    "404": {
-                        "description": "no concept could be found with the requested label"
-                    }
-                },
-                "tags": [
-                    "Vocabulary-specific methods"
-                ]
-            }
-        },
-        "/{vocid}/vocabularyStatistics": {
-            "get": {
-                "summary": "Number of Concepts and Collections in the vocabulary",
-                "parameters": [
-                    {
-                        "name": "vocid",
-                        "in": "path",
-                        "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "lang",
-                        "in": "query",
-                        "description": "language of labels, e.g. \"en\" or \"fi\"",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "produces": [
-                    "application/ld+json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "the concept and group counts for the vocabulary",
-                        "schema": {
-                            "$ref": "#/definitions/VocabularyStatistics"
-                        }
-                    },
-                    "404": {
-                        "description": "no vocabulary could be found with the requested id"
-                    }
-                },
-                "tags": [
-                    "Vocabulary-specific methods"
-                ]
-            }
-        },
-        "/{vocid}/labelStatistics": {
-            "get": {
-                "summary": "Number of labels by language",
-                "description": "Returns a list of label (skos:prefLabel, skos:altLabel and skos:hiddenLabel) counts in all the different languages.",
-                "parameters": [
-                    {
-                        "name": "vocid",
-                        "in": "path",
-                        "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "lang",
-                        "in": "query",
-                        "description": "language of labels, e.g. \"en\" or \"fi\"",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "produces": [
-                    "application/ld+json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "the concept and group counts for the vocabulary",
-                        "schema": {
-                            "$ref": "#/definitions/LabelStatistics"
-                        }
-                    },
-                    "404": {
-                        "description": "no vocabulary could be found with the requested id"
-                    }
-                },
-                "tags": [
-                    "Vocabulary-specific methods"
-                ]
-            }
-        },
-        "/{vocid}/label": {
-            "get": {
-                "summary": "Preferred label for the requested concept",
-                "parameters": [
-                    {
-                        "name": "vocid",
-                        "in": "path",
-                        "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "uri",
-                        "in": "query",
-                        "description": "URI of the concept whose label to return",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "lang",
-                        "in": "query",
-                        "description": "search language, e.g. \"en\" or \"fi\"",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "produces": [
-                    "application/ld+json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "preferred label for the requested concept",
-                        "schema": {
-                            "$ref": "#/definitions/PrefAndUri"
-                        }
-                    },
-                    "404": {
-                        "description": "no concept could be found with the requested URI"
-                    }
-                },
-                "tags": [
-                    "Concept-specific methods"
-                ]
-            }
-        },
-        "/{vocid}/broader": {
-            "get": {
-                "summary": "Broader concepts of the requested concept",
-                "parameters": [
-                    {
-                        "name": "vocid",
-                        "in": "path",
-                        "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "uri",
-                        "in": "query",
-                        "description": "URI of the concept whose broader concept to return",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "lang",
-                        "in": "query",
-                        "description": "label language, e.g. \"en\" or \"fi\"",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "produces": [
-                    "application/ld+json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "the broader concept(s) of the requested concept or an empty array if there are none",
-                        "schema": {
-                            "$ref": "#/definitions/BroaderResult"
-                        }
-                    },
-                    "404": {
-                        "description": "no concept could be found with the requested URI"
-                    }
-                },
-                "tags": [
-                    "Concept-specific methods"
-                ]
-            }
-        },
-        "/{vocid}/broaderTransitive": {
-            "get": {
-                "summary": "Broader transitive hierarchy for the requested concept",
-                "parameters": [
-                    {
-                        "name": "vocid",
-                        "in": "path",
-                        "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "uri",
-                        "in": "query",
-                        "description": "URI of the concept whose broader transitive hierarchy to return",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "lang",
-                        "in": "query",
-                        "description": "label language, e.g. \"en\" or \"fi\"",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "produces": [
-                    "application/ld+json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "the broader transitive hierarchy for the requested concept or an empty array if there concept does not have broaders",
-                        "schema": {
-                            "$ref": "#/definitions/BroaderTransitiveResult"
-                        }
-                    },
-                    "404": {
-                        "description": "no concept could be found with the requested URI"
-                    }
-                },
-                "tags": [
-                    "Concept-specific methods"
-                ]
-            }
-        },
-        "/{vocid}/narrower": {
-            "get": {
-                "summary": "Narrower concepts of the requested concept",
-                "parameters": [
-                    {
-                        "name": "vocid",
-                        "in": "path",
-                        "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "uri",
-                        "in": "query",
-                        "description": "URI of the concept whose narrower concept to return",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "lang",
-                        "in": "query",
-                        "description": "label language, e.g. \"en\" or \"fi\"",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "produces": [
-                    "application/ld+json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "the narrower concept(s) of the requested concept or an empty array if there are none",
-                        "schema": {
-                            "$ref": "#/definitions/NarrowerResult"
-                        }
-                    },
-                    "404": {
-                        "description": "no concept could be found with the requested URI"
-                    }
-                },
-                "tags": [
-                    "Concept-specific methods"
-                ]
-            }
-        },
-        "/{vocid}/narrowerTransitive": {
-            "get": {
-                "summary": "Narrower transitive hierarchy for the requested concept",
-                "parameters": [
-                    {
-                        "name": "vocid",
-                        "in": "path",
-                        "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "uri",
-                        "in": "query",
-                        "description": "URI of the concept whose narrower transitive hierarchy to return",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "lang",
-                        "in": "query",
-                        "description": "label language, e.g. \"en\" or \"fi\"",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "produces": [
-                    "application/ld+json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "the narrower transitive hierarchy for the requested concept or an empty array if there concept does not have narrowers",
-                        "schema": {
-                            "$ref": "#/definitions/NarrowerTransitiveResult"
-                        }
-                    },
-                    "404": {
-                        "description": "no concept could be found with the requested URI"
-                    }
-                },
-                "tags": [
-                    "Concept-specific methods"
-                ]
-            }
-        },
-        "/{vocid}/related": {
-            "get": {
-                "summary": "Related concepts of the requested concept",
-                "parameters": [
-                    {
-                        "name": "vocid",
-                        "in": "path",
-                        "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "uri",
-                        "in": "query",
-                        "description": "URI of the concept whose related concept to return",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "lang",
-                        "in": "query",
-                        "description": "label language, e.g. \"en\" or \"fi\"",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "produces": [
-                    "application/ld+json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "the related concept(s) of the requested concept or an empty array if there are none",
-                        "schema": {
-                            "$ref": "#/definitions/RelatedResult"
-                        }
-                    },
-                    "404": {
-                        "description": "no concept could be found with the requested URI"
-                    }
-                },
-                "tags": [
-                    "Concept-specific methods"
-                ]
-            }
-        },
-        "/{vocid}/children": {
-            "get": {
-                "summary": "Narrower concepts of the requested concept",
-                "parameters": [
-                    {
-                        "name": "vocid",
-                        "in": "path",
-                        "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "uri",
-                        "in": "query",
-                        "description": "URI of the concept whose narrower concepts to return",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "lang",
-                        "in": "query",
-                        "description": "label language, e.g. \"en\" or \"fi\"",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "produces": [
-                    "application/ld+json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Returns the children of the requested concept. The data is intended to be used in a hierarchical display.",
-                        "schema": {
-                            "$ref": "#/definitions/ChildrenResult"
-                        }
-                    },
-                    "404": {
-                        "description": "no concept could be found with the requested URI"
-                    }
-                },
-                "tags": [
-                    "Concept-specific methods"
-                ]
-            }
-        },
-        "/{vocid}/groups": {
-            "get": {
-                "summary": "Concept groups in the vocabulary",
-                "parameters": [
-                    {
-                        "name": "vocid",
-                        "in": "path",
-                        "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "lang",
-                        "in": "query",
-                        "description": "label language, e.g. \"en\" or \"fi\"",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "produces": [
-                    "application/ld+json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "concept groups of the vocabulary",
-                        "schema": {
-                            "$ref": "#/definitions/GroupResult"
-                        }
-                    },
-                    "404": {
-                        "description": "no vocabulary could be found with the requested id"
-                    }
-                },
-                "tags": [
-                    "Vocabulary-specific methods"
-                ]
-            }
-        },
-        "/{vocid}/groupMembers": {
-            "get": {
-                "summary": "Members of the requested concept group",
-                "parameters": [
-                    {
-                        "name": "vocid",
-                        "in": "path",
-                        "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "lang",
-                        "in": "query",
-                        "description": "label language, e.g. \"en\" or \"fi\"",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "produces": [
-                    "application/ld+json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "concept groups of the vocabulary",
-                        "schema": {
-                            "$ref": "#/definitions/GroupMembers"
-                        }
-                    },
-                    "404": {
-                        "description": "no concept group could be found with the requested URI"
-                    }
-                },
-                "tags": [
-                    "Concept-specific methods"
-                ]
-            }
-        },
-        "/{vocid}/hierarchy": {
-            "get": {
-                "summary": "Hierarchical context of the requested concept",
-                "parameters": [
-                    {
-                        "name": "vocid",
-                        "in": "path",
-                        "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "uri",
-                        "in": "query",
-                        "description": "URI of the concept whose hierarchical context to return",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "lang",
-                        "in": "query",
-                        "description": "label language, e.g. \"en\" or \"fi\"",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "produces": [
-                    "application/ld+json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Returns the hierarchical context of the requested concept. The hierarchy is intended to be used in a hierarchical display.",
-                        "schema": {
-                            "$ref": "#/definitions/Hierarchy"
-                        }
-                    },
-                    "404": {
-                        "description": "no concept group could be found with the requested URI"
-                    }
-                },
-                "tags": [
-                    "Concept-specific methods"
-                ]
-            }
-        }
+        "tags": [
+          "Global methods"
+        ]
+      }
     },
-    "definitions": {
-        "VocabularyList": {
-            "type": "object",
-            "properties": {
-                "uri": {
-                    "type": "string"
-                },
-                "vocabularies": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/Vocabulary"
-                    }
-                }
-            },
-            "required": [
-                "uri",
-                "vocabularies"
-            ]
-        },
-        "Vocabulary": {
-            "type": "object",
-            "properties": {
-                "uri": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "title": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "uri",
-                "id",
-                "title"
-            ]
-        },
-        "TypeList": {
-            "type": "object",
-            "properties": {
-                "uri": {
-                    "type": "string"
-                },
-                "types": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/Type"
-                    }
-                }
+    "/label": {
+      "get": {
+        "summary": "List of labels for the requested concept",
+        "parameters": [
+          {
+            "name": "uri",
+            "in": "query",
+            "description": "URI of the concept whose labels to return",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "search language, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "labels for the requested concept",
+            "schema": {
+              "$ref": "#/definitions/LabelsAndUri"
             }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
+          "404": {
+            "description": "no concept could be found with the requested URI"
+          }
         },
-        "Type": {
-            "type": "object",
-            "properties": {
-                "uri": {
-                    "type": "string",
-                    "description": "Concept scheme URI"
-                },
-                "label": {
-                    "type": "string",
-                    "description": "Label of type"
-                },
-                "superclass": {
-                    "type": "string",
-                    "description": "URI of the superclass type, which this type is an extension/specialization of"
-                }
-            },
-            "required": [
-                "uri"
-            ]
+        "tags": [
+          "Global methods"
+        ]
+      }
+    },
+    "/data": {
+      "get": {
+        "summary": "RDF data of the requested concept",
+        "parameters": [
+          {
+            "name": "uri",
+            "in": "query",
+            "description": "URI of the concept whose data to return",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "description": "the MIME type of the serialization format, e.g. \"text/turtle\" or \"application/rdf+xml\"",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/rdf+xml",
+          "text/turtle",
+          "application/ld+json",
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "the data of the requested concept"
+          },
+          "404": {
+            "description": "the URI did not match any known concept"
+          }
         },
-        "SearchResults": {
-            "type": "object",
-            "properties": {
-                "uri": {
-                    "type": "string"
-                },
-                "vocabularies": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/SearchResult"
-                    }
-                }
-            },
-            "required": [
-                "uri",
-                "vocabularies"
-            ]
-        },
-        "SearchResult": {
-            "type": "object",
-            "properties": {
-                "uri": {
-                    "type": "string"
-                },
-                "type": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "prefLabel": {
-                    "type": "string"
-                },
-                "altLabel": {
-                    "type": "string"
-                },
-                "hiddenLabel": {
-                    "type": "string"
-                },
-                "lang": {
-                    "type": "string"
-                },
-                "vocab": {
-                    "type": "string"
-                },
-                "exvocab": {
-                    "type": "string"
-                },
-                "notation": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "uri"
-            ]
-        },
-        "VocabularyInfo": {
-            "type": "object",
-            "properties": {
-                "uri": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "title": {
-                    "type": "string"
-                },
-                "defaultLanguage": {
-                    "type": "string"
-                },
-                "languages": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "conceptschemes": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/ConceptScheme"
-                    }
-                },
-                "type": {
-                    "description": "Optional vocabulary classification e.g. 'http://publications.europa.eu/resource/authority/dataset-type/ONTOLOGY'",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/PrefAndUri"
-                    }
-                }
-            },
-            "required": [
-                "uri",
-                "id",
-                "title",
-                "defaultLanguage",
-                "languages",
-                "conceptschemes"
-            ]
-        },
-        "ConceptScheme": {
-            "type": "object",
-            "properties": {
-                "label": {
-                    "type": "string",
-                    "description": "Label of concept scheme (rdfs:label)"
-                },
-                "prefLabel": {
-                    "type": "string",
-                    "description": "Preferred label of concept scheme (skos:prefLabel)"
-                },
-                "title": {
-                    "type": "string",
-                    "description": "Title of concept scheme (dc:title)"
-                },
-                "uri": {
-                    "type": "string",
-                    "description": "Concept scheme URI"
-                },
-                "type": {
-                    "type": "string",
-                    "description": "Type of object (currently always \"skos:ConceptScheme\")"
-                }
+        "tags": [
+          "Global methods"
+        ]
+      }
+    },
+    "/types": {
+      "get": {
+        "summary": "Information about the types (classes) of objects contained in all  vocabularies",
+        "parameters": [
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "language of labels, e.g. \"en\" or \"fi\"",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "the data of the requested concept",
+            "schema": {
+              "$ref": "#/definitions/TypeList"
             }
+          }
         },
-        "TopConcepts": {
-            "type": "object",
-            "properties": {
-                "uri": {
-                    "type": "string"
-                },
-                "topconcepts": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/TopConcept"
-                    }
-                }
-            },
-            "required": [
-                "uri",
-                "topconcepts"
-            ]
-        },
-        "TopConcept": {
-            "type": "object",
-            "properties": {
-                "uri": {
-                    "type": "string",
-                    "description": "URI of the concept"
-                },
-                "label": {
-                    "type": "string",
-                    "description": "Label of the concept"
-                },
-                "topConceptOf": {
-                    "type": "string"
-                },
-                "notation": {
-                    "type": "string",
-                    "description": "Notation of the concept"
-                },
-                "hasChildren": {
-                    "type": "boolean",
-                    "description": "Boolean value indicating whether the concept has narrower concepts"
-                }
-            },
-            "required": [
-                "uri",
-                "hasChildren"
-            ]
-        },
-        "LookupResults": {
-            "type": "object",
-            "properties": {
-                "result": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/SearchResult"
-                    }
-                }
-            },
-            "required": [
-                "result"
-            ]
-        },
-        "VocabularyStatistics": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "string",
-                    "description": "Skosmos vocabulary identifier"
-                },
-                "title": {
-                    "type": "string",
-                    "description": "Vocabulary title"
-                },
-                "concepts": {
-                    "$ref": "#/definitions/CountObject"
-                },
-                "subTypes": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/TypeCountObject"
-                    }
-                },
-                "conceptsGroups": {
-                    "$ref": "#/definitions/CountObject"
-                }
+        "tags": [
+          "Global methods"
+        ]
+      }
+    },
+    "/{vocid}/": {
+      "get": {
+        "summary": "General information about the vocabulary",
+        "parameters": [
+          {
+            "name": "vocid",
+            "in": "path",
+            "description": "The Skosmos vocabulary id e.g. stw or yso",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "language of labels, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "information about the requested vocabulary",
+            "schema": {
+              "$ref": "#/definitions/VocabularyInfo"
             }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
+          "404": {
+            "description": "no vocabulary could be found with the requested id"
+          }
         },
-        "CountObject": {
-            "type": "object",
-            "properties": {
-                "class": {
-                    "type": "string",
-                    "description": "Class/type of concepts"
-                },
-                "label": {
-                    "type": "string",
-                    "description": "Label of the class"
-                },
-                "count": {
-                    "type": "integer"
-                }
-            },
-            "required": [
-                "count",
-                "class"
-            ]
-        },
-        "TypeCountObject": {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "type": "string",
-                    "description": "Class/type of concepts"
-                },
-                "label": {
-                    "type": "string",
-                    "description": "Label of the type"
-                },
-                "count": {
-                    "type": "integer"
-                }
-            },
-            "required": [
-                "count",
-                "type"
-            ]
-        },
-        "LabelStatistics": {
-            "type": "object",
-            "properties": {
-                "uri": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string",
-                    "description": "Skosmos vocabulary identifier"
-                },
-                "title": {
-                    "type": "string",
-                    "description": "Vocabulary title"
-                },
-                "languages": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/LanguageObject"
-                    }
-                }
+        "tags": [
+          "Vocabulary-specific methods"
+        ]
+      }
+    },
+    "/{vocid}/types": {
+      "get": {
+        "summary": "Information about the types (classes) of objects in the vocabulary",
+        "parameters": [
+          {
+            "name": "vocid",
+            "in": "path",
+            "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "language of labels, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "type information about the requested vocabulary",
+            "schema": {
+              "$ref": "#/definitions/TypeList"
             }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
+          "404": {
+            "description": "no vocabulary could be found with the requested id"
+          }
         },
-        "LanguageObject": {
-            "type": "object",
-            "properties": {
-                "language": {
-                    "type": "string",
-                    "description": "Language code e.g. \"fi\" or \"en\""
-                },
-                "literal": {
-                    "type": "string",
-                    "description": "language name e.g. \"Finnish\" or \"English\" (if lang parameter was used)"
-                },
-                "properties": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/LabelCount"
-                    }
-                }
-            },
-            "required": [
-                "language",
-                "properties"
-            ]
-        },
-        "LabelCount": {
-            "type": "object",
-            "properties": {
-                "property": {
-                    "type": "string",
-                    "description": "property identifier, either \"skos:prefLabel\" or \"skos:altLabel\" or \"skos:hiddenLabel\""
-                },
-                "labels": {
-                    "type": "integer",
-                    "description": "number of labels with the specified property in the given language"
-                }
+        "tags": [
+          "Vocabulary-specific methods"
+        ]
+      }
+    },
+    "/{vocid}/topConcepts": {
+      "get": {
+        "summary": "Top concepts of the vocabulary",
+        "parameters": [
+          {
+            "name": "vocid",
+            "in": "path",
+            "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "language of labels, e.g. \"en\" or \"fi\"",
+            "type": "string"
+          },
+          {
+            "name": "scheme",
+            "in": "query",
+            "description": "concept scheme whose top concepts to return. If not given, the default concept scheme of the vocabulary will be used.",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "type information about the requested vocabulary",
+            "schema": {
+              "$ref": "#/definitions/TopConcepts"
             }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
+          "404": {
+            "description": "no vocabulary could be found with the requested id"
+          }
         },
-        "PrefAndUri": {
-            "type": "object",
-            "properties": {
-                "uri": {
-                    "type": "string",
-                    "description": "URI of the concept"
-                },
-                "prefLabel": {
-                    "type": "string",
-                    "description": "Preferred label of concept"
-                }
-            },
-            "required": [
-                "uri",
-                "prefLabel"
-            ]
+        "tags": [
+          "Vocabulary-specific methods"
+        ]
+      }
+    },
+    "/{vocid}/data": {
+      "get": {
+        "summary": "RDF data of the whole vocabulary or a specific concept. If the vocabulary has support for it, MARCXML data is available for the whole vocabulary in each language.",
+        "parameters": [
+          {
+            "name": "vocid",
+            "in": "path",
+            "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "description": "The MIME type of the serialization format, e.g \"text/turtle\" or \"application/rdf+xml\". If not specified, HTTP content negotiation (based on the Accept header) is used to determine a suitable serialization format from among the available ones.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "uri",
+            "in": "query",
+            "description": "URI of the desired concept. When no uri parameter is given, the whole vocabulary is returned instead.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "RDF language code when the requested resource for the MIME type is language specific, e.g. \"fi\" or \"en\".",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/rdf+xml",
+          "text/turtle",
+          "application/ld+json",
+          "application/json",
+          "application/marcxml+xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "the RDF data of the requested vocabulary/concept, or MARCXML if the vocabulary supports such"
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
+          "404": {
+            "description": "no vocabulary/concept could be found with the requested id/uri"
+          }
         },
-        "PrefAndUriAndBroader": {
-            "type": "object",
-            "properties": {
-                "uri": {
-                    "type": "string",
-                    "description": "URI of the concept"
-                },
-                "broader": {
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "description": "URI of the broader concept"
-                    }
-                },
-                "prefLabel": {
-                    "type": "string",
-                    "description": "Preferred label of concept"
-                }
-            },
-            "required": [
-                "uri",
-                "prefLabel"
-            ]
+        "tags": [
+          "Vocabulary-specific methods",
+          "Concept-specific methods"
+        ]
+      }
+    },
+    "/{vocid}/search": {
+      "get": {
+        "summary": "Finds concepts and collections from a vocabulary by query term",
+        "description": "Returns a list of search results. The search is performed as a case-insensitive pattern, where an asterisk (*) may be used as wildcard. E.g. \"cat*\" may return results such as \"CATCH-22\" and \"categorization\". If decoded into RDF, the result is a vocabulary fragment expressed as SKOS.",
+        "parameters": [
+          {
+            "name": "vocid",
+            "in": "path",
+            "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "the term to search for e.g. \"cat*\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "language of labels to match, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "limit search to concepts of the given type, e.g. \"skos:Concept\"; multiple types can be specified as a space-separated list",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "parent",
+            "in": "query",
+            "description": "limit search to concepts which have the given concept (specified by URI) as parent in their transitive broader hierarchy",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "group",
+            "in": "query",
+            "description": "limit search to concepts in the given group (specified by URI)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "maxhits",
+            "in": "query",
+            "description": "Maximum number of results to return. If not given, maxhits will default to 100. (default settable in config.ttl)",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "offset where to start in ther esult set, useful for paging the result. If not given, defaults to 0.",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "space-separated list of extra fields to include in the results. e.g. \"related\" or \"prefLabel\" or any other skos property.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "unique",
+            "in": "query",
+            "description": "boolean flag to indicate that each concept should be returned only once, instead of returning all the different ways it could match (for example both via prefLabel and altLabel).",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "data of the concepts matching the search term",
+            "schema": {
+              "$ref": "#/definitions/SearchResults"
+            }
+          }
         },
-        "PrefAndUriAndNarrower": {
-            "type": "object",
-            "properties": {
-                "uri": {
-                    "type": "string",
-                    "description": "URI of the concept"
-                },
-                "narrower": {
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "description": "URI of the narrower concept"
-                    }
-                },
-                "prefLabel": {
-                    "type": "string",
-                    "description": "Preferred label of concept"
-                }
-            },
-            "required": [
-                "uri",
-                "prefLabel"
-            ]
+        "tags": [
+          "Vocabulary-specific methods"
+        ]
+      }
+    },
+    "/{vocid}/lookup": {
+      "get": {
+        "summary": "Look up concepts by label",
+        "description": "Returns the best matching concept(s) for the given label in JSON-LD format. In case the label matches several concepts with the same precedence, all of them are returned.",
+        "parameters": [
+          {
+            "name": "vocid",
+            "in": "path",
+            "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "label",
+            "in": "query",
+            "description": "the label to look for, e.g. \"cat\" or \"dog\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "search language, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "type information about the requested vocabulary",
+            "schema": {
+              "$ref": "#/definitions/LookupResults"
+            }
+          },
+          "404": {
+            "description": "no concept could be found with the requested label"
+          }
         },
-        "BroaderResult": {
-            "type": "object",
-            "properties": {
-                "uri": {
-                    "type": "string",
-                    "description": "URI of the concept"
-                },
-                "broader": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/PrefAndUri"
-                    }
-                }
-            },
-            "required": [
-                "uri",
-                "broader"
-            ]
+        "tags": [
+          "Vocabulary-specific methods"
+        ]
+      }
+    },
+    "/{vocid}/vocabularyStatistics": {
+      "get": {
+        "summary": "Number of Concepts and Collections in the vocabulary",
+        "parameters": [
+          {
+            "name": "vocid",
+            "in": "path",
+            "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "language of labels, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "the concept and group counts for the vocabulary",
+            "schema": {
+              "$ref": "#/definitions/VocabularyStatistics"
+            }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
+          "404": {
+            "description": "no vocabulary could be found with the requested id"
+          }
         },
-        "BroaderTransitiveResult": {
-            "type": "object",
-            "properties": {
-                "uri": {
-                    "type": "string",
-                    "description": "URI of the concept"
-                },
-                "broaderTransitive": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/PrefAndUriAndBroader"
-                    }
-                }
-            },
-            "required": [
-                "uri",
-                "broaderTransitive"
-            ]
+        "tags": [
+          "Vocabulary-specific methods"
+        ]
+      }
+    },
+    "/{vocid}/labelStatistics": {
+      "get": {
+        "summary": "Number of labels by language",
+        "description": "Returns a list of label (skos:prefLabel, skos:altLabel and skos:hiddenLabel) counts in all the different languages.",
+        "parameters": [
+          {
+            "name": "vocid",
+            "in": "path",
+            "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "language of labels, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "the concept and group counts for the vocabulary",
+            "schema": {
+              "$ref": "#/definitions/LabelStatistics"
+            }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
+          "404": {
+            "description": "no vocabulary could be found with the requested id"
+          }
         },
-        "NarrowerResult": {
-            "type": "object",
-            "properties": {
-                "uri": {
-                    "type": "string",
-                    "description": "URI of the concept"
-                },
-                "narrower": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/PrefAndUri"
-                    }
-                }
-            },
-            "required": [
-                "uri",
-                "narrower"
-            ]
+        "tags": [
+          "Vocabulary-specific methods"
+        ]
+      }
+    },
+    "/{vocid}/index/": {
+      "get": {
+        "summary": "Initial letters of the alphabetical index",
+        "description": "Returns a list of the initial letters of labels (skos:prefLabel, skos:altLabel) in the given language, or the default language of the vocabulary. The special value \"0-9\" indicates the presence of labels starting with a number and the value \"!*\" indicates labels starting with a special character.",
+        "parameters": [
+          {
+            "name": "vocid",
+            "in": "path",
+            "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "language of labels, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "initial letters of the alphabetical index",
+            "schema": {
+              "$ref": "#/definitions/IndexLetters"
+            }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
+          "404": {
+            "description": "no vocabulary could be found with the requested id"
+          }
         },
-        "RelatedResult": {
-            "type": "object",
-            "properties": {
-                "uri": {
-                    "type": "string",
-                    "description": "URI of the concept"
-                },
-                "related": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/PrefAndUri"
-                    }
-                }
-            },
-            "required": [
-                "uri",
-                "related"
-            ]
+        "tags": [
+          "Vocabulary-specific methods"
+        ]
+      }
+    },
+    "/{vocid}/index/{letter}": {
+      "get": {
+        "summary": "Concepts for a given letter in the alphabetical index",
+        "description": "Returns a list of the concepes which have a label (skos:prefLabel or skos:altLabel) starting with the given letter in the given language, or the default language of the vocabulary. The special value \"0-9\" matches labels starting with a number and the value \"!*\" matches labels starting with a special character.",
+        "parameters": [
+          {
+            "name": "vocid",
+            "in": "path",
+            "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "letter",
+            "in": "path",
+            "description": "an initial letter, or one of the special values \"0-9 or \"!*\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "language of labels, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "concepts of the alphabetical index",
+            "schema": {
+              "$ref": "#/definitions/IndexConcepts"
+            }
+          },
+          "404": {
+            "description": "no vocabulary could be found with the requested id"
+          }
         },
-        "NarrowerTransitiveResult": {
-            "type": "object",
-            "properties": {
-                "uri": {
-                    "type": "string",
-                    "description": "URI of the concept"
-                },
-                "narrowerTransitive": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/PrefAndUriAndNarrower"
-                    }
-                }
-            },
-            "required": [
-                "uri",
-                "narrowerTransitive"
-            ]
+        "tags": [
+          "Vocabulary-specific methods"
+        ]
+      }
+    },
+    "/{vocid}/label": {
+      "get": {
+        "summary": "List of labels for the requested concept",
+        "parameters": [
+          {
+            "name": "vocid",
+            "in": "path",
+            "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uri",
+            "in": "query",
+            "description": "URI of the concept whose labels to return",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "search language, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "labels for the requested concept",
+            "schema": {
+              "$ref": "#/definitions/LabelsAndUri"
+            }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
+          "404": {
+            "description": "no concept could be found with the requested URI"
+          }
         },
-        "PrefAndUriAndChildren": {
-            "type": "object",
-            "properties": {
-                "uri": {
-                    "type": "string",
-                    "description": "URI of the concept"
-                },
-                "hasChildren": {
-                    "type": "boolean",
-                    "description": "Indicates whether the concept has children of its' own (narrower concepts)"
-                },
-                "prefLabel": {
-                    "type": "string",
-                    "description": "Preferred label of concept"
-                },
-                "notation": {
-                    "type": "string",
-                    "description": "Notation code"
-                }
-            },
-            "required": [
-                "uri",
-                "prefLabel",
-                "hasChildren"
-            ]
+        "tags": [
+          "Concept-specific methods"
+        ]
+      }
+    },
+    "/{vocid}/broader": {
+      "get": {
+        "summary": "Broader concepts of the requested concept",
+        "parameters": [
+          {
+            "name": "vocid",
+            "in": "path",
+            "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uri",
+            "in": "query",
+            "description": "URI of the concept whose broader concept to return",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "label language, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "the broader concept(s) of the requested concept or an empty array if there are none",
+            "schema": {
+              "$ref": "#/definitions/BroaderResult"
+            }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
+          "404": {
+            "description": "no concept could be found with the requested URI"
+          }
         },
-        "ChildrenResult": {
-            "type": "object",
-            "properties": {
-                "uri": {
-                    "type": "string",
-                    "description": "URI of the concept"
-                },
-                "narrower": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/PrefAndUriAndChildren"
-                    }
-                }
-            },
-            "required": [
-                "uri",
-                "narrower"
-            ]
+        "tags": [
+          "Concept-specific methods"
+        ]
+      }
+    },
+    "/{vocid}/broaderTransitive": {
+      "get": {
+        "summary": "Broader transitive hierarchy for the requested concept",
+        "parameters": [
+          {
+            "name": "vocid",
+            "in": "path",
+            "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uri",
+            "in": "query",
+            "description": "URI of the concept whose broader transitive hierarchy to return",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "label language, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "the broader transitive hierarchy for the requested concept or an empty array if there concept does not have broaders",
+            "schema": {
+              "$ref": "#/definitions/BroaderTransitiveResult"
+            }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
+          "404": {
+            "description": "no concept could be found with the requested URI"
+          }
         },
-        "GroupResult": {
-            "type": "object",
-            "properties": {
-                "uri": {
-                    "type": "string",
-                    "description": "URI of the concept"
-                },
-                "groups": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/PrefAndUriAndMembers"
-                    }
-                }
-            },
-            "required": [
-                "uri",
-                "groups"
-            ]
+        "tags": [
+          "Concept-specific methods"
+        ]
+      }
+    },
+    "/{vocid}/narrower": {
+      "get": {
+        "summary": "Narrower concepts of the requested concept",
+        "parameters": [
+          {
+            "name": "vocid",
+            "in": "path",
+            "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uri",
+            "in": "query",
+            "description": "URI of the concept whose narrower concept to return",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "label language, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "the narrower concept(s) of the requested concept or an empty array if there are none",
+            "schema": {
+              "$ref": "#/definitions/NarrowerResult"
+            }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
+          "404": {
+            "description": "no concept could be found with the requested URI"
+          }
         },
-        "PrefAndUriAndMembers": {
-            "type": "object",
-            "properties": {
-                "uri": {
-                    "type": "string",
-                    "description": "URI of the concept"
-                },
-                "childGroups": {
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "description": "Member URI"
-                    }
-                },
-                "hasMembers": {
-                    "type": "boolean",
-                    "description": "Indicates whether the group has members"
-                },
-                "prefLabel": {
-                    "type": "string",
-                    "description": "Preferred label of concept"
-                },
-                "notation": {
-                    "type": "string",
-                    "description": "Notation code"
-                }
-            },
-            "required": [
-                "uri",
-                "prefLabel",
-                "hasMembers"
-            ]
+        "tags": [
+          "Concept-specific methods"
+        ]
+      }
+    },
+    "/{vocid}/narrowerTransitive": {
+      "get": {
+        "summary": "Narrower transitive hierarchy for the requested concept",
+        "parameters": [
+          {
+            "name": "vocid",
+            "in": "path",
+            "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uri",
+            "in": "query",
+            "description": "URI of the concept whose narrower transitive hierarchy to return",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "label language, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "the narrower transitive hierarchy for the requested concept or an empty array if there concept does not have narrowers",
+            "schema": {
+              "$ref": "#/definitions/NarrowerTransitiveResult"
+            }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
+          "404": {
+            "description": "no concept could be found with the requested URI"
+          }
         },
-        "MembersList": {
-            "type": "object",
-            "properties": {
-                "uri": {
-                    "type": "string",
-                    "description": "URI of the concept"
-                },
-                "type": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "isSuper": {
-                    "type": "boolean",
-                    "description": "Indicates whether the group is a superGroup to an another group"
-                },
-                "hasMembers": {
-                    "type": "boolean",
-                    "description": "Indicates whether the group has members"
-                },
-                "prefLabel": {
-                    "type": "string",
-                    "description": "Preferred label of concept"
-                },
-                "notation": {
-                    "type": "string",
-                    "description": "Notation code"
-                }
-            },
-            "required": [
-                "uri",
-                "prefLabel",
-                "hasMembers"
-            ]
+        "tags": [
+          "Concept-specific methods"
+        ]
+      }
+    },
+    "/{vocid}/related": {
+      "get": {
+        "summary": "Related concepts of the requested concept",
+        "parameters": [
+          {
+            "name": "vocid",
+            "in": "path",
+            "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uri",
+            "in": "query",
+            "description": "URI of the concept whose related concept to return",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "label language, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "the related concept(s) of the requested concept or an empty array if there are none",
+            "schema": {
+              "$ref": "#/definitions/RelatedResult"
+            }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
+          "404": {
+            "description": "no concept could be found with the requested URI"
+          }
         },
-        "GroupMembers": {
-            "type": "object",
-            "properties": {
-                "uri": {
-                    "type": "string",
-                    "description": "URI of the concept"
-                },
-                "members": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/MembersList"
-                    }
-                }
-            },
-            "required": [
-                "uri",
-                "members"
-            ]
+        "tags": [
+          "Concept-specific methods"
+        ]
+      }
+    },
+    "/{vocid}/children": {
+      "get": {
+        "summary": "Narrower concepts of the requested concept",
+        "parameters": [
+          {
+            "name": "vocid",
+            "in": "path",
+            "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uri",
+            "in": "query",
+            "description": "URI of the concept whose narrower concepts to return",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "label language, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the children of the requested concept. The data is intended to be used in a hierarchical display.",
+            "schema": {
+              "$ref": "#/definitions/ChildrenResult"
+            }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
+          "404": {
+            "description": "no concept could be found with the requested URI"
+          }
         },
-        "Hierarchy": {
-            "type": "object",
-            "properties": {
-                "uri": {
-                    "type": "string",
-                    "description": "URI of the concept"
-                },
-                "broaderTransitive": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/HierarchyResult"
-                    }
-                }
-            },
-            "required": [
-                "uri",
-                "broaderTransitive"
-            ]
+        "tags": [
+          "Concept-specific methods"
+        ]
+      }
+    },
+    "/{vocid}/groups": {
+      "get": {
+        "summary": "Concept groups in the vocabulary",
+        "parameters": [
+          {
+            "name": "vocid",
+            "in": "path",
+            "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "label language, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "concept groups of the vocabulary",
+            "schema": {
+              "$ref": "#/definitions/GroupResult"
+            }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
+          "404": {
+            "description": "no vocabulary could be found with the requested id"
+          }
         },
-        "HierarchyResult": {
-            "type": "object",
-            "properties": {
-                "uri": {
-                    "type": "string",
-                    "description": "URI of the concept"
-                },
-                "broader": {
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "description": "broader concept URI"
-                    }
-                },
-                "narrower": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/LabelAndUriAndChildren"
-                    }
-                },
-                "hasChildren": {
-                    "type": "boolean",
-                    "description": "Indicates whether the concept has narrower concepts"
-                },
-                "prefLabel": {
-                    "type": "string",
-                    "description": "Preferred label of concept"
-                },
-                "notation": {
-                    "type": "string",
-                    "description": "Notation code"
-                },
-                "top": {
-                    "type": "string",
-                    "description": "This field is present if the current concept is a toplevel concept in the vocabulary and contains the concept scheme URI"
-                }
-            },
-            "required": [
-                "uri",
-                "hasChildren",
-                "prefLabel"
-            ]
+        "tags": [
+          "Vocabulary-specific methods"
+        ]
+      }
+    },
+    "/{vocid}/new": {
+      "get": {
+        "summary": "New concepts in the vocabulary",
+        "parameters": [
+          {
+            "name": "vocid",
+            "in": "path",
+            "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "label language, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "offset of the starting index",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "maximum number of concepts to return",
+            "required": false,
+            "type": "number"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "list of most recently created concepts of the vocabulary",
+            "schema": {
+              "$ref": "#/definitions/changedConceptsResult"
+            }
+          },
+          "404": {
+            "description": "no vocabulary could be found with the requested id"
+          }
         },
-        "LabelAndUriAndChildren": {
-            "type": "object",
-            "properties": {
-                "uri": {
-                    "type": "string",
-                    "description": "URI of the concept"
-                },
-                "hasChildren": {
-                    "type": "boolean",
-                    "description": "Indicates whether the concept has children of its' own (narrower concepts)"
-                },
-                "label": {
-                    "type": "string",
-                    "description": "Preferred label of concept"
-                },
-                "notation": {
-                    "type": "string",
-                    "description": "Notation code"
-                }
-            },
-            "required": [
-                "uri",
-                "label",
-                "hasChildren"
-            ]
-        }
+        "tags": [
+          "Vocabulary-specific methods"
+        ]
+      }
+    },
+    "/{vocid}/modified": {
+      "get": {
+        "summary": "Modified concepts in the vocabulary",
+        "parameters": [
+          {
+            "name": "vocid",
+            "in": "path",
+            "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "label language, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "offset of the starting index",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "maximum number of concepts to return",
+            "required": false,
+            "type": "number"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "list of most recently created concepts of the vocabulary",
+            "schema": {
+              "$ref": "#/definitions/changedConceptsResult"
+            }
+          },
+          "404": {
+            "description": "no vocabulary could be found with the requested id"
+          }
+        },
+        "tags": [
+          "Vocabulary-specific methods"
+        ]
+      }
+    },
+    "/{vocid}/groupMembers": {
+      "get": {
+        "summary": "Members of the requested concept group",
+        "parameters": [
+          {
+            "name": "vocid",
+            "in": "path",
+            "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "label language, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "concept groups of the vocabulary",
+            "schema": {
+              "$ref": "#/definitions/GroupMembers"
+            }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
+          "404": {
+            "description": "no concept group could be found with the requested URI"
+          }
+        },
+        "tags": [
+          "Concept-specific methods"
+        ]
+      }
+    },
+    "/{vocid}/hierarchy": {
+      "get": {
+        "summary": "Hierarchical context of the requested concept",
+        "parameters": [
+          {
+            "name": "vocid",
+            "in": "path",
+            "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uri",
+            "in": "query",
+            "description": "URI of the concept whose hierarchical context to return",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "label language, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the hierarchical context of the requested concept. The hierarchy is intended to be used in a hierarchical display.",
+            "schema": {
+              "$ref": "#/definitions/Hierarchy"
+            }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
+          "404": {
+            "description": "no concept group could be found with the requested URI"
+          }
+        },
+        "tags": [
+          "Concept-specific methods"
+        ]
+      }
+    },
+    "/{vocid}/mappings": {
+      "get": {
+        "summary": "Mappings associated with the requested concept",
+        "parameters": [
+          {
+            "name": "vocid",
+            "in": "path",
+            "description": "a Skosmos vocabulary identifier e.g. \"stw\" or \"yso\"",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uri",
+            "in": "query",
+            "description": "URI of the concept whose hierarchical context to return",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "external",
+            "in": "query",
+            "description": "Indicates whether mappings to external vocabularies should be listed",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "clang",
+            "in": "query",
+            "description": "content language, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "label language, e.g. \"en\" or \"fi\"",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/ld+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the mappings associated with the requested concept. The result is a JSKOS-compatible JSON object",
+            "schema": {
+              "$ref": "#/definitions/ConceptMappings"
+            }
+          },
+          "304": {
+            "description": "the resource was not modified, so there is no need to retransmit the requested resources"
+          },
+          "400": {
+            "description": "URI parameter is missing"
+          },
+          "404": {
+            "description": "no concept mappings could be found with the requested URI"
+          }
+        },
+        "tags": [
+          "Concept-specific methods"
+        ]
+      }
     }
+  },
+  "definitions": {
+    "VocabularyList": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "vocabularies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Vocabulary"
+          }
+        }
+      },
+      "required": [
+        "uri",
+        "vocabularies"
+      ]
+    },
+    "Vocabulary": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "uri",
+        "id",
+        "title"
+      ]
+    },
+    "TypeList": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "types": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Type"
+          }
+        }
+      }
+    },
+    "Type": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "Concept scheme URI"
+        },
+        "label": {
+          "type": "string",
+          "description": "Label of type"
+        },
+        "superclass": {
+          "type": "string",
+          "description": "URI of the superclass type, which this type is an extension/specialization of"
+        }
+      },
+      "required": [
+        "uri"
+      ]
+    },
+    "SearchResults": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SearchResult"
+          }
+        }
+      },
+      "required": [
+        "uri",
+        "results"
+      ]
+    },
+    "SearchResult": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "type": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "prefLabel": {
+          "type": "string"
+        },
+        "altLabel": {
+          "type": "string"
+        },
+        "hiddenLabel": {
+          "type": "string"
+        },
+        "lang": {
+          "type": "string"
+        },
+        "vocab": {
+          "type": "string"
+        },
+        "exvocab": {
+          "type": "string"
+        },
+        "notation": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "uri"
+      ]
+    },
+    "VocabularyInfo": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "marcSource": {
+          "type": "string"
+        },
+        "defaultLanguage": {
+          "type": "string"
+        },
+        "languages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "conceptschemes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ConceptScheme"
+          }
+        },
+        "type": {
+          "description": "Optional vocabulary classification e.g. 'http://publications.europa.eu/resource/authority/dataset-type/ONTOLOGY'",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PrefAndUri"
+          }
+        }
+      },
+      "required": [
+        "uri",
+        "id",
+        "title",
+        "defaultLanguage",
+        "languages",
+        "conceptschemes"
+      ]
+    },
+    "ConceptScheme": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string",
+          "description": "Label of concept scheme (rdfs:label)"
+        },
+        "prefLabel": {
+          "type": "string",
+          "description": "Preferred label of concept scheme (skos:prefLabel)"
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of concept scheme (dc:title)"
+        },
+        "uri": {
+          "type": "string",
+          "description": "Concept scheme URI"
+        },
+        "type": {
+          "type": "string",
+          "description": "Type of object (currently always \"skos:ConceptScheme\")"
+        }
+      }
+    },
+    "TopConcepts": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "topconcepts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TopConcept"
+          }
+        }
+      },
+      "required": [
+        "uri",
+        "topconcepts"
+      ]
+    },
+    "TopConcept": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "URI of the concept"
+        },
+        "label": {
+          "type": "string",
+          "description": "Label of the concept"
+        },
+        "topConceptOf": {
+          "type": "string"
+        },
+        "notation": {
+          "type": "string",
+          "description": "Notation of the concept"
+        },
+        "hasChildren": {
+          "type": "boolean",
+          "description": "Boolean value indicating whether the concept has narrower concepts"
+        }
+      },
+      "required": [
+        "uri",
+        "hasChildren"
+      ]
+    },
+    "LookupResults": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SearchResult"
+          }
+        }
+      },
+      "required": [
+        "result"
+      ]
+    },
+    "IndexLetters": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "indexLetters": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "A",
+            "B",
+            "C",
+            "0-9",
+            "!*"
+          ]
+        }
+      },
+      "required": [
+        "uri",
+        "indexLetters"
+      ]
+    },
+    "IndexConcepts": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "indexConcepts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/IndexConcept"
+          }
+        }
+      },
+      "required": [
+        "uri",
+        "indexLetters"
+      ]
+    },
+    "IndexConcept": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "prefLabel": {
+          "type": "string"
+        },
+        "altLabel": {
+          "type": "string"
+        },
+        "lang": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "uri",
+        "prefLabel",
+        "lang"
+      ]
+    },
+    "VocabularyStatistics": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Skosmos vocabulary identifier"
+        },
+        "title": {
+          "type": "string",
+          "description": "Vocabulary title"
+        },
+        "concepts": {
+          "$ref": "#/definitions/CountObject"
+        },
+        "subTypes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TypeCountObject"
+          }
+        },
+        "conceptsGroups": {
+          "$ref": "#/definitions/CountObject"
+        }
+      }
+    },
+    "CountObject": {
+      "type": "object",
+      "properties": {
+        "class": {
+          "type": "string",
+          "description": "Class/type of concepts"
+        },
+        "label": {
+          "type": "string",
+          "description": "Label of the class"
+        },
+        "count": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "count",
+        "class"
+      ]
+    },
+    "TypeCountObject": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Class/type of concepts"
+        },
+        "label": {
+          "type": "string",
+          "description": "Label of the type"
+        },
+        "count": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "count",
+        "type"
+      ]
+    },
+    "LabelStatistics": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "description": "Skosmos vocabulary identifier"
+        },
+        "title": {
+          "type": "string",
+          "description": "Vocabulary title"
+        },
+        "languages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LanguageObject"
+          }
+        }
+      }
+    },
+    "LanguageObject": {
+      "type": "object",
+      "properties": {
+        "language": {
+          "type": "string",
+          "description": "Language code e.g. \"fi\" or \"en\""
+        },
+        "literal": {
+          "type": "string",
+          "description": "language name e.g. \"Finnish\" or \"English\" (if lang parameter was used)"
+        },
+        "properties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LabelCount"
+          }
+        }
+      },
+      "required": [
+        "language",
+        "properties"
+      ]
+    },
+    "LabelCount": {
+      "type": "object",
+      "properties": {
+        "property": {
+          "type": "string",
+          "description": "property identifier, either \"skos:prefLabel\" or \"skos:altLabel\" or \"skos:hiddenLabel\""
+        },
+        "labels": {
+          "type": "integer",
+          "description": "number of labels with the specified property in the given language"
+        }
+      }
+    },
+    "PrefAndUri": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "URI of the concept"
+        },
+        "prefLabel": {
+          "type": "string",
+          "description": "Preferred label of concept"
+        }
+      },
+      "required": [
+        "uri",
+        "prefLabel"
+      ]
+    },
+    "LabelsAndUri": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "URI of the concept"
+        },
+        "prefLabel": {
+          "type": "string",
+          "description": "Preferred label of concept"
+        },
+        "altLabel": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Alternative labels for the concept"
+          }
+        },
+        "hiddenLabel": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Hidden labels for the concept"
+          }
+        }
+      },
+      "required": [
+        "uri",
+        "prefLabel"
+      ]
+    },
+    "PrefAndUriAndBroader": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "URI of the concept"
+        },
+        "broader": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "URI of the broader concept"
+          }
+        },
+        "prefLabel": {
+          "type": "string",
+          "description": "Preferred label of concept"
+        }
+      },
+      "required": [
+        "uri",
+        "prefLabel"
+      ]
+    },
+    "PrefAndUriAndNarrower": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "URI of the concept"
+        },
+        "narrower": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "URI of the narrower concept"
+          }
+        },
+        "prefLabel": {
+          "type": "string",
+          "description": "Preferred label of concept"
+        }
+      },
+      "required": [
+        "uri",
+        "prefLabel"
+      ]
+    },
+    "BroaderResult": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "URI of the concept"
+        },
+        "broader": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PrefAndUri"
+          }
+        }
+      },
+      "required": [
+        "uri",
+        "broader"
+      ]
+    },
+    "BroaderTransitiveResult": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "URI of the concept"
+        },
+        "broaderTransitive": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PrefAndUriAndBroader"
+          }
+        }
+      },
+      "required": [
+        "uri",
+        "broaderTransitive"
+      ]
+    },
+    "NarrowerResult": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "URI of the concept"
+        },
+        "narrower": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PrefAndUri"
+          }
+        }
+      },
+      "required": [
+        "uri",
+        "narrower"
+      ]
+    },
+    "RelatedResult": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "URI of the concept"
+        },
+        "related": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PrefAndUri"
+          }
+        }
+      },
+      "required": [
+        "uri",
+        "related"
+      ]
+    },
+    "NarrowerTransitiveResult": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "URI of the concept"
+        },
+        "narrowerTransitive": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PrefAndUriAndNarrower"
+          }
+        }
+      },
+      "required": [
+        "uri",
+        "narrowerTransitive"
+      ]
+    },
+    "PrefAndUriAndChildren": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "URI of the concept"
+        },
+        "hasChildren": {
+          "type": "boolean",
+          "description": "Indicates whether the concept has children of its' own (narrower concepts)"
+        },
+        "prefLabel": {
+          "type": "string",
+          "description": "Preferred label of concept"
+        },
+        "notation": {
+          "type": "string",
+          "description": "Notation code"
+        }
+      },
+      "required": [
+        "uri",
+        "prefLabel",
+        "hasChildren"
+      ]
+    },
+    "ChildrenResult": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "URI of the concept"
+        },
+        "narrower": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PrefAndUriAndChildren"
+          }
+        }
+      },
+      "required": [
+        "uri",
+        "narrower"
+      ]
+    },
+    "GroupResult": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "URI of the concept"
+        },
+        "groups": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PrefAndUriAndMembers"
+          }
+        }
+      },
+      "required": [
+        "uri",
+        "groups"
+      ]
+    },
+    "PrefAndUriAndMembers": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "URI of the concept"
+        },
+        "childGroups": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Member URI"
+          }
+        },
+        "hasMembers": {
+          "type": "boolean",
+          "description": "Indicates whether the group has members"
+        },
+        "prefLabel": {
+          "type": "string",
+          "description": "Preferred label of concept"
+        },
+        "notation": {
+          "type": "string",
+          "description": "Notation code"
+        }
+      },
+      "required": [
+        "uri",
+        "prefLabel",
+        "hasMembers"
+      ]
+    },
+    "MembersList": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "URI of the concept"
+        },
+        "type": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "isSuper": {
+          "type": "boolean",
+          "description": "Indicates whether the group is a superGroup to an another group"
+        },
+        "hasMembers": {
+          "type": "boolean",
+          "description": "Indicates whether the group has members"
+        },
+        "prefLabel": {
+          "type": "string",
+          "description": "Preferred label of concept"
+        },
+        "notation": {
+          "type": "string",
+          "description": "Notation code"
+        }
+      },
+      "required": [
+        "uri",
+        "prefLabel",
+        "hasMembers"
+      ]
+    },
+    "GroupMembers": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "URI of the concept"
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MembersList"
+          }
+        }
+      },
+      "required": [
+        "uri",
+        "members"
+      ]
+    },
+    "Hierarchy": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "URI of the concept"
+        },
+        "broaderTransitive": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HierarchyResult"
+          }
+        }
+      },
+      "required": [
+        "uri",
+        "broaderTransitive"
+      ]
+    },
+    "HierarchyResult": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "URI of the concept"
+        },
+        "broader": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "broader concept URI"
+          }
+        },
+        "narrower": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LabelAndUriAndChildren"
+          }
+        },
+        "hasChildren": {
+          "type": "boolean",
+          "description": "Indicates whether the concept has narrower concepts"
+        },
+        "prefLabel": {
+          "type": "string",
+          "description": "Preferred label of concept"
+        },
+        "notation": {
+          "type": "string",
+          "description": "Notation code"
+        },
+        "top": {
+          "type": "string",
+          "description": "This field is present if the current concept is a toplevel concept in the vocabulary and contains the concept scheme URI"
+        }
+      },
+      "required": [
+        "uri",
+        "hasChildren",
+        "prefLabel"
+      ]
+    },
+    "LabelAndUriAndChildren": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "URI of the concept"
+        },
+        "hasChildren": {
+          "type": "boolean",
+          "description": "Indicates whether the concept has children of its' own (narrower concepts)"
+        },
+        "label": {
+          "type": "string",
+          "description": "Preferred label of concept"
+        },
+        "notation": {
+          "type": "string",
+          "description": "Notation code"
+        }
+      },
+      "required": [
+        "uri",
+        "label",
+        "hasChildren"
+      ]
+    },
+    "ConceptMapping": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "URI of the concept"
+        },
+        "notation": {
+          "type": "string",
+          "description": "Notation of the concept"
+        },
+        "type": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "mapping type, e.g. \"skos:exactMatch\"."
+          }
+        },
+        "prefLabel": {
+          "type": "string",
+          "description": "Preferred label of concept scheme (skos:prefLabel)"
+        },
+        "from": {
+          "type": "object",
+          "description": "The origin concept in the mapping",
+          "properties": {
+            "memberSet": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "uri": {
+                    "type": "string",
+                    "description": "URI of the concept"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "to": {
+          "type": "object",
+          "description": "The target concept in the mapping",
+          "properties": {
+            "memberSet": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "uri": {
+                    "type": "string",
+                    "description": "URI of the concept"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": {
+          "type": "string",
+          "description": "Mapping description",
+          "example": "Exactly matching concepts in another vocabulary."
+        },
+        "hrefLink": {
+          "type": "string",
+          "description": "Part of the URI of the link, used by the UI to create a href link",
+          "example": "koko/en/page/p55620"
+        },
+        "lang": {
+          "type": "string",
+          "description": "Language of the mappings returned"
+        },
+        "vocabName": {
+          "type": "string",
+          "description": "Vocabulary name"
+        },
+        "typeLabel": {
+          "type": "string",
+          "description": "Label of the type, used by the UI"
+        },
+        "fromScheme": {
+          "type": "object",
+          "description": "The origin scheme in the mapping",
+          "properties": {
+            "uri": {
+              "type": "string",
+              "description": "URI of the vocabulary"
+            }
+          }
+        },
+        "toScheme": {
+          "type": "object",
+          "description": "The target scheme in the mapping",
+          "properties": {
+            "uri": {
+              "type": "string",
+              "description": "URI of the vocabulary"
+            }
+          }
+        }
+      }
+    },
+    "ConceptMappings": {
+      "type": "object",
+      "properties": {
+        "mappings": {
+          "$ref": "#/definitions/ConceptMapping",
+          "description": "The list of mappings for the concept."
+        },
+        "graph": {
+          "type": "string",
+          "description": "Concept Graph object. Can be read back as RDF."
+        }
+      },
+      "required": [
+        "uri",
+        "type",
+        "prefLabel",
+        "from",
+        "to",
+        "description",
+        "hrefLink",
+        "lang",
+        "vocabName",
+        "typeLabel"
+      ]
+    },
+    "changedConceptsResult": {
+      "type": "object",
+      "properties": {
+        "changeList": {
+          "type": "array",
+          "description": "List of changed concepts",
+          "items": {
+            "$ref": "#/definitions/changedConcept"
+          }
+        }
+      },
+      "required": [
+        "changeList"
+      ]
+    },
+    "changedConcept": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "URI of the concept"
+        },
+        "prefLabel": {
+          "type": "string",
+          "description": "Preferred label of the concept"
+        },
+        "date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Time stamp"
+        }
+      },
+      "required": [
+        "uri",
+        "prefLabel",
+        "date"
+      ]
+    }
+  }
 }

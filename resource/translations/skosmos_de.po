@@ -1,15 +1,16 @@
 # 
 # Translators:
-# CH_ <ch@infobib.de>, 2017
+# CH_ <ch@infobib.de>, 2017,2019
 # Joachim Neubert <j.neubert@zbw.eu>, 2015-2016
-# osma <osma.suominen@helsinki.fi>, 2015,2017
+# Jonas Waeber <jonaswaeber@gmail.com>, 2018
+# osma <osma.suominen@helsinki.fi>, 2015,2017,2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-16 10:26+0200\n"
-"PO-Revision-Date: 2017-11-21 13:54+0000\n"
-"Last-Translator: CH_ <ch@infobib.de>\n"
+"PO-Revision-Date: 2020-04-09 10:26+0000\n"
+"Last-Translator: osma <osma.suominen@helsinki.fi>\n"
 "Language-Team: German (http://www.transifex.com/national-library-of-finland/skosmos/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,6 +24,9 @@ msgstr ""
 "X-Poedit-SearchPath-2: model\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
+msgid "Download this vocabulary:"
+msgstr ""
+
 #: controller/Controller.php:38
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:21
 msgid "in_this_language"
@@ -31,12 +35,12 @@ msgstr "auf Deutsch"
 #: controller/RestController.php:271
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:125
 msgid "skos:Concept"
-msgstr "concept"
+msgstr "Konzept"
 
 #: controller/RestController.php:280
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:127
 msgid "skos:Collection"
-msgstr "Sammlung/Collection"
+msgstr "Sammlung"
 
 #: model/Concept.php:455 model/Concept.php:475
 msgid "skosmos:created"
@@ -44,7 +48,7 @@ msgstr "Erstellt"
 
 #: model/Concept.php:460 model/Concept.php:462 model/Concept.php:471
 msgid "skosmos:modified"
-msgstr "Geändert"
+msgstr "Geändert am"
 
 #: model/VocabularyCategory.php:39
 msgid "Vocabularies"
@@ -74,7 +78,7 @@ msgstr "Über"
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:35
 #, php-format
 msgid "All %d results displayed"
-msgstr "Alle %d Ergebnisse"
+msgstr "%d angezeigte Ergebnisse"
 
 #: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:64
 #: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:77
@@ -130,7 +134,7 @@ msgstr "Sprache der Inhalte"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:732
 msgid "Download this concept in SKOS format:"
-msgstr "Herunterladen des concepts im SKOS Format:"
+msgstr "Herunterladen des Konzepts im SKOS Format:"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:144
 msgid "E-mail:"
@@ -142,11 +146,11 @@ msgstr "Suche eingeben"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:148
 msgid "Enter your e-mail address"
-msgstr "Tragen Sie hier bitte Ihre E-Mail Adresse ein"
+msgstr "E-Mail Adresse eingeben bitte"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:140
 msgid "Enter your name"
-msgstr "Tragen Sie hier bitte Ihren Namen ein"
+msgstr "Namen eingeben bitte"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:900
 #: /tmp/cache/587c83c13194c/5c/5c060d2297f64d66beb101ee34831f917ed8d33f97dadeca144430a1561433ec.php:69
@@ -186,7 +190,7 @@ msgstr "Gruppen"
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:55
 #: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:91
 msgid "Hier-nav"
-msgstr "Baumstruktur"
+msgstr "Hierarchie"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:157
 msgid "Leave this field blank"
@@ -194,7 +198,7 @@ msgstr "Dieses Feld bitte leer lassen"
 
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:594
 msgid "Limit search"
-msgstr "Suche enschränken"
+msgstr "Suche einschränken"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:31
 msgid "Loading"
@@ -202,7 +206,7 @@ msgstr "Laden"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:27
 msgid "Loading more items"
-msgstr "Laden weiterer Objekte"
+msgstr "Weitere Resultate laden"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:152
 msgid "Message:"
@@ -219,7 +223,7 @@ msgstr "Keine Ergebnisse"
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:103
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:111
 msgid "Not to a specific vocabulary"
-msgstr "Nicht zu einem speziellen Vokabular"
+msgstr "Nicht zu einem spezifischen Vokabular"
 
 #: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:233
 msgid "Search"
@@ -242,8 +246,11 @@ msgid "Send feedback"
 msgstr "Sende Feedback"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:51
-msgid "Show all breadcrumb paths"
-msgstr "Zeige alle Brotkrümel-Pfade"
+msgid "show all # paths"
+msgstr "Zeige alle # Brotkrümel-Pfade"
+
+msgid "show all # values"
+msgstr ""
 
 #: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:72
 msgid "Skosmos version %version%"
@@ -263,7 +270,7 @@ msgstr "Die Suche ergab keine Ergebnisse."
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:48
 msgid "There is no term for this concept in this language"
-msgstr "In dieser Sprache gibt es keinen Begriff für dieses concept."
+msgstr "In dieser Sprache gibt es keinen Begriff für dieses Konzept."
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:173
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:47
@@ -272,11 +279,11 @@ msgstr "Der Wert ist verpflichtend und darf nicht leer bleiben"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:27
 msgid "cc:attributionName"
-msgstr "Name für die Nennung des Urhebers"
+msgstr "Name des Urhebers"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:29
 msgid "cc:attributionUrl"
-msgstr "URL für die Nennung des Urhebers"
+msgstr "URL des Urhebers"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:25
 msgid "cc:license"
@@ -296,7 +303,7 @@ msgstr "Konform mit"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:37
 msgid "dc:contributor"
-msgstr "Mitwirkender"
+msgstr "Mitwirkende/r"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:39
 msgid "dc:coverage"
@@ -308,7 +315,7 @@ msgstr "Erstellt"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:43
 msgid "dc:creator"
-msgstr "Ersteller"
+msgstr "Ersteller/in"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:45
 msgid "dc:date"
@@ -401,7 +408,7 @@ msgstr "Typ"
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:36
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:256
 msgid "deprecated"
-msgstr "Dieses concept ist veraltet. Bitte nutzen Sie es nicht mehr zur Beschreibung Ihrer Daten!"
+msgstr "Dieses Konzept ist veraltet. Bitte nutzen Sie es nicht mehr zur Beschreibung Ihrer Daten!"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:89
 msgid "foaf:homepage"
@@ -414,7 +421,7 @@ msgstr "Webseite"
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:658
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:542
 msgid "foreign prefLabel help"
-msgstr "Zusatzinformationen zum concept in anderen Sprachen"
+msgstr "Zusatzinformationen zum Konzept in anderen Sprachen"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:660
 msgid "foreign prefLabels"
@@ -430,15 +437,15 @@ msgstr "von allen"
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:293
 #: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:87
 msgid "hierarchy-disabled-help"
-msgstr "Die oberste Hierarchieebene kann in diesem Vokabular nicht angezeigt werden."
+msgstr "In diesem Vokabular kann die oberste Hierarchieebene nicht angezeigt werden."
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:93
 msgid "isothes:ConceptGroup"
-msgstr "Gruppe von concepts"
+msgstr "Gruppe von Konzepten"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:97
 msgid "isothes:ThesaurusArray"
-msgstr "Array aus concepts"
+msgstr "Array von Geschwisterkonzepten"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:99
 msgid "isothes:broaderGeneric"
@@ -466,11 +473,11 @@ msgstr "Unterbegriffe (partitiv)"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:95
 msgid "isothes:superGroup"
-msgstr "Obergruppe"
+msgstr "Übergruppe"
 
 #: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:66
 msgid "layout designed by Hahmo"
-msgstr "Layout erstellt durch Hahmo Design"
+msgstr "Layout erstellt von Hahmo Design"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:74
 msgid "limited to group"
@@ -482,7 +489,7 @@ msgstr "beschränkt auf Elternobjekt"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:81
 msgid "limited to scheme"
-msgstr ""
+msgstr "begrenzt auf Schema"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:29
 msgid "limited to type"
@@ -490,7 +497,7 @@ msgstr "beschränkt auf Typ"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:113
 msgid "owl:sameAs"
-msgstr "Äquivalente concepts"
+msgstr "Äquivalente Konzepte"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:111
 msgid "owl:versionInfo"
@@ -502,7 +509,7 @@ msgstr "Typ"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:117
 msgid "rdf:type_help"
-msgstr "Typ"
+msgstr "Typ der Entität"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:123
 msgid "rdfs:comment"
@@ -518,31 +525,31 @@ msgstr "Siehe auch"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:43
 msgid "selected"
-msgstr "Ausgewählt"
+msgstr "ausgewählt"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:143
 msgid "skos:altLabel"
-msgstr ""
+msgstr "Eingabe Begriffe"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:179
 msgid "skos:altLabel_help"
-msgstr "Alternative Beschreibung für das concept."
+msgstr "Alternative Beschreibung des Konzepts."
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:133
 msgid "skos:broadMatch"
-msgstr "Vergleichbares concept Objekt"
+msgstr "Vergleichbares Konzept"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:191
 msgid "skos:broadMatch_help"
-msgstr "Vergleichbares concept Objekt in anderem Vokabular."
+msgstr "Vergleichbares Konzept eines anderen Vokabulars."
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:129
 msgid "skos:broader"
-msgstr "Oberbegriff"
+msgstr "Übergeordnetes Konzept"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:171
 msgid "skos:broader_help"
-msgstr "Übergeordnetes concept Objekt"
+msgstr "Übergeordnetes Konzept"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:169
 msgid "skos:changeNote"
@@ -550,11 +557,11 @@ msgstr "Hinweis zur Änderung"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:147
 msgid "skos:closeMatch"
-msgstr "Ähnliches concept Objekt"
+msgstr "Ähnliches Konzept"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:189
 msgid "skos:closeMatch_help"
-msgstr "Ähnliches concept Objekt in anderem Vokabular."
+msgstr "Ähnliches Konzept eines anderen Vokabulars."
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:161
 msgid "skos:definition"
@@ -562,7 +569,7 @@ msgstr "Definition"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:185
 msgid "skos:definition_help"
-msgstr "Genaue Beschreibung der Intention zur Publikation des concept Objekts"
+msgstr "Eine genaue Erklärung zur beabsichtigten Bedeutung eines Konzepts"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:167
 msgid "skos:editorialNote"
@@ -570,11 +577,11 @@ msgstr "Hinweis des Verfassers"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:145
 msgid "skos:exactMatch"
-msgstr "Identisches concept Objekt"
+msgstr "Identisches Konzept"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:187
 msgid "skos:exactMatch_help"
-msgstr "Identisches concept Objekt in anderem Vokabular."
+msgstr "Identisches Konzept eines anderen Vokabulars."
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:163
 msgid "skos:example"
@@ -582,7 +589,7 @@ msgstr "Beispiel"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:155
 msgid "skos:hasTopConcept"
-msgstr "Hat übergeordnetes concept Objekt"
+msgstr "Hat ein übergeordnetes Konzept"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:165
 msgid "skos:historyNote"
@@ -590,7 +597,7 @@ msgstr "Hinweis zur Historie"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:151
 msgid "skos:inScheme"
-msgstr "Schema des concept Objekts"
+msgstr "Konzept Schema"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:149
 msgid "skos:member"
@@ -598,31 +605,31 @@ msgstr "Mitglieder der Gruppe"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:181
 msgid "skos:member_help"
-msgstr "Mitglieder der Gruppe."
+msgstr "Mitglieder der Gruppe"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:135
 msgid "skos:narrowMatch"
-msgstr "Untergeordnete passende concept Objekte"
+msgstr "Untergeordnete passende Konzepte"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:193
 msgid "skos:narrowMatch_help"
-msgstr "Untergeordnete passende concept Objekte aus anderem Vokabular."
+msgstr "Untergeordnete passende Konzepte eines anderen Vokabulars."
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:131
 msgid "skos:narrower"
-msgstr "Untergeordnete concept Objekte"
+msgstr "Untergeordnete Konzepte"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:173
 msgid "skos:narrower_help"
-msgstr "Untergeordnete concept Objekte"
+msgstr "Untergeordnete Konzepte."
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:157
 msgid "skos:note"
-msgstr "Hinweis"
+msgstr "Notiz"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:175
 msgid "skos:note_help"
-msgstr "Weitere Anmerkungen"
+msgstr "Anmerkungen"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:234
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:141
@@ -631,15 +638,15 @@ msgstr "Bevorzugte Bezeichnung"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:137
 msgid "skos:related"
-msgstr "Verknüpfte andere concept Objekte"
+msgstr "Verwandte Konzepte"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:139
 msgid "skos:relatedMatch"
-msgstr "Verknüpfte concept Objekte aus anderen Vokabularen."
+msgstr "Passende verwandte Konzepte"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:183
 msgid "skos:related_help"
-msgstr "Verknüpfte andere concept Objekte."
+msgstr "Konzepte verwandt mit diesem Konzept."
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:159
 msgid "skos:scopeNote"
@@ -647,15 +654,15 @@ msgstr "Hinweise zur Anwendung"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:177
 msgid "skos:scopeNote_help"
-msgstr "Hinweise zu Anwendungsfällen für dieses concept Objekt."
+msgstr "Hinweise zu den Anwendungsfällen dieses Konzepts."
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:153
 msgid "skos:topConceptOf"
-msgstr "Gehört zum Vocabular"
+msgstr "Gehört zum Vokabular"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:197
 msgid "skosext:DeprecatedConcept"
-msgstr "Veraltetes concept Objekt"
+msgstr "Veraltetes Konzept"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:195
 msgid "skosext:partOf"
@@ -663,7 +670,7 @@ msgstr "Ist Teil von"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:199
 msgid "skosext:partOf_help"
-msgstr "Gesamtheit aus der das concept Objekt stammt."
+msgstr "Gesamtheit in der Konzept ist."
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:548
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:201
@@ -684,7 +691,7 @@ msgstr "Array, zu dem das Konzept gehört."
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:546
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:203
 msgid "skosmos:memberOf_help"
-msgstr "Gruppe zu der das concept Objekt gehört."
+msgstr "Gruppe zu der das Konzept gehört."
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:23
 msgid "zxx-x-taxon"
@@ -708,7 +715,7 @@ msgstr "Anzahl"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:157
 msgid "Download this vocabulary as SKOS/RDF:"
-msgstr "Download des Vokabulars in SKOS/RDF:"
+msgstr "Herunterladen dieses Vokabulars in SKOS/RDF:"
 
 #: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:205
 msgid "Help"
@@ -736,7 +743,7 @@ msgstr "Anzahl Ressourcen nach Typ"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:124
 msgid "Term counts by language"
-msgstr "Zahl der Begriffe nach Sprache"
+msgstr "Anzahl Begriffe nach Sprache"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:116
 msgid "Type"
@@ -756,55 +763,10 @@ msgstr "Führen Sie Ihre Maus über den mit Punkten unterstrichenen Text um weit
 
 #: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:201
 msgid "search_example_text"
-msgstr "Für eine Suche nach Teilzeichenketten, nutzen sie bitte ein * (z.B. *wald or *baum*). Werden nur kurze Begriffe verwendet, so wird automatisch ein * angehangen. Das Ergebnis der Suche nach dem Begriff Wissen entspricht also einer Suche nach Wissen*."
+msgstr "Für eine Suche mit Trunkierung, nutzen Sie bitte ein * (z.B. *wald oder *baum*). Werden nur kurze Begriffe verwendet, so wird automatisch ein * angehängt. Die Suche nach dem Begriff Wissen ergibt das selbe Resultat wie Wissen*."
 
-#~ msgid "dc11:contributor"
-#~ msgstr "Contributor"
+msgid "feedback_enter_name_email"
+msgstr "Wenn Sie eine direkte Antwort erhalten möchten, geben Sie bitte Ihren Namen und Ihre E-Mail Adresse an. Sie haben auch die Möglichkeit, Ihr Feedback anonym zu übermitteln. Achtung: Feedback zu einem bestimmten Vokabular wird direkt an dessen Administrator*in weitergeleitet."
 
-#~ msgid "dc11:creator"
-#~ msgstr "Creator"
-
-#~ msgid "dc11:description"
-#~ msgstr "Description"
-
-#~ msgid "dc11:license"
-#~ msgstr "License"
-
-#~ msgid "dc11:publisher"
-#~ msgstr "Publisher"
-
-#~ msgid "dc11:relation"
-#~ msgstr "Relation"
-
-#~ msgid "dc11:rights"
-#~ msgstr "Rights"
-
-#~ msgid "dc11:source"
-#~ msgstr "Source"
-
-#~ msgid "dc11:title"
-#~ msgstr "Title"
-
-#~ msgid "Error: the vocabulary does not contain terms beginning with"
-#~ msgstr "The vocabulary does not contain terms beginning with"
-
-#~ msgid "Vocabularies on the server"
-#~ msgstr "Available vocabularies and ontologies"
-
-#~ msgid "Modified concepts"
-#~ msgstr "Modified concepts"
-
-#~ msgid "New concepts"
-#~ msgstr "New concepts"
-
-#~ msgid "All"
-#~ msgstr "All"
-
-#~ msgid "results"
-#~ msgstr "results:"
-
-#~ msgid "results for"
-#~ msgstr "results for"
-
-#~ msgid "Language literal"
-#~ msgstr "In English"
+msgid "concept_types"
+msgstr "Konzept-Typen"

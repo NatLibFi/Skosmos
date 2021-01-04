@@ -1,13 +1,13 @@
 # 
 # Translators:
-# Dan Michael O. Heggø <danmichaelo@gmail.com>, 2015-2017
-# osma <osma.suominen@helsinki.fi>, 2017
+# Dan Michael O. Heggø <danmichaelo@gmail.com>, 2015-2017,2019-2020
+# osma <osma.suominen@helsinki.fi>, 2017,2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-16 10:26+0200\n"
-"PO-Revision-Date: 2017-05-30 07:38+0000\n"
+"PO-Revision-Date: 2020-04-09 10:27+0000\n"
 "Last-Translator: osma <osma.suominen@helsinki.fi>\n"
 "Language-Team: Norwegian Nynorsk (http://www.transifex.com/national-library-of-finland/skosmos/language/nn/)\n"
 "MIME-Version: 1.0\n"
@@ -22,10 +22,13 @@ msgstr ""
 "X-Poedit-SearchPath-2: model\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
+msgid "Download this vocabulary:"
+msgstr "Last ned dette vokabularet:"
+
 #: controller/Controller.php:38
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:21
 msgid "in_this_language"
-msgstr "på nynorsk"
+msgstr "på engelsk"
 
 #: controller/RestController.php:271
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:125
@@ -241,8 +244,11 @@ msgid "Send feedback"
 msgstr "Gje tilbakemelding"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:51
-msgid "Show all breadcrumb paths"
+msgid "show all # paths"
 msgstr "vis alle # stiar"
+
+msgid "show all # values"
+msgstr ""
 
 #: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:72
 msgid "Skosmos version %version%"
@@ -757,53 +763,8 @@ msgstr "Flytter du peikaren over tekst med prikkete understreking får du inform
 msgid "search_example_text"
 msgstr "Du kan trunkera med teiknet *, som i *dyr eller *patent*. Søk utan trunkeringsteikn vert automatisk trunkert på slutten, så katt vil gje same resultatliste som katt*."
 
-#~ msgid "dc11:contributor"
-#~ msgstr "Contributor"
+msgid "feedback_enter_name_email"
+msgstr "Fyll inn namn og e-postadresse om du ynsker svar. Du kan òg sende inn tilbakemelding anonymt. Merk at tilbakemelding på eit bestemd vokabular vart sendt direkte til vokabularets administrator."
 
-#~ msgid "dc11:creator"
-#~ msgstr "Creator"
-
-#~ msgid "dc11:description"
-#~ msgstr "Description"
-
-#~ msgid "dc11:license"
-#~ msgstr "License"
-
-#~ msgid "dc11:publisher"
-#~ msgstr "Publisher"
-
-#~ msgid "dc11:relation"
-#~ msgstr "Relation"
-
-#~ msgid "dc11:rights"
-#~ msgstr "Rights"
-
-#~ msgid "dc11:source"
-#~ msgstr "Source"
-
-#~ msgid "dc11:title"
-#~ msgstr "Title"
-
-#~ msgid "Error: the vocabulary does not contain terms beginning with"
-#~ msgstr "The vocabulary does not contain terms beginning with"
-
-#~ msgid "Vocabularies on the server"
-#~ msgstr "Available vocabularies and ontologies"
-
-#~ msgid "Modified concepts"
-#~ msgstr "Modified concepts"
-
-#~ msgid "New concepts"
-#~ msgstr "New concepts"
-
-#~ msgid "All"
-#~ msgstr "All"
-
-#~ msgid "results"
-#~ msgstr "results:"
-
-#~ msgid "results for"
-#~ msgstr "results for"
-
-#~ msgid "Language literal"
-#~ msgstr "In English"
+msgid "concept_types"
+msgstr "Omgrepstyper"

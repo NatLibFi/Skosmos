@@ -19,6 +19,11 @@ try {
     if ($request->getQueryParam('vocab')) {
         $request->setVocab($request->getQueryParam('vocab'));
     }
+    if ($request->getQueryParam('clang')) {
+        $request->setContentLang($request->getQueryParam('clang'));
+    } elseif ($request->getQueryParam('lang')) {
+        $request->setContentLang($request->getQueryParam('lang'));
+    }
 
     if (sizeof($parts) < 2 || $parts[1] == "") {
         header("HTTP/1.0 404 Not Found");
@@ -27,6 +32,8 @@ try {
         $controller->vocabularies($request);
     } elseif ($parts[1] == 'search') {
         $controller->search($request);
+    } elseif ($parts[1] == 'label') {
+        $controller->label($request);
     } elseif ($parts[1] == 'types') {
         $controller->types($request);
     } elseif ($parts[1] == 'data') {
@@ -53,12 +60,21 @@ try {
             $controller->topConcepts($request);
         } elseif ($parts[2] == 'data') {
             $controller->data($request);
+        } elseif ($parts[2] == 'mappings') {
+            $controller->mappings($request);
         } elseif ($parts[2] == 'search') {
             $controller->search($request);
         } elseif ($parts[2] == 'label') {
             $controller->label($request);
         } elseif ($parts[2] == 'lookup') {
             $controller->lookup($request);
+        } elseif ($parts[2] == 'index' && sizeof($parts) == 4) {
+            $letter = $parts[3];
+            if ($letter == "") {
+                $controller->indexLetters($request);
+            } else {
+                $controller->indexConcepts($letter, $request);
+            }
         } elseif ($parts[2] == 'broader') {
             $controller->broader($request);
         } elseif ($parts[2] == 'broaderTransitive') {
@@ -81,6 +97,10 @@ try {
             $controller->groups($request);
         } elseif ($parts[2] == 'groupMembers') {
             $controller->groupMembers($request);
+        } elseif ($parts[2] == 'new') {
+            $controller->newConcepts($request);
+        } elseif ($parts[2] == 'modified') {
+            $controller->modifiedConcepts($request);
         } else {
             header("HTTP/1.0 404 Not Found");
             echo ("404 Not Found");

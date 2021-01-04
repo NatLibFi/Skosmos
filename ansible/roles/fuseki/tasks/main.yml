@@ -1,0 +1,145 @@
+
+- name: Download Fuseki tarball
+  get_url:
+    url: https://archive.apache.org/dist/jena/binaries/apache-jena-fuseki-3.8.0.tar.gz
+    dest: /home/vagrant/
+    mode: 755
+
+- name: Extract Fuseki to opt/
+  command: chdir=/opt /bin/tar xzf /home/vagrant/apache-jena-fuseki-3.8.0.tar.gz
+  args:
+    warn: false
+
+- name: Create a symbolic link to /opt/fuseki
+  file:
+    src: /opt/apache-jena-fuseki-3.8.0
+    dest: /opt/fuseki
+    state: link
+
+- name: Add a new user fuseki
+  user:
+    name: fuseki
+    home: /opt/fuseki
+    system: yes
+    create_home: no
+
+- name: Create directories to /var/lib
+  file:
+    path: "/var/lib/fuseki/{{ item }}"
+    state: directory
+    owner: fuseki
+    group: fuseki
+    mode: 0775
+  with_items:
+    - backups
+    - databases
+    - system
+    - system_files
+
+- name: Create directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: fuseki
+    group: fuseki
+    mode: 0775
+  with_items:
+    - /var/log/fuseki
+    - /etc/fuseki
+
+- name: Link fuseki home
+  file:
+    src: "/var/lib/fuseki/{{ item }}"
+    dest: /etc/fuseki/{{ item }}
+    state: link
+  with_items:
+    - backups
+    - databases
+    - system
+    - system_files
+
+- name: Link logs to /etc/fuseki/logs
+  file:
+    src: /var/log/fuseki
+    dest: /etc/fuseki/logs
+    state: link
+
+- name: Copy Fuseki config
+  copy:
+    src: files/fuseki
+    dest: /etc/default/
+
+- name: Setup autostart
+  command: chdir=/etc/init.d ln -s /opt/fuseki/fuseki .
+  args:
+    warn: false
+  ignore_errors: yes
+
+- name: Update services
+  command: update-rc.d fuseki defaults
+
+- name: Start service Fuseki
+  service:
+    name: fuseki
+    state: started
+
+- name: Create Skosmos database
+  uri:
+    url: http://localhost:3030/$/datasets/
+    method: POST
+    body: dbName=skosmos&dbType=tdb
+    body_format: raw
+
+- name: Shut down service Fuseki for configuration
+  service:
+    name: fuseki
+    state: stopped
+
+- name: Create configuration directory for Skosmos datasets
+  file:
+    path: etc/fuseki/configuration
+    state: directory
+
+- name: Create text index for Skosmos datasets
+  copy:
+    src: files/skosmos.ttl
+    dest: etc/fuseki/configuration/skosmos.ttl
+
+- name: Allow management operations for non-localhost access
+  lineinfile:
+    path: /etc/fuseki/shiro.ini
+    line: "/$/** = anon"
+
+- name: Start service Fuseki
+  service:
+    name: fuseki
+    state: started
+
+- name: Install Ruby
+  apt:
+    name: ruby
+    update_cache: yes
+    state: present
+
+- name: Download example vocabulary data (STW Thesaurus)
+  get_url:
+    url: http://zbw.eu/stw/version/latest/download/stw.ttl.zip
+    dest: /home/vagrant/
+    mode: 755
+
+- name: Unzip STW Thesaurus data file
+  command: unzip /home/vagrant/stw.ttl.zip -d /home/vagrant/
+  args:
+    warn: false
+
+- name: Download example vocabulary data (UNESCO Thesaurus)
+  get_url:
+    url: http://skos.um.es/unescothes/unescothes.ttl
+    dest: /home/vagrant/
+    mode: 755
+
+- name: Load example vocabulary data (STW Thesaurus)
+  command: /opt/fuseki/bin/s-put http://localhost:3030/skosmos/data http://zbw.eu/stw/ /home/vagrant/stw.ttl
+
+- name: Load example vocabulary data (UNESCO Thesaurus)
+  command: /opt/fuseki/bin/s-put http://localhost:3030/skosmos/data http://skos.um.es/unescothes/ /home/vagrant/unescothes.ttl

@@ -1,13 +1,34 @@
 <?php
 
 /**
- * VocabularyConfig provides access to the vocabulary configuration defined in vocabularies.ttl.
+ * VocabularyConfig provides access to the vocabulary configuration defined in config.ttl.
  */
-class VocabularyConfig extends DataObject
+class VocabularyConfig extends BaseConfig
 {
     private $plugins;
+    private $pluginParameters;
+    private $languageOrderCache = array();
 
-    public function __construct($resource, $globalPlugins=array()) 
+    const DEFAULT_PROPERTY_ORDER = array("rdf:type", "dc:isReplacedBy",
+    "skos:definition", "skos:broader", "isothes:broaderGeneric",
+    "isothes:broaderPartitive", "isothes:broaderInstantial",
+    "skos:narrower", "isothes:narrowerGeneric", "isothes:narrowerPartitive",
+    "isothes:narrowerInstantial", "skos:related", "skos:altLabel",
+    "skos:note", "skos:scopeNote", "skos:historyNote", "rdfs:comment",
+    "dc11:source", "dc:source", "skosmos:memberOf", "skosmos:memberOfArray");
+
+    const ISO25964_PROPERTY_ORDER = array("rdf:type", "dc:isReplacedBy",
+    // ISO 25964 allows placing all text fields (inc. SN and DEF) together
+    // so we will do that, except for HN, which is clearly administrative
+    "skos:note", "skos:scopeNote", "skos:definition", "rdfs:comment",
+    "dc11:source", "dc:source", "skos:altLabel", "skos:broader",
+    "isothes:broaderGeneric", "isothes:broaderPartitive",
+    "isothes:broaderInstantial", "skos:narrower", "isothes:narrowerGeneric",
+    "isothes:narrowerPartitive", "isothes:narrowerInstantial",
+    "skos:related", "skos:historyNote", "skosmos:memberOf",
+    "skosmos:memberOfArray");
+
+    public function __construct($resource, $globalPlugins=array())
     {
         $this->resource = $resource;
         $plugins = $this->resource->allLiterals('skosmos:usePlugin');
@@ -18,43 +39,33 @@ class VocabularyConfig extends DataObject
             }
         }
         $this->plugins = new PluginRegister(array_merge($globalPlugins, $pluginArray));
-    }
+        // Get parameterized plugins defined as resources and their respective parameters
+        $pluginResources = $this->resource->allResources('skosmos:useParamPlugin');
+        $this->pluginParameters = array();
+        if ($pluginResources) {
+            foreach ($pluginResources as $pluginResource) {
+                $pluginName = $pluginResource->getLiteral('skosmos:usePlugin')->getValue();
+                $this->pluginParameters[$pluginName] = array();
 
-    /**
-     * Returns a boolean value based on a literal value from the vocabularies.ttl configuration.
-     * @param string $property the property to query
-     * @param boolean $default the default value if the value is not set in configuration
-     */
-    private function getBoolean($property, $default = false)
-    {
-        $val = $this->resource->getLiteral($property);
-        if ($val) {
-            return filter_var($val->getValue(), FILTER_VALIDATE_BOOLEAN);
+                $pluginParams = $pluginResource->allResources('skosmos:parameters');
+                foreach ($pluginParams as $parameter) {
+
+                    $paramLiterals = $parameter->allLiterals('schema:value');
+                    foreach ($paramLiterals as $paramLiteral) {
+                        $paramName = $parameter->getLiteral('schema:propertyID')->getValue();
+                        $paramValue = $paramLiteral->getValue();
+                        $paramLang = $paramLiteral->getLang();
+                        if ($paramLang) {
+                            $paramName .= '_' . $paramLang;
+                        }
+                        $this->pluginParameters[$pluginName][$paramName] = $paramValue;
+                    }
+                }
+                $pluginArray[] = $pluginName;
+            }
+            $this->plugins = new PluginRegister(array_merge($globalPlugins, $pluginArray));
         }
 
-        return $default;
-    }
-    
-    /**
-     * Returns a boolean value based on a literal value from the vocabularies.ttl configuration.
-     * @param string $property the property to query
-     * @param string $lang preferred language for the literal,
-     */
-    private function getLiteral($property, $lang=null)
-    {
-        if (!isset($lang)) {;
-            $lang = $this->getEnvLang();
-        }
-
-        $literal = $this->resource->getLiteral($property, $lang);
-        if ($literal) {
-            return $literal->getValue();
-        }
-
-        // not found with selected language, try any language
-        $literal = $this->resource->getLiteral($property);
-        if ($literal)
-          return $literal->getValue();
     }
 
     /**
@@ -79,7 +90,7 @@ class VocabularyConfig extends DataObject
     }
 
     /**
-     * Wether the alphabetical index is small enough to be shown all at once.
+     * Whether the alphabetical index is small enough to be shown all at once.
      * @return boolean true if all concepts can be shown at once.
      */
     public function getAlphabeticalFull()
@@ -95,7 +106,7 @@ class VocabularyConfig extends DataObject
     public function getShortName()
     {
         $shortname = $this->getLiteral('skosmos:shortName');
-        if ($shortname) 
+        if ($shortname)
           return $shortname;
 
         // if no shortname exists fall back to the id
@@ -119,20 +130,20 @@ class VocabularyConfig extends DataObject
      */
     public function getTitle($lang = null)
     {
-        return $this->getLiteral('dc:title', $lang);
+        return $this->getLiteral('dc:title', false, $lang);
     }
 
     /**
-     * Returns a boolean value set in the vocabularies.ttl config.
+     * Returns a boolean value set in the config.ttl config.
      * @return boolean
      */
     public function sortByNotation()
     {
         return $this->getBoolean('skosmos:sortByNotation');
     }
-    
+
     /**
-     * Returns a boolean value set in the vocabularies.ttl config.
+     * Returns a boolean value set in the config.ttl config.
      * @return boolean
      */
     public function showChangeList()
@@ -155,7 +166,6 @@ class VocabularyConfig extends DataObject
                 $mimetypelit = $url->getLiteral('dc11:format');
             }
 
-            // if still not found, guess MIME type using file extension
             if ($mimetypelit !== null) {
                 $mimetype = $mimetypelit->getValue();
             } else {
@@ -167,9 +177,41 @@ class VocabularyConfig extends DataObject
                 $mimetypes = array_keys($format->getMimeTypes());
                 $mimetype = $mimetypes[0];
             }
-            $ret[$mimetype] = $url->getURI();
+
+            $langLit = $url->getLiteral('dc:language');
+
+            if ($langLit != null) {
+                //when the mimetype has language variants
+                $dataUrlLang = $langLit->getValue();
+
+                if (!isset($ret[$mimetype])) {
+                  $arr = array();
+                } else {
+                  $arr = $ret[$mimetype];
+                }
+                $arr[$dataUrlLang] = $url->getURI();
+                $ret[$mimetype] = $arr;
+            } else {
+                $ret[$mimetype] = $url->getURI();
+            }
         }
         return $ret;
+    }
+
+    /**
+     * Returns the main Concept Scheme URI of that Vocabulary,
+     * or null if not set.
+     * @return string concept scheme URI or null
+     */
+
+    public function getMainConceptSchemeURI()
+    {
+        $val = $this->resource->getResource("skosmos:mainConceptScheme");
+        if ($val) {
+            return $val->getURI();
+        }
+
+        return null;
     }
 
     /**
@@ -249,7 +291,7 @@ class VocabularyConfig extends DataObject
     }
 
     /**
-     * Returns a boolean value set in the vocabularies.ttl config.
+     * Returns a boolean value set in the config.ttl config.
      * @return boolean
      */
     public function getShowHierarchy()
@@ -258,7 +300,7 @@ class VocabularyConfig extends DataObject
     }
 
     /**
-     * Returns a boolean value set in the vocabularies.ttl config.
+     * Returns a boolean value set in the config.ttl config.
      * @return boolean
      */
     public function showConceptSchemesInHierarchy()
@@ -267,7 +309,7 @@ class VocabularyConfig extends DataObject
     }
 
     /**
-     * Returns a boolean value set in the vocabularies.ttl config.
+     * Returns a boolean value set in the config.ttl config.
      * @return boolean defaults to true if fetching hasn't been explicitly denied.
      */
     public function getExternalResourcesLoading()
@@ -276,7 +318,7 @@ class VocabularyConfig extends DataObject
     }
 
     /**
-     * Returns a boolean value set in the vocabularies.ttl config.
+     * Returns a boolean value set in the config.ttl config.
      * @return boolean
      */
     public function getShowLangCodes()
@@ -285,17 +327,39 @@ class VocabularyConfig extends DataObject
     }
 
     /**
-     * Returns a boolean value set in the vocabularies.ttl config.
+     * Returns a boolean value set in the config.ttl config.
+     * @return boolean
+     */
+    public function searchByNotation()
+    {
+        return $this->getBoolean('skosmos:searchByNotation');
+    }
+
+    /**
+     * Returns skosmos:marcSourcecode value set in config.ttl.
+     * @return string marcsource name
+     */
+    public function getMarcSourceCode($lang = null)
+    {
+        return $this->getLiteral('skosmos:marcSourceCode', false, $lang);
+    }
+
+    /**
+     * Returns a boolean value set in the config.ttl config.
      * @return array array of concept class URIs (can be empty)
      */
     public function getIndexClasses()
     {
-        $resources = $this->resource->allResources("skosmos:indexShowClass");
-        $ret = array();
-        foreach ($resources as $res) {
-            $ret[] = $res->getURI();
-        }
-        return $ret;
+        return $this->getResources("skosmos:indexShowClass");
+    }
+
+    /**
+     * Returns skosmos:externalProperty values set in the config.ttl config.
+     * @return array array of external property URIs (can be empty)
+     */
+    public function getExtProperties()
+    {
+        return $this->getResources("skosmos:externalProperty");
     }
 
     /**
@@ -316,6 +380,14 @@ class VocabularyConfig extends DataObject
     }
 
     /**
+     * Returns the plugin parameters
+     * @return string plugin parameters or null
+     */
+    public function getPluginParameters() {
+        return json_encode($this->pluginParameters, true);
+    }
+
+    /**
      * Returns the vocabulary default sidebar view.
      * @return string name of the view
      */
@@ -329,7 +401,7 @@ class VocabularyConfig extends DataObject
             }
 
         }
-        if ($this->showAlphabeticalIndex() === false) { 
+        if ($this->showAlphabeticalIndex() === false) {
             if ($this->getShowHierarchy()) {
                 return 'hierarchy';
             } else if ($this->getGroupClassURI()) {
@@ -378,7 +450,7 @@ class VocabularyConfig extends DataObject
         $ret = array();
         foreach ($resources as $res) {
             $prop = $res->getURI();
-            if (EasyRdf\RdfNamespace::shorten($prop) !== null) // prefixing if possible 
+            if (EasyRdf\RdfNamespace::shorten($prop) !== null) // prefixing if possible
             {
                 $prop = EasyRdf\RdfNamespace::shorten($prop);
             }
@@ -389,7 +461,7 @@ class VocabularyConfig extends DataObject
     }
 
     /**
-     * Returns a boolean value set in the vocabularies.ttl config.
+     * Returns a boolean value set in the config.ttl config.
      * @return boolean
      */
     public function showNotation()
@@ -398,16 +470,26 @@ class VocabularyConfig extends DataObject
     }
 
     /**
-     * Returns a boolean value set in the vocabularies.ttl config.
+     * Returns a boolean value set in the config.ttl config.
      * @return boolean
      */
     public function showAlphabeticalIndex()
     {
         return $this->getBoolean('skosmos:showAlphabeticalIndex', true);
     }
-    
+
     /**
-     * Returns a boolean value set in the vocabularies.ttl config.
+     * Returns the alphabetical list qualifier in this vocabulary,
+     * or null if not set.
+     * @return EasyRdf\Resource|null alphabetical list qualifier resource or null
+     */
+    public function getAlphabeticalListQualifier()
+    {
+        return $this->resource->getResource('skosmos:alphabeticalListQualifier');
+    }
+
+    /**
+     * Returns a boolean value set in the config.ttl config.
      * @return boolean
      */
     public function getShowDeprecated()
@@ -429,5 +511,78 @@ class VocabularyConfig extends DataObject
             $ret[] = array('uri' => $prop, 'prefLabel' =>  $label->getValue());
         }
         return $ret;
+    }
+
+    /**
+     * Returns an array of fallback languages that is ordered by priority and
+     * defined in the vocabulary configuration as a collection.
+     * Additionally, the chosen content language is inserted with the highest priority
+     * and the vocab default language is inserted with the lowest priority.
+     * @param string $clang
+     * @return array of language code strings
+     */
+    public function getLanguageOrder($clang)
+    {
+        if (array_key_exists($clang, $this->languageOrderCache)) {
+            return $this->languageOrderCache[$clang];
+        }
+        $ret = array($clang);
+        $fallbacks = !empty($this->resource->get('skosmos:fallbackLanguages')) ? $this->resource->get('skosmos:fallbackLanguages') : array();
+        foreach ($fallbacks as $lang) {
+            if (!in_array($lang, $ret)) {
+                $ret[] = (string)$lang; // Literal to string conversion
+            }
+        }
+        if (!in_array($this->getDefaultLanguage(), $ret)) {
+            $ret[] = (string)$this->getDefaultLanguage();
+        }
+        foreach ($this->getLanguages() as $lang) {
+            if (!in_array($lang, $ret)) {
+                $ret[] = $lang;
+            }
+        }
+        // store in cache so this doesn't have to be computed again
+        $this->languageOrderCache[$clang] = $ret;
+        return $ret;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isUseModifiedDate()
+    {
+        return $this->getBoolean('skosmos:useModifiedDate', false);
+    }
+
+    /**
+     * @return array
+     */
+    public function getPropertyOrder()
+    {
+        $order = $this->getResource()->getResource('skosmos:propertyOrder');
+        if ($order === null) {
+            return self::DEFAULT_PROPERTY_ORDER;
+        }
+
+        $short = EasyRdf\RdfNamespace::shorten($order);
+        if ($short == 'skosmos:iso25964PropertyOrder') {
+            return self::ISO25964_PROPERTY_ORDER;
+        } elseif ($short == 'skosmos:defaultPropertyOrder') {
+            return self::DEFAULT_PROPERTY_ORDER;
+        }
+        
+        // check for custom order definition
+        $orderList = $order->getResource('rdf:value');
+        if ($orderList !== null && $orderList instanceof EasyRdf\Collection) {
+            $ret = array();
+            foreach ($orderList as $prop) {
+                $short = $prop->shorten();
+                $ret[] = ($short !== null) ? $short : $prop->getURI();
+            }
+            return $ret;
+        }
+        
+        trigger_error("Property order for vocabulary '{$this->getShortName()}' unknown, using default order", E_USER_WARNING);
+        return self::DEFAULT_PROPERTY_ORDER;
     }
 }

@@ -13,7 +13,7 @@ class ConceptSearchParameters
     private $hidden;
     private $unique;
 
-    public function __construct($request, $config, $rest = false) 
+    public function __construct($request, $config, $rest = false)
     {
         $this->request = $request;
         $this->config = $config;
@@ -22,15 +22,15 @@ class ConceptSearchParameters
         $this->unique = $request->getQueryParamBoolean('unique', false);
     }
 
-    public function getLang() 
+    public function getLang()
     {
         if ($this->rest && $this->request->getQueryParam('labellang')) {
             return $this->request->getQueryParam('labellang');
         }
         return $this->request->getLang();
-    } 
+    }
 
-    public function getVocabs() 
+    public function getVocabs()
     {
         if ($this->vocabs) {
             return $this->vocabs;
@@ -39,7 +39,7 @@ class ConceptSearchParameters
             return array($this->request->getVocab());
         }
         return array();
-    } 
+    }
 
     public function getVocabIds()
     {
@@ -48,16 +48,15 @@ class ConceptSearchParameters
             return ($vocabs !== null && $vocabs !== '') ? explode(' ', $vocabs) : null;
         }
         $vocabs = $this->getVocabs();
-        $ret = isset($vocabs[0]) ? array($vocabs[0]->getId()) : null;
-        return $ret;
+        return isset($vocabs[0]) ? array($vocabs[0]->getId()) : null;
     }
 
-    public function setVocabularies($vocabs) 
+    public function setVocabularies($vocabs)
     {
         $this->vocabs = $vocabs;
     }
-    
-    public function getArrayClass() 
+
+    public function getArrayClass()
     {
         if (sizeof($this->getVocabs()) == 1) { // search within vocabulary
             $vocabs = $this->getVocabs();
@@ -65,8 +64,8 @@ class ConceptSearchParameters
         }
         return null;
     }
-    
-    public function getSearchTerm() 
+
+    public function getSearchTerm()
     {
         $term = $this->request->getQueryParamRaw('q') ? $this->request->getQueryParamRaw('q') : $this->request->getQueryParamRaw('query');
         if (!$term && $this->rest)
@@ -77,13 +76,13 @@ class ConceptSearchParameters
         }
         return strpos($term, "*") === false ? $term . "*" : $term; // default to prefix search
     }
-    
-    public function getContentLang() 
+
+    public function getContentLang()
     {
         return $this->request->getContentLang();
     }
-    
-    public function getSearchLang() 
+
+    public function getSearchLang()
     {
         if ($this->rest) {
             return $this->request->getQueryParam('lang');
@@ -102,7 +101,7 @@ class ConceptSearchParameters
         return array_filter($type, 'strlen');
     }
 
-    public function getTypeLimit() 
+    public function getTypeLimit()
     {
         $type = $this->request->getQueryParam('type') !== '' ? $this->request->getQueryParam('type') : null;
         if ($type && strpos($type, ' ')) {
@@ -124,25 +123,25 @@ class ConceptSearchParameters
     }
 
     private function getQueryParamArray($name) {
-        return $this->request->getQueryParam($name) ? explode(' ', urldecode($this->request->getQueryParam($name))) : null;
+        return $this->request->getQueryParam($name) ? explode(' ', urldecode($this->request->getQueryParam($name))) : [];
     }
 
-    public function getGroupLimit() 
+    public function getGroupLimit()
     {
         return $this->getQueryParam('group');
     }
-    
-    public function getParentLimit() 
+
+    public function getParentLimit()
     {
         return $this->getQueryParam('parent');
     }
-    
-    public function getSchemeLimit() 
+
+    public function getSchemeLimit()
     {
         return $this->getQueryParamArray('scheme');
     }
 
-    public function getOffset() 
+    public function getOffset()
     {
         return ($this->request->getQueryParam('offset') && is_numeric($this->request->getQueryParam('offset')) && $this->request->getQueryParam('offset') >= 0) ? $this->request->getQueryParam('offset') : 0;
     }
@@ -166,15 +165,15 @@ class ConceptSearchParameters
     public function getAdditionalFields() {
         return $this->getQueryParamArray('fields');
     }
-    
+
     public function getHidden() {
         return $this->hidden;
     }
-    
+
     public function setHidden($hidden) {
         $this->hidden = $hidden;
     }
-    
+
     public function getRest() {
         return $this->rest;
     }

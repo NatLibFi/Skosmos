@@ -4,6 +4,7 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/NatLibFi/Skosmos/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/NatLibFi/Skosmos/?branch=master)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/ca1939e4-919d-4429-95e7-d63e0a35f9a1/mini.png)](https://insight.sensiolabs.com/projects/ca1939e4-919d-4429-95e7-d63e0a35f9a1)
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/c41550cd00fe4962ba766f8b5fe4a5ff)](https://www.codacy.com/app/NatLibFi/Skosmos)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=NatLibFi_Skosmos&metric=alert_status)](https://sonarcloud.io/dashboard?id=NatLibFi_Skosmos)
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/NatLibFi/Skosmos.svg)](http://isitmaintained.com/project/NatLibFi/Skosmos "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/NatLibFi/Skosmos.svg)](http://isitmaintained.com/project/NatLibFi/Skosmos "Percentage of issues still open")
 
@@ -26,7 +27,7 @@ The latest development version is also available at
 
 Skosmos is implemented using PHP, with Twig templates and e.g. jQuery and
 jsTree used to build the web interface, and EasyRdf for SPARQL and RDF data
-access. We use [BrowserStack](https://www.browserstack.com) for making sure Skosmos works consistently with different browsers.
+access. 
 
 The code is open source under the MIT license. See 
 [Installation](https://github.com/NatLibFi/Skosmos/wiki/Installation) in the 
@@ -35,7 +36,6 @@ wiki for details on obtaining the source and running your own instance of Skosmo
 For information about released versions, see 
 [Release Notes](https://github.com/NatLibFi/Skosmos/releases).
 
-Skosmos was formerly known as ONKI Light.
 
 ## Reporting issues
 

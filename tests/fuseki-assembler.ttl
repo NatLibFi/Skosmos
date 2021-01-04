@@ -1,79 +1,86 @@
-## Example of a TDB dataset and text index published using Fuseki
+@prefix :      <http://base/#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix tdb2:  <http://jena.apache.org/2016/tdb#> .
+@prefix ja:    <http://jena.hpl.hp.com/2005/11/Assembler#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix fuseki: <http://jena.apache.org/fuseki#> .
+@prefix text:  <http://jena.apache.org/text#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
 
-@prefix :        <#> .
-@prefix fuseki:  <http://jena.apache.org/fuseki#> .
-@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix tdb:     <http://jena.hpl.hp.com/2008/tdb#> .
-@prefix ja:      <http://jena.hpl.hp.com/2005/11/Assembler#> .
-@prefix text:    <http://jena.apache.org/text#> .
-@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+ja:DatasetTxnMem  rdfs:subClassOf  ja:RDFDataset .
+ja:MemoryDataset  rdfs:subClassOf  ja:RDFDataset .
+ja:RDFDatasetOne  rdfs:subClassOf  ja:RDFDataset .
+ja:RDFDatasetSink  rdfs:subClassOf  ja:RDFDataset .
+ja:RDFDatasetZero  rdfs:subClassOf  ja:RDFDataset .
 
+tdb2:DatasetTDB  rdfs:subClassOf  ja:RDFDataset .
+tdb2:DatasetTDB2  rdfs:subClassOf  ja:RDFDataset .
 
-[] rdf:type fuseki:Server ;
-   fuseki:services (
-     <#service_text_tdb>
-   ) .
+tdb2:GraphTDB  rdfs:subClassOf  ja:Model .
+tdb2:GraphTDB2  rdfs:subClassOf  ja:Model .
 
-# TDB
-[] ja:loadClass "com.hp.hpl.jena.tdb.TDB" .
-tdb:DatasetTDB  rdfs:subClassOf  ja:RDFDataset .
-tdb:GraphTDB    rdfs:subClassOf  ja:Model .
+<http://jena.hpl.hp.com/2008/tdb#DatasetTDB>
+    rdfs:subClassOf  ja:RDFDataset .
 
-# Text
-[] ja:loadClass "org.apache.jena.query.text.TextQuery" .
-text:TextDataset      rdfs:subClassOf   ja:RDFDataset .
-#text:TextIndexSolr    rdfs:subClassOf   text:TextIndex .
-text:TextIndexLucene  rdfs:subClassOf   text:TextIndex .
+<http://jena.hpl.hp.com/2008/tdb#GraphTDB>
+    rdfs:subClassOf  ja:Model .
 
-## ---------------------------------------------------------------
+text:TextDataset
+    rdfs:subClassOf  ja:RDFDataset .
 
-<#service_text_tdb> rdf:type fuseki:Service ;
-    rdfs:label                      "TDB/text service" ;
-    fuseki:name                     "ds" ;
-    fuseki:serviceQuery             "query" ;
-    fuseki:serviceQuery             "sparql" ;
-    fuseki:serviceUpdate            "update" ;
-    fuseki:serviceUpload            "upload" ;
-    fuseki:serviceReadGraphStore    "get" ;
-    fuseki:serviceReadWriteGraphStore    "data" ;
-    fuseki:dataset                  <#text_dataset> ;
-    .
+:service_tdb_all  a               fuseki:Service ;
+    rdfs:label                    "TDB2+text skosmos" ;
+    fuseki:dataset                :text_dataset ;
+    fuseki:name                   "skosmos-test" ;
+    fuseki:serviceQuery           "query" , "" , "sparql" ;
+    fuseki:serviceReadGraphStore  "get" ;
+    fuseki:serviceReadQuads       "" ;
+    fuseki:serviceReadWriteGraphStore "data" ;
+    fuseki:serviceReadWriteQuads  "" ;
+    fuseki:serviceUpdate          "" , "update" ;
+    fuseki:serviceUpload          "upload" .
 
-<#text_dataset> rdf:type     text:TextDataset ;
-    text:dataset   <#dataset> ;
-    text:index     <#indexLucene> ;
-    .
+:text_dataset a text:TextDataset ;
+    text:dataset :tdb_dataset_readwrite ;
+    text:index :index_lucene .
 
-<#dataset> rdf:type      tdb:DatasetTDB ;
-    tdb:location "--mem--" ;
-    tdb:unionDefaultGraph true ;
-    .
+:tdb_dataset_readwrite
+    a tdb2:DatasetTDB2 ;
+    tdb2:unionDefaultGraph true ;
+    tdb2:location  "--mem--" .
 
-<#indexLucene> a text:TextIndexLucene ;
+:index_lucene a text:TextIndexLucene ;
     ##text:directory <file:/tmp/lucene> ;
     text:directory "mem" ;
-    text:entityMap <#entMap> ;
-    text:storeValues true ;
-    .
+    text:entityMap :entity_map ;
+    text:storeValues true .
 
-<#entMap> a text:EntityMap ;
+# Text index configuration
+:entity_map a text:EntityMap ;
     text:entityField      "uri" ;
-    text:graphField       "graph" ; ## enable graph-specific indexing
-    text:defaultField     "pref" ; ## Must be defined in the text:map
+    text:graphField       "graph" ;
+    text:defaultField     "pref" ;
     text:uidField         "uid" ;
     text:langField        "lang" ;
     text:map (
          # skos:prefLabel
          [ text:field "pref" ;
            text:predicate skos:prefLabel ;
-           text:analyzer [ a text:LowerCaseKeywordAnalyzer ] ]
+           text:analyzer [ a text:LowerCaseKeywordAnalyzer ]
+         ]
          # skos:altLabel
          [ text:field "alt" ;
            text:predicate skos:altLabel ;
-           text:analyzer [ a text:LowerCaseKeywordAnalyzer ] ]
+           text:analyzer [ a text:LowerCaseKeywordAnalyzer ]
+         ]
          # skos:hiddenLabel
          [ text:field "hidden" ;
            text:predicate skos:hiddenLabel ;
-           text:analyzer [ a text:LowerCaseKeywordAnalyzer ] ]
+           text:analyzer [ a text:LowerCaseKeywordAnalyzer ] 
+         ]
+           # skos:notation
+         [ text:field "notation" ;
+           text:predicate skos:notation ;
+           text:analyzer [ a text:LowerCaseKeywordAnalyzer ] 
+         ]
          ) .

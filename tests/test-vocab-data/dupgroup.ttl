@@ -19,3 +19,24 @@ dupgroup:c2 a isothes:ConceptGroup ;
     skos:prefLabel "Is the superGroup"@en ;
     skos:member dupgroup:c1 .
 
+dupgroup:species a isothes:ConceptGroup, skos:Collection ;
+    skos:member dupgroup:animalia ;
+    skos:prefLabel "Species"@en .
+
+dupgroup:animalia a isothes:ConceptGroup, skos:Collection ;
+    isothes:superGroup dupgroup:species ;
+    skos:member dupgroup:ta111 ;
+    skos:prefLabel "Animalia"@en .
+
+dupgroup:lifesciences a isothes:ConceptGroup, skos:Collection ;
+    skos:member dupgroup:biology ;
+    skos:prefLabel "Life sciences"@en .
+
+dupgroup:biology a isothes:ConceptGroup, skos:Collection ;
+    isothes:superGroup dupgroup:lifesciences ;
+    skos:member dupgroup:ta111 ;
+    skos:prefLabel "Biology"@en .
+
+dupgroup:ta111 a skos:Concept ;
+    skos:broader dupgroup:ta1 ;
+    skos:prefLabel "Tuna"@en .

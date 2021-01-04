@@ -17,7 +17,8 @@ meta:TestClass a owl:Class ;
     rdfs:label "Test class"@en .
 
 skosmos:testprop a rdf:Property ;
-    rdfs:label "Skosmos test property"@en .
+    rdfs:label "Skosmos test property"@en ;
+    rdfs:comment "description for Skosmos test property"@en .
 
 skos:prefLabel a rdf:Property ;
     rdfs:label "preferred label"@en .
@@ -74,6 +75,7 @@ test:ta116 a skos:Concept, meta:TestClass ;
 test:ta117 a skos:Concept, meta:TestClass ;
     skos:broader test:ta1 ;
     skos:inScheme test:conceptscheme ;
+    skos:relatedMatch test:ta115 ;
     skos:prefLabel "3D Bass"@en .
 
 test:ta118 a skos:Concept, meta:TestClass ;
@@ -121,7 +123,23 @@ test:ta125
 
 test:ta126
   a mads:Geographic, skos:Concept ;
+  skos:notation "12.34" ;
   skos:prefLabel "Europa"@nb .
+
+test:ta127
+  a skos:Concept ;
+  skos:definition "For testing sorting and language names of getForeignLabels()"@en ;
+  skos:prefLabel "Test sorting labels 1",
+    "Test sorting labels 2",
+    "A first",
+    "Ä before 'A first' in English (default) collation",
+    "Test prefLabel"@fi;
+
+   skos:altLabel "A sort first"@fi,
+   "B sorts second"@fi,
+   "Ä way after B in Finnish collation"@fi,
+   "Finnish before Swedish in result array"@sv,
+   "No language tag becomes very first in result language array" .
 
 test:ta1 a skos:Concept, meta:TestClass ;
     skos:inScheme test:conceptscheme ;

@@ -1,0 +1,5 @@
+- name: Update apt-cache and then install openjdk-8-jre
+  apt:
+    name: openjdk-8-jre
+    update_cache: yes
+    state: present

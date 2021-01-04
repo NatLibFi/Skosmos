@@ -1,7 +1,13 @@
-config.inc
-vocabularies.ttl
+config.ttl
+build
 vendor
 report
 components
+plugins/*
+!README
 composer.phar
 composer.lock
+tests/jena-fuseki*
+.vagrant
+.project
+.DS_Store
