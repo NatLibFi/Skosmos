@@ -535,7 +535,6 @@ function getTreeConfiguration() {
     'sort' : function (a,b) {
         var aNode = this.get_node(a);
         var bNode = this.get_node(b);
-        console.log(aNode);
 
         // sort on notation if requested
         if (window.showNotation) {
