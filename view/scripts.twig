@@ -32,6 +32,7 @@ var uriSpace = "{{ request.vocab.uriSpace }}";
 var showNotation = {% if request.vocab and request.vocab.config.showNotation == false %}false{% else %}true{% endif %};
 {% if request.vocab  %}
 var languageOrder = [{% for lang in request.vocab.config.languageOrder(request.contentLang) %}"{{ lang }}"{% if not loop.last %},{% endif %}{% endfor %}];
+var vocShortName = "{{ request.vocab.config.shortname }}";
 {% endif %}
 var explicitLangCodes = {{ explicit_langcodes ? 'true' : 'false' }};
 {% if plugin_params%}
