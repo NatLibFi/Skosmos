@@ -852,9 +852,10 @@ EOF;
      * Generate condition for matching labels in SPARQL
      * @param string $term search term
      * @param string $searchLang language code used for matching labels (null means any language)
+     * @param boolean $unique restrict results to unique concepts (default: false)
      * @return string sparql query snippet
      */
-    protected function generateConceptSearchQueryCondition($term, $searchLang)
+    protected function generateConceptSearchQueryCondition($term, $searchLang, $unique)
     {
         # use appropriate matching function depending on query type: =, strstarts, strends or full regex
         if (preg_match('/^[^\*]+$/', $term)) { // exact query
@@ -880,8 +881,10 @@ EOF;
         }
 
         $labelcondMatch = ($searchLang) ? "&& (?prop = skos:notation || LANGMATCHES(lang(?match), ?langParam))" : "";
+        $hlabelcondMatch = ($unique) ? "" : "\n FILTER(?prop != skos:hiddenLabel || ( NOT EXISTS { ?s skos:prefLabel ?prefLabel . FILTER (" . str_replace("?match", "?prefLabel", $filtercond) . ")} && NOT EXISTS { ?s skos:hiddenLabel ?hiddenLabel . FILTER (" . str_replace("?match", "?hiddenLabel", $filtercond) . " && STR(?hiddenLabel) < STR(?match))}))";
 
-        return "?s ?prop ?match . FILTER ($filtercond $labelcondMatch)";
+
+        return "?s ?prop ?match . FILTER ($filtercond $labelcondMatch) $hlabelcondMatch";
     }
 
 
@@ -897,7 +900,7 @@ EOF;
     protected function generateConceptSearchQueryInner($term, $lang, $searchLang, $props, $unique, $filterGraph)
     {
         $valuesProp = $this->formatValues('?prop', $props);
-        $textcond = $this->generateConceptSearchQueryCondition($term, $searchLang);
+        $textcond = $this->generateConceptSearchQueryCondition($term, $searchLang, $unique);
 
         $rawterm = str_replace(array('\\', '*', '"'), array('\\\\', '', '\"'), $term);
         // graph clause, if necessary
@@ -942,7 +945,8 @@ EOF;
      $textcond
      ?s ?prop ?match }
      OPTIONAL {
-      ?s skos:prefLabel ?label .
+      ?s skos:prefLabel ?prefLabel .
+      BIND (?prefLabel as ?label)
       FILTER ($labelcondLabel)
      } $labelcondFallback
      BIND(IF(langMatches(LANG(?match),'$lang'), ?pri, ?pri+1) AS ?npri)
@@ -1039,7 +1043,7 @@ EOQ;
   BIND(IF((?pri = "3" || ?pri = "4"), ?match, ?unbound) as ?alabel)
   BIND(IF((?pri = "7" || ?pri = "8"), ?match, ?unbound) as ?hlabel)
 EOQ;
-        $innerquery = $this->generateConceptSearchQueryInner($params->getSearchTerm(), $params->getLang(), $params->getSearchLang(), $props, $unique, $filterGraph);
+        $innerquery = $this->generateConceptSearchQueryInner($params->getSearchTerm(), $params->getSearchLang(), $params->getSearchLang(), $props, $unique, $filterGraph);
         if ($params->getSearchTerm() === '*' || $params->getSearchTerm() === '') {
           $labelpriority = '';
         }
@@ -1062,7 +1066,7 @@ WHERE {
  $filterGraph
 }
 GROUP BY ?s ?match ?label ?plabel ?alabel ?hlabel ?notation ?graph
-ORDER BY LCASE(STR(?match)) LANG(?match) $orderextra
+ORDER BY LCASE(COALESCE(CONCAT(STR(?alabel), "\u0000", STR(?label)), STR(?label))) LANG(?match) $orderextra
 EOQ;
         return $query;
     }

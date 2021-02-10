@@ -10,15 +10,15 @@
     <span class="prefLabel conceptlabel redirected-vocab-id" title="{{ concept.vocabTitle }}">{{ concept.shortName }}: </span>
     {% endif %}
     {% if concept.foundBy %} {# hit has been found through an alt/hidden/another language label #}
-      {% if concept.foundByType != 'lang' and concept.foundByType != 'hidden' %}<span class="versal replaced">{{ concept.foundBy }}{% if explicit_langcodes or request.queryparam('anylang') and concept.contentLang != '' %} ({{ concept.contentLang }}){% endif %}</span><span class="versal"> &rarr;&nbsp;</span>{% if concept.notation %}<span class="notation">{{ concept.notation }}</span>{% endif %}
-      <a class="prefLabel" href="{% if 'isothes:ConceptGroup' in concept.type %}{{ concept.uri | link_url(concept.vocab,request.lang,'page',concept.contentLang) }}{% else %}{{ concept.uri | link_url(concept.vocab,request.lang,'page',concept.contentLang) }}{% endif %}">{{ concept.label(request.contentLang) }}</a>{% if explicit_langcodes or request.queryparam('anylang') %}<span class="versal"> ({{ concept.label.lang }})</span>{% endif %}</span>
+      {% if concept.foundByType != 'lang' and concept.foundByType != 'hidden' %}<span class="versal replaced">{{ concept.foundBy }}{% if concept.contentLang and (explicit_langcodes or request.queryparam('anylang')) %} ({{ concept.contentLang }}){% endif %}</span><span class="versal"> &rarr;&nbsp;</span>{% if concept.notation %}<span class="notation">{{ concept.notation }}</span>{% endif %}
+      <a class="prefLabel" href="{% if 'isothes:ConceptGroup' in concept.type %}{{ concept.uri | link_url(concept.vocab,request.lang,'page',concept.contentLang) }}{% else %}{{ concept.uri | link_url(concept.vocab,request.lang,'page',concept.contentLang) }}{% endif %}">{{ concept.label(request.contentLang) }}</a>{% if concept.label.lang and (explicit_langcodes or request.queryparam('anylang')) %}<span class="versal"> ({{ concept.label.lang }})</span>{% endif %}</span>
  
       {% else %}{% if concept.notation %}<span class="notation">{{ concept.notation }}</span>{% endif %}
-      <a class="prefLabel" href="{% if "isothes:ConceptGroup" in concept.type %}{{ concept.uri | link_url(concept.vocab,request.lang,'page',concept.contentLang) }}{% else %}{{ concept.uri | link_url(concept.vocab,request.lang,'page',concept.contentLang) }}{% endif %}">{{ concept.label(request.contentLang) }}</a>{% if explicit_langcodes or request.queryparam('anylang') %}<span class="versal"> ({{ concept.contentLang }})</span>{% endif %}
+      <a class="prefLabel" href="{% if "isothes:ConceptGroup" in concept.type %}{{ concept.uri | link_url(concept.vocab,request.lang,'page',concept.contentLang) }}{% else %}{{ concept.uri | link_url(concept.vocab,request.lang,'page',concept.contentLang) }}{% endif %}">{{ concept.label(request.contentLang) }}</a>{% if concept.contentLang and (explicit_langcodes or request.queryparam('anylang')) %}<span class="versal"> ({{ concept.contentLang }})</span>{% endif %}
       {% endif %}
     {% else %}
     {% if concept.notation %}<span class="notation">{{ concept.notation }}</span>{% endif %}
-    <a class="prefLabel conceptlabel" href="{% if "isothes:ConceptGroup" in concept.type %}{{ concept.uri | link_url(concept.vocab, request.lang, 'page') }}{% elseif concept.exvocab is defined%}{{ concept.uri | link_url(concept.exvocab,concept.contentLang) }}{% else %}{{ concept.uri | link_url(concept.vocab,request.lang,'page',concept.contentLang) }}{% endif %}">{{ concept.label(request.contentLang) }}</a>{% if explicit_langcodes or request.queryparam('anylang') %}<span class="versal"> ({{ concept.contentLang }})</span>{% endif %}
+    <a class="prefLabel conceptlabel" href="{% if "isothes:ConceptGroup" in concept.type %}{{ concept.uri | link_url(concept.vocab, request.lang, 'page') }}{% elseif concept.exvocab is defined%}{{ concept.uri | link_url(concept.exvocab,concept.contentLang) }}{% else %}{{ concept.uri | link_url(concept.vocab,request.lang,'page',concept.contentLang) }}{% endif %}">{{ concept.label(request.contentLang) }}</a>{% if concept.contentLang and (explicit_langcodes or request.queryparam('anylang')) %}<span class="versal"> ({{ concept.contentLang }})</span>{% endif %}
     {% endif %}
   {% endspaceless %}
   {%- if concept.type == 'skosext:DeprecatedConcept' %}<span class="versal deprecated-alert">{% trans %}deprecated{% endtrans %}</span>{% endif -%}
@@ -36,7 +36,7 @@
           {% if propval.SubMembers %} {# if property is a group concept that has sub properties #}
             {% for sub_member in propval.SubMembers %}
               {% if previous != sub_member.label %}
-              <span class="versal value">{{ sub_member.label }}{% if sub_member.lang or explicit_langcodes %} ({{ sub_member.lang }}){% endif %}</span>{% if not outerLast %}<span class="versal">,</span>{% endif %}
+              <span class="versal value">{{ sub_member.label }}{% if sub_member.lang and (explicit_langcodes or request.queryparam('anylang') or sub_member.lang != request.contentLang) %} ({{ sub_member.lang }}){% endif %}</span>{% if not outerLast %}<span class="versal">,</span>{% endif %}
               {% endif %}
               {% set previous = sub_member.label %}
             {% endfor %}
@@ -49,11 +49,11 @@
                   {% else %}
                   <span class="versal value">{{ propval.label(request.contentLang) }}</span>
                   {% endif %}
-                  {% if propval.lang and (propval.lang != request.lang) or explicit_langcodes %}<span class="versal"> ({{ propval.lang }})</span>{% endif %}{% if not loop.last %}<span class="versal">,</span>{% endif %}
+                  {% if propval.lang and (explicit_langcodes or request.queryparam('anylang') or propval.label.lang != request.contentLang) %}<span class="versal"> ({{ propval.label.lang }})</span>{% endif %}{% if not loop.last %}<span class="versal">,</span>{% endif %}
                 {% endif %}
               {% endspaceless %}
               {% else %} {# Literals (no URI), eg. alternative labels as properties #}
-                 <span class="versal {% if propval.type == 'skos:altLabel' %}replaced {% endif %} value">{{ propval.label }}{% if not loop.last %},{% endif %}</span>
+                 <span class="versal {% if propval.type == 'skos:altLabel' %}replaced {% endif %} value">{{ propval.label }}{% if propval.lang and (explicit_langcodes or request.queryparam('anylang') or propval.lang != request.contentLang) %}<span class="versal"> ({{ propval.lang }}){% endif %}{% if not loop.last %},{% endif %}</span>
               {% endif %}
           {% endif %}
       {% endfor %}
@@ -83,7 +83,7 @@
           </span>
           <div class="property-values">
             {% for propval in property.values %} {# loop through ConceptMappingPropertyValue objects #}
-            {% if propval.exVocab %}<span class="redirected-vocab-id prefLabel">{{ propval.exVocab.shortName }}: </span>{% endif %}<span class="versal value">{{ propval.label(request.contentLang) }}</span>{% if propval.label(request.contentLang).lang != request.contentLang %}<span class="versal value"> ({{ propval.label(request.contentLang).lang }})</span>{% endif %}{% if loop.last == false %}<span class="versal">, </span>{% endif %}
+            {% if propval.exVocab %}{% set propvalLabel = propval.label(request.contentLang) %}<span class="redirected-vocab-id prefLabel">{{ propval.exVocab.shortName }}: </span>{% endif %}<span class="versal value">{{ propvalLabel }}</span>{% if propvalLabel.lang and (explicit_langcodes or request.queryparam('anylang') or propvalLabel.lang != request.contentLang) %}<span class="versal value"> ({{ propvalLabel.lang }})</span>{% endif %}{% if loop.last == false %}<span class="versal">, </span>{% endif %}
             {% endfor %}
           </div>
         </div>
