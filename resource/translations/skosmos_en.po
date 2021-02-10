@@ -427,6 +427,18 @@ msgstr "In other languages"
 msgid "from all"
 msgstr "from all"
 
+msgid "wgs84:lat"
+msgstr "Latitude"
+
+msgid "wgs84:lat_help"
+msgstr "Latitude in decimal degrees according to WGS 84 system."
+
+msgid "wgs84:long"
+msgstr "Longitude"
+
+msgid "wgs84:long_help"
+msgstr "Longitude in decimal degrees according to WGS 84 system."
+
 #: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:81
 #: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:90
 #: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:79
