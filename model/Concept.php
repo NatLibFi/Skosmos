@@ -876,9 +876,10 @@ class Concept extends VocabularyDataObject implements Modifiable
 
     /**
      * Gets the values of skos:prefLabel and skos:altLabel in all other languages than in the current language.
+     * @param boolean $sortByLangToString Sort by (subset filtered) language name in UI language (default: true)
      * @return array Language-based multidimensional sorted array ([string][string][ConceptPropertyValueLiteral]) or empty array if no values
      */
-    public function getForeignLabels()
+    public function getForeignLabels($sortByLangToString=true)
     {
         $prefLabels = $this->getForeignLabelList('skos:prefLabel', 'prefLabel');
         $altLabels = $this->getForeignLabelList('skos:altLabel', 'altLabel');
@@ -895,7 +896,7 @@ class Concept extends VocabularyDataObject implements Modifiable
             {
                 $coll->sort($ret[$lang]['altLabel'], Collator::SORT_STRING);
             }
-            if ($lang !== '') {
+            if ($lang !== '' && $sortByLangToString) {
                 $ret[$this->langToString($lang)] = $ret[$lang];
                 unset($ret[$lang]);
             }

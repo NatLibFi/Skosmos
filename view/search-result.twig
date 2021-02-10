@@ -61,7 +61,7 @@
     </div>
     {% endif %}
   {% endfor %}
-  {% set foreignLabels = concept.foreignLabels %}
+  {% set foreignLabels = concept.foreignLabels(false) %}
   {% if foreignLabels %}
     <div class="property">
       <span class="property-click" title="{% trans "foreign prefLabel help" %}"><img class="property-hover" src="resource/pics/globe.gif"></span>
