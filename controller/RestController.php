@@ -291,7 +291,7 @@ class RestController extends Controller
             'concepts' => array(
                 'class' => 'http://www.w3.org/2004/02/skos/core#Concept',
                 'label' => gettext('skos:Concept'),
-                'count' => $vocabStats['http://www.w3.org/2004/02/skos/core#Concept']['count'],
+                'count' => isset($vocabStats['http://www.w3.org/2004/02/skos/core#Concept']) ? $vocabStats['http://www.w3.org/2004/02/skos/core#Concept']['count'] : 0,
             ),
             'subTypes' => $subTypes,
         );
