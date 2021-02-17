@@ -463,7 +463,7 @@ class WebController extends Controller
         if (!$allAtOnce) {
             $letters = $vocab->getAlphabet($contentLang);
             $letter = $request->getLetter();
-            if ($letter === '') {
+            if ($letter === '' && isset($letters[0])) {
                 $letter = $letters[0];
             }
             $searchResults = $vocab->searchConceptsAlphabetical($letter, $count, $offset, $contentLang);
