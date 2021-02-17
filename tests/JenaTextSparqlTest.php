@@ -80,6 +80,15 @@ class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
   /**
    * @covers JenaTextSparql::generateAlphabeticalListQuery
    */
+  public function testQueryConceptsAlphabeticalEmpty() {
+    $actual = $this->sparql->queryConceptsAlphabetical('', 'en');
+    $expected = array();
+    $this->assertEquals($expected, $actual);
+  }
+
+  /**
+   * @covers JenaTextSparql::generateAlphabeticalListQuery
+   */
   public function testQueryConceptsAlphabeticalLimitAndOffset() {
     $actual = $this->sparql->queryConceptsAlphabetical('b', 'en', 2, 1);
     $expected = array (
