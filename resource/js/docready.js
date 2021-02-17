@@ -308,19 +308,16 @@ $(function() { // DOCUMENT READY
       function(event) {
         event.preventDefault();
         var targetUrl = event.target.href;
-        var parameters = (clang !== lang) ? $.param({'clang' : clang}) : $.param({});
-        var historyUrl = (clang !== lang) ? targetUrl + '?' + parameters : targetUrl;
         $('#hier-trigger').attr('href', targetUrl);
         var $content = $('.content').empty().append($delayedSpinner.hide());
         var loading = delaySpinner();
         $.ajax({
             url : targetUrl,
-            data: parameters,
             complete: function() { clearTimeout(loading); },
             success : function(data) {
               $content.empty();
               var response = $('.content', data).html();
-              if (window.history.pushState) { window.history.pushState({url: historyUrl}, '', historyUrl); }
+              if (window.history.pushState) { window.history.pushState({url: targetUrl}, '', targetUrl); }
               $content.append(response);
 
               updateJsonLD(data);
