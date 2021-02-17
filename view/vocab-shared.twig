@@ -67,6 +67,9 @@
         {% if 'text/turtle' in vocab.config.dataURLs|keys %}
           <a href="rest/v1/{{ request.vocabid }}/data?format=text/turtle">TURTLE</a>
         {% endif %}
+        {% if 'application/ld+json' in vocab.config.dataURLs|keys %}
+          <a href="rest/v1/{{ request.vocabid }}/data?format=application%2Fld%2Bjson">JSON-LD</a>
+        {% endif %}
         {% if 'application/marcxml+xml' in vocab.config.dataURLs|keys %}
             {% if vocab.config.dataURLs['application/marcxml+xml'] is iterable %}
                 {% for key, values in vocab.config.dataURLs['application/marcxml+xml'] %}
