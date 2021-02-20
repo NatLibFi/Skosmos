@@ -32,7 +32,11 @@
         {% endfor %}
         <div class="row">
           <div class="property-label versal"><h3>URI</h3></div>
-          <div class="property-value-column versal"><span class="uri-input-box">{{ vocab.defaultConceptScheme }}</span></div>
+          <div class="property-value-column versal">
+            <div class="property-value-wrapper">
+              <span class="uri-input-box">{{ vocab.defaultConceptScheme }}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -62,6 +66,9 @@
         {% endif %}
         {% if 'text/turtle' in vocab.config.dataURLs|keys %}
           <a href="rest/v1/{{ request.vocabid }}/data?format=text/turtle">TURTLE</a>
+        {% endif %}
+        {% if 'application/ld+json' in vocab.config.dataURLs|keys %}
+          <a href="rest/v1/{{ request.vocabid }}/data?format=application%2Fld%2Bjson">JSON-LD</a>
         {% endif %}
         {% if 'application/marcxml+xml' in vocab.config.dataURLs|keys %}
             {% if vocab.config.dataURLs['application/marcxml+xml'] is iterable %}
