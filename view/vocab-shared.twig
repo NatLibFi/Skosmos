@@ -60,7 +60,7 @@
     {% if vocab.config.dataURLs %}
     {% apply spaceless %}
     <div class="download-links">
-      <span class="versal">{% trans %}Download this vocabulary:{% endtrans %}
+      <span class="versal">{% trans %}Download this vocabulary:{% endtrans %}</span>
         {% if 'application/rdf+xml' in vocab.config.dataURLs|keys %}
           <a href="rest/v1/{{ request.vocabid }}/data?format=application/rdf%2Bxml">RDF/XML</a>
         {% endif %}
@@ -79,7 +79,6 @@
                 <a href="rest/v1/{{ request.vocabid }}/data?format=application/marcxml%2Bxml">MARCXML</a>
             {% endif %}
         {% endif %}
-      </span>
     </div>
     {% endapply %}
     {% endif %}

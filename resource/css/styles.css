@@ -203,7 +203,7 @@ ul {
 #topbar-language-navigation {
   display: flex;
   flex-wrap: wrap;
-  align-self: end;
+  align-self: flex-end;
 }
 
 .topbar > a {
@@ -230,7 +230,7 @@ ul {
   display: inline-flex;
   order: 2;
   flex-wrap: wrap;
-  align-content: end;
+  align-content: flex-end;
   margin-top: 5px;
   margin-bottom: 2px;
 }
@@ -279,7 +279,7 @@ ul {
   min-width: 0;
   width: auto;
   flex-wrap: wrap;
-  align-content: end;
+  align-content: flex-end;
   margin-top: 5px;
   margin-bottom: 2px;
 }
@@ -722,6 +722,11 @@ span.xl-pref-label > img {
 #vocabulary-list, #vocabulary-list-wide, #vocabulary-list-left, #vocabulary-list-right {
   background-color: #fff;
   display: inline-block;
+  word-break: break-word;
+}
+
+.logo-header > h2 {
+  word-break: initial;
 }
 
 .voclist-wide #vocabulary-list {
@@ -776,6 +781,10 @@ span.xl-pref-label > img {
   height: 150px;
 }
 
+#feedback-fields p {
+  word-break: break-word;
+}
+
 #feedback-fields > .dropdown {
   margin-bottom: 10px;
 }
@@ -790,6 +799,13 @@ span.xl-pref-label > img {
   width: 100%;
 }
 
+#feedback-fields > .open > .dropdown-menu > li > a {
+  white-space: normal;
+  text-indent: -10px;
+  margin-left: 10px;
+  word-break: break-word;
+}
+
 #feedback-fields > .open > .dropdown-menu > li:hover > a {
   color: #fff !important;
 }
@@ -798,15 +814,17 @@ span.xl-pref-label > img {
   background-color: #F6F7F8;
   border: 0;
   color: #00748f;
-  height: 34px;
   text-align: left;
   width: 100%;
+  white-space: inherit;
+  word-break: break-word;
+  padding-right: 25px;
 }
 
 #feedback-vocid > .caret {
   position: absolute;
   right: 10px;
-  top: 14px;
+  top: 50%;
 }
 
 #feedback-vocid:hover, #feedback-vocid:focus, #feedback-vocid:active {
@@ -825,6 +843,7 @@ span.xl-pref-label > img {
   border-top: 2px solid #394554;
   min-height: 140px;
   margin: 0;
+  max-width: 500px;
 }
 
 .feedback-box textarea, .feedback-box input, .feedback-box select, .feedback-box button, .feedback-box textarea:focus, .feedback-box input:focus, .feedback-box select:focus, .feedback-box button:focus {
@@ -880,7 +899,6 @@ span.xl-pref-label > img {
   border-top: 2px solid #394554;
   margin-bottom: 15px;
   padding-bottom: 15px;
-  width: 500px;
 }
 
 .about-content {
@@ -894,8 +912,9 @@ span.xl-pref-label > img {
   position: absolute;
 }
 
-.about-extra-info {
-  width: 500px;
+#about, .about-extra-info  {
+  max-width: 500px;
+  word-break: break-word;
 }
 
 .credits {
@@ -1123,6 +1142,10 @@ li.sub-group {
   border-image: url('../pics/stripe.png') 20 20 repeat;
 }
 
+#statistics, #counts {
+  word-break: break-all;
+}
+
 /* vocabulary
  ****************************/
 .container {
@@ -1132,10 +1155,12 @@ li.sub-group {
 
 .download-links {
   margin-bottom: 15px;
+  word-break: break-all;
 }
 
-.download-links a {
-  margin-left: 5px;
+.download-links > * {
+  margin-right: 5px;
+  display: inline-block;
 }
 
 .count-type {
@@ -1424,6 +1449,7 @@ tr.replaced-by > td > ul > li > a {
 #vocab-info h2 {
   font-size: 27px;
   font-weight: 400;
+  word-break: break-word;
 }
 
 #vocab-info h3 {
@@ -1848,7 +1874,6 @@ body, .versal, h1, h2, h3, p, .versal-bold {
 
   .content > .feedback-box, .content > #about, .content > .about-extra-info {
     margin-left: 120px;
-    width: 500px;
   }
 
   .tt-dropdown {
@@ -1874,6 +1899,14 @@ body, .versal, h1, h2, h3, p, .versal-bold {
 
   #sidebar {
     display: none;
+  }
+
+  .qtip-skosmos:not(#qtip-0) {
+    left: 0 !important;
+  }
+
+  .qtip-skosmos:not(#qtip-0) canvas {
+    display: none !important;
   }
 
   .content {
@@ -1912,10 +1945,33 @@ body, .versal, h1, h2, h3, p, .versal-bold {
   }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 450px) {
+  .content > .feedback-logo {
+    position: relative;
+    width: min-content;
+  }
 
-  #navi3 {
-    display: none;
+  .content > .container.feedback-box {
+    margin-left: 10px;
+    margin-top: 20px;
+  }
+
+  .qtip-skosmos {
+    min-width: auto;
+    left: 0 !important;
+  }
+  .qtip-skosmos canvas {
+    display: none !important;
+  }
+}
+
+@media (max-width: 530px) {
+  .content > #about {
+    margin-top: 20px;
+  }
+
+  .content > #about, .content .about-extra-info {
+     margin-left: 0;
   }
 }
 
@@ -1947,7 +2003,6 @@ body, .versal, h1, h2, h3, p, .versal-bold {
   
   .concept-main > .row > .property-label-pref {
       margin-top: 10px;
-      height: 20px;
       line-height: 20px;
   }
 
@@ -1976,10 +2031,6 @@ body, .versal, h1, h2, h3, p, .versal-bold {
     width: 95%;
   }
 
-  .content {
-    overflow: hidden;
-  }
-  
 }
 
 @media (max-width: 800px) {
@@ -2093,10 +2144,6 @@ body, .versal, h1, h2, h3, p, .versal-bold {
 
   #navigation > span {
     margin: auto 0;
-  }
-
-  .content > .feedback-box, .content > #about {
-    width: 500px;
   }
 
   .content {
@@ -2228,7 +2275,7 @@ body, .versal, h1, h2, h3, p, .versal-bold {
   }
 
   .content > .feedback-box, .content > #about, .about-extra-info {
-    width: 600px;
+    max-width: 600px;
   }
 
   .tt-dropdown-menu {
