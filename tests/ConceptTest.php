@@ -175,7 +175,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
   {
     $props = $this->concept->getProperties();
 
-    $this->assertEquals(6, sizeof($props));
+    $this->assertEquals(8, sizeof($props));
   }
 
   /**
@@ -188,7 +188,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
   public function testGetPropertiesCorrectOrderOfProperties()
   {
     $props = $this->concept->getProperties();
-    $expected = array (0 => 'rdf:type', 1=> 'skos:broader',2 => 'skos:narrower',3 => 'skos:altLabel',4 => 'skos:scopeNote',5 => 'http://www.skosmos.skos/testprop');
+    $expected = array (0 => 'rdf:type', 1 => 'skos:broader', 2 => 'skos:narrower', 3 => 'skos:altLabel', 4 => 'skos:scopeNote', 5 => 'http://www.skosmos.skos/multiLingOff', 6 => 'http://www.skosmos.skos/multiLingOn', 7 => 'http://www.skosmos.skos/testprop');
     $this->assertEquals($expected, array_keys($props));
 
   }
@@ -459,6 +459,74 @@ class ConceptTest extends PHPUnit\Framework\TestCase
         $this->assertArrayHasKey("Tuna", $subs);
       }
     }
+  }
+
+  /**
+   * @covers Concept::getProperties
+   */
+  public function testMultilingualPropertiesOnWithLangHit() {
+    $vocab = $this->model->getVocabulary('test');
+    $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en');
+    $concept = $concepts[0];
+    $props = $concept->getProperties();
+    $propvals = $props['http://www.skosmos.skos/multiLingOn']->getValues();
+    $runner = array();
+    foreach ($propvals as $propval) {
+      array_push($runner, $propval->getLabel());
+    }
+    $compareableArray = ['English', 'Finnish', 'Without lang tag'];
+    $this->assertSame($runner, $compareableArray);
+  }
+
+  /**
+   * @covers Concept::getProperties
+   */
+  public function testMultilingualPropertiesOnWithoutLangHit() {
+    $vocab = $this->model->getVocabulary('test');
+    $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'ru');
+    $concept = $concepts[0];
+    $props = $concept->getProperties();
+    $propvals = $props['http://www.skosmos.skos/multiLingOn']->getValues();
+    $runner = array();
+    foreach ($propvals as $propval) {
+      array_push($runner, $propval->getLabel());
+    }
+    $compareableArray = ['English', 'Finnish', 'Without lang tag'];
+    $this->assertSame($runner, $compareableArray);
+  }
+
+  /**
+   * @covers Concept::getProperties
+   */
+  public function testMultilingualPropertiesOffWithLangHit() {
+    $vocab = $this->model->getVocabulary('test');
+    $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en');
+    $concept = $concepts[0];
+    $props = $concept->getProperties();
+    $propvals = $props['http://www.skosmos.skos/multiLingOff']->getValues();
+    $runner = array();
+    foreach ($propvals as $propval) {
+      array_push($runner, $propval->getLabel());
+    }
+    $compareableArray = ['English', 'Without lang tag'];
+    $this->assertSame($runner, $compareableArray);
+  }
+
+  /**
+   * @covers Concept::getProperties
+   */
+  public function testMultilingualPropertiesOffWithoutLangHit() {
+    $vocab = $this->model->getVocabulary('test');
+    $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'ru');
+    $concept = $concepts[0];
+    $props = $concept->getProperties();
+    $propvals = $props['http://www.skosmos.skos/multiLingOff']->getValues();
+    $runner = array();
+    foreach ($propvals as $propval) {
+      array_push($runner, $propval->getLabel());
+    }
+    $compareableArray = ['Without lang tag'];
+    $this->assertSame($runner, $compareableArray);
   }
 
   /**

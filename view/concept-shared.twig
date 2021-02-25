@@ -93,11 +93,10 @@
           </div>
           <div class="property-value-column"><div class="property-value-wrapper">
         {% if request.vocab.config.hasMultiLingualProperty(property.type) %}
-          {% set prevlang = '' %}{# Only displaying the language when it appears for the very first time #}
           {% for language,labels in concept.allLabels(property.type) %}
             {% for value in labels %}
-            <div class="row other-languages{% if prevlang != language %} first-of-language{% endif %}"><span class="versal col-xs-6{% if value.type == "skos:altLabel" %} replaced{% endif %}">{{ value.label }}</span><span class="versal col-xs-6">{% if prevlang != language %} {{ language }}{% endif %}</span></div>
-            {% set prevlang = language %}
+            <div class="row other-languages{% if loop.first %} first-of-language{% endif %}">
+            <div class="versal col-xs-6{% if value.type == "skos:altLabel" %} replaced{% endif %}">{{ value.label }}</div><div class="versal col-xs-6">{% if loop.first %} {{ language }}{% endif %}</div></div>
             {% endfor %}
           {% endfor %}
         {% else %}

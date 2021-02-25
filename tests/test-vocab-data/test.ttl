@@ -20,6 +20,14 @@ skosmos:testprop a rdf:Property ;
     rdfs:label "Skosmos test property"@en ;
     rdfs:comment "description for Skosmos test property"@en .
 
+skosmos:multiLingOn a rdf:Property ;
+    rdfs:label "Skosmos test property"@en ;
+    rdfs:comment "description for Skosmos test property"@en .
+
+skosmos:multiLingOff a rdf:Property ;
+    rdfs:label "Skosmos test property"@en ;
+    rdfs:comment "description for Skosmos test property"@en .
+
 skos:prefLabel a rdf:Property ;
     rdfs:label "preferred label"@en .
 
@@ -52,7 +60,13 @@ test:ta112 a skos:Concept, meta:TestClass ;
         "Karppi"@fi ;
     skos:altLabel "Golden crucian"@en;
     skos:hiddenLabel "Karpit"@fi;
-    skos:scopeNote "Carp are oily freshwater fish"@en .
+    skos:scopeNote "Carp are oily freshwater fish"@en;
+    skosmos:multiLingOn "English"@en,
+    	"Finnish"@fi,
+    	"Without lang tag";
+    skosmos:multiLingOff "English"@en,
+    	"Finnish"@fi,
+    	"Without lang tag" .
 
 test:ta114 a skos:Concept, meta:TestClass ;
     skos:broader test:ta1 ;
