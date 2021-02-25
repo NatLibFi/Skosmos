@@ -86,6 +86,7 @@
 	skosmos:showTopConcepts "true";
 	skosmos:shortName "Test short",
                     "Testi lyhyt"@fi;
+	skosmos:hasMultiLingualProperty <http://www.skosmos.skos/multiLingOn>;
 	skosmos:sparqlGraph <http://www.skosmos.skos/test/> .
 
 :test-notation-sort a skosmos:Vocabulary, void:Dataset ;
