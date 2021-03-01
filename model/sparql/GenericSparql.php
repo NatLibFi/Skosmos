@@ -400,6 +400,7 @@ CONSTRUCT {
     ?s ?p ?uri .
     FILTER(!isBlank(?s))
     FILTER(?p != skos:inScheme)
+    FILTER NOT EXISTS { ?s owl:deprecated true . }
   }
   UNION
   { ?sp ?uri ?op . }
@@ -1327,6 +1328,9 @@ EOQ;
      * @param \EasyRdf\Resource|null $qualifier alphabetical list qualifier resource or null (default: null)
      */
     public function queryConceptsAlphabetical($letter, $lang, $limit = null, $offset = null, $classes = null, $showDeprecated = false, $qualifier = null) {
+        if ($letter === '') {
+            return array(); // special case: no letter given, return empty list
+        }
         $query = $this->generateAlphabeticalListQuery($letter, $lang, $limit, $offset, $classes, $showDeprecated, $qualifier);
         $results = $this->query($query);
         return $this->transformAlphabeticalListResults($results);

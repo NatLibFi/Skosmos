@@ -133,6 +133,19 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
    * @covers GenericSparql::formatLimitAndOffset
    * @covers GenericSparql::transformAlphabeticalListResults
    */
+  public function testQueryConceptsAlphabeticalEmpty() {
+    $actual = $this->sparql->queryConceptsAlphabetical('', 'en');
+    $expected = array();
+    $this->assertEquals($expected, $actual);
+  }
+
+  /**
+   * @covers GenericSparql::queryConceptsAlphabetical
+   * @covers GenericSparql::generateAlphabeticalListQuery
+   * @covers GenericSparql::formatFilterConditions
+   * @covers GenericSparql::formatLimitAndOffset
+   * @covers GenericSparql::transformAlphabeticalListResults
+   */
   public function testQueryConceptsAlphabeticalLimit() {
     $actual = $this->sparql->queryConceptsAlphabetical('b', 'en', 2);
     $expected = array (

@@ -291,7 +291,7 @@ class RestController extends Controller
             'concepts' => array(
                 'class' => 'http://www.w3.org/2004/02/skos/core#Concept',
                 'label' => gettext('skos:Concept'),
-                'count' => $vocabStats['http://www.w3.org/2004/02/skos/core#Concept']['count'],
+                'count' => isset($vocabStats['http://www.w3.org/2004/02/skos/core#Concept']) ? $vocabStats['http://www.w3.org/2004/02/skos/core#Concept']['count'] : 0,
             ),
             'subTypes' => $subTypes,
         );
@@ -425,7 +425,7 @@ class RestController extends Controller
         $hits = array();
         // case 1: exact match on preferred label
         foreach ($results as $res) {
-            if ($res['prefLabel'] == $label) {
+            if (isset($res['prefLabel']) && $res['prefLabel'] == $label) {
                 $hits[] = $res;
             }
         }
@@ -433,7 +433,7 @@ class RestController extends Controller
 
         // case 2: case-insensitive match on preferred label
         foreach ($results as $res) {
-            if (strtolower($res['prefLabel']) == strtolower($label)) {
+            if (isset($res['prefLabel']) && strtolower($res['prefLabel']) == strtolower($label)) {
                 $hits[] = $res;
             }
         }
@@ -442,7 +442,7 @@ class RestController extends Controller
         if ($lang === null) {
             // case 1A: exact match on preferred label in any language
             foreach ($results as $res) {
-                if ($res['matchedPrefLabel'] == $label) {
+                if (isset($res['matchedPrefLabel']) && $res['matchedPrefLabel']  == $label) {
                     $res['prefLabel'] = $res['matchedPrefLabel'];
                     unset($res['matchedPrefLabel']);
                     $hits[] = $res;
@@ -452,7 +452,7 @@ class RestController extends Controller
 
             // case 2A: case-insensitive match on preferred label in any language
             foreach ($results as $res) {
-                if (strtolower($res['matchedPrefLabel']) == strtolower($label)) {
+                if (isset($res['matchedPrefLabel']) && strtolower($res['matchedPrefLabel']) == strtolower($label)) {
                     $res['prefLabel'] = $res['matchedPrefLabel'];
                     unset($res['matchedPrefLabel']);
                     $hits[] = $res;
