@@ -17,6 +17,7 @@ class WebController extends Controller
      */
     public $twig;
     public $honeypot;
+    public $purifier;
 
     /**
      * Constructor for the WebController.
@@ -25,6 +26,11 @@ class WebController extends Controller
     public function __construct($model)
     {
         parent::__construct($model);
+
+        $purifier_config = HTMLPurifier_Config::createDefault();
+        $purifier_config->set('Cache.DefinitionImpl', null);
+        $purifier_config->set('HTML.Allowed', 'p,ul,ol,li,strong,b,em,i,u,a[href],code,pre,blockquote,cite,img[src|alt],br,hr');
+        $this->purifier = new HTMLPurifier($purifier_config);
 
         // initialize Twig templates
         $tmpDir = $model->getConfig()->getTemplateCache();
@@ -64,6 +70,12 @@ class WebController extends Controller
             return Language::getName($langcode, $lang);
         });
         $this->twig->addFilter($langFilter);
+
+        // register a Twig filter that purifies HTML and outputs safe HTML tags (e.g., links) as true HTML tags.
+        $html_purifier = new \Twig\TwigFilter('html_purify', function($string) {
+            return $this->purifier->purify($string);
+        }, ['is_safe' => ['html']]);
+        $this->twig->addFilter($html_purifier);
 
         // create the honeypot
         $this->honeypot = new \Honeypot();

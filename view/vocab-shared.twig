@@ -22,8 +22,7 @@
                 {% endif %}
               </a>
               {% elseif val matches '|^(https?://)|' %}<a href="{{ val }}">{{ val }}</a>
-              {% elseif val matches '|<\\w*\\b[^>]*>|' %}{{ val|raw|nl2br }}
-              {% else %}{{ val|nl2br }}
+              {% else %}{{ val|html_purify|nl2br }}
               {% endif %}
             </div>
             {% endfor %}

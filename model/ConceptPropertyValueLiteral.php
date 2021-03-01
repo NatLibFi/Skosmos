@@ -36,10 +36,6 @@ class ConceptPropertyValueLiteral extends VocabularyDataObject
         return $this->type;
     }
 
-    public function getContainsHtml() {
-        return preg_match("/\/[a-z]*>/i", $this->literal->getValue()) != 0;
-    }
-
     public function getLabel()
     {
         // if the property is a date object converting it to a human readable representation.
