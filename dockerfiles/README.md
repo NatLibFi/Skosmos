@@ -59,7 +59,3 @@ To stop:
 ```bash
 docker-compose down
 ```
-
-## License
-
-MIT License
