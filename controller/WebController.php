@@ -213,18 +213,16 @@ class WebController extends Controller
         }
         $feedbackName = $request->getQueryParamPOST('name');
         $feedbackEmail = $request->getQueryParamPOST('email');
+        $msgSubject = $request->getQueryParamPOST('msgsubject');
         $feedbackVocab = $request->getQueryParamPOST('vocab');
-
         $feedbackVocabEmail = ($feedbackVocab !== null && $feedbackVocab !== '') ?
             $this->model->getVocabulary($feedbackVocab)->getConfig()->getFeedbackRecipient() : null;
-
         // if the hidden field has been set a value we have found a spam bot
         // and we do not actually send the message.
         if ($this->honeypot->validateHoneypot($request->getQueryParamPOST('item-description')) &&
             $this->honeypot->validateHoneytime($request->getQueryParamPOST('user-captcha'), $this->model->getConfig()->getHoneypotTime())) {
-            $this->sendFeedback($request, $feedbackMsg, $feedbackName, $feedbackEmail, $feedbackVocab, $feedbackVocabEmail);
+            $this->sendFeedback($request, $feedbackMsg, $feedbackName, $feedbackEmail, $feedbackVocab, $feedbackVocabEmail, $msgSubject);
         }
-
         echo $template->render(
             array(
                 'languages' => $this->languages,
@@ -245,7 +243,6 @@ class WebController extends Controller
         if (!empty($fromEmail)) {
             $headers .= "Reply-To: $fromName <$fromEmail>\r\n";
         }
-
         $service = $this->model->getConfig()->getServiceName();
         return $headers . "From: $fromName via $service <$sender>";
     }
@@ -253,11 +250,12 @@ class WebController extends Controller
     /**
      * Sends the user entered message through the php's mailer.
      * @param string $message only required parameter is the actual message.
+     * @param string $messageSubject from the sender.
      * @param string $fromName senders own name.
      * @param string $fromEmail senders email address.
      * @param string $fromVocab which vocabulary is the feedback related to.
      */
-    public function sendFeedback($request, $message, $fromName = null, $fromEmail = null, $fromVocab = null, $toMail = null)
+    public function sendFeedback($request, $message, $fromName = null, $fromEmail = null, $fromVocab = null, $toMail = null, $messageSubject)
     {
         $toAddress = ($toMail) ? $toMail : $this->model->getConfig()->getFeedbackAddress();
         if ($fromVocab !== null && $fromVocab !== '') {
@@ -265,7 +263,6 @@ class WebController extends Controller
         }
 
         $envelopeSender = $this->model->getConfig()->getFeedbackEnvelopeSender();
-        $subject = $this->model->getConfig()->getServiceName() . " feedback";
         // determine the sender address of the message
         $sender = $this->model->getConfig()->getFeedbackSender();
         if (empty($sender)) $sender = $envelopeSender;
@@ -273,10 +270,8 @@ class WebController extends Controller
 
         // determine sender name - default to "anonymous user" if not given by user
         if (empty($fromName)) $fromName = "anonymous user";
-
         $headers = $this->createFeedbackHeaders($fromName, $fromEmail, $toMail, $sender);
         $params = empty($envelopeSender) ? '' : "-f $envelopeSender";
-
         // adding some information about the user for debugging purposes.
         $message = $message . "<br /><br /> Debugging information:"
             . "<br />Timestamp: " . date(DATE_RFC2822)
@@ -284,7 +279,7 @@ class WebController extends Controller
             . "<br />Referer: " . $request->getServerConstant('HTTP_REFERER');
 
         try {
-            mail($toAddress, $subject, $message, $headers, $params);
+            mail($toAddress, $messageSubject, $message, $headers, $params);
         } catch (Exception $e) {
             header("HTTP/1.0 404 Not Found");
             $template = $this->twig->loadTemplate('error-page.twig');

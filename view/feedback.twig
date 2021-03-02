@@ -35,6 +35,8 @@
         <input id="name" class="form-control" type ="text" size="40" name="name" placeholder="{% trans %}Enter your name{% endtrans %}">
         <p>{% trans %}E-mail:{% endtrans %}</p>
         <input id="email" class="form-control" type ="text" size="40" name="email" placeholder="{% trans %}Enter your e-mail address{% endtrans %}">
+        <p>{% trans %}Subject:{% endtrans %}</p>
+        <input id="msgsubject" class="form-control" type ="text" size="40" name="msgsubject" placeholder="Write a subject">
         <p>{% trans %}Message:{% endtrans %} *</p>
         <textarea id="message" class="form-control" name="message"></textarea>
         {{ honeypot.generate('item-description', 'user-captcha')|raw }}
