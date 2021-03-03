@@ -1,7 +1,6 @@
 FROM ubuntu:18.04
 
 ARG DEBIAN_FRONTEND=noninteractive
-# ARG SKOSMOS_TARGZ_RELEASE_URL=https://github.com/NatLibFi/Skosmos/archive/v2.4.tar.gz
 
 # git is necessary for some composer packages e.g. davidstutz/bootstrap-multiselect
 RUN apt-get update && apt-get install -y \
@@ -61,12 +60,6 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-# Install Skosmos
-# RUN curl -L --output skosmos.tar.gz ${SKOSMOS_TARGZ_RELEASE_URL}
-# RUN rm -rf /var/www/html/* && \
-#    tar -zxvf skosmos.tar.gz -C /var/www/html/ --strip-components=1 && \
-#	rm -rf /Skosmos* /skosmos.tar.gz
 
 VOLUME ["/var/www/html"]
 
