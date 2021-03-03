@@ -2,8 +2,8 @@
 
 class SkosmosTurtleParser extends EasyRdf\Parser\Turtle
 {
-    private $bytePos = 0;
-    private $dataLength = null;
+    protected $bytePos = 0;
+    protected $dataLength = null;
 
     /**
      * Returns the namespace prefixes as an array of prefix => URI

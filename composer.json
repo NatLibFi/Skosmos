@@ -58,7 +58,7 @@
     "components/jqueryui": "1.12.*",
     "components/handlebars.js": "v4.7.6",
     "davidstutz/bootstrap-multiselect": "v0.9.13",
-    "easyrdf/easyrdf": "0.10.0-alpha.1",
+    "easyrdf/easyrdf": "1.1.*",
     "etdsolutions/waypoints": "4.0.0",
     "twig/twig": "2.13.*",
     "twig/extensions": "1.5.*",
