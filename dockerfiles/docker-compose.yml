@@ -32,8 +32,8 @@ services:
     container_name: skosmos-web
     hostname: skosmos
     build:
-      context: ../
-      dockerfile: dockerfiles/Dockerfile.ubuntu
+      context: .
+      dockerfile: Dockerfile.ubuntu
     ports:
       - 9090:80
     depends_on:
@@ -41,7 +41,7 @@ services:
       - fuseki-cache
     volumes:
       - type: bind
-        source: ../dockerfiles/config/config-docker-compose.ttl
+        source: ./config/config-docker-compose.ttl
         target: /var/www/html/config.ttl
 
 # once the environment has been created load a vocabulary, e.g.:

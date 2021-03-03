@@ -57,7 +57,7 @@ ENV LANG=en_US.UTF-8
 # timezone
 RUN sed -i 's/;date.timezone =/date.timezone = "UTC"/g' /etc/php/7.2/apache2/php.ini
 
-COPY dockerfiles/config/000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY config/000-default.conf /etc/apache2/sites-available/000-default.conf
 
 RUN a2enmod rewrite
 RUN a2enmod expires
@@ -78,7 +78,7 @@ RUN git clone --branch $SKOSMOS_VERSION --depth 1 https://github.com/NatLibFi/Sk
 RUN /usr/local/bin/composer install --no-dev --no-interaction
 
 # Configure Skosmos
-COPY dockerfiles/config/config-docker.ttl /var/www/html/config.ttl
+COPY config/config-docker.ttl /var/www/html/config.ttl
 
 HEALTHCHECK --interval=5s --timeout=3s --retries=3 CMD curl -f http://localhost || exit 1
 
