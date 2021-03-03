@@ -7,7 +7,10 @@ and run the container. The container name is `skosmos-web`, but you can customiz
 the name, port, and other flags as necessary.
 
 ```bash
-docker build -t skosmos:test . -f Dockerfile.ubuntu
+# NOTE: the container copies the project sources during build, so the
+# context must be the parent directory, i.e. you MUST build the image
+# from the Skosmos source directory, not from $sources/dockerfiles/
+docker build -t skosmos:test . -f dockerfiles/Dockerfile.ubuntu
 docker run -d --rm --name skosmos-web -p 9090:80 skosmos:test
 ```
 

@@ -32,8 +32,8 @@ services:
     container_name: skosmos-web
     hostname: skosmos
     build:
-      context: .
-      dockerfile: Dockerfile.ubuntu
+      context: ..
+      dockerfile: dockerfiles/Dockerfile.ubuntu
     ports:
       - 9090:80
     depends_on:
