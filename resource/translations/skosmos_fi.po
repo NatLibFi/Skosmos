@@ -838,3 +838,9 @@ msgstr "Hakutulokset"
 
 msgid "Sidebar listing: list and traverse vocabulary contents by a criterion"
 msgstr "Sivupalkin lista: listaa ja selaa käsitteitä eri kriteerien mukaan"
+
+msgid "Subject:"
+msgstr "Aihe:"
+
+msgid "Write a subject"
+msgstr "Kirjoita aihe"

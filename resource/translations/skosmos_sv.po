@@ -836,3 +836,9 @@ msgstr "Sökresultat"
 
 msgid "Sidebar listing: list and traverse vocabulary contents by a criterion"
 msgstr "Sidofältlista: ordna och bläddra begrepp efter kriterier"
+
+msgid "Subject:"
+msgstr "Ämne:"
+
+msgid "Write a subject"
+msgstr "Skriv ett ämne"
