@@ -58,15 +58,18 @@ RUN a2enmod expires
 
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-# Install Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-VOLUME ["/var/www/html"]
+# Install Composer from the composer Docker image
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 WORKDIR /var/www/html
+RUN rm index.html
+
+RUN git clone --branch $SKOSMOS_VERSION --depth 1 https://github.com/NatLibFi/Skosmos.git /tmp/Skosmos && \
+    mv /tmp/Skosmos/* /var/www/html/ && \
+    mv /tmp/Skosmos/.htaccess /var/www/html/
 
 # Install Skosmos dependencies
-# RUN /usr/local/bin/composer install --no-dev --no-interaction
+RUN /usr/local/bin/composer install --no-dev --no-interaction
 
 # Configure Skosmos
 COPY dockerfiles/config/config-docker.ttl /var/www/html/config.ttl
