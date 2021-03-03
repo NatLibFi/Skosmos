@@ -845,3 +845,6 @@ msgstr "Subject:"
 
 msgid "Write a subject"
 msgstr "Write a subject"
+
+msgid "Select a vocabulary"
+msgstr "You can select a vocabulary"

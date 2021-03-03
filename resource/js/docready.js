@@ -712,7 +712,7 @@ $(function() { // DOCUMENT READY
       // changes the response so it can be easily displayed in the handlebars template.
       filter: function(data) {
         // looping the matches to see if there are hits where the concept has been hit by a property other than hiddenLabel
-        var hasNonHiddenMatch = {feedback};
+        var hasNonHiddenMatch = {};
         for (var i = 0; i < data.results.length; i++) {
             var hit = data.results[i];
             if (!hit.hiddenLabel) {

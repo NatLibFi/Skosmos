@@ -844,3 +844,6 @@ msgstr "Aihe:"
 
 msgid "Write a subject"
 msgstr "Kirjoita aihe"
+
+msgid "Select a vocabulary"
+msgstr "Voit valita halutessasi sanaston"

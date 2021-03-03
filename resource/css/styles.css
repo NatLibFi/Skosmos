@@ -5,6 +5,10 @@ li, td > a {
   font-size: 14px;
 }
 
+label {
+  font-weight: normal;
+}
+
 h1, .prefLabel, .prefLabelLang, .notation {
   font-family: 'Fira Sans', sans-serif;
   font-size: 24px;
@@ -667,7 +671,7 @@ span.xl-pref-label > img {
 .welcome-box, .right-box, #vocabulary-list {
   vertical-align: top;
 }
-  
+
 .welcome-box {
   background-color: #ffffff;
   display: inline-block;
@@ -2000,7 +2004,7 @@ body, .versal, h1, h2, h3, p, .versal-bold {
     margin: 2px 0 0 0;
     line-height: 30px;
   }
-  
+
   .concept-main > .row > .property-label-pref {
       margin-top: 10px;
       line-height: 20px;
@@ -2022,7 +2026,7 @@ body, .versal, h1, h2, h3, p, .versal-bold {
     margin: 0;
     width: 100%;
   }
-  
+
   .headerbar-coloured {
     overflow: hidden;
   }
@@ -2034,7 +2038,7 @@ body, .versal, h1, h2, h3, p, .versal-bold {
 }
 
 @media (max-width: 800px) {
-  
+
   .twitter-typeahead {
     width: 100%;
   }
@@ -2103,7 +2107,7 @@ body, .versal, h1, h2, h3, p, .versal-bold {
   .right-box {
     display: inline;
   }
-  
+
   .voclist-wide > .right-box {
     left: 0;
     top: 425px;
@@ -2161,12 +2165,12 @@ body, .versal, h1, h2, h3, p, .versal-bold {
   .frontpage > .welcome-box, .frontpage > .right-box {
     width: 200px;
   }
-    
+
   .voclist #vocabulary-list {
     margin-left: 20px;
     width: calc(100% - 225px);
   }
-  
+
    .voclist-right #vocabulary-list {
     margin-left: 20px;
     width: auto;

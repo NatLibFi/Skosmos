@@ -842,3 +842,6 @@ msgstr "Ämne:"
 
 msgid "Write a subject"
 msgstr "Skriv ett ämne"
+
+msgid "Select a vocabulary"
+msgstr "Du kan välja ett vokabulär"

@@ -213,7 +213,8 @@ class WebController extends Controller
         }
         $feedbackName = $request->getQueryParamPOST('name');
         $feedbackEmail = $request->getQueryParamPOST('email');
-        $msgSubject = $request->getQueryParamPOST('msgsubject');
+        $msgSubject = $this->model->getConfig()->getServiceName() . ": ";
+        $msgSubject .= $request->getQueryParamPOST('msgsubject');
         $feedbackVocab = $request->getQueryParamPOST('vocab');
         $feedbackVocabEmail = ($feedbackVocab !== null && $feedbackVocab !== '') ?
             $this->model->getVocabulary($feedbackVocab)->getConfig()->getFeedbackRecipient() : null;
