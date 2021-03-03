@@ -35,9 +35,25 @@
     # skosmos:baseHref "http://localhost/Skosmos/" ;
     # interface languages available, and the corresponding system locales
     skosmos:languages (
-        [ rdfs:label "fi" ; rdf:value "fi_FI.utf8" ]
-        [ rdfs:label "sv" ; rdf:value "sv_SE.utf8" ]
+        [ rdfs:label "ar" ; rdf:value "ar_AE.utf8" ]
+        [ rdfs:label "da" ; rdf:value "da_DK.utf8" ]
+        [ rdfs:label "de" ; rdf:value "de_DE.utf8" ]
         [ rdfs:label "en" ; rdf:value "en_GB.utf8" ]
+        [ rdfs:label "en_US" ; rdf:value "en_US.utf8" ]
+        [ rdfs:label "es" ; rdf:value "es_ES.utf8" ]
+        [ rdfs:label "fa" ; rdf:value "fa_IR.utf8" ]
+        [ rdfs:label "fi" ; rdf:value "fi_FI.utf8" ]
+        [ rdfs:label "fr" ; rdf:value "fr_FR.utf8" ]
+        [ rdfs:label "it" ; rdf:value "it_IT.utf8" ]
+        [ rdfs:label "nb" ; rdf:value "nb_NO.utf8" ]
+        [ rdfs:label "nl" ; rdf:value "nl_NL.utf8" ]
+        [ rdfs:label "nn" ; rdf:value "nn_NO.utf8" ]
+        [ rdfs:label "pl" ; rdf:value "pl_PL.utf8" ]
+        [ rdfs:label "pt" ; rdf:value "pt_PT.utf8" ]
+        [ rdfs:label "pt_BR" ; rdf:value "pt_BR.utf8" ]
+        [ rdfs:label "ru" ; rdf:value "ru_RU.utf8" ]
+        [ rdfs:label "sv" ; rdf:value "sv_SE.utf8" ]
+        [ rdfs:label "zh" ; rdf:value "zh_CN.utf8" ]
     ) ;
     # how many results (maximum) to load at a time on the search results page
     skosmos:searchResultsSize 20 ;
