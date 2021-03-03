@@ -1,5 +1,11 @@
 FROM ubuntu:18.04
 
+LABEL maintainer="National Library of Finland"
+LABEL version="0.1"
+LABEL description="A Docker image for Skosmos with Apache httpd."
+
+ARG SKOSMOS_VERSION=v.2.9
+
 ARG DEBIAN_FRONTEND=noninteractive
 
 # git is necessary for some composer packages e.g. davidstutz/bootstrap-multiselect
@@ -73,5 +79,9 @@ RUN /usr/local/bin/composer install --no-dev --no-interaction
 
 # Configure Skosmos
 COPY dockerfiles/config/config-docker.ttl /var/www/html/config.ttl
+
+HEALTHCHECK --interval=5s --timeout=3s --retries=3 CMD curl -f http://localhost || exit 1
+
+EXPOSE 80
 
 CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
