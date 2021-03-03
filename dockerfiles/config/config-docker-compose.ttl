@@ -76,7 +76,7 @@
     # email address to set as the envelope sender for feedback messages
     skosmos:feedbackEnvelopeSender "" ;
     # whether to display the ui language selection as a dropdown (useful for cases where there are more than 3 languages) 
-    skosmos:uiLanguageDropdown false ;
+    skosmos:uiLanguageDropdown true ;
     # whether to enable the spam honey pot or not, enabled by default
     skosmos:uiHoneypotEnabled true ;
     # default time a user must wait before submitting a form
