@@ -8,7 +8,8 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
   private $vocab;
   private $params;
 
-  protected function setUp() {
+  protected function setUp() : void
+  {
     putenv("LANGUAGE=en_GB.utf8");
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');

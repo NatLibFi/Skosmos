@@ -6,7 +6,8 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
   private $concept;
   private $vocab;
 
-  protected function setUp() {
+  protected function setUp() : void
+  {
     putenv("LANGUAGE=en_GB.utf8");
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');

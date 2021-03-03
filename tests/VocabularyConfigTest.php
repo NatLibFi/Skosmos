@@ -9,7 +9,8 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
    * @covers VocabularyConfig::getConfig
    * @throws Exception
    */
-  protected function setUp() {
+  protected function setUp() : void
+  {
     putenv("LANGUAGE=en_GB.utf8");
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');

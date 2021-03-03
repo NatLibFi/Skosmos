@@ -6,7 +6,8 @@ class PluginRegisterTest extends PHPUnit\Framework\TestCase
   private $concept;
   private $mockpr;
 
-  protected function setUp() {
+  protected function setUp() : void
+  {
     $this->mockpr = $this->getMockBuilder('PluginRegister')->setConstructorArgs(array(array('global-plugin')))->setMethods(array('getPlugins'))->getMock();
     $stubplugs = array ('test-plugin' => array ( 'js' => array ( 0 => 'first.js', 1 => 'second.min.js', ), 'css' => array ( 0 => 'stylesheet.css', ), 'templates' => array ( 0 => 'template.html', ), ), 'only-css' => array ( 'css' => array ( 0 => 'super.css')), 'global-plugin' => array('js' => array('everywhere.js')));
     $this->mockpr->method('getPlugins')->will($this->returnValue($stubplugs));

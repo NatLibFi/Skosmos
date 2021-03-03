@@ -7,7 +7,8 @@ class FeedbackTest extends PHPUnit\Framework\TestCase
   private $model;
   private $request;
 
-  protected function setUp() {
+  protected function setUp() : void
+  {
     $config = new GlobalConfig('/../tests/testconfig-fordefaults.ttl');
     $this->model = new Model($config);
     $this->request = \Mockery::mock('Request', array($this->model))->makePartial();

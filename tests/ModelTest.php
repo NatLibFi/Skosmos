@@ -5,7 +5,8 @@ class ModelTest extends PHPUnit\Framework\TestCase
   private $params;
   private $model;
 
-  protected function setUp() {
+  protected function setUp() : void
+  {
     putenv("LANGUAGE=en_GB.utf8");
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');
@@ -15,7 +16,8 @@ class ModelTest extends PHPUnit\Framework\TestCase
     $this->params->method('getVocabs')->will($this->returnValue(array($this->model->getVocabulary('test'))));
   }
 
-  protected function tearDown() {
+  protected function tearDown() : void
+  {
     $this->params = null;
   }
 

@@ -230,7 +230,7 @@ class Http304Test extends TestCase
         $this->assertEquals("", $content);
     }
 
-    public function tearDown()
+    public function tearDown() : void
     {
         parent::tearDown();
         \Mockery::close();

@@ -15,7 +15,8 @@ class RestControllerTest extends \PHPUnit\Framework\TestCase
    * @var RestController
    */
   private $controller;
-  protected function setUp() {
+  protected function setUp() : void
+  {
     putenv("LANGUAGE=en_GB.utf8");
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');
@@ -28,7 +29,8 @@ class RestControllerTest extends \PHPUnit\Framework\TestCase
     $this->controller = new RestController($this->model);
   }
 
-  protected function tearDown() {
+  protected function tearDown() : void
+  {
     ob_clean();
   }
 
