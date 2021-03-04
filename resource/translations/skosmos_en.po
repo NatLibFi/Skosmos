@@ -839,3 +839,12 @@ msgstr "Search results"
 
 msgid "Sidebar listing: list and traverse vocabulary contents by a criterion"
 msgstr "Sidebar listing: list and traverse vocabulary contents by a criterion"
+
+msgid "Subject:"
+msgstr "Subject:"
+
+msgid "Write a subject"
+msgstr "Write a subject"
+
+msgid "Select a vocabulary"
+msgstr "You can select a vocabulary"
