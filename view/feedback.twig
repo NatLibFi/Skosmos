@@ -45,7 +45,7 @@
         <label for="message">{% trans %}Message:{% endtrans %}</label>
         <textarea id="message" class="form-control" name="message"></textarea>
         {{ honeypot.generate('item-description', 'user-captcha')|raw }}
-        <button type="submit" class="btn btn-primary" id="send-feedback" aria-label="{% trans %}Send feedback{% endtrans %}">{% trans %}Send feedback{% endtrans %}</button>
+        <button type="submit" class="btn btn-primary" id="send-feedback">{% trans %}Send feedback{% endtrans %}</button>
       </form>
     {% endif %}
     </div>

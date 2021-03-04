@@ -213,8 +213,7 @@ class WebController extends Controller
         }
         $feedbackName = $request->getQueryParamPOST('name');
         $feedbackEmail = $request->getQueryParamPOST('email');
-        $msgSubject = $this->model->getConfig()->getServiceName() . ": ";
-        $msgSubject .= $request->getQueryParamPOST('msgsubject');
+        $msgSubject = $request->getQueryParamPOST('msgsubject');
         $feedbackVocab = $request->getQueryParamPOST('vocab');
         $feedbackVocabEmail = ($feedbackVocab !== null && $feedbackVocab !== '') ?
             $this->model->getVocabulary($feedbackVocab)->getConfig()->getFeedbackRecipient() : null;
@@ -250,8 +249,8 @@ class WebController extends Controller
 
     /**
      * Sends the user entered message through the php's mailer.
-     * @param string $message only required parameter is the actual message.
-     * @param string $messageSubject from the sender.
+     * @param string $message content given by user.
+     * @param string $messageSubject subject line given by user.
      * @param string $fromName senders own name.
      * @param string $fromEmail senders email address.
      * @param string $fromVocab which vocabulary is the feedback related to.
@@ -259,10 +258,10 @@ class WebController extends Controller
     public function sendFeedback($request, $message, $messageSubject, $fromName = null, $fromEmail = null, $fromVocab = null, $toMail = null)
     {
         $toAddress = ($toMail) ? $toMail : $this->model->getConfig()->getFeedbackAddress();
+        $messageSubject = "[" . $this->model->getConfig()->getServiceName() . "] " . $messageSubject;
         if ($fromVocab !== null && $fromVocab !== '') {
             $message = 'Feedback from vocab: ' . strtoupper($fromVocab) . "<br />" . $message;
         }
-
         $envelopeSender = $this->model->getConfig()->getFeedbackEnvelopeSender();
         // determine the sender address of the message
         $sender = $this->model->getConfig()->getFeedbackSender();
