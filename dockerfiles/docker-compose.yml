@@ -43,6 +43,3 @@ services:
       - type: bind
         source: ./config/config-docker-compose.ttl
         target: /var/www/html/config.ttl
-
-# once the environment has been created load a vocabulary, e.g.:
-# >curl -I -X POST -H Content-Type:text/turtle -T yso-skos.ttl -G http://localhost:9030/skosmos/data --data-urlencode graph=http://www.yso.fi/onto/yso/
