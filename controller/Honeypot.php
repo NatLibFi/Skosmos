@@ -80,9 +80,9 @@ class Honeypot
      * Decrypt the given time
      *
      * @param  mixed $time
-     * @return string|null
+     * @return int|null
      */
-    public function decryptTime($time) : int
+    public function decryptTime($time) : ?int
     {
         try {
             return intval(base64_decode($time));
