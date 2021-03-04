@@ -18,12 +18,12 @@
 :config a skosmos:Configuration ;
     # SPARQL endpoint
     # a local Fuseki server is usually on localhost:3030
-    #skosmos:sparqlEndpoint <http://localhost:3030/ds/sparql> ;
+    skosmos:sparqlEndpoint <http://localhost:3030/skosmos/sparql> ;
     # use the dev.finto.fi endpoint where the example vocabularies reside
-    skosmos:sparqlEndpoint <http://api.dev.finto.fi/sparql> ;
+    # skosmos:sparqlEndpoint <http://api.dev.finto.fi/sparql> ;
     # sparql-query extension, or "Generic" for plain SPARQL 1.1
     # set to "JenaText" instead if you use Fuseki with jena-text index
-    skosmos:sparqlDialect "Generic" ;
+    skosmos:sparqlDialect "JenaText" ;
     # whether to enable collation in sparql queries
     skosmos:sparqlCollationEnabled false ;
     # HTTP client configuration
@@ -86,61 +86,25 @@
 
 # Skosmos vocabularies
 
-:ysa a skosmos:Vocabulary, void:Dataset ;
-    dc:title "YSA - Yleinen suomalainen asiasanasto"@fi,
-        "YSA - Allmän tesaurus på finska"@sv,
-        "YSA - General Finnish thesaurus"@en ;
+:unesco a skosmos:Vocabulary, void:Dataset ;
+    dc:title "UNESCO Thesaurus"@en ;
+    skosmos:shortName "UNESCO";
     dc:subject :cat_general ;
-    dc:type mdrtype:THESAURUS ;
-    void:uriSpace "http://www.yso.fi/onto/ysa/";
-    skosmos:groupClass skos:Collection;
-    skosmos:language "fi";
-    skosmos:shortName "YSA";
-    skosmos:feedbackRecipient "vesa-posti@helsinki.fi" ;
-    skosmos:showChangeList "true" ;
-    void:dataDump <http://api.finto.fi/download/ysa/ysa-skos.ttl> ;
-    void:sparqlEndpoint <http://api.dev.finto.fi/sparql> ;
-    skosmos:sparqlGraph <http://www.yso.fi/onto/ysa/>
-.
-
-:yso a skosmos:Vocabulary, void:Dataset ;
-    dc:title "YSO - Yleinen suomalainen ontologia"@fi,
-        "ALLFO - Allmän finländsk ontologi"@sv,
-        "YSO - General Finnish ontology"@en ;
-    dc:subject :cat_general ;
-    dc:type mdrtype:ONTOLOGY ;
-    void:uriSpace "http://www.yso.fi/onto/yso/";
-    skosmos:language "fi", "sv", "en";
-    skosmos:defaultLanguage "fi";
-    skosmos:showTopConcepts "true";
-    skosmos:showStatistics "false";
-    skosmos:loadExternalResources "false";
-    skosmos:shortName "YSO",
-                    "ALLFO"@sv;
+    void:uriSpace "http://skos.um.es/unescothes/";
+    skosmos:language "en", "es", "fr", "ru";
+    skosmos:defaultLanguage "en";
+    skosmos:showTopConcepts true ;
+    skosmos:fullAlphabeticalIndex true ;
     skosmos:groupClass isothes:ConceptGroup ;
-    skosmos:arrayClass isothes:ThesaurusArray ;
-    void:dataDump <http://api.finto.fi/download/yso/yso-skos.ttl> ;
-    void:sparqlEndpoint <http://api.dev.finto.fi/sparql> ;
-    skosmos:sparqlGraph <http://www.yso.fi/onto/yso/> ;
-    skosmos:mainConceptScheme <http://www.yso.fi/onto/yso/>
-.
+    void:sparqlEndpoint <http://localhost:3030/skosmos/sparql> ;
+    skosmos:sparqlGraph <http://skos.um.es/unescothes/> .
 
-:categories a skos:ConceptScheme;
-    skos:prefLabel "Skosmos Vocabulary Categories"@en
-.
-
-:cat_general a skos:Concept ;
-    skos:topConceptOf :categories ;
-    skos:inScheme :categories ;
-    skos:prefLabel "Yleiskäsitteet"@fi,
-        "Allmänna begrepp"@sv,
-        "General concepts"@en
-.
-
-mdrtype:THESAURUS a skos:Concept ;
-    skos:prefLabel "Тезаурус"@bg, "Tezaurus"@cs, "Tesaurus"@da, "Thesaurus"@de, "Θησαυρός"@el, "Thesaurus"@en, "Tesaurus"@et, "Tesaurus"@fi, "Thésaurus"@fr, "Pojmovnik"@hr, "Tezaurusz"@hu, "Tesauro"@it, "Tēzaurs"@lv, "Tezauras"@lt, "Teżawru"@mt, "Thesaurus"@nl, "Tesaurus"@no, "Tezaurus"@pl, "Tesauro"@pt, "Tezaur"@ro, "Synonymický slovník"@sk, "Tezaver"@sl, "Tesauro"@es, "Tesaurus"@sv
-.
-
-mdrtype:ONTOLOGY a skos:Concept ;
-    skos:prefLabel "Онтология"@bg, "Ontologie"@cs, "Ontologi"@da, "Ontologie"@de, "Οντολογία"@el, "Ontology"@en, "Ontoloogia"@et, "Ontologia"@fi, "Ontologie"@fr, "Ontologija"@hr, "Ontológia"@hu, "Ontologia"@it, "Ontoloģija"@lv, "Ontologija"@lt, "Ontoloġija"@mt, "Ontologie"@nl, "Ontologi"@no, "Struktura pojęciowa"@pl, "Ontologia"@pt, "Ontologie"@ro, "Ontológia"@sk, "Ontologija"@sl, "Ontología"@es, "Ontologi"@sv
-.
+:stw a skosmos:Vocabulary, void:Dataset ;
+    dc:title "STW Thesaurus for Economics"@en ;
+    skosmos:shortName "STW";
+    dc:subject :cat_general ;
+    void:uriSpace "http://zbw.eu/stw/";
+    skosmos:language "en", "de";
+    skosmos:defaultLanguage "de";
+    void:sparqlEndpoint <http://localhost:3030/skosmos/sparql> ;
+    skosmos:sparqlGraph <http://zbw.eu/stw/> .
