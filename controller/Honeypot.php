@@ -53,11 +53,11 @@ class Honeypot
     /**
      * Validate honey time was within the time limit
      *
-     * @param  mixed $value
-     * @param  array $parameters
+     * @param  string $value base64 encoded time value
+     * @param  int $minDelta minimum time difference in seconds
      * @return boolean
      */
-    public function validateHoneytime($value, $parameters)
+    public function validateHoneytime($value, $minDelta)
     {
         if ($this->disabled) {
             return true;
@@ -65,8 +65,8 @@ class Honeypot
 
         // Get the decrypted time
         $value = $this->decryptTime($value);
-        // The current time should be greater than the time the form was built + the speed option
-        return ( is_numeric($value) && time() > ($value + $parameters[0]) );
+        // The current time should be greater than the time the form was built + minimum
+        return ( is_numeric($value) && time() > ($value + $minDelta) );
     }
     /**
      * Get encrypted time
@@ -85,7 +85,7 @@ class Honeypot
     public function decryptTime($time)
     {
         try {
-            return base64_decode($time);
+            return intval(base64_decode($time));
         } catch (\Exception $exception) {
             return null;
         }
