@@ -11,14 +11,14 @@ class Honeypot
     /**
      * Enable the Honeypot validation
      */
-    public function enable()
+    public function enable() : void
     {
         $this->disabled = false;
     }
     /**
      * Disable the Honeypot validation
      */
-    public function disable()
+    public function disable() : void
     {
         $this->disabled = true;
     }
@@ -28,7 +28,7 @@ class Honeypot
      * @param  string $honey_time
      * @return string
      */
-    public function generate($honey_name, $honey_time)
+    public function generate($honey_name, $honey_time) : string
     {
         // Encrypt the current time
         $honey_time_encrypted = $this->getEncryptedTime();
@@ -43,7 +43,7 @@ class Honeypot
     * @param  mixed $value
     * @return boolean
     */
-    public function validateHoneypot($value)
+    public function validateHoneypot($value) : bool
     {
         if ($this->disabled) {
             return true;
@@ -57,7 +57,7 @@ class Honeypot
      * @param  int $minDelta minimum time difference in seconds
      * @return boolean
      */
-    public function validateHoneytime($value, $minDelta)
+    public function validateHoneytime($value, $minDelta) : bool
     {
         if ($this->disabled) {
             return true;
@@ -72,7 +72,7 @@ class Honeypot
      * Get encrypted time
      * @return string
      */
-    public function getEncryptedTime()
+    public function getEncryptedTime() : string
     {
         return base64_encode(time());
     }
@@ -82,7 +82,7 @@ class Honeypot
      * @param  mixed $time
      * @return string|null
      */
-    public function decryptTime($time)
+    public function decryptTime($time) : int
     {
         try {
             return intval(base64_decode($time));
