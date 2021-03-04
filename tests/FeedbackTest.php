@@ -21,6 +21,12 @@ class FeedbackTest extends PHPUnit\Framework\TestCase
    * @covers Honeypot::getEncryptedTime
    */
   public function testHoneypotFieldsGenerated() {
+    $this->controller
+        ->shouldReceive('sendFeedback')
+        ->withAnyArgs()
+        ->once()
+        ->andReturn(true);
+
     $initialTime = time();
     ob_start();
     $this->controller->invokeFeedbackForm($this->request);
@@ -68,7 +74,8 @@ class FeedbackTest extends PHPUnit\Framework\TestCase
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('user-captcha')
-        ->andReturn(base64_encode(time() - 5 * 60));
+        // 6 seconds ago is more than the default 5 seconds
+        ->andReturn(base64_encode(time() - 6));
     $this->controller
         ->shouldReceive('sendFeedback')
         ->withAnyArgs()
@@ -112,7 +119,7 @@ class FeedbackTest extends PHPUnit\Framework\TestCase
         ->shouldReceive('getQueryParamPOST')
         ->with('user-captcha')
         // 0 seconds ago is less than the default 5 seconds
-        ->andReturn(base64_encode(time() - 0 * 60));
+        ->andReturn(base64_encode(time() - 0));
     $this->controller
         ->shouldReceive('sendFeedback')
         ->withAnyArgs()
@@ -152,8 +159,8 @@ class FeedbackTest extends PHPUnit\Framework\TestCase
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('user-captcha')
-        // 0 seconds ago is less than the default 5 seconds
-        ->andReturn(base64_encode(time() - 0 * 60));
+        // 2 seconds ago is less than the default 5 seconds
+        ->andReturn(base64_encode(time() - 2));
     $this->controller
         ->shouldReceive('sendFeedback')
         ->withAnyArgs()
@@ -193,7 +200,7 @@ class FeedbackTest extends PHPUnit\Framework\TestCase
     $this->request
         ->shouldReceive('getQueryParamPOST')
         ->with('user-captcha')
-        ->andReturn(base64_encode(time() - 5 * 60));
+        ->andReturn(base64_encode(time() - 5));
     $this->controller
         ->shouldReceive('sendFeedback')
         ->withAnyArgs()
