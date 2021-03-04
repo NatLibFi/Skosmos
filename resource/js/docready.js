@@ -1,6 +1,6 @@
 $(function() { // DOCUMENT READY
 
-  var spinner = '<div class="loading-spinner"><span class="spinner-text">'+ loading_text + '</span><span class="spinner" /></div>';
+  var spinner = '<div class="loading-spinner"><span class="spinner-text">'+ loading_text + '</span><span class="spinner"></span></div>';
   var searchString = ''; // stores the search field's value before autocomplete selection changes it
   var selectedVocabs = [];
   var vocabId;
@@ -14,7 +14,7 @@ $(function() { // DOCUMENT READY
   shortenProperties();
 
   // kills the autocomplete after a form submit so we won't have to wait for the ajax to complete.
-  $('.navbar-form').submit(
+  $('.navbar-form').on('submit',
     function() {
       $('#search-field').typeahead('destroy');
       $.ajaxQ.abortAll();
@@ -228,8 +228,8 @@ $(function() { // DOCUMENT READY
   // ajaxing the concept count and the preflabel counts on the vocabulary front page
   if ($('#vocab-info').length && $('#statistics').length) {
     // adding the spinners
-    $('#counts tr:nth-of-type(1)').after('<tr><td><span class="spinner" /></td></td></tr>');
-    $('#statistics tr:nth-of-type(1)').after('<tr><td><span class="spinner" /></td></td></tr>');
+    $('#counts tr:nth-of-type(1)').after('<tr><td><span class="spinner"></span></td></td></tr>');
+    $('#statistics tr:nth-of-type(1)').after('<tr><td><span class="spinner"></span></td></td></tr>');
     $.ajax({
       url : rest_base_url + vocab + '/vocabularyStatistics',
       data: $.param({'lang' : content_lang}),
@@ -520,7 +520,7 @@ $(function() { // DOCUMENT READY
 
   // Event handlers for the language selection links for setting the cookie
   $('#language a').each( function(index, el) {
-    $(el).click(function() {
+    $(el).on('click', function() {
       var langCode = el.id.substr(el.id.indexOf("-") + 1);
       setLangCookie(langCode);
     });
@@ -605,7 +605,7 @@ $(function() { // DOCUMENT READY
     createCookie('SKOSMOS_SEARCH_LANG', qlang, 365);
   }
 
-  $('.lang-button').click(function() {
+  $('.lang-button').on('click', function() {
     qlang = $(this)[0].attributes.hreflang ? $(this)[0].attributes.hreflang.value : 'anything';
     var any = (qlang === 'anything') ? '1' : '0';
     $('#lang-dropdown-toggle').html($(this).html() + ' <span class="caret"></span>');
@@ -615,7 +615,7 @@ $(function() { // DOCUMENT READY
     if (concepts) { concepts.clear(); }
   });
 
-  $('.lang-button, .lang-button-all').click(function() {
+  $('.lang-button, .lang-button-all').on('click', function() {
     $('#search-field').focus();
   });
 
@@ -625,7 +625,7 @@ $(function() { // DOCUMENT READY
   }
 
   // disables the button with an empty search form
-  $('#search-field').keyup(function() {
+  $('#search-field').on('keyup', function() {
     var empty = false;
     $('#search-field').each(function() {
       if ($(this).val().length === 0) { empty = true; }
@@ -800,7 +800,7 @@ $(function() { // DOCUMENT READY
         source: concepts.ttAdapter()
     }).on('typeahead:cursorchanged', function() {
       $('.tt-dropdown-menu').mCustomScrollbar("scrollTo", '.tt-cursor');
-    }).on('typeahead:selected', onSelection).bind('focus', function() {
+    }).on('typeahead:selected', onSelection).on('focus', function() {
       $('#search-field').typeahead('open');
     }).after(clearButton).on('keypress', function() {
       if ($typeahead.val().length > 0 && $(this).hasClass('clear-search-dark') === false) {
@@ -832,7 +832,7 @@ $(function() { // DOCUMENT READY
   });
 
   // Some form validation for the feedback form
-  $("#send-feedback").click(function() {
+  $('#send-feedback').on('click', function() {
       $('#email').removeClass('missing-value');
       $('#message').removeClass('missing-value');
       var emailMessageVal = $("#message").val();
@@ -850,7 +850,7 @@ $(function() { // DOCUMENT READY
   });
 
   // Initializes the waypoints plug-in used for the search listings.
-  var $loading = $("<p>" + loading_text + "&hellip;<span class='spinner'/></p>");
+  var $loading = $("<p>" + loading_text + "&hellip;<span class='spinner'></span></p>");
   var $trigger = $('.search-result:nth-last-of-type(6)');
   var options = { offset : '100%', continuous: false, triggerOnce: true };
   var alpha_complete = false;
@@ -1076,7 +1076,7 @@ $(function() { // DOCUMENT READY
   if ($('#alpha').hasClass('active') && $('#vocab-info').length === 1 && $('.alphabetical-search-results').length === 0) {
     // taking into account the possibility that the lang parameter has been changed by the WebController.
     var urlLangCorrected = vocab + '/' + lang + '/index?limit=250&offset=0&clang=' + clang;
-    $('.sidebar-grey').empty().append('<div class="loading-spinner"><span class="spinner-text">'+ loading_text + '</span><span class="spinner" /></div>');
+    $('.sidebar-grey').empty().append('<div class="loading-spinner"><span class="spinner-text">'+ loading_text + '</span><span class="spinner"></span></div>');
     $.ajax({
       url : urlLangCorrected,
       success : function(data) {
@@ -1129,7 +1129,7 @@ $(function() { // DOCUMENT READY
         source: concepts.ttAdapter()
     }).on('typeahead:cursorchanged', function() {
       $('.tt-dropdown-menu').mCustomScrollbar("scrollTo", '.tt-cursor');
-    }).on('typeahead:selected', onSelection).bind('focus', function() {
+    }).on('typeahead:selected', onSelection).on('focus', function() {
       $('#search-field').typeahead('open');
     });
   }
