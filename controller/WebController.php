@@ -222,7 +222,7 @@ class WebController extends Controller
         // and we do not actually send the message.
         if ($this->honeypot->validateHoneypot($request->getQueryParamPOST('item-description')) &&
             $this->honeypot->validateHoneytime($request->getQueryParamPOST('user-captcha'), $this->model->getConfig()->getHoneypotTime())) {
-            $this->sendFeedback($request, $feedbackMsg, $feedbackName, $feedbackEmail, $feedbackVocab, $feedbackVocabEmail, $msgSubject);
+            $this->sendFeedback($request, $feedbackMsg, $msgSubject, $feedbackName, $feedbackEmail, $feedbackVocab, $feedbackVocabEmail);
         }
         echo $template->render(
             array(
@@ -256,7 +256,7 @@ class WebController extends Controller
      * @param string $fromEmail senders email address.
      * @param string $fromVocab which vocabulary is the feedback related to.
      */
-    public function sendFeedback($request, $message, $fromName = null, $fromEmail = null, $fromVocab = null, $toMail = null, $messageSubject)
+    public function sendFeedback($request, $message, $messageSubject, $fromName = null, $fromEmail = null, $fromVocab = null, $toMail = null)
     {
         $toAddress = ($toMail) ? $toMail : $this->model->getConfig()->getFeedbackAddress();
         if ($fromVocab !== null && $fromVocab !== '') {
