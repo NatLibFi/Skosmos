@@ -5,10 +5,6 @@ li, td > a {
   font-size: 14px;
 }
 
-label {
-  font-weight: normal;
-}
-
 h1, .prefLabel, .prefLabelLang, .notation {
   font-family: 'Fira Sans', sans-serif;
   font-size: 24px;
@@ -777,8 +773,12 @@ span.xl-pref-label > img {
 
 /* feedback page
  ***************************/
-#feedback-fields > .missing-value {
+#feedback-fields > p .missing-value {
   border: 1px solid red;
+}
+
+#feedback-fields label {
+  font-weight: normal;
 }
 
 #message {

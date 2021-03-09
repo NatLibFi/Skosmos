@@ -835,15 +835,21 @@ $(function() { // DOCUMENT READY
   $("#send-feedback").click(function() {
       $('#email').removeClass('missing-value');
       $('#message').removeClass('missing-value');
+      $('#msgsubject').removeClass('missing-value');
       var emailMessageVal = $("#message").val();
       var emailAddress = $("#email").val();
+      var emailSubject = $("#msgsubject").val();
       var requiredFields = true;
-      if (emailAddress !== '' && emailAddress.indexOf('@') === -1) {
+      if (emailAddress === '' || emailAddress.indexOf('@') === -1) {
         $("#email").addClass('missing-value');
         requiredFields = false;
       }
       if (emailMessageVal === '') {
         $("#message").addClass('missing-value');
+        requiredFields = false;
+      }
+      if (emailSubject === '') {
+        $("#msgsubject").addClass('missing-value');
         requiredFields = false;
       }
       return requiredFields;
