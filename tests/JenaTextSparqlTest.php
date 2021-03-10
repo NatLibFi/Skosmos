@@ -183,7 +183,6 @@ class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
   /**
    * @covers JenaTextSparql::queryConceptsAlphabetical
    * @covers JenaTextSparql::generateAlphabeticalListQuery
-   * @covers JenaTextSparql::transformAlphabeticalListResults
    */
   public function testQualifiedBroaderAlphabeticalList() {
     $voc = $this->model->getVocabulary('test-qualified-broader');

@@ -286,7 +286,7 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
    * @covers Vocabulary::searchConceptsAlphabetical
    * @covers JenaTextSparql::queryConceptsAlphabetical
    * @covers JenaTextSparql::generateAlphabeticalListQuery
-   * @covers JenaTextSparql::transformAlphabeticalListResults
+   * @covers GenericSparql::transformAlphabeticalListResults
    */
   public function testSearchConceptsAlphabeticalQualifiedNotation() {
     $vocab = $this->jenamodel->getVocabulary('test-qualified-notation');
@@ -329,7 +329,7 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
    * @covers Vocabulary::searchConceptsAlphabetical
    * @covers JenaTextSparql::queryConceptsAlphabetical
    * @covers JenaTextSparql::generateAlphabeticalListQuery
-   * @covers JenaTextSparql::transformAlphabeticalListResults
+   * @covers GenericSparql::transformAlphabeticalListResults
    */
   public function testSearchConceptsAlphabeticalQualifiedBroader() {
     $vocab = $this->jenamodel->getVocabulary('test-qualified-broader');
