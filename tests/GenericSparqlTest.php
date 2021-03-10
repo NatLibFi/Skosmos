@@ -366,7 +366,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
   public function testQueryConceptsAlphabeticalNumbers() {
     $actual = $this->sparql->queryConceptsAlphabetical('0-9', 'en');
     $this->assertEquals(1, sizeof($actual));
-    $this->assertContains("3D", $actual[0]['prefLabel']);
+    $this->assertStringContainsString("3D", $actual[0]['prefLabel']);
   }
 
   /**
@@ -732,7 +732,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     $actual = $this->sparql->queryConcepts(array($voc), null, null, $this->params);
     $this->assertEquals(3, sizeof($actual));
     foreach($actual as $match)
-      $this->assertContains('bass', $match['prefLabel'], '',true);
+      $this->assertStringContainsStringIgnoringCase('bass', $match['prefLabel']);
   }
 
   /**
@@ -751,7 +751,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     $actual = $this->sparql->queryConcepts(array($voc), null, null, $this->params);
     $this->assertEquals(3, sizeof($actual));
     foreach($actual as $match)
-      $this->assertContains('bass', $match['prefLabel'], '',true);
+      $this->assertStringContainsStringIgnoringCase('bass', $match['prefLabel']);
   }
 
   /**

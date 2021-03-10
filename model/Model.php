@@ -417,7 +417,7 @@ class Model
                 return $voc;
             }
         }
-        throw new Exception("Vocabulary id '$vocid' not found in configuration.");
+        throw new ValueError("Vocabulary id '$vocid' not found in configuration.");
     }
 
     /**
@@ -444,7 +444,7 @@ class Model
         if (array_key_exists($key, $this->vocabsByGraph)) {
             return $this->vocabsByGraph[$key];
         } else {
-            throw new Exception("no vocabulary found for graph $graph and endpoint $endpoint");
+            throw new ValueError("no vocabulary found for graph $graph and endpoint $endpoint");
         }
 
     }

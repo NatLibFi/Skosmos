@@ -76,10 +76,10 @@ class ModelTest extends PHPUnit\Framework\TestCase
 
   /**
    * @covers Model::getVocabulary
-   * @expectedException \Exception
-   * @expectedExceptionMessage Vocabulary id 'thisshouldnotbefound' not found in configuration
    */
   public function testGetVocabularyByFalseId() {
+    $this->expectException(ValueError::class);
+    $this->expectExceptionMessage("Vocabulary id 'thisshouldnotbefound' not found in configuration");
     $vocab = $this->model->getVocabulary('thisshouldnotbefound');
     $this->assertInstanceOf('Vocabulary', $vocab);
   }
@@ -94,10 +94,10 @@ class ModelTest extends PHPUnit\Framework\TestCase
 
   /**
    * @covers Model::getVocabularyByGraph
-   * @expectedException \Exception
-   * @expectedExceptionMessage no vocabulary found for graph http://no/address and endpoint http://localhost:13030/skosmos-test/sparql
    */
   public function testGetVocabularyByInvalidGraphUri() {
+    $this->expectException(ValueError::class);
+    $this->expectExceptionMessage("no vocabulary found for graph http://no/address and endpoint http://localhost:13030/skosmos-test/sparql");
     $vocab = $this->model->getVocabularyByGraph('http://no/address');
     $this->assertInstanceOf('Vocabulary', $vocab);
   }
@@ -312,7 +312,7 @@ class ModelTest extends PHPUnit\Framework\TestCase
 
   public function testGetRdfCustomPrefix() {
     $result = $this->model->getRDF('prefix', 'http://www.skosmos.skos/prefix/p1', 'text/turtle');
-    $this->assertContains("@prefix my: <http://example.com/myns#> .", $result);
+    $this->assertStringContainsString("@prefix my: <http://example.com/myns#> .", $result);
   }
 
   /**

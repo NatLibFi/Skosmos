@@ -8,7 +8,7 @@ class VocabularyCategory extends DataObject
     public function __construct($model, $resource)
     {
         if (!($model instanceof Model)) {
-            throw new Exception('Invalid constructor parameter given to DataObject.');
+            throw new InvalidArgumentException('Invalid constructor parameter given to DataObject.');
         }
 
         $this->model = $model;

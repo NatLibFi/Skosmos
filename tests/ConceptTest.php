@@ -284,7 +284,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     $concepts = $vocab->getConceptInfo("http://www.skosmos.skos/test/ta123", "en");
     $concept = $concepts[0];
     $date = $concept->getDate();
-    $this->assertContains('10/1/14', $date);
+    $this->assertStringContainsString('10/1/14', $date);
   }
 
   /**
@@ -295,8 +295,8 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     $concepts = $vocab->getConceptInfo("http://www.skosmos.skos/date/d1", "en");
     $concept = $concepts[0];
     $date = $concept->getDate();
-    $this->assertContains('1/3/00', $date);
-    $this->assertContains('6/6/12', $date);
+    $this->assertStringContainsString('1/3/00', $date);
+    $this->assertStringContainsString('6/6/12', $date);
   }
 
   /**
@@ -324,7 +324,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     $concept = $concepts[0];
     # we use @ to suppress the exceptions in order to be able to check the result
     $date = @$concept->getDate();
-    $this->assertContains('1986-21-00', $date);
+    $this->assertStringContainsString('1986-21-00', $date);
   }
 
   /**
@@ -584,9 +584,9 @@ class ConceptTest extends PHPUnit\Framework\TestCase
 
     $concept->processExternalResource($res);
     $json =  $concept->dumpJsonLd();
-    $this->assertContains('HY', $json);
-    $this->assertContains('AK', $json);
-    $this->assertContains('OS', $json);
+    $this->assertStringContainsString('HY', $json);
+    $this->assertStringContainsString('AK', $json);
+    $this->assertStringContainsString('OS', $json);
     $contains_count = substr_count($json, "CONTAINS");
     $this->assertEquals($contains_count, 3);
   }
