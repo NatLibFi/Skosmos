@@ -6,7 +6,8 @@ class ConceptPropertyValueLiteralTest extends PHPUnit\Framework\TestCase
   private $concept;
   private $vocab;
 
-  protected function setUp() {
+  protected function setUp() : void
+  {
     putenv("LANGUAGE=en_GB.utf8");
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');
@@ -47,14 +48,14 @@ class ConceptPropertyValueLiteralTest extends PHPUnit\Framework\TestCase
     $concepts = $vocab->getConceptInfo("http://www.skosmos.skos/date/d1", "en");
     $props = $concepts[0]->getProperties();
     $propvals = $props['http://www.skosmos.skos/date/ownDate']->getValues();
-    $this->assertContains('8/8/15', $propvals['8/8/15']->getLabel());
+    $this->assertStringContainsString('8/8/15', $propvals['8/8/15']->getLabel());
   }
 
   /**
    * @covers ConceptPropertyValueLiteral::getLabel
-   * @expectedException PHPUnit\Framework\Error\Warning
    */
   public function testGetLabelThatIsABrokenDate() {
+    $this->expectWarning();
     $vocab = $this->model->getVocabulary('dates');
     $concepts = $vocab->getConceptInfo("http://www.skosmos.skos/date/d2", "en");
     $props = $concepts[0]->getProperties();

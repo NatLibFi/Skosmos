@@ -4,7 +4,8 @@ class ResolverTest extends PHPUnit\Framework\TestCase
 {
   private $resolver;
 
-  protected function setUp() {
+  protected function setUp() : void
+  {
     $model = new Model(new GlobalConfig('/../tests/testconfig.ttl'));
     $this->resolver = new Resolver($model);
   }

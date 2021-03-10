@@ -9,7 +9,8 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
    * @covers VocabularyConfig::getConfig
    * @throws Exception
    */
-  protected function setUp() {
+  protected function setUp() : void
+  {
     putenv("LANGUAGE=en_GB.utf8");
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');
@@ -111,10 +112,11 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
 
   /**
    * @covers VocabularyConfig::getDefaultLanguage
-   * @expectedException PHPUnit\Framework\Error\Error
    */
   public function testGetDefaultLanguageWhenNotSet() {
     $vocab = $this->model->getVocabulary('testdiff');
+    $this->expectError();
+    $this->expectErrorMessage("Default language for vocabulary 'testdiff' unknown, choosing 'en'.");
     $lang = $vocab->getConfig()->getDefaultLanguage();
   }
 
@@ -170,10 +172,11 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
 
   /**
    * @covers VocabularyConfig::getDataURLs
-   * @expectedException PHPUnit\Framework\Error\Warning
    */
   public function testGetDataURLsNotGuessable() {
     $vocab = $this->model->getVocabulary('test');
+    $this->expectWarning();
+    $this->expectWarningMessage("Could not guess format for <http://skosmos.skos/dump/test/>.");
     $url = $vocab->getConfig()->getDataURLs();
   }
 
@@ -199,10 +202,11 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
 
   /**
    * @covers VocabularyConfig::getDataURLs
-   * @expectedException PHPUnit\Framework\Error\Warning
    */
   public function testGetDataURLsMarcNotDefined() {
     $vocab = $this->model->getVocabulary('marc-undefined');
+    $this->expectWarning();
+    $this->expectWarningMessage("Could not guess format for <http://skosmos.skos/dump/test/marc-undefined.mrcx>.");
     $url = $vocab->getConfig()->getDataURLs();
     $this->assertEquals(array(), $url);
   }
@@ -522,10 +526,11 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
 
   /**
    * @covers VocabularyConfig::getPropertyOrder
-   * @expectedException PHPUnit\Framework\Error\Error
    */
   public function testGetPropertyOrderUnknown() {
     $vocab = $this->model->getVocabulary('testUnknownPropertyOrder');
+    $this->expectWarning();
+    $this->expectWarningMessage("Property order for vocabulary 'testUnknownPropertyOrder' unknown, using default order");
     $params = $vocab->getConfig()->getPropertyOrder();
     $this->assertEquals(VocabularyConfig::DEFAULT_PROPERTY_ORDER, $params);
   }

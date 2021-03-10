@@ -2,7 +2,6 @@ sudo: required
 dist: trusty
 language: php
 php:
-  - 7.1
   - 7.2
   - 7.3
   - 7.4
@@ -35,6 +34,5 @@ env:
 matrix:
   exclude:
   allow_failures:
-  - php: 7.4
 notifications:
     slack: kansalliskirjasto:9mOKu3Vws1CIddF5jqWgXbli
