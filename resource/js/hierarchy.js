@@ -274,17 +274,18 @@ function getParams(node) {
   return $.param({'uri' : nodeId, 'lang' : clang});
 }
 
-function pickLabelFromScheme(scheme) {
+function pickLabel(entity) {
   var label = '';
-  if (scheme.prefLabel)
-    label = scheme.prefLabel;
-  else if (scheme.label)
-    label = scheme.label;
-  else if (scheme.title)
-    label = scheme.title;
+  if (entity.prefLabel)
+    label = entity.prefLabel;
+  else if (entity.label)
+    label = entity.label;
+  else if (entity.title)
+    label = entity.title;
   return label;
 }
 
+/*
 function schemeRoot(schemes) {
   var topArray = [];
   for (var i = 0; i < schemes.length; i++) {
@@ -302,6 +303,101 @@ function schemeRoot(schemes) {
       topArray.push(schemeObject);
     }
   }
+  return topArray;
+}
+*/
+
+function schemeRoot(schemes) {
+  var topArray = [];
+
+  // Step 1 : gather domain list
+  var domains=[];
+
+  for (var i = 0; i < schemes.length; i++) {
+    // iterate on schemes subjects...
+    if(schemes[i].subject != null) {
+      var schemeDomain = schemes[i].subject.uri;
+
+      // test if domain was already found  
+      var found = false;
+      for (var k = 0; k < domains.length; k++) {
+        if(domains[k].uri===schemeDomain){
+          found = true;
+          break;
+        }
+      }
+
+      // if not found, store it in domain list
+      if(!found) {
+        domains.push(schemes[i].subject);
+      }
+    }
+  }
+
+  // Step 2 : create tree nodes for each domain
+  for (var i = 0; i < domains.length; i++) {
+    var theDomain = domains[i];
+    var theDomainLabel = pickLabel(theDomain);
+
+    // avoid creating entries with empty labels
+    if(theDomainLabel != '') {
+      // Step 2.1 : create domain node without children
+      var domainObject = {
+        text: theDomainLabel, 
+        // note that the class 'domain' will make sure the node will be sorted _before_ others
+        // (see the 'sort' function at the end)
+        a_attr : { "href" : vocab + '/' + lang + '/page/?uri=' + theDomain.uri, 'class': 'domain'},
+        uri: theDomain.uri,
+        children: [],
+        state: { opened: false } 
+      };
+
+      // Step 2.2 : find the concept schemes in this domain and add them as children
+      for (var k = 0; k < schemes.length; k++) {
+        var theScheme = schemes[k];
+        var theSchemeLabel = pickLabel(theScheme);
+
+        // avoid creating entries with empty labels
+        if(theSchemeLabel != '') { 
+          if((theScheme.subject) != null && (theScheme.subject.uri===theDomain.uri)) {
+            domainObject.children.push(
+            {
+              text: theSchemeLabel,
+              a_attr:{ "href" : vocab + '/' + lang + '/page/?uri=' + theScheme.uri, 'class': 'scheme'},
+              uri: theScheme.uri,
+              children: true,
+              state: { opened: false } 
+            }
+            );
+          }
+        }
+      } // end iterating on schemes
+
+      topArray.push(domainObject); 
+    }
+  } // end iterating on domains
+
+  // Step 3 : add the schemes without any subjects after the subjects node
+  for (var k = 0; k < schemes.length; k++) {
+    var theScheme = schemes[k]; 
+
+    if(theScheme.subject == null) {     
+      // avoid creating entries with empty labels
+      var theSchemeLabel = pickLabel(theScheme);
+      if(theSchemeLabel != '') {      
+        topArray.push(
+            {
+              text:theSchemeLabel,
+              a_attr:{ "href" : vocab + '/' + lang + '/page/?uri=' + theScheme.uri, 'class': 'scheme'},
+              uri: theScheme.uri,
+              children: true,
+              state: { opened: false } 
+            }
+        );
+      }
+    }
+  }
+
   return topArray;
 }
 
@@ -426,6 +522,7 @@ function getTreeConfiguration() {
         var aNode = this.get_node(a);
         var bNode = this.get_node(b);
 
+        // sort on notation if requested
         if (window.showNotation) {
             var aNotation = aNode.original.notation;
             var bNotation = bNode.original.notation;
@@ -442,8 +539,35 @@ function getTreeConfiguration() {
                 else return -1;
             }
             else if (bNotation) return 1;
-        }
-        return naturalCompare(aNode.text.toLowerCase(), bNode.text.toLowerCase());
+        } else {
+          // no sorting on notation requested
+          // make sure the tree nodes with class 'domain' are sorted before the others
+          var aClass = aNode.original.a_attr['class'];
+          var bClass = bNode.original.a_attr['class'];
+
+          if(aClass) {
+            if(bClass) {
+              if(aClass == 'domain' && bClass == 'domain') {
+                // 2 domains : alpha sort
+                return naturalCompare(this.get_text(a).toLowerCase(), this.get_text(b).toLowerCase());
+              }
+              else if(aClass == 'domain' && bClass != 'domain') {
+                // A is before B
+                return -1;
+              }
+              else if(aClass != 'domain' && bClass == 'domain') {
+                // B is before A
+                return 1;
+              }
+            } else {
+              // A has class, but not B (should not happen) : alpha sort
+              return naturalCompare(this.get_text(a).toLowerCase(), this.get_text(b).toLowerCase());
+            }
+          }  else {
+            // A has no class (should not happen) : alpha sort
+            return naturalCompare(this.get_text(a).toLowerCase(), this.get_text(b).toLowerCase());
+          }
+        }        
     }
   });
 }
