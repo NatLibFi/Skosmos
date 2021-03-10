@@ -93,6 +93,10 @@ To stop:
 After you have your container running, with either Docker or `docker-compose`,
 you will need to load your vocabulary data.
 
+**NOTE**: In the example below, we use the Fuseki URL `localhost:3030`, which
+should work for the Docker setup. If you used `docker-compose`, you will have
+to use `localhost:9030` instead.
+
     # load STW vocabulary data
     curl -L -o stw.ttl.zip http://zbw.eu/stw/version/latest/download/stw.ttl.zip
     unzip stw.ttl.zip
