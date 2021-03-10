@@ -76,7 +76,8 @@ extension.
 To the host machine Docker Compose is exposing these values as `localhost:3030`
 and `localhost:9031` respectively.
 
-To create the containers in this example setup, you can use this command:
+To create the containers in this example setup, you can use this command
+from the `./dockerfiles/` directory:
 
     docker-compose up -d
 
