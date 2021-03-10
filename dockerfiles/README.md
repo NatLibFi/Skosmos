@@ -6,13 +6,11 @@ The following commands will build and tag the image it with `skosmos:test`,
 and run the container. The container name is `skosmos-web`, but you can customize
 the name, port, and other flags as necessary.
 
-```bash
-# NOTE: the container copies the project sources during build, so the
-# context must be the parent directory, i.e. you MUST build the image
-# from the Skosmos source directory, not from $sources/dockerfiles/
-docker build -t skosmos:test . -f dockerfiles/Dockerfile.ubuntu
-docker run -d --rm --name skosmos-web --net=host skosmos:test
-```
+    # NOTE: the container copies the project sources during build, so the
+    # context must be the parent directory, i.e. you MUST build the image
+    # from the Skosmos source directory, not from $sources/dockerfiles/
+    docker build -t skosmos:test . -f dockerfiles/Dockerfile.ubuntu
+    docker run -d --rm --name skosmos-web --net=host skosmos:test
 
 Now Skosmos should be available at `http://localhost/`. See the
 [section below](#loading-vocabulary-data) to load vocabulary data.
@@ -28,9 +26,7 @@ if you would like to use Docker Compose.
 
 To stop the container:
 
-```bash
-docker stop skosmos-web
-```
+    docker stop skosmos-web
 
 The container created is based on the project
 [Install Tutorial](https://github.com/NatLibFi/Skosmos/wiki/InstallTutorial).
@@ -46,13 +42,11 @@ without Docker Compose, you can try the following command before loading your
 vocabulary data. It starts a container in the same way our other example with
 the `docker-compose` command.
 
-```bash
-docker run --name fuseki -ti --rm \
-  --env "ADMIN_PASSWORD=admin" --env "JVM_ARGS=-Xmx2g" \
-  -p 3030:3030 \
-  --mount type=bind,src=$(pwd)/config/skosmos.ttl,dst=/fuseki/configuration/skosmos.ttl \
-  stain/jena-fuseki
-```
+    docker run --name fuseki -ti --rm \
+      --env "ADMIN_PASSWORD=admin" --env "JVM_ARGS=-Xmx2g" \
+      -p 3030:3030 \
+      --mount type=bind,src=$(pwd)/config/skosmos.ttl,dst=/fuseki/configuration/skosmos.ttl \
+      stain/jena-fuseki
 
 ## Running with docker-compose
 
@@ -84,33 +78,27 @@ and `localhost:9031` respectively.
 
 To create the containers in this example setup, you can use this command:
 
-```bash
-docker-compose up -d
-```
+    docker-compose up -d
 
 Now Skosmos should be available at `http://localhost:9090/` from your
 host. See the [section below](#loading-vocabulary-data) to load vocabulary data.
 
 To stop:
 
-```bash
-docker-compose down
-```
+    docker-compose down
 
 ## Loading vocabulary data
 
 After you have your container running, with either Docker or `docker-compose`,
 you will need to load your vocabulary data.
 
-```bash
-# load STW vocabulary data
-curl -L -o stw.ttl.zip http://zbw.eu/stw/version/latest/download/stw.ttl.zip
-unzip stw.ttl.zip
-curl -I -X POST -H Content-Type:text/turtle -T stw.ttl -G http://localhost:3030/skosmos/data --data-urlencode graph=http://zbw.eu/stw/
-# load UNESCO vocabulary data
-curl -L -o unescothes.ttl http://skos.um.es/unescothes/unescothes.ttl
-curl -I -X POST -H Content-Type:text/turtle -T unescothes.ttl -G http://localhost:3030/skosmos/data --data-urlencode graph=http://skos.um.es/unescothes/
-```
+    # load STW vocabulary data
+    curl -L -o stw.ttl.zip http://zbw.eu/stw/version/latest/download/stw.ttl.zip
+    unzip stw.ttl.zip
+    curl -I -X POST -H Content-Type:text/turtle -T stw.ttl -G http://localhost:3030/skosmos/data --data-urlencode graph=http://zbw.eu/stw/
+    # load UNESCO vocabulary data
+    curl -L -o unescothes.ttl http://skos.um.es/unescothes/unescothes.ttl
+    curl -I -X POST -H Content-Type:text/turtle -T unescothes.ttl -G http://localhost:3030/skosmos/data --data-urlencode graph=http://skos.um.es/unescothes/
 
 After you execute these commands successfully, you should be able to use all the
 features of Skosmos, such as browsing vocabularies and concepts.
