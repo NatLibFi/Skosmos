@@ -836,7 +836,6 @@ $(function() { // DOCUMENT READY
       $('#message').removeClass('missing-value');
       $('#msgsubject').removeClass('missing-value');
       var emailMessageVal = $("#message").val();
-      var emailAddress = $("#email").val();
       var emailSubject = $("#msgsubject").val();
       var requiredFields = true;
       if (emailMessageVal === '') {
