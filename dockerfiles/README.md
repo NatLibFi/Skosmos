@@ -4,7 +4,11 @@ Dockerfiles for Skosmos.
 
 The following commands will build and tag the image it with `skosmos:test`,
 and run the container. The container name is `skosmos-web`, but you can customize
-the name, port, and other flags as necessary.
+the name, and other flags as necessary. The container will listen to port
+`80` at both the host and container since we are using `--net=host` to allow the
+Skosmos application to access Fuseki at `http://localhost:3030`. You are free to
+modify the command line and the `Dockerfile.ubuntu` and configuration files if you
+would like to deploy it differently.
 
     # NOTE: the container copies the project sources during build, so the
     # context must be the parent directory, i.e. you MUST build the image
