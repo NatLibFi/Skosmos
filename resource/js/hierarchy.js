@@ -285,28 +285,6 @@ function pickLabel(entity) {
   return label;
 }
 
-/*
-function schemeRoot(schemes) {
-  var topArray = [];
-  for (var i = 0; i < schemes.length; i++) {
-    var scheme = schemes[i];
-    var label = pickLabelFromScheme(scheme);
-    if (label !== '') { // hiding schemes without a label/title
-      var schemeObject = {
-        text: label, 
-        a_attr : { "href" : vocab + '/' + lang + '/page/?uri=' + scheme.uri, 'class': 'scheme'},
-        uri: scheme.uri,
-        notation: scheme.notation,
-        children: true,
-        state: { opened: false } 
-      };
-      topArray.push(schemeObject);
-    }
-  }
-  return topArray;
-}
-*/
-
 function schemeRoot(schemes) {
   var topArray = [];
 
