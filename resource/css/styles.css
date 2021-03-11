@@ -781,6 +781,12 @@ span.xl-pref-label > img {
   font-weight: normal;
 }
 
+#feedback-fields input::placeholder{
+  font-weight: lighter;
+  font-style: italic;
+}
+
+
 #message {
   height: 150px;
 }
