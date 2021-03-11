@@ -542,31 +542,11 @@ function getTreeConfiguration() {
         } else {
           // no sorting on notation requested
           // make sure the tree nodes with class 'domain' are sorted before the others
-          var aClass = aNode.original.a_attr['class'];
-          var bClass = bNode.original.a_attr['class'];
-
-          if(aClass) {
-            if(bClass) {
-              if(aClass == 'domain' && bClass == 'domain') {
-                // 2 domains : alpha sort
-                return naturalCompare(this.get_text(a).toLowerCase(), this.get_text(b).toLowerCase());
-              }
-              else if(aClass == 'domain' && bClass != 'domain') {
-                // A is before B
-                return -1;
-              }
-              else if(aClass != 'domain' && bClass == 'domain') {
-                // B is before A
-                return 1;
-              }
-            } else {
-              // A has class, but not B (should not happen) : alpha sort
-              return naturalCompare(this.get_text(a).toLowerCase(), this.get_text(b).toLowerCase());
-            }
-          }  else {
-            // A has no class (should not happen) : alpha sort
-            return naturalCompare(this.get_text(a).toLowerCase(), this.get_text(b).toLowerCase());
-          }
+          // aDomain/bDomain will be "0" if a/b has a domain class, else "1"
+          var aDomain = (aNode.original.a_attr['class'] == 'domain') ? "0" : "1";
+          var bDomain = (bNode.original.a_attr['class'] == 'domain') ? "0" : "1";
+          return naturalCompare(aDomain + " " + aNode.text.toLowerCase(),
+                                bDomain + " " + bNode.text.toLowerCase());
         }        
     }
   });
