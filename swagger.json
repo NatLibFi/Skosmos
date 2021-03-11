@@ -101,7 +101,7 @@
           {
             "name": "maxhits",
             "in": "query",
-            "description": "Maximum number of results to return. If not given, maxhits will default to 100. (default settable in config.ttl)",
+            "description": "Maximum number of results to return. If not given, all results will be returned.",
             "required": false,
             "type": "integer"
           },
@@ -485,7 +485,7 @@
           {
             "name": "maxhits",
             "in": "query",
-            "description": "Maximum number of results to return. If not given, maxhits will default to 100. (default settable in config.ttl)",
+            "description": "Maximum number of results to return. If not given, all results will be returned.",
             "required": false,
             "type": "integer"
           },
