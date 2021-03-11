@@ -28,7 +28,7 @@
     skos:prefLabel "Test ontology"@en ;
 	skosmos:arrayClass isothes:ThesaurusArray ;
 	skosmos:defaultLanguage "en";
-    skosmos:feedbackRecipient "developer@vocabulary.org";
+  skosmos:feedbackRecipient "developer@vocabulary.org";
 	skosmos:groupClass skos:Collection;
 	skosmos:language "en";
 	skosmos:showTopConcepts "true";
@@ -48,4 +48,3 @@ mdrtype:THESAURUS a skos:Concept ;
 
 mdrtype:ONTOLOGY a skos:Concept ;
     skos:prefLabel "Онтология"@bg, "Ontologie"@cs, "Ontologi"@da, "Ontologie"@de, "Οντολογία"@el, "Ontology"@en, "Ontoloogia"@et, "Ontologia"@fi, "Ontologie"@fr, "Ontologija"@hr, "Ontológia"@hu, "Ontologia"@it, "Ontoloģija"@lv, "Ontologija"@lt, "Ontoloġija"@mt, "Ontologie"@nl, "Ontologi"@no, "Struktura pojęciowa"@pl, "Ontologia"@pt, "Ontologie"@ro, "Ontológia"@sk, "Ontologija"@sl, "Ontología"@es, "Ontologi"@sv .
-

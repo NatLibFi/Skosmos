@@ -69,7 +69,7 @@ function invokeGroupTree() {
                 var children = [];
                 for (var i in response.members) {
                   var member = response.members[i];
-                  var child = {'text' : member.prefLabel,'parent' : node.a_attr['data-uri'], children : false, a_attr : { 'data-uri' : member.uri, "href" : vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(member.uri)}};
+                  var child = {'text' : member.prefLabel,'parent' : node.a_attr['data-uri'], children : false, a_attr : { 'data-uri' : member.uri, "href" : getHrefForUri(member.uri, true) }};
                   if (member.hasMembers || member.isSuper) {
                     child.children = true;
                   }
@@ -91,18 +91,7 @@ function invokeGroupTree() {
 }
 
 function createGroupNode(uri, groupObject) {
-	var groupPage;
-	if (uri.indexOf(uriSpace) !== -1) {	
-		groupPage = uri.substr(uriSpace.length);
-		if (/[^a-zA-Z0-9\.]/.test(groupPage) || groupPage.indexOf("/") > -1 ) {
-	      // contains special characters or contains an additional '/' - fall back to full URI
-		  groupPage = '?uri=' + encodeURIComponent(uri);
-	    }
-	} else {
-		groupPage = '?uri=' + encodeURIComponent(uri);
-	}
-  
-  var node = {children : [], a_attr : {'data-uri' : uri, "href" : vocab + '/' + lang + '/page/' + groupPage, "class" : "group" }};
+  var node = {children : [], a_attr : {'data-uri' : uri, "href" : getHrefForUri(uri, true), "class" : "group" }};
   node.text = groupObject.prefLabel;
   if (groupObject.hasMembers || groupObject.isSuper)
     node.children = true;

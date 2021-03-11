@@ -427,6 +427,18 @@ msgstr "Muunkieliset termit"
 msgid "from all"
 msgstr "kaikista sanastoista"
 
+msgid "wgs84:lat"
+msgstr "Leveysaste"
+
+msgid "wgs84:lat_help"
+msgstr "Leveysaste WGS 84 -järjestelmän mukaan desimaaliasteina."
+
+msgid "wgs84:long"
+msgstr "Pituusaste"
+
+msgid "wgs84:long_help"
+msgstr "Pituusaste WGS 84 -järjestelmän mukaan desimaaliasteina."
+
 #: /tmp/cache/587c830e6b9a0/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:81
 #: /tmp/cache/587c830e6b9a0/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:90
 #: /tmp/cache/587c830e6b9a0/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:79
@@ -775,3 +787,63 @@ msgstr ""
 
 msgid "concept_types"
 msgstr "Käsitteen tyypit"
+
+msgid "Skip to main"
+msgstr "Hyppää sisältöön"
+
+msgid "Available vocabularies and ontologies"
+msgstr "Sanastot ja ontologiat"
+
+msgid "Search from selected vocabularies"
+msgstr "Hae valituista sanastoista"
+
+msgid "List vocabulary concepts alphabetically"
+msgstr "Listaa käsitteet aakkosittain"
+
+msgid "List vocabulary concepts and groupings hierarchically"
+msgstr "Listaa käsitteet ja ryhmät hierarkian mukaan"
+
+msgid "List vocabulary concepts by newest additions"
+msgstr "Listaa käsitteet uusimpien lisättyjen mukaan"
+
+msgid "List vocabulary concepts hierarchically"
+msgstr "Listaa käsitteet hierarkian mukaan"
+
+msgid "Choose alphabetical listing letter"
+msgstr "Valitse aakkosellisen listan kirjain"
+
+msgid "Concept information"
+msgstr "Käsitteen tiedot"
+
+msgid "Hierarchical listing of vocabulary concepts"
+msgstr "Hierarkian mukainen lista käsitteistä"
+
+msgid "Hierarchical listing of vocabulary concepts and groupings"
+msgstr "Hierarkian mukainen lista käsitteistä ja ryhmistä"
+
+msgid "Listing vocabulary concepts alphabetically"
+msgstr "Listaa käsitteet aakkosittain"
+
+msgid "Listing vocabulary concepts by newest additions"
+msgstr "Listaa käsitteet uusimpien lisäysten mukaan"
+
+msgid "Prefer using"
+msgstr "Käytä termiä"
+
+msgid "Search options tab"
+msgstr "Hakuvalintojen välilehti"
+
+msgid "Search results"
+msgstr "Hakutulokset"
+
+msgid "Sidebar listing: list and traverse vocabulary contents by a criterion"
+msgstr "Sivupalkin lista: listaa ja selaa käsitteitä eri kriteerien mukaan"
+
+msgid "Subject:"
+msgstr "Aihe:"
+
+msgid "Write a subject"
+msgstr "Kirjoita aihe"
+
+msgid "Select a vocabulary"
+msgstr "Voit valita halutessasi sanaston"

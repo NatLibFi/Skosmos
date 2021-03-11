@@ -11,14 +11,14 @@ class Honeypot
     /**
      * Enable the Honeypot validation
      */
-    public function enable()
+    public function enable() : void
     {
         $this->disabled = false;
     }
     /**
      * Disable the Honeypot validation
      */
-    public function disable()
+    public function disable() : void
     {
         $this->disabled = true;
     }
@@ -28,7 +28,7 @@ class Honeypot
      * @param  string $honey_time
      * @return string
      */
-    public function generate($honey_name, $honey_time)
+    public function generate($honey_name, $honey_time) : string
     {
         // Encrypt the current time
         $honey_time_encrypted = $this->getEncryptedTime();
@@ -43,7 +43,7 @@ class Honeypot
     * @param  mixed $value
     * @return boolean
     */
-    public function validateHoneypot($value)
+    public function validateHoneypot($value) : bool
     {
         if ($this->disabled) {
             return true;
@@ -53,11 +53,11 @@ class Honeypot
     /**
      * Validate honey time was within the time limit
      *
-     * @param  mixed $value
-     * @param  array $parameters
+     * @param  string $value base64 encoded time value
+     * @param  int $minDelta minimum time difference in seconds
      * @return boolean
      */
-    public function validateHoneytime($value, $parameters)
+    public function validateHoneytime($value, $minDelta) : bool
     {
         if ($this->disabled) {
             return true;
@@ -65,14 +65,14 @@ class Honeypot
 
         // Get the decrypted time
         $value = $this->decryptTime($value);
-        // The current time should be greater than the time the form was built + the speed option
-        return ( is_numeric($value) && time() > ($value + $parameters[0]) );
+        // The current time should be greater than the time the form was built + minimum
+        return ( is_numeric($value) && time() > ($value + $minDelta) );
     }
     /**
      * Get encrypted time
      * @return string
      */
-    public function getEncryptedTime()
+    public function getEncryptedTime() : string
     {
         return base64_encode(time());
     }
@@ -80,12 +80,12 @@ class Honeypot
      * Decrypt the given time
      *
      * @param  mixed $time
-     * @return string|null
+     * @return int|null
      */
-    public function decryptTime($time)
+    public function decryptTime($time) : ?int
     {
         try {
-            return base64_decode($time);
+            return intval(base64_decode($time));
         } catch (\Exception $exception) {
             return null;
         }

@@ -8,7 +8,8 @@ class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
   private $vocab;
   private $params;
 
-  protected function setUp() {
+  protected function setUp() : void
+  {
     putenv("LANGUAGE=en_GB.utf8");
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');
@@ -74,6 +75,15 @@ class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
         'lang' => 'en',
       ),
     );
+    $this->assertEquals($expected, $actual);
+  }
+
+  /**
+   * @covers JenaTextSparql::generateAlphabeticalListQuery
+   */
+  public function testQueryConceptsAlphabeticalEmpty() {
+    $actual = $this->sparql->queryConceptsAlphabetical('', 'en');
+    $expected = array();
     $this->assertEquals($expected, $actual);
   }
 
@@ -173,7 +183,6 @@ class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
   /**
    * @covers JenaTextSparql::queryConceptsAlphabetical
    * @covers JenaTextSparql::generateAlphabeticalListQuery
-   * @covers JenaTextSparql::transformAlphabeticalListResults
    */
   public function testQualifiedBroaderAlphabeticalList() {
     $voc = $this->model->getVocabulary('test-qualified-broader');
@@ -261,7 +270,7 @@ class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
   public function testQueryConceptsAlphabeticalNumbers() {
     $actual = $this->sparql->queryConceptsAlphabetical('0-9', 'en');
     $this->assertEquals(1, sizeof($actual));
-    $this->assertContains("3D", $actual[0]['prefLabel']);
+    $this->assertStringContainsString("3D", $actual[0]['prefLabel']);
   }
 
   /**
@@ -327,7 +336,7 @@ class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
     $actual = $this->sparql->queryConcepts(array($voc), null, null, $this->params);
     $this->assertEquals(3, sizeof($actual));
     foreach($actual as $match)
-      $this->assertContains('bass', $match['prefLabel'], '',true);
+      $this->assertStringContainsStringIgnoringCase('bass', $match['prefLabel']);
   }
 
   /**

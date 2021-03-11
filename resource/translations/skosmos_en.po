@@ -427,6 +427,18 @@ msgstr "In other languages"
 msgid "from all"
 msgstr "from all"
 
+msgid "wgs84:lat"
+msgstr "Latitude"
+
+msgid "wgs84:lat_help"
+msgstr "Latitude in decimal degrees according to WGS 84 system."
+
+msgid "wgs84:long"
+msgstr "Longitude"
+
+msgid "wgs84:long_help"
+msgstr "Longitude in decimal degrees according to WGS 84 system."
+
 #: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:81
 #: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:90
 #: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:79
@@ -776,3 +788,63 @@ msgstr ""
 
 msgid "concept_types"
 msgstr "Concept types"
+
+msgid "Skip to main"
+msgstr "Skip to main content"
+
+msgid "Available vocabularies and ontologies"
+msgstr "Available vocabularies and ontologies"
+
+msgid "Search from selected vocabularies"
+msgstr "Search from selected vocabularies"
+
+msgid "List vocabulary concepts alphabetically"
+msgstr "List vocabulary concepts alphabetically"
+
+msgid "List vocabulary concepts and groupings hierarchically"
+msgstr "List vocabulary concepts and groupings hierarchically"
+
+msgid "List vocabulary concepts by newest additions"
+msgstr "List vocabulary concepts by newest additions"
+
+msgid "List vocabulary concepts hierarchically"
+msgstr "List vocabulary concepts hierarchically"
+
+msgid "Choose alphabetical listing letter"
+msgstr "Choose alphabetical listing letter"
+
+msgid "Concept information"
+msgstr "Concept information"
+
+msgid "Hierarchical listing of vocabulary concepts"
+msgstr "Hierarchical listing of vocabulary concepts"
+
+msgid "Hierarchical listing of vocabulary concepts and groupings"
+msgstr "Hierarchical listing of vocabulary concepts and groupings"
+
+msgid "Listing vocabulary concepts alphabetically"
+msgstr "Listing vocabulary concepts alphabetically"
+
+msgid "Listing vocabulary concepts by newest additions"
+msgstr "Listing vocabulary concepts by newest additions"
+
+msgid "Prefer using"
+msgstr "Prefer using"
+
+msgid "Search options tab"
+msgstr "Search options tab"
+
+msgid "Search results"
+msgstr "Search results"
+
+msgid "Sidebar listing: list and traverse vocabulary contents by a criterion"
+msgstr "Sidebar listing: list and traverse vocabulary contents by a criterion"
+
+msgid "Subject:"
+msgstr "Subject:"
+
+msgid "Write a subject"
+msgstr "Write a subject"
+
+msgid "Select a vocabulary"
+msgstr "You can select a vocabulary"

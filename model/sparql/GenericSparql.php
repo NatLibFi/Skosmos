@@ -400,6 +400,7 @@ CONSTRUCT {
     ?s ?p ?uri .
     FILTER(!isBlank(?s))
     FILTER(?p != skos:inScheme)
+    FILTER NOT EXISTS { ?s owl:deprecated true . }
   }
   UNION
   { ?sp ?uri ?op . }
@@ -466,7 +467,11 @@ EOQ;
         $conceptArray = array();
         foreach ($uris as $index => $uri) {
             $conc = $result->resource($uri);
-            $vocab = (isset($vocabs) && sizeof($vocabs) == 1) ? $vocabs[0] : $vocabs[$index];
+            if (is_array($vocabs)) {
+                $vocab = (sizeof($vocabs) == 1) ? $vocabs[0] : $vocabs[$index];
+            } else {
+                $vocab = null;
+            }
             $conceptArray[] = new Concept($this->model, $vocab, $conc, $result, $clang);
         }
         return $conceptArray;
@@ -1227,7 +1232,7 @@ EOQ;
      * @return string sparql query
      */
     protected function generateAlphabeticalListQuery($letter, $lang, $limit, $offset, $classes, $showDeprecated = false, $qualifier = null) {
-        $fcl = $this->generateFromClause();
+        $gcl = $this->graphClause;
         $classes = ($classes) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
         $values = $this->formatValues('?type', $classes, 'uri');
         $limitandoffset = $this->formatLimitAndOffset($limit, $offset);
@@ -1240,31 +1245,33 @@ EOQ;
             $filterDeprecated="FILTER NOT EXISTS { ?s owl:deprecated true }";
         }
         $query = <<<EOQ
-SELECT DISTINCT ?s ?label ?alabel ?qualifier $fcl
+SELECT DISTINCT ?s ?label ?alabel ?qualifier
 WHERE {
-  {
-    ?s skos:prefLabel ?label .
-    FILTER (
-      $filtercondLabel
-    )
-  }
-  UNION
-  {
-    {
-      ?s skos:altLabel ?alabel .
-      FILTER (
-        $filtercondALabel
-      )
-    }
+  $gcl {
     {
       ?s skos:prefLabel ?label .
-      FILTER (langMatches(lang(?label), '$lang'))
+      FILTER (
+        $filtercondLabel
+      )
     }
+    UNION
+    {
+      {
+        ?s skos:altLabel ?alabel .
+        FILTER (
+          $filtercondALabel
+        )
+      }
+      {
+        ?s skos:prefLabel ?label .
+        FILTER (langMatches(lang(?label), '$lang'))
+      }
+    }
+    ?s a ?type .
+    $qualifierClause
+    $filterDeprecated
+    $values
   }
-  ?s a ?type .
-  $qualifierClause
-  $filterDeprecated
-  $values
 }
 ORDER BY LCASE(STR(COALESCE(?alabel, ?label))) STR(?s) LCASE(STR(?qualifier)) $limitandoffset
 EOQ;
@@ -1325,6 +1332,9 @@ EOQ;
      * @param \EasyRdf\Resource|null $qualifier alphabetical list qualifier resource or null (default: null)
      */
     public function queryConceptsAlphabetical($letter, $lang, $limit = null, $offset = null, $classes = null, $showDeprecated = false, $qualifier = null) {
+        if ($letter === '') {
+            return array(); // special case: no letter given, return empty list
+        }
         $query = $this->generateAlphabeticalListQuery($letter, $lang, $limit, $offset, $classes, $showDeprecated, $qualifier);
         $results = $this->query($query);
         return $this->transformAlphabeticalListResults($results);
@@ -1337,15 +1347,17 @@ EOQ;
      * @return string sparql query
      */
     private function generateFirstCharactersQuery($lang, $classes) {
-        $fcl = $this->generateFromClause();
+        $gcl = $this->graphClause;
         $classes = (isset($classes) && sizeof($classes) > 0) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
         $values = $this->formatValues('?type', $classes, 'uri');
         $query = <<<EOQ
-SELECT DISTINCT (ucase(str(substr(?label, 1, 1))) as ?l) $fcl WHERE {
-  ?c skos:prefLabel ?label .
-  ?c a ?type
-  FILTER(langMatches(lang(?label), '$lang'))
-  $values
+SELECT DISTINCT (ucase(str(substr(?label, 1, 1))) as ?l) WHERE {
+  $gcl {
+    ?c skos:prefLabel ?label .
+    ?c a ?type
+    FILTER(langMatches(lang(?label), '$lang'))
+    $values
+  }
 }
 EOQ;
         return $query;

@@ -85,11 +85,6 @@ class Concept extends VocabularyDataObject implements Modifiable
         }
         $this->graph = $graph;
         $this->clang = $clang;
-        // setting the Punic plugins locale for localized datetime conversions
-        if ($this->clang && $this->clang !== '') {
-            Punic\Data::setDefaultLocale($clang);
-        }
-
     }
 
     /**
@@ -582,8 +577,8 @@ class Concept extends VocabularyDataObject implements Modifiable
                 // Iterating through every literal and adding these to the data object.
                 foreach ($this->resource->allLiterals($sprop) as $val) {
                     $literal = new ConceptPropertyValueLiteral($this->model, $this->vocab, $this->resource, $val, $prop);
-                    // only add literals when they match the content/hit language or have no language defined
-                    if (isset($ret[$prop]) && ($literal->getLang() === $this->clang || $literal->getLang() === null)) {
+                    // only add literals when they match the content/hit language or have no language defined OR when they are literals of a multilingual property
+                    if (isset($ret[$prop]) && ($literal->getLang() === $this->clang || $literal->getLang() === null) || $this->vocab->getConfig()->hasMultiLingualProperty($prop)) {
                         $ret[$prop]->addValue($literal);
                     }
 
@@ -734,14 +729,14 @@ class Concept extends VocabularyDataObject implements Modifiable
 
             // making a human readable string from the timestamps
             if ($created != '') {
-                $ret = gettext('skosmos:created') . ' ' . (Punic\Calendar::formatDate($created, 'short'));
+                $ret = gettext('skosmos:created') . ' ' . (Punic\Calendar::formatDate($created, 'short', $this->getEnvLang()));
             }
 
             if ($modified != '') {
                 if ($created != '') {
-                    $ret .= ', ' . gettext('skosmos:modified') . ' ' . (Punic\Calendar::formatDate($modified, 'short'));
+                    $ret .= ', ' . gettext('skosmos:modified') . ' ' . (Punic\Calendar::formatDate($modified, 'short', $this->getEnvLang()));
                 } else {
-                    $ret .= ' ' . ucfirst(gettext('skosmos:modified')) . ' ' . (Punic\Calendar::formatDate($modified, 'short'));
+                    $ret .= ' ' . ucfirst(gettext('skosmos:modified')) . ' ' . (Punic\Calendar::formatDate($modified, 'short', $this->getEnvLang()));
                 }
 
             }

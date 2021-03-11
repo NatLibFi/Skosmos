@@ -7,7 +7,8 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
    */
   private $model;
 
-  protected function setUp() {
+  protected function setUp() : void
+  {
     putenv("LANGUAGE=en_GB.utf8");
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');
@@ -285,7 +286,7 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
    * @covers Vocabulary::searchConceptsAlphabetical
    * @covers JenaTextSparql::queryConceptsAlphabetical
    * @covers JenaTextSparql::generateAlphabeticalListQuery
-   * @covers JenaTextSparql::transformAlphabeticalListResults
+   * @covers GenericSparql::transformAlphabeticalListResults
    */
   public function testSearchConceptsAlphabeticalQualifiedNotation() {
     $vocab = $this->jenamodel->getVocabulary('test-qualified-notation');
@@ -328,7 +329,7 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
    * @covers Vocabulary::searchConceptsAlphabetical
    * @covers JenaTextSparql::queryConceptsAlphabetical
    * @covers JenaTextSparql::generateAlphabeticalListQuery
-   * @covers JenaTextSparql::transformAlphabeticalListResults
+   * @covers GenericSparql::transformAlphabeticalListResults
    */
   public function testSearchConceptsAlphabeticalQualifiedBroader() {
     $vocab = $this->jenamodel->getVocabulary('test-qualified-broader');

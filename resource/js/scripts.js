@@ -1,4 +1,4 @@
-/* exported getUrlParams, readCookie, createCookie, getUrlParams, debounce, updateContent, updateTopbarLang, updateTitle, updateSidebar, setLangCookie, loadLimitations, loadPage, hideCrumbs, shortenProperties, countAndSetOffset, combineStatistics, loadLimitedResults, naturalCompare, escapeHtml, makeSelection, copyToClickboard */
+/* exported getUrlParams, getConceptHref, readCookie, createCookie, getUrlParams, debounce, updateContent, updateTopbarLang, updateTitle, updateSidebar, setLangCookie, loadLimitations, loadPage, hideCrumbs, shortenProperties, countAndSetOffset, combineStatistics, loadLimitedResults, naturalCompare, escapeHtml, makeSelection, copyToClickboard, renderPropertyMappings, loadMappingProperties */
 
 /* 
  * Creates a cookie value and stores it for the user. Takes the given
@@ -36,6 +36,35 @@ function getUrlParams() {
     params[key] = value;
   });
   return params;
+}
+
+/**
+ * Get a href value for a concept URI in current vocab urispace
+ *
+ * @param uri string concept URI
+ * @param plainReturnValue boolean indicates whether to return a plain string or a href-key key-value-pair
+ * @return string|object Plain href link (string) or href-key key-value-pair if parameter plainReturnValue evaluates to false
+ *
+ */
+function getHrefForUri(uri, plainReturnValue) {
+  var clangParam = (content_lang !== lang) ? "clang=" + content_lang : "";
+  var clangSeparator = "?";
+  if (uri.indexOf(window.uriSpace) !== -1) {
+    var page = uri.substr(window.uriSpace.length);
+    if (/[^a-zA-Z0-9-_\.~]/.test(page) || page.indexOf("/") > -1 ) {
+      // contains special characters or contains an additional '/' - fall back to full URI
+      page = '?uri=' + encodeURIComponent(uri);
+      clangSeparator = "&";
+    }
+  } else {
+    // not within URI space - fall back to full URI
+    page = '?uri=' + encodeURIComponent(uri);
+    clangSeparator = "&";
+  }
+
+  var href = window.vocab + '/' + window.lang + '/page/' + page + (clangParam !== "" ? clangSeparator + clangParam : "");
+
+  return plainReturnValue ? href : { "href" : href };
 }
 
 // Debounce function from underscore.js
@@ -287,8 +316,6 @@ function countAndSetOffset() {
   $('.sidebar-grey').attr('style', function() {
     var pixels = $('.nav-tabs').height() + 2; // the 2 pixels are for the borders
     if ($('#sidebar > .pagination').is(':visible')) { pixels += $('.pagination').height(); }
-    var $changesNavi = $('.changes-navi');
-    if ($changesNavi.is(':visible')) { pixels += $changesNavi.height(); }
     return 'height: calc(100% - ' + pixels + 'px) !important';
   });
   var $sidebar = $('#sidebar');
@@ -486,6 +513,7 @@ function loadMappingProperties(concept, lang, contentLang, $htmlElement, concept
         if (!found) {
           conceptProperty = {
             'type': conceptMappingPropertyValue.type[0],
+            'id': conceptMappingPropertyValue.type[0].replace(/[^A-Za-z-]/g, '_'),
             'label': conceptMappingPropertyValue.typeLabel,
             'notation': conceptMappingPropertyValue.notation,
             'description': conceptMappingPropertyValue.description,

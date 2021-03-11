@@ -21,6 +21,22 @@ $(function() { // DOCUMENT READY
     }
   );
 
+  $('#skiptocontent').on('click', function(e) {
+    // fixes an issue with screen reader not regaining true focus after Ctrl + Home
+    if (!e.looped) {
+      // loop focus in order to restore normal functionality
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      document.getElementById("footer").focus({preventScroll: true});
+      setTimeout(function() {
+        $(e.target).trigger({type: 'click', looped: true});
+      }, 100);
+      return false;
+    }
+
+    document.getElementById(e.target.hash.slice(1)).focus({preventScroll: true});
+  });
+
   /*
    * Moving the sidenav scrollbar towards the current concept. Aiming the current
    * concept at vertical center of the container. Each concept needs 18px height.
@@ -41,16 +57,14 @@ $(function() { // DOCUMENT READY
         });
         return removeThese.join(' ');
       });
-      if (settings.url.indexOf('index/') !== -1) {
-        $(".sidebar-grey").mCustomScrollbar({
-          alwaysShowScrollbar: 1,
-          scrollInertia: 0,
-          mouseWheel:{ preventDefault: true, scrollAmount: 105 },
-          snapAmount: 15,
-          snapOffset: 1,
-          callbacks: { alwaysTriggerOffsets: false, onTotalScroll: alphaWaypointCallback, onTotalScrollOffset: 300 }
-        });
-      }
+      $(".sidebar-grey-alpha").mCustomScrollbar({
+        alwaysShowScrollbar: 1,
+        scrollInertia: 0,
+        mouseWheel:{ preventDefault: true, scrollAmount: 105 },
+        snapAmount: 15,
+        snapOffset: 1,
+        callbacks: { alwaysTriggerOffsets: false, onTotalScroll: alphaWaypointCallback, onTotalScrollOffset: 300 }
+      });
     }
     // Sidenav actions only happen when doing other queries than the autocomplete.
     if (settings.url.indexOf('index') !== -1 || settings.url.indexOf('groups') !== -1) {
@@ -81,6 +95,15 @@ $(function() { // DOCUMENT READY
       });
     });
 
+    var active_tab = $('li.active').attr('id');
+    if (active_tab == 'groups') {
+      $('#sidebar > h4').remove();
+      $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.groups_listing + '</h4>');
+    } else if (active_tab == 'hierarchy') {
+      $('#sidebar > h4').remove();
+      $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.hierarchy_listing + '</h4>');
+    }
+
     countAndSetOffset();
 
     hideCrumbs();
@@ -88,10 +111,17 @@ $(function() { // DOCUMENT READY
   });
 
   // if the hierarchy tab is active filling the jstree with data
-  if ($('#hierarchy').hasClass('active')) { invokeParentTree(getTreeConfiguration()); }
-  if ($('#groups').hasClass('active')) { invokeGroupTree(); }
+  if ($('#hierarchy').hasClass('active')) {
+    $('#sidebar > h4').remove();
+    invokeParentTree(getTreeConfiguration());
+    $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.hierarchical_listing + '</h4>');
+  }
+  if ($('#groups').hasClass('active')) {
+    $('#sidebar > h4').remove();
+    invokeGroupTree();
+    $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.groups_listing + '</h4>');
+  }
 
-  var textColor = $('.search-parameter-highlight').css('color');
   countAndSetOffset();
 
   function initHierarchyQtip() {
@@ -131,14 +161,6 @@ $(function() { // DOCUMENT READY
       }
     }, { offset: -60 }); // when the headerbars bottom margin is at the top of the screen
   }
-
-  // Event handler for restoring the DOM back to normal after the focus is lost from the prefLabel.
-  $(':not(.search-parameter-highlight)').click(
-      function(){
-        $('#temp-textarea').remove();
-        $('.search-parameter-highlight').css({'background': 'transparent', 'color': textColor});
-      }
-  );
 
   // event handling the breadcrumb expansion
   $(document).on('click', '.expand-crumbs',
@@ -258,8 +280,6 @@ $(function() { // DOCUMENT READY
       function(event) {
         $.ajaxQ.abortContentQueries();
         var targetUrl = event.target.href;
-        var parameters = (clang !== lang) ? $.param({'clang' : clang}) : $.param({});
-        var historyUrl = (clang !== lang) ? targetUrl + '?' + parameters : targetUrl;
         $('#hier-trigger').attr('href', targetUrl);
         var $content = $('.content').empty().append($delayedSpinner.hide());
         var loading = delaySpinner();
@@ -267,11 +287,12 @@ $(function() { // DOCUMENT READY
             url : targetUrl,
             data: parameters,
             req_kind: $.ajaxQ.requestKind.CONTENT,
+
             complete: function() { clearTimeout(loading); },
             success : function(data) {
               $content.empty();
               var response = $('.content', data).html();
-              if (window.history.pushState) { window.history.pushState({url: historyUrl}, '', historyUrl); }
+              if (window.history.pushState) { window.history.pushState({url: targetUrl}, '', targetUrl); }
               $content.append(response);
 
               updateJsonLD(data);
@@ -295,14 +316,14 @@ $(function() { // DOCUMENT READY
         var $content = $('.content').empty().append($delayedSpinner.hide());
         var loading = delaySpinner();
         $.ajax({
-            url : event.target.href,
+            url : event.currentTarget.href,
             req_kind: $.ajaxQ.requestKind.CONTENT,
             complete: function() { clearTimeout(loading); },
             success : function(data, responseCode, jqxhr) {
-              if (window.history.pushState) { window.history.pushState({}, null, event.target.href); }
+              if (window.history.pushState) { window.history.pushState({}, null, event.currentTarget.href); }
               $content.empty().append($('.content', data).html());
               initHierarchyQtip();
-              $('#hier-trigger').attr('href', event.target.href);
+              $('#hier-trigger').attr('href', event.currentTarget.href);
               updateJsonLD(data);
               updateTitle(data);
               updateTopbarLang(data);
@@ -345,8 +366,8 @@ $(function() { // DOCUMENT READY
         $('.active').removeClass('active');
         $('#changes').addClass('active');
         $('.sidebar-grey').empty().prepend(spinner);
-        var $pagination = $('.pagination');
-        if ($pagination) { $pagination.hide(); }
+        $('.pagination').hide();
+        $('#sidebar > h4.sr-only').hide();
         var targetUrl = event.target.href;
         $.ajax({
             url : targetUrl,
@@ -385,8 +406,10 @@ $(function() { // DOCUMENT READY
         $('.active').removeClass('active');
         $('#hier-trigger').parent().addClass('active');
         $('.pagination').hide();
+        $('#sidebar > h4.sr-only').hide();
         $content.append('<div class="sidebar-grey concept-hierarchy"></div>');
         invokeParentTree(getTreeConfiguration());
+        $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.hierarchy_listing + '</h4>');
         $('#hier-trigger').attr('href', '#');
         return false;
       }
@@ -406,13 +429,13 @@ $(function() { // DOCUMENT READY
         $('.active').removeClass('active');
         var $clicked = $(this);
         $clicked.parent().addClass('active');
-        var $pagination = $('.pagination');
-        if ($pagination) { $pagination.hide(); }
-        if ($('.changes-navi')) { $('.changes-navi').hide(); }
+        $('.pagination').hide();
+        $('#sidebar > h4.sr-only').hide();
         $('.sidebar-grey').remove().prepend(spinner);
         $('#sidebar').append('<div class="sidebar-grey"><div class="group-hierarchy"></div></div>');
         if (window.history.pushState) { window.history.pushState({}, null, encodeURI(event.target.href)); }
         invokeGroupTree();
+        $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.groups_listing + '</h4>');
         return false;
       }
   );
@@ -454,21 +477,21 @@ $(function() { // DOCUMENT READY
           alpha_complete = false;
           var $content = $('.sidebar-grey');
           $content.empty().prepend(spinner);
-          var targetUrl = event.target.href;
+          var targetUrl = event.currentTarget.href;
           $.ajax({
             url : targetUrl,
             req_kind: $.ajaxQ.requestKind.SIDEBAR,
             success : function(data) {
               updateSidebar(data);
               $('.nav').scrollTop(0);
-              if (window.history.pushState) { window.history.pushState({}, null, encodeURI(event.target.href)); }
+              if (window.history.pushState) { window.history.pushState({}, null, encodeURI(event.currentTarget.href)); }
               updateTitle(data);
               // take the content language buttons from the response
               $('.header-float .dropdown-menu').empty().append($('.header-float .dropdown-menu', data).html());
             }
           });
         } else {
-          var selectedLetter = $(event.target).text().trim();
+          var selectedLetter = $(event.currentTarget).find("span:last-child").text().trim();
           if (document.getElementsByName(selectedLetter).length === 0) { return false; }
           var offset = $('li[name=' + selectedLetter + ']').offset().top - $('body').offset().top - 5;
           $('.nav').scrollTop(offset);
@@ -487,20 +510,26 @@ $(function() { // DOCUMENT READY
 
   var qtip_skosmos = {
     position: { my: 'top center', at: 'bottom center' },
-    style: { classes: 'qtip-tipsy qtip-skosmos' }
+    style: { classes: 'qtip-tipsy qtip-skosmos' },
+    show: {
+      event: 'mouseenter focusin'
+    },
+    hide: {
+      event: 'mouseleave focusout'
+    }
   };
 
   var qtip_skosmos_hierarchy = {
     position: { my: 'top left', at: 'bottom center' },
     style: { classes: 'qtip-tipsy qtip-skosmos' }
   };
-  
+
   $('#navi4').qtip(qtip_skosmos);
 
   $('.property-click').qtip(qtip_skosmos);
 
   $('.redirected-vocab-id').qtip(qtip_skosmos);
-  
+
   $('.reified-property-value').each(function() {
     $(this).qtip({
       content: $(this).next('.reified-tooltip'),
@@ -835,7 +864,7 @@ $(function() { // DOCUMENT READY
       alpha_complete = true;
       $('.alphabetical-search-results').append($loading);
       var parameters = $.param({'offset' : 250, 'clang': content_lang});
-      var letter = '/' + ($('.pagination > .active')[0] ? $('.pagination > .active > a')[0].innerHTML : $('.pagination > li > a')[0].innerHTML);
+      var letter = '/' + ($('.pagination > .active')[0] ? $('.pagination > .active > a > span:last-child')[0].innerHTML : $('.pagination > li > a > span:last-child')[0].innerHTML);
       $.ajax({
         url : vocab + '/' + lang + '/index' + letter,
         req_kind: $.ajaxQ.requestKind.SIDEBAR,
@@ -855,7 +884,7 @@ $(function() { // DOCUMENT READY
     $.ajaxQ.abortSidebarQueries();
     $('.change-list').append($loading);
     var parameters = $.param({'offset' : changeOffset, 'clang': content_lang});
-    var lastdate = $('.change-list > span:last-of-type')[0].innerHTML;
+    var lastdate = $('.change-list > h5:last-of-type')[0].innerHTML;
     $.ajax({
       url : vocab + '/' + lang + '/new',
       req_kind: $.ajaxQ.requestKind.SIDEBAR,
@@ -864,7 +893,7 @@ $(function() { // DOCUMENT READY
         $loading.detach();
         if ($(data).find('.change-list').length === 1) {
           $('.change-list').append($(data).find('.change-list')[0].innerHTML);
-          var $lastdate = $('.change-list > span:contains(' + lastdate + ')');
+          var $lastdate = $('.change-list > h5:contains(' + lastdate + ')');
           if ($lastdate.length === 2)
            $lastdate[1].remove();
           $('.change-list > p:last-of-type').remove();
@@ -1019,12 +1048,12 @@ $(function() { // DOCUMENT READY
    */
   var $replaced = $('.replaced-by a');
   if ($replaced.length > 0) {
-    var $replacedSpan = $('.replaced-by span');
-    var undoUppercasing = $replacedSpan.text().substr(0,1) + $replacedSpan.text().substr(1).toLowerCase();
+    var $replacedElem = $('.replaced-by h3');
+    var undoUppercasing = $replacedElem.text().substr(0,1) + $replacedElem.text().substr(1).toLowerCase();
     var html = ''
     for (var i = 0; i < $replaced.length; i++) {
         var replacedBy = '<a href="' + $replaced[i] + '">' + $replaced[i].innerHTML + '</a>';
-        html += '<h2 class="alert-replaced">' + undoUppercasing + ': ' + replacedBy + '</h2>';
+        html += '<p class="alert-replaced">' + undoUppercasing + ': ' + replacedBy + '</p>';
     }
     $('.alert-danger').append(html);
     $(document).on('click', '#groups',
@@ -1099,9 +1128,6 @@ $(function() { // DOCUMENT READY
       $('#search-field').typeahead('open');
     });
   }
-
-  // setting the focus to the search box on default if we are not on the search results page
-  if ($('.search-result-listing').length === 0) { $("#search-field").focus(); }
 
   if ($('#feedback-vocid').length) {
     $('#feedback-fields > .dropdown > .dropdown-menu > li > a').each(function(index, elem) {

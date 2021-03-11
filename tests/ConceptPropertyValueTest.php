@@ -6,7 +6,8 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
   private $concept;
   private $vocab;
 
-  protected function setUp() {
+  protected function setUp() : void
+  {
     putenv("LANGUAGE=en_GB.utf8");
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');
@@ -94,7 +95,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
   public function testGetVocabName() {
     $props = $this->concept->getProperties();
     $propvals = $props['skos:narrower']->getValues();
-    $this->assertEquals('Test ontology', $propvals['Crucian carp http://www.skosmos.skos/test/ta121']->getVocabName());
+    $this->assertEquals('Test short', $propvals['Crucian carp http://www.skosmos.skos/test/ta121']->getVocabName());
   }
 
   /**

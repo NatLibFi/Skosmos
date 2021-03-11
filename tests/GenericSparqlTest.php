@@ -8,7 +8,8 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
   private $vocab;
   private $params;
 
-  protected function setUp() {
+  protected function setUp() : void
+  {
     putenv("LANGUAGE=en_GB.utf8");
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');
@@ -123,6 +124,19 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
         'lang' => 'en',
       ),
     );
+    $this->assertEquals($expected, $actual);
+  }
+
+  /**
+   * @covers GenericSparql::queryConceptsAlphabetical
+   * @covers GenericSparql::generateAlphabeticalListQuery
+   * @covers GenericSparql::formatFilterConditions
+   * @covers GenericSparql::formatLimitAndOffset
+   * @covers GenericSparql::transformAlphabeticalListResults
+   */
+  public function testQueryConceptsAlphabeticalEmpty() {
+    $actual = $this->sparql->queryConceptsAlphabetical('', 'en');
+    $expected = array();
     $this->assertEquals($expected, $actual);
   }
 
@@ -352,7 +366,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
   public function testQueryConceptsAlphabeticalNumbers() {
     $actual = $this->sparql->queryConceptsAlphabetical('0-9', 'en');
     $this->assertEquals(1, sizeof($actual));
-    $this->assertContains("3D", $actual[0]['prefLabel']);
+    $this->assertStringContainsString("3D", $actual[0]['prefLabel']);
   }
 
   /**
@@ -718,7 +732,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     $actual = $this->sparql->queryConcepts(array($voc), null, null, $this->params);
     $this->assertEquals(3, sizeof($actual));
     foreach($actual as $match)
-      $this->assertContains('bass', $match['prefLabel'], '',true);
+      $this->assertStringContainsStringIgnoringCase('bass', $match['prefLabel']);
   }
 
   /**
@@ -737,7 +751,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     $actual = $this->sparql->queryConcepts(array($voc), null, null, $this->params);
     $this->assertEquals(3, sizeof($actual));
     foreach($actual as $match)
-      $this->assertContains('bass', $match['prefLabel'], '',true);
+      $this->assertStringContainsStringIgnoringCase('bass', $match['prefLabel']);
   }
 
   /**

@@ -83,7 +83,7 @@ function createObjectsFromChildren(conceptData, conceptUri) {
   for (var i = 0; i < conceptData.narrower.length; i++) {
     var childObject = {
       text: getLabel(conceptData.narrower[i]), 
-      a_attr: getConceptHref(conceptData.narrower[i]),
+      a_attr: getHrefForUri(conceptData.narrower[i].uri),
       uri: conceptData.narrower[i].uri,
       notation: conceptData.narrower[i].notation,
       parents: conceptUri,
@@ -109,7 +109,7 @@ function createObjectsFromChildren(conceptData, conceptUri) {
 function createConceptObject(conceptUri, conceptData) {
   var newNode = { 
     text: getLabel(conceptData), 
-    a_attr: getConceptHref(conceptData),
+    a_attr: getHrefForUri(conceptData.uri),
     uri: conceptUri,
     notation: conceptData.notation,
     parents: conceptData.broader,
@@ -205,27 +205,13 @@ function buildParentTree(uri, parentData, schemes) {
   return JSON.parse(JSON.stringify(rootArray));
 }
 
-function getConceptHref(conceptData) {
-  if (conceptData.uri.indexOf(window.uriSpace) !== -1) {
-    var page = conceptData.uri.substr(window.uriSpace.length);
-    if (/[^a-zA-Z0-9\.]/.test(page) || page.indexOf("/") > -1 ) {
-      // contains special characters or contains an additional '/' - fall back to full URI
-      page = '?uri=' + encodeURIComponent(conceptData.uri);
-    }
-  } else {
-    // not within URI space - fall back to full URI
-    page = '?uri=' + encodeURIComponent(conceptData.uri);
-  }
-  return { "href" : vocab + '/' + lang + '/page/' + page };
-}
-
 function vocabRoot(topConcepts) {
   var topArray = [];
   for (var i = 0; i < topConcepts.length; i++) {
     var conceptData = topConcepts[i];
     var childObject = {
       text: conceptData.label, 
-      a_attr : getConceptHref(conceptData),
+      a_attr : getHrefForUri(conceptData.uri),
       uri: conceptData.uri,
       notation: conceptData.notation,
       state: { opened: false } 
@@ -273,7 +259,7 @@ function createObjectsFromNarrowers(narrowerResponse) {
     var conceptObject = narrowerResponse.narrower[i];
     var childObject = {
       text : getLabel(conceptObject), 
-      a_attr : getConceptHref(conceptObject),
+      a_attr : getHrefForUri(conceptObject.uri),
       uri: conceptObject.uri,
       notation: conceptObject.notation,
       parents: narrowerResponse.uri,
@@ -344,7 +330,7 @@ function topConceptsToSchemes(topConcepts, schemes) {
     var hasChildren = topConcept.hasChildren; 
     var childObject = {
       text : getLabel(topConcept), 
-      a_attr : { "href" : vocab + '/' + lang + '/page/?uri=' + encodeURIComponent(topConcept.uri) },
+      a_attr: getHrefForUri(topConcept.uri),
       uri: topConcept.uri,
       notation: topConcept.notation,
       state: { opened: false, disabled: false, selected: false }
