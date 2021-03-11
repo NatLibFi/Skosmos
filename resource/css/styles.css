@@ -1591,6 +1591,10 @@ ul.nav-tabs > li {
   margin-left: 350px;
 }
 
+.content > .concept-spinner ~ * {
+   display: none;
+}
+
 #sidebar + main .content {
   max-width: calc(100% - 350px);
 }

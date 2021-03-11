@@ -124,25 +124,6 @@ $(function() { // DOCUMENT READY
 
   countAndSetOffset();
 
-  // Make a selection of an element for copy pasting.
-  function makeSelection(e, elem) {
-    var $clicked = elem || $(this);
-    var text = $clicked[0];
-    var range;
-    if (document.body.createTextRange) { // ms
-      range = document.body.createTextRange();
-      range.moveToElementText(text);
-      range.select();
-    } else if (window.getSelection) { // moz, opera, webkit
-      var selection = window.getSelection();
-      range = document.createRange();
-      range.selectNodeContents(text);
-      selection.removeAllRanges();
-      selection.addRange(range);
-    }
-    return false;
-  }
-
   function initHierarchyQtip() {
       if (!$('#hierarchy').length) {
           $('#hierarchy-disabled').attr('id', 'hierarchy');
@@ -157,15 +138,6 @@ $(function() { // DOCUMENT READY
   }
 
   $(document).on('click','.uri-input-box', makeSelection);
-
-  // copy to clipboard
-  function copyToClipboard() {
-    var $btn = $(this);
-    var id = $btn.attr('for');
-    var $elem = $(id);
-    makeSelection(undefined, $elem);
-    document.execCommand('copy');
-  }
 
   $(document).on('click', 'button.copy-clipboard', copyToClipboard);
 
@@ -230,6 +202,7 @@ $(function() { // DOCUMENT READY
     $('#statistics tr:nth-of-type(1)').after('<tr><td><span class="spinner" /></td></td></tr>');
     $.ajax({
       url : rest_base_url + vocab + '/vocabularyStatistics',
+      req_kind: $.ajaxQ.requestKind.GLOBAL,
       data: $.param({'lang' : content_lang}),
       success : function(data) {
         var $spinner = $('#counts tr:nth-of-type(2)');
@@ -250,6 +223,7 @@ $(function() { // DOCUMENT READY
 
     $.ajax({
       url : rest_base_url + vocab + '/labelStatistics',
+      req_kind: $.ajaxQ.requestKind.GLOBAL,
       data: $.param({'lang' : lang}),
       success : function(data) {
         $('#statistics tr:nth-of-type(2)').detach(); // removing the spinner
@@ -304,13 +278,16 @@ $(function() { // DOCUMENT READY
   // event handler for clicking the hierarchy concepts
   $(document).on('click', '.concept-hierarchy a',
       function(event) {
-        event.preventDefault();
+        $.ajaxQ.abortContentQueries();
         var targetUrl = event.target.href;
         $('#hier-trigger').attr('href', targetUrl);
         var $content = $('.content').empty().append($delayedSpinner.hide());
         var loading = delaySpinner();
         $.ajax({
             url : targetUrl,
+            data: parameters,
+            req_kind: $.ajaxQ.requestKind.CONTENT,
+
             complete: function() { clearTimeout(loading); },
             success : function(data) {
               $content.empty();
@@ -333,15 +310,16 @@ $(function() { // DOCUMENT READY
   // event handler for clicking the alphabetical/group index concepts
   $(document).on('click', '.side-navi a',
       function(event) {
-        $.ajaxQ.abortAll();
+        $.ajaxQ.abortContentQueries();
         $('.activated-concept').removeClass('activated-concept');
         $(this).addClass('activated-concept');
         var $content = $('.content').empty().append($delayedSpinner.hide());
         var loading = delaySpinner();
         $.ajax({
             url : event.currentTarget.href,
+            req_kind: $.ajaxQ.requestKind.CONTENT,
             complete: function() { clearTimeout(loading); },
-            success : function(data) {
+            success : function(data, responseCode, jqxhr) {
               if (window.history.pushState) { window.history.pushState({}, null, event.currentTarget.href); }
               $content.empty().append($('.content', data).html());
               initHierarchyQtip();
@@ -361,7 +339,7 @@ $(function() { // DOCUMENT READY
   // event handler for clicking the alphabetical index tab
   $(document).on('click', '#alpha',
       function(event) {
-        $.ajaxQ.abortAll();
+        $.ajaxQ.abortSidebarQueries(true);
         $('.active').removeClass('active');
         $('#alpha').addClass('active');
         alpha_complete = false;
@@ -369,6 +347,7 @@ $(function() { // DOCUMENT READY
         var targetUrl = event.target.href;
         $.ajax({
             url : targetUrl,
+            req_kind: $.ajaxQ.requestKind.SIDEBAR,
             success : function(data) {
               updateSidebar(data);
               $('.nav').scrollTop(0);
@@ -383,7 +362,7 @@ $(function() { // DOCUMENT READY
   // event handler for clicking the changes tab
   $(document).on('click', '#changes',
       function(event) {
-        $.ajaxQ.abortAll();
+        $.ajaxQ.abortSidebarQueries(true);
         $('.active').removeClass('active');
         $('#changes').addClass('active');
         $('.sidebar-grey').empty().prepend(spinner);
@@ -392,6 +371,7 @@ $(function() { // DOCUMENT READY
         var targetUrl = event.target.href;
         $.ajax({
             url : targetUrl,
+            req_kind: $.ajaxQ.requestKind.SIDEBAR,
             success : function(data) {
               updateSidebar(data);
               $('.nav').scrollTop(0);
@@ -445,7 +425,7 @@ $(function() { // DOCUMENT READY
   // event handler for clicking the group index tab
   $(document).on('click', '#groups > a',
       function(event) {
-        $.ajaxQ.abortAll();
+        $.ajaxQ.abortSidebarQueries(true);
         $('.active').removeClass('active');
         var $clicked = $(this);
         $clicked.parent().addClass('active');
@@ -463,11 +443,14 @@ $(function() { // DOCUMENT READY
   // event handler for clicking groups
   $(document).on('click','div.group-hierarchy a',
       function(event) {
+        $.ajaxQ.abortContentQueries();
         var $content = $('.content').empty().append($delayedSpinner.hide());
         var loading = delaySpinner();
         // ajaxing the sidebar content
         $.ajax({
             url : event.target.href,
+            req_kind: $.ajaxQ.requestKind.CONTENT,
+            complete: function() { clearTimeout(loading); },
             success : function(data) {
               initHierarchyQtip();
               $('#hier-trigger').attr('href', event.target.href);
@@ -489,7 +472,7 @@ $(function() { // DOCUMENT READY
   // event handler for the alphabetical index letters
   $(document).on('click','.pagination > li > a',
       function(event) {
-        $.ajaxQ.abortAll();
+        $.ajaxQ.abortSidebarQueries();
         if ($('.alphabet-header').length === 0) {
           alpha_complete = false;
           var $content = $('.sidebar-grey');
@@ -497,6 +480,7 @@ $(function() { // DOCUMENT READY
           var targetUrl = event.currentTarget.href;
           $.ajax({
             url : targetUrl,
+            req_kind: $.ajaxQ.requestKind.SIDEBAR,
             success : function(data) {
               updateSidebar(data);
               $('.nav').scrollTop(0);
@@ -672,9 +656,15 @@ $(function() { // DOCUMENT READY
   } else { // if not then ajax the rest api and cache the results.
     var typeParam = $.param({'lang' : lang });
     var typeUrl = rest_base_url + 'types';
-    $.getJSON(typeUrl, typeParam, function(response) {
-      lscache.set('types:' + lang, response, 1440);
-      processTypeJSON(response);
+    $.ajax({
+      dataType: 'json',
+      url: typeUrl,
+      req_kind: $.ajaxQ.requestKind.GLOBAL,
+      data: typeParam,
+      success: function(response) {
+        lscache.set('types:' + lang, response, 1440);
+        processTypeJSON(response);
+      }
     });
   }
 
@@ -696,6 +686,7 @@ $(function() { // DOCUMENT READY
             parameters = $.param({'vocab' : vocabString, 'lang' : '', 'labellang' : ''});
           }
           settings.url = settings.url + '&' + parameters;
+          settings.req_kind = $.ajaxQ.requestKind.GLOBAL;
         }
       },
       // changes the response so it can be easily displayed in the handlebars template.
@@ -860,12 +851,14 @@ $(function() { // DOCUMENT READY
   function alphaWaypointCallback() {
     // if the pagination is not visible all concepts are already shown
     if (!alpha_complete && $('.pagination').length === 1) {
+      $.ajaxQ.abortSidebarQueries();
       alpha_complete = true;
       $('.alphabetical-search-results').append($loading);
       var parameters = $.param({'offset' : 250, 'clang': content_lang});
       var letter = '/' + ($('.pagination > .active')[0] ? $('.pagination > .active > a > span:last-child')[0].innerHTML : $('.pagination > li > a > span:last-child')[0].innerHTML);
       $.ajax({
         url : vocab + '/' + lang + '/index' + letter,
+        req_kind: $.ajaxQ.requestKind.SIDEBAR,
         data : parameters,
         success : function(data) {
           $loading.detach();
@@ -879,11 +872,13 @@ $(function() { // DOCUMENT READY
   var changeOffset = 200;
 
   function changeListWaypointCallback() {
+    $.ajaxQ.abortSidebarQueries();
     $('.change-list').append($loading);
     var parameters = $.param({'offset' : changeOffset, 'clang': content_lang});
     var lastdate = $('.change-list > h5:last-of-type')[0].innerHTML;
     $.ajax({
       url : vocab + '/' + lang + '/new',
+      req_kind: $.ajaxQ.requestKind.SIDEBAR,
       data : parameters,
       success : function(data) {
         $loading.detach();
@@ -909,6 +904,7 @@ $(function() { // DOCUMENT READY
       var parameters = $.param({'q' : searchTerm, 'vocabs' : vocabSelectionString, 'offset' : offcount * waypoint_results, 'clang' : content_lang, 'type' : typeLimit, 'group' : groupLimit, 'parent': parentLimit, anylang: getUrlParams().anylang, 'scheme' : schemeLimit });
       $.ajax({
         url : window.location.pathname,
+        req_kind: $.ajaxQ.requestKind.GLOBAL,
         data : parameters,
         success : function(data) {
           $loading.detach();
@@ -1068,6 +1064,7 @@ $(function() { // DOCUMENT READY
     $('.sidebar-grey').empty().append('<div class="loading-spinner"><span class="spinner-text">'+ loading_text + '</span><span class="spinner" /></div>');
     $.ajax({
       url : urlLangCorrected,
+      req_kind: $.ajaxQ.requestKind.SIDEBAR,
       success : function(data) {
         $('#sidebar').replaceWith($(data).find('#sidebar'));
       }

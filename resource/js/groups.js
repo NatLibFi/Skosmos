@@ -61,6 +61,7 @@ function invokeGroupTree() {
           $.ajax({
             data: params,
             url: json_url, 
+            req_kind: $.ajaxQ.requestKind.SIDEBAR_PRIVILEGED,
             success: function (response) {
               if (response.groups) { // the default hierarchy query that fires when a page loads.
                 return cb(buildGroupTree(response.groups));
