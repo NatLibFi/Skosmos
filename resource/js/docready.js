@@ -57,16 +57,14 @@ $(function() { // DOCUMENT READY
         });
         return removeThese.join(' ');
       });
-      if (settings.url.indexOf('index/') !== -1) {
-        $(".sidebar-grey").mCustomScrollbar({
-          alwaysShowScrollbar: 1,
-          scrollInertia: 0,
-          mouseWheel:{ preventDefault: true, scrollAmount: 105 },
-          snapAmount: 15,
-          snapOffset: 1,
-          callbacks: { alwaysTriggerOffsets: false, onTotalScroll: alphaWaypointCallback, onTotalScrollOffset: 300 }
-        });
-      }
+      $(".sidebar-grey-alpha").mCustomScrollbar({
+        alwaysShowScrollbar: 1,
+        scrollInertia: 0,
+        mouseWheel:{ preventDefault: true, scrollAmount: 105 },
+        snapAmount: 15,
+        snapOffset: 1,
+        callbacks: { alwaysTriggerOffsets: false, onTotalScroll: alphaWaypointCallback, onTotalScrollOffset: 300 }
+      });
     }
     // Sidenav actions only happen when doing other queries than the autocomplete.
     if (settings.url.indexOf('index') !== -1 || settings.url.indexOf('groups') !== -1) {
