@@ -774,7 +774,7 @@ span.xl-pref-label > img {
 /* feedback page
  ***************************/
 #feedback-fields > p .missing-value {
-  border: 1px solid red;
+  border: 2px solid #D95F8A;
 }
 
 #feedback-fields label {
