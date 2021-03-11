@@ -285,7 +285,6 @@ $(function() { // DOCUMENT READY
         var loading = delaySpinner();
         $.ajax({
             url : targetUrl,
-            data: parameters,
             req_kind: $.ajaxQ.requestKind.CONTENT,
 
             complete: function() { clearTimeout(loading); },

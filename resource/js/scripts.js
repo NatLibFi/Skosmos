@@ -1,4 +1,4 @@
-/* exported getUrlParams, getConceptHref, readCookie, createCookie, getUrlParams, debounce, updateContent, updateTopbarLang, updateTitle, updateSidebar, setLangCookie, loadLimitations, loadPage, hideCrumbs, shortenProperties, countAndSetOffset, combineStatistics, loadLimitedResults, naturalCompare, escapeHtml, makeSelection, copyToClickboard, renderPropertyMappings, loadMappingProperties */
+/* exported getUrlParams, getHrefForUri, readCookie, createCookie, debounce, updateContent, updateJsonLD, updateTopbarLang, updateTitle, updateSidebar, setLangCookie, clearResultsAndAddSpinner, loadLimitations, loadPage, hideCrumbs, hidePropertyValues, shortenProperties, countAndSetOffset, combineStatistics, loadLimitedResults, naturalCompare, makeCallbacks, escapeHtml, makeSelection, copyToClickboard, renderPropertyMappingValues, renderPropertyMappings, loadMappingProperties */
 
 /* 
  * Creates a cookie value and stores it for the user. Takes the given
