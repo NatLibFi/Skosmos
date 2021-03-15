@@ -1,0 +1,79 @@
+FROM ubuntu:20.04
+
+LABEL maintainer="National Library of Finland"
+LABEL version="0.1"
+LABEL description="A Docker image for Skosmos with Apache httpd."
+
+ARG SKOSMOS_VERSION=v.2.9
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+# git is necessary for some composer packages e.g. davidstutz/bootstrap-multiselect
+# gettext is necessary as php-gettext was available in 18.04, but not in 20.04
+RUN apt-get update && apt-get install -y \
+    apache2 \
+    curl \
+    gettext \
+    git \
+    libapache2-mod-php7.4 \
+    locales \
+    php7.4 \
+    php7.4-curl \
+    php7.4-xsl \
+    php7.4-intl \
+    php7.4-mbstring \
+    php-apcu \
+    php-zip \
+    unzip \
+ && rm -rf /var/lib/apt/lists/*
+
+# https://stackoverflow.com/a/28406007
+# fixes warnings like perl: warning: Setting locale failed.
+RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
+    locale-gen \
+        ar_AE.utf8 \
+        da_DK.utf8 \
+        de_DE.utf8 \
+        en_GB.utf8 \
+        en_US.utf8 \
+        es_ES.utf8 \
+        fa_IR.utf8 \
+        fi_FI.utf8 \
+        fr_FR.utf8 \
+        it_IT.utf8 \
+        nb_NO.utf8 \
+        nl_NL.utf8 \
+        nn_NO.utf8 \
+        pl_PL.utf8 \
+        pt_PT.utf8 \
+        pt_BR.utf8 \
+        ru_RU.utf8 \
+        sv_SE.utf8 \
+        zh_CN.utf8
+ENV LANGUAGE=en_US:en  
+ENV LC_ALL=en_US.UTF-8 
+ENV LANG=en_US.UTF-8  
+
+# timezone
+RUN sed -i 's/;date.timezone =/date.timezone = "UTC"/g' /etc/php/7.4/apache2/php.ini
+
+COPY dockerfiles/config/000-default.conf /etc/apache2/sites-available/000-default.conf
+
+RUN a2enmod rewrite
+RUN a2enmod expires
+
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
+WORKDIR /var/www/html
+RUN rm index.html
+
+COPY . /var/www/html
+
+# Configure Skosmos
+COPY dockerfiles/config/config-docker.ttl /var/www/html/config.ttl
+
+HEALTHCHECK --interval=5s --timeout=3s --retries=3 CMD curl -f http://localhost || exit 1
+
+EXPOSE 80
+
+CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]

@@ -1,0 +1,110 @@
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wv: <http://vocab.org/waiver/terms/norms> .
+@prefix sd: <http://www.w3.org/ns/sparql-service-description#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix skosmos: <http://purl.org/net/skosmos#> .
+@prefix isothes: <http://purl.org/iso25964/skos-thes#> .
+@prefix mdrtype: <http://publications.europa.eu/resource/authority/dataset-type/> .
+@prefix : <#> .
+
+# Skosmos main configuration
+
+:config a skosmos:Configuration ;
+    # SPARQL endpoint
+    # a local Fuseki server is usually on localhost:3030
+    skosmos:sparqlEndpoint <http://fuseki-cache:80/skosmos/sparql> ;
+    # use the dev.finto.fi endpoint where the example vocabularies reside
+    # skosmos:sparqlEndpoint <http://api.dev.finto.fi/sparql> ;
+    # sparql-query extension, or "Generic" for plain SPARQL 1.1
+    # set to "JenaText" instead if you use Fuseki with jena-text index
+    skosmos:sparqlDialect "JenaText" ;
+    # whether to enable collation in sparql queries
+    skosmos:sparqlCollationEnabled false ;
+    # HTTP client configuration
+    skosmos:sparqlTimeout 20 ;
+    skosmos:httpTimeout 5 ;
+    # customize the service name
+    skosmos:serviceName "Skosmos" ;
+    # customize the base element. Set this if the automatic base url detection doesn't work. For example setups behind a proxy.
+    # skosmos:baseHref "http://localhost/Skosmos/" ;
+    # interface languages available, and the corresponding system locales
+    skosmos:languages (
+        [ rdfs:label "ar" ; rdf:value "ar_AE.utf8" ]
+        [ rdfs:label "da" ; rdf:value "da_DK.utf8" ]
+        [ rdfs:label "de" ; rdf:value "de_DE.utf8" ]
+        [ rdfs:label "en" ; rdf:value "en_GB.utf8" ]
+        [ rdfs:label "en_US" ; rdf:value "en_US.utf8" ]
+        [ rdfs:label "es" ; rdf:value "es_ES.utf8" ]
+        [ rdfs:label "fa" ; rdf:value "fa_IR.utf8" ]
+        [ rdfs:label "fi" ; rdf:value "fi_FI.utf8" ]
+        [ rdfs:label "fr" ; rdf:value "fr_FR.utf8" ]
+        [ rdfs:label "it" ; rdf:value "it_IT.utf8" ]
+        [ rdfs:label "nb" ; rdf:value "nb_NO.utf8" ]
+        [ rdfs:label "nl" ; rdf:value "nl_NL.utf8" ]
+        [ rdfs:label "nn" ; rdf:value "nn_NO.utf8" ]
+        [ rdfs:label "pl" ; rdf:value "pl_PL.utf8" ]
+        [ rdfs:label "pt" ; rdf:value "pt_PT.utf8" ]
+        [ rdfs:label "pt_BR" ; rdf:value "pt_BR.utf8" ]
+        [ rdfs:label "ru" ; rdf:value "ru_RU.utf8" ]
+        [ rdfs:label "sv" ; rdf:value "sv_SE.utf8" ]
+        [ rdfs:label "zh" ; rdf:value "zh_CN.utf8" ]
+    ) ;
+    # how many results (maximum) to load at a time on the search results page
+    skosmos:searchResultsSize 20 ;
+    # how many items (maximum) to retrieve in transitive property queries
+    skosmos:transitiveLimit 1000 ;
+    # whether or not to log caught exceptions
+    skosmos:logCaughtExceptions false ;
+    # set to TRUE to enable logging into browser console
+    skosmos:logBrowserConsole false ;
+    # set to a logfile path to enable logging into log file
+    # skosmos:logFileName "" ;
+    # a default location for Twig template rendering
+    skosmos:templateCache "/tmp/skosmos-template-cache" ;
+    # customize the css by adding your own stylesheet
+    skosmos:customCss "resource/css/stylesheet.css" ;
+    # default email address where to send the feedback
+    skosmos:feedbackAddress "" ;
+    # email address to set as the sender for feedback messages
+    skosmos:feedbackSender "" ;
+    # email address to set as the envelope sender for feedback messages
+    skosmos:feedbackEnvelopeSender "" ;
+    # whether to display the ui language selection as a dropdown (useful for cases where there are more than 3 languages) 
+    skosmos:uiLanguageDropdown true ;
+    # whether to enable the spam honey pot or not, enabled by default
+    skosmos:uiHoneypotEnabled true ;
+    # default time a user must wait before submitting a form
+    skosmos:uiHoneypotTime 5 ;
+    # plugins to activate for the whole installation (including all vocabularies)
+    skosmos:globalPlugins () .
+
+# Skosmos vocabularies
+
+:unesco a skosmos:Vocabulary, void:Dataset ;
+    dc:title "UNESCO Thesaurus"@en ;
+    skosmos:shortName "UNESCO";
+    dc:subject :cat_general ;
+    void:uriSpace "http://skos.um.es/unescothes/";
+    skosmos:language "en", "es", "fr", "ru";
+    skosmos:defaultLanguage "en";
+    skosmos:showTopConcepts true ;
+    skosmos:fullAlphabeticalIndex true ;
+    skosmos:groupClass isothes:ConceptGroup ;
+    void:sparqlEndpoint <http://fuseki-cache:80/skosmos/sparql> ;
+    skosmos:sparqlGraph <http://skos.um.es/unescothes/> .
+
+:stw a skosmos:Vocabulary, void:Dataset ;
+    dc:title "STW Thesaurus for Economics"@en ;
+    skosmos:shortName "STW";
+    dc:subject :cat_general ;
+    void:uriSpace "http://zbw.eu/stw/";
+    skosmos:language "en", "de";
+    skosmos:defaultLanguage "de";
+    void:sparqlEndpoint <http://fuseki-cache:80/skosmos/sparql> ;
+    skosmos:sparqlGraph <http://zbw.eu/stw/> .
