@@ -305,12 +305,10 @@ class WebController extends Controller
         $template = $this->twig->loadTemplate('about.twig');
         $this->setLanguageProperties($request->getLang());
         $url = $request->getServerConstant('HTTP_HOST');
-        $version = $this->model->getVersion();
 
         echo $template->render(
             array(
                 'languages' => $this->languages,
-                'version' => $version,
                 'server_instance' => $url,
                 'request' => $request,
             ));
