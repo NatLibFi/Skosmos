@@ -266,4 +266,13 @@ class Request
         }
         return new PluginRegister($this->model->getConfig()->getGlobalPlugins());
     }
+
+    /**
+     * Return the version of this Skosmos installation, or "unknown" if
+     * it cannot be determined. The version information is based on Git tags.
+     * @return string version
+     */
+    public function getVersion() {
+        return $this->model->getVersion();
+    }
 }
