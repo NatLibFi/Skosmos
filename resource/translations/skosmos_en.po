@@ -848,3 +848,6 @@ msgstr "Write a subject"
 
 msgid "Select a vocabulary"
 msgstr "You can select a vocabulary"
+
+msgid "We're sorry but Skosmos doesn't work properly without JavaScript enabled. Please enable it to continue."
+msgstr "We're sorry but Skosmos doesn't work properly without JavaScript enabled. Please enable it to continue."
