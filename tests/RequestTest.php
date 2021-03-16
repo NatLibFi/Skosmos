@@ -158,4 +158,11 @@ class RequestTest extends PHPUnit\Framework\TestCase
     $this->assertEquals('index', $this->request->getPage());
   }
 
+  /**
+   * @covers Request::getVersion
+   */
+  public function testGetVersion() {
+    $version = $this->request->getVersion();
+    $this->assertNotEmpty($version);
+  }
 }

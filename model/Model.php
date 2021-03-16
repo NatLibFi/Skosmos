@@ -74,11 +74,11 @@ class Model
      * it cannot be determined. The version information is based on Git tags.
      * @return string version
      */
-    public function getVersion()
+    public function getVersion() : string
     {
         $ver = null;
         if (file_exists('.git')) {
-            $ver = shell_exec('git describe --tags --always');
+            $ver = rtrim(shell_exec('git describe --tags --always'));
         }
 
         if ($ver === null) {
