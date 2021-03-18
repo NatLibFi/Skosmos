@@ -507,7 +507,7 @@ function getTreeConfiguration() {
         var aNode = this.get_node(a);
         var bNode = this.get_node(b);
 
-        // sort on notation if requested
+        // sort on notation if requested, and notations exist
         if (window.showNotation) {
             var aNotation = aNode.original.notation;
             var bNotation = bNode.original.notation;
@@ -524,15 +524,15 @@ function getTreeConfiguration() {
                 else return -1;
             }
             else if (bNotation) return 1;
-        } else {
-          // no sorting on notation requested
-          // make sure the tree nodes with class 'domain' are sorted before the others
-          // aDomain/bDomain will be "0" if a/b has a domain class, else "1"
-          var aDomain = (aNode.original.a_attr['class'] == 'domain') ? "0" : "1";
-          var bDomain = (bNode.original.a_attr['class'] == 'domain') ? "0" : "1";
-          return naturalCompare(aDomain + " " + aNode.text.toLowerCase(),
-                                bDomain + " " + bNode.text.toLowerCase());
-        }        
+            // NOTE: if no notations found, fall back on label comparison below
+        }
+        // no sorting on notation requested, or notations don't exist
+        // make sure the tree nodes with class 'domain' are sorted before the others
+        // aDomain/bDomain will be "0" if a/b has a domain class, else "1"
+        var aDomain = (aNode.original.a_attr['class'] == 'domain') ? "0" : "1";
+        var bDomain = (bNode.original.a_attr['class'] == 'domain') ? "0" : "1";
+        return naturalCompare(aDomain + " " + aNode.text.toLowerCase(),
+                              bDomain + " " + bNode.text.toLowerCase());
     }
   });
 }
