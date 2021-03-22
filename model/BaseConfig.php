@@ -44,7 +44,7 @@ abstract class BaseConfig extends DataObject
      */
     protected function getLiteral($property, $default=null, $lang=null)
     {
-        if (!isset($lang)) {;
+        if (!isset($lang)) {
             $lang = $this->getEnvLang();
         }
 

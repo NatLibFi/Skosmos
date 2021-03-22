@@ -160,7 +160,7 @@ class RestController extends Controller
         if ($request->getQueryParam('labellang')) {
             $ret['@context']['@language'] = $request->getQueryParam('labellang');
         } elseif ($request->getQueryParam('lang')) {
-            $ret['@context']['@language'] = $request->getQueryParam('lang');;
+            $ret['@context']['@language'] = $request->getQueryParam('lang');
         }
         return $ret;
     }
