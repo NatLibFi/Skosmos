@@ -11,6 +11,7 @@ abstract class BaseConfig extends DataObject
      * Returns a boolean value based on a literal value from the config.ttl configuration.
      * @param string $property the property to query
      * @param boolean $default the default value if the value is not set in configuration
+     * @return boolean the boolean value for the given property, or the default value if not found
      */
     protected function getBoolean($property, $default = false)
     {
@@ -37,10 +38,11 @@ abstract class BaseConfig extends DataObject
     }
 
     /**
-     * Returns a boolean value based on a literal value from the config.ttl configuration.
+     * Returns a string value based on a literal value from the config.ttl configuration.
      * @param string $property the property to query
      * @param string $default default value
      * @param string $lang preferred language for the literal
+     * @return string string value for the given property, or the default value if not found
      */
     protected function getLiteral($property, $default=null, $lang=null)
     {

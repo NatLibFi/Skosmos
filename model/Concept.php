@@ -907,6 +907,7 @@ class Concept extends VocabularyDataObject implements Modifiable
     /**
      * Gets the values for the property in question in all other languages than the ui language.
      * @param string $property
+     * @return array array of labels for the values of the given property
      */
     public function getAllLabels($property)
     {
