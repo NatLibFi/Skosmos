@@ -82,7 +82,7 @@ class GenericSparql {
 
     /**
      * Execute the SPARQL query using the SPARQL client, logging it as well.
-     * @param string $query SPARQL query to perform
+     * @param string $query SPARQL query to perform
      * @return Result|\EasyRdf\Graph query result
      */
     protected function query($query) {

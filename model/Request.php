@@ -49,8 +49,8 @@ class Request
 
     /**
      * Set a GET query parameter to mock it in tests.
-     * @param string $paramName parameter name
-     * @param string $value parameter value
+     * @param string $paramName parameter name
+     * @param string $value parameter value
      */
     public function setQueryParam($paramName, $value)
     {
@@ -59,8 +59,8 @@ class Request
 
     /**
      * Set a SERVER constant to mock it in tests.
-     * @param string $paramName parameter name
-     * @param string $value parameter value
+     * @param string $paramName parameter name
+     * @param string $value parameter value
      */
     public function setServerConstant($paramName, $value)
     {
@@ -69,7 +69,7 @@ class Request
 
     /**
      * Return the requested GET query parameter as a string. Backslashes are stripped for security reasons.
-     * @param string $paramName parameter name
+     * @param string $paramName parameter name
      * @return string parameter content, or null if no parameter found
      */
     public function getQueryParam($paramName)
@@ -81,7 +81,7 @@ class Request
 
     /**
      * Return the requested GET query parameter as a string, with no sanitizing.
-     * @param string $paramName parameter name
+     * @param string $paramName parameter name
      * @return string parameter content, or null if no parameter found
      */
     public function getQueryParamRaw($paramName)

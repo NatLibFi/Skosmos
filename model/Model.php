@@ -210,7 +210,7 @@ class Model
      * Makes a SPARQL-query to the endpoint that retrieves concept
      * references as it's search results.
      * @param ConceptSearchParameters $params an object that contains all the parameters needed for the search
-     * @return array search results
+     * @return array search results
      */
     public function searchConcepts($params)
     {

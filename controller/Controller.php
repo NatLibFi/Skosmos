@@ -69,7 +69,7 @@ class Controller
      * As a side effect, set the HTTP Vary header if a choice was made based on
      * the Accept header.
      * @param array $choices possible MIME types as strings
-     * @param string $accept HTTP Accept header value
+     * @param string $accept HTTP Accept header value
      * @param string $format proposed format
      * @return string selected format, or null if negotiation failed
      */
