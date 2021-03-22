@@ -962,7 +962,7 @@ EOQ;
         return $query;
     }
     /**
-    *  This function can be overwritten in other SPARQL dialects for the possibility of handling the differenc language clauses
+    *  This function can be overwritten in other SPARQL dialects for the possibility of handling the different language clauses
      * @param string $lang
      * @return string formatted language clause
      */
@@ -1989,7 +1989,7 @@ EOQ;
             }
             if (isset($row->tops)) {
                $topConceptsList=explode(" ", $row->tops->getValue());
-               // sort to garantee an alphabetical ordering of the URI
+               // sort to guarantee an alphabetical ordering of the URI
                sort($topConceptsList);
                $ret[$uri]['tops'] = $topConceptsList;
             }

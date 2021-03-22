@@ -195,7 +195,7 @@ class Vocabulary extends DataObject implements Modifiable
                 ksort($ret[$prop]);
             }
         }
-        if (isset($ret['owl:versionInfo'])) { // if version info availible for vocabulary convert it to a more readable format
+        if (isset($ret['owl:versionInfo'])) { // if version info available for vocabulary convert it to a more readable format
             $ret['owl:versionInfo'][0] = $this->parseVersionInfo($ret['owl:versionInfo'][0]);
         }
         // remove duplicate values

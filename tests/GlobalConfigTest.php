@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Tests for GlobalConfig. Must cover all of its methods, and use at least one file configuratoin that contains
+ * Tests for GlobalConfig. Must cover all of its methods, and use at least one file configuration that contains
  * different values than the default ones.
  */
 class GlobalConfigTest extends PHPUnit\Framework\TestCase
