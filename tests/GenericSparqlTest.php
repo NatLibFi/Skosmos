@@ -1051,7 +1051,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     $voc = $this->model->getVocabulary('groups');
     $graph = $voc->getGraph();
     $sparql = new GenericSparql('http://localhost:13030/skosmos-test/sparql', $graph, $this->model);
-    $actual = $sparql->ListConceptGroups('http://www.w3.org/2004/02/skos/core#Collection', 'en', false);
+    $actual = $sparql->ListConceptGroups('http://www.w3.org/2004/02/skos/core#Collection', 'en');
     $expected = array (0 => array ('prefLabel' => 'Fish', 'uri' => 'http://www.skosmos.skos/groups/fish', 'hasMembers' => true, 'childGroups' => array('http://www.skosmos.skos/groups/sub')), 1 => array ('prefLabel' => 'Freshwater fish', 'uri' => 'http://www.skosmos.skos/groups/fresh', 'hasMembers' => true), 2 => array ('prefLabel' => 'Saltwater fish', 'uri' => 'http://www.skosmos.skos/groups/salt', 'hasMembers' => true),3 => array ('prefLabel' => 'Submarine-like fish', 'uri' => 'http://www.skosmos.skos/groups/sub', 'hasMembers' => true));
     $this->assertEquals($expected, $actual);
   }
