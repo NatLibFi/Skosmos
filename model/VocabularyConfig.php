@@ -248,7 +248,7 @@ class VocabularyConfig extends BaseConfig
 
     /**
      * Returns custom properties displayed on the search page if configured.
-     * @return string array class URI or null
+     * @return array array class URI or null
      */
 
     public function getAdditionalSearchProperties()
@@ -441,7 +441,7 @@ class VocabularyConfig extends BaseConfig
 
     /**
      * Returns the property/properties used for visualizing concept hierarchies.
-     * @return string array class URI or null
+     * @return array array class URI or null
      */
 
     public function getHierarchyProperty()

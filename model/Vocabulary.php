@@ -303,7 +303,7 @@ class Vocabulary extends DataObject implements Modifiable
 
     /**
      * Counts the statistics of the vocabulary.
-     * @return array of the concept/group counts
+     * @return Array containing the label counts
      */
     public function getStatistics($lang = '', $array=null, $group=null)
     {
