@@ -195,7 +195,7 @@ class Vocabulary extends DataObject implements Modifiable
                 ksort($ret[$prop]);
             }
         }
-        if (isset($ret['owl:versionInfo'])) { // if version info availible for vocabulary convert it to a more readable format
+        if (isset($ret['owl:versionInfo'])) { // if version info available for vocabulary convert it to a more readable format
             $ret['owl:versionInfo'][0] = $this->parseVersionInfo($ret['owl:versionInfo'][0]);
         }
         // remove duplicate values
@@ -303,7 +303,7 @@ class Vocabulary extends DataObject implements Modifiable
 
     /**
      * Counts the statistics of the vocabulary.
-     * @return array of the concept/group counts
+     * @return Array containing the label counts
      */
     public function getStatistics($lang = '', $array=null, $group=null)
     {

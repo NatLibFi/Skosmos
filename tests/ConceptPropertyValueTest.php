@@ -214,6 +214,6 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
     $vals = $props['skos:definition']->getValues();
     $val = reset($vals);
     $reified_vals = $val->getReifiedPropertyValues();
-    $this->assertEquals(2, count($reified_vals));
+    $this->assertCount(2, $reified_vals);
   }
 }

@@ -179,7 +179,6 @@ class WebController extends Controller
             return;
         }
         $pluginParameters = $vocab->getConfig()->getPluginParameters();
-        /** @var \Twig\Template $template */
         $template = (in_array('skos:Concept', $results[0]->getType()) || in_array('skos:ConceptScheme', $results[0]->getType())) ? $this->twig->loadTemplate('concept-info.twig') : $this->twig->loadTemplate('group-contents.twig');
 
         $crumbs = $vocab->getBreadCrumbs($request->getContentLang(), $uri);
@@ -588,10 +587,11 @@ class WebController extends Controller
     }
 
     /**
-    * Formats the list of concepts as labels arranged by modification month
-    * @param Array $changeList
-    * @param string $lang the language for displaying dates in the change list
-    */
+     * Formats the list of concepts as labels arranged by modification month
+     * @param Array $changeList
+     * @param string $lang the language for displaying dates in the change list
+     * @return array list of concepts as labels by month
+     */
     public function formatChangeList($changeList, $lang)
     {
         $formatByDate = array();

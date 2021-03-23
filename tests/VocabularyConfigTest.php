@@ -468,7 +468,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
    */
   public function testGetExtProperties() {
     $vocab = $this->model->getVocabulary('cbd');
-    $this->assertEquals(4 , count($vocab->getConfig()->getExtProperties()));
+    $this->assertCount(4, $vocab->getConfig()->getExtProperties());
   }
 
   /**

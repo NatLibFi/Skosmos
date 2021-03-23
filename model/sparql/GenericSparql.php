@@ -11,12 +11,12 @@ class GenericSparql {
     protected $client;
     /**
      * Graph uri.
-     * @property string $graph
+     * @property object $graph
      */
     protected $graph;
     /**
      * A SPARQL query graph part template.
-     * @property string $graph
+     * @property string $graphClause
      */
     protected $graphClause;
     /**
@@ -82,8 +82,8 @@ class GenericSparql {
 
     /**
      * Execute the SPARQL query using the SPARQL client, logging it as well.
-     * @param string $query SPARQL query to perform
-     * @return Result|\EasyRdf\Graph query result
+     * @param string $query SPARQL query to perform
+     * @return \EasyRdf\Sparql\Result|\EasyRdf\Graph query result
      */
     protected function query($query) {
         $queryId = sprintf("%05d", rand(0, 99999));
@@ -216,7 +216,7 @@ EOQ;
     /**
      * Used for counting number of concepts and collections in a vocabulary.
      * @param string $lang language of labels
-     * @return int number of concepts in this vocabulary
+     * @return array with number of concepts in this vocabulary per label
      */
     public function countConcepts($lang = null, $array = null, $group = null) {
         $query = $this->generateCountConceptsQuery($array, $group);
@@ -608,7 +608,7 @@ EOQ;
     /**
      * Retrieves conceptScheme information from the endpoint.
      * @param string $conceptscheme concept scheme URI
-     * @return EasyRDF_Graph query result graph
+     * @return \EasyRdf\Sparql\Result|\EasyRdf\Graph query result graph
      */
     public function queryConceptScheme($conceptscheme) {
         $query = $this->generateQueryConceptSchemeQuery($conceptscheme);
@@ -818,7 +818,7 @@ EOV;
     /**
      * @param string $lang language code of the returned labels
      * @param array|null $fields extra fields to include in the result (array of strings). (default: null = none)
-     * @return string sparql query clause
+     * @return array sparql query clause
      */
     protected function formatExtraFields($lang, $fields) {
         // extra variable expressions to request and extra fields to query for
@@ -962,7 +962,7 @@ EOQ;
         return $query;
     }
     /**
-    *  This function can be overwritten in other SPARQL dialects for the possibility of handling the differenc language clauses
+    *  This function can be overwritten in other SPARQL dialects for the possibility of handling the different language clauses
      * @param string $lang
      * @return string formatted language clause
      */
@@ -1970,7 +1970,7 @@ EOQ;
      * Transforms the result into an array.
      * @param EasyRdf\Sparql\Result
      * @param string $lang
-     * @return an array for the REST controller to encode.
+     * @return array|null an array for the REST controller to encode.
      */
     private function transformParentListResults($result, $lang)
     {
@@ -1989,7 +1989,7 @@ EOQ;
             }
             if (isset($row->tops)) {
                $topConceptsList=explode(" ", $row->tops->getValue());
-               // sort to garantee an alphabetical ordering of the URI
+               // sort to guarantee an alphabetical ordering of the URI
                sort($topConceptsList);
                $ret[$uri]['tops'] = $topConceptsList;
             }
