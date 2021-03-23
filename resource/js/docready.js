@@ -812,7 +812,6 @@ $(function() { // DOCUMENT READY
 
   // Some form validation for the feedback form
   $('#send-feedback').on('click', function() {
-      $('#email').removeClass('missing-value');
       $('#message').removeClass('missing-value');
       $('#msgsubject').removeClass('missing-value');
       var emailMessageVal = $("#message").val();
