@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script>
 <!-- translations needed in javascript -->
 var noResultsTranslation = "{% trans %}No results{% endtrans %}";
 var loading_text = "{% trans %}Loading more items{% endtrans %}";
@@ -45,24 +45,24 @@ var pluginParameters = {{ plugin_params|raw }};
 {{ search_results|first.dumpJsonLd|raw }}
 </script>
 {% endif %}
-<script type="text/javascript" src="vendor/components/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="vendor/components/jqueryui/jquery-ui.min.js"></script>
-<script type="text/javascript" src="vendor/components/handlebars.js/handlebars.min.js"></script>
-<script type="text/javascript" src="vendor/vakata/jstree/dist/jstree.min.js"></script>
-<script type="text/javascript" src="vendor/twitter/typeahead.js/dist/typeahead.bundle.min.js"></script>
-<script type="text/javascript" src="vendor/medialize/uri.js/src/URI.min.js"></script>
-<script type="text/javascript" src="vendor/davidstutz/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
-<script type="text/javascript" src="vendor/twitter/bootstrap/dist/js/bootstrap.js"></script>
-<script type="text/javascript" src="vendor/grimmlink/qtip2/dist/jquery.qtip.min.js"></script>
-<script type="text/javascript" src="vendor/etdsolutions/waypoints/jquery.waypoints.min.js"></script>
-<script type="text/javascript" src="vendor/newerton/jquery-mousewheel/jquery.mousewheel.min.js"></script>
-<script type="text/javascript" src="vendor/pamelafox/lscache/lscache.min.js"></script>
-<script type="text/javascript" src="vendor/malihu/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
-<script type="text/javascript" src="resource/js/config.js"></script>
-<script type="text/javascript" src="resource/js/hierarchy.js"></script>
-<script type="text/javascript" src="resource/js/groups.js"></script>
-<script type="text/javascript" src="resource/js/scripts.js"></script>
-{% for files in request.plugins.pluginsJS %}{% for file in files %}<script type="text/javascript" src="{{ file }}"></script>{% endfor %}{% endfor %}
-{% if request.plugins.callbacks %}<script type="text/javascript">var pluginCallbacks = [{% for function in request.plugins.callbacks %}{% if not loop.first %}, {% endif %}"{{ function }}"{% endfor %}];</script>{% endif %}
-<script type="text/javascript" src="resource/js/docready.js"></script>
+<script src="vendor/components/jquery/jquery.min.js"></script>
+<script src="vendor/components/jqueryui/jquery-ui.min.js"></script>
+<script src="vendor/components/handlebars.js/handlebars.min.js"></script>
+<script src="vendor/vakata/jstree/dist/jstree.min.js"></script>
+<script src="vendor/twitter/typeahead.js/dist/typeahead.bundle.min.js"></script>
+<script src="vendor/medialize/uri.js/src/URI.min.js"></script>
+<script src="vendor/davidstutz/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+<script src="vendor/twitter/bootstrap/dist/js/bootstrap.js"></script>
+<script src="vendor/grimmlink/qtip2/dist/jquery.qtip.min.js"></script>
+<script src="vendor/etdsolutions/waypoints/jquery.waypoints.min.js"></script>
+<script src="vendor/newerton/jquery-mousewheel/jquery.mousewheel.min.js"></script>
+<script src="vendor/pamelafox/lscache/lscache.min.js"></script>
+<script src="vendor/malihu/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="resource/js/config.js"></script>
+<script src="resource/js/hierarchy.js"></script>
+<script src="resource/js/groups.js"></script>
+<script src="resource/js/scripts.js"></script>
+{% for files in request.plugins.pluginsJS %}{% for file in files %}<script src="{{ file }}"></script>{% endfor %}{% endfor %}
+{% if request.plugins.callbacks %}<script>var pluginCallbacks = [{% for function in request.plugins.callbacks %}{% if not loop.first %}, {% endif %}"{{ function }}"{% endfor %}];</script>{% endif %}
+<script src="resource/js/docready.js"></script>
 

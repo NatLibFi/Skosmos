@@ -185,7 +185,7 @@ function setLangCookie(lang) {
 }
 
 function clearResultsAndAddSpinner() {
-  var $loading = $("<div class='search-result'><p>" + loading_text + "&hellip;<span class='spinner'/></p></div>"); 
+  var $loading = $("<div class='search-result'><p>" + loading_text + "&hellip;<span class='spinner'></span></p></div>");
   $('.search-result-listing').empty().append($loading);
 }
   
