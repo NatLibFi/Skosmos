@@ -24,11 +24,11 @@
     <strong>{% trans "We're sorry but Skosmos doesn't work properly without JavaScript enabled. Please enable it to continue." %}</strong>
   </noscript>
   <a id="skiptocontent" href="{{ request.langurl }}#maincontent">{% trans "Skip to main" %}</a>
-  {% if request.vocabid != '' or request.page == 'feedback' or request.page == 'about' %}<div class="topbar-white">{% endif %}
+  <div class="topbar-container {% if request.vocabid != '' or request.page == 'feedback' or request.page == 'about' %}topbar-white{% else %}topbar-frontpage{% endif %}">
     <div class="topbar{% if request.vocabid != '' or request.vocabid == 'feedback' or request.vocabid == 'about' %} topbar-white{% else %} frontpage{% endif %}">
       {% include 'topbar.twig' %}
     </div>
-  {% if request.vocabid != '' or request.page == 'feedback' or request.page == 'about' %}</div>{% endif %}
+  </div>
   {% block headernav %}
   <div class="headerbar{% if request.vocabid == '' or global_search %} frontpage-spacing{% endif %}">
     {% include 'headerbar.twig' %}
