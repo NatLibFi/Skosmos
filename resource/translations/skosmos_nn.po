@@ -1,14 +1,15 @@
 # 
 # Translators:
-# Dan Michael O. Heggø <danmichaelo@gmail.com>, 2015-2017,2019-2020
+# Dan Michael O. Heggø <danmichaelo@gmail.com>, 2015-2017,2019-2021
+# Oddrun Pauline Ohren <oddrun.ohren@nb.no>, 2021
 # osma <osma.suominen@helsinki.fi>, 2017,2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-16 10:26+0200\n"
-"PO-Revision-Date: 2020-04-09 10:27+0000\n"
-"Last-Translator: osma <osma.suominen@helsinki.fi>\n"
+"PO-Revision-Date: 2021-04-04 20:39+0000\n"
+"Last-Translator: Dan Michael O. Heggø <danmichaelo@gmail.com>\n"
 "Language-Team: Norwegian Nynorsk (http://www.transifex.com/national-library-of-finland/skosmos/language/nn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,7 +29,7 @@ msgstr "Last ned dette vokabularet:"
 #: controller/Controller.php:38
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:21
 msgid "in_this_language"
-msgstr "på engelsk"
+msgstr "på nynorsk"
 
 #: controller/RestController.php:271
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:125
@@ -245,10 +246,10 @@ msgstr "Gje tilbakemelding"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:51
 msgid "show all # paths"
-msgstr "vis alle # stiar"
+msgstr "vis alle # stiane"
 
 msgid "show all # values"
-msgstr ""
+msgstr "Vis alle # verdiane"
 
 #: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:72
 msgid "Skosmos version %version%"
@@ -260,7 +261,7 @@ msgstr "Utfør søk"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:68
 msgid "Thank you for your feedback"
-msgstr "Takk for tilbakemeldinga. Me gjer vårt beste for å svare deg så fort som råd er."
+msgstr "Takk for tilbakemeldinga. Vi gjer vårt beste for å svare deg så fort som råd er."
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:129
 msgid "The search provided no results."
@@ -268,7 +269,7 @@ msgstr "Søket ga ingen resultat."
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:48
 msgid "There is no term for this concept in this language"
-msgstr "Det finnast ingen term for omgrepet på det valde språket."
+msgstr "Det finst ingen term for omgrepet på det valde språket."
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:173
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:47
@@ -428,6 +429,18 @@ msgstr "På andre språk"
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:39
 msgid "from all"
 msgstr "frå alle"
+
+msgid "wgs84:lat"
+msgstr "Breiddegrad"
+
+msgid "wgs84:lat_help"
+msgstr "Breiddegrad i desimalgradar etter WGS 84-systemet."
+
+msgid "wgs84:long"
+msgstr "Lengdegrad"
+
+msgid "wgs84:long_help"
+msgstr "Lengdegrad i desimalgradar etter WGS 84-systemet."
 
 #: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:81
 #: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:90
@@ -623,11 +636,11 @@ msgstr "Underordna omgrep."
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:157
 msgid "skos:note"
-msgstr "Merknad"
+msgstr "Note"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:175
 msgid "skos:note_help"
-msgstr "Merknadar"
+msgstr "Notar"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:234
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:141
@@ -648,11 +661,11 @@ msgstr "Omgrep som er beslekta med dette omgrepet."
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:159
 msgid "skos:scopeNote"
-msgstr "Omgrepavklaringsmerknad"
+msgstr "Note om bruk"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:177
 msgid "skos:scopeNote_help"
-msgstr "Merknadar om bruk og avgrensing av omgrepet."
+msgstr "Notar om bruk og avgrensing av omgrepet."
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:153
 msgid "skos:topConceptOf"
@@ -764,7 +777,72 @@ msgid "search_example_text"
 msgstr "Du kan trunkera med teiknet *, som i *dyr eller *patent*. Søk utan trunkeringsteikn vert automatisk trunkert på slutten, så katt vil gje same resultatliste som katt*."
 
 msgid "feedback_enter_name_email"
-msgstr "Fyll inn namn og e-postadresse om du ynsker svar. Du kan òg sende inn tilbakemelding anonymt. Merk at tilbakemelding på eit bestemd vokabular vart sendt direkte til vokabularets administrator."
+msgstr "Fyll inn namn og e-postadresse om du vil ha svar, men du kan òg sende inn tilbakemelding anonymt. Om du vel eit bestemt vokabular, blir tilbakemeldinga sendt direkte til ansvarleg for vokabularet."
 
 msgid "concept_types"
 msgstr "Omgrepstyper"
+
+msgid "Skip to main"
+msgstr "Hopp til hovudinnhaldet"
+
+msgid "Available vocabularies and ontologies"
+msgstr "Tilgjengelege vokabular og ontologiar"
+
+msgid "Search from selected vocabularies"
+msgstr "Søk i valgte vokabular"
+
+msgid "List vocabulary concepts alphabetically"
+msgstr "List opp omgrep frå vokabularet alfabetisk"
+
+msgid "List vocabulary concepts and groupings hierarchically"
+msgstr "List opp omgrep og grupper frå vokabularet hierarkisk"
+
+msgid "List vocabulary concepts by newest additions"
+msgstr "List opp nyaste omgrep i vokabuleret"
+
+msgid "List vocabulary concepts hierarchically"
+msgstr "List alle omgrepa i vokabularet hierarkisk"
+
+msgid "Choose alphabetical listing letter"
+msgstr "Velj ein bokstav for å vise alle omgrep som byrjar med denne bokstaven"
+
+msgid "Concept information"
+msgstr "Informasjon om omgrepet"
+
+msgid "Hierarchical listing of vocabulary concepts"
+msgstr "Hierarkisk liste over omgrepa i vokabularet"
+
+msgid "Hierarchical listing of vocabulary concepts and groupings"
+msgstr "Hierarkisk opplisting av omgrep og grupper frå vokabularet"
+
+msgid "Listing vocabulary concepts alphabetically"
+msgstr "List omgrepa i vokabularet alfabetisk"
+
+msgid "Listing vocabulary concepts by newest additions"
+msgstr "List nyaste omgrep først"
+
+msgid "Prefer using"
+msgstr "Bruk termen"
+
+msgid "Search options tab"
+msgstr "Fane for søkeval"
+
+msgid "Search results"
+msgstr "Søkeresultat"
+
+msgid "Sidebar listing: list and traverse vocabulary contents by a criterion"
+msgstr "Sidefelt: navigér i vokabularet"
+
+msgid "Subject:"
+msgstr "Emne:"
+
+msgid "Write a subject"
+msgstr "Fyll inn eit emne"
+
+msgid "Select a vocabulary"
+msgstr "Du kan velje eit vokabular"
+
+msgid ""
+"We're sorry but Skosmos doesn't work properly without JavaScript enabled. "
+"Please enable it to continue."
+msgstr "Orsak, men Skosmos fungerer ikkje ordentleg utan JavaScript. Aktiver JavaScript for å fortsetje."

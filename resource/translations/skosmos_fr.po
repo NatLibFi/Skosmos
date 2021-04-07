@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-16 10:26+0200\n"
-"PO-Revision-Date: 2020-04-09 10:25+0000\n"
-"Last-Translator: osma <osma.suominen@helsinki.fi>\n"
+"PO-Revision-Date: 2021-03-16 10:20+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: French (http://www.transifex.com/national-library-of-finland/skosmos/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -431,6 +431,18 @@ msgstr "Traductions"
 msgid "from all"
 msgstr "Partout"
 
+msgid "wgs84:lat"
+msgstr ""
+
+msgid "wgs84:lat_help"
+msgstr ""
+
+msgid "wgs84:long"
+msgstr ""
+
+msgid "wgs84:long_help"
+msgstr ""
+
 #: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:81
 #: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:90
 #: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:79
@@ -769,4 +781,69 @@ msgid "feedback_enter_name_email"
 msgstr ""
 
 msgid "concept_types"
+msgstr ""
+
+msgid "Skip to main"
+msgstr ""
+
+msgid "Available vocabularies and ontologies"
+msgstr ""
+
+msgid "Search from selected vocabularies"
+msgstr ""
+
+msgid "List vocabulary concepts alphabetically"
+msgstr ""
+
+msgid "List vocabulary concepts and groupings hierarchically"
+msgstr ""
+
+msgid "List vocabulary concepts by newest additions"
+msgstr ""
+
+msgid "List vocabulary concepts hierarchically"
+msgstr ""
+
+msgid "Choose alphabetical listing letter"
+msgstr ""
+
+msgid "Concept information"
+msgstr ""
+
+msgid "Hierarchical listing of vocabulary concepts"
+msgstr ""
+
+msgid "Hierarchical listing of vocabulary concepts and groupings"
+msgstr ""
+
+msgid "Listing vocabulary concepts alphabetically"
+msgstr ""
+
+msgid "Listing vocabulary concepts by newest additions"
+msgstr ""
+
+msgid "Prefer using"
+msgstr ""
+
+msgid "Search options tab"
+msgstr ""
+
+msgid "Search results"
+msgstr ""
+
+msgid "Sidebar listing: list and traverse vocabulary contents by a criterion"
+msgstr ""
+
+msgid "Subject:"
+msgstr ""
+
+msgid "Write a subject"
+msgstr ""
+
+msgid "Select a vocabulary"
+msgstr ""
+
+msgid ""
+"We're sorry but Skosmos doesn't work properly without JavaScript enabled. "
+"Please enable it to continue."
 msgstr ""
