@@ -206,22 +206,21 @@ class WebController extends Controller
         $vocab = $request->getVocab();
 
         $feedbackSent = false;
-        $feedbackMsg = null;
         if ($request->getQueryParamPOST('message')) {
             $feedbackSent = true;
             $feedbackMsg = $request->getQueryParamPOST('message');
-        }
-        $feedbackName = $request->getQueryParamPOST('name');
-        $feedbackEmail = $request->getQueryParamPOST('email');
-        $msgSubject = $request->getQueryParamPOST('msgsubject');
-        $feedbackVocab = $request->getQueryParamPOST('vocab');
-        $feedbackVocabEmail = ($feedbackVocab !== null && $feedbackVocab !== '') ?
-            $this->model->getVocabulary($feedbackVocab)->getConfig()->getFeedbackRecipient() : null;
-        // if the hidden field has been set a value we have found a spam bot
-        // and we do not actually send the message.
-        if ($this->honeypot->validateHoneypot($request->getQueryParamPOST('item-description')) &&
-            $this->honeypot->validateHoneytime($request->getQueryParamPOST('user-captcha'), $this->model->getConfig()->getHoneypotTime())) {
-            $this->sendFeedback($request, $feedbackMsg, $msgSubject, $feedbackName, $feedbackEmail, $feedbackVocab, $feedbackVocabEmail);
+            $feedbackName = $request->getQueryParamPOST('name');
+            $feedbackEmail = $request->getQueryParamPOST('email');
+            $msgSubject = $request->getQueryParamPOST('msgsubject');
+            $feedbackVocab = $request->getQueryParamPOST('vocab');
+            $feedbackVocabEmail = ($feedbackVocab !== null && $feedbackVocab !== '') ?
+                $this->model->getVocabulary($feedbackVocab)->getConfig()->getFeedbackRecipient() : null;
+            // if the hidden field has been set a value we have found a spam bot
+            // and we do not actually send the message.
+            if ($this->honeypot->validateHoneypot($request->getQueryParamPOST('item-description')) &&
+                $this->honeypot->validateHoneytime($request->getQueryParamPOST('user-captcha'), $this->model->getConfig()->getHoneypotTime())) {
+                $this->sendFeedback($request, $feedbackMsg, $msgSubject, $feedbackName, $feedbackEmail, $feedbackVocab, $feedbackVocabEmail);
+            }
         }
         echo $template->render(
             array(
