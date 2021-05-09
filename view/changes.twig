@@ -5,15 +5,17 @@
 <div class="sidebar-buttons">
   <h2 class="sr-only">{% trans "Sidebar listing: list and traverse vocabulary contents by a criterion" %}</h2>
   <ul class="nav nav-tabs{% if vocab.config.showChangeList and vocab.config.groupClassURI %} nav-four-wide{% endif %}">
+    {% set css_class = ['nav-link'] %}
     {% if request.vocab.config.showAlphabeticalIndex %}
     <h3 class="sr-only">{% trans "List vocabulary concepts alphabetically" %}</h3>
-    <li id="alpha"><a href="{{ request.vocabid }}/{{ request.lang }}/index{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% if vocab.config.showChangeList and vocab.config.groupClassURI %}{% trans 'A-Z' %}{% else %}{% trans "Alpha-nav" %}{% endif %}</a></li>
+    <li id="alpha" class="nav-item"><a class="{{ css_class|join(' ') }}" href="{{ request.vocabid }}/{{ request.lang }}/index{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% if vocab.config.showChangeList and vocab.config.groupClassURI %}{% trans 'A-Z' %}{% else %}{% trans "Alpha-nav" %}{% endif %}</a></li>
     {% endif %}
     <h3 class="sr-only">{% trans "List vocabulary concepts hierarchically" %}</h3>
-    <li id="hierarchy{% if not vocab.config.showHierarchy %}-disabled{% endif %}"{% if active_tab == 'hierarchy' %} class="active"{% endif %}><a href="#" id="hier-trigger"{% if not vocab.config.showHierarchy %} title="{% trans 'hierarchy-disabled-help' %}"{% endif %}>{% trans "Hier-nav" %}</a></li>
+    {% if active_tab == 'hierarchy' %}{% set css_class = css_class|merge(['active']) %}{% endif %}
+    <li id="hierarchy{% if not vocab.config.showHierarchy %}-disabled{% endif %}" class="nav-item"><a class="{{ css_class|join(' ') }}" href="#" id="hier-trigger"{% if not vocab.config.showHierarchy %} title="{% trans 'hierarchy-disabled-help' %}"{% endif %}>{% trans "Hier-nav" %}</a></li>
     {% if vocab.config.groupClassURI %}
     <h3 class="sr-only">{% trans "List vocabulary concepts and groupings hierarchically" %}</h3>
-    <li id="groups"><a href="{{ request.vocabid }}/{{ request.lang }}/groups{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Group-nav" %}</a></li>
+    <li id="groups" class="nav-item"><a class="{{ css_class|join(' ') }}" href="{{ request.vocabid }}/{{ request.lang }}/groups{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Group-nav" %}</a></li>
     {% endif %}
     {% if vocab.config.showChangeList %}
     {% if vocab.config.showDeprecatedChanges %}
@@ -21,7 +23,8 @@
     <li id="changes" class="active"><a href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Changes-and-deprecations-nav" %}</a></li>
     {% else %}
     <h3 class="sr-only">{% trans "List vocabulary concepts by newest additions" %}</h3>
-    <li id="changes" class="active"><a href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Changes-nav" %}</a></li>
+    {% set css_class = css_class|merge(['active']) %}
+    <li id="changes" class="nav-item"><a class="{{ css_class|join(' ') }}" href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Changes-nav" %}</a></li>
     {% endif %}
     {% endif %}
   </ul>

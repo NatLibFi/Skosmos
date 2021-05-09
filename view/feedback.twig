@@ -19,31 +19,31 @@
         {% if vocabList %}
         <input id="feedback-vocid-input" name="vocab" type="hidden"{% if request.vocabid %} value="{{ request.vocabid }}"{% endif %}>
         <div class="dropdown">
-          <button class="btn btn-default dropdown-toggle" type="button" id="feedback-vocid" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" aria-label="{% trans %}Select a vocabulary{% endtrans %}">
+          <button class="btn btn-default dropdown-toggle" type="button" id="feedback-vocid" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true" aria-label="{% trans %}Select a vocabulary{% endtrans %}">
             {% if request.vocabid %}{{ request.vocab.title }}{% else %}{% trans %}Not to a specific vocabulary{% endtrans %}{% endif %}
             <span class="caret"></span>
           </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-            <li><a href="#">{% trans %}Not to a specific vocabulary{% endtrans %}</a></li>
-            {% for option in vocabList %}<li><a href="#" data-vocid="{{ option.id }}">{{ option.title }}</a></li>{% endfor %}
+          <ul class="dropdown-menu" aria-labelledby="feedback-vocid">
+            <li class="dropdown-item"><a href="#">{% trans %}Not to a specific vocabulary{% endtrans %}</a></li>
+            {% for option in vocabList %}<li class="dropdown-item"><a href="#" data-vocid="{{ option.id }}">{{ option.title }}</a></li>{% endfor %}
           </ul>
         </div>
         {% endif %}
         <p>{% trans "feedback_enter_name_email" %}</p>
         <p>
-          <label for="name">{% trans %}Name:{% endtrans %}</label>
+          <label for="name" class="form-label">{% trans %}Name:{% endtrans %}</label>
           <input id="name" class="form-control" type="text" size="40" name="name" placeholder="{% trans %}Enter your name{% endtrans %}">
         </p>
         <p>
-          <label for="email">{% trans %}E-mail:{% endtrans %}</label>
+          <label for="email" class="form-label">{% trans %}E-mail:{% endtrans %}</label>
           <input id="email" class="form-control" type="text" size="40" name="email" placeholder="{% trans %}Enter your e-mail address{% endtrans %}">
         </p>
         <p>
-          <label for="msgsubject">{% trans %}Subject:{% endtrans %} *</label>
+          <label for="msgsubject" class="form-label">{% trans %}Subject:{% endtrans %} *</label>
           <input id="msgsubject" class="form-control" type="text" size="40" name="msgsubject" placeholder="{% trans %}Write a subject{% endtrans %}" >
         </p>
         <p>
-          <label for="message">{% trans %}Message:{% endtrans %} *</label>
+          <label for="message" class="form-label">{% trans %}Message:{% endtrans %} *</label>
           <textarea id="message" class="form-control" name="message"></textarea>
         </p>
         {{ honeypot.generate('item-description', 'user-captcha')|raw }}
