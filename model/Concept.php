@@ -530,13 +530,12 @@ class Concept extends VocabularyDataObject implements Modifiable
                 // note that this imply that the property has an rdf:type declared for the query to work
                 if(!$is_well_known && !$proplabel) {
                     $envLangLabels = $this->model->getDefaultSparql()->queryLabel($longUri, $this->getEnvLang());
-                    
-                    $defaultPropLabel = $this->model->getDefaultSparql()->queryLabel($longUri, '');
 
 					if($envLangLabels) {
 						$proplabel = $envLangLabels[$this->getEnvLang()];
                     } else {
-						if($defaultPropLabel) {
+                        $defaultPropLabel = $this->model->getDefaultSparql()->queryLabel($longUri, '');
+						if(isset($defaultPropLabel[''])) {
 							$proplabel = $defaultPropLabel[''];
 						}
 					}
