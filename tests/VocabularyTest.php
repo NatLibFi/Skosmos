@@ -195,6 +195,15 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
   }
 
   /**
+   * @covers Vocabulary::getAlphabet
+   */
+  public function testGetAlphabetIssue805() {
+    $vocab = $this->model->getVocabulary('collation');
+    $alpha = $vocab->getAlphabet('fi');
+    $this->assertEquals(array("A", "T", "Ä"), $alpha);
+  }
+
+  /**
    * @covers Vocabulary::getInfo
    * @covers Vocabulary::parseVersionInfo
    */

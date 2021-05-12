@@ -494,7 +494,8 @@ class Vocabulary extends DataObject implements Modifiable
                 $specials = true;
             }
         }
-        usort($letters, 'strcoll');
+        $coll = collator_create($clang);
+        $coll->sort($letters);
         if ($specials) {
             $letters[] = '!*';
         }
