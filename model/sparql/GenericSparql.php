@@ -178,17 +178,23 @@ class GenericSparql {
      */
     private function generateCountConceptsQuery($array, $group) {
         $fcl = $this->generateFromClause();
-        $optional = $array ? "UNION { ?type rdfs:subClassOf* <$array> }" : '';
-        $optional .= $group ? "UNION { ?type rdfs:subClassOf* <$group> }" : '';
+        $optional = $array ? "(<$array>) " : '';
+        $optional .= $group ? "(<$group>)" : '';
         $query = <<<EOQ
-      SELECT (COUNT(?conc) as ?c) ?type ?typelabel $fcl WHERE {
-        { ?conc a ?type .
-        { ?type rdfs:subClassOf* skos:Concept . } UNION { ?type rdfs:subClassOf* skos:Collection . } $optional }
-        OPTIONAL { ?type rdfs:label ?typelabel . }
-      }
-GROUP BY ?type ?typelabel
-EOQ;
-        return $query;
+      SELECT (COUNT(DISTINCT(?conc)) as ?c) ?type ?typelabel (COUNT(?depr) as ?deprcount) $fcl WHERE {
+        VALUES (?value) { (skos:Concept) (skos:Collection) $optional }
+  	    ?type rdfs:subClassOf* ?value
+        { ?type ^a ?conc .
+          OPTIONAL { ?conc owl:deprecated ?depr .
+  		    FILTER (?depr = True)
+          }
+        } UNION {SELECT * WHERE {
+            ?type rdfs:label ?typelabel
+            }
+          }
+      } GROUP BY ?type ?typelabel
+    EOQ;
+    return $query;
     }
 
     /**
