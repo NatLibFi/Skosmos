@@ -11,3 +11,4 @@ tests/jena-fuseki*
 .project
 .DS_Store
 .phpunit.result.cache
+.git
