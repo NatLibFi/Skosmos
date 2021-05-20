@@ -9,6 +9,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
+    - name: Set up Fuseki
+      run: |
+        cd tests
+        sh ./init_fuseki.sh
+
     - name: Install Composer dependencies
       uses: php-actions/composer@v5
       with:
