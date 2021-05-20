@@ -1079,9 +1079,8 @@ class RestController extends Controller
     {
         $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
         $limit = ($request->getQueryParam('limit') && is_numeric($request->getQueryParam('limit')) && $request->getQueryParam('limit') >= 0) ? $request->getQueryParam('limit') : 200;
-        $showDeprecated = $request->getVocab()->getConfig()->getShowDeprecatedChanges();
 
-        return $this->changedConcepts($request, 'dc:created', $offset, $limit, $showDeprecated);
+        return $this->changedConcepts($request, 'dc:created', $offset, $limit);
     }
 
     /**
@@ -1093,9 +1092,8 @@ class RestController extends Controller
     {
         $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
         $limit = ($request->getQueryParam('limit') && is_numeric($request->getQueryParam('limit')) && $request->getQueryParam('limit') >= 0) ? $request->getQueryParam('limit') : 200;
-        $showDeprecated = $request->getVocab()->getConfig()->getShowDeprecatedChanges();
 
-        return $this->changedConcepts($request, 'dc:modified', $offset, $limit, $showDeprecated);
+        return $this->changedConcepts($request, 'dc:modified', $offset, $limit);
     }
 
     /**
@@ -1112,9 +1110,18 @@ class RestController extends Controller
         $simpleChangeList = array();
         foreach($changeList as $conceptInfo) {
             if (array_key_exists('date', $conceptInfo)) {
-                $simpleChangeList[] =  array( 'uri' => $conceptInfo['uri'],
-                                               'prefLabel' => $conceptInfo['prefLabel'],
-                                               'date' => $conceptInfo['date']->format("Y-m-d\TH:i:sO") );
+                if (array_key_exists('replacedBy', $conceptInfo)) {
+                    $simpleChangeList[] =  array(
+                        'uri' => $conceptInfo['uri'],
+                        'prefLabel' => $conceptInfo['prefLabel'],
+                        'date' => $conceptInfo['date']->format("Y-m-d\TH:i:sO"),
+                        'replacedBy' => $conceptInfo['replacedBy'] );
+                } else {
+                    $simpleChangeList[] =  array(
+                        'uri' => $conceptInfo['uri'],
+                        'prefLabel' => $conceptInfo['prefLabel'],
+                        'date' => $conceptInfo['date']->format("Y-m-d\TH:i:sO") );
+                }
             }
         }
         return $this->returnJson(array_merge_recursive($this->context,

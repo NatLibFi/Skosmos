@@ -2257,12 +2257,13 @@ EOQ;
         $offset = ($offset) ? 'OFFSET ' . $offset : '';
 
         //Additional clauses when deprecated concepts need to be included in the results
+        $optionVar = ($showDeprecated) ? '?replacedBy' : '';
         $optionStart = ($showDeprecated) ? 'OPTIONAL {' : '';
         $optionEnd = ($showDeprecated) ? '}' : '';
-        $deprecatedOption = ($showDeprecated) ? 'OPTIONAL { ?concept <http://purl.org/dc/terms/modified> ?date ; owl:deprecated TRUE }' : '';
+        $deprecatedOption = ($showDeprecated) ? 'OPTIONAL { ?concept dc:modified ?date ; owl:deprecated TRUE ; dc:isReplacedBy ?replacedBy }' : '';
 
         $query = <<<EOQ
-SELECT DISTINCT ?concept ?date ?label $fcl
+SELECT DISTINCT ?concept ?date ?label $optionVar $fcl
 WHERE {
   ?concept a skos:Concept .
   ?concept skos:prefLabel ?label .
@@ -2298,6 +2299,10 @@ EOQ;
                     //don't record concepts with malformed dates e.g. 1986-21-00
                     continue;
                 }
+            }
+
+            if (isset($row->replacedBy)) {
+                $concept['replacedBy'] = $row->replacedBy->getURI();
             }
 
             $ret[] = $concept;
