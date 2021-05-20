@@ -274,6 +274,7 @@
 	void:uriSpace "http://www.skosmos.skos/changes/";
 	void:sparqlEndpoint <http://localhost:13030/skosmos-test/sparql> ;
 	skosmos:language "en";
+	skosmos:showDeprecatedChanges true ;
 	skosmos:sparqlGraph <http://www.skosmos.skos/changes/> .
 
 :prefix a skosmos:Vocabulary, void:Dataset ;

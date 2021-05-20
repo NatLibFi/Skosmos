@@ -369,7 +369,8 @@ EOD;
               { 
                   "uri": "http://www.skosmos.skos/changes/d4",
                   "prefLabel": "Fourth date",
-                  "date": "2011-12-12T09:26:39+0000"
+                  "date": "2021-01-03T12:46:33+0000",
+                  "replacedBy": "http://www.skosmos.skos/changes/d3"
               },
               {
                   "uri": "http://www.skosmos.skos/changes/d3",

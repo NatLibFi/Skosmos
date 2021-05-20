@@ -28,7 +28,11 @@
       {% for day,concepts in changeList %}
         <h5 class="versal versal-bold">{{day}}</h5>
         {% for concept in concepts %}
+          {% if concept.replacedBy is defined %}
+          <li><a href="{{ concept.uri | link_url(vocab,request.lang,'page', request.contentLang) }}"><del>{{ concept.prefLabel }}</del></a></li>
+          {% else %}
           <li><a href="{{ concept.uri | link_url(vocab,request.lang,'page', request.contentLang) }}">{{ concept.prefLabel }}</a></li>
+          {% endif %}
         {% endfor %}
       {% endfor %}
     </ul>

@@ -119,7 +119,6 @@ class GenericSparql {
         }
         return $clause;
     }
-
     protected function initializeHttpClient() {
         // configure the HTTP client used by EasyRdf\Sparql\Client
         $httpclient = EasyRdf\Http::getDefaultHttpClient();
@@ -2229,19 +2228,28 @@ EOQ;
      * @param string $lang language of labels to return
      * @param int $offset offset of results to retrieve; 0 for beginning of list
      * @param int $limit maximum number of results to return
+     * @param boolean $showDeprecated whether to include deprecated concepts in the change list
      * @return string sparql query
      */
-    private function generateChangeListQuery($prop, $lang, $offset, $limit=200) {
+    private function generateChangeListQuery($prop, $lang, $offset, $limit=200, $showDeprecated) {
         $fcl = $this->generateFromClause();
         $offset = ($offset) ? 'OFFSET ' . $offset : '';
 
+        //Additional clauses when deprecated concepts need to be included in the results
+        $optionVar = ($showDeprecated) ? '?replacedBy' : '';
+        $optionStart = ($showDeprecated) ? 'OPTIONAL {' : '';
+        $optionEnd = ($showDeprecated) ? '}' : '';
+        $deprecatedOption = ($showDeprecated) ? 'OPTIONAL { ?concept dc:modified ?date ; owl:deprecated TRUE ; dc:isReplacedBy ?replacedBy }' : '';
+
         $query = <<<EOQ
-SELECT DISTINCT ?concept ?date ?label $fcl
+SELECT DISTINCT ?concept ?date ?label $optionVar $fcl
 WHERE {
   ?concept a skos:Concept .
-  ?concept $prop ?date .
   ?concept skos:prefLabel ?label .
   FILTER (langMatches(lang(?label), '$lang'))
+  $optionStart ?concept $prop ?date .
+  MINUS{ ?concept owl:deprecated TRUE } $optionEnd
+  $deprecatedOption
 }
 ORDER BY DESC(YEAR(?date)) DESC(MONTH(?date)) LCASE(?label)
 LIMIT $limit $offset
@@ -2272,6 +2280,10 @@ EOQ;
                 }
             }
 
+            if (isset($row->replacedBy)) {
+                $concept['replacedBy'] = $row->replacedBy->getURI();
+            }
+
             $ret[] = $concept;
         }
         return $ret;
@@ -2283,10 +2295,11 @@ EOQ;
      * @param string $lang language of labels to return
      * @param int $offset offset of results to retrieve; 0 for beginning of list
      * @param int $limit maximum number of results to return
+     * @param boolean $showDeprecated whether to include deprecated concepts in the change list
      * @return array Result array
      */
-    public function queryChangeList($prop, $lang, $offset, $limit) {
-        $query = $this->generateChangeListQuery($prop, $lang, $offset, $limit);
+    public function queryChangeList($prop, $lang, $offset, $limit, $showDeprecated=false) {
+        $query = $this->generateChangeListQuery($prop, $lang, $offset, $limit, $showDeprecated);
 
         $result = $this->query($query);
         return $this->transformChangeListResults($result);

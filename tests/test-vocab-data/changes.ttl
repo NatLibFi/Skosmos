@@ -11,17 +11,22 @@
 
 changes:d1 a skos:Concept ;
     dc:created "2000-01-03T12:46:39"^^xsd:dateTime ;
+    dc:modified "2021-01-03T12:46:30"^^xsd:dateTime ;
     skos:prefLabel "A date"@en .
 
 changes:d2 a skos:Concept ;
     dc:created "2010-02-12T15:26:39"^^xsd:dateTime ;
+    dc:modified "2021-01-03T12:46:31"^^xsd:dateTime ;
     skos:prefLabel "Second date"@en .
 
 changes:d3 a skos:Concept ;
     dc:created "2010-02-12T10:26:39"^^xsd:dateTime ;
+    dc:modified "2021-01-03T12:46:32"^^xsd:dateTime ;
     skos:prefLabel "Hurr Durr"@en .
 
 changes:d4 a skos:Concept ;
+    owl:deprecated true ;
+    dc:isReplacedBy changes:d3 ;
     dc:created "2011-12-12T09:26:39"^^xsd:dateTime ;
+    dc:modified "2021-01-03T12:46:33"^^xsd:dateTime ;
     skos:prefLabel "Fourth date"@en .
-
