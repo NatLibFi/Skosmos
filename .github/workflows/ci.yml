@@ -11,4 +11,7 @@ jobs:
     
     - uses: php-actions/composer@v5
 
-    - uses: php-actions/phpunit@v2
+    - name: PHPUnit tests
+      uses: php-actions/phpunit@v2
+      with:
+        php_extensions: gettext intl xsl
