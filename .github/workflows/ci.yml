@@ -24,3 +24,5 @@ jobs:
       uses: php-actions/phpunit@v2
       with:
         version: 8.5
+        php_version: 7.4
+        php_extensions: gettext intl xsl
