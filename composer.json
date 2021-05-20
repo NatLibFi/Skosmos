@@ -87,5 +87,8 @@
   },
   "autoload": {
     "classmap": ["controller/", "model/", "model/sparql/"]
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit"
   }
 }
