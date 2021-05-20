@@ -193,7 +193,7 @@ class GenericSparql {
             }
           }
       } GROUP BY ?type ?typelabel
-    EOQ;
+EOQ;
     return $query;
     }
 
@@ -209,10 +209,16 @@ class GenericSparql {
             if (!isset($row->type)) {
                 continue;
             }
-            $ret[$row->type->getUri()]['type'] = $row->type->getUri();
-            $ret[$row->type->getUri()]['count'] = $row->c->getValue();
+            $typeURI = $row->type->getUri();
+            $ret[$typeURI]['type'] = $typeURI;
+
+            if (!isset($row->typelabel)) {
+                $ret[$typeURI]['count'] = $row->c->getValue();
+                $ret[$typeURI]['deprecatedCount'] = $row->deprcount->getValue();
+            }
+
             if (isset($row->typelabel) && $row->typelabel->getLang() === $lang) {
-                $ret[$row->type->getUri()]['label'] = $row->typelabel->getValue();
+                $ret[$typeURI]['label'] = $row->typelabel->getValue();
             }
 
         }

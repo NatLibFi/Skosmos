@@ -203,7 +203,7 @@ $(function() { // DOCUMENT READY
     $.ajax({
       url : rest_base_url + vocab + '/vocabularyStatistics',
       req_kind: $.ajaxQ.requestKind.GLOBAL,
-      data: $.param({'lang' : content_lang}),
+      data: $.param({'lang' : lang}),
       success : function(data) {
         var $spinner = $('#counts tr:nth-of-type(2)');
         var typeStats = '<tr><td class="count-type versal">' + data.concepts.label + '</td><td class="versal">' + data.concepts.count +'</td></tr>';
@@ -212,6 +212,7 @@ $(function() { // DOCUMENT READY
           var label = sub.label ? sub.label : sub.type;
           typeStats += '<tr><td class="count-type versal">&nbsp;&bull;&nbsp;' + label + '</td><td class="versal">' + sub.count + '</td></tr>';
         }
+        typeStats += '<tr><td class="count-type versal">&nbsp;&bull;&nbsp;' + depr_trans + '</td><td class="versal">' + data.concepts.deprecatedCount + '</td></tr>';
         if (data.conceptGroups) {
           typeStats += '<tr><td class="count-type versal">' + data.conceptGroups.label + '</td><td class="versal">' + data.conceptGroups.count +'</td></tr>';
         }

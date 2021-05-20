@@ -292,7 +292,7 @@ class RestController extends Controller
                 'class' => 'http://www.w3.org/2004/02/skos/core#Concept',
                 'label' => gettext('skos:Concept'),
                 'count' => isset($vocabStats['http://www.w3.org/2004/02/skos/core#Concept']) ? $vocabStats['http://www.w3.org/2004/02/skos/core#Concept']['count'] : 0,
-                'deprecatedCount' => isset($vocabStats['http://www.w3.org/2004/02/skos/core#Concept']) ? $vocabStats['http://www.w3.org/2004/02/skos/core#Concept']['deprcount'] : 0,
+                'deprecatedCount' => isset($vocabStats['http://www.w3.org/2004/02/skos/core#Concept']) ? $vocabStats['http://www.w3.org/2004/02/skos/core#Concept']['deprecatedCount'] : 0,
             ),
             'subTypes' => $subTypes,
         );
@@ -302,7 +302,7 @@ class RestController extends Controller
                 'class' => 'http://www.w3.org/2004/02/skos/core#Collection',
                 'label' => gettext('skos:Collection'),
                 'count' => $vocabStats['http://www.w3.org/2004/02/skos/core#Collection']['count'],
-                'deprecatedCount' => $vocabStats['http://www.w3.org/2004/02/skos/core#Collection']['deprcount'],
+                'deprecatedCount' => $vocabStats['http://www.w3.org/2004/02/skos/core#Collection']['deprecatedCount'],
             );
 
         } else if (isset($vocabStats[$groupClass])) {
@@ -310,14 +310,14 @@ class RestController extends Controller
                 'class' => $groupClass,
                 'label' => isset($vocabStats[$groupClass]['label']) ? $vocabStats[$groupClass]['label'] : gettext(EasyRdf\RdfNamespace::shorten($groupClass)),
                 'count' => $vocabStats[$groupClass]['count'],
-                'deprecatedCount' => $vocabStats[$groupClass]['deprcount'],
+                'deprecatedCount' => $vocabStats[$groupClass]['deprecatedCount'],
             );
         } else if (isset($vocabStats[$arrayClass])) {
             $ret['arrays'] = array(
                 'class' => $arrayClass,
                 'label' => isset($vocabStats[$arrayClass]['label']) ? $vocabStats[$arrayClass]['label'] : gettext(EasyRdf\RdfNamespace::shorten($arrayClass)),
                 'count' => $vocabStats[$arrayClass]['count'],
-                'deprecatedCount' => $vocabStats[$arrayClass]['deprcount'],
+                'deprecatedCount' => $vocabStats[$arrayClass]['deprecatedCount'],
             );
         }
 

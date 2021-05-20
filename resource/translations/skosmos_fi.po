@@ -850,3 +850,6 @@ msgstr "Voit valita halutessasi sanaston"
 
 msgid "We're sorry but Skosmos doesn't work properly without JavaScript enabled. Please enable it to continue."
 msgstr "Pahoittelut, mutta Skosmos ei toimi kunnolla ilman JavaScript-tukea. Ole hyvä ja ota se käyttöön."
+
+msgid "Deprecated concept"
+msgstr "Käytöstä poistettu käsite"
