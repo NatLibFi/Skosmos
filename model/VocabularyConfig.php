@@ -561,6 +561,15 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
+     * Returns a boolean value set in the config.ttl config.
+     * @return boolean
+     */
+    public function getShowDeprecatedChanges()
+    {
+        return $this->getBoolean('skosmos:showDeprecatedChanges', false);
+    }
+
+    /**
      * Returns the vocabulary dc:type value(s) with their labels and uris, if set in the vocabulary configuration.
      * @return array of objects or an empty array
      */

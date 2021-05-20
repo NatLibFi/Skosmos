@@ -661,7 +661,8 @@ class Vocabulary extends DataObject implements Modifiable
      */
     public function getChangeList($prop, $clang, $offset, $limit)
     {
-      return $this->getSparql()->queryChangeList($prop, $clang, $offset, $limit);
+        $showDeprecated = $this->getConfig()->getShowDeprecatedChanges();
+        return $this->getSparql()->queryChangeList($prop, $clang, $offset, $limit, $showDeprecated);
     }
 
     public function getTitle($lang=null) {
