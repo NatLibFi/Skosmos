@@ -22,3 +22,5 @@ jobs:
 
     - name: Run PHPUnit tests
       uses: php-actions/phpunit@v2
+      with:
+        version: 8.5
