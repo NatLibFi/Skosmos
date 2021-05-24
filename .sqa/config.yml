@@ -1,0 +1,9 @@
+config:
+  project_repos:
+    myrepo:
+      repo: 'https://github.com/EOSC-synergy/Skosmos'
+sqa_criteria:
+  qc_style:
+     repos:
+       myrepo:
+         container: skosmos
