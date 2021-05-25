@@ -189,6 +189,8 @@ class GlobalConfig extends BaseConfig {
         $endpoint = $this->resource->get('skosmos:sparqlEndpoint');
         if ($endpoint) {
             return $endpoint->getUri();
+        } elseif (getenv('SKOSMOS_SPARQL_ENDPOINT')) {
+            return getenv('SKOSMOS_SPARQL_ENDPOINT');
         } else {
             return 'http://localhost:3030/ds/sparql';
         }
