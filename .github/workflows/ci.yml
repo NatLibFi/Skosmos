@@ -9,8 +9,9 @@ jobs:
     services:
       fuseki:
         image: stain/jena-fuseki
-        ports:
-          - 13030:3030
+
+    env:
+      SKOSMOS_SPARQL_ENDPOINT: http://fuseki:3030/skosmos-test/sparql
 
     steps:
     - uses: actions/checkout@v2
