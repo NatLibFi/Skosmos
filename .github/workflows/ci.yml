@@ -9,9 +9,7 @@ jobs:
     services:
       fuseki:
         image: stain/jena-fuseki
-
-    env:
-      SKOSMOS_SPARQL_ENDPOINT: http://fuseki:3030/skosmos-test/sparql
+      ports: 13030:3030
 
     steps:
     - uses: actions/checkout@v2
@@ -23,7 +21,7 @@ jobs:
         php_extensions: gettext intl xsl
 
     - name: Run PHPUnit tests
-      uses: php-actions/phpunit@v2
+      uses: osma/phpunit@v1
       with:
         version: 8.5
         php_version: 7.4
