@@ -22,7 +22,7 @@ jobs:
         php_extensions: gettext intl xsl
 
     - name: Run PHPUnit tests
-      uses: osma/phpunit@v2-network-host
+      uses: osma/phpunit@v2-network-host-debug
       with:
         version: 8.5
         php_version: 7.4
