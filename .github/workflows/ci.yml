@@ -9,7 +9,8 @@ jobs:
     services:
       fuseki:
         image: stain/jena-fuseki
-        ports: 13030:3030
+        ports:
+          - 13030:3030
 
     steps:
     - uses: actions/checkout@v2
