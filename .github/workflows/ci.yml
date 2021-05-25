@@ -6,14 +6,12 @@ jobs:
   build-test:
     runs-on: ubuntu-latest
 
-    services:
-      fuseki:
-        image: stain/jena-fuseki
-        ports:
-          - 13030:3030
-
     steps:
-    - uses: actions/checkout@v2
+    - name: Check out repository code
+      uses: actions/checkout@v2
+
+    - name: Start up Fuseki
+      run: cd tests; sh ./init_fuseki.sh
     
     - name: Install Composer dependencies
       uses: php-actions/composer@v5
