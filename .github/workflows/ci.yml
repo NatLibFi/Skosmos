@@ -1,0 +1,58 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php_version: [7.2, 7.3, 7.4]
+      fail-fast: false
+
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v2
+
+    - name: Cache Fuseki installation
+      uses: actions/cache@v2
+      with:
+        path: tests/apache-jena-fuseki-*
+        key: fuseki-${{ hashFiles('tests/init_fuseki.sh') }}
+
+    - name: Start up Fuseki
+      run: cd tests; sh ./init_fuseki.sh
+    
+    - name: Cache Composer dependencies
+      uses: actions/cache@v2
+      with:
+        path: |
+          /tmp/composer-cache
+          vendor
+        key: ${{ runner.os }}-php${{ matrix.php_version}}-${{ hashFiles('**/composer.json') }}
+        restore-keys: |
+          ${{ runner.os }}-php${{ matrix.php_version}}-
+
+    - name: Install Composer dependencies
+      uses: php-actions/composer@v5
+      with:
+        php_version: ${{ matrix.php_version }}
+        php_extensions: gettext intl xsl pcov
+
+    - name: Run PHPUnit tests
+      uses: osma/phpunit@v2-network-host-debug
+      with:
+        version: 8.5
+        php_version: ${{ matrix.php_version }}
+        php_extensions: gettext intl xsl pcov
+        memory_limit: 512M
+
+    - name: Publish code coverage to Code Climate
+      uses: paambaati/codeclimate-action@v2.7.5
+      env:
+        CC_TEST_REPORTER_ID: fb98170a5c7ea9cc2bbab19ff26268335e6a11a4f8267ca935e5e8ff4624886c
+      with:
+        prefix: /app
+
+    - name: Publish code coverage to Codecov
+      uses: codecov/codecov-action@v1
