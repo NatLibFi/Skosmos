@@ -13,6 +13,12 @@ jobs:
     - name: Check out repository code
       uses: actions/checkout@v2
 
+    - name: Cache Fuseki installation
+      uses: actions/cache@v2
+      with:
+        path: tests/apache-jena-fuseki-*
+        key: fuseki-${{ hashFiles('tests/init_fuseki.sh') }}
+
     - name: Start up Fuseki
       run: cd tests; sh ./init_fuseki.sh
     
