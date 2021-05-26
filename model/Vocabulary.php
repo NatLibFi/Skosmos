@@ -31,7 +31,11 @@ class Vocabulary extends DataObject implements Modifiable
      */
     public function getEndpoint()
     {
-        return $this->config->getSparqlEndpoint();
+        $endpoint = $this->config->getSparqlEndpoint();
+        if (!$endpoint) {
+            $endpoint = $this->model->getConfig()->getDefaultEndpoint();
+        }
+        return $endpoint;
     }
 
     /**
@@ -51,8 +55,8 @@ class Vocabulary extends DataObject implements Modifiable
      */
     public function getSparql()
     {
-        $endpoint = $this->config->getSparqlEndpoint();
-        $graph = $this->config->getSparqlGraph();
+        $endpoint = $this->getEndpoint();
+        $graph = $this->getGraph();
         $dialect = $this->config->getSparqlDialect();
         $dialect = $dialect ? $dialect : $this->model->getConfig()->getDefaultSparqlDialect();
 

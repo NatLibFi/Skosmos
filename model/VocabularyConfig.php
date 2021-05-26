@@ -71,24 +71,21 @@ class VocabularyConfig extends BaseConfig
     /**
      * Get the SPARQL endpoint URL for this vocabulary
      *
-     * @return string endpoint URL
+     * @return string|null endpoint URL, or null if not set
      */
     public function getSparqlEndpoint()
     {
         $endpoint = $this->resource->get('void:sparqlEndpoint');
         if ($endpoint) {
             return $endpoint->getUri();
-        } elseif (getenv('SKOSMOS_SPARQL_ENDPOINT')) {
-            return getenv('SKOSMOS_SPARQL_ENDPOINT');
-        } else {
-            return 'http://localhost:3030/ds/sparql';
         }
+        return null;
     }
 
     /**
      * Get the SPARQL graph URI for this vocabulary
      *
-     * @return string|null graph URI
+     * @return string|null graph URI, or null if not set
      */
     public function getSparqlGraph()
     {
