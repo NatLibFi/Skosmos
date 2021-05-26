@@ -1,7 +1,7 @@
 #!/bin/bash
 # Note: This script must be sourced from within bash, e.g. ". init_fuseki.sh"
 
-FUSEKI_VERSION=${FUSEKI_VERSION:-3.14.0}
+FUSEKI_VERSION=${FUSEKI_VERSION:-4.0.0}
 
 if [ "$FUSEKI_VERSION" = "SNAPSHOT" ]; then
     # find out the latest snapshot version and its download URL by parsing Apache directory listings
