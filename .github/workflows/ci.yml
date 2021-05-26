@@ -51,3 +51,5 @@ jobs:
       uses: paambaati/codeclimate-action@v2.7.5
       env:
         CC_TEST_REPORTER_ID: fb98170a5c7ea9cc2bbab19ff26268335e6a11a4f8267ca935e5e8ff4624886c
+      with:
+        prefix: ${{ github.workspace }}
