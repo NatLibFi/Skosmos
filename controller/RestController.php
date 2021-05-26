@@ -259,7 +259,8 @@ class RestController extends Controller
         $this->setLanguageProperties($request->getLang());
         $arrayClass = $request->getVocab()->getConfig()->getArrayClassURI();
         $groupClass = $request->getVocab()->getConfig()->getGroupClassURI();
-        $vocabStats = $request->getVocab()->getStatistics($request->getQueryParam('lang'), $arrayClass, $groupClass);
+        $queryLang = $request->getQueryParam('lang') ?? $request->getLang();
+        $vocabStats = $request->getVocab()->getStatistics($queryLang, $arrayClass, $groupClass);
         $types = array('http://www.w3.org/2004/02/skos/core#Concept', 'http://www.w3.org/2004/02/skos/core#Collection', $arrayClass, $groupClass);
         $subTypes = array();
         foreach ($vocabStats as $subtype) {
