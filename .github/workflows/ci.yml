@@ -5,6 +5,9 @@ on: [push]
 jobs:
   build-test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php_version: [7.2, 7.3, 7.4]
 
     steps:
     - name: Check out repository code
@@ -16,12 +19,12 @@ jobs:
     - name: Install Composer dependencies
       uses: php-actions/composer@v5
       with:
-        php_version: 7.4
+        php_version: ${{ matrix.php_version }}
         php_extensions: gettext intl xsl
 
     - name: Run PHPUnit tests
       uses: osma/phpunit@v2-network-host-debug
       with:
         version: 8.5
-        php_version: 7.4
+        php_version: ${{ matrix.php_version }}
         php_extensions: gettext intl xsl
