@@ -22,9 +22,9 @@ jobs:
         path: |
           /tmp/composer-cache
           vendor
-        key: ${{ runner.os }}-php${{ matrix.php_version}-${{ hashFiles('**/composer.json') }}
+        key: ${{ runner.os }}-php${{ matrix.php_version}}-${{ hashFiles('**/composer.json') }}
         restore-keys: |
-          ${{ runner.os }}-php${{ matrix.php_version}-
+          ${{ runner.os }}-php${{ matrix.php_version}}-
 
     - name: Install Composer dependencies
       uses: php-actions/composer@v5
