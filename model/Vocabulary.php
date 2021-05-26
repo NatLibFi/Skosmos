@@ -32,7 +32,7 @@ class Vocabulary extends DataObject implements Modifiable
     public function getEndpoint()
     {
         $endpoint = $this->config->getSparqlEndpoint();
-        if (!$endpoint) {
+        if ($endpoint === null) {
             $endpoint = $this->model->getConfig()->getDefaultEndpoint();
         }
         return $endpoint;
