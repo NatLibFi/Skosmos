@@ -41,6 +41,8 @@ jobs:
 
     - name: Run PHPUnit tests
       uses: osma/phpunit@v2-network-host-debug
+      env:
+        LANGUAGE: fr
       with:
         version: 8.5
         php_version: ${{ matrix.php_version }}
