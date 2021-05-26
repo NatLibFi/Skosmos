@@ -36,11 +36,11 @@ jobs:
       uses: php-actions/composer@v5
       with:
         php_version: ${{ matrix.php_version }}
-        php_extensions: gettext intl xsl
+        php_extensions: gettext intl xsl pcov
 
     - name: Run PHPUnit tests
       uses: osma/phpunit@v2-network-host-debug
       with:
         version: 8.5
         php_version: ${{ matrix.php_version }}
-        php_extensions: gettext intl xsl
+        php_extensions: gettext intl xsl pcov
