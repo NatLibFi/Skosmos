@@ -15,8 +15,9 @@ fi
 
 if [ ! -f "apache-jena-fuseki-$FUSEKI_VERSION/fuseki-server" ]; then
     echo "fuseki server file not found - downloading it"
-    wget --output-document=fuseki-dist.tar.gz "$fusekiurl"
-    tar -zxvf fuseki-dist.tar.gz
+    wget --no-verbose --output-document=fuseki-dist.tar.gz "$fusekiurl"
+    echo "uncompressing fuseki distribution"
+    tar -zxf fuseki-dist.tar.gz
 fi
 
 cd "apache-jena-fuseki-$FUSEKI_VERSION"
