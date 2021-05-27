@@ -29,6 +29,7 @@ jobs:
         path: |
           /tmp/composer-cache
           vendor
+          components
         key: ${{ runner.os }}-php${{ matrix.php_version}}-${{ hashFiles('**/composer.json') }}
         restore-keys: |
           ${{ runner.os }}-php${{ matrix.php_version}}-
