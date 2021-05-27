@@ -31,7 +31,11 @@ class Vocabulary extends DataObject implements Modifiable
      */
     public function getEndpoint()
     {
-        return $this->resource->get('void:sparqlEndpoint')->getUri();
+        $endpoint = $this->config->getSparqlEndpoint();
+        if ($endpoint === null) {
+            $endpoint = $this->model->getConfig()->getDefaultEndpoint();
+        }
+        return $endpoint;
     }
 
     /**
@@ -41,12 +45,7 @@ class Vocabulary extends DataObject implements Modifiable
      */
     public function getGraph()
     {
-        $graph = $this->resource->get('skosmos:sparqlGraph');
-        if ($graph) {
-            $graph = $graph->getUri();
-        }
-
-        return $graph;
+        return $this->config->getSparqlGraph();
     }
 
     /**
@@ -58,8 +57,7 @@ class Vocabulary extends DataObject implements Modifiable
     {
         $endpoint = $this->getEndpoint();
         $graph = $this->getGraph();
-        $dialect = $this->resource->get('skosmos:sparqlDialect');
-        $dialect = $dialect ? $dialect->getValue() : $this->model->getConfig()->getDefaultSparqlDialect();
+        $dialect = $this->config->getSparqlDialect() ?? $this->model->getConfig()->getDefaultSparqlDialect();
 
         return $this->model->getSparqlImplementation($dialect, $endpoint, $graph);
     }

@@ -69,6 +69,50 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
+     * Get the SPARQL endpoint URL for this vocabulary
+     *
+     * @return string|null endpoint URL, or null if not set
+     */
+    public function getSparqlEndpoint()
+    {
+        $endpoint = $this->resource->get('void:sparqlEndpoint');
+        if ($endpoint) {
+            return $endpoint->getUri();
+        }
+        return null;
+    }
+
+    /**
+     * Get the SPARQL graph URI for this vocabulary
+     *
+     * @return string|null graph URI, or null if not set
+     */
+    public function getSparqlGraph()
+    {
+        $graph = $this->resource->get('skosmos:sparqlGraph');
+        if ($graph) {
+            $graph = $graph->getUri();
+        }
+
+        return $graph;
+    }
+
+    /**
+     * Get the SPARQL dialect for this vocabulary
+     *
+     * @return string|null dialect name
+     */
+    public function getSparqlDialect()
+    {
+        $dialect = $this->resource->get('skosmos:sparqlDialect');
+        if ($dialect) {
+            $dialect = $dialect->getValue();
+        }
+
+        return $dialect;
+    }
+
+    /**
      * Get the default language of this vocabulary
      * @return string default language, e.g. 'en'
      */

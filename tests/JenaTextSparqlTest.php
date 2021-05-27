@@ -17,14 +17,15 @@ class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
     $this->vocab = $this->model->getVocabulary('test');
     $this->graph = $this->vocab->getGraph();
     $this->params = $this->getMockBuilder('ConceptSearchParameters')->disableOriginalConstructor()->getMock();
-    $this->sparql = new JenaTextSparql('http://localhost:13030/skosmos-test/sparql', $this->graph, $this->model);
+    $this->endpoint = getenv('SKOSMOS_SPARQL_ENDPOINT');
+    $this->sparql = new JenaTextSparql($this->endpoint, $this->graph, $this->model);
   }
 
   /**
    * @covers JenaTextSparql::__construct
    */
   public function testConstructor() {
-    $gs = new JenaTextSparql('http://localhost:13030/skosmos-test/sparql', $this->graph, $this->model);
+    $gs = new JenaTextSparql($this->endpoint, $this->graph, $this->model);
     $this->assertInstanceOf('JenaTextSparql', $gs);
   }
 
@@ -117,7 +118,7 @@ class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
   public function testQualifiedNotationAlphabeticalList() {
     $voc = $this->model->getVocabulary('test-qualified-notation');
     $res = new EasyRdf\Resource("http://www.w3.org/2004/02/skos/core#notation");
-    $sparql = new GenericSparql('http://localhost:13030/skosmos-test/sparql', $voc->getGraph(), $this->model);
+    $sparql = new GenericSparql($this->endpoint, $voc->getGraph(), $this->model);
 
     $actual = $sparql->queryConceptsAlphabetical("a", "en", null, null, null, false, $res);
 
@@ -187,7 +188,7 @@ class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
   public function testQualifiedBroaderAlphabeticalList() {
     $voc = $this->model->getVocabulary('test-qualified-broader');
     $res = new EasyRdf\Resource("http://www.w3.org/2004/02/skos/core#broader");
-    $sparql = new JenaTextSparql('http://localhost:13030/skosmos-test/sparql', $voc->getGraph(), $this->model);
+    $sparql = new JenaTextSparql($this->endpoint, $voc->getGraph(), $this->model);
 
     $actual = $sparql->queryConceptsAlphabetical("a", "en", null, null, null, false, $res);
 
@@ -358,7 +359,7 @@ class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
   public function testQueryConceptsAlphabeticalOrderBy() {
     $vocab = $this->model->getVocabulary('collation');
     $graph = $vocab->getGraph();
-    $sparql = new JenaTextSparql('http://localhost:13030/skosmos-test/sparql', $graph, $this->model);
+    $sparql = new JenaTextSparql($this->endpoint, $graph, $this->model);
     $actual = $sparql->queryConceptsAlphabetical('t', 'fi');
     $expected = array (
       0 => array (
