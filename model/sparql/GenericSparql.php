@@ -2252,28 +2252,28 @@ EOQ;
      * @param boolean $showDeprecated whether to include deprecated concepts in the change list
      * @return string sparql query
      */
-    private function generateChangeListQuery($prop, $lang, $offset, $limit=200, $showDeprecated) {
+    private function generateChangeListQuery($prop, $lang, $offset, $limit=200, $showDeprecated=false) {
         $fcl = $this->generateFromClause();
         $offset = ($offset) ? 'OFFSET ' . $offset : '';
 
         //Additional clauses when deprecated concepts need to be included in the results
-        $optionVar = ($showDeprecated) ? '?replacedBy' : '';
-        $optionStart = ($showDeprecated) ? 'OPTIONAL {' : '';
-        $optionEnd = ($showDeprecated) ? '}' : '';
-        $deprecatedOption = ($showDeprecated) ? 'OPTIONAL { ?concept dc:modified ?date ; owl:deprecated TRUE ; dc:isReplacedBy ?replacedBy }' : '';
+        $deprecatedVars = ($showDeprecated) ? '?replacedBy ?deprecated ?replacingLabel' : '';
+        $deprecatedOptions = ($showDeprecated) ? 'UNION { ?concept dc:isReplacedBy ?replacedBy ; dc:modified ?date2 . BIND(COALESCE(?date2, ?date) AS ?date) OPTIONAL { ?replacedBy skos:prefLabel ?replacingLabel . FILTER (langMatches(lang(?replacingLabel), \''.$lang.'\')) }} OPTIONAL { ?concept owl:deprecated ?deprecated . }' : '';
 
         $query = <<<EOQ
-SELECT DISTINCT ?concept ?date ?label $optionVar $fcl
-WHERE {
-  ?concept a skos:Concept .
-  ?concept skos:prefLabel ?label .
-  FILTER (langMatches(lang(?label), '$lang'))
-  $optionStart ?concept $prop ?date .
-  MINUS{ ?concept owl:deprecated TRUE } $optionEnd
-  $deprecatedOption
-}
-ORDER BY DESC(YEAR(?date)) DESC(MONTH(?date)) LCASE(?label)
-LIMIT $limit $offset
+        SELECT ?concept ?date ?label $deprecatedVars $fcl
+        WHERE {
+            ?concept a skos:Concept ;
+	        skos:prefLabel ?label .
+            FILTER (langMatches(lang(?label), '$lang'))
+            {
+                ?concept $prop ?date .
+                MINUS { ?concept owl:deprecated True . }
+            }
+            $deprecatedOptions
+        }
+        ORDER BY DESC(YEAR(?date)) DESC(MONTH(?date)) LCASE(?label) DESC(?concept)
+        LIMIT $limit $offset
 EOQ;
 
         return $query;
@@ -2303,6 +2303,9 @@ EOQ;
 
             if (isset($row->replacedBy)) {
                 $concept['replacedBy'] = $row->replacedBy->getURI();
+            }
+            if (isset($row->replacingLabel)) {
+                $concept['replacingLabel'] = $row->replacingLabel->getValue();
             }
 
             $ret[] = $concept;

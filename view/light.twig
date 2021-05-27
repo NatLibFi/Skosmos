@@ -65,7 +65,7 @@
           {% endif %}
           {% if vocab.config.showChangeList %}
             <h3 class="sr-only">{% trans "List vocabulary concepts by newest additions" %}</h3>
-            <li id="changes"><a href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Changes-nav" %}</a></li>
+            <li id="changes"><a href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% if vocab.config.showDeprecatedChanges %}{% trans "Changes-and-deprecations-nav" %}{% else %}{% trans "Changes-nav" %}{% endif %}</a></li>
           {% endif %}
         {% else %}
           <h3 class="sr-only">{% trans "Search options tab" %}</h3>

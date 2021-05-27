@@ -370,7 +370,8 @@ EOD;
                   "uri": "http://www.skosmos.skos/changes/d4",
                   "prefLabel": "Fourth date",
                   "date": "2021-01-03T12:46:33+0000",
-                  "replacedBy": "http://www.skosmos.skos/changes/d3"
+                  "replacedBy": "http://www.skosmos.skos/changes/d3",
+                  "replacingLabel": "Hurr Durr"
               },
               {
                   "uri": "http://www.skosmos.skos/changes/d3",

@@ -1553,10 +1553,22 @@ tr.replaced-by > td > ul > li > a {
 .nav-tabs {
   background-color: #e0e4e7;
   border-bottom: none;
+  display: flex;
 }
 
 ul.nav-tabs > li {
   margin-bottom: 0;
+  box-sizing: content-box;
+  display: flex;
+}
+
+ul.nav-tabs > li > a {
+  box-sizing: content-box;
+  text-align: center;
+  flex-grow: 200;
+  align-content: stretch;
+  align-items: center;
+  display: flex;
 }
 
 .sidebar-buttons .nav-tabs > li > a, .sidebar-buttons .nav-tabs > li > p, .sidebar-buttons .nav-tabs > li.active > a {

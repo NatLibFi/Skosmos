@@ -1110,18 +1110,17 @@ class RestController extends Controller
         $simpleChangeList = array();
         foreach($changeList as $conceptInfo) {
             if (array_key_exists('date', $conceptInfo)) {
+                $concept = array(
+                    'uri' => $conceptInfo['uri'],
+                    'prefLabel' => $conceptInfo['prefLabel'],
+                    'date' => $conceptInfo['date']->format("Y-m-d\TH:i:sO") );
                 if (array_key_exists('replacedBy', $conceptInfo)) {
-                    $simpleChangeList[] =  array(
-                        'uri' => $conceptInfo['uri'],
-                        'prefLabel' => $conceptInfo['prefLabel'],
-                        'date' => $conceptInfo['date']->format("Y-m-d\TH:i:sO"),
-                        'replacedBy' => $conceptInfo['replacedBy'] );
-                } else {
-                    $simpleChangeList[] =  array(
-                        'uri' => $conceptInfo['uri'],
-                        'prefLabel' => $conceptInfo['prefLabel'],
-                        'date' => $conceptInfo['date']->format("Y-m-d\TH:i:sO") );
+                    $concept['replacedBy'] = $conceptInfo['replacedBy'];
+                    if (array_key_exists('replacingLabel', $conceptInfo)) {
+                        $concept['replacingLabel'] = $conceptInfo['replacingLabel'];
+                    }
                 }
+                $simpleChangeList[] = $concept;
             }
         }
         return $this->returnJson(array_merge_recursive($this->context,

@@ -109,6 +109,9 @@ msgstr "Tyypin mukaan"
 msgid "Changes-nav"
 msgstr "Uudet"
 
+msgid "Changes-and-deprecations-nav"
+msgstr "Uudet ja poistetut"
+
 #: /tmp/cache/587c830e6b9a0/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:122
 msgid "Clear limitations"
 msgstr "Peru rajoitukset"

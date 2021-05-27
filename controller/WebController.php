@@ -575,6 +575,14 @@ class WebController extends Controller
         $limit = ($request->getQueryParam('limit') && is_numeric($request->getQueryParam('limit')) && $request->getQueryParam('limit') >= 0) ? $request->getQueryParam('limit') : 200;
 
         $changeList = $this->getChangeList($request, $prop, $offset, $limit);
+
+        //foreach($changeList as $key => $concept) {
+            //if (isset($concept['replacedBy'])) {
+                //$replacingUri = $concept['replacedBy'];
+                //$concept['newLabel'] = $request->getVocab()->resolveExternalLabel($replacingUri, $request->getLang());
+                //$changeList[$key] = $concept;
+            //}
+        //}
         $bydate = $this->formatChangeList($changeList, $request->getLang());
 
         // load template
