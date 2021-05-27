@@ -57,8 +57,7 @@ class Vocabulary extends DataObject implements Modifiable
     {
         $endpoint = $this->getEndpoint();
         $graph = $this->getGraph();
-        $dialect = $this->config->getSparqlDialect();
-        $dialect = $dialect ? $dialect : $this->model->getConfig()->getDefaultSparqlDialect();
+        $dialect = $this->config->getSparqlDialect() ?? $this->model->getConfig()->getDefaultSparqlDialect();
 
         return $this->model->getSparqlImplementation($dialect, $endpoint, $graph);
     }
