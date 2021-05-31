@@ -3,7 +3,7 @@
   "description": "Thesaurus and controlled vocabulary browser using SKOS and SPARQL",
   "type": "project",
   "license": "MIT",
-  "repositories": { 
+  "repositories": {
     "urijs-unofficial": {
       "type": "package",
       "package": {
@@ -28,18 +28,6 @@
         }
       }
     },
-    "malihu-custom-scrollbar": {
-      "type": "package",
-      "package": {
-        "name": "malihu/malihu-custom-scrollbar-plugin",
-        "version": "3.1.5",
-        "source": {
-          "url": "https://github.com/malihu/malihu-custom-scrollbar-plugin.git",
-          "type": "git",
-          "reference": "3.1.5"
-        }
-      }
-    },
     "bootstrap-multiselect": {
       "type": "package",
       "package": {
@@ -51,7 +39,7 @@
           "reference": "v0.9.13"
         }
       }
-    } 
+    }
   },
   "require": {
     "components/jquery": "2.2.*",

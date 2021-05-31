@@ -1699,10 +1699,6 @@ span.date-info {
   display: inline-flex !important;
 }
 
-.tt-dropdown-menu.mCustomScrollbar {
-  border-right: 0;
-}
-
 .tt-dropdown-menu p {
   display: inline;
   padding-right: 2px;
@@ -1873,6 +1869,27 @@ body, .versal, h1, h2, h3, p, .versal-bold {
 @-webkit-keyframes fontfix {
   from { opacity: 1; }
   to   { opacity: 1; }
+}
+
+/* CSS custom scrollbars
+ ************************************/
+:root {
+  --scrollbarWidth: 12px;
+  --scrollbarBg: #b9c1c6;
+  --scrollbarThumb: #474b4f;
+}
+.sidebar-grey, .tt-dropdown-menu, .multiselect-container {
+  scrollbar-width: var(--scrollbarWidth);
+  scrollbar-color: var(--scrollbarThumb) var(--scrollbarBg);
+}
+.sidebar-grey::-webkit-scrollbar, .tt-dropdown-menu::-webkit-scrollbar, .multiselect-container::-webkit-scrollbar {
+  width: var(--scrollbarWidth);
+}
+.sidebar-grey::-webkit-scrollbar-track, .tt-dropdown-menu::-webkit-scrollbar-track, .multiselect-container::-webkit-scrollbar-track {
+  background: var(--scrollbarBg);
+}
+.sidebar-grey::-webkit-scrollbar-thumb, .tt-dropdown-menu::-webkit-scrollbar-thumb, .multiselect-container::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbarThumb);
 }
 
 /* mediaquery
