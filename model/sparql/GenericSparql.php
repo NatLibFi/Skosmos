@@ -190,11 +190,11 @@ class GenericSparql {
           }
         } UNION {SELECT * WHERE {
             ?type rdfs:label ?typelabel
-            }
           }
+        }
       } GROUP BY ?type ?typelabel
 EOQ;
-    return $query;
+        return $query;
     }
 
     /**

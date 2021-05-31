@@ -396,6 +396,7 @@ class Concept extends VocabularyDataObject implements Modifiable
     public function getMappingProperties(array $whitelist = null)
     {
         $ret = array();
+
         $longUris = $this->resource->propertyUris();
         foreach ($longUris as &$prop) {
             if (EasyRdf\RdfNamespace::shorten($prop) !== null) {
@@ -409,6 +410,7 @@ class Concept extends VocabularyDataObject implements Modifiable
                 // whitelist in use and this is not a whitelisted property, skipping
                 continue;
             }
+
             if (in_array($prop, $this->MAPPING_PROPERTIES) && !in_array($prop, $this->DELETED_PROPERTIES)) {
                 $propres = new EasyRdf\Resource($prop, $this->graph);
                 $proplabel = $propres->label($this->getEnvLang()) ? $propres->label($this->getEnvLang()) : $propres->label(); // current language
