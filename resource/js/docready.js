@@ -37,6 +37,17 @@ $(function() { // DOCUMENT READY
     document.getElementById(e.target.hash.slice(1)).focus({preventScroll: true});
   });
 
+  var addSideBarCallbacks = () => {
+    var sidebarElement = document.getElementsByClassName('sidebar-grey')[0];
+    $('.sidebar-grey').scroll(function () {
+      if (sidebarElement.scrollHeight - sidebarElement.scrollTop - 300 <= sidebarElement.clientHeight) {
+        ($('#changes.active').length === 1) ? changeListWaypointCallback() : alphaWaypointCallback();
+      }
+    })
+  }
+
+  addSideBarCallbacks()
+
   /*
    * Moving the sidenav scrollbar towards the current concept. Aiming the current
    * concept at vertical center of the container. Each concept needs 18px height.
@@ -57,13 +68,7 @@ $(function() { // DOCUMENT READY
         });
         return removeThese.join(' ');
       });
-      var scrollCB = ($('#changes.active').length === 1) ? changeListWaypointCallback : alphaWaypointCallback;
-      var element = document.getElementsByClassName('sidebar-grey')[0];
-      $('.sidebar-grey').scroll(function () {
-        if (element.scrollHeight - element.scrollTop - 300 <= element.clientHeight) {
-          scrollCB();
-        }
-      })
+      addSideBarCallbacks()
     }
 
     $('.reified-property-value').each(function() {
@@ -975,16 +980,6 @@ $(function() { // DOCUMENT READY
     buttonWidth: 'auto',
     maxHeight: 300
   });
-
-  if ($('#alpha.active').length === 1 || $('#changes.active').length === 1) {
-    var scrollCB = ($('#changes.active').length === 1) ? changeListWaypointCallback : alphaWaypointCallback;
-    var element = document.getElementsByClassName('sidebar-grey')[0];
-    $('.sidebar-grey').scroll(function () {
-      if (element.scrollHeight - element.scrollTop - 300 <= element.clientHeight) {
-        scrollCB();
-      }
-    })
-  }
 
   /* adding the replaced by concept href to the alert box when possible.
    */
