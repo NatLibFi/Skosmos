@@ -154,6 +154,9 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
     $vocab = $this->model->getVocabulary('test');
     $stats = $vocab->getStatistics();
     $this->assertEquals(17, $stats['http://www.w3.org/2004/02/skos/core#Concept']['count']);
+    $this->assertEquals(1, $stats['http://www.w3.org/2004/02/skos/core#Concept']['deprecatedCount']);
+    $this->assertEquals(13, $stats['http://www.skosmos.skos/test-meta/TestClass']['count']);
+    $this->assertEquals(1, $stats['http://www.skosmos.skos/test-meta/TestClass']['deprecatedCount']);
   }
 
   /**

@@ -178,15 +178,21 @@ class GenericSparql {
      */
     private function generateCountConceptsQuery($array, $group) {
         $fcl = $this->generateFromClause();
-        $optional = $array ? "UNION { ?type rdfs:subClassOf* <$array> }" : '';
-        $optional .= $group ? "UNION { ?type rdfs:subClassOf* <$group> }" : '';
+        $optional = $array ? "(<$array>) " : '';
+        $optional .= $group ? "(<$group>)" : '';
         $query = <<<EOQ
-      SELECT (COUNT(?conc) as ?c) ?type ?typelabel $fcl WHERE {
-        { ?conc a ?type .
-        { ?type rdfs:subClassOf* skos:Concept . } UNION { ?type rdfs:subClassOf* skos:Collection . } $optional }
-        OPTIONAL { ?type rdfs:label ?typelabel . }
-      }
-GROUP BY ?type ?typelabel
+      SELECT (COUNT(DISTINCT(?conc)) as ?c) ?type ?typelabel (COUNT(?depr) as ?deprcount) $fcl WHERE {
+        VALUES (?value) { (skos:Concept) (skos:Collection) $optional }
+  	    ?type rdfs:subClassOf* ?value
+        { ?type ^a ?conc .
+          OPTIONAL { ?conc owl:deprecated ?depr .
+  		    FILTER (?depr = True)
+          }
+        } UNION {SELECT * WHERE {
+            ?type rdfs:label ?typelabel
+          }
+        }
+      } GROUP BY ?type ?typelabel
 EOQ;
         return $query;
     }
@@ -203,10 +209,16 @@ EOQ;
             if (!isset($row->type)) {
                 continue;
             }
-            $ret[$row->type->getUri()]['type'] = $row->type->getUri();
-            $ret[$row->type->getUri()]['count'] = $row->c->getValue();
+            $typeURI = $row->type->getUri();
+            $ret[$typeURI]['type'] = $typeURI;
+
+            if (!isset($row->typelabel)) {
+                $ret[$typeURI]['count'] = $row->c->getValue();
+                $ret[$typeURI]['deprecatedCount'] = $row->deprcount->getValue();
+            }
+
             if (isset($row->typelabel) && $row->typelabel->getLang() === $lang) {
-                $ret[$row->type->getUri()]['label'] = $row->typelabel->getValue();
+                $ret[$typeURI]['label'] = $row->typelabel->getValue();
             }
 
         }
@@ -216,6 +228,8 @@ EOQ;
     /**
      * Used for counting number of concepts and collections in a vocabulary.
      * @param string $lang language of labels
+     * @param string $array the uri of the concept array class, eg. isothes:ThesaurusArray
+     * @param string $group the uri of the  concept group class, eg. isothes:ConceptGroup
      * @return array with number of concepts in this vocabulary per label
      */
     public function countConcepts($lang = null, $array = null, $group = null) {

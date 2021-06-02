@@ -1742,11 +1742,17 @@
           "description": "Label of the class"
         },
         "count": {
-          "type": "integer"
+          "type": "integer",
+          "description": "Total number of concepts"
+        },
+        "deprecatedCount": {
+          "type": "integer",
+          "description": "Number of deprecated concepts"
         }
       },
       "required": [
         "count",
+        "deprecatedCount",
         "class"
       ]
     },
@@ -1762,11 +1768,17 @@
           "description": "Label of the type"
         },
         "count": {
-          "type": "integer"
+          "type": "integer",
+          "description": "Total number of concepts by type"
+        },
+        "deprecatedCount": {
+          "type": "integer",
+          "description": "Number of deprecated concepts by type"
         }
       },
       "required": [
         "count",
+        "deprecatedCount",
         "type"
       ]
     },

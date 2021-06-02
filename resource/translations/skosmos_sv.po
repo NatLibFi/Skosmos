@@ -848,3 +848,6 @@ msgstr "Du kan välja en vokabulär"
 
 msgid "We're sorry but Skosmos doesn't work properly without JavaScript enabled. Please enable it to continue."
 msgstr "Vi beklagar, men Skosmos fungerar inte ordentligt utan JavaScript-stöd. Var god och aktivera JavaScript för att fortsätta."
+
+msgid "Deprecated concept"
+msgstr "Raderat begrepp"

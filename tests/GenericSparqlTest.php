@@ -48,6 +48,19 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
   }
 
   /**
+   * @covers GenericSparql::countConcepts
+   * @covers GenericSparql::generateCountConceptsQuery
+   * @covers GenericSparql::transformCountConceptsResults
+   */
+  public function testTransformCountConceptsResults() {
+    $result = $this->sparql->countConcepts();
+
+    $this->assertEquals(13, $result['http://www.skosmos.skos/test-meta/TestClass']['count']);
+    $this->assertEquals(1, $result['http://www.skosmos.skos/test-meta/TestClass']['deprecatedCount']);
+    $this->assertEquals('http://www.skosmos.skos/test-meta/TestClass', $result['http://www.skosmos.skos/test-meta/TestClass']['type']);
+  }
+
+  /**
    * @covers GenericSparql::countLangConcepts
    * @covers GenericSparql::generateCountLangConceptsQuery
    * @covers GenericSparql::transformCountLangConceptsResults
