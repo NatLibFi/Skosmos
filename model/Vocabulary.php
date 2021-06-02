@@ -166,12 +166,19 @@ class Vocabulary extends DataObject implements Modifiable
             "dc:title", "dc11:title", "skos:prefLabel", "rdfs:label",
             "dc:subject", "dc11:subject",
             "dc:description", "dc11:description",
+            "foaf:homepage",
             "dc:publisher", "dc11:publisher",
             "dc:creator", "dc11:creator",
             "dc:contributor",
+            "dc:license",
+            "dc:rights", "dc11:rights",
             "dc:language", "dc11:language",
             "owl:versionInfo",
-            "dc:source", "dc11:source"
+            "dc:source", "dc11:source",
+            "dc:relation", "dc11:relation",
+            "dc:created",
+            "dc:modified",
+            "dc:date", "dc11:date"
         );
 
         foreach ($conceptscheme->properties() as $prop) {
