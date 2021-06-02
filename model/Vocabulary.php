@@ -162,7 +162,17 @@ class Vocabulary extends DataObject implements Modifiable
         $sparql = $this->getSparql();
         $result = $sparql->queryConceptScheme($defaultcs);
         $conceptscheme = $result->resource($defaultcs);
-        $this->order = array("dc:title", "dc11:title", "skos:prefLabel", "rdfs:label", "dc:subject", "dc11:subject", "dc:description", "dc11:description", "dc:publisher", "dc11:publisher", "dc:creator", "dc11:creator", "dc:contributor", "dc:language", "dc11:language", "owl:versionInfo", "dc:source", "dc11:source");
+        $this->order = array(
+            "dc:title", "dc11:title", "skos:prefLabel", "rdfs:label",
+            "dc:subject", "dc11:subject",
+            "dc:description", "dc11:description",
+            "dc:publisher", "dc11:publisher",
+            "dc:creator", "dc11:creator",
+            "dc:contributor",
+            "dc:language", "dc11:language",
+            "owl:versionInfo",
+            "dc:source", "dc11:source"
+        );
 
         foreach ($conceptscheme->properties() as $prop) {
             foreach ($conceptscheme->allLiterals($prop, $lang) as $val) {
