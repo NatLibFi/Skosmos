@@ -228,6 +228,8 @@ EOQ;
     /**
      * Used for counting number of concepts and collections in a vocabulary.
      * @param string $lang language of labels
+     * @param string $array the uri of the concept array class, eg. isothes:ThesaurusArray
+     * @param string $group the uri of the  concept group class, eg. isothes:ConceptGroup
      * @return array with number of concepts in this vocabulary per label
      */
     public function countConcepts($lang = null, $array = null, $group = null) {

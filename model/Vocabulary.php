@@ -304,6 +304,8 @@ class Vocabulary extends DataObject implements Modifiable
     /**
      * Counts the statistics of the vocabulary.
      * @return Array containing the label counts
+     * @param string $array the uri of the concept array class, eg. isothes:ThesaurusArray
+     * @param string $group the uri of the  concept group class, eg. isothes:ConceptGroup
      */
     public function getStatistics($lang = '', $array=null, $group=null)
     {
