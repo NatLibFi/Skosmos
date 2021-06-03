@@ -46,7 +46,7 @@ jobs:
         php_extensions: gettext intl xsl pcov
 
     - name: Run PHPUnit tests
-      uses: osma/phpunit@v2-network-host-debug
+      uses: php-actions/phpunit@91ff02a58932e63741157ea8c04e7e7077233537
       env:
         LANGUAGE: fr
       with:
