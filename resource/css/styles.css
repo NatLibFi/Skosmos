@@ -1874,7 +1874,7 @@ body, .versal, h1, h2, h3, p, .versal-bold {
 /* CSS custom scrollbars
  ************************************/
 :root {
-  --scrollbarWidth: 12px;
+  --scrollbarWidth: 14px;
   --scrollbarBg: #b9c1c6;
   --scrollbarThumb: #474b4f;
 }
@@ -1890,6 +1890,8 @@ body, .versal, h1, h2, h3, p, .versal-bold {
 }
 .sidebar-grey::-webkit-scrollbar-thumb, .tt-dropdown-menu::-webkit-scrollbar-thumb, .multiselect-container::-webkit-scrollbar-thumb {
   background-color: var(--scrollbarThumb);
+  min-height: 40px;
+  -webkit-box-shadow: inset 0 -1.5em 0 #b9c1c6
 }
 
 /* mediaquery
