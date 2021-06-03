@@ -314,8 +314,8 @@ function countAndSetOffset() {
   /* calculates the sidebars content maximum height and sets it as an inline style.
      the .css() can't set important so using .attr() instead. */
   $('.sidebar-grey').attr('style', function() {
-    var pixels = $('.nav-tabs').height() + 2; // the 2 pixels are for the borders
-    if ($('#sidebar > .pagination').is(':visible')) { pixels += $('.pagination').height(); }
+    var pixels = $('.nav-tabs').outerHeight();
+    if ($('#sidebar > .pagination').is(':visible')) { pixels += $('.pagination').outerHeight(); }
     return 'height: calc(100% - ' + pixels + 'px) !important';
   });
   var $sidebar = $('#sidebar');
