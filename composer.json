@@ -64,7 +64,6 @@
     "monolog/monolog": "1.23.*",
     "newerton/jquery-mousewheel": "dev-master",
     "pamelafox/lscache": "1.0.5",
-    "malihu/malihu-custom-scrollbar-plugin": "3.1.5",
     "grimmlink/qtip2": "3.0.3"
   },
   "require-dev": {
