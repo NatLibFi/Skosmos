@@ -28,7 +28,6 @@ ratings:
 exclude_paths:
 - resource/js/bootstrap-multiselect.js
 - resource/js/*min.js
-- resource/css/jquery.mCustomScrollbar.css
 - resource/fonts/**/*
 - resource/pics/**/*
 - resource/translations/**/*
@@ -37,8 +36,8 @@ exclude_paths:
 - tools/**/*
 - LICENSE
 - README.md
-- composer.json 
+- composer.json
 - config.ttl.dist
-- favicon.ico 
-- phpdoc.sh 
+- favicon.ico
+- phpdoc.sh
 - phpunit.xml
