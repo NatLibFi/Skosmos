@@ -256,8 +256,19 @@ ul {
   min-width: 160px;
 }
 
-#language > .dropdown-menu > li, #language > .dropdown-menu > li > a {
+#language > .dropdown-menu > .dropdown-item, #language > .dropdown-menu > .dropdown-item > a {
   margin: 0;
+}
+
+#language > .dropdown-menu > .dropdown-item {
+  padding: 0;
+}
+
+#language > .dropdown-menu > .dropdown-item > a {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  text-decoration: none;
 }
 
 #language > .dropdown-toggle {
@@ -339,6 +350,17 @@ ul {
   overflow-y: auto;
 }
 
+.navbar-form .dropdown-menu > .dropdown-item {
+  padding: 0;
+}
+
+.navbar-form .dropdown-menu > .dropdown-item > a {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  text-decoration: none;
+}
+
 .header-float > .navbar-form {
   box-shadow: none;
   display: flex;
@@ -346,6 +368,7 @@ ul {
 
 .header-float > .navbar-form > .input-group {
   display: inline-flex;
+  flex-wrap: nowrap;
 }
 
 .header-float > .navbar-form > .input-group > .input-group-btn {
@@ -353,7 +376,7 @@ ul {
   width: initial;
 }
 
-ul.dropdown-menu > li:last-child > input {
+ul.dropdown-menu > li.dropdown-item:last-child > input {
   display: none;
 }
 
@@ -382,7 +405,7 @@ ul.dropdown-menu > li:last-child > input {
   top: 10px;
 }
 
-.multiselect-container > li.active > a, .multiselect-container > li > a:focus, .dropdown-menu > li:hover > a, .dropdown-menu > .active:focus > a, .dropdown-menu > .active:hover > a  {
+.multiselect-container > li.active > a, .multiselect-container > li > a:focus, .dropdown-menu > .dropdown-item:hover > a, .dropdown-menu > .active:focus > a, .dropdown-menu > .active:hover > a  {
   background-color: #00748F;
   color: #ffffff;
 }
@@ -809,14 +832,14 @@ span.xl-pref-label > img {
   width: 100%;
 }
 
-#feedback-fields > .open > .dropdown-menu > li > a {
+#feedback-fields > .open > .dropdown-menu > .dropdown-item > a {
   white-space: normal;
   text-indent: -10px;
   margin-left: 10px;
   word-break: break-word;
 }
 
-#feedback-fields > .open > .dropdown-menu > li:hover > a {
+#feedback-fields > .open > .dropdown-menu > .dropdown-item:hover > a {
   color: #fff !important;
 }
 

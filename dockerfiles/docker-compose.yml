@@ -41,5 +41,5 @@ services:
       - fuseki-cache
     volumes:
       - type: bind
-        source: ./config/config-docker-compose.ttl
-        target: /var/www/html/config.ttl
+        source: ../
+        target: /var/www/html/

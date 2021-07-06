@@ -44,11 +44,11 @@
       "type": "package",
       "package": {
         "name": "davidstutz/bootstrap-multiselect",
-        "version": "0.9.13",
+        "version": "1.0.0",
         "source": {
           "url": "https://github.com/davidstutz/bootstrap-multiselect.git",
           "type": "git",
-          "reference": "v0.9.13"
+          "reference": "v1.0.0"
         }
       }
     } 
@@ -57,13 +57,13 @@
     "components/jquery": "2.2.*",
     "components/jqueryui": "1.12.*",
     "components/handlebars.js": "v4.7.6",
-    "davidstutz/bootstrap-multiselect": "v0.9.13",
+    "davidstutz/bootstrap-multiselect": "v1.0.0",
     "easyrdf/easyrdf": "1.1.*",
     "etdsolutions/waypoints": "4.0.0",
     "twig/twig": "2.13.*",
     "twig/extensions": "1.5.*",
-    "twitter/bootstrap": "3.3.*",
-    "twitter/typeahead.js": "v0.10.5",
+    "twbs/bootstrap": "5.0.*",
+    "twitter/typeahead.js": "v0.11.*",
     "willdurand/negotiation": "2.3.*",
     "vakata/jstree": "3.3.*",
     "punic/punic": "3.5.1",

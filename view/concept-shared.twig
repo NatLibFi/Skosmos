@@ -75,7 +75,7 @@
         {% endif %}
         {% endif %}
         &nbsp;
-        <button type="button" data-toggle="tooltip" data-placement="button" title="Copy to clipboard" class="btn btn-default btn-xs copy-clipboard"
+        <button type="button" data-bs-toggle="tooltip" data-bs-placement="button" title="Copy to clipboard" class="btn btn-default btn-xs copy-clipboard"
           for="#{% if concept.notation %}notation{% else %}pref-label{% endif %}">
           <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
         </button>
@@ -168,7 +168,7 @@
       {% endif %}
         <div class="row property prop-uri">
             <div class="property-label"><h3 class="versal">URI</h3></div>
-            <div class="property-value-column"><div class="property-value-wrapper"><span class="versal uri-input-box" id="uri-input-box">{{ concept.uri }}</span> <button type="button" data-toggle="tooltip" data-placement="button" title="Copy to clipboard" class="btn btn-default btn-xs copy-clipboard" for="#uri-input-box"><span class="glyphicon glyphicon-copy" aria-hidden="true"></span></button></div></div>
+            <div class="property-value-column"><div class="property-value-wrapper"><span class="versal uri-input-box" id="uri-input-box">{{ concept.uri }}</span> <button type="button" data-bs-toggle="tooltip" data-bs-placement="button" title="Copy to clipboard" class="btn btn-default btn-xs copy-clipboard" for="#uri-input-box"><span class="glyphicon glyphicon-copy" aria-hidden="true"></span></button></div></div>
         </div>
         <div class="row">
             <div class="property-label"><h3 class="versal">{% trans %}Download this concept in SKOS format:{% endtrans %}</h3></div>

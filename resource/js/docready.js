@@ -795,8 +795,8 @@ $(function() { // DOCUMENT READY
     // accidental selection of values. TODO: we must fix this in a future release, possibly
     // using another library.
     var typeaheadInstance = $typeahead.data("ttTypeahead");
-    typeaheadInstance.dropdown.$menu.off("mouseenter.tt", ".tt-suggestion");
-    typeaheadInstance.dropdown.$menu.off("mouseleave.tt", ".tt-suggestion");
+    typeaheadInstance.menu.off("mouseenter.tt", ".tt-suggestion");
+    typeaheadInstance.menu.off("mouseleave.tt", ".tt-suggestion");
   }
 
   // storing the search input before autocompletion changes it
