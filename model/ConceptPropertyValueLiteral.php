@@ -31,6 +31,11 @@ class ConceptPropertyValueLiteral extends VocabularyDataObject
         return $this->literal->getLang();
     }
 
+    public function getDatatype()
+    {
+        return $this->literal->getDatatype();
+    }
+
     public function getType()
     {
         return $this->type;
