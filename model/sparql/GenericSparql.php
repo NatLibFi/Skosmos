@@ -399,6 +399,7 @@ CONSTRUCT {
  ?o skos:notation ?on .
  ?o ?oprop ?oval .
  ?o ?xlprop ?xlval .
+ ?dt rdfs:label ?dtlabel .
  ?directgroup skos:member ?uri .
  ?parent skos:member ?group .
  ?group skos:prefLabel ?grouplabel .
@@ -429,6 +430,10 @@ CONSTRUCT {
   UNION
   {
    ?uri ?p ?o .
+   OPTIONAL {
+     BIND(datatype(?o) AS ?dt)
+     ?dt rdfs:label ?dtlabel
+   }
    OPTIONAL {
      ?o rdf:rest* ?b1 .
      ?b1 rdf:first ?item .
