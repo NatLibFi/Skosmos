@@ -859,3 +859,9 @@ msgstr "Virhe: Haku epäonnistui!"
 
 msgid "Error: Failed to retrieve vocabulary information!"
 msgstr "Virhe: Sanaston tietojen haku epäonnistui!"
+
+msgid "skos:notation"
+msgstr "Notaatio"
+
+msgid "skos:notation_help"
+msgstr "Tunniste, joka yksilöi käsitteen sanaston sisällä."
