@@ -144,7 +144,7 @@
                         {% if property.type == 'skos:altLabel' %} class="replaced"{% endif %}
                         {% if propval.containsHtml %}{{ propval.label|raw }}{% else %}{{ propval.label }}{% endif %}
                         {% if propval.lang and (request.contentLang and propval.lang != request.contentLang or explicit_langcodes) %}({{ propval.lang }}){% endif %}
-                        {% if propval.datatype %} [ {{ propval.datatype }} ]{% endif %}
+                        {% if propval.datatype %} [{{ propval.datatype }}]{% endif %}
                     </span>
                 {% endif %}
             {% endif %}
