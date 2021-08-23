@@ -41,11 +41,13 @@ var pluginParameters = {{ plugin_params|raw }};
 {% endif %}
 </script>
 
-{% if request.page == 'page' and search_results and search_results|length == 1 %}
 <script type="application/ld+json">
+{% if search_results and search_results|length == 1 %}
 {{ search_results|first.dumpJsonLd|raw }}
-</script>
+{% else %}
+{}
 {% endif %}
+</script>
 <script src="vendor/components/jquery/jquery.min.js"></script>
 <script src="vendor/components/jqueryui/jquery-ui.min.js"></script>
 <script src="vendor/components/handlebars.js/handlebars.min.js"></script>
