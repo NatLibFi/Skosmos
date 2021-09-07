@@ -854,3 +854,6 @@ msgstr "We're sorry but Skosmos doesn't work properly without JavaScript enabled
 
 msgid "Deprecated concept"
 msgstr "Deprecated concept"
+
+msgid "Error: Search failed!"
+msgstr "Error: Search failed!"

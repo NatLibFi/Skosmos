@@ -514,6 +514,10 @@ ul.dropdown-menu > li:last-child > input {
   margin: 15px;
 }
 
+.search-result-listing > .alert {
+  margin: 10px 15px;
+}
+
 .search-result-listing > .alert > h4 {
   margin: 10px 0px;
 }

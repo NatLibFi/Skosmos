@@ -851,3 +851,6 @@ msgstr "Vi beklagar, men Skosmos fungerar inte ordentligt utan JavaScript-stöd.
 
 msgid "Deprecated concept"
 msgstr "Raderat begrepp"
+
+msgid "Error: Search failed!"
+msgstr "Fel: Sökningen misslyckades!"
