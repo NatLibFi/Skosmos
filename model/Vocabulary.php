@@ -252,7 +252,7 @@ class Vocabulary extends DataObject implements Modifiable
         $conceptSchemes = null;
         try {
             $conceptSchemes = $this->getSparql()->queryConceptSchemes($lang);
-        } catch (EasyRdf\Http\Exception | EasyRdf\Exception | Exception | Throwable $e) {
+        } catch (EasyRdf\Http\Exception | EasyRdf\Exception | Throwable $e) {
              if ($this->model->getConfig()->getLogCaughtExceptions()) {
                  error_log('Caught exception: ' . $e->getMessage());
              }
