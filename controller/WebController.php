@@ -378,7 +378,7 @@ class WebController extends Controller
         try {
             $vocabTypes = $this->model->getTypes($request->getVocabid(), $request->getLang());
         } catch (Exception $e) {
-            header("HTTP/1.0 404 Not Found");
+            header("HTTP/1.0 500 Internal Server Error");
             if ($this->model->getConfig()->getLogCaughtExceptions()) {
                 error_log('Caught exception: ' . $e->getMessage());
             }
@@ -386,6 +386,8 @@ class WebController extends Controller
             echo $template->render(
                 array(
                     'languages' => $this->languages,
+                    'vocab' => $vocab,
+                    'request' => $request,
                 ));
 
             return;
@@ -540,6 +542,7 @@ class WebController extends Controller
             array(
                 'languages' => $this->languages,
                 'request' => $request,
+                'vocab' => $request->getVocab(),
                 'message' => $message,
                 'requested_page' => filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_STRING),
             ));

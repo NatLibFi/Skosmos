@@ -1056,9 +1056,9 @@ $(function() { // DOCUMENT READY
   }
 
   /* makes an AJAX query for the alphabetical index contents when landing on
-   * the vocabulary home page.
+   * the vocabulary home page or on the vocabulary concept error page.
    */
-  if ($('#alpha').hasClass('active') && $('#vocab-info').length === 1 && $('.alphabetical-search-results').length === 0) {
+  if ($('#alpha').hasClass('active') && $('#vocab-info,.page-alert').length == 1 && $('.alphabetical-search-results').length == 0) {
     // taking into account the possibility that the lang parameter has been changed by the WebController.
     var urlLangCorrected = vocab + '/' + lang + '/index?limit=250&offset=0&clang=' + clang;
     $('.sidebar-grey').empty().append('<div class="loading-spinner"><span class="spinner-text">'+ loading_text + '</span><span class="spinner"></span></div>');

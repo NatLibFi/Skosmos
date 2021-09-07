@@ -162,7 +162,7 @@ class Vocabulary extends DataObject implements Modifiable
             // query everything the endpoint knows about the ConceptScheme
             $sparql = $this->getSparql();
             $result = $sparql->queryConceptScheme($defaultcs);
-        } catch (EasyRdf\Http\Exception | EasyRdf\Exception $e) {
+        } catch (EasyRdf\Http\Exception | EasyRdf\Exception | Throwable $e) {
              if ($this->model->getConfig()->getLogCaughtExceptions()) {
                  error_log('Caught exception: ' . $e->getMessage());
              }
@@ -249,8 +249,15 @@ class Vocabulary extends DataObject implements Modifiable
         if ($lang === '') {
             $lang = $this->getEnvLang();
         }
-
-        return $this->getSparql()->queryConceptSchemes($lang);
+        $conceptSchemes = null;
+        try {
+            $conceptSchemes = $this->getSparql()->queryConceptSchemes($lang);
+        } catch (EasyRdf\Http\Exception | EasyRdf\Exception | Throwable $e) {
+             if ($this->model->getConfig()->getLogCaughtExceptions()) {
+                 error_log('Caught exception: ' . $e->getMessage());
+             }
+        }
+        return $conceptSchemes;
     }
 
     /**
@@ -442,8 +449,15 @@ class Vocabulary extends DataObject implements Modifiable
     public function getConceptInfo($uri, $clang)
     {
         $sparql = $this->getSparql();
-
-        return $sparql->queryConceptInfo($uri, $this->config->getArrayClassURI(), array($this), $clang);
+        $conceptInfo = null;
+        try {
+            $conceptInfo = $sparql->queryConceptInfo($uri, $this->config->getArrayClassURI(), array($this), $clang);
+        } catch (EasyRdf\Http\Exception | EasyRdf\Exception | Throwable $e) {
+             if ($this->model->getConfig()->getLogCaughtExceptions()) {
+                 error_log('Caught exception: ' . $e->getMessage());
+             }
+        }
+        return $conceptInfo;
     }
 
     /**
