@@ -85,6 +85,7 @@
         <div class="col-md-12"><div class="preflabel-spacer"></div></div>
       </div>
       {% endspaceless %}
+
       {% for property in concept.properties %} {# loop through ConceptProperty objects #}
         {% if property.getSubPropertyOf != 'skos:hiddenLabel' %}
         <div class="row{% if property.type == 'dc:isReplacedBy' %} replaced-by{% endif%} property prop-{{property.ID}}">
@@ -96,7 +97,8 @@
           {% for language,labels in concept.allLabels(property.type) %}
             {% for value in labels %}
             <div class="row other-languages{% if loop.first %} first-of-language{% endif %}">
-            <div class="versal col-xs-6{% if value.type == "skos:altLabel" %} replaced{% endif %}">{% if value.containsHtml %}{{ value.label|raw }}{% else %}{{ value.label }}{% endif %}</div><div class="versal col-xs-6">{% if loop.first %} {{ language }}{% endif %}</div></div>
+                <div class="versal col-xs-6{% if value.type == "skos:altLabel" %} replaced{% endif %}">{% if value.containsHtml %}{{ value.label|raw }}{% else %}{{ value.label }}{% endif %}</div><div class="versal col-xs-6">{% if loop.first %} {{ language }}{% endif %}</div>
+            </div>
             {% endfor %}
           {% endfor %}
         {% else %}
@@ -144,7 +146,7 @@
                         {% if property.type == 'skos:altLabel' %} class="replaced"{% endif %}
                         {% if propval.containsHtml %}{{ propval.label|raw }}{% else %}{{ propval.label }}{% endif %}
                         {% if propval.lang and (request.contentLang and propval.lang != request.contentLang or explicit_langcodes) %}({{ propval.lang }}){% endif %}
-                        {% if propval.datatype %} [{{ propval.datatype }}]{% endif %}
+                        {% if propval.datatype %} ({{ propval.datatype }}){% endif %}
                     </span>
                 {% endif %}
             {% endif %}

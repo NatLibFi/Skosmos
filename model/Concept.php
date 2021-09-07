@@ -631,6 +631,7 @@ class Concept extends VocabularyDataObject implements Modifiable
                 $arrayPropObj->addValue($propVal);
             }
         }
+
         $ret['skosmos:memberOfArray'] = $arrayPropObj;
 
         foreach ($ret as $key => $prop) {
@@ -640,6 +641,9 @@ class Concept extends VocabularyDataObject implements Modifiable
         }
 
         $ret = $this->removeDuplicatePropertyValues($ret, $duplicates);
+
+        $ret = $this->vocab->getConfig()->getShowNotationAsProperty() !== null ? $this->removeNotationFromProperties($ret, $this->vocab->getConfig()->getShowNotationAsProperty()) : $ret ;
+
         // sorting the properties to the order preferred in the Skosmos concept page.
         return $this->arbitrarySort($ret);
     }
@@ -676,6 +680,14 @@ class Concept extends VocabularyDataObject implements Modifiable
         // handled separately: remove duplicate skos:prefLabel value (#854)
         if (isset($duplicates["skos:prefLabel"])) {
             unset($ret[$duplicates["skos:prefLabel"]]);
+        }
+        return $ret;
+    }
+
+    public function removeNotationFromProperties($ret, $isShowNotationAsPropertySet = true)
+    {
+        if (!$isShowNotationAsPropertySet) {
+            unset($ret["skos:notation"]);
         }
         return $ret;
     }

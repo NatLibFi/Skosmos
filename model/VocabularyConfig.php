@@ -390,6 +390,24 @@ class VocabularyConfig extends BaseConfig
 
     /**
      * Returns a boolean value set in the config.ttl config.
+     * @return boolean
+     */
+    public function getPrefLabelInTheConceptPageHeaderWithNotation()
+    {
+        return $this->getBoolean('skosmos:prefLabelInTheConceptPageHeaderWithNotation');
+    }
+
+    /**
+     * Returns a boolean value set in the config.ttl config.
+     * @return boolean
+     */
+    public function getShowNotationAsProperty()
+    {
+        return $this->getBoolean('skosmos:showNotationAsProperty', true);
+    }
+
+    /**
+     * Returns a boolean value set in the config.ttl config.
      * @return array array of concept class URIs (can be empty)
      */
     public function getIndexClasses()
