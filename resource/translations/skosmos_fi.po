@@ -853,3 +853,6 @@ msgstr "Pahoittelut, mutta Skosmos ei toimi kunnolla ilman JavaScript-tukea. Ole
 
 msgid "Deprecated concept"
 msgstr "Käytöstä poistettu käsite"
+
+msgid "Error: Search failed!"
+msgstr "Virhe: Haku epäonnistui!"
