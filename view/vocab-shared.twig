@@ -7,7 +7,7 @@
     {% set vocabInfo = vocab.info(request.contentLang) %}
     {% if not vocabInfo %}
     <div class="alert alert-danger" role="alert">
-        {% trans "Failed to retrieve vocabulary information" %}
+        {% trans "Error: Failed to retrieve vocabulary information!" %}
     </div>
     {% else %}
     <div class="vocab-info-literals">
