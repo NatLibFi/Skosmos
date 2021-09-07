@@ -449,8 +449,15 @@ class Vocabulary extends DataObject implements Modifiable
     public function getConceptInfo($uri, $clang)
     {
         $sparql = $this->getSparql();
-
-        return $sparql->queryConceptInfo($uri, $this->config->getArrayClassURI(), array($this), $clang);
+        $conceptInfo = null;
+        try {
+            $conceptInfo = $sparql->queryConceptInfo($uri, $this->config->getArrayClassURI(), array($this), $clang);
+        } catch (EasyRdf\Http\Exception | EasyRdf\Exception | Throwable $e) {
+             if ($this->model->getConfig()->getLogCaughtExceptions()) {
+                 error_log('Caught exception: ' . $e->getMessage());
+             }
+        }
+        return $conceptInfo;
     }
 
     /**
