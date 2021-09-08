@@ -4,9 +4,15 @@
       <h2>{% trans "Vocabulary information" %}</h2>
       <hr />
     </div>
+    {% set vocabInfo = vocab.info(request.contentLang) %}
+    {% if not vocabInfo %}
+    <div class="alert alert-danger" role="alert">
+        {% trans "Error: Failed to retrieve vocabulary information!" %}
+    </div>
+    {% else %}
     <div class="vocab-info-literals">
       <div class="table">
-        {% for key, values in vocab.info(request.contentLang) %}
+        {% for key, values in vocabInfo %}
         {% set keytrans = key %}
         <div class="row">
           <div class="property-label versal"><h3>{{ keytrans|trans|upper }}</h3><div class="property-divider"></div></div>
@@ -40,6 +46,7 @@
         </div>
       </div>
     </div>
+    {% endif %}
     {% if vocab.config.showStatistics %}
     <div>
       <h3>{% trans "Resource counts by type" %}</h3>

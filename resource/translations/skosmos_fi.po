@@ -856,3 +856,6 @@ msgstr "Käytöstä poistettu käsite"
 
 msgid "Error: Search failed!"
 msgstr "Virhe: Haku epäonnistui!"
+
+msgid "Error: Failed to retrieve vocabulary information!"
+msgstr "Virhe: Sanaston tietojen haku epäonnistui!"

@@ -857,3 +857,6 @@ msgstr "Deprecated concept"
 
 msgid "Error: Search failed!"
 msgstr "Error: Search failed!"
+
+msgid "Error: Failed to retrieve vocabulary information!"
+msgstr "Error: Failed to retrieve vocabulary information!"
