@@ -577,11 +577,21 @@ class Concept extends VocabularyDataObject implements Modifiable
                 // Iterating through every literal and adding these to the data object.
                 foreach ($this->resource->allLiterals($sprop) as $val) {
                     $literal = new ConceptPropertyValueLiteral($this->model, $this->vocab, $this->resource, $val, $prop);
-                    // only add literals when they match the content/hit language or have no language defined OR when they are literals of a multilingual property
-                    if (isset($ret[$prop]) && ($literal->getLang() === $this->clang || $literal->getLang() === null) || $this->vocab->getConfig()->hasMultiLingualProperty($prop)) {
+//                      Option 1: as a part of conditions in the if statement
+//                      https://www.php-fig.org/psr/psr-12/
+//                      -> Search: Expressions in parentheses MAY be split across multiple lines, where each subsequent line
+                    if (
+                        !($sprop === 'skos:notation' && $this->vocab->getConfig()->getShowNotationAsProperty() === false)
+                        && isset($ret[$prop])
+                        && ($literal->getLang() === $this->clang
+                        || $literal->getLang() === null)
+                        || $this->vocab->getConfig()->hasMultiLingualProperty($prop)) {
                         $ret[$prop]->addValue($literal);
+//                          Option 2: In a new if statement
+//                        if ($sprop === 'skos:notation' && $this->vocab->getConfig()->getShowNotationAsProperty() !== false) {
+//                            $ret[$prop]->addValue($literal);
+//                        }
                     }
-
                 }
 
                 // Iterating through every resource and adding these to the data object.
@@ -631,7 +641,6 @@ class Concept extends VocabularyDataObject implements Modifiable
                 $arrayPropObj->addValue($propVal);
             }
         }
-
         $ret['skosmos:memberOfArray'] = $arrayPropObj;
 
         foreach ($ret as $key => $prop) {
@@ -642,7 +651,7 @@ class Concept extends VocabularyDataObject implements Modifiable
 
         $ret = $this->removeDuplicatePropertyValues($ret, $duplicates);
 
-        $ret = $this->vocab->getConfig()->getShowNotationAsProperty() !== null ? $this->removeNotationFromProperties($ret, $this->vocab->getConfig()->getShowNotationAsProperty()) : $ret ;
+//        $ret = $this->vocab->getConfig()->getShowNotationAsProperty() !== null ? $this->removeNotationFromProperties($ret, $this->vocab->getConfig()->getShowNotationAsProperty()) : $ret ;
 
         // sorting the properties to the order preferred in the Skosmos concept page.
         return $this->arbitrarySort($ret);
@@ -684,13 +693,13 @@ class Concept extends VocabularyDataObject implements Modifiable
         return $ret;
     }
 
-    public function removeNotationFromProperties($ret, $isShowNotationAsPropertySet = true)
-    {
-        if (!$isShowNotationAsPropertySet) {
-            unset($ret["skos:notation"]);
-        }
-        return $ret;
-    }
+//    public function removeNotationFromProperties($ret, $isShowNotationAsPropertySet = true)
+//    {
+//        if (!$isShowNotationAsPropertySet) {
+//            unset($ret["skos:notation"]);
+//        }
+//        return $ret;
+//    }
 
     /**
      * @param $lang UI language
