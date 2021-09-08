@@ -863,3 +863,9 @@ msgstr "Notation"
 
 msgid "skos:notation_help"
 msgstr "Kod som unikt identifierar ett begrepp i en vokabulär."
+
+msgid "Error: Search failed!"
+msgstr "Fel: Sökningen misslyckades!"
+
+msgid "Error: Failed to retrieve vocabulary information!"
+msgstr "Fel: Information om vokabulären kunde inte hämtas!"
