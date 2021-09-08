@@ -1553,7 +1553,7 @@ tr.replaced-by > td > ul > li > a {
 .nav-tabs {
   background-color: #e0e4e7;
   border-bottom: none;
-  display: flex;
+   display: flex;
 }
 
 ul.nav-tabs > li {
@@ -1568,7 +1568,6 @@ ul.nav-tabs > li > a {
   flex-grow: 200;
   align-content: stretch;
   align-items: center;
-  display: flex;
 }
 
 .sidebar-buttons .nav-tabs > li > a, .sidebar-buttons .nav-tabs > li > p, .sidebar-buttons .nav-tabs > li.active > a {
@@ -1577,7 +1576,9 @@ ul.nav-tabs > li > a {
   border: 0;
   margin: 0;
   padding: 10px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .nav-tabs > li:nth-of-type(even) > a {
@@ -1609,7 +1610,7 @@ ul.nav-tabs > li > a {
 }
 
 .nav-four-wide > li {
-  width: 28%;
+  width: 31%;
 }
 
 .nav-four-wide > #alpha {

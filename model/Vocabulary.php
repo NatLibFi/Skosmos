@@ -556,18 +556,6 @@ class Vocabulary extends DataObject implements Modifiable
     }
 
     /**
-     * Gets a prefLabel associated with the uri from another known vocabulary
-     *
-     * @param $uri The URI of the concept
-     * @param $lang The language of the label
-     * @return string prefLabel of the concept
-     */
-    public function resolveExternalLabel($uri, $lang) {
-        $exvocab = $this->model->guessVocabularyFromURI($uri);
-        return $this->getExternalLabel($exvocab, $uri, $lang);
-    }
-
-    /**
      * Makes a query for the transitive broaders of a concept and returns the concepts hierarchy processed for the view.
      * @param string $lang
      * @param string $uri
