@@ -318,8 +318,16 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
   }
 
   /**
-   * @covers VocabularyConfig::getSortByNotation
-   * @covers VocabularyConfig::getLiteral
+   * @covers VocabularyConfig::getShowDeprecatedChanges
+   * @covers VocabularyConfig::getBoolean
+   */
+  public function testShowDeprecatedChanges() {
+    $vocab = $this->model->getVocabulary('changes');
+    $this->assertEquals(true, $vocab->getConfig()->getShowDeprecatedChanges());
+  }
+
+  /**
+   * @covers VocabularyConfig::sortByNotation
    * @covers VocabularyConfig::getBoolean
    */
   public function testShowSortByNotationDefaultValue() {
