@@ -245,7 +245,7 @@ class Model
                 try {
                     $hitvoc = $this->getVocabularyByGraph($hit['graph']);
                     $hit['vocab'] = $hitvoc->getId();
-                } catch (Exception $e) {
+                } catch (ValueError $e) {
                     trigger_error($e->getMessage(), E_USER_WARNING);
                     $hitvoc = null;
                     $hit['vocab'] = "???";
@@ -255,7 +255,7 @@ class Model
 
             $hit['voc'] = $hitvoc;
 
-            if (!$hitvoc->containsURI($hit['uri'])) {
+            if ($hitvoc === null || !$hitvoc->containsURI($hit['uri'])) {
                 // if uri is a external vocab uri that is included in the current vocab
                 $realvoc = $this->guessVocabularyFromURI($hit['uri'], $voc !== null ? $voc->getId() : null);
                 if ($realvoc !== $hitvoc) {
