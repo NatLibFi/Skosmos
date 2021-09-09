@@ -2257,23 +2257,33 @@ EOQ;
         $offset = ($offset) ? 'OFFSET ' . $offset : '';
 
         //Additional clauses when deprecated concepts need to be included in the results
-        $deprecatedVars = ($showDeprecated) ? '?replacedBy ?deprecated ?replacingLabel' : '';
-        $deprecatedOptions = ($showDeprecated) ? 'UNION { ?concept dc:isReplacedBy ?replacedBy ; dc:modified ?date2 . BIND(COALESCE(?date2, ?date) AS ?date) OPTIONAL { ?replacedBy skos:prefLabel ?replacingLabel . FILTER (langMatches(lang(?replacingLabel), \''.$lang.'\')) }} OPTIONAL { ?concept owl:deprecated ?deprecated . }' : '';
+        $deprecatedOptions = '';
+        $deprecatedVars = '';
+        if ($showDeprecated) {
+            $deprecatedVars = '?replacedBy ?deprecated ?replacingLabel';
+            $deprecatedOptions =
+            'UNION {'.
+                '?concept dc:isReplacedBy ?replacedBy ; dc:modified ?date2 .'.
+                'BIND(COALESCE(?date2, ?date) AS ?date)'.
+                'OPTIONAL { ?replacedBy skos:prefLabel ?replacingLabel .'.
+                    'FILTER (langMatches(lang(?replacingLabel), \''.$lang.'\')) }}'. 
+                'OPTIONAL { ?concept owl:deprecated ?deprecated . }';
+        }
 
         $query = <<<EOQ
-        SELECT ?concept ?date ?label $deprecatedVars $fcl
-        WHERE {
-            ?concept a skos:Concept ;
-	        skos:prefLabel ?label .
-            FILTER (langMatches(lang(?label), '$lang'))
-            {
-                ?concept $prop ?date .
-                MINUS { ?concept owl:deprecated True . }
-            }
-            $deprecatedOptions
-        }
-        ORDER BY DESC(YEAR(?date)) DESC(MONTH(?date)) LCASE(?label) DESC(?concept)
-        LIMIT $limit $offset
+SELECT ?concept ?date ?label $deprecatedVars $fcl
+WHERE {
+    ?concept a skos:Concept ;
+    skos:prefLabel ?label .
+    FILTER (langMatches(lang(?label), '$lang'))
+    {
+        ?concept $prop ?date .
+        MINUS { ?concept owl:deprecated True . }
+    }
+    $deprecatedOptions
+}
+ORDER BY DESC(YEAR(?date)) DESC(MONTH(?date)) LCASE(?label) DESC(?concept)
+LIMIT $limit $offset
 EOQ;
 
         return $query;
