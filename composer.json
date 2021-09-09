@@ -60,6 +60,7 @@
     "davidstutz/bootstrap-multiselect": "v0.9.13",
     "easyrdf/easyrdf": "1.1.*",
     "etdsolutions/waypoints": "4.0.0",
+    "symfony/polyfill-php80": "1.*",
     "twig/twig": "2.13.*",
     "twig/extensions": "1.5.*",
     "twitter/bootstrap": "3.3.*",
