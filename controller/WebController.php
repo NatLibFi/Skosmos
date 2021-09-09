@@ -344,21 +344,6 @@ class WebController extends Controller
         }
         $parameters->setVocabularies($vocabObjects);
 
-        $nondefaultEndpointVocs = array();
-
-        if (sizeOf($vocabObjects) != 1) {
-            // global search, either from all (sizeOf($vocabObjects) == 0) or from selected ones
-            if (empty($vocabObjects)) {
-                $vocabObjects = $this->model->getVocabularies();
-            }
-            $defaultEndpoint = $this->model->getConfig()->getDefaultEndpoint();
-            foreach($vocabObjects as $voc) {
-                if ($voc->getEndpoint() !== $defaultEndpoint) {
-                    $nondefaultEndpointVocs[] = $voc;
-                }
-            }
-        }
-
         $counts = null;
         $searchResults = null;
         $errored = false;
@@ -386,7 +371,6 @@ class WebController extends Controller
                 'rest' => $parameters->getOffset()>0,
                 'global_search' => true,
                 'search_failed' => $errored,
-                'skipped_vocabs' => $nondefaultEndpointVocs,
                 'term' => $request->getQueryParamRaw('q'),
                 'lang_list' => $langList,
                 'vocabs' => str_replace(' ', '+', $vocabs),
