@@ -389,7 +389,7 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
-     * Returns a boolean value set in the config.ttl config.
+     * Returns the boolean value of the skosmos:showNotationAsProperty setting.
      * @return boolean
      */
     public function getShowNotationAsProperty()
