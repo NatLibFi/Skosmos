@@ -337,7 +337,8 @@ class WebController extends Controller
                         error_log('Caught exception: ' . $e->getMessage());
                     }
                     header("HTTP/1.0 400 Bad Request");
-                    return $this->invokeGenericErrorPage($request, $e->getMessage());
+                    $this->invokeGenericErrorPage($request, $e->getMessage());
+                    return;
                 }
             }
         }
