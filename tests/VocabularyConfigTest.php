@@ -534,6 +534,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
   public function testGetPluginParameters() {
     $vocab = $this->model->getVocabulary('paramPluginTest');
     $params = $vocab->getConfig()->getPluginParameters();
+    //$this->assertEquals(json_encode(array('imaginaryPlugin' => array('poem_fi' => "Roses are red", 'poem' => "Violets are blue", 'color' => "#800000")),true), $params);
     $this->assertEquals(array('imaginaryPlugin' => array('poem_fi' => "Roses are red", 'poem' => "Violets are blue", 'color' => "#800000")), $params);
   }
 
