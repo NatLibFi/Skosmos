@@ -178,7 +178,7 @@ class WebController extends Controller
         if ($this->notModified($results[0])) {
             return;
         }
-        $pluginParameters = $vocab->getConfig()->getPluginParameters();
+        $pluginParameters = json_encode($vocab->getConfig()->getPluginParameters(), true);
         $template = (in_array('skos:Concept', $results[0]->getType()) || in_array('skos:ConceptScheme', $results[0]->getType())) ? $this->twig->loadTemplate('concept-info.twig') : $this->twig->loadTemplate('group-contents.twig');
 
         $crumbs = $vocab->getBreadCrumbs($request->getContentLang(), $uri);
@@ -532,7 +532,7 @@ class WebController extends Controller
             $this->invokeGroupIndex($request, true);
             return;
         }
-        $pluginParameters = $vocab->getConfig()->getPluginParameters();
+        $pluginParameters = json_encode($vocab->getConfig()->getPluginParameters(), true);
 
         $template = $this->twig->loadTemplate('vocab.twig');
 
