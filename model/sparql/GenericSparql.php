@@ -2266,7 +2266,7 @@ EOQ;
                 '?concept dc:isReplacedBy ?replacedBy ; dc:modified ?date2 .'.
                 'BIND(COALESCE(?date2, ?date) AS ?date)'.
                 'OPTIONAL { ?replacedBy skos:prefLabel ?replacingLabel .'.
-                    'FILTER (langMatches(lang(?replacingLabel), \''.$lang.'\')) }}'. 
+                    'FILTER (langMatches(lang(?replacingLabel), \''.$lang.'\')) }}'.
                 'OPTIONAL { ?concept owl:deprecated ?deprecated . }';
         }
 
