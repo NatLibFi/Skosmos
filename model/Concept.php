@@ -497,6 +497,12 @@ class Concept extends VocabularyDataObject implements Modifiable
             }
         }
 
+        // delete notations unless configured to show them
+        $deleted = $this->DELETED_PROPERTIES;
+        if (!$this->vocab->getConfig()->getShowNotationAsProperty()) {
+            $deleted[] = 'skos:notation';
+        }
+
         foreach ($longUris as &$prop) {
             // storing full URI without brackets in a separate variable
             $longUri = $prop;
@@ -506,12 +512,6 @@ class Concept extends VocabularyDataObject implements Modifiable
             } else {
                 // EasyRdf requires full URIs to be in angle brackets
                 $sprop = "<$prop>";
-            }
-
-            // delete notations unless configured to show them
-            $deleted = $this->DELETED_PROPERTIES;
-            if ($sprop === 'skos:notation' && !$this->vocab->getConfig()->getShowNotationAsProperty()) {
-                $deleted[] = 'skos:notation';
             }
 
             if (!in_array($prop, $deleted) || ($this->isGroup() === false && $prop === 'skos:member')) {
