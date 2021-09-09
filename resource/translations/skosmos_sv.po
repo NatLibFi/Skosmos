@@ -807,6 +807,9 @@ msgstr "Lista begrepp och grupper enligt hierarkin"
 msgid "List vocabulary concepts by newest additions"
 msgstr "Lista begrepp enligt de senaste tilläggen"
 
+msgid "List vocabulary concepts by newest additions including removed"
+msgstr "Lista begrepp enligt de senaste tilläggen eller raderingar"
+
 msgid "List vocabulary concepts hierarchically"
 msgstr "Lista begrepp enligt hierarkin"
 

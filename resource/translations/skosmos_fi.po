@@ -830,6 +830,9 @@ msgstr "Listaa käsitteet aakkosittain"
 msgid "Listing vocabulary concepts by newest additions"
 msgstr "Listaa käsitteet uusimpien lisäysten mukaan"
 
+msgid "List vocabulary concepts by newest additions including removed"
+msgstr "Listaa käsitteet uusimpien lisäysten tai poistojen mukaan"
+
 msgid "Prefer using"
 msgstr "Käytä termiä"
 
