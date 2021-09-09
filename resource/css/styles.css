@@ -522,6 +522,10 @@ ul.dropdown-menu > li:last-child > input {
   margin: 10px 0px;
 }
 
+.search-result-listing > .alert > .btn-default {
+  border-radius: 0;
+}
+
 .search-result-listing .search-count {
   text-align: left;
   margin-left: 15px;
