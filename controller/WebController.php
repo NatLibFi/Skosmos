@@ -348,7 +348,7 @@ class WebController extends Controller
 
         if (sizeOf($vocabObjects) != 1) {
             // global search, either from all (sizeOf($vocabObjects) == 0) or from selected ones
-            if (sizeOf($vocabObjects) == 0) {
+            if (empty($vocabObjects)) {
                 $vocabObjects = $this->model->getVocabularies();
             }
             $defaultEndpoint = $this->model->getConfig()->getDefaultEndpoint();
