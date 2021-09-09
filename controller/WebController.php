@@ -331,7 +331,7 @@ class WebController extends Controller
             foreach($vocids as $vocid) {
                 try {
                     $vocabObjects[] = $this->model->getVocabulary($vocid);
-                } catch (Exception $e) {
+                } catch (ValueError $e) {
                     // skip vocabularies not found in configuration
                     // please note that this may result in global search
                     // NB: should not happen in normal UI interaction
