@@ -332,9 +332,12 @@ class WebController extends Controller
                 try {
                     $vocabObjects[] = $this->model->getVocabulary($vocid);
                 } catch (ValueError $e) {
-                    // skip vocabularies not found in configuration
-                    // please note that this may result in global search
-                    // NB: should not happen in normal UI interaction
+                    // fail fast with an error page if the vocabulary cannot be found
+                    if ($this->model->getConfig()->getLogCaughtExceptions()) {
+                        error_log('Caught exception: ' . $e->getMessage());
+                    }
+                    header("HTTP/1.0 400 Bad Request");
+                    return $this->invokeGenericErrorPage($request, $e->getMessage());
                 }
             }
         }
