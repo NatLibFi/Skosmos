@@ -857,3 +857,9 @@ msgstr "Fel: Sökningen misslyckades!"
 
 msgid "Error: Failed to retrieve vocabulary information!"
 msgstr "Fel: Information om vokabulären kunde inte hämtas!"
+
+msgid "Error: Loading more items failed!"
+msgstr "Fel: Flera resultat kunde inte hämtas!"
+
+msgid "Retry"
+msgstr "Försök igen"

@@ -860,3 +860,9 @@ msgstr "Error: Search failed!"
 
 msgid "Error: Failed to retrieve vocabulary information!"
 msgstr "Error: Failed to retrieve vocabulary information!"
+
+msgid "Error: Loading more items failed!"
+msgstr "Error: Loading more items failed!"
+
+msgid "Retry"
+msgstr "Retry"
