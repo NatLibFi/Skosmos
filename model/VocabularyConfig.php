@@ -5,8 +5,8 @@
  */
 class VocabularyConfig extends BaseConfig
 {
-    private $plugins;
-    private $pluginParameters;
+    private $pluginRegister;
+    private $pluginParameters = array();
     private $languageOrderCache = array();
 
     const DEFAULT_PROPERTY_ORDER = array("rdf:type", "dc:isReplacedBy",
@@ -31,41 +31,97 @@ class VocabularyConfig extends BaseConfig
     public function __construct($resource, $globalPlugins=array())
     {
         $this->resource = $resource;
-        $plugins = $this->resource->allLiterals('skosmos:usePlugin');
+        $this->globalPlugins = $globalPlugins;
+        $this->setParametrizedPlugins();
+        $pluginArray = $this->getPluginArray();
+        $this->pluginRegister = new PluginRegister($pluginArray);
+    }
+
+    /**
+     * Get an ordered array of plugin names with order configured in skosmos:vocabularyPlugins
+     * @return array|null of plugin names
+     */
+    public function getPluginArray() {
+
         $pluginArray = array();
+
+        $vocabularyPlugins = $this->resource->getResource('skosmos:vocabularyPlugins');
+        if ($vocabularyPlugins) {
+            // $vocabularyPlugins has all resources
+            foreach ($vocabularyPlugins as $plugin) {
+                if ($plugin instanceof EasyRdf\Literal) {
+                    $pluginName = $plugin->getValue();
+                    array_push($pluginArray, $pluginName);
+                }
+                else {
+                    array_push($pluginArray, $plugin->getLiteral('skosmos:usePlugin')->getValue());
+                }
+            }
+        }
+        $pluginArray = array_merge($pluginArray, $this->globalPlugins);
+
+        $plugins = $this->resource->allLiterals('skosmos:usePlugin');
         if ($plugins) {
             foreach ($plugins as $pluginlit) {
-                $pluginArray[] = $pluginlit->getValue();
+                $pluginName = $pluginlit->getValue();
+                array_push($pluginArray, $pluginName);
             }
         }
-        $this->plugins = new PluginRegister(array_merge($globalPlugins, $pluginArray));
-        // Get parameterized plugins defined as resources and their respective parameters
-        $pluginResources = $this->resource->allResources('skosmos:useParamPlugin');
+
+        $pluginArray = array_values(array_unique(array_merge($pluginArray, array_keys($this->pluginParameters))));
+
+        return $pluginArray;
+
+    }
+
+    /**
+     * Sets array of parameterized plugins
+     * @param Easyrdf\Resource $pluginResource
+     */
+    private function setParametrizedPlugins() {
+
         $this->pluginParameters = array();
+
+        $vocabularyPlugins = $this->resource->getResource('skosmos:vocabularyPlugins');
+        if ($vocabularyPlugins) {
+            // $vocabularyPlugins has all resources
+            foreach ($vocabularyPlugins as $plugin) {
+                if (!$plugin instanceof EasyRdf\Literal) {
+                    $this->setPluginParameters($plugin);
+                }
+            }
+        }
+        $pluginResources = $this->resource->allResources('skosmos:useParamPlugin');
         if ($pluginResources) {
             foreach ($pluginResources as $pluginResource) {
-                $pluginName = $pluginResource->getLiteral('skosmos:usePlugin')->getValue();
-                $this->pluginParameters[$pluginName] = array();
-
-                $pluginParams = $pluginResource->allResources('skosmos:parameters');
-                foreach ($pluginParams as $parameter) {
-
-                    $paramLiterals = $parameter->allLiterals('schema:value');
-                    foreach ($paramLiterals as $paramLiteral) {
-                        $paramName = $parameter->getLiteral('schema:propertyID')->getValue();
-                        $paramValue = $paramLiteral->getValue();
-                        $paramLang = $paramLiteral->getLang();
-                        if ($paramLang) {
-                            $paramName .= '_' . $paramLang;
-                        }
-                        $this->pluginParameters[$pluginName][$paramName] = $paramValue;
-                    }
-                }
-                $pluginArray[] = $pluginName;
+                $this->setPluginParameters($pluginResource);
             }
-            $this->plugins = new PluginRegister(array_merge($globalPlugins, $pluginArray));
         }
+    }
 
+    /**
+     * Updates array of parameterized plugins adding parameter values
+     * @param Easyrdf\Resource $pluginResource
+     */
+    private function setPluginParameters(Easyrdf\Resource $pluginResource) : void
+    {
+        $pluginName = $pluginResource->getLiteral('skosmos:usePlugin')->getValue();
+        $this->pluginParameters[$pluginName] = array();
+
+        $pluginParams = $pluginResource->allResources('skosmos:parameters');
+        foreach ($pluginParams as $parameter) {
+
+            $paramLiterals = $parameter->allLiterals('schema:value');
+            foreach ($paramLiterals as $paramLiteral) {
+                $paramName = $parameter->getLiteral('schema:propertyID')->getValue();
+                $paramValue = $paramLiteral->getValue();
+                $paramLang = $paramLiteral->getLang();
+                if ($paramLang) {
+                    $paramName .= '_' . $paramLang;
+                }
+                $this->pluginParameters[$pluginName][$paramName] = $paramValue;
+            }
+        }
     }
 
     /**
@@ -428,6 +484,14 @@ class VocabularyConfig extends BaseConfig
      * @return string plugin parameters or null
      */
     public function getPluginParameters() {
+        return $this->pluginParameters;
+    }
+
+    /**
+     * Returns the plugin parameters
+     * @return string plugin parameters or null
+     */
+    public function getEncodedPluginParameters() {
         return json_encode($this->pluginParameters, true);
     }
 
@@ -478,9 +542,9 @@ class VocabularyConfig extends BaseConfig
         return $this->getBoolean('skosmos:showStatistics', true);
     }
 
-    public function getPlugins()
+    public function getPluginRegister()
     {
-        return $this->plugins;
+        return $this->pluginRegister;
     }
 
     /**

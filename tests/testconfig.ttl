@@ -356,6 +356,9 @@
     skosmos:feedbackRecipient "developer@vocabulary.org";
 	skosmos:groupClass skos:Collection;
 	skosmos:language "en";
+	skosmos:vocabularyPlugins ("plugin2" "Bravo" :parameterizedPlugin "plugin1");
+	skosmos:usePlugin "plugin1" ;
+	skosmos:usePlugin "plugin3" ;
 	skosmos:useParamPlugin :parameterizedPlugin ;
 	skosmos:showTopConcepts "true";
 	skosmos:shortName "Test params",
