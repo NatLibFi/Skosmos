@@ -926,8 +926,8 @@ $(function() { // DOCUMENT READY
         },
         error: function(jqXHR, textStatus, errorThrown) {
           $loading.detach();
-          var $failedSearch = $('<div class="alert alert-danger"><h4>Error: Loading for more items failed!</h4></div>');
-          var $retryButton = $('<button class="btn btn-default" type="button">Retry</button>');
+          var $failedSearch = $('<div class="alert alert-danger"><h4>' + loading_failed_text + '</h4></div>');
+          var $retryButton = $('<button class="btn btn-default" type="button">' + loading_retry_text + '</button>');
           $retryButton.on('click', function () {
             $failedSearch.remove();
             waypointCallback(waypoint);
