@@ -326,7 +326,14 @@ function countAndSetOffset() {
   }
 }
 
+// return -1 if the value is negative, 1 otherwise
+// used to coerce sort values so they are compatible with the jsTree sort plugin
+function negVsPos(val) {
+  return (val < 0) ? -1 : 1;
+}
+
 // Natural sort from: http://stackoverflow.com/a/15479354/3894569
+// adapted to return only -1 or 1 using negVsPos function above
 function naturalCompare(a, b) {
   var ax = [], bx = [];
 
@@ -337,10 +344,10 @@ function naturalCompare(a, b) {
     var an = ax.shift();
     var bn = bx.shift();
     var nn = (an[0] - bn[0]) || an[1].localeCompare(bn[1], lang);
-    if(nn) return nn;
+    if(nn) return negVsPos(nn);
   }
 
-  return ax.length - bx.length;
+  return negVsPos(ax.length - bx.length);
 }
 
 function makeCallbacks(data, pageType) {

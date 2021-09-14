@@ -508,17 +508,21 @@ function getTreeConfiguration() {
         var bNode = this.get_node(b);
 
         // sort on notation if requested, and notations exist
-        if (window.showNotation) {
+        if (window.sortByNotation) {
             var aNotation = aNode.original.notation;
             var bNotation = bNode.original.notation;
 
             if (aNotation) {
                 if (bNotation) {
-                    if (aNotation < bNotation) {
-                        return -1;
-                    }
-                    else if (aNotation > bNotation) {
-                        return 1;
+                    if (window.sortByNotation == "decimal") {
+                        if (aNotation < bNotation) {
+                            return -1;
+                        }
+                        else if (aNotation > bNotation) {
+                            return 1;
+                        }
+                    } else { // natural
+                        return naturalCompare(aNotation, bNotation);
                     }
                 }
                 else return -1;

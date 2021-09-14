@@ -117,6 +117,7 @@
     void:uriSpace "http://www.skosmos.skos/test-qualified-notation/" ;
     skosmos:defaultLanguage "en" ;
     skosmos:groupClass skos:Collection ;
+    skosmos:sortByNotation "decimal" ;
     skosmos:language "en" ;
     skosmos:alphabeticalListQualifier skos:notation ;
     skosmos:sparqlGraph <http://www.skosmos.skos/test-qualified-notation/> .
@@ -337,7 +338,7 @@
     dc:subject :cat_general ;
     void:uriSpace "http://www.skosmos.skos/notationFeatures/";
     skosmos:language "fi";
-    skosmos:sortByNotation true ;
+    skosmos:sortByNotation "natural" ;
     skosmos:searchByNotation true ;
     skosmos:showNotation true ;
     skosmos:useModifiedDate "true";
