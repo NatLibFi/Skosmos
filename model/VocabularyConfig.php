@@ -32,22 +32,21 @@ class VocabularyConfig extends BaseConfig
     {
         $this->resource = $resource;
         $this->globalPlugins = $globalPlugins;
-        $this->setParametrizedPlugins();
+        $this->setParameterizedPlugins();
         $pluginArray = $this->getPluginArray();
         $this->pluginRegister = new PluginRegister($pluginArray);
     }
 
     /**
      * Get an ordered array of plugin names with order configured in skosmos:vocabularyPlugins
-     * @return array|null of plugin names
+     * @return array of plugin names
      */
-    public function getPluginArray() {
-
+    public function getPluginArray() : array
+    {
         $pluginArray = array();
 
         $vocabularyPlugins = $this->resource->getResource('skosmos:vocabularyPlugins');
         if ($vocabularyPlugins) {
-            // $vocabularyPlugins has all resources
             foreach ($vocabularyPlugins as $plugin) {
                 if ($plugin instanceof EasyRdf\Literal) {
                     $pluginName = $plugin->getValue();
@@ -71,22 +70,22 @@ class VocabularyConfig extends BaseConfig
         $pluginArray = array_values(array_unique(array_merge($pluginArray, array_keys($this->pluginParameters))));
 
         return $pluginArray;
-
     }
 
     /**
      * Sets array of parameterized plugins
      * @param Easyrdf\Resource $pluginResource
+     * @return void
      */
-    private function setParametrizedPlugins() {
-
+    private function setParameterizedPlugins() : void
+    {
         $this->pluginParameters = array();
 
         $vocabularyPlugins = $this->resource->getResource('skosmos:vocabularyPlugins');
         if ($vocabularyPlugins) {
             // $vocabularyPlugins has all resources
             foreach ($vocabularyPlugins as $plugin) {
-                if (!$plugin instanceof EasyRdf\Literal) {
+                if ($plugin instanceof EasyRdf\Resource) {
                     $this->setPluginParameters($plugin);
                 }
             }
@@ -102,6 +101,7 @@ class VocabularyConfig extends BaseConfig
     /**
      * Updates array of parameterized plugins adding parameter values
      * @param Easyrdf\Resource $pluginResource
+     * @return void
      */
     private function setPluginParameters(Easyrdf\Resource $pluginResource) : void
     {
@@ -485,14 +485,6 @@ class VocabularyConfig extends BaseConfig
      */
     public function getPluginParameters() {
         return $this->pluginParameters;
-    }
-
-    /**
-     * Returns the plugin parameters
-     * @return string plugin parameters or null
-     */
-    public function getEncodedPluginParameters() {
-        return json_encode($this->pluginParameters, true);
     }
 
     /**
