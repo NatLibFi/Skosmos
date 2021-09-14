@@ -67,7 +67,7 @@ class VocabularyConfig extends BaseConfig
             }
         }
 
-        $pluginArray = array_values(array_unique(array_merge($pluginArray, array_keys($this->pluginParameters))));
+        $pluginArray = array_values(array_unique($pluginArray));
 
         return $pluginArray;
     }
