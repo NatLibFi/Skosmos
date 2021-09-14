@@ -347,6 +347,8 @@ EOD;
    */
   public function testNewConcepts() {
     $request = new Request($this->model);
+    $request->setQueryParam('format', 'application/json');
+    $request->setURI('http://www.skosmos.skos/changes');
     $request->setVocab('changes');
     $request->setLang('en');
     $request->setContentLang('en');
@@ -400,6 +402,8 @@ EOD;
    */
   public function testModifiedConcepts() {
     $request = new Request($this->model);
+    $request->setQueryParam('format', 'application/json');
+    $request->setURI('http://www.skosmos.skos/test');
     $request->setVocab('test');
     $request->setLang('en');
     $request->setContentLang('en');
@@ -431,6 +435,8 @@ EOD;
   */
   public function testDeprecatedChanges() {
     $request = new Request($this->model);
+    $request->setQueryParam('format', 'application/json');
+    $request->setURI('http://www.skosmos.skos/changes');
     $request->setVocab('changes');
     $request->setLang('en');
     $request->setContentLang('en');
@@ -465,6 +471,7 @@ EOD;
    */
   public function testVocabularyStatistics() {
     $request = new Request($this->model);
+    $request->setQueryParam('format', 'application/json');
     $request->setVocab('test');
     $request->setLang('en');
 

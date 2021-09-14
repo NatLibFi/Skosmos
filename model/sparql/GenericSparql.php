@@ -119,6 +119,7 @@ class GenericSparql {
         }
         return $clause;
     }
+
     protected function initializeHttpClient() {
         // configure the HTTP client used by EasyRdf\Sparql\Client
         $httpclient = EasyRdf\Http::getDefaultHttpClient();
