@@ -461,7 +461,7 @@ EOD;
       { "date": "2021-01-03T12:46:32+0000", "prefLabel": "Hurr Durr", "uri": "http://www.skosmos.skos/changes/d3" },
       { "date": "2021-01-03T12:46:31+0000", "prefLabel": "Second date", "uri": "http://www.skosmos.skos/changes/d2" }
     ]
-  }
+}
 EOD;
         $this->assertJsonStringEqualsJsonString($changeList, $expected);
   }
