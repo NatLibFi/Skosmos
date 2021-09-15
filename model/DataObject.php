@@ -50,7 +50,7 @@ class DataObject
                 $exsparql = $exvoc->getSparql();
                 $results = $exsparql->queryLabel($exuri, $lang);
                 return isset($results[$lang]) ? $results[$lang] : null;
-            } catch (EasyRdf\Http\Exception | EasyRdf\Exception | Throwable $e) {
+            } catch (EasyRdf\Http\Exception | EasyRdf\Exception | Throwable $e) {
                 if ($this->model->getConfig()->getLogCaughtExceptions()) {
                     error_log('Caught exception: ' . $e->getMessage());
                 }
@@ -72,7 +72,7 @@ class DataObject
                 $exsparql = $exvoc->getSparql();
                 $results = $exsparql->queryNotation($exuri);
                 return isset($results) ? $results : null;
-            } catch (EasyRdf\Http\Exception | EasyRdf\Exception | Throwable $e) {
+            } catch (EasyRdf\Http\Exception | EasyRdf\Exception | Throwable $e) {
                 if ($this->model->getConfig()->getLogCaughtExceptions()) {
                     error_log('Caught exception: ' . $e->getMessage());
                 }
