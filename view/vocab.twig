@@ -19,16 +19,16 @@
     {% if vocab.config.showChangeList %}
     {% if vocab.config.showDeprecatedChanges %}
     <h3 class="sr-only">{% trans "List vocabulary concepts by newest additions including removed" %}</h3>
-    <li id="changes" class="active"><a href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Changes-and-deprecations-nav" %}</a></li>
+    <li id="changes" {% if active_tab == 'new' %} class="active"{% endif %}><a href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Changes-and-deprecations-nav" %}</a></li>
     {% else %}
     <h3 class="sr-only">{% trans "List vocabulary concepts by newest additions" %}</h3>
-    <li id="changes" class="active"><a href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Changes-nav" %}</a></li>
+    <li id="changes" {% if active_tab == 'new' %} class="active"{% endif %}><a href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Changes-nav" %}</a></li>
     {% endif %}
     {% endif %}
   </ul>
 </div>
 
-<div class="sidebar-grey{% if active_tab == 'hierarchy' %} concept-hierarchy{% endif %}">
+<div class="sidebar-grey{% if active_tab == 'hierarchy' %} concept-hierarchy{% endif %}{% if active_tab == 'changes' %} concept-hierarchy{% endif %}">
   <div class="group-container">
     <ul class="group-index">
       {% for uri, value in groups %}
