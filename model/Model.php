@@ -478,7 +478,7 @@ class Model
                             // not found in preferred vocabulary, fall back to next method
                             break;
                         }
-                    } catch (EasyRdf\Http\Exception | EasyRdf\Exception | Throwable $e) {
+                    } catch (EasyRdf\Http\Exception | EasyRdf\Exception | Throwable $e) {
                         if ($this->getConfig()->getLogCaughtExceptions()) {
                             error_log('Caught exception: ' . $e->getMessage());
                         }
@@ -494,7 +494,7 @@ class Model
                 if ($vocab->getConceptLabel($uri, null) !== null) {
                     return $vocab;
                 }
-            } catch (EasyRdf\Http\Exception | EasyRdf\Exception | Throwable $e) {
+            } catch (EasyRdf\Http\Exception | EasyRdf\Exception | Throwable $e) {
                 if ($this->getConfig()->getLogCaughtExceptions()) {
                     error_log('Caught exception: ' . $e->getMessage());
                 }

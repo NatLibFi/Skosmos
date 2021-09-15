@@ -114,7 +114,7 @@ $.ajaxQ = (function(){
       var r = [];
       $.each(Q, function(i, jqXHR){
         r.push(jqXHR._id);
-        if (jqXHR.req_kind == $.ajaxQ.requestKind.CONTENT || jqXHR.req_kind == $.ajaxQ.requestKind.PLUGIN) {
+        if (jqXHR.req_kind == $.ajaxQ.requestKind.CONTENT || jqXHR.req_kind == $.ajaxQ.requestKind.PLUGIN) {
           jqXHR.abort();
         }
       });
@@ -124,7 +124,7 @@ $.ajaxQ = (function(){
       var r = [];
       $.each(Q, function(i, jqXHR){
         r.push(jqXHR._id);
-        if (jqXHR.req_kind == $.ajaxQ.requestKind.SIDEBAR || all && jqXHR.req_kind == $.ajaxQ.requestKind.SIDEBAR_PRIVILEGED) {
+        if (jqXHR.req_kind == $.ajaxQ.requestKind.SIDEBAR || all && jqXHR.req_kind == $.ajaxQ.requestKind.SIDEBAR_PRIVILEGED) {
           jqXHR.abort();
         }
       });
