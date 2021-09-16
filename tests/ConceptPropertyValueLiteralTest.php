@@ -63,6 +63,17 @@ class ConceptPropertyValueLiteralTest extends PHPUnit\Framework\TestCase
   }
 
   /**
+  * @covers ConceptPropertyValueLiteral::getLabel
+  */
+  public function testGetLabelForDatatype() {
+    $vocab = $this->model->getVocabulary('test');
+    $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en');
+    $props = $concepts[0]->getProperties();
+    $propvals = $props['skos:notation']->getValues();
+    $this->assertEquals('NameOfTheDatatype', $propvals['665']->getDatatype());
+  }
+
+  /**
    * @covers ConceptPropertyValueLiteral::getLang
    */
   public function testGetLang() {
