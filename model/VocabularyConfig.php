@@ -46,14 +46,16 @@ class VocabularyConfig extends BaseConfig
         $pluginArray = array();
 
         $vocabularyPlugins = $this->resource->getResource('skosmos:vocabularyPlugins');
+        if (!is_array($vocabularyPlugins)) {
+          $vocabularyPlugins = $this->resource->all('skosmos:vocabularyPlugins');
+        }
         if ($vocabularyPlugins) {
             foreach ($vocabularyPlugins as $plugin) {
                 if ($plugin instanceof EasyRdf\Literal) {
-                    $pluginName = $plugin->getValue();
-                    array_push($pluginArray, $pluginName);
+                    $pluginArray[] = $plugin->getValue();
                 }
-                else {
-                    array_push($pluginArray, $plugin->getLiteral('skosmos:usePlugin')->getValue());
+                else if ($plugin instanceof EasyRdf\Resource) {
+                    $pluginArray[] = $plugin->getLiteral('skosmos:usePlugin')->getValue();
                 }
             }
         }
@@ -62,14 +64,10 @@ class VocabularyConfig extends BaseConfig
         $plugins = $this->resource->allLiterals('skosmos:usePlugin');
         if ($plugins) {
             foreach ($plugins as $pluginlit) {
-                $pluginName = $pluginlit->getValue();
-                array_push($pluginArray, $pluginName);
+                $pluginArray[] = $pluginlit->getValue();
             }
         }
-
-        $pluginArray = array_values(array_unique($pluginArray));
-
-        return $pluginArray;
+        return array_values(array_unique($pluginArray));
     }
 
     /**
@@ -83,7 +81,6 @@ class VocabularyConfig extends BaseConfig
 
         $vocabularyPlugins = $this->resource->getResource('skosmos:vocabularyPlugins');
         if ($vocabularyPlugins) {
-            // $vocabularyPlugins has all resources
             foreach ($vocabularyPlugins as $plugin) {
                 if ($plugin instanceof EasyRdf\Resource) {
                     $this->setPluginParameters($plugin);
@@ -499,8 +496,8 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
-     * Returns the plugin parameters
-     * @return string plugin parameters or null
+     * Returns the parameters of parameterized plugins
+     * @return array of plugin parameters
      */
     public function getPluginParameters() {
         return $this->pluginParameters;
