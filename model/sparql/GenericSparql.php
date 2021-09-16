@@ -431,6 +431,8 @@ CONSTRUCT {
   {
    ?uri ?p ?o .
    OPTIONAL {
+     FILTER(?p = skos:notation)
+     FILTER(isLiteral(?o))
      BIND(datatype(?o) AS ?dt)
      ?dt rdfs:label ?dtlabel
    }
