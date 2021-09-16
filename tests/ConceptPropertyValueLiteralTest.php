@@ -63,7 +63,7 @@ class ConceptPropertyValueLiteralTest extends PHPUnit\Framework\TestCase
   }
 
   /**
-  * @covers ConceptPropertyValueLiteral::getLabel
+  * @covers ConceptPropertyValueLiteral::getDatatype
   */
   public function testGetLabelForDatatype() {
     $vocab = $this->model->getVocabulary('test');
@@ -74,18 +74,18 @@ class ConceptPropertyValueLiteralTest extends PHPUnit\Framework\TestCase
   }
 
   /**
-  * @covers ConceptPropertyValueLiteral::getLabel
+  * @covers ConceptPropertyValueLiteral::getDatatype
   */
   public function testGetNotationDatatypeWithoutLabel() {
     $vocab = $this->model->getVocabulary('test');
     $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta128', 'en');
     $props = $concepts[0]->getProperties();
     $propvals = $props['skos:notation']->getValues();
-    $this->assertEquals('', $propvals['testnotation']->getDatatype());
+    $this->assertNull($propvals['testnotation']->getDatatype());
   }
 
 /**
- * @covers ConceptPropertyValueLiteral::getLabel
+ * @covers ConceptPropertyValueLiteral::getDatatype
  */
 public function testGetLabelForDatatypeIfNull() {
     $vocab = $this->model->getVocabulary('test');

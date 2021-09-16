@@ -48,7 +48,7 @@ class ConceptPropertyValueLiteral extends VocabularyDataObject
             $dtLabel = $graph->resource($datatype)->label($this->clang);
             return $dtLabel->getValue();
         }
-        return "";
+        return null;
     }
 
     public function getType()
