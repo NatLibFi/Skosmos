@@ -81,7 +81,7 @@ class ConceptPropertyValueLiteralTest extends PHPUnit\Framework\TestCase
     $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta128', 'en');
     $props = $concepts[0]->getProperties();
     $propvals = $props['skos:notation']->getValues();
-    $this->assertEquals('', $propvals['testnotation']->getDatatype());
+    $this->assertNull($propvals['testnotation']->getDatatype());
   }
 
 /**
