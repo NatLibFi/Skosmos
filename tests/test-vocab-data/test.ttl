@@ -162,8 +162,8 @@ test:ta127
 
 test:ta128
   a mads:Geographic, skos:Concept ;
-  skos:notation "12.34"^^test:dt2 ;
-  skos:prefLabel "Europa"@nb .
+  skos:notation "testnotation"^^test:dt2 ;
+  skos:prefLabel "Europa2"@nb .
 
 test:ta1 a skos:Concept, meta:TestClass ;
     skos:inScheme test:conceptscheme ;

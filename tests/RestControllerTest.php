@@ -462,7 +462,7 @@ EOD;
   "concepts": {
     "class": "http://www.w3.org/2004/02/skos/core#Concept",
     "label": "Concept",
-    "count": 17,
+    "count": 18,
     "deprecatedCount": 1
   },
   "subTypes": [
