@@ -44,17 +44,16 @@ class VocabularyConfig extends BaseConfig
     public function getPluginArray() : array
     {
         $pluginArray = array();
-
         $vocabularyPlugins = $this->resource->getResource('skosmos:vocabularyPlugins');
-        if (!is_array($vocabularyPlugins)) {
-          $vocabularyPlugins = $this->resource->all('skosmos:vocabularyPlugins');
+        if (!$vocabularyPlugins instanceof EasyRdf\Collection) {
+            $vocabularyPlugins = $this->resource->all('skosmos:vocabularyPlugins');
         }
         if ($vocabularyPlugins) {
             foreach ($vocabularyPlugins as $plugin) {
                 if ($plugin instanceof EasyRdf\Literal) {
                     $pluginArray[] = $plugin->getValue();
                 }
-                else if ($plugin instanceof EasyRdf\Resource) {
+                else {
                     $pluginArray[] = $plugin->getLiteral('skosmos:usePlugin')->getValue();
                 }
             }

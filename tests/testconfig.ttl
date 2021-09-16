@@ -345,6 +345,15 @@
     skosmos:sparqlGraph <http://www.skosmos.skos/test-notation-sort/>;
     skosmos:mainConceptScheme test:notationMainConceptScheme .
 
+:paramPluginOrderTest a skosmos:Vocabulary, void:Dataset ;
+	dc:title "Test plugin order"@en ;
+	void:dataDump <http://skosmos.skos/dump/test/> ;
+	void:uriSpace "http://www.skosmos.skos/test/";
+	skosmos:vocabularyPlugins "plugin2", "Bravo", :parameterizedPlugin, "plugin1";
+	skosmos:usePlugin "plugin1" ;
+	skosmos:usePlugin "plugin3" ;
+	skosmos:useParamPlugin :parameterizedPlugin .
+
 :paramPluginTest a skosmos:Vocabulary, void:Dataset ;
 	dc:title "Test plugin parameters"@en ;
 	dc:subject :cat_science ;

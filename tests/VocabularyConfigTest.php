@@ -547,6 +547,16 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
   }
 
   /**
+   * @covers VocabularyConfig::getPluginArray
+   */
+  public function testGetUnorderedVocabularyPlugins() {
+    $vocab = $this->model->getVocabulary('paramPluginOrderTest');
+    $plugins = $vocab->getConfig()->getPluginArray();
+    $arrayElements = ["plugin2", "Bravo", "imaginaryPlugin", "plugin1", "alpha", "charlie", "plugin3"];
+    $this->assertEquals(sort($arrayElements), sort($plugins));
+  }
+
+  /**
    * @covers VocabularyConfig::getPropertyOrder
    */
   public function testGetPropertyOrderNotSet() {
