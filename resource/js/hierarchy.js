@@ -434,7 +434,7 @@ function nodeLabelSortKey(node) {
 
   // parse the HTML code in node.text and return just the label as a lower case value for sorting
   // should look like '<span class="tree-notation">12.3</span> <span class="tree-label">Hello</span>'
-  label = $(node.text.toLowerCase()).filter('.tree-label').text();
+  var label = $(node.text.toLowerCase()).filter('.tree-label').text();
 
   return domain + " " + label;
 }
