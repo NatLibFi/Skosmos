@@ -178,12 +178,22 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
-     * Returns a boolean value set in the config.ttl config.
-     * @return boolean
+     * Returns the sorting strategy for notation codes set in the config.ttl
+     * config: either "lexical", "natural", or null if sorting by notations is 
+     * disabled. A "true" value in the configuration file is interpreted as
+     * "lexical".
+     * @return string|bool
      */
-    public function sortByNotation()
+    public function getSortByNotation(): ?string
     {
-        return $this->getBoolean('skosmos:sortByNotation');
+        $value = $this->getLiteral('skosmos:sortByNotation');
+        if ($value == "lexical" || $value == "natural") {
+            return $value;
+        }
+        // not a special value - interpret as boolean instead
+        $bvalue = $this->getBoolean('skosmos:sortByNotation');
+        // "true" is interpreted as "lexical"
+        return $bvalue ? "lexical" : null;
     }
 
     /**

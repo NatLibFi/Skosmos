@@ -117,6 +117,7 @@
     void:uriSpace "http://www.skosmos.skos/test-qualified-notation/" ;
     skosmos:defaultLanguage "en" ;
     skosmos:groupClass skos:Collection ;
+    skosmos:sortByNotation "lexical" ;
     skosmos:language "en" ;
     skosmos:alphabeticalListQualifier skos:notation ;
     skosmos:sparqlGraph <http://www.skosmos.skos/test-qualified-notation/> .
@@ -335,13 +336,13 @@
 :testNotation a skosmos:Vocabulary, void:Dataset ;
     dc11:title "A vocabulary for testing vocabularies with notation features"@en ;
     dc:subject :cat_general ;
-    void:uriSpace "http://www.skosmos.skos/notationFeatures/";
+    void:uriSpace "http://www.skosmos.skos/test-notation-sort/";
     skosmos:language "fi";
-    skosmos:sortByNotation true ;
+    skosmos:sortByNotation "natural" ;
     skosmos:searchByNotation true ;
     skosmos:showNotation true ;
     skosmos:useModifiedDate "true";
-    skosmos:sparqlGraph <http://www.skosmos.skos/notation/>;
+    skosmos:sparqlGraph <http://www.skosmos.skos/test-notation-sort/>;
     skosmos:mainConceptScheme test:notationMainConceptScheme .
 
 :paramPluginTest a skosmos:Vocabulary, void:Dataset ;

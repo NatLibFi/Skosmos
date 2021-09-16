@@ -558,7 +558,7 @@ class Concept extends VocabularyDataObject implements Modifiable
                 if ($superprop) {
                     $superprop = EasyRdf\RdfNamespace::shorten($superprop) ? EasyRdf\RdfNamespace::shorten($superprop) : $superprop;
                 }
-                $sort_by_notation = $this->vocab->getConfig()->sortByNotation();
+                $sort_by_notation = $this->vocab->getConfig()->getSortByNotation();
                 $propobj = new ConceptProperty($prop, $proplabel, $prophelp, $superprop, $sort_by_notation);
 
                 if ($propobj->getLabel() !== null) {

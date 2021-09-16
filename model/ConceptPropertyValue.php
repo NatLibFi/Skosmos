@@ -33,12 +33,7 @@ class ConceptPropertyValue extends VocabularyDataObject
 
     public function __toString()
     {
-        $label = is_string($this->getLabel()) ? $this->getLabel() : $this->getLabel()->getValue();
-        if ($this->vocab->getConfig()->sortByNotation()) {
-            $label = ltrim($this->getNotation() . ' ') . $label;
-        }
-
-        return $label;
+        return is_string($this->getLabel()) ? $this->getLabel() : $this->getLabel()->getValue();
     }
 
     public function getLang()
