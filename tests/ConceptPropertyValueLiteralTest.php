@@ -73,6 +73,30 @@ class ConceptPropertyValueLiteralTest extends PHPUnit\Framework\TestCase
     $this->assertEquals('NameOfTheDatatype', $propvals['665']->getDatatype());
   }
 
+    /**
+     * @covers ConceptPropertyValueLiteral::getLabel
+     */
+    public function testGetDatatypeWithoutLabel() {
+        $vocab = $this->model->getVocabulary('test');
+        $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en');
+        $props = $concepts[0]->getProperties();
+        $propvals = $props['skos:notation']->getValues();
+        $this->assertEquals('NameOfTheDatatype', $propvals['665']->getDatatype());
+    }
+
+
+    /**
+     * @covers ConceptPropertyValueLiteral::getLabel
+     */
+    public function testGetLabelForDatatypeIfNull() {
+        $vocab = $this->model->getVocabulary('test');
+        $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta126', 'en');
+        $props = $concepts[0]->getProperties();
+        $propvals = $props['skos:notation']->getValues();
+        $this->assertNull($propvals['12.34']->getDatatype());
+    }
+
+
   /**
    * @covers ConceptPropertyValueLiteral::getLang
    */

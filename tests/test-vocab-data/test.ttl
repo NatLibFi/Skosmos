@@ -52,6 +52,8 @@ test:ta111 a skos:Concept, meta:TestClass ;
 test:dt a rdfs:Datatype ;
     rdfs:label "NameOfTheDatatype" .
 
+test:dt2 a rdfs:Datatype .
+
 test:ta112 a skos:Concept, meta:TestClass ;
     skosmos:testprop "Test property value" ;
     skos:notation "665"^^test:dt ;
@@ -157,6 +159,11 @@ test:ta127
    "Ä way after B in Finnish collation"@fi,
    "Finnish before Swedish in result array"@sv,
    "No language tag becomes very first in result language array" .
+
+test:ta128
+  a mads:Geographic, skos:Concept ;
+  skos:notation "12.34"^^test:dt2 ;
+  skos:prefLabel "Europa"@nb .
 
 test:ta1 a skos:Concept, meta:TestClass ;
     skos:inScheme test:conceptscheme ;
