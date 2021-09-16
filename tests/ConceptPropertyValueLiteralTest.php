@@ -63,7 +63,7 @@ class ConceptPropertyValueLiteralTest extends PHPUnit\Framework\TestCase
   }
 
   /**
-  * @covers ConceptPropertyValueLiteral::getLabel
+  * @covers ConceptPropertyValueLiteral::getDatatype
   */
   public function testGetLabelForDatatype() {
     $vocab = $this->model->getVocabulary('test');
@@ -74,7 +74,7 @@ class ConceptPropertyValueLiteralTest extends PHPUnit\Framework\TestCase
   }
 
   /**
-  * @covers ConceptPropertyValueLiteral::getLabel
+  * @covers ConceptPropertyValueLiteral::getDatatype
   */
   public function testGetNotationDatatypeWithoutLabel() {
     $vocab = $this->model->getVocabulary('test');
@@ -85,7 +85,7 @@ class ConceptPropertyValueLiteralTest extends PHPUnit\Framework\TestCase
   }
 
 /**
- * @covers ConceptPropertyValueLiteral::getLabel
+ * @covers ConceptPropertyValueLiteral::getDatatype
  */
 public function testGetLabelForDatatypeIfNull() {
     $vocab = $this->model->getVocabulary('test');
