@@ -16,6 +16,7 @@ class Concept extends VocabularyDataObject implements Modifiable
     /** the EasyRdf\Graph object of the concept */
     private $graph;
     private $clang;
+    private $deleted;
 
     /** concept properties that should not be shown to users */
     private $DELETED_PROPERTIES = array(
@@ -78,8 +79,13 @@ class Concept extends VocabularyDataObject implements Modifiable
     public function __construct($model, $vocab, $resource, $graph, $clang)
     {
         parent::__construct($model, $vocab, $resource);
+        $this->deleted = $this->DELETED_PROPERTIES;
         if ($vocab !== null) {
             $this->order = $vocab->getConfig()->getPropertyOrder();
+            // delete notations unless configured to show them
+            if (!$vocab->getConfig()->getShowNotationAsProperty()) {
+                $this->deleted[] = 'skos:notation';
+            }
         } else {
             $this->order = VocabularyConfig::DEFAULT_PROPERTY_ORDER;
         }
@@ -508,7 +514,7 @@ class Concept extends VocabularyDataObject implements Modifiable
                 $sprop = "<$prop>";
             }
 
-            if (!in_array($prop, $this->DELETED_PROPERTIES) || ($this->isGroup() === false && $prop === 'skos:member')) {
+            if (!in_array($prop, $this->deleted) || ($this->isGroup() === false && $prop === 'skos:member')) {
                 // retrieve property label and super properties from the current vocabulary first
                 $propres = new EasyRdf\Resource($prop, $this->graph);
                 $proplabel = $propres->label($this->getEnvLang()) ? $propres->label($this->getEnvLang()) : $propres->label();
@@ -581,7 +587,6 @@ class Concept extends VocabularyDataObject implements Modifiable
                     if (isset($ret[$prop]) && ($literal->getLang() === $this->clang || $literal->getLang() === null) || $this->vocab->getConfig()->hasMultiLingualProperty($prop)) {
                         $ret[$prop]->addValue($literal);
                     }
-
                 }
 
                 // Iterating through every resource and adding these to the data object.

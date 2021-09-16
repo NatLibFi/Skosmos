@@ -866,3 +866,9 @@ msgstr "Error: Loading more items failed!"
 
 msgid "Retry"
 msgstr "Retry"
+
+msgid "skos:notation"
+msgstr "Notation"
+
+msgid "skos:notation_help"
+msgstr "Code that uniquely identifies a concept within a concept scheme."

@@ -865,3 +865,9 @@ msgstr "Virhe: Lisätulosten haku epäonnistui!"
 
 msgid "Retry"
 msgstr "Yritä uudelleen"
+
+msgid "skos:notation"
+msgstr "Notaatio"
+
+msgid "skos:notation_help"
+msgstr "Tunniste, joka yksilöi käsitteen sanaston sisällä."
