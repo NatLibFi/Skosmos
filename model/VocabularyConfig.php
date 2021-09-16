@@ -63,8 +63,7 @@ class VocabularyConfig extends BaseConfig
         $plugins = $this->resource->allLiterals('skosmos:usePlugin');
         if ($plugins) {
             foreach ($plugins as $pluginlit) {
-                $pluginName = $pluginlit->getValue();
-                array_push($pluginArray, $pluginName);
+                $pluginArray[] = $pluginlit->getValue();
             }
         }
         return array_values(array_unique($pluginArray));
