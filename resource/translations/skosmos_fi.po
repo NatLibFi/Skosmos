@@ -860,14 +860,14 @@ msgstr "Virhe: Haku epäonnistui!"
 msgid "Error: Failed to retrieve vocabulary information!"
 msgstr "Virhe: Sanaston tietojen haku epäonnistui!"
 
+msgid "Error: Loading more items failed!"
+msgstr "Virhe: Lisätulosten haku epäonnistui!"
+
+msgid "Retry"
+msgstr "Yritä uudelleen"
+
 msgid "skos:notation"
 msgstr "Notaatio"
 
 msgid "skos:notation_help"
 msgstr "Tunniste, joka yksilöi käsitteen sanaston sisällä."
-
-msgid "Error: Search failed!"
-msgstr "Virhe: Haku epäonnistui!"
-
-msgid "Error: Failed to retrieve vocabulary information!"
-msgstr "Virhe: Sanaston tietojen haku epäonnistui!"

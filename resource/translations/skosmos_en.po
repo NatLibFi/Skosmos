@@ -861,14 +861,14 @@ msgstr "Error: Search failed!"
 msgid "Error: Failed to retrieve vocabulary information!"
 msgstr "Error: Failed to retrieve vocabulary information!"
 
+msgid "Error: Loading more items failed!"
+msgstr "Error: Loading more items failed!"
+
+msgid "Retry"
+msgstr "Retry"
+
 msgid "skos:notation"
 msgstr "Notation"
 
 msgid "skos:notation_help"
 msgstr "Code that uniquely identifies a concept within a concept scheme."
-
-msgid "Error: Search failed!"
-msgstr "Error: Search failed!"
-
-msgid "Error: Failed to retrieve vocabulary information!"
-msgstr "Error: Failed to retrieve vocabulary information!"
