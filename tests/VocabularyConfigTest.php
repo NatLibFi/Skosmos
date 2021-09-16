@@ -332,9 +332,9 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
    * @covers VocabularyConfig::getLiteral
    * @covers VocabularyConfig::getBoolean
    */
-  public function testShowSortByNotationTrueIsDecimal() {
+  public function testShowSortByNotationTrueIsLexical() {
     $vocab = $this->model->getVocabulary('test-notation-sort');
-    $this->assertEquals("decimal", $vocab->getConfig()->getSortByNotation());
+    $this->assertEquals("lexical", $vocab->getConfig()->getSortByNotation());
   }
 
   /**
@@ -342,9 +342,9 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
    * @covers VocabularyConfig::getLiteral
    * @covers VocabularyConfig::getBoolean
    */
-  public function testShowSortByNotationDecimal() {
+  public function testShowSortByNotationLexical() {
     $vocab = $this->model->getVocabulary('test-qualified-notation');
-    $this->assertEquals("decimal", $vocab->getConfig()->getSortByNotation());
+    $this->assertEquals("lexical", $vocab->getConfig()->getSortByNotation());
   }
 
   /**

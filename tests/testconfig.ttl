@@ -117,7 +117,7 @@
     void:uriSpace "http://www.skosmos.skos/test-qualified-notation/" ;
     skosmos:defaultLanguage "en" ;
     skosmos:groupClass skos:Collection ;
-    skosmos:sortByNotation "decimal" ;
+    skosmos:sortByNotation "lexical" ;
     skosmos:language "en" ;
     skosmos:alphabeticalListQualifier skos:notation ;
     skosmos:sparqlGraph <http://www.skosmos.skos/test-qualified-notation/> .

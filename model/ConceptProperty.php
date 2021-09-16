@@ -131,7 +131,7 @@ class ConceptProperty
                     }
                     else {
                         // assume that notations are unique, choose strategy
-                        if ($this->sort_by_notation == "decimal") {
+                        if ($this->sort_by_notation == "lexical") {
                             return strcoll($anot, $bnot);
                         } else { // natural
                             return strnatcasecmp($anot, $bnot);

@@ -123,8 +123,8 @@ class ConceptPropertyTest extends PHPUnit\Framework\TestCase
    * @covers ConceptProperty::addValue
    * @covers ConceptProperty::sortValues
    */
-  public function testSortNotatedValuesDecimal() {
-    # the vocabulary is configured to use decimal sorting
+  public function testSortNotatedValuesLexical() {
+    # the vocabulary is configured to use lexical sorting
     $vocab = $this->model->getVocabulary('test-notation-sort');
     $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta01', 'en');
     $concept = $concepts[0];

@@ -514,7 +514,7 @@ function getTreeConfiguration() {
 
             if (aNotation) {
                 if (bNotation) {
-                    if (window.sortByNotation == "decimal") {
+                    if (window.sortByNotation == "lexical") {
                         if (aNotation < bNotation) {
                             return -1;
                         }
