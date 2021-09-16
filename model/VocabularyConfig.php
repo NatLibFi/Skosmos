@@ -179,8 +179,9 @@ class VocabularyConfig extends BaseConfig
 
     /**
      * Returns the sorting strategy for notation codes set in the config.ttl
-     * config: either "lexical" (default), "natural", or null if
-     * sorting by notations is disabled.
+     * config: either "lexical", "natural", or null if sorting by notations is 
+     * disabled. A "true" value in the configuration file is interpreted as
+     * "lexical".
      * @return string|bool
      */
     public function getSortByNotation(): ?string
@@ -191,7 +192,7 @@ class VocabularyConfig extends BaseConfig
         }
         // not a special value - interpret as boolean instead
         $bvalue = $this->getBoolean('skosmos:sortByNotation');
-        // default sorting strategy is "lexical"
+        // "true" is interpreted as "lexical"
         return $bvalue ? "lexical" : null;
     }
 
