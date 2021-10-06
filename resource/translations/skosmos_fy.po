@@ -1,7 +1,7 @@
 # 
 # Translators:
-# hyu623 <hyu623@163.com>, 2015
-# osma <osma.suominen@helsinki.fi>, 2017,2020
+# Redmer Kronemeijer <redmer.kronemeijer@rdmr.eu>, 2021
+# Redmer Kronemeijer <redmer.kronemeijer@rdmr.eu>, 2021
 msgid ""
 msgstr ""
 "Project-Id-Version: Skosmos\n"
@@ -9,12 +9,12 @@ msgstr ""
 "POT-Creation-Date: 2017-01-16 10:26+0200\n"
 "PO-Revision-Date: 2021-09-16 16:18+0000\n"
 "Last-Translator: Transifex Bot <>\n"
-"Language-Team: Chinese (http://www.transifex.com/national-library-of-finland/skosmos/language/zh/)\n"
+"Language-Team: Western Frisian (http://www.transifex.com/national-library-of-finland/skosmos/language/fy/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: zh\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: fy\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.8.7.1\n"
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-SearchPath-0: view\n"
@@ -23,42 +23,42 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 
 msgid "Download this vocabulary:"
-msgstr ""
+msgstr "Download dizze wurdlist"
 
 #: controller/Controller.php:38
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:21
 msgid "in_this_language"
-msgstr "英语"
+msgstr "yn it Frysk"
 
 #: controller/RestController.php:271
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:125
 msgid "skos:Concept"
-msgstr "概念"
+msgstr "Begryp"
 
 #: controller/RestController.php:280
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:127
 msgid "skos:Collection"
-msgstr "收藏，集"
+msgstr "Kolleksje"
 
 #: model/Concept.php:455 model/Concept.php:475
 msgid "skosmos:created"
-msgstr "创建的"
+msgstr "Makke"
 
 #: model/Concept.php:460 model/Concept.php:462 model/Concept.php:471
 msgid "skosmos:modified"
-msgstr "最后修改"
+msgstr "lêst wizige"
 
 #: model/VocabularyCategory.php:39
 msgid "Vocabularies"
-msgstr ""
+msgstr "Wurdlist"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:26
 msgid "%search_count% results for '%term%'"
-msgstr "搜索...术语结果计数"
+msgstr "%search_count% resultaten foar ’%term%’"
 
 #: /tmp/cache/587c83c09abaa/23/23c9862892c34daf7bea11b6d50990145b73a83c0947ae60c3d729fe591a06ec.php:48
 msgid "404 Error: The page %requested_page% cannot be found."
-msgstr ""
+msgstr "404 fout: Pagina ‘%requested_page%’ kin net fûn wurde"
 
 #: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:62
 #: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:75
@@ -66,17 +66,17 @@ msgstr ""
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:274
 #: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:68
 msgid "A-Z"
-msgstr "全部，A到Z（按字母顺序排列的）索引"
+msgstr "A-Z"
 
 #: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:46
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:19
 msgid "About"
-msgstr "关于"
+msgstr "Oer"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:35
 #, php-format
 msgid "All %d results displayed"
-msgstr "所有...%d的结果已显示。"
+msgstr "Alle %d resultaten wurden werjûn"
 
 #: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:64
 #: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:77
@@ -84,27 +84,27 @@ msgstr "所有...%d的结果已显示。"
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:276
 #: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:70
 msgid "Alpha-nav"
-msgstr "按照字母顺序的"
+msgstr "Alfabetysk"
 
 #: /tmp/cache/587c83c09abaa/cf/cf0b3d87d2eb48f38f5f339303d5509c7535d13d7b010ad4840ee824430f7fe6.php:34
 msgid "Alphabetical index"
-msgstr "字顺索引（按字母顺序排列）"
+msgstr "Alfabetyske yndeks"
 
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:555
 msgid "By group"
-msgstr "按组"
+msgstr "Groep"
 
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:587
 msgid "By parent"
-msgstr "根据隶属关系"
+msgstr "Wider begryp"
 
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:477
 msgid "By scheme"
-msgstr ""
+msgstr "Subfokabulêr"
 
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:516
 msgid "By type"
-msgstr "按类型"
+msgstr "Type"
 
 #: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:119
 #: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:132
@@ -112,66 +112,66 @@ msgstr "按类型"
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:331
 #: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:125
 msgid "Changes-nav"
-msgstr ""
+msgstr "Nij"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:122
 msgid "Clear limitations"
-msgstr "明确限定"
+msgstr "WIskje filters"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:74
 msgid "Contact us!"
-msgstr "联系我们！"
+msgstr "Nim kontakt op!"
 
 #: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:108
 msgid "Content and search language"
-msgstr ""
+msgstr "Ynhâlds- en syktaal"
 
 #: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:51
 msgid "Content language"
-msgstr "内容语言"
+msgstr "Ynhâldstaal"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:732
 msgid "Download this concept in SKOS format:"
-msgstr "下载此概念"
+msgstr "Download dit begryp"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:144
 msgid "E-mail:"
-msgstr "电子邮件"
+msgstr "E-mailadres:"
 
 #: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:220
 msgid "Enter search term"
-msgstr ""
+msgstr "Sykterm"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:148
 msgid "Enter your e-mail address"
-msgstr "输入您的电子邮件地址"
+msgstr "Fier jo e-mailadres yn"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:140
 msgid "Enter your name"
-msgstr "输入您的姓名"
+msgstr "Fier jo namme yn"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:900
 #: /tmp/cache/587c83c13194c/5c/5c060d2297f64d66beb101ee34831f917ed8d33f97dadeca144430a1561433ec.php:69
 msgid "Error: Requested vocabulary not found!"
-msgstr "错误：请求的词汇未找到！"
+msgstr "Fout: de oanfrege wurdlist is net fûn."
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:890
 msgid "Error: Term \"%term%\" not found in vocabulary!"
-msgstr "错误：术语...不存在词汇表中！"
+msgstr "Fout: ‘%term%’ net fûn yn ’e wurdlist"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:34
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:54
 #: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:194
 msgid "Feedback"
-msgstr "意见反馈"
+msgstr "Weromkeppeling"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:64
 msgid "Feedback has been sent!"
-msgstr "反馈已发送！"
+msgstr "Weromkeppeling is ferstjoerd!"
 
 #: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:35
 msgid "Group index"
-msgstr "分组指数"
+msgstr "Groepsyndeks"
 
 #: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:101
 #: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:114
@@ -179,7 +179,7 @@ msgstr "分组指数"
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:313
 #: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:107
 msgid "Group-nav"
-msgstr "组别，群组"
+msgstr "Groepen"
 
 #: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:85
 #: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:94
@@ -188,258 +188,258 @@ msgstr "组别，群组"
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:55
 #: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:91
 msgid "Hier-nav"
-msgstr "层级，层次结构"
+msgstr "Hiërargy"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:157
 msgid "Leave this field blank"
-msgstr "保留此字段为空"
+msgstr "Lit dit leech"
 
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:594
 msgid "Limit search"
-msgstr "限定检索"
+msgstr "Sykje mei filter"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:31
 msgid "Loading"
-msgstr "加载中"
+msgstr "Lade"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:27
 msgid "Loading more items"
-msgstr "加载更多条目"
+msgstr "Mear begripen lade"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:152
 msgid "Message:"
-msgstr "消息"
+msgstr "Berjocht:"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:136
 msgid "Name:"
-msgstr "姓名"
+msgstr "Namme:"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:23
 msgid "No results"
-msgstr "没有结果"
+msgstr "Gjin resultaten"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:103
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:111
 msgid "Not to a specific vocabulary"
-msgstr "不符合特定的词汇表"
+msgstr "Net foar in spesifike wurdlist"
 
 #: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:233
 msgid "Search"
-msgstr "检索"
+msgstr "Sykje"
 
 #: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:59
 msgid "Search from vocabulary"
-msgstr ""
+msgstr "Sykje yn wurdlist"
 
 #: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:210
 msgid "Search language: any"
-msgstr "任何语言"
+msgstr "Elke taal"
 
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:340
 msgid "Search options"
-msgstr "搜索选项"
+msgstr "Sykopsjes"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:161
 msgid "Send feedback"
-msgstr "发送反馈"
+msgstr "Stjoer weromkeppeling"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:51
 msgid "show all # paths"
-msgstr "显示所有路径"
+msgstr "Jou alle # paden wer"
 
 msgid "show all # values"
-msgstr ""
+msgstr "Jou alle # wearden wer"
 
 #: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:72
 msgid "Skosmos version %version%"
-msgstr "Skosmos版本"
+msgstr "Skosmos fersje %version%"
 
 #: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:229
 msgid "Submit search"
-msgstr ""
+msgstr "Verstjoer sykopdracht"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:68
 msgid "Thank you for your feedback"
-msgstr "谢谢您的反馈。我们努力尽快回复所有反馈。"
+msgstr "Tank foar jo weromkeppeling. Wy stribje dernei alle weromkeppeling sa rap mooglik te beantwurdzje"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:129
 msgid "The search provided no results."
-msgstr "该检索没有结果。"
+msgstr "De sykopdracht hat gjin resultaten oplevere"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:48
 msgid "There is no term for this concept in this language"
-msgstr ""
+msgstr "Der is gjin term foar dit begryp in dizze taal."
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:173
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:47
 msgid "Value is required and can not be empty"
-msgstr "需要赋值，不能为空。"
+msgstr "Wearde is needsaaklik en kin net leech bliuwe"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:27
 msgid "cc:attributionName"
-msgstr ""
+msgstr "Rjochthawwende"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:29
 msgid "cc:attributionUrl"
-msgstr ""
+msgstr "URL rjochthawwende"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:25
 msgid "cc:license"
-msgstr ""
+msgstr "Lisinsje"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:31
 msgid "cc:morePermissions"
-msgstr ""
+msgstr "Oanfoljende lisinsjemooglikheid"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:33
 msgid "cc:useGuidelines"
-msgstr ""
+msgstr "Brûksrjochtline"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:35
 msgid "dc:conformsTo"
-msgstr ""
+msgstr "Komformearet mei"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:37
 msgid "dc:contributor"
-msgstr "其他责任者"
+msgstr "Bydragen fan"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:39
 msgid "dc:coverage"
-msgstr ""
+msgstr "Berik"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:41
 msgid "dc:created"
-msgstr "创建的"
+msgstr "Makke"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:43
 msgid "dc:creator"
-msgstr "创建者"
+msgstr "Makker"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:45
 msgid "dc:date"
-msgstr "日期"
+msgstr "Datum"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:47
 msgid "dc:description"
-msgstr "描述，说明"
+msgstr "Beskriuwing"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:49
 msgid "dc:format"
-msgstr ""
+msgstr "Formaat"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:51
 msgid "dc:identifier"
-msgstr ""
+msgstr "Identifikaasje"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:53
 msgid "dc:isReplacedBy"
-msgstr ""
+msgstr "Wurdt ferfongen troch"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:55
 msgid "dc:isRequiredBy"
-msgstr ""
+msgstr "Is nedich foar"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:57
 msgid "dc:issued"
-msgstr "发行日期"
+msgstr "Datum útjûn"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:59
 msgid "dc:language"
-msgstr "语言"
+msgstr "Taal"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:61
 msgid "dc:license"
-msgstr "许可"
+msgstr "Lisinsje"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:63
 msgid "dc:modified"
-msgstr "最后修改"
+msgstr "Lêst wizige"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:65
 msgid "dc:publisher"
-msgstr "出版者"
+msgstr "Útjouwer"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:67
 msgid "dc:relation"
-msgstr "关系"
+msgstr "Relateard"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:69
 msgid "dc:replaces"
-msgstr ""
+msgstr "Ferfangt"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:71
 msgid "dc:rights"
-msgstr "权限"
+msgstr "Rjochten"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:73
 msgid "dc:rightsHolder"
-msgstr ""
+msgstr "Rjochthawwende"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:75
 msgid "dc:source"
-msgstr "来源"
+msgstr "Boarne"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:77
 msgid "dc:source_help"
-msgstr ""
+msgstr "Boarne fan de beskriuwing fan it begryp"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:79
 msgid "dc:spatial"
-msgstr ""
+msgstr "Rúmtetlik berik"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:81
 msgid "dc:subject"
-msgstr "主题"
+msgstr "Ûnderwerp"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:83
 msgid "dc:temporal"
-msgstr ""
+msgstr "Tiidsberik"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:85
 msgid "dc:title"
-msgstr "题名"
+msgstr "Titel"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:87
 msgid "dc:type"
-msgstr ""
+msgstr "Type"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:36
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:256
 msgid "deprecated"
-msgstr "此概念已弃用，请不要使用用于注释。"
+msgstr "Dit begryp is ferâldere. Brûk it net as oantekening"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:89
 msgid "foaf:homepage"
-msgstr "主页"
+msgstr "Haadside"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:91
 msgid "foaf:page"
-msgstr ""
+msgstr "Side"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:658
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:542
 msgid "foreign prefLabel help"
-msgstr "其它语言中概念术语"
+msgstr "Termen foar it begryp yn oare talen"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:660
 msgid "foreign prefLabels"
-msgstr "其它语言"
+msgstr "Yn oare talen"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:39
 msgid "from all"
-msgstr "全部源自，所有来源"
+msgstr "fan alle"
 
 msgid "wgs84:lat"
-msgstr ""
+msgstr "Breedtegraad"
 
 msgid "wgs84:lat_help"
-msgstr ""
+msgstr "Breedtegraad yn desimale graden yn it WGS 84-systeem"
 
 msgid "wgs84:long"
-msgstr ""
+msgstr "Lingtegraad"
 
 msgid "wgs84:long_help"
-msgstr ""
+msgstr "Lingtegraad yn desimale graden yn it WGS 84-systeem"
 
 #: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:81
 #: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:90
@@ -447,407 +447,407 @@ msgstr ""
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:293
 #: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:87
 msgid "hierarchy-disabled-help"
-msgstr "该词汇表不显示顶级类层级。"
+msgstr "De haadhiërargy fan dizze wurdlist kin net sjoen wurde litte"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:93
 msgid "isothes:ConceptGroup"
-msgstr "概念组"
+msgstr "Begrypsgroep"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:97
 msgid "isothes:ThesaurusArray"
-msgstr "同位叙词概念类组"
+msgstr "Rige fan njonkenskikte begripen"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:99
 msgid "isothes:broaderGeneric"
-msgstr ""
+msgstr "Widere begripen"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:101
 msgid "isothes:broaderInstantial"
-msgstr ""
+msgstr "Wider begryp (klasse)"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:103
 msgid "isothes:broaderPartitive"
-msgstr ""
+msgstr "Wider begryp (diel fan)"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:105
 msgid "isothes:narrowerGeneric"
-msgstr ""
+msgstr "Eanger begryp"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:107
 msgid "isothes:narrowerInstantial"
-msgstr ""
+msgstr "Eanger begryp (ynstânsje)"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:109
 msgid "isothes:narrowerPartitive"
-msgstr ""
+msgstr "Eanger begryp (ûnderdiel)"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:95
 msgid "isothes:superGroup"
-msgstr "超级组"
+msgstr "Boppelizzende groep"
 
 #: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:66
 msgid "layout designed by Hahmo"
-msgstr "依据Hahmo Design公司设计的版面/布局"
+msgstr "Layout ûntworpen troch Hahmo Design"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:74
 msgid "limited to group"
-msgstr "组"
+msgstr "filtere op groep"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:67
 msgid "limited to parent"
-msgstr "隶属关系"
+msgstr "filtere op wider begryp"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:81
 msgid "limited to scheme"
-msgstr ""
+msgstr "filtere op subfokabulêr"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:29
 msgid "limited to type"
-msgstr "类型"
+msgstr "filtere op type"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:113
 msgid "owl:sameAs"
-msgstr "同等概念"
+msgstr "Gelike begripen"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:111
 msgid "owl:versionInfo"
-msgstr "版本"
+msgstr "Versje"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:115
 msgid "rdf:type"
-msgstr "类型"
+msgstr "Type"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:117
 msgid "rdf:type_help"
-msgstr "实体类型"
+msgstr "Type fan ’e entiteit"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:123
 msgid "rdfs:comment"
-msgstr "描述，说明"
+msgstr "Beskriuwing"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:119
 msgid "rdfs:label"
-msgstr "标签"
+msgstr "Label"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:121
 msgid "rdfs:seeAlso"
-msgstr "参见"
+msgstr "Sjoch ek"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:43
 msgid "selected"
-msgstr "所选的，选择的"
+msgstr "selekteard"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:143
 msgid "skos:altLabel"
-msgstr ""
+msgstr "Yngongstermen"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:179
 msgid "skos:altLabel_help"
-msgstr "此概念交替术语"
+msgstr "Oare termen foar it begryp"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:133
 msgid "skos:broadMatch"
-msgstr "简单知识组织系统：广泛匹配"
+msgstr "Widere oerienkommende begripen"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:191
 msgid "skos:broadMatch_help"
-msgstr "在另一词汇表中匹配的上位概念"
+msgstr "Widere oerienkommende begripen yn in oare wurdlist"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:129
 msgid "skos:broader"
-msgstr "上位概念"
+msgstr "Wider begryp"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:171
 msgid "skos:broader_help"
-msgstr "上位概念"
+msgstr "Wider begryp"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:169
 msgid "skos:changeNote"
-msgstr "变更注释，变更说明"
+msgstr "Wizigingsnotysje"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:147
 msgid "skos:closeMatch"
-msgstr "紧密匹配的概念"
+msgstr "Neiby oerienkommende begripen"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:189
 msgid "skos:closeMatch_help"
-msgstr "在另一词汇表中紧密匹配的概念"
+msgstr "Neiby oerienkommende begripen yn in oare wurdlist"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:161
 msgid "skos:definition"
-msgstr "定义"
+msgstr "Betsjutting"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:185
 msgid "skos:definition_help"
-msgstr "某概念特定涵义的完全解释"
+msgstr "In komplete beskriuwing fan de betsjutting fan in begryp"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:167
 msgid "skos:editorialNote"
-msgstr "编者按"
+msgstr "Redaksjenotysje"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:145
 msgid "skos:exactMatch"
-msgstr "精确匹配"
+msgstr "Presiis oerienkommende begripen"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:187
 msgid "skos:exactMatch_help"
-msgstr "在另一词汇表中精确匹配的概念"
+msgstr "Presiis oerienkommende begripen yn in oare wurdlist"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:163
 msgid "skos:example"
-msgstr "实例"
+msgstr "Foarbyld"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:155
 msgid "skos:hasTopConcept"
-msgstr "有顶层概念"
+msgstr "Haadbegryp"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:165
 msgid "skos:historyNote"
-msgstr "历史注解"
+msgstr "Skiednisnotysje"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:151
 msgid "skos:inScheme"
-msgstr "概念结构"
+msgstr "Subfokabulêr"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:149
 msgid "skos:member"
-msgstr "小组成员"
+msgstr "Lid"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:181
 msgid "skos:member_help"
-msgstr "小组成员"
+msgstr "Leden fan ’e groep"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:135
 msgid "skos:narrowMatch"
-msgstr "狭义匹配概念"
+msgstr "Eanger oerienkommende begripen"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:193
 msgid "skos:narrowMatch_help"
-msgstr "在另一词汇表中匹配的狭义概念"
+msgstr "Eanger oerienkommende begripen yn in oare wurdlist"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:131
 msgid "skos:narrower"
-msgstr "狭义概念"
+msgstr "Eangere begripen"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:173
 msgid "skos:narrower_help"
-msgstr "狭义概念"
+msgstr "Eangere begripen."
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:157
 msgid "skos:note"
-msgstr "注释，说明"
+msgstr "Notysje"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:175
 msgid "skos:note_help"
-msgstr "注释，说明（复数）"
+msgstr "Notysjes"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:234
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:141
 msgid "skos:prefLabel"
-msgstr "优选词，正式主题词"
+msgstr "Foarkarsterm"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:137
 msgid "skos:related"
-msgstr "相关概念"
+msgstr "Gearhingjende begripen"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:139
 msgid "skos:relatedMatch"
-msgstr "其他词汇表中相关概念"
+msgstr "Gearhingjende oerienkommende begripen"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:183
 msgid "skos:related_help"
-msgstr "与本概念相关的概念"
+msgstr "Begripen dy’t gearhingje mei dit begryp"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:159
 msgid "skos:scopeNote"
-msgstr "范围注释，叙词含义说明"
+msgstr "Notysje betsjuttingswiidte"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:177
 msgid "skos:scopeNote_help"
-msgstr "概念使用与范围的说明"
+msgstr "Notysjes oar it gebrûk en hoe breed it brûkt wurden kin"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:153
 msgid "skos:topConceptOf"
-msgstr "属于词汇表"
+msgstr "Beheart ta wurdlist"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:197
 msgid "skosext:DeprecatedConcept"
-msgstr "已弃用概念"
+msgstr "Ferfallen begryp"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:195
 msgid "skosext:partOf"
-msgstr "是...部分"
+msgstr "Is diel fan"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:199
 msgid "skosext:partOf_help"
-msgstr "该概念为的整体一部分"
+msgstr "It gehiel werfan it begryp diel útmakket"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:548
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:201
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:449
 msgid "skosmos:memberOf"
-msgstr "属于组"
+msgstr "Beheart ta groep"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:611
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:205
 msgid "skosmos:memberOfArray"
-msgstr ""
+msgstr "Beheart ta rige"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:609
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:207
 msgid "skosmos:memberOfArray_help"
-msgstr ""
+msgstr "Rige wêrta it begryp heart"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:546
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:203
 msgid "skosmos:memberOf_help"
-msgstr "概念归属的组"
+msgstr "Groep wêrta it begryp heart"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:23
 msgid "zxx-x-taxon"
-msgstr ""
+msgstr "Witttenskiplike namme"
 
 #: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:168
 msgid "About page"
-msgstr "关于"
+msgstr "oar"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:138
 msgid "Alternate terms"
-msgstr "交替术语"
+msgstr "Alternative termen"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:130
 msgid "Concept language"
-msgstr "语言"
+msgstr "Taal"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:118
 msgid "Count"
-msgstr "计数"
+msgstr "Oantal"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:157
 msgid "Download this vocabulary as SKOS/RDF:"
-msgstr "以SKOS或RDF格式下载此词汇表"
+msgstr "Download dizze wurdlist as SKOS/RDF:"
 
 #: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:205
 msgid "Help"
-msgstr "帮助"
+msgstr "Help"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:142
 msgid "Hidden terms"
-msgstr "隐藏术语"
+msgstr "Ferskûle termen"
 
 #: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:58
 msgid "Interface language"
-msgstr "界面语言"
+msgstr "Brûkersynterfacetaal"
 
 #: /tmp/cache/587c83c13194c/f9/f9c816822168f230ef0bfed735f5923aab99d389ce8b2c6b2f5fcd5d400bc275.php:26
 msgid "No vocabularies on the server!"
-msgstr "该服务器上没有词汇表！"
+msgstr "Gjin wudlisten op ’e server!"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:134
 msgid "Preferred terms"
-msgstr "优选词，正式主题词"
+msgstr "Foarkarstermen"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:111
 msgid "Resource counts by type"
-msgstr "按类型资源计数"
+msgstr "Oantal boarnen per type"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:124
 msgid "Term counts by language"
-msgstr "按语言术语计数"
+msgstr "Oantal termen per taal"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:116
 msgid "Type"
-msgstr "类型"
+msgstr "Type"
 
 #: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:146
 msgid "Vocabularies-nav"
-msgstr "词汇表"
+msgstr "Wurdlisten"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:24
 msgid "Vocabulary information"
-msgstr "词汇表信息"
+msgstr "Wurdlistynformaasje"
 
 #: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:199
 msgid "helper_help"
-msgstr "用点下划线在文本上悬停鼠标，以查看属性说明"
+msgstr "Beweegje jo cursor oer de understippele tekst om oanwizings oer de eigenskip te besjen."
 
 #: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:201
 msgid "search_example_text"
-msgstr "对于截词检索，请使用符号*作为*动物或*专利。对于检索词的结尾，检索将会自动截词，即使截词符号没有自动输入，因此输入cat将会产生和输入cat*同样的结果。"
+msgstr "Foar in ynkoarte sykopdracht, brûk in stjêrke, lykas *dier of *patent*. Oan it ein fan sykwurden komt fansels in stjêrke, sa’t ’kat’ itselde opleveret as ‘kat*’."
 
 msgid "feedback_enter_name_email"
-msgstr ""
+msgstr "Fier jo namme en e-mailadres yn at jo in antwurd ûntfange meie. Jo ha ek de mooglikheid jo weromkeppeling anonym efter te litten. NB: Weromkeppeling oer in bestimd wurdlist wurdt trochstjoerd nei de behearder derfan."
 
 msgid "concept_types"
-msgstr ""
+msgstr "Begryptypes"
 
 msgid "Skip to main"
-msgstr ""
+msgstr "Nei haadinhâld"
 
 msgid "Available vocabularies and ontologies"
-msgstr ""
+msgstr "Beskikbere wurdlisten en ontologyen"
 
 msgid "Search from selected vocabularies"
-msgstr ""
+msgstr "Sykje yn selektearde wurdlisten"
 
 msgid "List vocabulary concepts alphabetically"
-msgstr ""
+msgstr "Skiftsje begripen alfabetysk"
 
 msgid "List vocabulary concepts and groupings hierarchically"
-msgstr ""
+msgstr "Skiftsje begripen en groepen hiërargysk"
 
 msgid "List vocabulary concepts by newest additions"
-msgstr ""
+msgstr "Skiftsje begripen nei meast resint tafoege"
 
 msgid "List vocabulary concepts hierarchically"
-msgstr ""
+msgstr "Skiftsje begripen hiërargysk"
 
 msgid "Choose alphabetical listing letter"
-msgstr ""
+msgstr "Kies letter foar alfabetyske list"
 
 msgid "Concept information"
-msgstr ""
+msgstr "Begrypinformaasje"
 
 msgid "Hierarchical listing of vocabulary concepts"
-msgstr ""
+msgstr "Begripen hiërargysk skifte"
 
 msgid "Hierarchical listing of vocabulary concepts and groupings"
-msgstr ""
+msgstr "Begripen en groepen hiërargysk skifte"
 
 msgid "Listing vocabulary concepts alphabetically"
-msgstr ""
+msgstr "Begripen alfabetysk skifte"
 
 msgid "Listing vocabulary concepts by newest additions"
-msgstr ""
+msgstr "Begripen skifte nei meast resint tafoege"
 
 msgid "Prefer using"
-msgstr ""
+msgstr "Brûk leaver"
 
 msgid "Search options tab"
-msgstr ""
+msgstr "Tab foar sykopsjes"
 
 msgid "Search results"
-msgstr ""
+msgstr "Sykresultaten"
 
 msgid "Sidebar listing: list and traverse vocabulary contents by a criterion"
-msgstr ""
+msgstr "Sijbalke: skiftsje en blêder troch filtere wurdlistûnderdelen"
 
 msgid "Subject:"
-msgstr ""
+msgstr "Ûnderwerp"
 
 msgid "Write a subject"
-msgstr ""
+msgstr "Heak in ûnderwerp ta"
 
 msgid "Select a vocabulary"
-msgstr ""
+msgstr "Selektearje in wurdlist"
 
 msgid ""
 "We're sorry but Skosmos doesn't work properly without JavaScript enabled. "
 "Please enable it to continue."
-msgstr ""
+msgstr "Spitchgenôch hat Skosmos JavaScript nedich. Skakel it yn om fierder te gean."
 
 msgid "Deprecated concept"
-msgstr ""
+msgstr "Ferfallen begryp"
 
 msgid "Error: Search failed!"
 msgstr ""
