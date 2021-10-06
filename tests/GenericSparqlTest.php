@@ -44,7 +44,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
    */
   public function testCountConcepts() {
     $actual = $this->sparql->countConcepts();
-    $this->assertEquals(17, $actual['http://www.w3.org/2004/02/skos/core#Concept']['count']);
+    $this->assertEquals(18, $actual['http://www.w3.org/2004/02/skos/core#Concept']['count']);
   }
 
   /**

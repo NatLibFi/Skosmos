@@ -45,7 +45,7 @@
           <h3 class="versal">{% set subPrefLabelTranslation = concept.preferredSubpropertyLabelTranslation(request.lang) %}{% if subPrefLabelTranslation %}{{ subPrefLabelTranslation|upper }}{% else %}{{ 'skos:prefLabel'|trans|upper }}{% endif %}</h3>
         </div>
         {% if concept.foundBy %} {# hit has been found through an alternative label #}
-        <span class="versal">{{ concept.foundBy }} >></span>
+        <span class="versal">{{ concept.foundBy }} ></span>
         {% if concept.ExVocab is defined %}
         <span class="prefLabel conceptlabel redirected-vocab-id"> @{{ concept.ExVocab }}</span>
         {% endif %}
@@ -85,6 +85,7 @@
         <div class="col-md-12"><div class="preflabel-spacer"></div></div>
       </div>
       {% endspaceless %}
+
       {% for property in concept.properties %} {# loop through ConceptProperty objects #}
         {% if property.getSubPropertyOf != 'skos:hiddenLabel' %}
         <div class="row{% if property.type == 'dc:isReplacedBy' %} replaced-by{% endif%} property prop-{{property.ID}}">
@@ -127,7 +128,7 @@
               {% endif %}
             {% elseif property.type == 'rdf:type' %}<p>{{ propval.label|trans }}</p>
             {% else %} {# Literals (no URI), eg. alternative labels as properties #}
-                {% if propval.lang == request.contentLang or propval.lang == null or not request.contentLang and propval.lang == request.lang %}{% if propval.hasXlProperties %}<span class="reified-property-value xl-label"><img src="resource/pics/about.png"></span><div class="reified-tooltip">{% for key, val in propval.getXlProperties %}{% if key != 'rdf:type' and key != 'skosxl:literalForm' and val != '' %}<p>{{ key|trans }}: <span class="versal">{{ val }}</span></p>{% endif %}{% endfor %}</div>{% endif %}<span{% if property.type == 'skos:altLabel' %} class="replaced"{% endif %}>{% if propval.containsHtml %}{{ propval.label|raw }}{% else %}{{ propval.label }}{% endif %}{% if propval.lang and (request.contentLang and propval.lang != request.contentLang or explicit_langcodes) %} ({{ propval.lang }}){% endif %}</span>
+                {% if propval.lang == request.contentLang or propval.lang == null or not request.contentLang and propval.lang == request.lang %}{% if propval.hasXlProperties %}<span class="reified-property-value xl-label"><img src="resource/pics/about.png"></span><div class="reified-tooltip">{% for key, val in propval.getXlProperties %}{% if key != 'rdf:type' and key != 'skosxl:literalForm' and val != '' %}<p>{{ key|trans }}: <span class="versal">{{ val }}</span></p>{% endif %}{% endfor %}</div>{% endif %}<span{% if property.type == 'skos:altLabel' %} class="replaced"{% endif %}>{% if propval.containsHtml %}{{ propval.label|raw }}{% else %}{{ propval.label }}{% endif %}{% if propval.lang and (request.contentLang and propval.lang != request.contentLang or explicit_langcodes) %} ({{ propval.lang }}){% endif %}{% if propval.datatype %} ({{ propval.datatype }}){% endif %}</span>
                 {% endif %}
             {% endif %}
             </li>

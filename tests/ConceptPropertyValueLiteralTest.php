@@ -63,6 +63,39 @@ class ConceptPropertyValueLiteralTest extends PHPUnit\Framework\TestCase
   }
 
   /**
+  * @covers ConceptPropertyValueLiteral::getDatatype
+  */
+  public function testGetLabelForDatatype() {
+    $vocab = $this->model->getVocabulary('test');
+    $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en');
+    $props = $concepts[0]->getProperties();
+    $propvals = $props['skos:notation']->getValues();
+    $this->assertEquals('NameOfTheDatatype', $propvals['665']->getDatatype());
+  }
+
+  /**
+  * @covers ConceptPropertyValueLiteral::getDatatype
+  */
+  public function testGetNotationDatatypeWithoutLabel() {
+    $vocab = $this->model->getVocabulary('test');
+    $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta128', 'en');
+    $props = $concepts[0]->getProperties();
+    $propvals = $props['skos:notation']->getValues();
+    $this->assertNull($propvals['testnotation']->getDatatype());
+  }
+
+/**
+ * @covers ConceptPropertyValueLiteral::getDatatype
+ */
+public function testGetLabelForDatatypeIfNull() {
+    $vocab = $this->model->getVocabulary('test');
+    $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta126', 'en');
+    $props = $concepts[0]->getProperties();
+    $propvals = $props['skos:notation']->getValues();
+    $this->assertNull($propvals['12.34']->getDatatype());
+}
+
+  /**
    * @covers ConceptPropertyValueLiteral::getLang
    */
   public function testGetLang() {

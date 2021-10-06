@@ -318,12 +318,43 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
   }
 
   /**
-   * @covers VocabularyConfig::sortByNotation
+   * @covers VocabularyConfig::getSortByNotation
+   * @covers VocabularyConfig::getLiteral
    * @covers VocabularyConfig::getBoolean
    */
   public function testShowSortByNotationDefaultValue() {
     $vocab = $this->model->getVocabulary('test');
-    $this->assertEquals(false, $vocab->getConfig()->sortByNotation());
+    $this->assertNull($vocab->getConfig()->getSortByNotation());
+  }
+
+  /**
+   * @covers VocabularyConfig::getSortByNotation
+   * @covers VocabularyConfig::getLiteral
+   * @covers VocabularyConfig::getBoolean
+   */
+  public function testShowSortByNotationTrueIsLexical() {
+    $vocab = $this->model->getVocabulary('test-notation-sort');
+    $this->assertEquals("lexical", $vocab->getConfig()->getSortByNotation());
+  }
+
+  /**
+   * @covers VocabularyConfig::getSortByNotation
+   * @covers VocabularyConfig::getLiteral
+   * @covers VocabularyConfig::getBoolean
+   */
+  public function testShowSortByNotationLexical() {
+    $vocab = $this->model->getVocabulary('test-qualified-notation');
+    $this->assertEquals("lexical", $vocab->getConfig()->getSortByNotation());
+  }
+
+  /**
+   * @covers VocabularyConfig::getSortByNotation
+   * @covers VocabularyConfig::getLiteral
+   * @covers VocabularyConfig::getBoolean
+   */
+  public function testShowSortByNotationNatural() {
+    $vocab = $this->model->getVocabulary('testNotation');
+    $this->assertEquals("natural", $vocab->getConfig()->getSortByNotation());
   }
 
   /**

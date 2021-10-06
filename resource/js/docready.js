@@ -280,7 +280,7 @@ $(function() { // DOCUMENT READY
   $(document).on('click', '.concept-hierarchy a',
       function(event) {
         $.ajaxQ.abortContentQueries();
-        var targetUrl = event.target.href;
+        var targetUrl = event.target.href || event.target.parentElement.href;
         $('#hier-trigger').attr('href', targetUrl);
         var $content = $('.content').empty().append($delayedSpinner.hide());
         var loading = delaySpinner();

@@ -863,3 +863,9 @@ msgstr "Fel: Flera resultat kunde inte hämtas!"
 
 msgid "Retry"
 msgstr "Försök igen"
+
+msgid "skos:notation"
+msgstr "Notation"
+
+msgid "skos:notation_help"
+msgstr "Kod som unikt identifierar ett begrepp i en vokabulär."

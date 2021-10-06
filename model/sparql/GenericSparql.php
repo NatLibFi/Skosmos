@@ -399,6 +399,7 @@ CONSTRUCT {
  ?o skos:notation ?on .
  ?o ?oprop ?oval .
  ?o ?xlprop ?xlval .
+ ?dt rdfs:label ?dtlabel .
  ?directgroup skos:member ?uri .
  ?parent skos:member ?group .
  ?group skos:prefLabel ?grouplabel .
