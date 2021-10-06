@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-16 10:26+0200\n"
-"PO-Revision-Date: 2021-03-16 10:20+0000\n"
+"PO-Revision-Date: 2021-09-16 16:18+0000\n"
 "Last-Translator: Transifex Bot <>\n"
 "Language-Team: French (http://www.transifex.com/national-library-of-finland/skosmos/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -846,4 +846,25 @@ msgstr ""
 msgid ""
 "We're sorry but Skosmos doesn't work properly without JavaScript enabled. "
 "Please enable it to continue."
+msgstr ""
+
+msgid "Deprecated concept"
+msgstr ""
+
+msgid "Error: Search failed!"
+msgstr ""
+
+msgid "Error: Failed to retrieve vocabulary information!"
+msgstr ""
+
+msgid "Error: Loading more items failed!"
+msgstr ""
+
+msgid "Retry"
+msgstr ""
+
+msgid "skos:notation"
+msgstr ""
+
+msgid "skos:notation_help"
 msgstr ""
