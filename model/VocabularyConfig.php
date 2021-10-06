@@ -79,6 +79,9 @@ class VocabularyConfig extends BaseConfig
         $this->pluginParameters = array();
 
         $vocabularyPlugins = $this->resource->getResource('skosmos:vocabularyPlugins');
+        if (!$vocabularyPlugins instanceof EasyRdf\Collection) {
+            $vocabularyPlugins = $this->resource->all('skosmos:vocabularyPlugins');
+        }
         if ($vocabularyPlugins) {
             foreach ($vocabularyPlugins as $plugin) {
                 if ($plugin instanceof EasyRdf\Resource) {
