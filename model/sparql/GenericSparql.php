@@ -430,6 +430,12 @@ CONSTRUCT {
   {
    ?uri ?p ?o .
    OPTIONAL {
+     ?uri skos:notation ?nVal .  
+     FILTER(isLiteral(?nVal))
+     BIND(datatype(?nVal) AS ?dt)
+     ?dt rdfs:label ?dtlabel
+   }
+   OPTIONAL {
      ?o rdf:rest* ?b1 .
      ?b1 rdf:first ?item .
      ?b1 rdf:rest ?b2 .
