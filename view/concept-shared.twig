@@ -90,7 +90,8 @@
         {% if property.getSubPropertyOf != 'skos:hiddenLabel' %}
         <div class="row{% if property.type == 'dc:isReplacedBy' %} replaced-by{% endif%} property prop-{{property.ID}}">
           <div class="property-label">
-            <h3 class="versal{% if property.type == 'rdf:type' %}-bold{% endif %}{% if property.description %} property-click" title="{{ property.description }}{% endif %}">{{ property.label|upper }}</h3>
+{#            <h3 class="versal{% if property.type == 'rdf:type' %}-bold{% endif %}{% if property.description %} property-click" title="{{ property.description }}{% endif %}">{{ property.label|upper }}</h3>#}
+            <h3 class="versal{% if property.type == 'rdf:type' %}-bold{% endif %}{% if property.description %} property-click" title="{{ property.description }}{% endif %}">{{ property.label }}</h3>
           </div>
           <div class="property-value-column"><div class="property-value-wrapper">
         {% if request.vocab.config.hasMultiLingualProperty(property.type) %}

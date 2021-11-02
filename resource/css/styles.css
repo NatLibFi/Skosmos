@@ -2381,6 +2381,7 @@ body, .versal, h1, h2, h3, p, .versal-bold {
 
   .row > .property-label {
     width: 235px;
+    text-transform: uppercase;
   }
 
   .row > .property-value-column {
