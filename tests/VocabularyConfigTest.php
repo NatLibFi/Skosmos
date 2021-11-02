@@ -7,6 +7,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
 
   /**
    * @covers VocabularyConfig::getConfig
+   * @covers VocabularyConfig::getPluginRegister
    * @throws Exception
    */
   protected function setUp() : void
