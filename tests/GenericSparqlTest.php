@@ -1125,7 +1125,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
   {
     $voc = $this->model->getVocabulary('changes');
     $graph = $voc->getGraph();
-    $sparql = new GenericSparql('http://localhost:13030/skosmos-test/sparql', $graph, $this->model);
+    $sparql = new GenericSparql($this->endpoint, $graph, $this->model);
     $actual = $sparql->queryChangeList('dc:modified', 'en', 0, 10, false);
 
     $order = array();

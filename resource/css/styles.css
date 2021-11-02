@@ -1553,7 +1553,7 @@ tr.replaced-by > td > ul > li > a {
 .nav-tabs {
   background-color: #e0e4e7;
   border-bottom: none;
-   display: flex;
+  display: flex;
 }
 
 ul.nav-tabs > li {
