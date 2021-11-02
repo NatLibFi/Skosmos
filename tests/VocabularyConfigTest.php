@@ -7,6 +7,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
 
   /**
    * @covers VocabularyConfig::getConfig
+   * @covers VocabularyConfig::getPluginRegister
    * @throws Exception
    */
   protected function setUp() : void
@@ -15,7 +16,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');
     $this->model = new Model(new GlobalConfig('/../tests/testconfig.ttl'));
-    $this->assertNotNull($this->model->getVocabulary('test')->getConfig()->getPlugins(), "The PluginRegister of the model was not initialized!");
+    $this->assertNotNull($this->model->getVocabulary('test')->getConfig()->getPluginRegister(), "The PluginRegister of the model was not initialized!");
   }
 
   /**
@@ -534,7 +535,26 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
   public function testGetPluginParameters() {
     $vocab = $this->model->getVocabulary('paramPluginTest');
     $params = $vocab->getConfig()->getPluginParameters();
-    $this->assertEquals(json_encode(array('imaginaryPlugin' => array('poem_fi' => "Roses are red", 'poem' => "Violets are blue", 'color' => "#800000")),true), $params);
+    $this->assertEquals(array('imaginaryPlugin' => array('poem_fi' => "Roses are red", 'poem' => "Violets are blue", 'color' => "#800000")), $params);
+  }
+
+  /**
+   * @covers VocabularyConfig::getPluginArray
+   */
+  public function testGetOrderedPlugins() {
+    $vocab = $this->model->getVocabulary('paramPluginTest');
+    $plugins = $vocab->getConfig()->getPluginArray();
+    $this->assertEquals(["plugin2", "Bravo", "imaginaryPlugin", "plugin1", "alpha", "charlie", "plugin3"],  $plugins);
+  }
+
+  /**
+   * @covers VocabularyConfig::getPluginArray
+   */
+  public function testGetUnorderedVocabularyPlugins() {
+    $vocab = $this->model->getVocabulary('paramPluginOrderTest');
+    $plugins = $vocab->getConfig()->getPluginArray();
+    $arrayElements = ["plugin2", "Bravo", "imaginaryPlugin", "plugin1", "alpha", "charlie", "plugin3"];
+    $this->assertEquals(sort($arrayElements), sort($plugins));
   }
 
   /**

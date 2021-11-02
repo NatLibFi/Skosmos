@@ -284,7 +284,7 @@ class Concept extends VocabularyDataObject implements Modifiable
         $propList =  array_unique(array_merge(
             $this->DEFAULT_EXT_PROPERTIES,
             $this->getVocab()->getConfig()->getExtProperties(),
-            $this->getVocab()->getConfig()->getPlugins()->getExtProperties()
+            $this->getVocab()->getConfig()->getPluginRegister()->getExtProperties()
         ));
 
         $seen = array();

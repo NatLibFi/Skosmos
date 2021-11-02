@@ -262,7 +262,7 @@ class Request
 
     public function getPlugins() {
         if ($this->vocab) {
-            return $this->vocab->getConfig()->getPlugins();
+            return $this->vocab->getConfig()->getPluginRegister();
         }
         return new PluginRegister($this->model->getConfig()->getGlobalPlugins());
     }
