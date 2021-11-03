@@ -751,6 +751,10 @@ span.xl-pref-label > img {
   padding: 15px 0 15px 10px;
 }
 
+.property-label, .vocab-category > h3 {
+  text-transform: uppercase;
+}
+
 .vocab-category {
   display: inline-block;
   width: 100%;

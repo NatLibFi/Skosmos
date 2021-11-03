@@ -15,7 +15,7 @@
         {% for key, values in vocabInfo %}
         {% set keytrans = key %}
         <div class="row">
-          <div class="property-label versal"><h3>{{ keytrans|trans|upper }}</h3><div class="property-divider"></div></div>
+          <div class="property-label versal"><h3>{{ keytrans|trans }}</h3><div class="property-divider"></div></div>
           <div class="property-value-column versal">
             {% for val in values %}
             <div class="property-value-wrapper">
