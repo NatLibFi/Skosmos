@@ -347,6 +347,8 @@ EOD;
    */
   public function testNewConcepts() {
     $request = new Request($this->model);
+    $request->setQueryParam('format', 'application/json');
+    $request->setURI('http://www.skosmos.skos/changes');
     $request->setVocab('changes');
     $request->setLang('en');
     $request->setContentLang('en');
@@ -369,7 +371,9 @@ EOD;
               { 
                   "uri": "http://www.skosmos.skos/changes/d4",
                   "prefLabel": "Fourth date",
-                  "date": "2011-12-12T09:26:39+0000"
+                  "date": "2021-01-03T12:46:33+0000",
+                  "replacedBy": "http://www.skosmos.skos/changes/d3",
+                  "replacingLabel": "Hurr Durr"
               },
               {
                   "uri": "http://www.skosmos.skos/changes/d3",
@@ -398,6 +402,8 @@ EOD;
    */
   public function testModifiedConcepts() {
     $request = new Request($this->model);
+    $request->setQueryParam('format', 'application/json');
+    $request->setURI('http://www.skosmos.skos/test');
     $request->setVocab('test');
     $request->setLang('en');
     $request->setContentLang('en');
@@ -423,11 +429,49 @@ EOD;
 
  }
 
+ /**
+  * @covers RestController::modifiedConcepts
+  * @covers RestController::changedConcepts
+  */
+  public function testDeprecatedChanges() {
+    $request = new Request($this->model);
+    $request->setQueryParam('format', 'application/json');
+    $request->setURI('http://www.skosmos.skos/changes');
+    $request->setVocab('changes');
+    $request->setLang('en');
+    $request->setContentLang('en');
+    $request->setQueryParam('offset', '0');
+
+    $this->controller->modifiedConcepts($request);
+    $changeList = $this->getActualOutput();
+
+    $expected = <<<EOD
+{"@context": {
+        "skos": "http://www.w3.org/2004/02/skos/core#",
+        "uri": "@id",
+        "type": "@type",
+        "@language": "en",
+        "prefLabel": "skos:prefLabel",
+        "xsd": "http://www.w3.org/2001/XMLSchema#",
+        "date": { "@id":"http://purl.org/dc/terms/date","@type":"http://www.w3.org/2001/XMLSchema#dateTime" }
+    },
+    "changeList": [
+      { "date": "2021-01-03T12:46:30+0000", "prefLabel": "A date", "uri": "http://www.skosmos.skos/changes/d1" },
+      { "date": "2021-01-03T12:46:33+0000", "prefLabel": "Fourth date", "replacedBy": "http://www.skosmos.skos/changes/d3", "replacingLabel": "Hurr Durr", "uri": "http://www.skosmos.skos/changes/d4" },
+      { "date": "2021-01-03T12:46:32+0000", "prefLabel": "Hurr Durr", "uri": "http://www.skosmos.skos/changes/d3" },
+      { "date": "2021-01-03T12:46:31+0000", "prefLabel": "Second date", "uri": "http://www.skosmos.skos/changes/d2" }
+    ]
+}
+EOD;
+        $this->assertJsonStringEqualsJsonString($changeList, $expected);
+  }
+
   /**
    * @covers RestController::vocabularyStatistics
    */
   public function testVocabularyStatistics() {
     $request = new Request($this->model);
+    $request->setQueryParam('format', 'application/json');
     $request->setVocab('test');
     $request->setLang('en');
 

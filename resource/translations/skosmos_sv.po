@@ -109,6 +109,9 @@ msgstr "Enligt typ"
 msgid "Changes-nav"
 msgstr "Nya"
 
+msgid "Changes-and-deprecations-nav"
+msgstr "Nya och ur bruk"
+
 #: /tmp/cache/587c83500d6c9/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:122
 msgid "Clear limitations"
 msgstr "Ta bort avgränsningar"
@@ -803,6 +806,9 @@ msgstr "Lista begrepp och grupper enligt hierarkin"
 
 msgid "List vocabulary concepts by newest additions"
 msgstr "Lista begrepp enligt de senaste tilläggen"
+
+msgid "List vocabulary concepts by newest additions including removed"
+msgstr "Lista begrepp enligt de senaste tilläggen eller raderingar"
 
 msgid "List vocabulary concepts hierarchically"
 msgstr "Lista begrepp enligt hierarkin"

@@ -258,6 +258,7 @@
 	dc:subject :cat_general ;
 	void:uriSpace "http://www.skosmos.skos/changes/";
 	skosmos:language "en";
+	skosmos:showDeprecatedChanges true ;
 	skosmos:sparqlGraph <http://www.skosmos.skos/changes/> .
 
 :prefix a skosmos:Vocabulary, void:Dataset ;

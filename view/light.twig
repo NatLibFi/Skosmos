@@ -64,10 +64,15 @@
           <li id="groups"><a href="{{ request.vocabid }}/{{ request.lang }}/groups{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Group-nav" %}</a></li>
           {% endif %}
           {% if vocab.config.showChangeList %}
-            <h3 class="sr-only">{% trans "List vocabulary concepts by newest additions" %}</h3>
-            <li id="changes"><a href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Changes-nav" %}</a></li>
+          {% if vocab.config.showDeprecatedChanges %}
+          <h3 class="sr-only">{% trans "List vocabulary concepts by newest additions including removed" %}</h3>
+          <li id="changes" {% if active_tab == 'new' %} class="active"{% endif %}><a href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Changes-and-deprecations-nav" %}</a></li>
+          {% else %}
+          <h3 class="sr-only">{% trans "List vocabulary concepts by newest additions" %}</h3>
+          <li id="changes" {% if active_tab == 'new' %} class="active"{% endif %}><a href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Changes-nav" %}</a></li>
           {% endif %}
-        {% else %}
+          {% endif %}
+          {% else %}
           <h3 class="sr-only">{% trans "Search options tab" %}</h3>
           <li id="limit"><p>{% trans "Search options" %}</p></li>
         {% endif %}

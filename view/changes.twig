@@ -16,8 +16,13 @@
     <li id="groups"><a href="{{ request.vocabid }}/{{ request.lang }}/groups{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Group-nav" %}</a></li>
     {% endif %}
     {% if vocab.config.showChangeList %}
+    {% if vocab.config.showDeprecatedChanges %}
+    <h3 class="sr-only">{% trans "List vocabulary concepts by newest additions including removed" %}</h3>
+    <li id="changes" class="active"><a href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Changes-and-deprecations-nav" %}</a></li>
+    {% else %}
     <h3 class="sr-only">{% trans "List vocabulary concepts by newest additions" %}</h3>
     <li id="changes" class="active"><a href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Changes-nav" %}</a></li>
+    {% endif %}
     {% endif %}
   </ul>
 </div>
@@ -28,7 +33,17 @@
       {% for day,concepts in changeList %}
         <h5 class="versal versal-bold">{{day}}</h5>
         {% for concept in concepts %}
-          <li><a href="{{ concept.uri | link_url(vocab,request.lang,'page', request.contentLang) }}">{{ concept.prefLabel }}</a></li>
+          <li><a href="{{ concept.uri | link_url(vocab,request.lang,'page', request.contentLang) }}">
+            {% if concept.replacedBy is defined %}
+              <s>{{ concept.prefLabel }}</s>
+              {% else %}
+              {{ concept.prefLabel }}
+            {% endif %}
+            </a>
+            {% if concept.replacingLabel is defined %}
+            <span aria-hidden=true><span class="replaced">{{ value.altLabel }}</span>	&rarr;</span>
+            <a href="{{ concept.replacedBy | link_url(vocab,request.lang,'page', request.contentLang) }}">{{ concept.replacingLabel }}</a>
+            {% endif %}</li>
         {% endfor %}
       {% endfor %}
     </ul>

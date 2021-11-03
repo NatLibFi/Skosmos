@@ -2250,21 +2250,40 @@ EOQ;
      * @param string $lang language of labels to return
      * @param int $offset offset of results to retrieve; 0 for beginning of list
      * @param int $limit maximum number of results to return
+     * @param boolean $showDeprecated whether to include deprecated concepts in the change list
      * @return string sparql query
      */
-    private function generateChangeListQuery($prop, $lang, $offset, $limit=200) {
+    private function generateChangeListQuery($prop, $lang, $offset, $limit=200, $showDeprecated=false) {
         $fcl = $this->generateFromClause();
         $offset = ($offset) ? 'OFFSET ' . $offset : '';
 
+        //Additional clauses when deprecated concepts need to be included in the results
+        $deprecatedOptions = '';
+        $deprecatedVars = '';
+        if ($showDeprecated) {
+            $deprecatedVars = '?replacedBy ?deprecated ?replacingLabel';
+            $deprecatedOptions =
+            'UNION {'.
+                '?concept dc:isReplacedBy ?replacedBy ; dc:modified ?date2 .'.
+                'BIND(COALESCE(?date2, ?date) AS ?date)'.
+                'OPTIONAL { ?replacedBy skos:prefLabel ?replacingLabel .'.
+                    'FILTER (langMatches(lang(?replacingLabel), \''.$lang.'\')) }}'.
+                'OPTIONAL { ?concept owl:deprecated ?deprecated . }';
+        }
+
         $query = <<<EOQ
-SELECT DISTINCT ?concept ?date ?label $fcl
+SELECT ?concept ?date ?label $deprecatedVars $fcl
 WHERE {
-  ?concept a skos:Concept .
-  ?concept $prop ?date .
-  ?concept skos:prefLabel ?label .
-  FILTER (langMatches(lang(?label), '$lang'))
+    ?concept a skos:Concept ;
+    skos:prefLabel ?label .
+    FILTER (langMatches(lang(?label), '$lang'))
+    {
+        ?concept $prop ?date .
+        MINUS { ?concept owl:deprecated True . }
+    }
+    $deprecatedOptions
 }
-ORDER BY DESC(YEAR(?date)) DESC(MONTH(?date)) LCASE(?label)
+ORDER BY DESC(YEAR(?date)) DESC(MONTH(?date)) LCASE(?label) DESC(?concept)
 LIMIT $limit $offset
 EOQ;
 
@@ -2293,6 +2312,13 @@ EOQ;
                 }
             }
 
+            if (isset($row->replacedBy)) {
+                $concept['replacedBy'] = $row->replacedBy->getURI();
+            }
+            if (isset($row->replacingLabel)) {
+                $concept['replacingLabel'] = $row->replacingLabel->getValue();
+            }
+
             $ret[] = $concept;
         }
         return $ret;
@@ -2304,10 +2330,11 @@ EOQ;
      * @param string $lang language of labels to return
      * @param int $offset offset of results to retrieve; 0 for beginning of list
      * @param int $limit maximum number of results to return
+     * @param boolean $showDeprecated whether to include deprecated concepts in the change list
      * @return array Result array
      */
-    public function queryChangeList($prop, $lang, $offset, $limit) {
-        $query = $this->generateChangeListQuery($prop, $lang, $offset, $limit);
+    public function queryChangeList($prop, $lang, $offset, $limit, $showDeprecated=false) {
+        $query = $this->generateChangeListQuery($prop, $lang, $offset, $limit, $showDeprecated);
 
         $result = $this->query($query);
         return $this->transformChangeListResults($result);

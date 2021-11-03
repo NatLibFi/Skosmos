@@ -531,6 +531,8 @@ class WebController extends Controller
         if ($defaultView === 'groups') {
             $this->invokeGroupIndex($request, true);
             return;
+        } else if ($defaultView === 'new') {
+            $this->invokeChangeList($request);
         }
         $pluginParameters = json_encode($vocab->getConfig()->getPluginParameters());
 

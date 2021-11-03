@@ -514,7 +514,7 @@ class VocabularyConfig extends BaseConfig
         $defview = $this->resource->getLiteral('skosmos:defaultSidebarView');
         if ($defview) {
             $value = $defview->getValue();
-            if ($value === 'groups' || $value === 'hierarchy') {
+            if ($value === 'groups' || $value === 'hierarchy' || $value === 'new') {
                 return $value;
             }
 
@@ -613,6 +613,15 @@ class VocabularyConfig extends BaseConfig
     public function getShowDeprecated()
     {
         return $this->getBoolean('skosmos:showDeprecated', false);
+    }
+
+    /**
+     * Returns a boolean value set in the config.ttl config.
+     * @return boolean
+     */
+    public function getShowDeprecatedChanges()
+    {
+        return $this->getBoolean('skosmos:showDeprecatedChanges', false);
     }
 
     /**
