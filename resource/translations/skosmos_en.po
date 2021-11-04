@@ -110,7 +110,7 @@ msgid "Changes-nav"
 msgstr "New"
 
 msgid "Changes-and-deprecations-nav"
-msgstr "New and deprecated"
+msgstr "New and Deprecated"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:122
 msgid "Clear limitations"
