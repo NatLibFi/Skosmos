@@ -25,6 +25,11 @@ class GenericSparql {
      */
     protected $model;
 
+    protected $conceptSchemes;
+
+    const SKOS_CONCEPT = 'http://www.w3.org/2004/02/skos/core#Concept';
+    const SKOS_IN_SCHEME = 'http://www.w3.org/2004/02/skos/core#inScheme';
+
     /**
      * Cache used to avoid expensive shorten() calls
      * @property array $qnamecache
@@ -38,9 +43,10 @@ class GenericSparql {
      *                           to use the default graph, or NULL to not use a GRAPH clause.
      * @param object $model a Model instance.
      */
-    public function __construct($endpoint, $graph, $model) {
+    public function __construct($endpoint, $graph, $model, $conceptSchemes=null) {
         $this->graph = $graph;
         $this->model = $model;
+        $this->conceptSchemes = $conceptSchemes;
 
         // create the EasyRDF SPARQL client instance to use
         $this->initializeHttpClient();
@@ -178,21 +184,48 @@ class GenericSparql {
      */
     private function generateCountConceptsQuery($array, $group) {
         $fcl = $this->generateFromClause();
+        $conceptInScheme = '';
+        $conc_concept = '';
+        $conc_member = '';
+        if (!empty($this->conceptSchemes)) {
+            $conceptInScheme = $this->formatValuesGraphPattern('?concept', self::SKOS_IN_SCHEME, $this->conceptSchemes, 'uri');
+            $conc_concept = "bind(?concept as ?conc)";
+            $conc_member = "?conc skos:member+ ?concept .";
+        }
         $optional = $array ? "(<$array>) " : '';
         $optional .= $group ? "(<$group>)" : '';
         $query = <<<EOQ
-      SELECT (COUNT(DISTINCT(?conc)) as ?c) ?type ?typelabel (COUNT(?depr) as ?deprcount) $fcl WHERE {
-        VALUES (?value) { (skos:Concept) (skos:Collection) $optional }
-  	    ?type rdfs:subClassOf* ?value
-        { ?type ^a ?conc .
-          OPTIONAL { ?conc owl:deprecated ?depr .
-  		    FILTER (?depr = True)
-          }
-        } UNION {SELECT * WHERE {
-            ?type rdfs:label ?typelabel
-          }
+      SELECT ?c ?type ?typelabel ?deprcount $fcl WHERE {
+        {
+          SELECT (COUNT(DISTINCT(?conc)) as ?c) ?type (COUNT(?depr) as ?deprcount) WHERE {
+            $conceptInScheme
+            {
+                ?type rdfs:subClassOf* skos:Concept .
+                $conc_concept
+                ?type ^a ?conc .
+            }
+            UNION
+            {
+                ?type rdfs:subClassOf* skos:Collection .
+                ?type ^a ?conc .
+                $conc_member
+      	    }
+            UNION
+            {
+                VALUES (?value) { $optional }
+                ?type rdfs:subClassOf* ?value .
+                ?type ^a ?conc .
+            }
+            OPTIONAL {
+               ?conc owl:deprecated ?depr .
+            }
+          } GROUP BY ?type
         }
-      } GROUP BY ?type ?typelabel
+        OPTIONAL {
+            ?type rdfs:label ?typelabel .
+        }
+      }
+      ORDER BY DESC(?c)
 EOQ;
         return $query;
     }
@@ -211,16 +244,12 @@ EOQ;
             }
             $typeURI = $row->type->getUri();
             $ret[$typeURI]['type'] = $typeURI;
+            $ret[$typeURI]['count'] = $row->c->getValue();
+            $ret[$typeURI]['deprecatedCount'] = $row->deprcount->getValue();
 
-            if (!isset($row->typelabel)) {
-                $ret[$typeURI]['count'] = $row->c->getValue();
-                $ret[$typeURI]['deprecatedCount'] = $row->deprcount->getValue();
-            }
-
-            if (isset($row->typelabel) && $row->typelabel->getLang() === $lang) {
+            if (isset($row->typelabel) && ($row->typelabel->getLang() === $lang || $row->typelabel->getLang() === null)) {
                 $ret[$typeURI]['label'] = $row->typelabel->getValue();
             }
-
         }
         return $ret;
     }
@@ -245,7 +274,7 @@ EOQ;
      */
     private function generateCountLangConceptsQuery($langs, $classes, $props) {
         $gcl = $this->graphClause;
-        $classes = ($classes) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
+        $classes = ($classes) ? $classes : array(self::SKOS_CONCEPT);
 
 	$quote_string = function($val) { return "'$val'"; };
 	$quoted_values = array_map($quote_string, $langs);
@@ -253,6 +282,7 @@ EOQ;
 
         $values = $this->formatValues('?type', $classes, 'uri');
         $valuesProp = $this->formatValues('?prop', $props, null);
+        $conc_inScheme = $this->formatValuesGraphPattern('?conc', self::SKOS_IN_SCHEME, $this->conceptSchemes, 'uri');
 
         $query = <<<EOQ
 SELECT ?lang ?prop
@@ -262,6 +292,7 @@ WHERE {
     $values
     $valuesProp
     ?conc a ?type .
+    $conc_inScheme
     ?conc ?prop ?label .
     BIND(LANG(?label) AS ?lang)
     $langFilter
@@ -336,6 +367,45 @@ EOQ;
     }
 
     /**
+     * Formats a graph pattern of the form:
+     *     VALUES (?v) { ... }
+     *     ?var <pred> ?v .
+     *
+     * If there is only a single value then this is simplified to:
+     *     ?var <pred> <value> .
+     *
+     * @param string $varname variable name, e.g. "?uri"
+     * @param string $pred predicate URI
+     * @param array $values the values
+     * @param string $type type of values: "uri", "literal" or null (determines quoting style)
+     */
+    protected function formatValuesGraphPattern($varname, $pred, $values, $type = null) {
+        $gp = '';
+        if (!empty($values)) {
+            if ($pred != 'a') {
+                $pred = "<$pred>";
+            }
+
+            if (sizeof($values) == 1) {
+                $val = $values[0];
+                if ($type == 'uri') {
+                    $val = "<$val>";
+                }
+
+                if ($type == 'literal') {
+                    $val = "'$val'";
+                }
+                $gp .= "$varname $pred $val .";
+            } else {
+                $valVar = $varname . '_value';
+                $gp .= $this->formatValues($valVar, $values, $type);
+                $gp .= "\n$varname $pred $valVar .";
+            }
+        }
+        return $gp;
+    }
+
+    /**
      * Filters multiple instances of the same vocabulary from the input array.
      * @param \Vocabulary[]|null $vocabs array of Vocabulary objects
      * @return \Vocabulary[]
@@ -399,6 +469,7 @@ CONSTRUCT {
  ?o skos:notation ?on .
  ?o ?oprop ?oval .
  ?o ?xlprop ?xlval .
+ ?o skos:inScheme ?oscheme .
  ?dt rdfs:label ?dtlabel .
  ?directgroup skos:member ?uri .
  ?parent skos:member ?group .
@@ -467,6 +538,8 @@ CONSTRUCT {
      UNION
      { ?o a skosxl:Label .
        ?o ?xlprop ?xlval }
+     UNION
+     { ?o skos:inScheme ?oscheme . }
    } $optional
   }
  }
@@ -643,9 +716,14 @@ EOQ;
      */
     private function generateQueryConceptSchemesQuery($lang) {
         $fcl = $this->generateFromClause();
+        $csValues = '';
+        if (!empty($this->conceptSchemes)) {
+        	$csValues .= $this->formatValues('?cs', $this->conceptSchemes, 'uri');
+        }
         $query = <<<EOQ
 SELECT ?cs ?label ?preflabel ?title ?domain ?domainLabel $fcl
 WHERE {
+ $csValues
  ?cs a skos:ConceptScheme .
  OPTIONAL{
     ?cs dcterms:subject ?domain.
@@ -761,7 +839,7 @@ EOQ;
         foreach ($graphs as $graph) {
           $values[] = "<$graph>";
         }
-        if (count($values)) {
+        if (sizeof($values)) {
           return "FILTER (?graph IN (" . implode(',', $values) . "))";
         }
     }
@@ -907,7 +985,7 @@ EOF;
 
         $labelcondMatch = ($searchLang) ? "&& (?prop = skos:notation || LANGMATCHES(lang(?match), ?langParam))" : "";
 
-        return "?s ?prop ?match . FILTER ($filtercond $labelcondMatch)";
+        return "FILTER ($filtercond $labelcondMatch)";
     }
 
 
@@ -928,6 +1006,7 @@ EOF;
         $rawterm = str_replace(array('\\', '*', '"'), array('\\\\', '', '\"'), $term);
         // graph clause, if necessary
         $graphClause = $filterGraph != '' ? 'GRAPH ?graph' : '';
+        $s_inScheme = $this->formatValuesGraphPattern('?s', self::SKOS_IN_SCHEME, $this->conceptSchemes, 'uri');
 
         // extra conditions for label language, if specified
         $labelcondLabel = ($lang) ? "LANGMATCHES(lang(?label), '$lang')" : "lang(?match) = '' || LANGMATCHES(lang(?label), lang(?match))";
@@ -965,12 +1044,15 @@ EOF;
      { 
      $valuesProp
      VALUES (?prop ?pri ?langParam) { (skos:prefLabel 1 $langClause) (skos:altLabel 3 $langClause) (skos:notation 5 '') (skos:hiddenLabel 7 $langClause)}
+     ?s ?prop ?match .
+     $s_inScheme
      $textcond
-     ?s ?prop ?match }
+     }
      OPTIONAL {
       ?s skos:prefLabel ?label .
       FILTER ($labelcondLabel)
-     } $labelcondFallback
+     }
+     $labelcondFallback
      BIND(IF(langMatches(LANG(?match),'$lang'), ?pri, ?pri+1) AS ?npri)
      BIND(CONCAT(STR(?npri), LANG(?match), '@', STR(?match)) AS ?matchstr)
      OPTIONAL { ?s skos:notation ?notation }
@@ -1079,7 +1161,8 @@ WHERE {
   }
   $labelpriority
   $formattedtype
-  { $pgcond 
+  {
+   $pgcond 
    ?s a ?type .
    $extrafields $schemecond
   }
@@ -1254,8 +1337,9 @@ EOQ;
      */
     protected function generateAlphabeticalListQuery($letter, $lang, $limit, $offset, $classes, $showDeprecated = false, $qualifier = null) {
         $gcl = $this->graphClause;
-        $classes = ($classes) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
-        $values = $this->formatValues('?type', $classes, 'uri');
+        $classes = ($classes) ? $classes : array(self::SKOS_CONCEPT);
+        $s_type = $this->formatValuesGraphPattern('?s', 'a', $classes, 'uri');
+        $s_inScheme = $this->formatValuesGraphPattern('?s', self::SKOS_IN_SCHEME, $this->conceptSchemes, 'uri');
         $limitandoffset = $this->formatLimitAndOffset($limit, $offset);
         $conditions = $this->formatFilterConditions($letter, $lang);
         $filtercondLabel = $conditions['filterpref'];
@@ -1269,6 +1353,8 @@ EOQ;
 SELECT DISTINCT ?s ?label ?alabel ?qualifier
 WHERE {
   $gcl {
+    $s_type
+    $s_inScheme
     {
       ?s skos:prefLabel ?label .
       FILTER (
@@ -1288,10 +1374,8 @@ WHERE {
         FILTER (langMatches(lang(?label), '$lang'))
       }
     }
-    ?s a ?type .
     $qualifierClause
     $filterDeprecated
-    $values
   }
 }
 ORDER BY LCASE(STR(COALESCE(?alabel, ?label))) STR(?s) LCASE(STR(?qualifier)) $limitandoffset
@@ -1369,15 +1453,16 @@ EOQ;
      */
     private function generateFirstCharactersQuery($lang, $classes) {
         $gcl = $this->graphClause;
-        $classes = (isset($classes) && sizeof($classes) > 0) ? $classes : array('http://www.w3.org/2004/02/skos/core#Concept');
-        $values = $this->formatValues('?type', $classes, 'uri');
+        $classes = (isset($classes) && sizeof($classes) > 0) ? $classes : array(self::SKOS_CONCEPT);
+        $c_type = $this->formatValuesGraphPattern('?c', 'a', $classes, 'uri');
+        $c_inScheme = $this->formatValuesGraphPattern('?c', self::SKOS_IN_SCHEME, $this->conceptSchemes, 'uri');
         $query = <<<EOQ
 SELECT DISTINCT (ucase(str(substr(?label, 1, 1))) as ?l) WHERE {
   $gcl {
     ?c skos:prefLabel ?label .
-    ?c a ?type
+    $c_type
+    $c_inScheme
     FILTER(langMatches(lang(?label), '$lang'))
-    $values
   }
 }
 EOQ;
@@ -1879,21 +1964,24 @@ EOQ;
 
     /**
      * Query the top concepts of a vocabulary.
-     * @param string $conceptSchemes concept schemes whose top concepts to query for
+     * @param string $topConceptSchemes concept schemes whose top concepts to query for
      * @param string $lang language of labels
      * @param string $fallback language to use if label is not available in the preferred language
      */
-    public function queryTopConcepts($conceptSchemes, $lang, $fallback) {
-        if (!is_array($conceptSchemes)) {
-            $conceptSchemes = array($conceptSchemes);
+    public function queryTopConcepts($topConceptSchemes, $lang, $fallback) {
+        if (!is_array($topConceptSchemes)) {
+            $topConceptSchemes = array($topConceptSchemes);
         }
 
-        $values = $this->formatValues('?topuri', $conceptSchemes, 'uri');
+        $values = $this->formatValues('?topuri', $topConceptSchemes, 'uri');
+        $top_inScheme = $this->formatValuesGraphPattern('?top', self::SKOS_IN_SCHEME, $this->conceptSchemes, 'uri');
 
         $fcl = $this->generateFromClause();
         $query = <<<EOQ
 SELECT DISTINCT ?top ?topuri ?label ?notation ?children $fcl WHERE {
+  $values
   ?top skos:topConceptOf ?topuri .
+  $top_inScheme
   OPTIONAL {
     ?top skos:prefLabel ?label .
     FILTER (langMatches(lang(?label), "$lang"))
@@ -1907,7 +1995,6 @@ SELECT DISTINCT ?top ?topuri ?label ?notation ?children $fcl WHERE {
   }
   OPTIONAL { ?top skos:notation ?notation . }
   BIND ( EXISTS { ?top skos:narrower ?a . } AS ?children )
-  $values
 }
 EOQ;
         $result = $this->query($query);
@@ -2255,6 +2342,7 @@ EOQ;
      */
     private function generateChangeListQuery($prop, $lang, $offset, $limit=200, $showDeprecated=false) {
         $fcl = $this->generateFromClause();
+        $concept_inScheme = $this->formatValuesGraphPattern('?concept', self::SKOS_IN_SCHEME, $this->conceptSchemes, 'uri');
         $offset = ($offset) ? 'OFFSET ' . $offset : '';
 
         //Additional clauses when deprecated concepts need to be included in the results
@@ -2276,6 +2364,7 @@ SELECT ?concept ?date ?label $deprecatedVars $fcl
 WHERE {
     ?concept a skos:Concept ;
     skos:prefLabel ?label .
+    $concept_inScheme
     FILTER (langMatches(lang(?label), '$lang'))
     {
         ?concept $prop ?date .

@@ -308,6 +308,14 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
+     * Returns an array of concept schemes to restrict to using skos:inScheme.
+     */
+    public function getConceptSchemeURIs()
+    {
+        return $this->getResources("skosmos:conceptSchemes");
+    }
+
+    /**
      * Returns the main Concept Scheme URI of that Vocabulary,
      * or null if not set.
      * @return string concept scheme URI or null
