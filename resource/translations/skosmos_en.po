@@ -407,7 +407,7 @@ msgstr "Type"
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:256
 msgid "deprecated"
 msgstr ""
-"This concept has been deprecated. Do not use this concept for annotation!"
+"This concept has been deprecated."
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:89
 msgid "foaf:homepage"
