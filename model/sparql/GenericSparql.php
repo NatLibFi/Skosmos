@@ -1694,11 +1694,9 @@ WHERE {
   SELECT ?object ?label (GROUP_CONCAT(STR(?dir);separator=' ') as ?direct)
   WHERE {
     <$uri> a skos:Concept .
+    <$uri> $propertyClause* ?object .
     OPTIONAL {
-      <$uri> $propertyClause* ?object .
-      OPTIONAL {
-        ?object $propertyClause ?dir .
-      }
+      ?object $propertyClause ?dir .
     }
     OPTIONAL {
       ?object skos:prefLabel ?label .
