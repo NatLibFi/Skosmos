@@ -71,6 +71,7 @@ class ConceptSearchParameters
         if (!$term && $this->rest)
             $term = $this->request->getQueryParamRaw('label');
         $term = trim($term); // surrounding whitespace is not considered significant
+        $term = Normalizer::normalize( $term, Normalizer::FORM_C ); //Normalize decomposed unicode characters #1184
         if ($this->rest) {
             return $term;
         }
