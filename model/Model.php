@@ -13,6 +13,8 @@ class Model
     private $vocabsByGraph = null;
     /** cache for Vocabulary objects */
     private $vocabsByUriSpace = null;
+    /** cache for Vocabulary objects */
+    private $vocabsByScheme = null;
     /** how long to store retrieved URI information in APC cache */
     const URI_FETCH_TTL = 86400; // 1 day
     private $globalConfig;
@@ -447,6 +449,29 @@ class Model
             throw new ValueError("no vocabulary found for graph $graph and endpoint $endpoint");
         }
 
+    }
+
+    /**
+     * Return the vocabulary that has the given scheme.
+     *
+     * @param $graph string graph URI
+     * @return Vocabulary vocabulary for this scheme, or null if not found
+     */
+    public function getVocabularyByScheme($scheme)
+    {
+        if ($this->vocabsByScheme === null) { // initialize cache
+            $this->vocabsByScheme = array();
+            foreach ($this->getVocabularies() as $voc) {
+                $key = $voc->getDefaultConceptScheme();
+                $this->vocabsByScheme[$key] = $voc;
+            }
+        }
+
+        if (array_key_exists($scheme, $this->vocabsByScheme)) {
+            return $this->vocabsByScheme[$scheme];
+        } else {
+            return null;
+        }
     }
 
     /**

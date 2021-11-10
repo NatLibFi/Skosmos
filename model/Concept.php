@@ -449,7 +449,18 @@ class Concept extends VocabularyDataObject implements Modifiable
                                 continue;
                             }
                         }
-                        $ret[$prop]->addValue(new ConceptMappingPropertyValue($this->model, $this->vocab, $val, $this->resource, $prop, $this->clang));
+
+                        // check if target vocabularly can be found by scheme
+                        $targetVocab = $this->vocab;
+                        foreach ($val->allResources("skos:inScheme") as $targetScheme) {
+                            $schemeVocab = $this->model->getVocabularyByScheme($targetScheme->getUri());
+                            if ($schemeVocab) {
+                                $targetVocab = $schemeVocab;
+                                break;
+                            }
+                        }
+
+                        $ret[$prop]->addValue(new ConceptMappingPropertyValue($this->model, $targetVocab, $val, $this->resource, $prop, $this->clang));
                     }
                 }
             }
