@@ -429,6 +429,8 @@
 	skosmos:language "en";
 	skosmos:sparqlGraph <http://www.skosmos.skos/testOrder/> .
 
+<http://testMultiHashesInUri#vocab#multiHashVocabId> a skosmos:Vocabulary, void:Dataset ;
+
 <http://skosmos.skos/dump/test/groups> dc:format "application/rdf+xml" .
 
 :cat_science a skos:Concept ;
