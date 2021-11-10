@@ -298,6 +298,22 @@
     skosmos:language "fi";
     skosmos:sparqlGraph <http://www.skosmos.skos/collation/> .
 
+:conceptPropertyLabels  a skosmos:Vocabulary, void:Dataset ;
+	dc:title "Test custom property labels"@en ;
+	dc:subject :cat_science ;
+    dc:type mdrtype:ONTOLOGY ;
+	void:dataDump <http://skosmos.skos/dump/test/> ;
+	void:uriSpace "http://www.skosmos.skos/test/";
+	skosmos:defaultLanguage "en";
+	skosmos:language "en";
+    skosmos:propertyLabelOverride
+        [ skosmos:property skos:prefLabel ;
+          rdfs:label "Caption"@en, "Luokka"@fi ],
+        [ skosmos:property skos:notation ;
+          rdfs:label "UDC number"@en, "UDC-numero"@fi, "UDC-nummer"@sv ;
+          schema:description "Class Number"@en ] ;
+	skosmos:sparqlGraph <http://www.skosmos.skos/conceptPropertyLabels/> .
+
 :cbd a skosmos:Vocabulary, void:Dataset ;
     dc11:title "A vocabulary for testing blank node processing and reification"@en ;
     dc:subject :cat_general ;
