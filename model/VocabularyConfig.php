@@ -73,7 +73,6 @@ class VocabularyConfig extends BaseConfig
 
     /**
      * Sets array of parameterized plugins
-     * @param Easyrdf\Resource $pluginResource
      * @return void
      */
     private function setParameterizedPlugins() : void
@@ -133,7 +132,7 @@ class VocabularyConfig extends BaseConfig
     {
         $this->labelOverrides = array();
         $overrides = $this->resource->allResources('skosmos:propertyLabelOverride');
-        if ($overrides) {
+        if (!empty($overrides)) {
             foreach ($overrides as $override) {
                 $this->setLabelOverride($override);
             }
