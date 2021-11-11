@@ -67,8 +67,13 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 WORKDIR /var/www/html
 RUN rm index.html
 
-COPY . /var/www/html
+# composer and packages layer
 RUN curl -sS https://getcomposer.org/installer | php
+COPY composer.json /var/www/html
+RUN php composer.phar install --no-dev --no-autoloader
+
+# skosmos layer
+COPY . /var/www/html
 RUN php composer.phar install --no-dev
 
 
