@@ -311,7 +311,7 @@
           rdfs:label "Caption"@en, "Luokka"@fi ],
         [ skosmos:property skos:notation ;
           rdfs:label "UDC number"@en, "UDC-numero"@fi, "UDC-nummer"@sv ;
-          schema:description "Class Number"@en ] ;
+          rdfs:comment "Class Number"@en ] ;
 	skosmos:sparqlGraph <http://www.skosmos.skos/conceptPropertyLabels/> .
 
 :cbd a skosmos:Vocabulary, void:Dataset ;

@@ -157,7 +157,7 @@ class VocabularyConfig extends BaseConfig
         foreach ($labels as $label) {
             $newOverrides['label'][$label->getLang()] = $label->getValue();
         }
-        $descriptions = $override->allLiterals('schema:description'); //optionally override property label tooltips
+        $descriptions = $override->allLiterals('rdfs:comment'); //optionally override property label tooltips
         foreach ($descriptions as $description) {
              $newOverrides['description'][$description->getLang()] = $description->getValue();
         }
