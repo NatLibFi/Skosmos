@@ -618,4 +618,22 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     $this->assertEquals($order, $params);
   }
 
+  /**
+   * @covers VocabularyConfig::getPropertyLabelOverrides
+   * @covers VocabularyConfig::setPropertyLabelOverrides
+   * @covers VocabularyConfig::setLabelOverride
+   */
+  public function testGetPropertyLabelOverrides() {
+    $vocab = $this->model->getVocabulary('conceptPropertyLabels');
+
+    $overrides = $vocab->getConfig()->getPropertyLabelOverrides();
+
+    $expected = array(
+      'skos:prefLabel' => array( 'label' => array ( 'en' => 'Caption', 'fi' => 'Luokka' ) ),
+      'skos:notation' => array( 'label' => array ( 'en' => 'UDC number', 'fi' => 'UDC-numero', 'sv' => 'UDC-nummer' ),
+                                'description' => array( 'en' => 'Class Number') ),
+    );
+    $this->assertEquals($expected, $overrides);
+  }
+
 }

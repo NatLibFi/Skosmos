@@ -8,6 +8,7 @@ class VocabularyConfig extends BaseConfig
     private $pluginRegister;
     private $pluginParameters = array();
     private $languageOrderCache = array();
+    private $labelOverrides = array();
 
     const DEFAULT_PROPERTY_ORDER = array("rdf:type", "dc:isReplacedBy",
     "skos:definition", "skos:broader", "isothes:broaderGeneric",
@@ -33,6 +34,7 @@ class VocabularyConfig extends BaseConfig
         $this->resource = $resource;
         $this->globalPlugins = $globalPlugins;
         $this->setParameterizedPlugins();
+        $this->setPropertyLabelOverrides();
         $pluginArray = $this->getPluginArray();
         $this->pluginRegister = new PluginRegister($pluginArray);
     }
@@ -71,7 +73,6 @@ class VocabularyConfig extends BaseConfig
 
     /**
      * Sets array of parameterized plugins
-     * @param Easyrdf\Resource $pluginResource
      * @return void
      */
     private function setParameterizedPlugins() : void
@@ -121,6 +122,46 @@ class VocabularyConfig extends BaseConfig
                 $this->pluginParameters[$pluginName][$paramName] = $paramValue;
             }
         }
+    }
+
+    /**
+     * Sets array of configured property label overrides
+     *  @return void
+     */
+    private function setPropertyLabelOverrides() : void
+    {
+        $this->labelOverrides = array();
+        $overrides = $this->resource->allResources('skosmos:propertyLabelOverride');
+        if (!empty($overrides)) {
+            foreach ($overrides as $override) {
+                $this->setLabelOverride($override);
+            }
+        }
+    }
+
+    /**
+     * Updates array of label overrides by adding a new override from the configuration file
+     * @param Easyrdf\Resource $labelOverride
+     * @return void
+     */
+    private function setLabelOverride(Easyrdf\Resource $override) : void
+    {
+        $labelProperty = $override->getResource('skosmos:property');
+        $labelPropUri = $labelProperty->shorten();
+        if (empty($this->labelOverrides[$labelPropUri])) {
+            $this->labelOverrides[$labelPropUri]  = array();
+        }
+        $newOverrides = array();
+
+        $labels = $override->allLiterals('rdfs:label'); //property label overrides
+        foreach ($labels as $label) {
+            $newOverrides['label'][$label->getLang()] = $label->getValue();
+        }
+        $descriptions = $override->allLiterals('rdfs:comment'); //optionally override property label tooltips
+        foreach ($descriptions as $description) {
+             $newOverrides['description'][$description->getLang()] = $description->getValue();
+        }
+        $this->labelOverrides[$labelPropUri] = array_merge($newOverrides, $this->labelOverrides[$labelPropUri]);
     }
 
     /**
@@ -503,6 +544,14 @@ class VocabularyConfig extends BaseConfig
      */
     public function getPluginParameters() {
         return $this->pluginParameters;
+    }
+
+    /**
+     * Get the list of property label overrides
+     * @return array of custom property labels
+     */
+    public function getPropertyLabelOverrides() {
+        return $this->labelOverrides;
     }
 
     /**

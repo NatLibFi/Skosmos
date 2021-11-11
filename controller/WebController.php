@@ -178,6 +178,8 @@ class WebController extends Controller
         if ($this->notModified($results[0])) {
             return;
         }
+        $customLabels = $vocab->getConfig()->getPropertyLabelOverrides();
+
         $pluginParameters = json_encode($vocab->getConfig()->getPluginParameters());
         $template = (in_array('skos:Concept', $results[0]->getType()) || in_array('skos:ConceptScheme', $results[0]->getType())) ? $this->twig->loadTemplate('concept-info.twig') : $this->twig->loadTemplate('group-contents.twig');
 
@@ -191,7 +193,8 @@ class WebController extends Controller
             'bread_crumbs' => $crumbs['breadcrumbs'],
             'combined' => $crumbs['combined'],
             'request' => $request,
-            'plugin_params' => $pluginParameters)
+            'plugin_params' => $pluginParameters,
+            'custom_labels' => $customLabels)
         );
     }
 

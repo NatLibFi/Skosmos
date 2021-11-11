@@ -42,7 +42,16 @@
       {% spaceless %}
       <div class="row{% if concept.type == 'skosext:DeprecatedConcept' %} deprecated{% endif %} property prop-preflabel">
         <div class="property-label property-label-pref">
-          <h3 class="versal">{% set subPrefLabelTranslation = concept.preferredSubpropertyLabelTranslation(request.lang) %}{% if subPrefLabelTranslation %}{{ subPrefLabelTranslation }}{% else %}{{ 'skos:prefLabel'|trans }}{% endif %}</h3>
+          <h3 class="versal">
+            {% set subPrefLabelTranslation = concept.preferredSubpropertyLabelTranslation(request.lang) %}
+            {% if subPrefLabelTranslation %}
+              {{ subPrefLabelTranslation }}
+            {% elseif custom_labels['skos:prefLabel']['label'][request.lang] %}
+              {{ custom_labels['skos:prefLabel']['label'][request.lang] }}
+            {% else %}
+              {{ 'skos:prefLabel'|trans }}
+            {% endif %}
+          </h3>
         </div>
         {% if concept.foundBy %} {# hit has been found through an alternative label #}
         <span class="versal">{{ concept.foundBy }} ></span>
@@ -90,7 +99,16 @@
         {% if property.getSubPropertyOf != 'skos:hiddenLabel' %}
         <div class="row{% if property.type == 'dc:isReplacedBy' %} replaced-by{% endif%} property prop-{{property.ID}}">
           <div class="property-label">
-            <h3 class="versal{% if property.type == 'rdf:type' %}-bold{% endif %}{% if property.description %} property-click" title="{{ property.description }}{% endif %}">{{ property.label }}</h3>
+            <h3 class="versal{% if property.type == 'rdf:type' %}-bold{% endif %}
+              {% if custom_labels[property.type]['description'][request.lang] %}property-click" title="{{ custom_labels[property.type]['description'][request.lang] }}
+              {% elseif property.description %} property-click" title="{{ property.description }}
+              {% endif %}">
+              {% if custom_labels[property.type]['label'][request.lang] %}
+                {{ custom_labels[property.type]['label'][request.lang] }}
+              {% else %}
+                {{ property.label }}
+              {% endif %}
+            </h3>
           </div>
           <div class="property-value-column"><div class="property-value-wrapper">
         {% if request.vocab.config.hasMultiLingualProperty(property.type) %}
