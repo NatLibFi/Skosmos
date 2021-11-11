@@ -47,7 +47,7 @@
             {% if subPrefLabelTranslation %}
               {{ subPrefLabelTranslation }}
             {% elseif custom_labels['skos:prefLabel'] %}
-              {{ custom_labels['skos:prefLabel']['label'][request.contentLang] }}
+              {{ custom_labels['skos:prefLabel']['label'][request.lang] }}
             {% else %}
               {{ 'skos:prefLabel'|trans }}
             {% endif %}
@@ -101,10 +101,10 @@
           <div class="property-label">
             {% if custom_labels[property.type] %}
               <h3 class="versal{% if property.type == 'rdf:type' %}-bold{% endif %}
-                {% if custom_labels[property.type] and custom_labels[property.type]['description'] and custom_labels[property.type]['description'][request.contentLang] %}property-click" title="{{ custom_labels[property.type]['description'][request.contentLang] }}
+                {% if custom_labels[property.type] and custom_labels[property.type]['description'] and custom_labels[property.type]['description'][request.lang] %}property-click" title="{{ custom_labels[property.type]['description'][request.lang] }}
                 {% elseif property.description %} property-click" title="{{ property.description }}
                 {% endif %}
-                ">{{ custom_labels[property.type]['label'][request.contentLang] }}</h3>
+                ">{{ custom_labels[property.type]['label'][request.lang] }}</h3>
             {% else %}
               <h3 class="versal{% if property.type == 'rdf:type' %}-bold{% endif %}{% if property.description %} property-click" title="{{ property.description }}{% endif %}">{{ property.label }}</h3>
             {% endif %}
