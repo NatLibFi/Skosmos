@@ -46,7 +46,7 @@
             {% set subPrefLabelTranslation = concept.preferredSubpropertyLabelTranslation(request.lang) %}
             {% if subPrefLabelTranslation %}
               {{ subPrefLabelTranslation }}
-            {% elseif custom_labels['skos:prefLabel'] %}
+            {% elseif custom_labels['skos:prefLabel']['label'][request.lang] %}
               {{ custom_labels['skos:prefLabel']['label'][request.lang] }}
             {% else %}
               {{ 'skos:prefLabel'|trans }}
@@ -99,9 +99,9 @@
         {% if property.getSubPropertyOf != 'skos:hiddenLabel' %}
         <div class="row{% if property.type == 'dc:isReplacedBy' %} replaced-by{% endif%} property prop-{{property.ID}}">
           <div class="property-label">
-            {% if custom_labels[property.type] %}
+            {% if custom_labels[property.type]['label'][request.lang] %}
               <h3 class="versal{% if property.type == 'rdf:type' %}-bold{% endif %}
-                {% if custom_labels[property.type] and custom_labels[property.type]['description'] and custom_labels[property.type]['description'][request.lang] %}property-click" title="{{ custom_labels[property.type]['description'][request.lang] }}
+                {% if custom_labels[property.type]['description'][request.lang] %}property-click" title="{{ custom_labels[property.type]['description'][request.lang] }}
                 {% elseif property.description %} property-click" title="{{ property.description }}
                 {% endif %}
                 ">{{ custom_labels[property.type]['label'][request.lang] }}</h3>
