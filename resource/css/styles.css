@@ -63,7 +63,7 @@ h1, .prefLabel, .prefLabelLang, .notation {
 }
 
 p {
-  color: #474b4f;
+  color: var(--gray-900);
   font-family: var(--font-family);
   font-size: var(--font-size);
   margin: 0 0 10px 0;
@@ -453,8 +453,8 @@ ul {
 .dropdown-toggle:hover,
 .dropdown-toggle:focus,
 .dropdown-toggle:active {
-  background-color: #394554 !important;
-  color: #ffffff !important;
+  background-color: var(--dark-color) !important;
+  color: var(--white-color) !important;
   box-shadow: none;
 }
 
