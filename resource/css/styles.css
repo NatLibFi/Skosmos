@@ -1572,6 +1572,7 @@ li.sub-group {
 
 .vocab-info-literals > div.table > .row {
   padding-top: 10px;
+  border-top: none;
 }
 
 #vocab-info table > tbody > tr.other-languages > td {
