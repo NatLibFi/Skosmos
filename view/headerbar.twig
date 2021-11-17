@@ -27,11 +27,11 @@
         <ul class="dropdown-menu" aria-labelledby="lang-dropdown-toggle">
         {% if request.vocab %}
           {% for langcode in request.vocab.config.languages %}
-          <li class="dropdown-item"><a href="{{ concept_uri | link_url(request.vocabid,request.lang,request.page,langcode,term,letter) }}" class="lang-button" hreflang="{{ langcode }}">{{ langcode | lang_name(request.lang) }}</a></li>
+          <li><a class="dropdown-item" href="{{ concept_uri | link_url(request.vocabid,request.lang,request.page,langcode,term,letter) }}" class="lang-button" hreflang="{{ langcode }}">{{ langcode | lang_name(request.lang) }}</a></li>
           {% endfor %}
         {% else %}
           {% for langcode in lang_list %}
-          <li class="dropdown-item"><a href="{{ request.lang }}/{{ request.page -}}
+          <li><a class="dropdown-item" href="{{ request.lang }}/{{ request.page -}}
             {%- if langcode != request.lang -%}
               ?clang={{langcode}}
               {%- set paramSeparator = '&' -%}
@@ -41,8 +41,8 @@
             " class="lang-button" hreflang="{{ langcode }}">{{ langcode | lang_name(request.lang) }}</a></li>
           {% endfor %}
         {% endif %}
-          <li class="dropdown-item">
-            <a href="
+          <li>
+            <a class="dropdown-item" href="
               {%- if not request.vocab -%}
                   {{ request.lang }}/
               {%- endif -%}

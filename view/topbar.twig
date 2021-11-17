@@ -25,7 +25,7 @@
   <ul class="dropdown-menu dropdown-menu-end">
   {% for langcode, langdata in languages %}
   {% if request.lang != langcode %}
-  <li class="dropdown-item"><a id="language-{{ langcode }}" class="versal" href="{{ request.langurl(langcode) }}"> {{langdata.lemma}}</a></li>
+  <li><a class="dropdown-item" id="language-{{ langcode }}" class="versal" href="{{ request.langurl(langcode) }}"> {{langdata.lemma}}</a></li>
   {% endif %}
   {% endfor %}
   </ul>
