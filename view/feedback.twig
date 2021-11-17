@@ -24,8 +24,8 @@
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu" aria-labelledby="feedback-vocid">
-            <li class="dropdown-item"><a href="#">{% trans %}Not to a specific vocabulary{% endtrans %}</a></li>
-            {% for option in vocabList %}<li class="dropdown-item"><a href="#" data-vocid="{{ option.id }}">{{ option.title }}</a></li>{% endfor %}
+            <li><a class="dropdown-item" href="#">{% trans %}Not to a specific vocabulary{% endtrans %}</a></li>
+            {% for option in vocabList %}<li><a class="dropdown-item" href="#" data-vocid="{{ option.id }}">{{ option.title }}</a></li>{% endfor %}
           </ul>
         </div>
         {% endif %}

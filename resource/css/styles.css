@@ -36,32 +36,13 @@
   content: " ";
 }
 
+.btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+
 /* Font definitions
  *****************************************/
-li, td > a {
-  font-family: var(--font-family);
-  font-size: var(--font-size);
-}
-
-h1, .prefLabel, .prefLabelLang, .notation {
-  font-family: var(--font-family);
-  font-size: 24px;
-  font-weight: 400;
-}
-
-.prefLabel, .prefLabelLang, .notation {
-  font-weight: 500;
-}
-
-.prefLabelLang {
-  color: var(--gray-900);
-}
-
-#service-name {
-  font-size: 27px;
-  font-weight: bold;
-}
-
 p {
   color: var(--gray-900);
   font-family: var(--font-family);
@@ -95,6 +76,30 @@ h6, .h6 { font-size: 12px; }
 
 h2, h3 {
   font-size: 16px;
+}
+
+li, td > a {
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+}
+
+h1, .prefLabel, .prefLabelLang, .notation {
+  font-family: var(--font-family);
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.prefLabel, .prefLabelLang, .notation {
+  font-weight: 500;
+}
+
+.prefLabelLang {
+  color: var(--gray-900);
+}
+
+#service-name {
+  font-size: 27px;
+  font-weight: bold;
 }
 
 .navigation-font {
@@ -149,6 +154,16 @@ a, a.versal, .nav-link, .nav-link.active, .jstree-node > .jstree-anchor {
   padding-top: 180px;
   text-align: center;
   width: 150px;
+}
+
+/**
+ * This class is from Bootstrap 3 utilities.less, and used by the concept-spinner
+ * above. It is what centralizes the spinner at the middle of the content div.
+ */
+.center-block {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .replaced {
@@ -347,15 +362,15 @@ ul {
   min-width: 160px;
 }
 
-#language > .dropdown-menu > .dropdown-item, #language > .dropdown-menu > .dropdown-item > a {
+#language > .dropdown-menu > .dropdown-item, #language > .dropdown-menu > li > a.dropdown-item {
   margin: 0;
 }
 
-#language > .dropdown-menu > .dropdown-item {
+#language > .dropdown-menu > li > a.dropdown-item {
   padding: 0;
 }
 
-#language > .dropdown-menu > .dropdown-item > a {
+#language > .dropdown-menu > li > a.dropdown-item {
   display: block;
   padding: 3px 20px;
   clear: both;
@@ -363,7 +378,7 @@ ul {
   color: #333;
 }
 
-#language > .dropdown-menu > .dropdown-item > a:hover {
+#language > .dropdown-menu > li > a.dropdown-item:hover {
   color: #fff;
 }
 
@@ -463,7 +478,7 @@ ul {
   padding: 0;
 }
 
-.navbar-form .dropdown-menu > .dropdown-item > a {
+.navbar-form .dropdown-menu > li > a.dropdown-item {
   display: block;
   padding: 3px 20px;
   clear: both;
@@ -491,7 +506,7 @@ ul.dropdown-menu > li.dropdown-item:last-child > input {
 
 .dropdown-menu.show {
   border-radius: 0;
-  transform: translate3d(0px, 22px, 0px) !important;
+  transform: translate3d(0px, 22px, 0px);
 }
 
 .header-float .multiselect > .caret {
@@ -774,6 +789,13 @@ ul.dropdown-menu > li.dropdown-item:last-child > input {
   display: table-cell;
 }
 
+.form-control:focus {
+  background-color: var(--gray-100);
+  color: var(--medium-color);
+  border: none;
+  resize: none;
+}
+
 .input-group-btn {
   width: 50px;
 }
@@ -968,23 +990,24 @@ span.xl-pref-label > img {
   width: 100%;
 }
 
-#feedback-fields > .dropdown > .dropdown-menu > .dropdown-item:hover {
+#feedback-fields > .dropdown > .dropdown-menu > li > .dropdown-item:hover {
   background-color: var(--medium-color);
+  color: var(--white-color);
 }
 
-#feedback-fields > .dropdown > .dropdown-menu > .dropdown-item > a {
+#feedback-fields > .dropdown > .dropdown-menu > li > .dropdown-item > a {
   white-space: normal;
   text-indent: -10px;
   margin-left: 10px;
   word-break: break-word;
 }
 
-#feedback-fields > .open > .dropdown-menu > li:hover > a {
+#feedback-fields > .open > .dropdown-menu > li > a:hover {
   color: var(--white-color) !important;
   text-decoration: none;
 }
 
-#feedback-fields > .dropdown > .dropdown-menu > .dropdown-item:hover > a:hover {
+#feedback-fields > .dropdown > .dropdown-menu > li > a.dropdown-item:hover {
   text-decoration: none;
 }
 
