@@ -983,7 +983,7 @@ $(function() { // DOCUMENT READY
     numberDisplayed: 2,
     buttonWidth: 'auto',
     buttonClass: 'btn btn-secondary',
-    buttonContainer : '<div class="dropdown btn-group" aria-role="group" aria-label="' + all_vocabs + '" />',
+    buttonContainer : '<div id="search-from-vocabularies" class="dropdown btn-group" aria-role="group" aria-label="' + all_vocabs + '" />',
     templates: {
       ul: '<ul class="multiselect-container dropdown-menu p-1 m-0"></ul>',
       li: '<button class="multiselect-option dropdown-item"></button>',

@@ -58,7 +58,7 @@ h5, .h5 { font-size: 14px; }
 h6, .h6 { font-size: 12px; }
 
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-family);
+  font-family: inherit;
   font-weight: 500;
   line-height: 1.1;
   color: inherit;
@@ -75,6 +75,7 @@ h6, .h6 { font-size: 12px; }
 }
 
 h2, h3 {
+  font-family: var(--font-family);
   font-size: 16px;
 }
 
@@ -184,6 +185,11 @@ a:link,a:visited,a:active,a:hover,a:focus {
   outline-offset: 1px;
 }
 
+a:focus {
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+
 :focus {
   outline: 2px dotted var(--gray-900);
   z-index: 1;
@@ -216,7 +222,7 @@ html,body {
   min-height: 100%;
   min-width: 100%;
   padding: 0;
-  font-family: var(--font-family);
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size: var(--font-size);
 }
 
@@ -362,6 +368,10 @@ ul {
   min-width: 160px;
 }
 
+#language > .dropdown-menu > li, #language > .dropdown-menu > li > a {
+  margin: 0;
+}
+
 #language > .dropdown-menu > li a.dropdown-item, #language > .dropdown-menu > li > a.dropdown-item {
   margin: 0;
 }
@@ -383,10 +393,10 @@ ul {
 }
 
 #language > .dropdown-toggle {
-  background: none;
+  background: none !important;
   border: none;
   border-radius: 0;
-  color: var(--dark-color);
+  color: var(--dark-color) !important;
   padding: 0;
 }
 
@@ -447,21 +457,47 @@ ul {
   vertical-align: middle;
 }
 
+/* Drop down to search from a specific vocabulary */
+
+#search-from-vocabularies > button.show:focus {
+  color: #333;
+  background-color: #e6e6e6;
+  border-color: #adadad;
+}
+
+#search-from-vocabularies > button:focus {
+  color: var(--white-color);
+  background-color: var(--dark-color);
+  box-shadow: none;
+}
+
+#search-from-vocabularies > div.dropdown-menu > button.dropdown-item:hover,
+#search-from-vocabularies > div.dropdown-menu > button.dropdown-item:focus,
+#search-from-vocabularies > div.dropdown-menu > button.active:not(.multiselect-active-item-fallback){
+  /* !important to override bootstrap-multiselect style .multiselect-container .multiselect-all:hover */
+  background-color: var(--medium-color) !important;
+  color: var(--white-color);
+}
+
+/* Drop down to specify the search language (not the interface language) */
+
 #lang-dropdown-toggle .caret, .multiselect span > .caret {
   border-top-color: var(--white-color);
 }
 
 #lang-dropdown-toggle:focus,
-.multiselect-container .multiselect-all:focus,
-.multiselect-container .multiselect-all:hover,
-.multiselect-container .multiselect-option:focus,
-.multiselect-container .multiselect-option:hover,
-.multiselect-container .multiselect-option:hover,
-.dropdown-item.active,
+.multiselect:focus,
 #search-all-button:focus {
   outline: 3px solid white;
-  background-color: var(--medium-color) !important;
-  color: var(--white-color) !important;;
+  background-color: var(--medium-color);
+}
+
+.multiselect .dropdown-toggle,
+.dropdown-toggle:hover,
+.btn.dropdown-toggle:focus,
+.open > .dropdown-toggle.btn-default {
+  color: var(--white-color);
+  background-color: var(--dark-color);
   box-shadow: none;
 }
 
@@ -548,6 +584,12 @@ ul.dropdown-menu > li:last-child > input {
 
 .multiselect-all > .form-check {
   padding: 3px 20px;
+}
+
+.dropdown-menu>li>a:focus, .dropdown-menu>li>a:hover {
+  color: #262626;
+  text-decoration: none;
+  background-color: #f5f5f5;
 }
 
 /* Used by bootstrap-multiselect */
@@ -1012,9 +1054,9 @@ span.xl-pref-label > img {
 }
 
 #feedback-vocid {
-  background-color: var(--gray-100);
-  border: 0;
-  color: var(--medium-color);
+  background-color: var(--gray-100) !important;;
+  border: 0 !important;;
+  color: var(--medium-color) !important;;
   text-align: left;
   width: 100%;
   white-space: inherit;
