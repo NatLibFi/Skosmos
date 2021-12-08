@@ -3,13 +3,14 @@
 # A I <aaing@digst.dk>, 2019
 # osma <osma.suominen@helsinki.fi>, 2020
 # Sebastian Esp Nielsen <sebastianesp@hotmail.com>, 2019
+# Yksityis Yrittäjä <okko.vainonen@helsinki.fi>, 2021
 msgid ""
 msgstr ""
 "Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-16 10:26+0200\n"
-"PO-Revision-Date: 2021-09-16 16:18+0000\n"
-"Last-Translator: Transifex Bot <>\n"
+"PO-Revision-Date: 2021-11-10 15:04+0000\n"
+"Last-Translator: Yksityis Yrittäjä <okko.vainonen@helsinki.fi>\n"
 "Language-Team: Danish (http://www.transifex.com/national-library-of-finland/skosmos/language/da/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -114,6 +115,9 @@ msgstr "Efter type"
 #: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:125
 msgid "Changes-nav"
 msgstr "Nye"
+
+msgid "Changes-and-deprecations-nav"
+msgstr ""
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:122
 msgid "Clear limitations"
