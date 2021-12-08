@@ -174,11 +174,16 @@ class Request
 
     /**
      * Returns the relative page url eg. '/yso/fi/search?clang=en&q=cat'
+     * @param string $newlang new UI language to set
      * @return string the relative url of the page
      */
-    public function getLangUrl()
+    public function getLangUrl($newlang=null)
     {
-        return substr(str_replace(str_replace('/index.php', '', $this->getServerConstant('SCRIPT_NAME')), '', $this->getServerConstant('REQUEST_URI')), 1);
+        $langurl = substr(str_replace(str_replace('/index.php', '', $this->getServerConstant('SCRIPT_NAME')), '', $this->getServerConstant('REQUEST_URI')), 1);
+        if ($newlang !== null) {
+            $langurl = preg_replace("#^(.*/)?{$this->lang}/#", "$1{$newlang}/", $langurl);
+        }
+        return $langurl;
     }
 
     public function getLetter()
