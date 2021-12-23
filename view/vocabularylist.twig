@@ -15,13 +15,12 @@
       <h3>{{ vocabClassName }}</h3>
       <ul>
       {% for vocab in vocabArray %}
-        {% set useDefaultLanguage = null %}
-        {% if request.contentLang not in vocab.config.languages and request.contentLang != '' %}
-          {% set useDefaultLanguage = true %}
-        {% endif %}
-        <li><a class="navigation-font" href="{{ vocab.id }}/{{ request.lang }}/{% if request.contentLang not in vocab.config.languages and request.contentLang != '' %}?clang={{ vocab.config.defaultLanguage }}{% endif %}">
-          {% if useDefaultLanguage is not null %} {{ vocab.title(vocab.config.defaultLanguage) }}
-            {% else %} {{ vocab.title(request.contentLang) }}
+        {% set useDefaultLanguage = request.contentLang not in vocab.config.languages and request.contentLang != '' %}
+        <li><a class="navigation-font" href="{{ vocab.id }}/{{ request.lang }}/{% if useDefaultLanguage %}?clang={{ vocab.config.defaultLanguage }}{% endif %}">
+          {% if useDefaultLanguage %}
+            {{ vocab.title(vocab.config.defaultLanguage) }}
+          {% else %}
+            {{ vocab.title(request.contentLang) }}
           {% endif %} </a></li>
       {% endfor %}
       </ul>
@@ -31,3 +30,8 @@
   </div>
   {% endif %}
 </div>
+
+
+
+
+
