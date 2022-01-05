@@ -88,5 +88,10 @@
   },
   "autoload": {
     "classmap": ["controller/", "model/", "model/sparql/"]
+  },
+  "config": {
+    "allow-plugins": {
+      "robloach/component-installer": true
+    }
   }
 }
