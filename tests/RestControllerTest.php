@@ -109,7 +109,7 @@ class RestControllerTest extends \PHPUnit\Framework\TestCase
     if ($isSuccess) {
       $this->assertStringNotContainsString("400 Bad Request", $out, "The REST search call returned an unexpected 400 bad request error!");
     } else {
-      $this->assertStringContainsString("400 Bad Request", $out, "The REST search call DID NOT returned an expected 400 bad request error!");
+      $this->assertStringContainsString("400 Bad Request", $out, "The REST search call DID NOT return an expected 400 bad request error!");
     }
   }
 
