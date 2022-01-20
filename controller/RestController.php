@@ -169,27 +169,30 @@ class RestController extends Controller
      * Performs the search function calls. And wraps the result in a json-ld object.
      * @param Request $request
      */
-    public function search($request)
+    public function search(Request $request): void
     {
         $maxhits = $request->getQueryParam('maxhits');
         $offset = $request->getQueryParam('offset');
         $term = $request->getQueryParamRaw('query');
 
-        if (!$term && (!$request->getQueryParam('group') && !$request->getQueryParam('parent'))) {
-            return $this->returnError(400, "Bad Request", "query parameter missing");
+        if ((!isset($term) || strlen(trim($term)) === 0) && (!$request->getQueryParam('group') && !$request->getQueryParam('parent'))) {
+            $this->returnError(400, "Bad Request", "query parameter missing");
+            return;
         }
         if ($maxhits && (!is_numeric($maxhits) || $maxhits <= 0)) {
-            return $this->returnError(400, "Bad Request", "maxhits parameter is invalid");
+            $this->returnError(400, "Bad Request", "maxhits parameter is invalid");
+            return;
         }
         if ($offset && (!is_numeric($offset) || $offset < 0)) {
-            return $this->returnError(400, "Bad Request", "offset parameter is invalid");
+            $this->returnError(400, "Bad Request", "offset parameter is invalid");
+            return;
         }
 
         $parameters = $this->constructSearchParameters($request);
         $results = $this->model->searchConcepts($parameters);
         $ret = $this->transformSearchResults($request, $results, $parameters);
 
-        return $this->returnJson($ret);
+        $this->returnJson($ret);
     }
 
 /** Vocabulary-specific methods **/

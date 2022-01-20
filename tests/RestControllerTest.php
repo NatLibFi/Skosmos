@@ -79,6 +79,41 @@ class RestControllerTest extends \PHPUnit\Framework\TestCase
   }
 
   /**
+   * Data provider for testSearchWithZero test.
+   */
+  public function testSearchWithZeroData(): array {
+    return [
+      ['0', true],
+      ['1', true],
+      ['-1', true],
+      ['skosmos', true],
+      ['', false],
+      [' ', false]
+    ];
+  }
+
+  /**
+   * @covers RestController::search
+   * @dataProvider testSearchWithZeroData
+   * @param $query string the search query
+   * @param $isSuccess bool whether the request must succeed or fail
+   */
+  public function testSearchWithZero(string $query, bool $isSuccess) {
+    $request = new Request($this->model);
+    $request->setQueryParam('format', 'application/json');
+    $request->setQueryParam('query', $query);
+    $request->setQueryParam('fields', 'broader relatedMatch');
+    $this->controller->search($request);
+
+    $out = $this->getActualOutput();
+    if ($isSuccess) {
+      $this->assertStringNotContainsString("400 Bad Request", $out, "The REST search call returned an unexpected 400 bad request error!");
+    } else {
+      $this->assertStringContainsString("400 Bad Request", $out, "The REST search call DID NOT return an expected 400 bad request error!");
+    }
+  }
+
+  /**
    * @covers RestController::indexLetters
    */
   public function testIndexLettersJsonLd() {
