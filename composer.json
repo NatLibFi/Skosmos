@@ -65,7 +65,7 @@
     "twig/extensions": "1.5.*",
     "twitter/bootstrap": "3.3.*",
     "twitter/typeahead.js": "v0.10.5",
-    "willdurand/negotiation": "2.3.*",
+    "willdurand/negotiation": "3.0.*",
     "vakata/jstree": "3.3.*",
     "punic/punic": "3.5.1",
     "ml/json-ld": "1.*",
