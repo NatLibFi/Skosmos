@@ -53,7 +53,6 @@ jobs:
         php_extensions: gettext intl xsl pcov
         memory_limit: 512M
         configuration: phpunit.xml
-        args: --verbose --debug
 
     - name: Publish code coverage to Code Climate
       uses: paambaati/codeclimate-action@v2.7.5
