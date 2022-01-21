@@ -52,6 +52,7 @@ jobs:
         php_version: ${{ matrix.php_version }}
         php_extensions: gettext intl xsl pcov
         memory_limit: 512M
+        configuration: phpunit.xml
         args: --verbose --debug
 
     - name: Publish code coverage to Code Climate
