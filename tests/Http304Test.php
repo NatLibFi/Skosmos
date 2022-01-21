@@ -26,13 +26,6 @@ class Http304Test extends TestCase
      */
     private $twig;
 
-    /* skip these tests for now, to diagnose PHP 8 issues */
-    protected function setUp() : void
-    {
-        $this->markTestSkipped();
-    }
-
-
     /**
      * Initializes the test objects. Not using setUp here as the $vocabularyName
      * needs to be specified per test.
