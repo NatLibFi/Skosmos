@@ -5,6 +5,7 @@ on: [push]
 jobs:
   build-test:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       fail-fast: false
