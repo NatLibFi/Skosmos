@@ -61,9 +61,9 @@ jobs:
       with:
         prefix: /app
       # PHPUnit 8.5 doesn't support code coverage for PHP 8
-      if: ${{ matrix.php_version < "8.0" }}
+      if: ${{ matrix.php_version < '8.0' }}
 
     - name: Publish code coverage to Codecov
       uses: codecov/codecov-action@v1
       # PHPUnit 8.5 doesn't support code coverage for PHP 8
-      if: ${{ matrix.php_version < "8.0" }}
+      if: ${{ matrix.php_version < '8.0' }}
