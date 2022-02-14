@@ -423,7 +423,7 @@ class Vocabulary extends DataObject implements Modifiable
      * @param boolean $any set to true if you want to have a label even in case of a correct language one missing.
      * @param string $lang language identifier.
      */
-    public function getConceptTransitiveBroaders($uri, $limit, $any = false, $lang)
+    public function getConceptTransitiveBroaders($uri, $limit, $any, $lang)
     {
         $lang = $lang ? $lang : $this->getEnvLang();
         $fallback = $this->config->getDefaultLanguage();
