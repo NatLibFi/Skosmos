@@ -81,7 +81,7 @@ class RestControllerTest extends \PHPUnit\Framework\TestCase
   /**
    * Data provider for testSearchWithZero test.
    */
-  public function testSearchWithZeroData(): array {
+  public function provideSearchWithZeroData(): array {
     return [
       ['0', true],
       ['1', true],
@@ -94,7 +94,7 @@ class RestControllerTest extends \PHPUnit\Framework\TestCase
 
   /**
    * @covers RestController::search
-   * @dataProvider testSearchWithZeroData
+   * @dataProvider provideSearchWithZeroData
    * @param $query string the search query
    * @param $isSuccess bool whether the request must succeed or fail
    */

@@ -922,7 +922,6 @@ EOF;
      */
     protected function generateConceptSearchQueryInner($term, $lang, $searchLang, $props, $unique, $filterGraph)
     {
-        error_log('term >>> ' . $term . '<<<<');
         $valuesProp = $this->formatValues('?prop', $props);
         $textcond = $this->generateConceptSearchQueryCondition($term, $searchLang);
 
@@ -980,8 +979,6 @@ EOF;
    }
    $hitgroup
 EOQ;
-        error_log('>>>>>' . $textcond . '<<<<<');
-        error_log('>>>>>' . $query . '<<<<<');
         return $query;
     }
     /**

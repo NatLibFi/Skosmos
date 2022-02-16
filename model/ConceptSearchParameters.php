@@ -68,7 +68,7 @@ class ConceptSearchParameters
     public function getSearchTerm()
     {
         $term = $this->request->getQueryParamRaw('q') !== null ? $this->request->getQueryParamRaw('q') : $this->request->getQueryParamRaw('query');
-        if (($term !== null || strlen(trim($term)) === 0) && $this->rest)
+        if (($term === null || strlen(trim($term)) === 0) && $this->rest)
             $term = $this->request->getQueryParamRaw('label');
         $term = trim($term); // surrounding whitespace is not considered significant
         $term = Normalizer::normalize( $term, Normalizer::FORM_C ); //Normalize decomposed unicode characters #1184
