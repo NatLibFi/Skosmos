@@ -130,17 +130,27 @@ class PluginRegister {
     }
 
     /**
-     * Returns an array of javascript function names to call when loading pages
+     * Returns a sorted array of javascript function names to call when loading pages
+     * in order configured with skosmos:vocabularyPlugins
      * @return array
      */
     public function getCallbacks() {
         $ret = array();
+        $sortedCallbacks = array();
+        $order = array();
+        foreach ($this->requestedPlugins as $index => $value) {
+            $order[$value] = $index;
+        }
         $plugins = $this->filterPluginsByName('callback', $this->requestedPlugins);
         foreach ($plugins as $callbacks) {
             foreach ($callbacks as $callback) {
                 $split = explode('/', $callback);
-                $ret[] = $split[2];
+                $sortedCallbacks[$split[1]] = $split[2];
             }
+        }
+        $sortedCallbacks = array_replace($order, $sortedCallbacks);
+        foreach ($sortedCallbacks as $callback) {
+            $ret[] = $callback;
         }
         return $ret;
     }
