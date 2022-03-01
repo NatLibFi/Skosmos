@@ -62,9 +62,9 @@ COPY dockerfiles/config/000-default.conf /etc/apache2/sites-available/000-defaul
 RUN a2enmod rewrite
 RUN a2enmod expires
 
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
-# redirect error log to stderr for docker logs
-RUN sed -ri \
+# set ServerName & redirect error log to stderr for docker logs
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
+        sed -ri \
         -e 's!^(\s*ErrorLog)\s+\S+!\1 /proc/self/fd/1!g' \
         "/etc/apache2/apache2.conf"
 
