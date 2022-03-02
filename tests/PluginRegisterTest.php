@@ -8,9 +8,44 @@ class PluginRegisterTest extends PHPUnit\Framework\TestCase
 
   protected function setUp() : void
   {
-    $this->mockpr = $this->getMockBuilder('PluginRegister')->setConstructorArgs(array(array('global-plugin')))->setMethods(array('getPlugins'))->getMock();
-    $stubplugs = array ('test-plugin' => array ( 'js' => array ( 0 => 'first.js', 1 => 'second.min.js', ), 'css' => array ( 0 => 'stylesheet.css', ), 'templates' => array ( 0 => 'template.html', ), ), 'only-css' => array ( 'css' => array ( 0 => 'super.css')), 'global-plugin' => array('js' => array('everywhere.js')));
-    $this->mockpr->method('getPlugins')->will($this->returnValue($stubplugs));
+    $this->mockpr = $this->getMockBuilder('PluginRegister')->setConstructorArgs(array(array('test-plugin2',
+                                                                                            'global-plugin-Bravo',
+                                                                                            'imaginary-plugin',
+                                                                                            'test-plugin1',
+                                                                                            'global-plugin-alpha',
+                                                                                            'global-plugin-charlie',
+                                                                                            'test-plugin3'
+                                                                                            )))
+                                                           ->setMethods(['getPlugins'])
+                                                           ->getMock();
+    $this->stubplugs = array ('imaginary-plugin' => array ( 'js' => array ( 0 => 'imaginaryPlugin.js', ),
+                                                 'css' => array ( 0 => 'stylesheet.css', ),
+                                                 'templates' => array ( 0 => 'template.html', ),
+                                                 'callback' => array ( 0 => 'imaginaryPlugin')
+                        ),
+                        'test-plugin1' => array ( 'js' => array ( 0 => 'plugin1.js', 1 => 'second.min.js'),
+                                                 'css' => array ( 0 => 'stylesheet.css', ),
+                                                 'templates' => array ( 0 => 'template.html', ),
+                                                 'callback' => array ( 0 => 'callplugin1')
+                        ),
+                        'test-plugin2' => array ( 'js' => array ( 0 => 'plugin2.js', ),
+                                                 'css' => array ( 0 => 'stylesheet.css', ),
+                                                 'templates' => array ( 0 => 'template.html', ),
+                                                 'callback' => array ( 0 => 'callplugin2')
+                        ),
+                        'test-plugin3' => array ( 'js' => array ( 0 => 'plugin3.js', ),
+                                                 'css' => array ( 0 => 'stylesheet.css', ),
+                                                 'templates' => array ( 0 => 'template.html', ),
+                                                 'callback' => array ( 0 => 'callplugin3')
+                        ),
+                        'only-css' => array ( 'css' => array ( 0 => 'super.css')),
+                        'global-plugin-alpha' => array('js' => array('alpha.js'),
+                                                  'callback' => array ( 0 => 'alpha')),
+                        'global-plugin-Bravo' => array('js' => array('Bravo.js'),
+                                                  'callback' => array ( 0 => 'bravo')),
+                        'global-plugin-charlie' => array('js' => array('charlie.js'),
+                                                  'callback' => array ( 0 => 'charlie')));
+    $this->mockpr->method('getPlugins')->will($this->returnValue($this->stubplugs));
     $this->model = new Model(new GlobalConfig('/../tests/testconfig.ttl'));
     $this->vocab = $this->model->getVocabulary('test');
   }
@@ -42,7 +77,8 @@ class PluginRegisterTest extends PHPUnit\Framework\TestCase
    */
   public function testGetPluginsJSWithName()
   {
-    $this->assertEquals(array('global-plugin' => array('plugins/global-plugin/everywhere.js'), 'test-plugin' => array('plugins/test-plugin/first.js', 'plugins/test-plugin/second.min.js')), $this->mockpr->getPluginsJS(array('test-plugin')));
+    $this->assertEquals($this->mockpr->getPluginsJS()['test-plugin1'],
+                        array('plugins/test-plugin1/plugin1.js', 'plugins/test-plugin1/second.min.js'));
   }
 
   /**
@@ -53,7 +89,8 @@ class PluginRegisterTest extends PHPUnit\Framework\TestCase
    */
   public function testGetPluginsJSWithGlobalPlugin()
   {
-    $this->assertEquals(array('global-plugin' => array('plugins/global-plugin/everywhere.js')), $this->mockpr->getPluginsJS());
+    $this->assertEquals($this->mockpr->getPluginsJS()['global-plugin-alpha'],
+                        array('plugins/global-plugin-alpha/alpha.js'));
   }
 
   /**
@@ -73,7 +110,8 @@ class PluginRegisterTest extends PHPUnit\Framework\TestCase
   public function testGetPluginsCSSWithName()
   {
     $plugins = new PluginRegister();
-    $this->assertEquals(array('test-plugin' => array('plugins/test-plugin/stylesheet.css')), $this->mockpr->getPluginsCSS(array('test-plugin')));
+    $this->assertEquals($this->mockpr->getPluginsCSS()['test-plugin1'],
+                        array('plugins/test-plugin1/stylesheet.css'));
   }
 
   /**
@@ -99,8 +137,9 @@ class PluginRegisterTest extends PHPUnit\Framework\TestCase
    */
   public function testGetCallbacks()
   {
-    $plugins = new PluginRegister();
-    $this->assertEquals(array(), $plugins->getCallbacks());
+    $this->assertEquals($this->mockpr->getCallbacks(),
+                        array('callplugin2', 'bravo', 'imaginaryPlugin', 'callplugin1', 'alpha', 'charlie', 'callplugin3')
+    );
   }
 
 }

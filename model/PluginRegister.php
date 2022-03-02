@@ -130,6 +130,19 @@ class PluginRegister {
     }
 
     /**
+     * Returns an array of plugin callback function names
+     * @param array $names the plugin name strings (foldernames) in an array
+     * @return array
+     */
+    public function getPluginsCallbacks($names=null) {
+        if ($names) {
+            $names = array_merge($this->requestedPlugins, $names);
+            return $this->filterPluginsByName('callback', $names);
+        }
+        return $this->filterPluginsByName('callback', $this->requestedPlugins);
+    }
+
+    /**
      * Returns a sorted array of javascript function names to call when loading pages
      * in order configured with skosmos:vocabularyPlugins
      * @return array
@@ -141,7 +154,7 @@ class PluginRegister {
         foreach ($this->requestedPlugins as $index => $value) {
             $order[$value] = $index;
         }
-        $plugins = $this->filterPluginsByName('callback', $this->requestedPlugins);
+        $plugins = $this->getPluginsCallbacks($this->requestedPlugins);
         foreach ($plugins as $callbacks) {
             foreach ($callbacks as $callback) {
                 $split = explode('/', $callback);
@@ -154,7 +167,7 @@ class PluginRegister {
         }
         return $ret;
     }
- 
+
     /**
      * Returns an array that is flattened from its possibly multidimensional form
      * copied from https://stackoverflow.com/a/1320156
