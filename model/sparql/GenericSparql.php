@@ -166,7 +166,8 @@ class GenericSparql {
         if (!array_key_exists($uri, $this->qnamecache)) {
             $res = new EasyRdf\Resource($uri);
             $qname = $res->shorten(); // returns null on failure
-            $this->qnamecache[$uri] = ($qname !== null) ? $qname : $uri;
+            // only URIs in the SKOS namespace are shortened
+            $this->qnamecache[$uri] = ($qname !== null && strpos($qname, "skos:") === 0) ? $qname : $uri;
         }
         return $this->qnamecache[$uri];
     }
