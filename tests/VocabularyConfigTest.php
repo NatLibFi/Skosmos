@@ -541,7 +541,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
    * @covers VocabularyConfig::getPluginParameters
    */
   public function testGetPluginParameters() {
-    $vocab = $this->model->getVocabulary('paramPluginTest');
+    $vocab = $this->model->getVocabulary('paramPluginOrderTest');
     $params = $vocab->getConfig()->getPluginParameters();
     $this->assertEquals(array('imaginaryPlugin' => array('poem_fi' => "Roses are red", 'poem' => "Violets are blue", 'color' => "#800000")), $params);
   }
@@ -550,7 +550,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
    * @covers VocabularyConfig::getPluginArray
    */
   public function testGetOrderedPlugins() {
-    $vocab = $this->model->getVocabulary('paramPluginTest');
+    $vocab = $this->model->getVocabulary('paramPluginOrderTest');
     $plugins = $vocab->getConfig()->getPluginArray();
     $this->assertEquals(["plugin2", "Bravo", "plugin1", "alpha", "charlie", "imaginaryPlugin", "plugin3"],  $plugins);
   }
@@ -559,7 +559,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
    * @covers VocabularyConfig::getPluginArray
    */
   public function testGetUnorderedVocabularyPlugins() {
-    $vocab = $this->model->getVocabulary('paramPluginOrderTest');
+    $vocab = $this->model->getVocabulary('paramPluginTest');
     $plugins = $vocab->getConfig()->getPluginArray();
     $arrayElements = ["plugin2", "Bravo", "imaginaryPlugin", "plugin1", "alpha", "charlie", "plugin3"];
     $this->assertEquals(sort($arrayElements), sort($plugins));
