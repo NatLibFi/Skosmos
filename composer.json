@@ -61,7 +61,7 @@
     "easyrdf/easyrdf": "1.1.*",
     "etdsolutions/waypoints": "4.0.0",
     "symfony/polyfill-php80": "1.*",
-    "twig/twig": "2.14.*",
+    "twig/twig": "2.13.*",
     "twig/extensions": "1.5.*",
     "twitter/bootstrap": "3.3.*",
     "twitter/typeahead.js": "v0.10.5",
@@ -88,10 +88,5 @@
   },
   "autoload": {
     "classmap": ["controller/", "model/", "model/sparql/"]
-  },
-  "config": {
-    "allow-plugins": {
-      "robloach/component-installer": true
-    }
   }
 }
