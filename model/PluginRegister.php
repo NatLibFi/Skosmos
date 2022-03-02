@@ -134,7 +134,7 @@ class PluginRegister {
      * @param array $names the plugin name strings (foldernames) in an array
      * @return array
      */
-    public function getPluginsCallbacks($names=null) {
+    public function getPluginCallbacks($names=null) {
         if ($names) {
             $names = array_merge($this->requestedPlugins, $names);
             return $this->filterPluginsByName('callback', $names);
@@ -154,7 +154,7 @@ class PluginRegister {
         foreach ($this->requestedPlugins as $index => $value) {
             $order[$value] = $index;
         }
-        $plugins = $this->getPluginsCallbacks($this->requestedPlugins);
+        $plugins = $this->getPluginCallbacks($this->requestedPlugins);
         foreach ($plugins as $callbacks) {
             foreach ($callbacks as $callback) {
                 $split = explode('/', $callback);

@@ -109,9 +109,20 @@ class PluginRegisterTest extends PHPUnit\Framework\TestCase
    */
   public function testGetPluginsCSSWithName()
   {
-    $plugins = new PluginRegister();
     $this->assertEquals($this->mockpr->getPluginsCSS()['test-plugin1'],
                         array('plugins/test-plugin1/stylesheet.css'));
+  }
+
+  /**
+   * @covers PluginRegister::getPluginCallbacks
+   * @covers PluginRegister::filterPlugins
+   * @covers PluginRegister::filterPluginsByName
+   */
+  public function testGetPluginCallbacks()
+  {
+    $plugins = new PluginRegister();
+    $this->assertEquals($this->mockpr->getPluginCallbacks()['test-plugin1'],
+                        array('plugins/test-plugin1/callplugin1'));
   }
 
   /**
