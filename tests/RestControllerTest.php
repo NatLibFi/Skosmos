@@ -171,9 +171,9 @@ EOD;
     $expected = <<<EOD
 {
    "@context":{
-      "skos":"http:\/\/www.w3.org\/2004\/02\/skos\/core#",
-      "isothes":"http:\/\/purl.org\/iso25964\/skos-thes#",
-      "onki":"http:\/\/schema.onki.fi\/onki#",
+      "skos":"http://www.w3.org/2004/02/skos/core#",
+      "isothes":"http://purl.org/iso25964/skos-thes#",
+      "onki":"http://schema.onki.fi/onki#",
       "uri":"@id",
       "type":"@type",
       "results":{
@@ -187,7 +187,7 @@ EOD;
    "uri":"",
    "results":[
       {
-         "uri":"http:\/\/www.skosmos.skos\/test\/ta117",
+         "uri":"http://www.skosmos.skos/test/ta117",
          "type":[
             "skos:Concept",
             "meta:TestClass"
@@ -197,7 +197,7 @@ EOD;
          "vocab":"test"
       },
       {
-         "uri":"http:\/\/www.skosmos.skos\/test\/ta116",
+         "uri":"http://www.skosmos.skos/test/ta116",
          "type":[
             "skos:Concept",
             "meta:TestClass"
@@ -207,7 +207,7 @@ EOD;
          "vocab":"test"
       },
       {
-         "uri":"http:\/\/www.skosmos.skos\/test\/ta122",
+         "uri":"http://www.skosmos.skos/test/ta122",
          "type":[
             "skos:Concept",
             "meta:TestClass"
@@ -238,9 +238,9 @@ EOD;
     $expected = <<<EOD
 {
    "@context":{
-      "skos":"http:\/\/www.w3.org\/2004\/02\/skos\/core#",
-      "isothes":"http:\/\/purl.org\/iso25964\/skos-thes#",
-      "onki":"http:\/\/schema.onki.fi\/onki#",
+      "skos":"http://www.w3.org/2004/02/skos/core#",
+      "isothes":"http://purl.org/iso25964/skos-thes#",
+      "onki":"http://schema.onki.fi/onki#",
       "uri":"@id",
       "type":"@type",
       "results":{
@@ -256,19 +256,19 @@ EOD;
    "uri":"",
    "results":[
       {
-         "uri":"http:\/\/www.skosmos.skos\/test\/ta117",
+         "uri":"http://www.skosmos.skos/test/ta117",
          "type":[
             "skos:Concept",
             "meta:TestClass"
          ],
          "broader":[
             {
-               "uri":"http:\/\/www.skosmos.skos\/test\/ta1"
+               "uri":"http://www.skosmos.skos/test/ta1"
             }
          ],
          "relatedMatch":[
             {
-               "uri":"http:\/\/www.skosmos.skos\/test\/ta115"
+               "uri":"http://www.skosmos.skos/test/ta115"
             }
          ],
          "prefLabel":"3D Bass",
@@ -276,14 +276,14 @@ EOD;
          "vocab":"test"
       },
       {
-         "uri":"http:\/\/www.skosmos.skos\/test\/ta116",
+         "uri":"http://www.skosmos.skos/test/ta116",
          "type":[
             "skos:Concept",
             "meta:TestClass"
          ],
          "broader":[
             {
-               "uri":"http:\/\/www.skosmos.skos\/test\/ta1"
+               "uri":"http://www.skosmos.skos/test/ta1"
             }
          ],
          "prefLabel":"Bass",
@@ -291,14 +291,14 @@ EOD;
          "vocab":"test"
       },
       {
-         "uri":"http:\/\/www.skosmos.skos\/test\/ta122",
+         "uri":"http://www.skosmos.skos/test/ta122",
          "type":[
             "skos:Concept",
             "meta:TestClass"
          ],
          "broader":[
             {
-               "uri":"http:\/\/www.skosmos.skos\/test\/ta116"
+               "uri":"http://www.skosmos.skos/test/ta116"
             }
          ],
          "prefLabel":"Black sea bass",
@@ -361,7 +361,7 @@ EOD;
     $expected = <<<EOD
 {
    "@context":{
-      "skos":"http:\/\/www.w3.org\/2004\/02\/skos\/core#",
+      "skos":"http://www.w3.org/2004/02/skos/core#",
       "uri":"@id",
       "type":"@type",
       "indexLetters":{
@@ -401,7 +401,7 @@ EOD;
     $expected = <<<EOD
 {
    "@context":{
-      "skos":"http:\/\/www.w3.org\/2004\/02\/skos\/core#",
+      "skos":"http://www.w3.org/2004/02/skos/core#",
       "uri":"@id",
       "type":"@type",
       "indexConcepts":{
@@ -412,19 +412,19 @@ EOD;
    "uri":"",
    "indexConcepts":[
       {
-         "uri":"http:\/\/www.skosmos.skos\/test\/ta116",
+         "uri":"http://www.skosmos.skos/test/ta116",
          "localname":"ta116",
          "prefLabel":"Bass",
          "lang":"en"
       },
       {
-         "uri":"http:\/\/www.skosmos.skos\/test\/ta122",
+         "uri":"http://www.skosmos.skos/test/ta122",
          "localname":"ta122",
          "prefLabel":"Black sea bass",
          "lang":"en"
       },
       {
-         "uri":"http:\/\/www.skosmos.skos\/test\/ta114",
+         "uri":"http://www.skosmos.skos/test/ta114",
          "localname":"ta114",
          "prefLabel":"Buri",
          "lang":"en"
@@ -451,7 +451,7 @@ EOD;
     $expected = <<<EOD
 {
    "@context":{
-      "skos":"http:\/\/www.w3.org\/2004\/02\/skos\/core#",
+      "skos":"http://www.w3.org/2004/02/skos/core#",
       "uri":"@id",
       "type":"@type",
       "indexConcepts":{
@@ -462,13 +462,13 @@ EOD;
    "uri":"",
    "indexConcepts":[
       {
-         "uri":"http:\/\/www.skosmos.skos\/test\/ta116",
+         "uri":"http://www.skosmos.skos/test/ta116",
          "localname":"ta116",
          "prefLabel":"Bass",
          "lang":"en"
       },
       {
-         "uri":"http:\/\/www.skosmos.skos\/test\/ta122",
+         "uri":"http://www.skosmos.skos/test/ta122",
          "localname":"ta122",
          "prefLabel":"Black sea bass",
          "lang":"en"
@@ -495,7 +495,7 @@ EOD;
     $expected = <<<EOD
 {
    "@context":{
-      "skos":"http:\/\/www.w3.org\/2004\/02\/skos\/core#",
+      "skos":"http://www.w3.org/2004/02/skos/core#",
       "uri":"@id",
       "type":"@type",
       "indexConcepts":{
@@ -506,13 +506,13 @@ EOD;
    "uri":"",
    "indexConcepts":[
       {
-         "uri":"http:\/\/www.skosmos.skos\/test\/ta122",
+         "uri":"http://www.skosmos.skos/test/ta122",
          "localname":"ta122",
          "prefLabel":"Black sea bass",
          "lang":"en"
       },
       {
-         "uri":"http:\/\/www.skosmos.skos\/test\/ta114",
+         "uri":"http://www.skosmos.skos/test/ta114",
          "localname":"ta114",
          "prefLabel":"Buri",
          "lang":"en"
@@ -540,7 +540,7 @@ EOD;
     $expected = <<<EOD
 {
    "@context":{
-      "skos":"http:\/\/www.w3.org\/2004\/02\/skos\/core#",
+      "skos":"http://www.w3.org/2004/02/skos/core#",
       "uri":"@id",
       "type":"@type",
       "indexConcepts":{
@@ -551,7 +551,7 @@ EOD;
    "uri":"",
    "indexConcepts":[
       {
-         "uri":"http:\/\/www.skosmos.skos\/test\/ta122",
+         "uri":"http://www.skosmos.skos/test/ta122",
          "localname":"ta122",
          "prefLabel":"Black sea bass",
          "lang":"en"
