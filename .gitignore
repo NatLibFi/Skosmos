@@ -6,6 +6,7 @@ components
 plugins/*
 !README
 composer.phar
+composer.lock
 tests/jena-fuseki*
 .vagrant
 .project
