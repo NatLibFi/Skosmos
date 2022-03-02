@@ -190,7 +190,7 @@ EOD;
          "uri":"http://www.skosmos.skos/test/ta117",
          "type":[
             "skos:Concept",
-            "meta:TestClass"
+            "http://www.skosmos.skos/test-meta/TestClass"
          ],
          "prefLabel":"3D Bass",
          "lang":"en",
@@ -200,7 +200,7 @@ EOD;
          "uri":"http://www.skosmos.skos/test/ta116",
          "type":[
             "skos:Concept",
-            "meta:TestClass"
+            "http://www.skosmos.skos/test-meta/TestClass"
          ],
          "prefLabel":"Bass",
          "lang":"en",
@@ -210,7 +210,7 @@ EOD;
          "uri":"http://www.skosmos.skos/test/ta122",
          "type":[
             "skos:Concept",
-            "meta:TestClass"
+            "http://www.skosmos.skos/test-meta/TestClass"
          ],
          "prefLabel":"Black sea bass",
          "lang":"en",
@@ -259,7 +259,7 @@ EOD;
          "uri":"http://www.skosmos.skos/test/ta117",
          "type":[
             "skos:Concept",
-            "meta:TestClass"
+            "http://www.skosmos.skos/test-meta/TestClass"
          ],
          "broader":[
             {
@@ -279,7 +279,7 @@ EOD;
          "uri":"http://www.skosmos.skos/test/ta116",
          "type":[
             "skos:Concept",
-            "meta:TestClass"
+            "http://www.skosmos.skos/test-meta/TestClass"
          ],
          "broader":[
             {
@@ -294,7 +294,7 @@ EOD;
          "uri":"http://www.skosmos.skos/test/ta122",
          "type":[
             "skos:Concept",
-            "meta:TestClass"
+            "http://www.skosmos.skos/test-meta/TestClass"
          ],
          "broader":[
             {
