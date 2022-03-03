@@ -980,7 +980,6 @@ EOF;
    }
    $hitgroup
 EOQ;
-
         return $query;
     }
     /**

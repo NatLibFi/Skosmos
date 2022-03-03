@@ -67,7 +67,7 @@ class ConceptSearchParameters
 
     public function getSearchTerm() : string
     {
-        $term = $this->request->getQueryParamRaw('q') ? $this->request->getQueryParamRaw('q') : $this->request->getQueryParamRaw('query');
+        $term = $this->request->getQueryParamRaw('q') !== null ? $this->request->getQueryParamRaw('q') : $this->request->getQueryParamRaw('query');
         if ((!isset($term) || strlen(trim($term)) === 0) && $this->rest)
             $term = $this->request->getQueryParamRaw('label');
         $term = trim($term); // surrounding whitespace is not considered significant
