@@ -75,10 +75,29 @@ class PluginRegisterTest extends PHPUnit\Framework\TestCase
    * @covers PluginRegister::filterPlugins
    * @covers PluginRegister::filterPluginsByName
    */
+  public function testGetPluginsJSInOrder()
+  {
+    $this->assertEquals(['test-plugin2',
+                         'global-plugin-Bravo',
+                         'imaginary-plugin',
+                         'test-plugin1',
+                         'global-plugin-alpha',
+                         'global-plugin-charlie',
+                         'test-plugin3'],
+                        array_keys($this->mockpr->getPluginsJS()));
+
+  }
+
+  /**
+   * @covers PluginRegister::getPlugins
+   * @covers PluginRegister::getPluginsJS
+   * @covers PluginRegister::filterPlugins
+   * @covers PluginRegister::filterPluginsByName
+   */
   public function testGetPluginsJSWithName()
   {
-    $this->assertEquals($this->mockpr->getPluginsJS()['test-plugin1'],
-                        array('plugins/test-plugin1/plugin1.js', 'plugins/test-plugin1/second.min.js'));
+    $this->assertEquals(array('plugins/test-plugin1/plugin1.js', 'plugins/test-plugin1/second.min.js'),
+                        $this->mockpr->getPluginsJS()['test-plugin1']);
   }
 
   /**
@@ -89,8 +108,8 @@ class PluginRegisterTest extends PHPUnit\Framework\TestCase
    */
   public function testGetPluginsJSWithGlobalPlugin()
   {
-    $this->assertEquals($this->mockpr->getPluginsJS()['global-plugin-alpha'],
-                        array('plugins/global-plugin-alpha/alpha.js'));
+    $this->assertEquals(array('plugins/global-plugin-alpha/alpha.js'),
+                        $this->mockpr->getPluginsJS()['global-plugin-alpha']);
   }
 
   /**
@@ -109,8 +128,8 @@ class PluginRegisterTest extends PHPUnit\Framework\TestCase
    */
   public function testGetPluginsCSSWithName()
   {
-    $this->assertEquals($this->mockpr->getPluginsCSS()['test-plugin1'],
-                        array('plugins/test-plugin1/stylesheet.css'));
+    $this->assertEquals(array('plugins/test-plugin1/stylesheet.css'),
+                        $this->mockpr->getPluginsCSS()['test-plugin1']);
   }
 
   /**
@@ -121,8 +140,8 @@ class PluginRegisterTest extends PHPUnit\Framework\TestCase
   public function testGetPluginCallbacks()
   {
     $plugins = new PluginRegister();
-    $this->assertEquals($this->mockpr->getPluginCallbacks()['test-plugin1'],
-                        array('plugins/test-plugin1/callplugin1'));
+    $this->assertEquals(array('plugins/test-plugin1/callplugin1'),
+                        $this->mockpr->getPluginCallbacks()['test-plugin1']);
   }
 
   /**
@@ -148,8 +167,8 @@ class PluginRegisterTest extends PHPUnit\Framework\TestCase
    */
   public function testGetCallbacks()
   {
-    $this->assertEquals($this->mockpr->getCallbacks(),
-                        array('callplugin2', 'bravo', 'imaginaryPlugin', 'callplugin1', 'alpha', 'charlie', 'callplugin3')
+    $this->assertEquals(array('callplugin2', 'bravo', 'imaginaryPlugin', 'callplugin1', 'alpha', 'charlie', 'callplugin3'),
+                        $this->mockpr->getCallbacks()
     );
   }
 
