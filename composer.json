@@ -61,11 +61,11 @@
     "easyrdf/easyrdf": "1.1.*",
     "etdsolutions/waypoints": "4.0.0",
     "symfony/polyfill-php80": "1.*",
-    "twig/twig": "2.13.*",
+    "twig/twig": "2.14.*",
     "twig/extensions": "1.5.*",
     "twitter/bootstrap": "3.3.*",
     "twitter/typeahead.js": "v0.10.5",
-    "willdurand/negotiation": "2.3.*",
+    "willdurand/negotiation": "3.0.*",
     "vakata/jstree": "3.3.*",
     "punic/punic": "3.5.1",
     "ml/json-ld": "1.*",
@@ -83,10 +83,15 @@
   "require-dev": {
     "phpunit/phpunit": "8.5.*",
     "umpirsky/twig-gettext-extractor": "1.3.*",
-    "symfony/dom-crawler": "3.4.3",
-    "mockery/mockery": "1.3.1"
+    "symfony/dom-crawler": "5.4.*",
+    "mockery/mockery": "1.3.5"
   },
   "autoload": {
     "classmap": ["controller/", "model/", "model/sparql/"]
+  },
+  "config": {
+    "allow-plugins": {
+      "robloach/component-installer": true
+    }
   }
 }

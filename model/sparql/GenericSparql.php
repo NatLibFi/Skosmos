@@ -166,7 +166,8 @@ class GenericSparql {
         if (!array_key_exists($uri, $this->qnamecache)) {
             $res = new EasyRdf\Resource($uri);
             $qname = $res->shorten(); // returns null on failure
-            $this->qnamecache[$uri] = ($qname !== null) ? $qname : $uri;
+            // only URIs in the SKOS namespace are shortened
+            $this->qnamecache[$uri] = ($qname !== null && strpos($qname, "skos:") === 0) ? $qname : $uri;
         }
         return $this->qnamecache[$uri];
     }
@@ -1197,13 +1198,13 @@ EOQ;
     /**
      * Query for concepts using a search term.
      * @param array $vocabs array of Vocabulary objects to search; empty for global search
-     * @param array $fields extra fields to include in the result (array of strings). (default: null = none)
-     * @param boolean $unique restrict results to unique concepts (default: false)
-     * @param boolean $showDeprecated whether to include deprecated concepts in the result (default: false)
+     * @param array $fields extra fields to include in the result (array of strings or null).
+     * @param boolean $unique restrict results to unique concepts
      * @param ConceptSearchParameters $params
+     * @param boolean $showDeprecated whether to include deprecated concepts in the result (default: false)
      * @return array query result object
      */
-    public function queryConcepts($vocabs, $fields = null, $unique = false, $params, $showDeprecated = false) {
+    public function queryConcepts($vocabs, $fields, $unique, $params, $showDeprecated = false) {
         $query = $this->generateConceptSearchQuery($fields, $unique, $params,$showDeprecated);
         $results = $this->query($query);
         return $this->transformConceptSearchResults($results, $vocabs, $fields);

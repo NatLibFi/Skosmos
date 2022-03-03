@@ -46,7 +46,115 @@ class RestControllerTest extends \PHPUnit\Framework\TestCase
 
     $out = $this->getActualOutput();
 
-    $this->assertJsonStringEqualsJsonString('{"@context":{"skos":"http://www.w3.org/2004/02/skos/core#","isothes":"http://purl.org/iso25964/skos-thes#","rdfs":"http://www.w3.org/2000/01/rdf-schema#","owl":"http://www.w3.org/2002/07/owl#","dct":"http://purl.org/dc/terms/","dc11":"http://purl.org/dc/elements/1.1/","uri":"@id","type":"@type","lang":"@language","value":"@value","graph":"@graph","label":"rdfs:label","prefLabel":"skos:prefLabel","altLabel":"skos:altLabel","hiddenLabel":"skos:hiddenLabel","broader":"skos:broader","narrower":"skos:narrower","related":"skos:related","inScheme":"skos:inScheme","exactMatch":"skos:exactMatch","closeMatch":"skos:closeMatch","broadMatch":"skos:broadMatch","narrowMatch":"skos:narrowMatch","relatedMatch":"skos:relatedMatch"},"graph":[{"uri":"http://www.skosmos.skos/test-meta/TestClass","type":"owl:Class","label":{"lang":"en","value":"Test class"}},{"uri":"http://www.skosmos.skos/test/conceptscheme","type":"skos:ConceptScheme","label":{"lang":"en","value":"Test conceptscheme"}},{"uri":"http://www.skosmos.skos/test/ta1","type":["http://www.skosmos.skos/test-meta/TestClass","skos:Concept"],"narrower":{"uri":"http://www.skosmos.skos/test/ta117"},"prefLabel":{"lang":"en","value":"Fish"}},{"uri":"http://www.skosmos.skos/test/ta115","type":["http://www.skosmos.skos/test-meta/TestClass","skos:Concept"],"prefLabel":{"lang":"en","value":"Eel"}},{"uri":"http://www.skosmos.skos/test/ta117","type":["http://www.skosmos.skos/test-meta/TestClass","skos:Concept"],"broader":{"uri":"http://www.skosmos.skos/test/ta1"},"inScheme":{"uri":"http://www.skosmos.skos/test/conceptscheme"},"prefLabel":{"lang":"en","value":"3D Bass"},"relatedMatch":{"uri":"http://www.skosmos.skos/test/ta115"}},{"uri":"skos:broader","label":{"lang":"en","value":"has broader"}},{"uri":"skos:prefLabel","label":{"lang":"en","value":"preferred label"}}]}', $out);
+    $expected = <<<EOD
+{
+   "@context":{
+      "skos":"http://www.w3.org/2004/02/skos/core#",
+      "isothes":"http://purl.org/iso25964/skos-thes#",
+      "rdfs":"http://www.w3.org/2000/01/rdf-schema#",
+      "owl":"http://www.w3.org/2002/07/owl#",
+      "dct":"http://purl.org/dc/terms/",
+      "dc11":"http://purl.org/dc/elements/1.1/",
+      "uri":"@id",
+      "type":"@type",
+      "lang":"@language",
+      "value":"@value",
+      "graph":"@graph",
+      "label":"rdfs:label",
+      "prefLabel":"skos:prefLabel",
+      "altLabel":"skos:altLabel",
+      "hiddenLabel":"skos:hiddenLabel",
+      "broader":"skos:broader",
+      "narrower":"skos:narrower",
+      "related":"skos:related",
+      "inScheme":"skos:inScheme",
+      "exactMatch":"skos:exactMatch",
+      "closeMatch":"skos:closeMatch",
+      "broadMatch":"skos:broadMatch",
+      "narrowMatch":"skos:narrowMatch",
+      "relatedMatch":"skos:relatedMatch"
+   },
+   "graph":[
+      {
+         "uri":"http://www.skosmos.skos/test-meta/TestClass",
+         "type":"owl:Class",
+         "label":{
+            "lang":"en",
+            "value":"Test class"
+         }
+      },
+      {
+         "uri":"http://www.skosmos.skos/test/conceptscheme",
+         "type":"skos:ConceptScheme",
+         "label":{
+            "lang":"en",
+            "value":"Test conceptscheme"
+         }
+      },
+      {
+         "uri":"http://www.skosmos.skos/test/ta1",
+         "type":[
+            "http://www.skosmos.skos/test-meta/TestClass",
+            "skos:Concept"
+         ],
+         "narrower":{
+            "uri":"http://www.skosmos.skos/test/ta117"
+         },
+         "prefLabel":{
+            "lang":"en",
+            "value":"Fish"
+         }
+      },
+      {
+         "uri":"http://www.skosmos.skos/test/ta115",
+         "type":[
+            "http://www.skosmos.skos/test-meta/TestClass",
+            "skos:Concept"
+         ],
+         "prefLabel":{
+            "lang":"en",
+            "value":"Eel"
+         }
+      },
+      {
+         "uri":"http://www.skosmos.skos/test/ta117",
+         "type":[
+            "http://www.skosmos.skos/test-meta/TestClass",
+            "skos:Concept"
+         ],
+         "broader":{
+            "uri":"http://www.skosmos.skos/test/ta1"
+         },
+         "inScheme":{
+            "uri":"http://www.skosmos.skos/test/conceptscheme"
+         },
+         "prefLabel":{
+            "lang":"en",
+            "value":"3D Bass"
+         },
+         "relatedMatch":{
+            "uri":"http://www.skosmos.skos/test/ta115"
+         }
+      },
+      {
+         "uri":"skos:broader",
+         "label":{
+            "lang":"en",
+            "value":"has broader"
+         }
+      },
+      {
+         "uri":"skos:prefLabel",
+         "label":{
+            "lang":"en",
+            "value":"preferred label"
+         }
+      }
+   ]
+}
+EOD;
+
+    $this->assertJsonStringEqualsJsonString($expected, $out);
   }
 
   /**
@@ -60,7 +168,59 @@ class RestControllerTest extends \PHPUnit\Framework\TestCase
 
     $out = $this->getActualOutput();
 
-    $this->assertJsonStringEqualsJsonString('{"@context":{"skos":"http:\/\/www.w3.org\/2004\/02\/skos\/core#","isothes":"http:\/\/purl.org\/iso25964\/skos-thes#","onki":"http:\/\/schema.onki.fi\/onki#","uri":"@id","type":"@type","results":{"@id":"onki:results","@container":"@list"},"prefLabel":"skos:prefLabel","altLabel":"skos:altLabel","hiddenLabel":"skos:hiddenLabel"},"uri":"","results":[{"uri":"http:\/\/www.skosmos.skos\/test\/ta117","type":["skos:Concept","meta:TestClass"],"prefLabel":"3D Bass","lang":"en","vocab":"test"},{"uri":"http:\/\/www.skosmos.skos\/test\/ta116","type":["skos:Concept","meta:TestClass"],"prefLabel":"Bass","lang":"en","vocab":"test"},{"uri":"http:\/\/www.skosmos.skos\/test\/ta122","type":["skos:Concept","meta:TestClass"],"prefLabel":"Black sea bass","lang":"en","vocab":"test"}]}', $out);
+    $expected = <<<EOD
+{
+   "@context":{
+      "skos":"http://www.w3.org/2004/02/skos/core#",
+      "isothes":"http://purl.org/iso25964/skos-thes#",
+      "onki":"http://schema.onki.fi/onki#",
+      "uri":"@id",
+      "type":"@type",
+      "results":{
+         "@id":"onki:results",
+         "@container":"@list"
+      },
+      "prefLabel":"skos:prefLabel",
+      "altLabel":"skos:altLabel",
+      "hiddenLabel":"skos:hiddenLabel"
+   },
+   "uri":"",
+   "results":[
+      {
+         "uri":"http://www.skosmos.skos/test/ta117",
+         "type":[
+            "skos:Concept",
+            "http://www.skosmos.skos/test-meta/TestClass"
+         ],
+         "prefLabel":"3D Bass",
+         "lang":"en",
+         "vocab":"test"
+      },
+      {
+         "uri":"http://www.skosmos.skos/test/ta116",
+         "type":[
+            "skos:Concept",
+            "http://www.skosmos.skos/test-meta/TestClass"
+         ],
+         "prefLabel":"Bass",
+         "lang":"en",
+         "vocab":"test"
+      },
+      {
+         "uri":"http://www.skosmos.skos/test/ta122",
+         "type":[
+            "skos:Concept",
+            "http://www.skosmos.skos/test-meta/TestClass"
+         ],
+         "prefLabel":"Black sea bass",
+         "lang":"en",
+         "vocab":"test"
+      }
+   ]
+}
+EOD;
+
+    $this->assertJsonStringEqualsJsonString($expected, $out);
   }
 
   /**
@@ -75,7 +235,81 @@ class RestControllerTest extends \PHPUnit\Framework\TestCase
 
     $out = $this->getActualOutput();
 
-    $this->assertJsonStringEqualsJsonString('{"@context":{"skos":"http:\/\/www.w3.org\/2004\/02\/skos\/core#","isothes":"http:\/\/purl.org\/iso25964\/skos-thes#","onki":"http:\/\/schema.onki.fi\/onki#","uri":"@id","type":"@type","results":{"@id":"onki:results","@container":"@list"},"prefLabel":"skos:prefLabel","altLabel":"skos:altLabel","hiddenLabel":"skos:hiddenLabel","broader":"skos:broader","relatedMatch":"skos:relatedMatch"},"uri":"","results":[{"uri":"http:\/\/www.skosmos.skos\/test\/ta117","type":["skos:Concept","meta:TestClass"],"broader":[{"uri":"http:\/\/www.skosmos.skos\/test\/ta1"}],"relatedMatch":[{"uri":"http:\/\/www.skosmos.skos\/test\/ta115"}],"prefLabel":"3D Bass","lang":"en","vocab":"test"},{"uri":"http:\/\/www.skosmos.skos\/test\/ta116","type":["skos:Concept","meta:TestClass"],"broader":[{"uri":"http:\/\/www.skosmos.skos\/test\/ta1"}],"prefLabel":"Bass","lang":"en","vocab":"test"},{"uri":"http:\/\/www.skosmos.skos\/test\/ta122","type":["skos:Concept","meta:TestClass"],"broader":[{"uri":"http:\/\/www.skosmos.skos\/test\/ta116"}],"prefLabel":"Black sea bass","lang":"en","vocab":"test"}]}', $out);
+    $expected = <<<EOD
+{
+   "@context":{
+      "skos":"http://www.w3.org/2004/02/skos/core#",
+      "isothes":"http://purl.org/iso25964/skos-thes#",
+      "onki":"http://schema.onki.fi/onki#",
+      "uri":"@id",
+      "type":"@type",
+      "results":{
+         "@id":"onki:results",
+         "@container":"@list"
+      },
+      "prefLabel":"skos:prefLabel",
+      "altLabel":"skos:altLabel",
+      "hiddenLabel":"skos:hiddenLabel",
+      "broader":"skos:broader",
+      "relatedMatch":"skos:relatedMatch"
+   },
+   "uri":"",
+   "results":[
+      {
+         "uri":"http://www.skosmos.skos/test/ta117",
+         "type":[
+            "skos:Concept",
+            "http://www.skosmos.skos/test-meta/TestClass"
+         ],
+         "broader":[
+            {
+               "uri":"http://www.skosmos.skos/test/ta1"
+            }
+         ],
+         "relatedMatch":[
+            {
+               "uri":"http://www.skosmos.skos/test/ta115"
+            }
+         ],
+         "prefLabel":"3D Bass",
+         "lang":"en",
+         "vocab":"test"
+      },
+      {
+         "uri":"http://www.skosmos.skos/test/ta116",
+         "type":[
+            "skos:Concept",
+            "http://www.skosmos.skos/test-meta/TestClass"
+         ],
+         "broader":[
+            {
+               "uri":"http://www.skosmos.skos/test/ta1"
+            }
+         ],
+         "prefLabel":"Bass",
+         "lang":"en",
+         "vocab":"test"
+      },
+      {
+         "uri":"http://www.skosmos.skos/test/ta122",
+         "type":[
+            "skos:Concept",
+            "http://www.skosmos.skos/test-meta/TestClass"
+         ],
+         "broader":[
+            {
+               "uri":"http://www.skosmos.skos/test/ta116"
+            }
+         ],
+         "prefLabel":"Black sea bass",
+         "lang":"en",
+         "vocab":"test"
+      }
+   ]
+}
+EOD;
+
+    $this->assertJsonStringEqualsJsonString($expected, $out);
   }
 
   /**
@@ -124,7 +358,33 @@ class RestControllerTest extends \PHPUnit\Framework\TestCase
 
     $out = $this->getActualOutput();
 
-    $this->assertJsonStringEqualsJsonString('{"@context":{"skos":"http:\/\/www.w3.org\/2004\/02\/skos\/core#","uri":"@id","type":"@type","indexLetters":{"@id":"skosmos:indexLetters","@container":"@list","@language":"en"}},"uri":"","indexLetters":["B","C","E","F","M","T","!*","0-9"]}', $out);
+    $expected = <<<EOD
+{
+   "@context":{
+      "skos":"http://www.w3.org/2004/02/skos/core#",
+      "uri":"@id",
+      "type":"@type",
+      "indexLetters":{
+         "@id":"skosmos:indexLetters",
+         "@container":"@list",
+         "@language":"en"
+      }
+   },
+   "uri":"",
+   "indexLetters":[
+      "B",
+      "C",
+      "E",
+      "F",
+      "M",
+      "T",
+      "!*",
+      "0-9"
+   ]
+}
+EOD;
+
+    $this->assertJsonStringEqualsJsonString($expected, $out);
   }
 
   /**
@@ -138,7 +398,42 @@ class RestControllerTest extends \PHPUnit\Framework\TestCase
 
     $out = $this->getActualOutput();
 
-    $this->assertJsonStringEqualsJsonString('{"@context":{"skos":"http:\/\/www.w3.org\/2004\/02\/skos\/core#","uri":"@id","type":"@type","indexConcepts":{"@id":"skosmos:indexConcepts","@container":"@list"}},"uri":"","indexConcepts":[{"uri":"http:\/\/www.skosmos.skos\/test\/ta116","localname":"ta116","prefLabel":"Bass","lang":"en"},{"uri":"http:\/\/www.skosmos.skos\/test\/ta122","localname":"ta122","prefLabel":"Black sea bass","lang":"en"},{"uri":"http:\/\/www.skosmos.skos\/test\/ta114","localname":"ta114","prefLabel":"Buri","lang":"en"}]}', $out);
+    $expected = <<<EOD
+{
+   "@context":{
+      "skos":"http://www.w3.org/2004/02/skos/core#",
+      "uri":"@id",
+      "type":"@type",
+      "indexConcepts":{
+         "@id":"skosmos:indexConcepts",
+         "@container":"@list"
+      }
+   },
+   "uri":"",
+   "indexConcepts":[
+      {
+         "uri":"http://www.skosmos.skos/test/ta116",
+         "localname":"ta116",
+         "prefLabel":"Bass",
+         "lang":"en"
+      },
+      {
+         "uri":"http://www.skosmos.skos/test/ta122",
+         "localname":"ta122",
+         "prefLabel":"Black sea bass",
+         "lang":"en"
+      },
+      {
+         "uri":"http://www.skosmos.skos/test/ta114",
+         "localname":"ta114",
+         "prefLabel":"Buri",
+         "lang":"en"
+      }
+   ]
+}
+EOD;
+
+    $this->assertJsonStringEqualsJsonString($expected, $out);
   }
 
   /**
@@ -153,7 +448,36 @@ class RestControllerTest extends \PHPUnit\Framework\TestCase
 
     $out = $this->getActualOutput();
 
-    $this->assertJsonStringEqualsJsonString('{"@context":{"skos":"http:\/\/www.w3.org\/2004\/02\/skos\/core#","uri":"@id","type":"@type","indexConcepts":{"@id":"skosmos:indexConcepts","@container":"@list"}},"uri":"","indexConcepts":[{"uri":"http:\/\/www.skosmos.skos\/test\/ta116","localname":"ta116","prefLabel":"Bass","lang":"en"},{"uri":"http:\/\/www.skosmos.skos\/test\/ta122","localname":"ta122","prefLabel":"Black sea bass","lang":"en"}]}', $out);
+    $expected = <<<EOD
+{
+   "@context":{
+      "skos":"http://www.w3.org/2004/02/skos/core#",
+      "uri":"@id",
+      "type":"@type",
+      "indexConcepts":{
+         "@id":"skosmos:indexConcepts",
+         "@container":"@list"
+      }
+   },
+   "uri":"",
+   "indexConcepts":[
+      {
+         "uri":"http://www.skosmos.skos/test/ta116",
+         "localname":"ta116",
+         "prefLabel":"Bass",
+         "lang":"en"
+      },
+      {
+         "uri":"http://www.skosmos.skos/test/ta122",
+         "localname":"ta122",
+         "prefLabel":"Black sea bass",
+         "lang":"en"
+      }
+   ]
+}
+EOD;
+
+    $this->assertJsonStringEqualsJsonString($expected, $out);
   }
 
   /**
@@ -168,7 +492,36 @@ class RestControllerTest extends \PHPUnit\Framework\TestCase
 
     $out = $this->getActualOutput();
 
-    $this->assertJsonStringEqualsJsonString('{"@context":{"skos":"http:\/\/www.w3.org\/2004\/02\/skos\/core#","uri":"@id","type":"@type","indexConcepts":{"@id":"skosmos:indexConcepts","@container":"@list"}},"uri":"","indexConcepts":[{"uri":"http:\/\/www.skosmos.skos\/test\/ta122","localname":"ta122","prefLabel":"Black sea bass","lang":"en"},{"uri":"http:\/\/www.skosmos.skos\/test\/ta114","localname":"ta114","prefLabel":"Buri","lang":"en"}]}', $out);
+    $expected = <<<EOD
+{
+   "@context":{
+      "skos":"http://www.w3.org/2004/02/skos/core#",
+      "uri":"@id",
+      "type":"@type",
+      "indexConcepts":{
+         "@id":"skosmos:indexConcepts",
+         "@container":"@list"
+      }
+   },
+   "uri":"",
+   "indexConcepts":[
+      {
+         "uri":"http://www.skosmos.skos/test/ta122",
+         "localname":"ta122",
+         "prefLabel":"Black sea bass",
+         "lang":"en"
+      },
+      {
+         "uri":"http://www.skosmos.skos/test/ta114",
+         "localname":"ta114",
+         "prefLabel":"Buri",
+         "lang":"en"
+      }
+   ]
+}
+EOD;
+
+    $this->assertJsonStringEqualsJsonString($expected, $out);
   }
 
   /**
@@ -184,7 +537,30 @@ class RestControllerTest extends \PHPUnit\Framework\TestCase
 
     $out = $this->getActualOutput();
 
-    $this->assertJsonStringEqualsJsonString('{"@context":{"skos":"http:\/\/www.w3.org\/2004\/02\/skos\/core#","uri":"@id","type":"@type","indexConcepts":{"@id":"skosmos:indexConcepts","@container":"@list"}},"uri":"","indexConcepts":[{"uri":"http:\/\/www.skosmos.skos\/test\/ta122","localname":"ta122","prefLabel":"Black sea bass","lang":"en"}]}', $out);
+    $expected = <<<EOD
+{
+   "@context":{
+      "skos":"http://www.w3.org/2004/02/skos/core#",
+      "uri":"@id",
+      "type":"@type",
+      "indexConcepts":{
+         "@id":"skosmos:indexConcepts",
+         "@container":"@list"
+      }
+   },
+   "uri":"",
+   "indexConcepts":[
+      {
+         "uri":"http://www.skosmos.skos/test/ta122",
+         "localname":"ta122",
+         "prefLabel":"Black sea bass",
+         "lang":"en"
+      }
+   ]
+}
+EOD;
+
+    $this->assertJsonStringEqualsJsonString($expected, $out);
   }
 
    /**

@@ -1,4 +1,5 @@
-<phpunit colors="true" bootstrap="tests/bootstrap.php" processIsolation="true">
+<phpunit colors="true" bootstrap="tests/bootstrap.php" processIsolation="true"
+         convertDeprecationsToExceptions="true">
   <logging>
     <log type="coverage-html" target="./report" lowUpperBound="35" highLowerBound="70"/>  
     <log type="coverage-clover" target="build/logs/clover.xml"/>

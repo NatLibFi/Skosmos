@@ -1,16 +1,20 @@
 name: CI
 
-on: [push]
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
   build-test:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       fail-fast: false
       matrix:
-        php_version: [7.2, 7.3, 7.4]
+        php_version: ["7.2", "7.3", "7.4", "8.0"]
         experimental: [false]
+        include:
+          - php_version: "8.1"
+            experimental: true
 
     steps:
     - name: Check out repository code
@@ -43,7 +47,7 @@ jobs:
         php_extensions: gettext intl xsl pcov
 
     - name: Run PHPUnit tests
-      uses: php-actions/phpunit@91ff02a58932e63741157ea8c04e7e7077233537
+      uses: php-actions/phpunit@v3
       env:
         LANGUAGE: fr
       with:
@@ -51,6 +55,7 @@ jobs:
         php_version: ${{ matrix.php_version }}
         php_extensions: gettext intl xsl pcov
         memory_limit: 512M
+        configuration: phpunit.xml
 
     - name: Publish code coverage to Code Climate
       uses: paambaati/codeclimate-action@v2.7.5
@@ -58,6 +63,10 @@ jobs:
         CC_TEST_REPORTER_ID: fb98170a5c7ea9cc2bbab19ff26268335e6a11a4f8267ca935e5e8ff4624886c
       with:
         prefix: /app
+      # PHPUnit 8.5 doesn't support code coverage for PHP 8
+      if: ${{ matrix.php_version < '8.0' }}
 
     - name: Publish code coverage to Codecov
       uses: codecov/codecov-action@v1
+      # PHPUnit 8.5 doesn't support code coverage for PHP 8
+      if: ${{ matrix.php_version < '8.0' }}
