@@ -99,21 +99,6 @@
 	skosmos:language "en";
 	skosmos:sparqlGraph <http://www.skosmos.skos/test-notation-sort/> .
 
-:test-notation-search a skosmos:Vocabulary, void:Dataset ;
-	dc:title "Test searches with a notation"@en ;
-	dc:subject :cat_science ;
-    dc:type mdrtype:ONTOLOGY ;
-	void:uriSpace "http://www.skosmos.skos/test-notation-search/";
-    skos:prefLabel "Test searches with a notation"@en ;
-	skosmos:defaultLanguage "en";
-    skosmos:feedbackRecipient "developer@vocabulary.org";
-    skosmos:sortByNotation "true";
-    skosmos:showNotation "true";
-    skosmos:showNotationAsProperty "true";
-    skosmos:searchByNotation "true" ;
-	skosmos:language "en";
-	skosmos:sparqlGraph <http://www.skosmos.skos/test-notation-search/> .
-
 :test-qualified-broader a skosmos:Vocabulary, void:Dataset ;
     dc:title "Test qualified alphabetical listing queries (skos:broader)"@en ;
     dc:subject :cat_science ;
