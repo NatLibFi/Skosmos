@@ -33,7 +33,6 @@ class VocabularyConfig extends BaseConfig
     {
         $this->resource = $resource;
         $this->globalPlugins = $globalPlugins;
-        $this->setParameterizedPlugins();
         $this->setPropertyLabelOverrides();
         $pluginArray = $this->getPluginArray();
         $this->pluginRegister = new PluginRegister($pluginArray);
@@ -45,6 +44,7 @@ class VocabularyConfig extends BaseConfig
      */
     public function getPluginArray() : array
     {
+        $this->setParameterizedPlugins();
         $pluginArray = array();
         $vocabularyPlugins = $this->resource->getResource('skosmos:vocabularyPlugins');
         if (!$vocabularyPlugins instanceof EasyRdf\Collection) {
@@ -62,6 +62,12 @@ class VocabularyConfig extends BaseConfig
         }
         $pluginArray = array_merge($pluginArray, $this->globalPlugins);
 
+        $paramPlugins = $this->resource->allResources('skosmos:useParamPlugin');
+        if ($paramPlugins) {
+            foreach ($paramPlugins as $plugin) {
+                $pluginArray[] = $plugin->getLiteral('skosmos:usePlugin')->getValue();
+            }
+        }
         $plugins = $this->resource->allLiterals('skosmos:usePlugin');
         if ($plugins) {
             foreach ($plugins as $pluginlit) {

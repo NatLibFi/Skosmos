@@ -362,7 +362,7 @@
     skosmos:sparqlGraph <http://www.skosmos.skos/test-notation-sort/>;
     skosmos:mainConceptScheme test:notationMainConceptScheme .
 
-:paramPluginOrderTest a skosmos:Vocabulary, void:Dataset ;
+:paramPluginTest a skosmos:Vocabulary, void:Dataset ;
 	dc:title "Test plugin order"@en ;
 	void:dataDump <http://skosmos.skos/dump/test/> ;
 	void:uriSpace "http://www.skosmos.skos/test/";
@@ -371,7 +371,7 @@
 	skosmos:usePlugin "plugin3" ;
 	skosmos:useParamPlugin :parameterizedPlugin .
 
-:paramPluginTest a skosmos:Vocabulary, void:Dataset ;
+:paramPluginOrderTest a skosmos:Vocabulary, void:Dataset ;
 	dc:title "Test plugin parameters"@en ;
 	dc:subject :cat_science ;
     dc:type mdrtype:ONTOLOGY ;
@@ -383,7 +383,7 @@
     skosmos:feedbackRecipient "developer@vocabulary.org";
 	skosmos:groupClass skos:Collection;
 	skosmos:language "en";
-	skosmos:vocabularyPlugins ("plugin2" "Bravo" :parameterizedPlugin "plugin1");
+	skosmos:vocabularyPlugins ("plugin2" "Bravo" "plugin1");
 	skosmos:usePlugin "plugin1" ;
 	skosmos:usePlugin "plugin3" ;
 	skosmos:useParamPlugin :parameterizedPlugin ;
