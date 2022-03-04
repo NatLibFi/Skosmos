@@ -74,6 +74,7 @@ class PluginRegisterTest extends PHPUnit\Framework\TestCase
    * @covers PluginRegister::getPluginsJS
    * @covers PluginRegister::filterPlugins
    * @covers PluginRegister::filterPluginsByName
+   * @covers PluginRegister::sortPlugins
    */
   public function testGetPluginsJSInOrder()
   {
@@ -93,6 +94,7 @@ class PluginRegisterTest extends PHPUnit\Framework\TestCase
    * @covers PluginRegister::getPluginsJS
    * @covers PluginRegister::filterPlugins
    * @covers PluginRegister::filterPluginsByName
+   * @covers PluginRegister::sortPlugins
    */
   public function testGetPluginsJSWithName()
   {
@@ -105,6 +107,7 @@ class PluginRegisterTest extends PHPUnit\Framework\TestCase
    * @covers PluginRegister::getPluginsJS
    * @covers PluginRegister::filterPlugins
    * @covers PluginRegister::filterPluginsByName
+   * @covers PluginRegister::sortPlugins
    */
   public function testGetPluginsJSWithGlobalPlugin()
   {
@@ -125,6 +128,7 @@ class PluginRegisterTest extends PHPUnit\Framework\TestCase
    * @covers PluginRegister::getPluginsCSS
    * @covers PluginRegister::filterPlugins
    * @covers PluginRegister::filterPluginsByName
+   * @covers PluginRegister::sortPlugins
    */
   public function testGetPluginsCSSWithName()
   {
@@ -136,6 +140,7 @@ class PluginRegisterTest extends PHPUnit\Framework\TestCase
    * @covers PluginRegister::getPluginCallbacks
    * @covers PluginRegister::filterPlugins
    * @covers PluginRegister::filterPluginsByName
+   * @covers PluginRegister::sortPlugins
    */
   public function testGetPluginCallbacks()
   {
