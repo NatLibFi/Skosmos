@@ -180,6 +180,7 @@
         {% include 'vocabularylist.twig' %}
       {% endif %}
       <div class="{% if global_search %}global-{% elseif request.page == 'vocab' and not request.vocab.config.showAlphabeticalIndex and not request.vocab.config.showTopConcepts and not request.vocab.config.showChangeList %}wide-{% endif %}content">
+        <div id="content-top"></div>
       {% block content %}
       {% endblock %}
       </div>
