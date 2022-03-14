@@ -5,6 +5,8 @@ on: [push, pull_request, workflow_dispatch]
 jobs:
   build-test:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
     timeout-minutes: 10
     continue-on-error: ${{ matrix.experimental }}
     strategy:
