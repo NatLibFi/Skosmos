@@ -3,56 +3,6 @@
   "description": "Thesaurus and controlled vocabulary browser using SKOS and SPARQL",
   "type": "project",
   "license": "MIT",
-  "repositories": { 
-    "urijs-unofficial": {
-      "type": "package",
-      "package": {
-        "name": "medialize/uri.js",
-        "version": "1.19.0",
-        "source": {
-          "url": "https://github.com/medialize/URI.js.git",
-          "type": "git",
-          "reference": "v1.19.0"
-        }
-      }
-    },
-    "lscache": {
-      "type": "package",
-      "package": {
-        "name": "pamelafox/lscache",
-        "version": "1.0.5",
-        "source": {
-          "url": "https://github.com/pamelafox/lscache.git",
-          "type": "git",
-          "reference": "1.0.5"
-        }
-      }
-    },
-    "malihu-custom-scrollbar": {
-      "type": "package",
-      "package": {
-        "name": "malihu/malihu-custom-scrollbar-plugin",
-        "version": "3.1.5",
-        "source": {
-          "url": "https://github.com/malihu/malihu-custom-scrollbar-plugin.git",
-          "type": "git",
-          "reference": "3.1.5"
-        }
-      }
-    },
-    "bootstrap-multiselect": {
-      "type": "package",
-      "package": {
-        "name": "davidstutz/bootstrap-multiselect",
-        "version": "0.9.13",
-        "source": {
-          "url": "https://github.com/davidstutz/bootstrap-multiselect.git",
-          "type": "git",
-          "reference": "v0.9.13"
-        }
-      }
-    } 
-  },
   "require": {
     "ext-gettext": "*",
     "ext-intl": "*",
@@ -64,10 +14,5 @@
   },
   "autoload": {
     "classmap": ["controller/", "model/", "model/sparql/"]
-  },
-  "config": {
-    "allow-plugins": {
-      "robloach/component-installer": true
-    }
   }
 }
