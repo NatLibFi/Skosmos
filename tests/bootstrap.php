@@ -9,4 +9,4 @@ if (!$endpoint) {
     putenv('SKOSMOS_SPARQL_ENDPOINT=http://localhost:13030/skosmos-test/sparql');
 }
 
-require_once(__DIR__ . '/../vendor/autoload.php');
+require_once(__DIR__ . '/../model/Breadcrumb.php');
