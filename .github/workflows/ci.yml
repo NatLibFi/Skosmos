@@ -22,17 +22,6 @@ jobs:
     - name: Check out repository code
       uses: actions/checkout@v2
 
-    - name: Cache Composer dependencies
-      uses: actions/cache@v2
-      with:
-        path: |
-          /tmp/composer-cache
-          vendor
-          components
-        key: ${{ runner.os }}-php${{ matrix.php_version}}-${{ hashFiles('**/composer.json') }}
-        restore-keys: |
-          ${{ runner.os }}-php${{ matrix.php_version}}-
-
     - name: Install Composer dependencies
       uses: php-actions/composer@v5
       with:
