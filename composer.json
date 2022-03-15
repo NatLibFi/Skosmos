@@ -13,6 +13,6 @@
     "phpunit/phpunit": "8.5.*"
   },
   "autoload": {
-    "classmap": ["controller/", "model/"]
+    "classmap": ["model/"]
   }
 }
