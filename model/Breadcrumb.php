@@ -1,4 +1,4 @@
-<?php
+<?php /* Breadcrumb.php */
 
 /**
  * A class for breadcrumb concept hierarchy paths
