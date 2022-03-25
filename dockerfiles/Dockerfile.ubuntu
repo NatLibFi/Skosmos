@@ -4,8 +4,6 @@ LABEL maintainer="National Library of Finland"
 LABEL version="0.1"
 LABEL description="A Docker image for Skosmos with Apache httpd."
 
-ARG SKOSMOS_VERSION=v.2.9
-
 ARG DEBIAN_FRONTEND=noninteractive
 
 # git is necessary for some composer packages e.g. davidstutz/bootstrap-multiselect
