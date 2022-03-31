@@ -45,7 +45,6 @@
  *****************************************/
 p {
   color: var(--gray-900);
-  font-family: var(--font-family);
   font-size: var(--font-size);
   margin: 0 0 10px 0;
 }
@@ -75,17 +74,14 @@ h6, .h6 { font-size: 12px; }
 }
 
 h2, h3 {
-  font-family: var(--font-family);
   font-size: 16px;
 }
 
 li, td > a {
-  font-family: var(--font-family);
   font-size: var(--font-size);
 }
 
 h1, .prefLabel, .prefLabelLang, .notation {
-  font-family: var(--font-family);
   font-size: 24px;
   font-weight: 400;
 }
@@ -104,12 +100,10 @@ h1, .prefLabel, .prefLabelLang, .notation {
 }
 
 .navigation-font {
-  font-family: var(--font-family);
   font-size: 16px;
 }
 
 .multiselect span, .multiselect a, .dropdown-toggle, #search-all-button, .qtip-skosmos * {
-  font-family: var(--font-family);
 }
 
 .topbar a.navigation-font, .topbar span {
@@ -118,24 +112,20 @@ h1, .prefLabel, .prefLabelLang, .notation {
 
 p {
   color: var(--gray-900);
-  font-family: var(--font-family);
   font-size: var(--font-size);
 }
 
 .bread-crumb {
-  font-family: var(--font-family);
   font-size: var(--font-size);
 }
 
 .versal {
   color: var(--gray-900);
-  font-family: var(--font-family);
   font-size: var(--font-size);
   font-weight: 400;
 }
 
 .versal-bold {
-  font-family: var(--font-family);
   font-size: var(--font-size);
   font-weight: bold;
 }
@@ -1556,7 +1546,6 @@ li.sub-group {
 }
 
 .appendix-vocab-label {
-  font-family: var(--font-family);
   font-size: 12px;
   line-height: 21px;
   padding-left: 15px;
@@ -1910,7 +1899,6 @@ ul.nav-tabs > li > a {
 
 span.date-info {
   float: right;
-  font-family: var(--font-family);
   font-size: 12px;
   margin-top: 4px;
 }
