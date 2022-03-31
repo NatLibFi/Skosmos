@@ -23,6 +23,7 @@
     <h3 class="sr-only">{% trans "List vocabulary concepts by newest additions including removed" %}</h3>
     <li id="changes"><a href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Changes-and-deprecations-nav" %}</a></li>
     {% else %}
+    {% set css_class = ['nav-link'] %}
     <h3 class="sr-only">{% trans "List vocabulary concepts by newest additions" %}</h3>
     <li id="changes" class="nav-item"><a class="{{ css_class|join(' ') }}" href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Changes-nav" %}</a></li>
     {% endif %}

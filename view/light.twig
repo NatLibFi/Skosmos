@@ -71,6 +71,7 @@
           <li id="changes" class="nav-item"><a class="{{ css_class|join(' ') }}" href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Changes-and-deprecations-nav" %}</a></li>
           {% else %}
           <h3 class="sr-only">{% trans "List vocabulary concepts by newest additions" %}</h3>
+          {% set css_class = ['nav-link'] %}
           {% if active_tab == 'new' %}{% set css_class = css_class|merge(['active']) %}{%  endif %}
           <li id="changes" class="nav-item"><a class="{{ css_class|join(' ') }}" href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Changes-nav" %}</a></li>
           {% endif %}
