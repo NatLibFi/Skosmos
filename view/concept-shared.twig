@@ -84,9 +84,8 @@
         {% endif %}
         {% endif %}
         &nbsp;
-        <button type="button" data-toggle="tooltip" data-placement="button" title="Copy to clipboard" class="btn btn-default btn-xs copy-clipboard"
-          for="#{% if concept.notation %}notation{% else %}pref-label{% endif %}">
-          <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
+        <button type="button" data-bs-toggle="tooltip" data-bs-placement="button" title="Copy to clipboard" class="btn btn-default btn-xs copy-clipboard" for="#{% if concept.notation %}notation{% else %}pref-label{% endif %}">
+            <img src="resource/pics/clipboard.svg" alt="Clipboard image" style="font-size: 24px;" />
         </button>
         {% endapply %}
         </div>
@@ -115,7 +114,7 @@
           {% for language,labels in concept.allLabels(property.type) %}
             {% for value in labels %}
             <div class="row other-languages{% if loop.first %} first-of-language{% endif %}">
-            <div class="versal col-xs-6{% if value.type == "skos:altLabel" %} replaced{% endif %}">{% if value.containsHtml %}{{ value.label|raw }}{% else %}{{ value.label }}{% endif %}</div><div class="versal col-xs-6">{% if loop.first %} {{ language }}{% endif %}</div></div>
+            <div class="versal col-6{% if value.type == "skos:altLabel" %} replaced{% endif %}">{% if value.containsHtml %}{{ value.label|raw }}{% else %}{{ value.label }}{% endif %}</div><div class="versal col-6">{% if loop.first %} {{ language }}{% endif %}</div></div>
             {% endfor %}
           {% endfor %}
         {% else %}
@@ -166,7 +165,7 @@
               {% for language,labels in foreignLabels %}
               {% for value in labels.prefLabel|default([])|merge(labels.altLabel|default([])) %}
               <li class="row other-languages{% if loop.first %} first-of-language{% endif %}">
-                <div class="col-xs-6 versal{% if value.type == "skos:altLabel" %} replaced{%else %} versal-pref{% endif %}">
+                <div class="col-6 versal{% if value.type == "skos:altLabel" %} replaced{%else %} versal-pref{% endif %}">
                   {% if value.hasXlProperties %}
                   <span class="reified-property-value xl-label"><img src="resource/pics/about.png"></span>
                   <div class="reified-tooltip">{% for key, val in value.getXlProperties %}{% if key != 'rdf:type' and key != 'skosxl:literalForm' and val != '' %}<p>{{ key|trans }}: <span class="versal">{{ val }}</span></p>{% endif %}{% endfor %}</div>
@@ -176,7 +175,7 @@
                   {% else %}{{ value.label }}
                   {% endif %}
                 </div>
-                <div class="col-xs-6 versal">{% if loop.first %}<p>{{ language }}</p>{% endif %}</div>
+                <div class="col-6 versal">{% if loop.first %}<p>{{ language }}</p>{% endif %}</div>
               </li>
               {% endfor %}
               {% endfor %}
@@ -187,7 +186,14 @@
       {% endif %}
         <div class="row property prop-uri">
             <div class="property-label"><h3 class="versal">URI</h3></div>
-            <div class="property-value-column"><div class="property-value-wrapper"><span class="versal uri-input-box" id="uri-input-box">{{ concept.uri }}</span> <button type="button" data-toggle="tooltip" data-placement="button" title="Copy to clipboard" class="btn btn-default btn-xs copy-clipboard" for="#uri-input-box"><span class="glyphicon glyphicon-copy" aria-hidden="true"></span></button></div></div>
+            <div class="property-value-column">
+                <div class="property-value-wrapper">
+                    <span class="versal uri-input-box" id="uri-input-box">{{ concept.uri }}</span>
+                    <button type="button" data-bs-toggle="tooltip" data-bs-placement="button" title="Copy to clipboard" class="btn btn-default btn-xs copy-clipboard" for="#uri-input-box">
+                        <img class="icon" src="resource/pics/clipboard.svg" alt="Clipboard image" />
+                    </button>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="property-label"><h3 class="versal">{% trans %}Download this concept in SKOS format:{% endtrans %}</h3></div>
@@ -230,12 +236,12 @@
             {{#each values }} {{! loop through ConceptPropertyValue objects }}
             {{#if prefLabel }}
             <div class="row">
-                <div class="col-xs-5">
+                <div class="col-5">
                     <a class="versal" href="{{hrefLink}}">{{#if notation }}<span class="versal">{{ notation }} </span>{{/if}}{{ prefLabel }}</a>
                     {{#ifDifferentLabelLang lang }}<span class="propertyvalue"> ({{ lang }})</span>{{/ifDifferentLabelLang}}
                 </div>
                 {{#if vocabName }}
-                    <span class="appendix-vocab-label col-xs-7">{{ vocabName }}</span>
+                    <span class="appendix-vocab-label col-7">{{ vocabName }}</span>
                 {{/if}}
             </div>
             {{/if}}

@@ -95,7 +95,7 @@ $(function() { // DOCUMENT READY
       });
     });
 
-    var active_tab = $('li.active').attr('id');
+    var active_tab = $('a.active').parent().attr('id');
     if (active_tab == 'groups') {
       $('#sidebar > h4').remove();
       $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.groups_listing + '</h4>');
@@ -111,12 +111,12 @@ $(function() { // DOCUMENT READY
   });
 
   // if the hierarchy tab is active filling the jstree with data
-  if ($('#hierarchy').hasClass('active')) {
+  if ($('#hierarchy > a').hasClass('active')) {
     $('#sidebar > h4').remove();
     invokeParentTree(getTreeConfiguration());
     $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.hierarchical_listing + '</h4>');
   }
-  if ($('#groups').hasClass('active')) {
+  if ($('#groups > a').hasClass('active')) {
     $('#sidebar > h4').remove();
     invokeGroupTree();
     $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.groups_listing + '</h4>');
@@ -341,7 +341,7 @@ $(function() { // DOCUMENT READY
       function(event) {
         $.ajaxQ.abortSidebarQueries(true);
         $('.active').removeClass('active');
-        $('#alpha').addClass('active');
+        $('#alpha a').addClass('active');
         alpha_complete = false;
         $('.sidebar-grey').empty().prepend(spinner);
         var targetUrl = event.target.href;
@@ -364,7 +364,7 @@ $(function() { // DOCUMENT READY
       function(event) {
         $.ajaxQ.abortSidebarQueries(true);
         $('.active').removeClass('active');
-        $('#changes').addClass('active');
+        $('#changes a').addClass('active');
         $('.sidebar-grey').empty().prepend(spinner);
         $('.pagination').hide();
         $('#sidebar > h4.sr-only').hide();
@@ -404,7 +404,7 @@ $(function() { // DOCUMENT READY
       if($('#vocab-info').length) { // if on the vocabulary front page
         $('.sidebar-grey').remove();
         $('.active').removeClass('active');
-        $('#hier-trigger').parent().addClass('active');
+        $('#hier-trigger').addClass('active');
         $('.pagination').hide();
         $('#sidebar > h4.sr-only').hide();
         $content.append('<div class="sidebar-grey concept-hierarchy"></div>');
@@ -428,7 +428,7 @@ $(function() { // DOCUMENT READY
         $.ajaxQ.abortSidebarQueries(true);
         $('.active').removeClass('active');
         var $clicked = $(this);
-        $clicked.parent().addClass('active');
+        $clicked.addClass('active');
         $('.pagination').hide();
         $('#sidebar > h4.sr-only').hide();
         $('.sidebar-grey').remove().prepend(spinner);
@@ -668,29 +668,23 @@ $(function() { // DOCUMENT READY
     });
   }
 
-  var wildcard = '';
-
   var concepts = new Bloodhound({
     remote: {
       url: rest_base_url + 'search?query=',
-      replace: function(url, query) {
+      prepare: function (query, settings) {
+        var vocabString = $('.frontpage').length ? vocabSelectionString : vocab;
+        // if the search has been targeted at all languages by clicking the checkbox then
+        // :checked will be true
+        var parameters = $('input[name=anylang]').is(':checked') ?
+          $.param({'vocab' : vocabString, 'lang' : '', 'labellang' : ''}) :
+          $.param({'vocab' : vocabString, 'lang' : qlang, 'labellang' : qlang});
         var wildcard = (query.indexOf('*') === -1) ? '*' : '';
-        return url + encodeURIComponent(query) + wildcard;
-      },
-      ajax: {
-        beforeSend: function(jqXHR, settings) {
-          var vocabString = $('.frontpage').length ? vocabSelectionString : vocab;
-          var parameters = $.param({'vocab' : vocabString, 'lang' : qlang, 'labellang' : qlang});
-          // if the search has been targeted at all languages by clicking the checkbox
-          if ($('input[name=anylang]').is(':checked')) {
-            parameters = $.param({'vocab' : vocabString, 'lang' : '', 'labellang' : ''});
-          }
-          settings.url = settings.url + '&' + parameters;
-          settings.req_kind = $.ajaxQ.requestKind.GLOBAL;
-        }
+        settings.url += encodeURIComponent(query) + wildcard + '&' + parameters;
+        settings.req_kind = $.ajaxQ.requestKind.GLOBAL;
+        return settings;
       },
       // changes the response so it can be easily displayed in the handlebars template.
-      filter: function(data) {
+      transform: function(data) {
         // looping the matches to see if there are hits where the concept has been hit by a property other than hiddenLabel
         var hasNonHiddenMatch = {};
         for (var i = 0; i < data.results.length; i++) {
@@ -770,6 +764,7 @@ $(function() { // DOCUMENT READY
     var $typeahead = $('#search-field').typeahead({ hint: false, highlight: true, minLength: autocomplete_activation },
       {
         name: 'concept',
+        limit: autocomplete_limit,
         displayKey: 'label',
         templates: {
           empty: Handlebars.compile([
@@ -795,8 +790,8 @@ $(function() { // DOCUMENT READY
     // accidental selection of values. TODO: we must fix this in a future release, possibly
     // using another library.
     var typeaheadInstance = $typeahead.data("ttTypeahead");
-    typeaheadInstance.dropdown.$menu.off("mouseenter.tt", ".tt-suggestion");
-    typeaheadInstance.dropdown.$menu.off("mouseleave.tt", ".tt-suggestion");
+    typeaheadInstance.menu.off("mouseenter.tt", ".tt-suggestion");
+    typeaheadInstance.menu.off("mouseleave.tt", ".tt-suggestion");
   }
 
   // storing the search input before autocompletion changes it
@@ -943,7 +938,7 @@ $(function() { // DOCUMENT READY
   // activating the custom autocomplete
   function updateVocabParam() {
     vocabSelectionString = '';
-    var $vocabs = $('li.active input');
+    var $vocabs = $('li > a.active input');
     $.each($vocabs,
       function(index, ob) {
         if (ob.value === 'multiselect-all') {
@@ -987,6 +982,13 @@ $(function() { // DOCUMENT READY
     },
     numberDisplayed: 2,
     buttonWidth: 'auto',
+    buttonClass: 'btn btn-secondary',
+    buttonContainer : '<div id="search-from-vocabularies" class="dropdown btn-group" aria-role="group" aria-label="' + all_vocabs + '" />',
+    templates: {
+      ul: '<ul class="multiselect-container dropdown-menu p-1 m-0"></ul>',
+      li: '<button class="multiselect-option dropdown-item"></button>',
+      button: '<button type="button" class="multiselect dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><span class="multiselect-selected-text"></span></button>',
+    },
     includeSelectAllOption: true,
     selectAllText: all_vocabs,
     onChange: function(element, checked) {
@@ -1027,7 +1029,7 @@ $(function() { // DOCUMENT READY
     maxHeight: 300
   });
 
-  if ($('#alpha.active').length === 1 || $('#changes.active').length === 1) {
+  if ($('#alpha > a.active').length === 1 || $('#changes >a.active').length === 1) {
     var scrollCB = ($('#changes.active').length === 1) ? changeListWaypointCallback : alphaWaypointCallback;
     $(".sidebar-grey").mCustomScrollbar({
       alwaysShowScrollbar: 1,
@@ -1075,7 +1077,7 @@ $(function() { // DOCUMENT READY
   /* makes an AJAX query for the alphabetical index contents when landing on
    * the vocabulary home page or on the vocabulary concept error page.
    */
-  if ($('#alpha').hasClass('active') && $('#vocab-info,.page-alert').length == 1 && $('.alphabetical-search-results').length == 0) {
+  if ($('#alpha > a').hasClass('active') && $('#vocab-info,.page-alert').length === 1 && $('.alphabetical-search-results').length === 0) {
     // taking into account the possibility that the lang parameter has been changed by the WebController.
     var urlLangCorrected = vocab + '/' + lang + '/index?limit=250&offset=0&clang=' + clang;
     $('.sidebar-grey').empty().append('<div class="loading-spinner"><span class="spinner-text">'+ loading_text + '</span><span class="spinner"></span></div>');
@@ -1123,6 +1125,7 @@ $(function() { // DOCUMENT READY
     $('#parent-limit').typeahead({ hint: false, highlight: true, minLength: autocomplete_activation },{
         name: 'concept',
         displayKey: 'label',
+        limit: autocomplete_limit,
         templates: {
           empty: Handlebars.compile([
             '<div><p class="autocomplete-no-results">{{#noresults}}{{/noresults}}</p></div>'

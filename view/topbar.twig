@@ -21,11 +21,11 @@
 {% if LanguageDropdown %}
 <div id="language" class="dropdown"><span class="navigation-font">|</span>
   <span class="navigation-font">{% trans "Interface language" %}:</span>
-  <button type="button" class="btn btn-default dropdown-toggle navigation-font" data-toggle="dropdown">{{ request.lang | lang_name(request.lang) }}<span class="caret"></span></button>
-  <ul class="dropdown-menu dropdown-menu-right">
+  <button type="button" class="btn btn-default dropdown-toggle navigation-font" data-bs-toggle="dropdown">{{ request.lang | lang_name(request.lang) }}<span class="caret"></span></button>
+  <ul class="dropdown-menu dropdown-menu-end">
   {% for langcode, langdata in languages %}
   {% if request.lang != langcode %}
-  <li><a id="language-{{ langcode }}" class="versal" href="{{ request.langurl(langcode) }}"> {{langdata.lemma}}</a></li>
+  <li><a class="dropdown-item" id="language-{{ langcode }}" class="versal" href="{{ request.langurl(langcode) }}"> {{langdata.lemma}}</a></li>
   {% endif %}
   {% endfor %}
   </ul>

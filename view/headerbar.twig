@@ -23,15 +23,15 @@
     <div class="input-group">
       <div class="input-group-btn">
         <label class="sr-only" for="lang-dropdown-toggle">{% trans "Content and search language" %}</label>
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="lang-dropdown-toggle">{{ (request.contentLang ? request.contentLang : request.lang) | lang_name(request.lang) }} <span class="caret"></span></button>
-        <ul class="dropdown-menu">
+        <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" id="lang-dropdown-toggle">{{ (request.contentLang ? request.contentLang : request.lang) | lang_name(request.lang) }}<span class="caret"></span></button>
+        <ul class="dropdown-menu" aria-labelledby="lang-dropdown-toggle">
         {% if request.vocab %}
           {% for langcode in request.vocab.config.languages %}
-          <li><a href="{{ concept_uri | link_url(request.vocabid,request.lang,request.page,langcode,term,letter) }}" class="lang-button" hreflang="{{ langcode }}">{{ langcode | lang_name(request.lang) }}</a></li>
+          <li><a class="dropdown-item" href="{{ concept_uri | link_url(request.vocabid,request.lang,request.page,langcode,term,letter) }}" class="lang-button" hreflang="{{ langcode }}">{{ langcode | lang_name(request.lang) }}</a></li>
           {% endfor %}
         {% else %}
           {% for langcode in lang_list %}
-          <li><a href="{{ request.lang }}/{{ request.page -}}
+          <li><a class="dropdown-item" href="{{ request.lang }}/{{ request.page -}}
             {%- if langcode != request.lang -%}
               ?clang={{langcode}}
               {%- set paramSeparator = '&' -%}
@@ -42,7 +42,7 @@
           {% endfor %}
         {% endif %}
           <li>
-            <a href="
+            <a class="dropdown-item" href="
               {%- if not request.vocab -%}
                   {{ request.lang }}/
               {%- endif -%}
