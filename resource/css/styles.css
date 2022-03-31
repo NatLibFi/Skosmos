@@ -187,7 +187,6 @@ a:link,a:visited,a:active,a:hover,a:focus {
 
 a:focus {
   outline: 5px auto -webkit-focus-ring-color;
-  outline-offset: -2px;
 }
 
 :focus {
