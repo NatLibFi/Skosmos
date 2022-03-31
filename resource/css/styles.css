@@ -574,6 +574,10 @@ ul.dropdown-menu > li:last-child > input {
   padding: 3px 20px;
 }
 
+.form-check-input:checked {
+  background-color: #398ee7;
+}
+
 .dropdown-menu>li>a:focus, .dropdown-menu>li>a:hover {
   color: #262626;
   text-decoration: none;
