@@ -341,7 +341,7 @@ $(function() { // DOCUMENT READY
       function(event) {
         $.ajaxQ.abortSidebarQueries(true);
         $('.active').removeClass('active');
-        $('#alpha').addClass('active');
+        $('#alpha a').addClass('active');
         alpha_complete = false;
         $('.sidebar-grey').empty().prepend(spinner);
         var targetUrl = event.target.href;
@@ -364,7 +364,7 @@ $(function() { // DOCUMENT READY
       function(event) {
         $.ajaxQ.abortSidebarQueries(true);
         $('.active').removeClass('active');
-        $('#changes').addClass('active');
+        $('#changes a').addClass('active');
         $('.sidebar-grey').empty().prepend(spinner);
         $('.pagination').hide();
         $('#sidebar > h4.sr-only').hide();
@@ -404,7 +404,7 @@ $(function() { // DOCUMENT READY
       if($('#vocab-info').length) { // if on the vocabulary front page
         $('.sidebar-grey').remove();
         $('.active').removeClass('active');
-        $('#hier-trigger').parent().addClass('active');
+        $('#hier-trigger').addClass('active');
         $('.pagination').hide();
         $('#sidebar > h4.sr-only').hide();
         $content.append('<div class="sidebar-grey concept-hierarchy"></div>');
@@ -428,7 +428,7 @@ $(function() { // DOCUMENT READY
         $.ajaxQ.abortSidebarQueries(true);
         $('.active').removeClass('active');
         var $clicked = $(this);
-        $clicked.parent().addClass('active');
+        $clicked.addClass('active');
         $('.pagination').hide();
         $('#sidebar > h4.sr-only').hide();
         $('.sidebar-grey').remove().prepend(spinner);

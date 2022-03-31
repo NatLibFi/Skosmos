@@ -19,11 +19,11 @@
     {% endif %}
     {% if vocab.config.showChangeList %}
     {% if vocab.config.showDeprecatedChanges %}
+    {% set css_class = css_class|merge(['active']) %}
     <h3 class="sr-only">{% trans "List vocabulary concepts by newest additions including removed" %}</h3>
-    <li id="changes" class="active"><a href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Changes-and-deprecations-nav" %}</a></li>
+    <li id="changes" class="nav-item"><a class="{{ css_class|join(' ') }}" href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Changes-and-deprecations-nav" %}</a></li>
     {% else %}
     <h3 class="sr-only">{% trans "List vocabulary concepts by newest additions" %}</h3>
-    {% set css_class = css_class|merge(['active']) %}
     <li id="changes" class="nav-item"><a class="{{ css_class|join(' ') }}" href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Changes-nav" %}</a></li>
     {% endif %}
     {% endif %}
