@@ -1799,6 +1799,7 @@ tr.replaced-by > td > ul > li > a {
   background-color: var(--gray-400);
   border-bottom: none;
   display: flex;
+  flex-wrap: nowrap;
 }
 
 ul.nav-tabs > li {
