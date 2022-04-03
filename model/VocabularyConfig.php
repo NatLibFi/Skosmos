@@ -63,7 +63,7 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
-     * Get a resouce if if skosmos:vocabularyPlugins is set
+     * Get a resouce if skosmos:vocabularyPlugins is set
      * @return EasyRdf\Resource object
      */
     public function getVocabularyPlugins() {
