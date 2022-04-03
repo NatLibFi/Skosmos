@@ -39,7 +39,7 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
-     * Get a literal value if skosmos:usePlugin is defined
+     * Get a literal value if skosmos:usePlugin is set
      * @return \EasyRdf\Literal value
      */
     public function getUsePluginAsLiteral($plugin) {
@@ -47,7 +47,7 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
-     * Get an array of literal values if skosmos:usePlugin is defined
+     * Get an array of literal values if skosmos:usePlugin is set
      * @return array of literal values
      */
     public function getUsePluginAsArray(EasyRdf\Resource $res) {
@@ -55,7 +55,7 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
-     * Get an array of resources if skosmos:useParamPlugin is used
+     * Get an array of resources if skosmos:useParamPlugin is set
      * @return array of resources
      */
     public function getUseParamPlugin() : array {
@@ -63,7 +63,7 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
-     * Get a resouce if if skosmos:vocabularyPlugins is used
+     * Get a resouce if if skosmos:vocabularyPlugins is set
      * @return EasyRdf\Resource object
      */
     public function getVocabularyPlugins() {
