@@ -4,24 +4,23 @@ services:
   fuseki:
     container_name: skosmos-fuseki
     hostname: fuseki
-    image: stain/jena-fuseki
+    image: stain/jena-fuseki:4.0.0
     environment:
       - ADMIN_PASSWORD=admin
       - JVM_ARGS=-Xmx2g
     ports:
       - 9030:3030
-  # You can uncomment the line below to have a local volume bound onto the container, or
-  # visit https://hub.docker.com/r/stain/jena-fuseki/ for other alternatives
-  # volumes:
-  #  - ${PWD}/fuseki:/fuseki
     volumes:
       - type: bind
         source: ./config/skosmos.ttl
         target: /fuseki/configuration/skosmos.ttl
+      # The example below shows how to bind a volume to persist the Jena Fuseki data.
+      # Visit https://hub.docker.com/r/stain/jena-fuseki/ for more options.
+      # - ${PWD}/fuseki:/fuseki
   fuseki-cache:
     container_name: skosmos-fuseki-cache
     hostname: fuseki-cache
-    image: varnish
+    image: varnish:6.0.10
     ports:
       - 9031:80
     volumes:
