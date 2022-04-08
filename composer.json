@@ -4,18 +4,6 @@
   "type": "project",
   "license": "MIT",
   "repositories": { 
-    "urijs-unofficial": {
-      "type": "package",
-      "package": {
-        "name": "medialize/uri.js",
-        "version": "1.19.0",
-        "source": {
-          "url": "https://github.com/medialize/URI.js.git",
-          "type": "git",
-          "reference": "v1.19.0"
-        }
-      }
-    },
     "lscache": {
       "type": "package",
       "package": {
@@ -69,7 +57,6 @@
     "vakata/jstree": "3.3.*",
     "punic/punic": "3.5.1",
     "ml/json-ld": "1.*",
-    "medialize/uri.js": "1.19.0",
     "ext-gettext": "*",
     "ext-intl": "*",
     "ext-mbstring": "*",
