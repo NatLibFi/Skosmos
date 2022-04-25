@@ -749,11 +749,13 @@ $(function() { // DOCUMENT READY
   concepts.initialize();
 
   var autocompleteTemplate =[
-    '{{# if matched }}<p>{{matched}}{{# if lang}} ({{lang}}){{/if}} = </p>{{/if}}',
-    '{{# if replaced }}<p class="replaced">{{replaced}}{{# if lang}} ({{lang}}){{/if}} &rarr; </p>{{/if}}',
-    '{{# if notation }}<p>{{notation}}</p>{{/if}}',
-    '<p class="autocomplete-label">{{label}}{{# if lang}}{{# unless matched }}<p>({{lang}})</p>{{/unless}}{{/if}}</p>',
+    '<div class="autocomplete-label">',
+    '{{# if matched }}<span>{{matched}}{{# if lang}} ({{lang}}){{/if}} = </span>{{/if}}',
+    '{{# if replaced }}<span class="replaced">{{replaced}}{{# if lang}} ({{lang}}){{/if}} &rarr; </span>{{/if}}',
+    '{{# if notation }}<span>{{notation}}</span>{{/if}}',
+    '<span>{{label}}{{# if lang}}{{# unless matched }}<span>({{lang}})</span>{{/unless}}{{/if}}</span>',
     '{{# if typeLabel }}<span class="concept-type">{{typeLabel}}</span>{{/if}}',
+    '</div>',
     '<div class="vocab">{{vocabLabel}}</div>'
   ].join('');
 
@@ -761,11 +763,11 @@ $(function() { // DOCUMENT READY
     var dark = ($('#search-field').val().length > 0) ? ' clear-search-dark' : '';
     var clearButton = '<span class="versal clear-search' + dark + '">&#215;</span>';
 
-    var $typeahead = $('#search-field').typeahead({ hint: false, highlight: true, minLength: autocomplete_activation },
+    var $typeahead = $('#search-field').typeahead({hint: false, highlight: true, minLength: autocomplete_activation},
       {
         name: 'concept',
         limit: autocomplete_limit,
-        displayKey: 'label',
+        display: 'label',
         templates: {
           empty: Handlebars.compile([
             '<div><p class="autocomplete-no-results">{{#noresults}}{{/noresults}}</p></div>'
@@ -773,9 +775,9 @@ $(function() { // DOCUMENT READY
           suggestion: Handlebars.compile(autocompleteTemplate)
         },
         source: concepts.ttAdapter()
-    }).on('typeahead:cursorchanged', function() {
+      }).on('typeahead:cursorchanged', function () {
       $('.tt-dropdown-menu').mCustomScrollbar("scrollTo", '.tt-cursor');
-    }).on('typeahead:selected', onSelection).on('focus', function() {
+    }).on('typeahead:selected', onSelection).on('focus', function () {
       $('#search-field').typeahead('open');
     }).after(clearButton).on('keypress', function() {
       if ($typeahead.val().length > 0 && $(this).hasClass('clear-search-dark') === false) {
@@ -1060,7 +1062,7 @@ $(function() { // DOCUMENT READY
   if ($replaced.length > 0) {
     var $replacedElem = $('.replaced-by h3');
     var undoUppercasing = $replacedElem.text().substr(0,1) + $replacedElem.text().substr(1).toLowerCase();
-    var html = ''
+    var html = '';
     for (var i = 0; i < $replaced.length; i++) {
         var replacedBy = '<a href="' + $replaced[i] + '">' + $replaced[i].innerHTML + '</a>';
         html += '<p class="alert-replaced">' + undoUppercasing + ': ' + replacedBy + '</p>';

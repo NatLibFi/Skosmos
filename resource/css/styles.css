@@ -159,6 +159,7 @@ a, a.versal, .nav-link, .nav-link.active, .jstree-node > .jstree-anchor {
 
 .replaced {
   font-style: italic;
+  color: var(--gray-900) !important;
 }
 
 .nav-link:link,.nav-link:visited,.nav-link:active,.nav-link:hover,.nav-link:focus {
@@ -2073,9 +2074,8 @@ span.date-info {
   overflow: hidden;
 }
 
-p.autocomplete-label {
+.autocomplete-label > span {
   color: var(--medium-color);
-  display: block;
   margin: 0;
 }
 
