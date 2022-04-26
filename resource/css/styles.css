@@ -219,6 +219,10 @@ ul {
   list-style: none;
 }
 
+.btn {
+  font-size: var(--font-size);
+}
+
 /**
  * Bootstrap 5 added a margin in the :after element of the caret. This removes the extra space.
  */
@@ -822,13 +826,6 @@ ul.dropdown-menu > li:last-child > input {
 
 .form-control {
   display: table-cell;
-}
-
-.form-control:focus {
-  background-color: var(--gray-100);
-  color: var(--medium-color);
-  border: none;
-  resize: none;
 }
 
 .input-group-btn {
