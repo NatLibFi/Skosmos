@@ -35,7 +35,10 @@ class ModelTest extends PHPUnit\Framework\TestCase
    */
   public function testGetVersion() {
     $version = $this->model->getVersion();
-    $this->assertNotEmpty($version);
+    // make sure that the returned version (which comes from composer.json)
+    // matches the version from git tags
+    $git_tag = rtrim(shell_exec('git describe --tags --always'));
+    $this->assertStringStartsWith("v" . $version, $git_tag);
   }
 
   /**
