@@ -229,4 +229,15 @@ class RequestTest extends PHPUnit\Framework\TestCase
     $this->assertEquals("myvocab/sv/index", $langurl);
   }
 
+  /**
+   * @covers Request::getLangUrl
+   */
+  public function testGetLangUrlSanitizeSpecialChars() {
+    $this->request->setServerConstant('SCRIPT_NAME', '/Skosmos/index.php');
+    $this->request->setServerConstant('REQUEST_URI', '/Skosmos/http://example.com');
+    $this->request->setLang('en');
+    $langurl = $this->request->getLangUrl();
+    $this->assertEquals("http//examplecom", $langurl);
+  }
+
 }
