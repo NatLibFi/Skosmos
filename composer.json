@@ -44,7 +44,7 @@
   "require": {
     "components/jquery": "2.2.*",
     "components/jqueryui": "1.12.*",
-    "components/handlebars.js": "v4.7.6",
+    "components/handlebars.js": "v4.7.7",
     "davidstutz/bootstrap-multiselect": "v1.1.1",
     "easyrdf/easyrdf": "1.1.*",
     "etdsolutions/waypoints": "4.0.0",
