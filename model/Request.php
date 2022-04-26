@@ -184,8 +184,8 @@ class Request
         if ($newlang !== null) {
             $langurl = preg_replace("#^(.*/)?{$this->lang}/#", "$1{$newlang}/", $langurl);
         }
-        // make sure that the resulting URL doesn't contain suspicious characters
-        $langurl = preg_replace("#[^a-zA-Z0-9/-]#", "", $langurl);
+        // make sure that the resulting URL isn't interpreted as an absolute URL
+        $langurl = str_replace(":", "", $langurl);
         return $langurl;
     }
 

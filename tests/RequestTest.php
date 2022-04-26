@@ -237,7 +237,7 @@ class RequestTest extends PHPUnit\Framework\TestCase
     $this->request->setServerConstant('REQUEST_URI', '/Skosmos/http://example.com');
     $this->request->setLang('en');
     $langurl = $this->request->getLangUrl();
-    $this->assertEquals("http//examplecom", $langurl);
+    $this->assertEquals("http//example.com", $langurl);
   }
 
 }
