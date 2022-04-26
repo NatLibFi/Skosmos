@@ -189,6 +189,16 @@ class RequestTest extends PHPUnit\Framework\TestCase
   /**
    * @covers Request::getLangUrl
    */
+  public function testGetLangUrlNoParamVocabIndex() {
+    $this->request->setServerConstant('SCRIPT_NAME', '/Skosmos/index.php');
+    $this->request->setServerConstant('REQUEST_URI', '/Skosmos/myvocab/en/index');
+    $langurl = $this->request->getLangUrl();
+    $this->assertEquals("myvocab/en/index", $langurl);
+  }
+
+  /**
+   * @covers Request::getLangUrl
+   */
   public function testGetLangUrlNewLangRoot() {
     $this->request->setServerConstant('SCRIPT_NAME', '/Skosmos/index.php');
     $this->request->setServerConstant('REQUEST_URI', '/Skosmos/en/');
@@ -206,6 +216,28 @@ class RequestTest extends PHPUnit\Framework\TestCase
     $this->request->setLang('en');
     $langurl = $this->request->getLangUrl("sv");
     $this->assertEquals("myvocab/sv/", $langurl);
+  }
+
+  /**
+   * @covers Request::getLangUrl
+   */
+  public function testGetLangUrlNewLangVocabIndex() {
+    $this->request->setServerConstant('SCRIPT_NAME', '/Skosmos/index.php');
+    $this->request->setServerConstant('REQUEST_URI', '/Skosmos/myvocab/en/index');
+    $this->request->setLang('en');
+    $langurl = $this->request->getLangUrl("sv");
+    $this->assertEquals("myvocab/sv/index", $langurl);
+  }
+
+  /**
+   * @covers Request::getLangUrl
+   */
+  public function testGetLangUrlSanitizeSpecialChars() {
+    $this->request->setServerConstant('SCRIPT_NAME', '/Skosmos/index.php');
+    $this->request->setServerConstant('REQUEST_URI', '/Skosmos/http://example.com');
+    $this->request->setLang('en');
+    $langurl = $this->request->getLangUrl();
+    $this->assertEquals("http//example.com", $langurl);
   }
 
 }
