@@ -76,11 +76,7 @@ class Model
      */
     public function getVersion() : string
     {
-        $ver = null;
-        if (file_exists('.git')) {
-            $ver = rtrim(shell_exec('git describe --tags --always'));
-        }
-
+        $ver = \Composer\InstalledVersions::getRootPackage()['pretty_version'];
         if ($ver === null) {
             return "unknown";
         }
