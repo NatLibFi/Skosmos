@@ -1920,10 +1920,13 @@ span.date-info {
   padding: 0;
 }
 
+.prop-preflabel .copy-clipboard img {
+  vertical-align: text-bottom;
+}
+
 .copy-clipboard img {
   width: 1em;
   height: 1em;
-  vertical-align: text-bottom;
 }
 
 .copy-clipboard:active, .copy-clipboard:focus, .copy-clipboard:active:focus {
