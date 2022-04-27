@@ -1927,6 +1927,7 @@ span.date-info {
 .copy-clipboard img {
   width: 1em;
   height: 1em;
+  vertical-align: text-top;
 }
 
 .copy-clipboard:active, .copy-clipboard:focus, .copy-clipboard:active:focus {
