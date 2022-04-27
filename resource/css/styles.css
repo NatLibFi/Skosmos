@@ -2619,7 +2619,7 @@ body, .versal, h1, h2, h3, p, .versal-bold {
     font-size: 24px;
   }
 
-  .alphabetical-search-results li, li, .versal, .versal-bold, p, .search-result > .prefLabel, .search-result > .notation, .property-values > .prefLabel, td > a {
+  .alphabetical-search-results li, li, .versal, .versal-bold, p, .autocomplete-label, .search-result > .prefLabel, .search-result > .notation, .property-values > .prefLabel, td > a {
     font-size: 16px;
   }
 
