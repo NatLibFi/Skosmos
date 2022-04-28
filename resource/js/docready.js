@@ -1011,7 +1011,7 @@ $(function() { // DOCUMENT READY
 
   $('.sidebar-grey .multiselect').multiselect({
     buttonText: function(options) {
-      if (options.length === 0) {
+      if (options.length === 0 || options.length === ($('.sidebar-grey .multiselect-container li').length - 1)) {
         return  '';
       } else {
         var selected = '';
@@ -1024,6 +1024,13 @@ $(function() { // DOCUMENT READY
     },
     numberDisplayed: 2,
     buttonWidth: 'auto',
+    buttonClass: 'btn btn-secondary',
+    buttonContainer : '<div class="dropdown btn-group" aria-role="group" aria-label="" />',
+    templates: {
+      ul: '<ul class="multiselect-container dropdown-menu p-1 m-0"></ul>',
+      li: '<button class="multiselect-option dropdown-item"></button>',
+      button: '<button type="button" class="multiselect dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><span class="multiselect-selected-text"></span></button>',
+    },
     onDropdownShown: function(event) {
       var $activeChild = $(event.currentTarget).find('.active');
       $('.multiselect-container').mCustomScrollbar('scrollTo', $activeChild);
