@@ -558,12 +558,12 @@ $(function() { // DOCUMENT READY
   var langPretty;
 
   if (search_lang === 'anything' || getUrlParams().anylang === 'on') {
-    $('#lang-dropdown-toggle').html($('.lang-button-all').html() + ' <span class="caret"></span>');
+    $('#lang-dropdown-toggle').html($('#lang-button-all').html() + ' <span class="caret"></span>');
     qlang = "";
   } else if (!search_lang) {
       langPretty = $('a[hreflang=' + lang + ']').html();
       search_lang = lang;
-      if (!langPretty) { langPretty = $('.lang-button-all').html(); }
+      if (!langPretty) { langPretty = $('#lang-button-all').html(); }
       $('#lang-dropdown-toggle').html(langPretty + ' <span class="caret"></span>');
       qlang = lang;
   }
@@ -574,7 +574,7 @@ $(function() { // DOCUMENT READY
   });
 
   if (!search_lang_possible && search_lang !== 'anything') {
-    langPretty = $('.lang-button-all').html();
+    langPretty = $('#lang-button-all').html();
     $('#lang-dropdown-toggle').html(langPretty + ' <span class="caret"></span>');
     qlang = '';
     createCookie('SKOSMOS_SEARCH_LANG', qlang, 365);
@@ -588,7 +588,7 @@ $(function() { // DOCUMENT READY
     if (concepts) { concepts.clear(); }
   });
 
-  $('.lang-button, .lang-button-all').on('click', function() {
+  $('.lang-button, #lang-button-all').on('click', function() {
     $('#search-field').focus();
   });
 
