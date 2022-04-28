@@ -182,11 +182,14 @@
                   {% if value.hasXlProperties %}
                   <span class="reified-property-value xl-label"><img src="resource/pics/about.png"></span>
                   <div class="reified-tooltip">
-                    {% for key, val in value.getXlProperties %}
-                      {% if key != 'rdf:type' and key != 'skosxl:literalForm' and val != '' %}
-                        <p>{{ key|trans }}: <span class="versal">{{ val }}</span></p>
+                    {% for key, val in value.xlLabel.properties %}
+                      {% if key != 'rdf:type' and key != 'skosxl:literalForm' %}
+                        <p>{{ key|trans }}:
+                          <span class="versal">{{ val }}</span>
+                        </p>
                       {% endif %}
-                    {% endfor %}</div>
+                    {% endfor %}
+                  </div>
                   {% endif %}
                   {% if value.type == "skos:prefLabel" and value.lang in request.vocab.config.languages %}
                   <a href='{{ concept.uri|link_url(request.vocabid,request.lang, 'page', value.lang) }}' hreflang='{{ value.lang }}'>{{ value.label }}</a>
