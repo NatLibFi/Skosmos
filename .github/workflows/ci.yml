@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php_version: ["7.2", "7.3", "7.4", "8.0"]
+        php_version: ["7.3", "7.4", "8.0"]
         experimental: [false]
         include:
           - php_version: "8.1"
@@ -55,7 +55,7 @@ jobs:
       env:
         LANGUAGE: fr
       with:
-        version: 8.5
+        version: 9.5
         php_version: ${{ matrix.php_version }}
         php_extensions: gettext intl xsl pcov
         memory_limit: 512M
@@ -67,10 +67,6 @@ jobs:
         CC_TEST_REPORTER_ID: fb98170a5c7ea9cc2bbab19ff26268335e6a11a4f8267ca935e5e8ff4624886c
       with:
         prefix: /app
-      # PHPUnit 8.5 doesn't support code coverage for PHP 8
-      if: ${{ matrix.php_version < '8.0' }}
 
     - name: Publish code coverage to Codecov
       uses: codecov/codecov-action@v1
-      # PHPUnit 8.5 doesn't support code coverage for PHP 8
-      if: ${{ matrix.php_version < '8.0' }}

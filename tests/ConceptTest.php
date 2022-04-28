@@ -307,7 +307,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
    * @covers ConceptPropertyValueLiteral::getLabel
    */
   public function testGetTimestampInvalidWarning() {
-    $this->expectException(PHPUnit\Framework\Error\Error::class);
+    $this->expectError();
     $vocab = $this->model->getVocabulary('test');
     $concepts = $vocab->getConceptInfo("http://www.skosmos.skos/test/ta114", "en");
     $concept = $concepts[0];

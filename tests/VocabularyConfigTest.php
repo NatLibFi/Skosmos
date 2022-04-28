@@ -328,7 +328,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
   }
 
   /**
-   * @covers VocabularyConfig::sortByNotation
+   * @covers VocabularyConfig::getSortByNotation
    * @covers VocabularyConfig::getBoolean
    */
   public function testShowSortByNotationDefaultValue() {
