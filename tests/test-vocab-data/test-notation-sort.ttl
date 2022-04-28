@@ -38,11 +38,12 @@ test:ta0111 a skos:Concept, meta:TestClass ;
     skos:broader test:ta01 ;
     skos:inScheme test:conceptscheme ;
     owl:deprecated true ;
+    skos:notation "33.01" ;
     skos:prefLabel "Tuna"@en .
 
 test:ta0112 a skos:Concept, meta:TestClass ;
     skosmos:testprop "Test property value" ;
-    skos:notation "665" ;
+    skos:notation "33.1" ;
     skos:broader test:ta01 ;
     skos:narrower test:ta0121 ;
     skos:exactMatch test:ta0118 ;
@@ -56,6 +57,7 @@ test:ta0112 a skos:Concept, meta:TestClass ;
 test:ta0114 a skos:Concept, meta:TestClass ;
     skos:broader test:ta01 ;
     dct:modified "1986-21-00"^^xsd:date ; # date invalid on purpose
+    skos:notation "33.10" ;
     skos:inScheme test:conceptscheme ;
     skos:prefLabel "Buri"@en .
 
@@ -64,16 +66,19 @@ test:ta0115 a skos:Concept, meta:TestClass ;
     skos:inScheme test:conceptscheme ;
     skos:definition "any fish belonging to the order Anguilliformes"@en, 
       "Iljettävä limanuljaska"@fi ;
+    skos:notation "33.2" ;
     skos:prefLabel "Eel"@en .
 
 test:ta0116 a skos:Concept, meta:TestClass ;
     skos:broader test:ta01 ;
     skos:inScheme test:conceptscheme ;
+    skos:notation "33.02" ;
     skos:prefLabel "Barracuda"@en .
 
 test:ta0117 a skos:Concept, meta:TestClass ;
     skos:broader test:ta01 ;
     skos:inScheme test:conceptscheme ;
+    skos:notation "33.9" ;
     skos:relatedMatch test:ta0115 ;
     skos:prefLabel "3D Barracuda"@en .
 
@@ -85,11 +90,12 @@ test:ta0118 a skos:Concept, meta:TestClass ;
 test:ta0119 a skos:Concept, meta:TestClass ;
     skos:broader test:ta01 ;
     skos:inScheme test:conceptscheme ;
-    skos:notation "690" ;
+    skos:notation "33.90" ;
     skos:prefLabel "Hauki"@fi .
 
 test:ta0120 a skos:Concept, meta:TestClass ;
     skos:broader test:ta01 ;
+    skos:notation "K2" ;
     skos:inScheme test:conceptscheme .
 
 test:ta0121 a skos:Concept, meta:TestClass ;

@@ -5,6 +5,10 @@ class PluginRegister {
 
     public function __construct($requestedPlugins=array()) {
         $this->requestedPlugins = $requestedPlugins;
+        $this->pluginOrder = array();
+        foreach ($this->requestedPlugins as $index => $value) {
+            $this->pluginOrder[$value] = $index;
+        }
     }
 
     /**
@@ -25,6 +29,16 @@ class PluginRegister {
     }
 
     /**
+     * Sort plugins by order defined in class constructor
+     * @return array
+     */
+    private function sortPlugins($plugins) {
+        $sortedPlugins = array();
+        $sortedPlugins = array_replace($this->pluginOrder, $plugins);
+        return $sortedPlugins;
+    }
+
+    /**
      * Returns the plugin configurations found from plugin folders
      * inside the plugins folder filtered by filetype.
      * @param string $type filetype e.g. 'css', 'js' or 'template'
@@ -33,6 +47,7 @@ class PluginRegister {
      */
     private function filterPlugins($type, $raw=false) {
         $plugins = $this->getPlugins();
+        $plugins = $this->sortPlugins($plugins);
         $ret = array();
         if (!empty($plugins)) {
             foreach ($plugins as $name => $files) {
@@ -130,21 +145,40 @@ class PluginRegister {
     }
 
     /**
-     * Returns an array of javascript function names to call when loading pages
+     * Returns an array of plugin callback function names
+     * @param array $names the plugin name strings (foldernames) in an array
+     * @return array
+     */
+    public function getPluginCallbacks($names=null) {
+        if ($names) {
+            $names = array_merge($this->requestedPlugins, $names);
+            return $this->filterPluginsByName('callback', $names);
+        }
+        return $this->filterPluginsByName('callback', $this->requestedPlugins);
+    }
+
+    /**
+     * Returns a sorted array of javascript function names to call when loading pages
+     * in order configured with skosmos:vocabularyPlugins
      * @return array
      */
     public function getCallbacks() {
         $ret = array();
-        $plugins = $this->filterPluginsByName('callback', $this->requestedPlugins);
+        $sortedCallbacks = array();
+        $plugins = $this->getPluginCallbacks($this->requestedPlugins);
         foreach ($plugins as $callbacks) {
             foreach ($callbacks as $callback) {
                 $split = explode('/', $callback);
-                $ret[] = $split[2];
+                $sortedCallbacks[$split[1]] = $split[2];
             }
+        }
+        $sortedCallbacks = array_replace($this->pluginOrder, $sortedCallbacks);
+        foreach ($sortedCallbacks as $callback) {
+            $ret[] = $callback;
         }
         return $ret;
     }
- 
+
     /**
      * Returns an array that is flattened from its possibly multidimensional form
      * copied from https://stackoverflow.com/a/1320156

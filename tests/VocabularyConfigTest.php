@@ -7,6 +7,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
 
   /**
    * @covers VocabularyConfig::getConfig
+   * @covers VocabularyConfig::getPluginRegister
    * @throws Exception
    */
   protected function setUp() : void
@@ -15,7 +16,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');
     $this->model = new Model(new GlobalConfig('/../tests/testconfig.ttl'));
-    $this->assertNotNull($this->model->getVocabulary('test')->getConfig()->getPlugins(), "The PluginRegister of the model was not initialized!");
+    $this->assertNotNull($this->model->getVocabulary('test')->getConfig()->getPluginRegister(), "The PluginRegister of the model was not initialized!");
   }
 
   /**
@@ -318,12 +319,51 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
   }
 
   /**
-   * @covers VocabularyConfig::sortByNotation
+   * @covers VocabularyConfig::getShowDeprecatedChanges
+   * @covers VocabularyConfig::getBoolean
+   */
+  public function testShowDeprecatedChanges() {
+    $vocab = $this->model->getVocabulary('changes');
+    $this->assertEquals(true, $vocab->getConfig()->getShowDeprecatedChanges());
+  }
+
+  /**
+   * @covers VocabularyConfig::getSortByNotation
    * @covers VocabularyConfig::getBoolean
    */
   public function testShowSortByNotationDefaultValue() {
     $vocab = $this->model->getVocabulary('test');
-    $this->assertEquals(false, $vocab->getConfig()->sortByNotation());
+    $this->assertNull($vocab->getConfig()->getSortByNotation());
+  }
+
+  /**
+   * @covers VocabularyConfig::getSortByNotation
+   * @covers VocabularyConfig::getLiteral
+   * @covers VocabularyConfig::getBoolean
+   */
+  public function testShowSortByNotationTrueIsLexical() {
+    $vocab = $this->model->getVocabulary('test-notation-sort');
+    $this->assertEquals("lexical", $vocab->getConfig()->getSortByNotation());
+  }
+
+  /**
+   * @covers VocabularyConfig::getSortByNotation
+   * @covers VocabularyConfig::getLiteral
+   * @covers VocabularyConfig::getBoolean
+   */
+  public function testShowSortByNotationLexical() {
+    $vocab = $this->model->getVocabulary('test-qualified-notation');
+    $this->assertEquals("lexical", $vocab->getConfig()->getSortByNotation());
+  }
+
+  /**
+   * @covers VocabularyConfig::getSortByNotation
+   * @covers VocabularyConfig::getLiteral
+   * @covers VocabularyConfig::getBoolean
+   */
+  public function testShowSortByNotationNatural() {
+    $vocab = $this->model->getVocabulary('testNotation');
+    $this->assertEquals("natural", $vocab->getConfig()->getSortByNotation());
   }
 
   /**
@@ -501,9 +541,28 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
    * @covers VocabularyConfig::getPluginParameters
    */
   public function testGetPluginParameters() {
-    $vocab = $this->model->getVocabulary('paramPluginTest');
+    $vocab = $this->model->getVocabulary('paramPluginOrderTest');
     $params = $vocab->getConfig()->getPluginParameters();
-    $this->assertEquals(json_encode(array('imaginaryPlugin' => array('poem_fi' => "Roses are red", 'poem' => "Violets are blue", 'color' => "#800000")),true), $params);
+    $this->assertEquals(array('imaginaryPlugin' => array('poem_fi' => "Roses are red", 'poem' => "Violets are blue", 'color' => "#800000")), $params);
+  }
+
+  /**
+   * @covers VocabularyConfig::getPluginArray
+   */
+  public function testGetOrderedPlugins() {
+    $vocab = $this->model->getVocabulary('paramPluginOrderTest');
+    $plugins = $vocab->getConfig()->getPluginArray();
+    $this->assertEquals(["plugin2", "Bravo", "plugin1", "alpha", "charlie", "imaginaryPlugin", "plugin3"],  $plugins);
+  }
+
+  /**
+   * @covers VocabularyConfig::getPluginArray
+   */
+  public function testGetUnorderedVocabularyPlugins() {
+    $vocab = $this->model->getVocabulary('paramPluginTest');
+    $plugins = $vocab->getConfig()->getPluginArray();
+    $arrayElements = ["plugin2", "Bravo", "imaginaryPlugin", "plugin1", "alpha", "charlie", "plugin3"];
+    $this->assertEquals(sort($arrayElements), sort($plugins));
   }
 
   /**
@@ -557,6 +616,24 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     'skos:scopeNote', 'skos:historyNote', 'skos:prefLabel');
 
     $this->assertEquals($order, $params);
+  }
+
+  /**
+   * @covers VocabularyConfig::getPropertyLabelOverrides
+   * @covers VocabularyConfig::setPropertyLabelOverrides
+   * @covers VocabularyConfig::setLabelOverride
+   */
+  public function testGetPropertyLabelOverrides() {
+    $vocab = $this->model->getVocabulary('conceptPropertyLabels');
+
+    $overrides = $vocab->getConfig()->getPropertyLabelOverrides();
+
+    $expected = array(
+      'skos:prefLabel' => array( 'label' => array ( 'en' => 'Caption', 'fi' => 'Luokka' ) ),
+      'skos:notation' => array( 'label' => array ( 'en' => 'UDC number', 'fi' => 'UDC-numero', 'sv' => 'UDC-nummer' ),
+                                'description' => array( 'en' => 'Class Number') ),
+    );
+    $this->assertEquals($expected, $overrides);
   }
 
 }

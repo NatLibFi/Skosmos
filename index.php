@@ -49,7 +49,7 @@ if (sizeof($parts) <= 2) {
         $vocab = $parts[1];
         try {
             $request->setVocab($parts[1]);
-        } catch (Exception $e) {
+        } catch (Exception | ValueError $e) {
             $request->setLang($controller->guessLanguage());
             $controller->invokeGenericErrorPage($request);
             return;

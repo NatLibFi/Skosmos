@@ -5,9 +5,10 @@
  */
 class VocabularyConfig extends BaseConfig
 {
-    private $plugins;
-    private $pluginParameters;
+    private $pluginRegister;
+    private $pluginParameters = array();
     private $languageOrderCache = array();
+    private $labelOverrides = array();
 
     const DEFAULT_PROPERTY_ORDER = array("rdf:type", "dc:isReplacedBy",
     "skos:definition", "skos:broader", "isothes:broaderGeneric",
@@ -31,41 +32,142 @@ class VocabularyConfig extends BaseConfig
     public function __construct($resource, $globalPlugins=array())
     {
         $this->resource = $resource;
-        $plugins = $this->resource->allLiterals('skosmos:usePlugin');
+        $this->globalPlugins = $globalPlugins;
+        $this->setPropertyLabelOverrides();
+        $pluginArray = $this->getPluginArray();
+        $this->pluginRegister = new PluginRegister($pluginArray);
+    }
+
+    /**
+     * Get an ordered array of plugin names with order configured in skosmos:vocabularyPlugins
+     * @return array of plugin names
+     */
+    public function getPluginArray() : array
+    {
+        $this->setParameterizedPlugins();
         $pluginArray = array();
+        $vocabularyPlugins = $this->resource->getResource('skosmos:vocabularyPlugins');
+        if (!$vocabularyPlugins instanceof EasyRdf\Collection) {
+            $vocabularyPlugins = $this->resource->all('skosmos:vocabularyPlugins');
+        }
+        if ($vocabularyPlugins) {
+            foreach ($vocabularyPlugins as $plugin) {
+                if ($plugin instanceof EasyRdf\Literal) {
+                    $pluginArray[] = $plugin->getValue();
+                }
+                else {
+                    $pluginArray[] = $plugin->getLiteral('skosmos:usePlugin')->getValue();
+                }
+            }
+        }
+        $pluginArray = array_merge($pluginArray, $this->globalPlugins);
+
+        $paramPlugins = $this->resource->allResources('skosmos:useParamPlugin');
+        if ($paramPlugins) {
+            foreach ($paramPlugins as $plugin) {
+                $pluginArray[] = $plugin->getLiteral('skosmos:usePlugin')->getValue();
+            }
+        }
+        $plugins = $this->resource->allLiterals('skosmos:usePlugin');
         if ($plugins) {
             foreach ($plugins as $pluginlit) {
                 $pluginArray[] = $pluginlit->getValue();
             }
         }
-        $this->plugins = new PluginRegister(array_merge($globalPlugins, $pluginArray));
-        // Get parameterized plugins defined as resources and their respective parameters
-        $pluginResources = $this->resource->allResources('skosmos:useParamPlugin');
+        return array_values(array_unique($pluginArray));
+    }
+
+    /**
+     * Sets array of parameterized plugins
+     * @return void
+     */
+    private function setParameterizedPlugins() : void
+    {
         $this->pluginParameters = array();
+
+        $vocabularyPlugins = $this->resource->getResource('skosmos:vocabularyPlugins');
+        if (!$vocabularyPlugins instanceof EasyRdf\Collection) {
+            $vocabularyPlugins = $this->resource->all('skosmos:vocabularyPlugins');
+        }
+        if ($vocabularyPlugins) {
+            foreach ($vocabularyPlugins as $plugin) {
+                if ($plugin instanceof EasyRdf\Resource) {
+                    $this->setPluginParameters($plugin);
+                }
+            }
+        }
+        $pluginResources = $this->resource->allResources('skosmos:useParamPlugin');
         if ($pluginResources) {
             foreach ($pluginResources as $pluginResource) {
-                $pluginName = $pluginResource->getLiteral('skosmos:usePlugin')->getValue();
-                $this->pluginParameters[$pluginName] = array();
-
-                $pluginParams = $pluginResource->allResources('skosmos:parameters');
-                foreach ($pluginParams as $parameter) {
-
-                    $paramLiterals = $parameter->allLiterals('schema:value');
-                    foreach ($paramLiterals as $paramLiteral) {
-                        $paramName = $parameter->getLiteral('schema:propertyID')->getValue();
-                        $paramValue = $paramLiteral->getValue();
-                        $paramLang = $paramLiteral->getLang();
-                        if ($paramLang) {
-                            $paramName .= '_' . $paramLang;
-                        }
-                        $this->pluginParameters[$pluginName][$paramName] = $paramValue;
-                    }
-                }
-                $pluginArray[] = $pluginName;
+                $this->setPluginParameters($pluginResource);
             }
-            $this->plugins = new PluginRegister(array_merge($globalPlugins, $pluginArray));
         }
+    }
 
+    /**
+     * Updates array of parameterized plugins adding parameter values
+     * @param Easyrdf\Resource $pluginResource
+     * @return void
+     */
+    private function setPluginParameters(Easyrdf\Resource $pluginResource) : void
+    {
+        $pluginName = $pluginResource->getLiteral('skosmos:usePlugin')->getValue();
+        $this->pluginParameters[$pluginName] = array();
+
+        $pluginParams = $pluginResource->allResources('skosmos:parameters');
+        foreach ($pluginParams as $parameter) {
+
+            $paramLiterals = $parameter->allLiterals('schema:value');
+            foreach ($paramLiterals as $paramLiteral) {
+                $paramName = $parameter->getLiteral('schema:propertyID')->getValue();
+                $paramValue = $paramLiteral->getValue();
+                $paramLang = $paramLiteral->getLang();
+                if ($paramLang) {
+                    $paramName .= '_' . $paramLang;
+                }
+                $this->pluginParameters[$pluginName][$paramName] = $paramValue;
+            }
+        }
+    }
+
+    /**
+     * Sets array of configured property label overrides
+     *  @return void
+     */
+    private function setPropertyLabelOverrides() : void
+    {
+        $this->labelOverrides = array();
+        $overrides = $this->resource->allResources('skosmos:propertyLabelOverride');
+        if (!empty($overrides)) {
+            foreach ($overrides as $override) {
+                $this->setLabelOverride($override);
+            }
+        }
+    }
+
+    /**
+     * Updates array of label overrides by adding a new override from the configuration file
+     * @param Easyrdf\Resource $labelOverride
+     * @return void
+     */
+    private function setLabelOverride(Easyrdf\Resource $override) : void
+    {
+        $labelProperty = $override->getResource('skosmos:property');
+        $labelPropUri = $labelProperty->shorten();
+        if (empty($this->labelOverrides[$labelPropUri])) {
+            $this->labelOverrides[$labelPropUri]  = array();
+        }
+        $newOverrides = array();
+
+        $labels = $override->allLiterals('rdfs:label'); //property label overrides
+        foreach ($labels as $label) {
+            $newOverrides['label'][$label->getLang()] = $label->getValue();
+        }
+        $descriptions = $override->allLiterals('rdfs:comment'); //optionally override property label tooltips
+        foreach ($descriptions as $description) {
+             $newOverrides['description'][$description->getLang()] = $description->getValue();
+        }
+        $this->labelOverrides[$labelPropUri] = array_merge($newOverrides, $this->labelOverrides[$labelPropUri]);
     }
 
     /**
@@ -178,12 +280,22 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
-     * Returns a boolean value set in the config.ttl config.
-     * @return boolean
+     * Returns the sorting strategy for notation codes set in the config.ttl
+     * config: either "lexical", "natural", or null if sorting by notations is 
+     * disabled. A "true" value in the configuration file is interpreted as
+     * "lexical".
+     * @return string|bool
      */
-    public function sortByNotation()
+    public function getSortByNotation(): ?string
     {
-        return $this->getBoolean('skosmos:sortByNotation');
+        $value = $this->getLiteral('skosmos:sortByNotation');
+        if ($value == "lexical" || $value == "natural") {
+            return $value;
+        }
+        // not a special value - interpret as boolean instead
+        $bvalue = $this->getBoolean('skosmos:sortByNotation');
+        // "true" is interpreted as "lexical"
+        return $bvalue ? "lexical" : null;
     }
 
     /**
@@ -389,6 +501,15 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
+     * Returns the boolean value of the skosmos:showNotationAsProperty setting.
+     * @return boolean
+     */
+    public function getShowNotationAsProperty()
+    {
+        return $this->getBoolean('skosmos:showNotationAsProperty', true);
+    }
+
+    /**
      * Returns a boolean value set in the config.ttl config.
      * @return array array of concept class URIs (can be empty)
      */
@@ -424,11 +545,19 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
-     * Returns the plugin parameters
-     * @return string plugin parameters or null
+     * Returns the parameters of parameterized plugins
+     * @return array of plugin parameters
      */
     public function getPluginParameters() {
-        return json_encode($this->pluginParameters, true);
+        return $this->pluginParameters;
+    }
+
+    /**
+     * Get the list of property label overrides
+     * @return array of custom property labels
+     */
+    public function getPropertyLabelOverrides() {
+        return $this->labelOverrides;
     }
 
     /**
@@ -440,7 +569,7 @@ class VocabularyConfig extends BaseConfig
         $defview = $this->resource->getLiteral('skosmos:defaultSidebarView');
         if ($defview) {
             $value = $defview->getValue();
-            if ($value === 'groups' || $value === 'hierarchy') {
+            if ($value === 'groups' || $value === 'hierarchy' || $value === 'new') {
                 return $value;
             }
 
@@ -478,9 +607,9 @@ class VocabularyConfig extends BaseConfig
         return $this->getBoolean('skosmos:showStatistics', true);
     }
 
-    public function getPlugins()
+    public function getPluginRegister()
     {
-        return $this->plugins;
+        return $this->pluginRegister;
     }
 
     /**
@@ -539,6 +668,15 @@ class VocabularyConfig extends BaseConfig
     public function getShowDeprecated()
     {
         return $this->getBoolean('skosmos:showDeprecated', false);
+    }
+
+    /**
+     * Returns a boolean value set in the config.ttl config.
+     * @return boolean
+     */
+    public function getShowDeprecatedChanges()
+    {
+        return $this->getBoolean('skosmos:showDeprecatedChanges', false);
     }
 
     /**

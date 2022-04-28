@@ -174,11 +174,19 @@ class Request
 
     /**
      * Returns the relative page url eg. '/yso/fi/search?clang=en&q=cat'
+     * @param string $newlang new UI language to set
      * @return string the relative url of the page
      */
-    public function getLangUrl()
+    public function getLangUrl($newlang=null)
     {
-        return substr(str_replace(str_replace('/index.php', '', $this->getServerConstant('SCRIPT_NAME')), '', $this->getServerConstant('REQUEST_URI')), 1);
+        $script_name = str_replace('/index.php', '', $this->getServerConstant('SCRIPT_NAME'));
+        $langurl = substr(str_replace($script_name, '', $this->getServerConstant('REQUEST_URI')), 1);
+        if ($newlang !== null) {
+            $langurl = preg_replace("#^(.*/)?{$this->lang}/#", "$1{$newlang}/", $langurl);
+        }
+        // make sure that the resulting URL isn't interpreted as an absolute URL
+        $langurl = str_replace(":", "", $langurl);
+        return $langurl;
     }
 
     public function getLetter()
@@ -262,7 +270,7 @@ class Request
 
     public function getPlugins() {
         if ($this->vocab) {
-            return $this->vocab->getConfig()->getPlugins();
+            return $this->vocab->getConfig()->getPluginRegister();
         }
         return new PluginRegister($this->model->getConfig()->getGlobalPlugins());
     }

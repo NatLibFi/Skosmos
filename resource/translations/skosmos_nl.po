@@ -5,13 +5,15 @@
 # Maxime Van Driessche <Van-driessche-maxime@hotmail.com>, 2018
 # noho <niels.hoffmann@hotmail.com>, 2019
 # osma <osma.suominen@helsinki.fi>, 2020
+# Redmer Kronemeijer <redmer.kronemeijer@rdmr.eu>, 2021
+# Yksityis Yrittäjä <okko.vainonen@helsinki.fi>, 2021
 msgid ""
 msgstr ""
 "Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-16 10:26+0200\n"
-"PO-Revision-Date: 2021-03-16 10:20+0000\n"
-"Last-Translator: Transifex Bot <>\n"
+"PO-Revision-Date: 2021-11-10 15:04+0000\n"
+"Last-Translator: Yksityis Yrittäjä <okko.vainonen@helsinki.fi>\n"
 "Language-Team: Dutch (http://www.transifex.com/national-library-of-finland/skosmos/language/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,7 +28,7 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 
 msgid "Download this vocabulary:"
-msgstr ""
+msgstr "Download deze woordenlijst:"
 
 #: controller/Controller.php:38
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:21
@@ -87,7 +89,7 @@ msgstr "Alle %d resultaten worden getoond."
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:276
 #: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:70
 msgid "Alpha-nav"
-msgstr "Alfabetish"
+msgstr "Alfabetisch"
 
 #: /tmp/cache/587c83c09abaa/cf/cf0b3d87d2eb48f38f5f339303d5509c7535d13d7b010ad4840ee824430f7fe6.php:34
 msgid "Alphabetical index"
@@ -95,19 +97,19 @@ msgstr "Alfabetische index"
 
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:555
 msgid "By group"
-msgstr "Per groep"
+msgstr "Groep"
 
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:587
 msgid "By parent"
-msgstr "Per parent"
+msgstr "Breder concept"
 
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:477
 msgid "By scheme"
-msgstr "Per subvocabulair"
+msgstr "Subvocabulair"
 
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:516
 msgid "By type"
-msgstr "Per type"
+msgstr "Type"
 
 #: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:119
 #: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:132
@@ -117,9 +119,12 @@ msgstr "Per type"
 msgid "Changes-nav"
 msgstr "Nieuw"
 
+msgid "Changes-and-deprecations-nav"
+msgstr ""
+
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:122
 msgid "Clear limitations"
-msgstr "Wis limiten"
+msgstr "Wis filters"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:74
 msgid "Contact us!"
@@ -127,11 +132,11 @@ msgstr "Contacteer ons!"
 
 #: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:108
 msgid "Content and search language"
-msgstr "Content en zoek taal"
+msgstr "Content- en zoektaal"
 
 #: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:51
 msgid "Content language"
-msgstr "Content taal"
+msgstr "Content-taal"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:732
 msgid "Download this concept in SKOS format:"
@@ -143,7 +148,7 @@ msgstr "E-mail:"
 
 #: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:220
 msgid "Enter search term"
-msgstr "Type je zoekterm"
+msgstr "Typ zoekterm"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:148
 msgid "Enter your e-mail address"
@@ -199,7 +204,7 @@ msgstr "Laat dit veld leeg"
 
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:594
 msgid "Limit search"
-msgstr "Limiet zoeken"
+msgstr "Zoek met filter"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:31
 msgid "Loading"
@@ -224,11 +229,11 @@ msgstr "Geen resultaten"
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:103
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:111
 msgid "Not to a specific vocabulary"
-msgstr "Geen specifieke woordenlijst"
+msgstr "Niet voor een specifieke woordenlijst"
 
 #: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:233
 msgid "Search"
-msgstr "Zoeken"
+msgstr "Zoek"
 
 #: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:59
 msgid "Search from vocabulary"
@@ -236,7 +241,7 @@ msgstr "Zoek in woordenlijst"
 
 #: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:210
 msgid "Search language: any"
-msgstr "Een taal"
+msgstr "Elke taal"
 
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:340
 msgid "Search options"
@@ -251,7 +256,7 @@ msgid "show all # paths"
 msgstr "Toon alle # paden"
 
 msgid "show all # values"
-msgstr ""
+msgstr "Toon alle # waardes"
 
 #: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:72
 msgid "Skosmos version %version%"
@@ -263,7 +268,7 @@ msgstr "Verzend zoekopdracht"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:68
 msgid "Thank you for your feedback"
-msgstr "Bedankt voor je feedback. We streven ernaar om alle feedback zo snel mogelijk te beantwoorden."
+msgstr "Bedankt voor uw feedback. We streven ernaar om alle feedback zo snel mogelijk te beantwoorden."
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:129
 msgid "The search provided no results."
@@ -280,11 +285,11 @@ msgstr "Waarde is noodzakelijk en kan niet leeg zijn"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:27
 msgid "cc:attributionName"
-msgstr "Attribuut Naam"
+msgstr "Rechthebbende"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:29
 msgid "cc:attributionUrl"
-msgstr "Attribuut Url"
+msgstr "URL rechthebbende"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:25
 msgid "cc:license"
@@ -292,11 +297,11 @@ msgstr "Licentie"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:31
 msgid "cc:morePermissions"
-msgstr "Meer permissies"
+msgstr "Aanvullende licentiemogelijkheden"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:33
 msgid "cc:useGuidelines"
-msgstr "gebruik guidelines"
+msgstr "Gebruiksrichtlijnen"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:35
 msgid "dc:conformsTo"
@@ -304,7 +309,7 @@ msgstr "Conformeert met"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:37
 msgid "dc:contributor"
-msgstr "Contributor"
+msgstr "Bijdrages van"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:39
 msgid "dc:coverage"
@@ -316,7 +321,7 @@ msgstr "Gemaakt"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:43
 msgid "dc:creator"
-msgstr "Creator"
+msgstr "Maker"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:45
 msgid "dc:date"
@@ -364,7 +369,7 @@ msgstr "Uitgever"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:67
 msgid "dc:relation"
-msgstr "Relatie"
+msgstr "Gerelateerd"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:69
 msgid "dc:replaces"
@@ -409,7 +414,7 @@ msgstr "Type"
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:36
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:256
 msgid "deprecated"
-msgstr "Dit concept is verouderd. Gebruik dit concept niet als aantekening!"
+msgstr "Dit concept is verouderd."
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:89
 msgid "foaf:homepage"
@@ -433,16 +438,16 @@ msgid "from all"
 msgstr "van alle"
 
 msgid "wgs84:lat"
-msgstr ""
+msgstr "Breedtegraad"
 
 msgid "wgs84:lat_help"
-msgstr ""
+msgstr "Decimale breedtegraden volgens WGS 84"
 
 msgid "wgs84:long"
-msgstr ""
+msgstr "Lengtegraad"
 
 msgid "wgs84:long_help"
-msgstr ""
+msgstr "Decimale lengtegraden volgens WGS 84"
 
 #: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:81
 #: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:90
@@ -454,7 +459,7 @@ msgstr "De hiërarchie van het hoogste niveau kan niet getoond worden in deze wo
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:93
 msgid "isothes:ConceptGroup"
-msgstr "Concept groep"
+msgstr "Conceptgroep"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:97
 msgid "isothes:ThesaurusArray"
@@ -470,7 +475,7 @@ msgstr "Bredere concepten (instantie)"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:103
 msgid "isothes:broaderPartitive"
-msgstr "Bredere concepten (opgedeeld)"
+msgstr "Bredere concepten (deel van)"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:105
 msgid "isothes:narrowerGeneric"
@@ -482,7 +487,7 @@ msgstr "Nauwere concepten (instantie)"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:109
 msgid "isothes:narrowerPartitive"
-msgstr "Nauwere concepten (opgedeeld)"
+msgstr "Nauwere concepten (onderdeel)"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:95
 msgid "isothes:superGroup"
@@ -494,19 +499,19 @@ msgstr "lay-out ontworpen door Hahmo Design"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:74
 msgid "limited to group"
-msgstr "groep"
+msgstr "gefilterd op groep"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:67
 msgid "limited to parent"
-msgstr "ouder"
+msgstr "gefilterd op breder"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:81
 msgid "limited to scheme"
-msgstr "gelimiteerd tot schema"
+msgstr "gefilterd op subvocabulair"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:29
 msgid "limited to type"
-msgstr "type"
+msgstr "gefilterd op type"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:113
 msgid "owl:sameAs"
@@ -566,7 +571,7 @@ msgstr "Breder concept"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:169
 msgid "skos:changeNote"
-msgstr "Verander notitie"
+msgstr "Wijzigingsnotitie"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:147
 msgid "skos:closeMatch"
@@ -602,19 +607,19 @@ msgstr "Voorbeeld"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:155
 msgid "skos:hasTopConcept"
-msgstr "Heeft top concept"
+msgstr "Topconcept"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:165
 msgid "skos:historyNote"
-msgstr "Geschiedenis notitie"
+msgstr "Geschiedenisnotitie"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:151
 msgid "skos:inScheme"
-msgstr "Concept schema"
+msgstr "Subvocabulair"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:149
 msgid "skos:member"
-msgstr "Groep leden"
+msgstr "Lid"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:181
 msgid "skos:member_help"
@@ -647,7 +652,7 @@ msgstr "Notities"
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:234
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:141
 msgid "skos:prefLabel"
-msgstr "Geprefereerde term"
+msgstr "Voorkeursterm"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:137
 msgid "skos:related"
@@ -663,7 +668,7 @@ msgstr "Concepten die gerelateerd zijn aan dit concept"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:159
 msgid "skos:scopeNote"
-msgstr "Bereik notitie"
+msgstr "Bereiksnotitie"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:177
 msgid "skos:scopeNote_help"
@@ -671,7 +676,7 @@ msgstr "Notities over het gebruik en het bereik van dit concept"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:153
 msgid "skos:topConceptOf"
-msgstr "Behoord tot woordenlijst"
+msgstr "Behoort tot woordenlijst"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:197
 msgid "skosext:DeprecatedConcept"
@@ -728,7 +733,7 @@ msgstr "Aantal"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:157
 msgid "Download this vocabulary as SKOS/RDF:"
-msgstr "Download deze woordenlijset als SKOS/RDF"
+msgstr "Download deze woordenlijst als SKOS/RDF"
 
 #: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:205
 msgid "Help"
@@ -740,7 +745,7 @@ msgstr "Verborgen termen"
 
 #: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:58
 msgid "Interface language"
-msgstr "Interface taal"
+msgstr "Interfacetaal"
 
 #: /tmp/cache/587c83c13194c/f9/f9c816822168f230ef0bfed735f5923aab99d389ce8b2c6b2f5fcd5d400bc275.php:26
 msgid "No vocabularies on the server!"
@@ -748,7 +753,7 @@ msgstr "Geen woordenlijsten op de server!"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:134
 msgid "Preferred terms"
-msgstr "Geprefereerde termen"
+msgstr "Voorkeurstermen"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:111
 msgid "Resource counts by type"
@@ -768,7 +773,7 @@ msgstr "Woordenlijsten"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:24
 msgid "Vocabulary information"
-msgstr "Woordenlijst informatie"
+msgstr "Woordenlijstinformatie"
 
 #: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:199
 msgid "helper_help"
@@ -776,75 +781,96 @@ msgstr "Beweeg uw cursor over de tekst met een gestippelde onderstreping om inst
 
 #: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:201
 msgid "search_example_text"
-msgstr "Voor een ingekorte zoekopdracht, gelieve het symbool * te gebruiken zoals in *dier of *patent*. Voor het einde van zoekwoorden zal de zoekopdracht automatisch beschouwd worden als ingekort, zelfs als het inkortingssymbool not manueel werd ingevoerd: zo zal kat hetzelfde resultaat opleveren als kat*"
+msgstr "Voor een ingekorte zoekopdracht, gelieve het symbool * te gebruiken zoals in *dier of *patent*. Voor het einde van zoekwoorden zal de zoekopdracht automatisch beschouwd worden als ingekort, zelfs als het inkortingssymbool niet handmatig werd ingevoerd: zo zal kat hetzelfde resultaat opleveren als kat*"
 
 msgid "feedback_enter_name_email"
-msgstr ""
+msgstr "Voer uw naam en e-mailadres in als u een direct antwoord wilt ontvangen. U hebt ook de mogelijkheid om uw feedback anoniem in te dienen. NB: Feedback over een specifieke woordenlijst wordt doorgestuurd naar de beheerder ervan."
 
 msgid "concept_types"
-msgstr "Concept types"
+msgstr "Concepttypes"
 
 msgid "Skip to main"
-msgstr ""
+msgstr "Naar hoofdinhoud"
 
 msgid "Available vocabularies and ontologies"
-msgstr ""
+msgstr "Beschikbare woordenlijsten en ontologieën"
 
 msgid "Search from selected vocabularies"
-msgstr ""
+msgstr "Zoek in geselecteerde woordenlijsten"
 
 msgid "List vocabulary concepts alphabetically"
-msgstr ""
+msgstr "Sorteer concepten alfabetisch"
 
 msgid "List vocabulary concepts and groupings hierarchically"
-msgstr ""
+msgstr "Sorteer concepten en groepen hiërarchisch"
 
 msgid "List vocabulary concepts by newest additions"
-msgstr ""
+msgstr "Sorteer concepten op meest recent toegevoegd"
 
 msgid "List vocabulary concepts hierarchically"
-msgstr ""
+msgstr "Sorteer concepten hiërarchisch"
 
 msgid "Choose alphabetical listing letter"
-msgstr ""
+msgstr "Kies letter voor alfabetische lijst"
 
 msgid "Concept information"
-msgstr ""
+msgstr "Conceptinformatie"
 
 msgid "Hierarchical listing of vocabulary concepts"
-msgstr ""
+msgstr "Concepten hiërarchisch gesorteerd"
 
 msgid "Hierarchical listing of vocabulary concepts and groupings"
-msgstr ""
+msgstr "Concepten en groepen hiërarchisch gesorteerd"
 
 msgid "Listing vocabulary concepts alphabetically"
-msgstr ""
+msgstr "Concepten alfabetisch gesorteerd"
 
 msgid "Listing vocabulary concepts by newest additions"
-msgstr ""
+msgstr "Concepten gesorteerd op meest recent toegevoegd"
 
 msgid "Prefer using"
-msgstr ""
+msgstr "Gebruik liever"
 
 msgid "Search options tab"
-msgstr ""
+msgstr "Tab voor zoekopties"
 
 msgid "Search results"
-msgstr ""
+msgstr "Zoekresultaten"
 
 msgid "Sidebar listing: list and traverse vocabulary contents by a criterion"
-msgstr ""
+msgstr "Zijbalk: sorteer en blader door gefilterde woordenlijstonderdelen"
 
 msgid "Subject:"
-msgstr ""
+msgstr "Onderwerp:"
 
 msgid "Write a subject"
-msgstr ""
+msgstr "Voeg een onderwerp toe"
 
 msgid "Select a vocabulary"
-msgstr ""
+msgstr "Selecteer een woordenlijst"
 
 msgid ""
 "We're sorry but Skosmos doesn't work properly without JavaScript enabled. "
 "Please enable it to continue."
+msgstr "Helaas werkt Skosmos niet correct zonder JavaScript. Schakel het in om door te gaan."
+
+msgid "Deprecated concept"
+msgstr "Vervallen concept"
+
+msgid "Error: Search failed!"
+msgstr ""
+
+msgid "Error: Failed to retrieve vocabulary information!"
+msgstr ""
+
+msgid "Error: Loading more items failed!"
+msgstr ""
+
+msgid "Retry"
+msgstr ""
+
+msgid "skos:notation"
+msgstr ""
+
+msgid "skos:notation_help"
 msgstr ""

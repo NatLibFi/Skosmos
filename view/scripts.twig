@@ -2,6 +2,8 @@
 <!-- translations needed in javascript -->
 var noResultsTranslation = "{% trans %}No results{% endtrans %}";
 var loading_text = "{% trans %}Loading more items{% endtrans %}";
+var loading_failed_text = "{% trans %}Error: Loading more items failed!{% endtrans %}";
+var loading_retry_text = "{% trans %}Retry{% endtrans %}";
 var jstree_loading = "{% trans %}Loading{% endtrans %} ...";
 var results_disp = "{% trans %}All %d results displayed{% endtrans %}";
 var all_vocabs  = "{% trans %}from all{% endtrans %}";
@@ -30,8 +32,9 @@ var prefLabels = [{"lang": "{{ search_results|first.label.lang }}","label": "{{ 
 {% if request.vocab and request.vocab.uriSpace %}
 var uriSpace = "{{ request.vocab.uriSpace }}";
 {% endif %}
-var showNotation = {% if request.vocab and request.vocab.config.showNotation == false %}false{% else %}true{% endif %};
+var showNotation = {% if request.vocab and not request.vocab.config.showNotation %}false{% else %}true{% endif %};
 {% if request.vocab  %}
+var sortByNotation = {% if request.vocab.config.sortByNotation %}"{{ request.vocab.config.sortByNotation }}"{% else %}null{% endif %};
 var languageOrder = [{% for lang in request.vocab.config.languageOrder(request.contentLang) %}"{{ lang }}"{% if not loop.last %},{% endif %}{% endfor %}];
 var vocShortName = "{{ request.vocab.config.shortname }}";
 {% endif %}
@@ -41,19 +44,20 @@ var pluginParameters = {{ plugin_params|raw }};
 {% endif %}
 </script>
 
-{% if request.page == 'page' and search_results and search_results|length == 1 %}
 <script type="application/ld+json">
+{% if search_results and search_results|length == 1 %}
 {{ search_results|first.dumpJsonLd|raw }}
-</script>
+{% else %}
+{}
 {% endif %}
+</script>
 <script src="vendor/components/jquery/jquery.min.js"></script>
 <script src="vendor/components/jqueryui/jquery-ui.min.js"></script>
 <script src="vendor/components/handlebars.js/handlebars.min.js"></script>
 <script src="vendor/vakata/jstree/dist/jstree.min.js"></script>
 <script src="vendor/twitter/typeahead.js/dist/typeahead.bundle.min.js"></script>
-<script src="vendor/medialize/uri.js/src/URI.min.js"></script>
-<script src="vendor/davidstutz/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
-<script src="vendor/twitter/bootstrap/dist/js/bootstrap.js"></script>
+<script src="vendor/davidstutz/bootstrap-multiselect/dist/js/bootstrap-multiselect.min.js"></script>
+<script src="vendor/twbs/bootstrap/dist/js/bootstrap.bundle.js"></script>
 <script src="vendor/grimmlink/qtip2/dist/jquery.qtip.min.js"></script>
 <script src="vendor/etdsolutions/waypoints/jquery.waypoints.min.js"></script>
 <script src="vendor/newerton/jquery-mousewheel/jquery.mousewheel.min.js"></script>

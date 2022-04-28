@@ -1,21 +1,20 @@
 # 
 # Translators:
-# Dan Michael O. Heggø <danmichaelo@gmail.com>, 2015-2017,2019-2021
-# Oddrun Pauline Ohren <oddrun.ohren@nb.no>, 2021
-# osma <osma.suominen@helsinki.fi>, 2017,2020
+# Redmer Kronemeijer <redmer.kronemeijer@rdmr.eu>, 2021
+# Redmer Kronemeijer <redmer.kronemeijer@rdmr.eu>, 2021
 # Yksityis Yrittäjä <okko.vainonen@helsinki.fi>, 2021
 msgid ""
 msgstr ""
 "Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-16 10:26+0200\n"
-"PO-Revision-Date: 2021-11-10 15:06+0000\n"
+"PO-Revision-Date: 2021-11-10 15:09+0000\n"
 "Last-Translator: Yksityis Yrittäjä <okko.vainonen@helsinki.fi>\n"
-"Language-Team: Norwegian Bokmål (http://www.transifex.com/national-library-of-finland/skosmos/language/nb/)\n"
+"Language-Team: Western Frisian (http://www.transifex.com/national-library-of-finland/skosmos/language/fy/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: nb\n"
+"Language: fy\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.8.7.1\n"
 "X-Poedit-Basepath: ../..\n"
@@ -25,42 +24,42 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 
 msgid "Download this vocabulary:"
-msgstr "Last ned dette vokabularet:"
+msgstr "Download dizze wurdlist"
 
 #: controller/Controller.php:38
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:21
 msgid "in_this_language"
-msgstr "på bokmål"
+msgstr "yn it Frysk"
 
 #: controller/RestController.php:271
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:125
 msgid "skos:Concept"
-msgstr "Begrep"
+msgstr "Begryp"
 
 #: controller/RestController.php:280
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:127
 msgid "skos:Collection"
-msgstr "Samling"
+msgstr "Kolleksje"
 
 #: model/Concept.php:455 model/Concept.php:475
 msgid "skosmos:created"
-msgstr "Opprettet"
+msgstr "Makke"
 
 #: model/Concept.php:460 model/Concept.php:462 model/Concept.php:471
 msgid "skosmos:modified"
-msgstr "sist endret"
+msgstr "lêst wizige"
 
 #: model/VocabularyCategory.php:39
 msgid "Vocabularies"
-msgstr "Vokabularer"
+msgstr "Wurdlist"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:26
 msgid "%search_count% results for '%term%'"
-msgstr "%search_count% treff for '%term%'"
+msgstr "%search_count% resultaten foar ’%term%’"
 
 #: /tmp/cache/587c83c09abaa/23/23c9862892c34daf7bea11b6d50990145b73a83c0947ae60c3d729fe591a06ec.php:48
 msgid "404 Error: The page %requested_page% cannot be found."
-msgstr "404 Feil: Siden %requested_page% finnes ikke."
+msgstr "404 fout: Pagina ‘%requested_page%’ kin net fûn wurde"
 
 #: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:62
 #: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:75
@@ -68,17 +67,17 @@ msgstr "404 Feil: Siden %requested_page% finnes ikke."
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:274
 #: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:68
 msgid "A-Z"
-msgstr "A-Å"
+msgstr "A-Z"
 
 #: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:46
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:19
 msgid "About"
-msgstr "Informasjon"
+msgstr "Oer"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:35
 #, php-format
 msgid "All %d results displayed"
-msgstr "Alle %d resultater vises"
+msgstr "Alle %d resultaten wurden werjûn"
 
 #: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:64
 #: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:77
@@ -86,27 +85,27 @@ msgstr "Alle %d resultater vises"
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:276
 #: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:70
 msgid "Alpha-nav"
-msgstr "Alfabetisk"
+msgstr "Alfabetysk"
 
 #: /tmp/cache/587c83c09abaa/cf/cf0b3d87d2eb48f38f5f339303d5509c7535d13d7b010ad4840ee824430f7fe6.php:34
 msgid "Alphabetical index"
-msgstr "Alfabetisk indeks"
+msgstr "Alfabetyske yndeks"
 
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:555
 msgid "By group"
-msgstr "Etter gruppe"
+msgstr "Groep"
 
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:587
 msgid "By parent"
-msgstr "Etter overordnet"
+msgstr "Wider begryp"
 
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:477
 msgid "By scheme"
-msgstr "Etter undervokabular"
+msgstr "Subfokabulêr"
 
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:516
 msgid "By type"
-msgstr "Etter type"
+msgstr "Type"
 
 #: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:119
 #: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:132
@@ -114,69 +113,69 @@ msgstr "Etter type"
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:331
 #: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:125
 msgid "Changes-nav"
-msgstr "Nye"
+msgstr "Nij"
 
 msgid "Changes-and-deprecations-nav"
 msgstr ""
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:122
 msgid "Clear limitations"
-msgstr "Fjern avgrensninger"
+msgstr "WIskje filters"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:74
 msgid "Contact us!"
-msgstr "Ta kontakt!"
+msgstr "Nim kontakt op!"
 
 #: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:108
 msgid "Content and search language"
-msgstr "Innholds- og søkespråk"
+msgstr "Ynhâlds- en syktaal"
 
 #: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:51
 msgid "Content language"
-msgstr "Innholdsspråk"
+msgstr "Ynhâldstaal"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:732
 msgid "Download this concept in SKOS format:"
-msgstr "Last ned dette begrepet:"
+msgstr "Download dit begryp"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:144
 msgid "E-mail:"
-msgstr "E-postadresse:"
+msgstr "E-mailadres:"
 
 #: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:220
 msgid "Enter search term"
-msgstr "Fyll inn søketerm"
+msgstr "Sykterm"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:148
 msgid "Enter your e-mail address"
-msgstr "Fyll inn e-postadressen din"
+msgstr "Fier jo e-mailadres yn"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:140
 msgid "Enter your name"
-msgstr "Fyll inn navnet ditt"
+msgstr "Fier jo namme yn"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:900
 #: /tmp/cache/587c83c13194c/5c/5c060d2297f64d66beb101ee34831f917ed8d33f97dadeca144430a1561433ec.php:69
 msgid "Error: Requested vocabulary not found!"
-msgstr "Feil: Vokabularet ble ikke funnet!"
+msgstr "Fout: de oanfrege wurdlist is net fûn."
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:890
 msgid "Error: Term \"%term%\" not found in vocabulary!"
-msgstr "Feil: Termen «%term%» finnes ikke i vokabularet!"
+msgstr "Fout: ‘%term%’ net fûn yn ’e wurdlist"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:34
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:54
 #: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:194
 msgid "Feedback"
-msgstr "Tilbakemelding"
+msgstr "Weromkeppeling"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:64
 msgid "Feedback has been sent!"
-msgstr "Tilbakemeldingen er sendt inn!"
+msgstr "Weromkeppeling is ferstjoerd!"
 
 #: /tmp/cache/587c83c09abaa/d1/d13f81e53ff33f31fff259d66f8ddbf7cfc39d25c6219ff727553feca6d87d37.php:35
 msgid "Group index"
-msgstr "Gruppeindeks"
+msgstr "Groepsyndeks"
 
 #: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:101
 #: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:114
@@ -184,7 +183,7 @@ msgstr "Gruppeindeks"
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:313
 #: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:107
 msgid "Group-nav"
-msgstr "Grupper"
+msgstr "Groepen"
 
 #: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:85
 #: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:94
@@ -193,216 +192,216 @@ msgstr "Grupper"
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:55
 #: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:91
 msgid "Hier-nav"
-msgstr "Hierarki"
+msgstr "Hiërargy"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:157
 msgid "Leave this field blank"
-msgstr "La feltet stå blankt"
+msgstr "Lit dit leech"
 
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:594
 msgid "Limit search"
-msgstr "Avgrens søket"
+msgstr "Sykje mei filter"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:31
 msgid "Loading"
-msgstr "Laster"
+msgstr "Lade"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:27
 msgid "Loading more items"
-msgstr "Henter flere elementer"
+msgstr "Mear begripen lade"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:152
 msgid "Message:"
-msgstr "Melding:"
+msgstr "Berjocht:"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:136
 msgid "Name:"
-msgstr "Navn:"
+msgstr "Namme:"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:23
 msgid "No results"
-msgstr "Ingen resultater"
+msgstr "Gjin resultaten"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:103
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:111
 msgid "Not to a specific vocabulary"
-msgstr "Ikke noe bestemt vokabular"
+msgstr "Net foar in spesifike wurdlist"
 
 #: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:233
 msgid "Search"
-msgstr "Søk"
+msgstr "Sykje"
 
 #: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:59
 msgid "Search from vocabulary"
-msgstr "Søk fra vokabular"
+msgstr "Sykje yn wurdlist"
 
 #: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:210
 msgid "Search language: any"
-msgstr "på alle språk"
+msgstr "Elke taal"
 
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:340
 msgid "Search options"
-msgstr "Søkevalg"
+msgstr "Sykopsjes"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:161
 msgid "Send feedback"
-msgstr "Gi tilbakemelding"
+msgstr "Stjoer weromkeppeling"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:51
 msgid "show all # paths"
-msgstr "vis alle # stier"
+msgstr "Jou alle # paden wer"
 
 msgid "show all # values"
-msgstr "vis alle # verdier"
+msgstr "Jou alle # wearden wer"
 
 #: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:72
 msgid "Skosmos version %version%"
-msgstr "Skosmos versjon %version%"
+msgstr "Skosmos fersje %version%"
 
 #: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:229
 msgid "Submit search"
-msgstr "Send inn søk"
+msgstr "Verstjoer sykopdracht"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:68
 msgid "Thank you for your feedback"
-msgstr "Takk for tilbakemeldingen. Vi prøver å svare deg så fort som mulig."
+msgstr "Tank foar jo weromkeppeling. Wy stribje dernei alle weromkeppeling sa rap mooglik te beantwurdzje"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:129
 msgid "The search provided no results."
-msgstr "Søket ga ingen resultater."
+msgstr "De sykopdracht hat gjin resultaten oplevere"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:48
 msgid "There is no term for this concept in this language"
-msgstr "Det finnes ingen termer for dette begrepet på dette språket"
+msgstr "Der is gjin term foar dit begryp in dizze taal."
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:173
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:47
 msgid "Value is required and can not be empty"
-msgstr "Feltet er obligatorisk og kan ikke stå tomt"
+msgstr "Wearde is needsaaklik en kin net leech bliuwe"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:27
 msgid "cc:attributionName"
-msgstr "Kreditering"
+msgstr "Rjochthawwende"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:29
 msgid "cc:attributionUrl"
-msgstr "Krediteringslenke"
+msgstr "URL rjochthawwende"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:25
 msgid "cc:license"
-msgstr "Lisens"
+msgstr "Lisinsje"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:31
 msgid "cc:morePermissions"
-msgstr "Ytterligere tillatelser"
+msgstr "Oanfoljende lisinsjemooglikheid"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:33
 msgid "cc:useGuidelines"
-msgstr "retningslinjer for bruk"
+msgstr "Brûksrjochtline"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:35
 msgid "dc:conformsTo"
-msgstr "Er i overensstemmelse med"
+msgstr "Komformearet mei"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:37
 msgid "dc:contributor"
-msgstr "Bidragsyter"
+msgstr "Bydragen fan"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:39
 msgid "dc:coverage"
-msgstr "Dekning"
+msgstr "Berik"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:41
 msgid "dc:created"
-msgstr "Opprettet"
+msgstr "Makke"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:43
 msgid "dc:creator"
-msgstr "Skaper"
+msgstr "Makker"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:45
 msgid "dc:date"
-msgstr "Dato"
+msgstr "Datum"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:47
 msgid "dc:description"
-msgstr "Beskrivelse"
+msgstr "Beskriuwing"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:49
 msgid "dc:format"
-msgstr "Format"
+msgstr "Formaat"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:51
 msgid "dc:identifier"
-msgstr "Identifikator"
+msgstr "Identifikaasje"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:53
 msgid "dc:isReplacedBy"
-msgstr "Erstattet av"
+msgstr "Wurdt ferfongen troch"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:55
 msgid "dc:isRequiredBy"
-msgstr "Kreves av"
+msgstr "Is nedich foar"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:57
 msgid "dc:issued"
-msgstr "Publiseringsdato"
+msgstr "Datum útjûn"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:59
 msgid "dc:language"
-msgstr "Språk"
+msgstr "Taal"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:61
 msgid "dc:license"
-msgstr "Lisens"
+msgstr "Lisinsje"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:63
 msgid "dc:modified"
-msgstr "Sist endret"
+msgstr "Lêst wizige"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:65
 msgid "dc:publisher"
-msgstr "Utgiver"
+msgstr "Útjouwer"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:67
 msgid "dc:relation"
-msgstr "Relasjon"
+msgstr "Relateard"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:69
 msgid "dc:replaces"
-msgstr "Erstatter"
+msgstr "Ferfangt"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:71
 msgid "dc:rights"
-msgstr "Rettigheter"
+msgstr "Rjochten"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:73
 msgid "dc:rightsHolder"
-msgstr "Rettighetshaver"
+msgstr "Rjochthawwende"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:75
 msgid "dc:source"
-msgstr "Kilde"
+msgstr "Boarne"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:77
 msgid "dc:source_help"
-msgstr "Kilde for beskrivelsen av begrepet."
+msgstr "Boarne fan de beskriuwing fan it begryp"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:79
 msgid "dc:spatial"
-msgstr "Geografisk dekning"
+msgstr "Rúmtetlik berik"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:81
 msgid "dc:subject"
-msgstr "Emne"
+msgstr "Ûnderwerp"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:83
 msgid "dc:temporal"
-msgstr "Kronologisk dekning"
+msgstr "Tiidsberik"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:85
 msgid "dc:title"
-msgstr "Navn"
+msgstr "Titel"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:87
 msgid "dc:type"
@@ -411,11 +410,11 @@ msgstr "Type"
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:36
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:256
 msgid "deprecated"
-msgstr "Begrepet er tatt ut av bruk."
+msgstr "Dit begryp is ferâldere."
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:89
 msgid "foaf:homepage"
-msgstr "Hjemmeside"
+msgstr "Haadside"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:91
 msgid "foaf:page"
@@ -424,27 +423,27 @@ msgstr "Side"
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:658
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:542
 msgid "foreign prefLabel help"
-msgstr "Termer brukt om det samme begrepet på andre språk."
+msgstr "Termen foar it begryp yn oare talen"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:660
 msgid "foreign prefLabels"
-msgstr "På andre språk"
+msgstr "Yn oare talen"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:39
 msgid "from all"
-msgstr "fra alle"
+msgstr "fan alle"
 
 msgid "wgs84:lat"
-msgstr "Breddegrad"
+msgstr "Breedtegraad"
 
 msgid "wgs84:lat_help"
-msgstr "Breddegrad i desimalgrader i henhold til WGS 84-systemet."
+msgstr "Breedtegraad yn desimale graden yn it WGS 84-systeem"
 
 msgid "wgs84:long"
-msgstr "Lengdegrad"
+msgstr "Lingtegraad"
 
 msgid "wgs84:long_help"
-msgstr "Lengdegrad i desimalgrader i henhold til WGS 84-systemet."
+msgstr "Lingtegraad yn desimale graden yn it WGS 84-systeem"
 
 #: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:81
 #: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:90
@@ -452,71 +451,71 @@ msgstr "Lengdegrad i desimalgrader i henhold til WGS 84-systemet."
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:293
 #: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:87
 msgid "hierarchy-disabled-help"
-msgstr "Kan ikke vise toppnivåhierarkiet for dette vokabularet."
+msgstr "De haadhiërargy fan dizze wurdlist kin net sjoen wurde litte"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:93
 msgid "isothes:ConceptGroup"
-msgstr "Begrepsgruppe"
+msgstr "Begrypsgroep"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:97
 msgid "isothes:ThesaurusArray"
-msgstr "Inndeling av søskenbegrep"
+msgstr "Rige fan njonkenskikte begripen"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:99
 msgid "isothes:broaderGeneric"
-msgstr "Overordnede begrep"
+msgstr "Widere begripen"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:101
 msgid "isothes:broaderInstantial"
-msgstr "Overordnet begrep (forekomst av)"
+msgstr "Wider begryp (klasse)"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:103
 msgid "isothes:broaderPartitive"
-msgstr "Overordnet begrep (del av)"
+msgstr "Wider begryp (diel fan)"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:105
 msgid "isothes:narrowerGeneric"
-msgstr "Underordnede begreper"
+msgstr "Eanger begryp"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:107
 msgid "isothes:narrowerInstantial"
-msgstr "Underordnede begreper (forekomster)"
+msgstr "Eanger begryp (ynstânsje)"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:109
 msgid "isothes:narrowerPartitive"
-msgstr "Underordnede begreper (deler)"
+msgstr "Eanger begryp (ûnderdiel)"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:95
 msgid "isothes:superGroup"
-msgstr "Overordnet gruppe"
+msgstr "Boppelizzende groep"
 
 #: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:66
 msgid "layout designed by Hahmo"
-msgstr "layout av Hahmo Design"
+msgstr "Layout ûntworpen troch Hahmo Design"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:74
 msgid "limited to group"
-msgstr "gruppe"
+msgstr "filtere op groep"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:67
 msgid "limited to parent"
-msgstr "overordnet"
+msgstr "filtere op wider begryp"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:81
 msgid "limited to scheme"
-msgstr "avgrenset til"
+msgstr "filtere op subfokabulêr"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:29
 msgid "limited to type"
-msgstr "type"
+msgstr "filtere op type"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:113
 msgid "owl:sameAs"
-msgstr "Tilsvarende begreper"
+msgstr "Gelike begripen"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:111
 msgid "owl:versionInfo"
-msgstr "Versjon"
+msgstr "Versje"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:115
 msgid "rdf:type"
@@ -524,241 +523,241 @@ msgstr "Type"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:117
 msgid "rdf:type_help"
-msgstr "Begrepstype"
+msgstr "Type fan ’e entiteit"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:123
 msgid "rdfs:comment"
-msgstr "Note"
+msgstr "Beskriuwing"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:119
 msgid "rdfs:label"
-msgstr "Term"
+msgstr "Label"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:121
 msgid "rdfs:seeAlso"
-msgstr "Se også"
+msgstr "Sjoch ek"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:43
 msgid "selected"
-msgstr "valgte"
+msgstr "selekteard"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:143
 msgid "skos:altLabel"
-msgstr "Henvisningsterm"
+msgstr "Yngongstermen"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:179
 msgid "skos:altLabel_help"
-msgstr "Andre termer som brukes om det samme begrepet."
+msgstr "Oare termen foar it begryp"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:133
 msgid "skos:broadMatch"
-msgstr "Overordnede begreper"
+msgstr "Widere oerienkommende begripen"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:191
 msgid "skos:broadMatch_help"
-msgstr "Videre begreper i andre vokabularer."
+msgstr "Widere oerienkommende begripen yn in oare wurdlist"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:129
 msgid "skos:broader"
-msgstr "Overordnede begreper"
+msgstr "Wider begryp"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:171
 msgid "skos:broader_help"
-msgstr "Videre begreper i samme vokabular."
+msgstr "Wider begryp"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:169
 msgid "skos:changeNote"
-msgstr "Endringsnote"
+msgstr "Wizigingsnotysje"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:147
 msgid "skos:closeMatch"
-msgstr "Nærliggende begreper"
+msgstr "Neiby oerienkommende begripen"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:189
 msgid "skos:closeMatch_help"
-msgstr "Begreper i andre vokabularer med nesten tilsvarende betydning."
+msgstr "Neiby oerienkommende begripen yn in oare wurdlist"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:161
 msgid "skos:definition"
-msgstr "Definisjon"
+msgstr "Betsjutting"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:185
 msgid "skos:definition_help"
-msgstr "Beskrivelse og avgrensning av begrepets omfang."
+msgstr "In komplete beskriuwing fan de betsjutting fan in begryp"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:167
 msgid "skos:editorialNote"
-msgstr "Redaksjonelle bemerkninger"
+msgstr "Redaksjenotysje"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:145
 msgid "skos:exactMatch"
-msgstr "Tilsvarende"
+msgstr "Presiis oerienkommende begripen"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:187
 msgid "skos:exactMatch_help"
-msgstr "Begreper i andre vokabularer med tilsvarende betydning."
+msgstr "Presiis oerienkommende begripen yn in oare wurdlist"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:163
 msgid "skos:example"
-msgstr "Eksempel"
+msgstr "Foarbyld"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:155
 msgid "skos:hasTopConcept"
-msgstr "Har toppbegrep"
+msgstr "Haadbegryp"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:165
 msgid "skos:historyNote"
-msgstr "Endringshistorikk"
+msgstr "Skiednisnotysje"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:151
 msgid "skos:inScheme"
-msgstr "Tilhører"
+msgstr "Subfokabulêr"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:149
 msgid "skos:member"
-msgstr "Gruppemedlemmer"
+msgstr "Lid"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:181
 msgid "skos:member_help"
-msgstr "Medlemmer av denne gruppen"
+msgstr "Leden fan ’e groep"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:135
 msgid "skos:narrowMatch"
-msgstr "Underordnede begreper"
+msgstr "Eanger oerienkommende begripen"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:193
 msgid "skos:narrowMatch_help"
-msgstr "Snevrere begreper i andre vokabularer."
+msgstr "Eanger oerienkommende begripen yn in oare wurdlist"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:131
 msgid "skos:narrower"
-msgstr "Underordnede begreper"
+msgstr "Eangere begripen"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:173
 msgid "skos:narrower_help"
-msgstr "Smalere begreper i samme vokabular."
+msgstr "Eangere begripen."
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:157
 msgid "skos:note"
-msgstr "Note"
+msgstr "Notysje"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:175
 msgid "skos:note_help"
-msgstr "Noter"
+msgstr "Notysjes"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:234
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:141
 msgid "skos:prefLabel"
-msgstr "Anbefalt term"
+msgstr "Foarkarsterm"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:137
 msgid "skos:related"
-msgstr "Relaterte begreper"
+msgstr "Gearhingjende begripen"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:139
 msgid "skos:relatedMatch"
-msgstr "Relaterte begreper i andre vokabular"
+msgstr "Gearhingjende oerienkommende begripen"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:183
 msgid "skos:related_help"
-msgstr "Begreper som er relatert/beslektet med dette begrepet."
+msgstr "Begripen dy’t gearhingje mei dit begryp"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:159
 msgid "skos:scopeNote"
-msgstr "Note om bruk"
+msgstr "Notysje betsjuttingswiidte"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:177
 msgid "skos:scopeNote_help"
-msgstr "Noter om bruk og avgrensning av begrepet."
+msgstr "Notysjes oar it gebrûk en hoe breed it brûkt wurden kin"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:153
 msgid "skos:topConceptOf"
-msgstr "Hører til vokabular"
+msgstr "Beheart ta wurdlist"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:197
 msgid "skosext:DeprecatedConcept"
-msgstr "Erstattet begrep"
+msgstr "Ferfallen begryp"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:195
 msgid "skosext:partOf"
-msgstr "Del av"
+msgstr "Is diel fan"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:199
 msgid "skosext:partOf_help"
-msgstr "Helhet som begrepet er en del av."
+msgstr "It gehiel werfan it begryp diel útmakket"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:548
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:201
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:449
 msgid "skosmos:memberOf"
-msgstr "Hører til gruppe"
+msgstr "Beheart ta groep"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:611
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:205
 msgid "skosmos:memberOfArray"
-msgstr "Hører til inndeling"
+msgstr "Beheart ta rige"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:609
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:207
 msgid "skosmos:memberOfArray_help"
-msgstr "Inndeling som begrepet hører til"
+msgstr "Rige wêrta it begryp heart"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:546
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:203
 msgid "skosmos:memberOf_help"
-msgstr "Gruppe som begrepet hører til."
+msgstr "Groep wêrta it begryp heart"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:23
 msgid "zxx-x-taxon"
-msgstr "Vitenskapelig navn"
+msgstr "Witttenskiplike namme"
 
 #: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:168
 msgid "About page"
-msgstr "Informasjon"
+msgstr "oar"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:138
 msgid "Alternate terms"
-msgstr "Alternative termer"
+msgstr "Alternative termen"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:130
 msgid "Concept language"
-msgstr "Språk"
+msgstr "Taal"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:118
 msgid "Count"
-msgstr "Antall"
+msgstr "Oantal"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:157
 msgid "Download this vocabulary as SKOS/RDF:"
-msgstr "Last ned vokabularet som SKOS/RDF:"
+msgstr "Download dizze wurdlist as SKOS/RDF:"
 
 #: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:205
 msgid "Help"
-msgstr "Hjelp"
+msgstr "Help"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:142
 msgid "Hidden terms"
-msgstr "Skjulte termer"
+msgstr "Ferskûle termen"
 
 #: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:58
 msgid "Interface language"
-msgstr "Grensesnittspråk"
+msgstr "Brûkersynterfacetaal"
 
 #: /tmp/cache/587c83c13194c/f9/f9c816822168f230ef0bfed735f5923aab99d389ce8b2c6b2f5fcd5d400bc275.php:26
 msgid "No vocabularies on the server!"
-msgstr "Det er ingen vokabularer på serveren."
+msgstr "Gjin wudlisten op ’e server!"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:134
 msgid "Preferred terms"
-msgstr "Anbefalte termer"
+msgstr "Foarkarstermen"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:111
 msgid "Resource counts by type"
-msgstr "Antall ressurser etter type"
+msgstr "Oantal boarnen per type"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:124
 msgid "Term counts by language"
-msgstr "Termer etter språk"
+msgstr "Oantal termen per taal"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:116
 msgid "Type"
@@ -766,93 +765,93 @@ msgstr "Type"
 
 #: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:146
 msgid "Vocabularies-nav"
-msgstr "Vokabularer"
+msgstr "Wurdlisten"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:24
 msgid "Vocabulary information"
-msgstr "Informasjon om vokabularet"
+msgstr "Wurdlistynformaasje"
 
 #: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:199
 msgid "helper_help"
-msgstr "Beveger du pekeren over tekst med prikkete understreking får du informasjon om egenskapen."
+msgstr "Beweegje jo cursor oer de understippele tekst om oanwizings oer de eigenskip te besjen."
 
 #: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:201
 msgid "search_example_text"
-msgstr "Du kan trunkere med tegnet *, som i *dyr eller *patent*. Søk uten trunkeringstegn blir automatisk trunkert på slutten, så katt vil gi samme resultatliste som katt*."
+msgstr "Foar in ynkoarte sykopdracht, brûk in stjêrke, lykas *dier of *patent*. Oan it ein fan sykwurden komt fansels in stjêrke, sa’t ’kat’ itselde opleveret as ‘kat*’."
 
 msgid "feedback_enter_name_email"
-msgstr "Fyll inn navn og e-postadresse hvis du ønsker svar, men du har også mulighet til å sende inn tilbakemelding anonymt. Velger du et bestemt vokabular, blir tilbakemeldingen din sendt direkte til ansvarlig for vokabularet."
+msgstr "Fier jo namme en e-mailadres yn at jo in antwurd ûntfange meie. Jo ha ek de mooglikheid jo weromkeppeling anonym efter te litten. NB: Weromkeppeling oer in bestimd wurdlist wurdt trochstjoerd nei de behearder derfan."
 
 msgid "concept_types"
-msgstr "Begrepstyper"
+msgstr "Begryptypes"
 
 msgid "Skip to main"
-msgstr "Hopp til hovedinnholdet."
+msgstr "Nei haadinhâld"
 
 msgid "Available vocabularies and ontologies"
-msgstr "Tilgjengelige vokabularer og ontologier"
+msgstr "Beskikbere wurdlisten en ontologyen"
 
 msgid "Search from selected vocabularies"
-msgstr "Søk i valgte vokabularer"
+msgstr "Sykje yn selektearde wurdlisten"
 
 msgid "List vocabulary concepts alphabetically"
-msgstr "List opp begreper alfabetisk"
+msgstr "Skiftsje begripen alfabetysk"
 
 msgid "List vocabulary concepts and groupings hierarchically"
-msgstr "List opp begreper og grupper hierarkisk"
+msgstr "Skiftsje begripen en groepen hiërargysk"
 
 msgid "List vocabulary concepts by newest additions"
-msgstr "List opp nyeste begreper"
+msgstr "Skiftsje begripen nei meast resint tafoege"
 
 msgid "List vocabulary concepts hierarchically"
-msgstr "List opp begreper hierarkisk"
+msgstr "Skiftsje begripen hiërargysk"
 
 msgid "Choose alphabetical listing letter"
-msgstr "Velg en bokstav for å vise alle begreper som begynner med denne bokstaven"
+msgstr "Kies letter foar alfabetyske list"
 
 msgid "Concept information"
-msgstr "Begrepsinformasjon"
+msgstr "Begrypinformaasje"
 
 msgid "Hierarchical listing of vocabulary concepts"
-msgstr "Hierarkisk oversikt over begreper"
+msgstr "Begripen hiërargysk skifte"
 
 msgid "Hierarchical listing of vocabulary concepts and groupings"
-msgstr "Hierarkisk oversikt over begreper og grupper"
+msgstr "Begripen en groepen hiërargysk skifte"
 
 msgid "Listing vocabulary concepts alphabetically"
-msgstr "Alfabetisk liste over begreper"
+msgstr "Begripen alfabetysk skifte"
 
 msgid "Listing vocabulary concepts by newest additions"
-msgstr "Liste over nyeste begreper i vokabularet"
+msgstr "Begripen skifte nei meast resint tafoege"
 
 msgid "Prefer using"
-msgstr "Bruk termen"
+msgstr "Brûk leaver"
 
 msgid "Search options tab"
-msgstr "Fane for søkevalg"
+msgstr "Tab foar sykopsjes"
 
 msgid "Search results"
-msgstr "Søkeresultater"
+msgstr "Sykresultaten"
 
 msgid "Sidebar listing: list and traverse vocabulary contents by a criterion"
-msgstr "Sidefelt: navigér i vokabularet på ulike måter"
+msgstr "Sijbalke: skiftsje en blêder troch filtere wurdlistûnderdelen"
 
 msgid "Subject:"
-msgstr "Emne:"
+msgstr "Ûnderwerp"
 
 msgid "Write a subject"
-msgstr "Fyll inn et emne"
+msgstr "Heak in ûnderwerp ta"
 
 msgid "Select a vocabulary"
-msgstr "Du kan velge et vokabular"
+msgstr "Selektearje in wurdlist"
 
 msgid ""
 "We're sorry but Skosmos doesn't work properly without JavaScript enabled. "
 "Please enable it to continue."
-msgstr "Vi beklager, men Skosmos fungerer ikke ordentlig uten JavaScript. Aktiver JavaScript for å fortsette."
+msgstr "Spitchgenôch hat Skosmos JavaScript nedich. Skakel it yn om fierder te gean."
 
 msgid "Deprecated concept"
-msgstr ""
+msgstr "Ferfallen begryp"
 
 msgid "Error: Search failed!"
 msgstr ""

@@ -123,12 +123,52 @@ class ConceptPropertyTest extends PHPUnit\Framework\TestCase
    * @covers ConceptProperty::addValue
    * @covers ConceptProperty::sortValues
    */
-  public function testSortNotatedValues() {
+  public function testSortNotatedValuesLexical() {
+    # the vocabulary is configured to use lexical sorting
     $vocab = $this->model->getVocabulary('test-notation-sort');
     $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta01', 'en');
     $concept = $concepts[0];
     $props = $concept->getProperties();
-    $expected = array("test:ta0112", "test:ta0119", "test:ta0117", "test:ta0116", "test:ta0114","test:ta0115","test:ta0113", "test:ta0120", "test:ta0111", );
+    $expected = array(
+      "test:ta0111", # 33.01
+      "test:ta0116", # 33.02
+      "test:ta0112", # 33.1
+      "test:ta0114", # 33.10
+      "test:ta0115", # 33.2
+      "test:ta0117", # 33.9
+      "test:ta0119", # 33.90
+      "test:ta0120", # K2
+      "test:ta0113"  # concept not defined, no notation code
+    );
+    $ret = array();
+
+    foreach($props['skos:narrower']->getValues() as $val) {
+        $ret[] = EasyRdf\RdfNamespace::shorten($val->getUri());
+    }
+    $this->assertEquals($expected, $ret);
+  }
+
+  /**
+   * @covers ConceptProperty::addValue
+   * @covers ConceptProperty::sortValues
+   */
+  public function testSortNotatedValuesNatural() {
+    # the vocabulary is configured to use natural sorting
+    $vocab = $this->model->getVocabulary('testNotation');
+    $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta01', 'en');
+    $concept = $concepts[0];
+    $props = $concept->getProperties();
+    $expected = array(
+      "test:ta0111", # 33.01
+      "test:ta0116", # 33.02
+      "test:ta0112", # 33.1
+      "test:ta0115", # 33.2
+      "test:ta0117", # 33.9
+      "test:ta0114", # 33.10
+      "test:ta0119", # 33.90
+      "test:ta0120", # K2
+      "test:ta0113"  # concept not defined, no notation code
+    );
     $ret = array();
 
     foreach($props['skos:narrower']->getValues() as $val) {

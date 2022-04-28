@@ -73,9 +73,9 @@ function getLabel(object) {
     labelProp = 'label';
   }
   if (window.showNotation && object.notation) {
-    return '<span class="tree-notation">' + object.notation + '</span> ' + object[labelProp];
+    return '<span class="tree-notation">' + object.notation + '</span> <span class="tree-label">' + escapeHtml(object[labelProp]) + '</span>';
   }
-  return escapeHtml(object[labelProp]);
+  return '<span class="tree-label">' + escapeHtml(object[labelProp]) + '</span>';
 }
 
 function createObjectsFromChildren(conceptData, conceptUri) {
@@ -210,7 +210,7 @@ function vocabRoot(topConcepts) {
   for (var i = 0; i < topConcepts.length; i++) {
     var conceptData = topConcepts[i];
     var childObject = {
-      text: conceptData.label, 
+      text: getLabel(conceptData), 
       a_attr : getHrefForUri(conceptData.uri),
       uri: conceptData.uri,
       notation: conceptData.notation,
@@ -218,8 +218,6 @@ function vocabRoot(topConcepts) {
     };
     if (conceptData.hasChildren)
       childObject.children = true;
-    if (window.showNotation && conceptData.notation)
-      childObject.text = '<span class="tree-notation">' + conceptData.notation + '</span> ' + childObject.text;
     setNode(childObject);
     topArray.push(childObject);
   }
@@ -423,6 +421,22 @@ function topConceptsToSchemes(topConcepts, schemes) {
   return childArray;
 }
 
+/*
+ * Return a sort key suitable for sorting hierarchy nodes mainly by label.
+ * Nodes with domain class will be sorted first, followed by non-domain nodes.
+ */
+function nodeLabelSortKey(node) {
+  // make sure the tree nodes with class 'domain' are sorted before the others
+  // domain will be "0" if the node has a domain class, else "1"
+  var domain = (node.original.a_attr['class'] == 'domain') ? "0" : "1";
+
+  // parse the HTML code in node.text and return just the label as a lower case value for sorting
+  // should look like '<span class="tree-notation">12.3</span> <span class="tree-label">Hello</span>'
+  var label = $($.parseHTML(node.text.toLowerCase())).filter('.tree-label').text();
+
+  return domain + " " + label;
+}
+
 /* 
  * Gives you the Skosmos default jsTree configuration.
  */
@@ -508,17 +522,21 @@ function getTreeConfiguration() {
         var bNode = this.get_node(b);
 
         // sort on notation if requested, and notations exist
-        if (window.showNotation) {
+        if (window.sortByNotation) {
             var aNotation = aNode.original.notation;
             var bNotation = bNode.original.notation;
 
             if (aNotation) {
                 if (bNotation) {
-                    if (aNotation < bNotation) {
-                        return -1;
-                    }
-                    else if (aNotation > bNotation) {
-                        return 1;
+                    if (window.sortByNotation == "lexical") {
+                        if (aNotation < bNotation) {
+                            return -1;
+                        }
+                        else if (aNotation > bNotation) {
+                            return 1;
+                        }
+                    } else { // natural
+                        return naturalCompare(aNotation, bNotation);
                     }
                 }
                 else return -1;
@@ -527,12 +545,7 @@ function getTreeConfiguration() {
             // NOTE: if no notations found, fall back on label comparison below
         }
         // no sorting on notation requested, or notations don't exist
-        // make sure the tree nodes with class 'domain' are sorted before the others
-        // aDomain/bDomain will be "0" if a/b has a domain class, else "1"
-        var aDomain = (aNode.original.a_attr['class'] == 'domain') ? "0" : "1";
-        var bDomain = (bNode.original.a_attr['class'] == 'domain') ? "0" : "1";
-        return naturalCompare(aDomain + " " + aNode.text.toLowerCase(),
-                              bDomain + " " + bNode.text.toLowerCase());
+        return naturalCompare(nodeLabelSortKey(aNode), nodeLabelSortKey(bNode));
     }
   });
 }

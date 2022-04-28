@@ -1,23 +1,28 @@
 name: CI
 
-on: [push]
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
   build-test:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    timeout-minutes: 10
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       fail-fast: false
       matrix:
-        php_version: [7.2, 7.3, 7.4]
+        php_version: ["7.3", "7.4", "8.0"]
         experimental: [false]
         include:
-          - php_version: 8.0
+          - php_version: "8.1"
             experimental: true
 
     steps:
     - name: Check out repository code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
 
     - name: Cache Fuseki installation
       uses: actions/cache@v2
@@ -46,14 +51,15 @@ jobs:
         php_extensions: gettext intl xsl pcov
 
     - name: Run PHPUnit tests
-      uses: php-actions/phpunit@91ff02a58932e63741157ea8c04e7e7077233537
+      uses: php-actions/phpunit@v3
       env:
         LANGUAGE: fr
       with:
-        version: 8.5
+        version: 9.5
         php_version: ${{ matrix.php_version }}
         php_extensions: gettext intl xsl pcov
         memory_limit: 512M
+        configuration: phpunit.xml
 
     - name: Publish code coverage to Code Climate
       uses: paambaati/codeclimate-action@v2.7.5

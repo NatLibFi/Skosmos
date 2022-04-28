@@ -1,14 +1,16 @@
 # 
 # Translators:
 # Bruno P. Kinoshita <brunodepaulak@yahoo.com.br>, 2016,2020
+# Pedro Paulo Favato Barcelos, 2021
 # Ronnie Fagundes de Brito <ronniefbrito@gmail.com>, 2018
+# Yksityis Yrittäjä <okko.vainonen@helsinki.fi>, 2021
 msgid ""
 msgstr ""
 "Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-16 10:26+0200\n"
-"PO-Revision-Date: 2021-03-16 10:20+0000\n"
-"Last-Translator: Transifex Bot <>\n"
+"PO-Revision-Date: 2021-11-10 15:08+0000\n"
+"Last-Translator: Yksityis Yrittäjä <okko.vainonen@helsinki.fi>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/national-library-of-finland/skosmos/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -113,6 +115,9 @@ msgstr "Por tipo"
 #: /tmp/cache/587c83c13194c/07/073354bd24405bc5c963d187d0034352a7a24a3550861ca791f826417bb9cecd.php:125
 msgid "Changes-nav"
 msgstr "Novo"
+
+msgid "Changes-and-deprecations-nav"
+msgstr ""
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:122
 msgid "Clear limitations"
@@ -406,7 +411,7 @@ msgstr "Tipo"
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:36
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:256
 msgid "deprecated"
-msgstr "Este conceito foi descontinuado. Não utilize este conceito para anotações!"
+msgstr "Este conceito foi descontinuado."
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:89
 msgid "foaf:homepage"
@@ -430,16 +435,16 @@ msgid "from all"
 msgstr "de todos"
 
 msgid "wgs84:lat"
-msgstr ""
+msgstr "Latitude"
 
 msgid "wgs84:lat_help"
-msgstr ""
+msgstr "Latitude em graus decimais de acordo com o sistema WGS 84"
 
 msgid "wgs84:long"
-msgstr ""
+msgstr "Longitude"
 
 msgid "wgs84:long_help"
-msgstr ""
+msgstr "Longitude em graus decimais de acordo com o sistema WGS 84"
 
 #: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:81
 #: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:90
@@ -782,66 +787,87 @@ msgid "concept_types"
 msgstr "Tipos de conceito"
 
 msgid "Skip to main"
-msgstr ""
+msgstr "Avançar para o conteúdo principal"
 
 msgid "Available vocabularies and ontologies"
-msgstr ""
+msgstr "Vocabulários e ontologias disponíveis"
 
 msgid "Search from selected vocabularies"
-msgstr ""
+msgstr "Pesquisar a partir de vocabulários selecionados"
 
 msgid "List vocabulary concepts alphabetically"
-msgstr ""
+msgstr "Listar conceitos de vocabulários em ordem alfabética"
 
 msgid "List vocabulary concepts and groupings hierarchically"
-msgstr ""
+msgstr "Listar conceitos de vocabulários e agrupamentos hierarquicamente"
 
 msgid "List vocabulary concepts by newest additions"
-msgstr ""
+msgstr "Listar conceitos de vocabulários por adições mais recentes"
 
 msgid "List vocabulary concepts hierarchically"
-msgstr ""
+msgstr "Listar conceitos de vocabulários hierarquicamente"
 
 msgid "Choose alphabetical listing letter"
-msgstr ""
+msgstr "Escolha a letra para listagem em ordem alfabética"
 
 msgid "Concept information"
-msgstr ""
+msgstr "Informações sobre o conceito"
 
 msgid "Hierarchical listing of vocabulary concepts"
-msgstr ""
+msgstr "Listagem hierárquica dos conceitos do vocabulário"
 
 msgid "Hierarchical listing of vocabulary concepts and groupings"
-msgstr ""
+msgstr "Listagem hierárquica dos conceitos do vocabulário e agrupamentos"
 
 msgid "Listing vocabulary concepts alphabetically"
-msgstr ""
+msgstr "Listando conceitos de vocabulários em ordem alfabética"
 
 msgid "Listing vocabulary concepts by newest additions"
-msgstr ""
+msgstr "Listando conceitos de vocabulários por adições mais recentes"
 
 msgid "Prefer using"
-msgstr ""
+msgstr "Prefere usar"
 
 msgid "Search options tab"
-msgstr ""
+msgstr "Aba opções de pesquisa"
 
 msgid "Search results"
-msgstr ""
+msgstr "Resultados da busca"
 
 msgid "Sidebar listing: list and traverse vocabulary contents by a criterion"
-msgstr ""
+msgstr "Listagem na barra lateral: listar e cruzar conteúdo do vocabulário por um critério"
 
 msgid "Subject:"
-msgstr ""
+msgstr "Assunto:"
 
 msgid "Write a subject"
-msgstr ""
+msgstr "Escreva um assunto"
 
 msgid "Select a vocabulary"
-msgstr ""
+msgstr "Você pode selecionar um vocabulário"
 
 msgid ""
 "We're sorry but Skosmos doesn't work properly without JavaScript enabled. "
 "Please enable it to continue."
-msgstr ""
+msgstr "Pedimos desculpas, mas o Skosmos não funciona sem o Javascript habilitado. Por favor habilite-o para continuar."
+
+msgid "Deprecated concept"
+msgstr "Conceito obsoleto"
+
+msgid "Error: Search failed!"
+msgstr "Erro: falha na busca!"
+
+msgid "Error: Failed to retrieve vocabulary information!"
+msgstr "Erro: Falha em recuperar informação do vocabulário"
+
+msgid "Error: Loading more items failed!"
+msgstr "Erro: Falha no carregamento de mais itens"
+
+msgid "Retry"
+msgstr "Tentar novamente"
+
+msgid "skos:notation"
+msgstr "Notação"
+
+msgid "skos:notation_help"
+msgstr "Código que identifica unicamente um conceito dentro de um esquema de conceitos"

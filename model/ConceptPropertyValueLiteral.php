@@ -9,12 +9,15 @@ class ConceptPropertyValueLiteral extends VocabularyDataObject
     private $literal;
     /** property type */
     private $type;
+    /** content language */
+    private $clang;
 
-    public function __construct($model, $vocab, $resource, $literal, $prop)
+    public function __construct($model, $vocab, $resource, $literal, $prop, $clang = '')
     {
         parent::__construct($model, $vocab, $resource);
         $this->literal = $literal;
         $this->type = $prop;
+        $this->clang = $clang;
     }
 
     public function __toString()
@@ -29,6 +32,23 @@ class ConceptPropertyValueLiteral extends VocabularyDataObject
     public function getLang()
     {
         return $this->literal->getLang();
+    }
+
+    /**
+     * A method for fetching a datatype.
+     */
+    public function getDatatype(): ?string
+    {
+        $datatype = $this->literal->getDatatype();
+        if ($datatype === null) {
+            return null;
+        }
+        $graph = $this->resource->getGraph();
+        if ($graph->resource($datatype)->label($this->clang)) {
+            $dtLabel = $graph->resource($datatype)->label($this->clang);
+            return $dtLabel->getValue();
+        }
+        return null;
     }
 
     public function getType()

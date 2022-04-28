@@ -1,5 +1,7 @@
 <?php
 
+error_reporting(E_ALL);
+
 // make sure that a SPARQL endpoint is set by an environment variable
 $endpoint = getenv('SKOSMOS_SPARQL_ENDPOINT');
 if (!$endpoint) {

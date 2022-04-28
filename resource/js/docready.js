@@ -95,7 +95,7 @@ $(function() { // DOCUMENT READY
       });
     });
 
-    var active_tab = $('li.active').attr('id');
+    var active_tab = $('a.active').parent().attr('id');
     if (active_tab == 'groups') {
       $('#sidebar > h4').remove();
       $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.groups_listing + '</h4>');
@@ -111,12 +111,12 @@ $(function() { // DOCUMENT READY
   });
 
   // if the hierarchy tab is active filling the jstree with data
-  if ($('#hierarchy').hasClass('active')) {
+  if ($('#hierarchy > a').hasClass('active')) {
     $('#sidebar > h4').remove();
     invokeParentTree(getTreeConfiguration());
     $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.hierarchical_listing + '</h4>');
   }
-  if ($('#groups').hasClass('active')) {
+  if ($('#groups > a').hasClass('active')) {
     $('#sidebar > h4').remove();
     invokeGroupTree();
     $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.groups_listing + '</h4>');
@@ -280,7 +280,7 @@ $(function() { // DOCUMENT READY
   $(document).on('click', '.concept-hierarchy a',
       function(event) {
         $.ajaxQ.abortContentQueries();
-        var targetUrl = event.target.href;
+        var targetUrl = event.target.href || event.target.parentElement.href;
         $('#hier-trigger').attr('href', targetUrl);
         var $content = $('.content').empty().append($delayedSpinner.hide());
         var loading = delaySpinner();
@@ -341,7 +341,7 @@ $(function() { // DOCUMENT READY
       function(event) {
         $.ajaxQ.abortSidebarQueries(true);
         $('.active').removeClass('active');
-        $('#alpha').addClass('active');
+        $('#alpha a').addClass('active');
         alpha_complete = false;
         $('.sidebar-grey').empty().prepend(spinner);
         var targetUrl = event.target.href;
@@ -364,7 +364,7 @@ $(function() { // DOCUMENT READY
       function(event) {
         $.ajaxQ.abortSidebarQueries(true);
         $('.active').removeClass('active');
-        $('#changes').addClass('active');
+        $('#changes a').addClass('active');
         $('.sidebar-grey').empty().prepend(spinner);
         $('.pagination').hide();
         $('#sidebar > h4.sr-only').hide();
@@ -404,7 +404,7 @@ $(function() { // DOCUMENT READY
       if($('#vocab-info').length) { // if on the vocabulary front page
         $('.sidebar-grey').remove();
         $('.active').removeClass('active');
-        $('#hier-trigger').parent().addClass('active');
+        $('#hier-trigger').addClass('active');
         $('.pagination').hide();
         $('#sidebar > h4.sr-only').hide();
         $content.append('<div class="sidebar-grey concept-hierarchy"></div>');
@@ -428,7 +428,7 @@ $(function() { // DOCUMENT READY
         $.ajaxQ.abortSidebarQueries(true);
         $('.active').removeClass('active');
         var $clicked = $(this);
-        $clicked.parent().addClass('active');
+        $clicked.addClass('active');
         $('.pagination').hide();
         $('#sidebar > h4.sr-only').hide();
         $('.sidebar-grey').remove().prepend(spinner);
@@ -558,12 +558,12 @@ $(function() { // DOCUMENT READY
   var langPretty;
 
   if (search_lang === 'anything' || getUrlParams().anylang === 'on') {
-    $('#lang-dropdown-toggle').html($('.lang-button-all').html() + ' <span class="caret"></span>');
+    $('#lang-dropdown-toggle').html($('#lang-button-all').html() + ' <span class="caret"></span>');
     qlang = "";
   } else if (!search_lang) {
       langPretty = $('a[hreflang=' + lang + ']').html();
       search_lang = lang;
-      if (!langPretty) { langPretty = $('.lang-button-all').html(); }
+      if (!langPretty) { langPretty = $('#lang-button-all').html(); }
       $('#lang-dropdown-toggle').html(langPretty + ' <span class="caret"></span>');
       qlang = lang;
   }
@@ -574,7 +574,7 @@ $(function() { // DOCUMENT READY
   });
 
   if (!search_lang_possible && search_lang !== 'anything') {
-    langPretty = $('.lang-button-all').html();
+    langPretty = $('#lang-button-all').html();
     $('#lang-dropdown-toggle').html(langPretty + ' <span class="caret"></span>');
     qlang = '';
     createCookie('SKOSMOS_SEARCH_LANG', qlang, 365);
@@ -588,7 +588,7 @@ $(function() { // DOCUMENT READY
     if (concepts) { concepts.clear(); }
   });
 
-  $('.lang-button, .lang-button-all').on('click', function() {
+  $('.lang-button, #lang-button-all').on('click', function() {
     $('#search-field').focus();
   });
 
@@ -668,29 +668,23 @@ $(function() { // DOCUMENT READY
     });
   }
 
-  var wildcard = '';
-
   var concepts = new Bloodhound({
     remote: {
       url: rest_base_url + 'search?query=',
-      replace: function(url, query) {
+      prepare: function (query, settings) {
+        var vocabString = $('.frontpage').length ? vocabSelectionString : vocab;
+        // if the search has been targeted at all languages by clicking the checkbox then
+        // :checked will be true
+        var parameters = $('input[name=anylang]').is(':checked') ?
+          $.param({'vocab' : vocabString, 'lang' : '', 'labellang' : ''}) :
+          $.param({'vocab' : vocabString, 'lang' : qlang, 'labellang' : qlang});
         var wildcard = (query.indexOf('*') === -1) ? '*' : '';
-        return url + encodeURIComponent(query) + wildcard;
-      },
-      ajax: {
-        beforeSend: function(jqXHR, settings) {
-          var vocabString = $('.frontpage').length ? vocabSelectionString : vocab;
-          var parameters = $.param({'vocab' : vocabString, 'lang' : qlang, 'labellang' : qlang});
-          // if the search has been targeted at all languages by clicking the checkbox
-          if ($('input[name=anylang]').is(':checked')) {
-            parameters = $.param({'vocab' : vocabString, 'lang' : '', 'labellang' : ''});
-          }
-          settings.url = settings.url + '&' + parameters;
-          settings.req_kind = $.ajaxQ.requestKind.GLOBAL;
-        }
+        settings.url += encodeURIComponent(query) + wildcard + '&' + parameters;
+        settings.req_kind = $.ajaxQ.requestKind.GLOBAL;
+        return settings;
       },
       // changes the response so it can be easily displayed in the handlebars template.
-      filter: function(data) {
+      transform: function(data) {
         // looping the matches to see if there are hits where the concept has been hit by a property other than hiddenLabel
         var hasNonHiddenMatch = {};
         for (var i = 0; i < data.results.length; i++) {
@@ -755,11 +749,13 @@ $(function() { // DOCUMENT READY
   concepts.initialize();
 
   var autocompleteTemplate =[
-    '{{# if matched }}<p>{{matched}}{{# if lang}} ({{lang}}){{/if}} = </p>{{/if}}',
-    '{{# if replaced }}<p class="replaced">{{replaced}}{{# if lang}} ({{lang}}){{/if}} &rarr; </p>{{/if}}',
-    '{{# if notation }}<p>{{notation}}</p>{{/if}}',
-    '<p class="autocomplete-label">{{label}}{{# if lang}}{{# unless matched }}<p>({{lang}})</p>{{/unless}}{{/if}}</p>',
+    '<div class="autocomplete-label">',
+    '{{# if matched }}<span>{{matched}}{{# if lang}} ({{lang}}){{/if}} = </span>{{/if}}',
+    '{{# if replaced }}<span class="replaced">{{replaced}}{{# if lang}} ({{lang}}){{/if}} &rarr; </span>{{/if}}',
+    '{{# if notation }}<span>{{notation}}</span>{{/if}}',
+    '<span>{{label}}{{# if lang}}{{# unless matched }}<span>({{lang}})</span>{{/unless}}{{/if}}</span>',
     '{{# if typeLabel }}<span class="concept-type">{{typeLabel}}</span>{{/if}}',
+    '</div>',
     '<div class="vocab">{{vocabLabel}}</div>'
   ].join('');
 
@@ -767,10 +763,11 @@ $(function() { // DOCUMENT READY
     var dark = ($('#search-field').val().length > 0) ? ' clear-search-dark' : '';
     var clearButton = '<span class="versal clear-search' + dark + '">&#215;</span>';
 
-    var $typeahead = $('#search-field').typeahead({ hint: false, highlight: true, minLength: autocomplete_activation },
+    var $typeahead = $('#search-field').typeahead({hint: false, highlight: true, minLength: autocomplete_activation},
       {
         name: 'concept',
-        displayKey: 'label',
+        limit: autocomplete_limit,
+        display: 'label',
         templates: {
           empty: Handlebars.compile([
             '<div><p class="autocomplete-no-results">{{#noresults}}{{/noresults}}</p></div>'
@@ -778,9 +775,9 @@ $(function() { // DOCUMENT READY
           suggestion: Handlebars.compile(autocompleteTemplate)
         },
         source: concepts.ttAdapter()
-    }).on('typeahead:cursorchanged', function() {
+      }).on('typeahead:cursorchanged', function () {
       $('.tt-dropdown-menu').mCustomScrollbar("scrollTo", '.tt-cursor');
-    }).on('typeahead:selected', onSelection).on('focus', function() {
+    }).on('typeahead:selected', onSelection).on('focus', function () {
       $('#search-field').typeahead('open');
     }).after(clearButton).on('keypress', function() {
       if ($typeahead.val().length > 0 && $(this).hasClass('clear-search-dark') === false) {
@@ -795,8 +792,8 @@ $(function() { // DOCUMENT READY
     // accidental selection of values. TODO: we must fix this in a future release, possibly
     // using another library.
     var typeaheadInstance = $typeahead.data("ttTypeahead");
-    typeaheadInstance.dropdown.$menu.off("mouseenter.tt", ".tt-suggestion");
-    typeaheadInstance.dropdown.$menu.off("mouseleave.tt", ".tt-suggestion");
+    typeaheadInstance.menu.off("mouseenter.tt", ".tt-suggestion");
+    typeaheadInstance.menu.off("mouseleave.tt", ".tt-suggestion");
   }
 
   // storing the search input before autocompletion changes it
@@ -844,7 +841,7 @@ $(function() { // DOCUMENT READY
       $('.search-result-listing').append($ready);
     }
     else {
-      $trigger.waypoint(function() { waypointCallback(); }, options);
+      $trigger.waypoint(function() { waypointCallback(this); }, options);
     }
   }
 
@@ -894,9 +891,13 @@ $(function() { // DOCUMENT READY
     changeOffset += 200;
   }
 
-  function waypointCallback() {
+  function waypointCallback(waypoint) {
+    if ($('.search-result-listing > p .spinner,.search-result-listing .alert-danger').length > 0) {
+      return false;
+    }
     var number_of_hits = $(".search-result").length;
-    if (number_of_hits < parseInt($('.search-count p').text().substr(0, $('.search-count p').text().indexOf(' ')), 10)) { $('.search-result-listing').append($loading);
+    if (number_of_hits < parseInt($('.search-count p').text().substr(0, $('.search-count p').text().indexOf(' ')), 10)) {
+      $('.search-result-listing').append($loading);
       var typeLimit = $('#type-limit').val();
       var schemeLimit = $('#scheme-limit').val();
       var groupLimit = $('#group-limit').val();
@@ -917,7 +918,20 @@ $(function() { // DOCUMENT READY
             $('.search-result-listing').append($ready);
             return false;
           }
-          $('.search-result:nth-last-of-type(4)').waypoint(function() { waypointCallback(); }, options );
+          waypoint.destroy();
+          $('.search-result:nth-last-of-type(4)').waypoint(function() { waypointCallback(this); }, options );
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          $loading.detach();
+          var $failedSearch = $('<div class="alert alert-danger"><h4>' + loading_failed_text + '</h4></div>');
+          var $retryButton = $('<button class="btn btn-default" type="button">' + loading_retry_text + '</button>');
+          $retryButton.on('click', function () {
+            $failedSearch.remove();
+            waypointCallback(waypoint);
+            return false;
+          });
+          $failedSearch.append($retryButton)
+          $('.search-result-listing').append($failedSearch);
         }
       });
     }
@@ -926,7 +940,7 @@ $(function() { // DOCUMENT READY
   // activating the custom autocomplete
   function updateVocabParam() {
     vocabSelectionString = '';
-    var $vocabs = $('li.active input');
+    var $vocabs = $('li > a.active input');
     $.each($vocabs,
       function(index, ob) {
         if (ob.value === 'multiselect-all') {
@@ -970,6 +984,13 @@ $(function() { // DOCUMENT READY
     },
     numberDisplayed: 2,
     buttonWidth: 'auto',
+    buttonClass: 'btn btn-secondary',
+    buttonContainer : '<div id="search-from-vocabularies" class="dropdown btn-group" aria-role="group" aria-label="' + all_vocabs + '" />',
+    templates: {
+      ul: '<ul class="multiselect-container dropdown-menu p-1 m-0"></ul>',
+      li: '<button class="multiselect-option dropdown-item"></button>',
+      button: '<button type="button" class="multiselect dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><span class="multiselect-selected-text"></span></button>',
+    },
     includeSelectAllOption: true,
     selectAllText: all_vocabs,
     onChange: function(element, checked) {
@@ -1010,7 +1031,7 @@ $(function() { // DOCUMENT READY
     maxHeight: 300
   });
 
-  if ($('#alpha.active').length === 1 || $('#changes.active').length === 1) {
+  if ($('#alpha > a.active').length === 1 || $('#changes >a.active').length === 1) {
     var scrollCB = ($('#changes.active').length === 1) ? changeListWaypointCallback : alphaWaypointCallback;
     $(".sidebar-grey").mCustomScrollbar({
       alwaysShowScrollbar: 1,
@@ -1041,7 +1062,7 @@ $(function() { // DOCUMENT READY
   if ($replaced.length > 0) {
     var $replacedElem = $('.replaced-by h3');
     var undoUppercasing = $replacedElem.text().substr(0,1) + $replacedElem.text().substr(1).toLowerCase();
-    var html = ''
+    var html = '';
     for (var i = 0; i < $replaced.length; i++) {
         var replacedBy = '<a href="' + $replaced[i] + '">' + $replaced[i].innerHTML + '</a>';
         html += '<p class="alert-replaced">' + undoUppercasing + ': ' + replacedBy + '</p>';
@@ -1056,9 +1077,9 @@ $(function() { // DOCUMENT READY
   }
 
   /* makes an AJAX query for the alphabetical index contents when landing on
-   * the vocabulary home page.
+   * the vocabulary home page or on the vocabulary concept error page.
    */
-  if ($('#alpha').hasClass('active') && $('#vocab-info').length === 1 && $('.alphabetical-search-results').length === 0) {
+  if ($('#alpha > a').hasClass('active') && $('#vocab-info,.page-alert').length === 1 && $('.alphabetical-search-results').length === 0) {
     // taking into account the possibility that the lang parameter has been changed by the WebController.
     var urlLangCorrected = vocab + '/' + lang + '/index?limit=250&offset=0&clang=' + clang;
     $('.sidebar-grey').empty().append('<div class="loading-spinner"><span class="spinner-text">'+ loading_text + '</span><span class="spinner"></span></div>');
@@ -1106,6 +1127,7 @@ $(function() { // DOCUMENT READY
     $('#parent-limit').typeahead({ hint: false, highlight: true, minLength: autocomplete_activation },{
         name: 'concept',
         displayKey: 'label',
+        limit: autocomplete_limit,
         templates: {
           empty: Handlebars.compile([
             '<div><p class="autocomplete-no-results">{{#noresults}}{{/noresults}}</p></div>'

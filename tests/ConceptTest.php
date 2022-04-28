@@ -176,7 +176,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
   {
     $props = $this->concept->getProperties();
 
-    $this->assertEquals(8, sizeof($props));
+    $this->assertEquals(9, sizeof($props));
   }
 
   /**
@@ -189,7 +189,9 @@ class ConceptTest extends PHPUnit\Framework\TestCase
   public function testGetPropertiesCorrectOrderOfProperties()
   {
     $props = $this->concept->getProperties();
-    $expected = array (0 => 'rdf:type', 1 => 'skos:broader', 2 => 'skos:narrower', 3 => 'skos:altLabel', 4 => 'skos:scopeNote', 5 => 'http://www.skosmos.skos/multiLingOff', 6 => 'http://www.skosmos.skos/multiLingOn', 7 => 'http://www.skosmos.skos/testprop');
+    $expected = array (0 => 'rdf:type', 1 => 'skos:broader', 2 => 'skos:narrower', 3 => 'skos:altLabel',
+        4 => 'skos:scopeNote', 5 => 'http://www.skosmos.skos/multiLingOff', 6 => 'http://www.skosmos.skos/multiLingOn',
+        7 => 'http://www.skosmos.skos/testprop', 8 => 'skos:notation');
     $this->assertEquals($expected, array_keys($props));
 
   }
@@ -305,7 +307,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
    * @covers ConceptPropertyValueLiteral::getLabel
    */
   public function testGetTimestampInvalidWarning() {
-    $this->expectException(PHPUnit\Framework\Error\Error::class);
+    $this->expectError();
     $vocab = $this->model->getVocabulary('test');
     $concepts = $vocab->getConceptInfo("http://www.skosmos.skos/test/ta114", "en");
     $concept = $concepts[0];

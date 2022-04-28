@@ -114,7 +114,7 @@ $.ajaxQ = (function(){
       var r = [];
       $.each(Q, function(i, jqXHR){
         r.push(jqXHR._id);
-        if (jqXHR.req_kind == $.ajaxQ.requestKind.CONTENT || jqXHR.req_kind == $.ajaxQ.requestKind.PLUGIN) {
+        if (jqXHR.req_kind == $.ajaxQ.requestKind.CONTENT || jqXHR.req_kind == $.ajaxQ.requestKind.PLUGIN) {
           jqXHR.abort();
         }
       });
@@ -124,7 +124,7 @@ $.ajaxQ = (function(){
       var r = [];
       $.each(Q, function(i, jqXHR){
         r.push(jqXHR._id);
-        if (jqXHR.req_kind == $.ajaxQ.requestKind.SIDEBAR || all && jqXHR.req_kind == $.ajaxQ.requestKind.SIDEBAR_PRIVILEGED) {
+        if (jqXHR.req_kind == $.ajaxQ.requestKind.SIDEBAR || all && jqXHR.req_kind == $.ajaxQ.requestKind.SIDEBAR_PRIVILEGED) {
           jqXHR.abort();
         }
       });
@@ -210,7 +210,8 @@ function loadLimitedResults(parameters) {
   clearResultsAndAddSpinner();
   $.ajax({
     data: parameters,
-    success : function(data) {
+    complete : function(jqXHR, textStatus) {
+      var data = jqXHR.responseText;
       var response = $('.search-result-listing', data).html();
       if (window.history.pushState) { window.history.pushState({url: this.url}, '', this.url); }
       $('.search-result-listing').append(response);
@@ -325,7 +326,14 @@ function countAndSetOffset() {
   }
 }
 
+// return -1 if the value is negative, 1 otherwise
+// used to coerce sort values so they are compatible with the jsTree sort plugin
+function negVsPos(val) {
+  return (val < 0) ? -1 : 1;
+}
+
 // Natural sort from: http://stackoverflow.com/a/15479354/3894569
+// adapted to return only -1 or 1 using negVsPos function above
 function naturalCompare(a, b) {
   var ax = [], bx = [];
 
@@ -336,10 +344,10 @@ function naturalCompare(a, b) {
     var an = ax.shift();
     var bn = bx.shift();
     var nn = (an[0] - bn[0]) || an[1].localeCompare(bn[1], lang);
-    if(nn) return nn;
+    if(nn) return negVsPos(nn);
   }
 
-  return ax.length - bx.length;
+  return negVsPos(ax.length - bx.length);
 }
 
 function makeCallbacks(data, pageType) {

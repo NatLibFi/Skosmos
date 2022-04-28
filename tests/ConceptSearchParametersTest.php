@@ -87,6 +87,36 @@ class ConceptSearchParametersTest extends PHPUnit\Framework\TestCase
     }
 
     /**
+     * @covers ConceptSearchParameters::getSearchTerm
+     * Is created particularly for searches not using REST
+     */
+    public function testSearchTermWithoutRest() {
+        $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.ttl'), false);
+        $this->request->method('getQueryParamRaw')->will($this->returnValue('0'));
+        $this->assertEquals('0*', $params->getSearchTerm());
+    }
+    
+    /**
+     * For https://github.com/NatLibFi/Skosmos/issues/1275, to verify
+     * that querying for `0` (zero) does not evaluate it as a boolean
+     * value, causing issues in the SKOSMOS search functionality.
+     *
+     * @covers ConceptSearchParameters::getSearchTerm
+     */
+    public function testGetSearchTermZeroes() {
+        $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.ttl'), true);
+        $this->assertEquals('', $params->getSearchTerm());
+        $this->request->method('getQueryParamRaw')->will(
+            $this->returnValueMap([
+                ['q', '0'],
+                ['query', '0'],
+                ['label', '10']
+            ])
+        );
+        $this->assertEquals('0', $params->getSearchTerm());
+    }
+
+    /**
      * @covers ConceptSearchParameters::getTypeLimit
      * @covers ConceptSearchParameters::getDefaultTypeLimit
      */
@@ -230,4 +260,5 @@ class ConceptSearchParametersTest extends PHPUnit\Framework\TestCase
         $params = new ConceptSearchParameters($this->request, new GlobalConfig('/../tests/testconfig.ttl'));
         $this->assertEquals(array('broader', 'prefLabel'), $params->getAdditionalFields());
     }
+
 }

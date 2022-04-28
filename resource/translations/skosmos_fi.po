@@ -109,6 +109,9 @@ msgstr "Tyypin mukaan"
 msgid "Changes-nav"
 msgstr "Uudet"
 
+msgid "Changes-and-deprecations-nav"
+msgstr "Uudet ja poistetut"
+
 #: /tmp/cache/587c830e6b9a0/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:122
 msgid "Clear limitations"
 msgstr "Peru rajoitukset"
@@ -403,8 +406,7 @@ msgstr "Tyyppi"
 #: /tmp/cache/587c830e6b9a0/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:36
 #: /tmp/cache/587c830e6b9a0/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:256
 msgid "deprecated"
-msgstr ""
-"Käsite on poistettu käytöstä. Älä käytä tätä käsitettä sisällönkuvailuun!"
+msgstr "Käsite on poistettu käytöstä."
 
 #: /tmp/cache/587c830e6b9a0/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:89
 msgid "foaf:homepage"
@@ -830,6 +832,9 @@ msgstr "Listaa käsitteet aakkosittain"
 msgid "Listing vocabulary concepts by newest additions"
 msgstr "Listaa käsitteet uusimpien lisäysten mukaan"
 
+msgid "List vocabulary concepts by newest additions including removed"
+msgstr "Listaa käsitteet uusimpien lisäysten tai poistojen mukaan"
+
 msgid "Prefer using"
 msgstr "Käytä termiä"
 
@@ -856,3 +861,21 @@ msgstr "Pahoittelut, mutta Skosmos ei toimi kunnolla ilman JavaScript-tukea. Ole
 
 msgid "Deprecated concept"
 msgstr "Käytöstä poistettu käsite"
+
+msgid "Error: Search failed!"
+msgstr "Virhe: Haku epäonnistui!"
+
+msgid "Error: Failed to retrieve vocabulary information!"
+msgstr "Virhe: Sanaston tietojen haku epäonnistui!"
+
+msgid "Error: Loading more items failed!"
+msgstr "Virhe: Lisätulosten haku epäonnistui!"
+
+msgid "Retry"
+msgstr "Yritä uudelleen"
+
+msgid "skos:notation"
+msgstr "Notaatio"
+
+msgid "skos:notation_help"
+msgstr "Tunniste, joka yksilöi käsitteen sanaston sisällä."
