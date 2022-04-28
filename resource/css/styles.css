@@ -215,6 +215,13 @@ html,body {
   font-family: var(--font-family);
 }
 
+label {
+  display: inline-block;
+  max-width: 100%;
+  /* replaces margin-bottom from .form-label */
+  margin-bottom: 5px !important;
+}
+
 ul {
   list-style: none;
 }
@@ -1269,6 +1276,17 @@ span.xl-pref-label > img {
   position: absolute;
   right: 5px;
   top: 16px;
+}
+
+.multiselect-option {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.multiselect-option > .form-check {
+  margin-bottom: 0;
 }
 
 .fixed {
