@@ -1314,7 +1314,7 @@ div#sidebar-grey > div > div > form.search-options {
   padding-right: 15px;
 }
 
-.search-options > .input-group * {
+.form-check-input[type="checkbox"] {
   border-radius: 0;
 }
 
