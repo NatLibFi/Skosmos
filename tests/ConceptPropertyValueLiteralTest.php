@@ -189,9 +189,9 @@ public function testGetLabelForDatatypeIfNull() {
    * @covers ConceptPropertyValueLiteral::hasXlProperties
    */
   public function testGetXlLabel() {
-    $vocab = $this->model->getVocabulary('xl');
-    $concept = $vocab->getConceptInfo('http://www.skosmos.skos/xl/c1', 'en')[0];
-    $props = $concept->getProperties();
+    $voc = $this->model->getVocabulary('xl');
+    $conc = $voc->getConceptInfo('http://www.skosmos.skos/xl/c1', 'en')[0];
+    $props = $conc->getProperties();
     $vals = $props['skos:altLabel']->getValues();
     $val = reset($vals);
 
