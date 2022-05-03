@@ -85,7 +85,7 @@
         {% endif %}
         &nbsp;
         <button type="button" data-bs-toggle="tooltip" data-bs-placement="button" title="Copy to clipboard" class="btn btn-default btn-xs copy-clipboard" for="#{% if concept.notation %}notation{% else %}pref-label{% endif %}">
-            <img src="resource/pics/clipboard.svg" alt="Clipboard image" style="font-size: 24px;" />
+          <span class="fa-regular fa-copy"></span>
         </button>
         {% endapply %}
         </div>
@@ -190,7 +190,7 @@
                 <div class="property-value-wrapper">
                     <span class="versal uri-input-box" id="uri-input-box">{{ concept.uri }}</span>
                     <button type="button" data-bs-toggle="tooltip" data-bs-placement="button" title="Copy to clipboard" class="btn btn-default btn-xs copy-clipboard" for="#uri-input-box">
-                        <img class="icon" src="resource/pics/clipboard.svg" alt="Clipboard image" />
+                      <span class="fa-regular fa-copy"></span>
                     </button>
                 </div>
             </div>

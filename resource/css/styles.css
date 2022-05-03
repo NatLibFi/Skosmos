@@ -1970,7 +1970,7 @@ span.date-info {
 .copy-clipboard {
   color: var(--medium-color);
   border-radius: 0;
-  vertical-align: unset;
+  vertical-align: inherit;
   display: inline-block;
   font-size: var(--font-size);
   border: 0;
@@ -1978,14 +1978,8 @@ span.date-info {
   padding: 0;
 }
 
-.prop-preflabel .copy-clipboard img {
-  vertical-align: text-bottom;
-}
-
-.copy-clipboard img {
-  width: 1em;
-  height: 1em;
-  vertical-align: text-top;
+.prop-preflabel .copy-clipboard {
+  font-size: 20px;
 }
 
 .copy-clipboard:active, .copy-clipboard:focus, .copy-clipboard:active:focus {
