@@ -879,3 +879,6 @@ msgstr "Notaatio"
 
 msgid "skos:notation_help"
 msgstr "Tunniste, joka yksilöi käsitteen sanaston sisällä."
+
+msgid "Information"
+msgstr "Tietoja"
