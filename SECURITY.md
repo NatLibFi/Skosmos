@@ -2,14 +2,13 @@
 
 ## Supported Versions
 
-Following Skosmos versions are currently being supported with security updates.
+Following Skosmos versions are currently being supported with security updates. The "current development branch" means the master branch of the repository, whereas the "maintenance branch" corresponds with the latest release of Skosmos.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 2.15    |  ✔️                 |
-| 2.14.x  |  ✔️                 |
-| 2.13.x  | :white_check_mark: |
-| < 2.13  | :x:                |
+| Version                     | Supported          |
+| --------------------------- | ------------------ |
+| Current development branch  |  ✔️                 |
+| Current maintenance branch  |  ✔️                 |
+| Older versions              | :x:                |
 
 ## Reporting a Vulnerability
 
