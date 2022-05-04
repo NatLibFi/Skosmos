@@ -878,3 +878,6 @@ msgstr "Notation"
 
 msgid "skos:notation_help"
 msgstr "Kod som unikt identifierar ett begrepp i en vokabulär."
+
+msgid "Information"
+msgstr "Information"

@@ -183,4 +183,24 @@ public function testGetLabelForDatatypeIfNull() {
     $lit = new ConceptPropertyValueLiteral($this->model, $this->vocab, $resmock, $litmock, 'skosmos:testType');
     $this->assertTrue($lit->getContainsHtml());
   }
+
+  /**
+   * @covers ConceptPropertyValueLiteral::getXlLabel
+   * @covers ConceptPropertyValueLiteral::hasXlProperties
+   */
+  public function testGetXlLabel() {
+    $voc = $this->model->getVocabulary('xl');
+    $conc = $voc->getConceptInfo('http://www.skosmos.skos/xl/c1', 'en')[0];
+    $props = $conc->getProperties();
+    $vals = $props['skos:altLabel']->getValues();
+    $val = reset($vals);
+
+    $reified_vals = array();
+    if ($val->hasXlProperties())
+      {
+        $reified_vals = $val->getXlLabel()->getProperties();
+      }
+    $this->assertArrayHasKey('skosxl:literalForm', $reified_vals);
+    $this->assertArrayHasKey('skosxl:labelRelation', $reified_vals);
+  }
 }

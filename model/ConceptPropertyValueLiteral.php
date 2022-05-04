@@ -92,21 +92,14 @@ class ConceptPropertyValueLiteral extends VocabularyDataObject
         return !empty($resources);
     }
 
-    public function getXlProperties()
+    public function getXlLabel()
     {
-        $ret = array();
         $graph = $this->resource->getGraph();
-        $resources = $graph->resourcesMatching('skosxl:literalForm', $this->literal);
-        foreach ($resources as $xlres) {
-            foreach ($xlres->properties() as $prop) {
-                foreach($graph->allLiterals($xlres, $prop) as $val) {
-                    if ($prop !== 'rdf:type') {
-                        $ret[$prop] = $val;
-                    }
-                }
-            }
+        $labelResources = $graph->resourcesMatching('skosxl:literalForm', $this->literal);
+        foreach($labelResources as $labres) {
+            return new LabelSkosXL($this->model, $labres);
         }
-        return $ret;
+        return null;
     }
 
 }
