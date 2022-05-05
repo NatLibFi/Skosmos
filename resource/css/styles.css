@@ -404,6 +404,7 @@ ul {
   border-radius: 0;
   color: var(--dark-color) !important;
   padding: 0;
+  font-size: 16px;
 }
 
 #language > .dropdown-toggle:hover, #language > .dropdown-toggle:focus, #language > .dropdown-toggle:active, #language > .dropdown-toggle:visited {
@@ -464,6 +465,10 @@ ul {
 }
 
 /* Drop down to search from a specific vocabulary */
+
+#search-from-vocabularies .dropdown-item {
+  white-space: normal;
+}
 
 #search-from-vocabularies > button.show:focus {
   color: #333;
@@ -1122,6 +1127,7 @@ span.xl-pref-label > img {
   color: var(--medium-color);
   margin-bottom: 10px;
   resize: none;
+  font-size: var(--font-size);
 }
 
 .feedback-thanks {
@@ -1980,6 +1986,7 @@ span.date-info {
 
 .prop-preflabel .copy-clipboard {
   font-size: 20px;
+  vertical-align: 5%;
 }
 
 .copy-clipboard:active, .copy-clipboard:focus, .copy-clipboard:active:focus {
