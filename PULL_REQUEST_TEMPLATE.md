@@ -11,5 +11,6 @@
 ## Checklist
 
 - [ ] phpUnit tests pass locally with my changes
-- [ ] I have added tests that prove my fix is effective or that my feature works (if not, explain why below)
+- [ ] I have added tests that the new code works, or tests are not relevant for this PR (e.g. only HTML/CSS changes)
+- [ ] The PR doesn't reduce accessibility of the front-end code
 - [ ] The PR doesn't introduce unintended code changes (e.g. empty lines or useless reindentation)
