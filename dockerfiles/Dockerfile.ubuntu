@@ -1,32 +1,34 @@
-FROM ubuntu:20.04
+FROM php:8.1-apache-buster
 
 LABEL maintainer="National Library of Finland"
-LABEL version="0.1"
+LABEL version="0.2"
 LABEL description="A Docker image for Skosmos with Apache httpd."
 
-ARG DEBIAN_FRONTEND=noninteractive
-
-# TODO: maybe find an image that comes with PHP 8 instead
-RUN apt-get update && apt-get install -y software-properties-common && add-apt-repository -y ppa:ondrej/php
+# Use the default production configuration
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+# timezone
+RUN sed -i 's/;date.timezone =/date.timezone = "UTC"/g' "$PHP_INI_DIR/php.ini"
 
 # git is necessary for some composer packages e.g. davidstutz/bootstrap-multiselect
 # gettext is necessary as php-gettext was available in 18.04, but not in 20.04
 RUN apt-get update && apt-get install -y \
-    apache2 \
-    curl \
     gettext \
     git \
-    libapache2-mod-php8.0 \
+    libicu-dev \
+    libxslt-dev \
+    libzip-dev \
     locales \
-    php8.0 \
-    php8.0-curl \
-    php8.0-xsl \
-    php8.0-intl \
-    php8.0-mbstring \
-    php8.0-apcu \
-    php8.0-zip \
     unzip \
  && rm -rf /var/lib/apt/lists/*
+
+# apcu was dropped in php 8, but can still be used if you install it via pecl, for instance
+RUN pecl install apcu && \
+    pecl install zip && \
+    docker-php-ext-install gettext && \
+    docker-php-ext-install intl && \
+    docker-php-ext-install xsl && \
+    docker-php-ext-enable apcu && \
+    docker-php-ext-enable zip
 
 # https://stackoverflow.com/a/28406007
 # fixes warnings like perl: warning: Setting locale failed.
@@ -55,32 +57,20 @@ ENV LANGUAGE=en_US:en
 ENV LC_ALL=en_US.UTF-8 
 ENV LANG=en_US.UTF-8  
 
-# timezone
-RUN sed -i 's/;date.timezone =/date.timezone = "UTC"/g' /etc/php/8.0/apache2/php.ini
-
 COPY dockerfiles/config/000-default.conf /etc/apache2/sites-available/000-default.conf
 
 RUN a2enmod rewrite
 RUN a2enmod expires
 
-# set ServerName & redirect error log to stderr for docker logs
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
-        sed -ri \
-        -e 's!^(\s*ErrorLog)\s+\S+!\1 /proc/self/fd/1!g' \
-        "/etc/apache2/apache2.conf"
-
 WORKDIR /var/www/html
-RUN rm index.html
 
 # composer and packages layer
-RUN curl -sS https://getcomposer.org/installer | php
-COPY composer.json /var/www/html
-RUN php composer.phar install --no-dev --no-autoloader
+# RUN curl -sS https://getcomposer.org/installer | php
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # skosmos layer
-COPY . /var/www/html
-RUN php composer.phar install --no-dev
-
+COPY . /var/www/html/
+RUN composer install --no-dev
 
 # Configure Skosmos
 COPY dockerfiles/config/config-docker.ttl /var/www/html/config.ttl
