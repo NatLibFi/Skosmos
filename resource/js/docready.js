@@ -524,8 +524,6 @@ $(function() { // DOCUMENT READY
     style: { classes: 'qtip-tipsy qtip-skosmos' }
   };
 
-  $('#navi4').qtip(qtip_skosmos);
-
   $('.property-click').qtip(qtip_skosmos);
 
   $('.redirected-vocab-id').qtip(qtip_skosmos);
