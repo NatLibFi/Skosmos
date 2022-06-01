@@ -756,7 +756,6 @@ $(function() { // DOCUMENT READY
     '{{# if notation }}<span>{{notation}}</span>{{/if}}',
     '<span>{{label}}{{# if lang}}{{# unless matched }}<span>({{lang}})</span>{{/unless}}{{/if}}</span>',
     '{{# if typeLabel }}<span class="concept-type">{{typeLabel}}</span>{{/if}}',
-    '<p class="vocab">{{vocabLabel}}</p>',
     '</div>',
     '<div class="vocab">{{vocabLabel}}</div>',
     '</div>'
