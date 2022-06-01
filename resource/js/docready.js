@@ -754,7 +754,7 @@ $(function() { // DOCUMENT READY
     '{{# if matched }}<span>{{matched}}{{# if lang}} ({{lang}}){{/if}} = </span>{{/if}}',
     '{{# if replaced }}<span class="replaced">{{replaced}}{{# if lang}} ({{lang}}){{/if}} &rarr; </span>{{/if}}',
     '{{# if notation }}<span>{{notation}}</span>{{/if}}',
-    '<span class="autocomplete-label">{{label}}{{# if lang}}{{# unless matched }}<span>({{lang}})</span>{{/unless}}{{/if}}</span>',
+    '<span>{{label}}{{# if lang}}{{# unless matched }}<span>({{lang}})</span>{{/unless}}{{/if}}</span>',
     '{{# if typeLabel }}<span class="concept-type">{{typeLabel}}</span>{{/if}}',
     '<p class="vocab">{{vocabLabel}}</p>',
     '</div>',

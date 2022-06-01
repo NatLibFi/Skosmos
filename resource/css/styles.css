@@ -2135,7 +2135,7 @@ span.date-info {
   overflow: hidden;
 }
 
-.autocomplete-label > span {
+.autocomplete-label > div:first-child > span:first-child, .autocomplete-label > div:first-child > span.replaced + span {
   color: var(--medium-color);
   margin: 0;
 }
