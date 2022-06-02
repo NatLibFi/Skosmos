@@ -2,8 +2,6 @@
 [![Test Coverage](https://codeclimate.com/github/NatLibFi/Skosmos/badges/coverage.svg)](https://codeclimate.com/github/NatLibFi/Skosmos/coverage)
 [![Code Climate](https://codeclimate.com/github/NatLibFi/Skosmos/badges/gpa.svg)](https://codeclimate.com/github/NatLibFi/Skosmos)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/NatLibFi/Skosmos/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/NatLibFi/Skosmos/?branch=master)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/ca1939e4-919d-4429-95e7-d63e0a35f9a1/mini.png)](https://insight.sensiolabs.com/projects/ca1939e4-919d-4429-95e7-d63e0a35f9a1)
-[![Codacy Badge](https://api.codacy.com/project/badge/grade/c41550cd00fe4962ba766f8b5fe4a5ff)](https://www.codacy.com/app/NatLibFi/Skosmos)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=NatLibFi_Skosmos&metric=alert_status)](https://sonarcloud.io/dashboard?id=NatLibFi_Skosmos)
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/NatLibFi/Skosmos.svg)](http://isitmaintained.com/project/NatLibFi/Skosmos "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/NatLibFi/Skosmos.svg)](http://isitmaintained.com/project/NatLibFi/Skosmos "Percentage of issues still open")
