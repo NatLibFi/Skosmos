@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-16 10:26+0200\n"
-"PO-Revision-Date: 2021-11-10 15:08+0000\n"
-"Last-Translator: Yksityis Yrittäjä <okko.vainonen@helsinki.fi>\n"
+"PO-Revision-Date: 2015-06-18 07:06+0000\n"
+"Last-Translator: Yksityis Yrittäjä <okko.vainonen@helsinki.fi>, 2021\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/national-library-of-finland/skosmos/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: pt_BR\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 "X-Generator: Poedit 1.8.7.1\n"
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-SearchPath-0: view\n"
@@ -687,6 +687,9 @@ msgstr "É parte de"
 msgid "skosext:partOf_help"
 msgstr "O todo do qual o conceito é parte."
 
+msgid "skosmos:marcSourceCode"
+msgstr ""
+
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:548
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:201
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:449
@@ -871,3 +874,6 @@ msgstr "Notação"
 
 msgid "skos:notation_help"
 msgstr "Código que identifica unicamente um conceito dentro de um esquema de conceitos"
+
+msgid "Information"
+msgstr ""
