@@ -68,8 +68,8 @@
           <li id="groups" class="nav-item"><a class="{{ css_class|join(' ') }}" href="{{ request.vocabid }}/{{ request.lang }}/groups{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Group-nav" %}</a></li>
           {% endif %}
           {% if vocab.config.showChangeList %}
-          {% if vocab.config.showDeprecatedChanges %}
           {% if active_tab == 'new' %}{% set css_class = css_class|merge(['active']) %}{%  endif %}
+          {% if vocab.config.showDeprecatedChanges %}
           <h3 class="sr-only">{% trans "List vocabulary concepts by newest additions including removed" %}</h3>
           <li id="changes" class="nav-item"><a class="{{ css_class|join(' ') }}" href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% trans "Changes-and-deprecations-nav" %}</a></li>
           {% else %}
