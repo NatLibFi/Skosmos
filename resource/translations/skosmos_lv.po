@@ -683,6 +683,9 @@ msgstr "Ir daļa no"
 msgid "skosext:partOf_help"
 msgstr "Kopums, no kura šis koncepts ir daļa."
 
+msgid "skosmos:marcSourceCode"
+msgstr ""
+
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:548
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:201
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:449
@@ -867,3 +870,6 @@ msgstr "Notācija"
 
 msgid "skos:notation_help"
 msgstr "Kods, kas doto konceptu unikāli identificē konceptu shēmas ietvaros."
+
+msgid "Information"
+msgstr ""

@@ -1,6 +1,6 @@
 # 
 # Translators:
-# Bruno Almeida <brunoalmeida@fcsh.unl.pt>, 2020
+# Bruno Almeida <brunoalmeida@fcsh.unl.pt>, 2020,2022
 # Laureano Macedo <laureanomacedo@gov-madeira.pt>, 2018
 # Yksityis Yrittäjä <okko.vainonen@helsinki.fi>, 2021
 msgid ""
@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-16 10:26+0200\n"
-"PO-Revision-Date: 2021-11-10 15:08+0000\n"
-"Last-Translator: Yksityis Yrittäjä <okko.vainonen@helsinki.fi>\n"
+"PO-Revision-Date: 2015-06-18 07:06+0000\n"
+"Last-Translator: Bruno Almeida <brunoalmeida@fcsh.unl.pt>, 2020,2022\n"
 "Language-Team: Portuguese (http://www.transifex.com/national-library-of-finland/skosmos/language/pt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: pt\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 "X-Generator: Poedit 1.8.7.1\n"
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-SearchPath-0: view\n"
@@ -43,7 +43,7 @@ msgstr "Coleção"
 
 #: model/Concept.php:455 model/Concept.php:475
 msgid "skosmos:created"
-msgstr "Criado por"
+msgstr "Criado em"
 
 #: model/Concept.php:460 model/Concept.php:462 model/Concept.php:471
 msgid "skosmos:modified"
@@ -77,7 +77,7 @@ msgstr "Sobre"
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:35
 #, php-format
 msgid "All %d results displayed"
-msgstr "Mostrando todos os %d resultados"
+msgstr "A mostrar todos os %d resultados"
 
 #: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:64
 #: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:77
@@ -116,7 +116,7 @@ msgid "Changes-nav"
 msgstr "Novo"
 
 msgid "Changes-and-deprecations-nav"
-msgstr ""
+msgstr "Novo e obsoleto"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:122
 msgid "Clear limitations"
@@ -427,23 +427,23 @@ msgstr "Termos para o conceito noutras línguas."
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:660
 msgid "foreign prefLabels"
-msgstr "Em outras línguas"
+msgstr "Termos equivalentes"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:39
 msgid "from all"
 msgstr "Todos"
 
 msgid "wgs84:lat"
-msgstr ""
+msgstr "Latitude"
 
 msgid "wgs84:lat_help"
-msgstr ""
+msgstr "Latitude em graus decimais de acordo com o sistema WGS 84."
 
 msgid "wgs84:long"
-msgstr ""
+msgstr "Longitude"
 
 msgid "wgs84:long_help"
-msgstr ""
+msgstr "Longitude em graus decimais de acordo com o sistema WGS 84."
 
 #: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:81
 #: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:90
@@ -591,11 +591,11 @@ msgstr "Nota editorial"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:145
 msgid "skos:exactMatch"
-msgstr "Conceitos equivalentes correspondentes"
+msgstr "Conceitos exatamente correspondentes"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:187
 msgid "skos:exactMatch_help"
-msgstr "Conceitos equivalentes noutro vocabulário."
+msgstr "Conceitos exatamente correspondentes noutro vocabulário."
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:163
 msgid "skos:example"
@@ -685,6 +685,9 @@ msgstr "É parte de"
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:199
 msgid "skosext:partOf_help"
 msgstr "O todo do qual o conceito faz parte."
+
+msgid "skosmos:marcSourceCode"
+msgstr "Código MARC"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:548
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:201
@@ -786,87 +789,90 @@ msgid "concept_types"
 msgstr "Tipos de conceitos"
 
 msgid "Skip to main"
-msgstr ""
+msgstr "Ir para o conteúdo principal"
 
 msgid "Available vocabularies and ontologies"
-msgstr ""
+msgstr "Vocabulários e ontologias disponíveis"
 
 msgid "Search from selected vocabularies"
-msgstr ""
+msgstr "Procure nos vocabulários selecionados"
 
 msgid "List vocabulary concepts alphabetically"
-msgstr ""
+msgstr "Listar os conceitos do vocabulário alfabeticamente"
 
 msgid "List vocabulary concepts and groupings hierarchically"
-msgstr ""
+msgstr "Listar os conceitos e grupos do vocabulário hierarquicamente"
 
 msgid "List vocabulary concepts by newest additions"
-msgstr ""
+msgstr "Listar os conceitos do vocabulário pelas adições mais recentes"
 
 msgid "List vocabulary concepts hierarchically"
-msgstr ""
+msgstr "Listar os conceitos do vocabulário hierarquicamente"
 
 msgid "Choose alphabetical listing letter"
-msgstr ""
+msgstr "Selecionar a letra da lista alfabética"
 
 msgid "Concept information"
-msgstr ""
+msgstr "Informação do conceito"
 
 msgid "Hierarchical listing of vocabulary concepts"
-msgstr ""
+msgstr "Listagem hierárquica dos conceitos do vocabulário"
 
 msgid "Hierarchical listing of vocabulary concepts and groupings"
-msgstr ""
+msgstr "Listagem hierárquica dos conceitos e grupos do vocabulário"
 
 msgid "Listing vocabulary concepts alphabetically"
-msgstr ""
+msgstr "Listagem alfabética dos conceitos do vocabulário"
 
 msgid "Listing vocabulary concepts by newest additions"
-msgstr ""
+msgstr "Listagem dos conceitos do vocabulário mais recentes"
 
 msgid "Prefer using"
-msgstr ""
+msgstr "Prefere usar"
 
 msgid "Search options tab"
-msgstr ""
+msgstr "Opções de pesquisa"
 
 msgid "Search results"
-msgstr ""
+msgstr "Resultados da pesquisa"
 
 msgid "Sidebar listing: list and traverse vocabulary contents by a criterion"
-msgstr ""
+msgstr "Listagem na barra lateral: listar e navegar no conteúdo do vocabulário por critério"
 
 msgid "Subject:"
-msgstr ""
+msgstr "Assunto:"
 
 msgid "Write a subject"
-msgstr ""
+msgstr "Escreva um assunto"
 
 msgid "Select a vocabulary"
-msgstr ""
+msgstr "Pode selecionar um vocabulário"
 
 msgid ""
 "We're sorry but Skosmos doesn't work properly without JavaScript enabled. "
 "Please enable it to continue."
-msgstr ""
+msgstr "Lamentamos, mas o Skosmos não funciona sem o Javascript ativado. Por favor ative-o para continuar."
 
 msgid "Deprecated concept"
-msgstr ""
+msgstr "Conceito obsoleto"
 
 msgid "Error: Search failed!"
-msgstr ""
+msgstr "Erro: Falha na pesquisa!"
 
 msgid "Error: Failed to retrieve vocabulary information!"
-msgstr ""
+msgstr "Erro: Falha em recuperar a informação do vocabulário!"
 
 msgid "Error: Loading more items failed!"
-msgstr ""
+msgstr "Erro: Falha no carregamento de mais itens!"
 
 msgid "Retry"
-msgstr ""
+msgstr "Tentar novamente"
 
 msgid "skos:notation"
-msgstr ""
+msgstr "Notação"
 
 msgid "skos:notation_help"
-msgstr ""
+msgstr "Código que identifica unicamente um conceito dentro de um esquema de conceitos"
+
+msgid "Information"
+msgstr "Informação"
