@@ -3,7 +3,7 @@
   "description": "Thesaurus and controlled vocabulary browser using SKOS and SPARQL",
   "type": "project",
   "license": "MIT",
-  "version": "2.15-dev",
+  "version": "2.15",
   "repositories": { 
     "lscache": {
       "type": "package",
