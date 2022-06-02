@@ -750,13 +750,15 @@ $(function() { // DOCUMENT READY
 
   var autocompleteTemplate =[
     '<div class="autocomplete-label">',
+    '<div>',
     '{{# if matched }}<span>{{matched}}{{# if lang}} ({{lang}}){{/if}} = </span>{{/if}}',
     '{{# if replaced }}<span class="replaced">{{replaced}}{{# if lang}} ({{lang}}){{/if}} &rarr; </span>{{/if}}',
     '{{# if notation }}<span>{{notation}}</span>{{/if}}',
     '<span>{{label}}{{# if lang}}{{# unless matched }}<span>({{lang}})</span>{{/unless}}{{/if}}</span>',
     '{{# if typeLabel }}<span class="concept-type">{{typeLabel}}</span>{{/if}}',
     '</div>',
-    '<div class="vocab">{{vocabLabel}}</div>'
+    '<div class="vocab">{{vocabLabel}}</div>',
+    '</div>'
   ].join('');
 
   if ($('.headerbar').length > 0) {

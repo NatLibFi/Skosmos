@@ -2126,7 +2126,7 @@ span.date-info {
   float: right;
 }
 
-.tt-selectable > .concept-type {
+.tt-selectable > .concept-type, .autocomplete-label > div:first-child > span.concept-type {
   float: right;
   height: auto;
 }
@@ -2135,7 +2135,7 @@ span.date-info {
   overflow: hidden;
 }
 
-.autocomplete-label > span {
+.autocomplete-label > div:first-child > span:first-child, .autocomplete-label > div:first-child > span.replaced + span {
   color: var(--medium-color);
   margin: 0;
 }
