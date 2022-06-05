@@ -491,7 +491,10 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
       'http://www.skosmos.skos/test-meta/TestClass' => array(
         'superclass' => 'http://www.w3.org/2004/02/skos/core#Concept',
         'label' => 'Test class'
-      )
+      ),
+      'http://www.w3.org/2004/02/skos/core#Collection' => array(),
+      'http://purl.org/iso25964/skos-thes#ThesaurusArray' => array(),
+      'http://purl.org/iso25964/skos-thes#ConceptGroup' => array()
     );
     $this->assertEquals($expected, $actual);
   }
