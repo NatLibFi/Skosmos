@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * SimpleSamlPHP authentication layer for Skosmos
+ *
+ * Required variables in your config.ttl:
+ * skosmos:authenticationProvider "SimpleSamlPHP" ;
+ * skosmos:authProviderIncludeDirectory "<SimpleSamlPHP installation path>" ;
+ * skosmos:authProviderAuthEntity "<What authentication entity must be used? For simple testing use 'admin'>" .
+ */
 class SimpleSamlPHP implements BaseAuthInterface {
 
 	/**
