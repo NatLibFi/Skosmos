@@ -13,7 +13,7 @@ abstract class BaseConfig extends DataObject
      * @param boolean $default the default value if the value is not set in configuration
      * @return boolean the boolean value for the given property, or the default value if not found
      */
-    protected function getBoolean($property, $default = false)
+    public function getBoolean($property, $default = false)
     {
         $val = $this->getResource()->getLiteral($property);
         if ($val) {
@@ -44,7 +44,7 @@ abstract class BaseConfig extends DataObject
      * @param string $lang preferred language for the literal
      * @return string string value for the given property, or the default value if not found
      */
-    protected function getLiteral($property, $default=null, $lang=null)
+    public function getLiteral( $property, $default=null, $lang=null)
     {
         if (!isset($lang)) {
             $lang = $this->getEnvLang();
