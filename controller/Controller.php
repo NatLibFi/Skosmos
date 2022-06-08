@@ -48,8 +48,8 @@ class Controller
 
 		// Check if we have an authentication provider configured
 		// If so; check if the configured provider is actually a class we can use
-		if ( ( $authProvider = $this->model->getConfig()->getAuthenticationProvider() ) && class_exists( $authProvider ) ) {
-			$this->invokeAuthenticationLayer( new $authProvider($this) );
+		if (($authProvider = $this->model->getConfig()->getAuthenticationProvider()) && class_exists($authProvider)) {
+			$this->invokeAuthenticationLayer(new $authProvider($this));
 		}
     }
 
@@ -59,27 +59,27 @@ class Controller
 	 * @param BaseAuthInterface $provider
 	 * @return void
 	 */
-	private function invokeAuthenticationLayer( BaseAuthInterface $authProvider ) {
+	private function invokeAuthenticationLayer(BaseAuthInterface $authProvider) {
 
 		// Validate the authentication provider's configuration parameters
-		if ( $authProvider->validate() ) {
+		if ($authProvider->validate()) {
 
 			// We don't have a valid user session; so sign in the user
-			if ( !$authProvider->isSignedIn() ) {
+			if (!$authProvider->isSignedIn()) {
 				$authProvider->signIn();
 
 			// We have a valid session for this user; see if it wants to do anything..
-			} else if ( isset ( $_GET[ 'auth_do' ] ) ) {
-				$action = $_GET[ 'auth_do' ];
+			} elseif (isset($_GET['auth_do'])) {
+				$action = $_GET['auth_do'];
 
 				// Signout
-				if ( $action === 'signout' ) {
+				if ($action === 'signout') {
 					$authProvider->signOut();
 
 				// Retrieve user info
-				} else if ( $action === 'info' ) {
-					echo json_encode( $authProvider->getUserAttributes() );
-					$this->sendHeader('Content-Type: application/json' );
+				} else if ($action === 'info') {
+					echo json_encode($authProvider->getUserAttributes());
+					$this->sendHeader('Content-Type: application/json');
 					exit();
 				}
 			}

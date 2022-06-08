@@ -2,7 +2,7 @@
 
 interface BaseAuthInterface {
 
-	public function __construct( Controller $controller );
+	public function __construct(Controller $controller);
 
 	/**
 	 * Validate if all requirements are met to load this
@@ -11,7 +11,7 @@ interface BaseAuthInterface {
 	 *
 	 * @return bool
 	 */
-	public function validate() :bool;
+	public function validate(): bool;
 
 	/**
 	 * Checks if the current user has a valid session on the
@@ -19,7 +19,7 @@ interface BaseAuthInterface {
 	 *
 	 * @return bool
 	 */
-	public function isSignedIn() : bool;
+	public function isSignedIn(): bool;
 
 	/**
 	 * Signs in the current user
@@ -40,7 +40,7 @@ interface BaseAuthInterface {
 	 *
 	 * @return array
 	 */
-	public function getUserAttributes() : array;
+	public function getUserAttributes(): array;
 
 
 }

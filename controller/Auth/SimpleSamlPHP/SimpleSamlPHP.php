@@ -32,7 +32,7 @@ class SimpleSamlPHP implements BaseAuthInterface {
 	/**
 	 * @param Model $model
 	 */
-	public function __construct( Controller $controller ) {
+	public function __construct(Controller $controller) {
 		$this->model = $controller->model;
 		$this->baseHref = $controller->getBaseHref();
 	}
@@ -42,19 +42,19 @@ class SimpleSamlPHP implements BaseAuthInterface {
 	 */
 	public function validate(): bool {
 		$authDirectory = $this->model->getConfig()->getLiteral( 'skosmos:authProviderIncludeDirectory' );
-		if ( !$authDirectory ) {
+		if (!$authDirectory) {
 			return false;
 		}
 
 		$authEntity = $this->model->getConfig()->getLiteral( 'skosmos:authProviderAuthEntity' );
-		if ( !$authEntity ) {
+		if (!$authEntity) {
 			return false;
 		} else {
 			$this->authEntity = $authEntity;
 		}
 
 		$sspAutoloader = $authDirectory . DIRECTORY_SEPARATOR . 'lib/_autoload.php';
-		if ( !file_exists( $sspAutoloader ) ) {
+		if (!file_exists($sspAutoloader)) {
 			return false;
 		} else {
 			require $sspAutoloader;
@@ -67,32 +67,32 @@ class SimpleSamlPHP implements BaseAuthInterface {
 	 * @inheritDoc
 	 */
 	public function isSignedIn(): bool {
-		return $this->getSessionFromRequest()->isValid( $this->authEntity );
+		return $this->getSessionFromRequest()->isValid($this->authEntity);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
 	public function signIn() {
-		$this->getAuthenticationSource()->requireAuth( [
+		$this->getAuthenticationSource()->requireAuth([
 			'ReturnTo' => $this->baseHref
-		] );
+		]);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
 	public function signOut() {
-		$this->getAuthenticationSource()->logout( [
+		$this->getAuthenticationSource()->logout([
 			'ReturnTo' => $this->baseHref
-		] );
+		]);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
 	public function getUserAttributes(): array {
-		if ( $this->isSignedIn() ) {
+		if ($this->isSignedIn()) {
 			return [];
 		}
 		return [
@@ -104,8 +104,8 @@ class SimpleSamlPHP implements BaseAuthInterface {
 	/**
 	 * @return \SimpleSAML\Auth\Simple
 	 */
-	private function getAuthenticationSource( ) {
-		return new SimpleSAML\Auth\Simple( $this->authEntity );
+	private function getAuthenticationSource() {
+		return new SimpleSAML\Auth\Simple($this->authEntity);
 	}
 
 	/**
