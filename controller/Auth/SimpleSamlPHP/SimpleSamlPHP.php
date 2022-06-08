@@ -33,12 +33,12 @@ class SimpleSamlPHP implements BaseAuthInterface {
 	 * @inheritDoc
 	 */
 	public function validate(): bool {
-		$authDirectory = $this->model->getConfig()->getLiteral( 'skosmos:authProviderIncludeDirectory');
+		$authDirectory = $this->model->getConfig()->getLiteral( 'skosmos:authProviderIncludeDirectory' );
 		if ( !$authDirectory ) {
 			return false;
 		}
 
-		$authEntity = $this->model->getConfig()->getLiteral('skosmos:authProviderAuthEntity');
+		$authEntity = $this->model->getConfig()->getLiteral( 'skosmos:authProviderAuthEntity' );
 		if ( !$authEntity ) {
 			return false;
 		} else {
