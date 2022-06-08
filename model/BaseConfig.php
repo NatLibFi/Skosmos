@@ -44,7 +44,7 @@ abstract class BaseConfig extends DataObject
      * @param string $lang preferred language for the literal
      * @return string string value for the given property, or the default value if not found
      */
-    public function getLiteral( $property, $default=null, $lang=null)
+    public function getLiteral($property, $default=null, $lang=null)
     {
         if (!isset($lang)) {
             $lang = $this->getEnvLang();
