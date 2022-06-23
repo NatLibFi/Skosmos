@@ -1237,6 +1237,13 @@
             "type": "string"
           },
           {
+            "name": "uri",
+            "in": "query",
+            "description": "URI of the group to return members from",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "lang",
             "in": "query",
             "description": "label language, e.g. \"en\" or \"fi\"",
