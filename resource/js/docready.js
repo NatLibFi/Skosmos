@@ -942,7 +942,7 @@ $(function() { // DOCUMENT READY
   // activating the custom autocomplete
   function updateVocabParam() {
     vocabSelectionString = '';
-    var $vocabs = $('li > a.active input');
+    var $vocabs = $('button.active input');
     $.each($vocabs,
       function(index, ob) {
         if (ob.value === 'multiselect-all') {
