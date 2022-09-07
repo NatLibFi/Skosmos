@@ -37,6 +37,17 @@ $(function() { // DOCUMENT READY
     document.getElementById(e.target.hash.slice(1)).focus({preventScroll: true});
   });
 
+  var addSideBarCallbacks = () => {
+    var sidebarElement = document.getElementsByClassName('sidebar-grey')[0];
+    $('.sidebar-grey').scroll(function () {
+      if (sidebarElement.scrollHeight - sidebarElement.scrollTop - 300 <= sidebarElement.clientHeight) {
+        ($('#changes.active').length === 1) ? changeListWaypointCallback() : alphaWaypointCallback();
+      }
+    })
+  }
+
+  addSideBarCallbacks()
+
   /*
    * Moving the sidenav scrollbar towards the current concept. Aiming the current
    * concept at vertical center of the container. Each concept needs 18px height.
@@ -57,32 +68,7 @@ $(function() { // DOCUMENT READY
         });
         return removeThese.join(' ');
       });
-      $(".sidebar-grey-alpha").mCustomScrollbar({
-        alwaysShowScrollbar: 1,
-        scrollInertia: 0,
-        mouseWheel:{ preventDefault: true, scrollAmount: 105 },
-        snapAmount: 15,
-        snapOffset: 1,
-        callbacks: { alwaysTriggerOffsets: false, onTotalScroll: alphaWaypointCallback, onTotalScrollOffset: 300 }
-      });
-    }
-    // Sidenav actions only happen when doing other queries than the autocomplete.
-    if (settings.url.indexOf('index') !== -1 || settings.url.indexOf('groups') !== -1) {
-      // initializing the mCustomScrollbar before the jstree has properly loaded causes a crash
-      if ($('.sidebar-grey').hasClass('jstree-loading') === false) {
-        var snap = (settings.url.indexOf('hierarchy') !== -1) ? 18 : 15;
-        $(".sidebar-grey").mCustomScrollbar({
-          alwaysShowScrollbar: 1,
-          scrollInertia: 0,
-          mouseWheel:{ scrollAmount: 105 },
-          snapAmount: snap,
-          snapOffset: 0
-        });
-      }
-    }
-    var $autocomplete = $('.tt-dropdown-menu');
-    if (settings.url.indexOf('search') !== -1 && $autocomplete.length > 0 && $autocomplete[0].offsetHeight === 302) {
-      $(".tt-dropdown-menu").mCustomScrollbar({ alwaysShowScrollbar: 1, scrollInertia: 0 });
+      addSideBarCallbacks();
     }
 
     $('.reified-property-value').each(function() {
@@ -377,14 +363,6 @@ $(function() { // DOCUMENT READY
               $('.nav').scrollTop(0);
               if (window.history.pushState) { window.history.pushState({}, null, encodeURI(event.target.href)); }
               updateTitle(data);
-              $(".sidebar-grey").mCustomScrollbar({
-                alwaysShowScrollbar: 1,
-                scrollInertia: 0,
-                mouseWheel:{ preventDefault: true, scrollAmount: 105 },
-                snapAmount: 15,
-                snapOffset: 1,
-                callbacks: { alwaysTriggerOffsets: false, onTotalScroll: changeListWaypointCallback, onTotalScrollOffset: 300 }
-              });
             }
         });
         return false;
@@ -777,8 +755,6 @@ $(function() { // DOCUMENT READY
           suggestion: Handlebars.compile(autocompleteTemplate)
         },
         source: concepts.ttAdapter()
-      }).on('typeahead:cursorchanged', function () {
-      $('.tt-dropdown-menu').mCustomScrollbar("scrollTo", '.tt-cursor');
     }).on('typeahead:selected', onSelection).on('focus', function () {
       $('#search-field').typeahead('open');
     }).after(clearButton).on('keypress', function() {
@@ -1033,37 +1009,8 @@ $(function() { // DOCUMENT READY
       li: '<button class="multiselect-option dropdown-item"></button>',
       button: '<button type="button" class="multiselect dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><span class="multiselect-selected-text"></span></button>',
     },
-    onDropdownShown: function(event) {
-      var $activeChild = $(event.currentTarget).find('.active');
-      $('.multiselect-container').mCustomScrollbar('scrollTo', $activeChild);
-    },
     maxHeight: 300
   });
-
-  if ($('#alpha > a.active').length === 1 || $('#changes >a.active').length === 1) {
-    var scrollCB = ($('#changes.active').length === 1) ? changeListWaypointCallback : alphaWaypointCallback;
-    $(".sidebar-grey").mCustomScrollbar({
-      alwaysShowScrollbar: 1,
-      scrollInertia: 0,
-      mouseWheel:{ preventDefault: true, scrollAmount: 105 },
-      snapAmount: 15,
-      snapOffset: 1,
-      callbacks: { alwaysTriggerOffsets: false, onTotalScroll: scrollCB, onTotalScrollOffset: 300 }
-    });
-  }
-
-  /*  activating the custom scrollbars only when not on the hierarchy page
-   *  since that goes haywire if it's done before the ajax complete runs
-   */
-  if ($('#vocab-info').length === -1 && document.URL.indexOf('/page/') === -1 && $('.search-count').length === 0) {
-    $(".sidebar-grey").mCustomScrollbar({
-      alwaysShowScrollbar: 1,
-      scrollInertia: 0,
-      mouseWheel:{ scrollAmount: 105 },
-      snapAmount: 15,
-      snapOffset: 1
-    });
-  }
 
   /* adding the replaced by concept href to the alert box when possible.
    */
@@ -1125,14 +1072,6 @@ $(function() { // DOCUMENT READY
       return false;
     });
 
-    $('.multiselect-container').mCustomScrollbar({
-      alwaysShowScrollbar: 1,
-      scrollInertia: 0,
-      mouseWheel:{ scrollAmount: 60 },
-      snapAmount: 20,
-      snapOffset: 1
-    });
-
     $('#parent-limit').typeahead({ hint: false, highlight: true, minLength: autocomplete_activation },{
         name: 'concept',
         displayKey: 'label',
@@ -1144,8 +1083,6 @@ $(function() { // DOCUMENT READY
           suggestion: Handlebars.compile(autocompleteTemplate)
         },
         source: concepts.ttAdapter()
-    }).on('typeahead:cursorchanged', function() {
-      $('.tt-dropdown-menu').mCustomScrollbar("scrollTo", '.tt-cursor');
     }).on('typeahead:selected', onSelection).on('focus', function() {
       $('#search-field').typeahead('open');
     });

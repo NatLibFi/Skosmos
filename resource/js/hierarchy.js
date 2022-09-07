@@ -1,12 +1,5 @@
 var treeIndex = {}; 
 var urlToUri = {};
-var hierTreeConf ={ 
-  alwaysShowScrollbar: 1,
-  scrollInertia: 0, 
-  mouseWheel:{ scrollAmount: 105 },
-  snapAmount: 18,
-  snapOffset: 1
-};
 
 /* 
  * For legacy browsers that don't natively support Object.size().
@@ -39,19 +32,10 @@ function invokeParentTree(tree) {
   });
 
   $treeObject.on('loaded.jstree', function() {
-    var $sidebarGrey = $(".sidebar-grey");
-    if ($('#sidebar .mCustomScrollbar').length === 0) {
-      $sidebarGrey.mCustomScrollbar(hierTreeConf);
-    }
     // fix a bug causing throbber.gif not showing whilst ajaxing
     // TODO: a good fix would mean fixing the underlying DOM structure
     $('.jstree-container-ul').parent().addClass('jstree-default');
 
-    var $leafProper = $('.jstree-leaf-proper');
-    if ($leafProper.length > 0) {
-      $sidebarGrey.jstree('select_node', $leafProper.toArray());
-      $sidebarGrey.mCustomScrollbar('scrollTo', getLeafOffset());
-    }
   });
 }
   
