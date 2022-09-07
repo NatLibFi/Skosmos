@@ -69,11 +69,9 @@
         </span>
         <div class="reified-tooltip">
           {% for key, val in concept.xlLabel.properties %}
-            {% if key != 'rdf:type' and key != 'skosxl:literalForm' %}
             <p>{{ key|trans }}:
               <span class="versal">{{ val }}</span>
             </p>
-            {% endif %}
           {% endfor %}
         </div>
         <span class="prefLabel" id="pref-label">{{ concept.xlLabel }}</span>
@@ -150,11 +148,9 @@
                   <span class="reified-property-value xl-label"><img alt="{{ "Information" | trans }}" src="resource/pics/about.png"></span>
                     <div class="reified-tooltip">
                     {% for key, val in propval.xlLabel.properties %}
-                      {% if key != 'rdf:type' and key != 'skosxl:literalForm' %}
                       <p>{{ key|trans }}:
                         <span class="versal">{{ val }}</span>
                       </p>
-                      {% endif %}
                     {% endfor %}
                     </div>
                   {% endif %}

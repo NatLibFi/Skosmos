@@ -163,12 +163,10 @@ class Concept extends VocabularyDataObject implements Modifiable
         return "";
     }
 
-    public function hasXlLabel($prop = 'prefLabel')
+    public function hasXlLabel()
     {
-        if ($this->resource->hasProperty('skosxl:' . $prop)) {
-            return true;
-        }
-        return false;
+        $xlLabel = $this->getXlLabel();
+        return ($xlLabel !== null && !empty($xlLabel->getProperties()));
     }
 
     public function getXlLabel()
