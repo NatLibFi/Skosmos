@@ -580,7 +580,7 @@ $(function() { // DOCUMENT READY
     createCookie('SKOSMOS_SEARCH_LANG', qlang, 365);
   }
 
-  $('.lang-button').on('click', function() {
+  $('a.dropdown-item').on('click', function() {
     qlang = $(this)[0].attributes.hreflang ? $(this)[0].attributes.hreflang.value : 'anything';
     $('#lang-dropdown-toggle').html($(this).html() + ' <span class="caret"></span>');
     $('#lang-input').val(qlang);
