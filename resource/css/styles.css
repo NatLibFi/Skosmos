@@ -2747,7 +2747,7 @@ body, .versal, h1, h2, h3, p, .versal-bold {
   height: 15px;
   z-index: 500;
   opacity: 0;
-  transition: all cubic-bezier(0.17, 0.67, 0.5, 0.71) 100ms;
+  /* transition: all cubic-bezier(0.17, 0.67, 0.5, 0.71) 100ms; */
   pointer-events: none;
 }
 
@@ -2767,7 +2767,7 @@ body, .versal, h1, h2, h3, p, .versal-bold {
   position: absolute;
   z-index: 555;
   opacity: 0;
-  transition: all cubic-bezier(0.17, 0.67, 0.5, 0.71) 100ms;
+  /* transition: all cubic-bezier(0.17, 0.67, 0.5, 0.71) 100ms; */
   pointer-events: none;
   margin: 12px 0 0 9px;
   padding: 0.25rem 0.5rem;
