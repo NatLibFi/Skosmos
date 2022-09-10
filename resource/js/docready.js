@@ -119,7 +119,7 @@ $(function() { // DOCUMENT READY
 
   countAndSetOffset();
 
-  function initHierarchyQtip() {
+  function initHierarchyTooltip() {
       if (!$('#hierarchy').length) {
           $('#hierarchy-disabled').attr('id', 'hierarchy');
           $('#hier-trigger').attr('title', '');
@@ -316,7 +316,7 @@ $(function() { // DOCUMENT READY
             success : function(data, responseCode, jqxhr) {
               if (window.history.pushState) { window.history.pushState({}, null, event.currentTarget.href); }
               $content.empty().append($('.content', data).html());
-              initHierarchyQtip();
+              initHierarchyTooltip();
               $('#hier-trigger').attr('href', event.currentTarget.href);
               updateJsonLD(data);
               updateTitle(data);
@@ -446,7 +446,7 @@ $(function() { // DOCUMENT READY
             req_kind: $.ajaxQ.requestKind.CONTENT,
             complete: function() { clearTimeout(loading); },
             success : function(data) {
-              initHierarchyQtip();
+              initHierarchyTooltip();
               $('#hier-trigger').attr('href', event.target.href);
               updateTitle(data);
               updateTopbarLang(data);
