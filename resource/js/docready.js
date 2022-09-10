@@ -42,11 +42,7 @@ $(function() { // DOCUMENT READY
    * concept at vertical center of the container. Each concept needs 18px height.
    */
   $(document).ajaxComplete(function(event, xhr, settings) {
-    $('.property-click').qtip({
-      position: { my: 'bottom center', at: 'top center' },
-      style: { classes: 'qtip-tipsy qtip-skosmos' }
-    });
-    $('#hierarchy-disabled > #hier-trigger').qtip(qtip_skosmos_hierarchy);
+    // $('#hierarchy-disabled > #hier-trigger').qtip(qtip_skosmos_hierarchy);
     if (settings.url.indexOf('groups') !== -1 || settings.url.indexOf('index') !== -1) {
       $('.sidebar-grey').removeClass(function(index, classes) {
         var elementClasses = classes.split(' ');
@@ -86,13 +82,13 @@ $(function() { // DOCUMENT READY
     }
 
     $('.reified-property-value').each(function() {
-      $(this).qtip({
-        content: $(this).next('.reified-tooltip'),
-        position: { my: 'top left', at: 'top left' },
-        style: { classes: 'qtip-skosmos' },
-        show: { delay: 100 },
-        hide: { fixed: true, delay: 400 }
-      });
+      // $(this).qtip({
+      //   content: $(this).next('.reified-tooltip'),
+      //   position: { my: 'top left', at: 'top left' },
+      //   style: { classes: 'qtip-skosmos' },
+      //   show: { delay: 100 },
+      //   hide: { fixed: true, delay: 400 }
+      // });
     });
 
     var active_tab = $('a.active').parent().attr('id');
@@ -128,7 +124,7 @@ $(function() { // DOCUMENT READY
       if (!$('#hierarchy').length) {
           $('#hierarchy-disabled').attr('id', 'hierarchy');
           $('#hier-trigger').attr('title', '');
-          $('#hier-trigger').qtip('disable');
+          // $('#hier-trigger').qtip('disable');
       }
   }
 
@@ -524,24 +520,22 @@ $(function() { // DOCUMENT READY
     style: { classes: 'qtip-tipsy qtip-skosmos' }
   };
 
-  $('.property-click').qtip(qtip_skosmos);
-
-  $('.redirected-vocab-id').qtip(qtip_skosmos);
+  // $('.redirected-vocab-id').qtip(qtip_skosmos);
 
   $('.reified-property-value').each(function() {
-    $(this).qtip({
-      content: $(this).next('.reified-tooltip'),
-      position: { my: 'top left', at: 'top left' },
-      style: { classes: 'qtip-skosmos' },
-      show: { delay: 100 },
-      hide: {
-        fixed: true,
-        delay: 400
-      }
-    });
+    // $(this).qtip({
+    //   content: $(this).next('.reified-tooltip'),
+    //   position: { my: 'top left', at: 'top left' },
+    //   style: { classes: 'qtip-skosmos' },
+    //   show: { delay: 100 },
+    //   hide: {
+    //     fixed: true,
+    //     delay: 400
+    //   }
+    // });
   });
 
-  $('#hierarchy-disabled > #hier-trigger').qtip(qtip_skosmos_hierarchy);
+  // $('#hierarchy-disabled > #hier-trigger').qtip(qtip_skosmos_hierarchy);
 
   // Setting the language parameters according to the clang parameter or if that's not possible the cookie.
   var search_lang = (content_lang !== '' && !getUrlParams().anylang && vocab !== '') ? content_lang : readCookie('SKOSMOS_SEARCH_LANG');
@@ -762,6 +756,7 @@ $(function() { // DOCUMENT READY
   if ($('.headerbar').length > 0) {
     var dark = ($('#search-field').val().length > 0) ? ' clear-search-dark' : '';
     var clearButton = '<span class="versal clear-search' + dark + '">&#215;</span>';
+    console.log('ADDED CLEAR BTN!');
 
     var $typeahead = $('#search-field').typeahead({hint: false, highlight: true, minLength: autocomplete_activation},
       {

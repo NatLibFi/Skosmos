@@ -97,9 +97,9 @@
         <div class="row{% if property.type == 'dc:isReplacedBy' %} replaced-by{% endif%} property prop-{{property.ID}}">
           <div class="property-label">
             <h3 class="versal{% if property.type == 'rdf:type' %}-bold{% endif %}
-              {% if custom_labels[property.type]['description'][request.lang] %}property-click" title="{{ custom_labels[property.type]['description'][request.lang] }}
-              {% elseif property.description %} property-click" title="{{ property.description }}
-              {% endif %}">
+              {%- if custom_labels[property.type]['description'][request.lang] -%}property-click skosmos-tooltip-wrapper skosmos-tooltip t-top" data-title="{{ custom_labels[property.type]['description'][request.lang] }}
+              {%- elseif property.description -%} property-click skosmos-tooltip-wrapper skosmos-tooltip t-top" data-title="{{ property.description }}
+              {%- endif -%}">
               {% if custom_labels[property.type]['label'][request.lang] %}
                 {{ custom_labels[property.type]['label'][request.lang] }}
               {% else %}
@@ -171,7 +171,7 @@
       {% set foreignLabels = concept.foreignLabels %}
       {% if foreignLabels %}
       <div class="row property prop-other-languages">
-        <div class="property-label"><h3 class="versal property-click" title="{% trans "foreign prefLabel help" %}" >{{ 'foreign prefLabels'|trans }}</h3></div>
+        <div class="property-label"><h3 class="versal property-click skosmos-tooltip-wrapper skosmos-tooltip t-top" data-title="{% trans "foreign prefLabel help" %}" >{{ 'foreign prefLabels'|trans }}</h3></div>
         <div class="property-value-column">
           <div class="property-value-wrapper">
             <ul>
@@ -252,7 +252,7 @@
 <template id="property-mappings-template">
     {{#each properties}}
     <div class="row{{#ifDeprecated concept.type 'skosext:DeprecatedConcept'}} deprecated{{/ifDeprecated}} property prop-{{ id }}">
-        <div class="property-label"><h3 class="versal{{#ifNotInDescription type description}} property-click" title="{{ description }}{{/ifNotInDescription}}">{{label}}</h3></div>
+        <div class="property-label"><h3 class="versal{{#ifNotInDescription type description}} property-click skosmos-tooltip-wrapper skosmos-tooltip t-top" data-title="{{ description }}{{/ifNotInDescription}}">{{label}}</h3></div>
         <div class="property-value-column">
             {{#each values }} {{! loop through ConceptPropertyValue objects }}
             {{#if prefLabel }}
