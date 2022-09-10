@@ -502,24 +502,6 @@ $(function() { // DOCUMENT READY
     });
   });
 
-  var qtip_skosmos = {
-    position: { my: 'top center', at: 'bottom center' },
-    style: { classes: 'qtip-tipsy qtip-skosmos' },
-    show: {
-      event: 'mouseenter focusin'
-    },
-    hide: {
-      event: 'mouseleave focusout'
-    }
-  };
-
-  var qtip_skosmos_hierarchy = {
-    position: { my: 'top left', at: 'bottom center' },
-    style: { classes: 'qtip-tipsy qtip-skosmos' }
-  };
-
-  // $('.redirected-vocab-id').qtip(qtip_skosmos);
-
   $('.reified-property-value').each(function() {
     // $(this).qtip({
     //   content: $(this).next('.reified-tooltip'),
