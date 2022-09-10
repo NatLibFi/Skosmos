@@ -42,7 +42,6 @@ $(function() { // DOCUMENT READY
    * concept at vertical center of the container. Each concept needs 18px height.
    */
   $(document).ajaxComplete(function(event, xhr, settings) {
-    // $('#hierarchy-disabled > #hier-trigger').qtip(qtip_skosmos_hierarchy);
     if (settings.url.indexOf('groups') !== -1 || settings.url.indexOf('index') !== -1) {
       $('.sidebar-grey').removeClass(function(index, classes) {
         var elementClasses = classes.split(' ');
@@ -124,7 +123,6 @@ $(function() { // DOCUMENT READY
       if (!$('#hierarchy').length) {
           $('#hierarchy-disabled').attr('id', 'hierarchy');
           $('#hier-trigger').attr('title', '');
-          // $('#hier-trigger').qtip('disable');
       }
   }
 
@@ -534,8 +532,6 @@ $(function() { // DOCUMENT READY
     //   }
     // });
   });
-
-  // $('#hierarchy-disabled > #hier-trigger').qtip(qtip_skosmos_hierarchy);
 
   // Setting the language parameters according to the clang parameter or if that's not possible the cookie.
   var search_lang = (content_lang !== '' && !getUrlParams().anylang && vocab !== '') ? content_lang : readCookie('SKOSMOS_SEARCH_LANG');
