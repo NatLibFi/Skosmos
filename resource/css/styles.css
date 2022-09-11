@@ -2724,6 +2724,10 @@ body, .versal, h1, h2, h3, p, .versal-bold {
  *
  * Created to replace https://github.com/qTip2/qTip2/ as that library is not maintained anymore,
  * and creates issues when trying to update JQuery versions.
+ *
+ * The .skosmos-tooltip{-wrapper} classes are derived from https://dev.to/r3zu3/pure-css-tooltip-1k3j.
+ *
+ * The .skosmos-tooltip-html* classes are from https://codepen.io/roydigerhund/pen/gPyzEa/.
  */
 .skosmos-tooltip-wrapper {
   width: fit-content;
@@ -2853,4 +2857,71 @@ body, .versal, h1, h2, h3, p, .versal-bold {
 
 .skosmos-tooltip.t-bottom:hover::after {
   transform: translate(-50%, calc(100% + 10px));
+}
+
+/* These classes were needed for the reified properties tooltips, as they displayed HTML elements.*/
+/*
+ * Example use case:
+ *
+ * <div class="tooltip-html">
+ *   <input type="button" value="Hover Me">
+ *   <div class="tooltip-html-content">
+ *     <p>First line</p>
+ *     <p>Second <a href="#">line</a></p>
+ *   </div>
+ * </div>
+ */
+/* NOTE: We only display this tooltip at the bottom of the element that triggered it, as the qtip
+ *       as its settings for the reified properties were doing so.
+ */
+.tooltip-html {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.tooltip-html:hover .tooltip-html-content, .tooltip-html:focus .tooltip-html-content {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tooltip-html-content {
+  box-sizing: border-box;
+  position: absolute;
+  top: 26px;
+  left: 0;
+  display: block;
+  cursor: text;
+  width: 350px;
+  color: var(--white-color);
+  background-color: var(--tooltip-bg-color);
+  border: 3px solid var(--tooltip-border-color);
+  z-index: 9001;
+  visibility: hidden;
+  opacity: 0;
+  padding: 0.25rem 0.5rem;
+}
+
+.tooltip-html-content * {
+  color: var(--white-color);
+}
+
+/*
+ * The triangle that appears near the element that triggered it.
+ */
+.tooltip-html-content:after {
+  position: absolute;
+  content: '';
+  width: 10px;
+  height: 10px;
+  transform: rotate(45deg);
+  top: -6px;
+  left: 0;
+  margin-left: 2px;
+  color: var(--white-color);
+  border-top: 6px solid var(--tooltip-border-color);
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 6px solid var(--tooltip-border-color);
+  z-index: 9002;
 }

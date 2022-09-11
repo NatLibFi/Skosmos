@@ -80,16 +80,6 @@ $(function() { // DOCUMENT READY
       $(".tt-dropdown-menu").mCustomScrollbar({ alwaysShowScrollbar: 1, scrollInertia: 0 });
     }
 
-    $('.reified-property-value').each(function() {
-      // $(this).qtip({
-      //   content: $(this).next('.reified-tooltip'),
-      //   position: { my: 'top left', at: 'top left' },
-      //   style: { classes: 'qtip-skosmos' },
-      //   show: { delay: 100 },
-      //   hide: { fixed: true, delay: 400 }
-      // });
-    });
-
     var active_tab = $('a.active').parent().attr('id');
     if (active_tab == 'groups') {
       $('#sidebar > h4').remove();
@@ -502,19 +492,6 @@ $(function() { // DOCUMENT READY
     });
   });
 
-  $('.reified-property-value').each(function() {
-    // $(this).qtip({
-    //   content: $(this).next('.reified-tooltip'),
-    //   position: { my: 'top left', at: 'top left' },
-    //   style: { classes: 'qtip-skosmos' },
-    //   show: { delay: 100 },
-    //   hide: {
-    //     fixed: true,
-    //     delay: 400
-    //   }
-    // });
-  });
-
   // Setting the language parameters according to the clang parameter or if that's not possible the cookie.
   var search_lang = (content_lang !== '' && !getUrlParams().anylang && vocab !== '') ? content_lang : readCookie('SKOSMOS_SEARCH_LANG');
 
@@ -734,7 +711,6 @@ $(function() { // DOCUMENT READY
   if ($('.headerbar').length > 0) {
     var dark = ($('#search-field').val().length > 0) ? ' clear-search-dark' : '';
     var clearButton = '<span class="versal clear-search' + dark + '">&#215;</span>';
-    console.log('ADDED CLEAR BTN!');
 
     var $typeahead = $('#search-field').typeahead({hint: false, highlight: true, minLength: autocomplete_activation},
       {
