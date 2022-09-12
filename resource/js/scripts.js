@@ -250,6 +250,9 @@ function hideCrumbs() {
       $($crumbs[i]).addClass('hidden-path');
     }
     if ($('.restore-breadcrumbs').length === 0) {
+      // We attach the link to display all breadcrumbs after the zero-th element
+      // to force the browser to re-arrange the elements. If we moved that to the
+      // bottom, then we wouldn't have an easy way to re-arrange it at the top.
       $($crumbs[0]).after('<a class="versal restore-breadcrumbs" href="#">[' + expand_paths.replace('#',($crumbs.length)) + ']</a>');
     }
   }
