@@ -10,6 +10,7 @@ $(function() { // DOCUMENT READY
   }
   $('#selected-vocabs').val(vocabSelectionString);
   var clang = content_lang !== '' ? content_lang : lang;
+  var alpha_offset = 0;
 
   shortenProperties();
 
@@ -39,9 +40,21 @@ $(function() { // DOCUMENT READY
 
   var addSideBarCallbacks = () => {
     var sidebarElement = document.getElementsByClassName('sidebar-grey')[0];
+    var callbackDone = false;
     $('.sidebar-grey').scroll(function () {
       if (sidebarElement.scrollHeight - sidebarElement.scrollTop - 300 <= sidebarElement.clientHeight) {
-        ($('#changes.active').length === 1) ? changeListWaypointCallback() : alphaWaypointCallback();
+        if ($('#changes > a.active').length === 1) {
+            if (callbackDone == false) {
+              callbackDone = true;
+              callbackDone = changeListWaypointCallback();
+            }
+        }
+        else {
+          if (callbackDone == false) {
+            callbackDone = true;
+            callbackDone = alphaWaypointCallback();
+          }
+        }
       }
     })
   }
@@ -825,11 +838,13 @@ $(function() { // DOCUMENT READY
 
   function alphaWaypointCallback() {
     // if the pagination is not visible all concepts are already shown
+    alpha_complete = false;
     if (!alpha_complete && $('.pagination').length === 1) {
       $.ajaxQ.abortSidebarQueries();
       alpha_complete = true;
+      alpha_offset += 250;
       $('.alphabetical-search-results').append($loading);
-      var parameters = $.param({'offset' : 250, 'clang': content_lang});
+      var parameters = $.param({'offset' : alpha_offset, 'clang': content_lang, 'limit': 250});
       var letter = '/' + ($('.pagination > .active')[0] ? $('.pagination > .active > a > span:last-child')[0].innerHTML : $('.pagination > li > a > span:last-child')[0].innerHTML);
       $.ajax({
         url : vocab + '/' + lang + '/index' + letter,
@@ -840,8 +855,10 @@ $(function() { // DOCUMENT READY
           if ($(data).find('.alphabetical-search-results').length === 1) {
             $('.alphabetical-search-results').append($(data).find('.alphabetical-search-results')[0].innerHTML);
           }
+          return false;
         }
       });
+
     }
   }
   var changeOffset = 200;
@@ -864,6 +881,7 @@ $(function() { // DOCUMENT READY
            $lastdate[1].remove();
           $('.change-list > p:last-of-type').remove();
         }
+        return false;
       }
     });
     changeOffset += 200;
