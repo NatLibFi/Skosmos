@@ -636,4 +636,47 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     $modifiedDate = $concept->getModifiedDate();
     $this->assertEquals(new DateTime("2014-10-01T16:29:03+00:00"), $modifiedDate);
   }
+
+  /**
+   * @covers Concept::hasXlLabel
+   */
+  public function testHasXlLabelTrue() {
+    $vocab = $this->model->getVocabulary('xl');
+    $concept = $vocab->getConceptInfo('http://www.skosmos.skos/xl/c1', 'en')[0];
+    $this->assertTrue($concept->hasXlLabel());
+  }
+
+  /**
+   * @covers Concept::hasXlLabel
+   */
+  public function testHasXlLabelFalse() {
+    $vocab = $this->model->getVocabulary('test');
+    $concept = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta111', 'en')[0];
+    $this->assertFalse($concept->hasXlLabel());
+  }
+
+  /**
+   * @covers Concept::getXlLabel
+   * @covers LabelSkosXL::getProperties
+   */
+  public function testGetXlLabel() {
+    $vocab = $this->model->getVocabulary('xl');
+    $concept = $vocab->getConceptInfo('http://www.skosmos.skos/xl/c1', 'en')[0];
+    $label = $concept->getXlLabel();
+    $props = $label->getProperties();
+    $this->assertArrayHasKey('skosxl:labelRelation', $props);
+    $this->assertArrayHasKey('dc:modified', $props);
+    $this->assertArrayNotHasKey('skosxl:literalForm', $props);
+    $this->assertArrayNotHasKey('rdf:type', $props);
+  }
+
+  /**
+   * @covers Concept::getXlLabel
+   */
+  public function testGetXlLabelNull() {
+    $vocab = $this->model->getVocabulary('test');
+    $concept = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta111', 'en')[0];
+    $this->assertNull($concept->getXlLabel());
+  }
+
 }

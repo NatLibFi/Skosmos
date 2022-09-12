@@ -24,8 +24,11 @@ class LabelSkosXL extends DataObject
         $ret = array();
         $props = $this->resource->properties();
         foreach($props as $prop) {
-            if ($prop !== 'skosxl:prefLabel') {
-                $ret[$prop] = $this->resource->get($prop);
+            if ($prop !== 'rdf:type' && $prop !== 'skosxl:literalForm') {
+                // make sure to use the correct gettext keys for DC namespace
+                $propkey = str_starts_with($prop, 'dc11:') ?
+                    str_replace('dc11:', 'dc:', $prop) : $prop;
+                $ret[$propkey] = $this->resource->get($prop);
             }
         }
         return $ret;

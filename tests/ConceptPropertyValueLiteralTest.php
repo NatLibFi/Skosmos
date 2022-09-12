@@ -200,7 +200,7 @@ public function testGetLabelForDatatypeIfNull() {
       {
         $reified_vals = $val->getXlLabel()->getProperties();
       }
-    $this->assertArrayHasKey('skosxl:literalForm', $reified_vals);
+    $this->assertArrayNotHasKey('skosxl:literalForm', $reified_vals);
     $this->assertArrayHasKey('skosxl:labelRelation', $reified_vals);
   }
 }
