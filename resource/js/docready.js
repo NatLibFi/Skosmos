@@ -342,6 +342,7 @@ $(function() { // DOCUMENT READY
         $('.active').removeClass('active');
         $('#alpha a').addClass('active');
         alpha_complete = false;
+        alpha_offset = 0;
         $('.sidebar-grey').empty().prepend(spinner);
         var targetUrl = event.target.href;
         $.ajax({
@@ -466,6 +467,7 @@ $(function() { // DOCUMENT READY
         $.ajaxQ.abortSidebarQueries();
         if ($('.alphabet-header').length === 0) {
           alpha_complete = false;
+          alpha_offset = 0;
           var $content = $('.sidebar-grey');
           $content.empty().prepend(spinner);
           var targetUrl = event.currentTarget.href;
@@ -838,10 +840,8 @@ $(function() { // DOCUMENT READY
 
   function alphaWaypointCallback() {
     // if the pagination is not visible all concepts are already shown
-    alpha_complete = false;
     if (!alpha_complete && $('.pagination').length === 1) {
       $.ajaxQ.abortSidebarQueries();
-      alpha_complete = true;
       alpha_offset += 250;
       $('.alphabetical-search-results').append($loading);
       var parameters = $.param({'offset' : alpha_offset, 'clang': content_lang, 'limit': 250});
@@ -855,7 +855,10 @@ $(function() { // DOCUMENT READY
           if ($(data).find('.alphabetical-search-results').length === 1) {
             $('.alphabetical-search-results').append($(data).find('.alphabetical-search-results')[0].innerHTML);
           }
-          return false;
+          if ($(data).find('.alphabetical-search-results > li').length < 250) {
+            alpha_complete = true;
+          }
+          return true;
         }
       });
 
