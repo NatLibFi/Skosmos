@@ -10,7 +10,8 @@ $(function() { // DOCUMENT READY
   }
   $('#selected-vocabs').val(vocabSelectionString);
   var clang = content_lang !== '' ? content_lang : lang;
-  var alpha_offset = 0;
+  var alphaOffset = 0;
+  var changeOffset = 200;
 
   shortenProperties();
 
@@ -45,13 +46,11 @@ $(function() { // DOCUMENT READY
       if (sidebarElement.scrollHeight - sidebarElement.scrollTop - 300 <= sidebarElement.clientHeight) {
         if ($('#changes > a.active').length === 1) {
             if (callbackDone == false) {
-              callbackDone = true;
               callbackDone = changeListWaypointCallback();
             }
         }
         else {
           if (callbackDone == false) {
-            callbackDone = true;
             callbackDone = alphaWaypointCallback();
           }
         }
@@ -71,7 +70,9 @@ $(function() { // DOCUMENT READY
       style: { classes: 'qtip-tipsy qtip-skosmos' }
     });
     $('#hierarchy-disabled > #hier-trigger').qtip(qtip_skosmos_hierarchy);
-    if (settings.url.indexOf('groups') !== -1 || settings.url.indexOf('index') !== -1) {
+    if (settings.url.indexOf('groups') !== -1 ||
+      settings.url.indexOf('index') !== -1 ||
+      settings.url.indexOf('new') !== -1) {
       $('.sidebar-grey').removeClass(function(index, classes) {
         var elementClasses = classes.split(' ');
         var removeThese = [];
@@ -341,8 +342,8 @@ $(function() { // DOCUMENT READY
         $.ajaxQ.abortSidebarQueries(true);
         $('.active').removeClass('active');
         $('#alpha a').addClass('active');
-        alpha_complete = false;
-        alpha_offset = 0;
+        alphaComplete = false;
+        alphaOffset = 0;
         $('.sidebar-grey').empty().prepend(spinner);
         var targetUrl = event.target.href;
         $.ajax({
@@ -363,6 +364,7 @@ $(function() { // DOCUMENT READY
   $(document).on('click', '#changes',
       function(event) {
         $.ajaxQ.abortSidebarQueries(true);
+        changeOffset = 200;
         $('.active').removeClass('active');
         $('#changes a').addClass('active');
         $('.sidebar-grey').empty().prepend(spinner);
@@ -466,8 +468,8 @@ $(function() { // DOCUMENT READY
       function(event) {
         $.ajaxQ.abortSidebarQueries();
         if ($('.alphabet-header').length === 0) {
-          alpha_complete = false;
-          alpha_offset = 0;
+          alphaComplete = false;
+          alphaOffset = 0;
           var $content = $('.sidebar-grey');
           $content.empty().prepend(spinner);
           var targetUrl = event.currentTarget.href;
@@ -823,7 +825,7 @@ $(function() { // DOCUMENT READY
   var $loading = $("<p>" + loading_text + "&hellip;<span class='spinner'></span></p>");
   var $trigger = $('.search-result:nth-last-of-type(6)');
   var options = { offset : '100%', continuous: false, triggerOnce: true };
-  var alpha_complete = false;
+  var alphaComplete = false;
   var offcount = 1;
   var number_of_hits = $(".search-result").length;
   var $ready = $("<p class='search-count'>" + results_disp.replace('%d', number_of_hits) +"</p>");
@@ -840,11 +842,11 @@ $(function() { // DOCUMENT READY
 
   function alphaWaypointCallback() {
     // if the pagination is not visible all concepts are already shown
-    if (!alpha_complete && $('.pagination').length === 1) {
+    if (!alphaComplete && $('.pagination').length === 1) {
       $.ajaxQ.abortSidebarQueries();
-      alpha_offset += 250;
+      alphaOffset += 250;
       $('.alphabetical-search-results').append($loading);
-      var parameters = $.param({'offset' : alpha_offset, 'clang': content_lang, 'limit': 250});
+      var parameters = $.param({'offset' : alphaOffset, 'clang': content_lang, 'limit': 250});
       var letter = '/' + ($('.pagination > .active')[0] ? $('.pagination > .active > a > span:last-child')[0].innerHTML : $('.pagination > li > a > span:last-child')[0].innerHTML);
       $.ajax({
         url : vocab + '/' + lang + '/index' + letter,
@@ -856,7 +858,7 @@ $(function() { // DOCUMENT READY
             $('.alphabetical-search-results').append($(data).find('.alphabetical-search-results')[0].innerHTML);
           }
           if ($(data).find('.alphabetical-search-results > li').length < 250) {
-            alpha_complete = true;
+            alphaComplete = true;
           }
           return true;
         }
@@ -864,13 +866,13 @@ $(function() { // DOCUMENT READY
 
     }
   }
-  var changeOffset = 200;
 
   function changeListWaypointCallback() {
     $.ajaxQ.abortSidebarQueries();
     $('.change-list').append($loading);
     var parameters = $.param({'offset' : changeOffset, 'clang': content_lang});
-    var lastdate = $('.change-list > h5:last-of-type')[0].innerHTML;
+    if ($('.change-list > h5:last-of-type').length > 0)
+      var lastdate = $('.change-list > h5:last-of-type')[0].innerHTML;
     $.ajax({
       url : vocab + '/' + lang + '/new',
       req_kind: $.ajaxQ.requestKind.SIDEBAR,
@@ -881,10 +883,11 @@ $(function() { // DOCUMENT READY
           $('.change-list').append($(data).find('.change-list')[0].innerHTML);
           var $lastdate = $('.change-list > h5:contains(' + lastdate + ')');
           if ($lastdate.length === 2)
-           $lastdate[1].remove();
+            $lastdate[1].remove();
           $('.change-list > p:last-of-type').remove();
         }
-        return false;
+
+        return true;
       }
     });
     changeOffset += 200;
