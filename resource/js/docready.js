@@ -96,6 +96,12 @@ $(function() { // DOCUMENT READY
     });
 
     var active_tab = $('a.active').parent().attr('id');
+
+    active_tab == 'alpha' ? $('#alpha').css('pointer-events','none') : $('#alpha').css('pointer-events','auto');
+    active_tab == 'changes' ? $('#changes').css('pointer-events','none') : $('#changes').css('pointer-events','auto');
+    active_tab == 'groups' ? $('#groups').css('pointer-events','none') : $('#groups').css('pointer-events','auto');
+    active_tab == 'hierarchy' ? $('#hierarchy').css('pointer-events','none') : $('#hierarchy').css('pointer-events','auto');
+
     if (active_tab == 'groups') {
       $('#sidebar > h4').remove();
       $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.groups_listing + '</h4>');
@@ -1134,5 +1140,4 @@ $(function() { // DOCUMENT READY
   } else {
     makeCallbacks();
   }
-
 });
