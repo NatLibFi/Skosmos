@@ -1008,6 +1008,10 @@ $(function() { // DOCUMENT READY
       }
       updateVocabParam();
     },
+    onSelectAll: function() {
+      selectedVocabs = [];
+      updateVocabParam();
+    },
     maxHeight: 300
   });
 
