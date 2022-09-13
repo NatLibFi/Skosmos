@@ -580,7 +580,7 @@ $(function() { // DOCUMENT READY
     createCookie('SKOSMOS_SEARCH_LANG', qlang, 365);
   }
 
-  $('.lang-button').on('click', function() {
+  $('a.dropdown-item').on('click', function() {
     qlang = $(this)[0].attributes.hreflang ? $(this)[0].attributes.hreflang.value : 'anything';
     $('#lang-dropdown-toggle').html($(this).html() + ' <span class="caret"></span>');
     $('#lang-input').val(qlang);
@@ -942,7 +942,7 @@ $(function() { // DOCUMENT READY
   // activating the custom autocomplete
   function updateVocabParam() {
     vocabSelectionString = '';
-    var $vocabs = $('li > a.active input');
+    var $vocabs = $('button.active input');
     $.each($vocabs,
       function(index, ob) {
         if (ob.value === 'multiselect-all') {
@@ -1006,6 +1006,10 @@ $(function() { // DOCUMENT READY
       } else if (selectedVocabs[vocabId] !== undefined) {
         delete selectedVocabs[vocabId];
       }
+      updateVocabParam();
+    },
+    onSelectAll: function() {
+      selectedVocabs = [];
       updateVocabParam();
     },
     maxHeight: 300
