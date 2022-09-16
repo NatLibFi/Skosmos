@@ -869,8 +869,8 @@ $(function() { // DOCUMENT READY
           return true;
         }
       });
-
     }
+    return undefined;
   }
 
   function changeListWaypointCallback() {
@@ -892,11 +892,11 @@ $(function() { // DOCUMENT READY
             $lastdate[1].remove();
           $('.change-list > p:last-of-type').remove();
         }
-
         return true;
       }
     });
     changeOffset += 200;
+    return undefined;
   }
 
   function waypointCallback(waypoint) {
