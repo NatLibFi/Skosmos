@@ -177,5 +177,9 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
     $val = reset($vals);
     $reified_vals = $val->getReifiedPropertyValues();
     $this->assertCount(2, $reified_vals);
+    $this->assertArrayHasKey('Source', $reified_vals);
+    $this->assertEquals('https://en.wikipedia.org/wiki/Concept', $reified_vals['Source']->getLabel());
+    $this->assertArrayHasKey('Last modified', $reified_vals);
+    $this->assertEquals('4/13/18', $reified_vals['Last modified']->getLabel());
   }
 }

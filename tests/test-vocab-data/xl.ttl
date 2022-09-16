@@ -1,5 +1,6 @@
 @prefix xl: <http://www.skosmos.skos/xl/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/>.
 @prefix dct: <http://purl.org/dc/terms/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
@@ -25,4 +26,4 @@ xl:l2 a skosxl:Label ;
 xl:d1
     rdf:value "Unit of thought"@en ;
     dct:modified "2018-04-13T10:29:03+00:00"^^xsd:dateTime ;
-    dct:source <https://en.wikipedia.org/wiki/Concept> .
+    dc:source <https://en.wikipedia.org/wiki/Concept> .
