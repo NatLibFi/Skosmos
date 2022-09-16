@@ -13,6 +13,10 @@
   --alert-color-bright: #ED0D6C;
   --uri-id-text-color: #006621; /* only used in search results */
 
+  --scroll-box-color: #474b4f; /* used for the sidebar scroll */
+  --scroll-bar-color: #b9c1c6; /* used for the sidebar scroll */
+  --scroll-bar-width: 14px; /* used for the sidebar scroll */
+
   --white-color: #FFFFFF; /**/
   --gray-100: #F6F7F8;
   --gray-200: #EDF0F2;
@@ -2229,23 +2233,18 @@ body, .versal, h1, h2, h3, p, .versal-bold {
 
 /* CSS custom scrollbars
  ************************************/
- :root {
-  --scrollbarWidth: 14px;
-  --scrollbarBg: #b9c1c6;
-  --scrollbarThumb: #474b4f;
-}
 .sidebar-grey, .tt-dropdown-menu, .multiselect-container {
-  scrollbar-width: var(--scrollbarWidth);
-  scrollbar-color: var(--scrollbarThumb) var(--scrollbarBg);
+  scrollbar-width: var(--scroll-bar-width);
+  scrollbar-color: var(--scroll-box-color) var(--scroll-bar-color);
 }
 .sidebar-grey::-webkit-scrollbar, .tt-dropdown-menu::-webkit-scrollbar, .multiselect-container::-webkit-scrollbar {
-  width: var(--scrollbarWidth);
+  width: var(--scroll-bar-width);
 }
 .sidebar-grey::-webkit-scrollbar-track, .tt-dropdown-menu::-webkit-scrollbar-track, .multiselect-container::-webkit-scrollbar-track {
-  background: var(--scrollbarBg);
+  background: var(--scroll-bar-color);
 }
 .sidebar-grey::-webkit-scrollbar-thumb, .tt-dropdown-menu::-webkit-scrollbar-thumb, .multiselect-container::-webkit-scrollbar-thumb {
-  background-color: var(--scrollbarThumb);
+  background-color: var(--scroll-box-color);
   min-height: 40px;
   -webkit-box-shadow: inset 0 -1.5em 0 #b9c1c6
 }
