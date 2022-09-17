@@ -2758,7 +2758,7 @@ body, .versal, h1, h2, h3, p, .versal-bold {
 .skosmos-tooltip::after {
   content: attr(data-title);
   /* https://www.digitalocean.com/community/tutorials/css-line-break-content-property */
-  white-space: pre-wrap;
+  white-space: pre-line;
   max-width: 400px;
   width: max-content;
   display: inline-block;
