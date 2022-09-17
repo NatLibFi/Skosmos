@@ -97,9 +97,9 @@
         <div class="row{% if property.type == 'dc:isReplacedBy' %} replaced-by{% endif%} property prop-{{property.ID}}">
           <div class="property-label">
             <h3 class="versal{% if property.type == 'rdf:type' %}-bold{% endif %}
-              {%- if custom_labels[property.type]['description'][request.lang] -%}property-click skosmos-tooltip-wrapper skosmos-tooltip t-top" data-title="{{ custom_labels[property.type]['description'][request.lang] }}
-              {%- elseif property.description -%} property-click skosmos-tooltip-wrapper skosmos-tooltip t-top" data-title="{{ property.description }}
-              {%- endif -%}">
+              {% if custom_labels[property.type]['description'][request.lang] %}property-click skosmos-tooltip-wrapper skosmos-tooltip t-top" data-title="{{ custom_labels[property.type]['description'][request.lang] }}
+              {% elseif property.description %} property-click skosmos-tooltip-wrapper skosmos-tooltip t-top" data-title="{{ property.description }}
+              {% endif %}">
               {% if custom_labels[property.type]['label'][request.lang] %}
                 {{ custom_labels[property.type]['label'][request.lang] }}
               {% else %}
