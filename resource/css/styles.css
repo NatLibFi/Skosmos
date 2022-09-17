@@ -2777,6 +2777,10 @@ body, .versal, h1, h2, h3, p, .versal-bold {
   padding: 0.25rem 0.5rem;
 }
 
+.skosmos-tooltip:focus {
+  z-index: 9002 !important;
+}
+
 .skosmos-tooltip:hover::before, .skosmos-tooltip:hover::after {
   opacity: 1;
 }
@@ -2900,6 +2904,10 @@ body, .versal, h1, h2, h3, p, .versal-bold {
   visibility: hidden;
   opacity: 0;
   padding: 0.25rem 0.5rem;
+}
+
+.tooltip-html-content:focus {
+  z-index: 9001 !important;
 }
 
 .tooltip-html-content * {
