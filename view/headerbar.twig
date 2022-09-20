@@ -36,8 +36,8 @@
               ?clang={{langcode}}
               {%- set paramSeparator = '&' -%}
             {%- endif %}
-            {%- if term %}{{ paramSeparator }}q={{ term }}{% set paramSeparor = '&' %}{% endif -%}
-            {%- if vocabs %}{{ paramSepartor }}vocabs={{ vocabs }}{% endif -%}
+            {%- if term %}{{ paramSeparator }}q={{ term }}{% set paramSeparator = '&' %}{% endif -%}
+            {%- if vocabs %}{{ paramSeparator }}vocabs={{ vocabs }}{% endif -%}
             " class="lang-button" hreflang="{{ langcode }}">{{ langcode | lang_name(request.lang) }}</a></li>
           {% endfor %}
         {% endif %}

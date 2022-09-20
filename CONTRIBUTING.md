@@ -12,21 +12,21 @@ If you've found a bug that hasn't been reported yet you can help us by [creating
 
 ### Providing translations
 
-Skosmos core languages (English, Finnish and Swedish) are maintained by us. In addition to these three languages volunteers have provided translations for other languages on the transifex platform. We are happy to receive both translations for new languages as well as **updates to the existing translations**. Translations included in the 1.7 release include English, Chinese, Spanish, French, German, Italian, Finnish, Swedish and Norwegian (both Bokmål & Nynorsk).
+Skosmos core languages (English, Finnish and Swedish) are maintained by the National Library of Finland. In addition to these three languages volunteers have provided translations for other languages on the transifex platform. We are happy to receive both translations for new languages as well as **updates to the existing translations**. Skosmos has been translated to more than 10 languages by members of the community.
 
 If you'd like to provide translation help the instructions at the [translation wiki page](https://github.com/NatLibFi/Skosmos/wiki/Translation) will tell you how to do it.
 
 ### Contributing code
 
 #### Development cycles and use of milestones
- Skosmos development is done in cycles lasting roughly two months. The planned work (issues) for the next/current cycle have a milestone indicating the version number of the planned release eg. **1.8**. The issues marked in the milestone **Next tasks** are issues we haven't yet scheduled for a specific release but we'd like resolve in the near future. Issues marked **Blue sky** are issues we've decided to postpone for now. The milestones and open issues are evaluated after each release.
- 
+Skosmos development is done in sprints, usually lasting two weeks, followed by a release. The planned work (issues) for the next/current sprint is chosen from among the open issues. Issues or pull requests may have a milestone indicating the version number of the planned release eg. **2.16**. The issues marked in the milestone **Next tasks** are issues we haven't yet scheduled for a specific release but we'd like resolve in the near future. Issues marked **Blue sky** are issues we've decided to postpone for now. The milestones and open issues are evaluated after each release.
+
 #### Making a commit
 If you see an issue that you'd like to fix feel free to do so. If possible let us know you're working on an issue by leaving a comment on it so we'll be able to avoid doing the same work twice. This is especially useful if the issue has been marked for a release (in a milestone with a version number eg. "1.8") since it's more likely someone might be already working on it.
 
-We do not strictly enforce a coding style but for PHP code following [PSR-1](http://www.php-fig.org/psr/psr-1/) is encouraged. We prefer to use 4 spaces for indenting.
+We do not strictly enforce a coding style but for PHP code following [PSR-12](https://www.php-fig.org/psr/psr-12/) is encouraged. We prefer to use 4 spaces for indenting. When in doubt, please refer to the coding style of existing similar code. For example, if you are adding a new function to an existing class, check how other functions are documented and how the code is formatted.
 
-If you've added new functionality or you've found out that the existing tests are lacking. We'd be happy if you could provide additional PHPUnit tests to cover it. Also see that your code passes all the existing tests by running PHPUnit. You can do this by running the test database initialization script init_fuseki.sh in the tests folder and then running vendor/bin/phpunit.
+If you've added new functionality or you've found out that the existing tests are lacking, we'd be happy if you could provide additional PHPUnit tests to cover it. Also see that your code passes all the existing tests by running PHPUnit. For more information, see the wiki page on [unit and integration tests](https://github.com/NatLibFi/Skosmos/wiki/Unit-and-integration-tests).
 
 Please add a concise commit message for your contributions. In addition to describing the changes made include references to related issue numbers eg. "Description of the changes in the commit, related to #22". Then the GitHub issue tracker automatically links the related commits to the issue page. This makes debugging persistent bugs easier.
 

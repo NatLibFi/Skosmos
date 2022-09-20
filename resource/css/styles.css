@@ -1631,11 +1631,13 @@ li.sub-group {
 
 .restore-breadcrumbs {
   background-color: var(--white-color);
-  float: right;
+  width: auto;
+  position: absolute;
+  right: 0;
+  display: inline;
 }
 
 .crumb-path {
-  float:left;
   width: 100%;
 }
 
@@ -1650,6 +1652,7 @@ li.sub-group {
 
 .concept-main > .row, .concept-appendix > .row {
   padding-top: 5px;
+  position: relative;
 }
 
 .concept-main > .row > .property-value-column {
@@ -2381,7 +2384,7 @@ body, .versal, h1, h2, h3, p, .versal-bold {
   }
 
   .concept-main > .row, .concept-appendix > .row {
-    padding-top: 0px;
+    padding-top: 0;
   }
 
   .row:nth-of-type(2) > .property-value-column {
@@ -2701,7 +2704,7 @@ body, .versal, h1, h2, h3, p, .versal-bold {
   }
 
   .alphabetical-search-results li, li, .versal, .versal-bold, p, .autocomplete-label, .search-result > .prefLabel, .search-result > .notation, .property-values > .prefLabel, td > a {
-    font-size: 16px;
+    font-size: var(--font-size);
   }
 
   .search-result > div > span.uri-input-box {
