@@ -2789,21 +2789,21 @@ body, .versal, h1, h2, h3, p, .versal-bold {
 .skosmos-tooltip.t-top::before {
   top: 0;
   left: 50%;
-  transform: translate(-50%, 0) rotate(45deg);
+  transform: translate(0, 0) rotate(45deg);
 }
 
 .skosmos-tooltip.t-top::after {
   top: 0;
-  left: 50%;
-  transform: translate(-50%, 0);
+  left: 0;
+  transform: translate(0, 0);
 }
 
 .skosmos-tooltip.t-top:hover::before {
-  transform: translate(-50%, calc(-100% - 5px)) rotate(45deg);
+  transform: translate(0, calc(-50% - 5px)) rotate(45deg);
 }
 
 .skosmos-tooltip.t-top:hover::after {
-  transform: translate(-50%, calc(-100% - 10px));
+  transform: translate(0, calc(-100% - 15px));
 }
 
 .skosmos-tooltip.t-left::before {
