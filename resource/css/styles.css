@@ -2775,6 +2775,7 @@ body, .versal, h1, h2, h3, p, .versal-bold {
   pointer-events: none;
   margin: 12px 0 0 9px;
   padding: 0.25rem 0.5rem;
+  text-transform: none;
 }
 
 .skosmos-tooltip:focus {
