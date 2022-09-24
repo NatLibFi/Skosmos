@@ -2893,7 +2893,7 @@ body, .versal, h1, h2, h3, p, .versal-bold {
 .tooltip-html-content {
   box-sizing: border-box;
   position: absolute;
-  top: 26px;
+  top: 20px;
   left: 0;
   display: block;
   cursor: text;
@@ -2924,7 +2924,7 @@ body, .versal, h1, h2, h3, p, .versal-bold {
   width: 10px;
   height: 10px;
   transform: rotate(45deg);
-  top: -6px;
+  top: -8px;
   left: 0;
   margin-left: 2px;
   color: var(--white-color);

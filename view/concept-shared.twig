@@ -125,9 +125,9 @@
                 <a href="{{ propval.uri | link_url(propval.exvocab, request.lang, 'page', request.contentLang) }}">{{ propval.label }}</a>{% if propval.exvocab %} ({{ propval.vocabname }}){% endif %}
                 {% else %}
                 {% if propval.isReified %} {# e.g. skos:definition's with resource values #}
-                <span class="versal reified-property-value tooltip-html">
+                <span class="versal-pref reified-property-value tooltip-html">
                   <img alt="{{ "Information" | trans }}" src="resource/pics/about.png">{% if propval.notation %}<span class="versal">{{ propval.notation }} </span>{% endif %} {{ propval.label(request.contentLang) }}
-                  <div class="reified-tooltip tooltip-html-content">{% for key, val in propval.reifiedPropertyValues %}<p>{{ key }}: <a href="{{ val.uri | link_url(val.exvocab, request.lang, 'page', request.contentLang) }}">{{ val.label(request.contentLang) }}</a></p>{% endfor %}</div>
+                  <div class="reified-tooltip tooltip-html-content">{% for key, val in propval.reifiedPropertyValues %}<p>{{ key }}: <a class="versal" href="{{ val.uri | link_url(val.exvocab, request.lang, 'page', request.contentLang) }}">{{ val.label(request.contentLang) }}</a></p>{% endfor %}</div>
                 </span>
                 {% else %}
                     <a href="{{ propval.uri | link_url(propval.vocab, request.lang, 'page', request.contentLang) }}">{% if propval.notation %}<span class="versal">{{ propval.notation }} </span>{% endif %} {{ propval.label(request.contentLang) }}</a>
