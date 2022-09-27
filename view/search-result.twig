@@ -7,7 +7,7 @@
 <div class="search-result">
   {% spaceless %}
     {% if vocab == '' and concept.vocab.id is defined %}
-    <span class="prefLabel conceptlabel redirected-vocab-id" title="{{ concept.vocabTitle }}">{{ concept.shortName }}: </span>
+    <span class="prefLabel conceptlabel redirected-vocab-id skosmos-tooltip-wrapper skosmos-tooltip t-bottom" data-title="{{ concept.vocabTitle }}">{{ concept.shortName }}: </span>
     {% endif %}
     {% if concept.foundBy %} {# hit has been found through an alt/hidden/another language label #}
       {% if concept.foundByType != 'lang' and concept.foundByType != 'hidden' %}<span class="versal replaced">{{ concept.foundBy }}{% if explicit_langcodes or request.queryparam('anylang') and concept.contentLang != '' %} ({{ concept.contentLang }}){% endif %}</span><span class="versal"> &rarr;&nbsp;</span>{% if concept.notation %}<span class="notation">{{ concept.notation }}</span>{% endif %}
@@ -26,7 +26,7 @@
   {% for property in conceptProperties %} {# loop through ConceptProperty objects #}
     {% if property.type in PreferredProperties or property.type in concept.vocab.config.additionalSearchProperties  or property.type in concept.vocab.config.hierarchyProperty %}
     <div class="property">
-      <span class="property-click" title="{{ property.description }}">
+      <span class="property-click skosmos-tooltip-wrapper skosmos-tooltip t-top" data-title="{{ property.description }}">
         <img class="property-hover" src="resource/pics/{% if property.type == 'skos:broader' %}broader{% elseif property.type == 'skos:narrower' %}narrower{% elseif property.type == 'skos:altLabel' %}replaced{% elseif property.type == 'skos:related' %}cloud{% elseif property.type == 'skosmos:memberOf' %}group{% elseif property.type == 'skos:note' %}note{% else %}globe{% endif %}.gif">
       </span>
       <div class="property-values">
@@ -64,7 +64,7 @@
   {% set foreignLabels = concept.foreignLabels %}
   {% if foreignLabels %}
     <div class="property">
-      <span class="property-click" title="{% trans "foreign prefLabel help" %}"><img class="property-hover" src="resource/pics/globe.gif"></span>
+      <span class="property-click skosmos-tooltip-wrapper skosmos-tooltip t-top" data-title="{% trans "foreign prefLabel help" %}"><img class="property-hover" src="resource/pics/globe.gif"></span>
       {% for langstring, labels in foreignLabels %}{% spaceless %}
         {% for label in labels.prefLabel|default([])|merge(labels.altLabel|default([])) %}
         <span class="versal{% if label.type == 'skos:prefLabel' %} prefLabel {% elseif label.type == 'skos:altLabel'%} replaced {% endif %} proplabel">{{ label }}</span>{% if label.lang %}<span class="versal"> ({{ label.lang }})</span>{% endif %}{% if loop.last == false %}<span class="versal">, </span>{% endif %}
@@ -78,7 +78,7 @@
       {% for property in mappingProperties %} {# loop through ConceptProperty objects #}
         {% if property.type in concept.vocab.config.additionalSearchProperties %}
         <div class="property">
-          <span class="property-click" title="{{ property.type|trans }}">
+          <span class="property-click skosmos-tooltip-wrapper skosmos-tooltip t-top" data-title="{{ property.type|trans }}">
             <img class="property-hover" src="resource/pics/globe.gif">
           </span>
           <div class="property-values">
@@ -94,7 +94,7 @@
   {% for property in conceptProperties %} {# loop through ConceptProperty objects #}
     {% if property.type == 'rdf:type' %}
       <div class="property">
-        <span class="property-click" title="{% trans "concept_types" %}">
+        <span class="property-click skosmos-tooltip-wrapper skosmos-tooltip t-top" data-title="{% trans "concept_types" %}">
           <img class="property-hover" src="resource/pics/type.gif">
         </span>
         <div class="property-values">

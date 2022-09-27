@@ -65,11 +65,6 @@ $(function() { // DOCUMENT READY
    * concept at vertical center of the container. Each concept needs 18px height.
    */
   $(document).ajaxComplete(function(event, xhr, settings) {
-    $('.property-click').qtip({
-      position: { my: 'bottom center', at: 'top center' },
-      style: { classes: 'qtip-tipsy qtip-skosmos' }
-    });
-    $('#hierarchy-disabled > #hier-trigger').qtip(qtip_skosmos_hierarchy);
     if (settings.url.indexOf('groups') !== -1 ||
       settings.url.indexOf('index') !== -1 ||
       settings.url.indexOf('new') !== -1) {
@@ -84,16 +79,6 @@ $(function() { // DOCUMENT READY
       });
       addSideBarCallbacks();
     }
-
-    $('.reified-property-value').each(function() {
-      $(this).qtip({
-        content: $(this).next('.reified-tooltip'),
-        position: { my: 'top left', at: 'top left' },
-        style: { classes: 'qtip-skosmos' },
-        show: { delay: 100 },
-        hide: { fixed: true, delay: 400 }
-      });
-    });
 
     var active_tab = $('a.active').parent().attr('id');
 
@@ -130,11 +115,10 @@ $(function() { // DOCUMENT READY
 
   countAndSetOffset();
 
-  function initHierarchyQtip() {
+  function initHierarchyTooltip() {
       if (!$('#hierarchy').length) {
           $('#hierarchy-disabled').attr('id', 'hierarchy');
           $('#hier-trigger').attr('title', '');
-          $('#hier-trigger').qtip('disable');
       }
   }
 
@@ -328,7 +312,7 @@ $(function() { // DOCUMENT READY
             success : function(data, responseCode, jqxhr) {
               if (window.history.pushState) { window.history.pushState({}, null, event.currentTarget.href); }
               $content.empty().append($('.content', data).html());
-              initHierarchyQtip();
+              initHierarchyTooltip();
               $('#hier-trigger').attr('href', event.currentTarget.href);
               updateJsonLD(data);
               updateTitle(data);
@@ -452,7 +436,7 @@ $(function() { // DOCUMENT READY
             req_kind: $.ajaxQ.requestKind.CONTENT,
             complete: function() { clearTimeout(loading); },
             success : function(data) {
-              initHierarchyQtip();
+              initHierarchyTooltip();
               $('#hier-trigger').attr('href', event.target.href);
               updateTitle(data);
               updateTopbarLang(data);
@@ -508,43 +492,6 @@ $(function() { // DOCUMENT READY
       setLangCookie(langCode);
     });
   });
-
-  var qtip_skosmos = {
-    position: { my: 'top center', at: 'bottom center' },
-    style: { classes: 'qtip-tipsy qtip-skosmos' },
-    show: {
-      event: 'mouseenter focusin'
-    },
-    hide: {
-      event: 'mouseleave focusout'
-    }
-  };
-
-  var qtip_skosmos_hierarchy = {
-    position: { my: 'top left', at: 'bottom center' },
-    style: { classes: 'qtip-tipsy qtip-skosmos' }
-  };
-
-  $('#navi4').qtip(qtip_skosmos);
-
-  $('.property-click').qtip(qtip_skosmos);
-
-  $('.redirected-vocab-id').qtip(qtip_skosmos);
-
-  $('.reified-property-value').each(function() {
-    $(this).qtip({
-      content: $(this).next('.reified-tooltip'),
-      position: { my: 'top left', at: 'top left' },
-      style: { classes: 'qtip-skosmos' },
-      show: { delay: 100 },
-      hide: {
-        fixed: true,
-        delay: 400
-      }
-    });
-  });
-
-  $('#hierarchy-disabled > #hier-trigger').qtip(qtip_skosmos_hierarchy);
 
   // Setting the language parameters according to the clang parameter or if that's not possible the cookie.
   var search_lang = (content_lang !== '' && !getUrlParams().anylang && vocab !== '') ? content_lang : readCookie('SKOSMOS_SEARCH_LANG');
