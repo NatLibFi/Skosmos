@@ -10,6 +10,8 @@ $(function() { // DOCUMENT READY
   }
   $('#selected-vocabs').val(vocabSelectionString);
   var clang = content_lang !== '' ? content_lang : lang;
+  var alphaOffset = 0;
+  var changeOffset = 200;
 
   shortenProperties();
 
@@ -37,12 +39,35 @@ $(function() { // DOCUMENT READY
     document.getElementById(e.target.hash.slice(1)).focus({preventScroll: true});
   });
 
+  var addSideBarCallbacks = () => {
+    var sidebarElement = document.getElementsByClassName('sidebar-grey')[0];
+    var callbackDone = false;
+    $('.sidebar-grey').on("scroll", function () {
+      if (sidebarElement.scrollHeight - sidebarElement.scrollTop - 300 <= sidebarElement.clientHeight) {
+        if ($('#changes > a.active').length === 1) {
+            if (callbackDone == false) {
+              callbackDone = changeListWaypointCallback();
+            }
+        }
+        else {
+          if (callbackDone == false) {
+            callbackDone = alphaWaypointCallback();
+          }
+        }
+      }
+    })
+  }
+
+  addSideBarCallbacks()
+
   /*
    * Moving the sidenav scrollbar towards the current concept. Aiming the current
    * concept at vertical center of the container. Each concept needs 18px height.
    */
   $(document).ajaxComplete(function(event, xhr, settings) {
-    if (settings.url.indexOf('groups') !== -1 || settings.url.indexOf('index') !== -1) {
+    if (settings.url.indexOf('groups') !== -1 ||
+      settings.url.indexOf('index') !== -1 ||
+      settings.url.indexOf('new') !== -1) {
       $('.sidebar-grey').removeClass(function(index, classes) {
         var elementClasses = classes.split(' ');
         var removeThese = [];
@@ -52,35 +77,16 @@ $(function() { // DOCUMENT READY
         });
         return removeThese.join(' ');
       });
-      $(".sidebar-grey-alpha").mCustomScrollbar({
-        alwaysShowScrollbar: 1,
-        scrollInertia: 0,
-        mouseWheel:{ preventDefault: true, scrollAmount: 105 },
-        snapAmount: 15,
-        snapOffset: 1,
-        callbacks: { alwaysTriggerOffsets: false, onTotalScroll: alphaWaypointCallback, onTotalScrollOffset: 300 }
-      });
-    }
-    // Sidenav actions only happen when doing other queries than the autocomplete.
-    if (settings.url.indexOf('index') !== -1 || settings.url.indexOf('groups') !== -1) {
-      // initializing the mCustomScrollbar before the jstree has properly loaded causes a crash
-      if ($('.sidebar-grey').hasClass('jstree-loading') === false) {
-        var snap = (settings.url.indexOf('hierarchy') !== -1) ? 18 : 15;
-        $(".sidebar-grey").mCustomScrollbar({
-          alwaysShowScrollbar: 1,
-          scrollInertia: 0,
-          mouseWheel:{ scrollAmount: 105 },
-          snapAmount: snap,
-          snapOffset: 0
-        });
-      }
-    }
-    var $autocomplete = $('.tt-dropdown-menu');
-    if (settings.url.indexOf('search') !== -1 && $autocomplete.length > 0 && $autocomplete[0].offsetHeight === 302) {
-      $(".tt-dropdown-menu").mCustomScrollbar({ alwaysShowScrollbar: 1, scrollInertia: 0 });
+      addSideBarCallbacks();
     }
 
     var active_tab = $('a.active').parent().attr('id');
+
+    active_tab == 'alpha' ? $('#alpha').css('pointer-events','none') : $('#alpha').css('pointer-events','auto');
+    active_tab == 'changes' ? $('#changes').css('pointer-events','none') : $('#changes').css('pointer-events','auto');
+    active_tab == 'groups' ? $('#groups').css('pointer-events','none') : $('#groups').css('pointer-events','auto');
+    active_tab == 'hierarchy' ? $('#hierarchy').css('pointer-events','none') : $('#hierarchy').css('pointer-events','auto');
+
     if (active_tab == 'groups') {
       $('#sidebar > h4').remove();
       $('.sidebar-grey').before('<h4 class="sr-only">' + sr_only_translations.groups_listing + '</h4>');
@@ -326,7 +332,8 @@ $(function() { // DOCUMENT READY
         $.ajaxQ.abortSidebarQueries(true);
         $('.active').removeClass('active');
         $('#alpha a').addClass('active');
-        alpha_complete = false;
+        alphaComplete = false;
+        alphaOffset = 0;
         $('.sidebar-grey').empty().prepend(spinner);
         var targetUrl = event.target.href;
         $.ajax({
@@ -347,6 +354,7 @@ $(function() { // DOCUMENT READY
   $(document).on('click', '#changes',
       function(event) {
         $.ajaxQ.abortSidebarQueries(true);
+        changeOffset = 200;
         $('.active').removeClass('active');
         $('#changes a').addClass('active');
         $('.sidebar-grey').empty().prepend(spinner);
@@ -361,14 +369,6 @@ $(function() { // DOCUMENT READY
               $('.nav').scrollTop(0);
               if (window.history.pushState) { window.history.pushState({}, null, encodeURI(event.target.href)); }
               updateTitle(data);
-              $(".sidebar-grey").mCustomScrollbar({
-                alwaysShowScrollbar: 1,
-                scrollInertia: 0,
-                mouseWheel:{ preventDefault: true, scrollAmount: 105 },
-                snapAmount: 15,
-                snapOffset: 1,
-                callbacks: { alwaysTriggerOffsets: false, onTotalScroll: changeListWaypointCallback, onTotalScrollOffset: 300 }
-              });
             }
         });
         return false;
@@ -458,7 +458,8 @@ $(function() { // DOCUMENT READY
       function(event) {
         $.ajaxQ.abortSidebarQueries();
         if ($('.alphabet-header').length === 0) {
-          alpha_complete = false;
+          alphaComplete = false;
+          alphaOffset = 0;
           var $content = $('.sidebar-grey');
           $content.empty().prepend(spinner);
           var targetUrl = event.currentTarget.href;
@@ -724,8 +725,6 @@ $(function() { // DOCUMENT READY
           suggestion: Handlebars.compile(autocompleteTemplate)
         },
         source: concepts.ttAdapter()
-      }).on('typeahead:cursorchanged', function () {
-      $('.tt-dropdown-menu').mCustomScrollbar("scrollTo", '.tt-cursor');
     }).on('typeahead:selected', onSelection).on('focus', function () {
       $('#search-field').typeahead('open');
     }).after(clearButton).on('keypress', function() {
@@ -779,7 +778,7 @@ $(function() { // DOCUMENT READY
   var $loading = $("<p>" + loading_text + "&hellip;<span class='spinner'></span></p>");
   var $trigger = $('.search-result:nth-last-of-type(6)');
   var options = { offset : '100%', continuous: false, triggerOnce: true };
-  var alpha_complete = false;
+  var alphaComplete = false;
   var offcount = 1;
   var number_of_hits = $(".search-result").length;
   var $ready = $("<p class='search-count'>" + results_disp.replace('%d', number_of_hits) +"</p>");
@@ -796,11 +795,11 @@ $(function() { // DOCUMENT READY
 
   function alphaWaypointCallback() {
     // if the pagination is not visible all concepts are already shown
-    if (!alpha_complete && $('.pagination').length === 1) {
+    if (!alphaComplete && $('.pagination').length === 1) {
       $.ajaxQ.abortSidebarQueries();
-      alpha_complete = true;
+      alphaOffset += 250;
       $('.alphabetical-search-results').append($loading);
-      var parameters = $.param({'offset' : 250, 'clang': content_lang});
+      var parameters = $.param({'offset' : alphaOffset, 'clang': content_lang, 'limit': 250});
       var letter = '/' + ($('.pagination > .active')[0] ? $('.pagination > .active > a > span:last-child')[0].innerHTML : $('.pagination > li > a > span:last-child')[0].innerHTML);
       $.ajax({
         url : vocab + '/' + lang + '/index' + letter,
@@ -811,17 +810,22 @@ $(function() { // DOCUMENT READY
           if ($(data).find('.alphabetical-search-results').length === 1) {
             $('.alphabetical-search-results').append($(data).find('.alphabetical-search-results')[0].innerHTML);
           }
+          if ($(data).find('.alphabetical-search-results > li').length < 250) {
+            alphaComplete = true;
+          }
+          return true;
         }
       });
     }
+    return undefined;
   }
-  var changeOffset = 200;
 
   function changeListWaypointCallback() {
     $.ajaxQ.abortSidebarQueries();
     $('.change-list').append($loading);
     var parameters = $.param({'offset' : changeOffset, 'clang': content_lang});
-    var lastdate = $('.change-list > h5:last-of-type')[0].innerHTML;
+    if ($('.change-list > h5:last-of-type').length > 0)
+      var lastdate = $('.change-list > h5:last-of-type')[0].innerHTML;
     $.ajax({
       url : vocab + '/' + lang + '/new',
       req_kind: $.ajaxQ.requestKind.SIDEBAR,
@@ -832,12 +836,14 @@ $(function() { // DOCUMENT READY
           $('.change-list').append($(data).find('.change-list')[0].innerHTML);
           var $lastdate = $('.change-list > h5:contains(' + lastdate + ')');
           if ($lastdate.length === 2)
-           $lastdate[1].remove();
+            $lastdate[1].remove();
           $('.change-list > p:last-of-type').remove();
         }
+        return true;
       }
     });
     changeOffset += 200;
+    return undefined;
   }
 
   function waypointCallback(waypoint) {
@@ -984,37 +990,8 @@ $(function() { // DOCUMENT READY
       li: '<button class="multiselect-option dropdown-item"></button>',
       button: '<button type="button" class="multiselect dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><span class="multiselect-selected-text"></span></button>',
     },
-    onDropdownShown: function(event) {
-      var $activeChild = $(event.currentTarget).find('.active');
-      $('.multiselect-container').mCustomScrollbar('scrollTo', $activeChild);
-    },
     maxHeight: 300
   });
-
-  if ($('#alpha > a.active').length === 1 || $('#changes >a.active').length === 1) {
-    var scrollCB = ($('#changes.active').length === 1) ? changeListWaypointCallback : alphaWaypointCallback;
-    $(".sidebar-grey").mCustomScrollbar({
-      alwaysShowScrollbar: 1,
-      scrollInertia: 0,
-      mouseWheel:{ preventDefault: true, scrollAmount: 105 },
-      snapAmount: 15,
-      snapOffset: 1,
-      callbacks: { alwaysTriggerOffsets: false, onTotalScroll: scrollCB, onTotalScrollOffset: 300 }
-    });
-  }
-
-  /*  activating the custom scrollbars only when not on the hierarchy page
-   *  since that goes haywire if it's done before the ajax complete runs
-   */
-  if ($('#vocab-info').length === -1 && document.URL.indexOf('/page/') === -1 && $('.search-count').length === 0) {
-    $(".sidebar-grey").mCustomScrollbar({
-      alwaysShowScrollbar: 1,
-      scrollInertia: 0,
-      mouseWheel:{ scrollAmount: 105 },
-      snapAmount: 15,
-      snapOffset: 1
-    });
-  }
 
   /* adding the replaced by concept href to the alert box when possible.
    */
@@ -1076,14 +1053,6 @@ $(function() { // DOCUMENT READY
       return false;
     });
 
-    $('.multiselect-container').mCustomScrollbar({
-      alwaysShowScrollbar: 1,
-      scrollInertia: 0,
-      mouseWheel:{ scrollAmount: 60 },
-      snapAmount: 20,
-      snapOffset: 1
-    });
-
     $('#parent-limit').typeahead({ hint: false, highlight: true, minLength: autocomplete_activation },{
         name: 'concept',
         displayKey: 'label',
@@ -1095,8 +1064,6 @@ $(function() { // DOCUMENT READY
           suggestion: Handlebars.compile(autocompleteTemplate)
         },
         source: concepts.ttAdapter()
-    }).on('typeahead:cursorchanged', function() {
-      $('.tt-dropdown-menu').mCustomScrollbar("scrollTo", '.tt-cursor');
     }).on('typeahead:selected', onSelection).on('focus', function() {
       $('#search-field').typeahead('open');
     });
@@ -1124,5 +1091,4 @@ $(function() { // DOCUMENT READY
   } else {
     makeCallbacks();
   }
-
 });
