@@ -2915,6 +2915,10 @@ body, .versal, h1, h2, h3, p, .versal-bold {
   color: var(--white-color);
 }
 
+.tooltip-prop {
+  font-weight: 500;
+}
+
 /*
  * The triangle that appears near the element that triggered it.
  */
