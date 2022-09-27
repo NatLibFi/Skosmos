@@ -103,9 +103,6 @@ h1, .prefLabel, .prefLabelLang, .notation {
   font-size: 16px;
 }
 
-.multiselect span, .multiselect a, .dropdown-toggle, #search-all-button, .qtip-skosmos * {
-}
-
 .topbar a.navigation-font, .topbar span {
   color: var(--dark-color);
 }
@@ -855,31 +852,10 @@ ul.dropdown-menu > li:last-child > input {
   width: 50px;
 }
 
-.qtip-skosmos {
-  background-color: var(--tooltip-bg-color);
-  border-radius: 0;
-  border: 3px solid var(--tooltip-border-color);
-  margin-top: 12px;
-  margin-left: 9px;
-  min-width: 400px;
-}
-
-.qtip-skosmos *, .reified-tooltip > p > span {
-  color: var(--white-color);
-  font-size: var(--font-size);
-  font-weight: 400;
-}
-
-.qtip-skosmos a {
-  color: var(--tooltip-text-color) !important;
-  width: 100%;
-}
-
 .reified-tooltip {
   display: none;
   margin-top: 5px;
   width: 100%;
-
 }
 
 .reified-property-value > img {
@@ -2270,14 +2246,6 @@ body, .versal, h1, h2, h3, p, .versal-bold {
     display: none;
   }
 
-  .qtip-skosmos:not(#qtip-0) {
-    left: 0 !important;
-  }
-
-  .qtip-skosmos:not(#qtip-0) canvas {
-    display: none !important;
-  }
-
   .content {
     margin: 0 auto;
   }
@@ -2323,14 +2291,6 @@ body, .versal, h1, h2, h3, p, .versal-bold {
   .content > .container.feedback-box {
     margin-left: 10px;
     margin-top: 20px;
-  }
-
-  .qtip-skosmos {
-    min-width: auto;
-    left: 0 !important;
-  }
-  .qtip-skosmos canvas {
-    display: none !important;
   }
 }
 
@@ -2758,3 +2718,223 @@ body, .versal, h1, h2, h3, p, .versal-bold {
   border: 2px dashed #62729f !important;
 }
 <![endif]-->
+
+/*
+ * Skosmos tooltips.
+ *
+ * Created to replace https://github.com/qTip2/qTip2/ as that library is not maintained anymore,
+ * and creates issues when trying to update JQuery versions.
+ *
+ * The .skosmos-tooltip{-wrapper} classes are derived from https://dev.to/r3zu3/pure-css-tooltip-1k3j.
+ *
+ * The .skosmos-tooltip-html* classes are from https://codepen.io/roydigerhund/pen/gPyzEa/.
+ */
+.skosmos-tooltip-wrapper {
+  width: fit-content;
+}
+
+.skosmos-tooltip {
+  position: relative;
+}
+
+.skosmos-tooltip a {
+  color: var(--tooltip-text-color) !important;
+  width: 100%;
+}
+
+.skosmos-tooltip::before {
+  position: absolute;
+  content: ' ';
+  background-color: var(--tooltip-border-color);
+  border: 3px solid var(--tooltip-border-color);
+  width: 15px;
+  height: 15px;
+  z-index: 500;
+  opacity: 0;
+  /* transition: all cubic-bezier(0.17, 0.67, 0.5, 0.71) 100ms; */
+  pointer-events: none;
+}
+
+.skosmos-tooltip::after {
+  content: attr(data-title);
+  /* https://www.digitalocean.com/community/tutorials/css-line-break-content-property */
+  white-space: pre-line;
+  max-width: 400px;
+  width: max-content;
+  display: inline-block;
+  border-radius: 0;
+  font-size: var(--font-size);
+  font-weight: 400;
+  color: var(--white-color);
+  background-color: var(--tooltip-bg-color);
+  border: 3px solid var(--tooltip-border-color);
+  position: absolute;
+  z-index: 9002;
+  opacity: 0;
+  /* transition: all cubic-bezier(0.17, 0.67, 0.5, 0.71) 100ms; */
+  pointer-events: none;
+  margin: 12px 0 0 9px;
+  padding: 0.25rem 0.5rem;
+  text-transform: none;
+}
+
+.skosmos-tooltip:focus {
+  z-index: 9002 !important;
+}
+
+.skosmos-tooltip:hover::before, .skosmos-tooltip:hover::after {
+  opacity: 1;
+}
+
+.skosmos-tooltip.t-top::before {
+  top: 0;
+  left: 50%;
+  transform: translate(0, 0) rotate(45deg);
+}
+
+.skosmos-tooltip.t-top::after {
+  top: 0;
+  left: 0;
+  transform: translate(0, 0);
+}
+
+.skosmos-tooltip.t-top:hover::before {
+  transform: translate(0, calc(-50% - 5px)) rotate(45deg);
+}
+
+.skosmos-tooltip.t-top:hover::after {
+  transform: translate(0, calc(-100% - 15px));
+}
+
+.skosmos-tooltip.t-left::before {
+  top: 25%;
+  left: 0;
+  transform: translate(0, 0%) rotate(45deg);
+}
+
+.skosmos-tooltip.t-left::after {
+  top: 0;
+  left: 0;
+}
+
+.skosmos-tooltip.t-left:hover::before {
+  transform: translate(calc(-100% - 5px)) rotate(45deg);
+}
+
+.skosmos-tooltip.t-left:hover::after {
+  transform: translate(calc(-100% - 10px));
+}
+
+.skosmos-tooltip.t-right::before {
+  top: 25%;
+  right: 0;
+  transform: translate(0, 0%) rotate(45deg);
+}
+
+.skosmos-tooltip.t-right::after {
+  top: 0;
+  right: 0;
+}
+
+.skosmos-tooltip.t-right:hover::before {
+  transform: translate(calc(100% + 5px)) rotate(45deg);
+}
+
+.skosmos-tooltip.t-right:hover::after {
+  transform: translate(calc(100% + 10px));
+}
+
+.skosmos-tooltip.t-bottom::before {
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 0) rotate(45deg);
+}
+
+.skosmos-tooltip.t-bottom::after {
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.skosmos-tooltip.t-bottom:hover::before {
+  transform: translate(-50%, calc(100% + 5px)) rotate(45deg);
+}
+
+.skosmos-tooltip.t-bottom:hover::after {
+  transform: translate(-50%, calc(100% + 10px));
+}
+
+/* These classes were needed for the reified properties tooltips, as they displayed HTML elements.*/
+/*
+ * Example use case:
+ *
+ * <div class="tooltip-html">
+ *   <input type="button" value="Hover Me">
+ *   <div class="tooltip-html-content">
+ *     <p>First line</p>
+ *     <p>Second <a href="#">line</a></p>
+ *   </div>
+ * </div>
+ */
+/* NOTE: We only display this tooltip at the bottom of the element that triggered it, as the qtip
+ *       as its settings for the reified properties were doing so.
+ */
+.tooltip-html {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.tooltip-html:hover .tooltip-html-content, .tooltip-html:focus .tooltip-html-content {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tooltip-html-content {
+  box-sizing: border-box;
+  position: absolute;
+  top: 20px;
+  left: 0;
+  display: block;
+  cursor: text;
+  width: 350px;
+  color: var(--white-color);
+  background-color: var(--tooltip-bg-color);
+  border: 3px solid var(--tooltip-border-color);
+  z-index: 9001;
+  visibility: hidden;
+  opacity: 0;
+  padding: 0.25rem 0.5rem;
+}
+
+.tooltip-html-content:focus {
+  z-index: 9001 !important;
+}
+
+.tooltip-html-content * {
+  color: var(--white-color);
+}
+
+.tooltip-prop {
+  font-weight: 500;
+}
+
+/*
+ * The triangle that appears near the element that triggered it.
+ */
+.tooltip-html-content:after {
+  position: absolute;
+  content: '';
+  width: 10px;
+  height: 10px;
+  transform: rotate(45deg);
+  top: -8px;
+  left: 0;
+  margin-left: 2px;
+  color: var(--white-color);
+  border-top: 6px solid var(--tooltip-border-color);
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 6px solid var(--tooltip-border-color);
+  z-index: 9002;
+}

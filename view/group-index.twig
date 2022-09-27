@@ -12,7 +12,7 @@
     <li id="alpha" class="nav-item"><a class="{{ css_class|join(' ') }}" href="{{ request.vocabid }}/{{ request.lang }}/index{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% if vocab.config.showChangeList and vocab.config.groupClassURI %}{% trans 'A-Z' %}{% else %}{% trans "Alpha-nav" %}{% endif %}</a></li>
     {% endif %}
     <h3 class="sr-only">{% trans "List vocabulary concepts hierarchically" %}</h3>
-    <li id="hierarchy{% if not vocab.config.showHierarchy %}-disabled{% endif %}" class="nav-item"><a class="{{ css_class|join(' ') }}" href="#" id="hier-trigger"{% if not vocab.config.showHierarchy %} title="{% trans 'hierarchy-disabled-help' %}"{% endif %}>{% trans "Hier-nav" %}</a></li>
+    <li id="hierarchy{% if not vocab.config.showHierarchy %}-disabled{% endif %}" class="nav-item"><a class="{{ css_class|join(' ') }} skosmos-tooltip-wrapper skosmos-tooltip t-bottom" href="#" id="hier-trigger"{% if not vocab.config.showHierarchy %} data-title="{% trans 'hierarchy-disabled-help' %}"{% endif %}>{% trans "Hier-nav" %}</a></li>
     {% if vocab.config.groupClassURI %}
     <h3 class="sr-only">{% trans "List vocabulary concepts and groupings hierarchically" %}</h3>
     {% set css_class = css_class|merge(['active']) %}
