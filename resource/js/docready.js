@@ -42,7 +42,7 @@ $(function() { // DOCUMENT READY
   var addSideBarCallbacks = () => {
     var sidebarElement = document.getElementsByClassName('sidebar-grey')[0];
     var callbackDone = false;
-    $('.sidebar-grey').scroll(function () {
+    $('.sidebar-grey').on("scroll", function () {
       if (sidebarElement.scrollHeight - sidebarElement.scrollTop - 300 <= sidebarElement.clientHeight) {
         if ($('#changes > a.active').length === 1) {
             if (callbackDone == false) {
