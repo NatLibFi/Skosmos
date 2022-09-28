@@ -742,6 +742,55 @@ $(function() { // DOCUMENT READY
     var typeaheadInstance = $typeahead.data("ttTypeahead");
     typeaheadInstance.menu.off("mouseenter.tt", ".tt-suggestion");
     typeaheadInstance.menu.off("mouseleave.tt", ".tt-suggestion");
+    // Monkey-patching for:
+    // - https://github.com/twitter/typeahead.js/pull/1774
+    // - https://github.com/twitter/typeahead.js/blob/0700b186e98401127b051302365e34b09def2285/src/typeahead/dataset.js#L265-L278
+    var update = function update(query) {
+      var that = this, canceled = false, syncCalled = false, rendered = 0;
+
+      // cancel possible pending update
+      this.cancel();
+
+      this.cancel = function cancel() {
+        canceled = true;
+        that.cancel = $.noop;
+        that.async && that.trigger('asyncCanceled', query);
+      };
+
+      this.source(query, sync, async);
+      !syncCalled && sync([]);
+
+      function sync(suggestions) {
+        if (syncCalled) { return; }
+
+        syncCalled = true;
+        suggestions = (suggestions || []).slice(0, that.limit);
+        rendered = suggestions.length;
+
+        that._overwrite(query, suggestions);
+
+        if (rendered < that.limit && that.async) {
+          that.trigger('asyncRequested', query);
+        }
+      }
+
+      function async(suggestions) {
+        suggestions = suggestions || [];
+
+        // if the update has been canceled or if the query has changed
+        // do not render the suggestions as they've become outdated
+        if (!canceled && rendered < that.limit) {
+          that.cancel = $.noop;
+          that._append(query, suggestions.slice(0, that.limit - rendered));
+
+          that.async && that.trigger('asyncReceived', query);
+          rendered += suggestions.length;
+        }
+      }
+    };
+    typeaheadInstance.menu.datasets[0].update = update;
+    update.bind(typeaheadInstance.menu.datasets[0]);
+    // END
   }
 
   // storing the search input before autocompletion changes it
