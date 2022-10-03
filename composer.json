@@ -37,7 +37,7 @@
     "easyrdf/easyrdf": "1.1.*",
     "etdsolutions/waypoints": "4.0.0",
     "symfony/polyfill-php80": "1.*",
-    "twig/twig": "2.14.*",
+    "twig/twig": "^2.15.3",
     "twig/extensions": "1.5.*",
     "twbs/bootstrap": "5.1.*",
     "twitter/typeahead.js": "v0.11.*",
