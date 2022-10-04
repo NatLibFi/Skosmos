@@ -51,10 +51,13 @@
           {% endif %}
           {% set css_class = ['nav-link'] %}
           {% set disabledHierarchy = not vocab.config.showHierarchy and not search_results|length == 1 %}
+          {%  if disabledHierarchy %}
+            {% set css_class = css_class|merge(['skosmos-tooltip-wrapper', 'skosmos-tooltip', 't-bottom']) %}
+          {%  endif %}
           <h3 class="sr-only">{% trans "List vocabulary concepts hierarchically" %}</h3>
           {% if search_results|length == 1 and not term %}{% set css_class = css_class|merge(['active']) %}{% endif %}
           <li id="hierarchy{%- if disabledHierarchy %}-disabled{% endif -%}" class="nav-item">
-            <a class="{{ css_class|join(' ') }} skosmos-tooltip-wrapper skosmos-tooltip t-bottom" href="#" id="hier-trigger"
+            <a class="{{ css_class|join(' ') }}" href="#" id="hier-trigger"
             {% if disabledHierarchy%} data-title="{% trans 'hierarchy-disabled-help' %}"{% endif %}
             >{% trans "Hier-nav" %}
             </a>
