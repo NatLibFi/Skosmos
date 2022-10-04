@@ -36,19 +36,13 @@ function invokeParentTree(tree) {
     // TODO: a good fix would mean fixing the underlying DOM structure
     $('.jstree-container-ul').parent().addClass('jstree-default');
 
+    var $leafProper = $('.jstree-leaf-proper');
+    if ($leafProper.length > 0) {
+      var $sidebarGrey = $(".sidebar-grey");
+      $sidebarGrey.jstree('select_node', $leafProper.toArray());
+      $leafProper[0].scrollIntoView({block: 'center', behavior: 'smooth'});
+    }
   });
-}
-  
-function getLeafOffset() {
-  var containerHeight = $('.sidebar-grey').height();
-  var conceptCount = Math.floor((containerHeight * 0.66) / 18);
-  var scrollAmount = 18 * conceptCount;
-  var $leafProper = $('.jstree-leaf-proper');
-  if ($leafProper.length) {
-    var newOffset = $leafProper[0].offsetTop-scrollAmount;
-    if (newOffset > 0) // only scrolls the view if the concept isn't already at the top.
-      return newOffset;
-  }
 }
 
 function getLabel(object) {
