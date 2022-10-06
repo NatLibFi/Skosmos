@@ -54,7 +54,7 @@ msgstr "Sátnerájut"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:26
 msgid "%search_count% results for '%term%'"
-msgstr "%search_count% bohtosat ohcui '%term%'"
+msgstr "%search_count% bohtosa ohcui '%term%'"
 
 #: /tmp/cache/587c83c09abaa/23/23c9862892c34daf7bea11b6d50990145b73a83c0947ae60c3d729fe591a06ec.php:48
 msgid "404 Error: The page %requested_page% cannot be found."
@@ -430,7 +430,7 @@ msgstr "Eará gielain"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:39
 msgid "from all"
-msgstr "buot sátnerájuin"
+msgstr "Buot sátnerájut"
 
 msgid "wgs84:lat"
 msgstr "Govdodat"
@@ -755,7 +755,7 @@ msgstr "Njunuštearpmat"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:111
 msgid "Resource counts by type"
-msgstr "Resurssaid lohkomearri tiippaid mielde. "
+msgstr "Resurssaid lohkomearri tiippaid mielde"
 
 #: /tmp/cache/587c83c13194c/ab/abd3710fda280028e428e4bc415383b12c9a30cc34eadffd21ff4130ae796b99.php:124
 msgid "Term counts by language"
@@ -859,7 +859,7 @@ msgid "Error: Search failed!"
 msgstr "Error: Ohcu eahpelihkostuvai!"
 
 msgid "Error: Failed to retrieve vocabulary information!"
-msgstr "Error: Sátneráju dieđuid ohcu eahpelihkostuvai!"
+msgstr "Error: Sátneráju dieđuid ohcan eahpelihkostuvai!"
 
 msgid "Error: Loading more items failed!"
 msgstr "Error: Bohtosiid ohcu eahpelihkostuvai!"
