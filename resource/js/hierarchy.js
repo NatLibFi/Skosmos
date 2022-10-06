@@ -40,7 +40,7 @@ function invokeParentTree(tree) {
     if ($leafProper.length > 0) {
       var $sidebarGrey = $(".sidebar-grey");
       $sidebarGrey.jstree('select_node', $leafProper.toArray());
-      $leafProper[0].scrollIntoView({block: 'center', behavior: 'smooth'});
+      $leafProper.find('span')[0].scrollIntoView({block: 'center', behavior: 'smooth'});
     }
   });
 }
