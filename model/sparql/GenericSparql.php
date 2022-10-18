@@ -1047,12 +1047,12 @@ EOQ;
         # make VALUES clauses
         $props = array('skos:prefLabel', 'skos:altLabel');
 
+        // Only search for distinguisher labels if single vocabulary search has been initialized and it is set
+        $distinguisher = (is_array($vocabs) && count($vocabs) === 1) ? $vocabs[0]->getConfig()->getResultDistinguisher() : '';
+
         //add notation into searchable data for the vocabularies which have been configured for it
         if ($vocabs) {
             $searchByNotation = false;
-            // Only search for distinguisher labels if single vocabulary search has been initialized and it is set
-            $distinguisher = count($vocabs) === 1 ? $vocabs[0]->getConfig()->getResultDistinguisher() : '';
-
             foreach ($vocabs as $vocab) {
                 if ($vocab->getConfig()->searchByNotation()) {
                     $searchByNotation = true;
