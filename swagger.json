@@ -1509,6 +1509,12 @@
         },
         "notation": {
           "type": "string"
+        },
+        "distinguisherLabels": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       },
       "required": [

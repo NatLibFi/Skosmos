@@ -424,6 +424,16 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
+     * Returns the result distinguisher property path in case of a shared prefLabel for this vocabulary,
+     * or null if not set.
+     * @return string Result distinguisher property path or null
+     */
+    public function getResultDistinguisher()
+    {
+        return $this->getLiteral("skosmos:resultDistinguisher");
+    }
+
+    /**
      * Queries whether the property should be shown with all the label language variations.
      * @param string $property
      * @return boolean

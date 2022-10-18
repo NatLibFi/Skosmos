@@ -2101,11 +2101,15 @@ span.date-info {
   width: 280px;
 }
 
-.vocab, .concept-type {
+.vocab, .concept-type, .concept-distinguisher {
   font-size: 12px;
 }
 
 .type {
+  float: right;
+}
+
+.tt-selectable .concept-extra {
   float: right;
 }
 
@@ -2121,6 +2125,10 @@ span.date-info {
 .autocomplete-label > div:first-child > span:first-child, .autocomplete-label > div:first-child > span.replaced + span {
   color: var(--medium-color);
   margin: 0;
+}
+
+.autocomplete-label .distinguisher-marker {
+  color: var(--gray-900);
 }
 
 /* jsTree customization
