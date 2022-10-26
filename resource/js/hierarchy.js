@@ -60,7 +60,8 @@ function createObjectsFromChildren(conceptData, conceptUri) {
   var childArray = [];
   for (var i = 0; i < conceptData.narrower.length; i++) {
     var childObject = {
-      text: getLabel(conceptData.narrower[i]), 
+      text: getLabel(conceptData.narrower[i]),
+      label: pickLabel(conceptData.narrower[i]),
       a_attr: getHrefForUri(conceptData.narrower[i].uri),
       uri: conceptData.narrower[i].uri,
       notation: conceptData.narrower[i].notation,
@@ -86,7 +87,8 @@ function createObjectsFromChildren(conceptData, conceptUri) {
  */
 function createConceptObject(conceptUri, conceptData) {
   var newNode = { 
-    text: getLabel(conceptData), 
+    text: getLabel(conceptData),
+    label: pickLabel(conceptData),
     a_attr: getHrefForUri(conceptData.uri),
     uri: conceptUri,
     notation: conceptData.notation,
@@ -188,7 +190,8 @@ function vocabRoot(topConcepts) {
   for (var i = 0; i < topConcepts.length; i++) {
     var conceptData = topConcepts[i];
     var childObject = {
-      text: getLabel(conceptData), 
+      text: getLabel(conceptData),
+      label: pickLabel(conceptData),
       a_attr : getHrefForUri(conceptData.uri),
       uri: conceptData.uri,
       notation: conceptData.notation,
@@ -234,7 +237,8 @@ function createObjectsFromNarrowers(narrowerResponse) {
   for (var i = 0; i < narrowerResponse.narrower.length; i++) {
     var conceptObject = narrowerResponse.narrower[i];
     var childObject = {
-      text : getLabel(conceptObject), 
+      text : getLabel(conceptObject),
+      label: pickLabel(conceptObject),
       a_attr : getHrefForUri(conceptObject.uri),
       uri: conceptObject.uri,
       notation: conceptObject.notation,
@@ -301,7 +305,8 @@ function schemeRoot(schemes) {
     if(theDomainLabel != '') {
       // Step 2.1 : create domain node without children
       var domainObject = {
-        text: theDomainLabel, 
+        text: theDomainLabel,
+        label: theDomainLabel,
         // note that the class 'domain' will make sure the node will be sorted _before_ others
         // (see the 'sort' function at the end)
         a_attr : { "href" : vocab + '/' + lang + '/page/?uri=' + theDomain.uri, 'class': 'domain'},
@@ -321,6 +326,7 @@ function schemeRoot(schemes) {
             domainObject.children.push(
             {
               text: theSchemeLabel,
+              label: theSchemeLabel,
               a_attr:{ "href" : vocab + '/' + lang + '/page/?uri=' + theScheme.uri, 'class': 'scheme'},
               uri: theScheme.uri,
               children: true,
@@ -346,6 +352,7 @@ function schemeRoot(schemes) {
         topArray.push(
             {
               text:theSchemeLabel,
+              label:theSchemeLabel,
               a_attr:{ "href" : vocab + '/' + lang + '/page/?uri=' + theScheme.uri, 'class': 'scheme'},
               uri: theScheme.uri,
               children: true,
@@ -379,7 +386,8 @@ function topConceptsToSchemes(topConcepts, schemes) {
     var topConcept = topConcepts[i];
     var hasChildren = topConcept.hasChildren; 
     var childObject = {
-      text : getLabel(topConcept), 
+      text: getLabel(topConcept),
+      label: pickLabel(topConcept),
       a_attr: getHrefForUri(topConcept.uri),
       uri: topConcept.uri,
       notation: topConcept.notation,
@@ -407,10 +415,7 @@ function nodeLabelSortKey(node) {
   // make sure the tree nodes with class 'domain' are sorted before the others
   // domain will be "0" if the node has a domain class, else "1"
   var domain = (node.original.a_attr['class'] == 'domain') ? "0" : "1";
-
-  // parse the HTML code in node.text and return just the label as a lower case value for sorting
-  // should look like '<span class="tree-notation">12.3</span> <span class="tree-label">Hello</span>'
-  var label = $($.parseHTML(node.text.toLowerCase())).filter('.tree-label').text();
+  var label = node.original.label.toLowerCase();
 
   return domain + " " + label;
 }
