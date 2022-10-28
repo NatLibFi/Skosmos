@@ -233,6 +233,15 @@
 	skosmos:language "en";
 	skosmos:sparqlGraph <http://www.skosmos.skos/dup/> .
 
+:duplabel a skosmos:Vocabulary, void:Dataset ;
+	dc11:title "Duplicate labels with distinguishers test vocabulary"@en ;
+	dc:subject :cat_general ;
+	void:uriSpace "http://www.skosmos.skos/duplabel/";
+	skosmos:language "en", "fi" ;
+	skosmos:defaultLanguage "en" ;
+	skosmos:resultDistinguisher "skos:closeMatch|skos:inScheme" ;
+	skosmos:sparqlGraph <http://www.skosmos.skos/duplabel/> .
+
 :dates a skosmos:Vocabulary, void:Dataset ;
 	dc:title "Date information vocabulary"@en ;
 	dc11:title "Date information vocabulary"@en ;

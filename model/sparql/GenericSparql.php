@@ -946,6 +946,7 @@ EOF;
           return $labelClause . " BIND(?label AS ?match)";
         }
 
+        $distinguishercondLabel = "FILTER (LANG(?distLabel) = LANG(?label))";
         // Only include distinguisher labels in case of a shared prefLabel
         $distinguisherClause = $distinguisher ?
             "OPTIONAL {\n" .
@@ -953,9 +954,13 @@ EOF;
             "  ?s $distinguisher ?distinguisher.\n" .
             "  OPTIONAL {\n" .
             "    ?distinguisher skos:prefLabel ?distLabel .\n" .
-            "    FILTER (LANG(?distLabel) = LANG(?label))\n" .
+            "    $distinguishercondLabel\n" .
             "  }\n" .
-            "}" : "";
+            "  OPTIONAL {\n" .
+            "    ?distinguisher rdfs:label ?distLabel .\n" .
+            "    $distinguishercondLabel\n" .
+            "  }\n" .
+            "} BIND(COALESCE(?distLabel,STR(?distinguisher)) AS ?distcoal) " : "";
 
         /*
          * This query does some tricks to obtain a list of unique concepts.
@@ -967,12 +972,12 @@ EOF;
          * the structure is unpacked to get back the original string. Phew!
          */
         $hitvar = $unique ? '(MIN(?matchstr) AS ?hit)' : '(?matchstr AS ?hit)';
-        $hitgroup = $unique ? 'GROUP BY ?s ?label ?notation ?distinguisher ?distLabel' : '';
+        $hitgroup = $unique ? 'GROUP BY ?s ?label ?notation ?distcoal' : '';
 
         $langClause = $this->generateLangClause($searchLang);
 
         $query = <<<EOQ
-   SELECT DISTINCT ?s ?label ?notation ?distinguisher ?distLabel $hitvar
+   SELECT DISTINCT ?s ?label ?notation ?distcoal $hitvar
    WHERE {
     $graphClause {
      { 
@@ -992,7 +997,7 @@ EOF;
     $filterGraph
    }
    $hitgroup
-   ORDER BY LCASE(?distLabel)
+   ORDER BY LCASE(?distcoal)
 EOQ;
         return $query;
     }
@@ -1100,12 +1105,11 @@ WHERE {
    ?s a ?type .
    $extrafields $schemecond
   }
-  BIND(COALESCE(?distLabel,STR(?distinguisher)) AS ?distcoal)
   $filterDeprecated
  }
  $filterGraph
 }
-GROUP BY ?s ?match ?label ?plabel ?alabel ?hlabel ?notation ?graph
+GROUP BY ?s ?match ?label ?plabel ?alabel ?hlabel ?notation ?distLabels ?graph
 ORDER BY LCASE(STR(?match)) LANG(?match) LCASE(STR(?distLabels)) $orderextra
 EOQ;
         return $query;
