@@ -90,17 +90,17 @@ class Controller
 
     private function isSecure()
     {
-        if ($protocol = filter_input(INPUT_SERVER, 'HTTP_X_FORWARDED_PROTO', FILTER_SANITIZE_STRING)) {
+        if ($protocol = filter_input(INPUT_SERVER, 'HTTP_X_FORWARDED_PROTO', FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
             return \in_array(strtolower($protocol), ['https', 'on', 'ssl', '1'], true);
         }
 
-        return filter_input(INPUT_SERVER, 'HTTPS', FILTER_SANITIZE_STRING) !== null;
+        return filter_input(INPUT_SERVER, 'HTTPS', FILTER_SANITIZE_FULL_SPECIAL_CHARS) !== null;
     }
 
     private function guessBaseHref()
     {
-        $script_name = filter_input(INPUT_SERVER, 'SCRIPT_NAME', FILTER_SANITIZE_STRING);
-        $script_filename = filter_input(INPUT_SERVER, 'SCRIPT_FILENAME', FILTER_SANITIZE_STRING);
+        $script_name = filter_input(INPUT_SERVER, 'SCRIPT_NAME', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $script_filename = filter_input(INPUT_SERVER, 'SCRIPT_FILENAME', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $script_filename = realpath($script_filename); // resolve any symlinks (see #274)
         $script_filename = str_replace("\\", "/", $script_filename); // fixing windows paths with \ (see #309)
         $base_dir = __DIR__; // Absolute path to your installation, ex: /var/www/mywebsite
@@ -109,9 +109,9 @@ class Controller
         $base_url = preg_replace("!^{$doc_root}!", '', $base_dir);
         $base_url = str_replace('/controller', '/', $base_url);
         $protocol = $this->isSecure() ? 'https' : 'http';
-        $port = filter_input(INPUT_SERVER, 'SERVER_PORT', FILTER_SANITIZE_STRING);
+        $port = filter_input(INPUT_SERVER, 'SERVER_PORT', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $disp_port = ($port == 80 || $port == 443) ? '' : ":$port";
-        $domain = filter_input(INPUT_SERVER, 'SERVER_NAME', FILTER_SANITIZE_STRING);
+        $domain = filter_input(INPUT_SERVER, 'SERVER_NAME', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         return "$protocol://{$domain}{$disp_port}{$base_url}";
     }
 
@@ -308,7 +308,7 @@ class Controller
     protected function getIfModifiedSince()
     {
         $ifModifiedSince = null;
-        $ifModSinceHeader = filter_input(INPUT_SERVER, 'HTTP_IF_MODIFIED_SINCE', FILTER_SANITIZE_STRING);
+        $ifModSinceHeader = filter_input(INPUT_SERVER, 'HTTP_IF_MODIFIED_SINCE', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         if ($ifModSinceHeader) {
             // example value set by a browser: "Mon, 11 May 2020 10:46:57 GMT"
             $ifModifiedSince = new DateTime($ifModSinceHeader);

@@ -23,7 +23,7 @@ class RestController extends Controller
     private function returnJson($data)
     {
         // wrap with JSONP callback if requested
-        if (filter_input(INPUT_GET, 'callback', FILTER_SANITIZE_STRING)) {
+        if (filter_input(INPUT_GET, 'callback', FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
             header("Content-type: application/javascript; charset=utf-8");
             echo filter_input(INPUT_GET, 'callback', FILTER_UNSAFE_RAW) . "(" . json_encode($data) . ");";
             return;
@@ -32,7 +32,7 @@ class RestController extends Controller
         // otherwise negotiate suitable format for the response and return that
         $negotiator = new \Negotiation\Negotiator();
         $priorities = array('application/json', 'application/ld+json');
-        $best = filter_input(INPUT_SERVER, 'HTTP_ACCEPT', FILTER_SANITIZE_STRING) ? $negotiator->getBest(filter_input(INPUT_SERVER, 'HTTP_ACCEPT', FILTER_SANITIZE_STRING), $priorities) : null;
+        $best = filter_input(INPUT_SERVER, 'HTTP_ACCEPT', FILTER_SANITIZE_FULL_SPECIAL_CHARS) ? $negotiator->getBest(filter_input(INPUT_SERVER, 'HTTP_ACCEPT', FILTER_SANITIZE_FULL_SPECIAL_CHARS), $priorities) : null;
         $format = ($best !== null) ? $best->getValue() : $priorities[0];
         header("Content-type: $format; charset=utf-8");
         header("Vary: Accept"); // inform caches that we made a choice based on Accept header

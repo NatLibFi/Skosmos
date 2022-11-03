@@ -869,8 +869,8 @@ class Concept extends VocabularyDataObject implements Modifiable
 
         foreach ($labels as $lit) {
             // filtering away subsets of the current language eg. en vs en-GB
-            if ($lit->getLang() != $this->clang && strpos($lit->getLang(), $this->getEnvLang() . '-') !== 0) {
-                $langCode = $lit->getLang() ? $lit->getLang() : '';
+            $langCode = strval($lit->getLang());
+            if ($langCode != $this->clang && strpos($langCode, $this->getEnvLang() . '-') !== 0) {
                 $ret[$langCode][$key][] = new ConceptPropertyValueLiteral($this->model, $this->vocab, $this->resource, $lit, $prop);
             }
         }

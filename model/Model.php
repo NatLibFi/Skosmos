@@ -276,7 +276,7 @@ class Model
         $params->setUnique(true);
         $allhits = $this->searchConcepts($params);
         $count = sizeof($allhits);
-        $hits = array_slice($allhits, $params->getOffset(), $params->getSearchLimit());
+        $hits = array_slice($allhits, intval($params->getOffset()), $params->getSearchLimit());
 
         $ret = array();
         $uris = array();
@@ -521,8 +521,8 @@ class Model
 
         // try to guess the URI space and look it up in the cache
         $res = new EasyRdf\Resource($uri);
-        $namespace = substr($uri, 0, -strlen($res->localName()));
-        if (array_key_exists($namespace, $this->vocabsByUriSpace)) {
+        $namespace = substr(strval($uri), 0, -strlen(strval($res->localName())));
+        if ($namespace && array_key_exists($namespace, $this->vocabsByUriSpace)) {
             $vocabs = $this->vocabsByUriSpace[$namespace];
             return $this->disambiguateVocabulary($vocabs, $uri, $preferredVocabId);
         }

@@ -75,7 +75,7 @@ class Request
     public function getQueryParam($paramName)
     {
         if (!isset($this->queryParams[$paramName])) return null;
-        $val = filter_var($this->queryParams[$paramName], FILTER_SANITIZE_STRING);
+        $val = filter_var($this->queryParams[$paramName], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         return ($val !== null ? str_replace('\\', '', $val) : null);
     }
 
@@ -92,7 +92,7 @@ class Request
     public function getQueryParamPOST($paramName)
     {
         if (!isset($this->queryParamsPOST[$paramName])) return null;
-        return filter_var($this->queryParamsPOST[$paramName], FILTER_SANITIZE_STRING);
+        return filter_var($this->queryParamsPOST[$paramName], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     }
 
     public function getQueryParamBoolean($paramName, $default)
@@ -107,7 +107,7 @@ class Request
     public function getServerConstant($paramName)
     {
         if (!isset($this->serverConstants[$paramName])) return null;
-        return filter_var($this->serverConstants[$paramName], FILTER_SANITIZE_STRING);
+        return filter_var($this->serverConstants[$paramName], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     }
 
     public function getLang()
@@ -180,7 +180,7 @@ class Request
     public function getLangUrl($newlang=null)
     {
         $script_name = str_replace('/index.php', '', $this->getServerConstant('SCRIPT_NAME'));
-        $langurl = substr(str_replace($script_name, '', $this->getServerConstant('REQUEST_URI')), 1);
+        $langurl = substr(str_replace($script_name, '', strval($this->getServerConstant('REQUEST_URI'))), 1);
         if ($newlang !== null) {
             $langurl = preg_replace("#^(.*/)?{$this->lang}/#", "$1{$newlang}/", $langurl);
         }
@@ -218,7 +218,7 @@ class Request
     public function setURI($uri)
     {
         if ($uri !== '') {
-            $this->uri = rtrim($uri);
+            $this->uri = rtrim(strval($uri));
         }
 
     }

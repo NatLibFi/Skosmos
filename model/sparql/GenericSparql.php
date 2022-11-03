@@ -129,8 +129,8 @@ class GenericSparql {
         // client, set the same type of cache control headers also in subsequent
         // in the SPARQL requests (this is useful for performance testing)
         // @codeCoverageIgnoreStart
-        $cacheControl = filter_input(INPUT_SERVER, 'HTTP_CACHE_CONTROL', FILTER_SANITIZE_STRING);
-        $pragma = filter_input(INPUT_SERVER, 'HTTP_PRAGMA', FILTER_SANITIZE_STRING);
+        $cacheControl = filter_input(INPUT_SERVER, 'HTTP_CACHE_CONTROL', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $pragma = filter_input(INPUT_SERVER, 'HTTP_PRAGMA', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         if ($cacheControl !== null || $pragma !== null) {
             $val = $pragma !== null ? $pragma : $cacheControl;
             $httpclient->setHeaders('Cache-Control', $val);
