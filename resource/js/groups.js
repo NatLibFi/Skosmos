@@ -52,7 +52,7 @@ function invokeGroupTree() {
 
   $treeObject.jstree({
     'plugins' : ['sort'],
-    'sort' : function (a,b) { return naturalCompare(this.get_text(a).toLowerCase(), this.get_text(b).toLowerCase()); },
+    'sort' : hierarchySort,
     'core' : { 
       'data' : 
         function(node, cb) { 
@@ -69,12 +69,19 @@ function invokeGroupTree() {
                 var children = [];
                 for (var i in response.members) {
                   var member = response.members[i];
-                  var child = {'text' : member.prefLabel,'parent' : node.a_attr['data-uri'], children : false, a_attr : { 'data-uri' : member.uri, "href" : getHrefForUri(member.uri, true) }};
+                  var child = {
+                    text: getLabel(member),
+                    label: pickLabel(member),
+                    parent: node.a_attr['data-uri'],
+                    notation: member.notation,
+                    children: false,
+                    a_attr: {
+                      'data-uri': member.uri,
+                      "href": getHrefForUri(member.uri, true)
+                    }
+                  };
                   if (member.hasMembers || member.isSuper) {
                     child.children = true;
-                  }
-                  if (showNotation && member.notation) {
-                    child.text = '<span class="tree-notation">' + member.notation + '</span> ' + child.text;
                   }
                   children.push(JSON.parse(JSON.stringify(child)));
                 }
@@ -91,12 +98,19 @@ function invokeGroupTree() {
 }
 
 function createGroupNode(uri, groupObject) {
-  var node = {children : [], a_attr : {'data-uri' : uri, "href" : getHrefForUri(uri, true), "class" : "group" }};
-  node.text = groupObject.prefLabel;
+  var node = {
+    text: getLabel(groupObject),
+    label: pickLabel(groupObject),
+    notation: groupObject.notation,
+    children: [],
+    a_attr: {
+      'data-uri': uri,
+      "href": getHrefForUri(uri, true),
+      "class": "group"
+    }
+  };
   if (groupObject.hasMembers || groupObject.isSuper)
     node.children = true;
-  if (showNotation && groupObject.notation)
-    node.text = '<span class="tree-notation">' + groupObject.notation + '</span> ' + node.text;
   return node;
 }
 
