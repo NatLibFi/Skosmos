@@ -7,11 +7,11 @@ assignees: ''
 
 ---
 
-**URL-address of the page (in finto.fi) where you encountered the problem**
+## URL address of the page where you encountered the problem
 
-**Description of the problem**
+## Description of the problem
 Steps to produce the problem, and the expected outcome after it has been fixed
 
-**Additional information about the problem**
+## Additional information about the problem
 
-**The browser you used when the problem appeared**
+## The browser you used when the problem appeared
