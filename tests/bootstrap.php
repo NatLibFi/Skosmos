@@ -9,5 +9,12 @@ if (!$endpoint) {
     putenv('SKOSMOS_SPARQL_ENDPOINT=http://localhost:13030/skosmos-test/sparql');
 }
 
+# Allow running git commands in the php-actions/phpunit container
+# (prevent "dubious ownership" error; /app is owned by another user, not root)
+if (getenv('GITHUB_ACTIONS') === 'true' ) {
+  mkdir('/home/runner');
+  exec('git config --global --add safe.directory /app');
+}
+
 require_once(__DIR__ . '/../vendor/autoload.php');
 require_once(__DIR__ . '/../model/Model.php');
