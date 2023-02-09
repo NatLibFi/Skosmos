@@ -1784,7 +1784,7 @@ tr.replaced-by > td > ul > li > a {
 
 #counts { max-width: 300px; }
 
-#statistics { max-width: 450px; }
+#statistics { max-width: 600px; }
 
 #statistics .property-divider, #counts .property-divider {
   margin: 0;
