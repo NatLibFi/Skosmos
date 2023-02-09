@@ -16,7 +16,7 @@ class PluginRegisterTest extends PHPUnit\Framework\TestCase
                                                                                             'global-plugin-charlie',
                                                                                             'test-plugin3'
                                                                                             )))
-                                                           ->setMethods(['getPlugins'])
+                                                           ->onlyMethods(['getPlugins'])
                                                            ->getMock();
     $this->stubplugs = array ('imaginary-plugin' => array ( 'js' => array ( 0 => 'imaginaryPlugin.js', ),
                                                  'css' => array ( 0 => 'stylesheet.css', ),
