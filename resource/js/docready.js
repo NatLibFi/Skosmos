@@ -665,6 +665,8 @@ $(function() { // DOCUMENT READY
             if (item.hiddenLabel && hasNonHiddenMatch[item.uri]) { return null; }
             // do not show the label language when it's same or in the same subset as the ui language.
             if (item.lang && (item.lang === qlang || item.lang.indexOf(qlang + '-') === 0)) { delete(item.lang); }
+            // do not show notation code if is not requested
+            if (false === window.showNotation && 'notation' in item) { delete(item.notation); }
             if (item.type) {
               var toBeRemoved = null;
               item.typeLabel = item.type;
