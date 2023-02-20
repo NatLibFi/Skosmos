@@ -86,11 +86,22 @@
 
 :skills a skosmos:Vocabulary, void:Dataset ;
     dc:title "Beamery skills taxonomy"@en ;
-    skosmos:shortName "SKILLZ";
+    skosmos:shortName "skills";
     dc:subject :cat_general ;
     void:uriSpace "https://www.beamery.com/taxonomies/skills/";
     skosmos:language "en";
     skosmos:defaultLanguage "en";
-    void:sparqlEndpoint <http://fuseki:3030/skosmos/sparql> ;
+    void:sparqlEndpoint <http://fuseki-cache:80/skosmos/sparql> ;
     skosmos:sparqlGraph <https://www.beamery.com/taxonomies/skills> ;
-    skosmos:mainConceptScheme <https://www.beamery.com/taxonomies/skills/#this> .
+    skosmos:mainConceptScheme <https://www.beamery.com/taxonomies/skills#this> .
+
+:roles a skosmos:Vocabulary, void:Dataset ;
+    dc:title "Beamery roles taxonomy"@en ;
+    skosmos:shortName "roles";
+    dc:subject :cat_general ;
+    void:uriSpace "https://www.beamery.com/taxonomies/roles/";
+    skosmos:language "en";
+    skosmos:defaultLanguage "en";
+    void:sparqlEndpoint <http://fuseki-cache:80/skosmos/sparql> ;
+    skosmos:sparqlGraph <https://www.beamery.com/taxonomies/roles> ;
+    skosmos:mainConceptScheme <https://www.beamery.com/taxonomies/roles#this> .
