@@ -71,7 +71,10 @@ class Vocabulary extends DataObject implements Modifiable
     {
         if ($this->urispace === null) // initialize cache
         {
-            $this->urispace = $this->resource->getLiteral('void:uriSpace')->getValue();
+            $urispace = $this->resource->getLiteral('void:uriSpace');
+            if ($urispace) {
+                $this->urispace = $urispace->getValue();
+            }
         }
 
         return $this->urispace;
