@@ -30,7 +30,7 @@ text:TextDataset
 
 :service_tdb_all  a               fuseki:Service ;
     rdfs:label                    "TDB2+text skosmos" ;
-    fuseki:dataset                :text_dataset ;
+    fuseki:dataset                :tdb_dataset_readwrite ; # :text_dataset ;
     fuseki:name                   "skosmos" ;
     fuseki:serviceQuery           "query" , "" , "sparql" ;
     fuseki:serviceReadGraphStore  "get" ;

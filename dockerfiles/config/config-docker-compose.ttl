@@ -21,11 +21,11 @@
     skosmos:sparqlEndpoint <http://fuseki-cache:80/skosmos/sparql> ;
     # sparql-query extension, or "Generic" for plain SPARQL 1.1
     # set to "JenaText" instead if you use Fuseki with jena-text index
-    skosmos:sparqlDialect "JenaText" ;
+    # skosmos:sparqlDialect "JenaText" ;
     # whether to enable collation in sparql queries
     skosmos:sparqlCollationEnabled false ;
     # HTTP client configuration
-    skosmos:sparqlTimeout 20 ;
+    skosmos:sparqlTimeout 60 ;
     skosmos:httpTimeout 5 ;
     # customize the service name
     skosmos:serviceName "Skosmos" ;
@@ -84,25 +84,13 @@
 
 # Skosmos vocabularies
 
-:unesco a skosmos:Vocabulary, void:Dataset ;
-    dc:title "UNESCO Thesaurus"@en ;
-    skosmos:shortName "UNESCO";
+:skills a skosmos:Vocabulary, void:Dataset ;
+    dc:title "Beamery skills taxonomy"@en ;
+    skosmos:shortName "SKILLZ";
     dc:subject :cat_general ;
-    void:uriSpace "http://skos.um.es/unescothes/";
-    skosmos:language "en", "es", "fr", "ru";
+    void:uriSpace "https://www.beamery.com/taxonomies/skills/";
+    skosmos:language "en";
     skosmos:defaultLanguage "en";
-    skosmos:showTopConcepts true ;
-    skosmos:fullAlphabeticalIndex true ;
-    skosmos:groupClass isothes:ConceptGroup ;
-    void:sparqlEndpoint <http://fuseki-cache:80/skosmos/sparql> ;
-    skosmos:sparqlGraph <http://skos.um.es/unescothes/> .
-
-:stw a skosmos:Vocabulary, void:Dataset ;
-    dc:title "STW Thesaurus for Economics"@en ;
-    skosmos:shortName "STW";
-    dc:subject :cat_general ;
-    void:uriSpace "http://zbw.eu/stw/";
-    skosmos:language "en", "de";
-    skosmos:defaultLanguage "de";
-    void:sparqlEndpoint <http://fuseki-cache:80/skosmos/sparql> ;
-    skosmos:sparqlGraph <http://zbw.eu/stw/> .
+    void:sparqlEndpoint <http://fuseki:3030/skosmos/sparql> ;
+    skosmos:sparqlGraph <https://www.beamery.com/taxonomies/skills> ;
+    skosmos:mainConceptScheme <https://www.beamery.com/taxonomies/skills/#this> .
