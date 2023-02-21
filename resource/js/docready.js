@@ -701,8 +701,8 @@ $(function() { // DOCUMENT READY
 
   var autocompleteTemplate =[
     '<div class="autocomplete-label">',
-    '<div>',
-    '{{# if typeLabel }}<span class="concept-type">{{typeLabel}}</span>{{/if}}',
+    '{{# if typeLabel }}<div class="concept-type">{{typeLabel}}</div>{{/if}}',
+    '<div class="concept-label-wrapper">',
     '{{# if matched }}<span>{{matched}}{{# if lang}} ({{lang}}){{/if}} = </span>{{/if}}',
     '{{# if replaced }}<span class="replaced">{{replaced}}{{# if lang}} ({{lang}}){{/if}} &rarr; </span>{{/if}}',
     '{{# if notation }}<span>{{notation}}</span>{{/if}}',

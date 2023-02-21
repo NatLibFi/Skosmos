@@ -2113,9 +2113,20 @@ span.date-info {
   word-wrap: break-word;
 }
 
-.tt-selectable > .concept-type, .autocomplete-label > div:first-child > span.concept-type {
+.tt-selectable > .concept-type {
   float: right;
   height: auto;
+  text-align: right;
+  word-break: break-word;
+  margin-left: 4px;
+}
+
+.tt-selectable .concept-label-wrapper, .tt-selectable .concept-distinguisher, .tt-selectable .vocab {
+  float: left;
+}
+
+.tt-selectable .concept-distinguisher, .tt-selectable .vocab {
+  width: 100%;
 }
 
 .tt-selectable {
@@ -2126,26 +2137,9 @@ span.date-info {
   word-break: break-word;
 }
 
-.autocomplete-label > div:first-child > span.concept-type {
-  float: right;
-  height: auto;
-  word-break: break-all;
-  text-align: right;
-  margin-left: 4px;
-  /* Alternative way to split the area for label and type in two, the width for type may not grow past 80%
-  max-width: 80%;
-  margin-left: -20% !important;
-  padding-left: 23%;
-  */
-}
-
 .autocomplete-label .concept-label, .autocomplete-label > div:first-child > span.replaced + span {
   color: var(--medium-color);
   margin: 0;
-}
-
-.autocomplete-label .distinguisher-marker {
-  color: var(--gray-900);
 }
 
 /* jsTree customization
