@@ -28,7 +28,7 @@
     skosmos:sparqlTimeout 60 ;
     skosmos:httpTimeout 5 ;
     # customize the service name
-    skosmos:serviceName "Skosmos" ;
+    skosmos:serviceName "Beamery - Career Architecture HQ" ;
     # customize the base element. Set this if the automatic base url detection doesn't work. For example setups behind a proxy.
     # skosmos:baseHref "http://localhost/Skosmos/" ;
     # interface languages available, and the corresponding system locales
@@ -66,7 +66,7 @@
     # a default location for Twig template rendering
     skosmos:templateCache "/tmp/skosmos-template-cache" ;
     # customize the css by adding your own stylesheet
-    skosmos:customCss "resource/css/stylesheet.css" ;
+    skosmos:customCss "resource/css/beamery-styles.css" ;
     # default email address where to send the feedback
     skosmos:feedbackAddress "" ;
     # email address to set as the sender for feedback messages
