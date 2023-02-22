@@ -11,4 +11,14 @@ class SkosmosTurtleParser extends EasyRdf\Parser\Turtle
         return $this->namespaces;
     }
 
+    /**
+     * Parse Turtle into a new Graph and return it.
+     * @return EasyRdf\Graph
+     */
+    public function parseGraph($data, $baseUri)
+    {
+        $graph = new EasyRdf\Graph();
+        $this->parse($graph, $data, 'turtle', $baseUri);
+        return $graph;
+    }
 }

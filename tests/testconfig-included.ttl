@@ -1,0 +1,14 @@
+@prefix skosmos: <http://purl.org/net/skosmos#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+# This configuration is being included from file
+
+<http://example.org/> a skosmos:Configuration ;
+ 
+    # whether to enable the spam honey pot or not, enabled by default
+    skosmos:uiHoneypotEnabled false ;
+
+    # default time a user must wait before submitting a form
+    skosmos:uiHoneypotTime 2 .
+
+<whatever> a skos:Concept .

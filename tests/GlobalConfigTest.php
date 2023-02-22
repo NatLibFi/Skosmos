@@ -116,6 +116,13 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
         $this->assertEquals(true, $this->config->getUiLanguageDropdown());
     }
 
+    public function testGetGlobalPlugins()
+    {
+        $this->assertEquals(["alpha", "Bravo", "charlie"], $this->config->getGlobalPlugins());
+    }
+
+    // included from testconfig-included.ttl
+
     public function testGetHoneypotEnabled()
     {
         $this->assertEquals(false, $this->config->getHoneypotEnabled());
@@ -126,17 +133,25 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
         $this->assertEquals(2, $this->config->getHoneypotTime());
     }
 
-    public function testGetGlobalPlugins()
-    {
-        $this->assertEquals(["alpha", "Bravo", "charlie"], $this->config->getGlobalPlugins());
+    public function testVocabularyExists() {
+        $this->assertEquals(4, count($this->config->getGraph()->allOfType('skos:Concept')));
+    }
+
+    // --- test inclusion from URL
+
+    public function testInclusionFromURL() {
+        $conf = new GlobalConfig("/../tests/testconfig-include.ttl");
+        $this->assertEquals(2, $conf->getHoneypotTime());
     }
 
     // --- tests for the exception paths
 
     public function testInitializeConfigWithoutGraph()
     {
-        $this->expectOutputString('Error: config.ttl must have exactly one skosmos:Configuration');
-        $conf = new GlobalConfig('/../tests/testconfig-nograph.ttl');
+        $file = '/../tests/testconfig-nograph.ttl';
+        $filepath = realpath( dirname(__FILE__) . $file );
+        $this->expectOutputString("Error: $filepath must have exactly one skosmos:Configuration");
+        $conf = new GlobalConfig($file);
         $this->assertNotNull($conf);
     }
 

@@ -59,12 +59,11 @@
     skosmos:feedbackEnvelopeSender "skosmos tests" ;
     # whether to display the ui language selection as a dropdown (useful for cases where there are more than 3 languages) 
     skosmos:uiLanguageDropdown true ;
-    # whether to enable the spam honey pot or not, enabled by default
-    skosmos:uiHoneypotEnabled false ;
-    # default time a user must wait before submitting a form
-    skosmos:uiHoneypotTime 2 ;
     # plugins to activate for the whole installation (including all vocabularies)
-    skosmos:globalPlugins ("alpha" "Bravo" "charlie") .
+    skosmos:globalPlugins ("alpha" "Bravo" "charlie") ;
+
+    # include another config file
+    skosmos:includeConfig <testconfig-included.ttl> .
 
 # Skosmos vocabularies
 
