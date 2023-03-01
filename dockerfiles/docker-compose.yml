@@ -1,39 +1,14 @@
 version: '3.7'
 
 services:
-  # fuseki:
-  #   container_name: skosmos-fuseki
-  #   hostname: fuseki
-  #   image: stain/jena-fuseki
-  #   environment:
-  #     - ADMIN_PASSWORD=admin
-  #     - JVM_ARGS=-Xmx4g
-  #   ports:
-  #     - 9030:3030
-  # # You can uncomment the line below to have a local volume bound onto the container, or
-  # # visit https://hub.docker.com/r/stain/jena-fuseki/ for other alternatives
-  # # volumes:
-  # #  - ${PWD}/fuseki:/fuseki
-  #   volumes:
-  #     - type: bind
-  #       source: ./config/skosmos.ttl
-  #       target: /fuseki/configuration/skosmos.ttl
-
   fuseki:
     container_name: skosmos-fuseki
     hostname: fuseki
     image: atomgraph/fuseki
-    #environment:
-    #  - ADMIN_PASSWORD=admin
-    #  - JVM_ARGS=-Xmx2g
     ports:
       - 9030:3030
-  # You can uncomment the line below to have a local volume bound onto the container, or
-  # visit https://hub.docker.com/r/stain/jena-fuseki/ for other alternatives
-  # volumes:
-  #  - ${PWD}/fuseki:/fuseki
     environment:
-      - JAVA_OPTIONS=-Xmx4096m -Xms4096m
+      - JAVA_OPTIONS=-Xmx8G -Xmx8G
     volumes:
       - ./config/skosmos.ttl:/fuseki/configuration/skosmos.ttl:ro
     command: [ "--config", "/fuseki/configuration/skosmos.ttl" ]
@@ -48,6 +23,7 @@ services:
       - type: bind
         source: ./config/varnish-default.vcl
         target: /etc/varnish/default.vcl
+
   skosmos:
     container_name: skosmos-web
     hostname: skosmos
