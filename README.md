@@ -38,4 +38,4 @@ For information about released versions, see
 ## Reporting issues
 
 If you have found a bug please create a new issue using the provided template:
-[Report an issue](https://github.com/NatLibFi/Skosmos/issues/new)
+[Report an issue](https://github.com/NatLibFi/Skosmos/issues/new/choose)
