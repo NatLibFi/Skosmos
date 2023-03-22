@@ -176,6 +176,17 @@ public function testGetLabelForDatatypeIfNull() {
   /**
    * @covers ConceptPropertyValueLiteral::getContainsHtml
    */
+  public function testGetContainsHtmlWhenValueIsDate() {
+    $litmock = $this->getMockBuilder('EasyRdf\Literal\Date')->disableOriginalConstructor()->getMock();
+    $litmock->method('getValue')->will($this->returnValue(DateTime::createFromFormat('Y-m-d', '2013-10-14')));
+    $resmock = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
+    $lit = new ConceptPropertyValueLiteral($this->model, $this->vocab, $resmock, $litmock, 'skosmos:testType');
+    $this->assertFalse($lit->getContainsHtml());
+  }
+
+  /**
+   * @covers ConceptPropertyValueLiteral::getContainsHtml
+   */
   public function testGetContainsHtml() {
     $litmock = $this->getMockBuilder('EasyRdf\Literal')->disableOriginalConstructor()->getMock();
     $litmock->method('getValue')->will($this->returnValue('a <a href=\"http://skosmos.org\">literal</a> with valid html'));
