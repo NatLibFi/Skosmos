@@ -57,7 +57,7 @@ class ConceptPropertyValueLiteral extends VocabularyDataObject
     }
 
     public function getContainsHtml() {
-        return preg_match("/\/[a-z]*>/i", $this->literal->getValue()) != 0;
+        return preg_match("/\/[a-z]*>/i", $this->getLabel()) != 0;
     }
 
     public function getLabel()
