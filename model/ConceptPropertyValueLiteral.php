@@ -88,7 +88,7 @@ class ConceptPropertyValueLiteral extends VocabularyDataObject
     public function hasXlProperties()
     {
         $xlLabel = $this->getXlLabel();
-        return ($xlLabel !== null && !empty($xlLabel->getProperties()) && $this->getLang() == $xlLabel->getLang());
+        return ($xlLabel !== null && !empty($xlLabel->getProperties()));
     }
 
     public function getXlLabel()
@@ -96,7 +96,10 @@ class ConceptPropertyValueLiteral extends VocabularyDataObject
         $graph = $this->resource->getGraph();
         $labelResources = $graph->resourcesMatching('skosxl:literalForm', $this->literal);
         foreach($labelResources as $labres) {
-            return new LabelSkosXL($this->model, $labres);
+          $xlLabel = new LabelSkosXL($this->model, $labres);
+          if ($xlLabel->getLang() == $this->getLang()) {
+            return $xlLabel;
+          }
         }
         return null;
     }
