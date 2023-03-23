@@ -11,6 +11,10 @@ assignees: ''
 
 ## Who are the users that would benefit from the enhancement and how?
 
+(Name specific organizations, roles and/or communities if possible, and/or point to relevant discussion elsewhere)
+
 ## What new functionalities would the enhancement make possible?
 
 ## Why is the enhancement important?
+
+(Why should this be prioritized, instead of spending energy on something else? Who would do the work to make this happen?)
