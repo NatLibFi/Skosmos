@@ -1,17 +1,18 @@
 # 
 # Translators:
 # CH_ <ch@infobib.de>, 2017,2019
+# Jakob Voß <jakob@nichtich.de>, 2023
 # Joachim Neubert <j.neubert@zbw.eu>, 2015-2016
 # Jonas Waeber <jonaswaeber@gmail.com>, 2018
 # osma <osma.suominen@helsinki.fi>, 2015,2017,2020-2021
-# schlawiner <schlawiner@gmail.com>, 2021
+# schlawiner <schlawiner@gmail.com>, 2021,2023
 msgid ""
 msgstr ""
 "Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-16 10:26+0200\n"
 "PO-Revision-Date: 2015-06-18 07:06+0000\n"
-"Last-Translator: osma <osma.suominen@helsinki.fi>, 2015,2017,2020-2021\n"
+"Last-Translator: schlawiner <schlawiner@gmail.com>, 2021,2023\n"
 "Language-Team: German (http://www.transifex.com/national-library-of-finland/skosmos/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -118,7 +119,7 @@ msgid "Changes-nav"
 msgstr "Neu"
 
 msgid "Changes-and-deprecations-nav"
-msgstr ""
+msgstr "Änderungen"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:122
 msgid "Clear limitations"
@@ -391,7 +392,7 @@ msgstr "Quelle für die Beschreibung dieses Begriffs."
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:79
 msgid "dc:spatial"
-msgstr "Räumliche Abdeckung"
+msgstr "Räumlicher Geltungsbereich"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:81
 msgid "dc:subject"
@@ -399,7 +400,7 @@ msgstr "Thema"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:83
 msgid "dc:temporal"
-msgstr "Zeitliche Abdeckung"
+msgstr "Zeitlicher Geltungsbereich"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:85
 msgid "dc:title"
@@ -565,7 +566,7 @@ msgstr "Oberbegriff"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:171
 msgid "skos:broader_help"
-msgstr "Hierarchisch übergeordneter Begriff"
+msgstr "Oberbegriff"
 
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:169
 msgid "skos:changeNote"
@@ -689,7 +690,7 @@ msgid "skosext:partOf_help"
 msgstr "Gesamtheit, zu der dieser Begriff gehört."
 
 msgid "skosmos:marcSourceCode"
-msgstr ""
+msgstr "MARC-Code"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:548
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:201
@@ -877,4 +878,4 @@ msgid "skos:notation_help"
 msgstr "Code, der einen Begriff innerhalb seines Begriffs-Schemas eindeutig kennzeichnet."
 
 msgid "Information"
-msgstr ""
+msgstr "Information"

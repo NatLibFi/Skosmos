@@ -1,21 +1,24 @@
+# 
+# Translators:
 msgid ""
 msgstr ""
 "Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-16 10:26+0200\n"
-"PO-Revision-Date: \n"
+"PO-Revision-Date: 2015-06-18 07:06+0000\n"
 "Last-Translator: Henri Ylikotila <henri.ylikotila@helsinki.fi>\n"
-"Language-Team: Finto Team <finto-posti@helsinki.fi>\n"
-"Language: en\n"
+"Language-Team: English (http://www.transifex.com/national-library-of-finland/skosmos/language/en/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-Basepath: ../..\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.8.7.1\n"
+"X-Poedit-Basepath: ../..\n"
 "X-Poedit-SearchPath-0: view\n"
 "X-Poedit-SearchPath-1: controller\n"
 "X-Poedit-SearchPath-2: model\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 msgid "Download this vocabulary:"
 msgstr "Download this vocabulary:"
@@ -258,9 +261,7 @@ msgstr "Submit search"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:68
 msgid "Thank you for your feedback"
-msgstr ""
-"Thank you for your feedback. We strive to answer all feedback as soon as "
-"possible."
+msgstr "Thank you for your feedback. We strive to answer all feedback as soon as possible."
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:129
 msgid "The search provided no results."
@@ -772,24 +773,14 @@ msgstr "Vocabulary information"
 
 #: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:199
 msgid "helper_help"
-msgstr ""
-"Hover your cursor over the text with a dotted underline to see instructions "
-"about the property."
+msgstr "Hover your cursor over the text with a dotted underline to see instructions about the property."
 
 #: /tmp/cache/587c83c13194c/0b/0bbfc29e05e244fa07889ce1678840902f16e5f76560e00137de0cc3bb084b8b.php:201
 msgid "search_example_text"
-msgstr ""
-"For truncation search, please use the symbol * as in *animal or *patent*. "
-"For ends of search words, the search will be truncated automatically, even "
-"if the truncation symbol is not entered manually: thus, cat will yield the "
-"same results as cat*."
+msgstr "For truncation search, please use the symbol * as in *animal or *patent*. For ends of search words, the search will be truncated automatically, even if the truncation symbol is not entered manually: thus, cat will yield the same results as cat*."
 
 msgid "feedback_enter_name_email"
-msgstr ""
-"Please enter your name and email address if you wish to receive a direct "
-"response. You also have the option to submit your feedback anonymously. NB: "
-"Feedback regarding a specific vocabulary is referred directly to its "
-"administrator."
+msgstr "Please enter your name and email address if you wish to receive a direct response. You also have the option to submit your feedback anonymously. NB: Feedback regarding a specific vocabulary is referred directly to its administrator."
 
 msgid "concept_types"
 msgstr "Concept types"
@@ -854,7 +845,9 @@ msgstr "Write a subject"
 msgid "Select a vocabulary"
 msgstr "You can select a vocabulary"
 
-msgid "We're sorry but Skosmos doesn't work properly without JavaScript enabled. Please enable it to continue."
+msgid ""
+"We're sorry but Skosmos doesn't work properly without JavaScript enabled. "
+"Please enable it to continue."
 msgstr "We're sorry but Skosmos doesn't work properly without JavaScript enabled. Please enable it to continue."
 
 msgid "Deprecated concept"
