@@ -15,8 +15,6 @@ assignees: ''
 
 ## What new functionalities would the enhancement make possible?
 
-(What great things could become possible, that aren't possible now?)
-
 ## Why is the enhancement important?
 
 (Why should this be prioritized, instead of spending energy on something else? Who would do the work to make this happen?)
