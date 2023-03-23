@@ -88,7 +88,7 @@ class ConceptPropertyValueLiteral extends VocabularyDataObject
     public function hasXlProperties()
     {
         $xlLabel = $this->getXlLabel();
-        return ($xlLabel !== null && !empty($xlLabel->getProperties()));
+        return ($xlLabel !== null && !empty($xlLabel->getProperties()) && $this->getLang() == $xlLabel->getLang());
     }
 
     public function getXlLabel()
