@@ -214,4 +214,38 @@ public function testGetLabelForDatatypeIfNull() {
     $this->assertArrayNotHasKey('skosxl:literalForm', $reified_vals);
     $this->assertArrayHasKey('skosxl:labelRelation', $reified_vals);
   }
+
+  /**
+   * @covers ConceptPropertyValueLiteral::getXlLabel
+   * @covers ConceptPropertyValueLiteral::hasXlProperties
+   */
+  public function testGetXlPropertiesByLang() {
+    $voc = $this->model->getVocabulary('xl');
+    $conc = $voc->getConceptInfo('http://www.skosmos.skos/xl/c2', 'en')[0];
+    $props = $conc->getProperties();
+    $vals = $props['skos:altLabel']->getValues();
+    $val = reset($vals);
+
+    $reified_vals = array();
+    if ($val->hasXlProperties())
+      {
+        $reified_vals = $val->getXlLabel()->getProperties();
+      }
+    $this->assertArrayHasKey('dc:source', $reified_vals);
+    $this->assertArrayHasKey('dc:modified', $reified_vals);
+    $this->assertCount(2, $reified_vals);
+
+    // testing that XlProperties are only shown for matching language
+    $conc = $voc->getConceptInfo('http://www.skosmos.skos/xl/c2', 'fi')[0];
+    $props = $conc->getProperties();
+    $vals = $props['skos:altLabel']->getValues();
+    $val = reset($vals);
+
+    $reified_vals = array();
+    if ($val->hasXlProperties())
+      {
+        $reified_vals = $val->getXlLabel()->getProperties();
+      }
+    $this->assertEmpty($reified_vals);
+  }
 }
