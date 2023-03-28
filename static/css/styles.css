@@ -1,0 +1,388 @@
+:root {
+    /* Color definitions */
+    --dark-color: #0d284e;
+    --secondary-dark-color: #1b709d ;
+    --medium-color: #dfe5ed;
+    --secondary-medium-color: #b8c9db;
+    --light-color: #f2f5f7;
+    --white-color: #ffffff;
+
+    /* Font definitions */
+    --font-size: 14px;
+    --font-family: 'Public Sans', sans-serif;
+    --font-family-heading: 'EB Garamond', serif; 
+}
+
+body {
+    font-family: var(--font-family);
+    font-size: var(--font-size);
+    color: var(--dark-color);
+}
+
+.fs-1 {
+  font-size: 3.75em !important;
+}
+
+.fs-2 {
+  font-size: 3.25em !important;
+}
+
+.fs-3 {
+  font-size: 2.5em !important;
+}
+
+/* Topbar
+ *****************************************/
+#topbar {
+    background-color: var(--dark-color);
+    color: var(--white-color);
+}
+
+#topbar h3 {
+    display: inline;
+    font-weight: bold;
+}
+
+.topbar-nav-link {
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size: 40%;
+    padding-left: 30px;
+}
+
+#topbar-nav-home {
+    background-image: url("../pics/koti.svg");
+}
+
+#topbar-nav-info {
+    background-image: url("../pics/tietoa.svg");
+}
+
+#topbar-nav-feedback {
+    background-image: url("../pics/palaute.svg");
+}
+
+/* Headerbar
+ *****************************************/
+
+#headerbar h1 {
+    font-weight: bold;
+}
+
+#vocab-title a {
+    color: var(--dark-color);
+    font-family: var(--font-family-heading);
+    text-decoration: none;
+}
+
+#search-vocab {
+    width: 600px;
+}
+
+#search-vocab .dropdown-toggle {
+    color: var(--dark-color);
+    border: 1px solid var(--medium-color);
+    border-radius: 0;
+    width: 200px;
+}
+
+#search-vocab input {
+    border: 1px solid var(--medium-color);
+}
+
+#search-button {
+    color: var(--white-color);
+    background-color: var(--dark-color);
+    border: none;
+    border-radius: 0;
+}
+
+#search-vocab a {
+    color: var(--dark-color);
+    float: right;
+}
+
+/* Main container
+ *****************************************/
+#main-container {
+    font-size: 16px;
+}
+
+#main-container h1, #main-container h2 {
+    font-family: var(--font-family-heading);
+    font-weight: bold;
+}
+
+/***** Main container frontpage *****/
+#vocabulary-list, #welcome-box, #info-box {
+    padding: 2rem 1.5rem;
+}
+
+#main-container.frontpage #vocabulary-list, #vocabulary-list .list-group-item, #main-container.frontpage #info-box {
+    background-color: var(--medium-color);
+}
+
+#main-container.frontpage #welcome-box {
+    background-color: var(--dark-color);
+    color: var(--white-color);
+    margin-bottom: 1.5rem;
+}
+
+#main-container.frontpage #info-box {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#info-box a {
+    color: var(--dark-color);
+    text-decoration: none;
+}
+
+.vocab-category {
+    border-top: 1px solid var(--dark-color);
+}
+
+.vocab-category a {
+    color: var(--secondary-dark-color);
+    font-weight: bold;
+    text-decoration: underline var(--secondary-medium-color) solid;
+}
+
+/***** Main container frontpage one vocab *****/
+#main-container.frontpage-one-vocab #vocabulary-list {
+    background-color: var(--dark-color);
+}
+
+#main-container.frontpage-one-vocab #welcome-box, #main-container.frontpage-one-vocab #info-box {
+    background-color: var(--medium-color);
+}
+
+#main-container.frontpage-one-vocab #vocabulary-list {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#main-container.frontpage-one-vocab #vocabulary-list a {
+    color: var(--white-color);
+    text-decoration: underline;
+}
+
+/***** Main container vocabpage *****/
+#main-container.vocabpage, #main-container.termpage {
+    background-color: var(--medium-color);
+    padding: 1rem 0;
+}
+
+#main-container.vocabpage a, #main-container.termpage a {
+    color: var(--secondary-dark-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#sidebar, #main-content {
+    background-color: var(--white-color);
+}
+
+/*** Sidebar ***/
+#sidebar .nav-item {
+    background-color: var(--light-color);
+}
+
+#sidebar .nav-link {
+    color: var(--dark-color) !important;
+    transition: none;
+}
+
+#sidebar .nav .active {
+    background-color: var(--dark-color);
+    color: var(--white-color) !important;
+}
+
+#sidebar .pagination {
+    background-color: var(--dark-color);
+    color: var(--white-color);
+    padding: 1rem;
+    margin: 0;
+    flex-wrap: wrap;
+}
+
+#sidebar .page-item, #sidebar .page-link {
+    background-color: var(--dark-color);
+    color: var(--white-color) !important;
+    font-weight: normal !important;
+    border: none;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    transition: none;
+}
+
+/* Not sure what these should be, probably something though */
+#sidebar .page-link:hover, #sidebar .page-link:active, #sidebar .page-link:focus {
+    background-color: var(--dark-color);
+    color: var(--white-color);
+    box-shadow: none;
+}
+
+#alpha-list {
+    padding: 2rem 1rem;
+    overflow: hidden;
+    overflow-y: scroll;
+    scrollbar-color: var(--secondary-medium-color) var(--light-color);
+    height: 600px; /*remove*/
+}
+
+#alpha-list::-webkit-scrollbar {
+    background: var(--light-color);
+}
+
+#alpha-list::-webkit-scrollbar-thumb {
+    background: var(--secondary-medium-color);
+}
+
+#alpha-list li {
+    border: none;
+    border-radius: none;
+}
+
+#alpha-list a {
+    color: var(--secondary-dark-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#alpha-list .list-group-item.selected a {
+    color: var(--dark-color);
+    font-size: 18px;
+}
+
+#tab-hierarchy {
+    background-color: var(--dark-color);
+    color: var(--white-color);
+}
+
+/***  Main content ***/
+.main-content-section {
+    border-bottom: 2px solid var(--medium-color);
+}
+
+#main-table {
+    margin-top: 4rem;
+}
+
+#main-table tr {
+    border-top: 1px solid var(--medium-color)
+}
+
+#main-table td {
+    border: none;
+    color: var(--dark-color)
+}
+
+#main-table a {
+    color: var(--secondary-dark-color) !important;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.main-table-label {
+    width: 30%;
+    font-weight: bold;
+    font-size: 20px !important;
+}
+
+#resource-table th, #term-table th {
+    font-weight: bold;
+    border-bottom: 1px solid var(--dark-color);
+}
+
+#resource-table td, #term-table td {
+    border: none;
+}
+
+.resource-table-label {
+    width: 40%;
+}
+
+/***** Main container termpage *****/
+#term-heading span {
+    width: 30%;
+    align-self: end;
+}
+
+.copy-clipboard {
+    border: none;
+    font-size: 20px;
+}
+
+.copy-clipboard:active, .copy-clipboard:focus, .copy-clipboard:active:focus {
+    border: none;
+}
+
+.term-other-languages a {
+    display: inline-block;
+    width: 50%;
+}
+
+/***** Main container infopage *****/
+#main-container.infopage, #main-container.feedbackpage {
+    background-color: var(--light-color);
+    padding: 4rem 0;
+}
+
+#main-container.infopage .container, #main-container.feedbackpage .container {
+    padding: 0 12rem;
+}
+
+#main-container.infopage a {
+    color: var(--secondary-dark-color);
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+/***** Main container feedbackpage *****/
+#feedback-form {
+    background-color: var(--white-color);
+    padding: 2rem 1rem 4.5rem;
+}
+
+#feedback-form label {
+    font-weight: bold;
+}
+
+#feedback-form input, #feedback-form select, #feedback-form textarea {
+    background-color: var(--light-color);
+    border: none;
+    border-radius: 0;
+}
+
+#feedback-form input::placeholder {
+    color: var(--dark-color);
+}
+
+#feedback-form textarea {
+    margin-bottom: 4rem;
+}
+
+#feedback-form button {
+    background-color: var(--dark-color);
+    border: none;
+    border-radius: 0;
+    font-weight: bold;
+    float: right;
+}
+
+/* Footer
+ *****************************************/
+#footer p {
+    max-width: 75%;
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1400px !important;
+  }
+}

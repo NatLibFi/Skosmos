@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="stylesheet" href="static/css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="static/css/fonts.css">
+
+  <link rel="stylesheet" href="static/css/styles.css">
+
+  <link rel="shortcut icon" href="favicon.ico">
+
+  <title>Skosmos</title>
+
+</head>
+<body>
+
+  <div class="container-fluid d-flex my-auto py-3 px-4" id="topbar">
+    <h3 class="fs-3 my-auto">Skosmos</h3>
+    <ul class="nav nav-pills my-auto ms-auto text-light gx-3 py-3" id="topbar-nav">
+      <li class="nav-item"><a href="#" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none" id="topbar-nav-home">Etusivu</a></li>
+      <li class="nav-item"><a href="#" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none" id="topbar-nav-info">Tietoa</a></li>
+      <li class="nav-item"><a href="#" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none" id="topbar-nav-feedback">Palaute</a></li>
+      <li class="nav-item"><a href="#" class="fs-6 text-light ms-3 text-decoration-none">På svenska</a></li>
+      <li class="nav-item"><a href="#" class="fs-6 text-light ms-3 text-decoration-none">In English</a></li>
+    </ul>
+  </div>
+
+  <main class="feedbackpage" id="main-container">
+    <div class="container">
+      <h2 class="fs-2 mb-5">Ota yhteyttä!</h2>
+      <p class="fs-5 mb-5">
+        Kerro nimesi ja sähköpostiosoitteesi, niin vastaamme
+        sinulle henkilökohtaisesti. Voit halutessasi jättää
+        palautteen myös nimettömänä. HUOM! Tiettyä sanastoa
+        koskeva palaute ohjataan suoraan sanaston ylläpitäjälle.
+      </p>
+      
+      <form id="feedback-form">
+        <div class="mb-4">
+          <label class="form-label" for="vocab-select">Sanasto</label>
+          <select class="form-select" id="vocab-select">
+            <option>Eurovoc, the EU’s multilingual thesaurus</option>
+            <option>YSO - Yleinen suomalainen ontologia</option>
+            <option>STW Thesaurus for Economics</option>
+            <option>AGROVOC</option>
+            <option>EARTh Thesaurus</option>
+            <option>GACS Beta 4.0</option>
+            <option>NAL Thesaurus</option>
+            <option>UNESCO Thesaurus</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label for="name-input" class="form-label">Nimi</label>
+          <input type="text" class="form-control" id="name-input" placeholder="Syötä nimesi">
+        </div>
+        <div class="mb-4">
+          <label for="email-input" class="form-label">Sähköposti</label>
+          <input type="email" class="form-control" id="email-input" placeholder="Syötä sähköpostiosoitteesi">
+        </div>
+        <div class="mb-4">
+          <label for="subject-input" class="form-label">Aihe*</label>
+          <input type="text" class="form-control" id="subject-input" placeholder="Kirjoita aihe" required>
+        </div>
+        <div>
+          <label for="message-input" class="form-label">Viesti</label>
+          <textarea class="form-control" id="message-input" rows="5"></textarea>
+        </div>
+
+        <div>
+          <span>* kenttä on pakollinen</span>
+          <button type="submit" class="btn btn-primary" id="submit-feedback">Lähetä palaute</button>
+        </div>
+      </form>
+
+    </div>
+  </main>
+
+  <div class="container pb-5">
+    <footer class="row py-5">
+      <div class="col-md-7 pe-5">
+        <p class="fs-6">
+          Skosmos is a web-based tool providing services for accessing controlled vocabularies, 
+          which are used by indexers describing documents and searchers looking
+          for suitable keywords. Vocabularies are accessed via SPARQL endpoints containing SKOS vocabularies.
+        </p>
+      </div>
+      <div class="col-md-5 ps-5">
+        <span class="fs-6 fw-bold">Contact</span>
+        <p class="fs-6">Yhteystiedot?<p>
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="static/js/bootstrap.min.js"></script>
+
+</body>
+</html>

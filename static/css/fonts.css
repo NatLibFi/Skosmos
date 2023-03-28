@@ -1,0 +1,32 @@
+/* Replace with proper font specification */
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local(''),
+    url('../fonts/PublicSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local(''),
+    url('../fonts/PublicSans-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-weight: 400;
+  src: local(''),
+    url('../fonts/EBGaramond-Regular.ttf') format('truetype');
+  }
+ 
+@font-face {
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-weight: 700;
+  src: local(''),
+    url('../fonts/EBGaramond-Bold.ttf') format('truetype');
+}
