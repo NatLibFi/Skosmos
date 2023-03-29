@@ -125,7 +125,6 @@ body {
 #main-container.frontpage #welcome-box {
     background-color: var(--dark-color);
     color: var(--white-color);
-    margin-bottom: 1.5rem;
 }
 
 #main-container.frontpage #info-box {
@@ -373,6 +372,14 @@ body {
     border-radius: 0;
     font-weight: bold;
     float: right;
+}
+
+#feedback-form select:valid {
+    color: var(--dark-color);
+}
+
+#feedback-form select:valid:focus {
+    color: var(--dark-color);
 }
 
 /* Footer
