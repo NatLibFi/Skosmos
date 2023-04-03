@@ -2,15 +2,18 @@
     /* Color definitions */
     --dark-color: #0d284e;
     --secondary-dark-color: #1b709d;
-    --medium-color: #dfe5ed;
-    --secondary-medium-color: #b8c9db;
-    --light-color: #f2f5f7;
+    --accent-color: #0088ec;
+    --medium-color: #94bbdb;
+    --secondary-medium-color: #82abcb;
+    --light-color: #afdfff;
+    --secondary-light-color: #c9ddec;
+    --lighter-color: #e4eef6;
     --white-color: #ffffff;
 
     /* Font definitions */
     --font-size: 14px;
     --font-family: 'Public Sans', sans-serif;
-    --font-family-heading: 'EB Garamond', serif;
+    --font-family-heading: 'EB Garamond', serif; 
 }
 
 body {
@@ -109,13 +112,13 @@ body {
 
 #search-vocab .dropdown-toggle {
     color: var(--dark-color);
-    border: 1px solid var(--medium-color);
+    border: 1px solid var(--secondary-light-color);
     border-radius: 0;
     width: 200px;
 }
 
 #search-vocab input {
-    border: 1px solid var(--medium-color);
+    border: 1px solid var(--secondary-light-color);
 }
 
 #search-button {
@@ -143,15 +146,15 @@ body {
 
 /***** Main container frontpage *****/
 #background.frontpage, #background.frontpage-one-vocab {
-    background-color: var(--white-color);
-    background-image: url(../pics/viivakuvio-f2f5f7.svg);
+    background-color: var(--medium-color);
+    background-image: url(../pics/viivakuvio-afdfff.svg);
     background-repeat: no-repeat;
     background-size: 650px;
     background-position: calc(100% + 41px) -55px;
 }
 
 #main-container.frontpage, #main-container.frontpage-one-vocab {
-    background-image: url(../pics/viivakuvio-dfe5ed.svg);
+    background-image: url(../pics/viivakuvio-82abcb.svg);
     background-repeat: no-repeat;
     background-size: 650px;
     background-position: -41px calc(100% + 55px);
@@ -162,8 +165,7 @@ body {
 }
 
 #main-container.frontpage #vocab-box, #vocab-box .list-group-item {
-    background-color: var(--medium-color);
-    color: var(--dark-color);
+    background-color: var(--white-color);
 }
 
 #main-container.frontpage #welcome-box {
@@ -172,7 +174,7 @@ body {
 }
 
 #main-container.frontpage #info-box {
-    background-color: var(--medium-color);
+    background-color: var(--light-color);
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -190,7 +192,7 @@ body {
 }
 
 .vocab-category a {
-    color: var(--secondary-dark-color);
+    color: var(--accent-color);
     font-weight: bold;
     text-decoration: underline var(--secondary-dark-color) solid;
     text-decoration-thickness: 1px;
@@ -202,12 +204,12 @@ body {
 }
 
 #main-container.frontpage-one-vocab #welcome-box {
-    background-color: var(--medium-color);
+    background-color: var(--white-color);
     color: var(--dark-color);
 }
 
 #main-container.frontpage-one-vocab #info-box {
-    background-color: var(--medium-color);
+    background-color: var(--light-color);
 }
 
 #main-container.frontpage-one-vocab #vocab-box {
@@ -241,7 +243,7 @@ body {
 
 /*** Sidebar ***/
 #sidebar .nav-item {
-    background-color: var(--light-color);
+    background-color: var(--secondary-light-color);
 }
 
 #sidebar .nav-link {
@@ -283,16 +285,16 @@ body {
     padding: 2rem 1rem;
     overflow: hidden;
     overflow-y: scroll;
-    scrollbar-color: var(--secondary-medium-color) var(--light-color);
+    scrollbar-color: var(--accent-color) var(--secondary-light-color);
     height: 600px; /*remove*/
 }
 
 #alpha-list::-webkit-scrollbar {
-    background: var(--light-color);
+    background: var(--secondary-light-color);
 }
 
 #alpha-list::-webkit-scrollbar-thumb {
-    background: var(--secondary-medium-color);
+    background: var(--accent-color);
 }
 
 #alpha-list li {
@@ -326,7 +328,7 @@ body {
 }
 
 #main-table tr {
-    border-top: 1px solid var(--medium-color)
+    border-top: 1px solid var(--secondary-light-color)
 }
 
 #main-table td {
@@ -387,7 +389,7 @@ body {
 }
 
 #main-container.infopage {
-    background-image: url(../pics/viivakuvio.svg);
+    background-image: url(../pics/viivakuvio-82abcb.svg);
     background-repeat: no-repeat;
     background-size: 650px;
     background-position: calc(100% + 41px) calc(100% + 55px);
@@ -405,7 +407,7 @@ body {
 
 /***** Main container feedbackpage *****/
 #main-container.feedbackpage {
-    background-image: url(../pics/viivakuvio-dfe5ed.svg);
+    background-image: url(../pics/viivakuvio-94bbdb.svg);
     background-repeat: no-repeat;
     background-size: 650px;
     background-position: calc(100% + 41px) -55px;
@@ -422,7 +424,7 @@ body {
 }
 
 #feedback-form input, #feedback-form select, #feedback-form textarea {
-    background-color: var(--light-color);
+    background-color: var(--lighter-color);
     border: none;
     border-radius: 0;
 }

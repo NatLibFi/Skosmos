@@ -18,7 +18,7 @@
 </head>
 <body>
 
-  <div class="container-fluid d-flex my-auto py-2 px-4" id="topbar">
+  <div class="vocabpage container-fluid d-flex my-auto py-2 px-4" id="topbar">
     <h3 class="fs-3 my-auto">Skosmos</h3>
     <ul class="nav nav-pills my-auto ms-auto text-light gx-3 py-3" id="topbar-nav">
       <li class="nav-item"><a href="#" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none" id="topbar-nav-home">Etusivu</a></li>
@@ -29,21 +29,23 @@
     </ul>
   </div>
 
-  <header class="container d-flex my-4" id="headerbar">
-    <h1 class="my-auto" id="vocab-title"><a href="#">STW Thesaurus for Economics</a></h1>
+  <header class="vocabpage" id="headerbar">
+    <div class="container d-flex py-4">
+      <h1 class="my-auto" id="vocab-title"><a href="#">STW Thesaurus for Economics</a></h1>
 
-    <div class="my-auto ms-auto" id="search-vocab">
-      <div class="input-group mb-2">
-        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Suomi</button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#">Suomi</a></li>
-          <li><a class="dropdown-item" href="#">Ruotsi</a></li>
-          <li><a class="dropdown-item" href="#">Englanti</a></li>
-        </ul>
-        <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="Hae sanastosta...">
-        <button class="btn btn-outline-secondary" type="button" id="search-button">&#x1F50D;</button>
+      <div class="my-auto ms-auto" id="search-vocab">
+        <div class="input-group mb-2">
+          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Suomi</button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Suomi</a></li>
+            <li><a class="dropdown-item" href="#">Ruotsi</a></li>
+            <li><a class="dropdown-item" href="#">Englanti</a></li>
+          </ul>
+          <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="Hae sanastosta...">
+          <button class="btn btn-outline-secondary" type="button" id="search-button">&#x1F50D;</button>
+        </div>
+        <a href="#">Hakuvinkkejä</a>
       </div>
-      <a href="#">Hakuvinkkejä</a>
     </div>
   </header>
 
@@ -221,7 +223,7 @@
             </div>
 
             <div class="main-content-section p-5">
-              <h4>Resurssien lukumäärä tyypeittäin</h4>
+              <h5 class="fw-bold">Resurssien lukumäärä tyypeittäin</h5>
 
               <table class="table" id="resource-table">
                 <thead>
@@ -260,7 +262,7 @@
             </div>
 
             <div class="main-content-section p-5">
-              <h4>Termien lukumäärä kielittäin</h4>
+              <h5 class="fw-bold">Termien lukumäärä kielittäin</h5>
 
               <table class="table" id="term-table">
                 <thead>

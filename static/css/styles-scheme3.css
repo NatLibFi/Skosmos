@@ -2,15 +2,15 @@
     /* Color definitions */
     --dark-color: #0d284e;
     --secondary-dark-color: #1b709d;
-    --medium-color: #dfe5ed;
-    --secondary-medium-color: #b8c9db;
-    --light-color: #f2f5f7;
+    --medium-color: #8fdbff;
+    --light-color: #d9f0f4;
+    --secondary-light-color: #ebf7f9;
     --white-color: #ffffff;
 
     /* Font definitions */
     --font-size: 14px;
     --font-family: 'Public Sans', sans-serif;
-    --font-family-heading: 'EB Garamond', serif;
+    --font-family-heading: 'EB Garamond', serif; 
 }
 
 body {
@@ -34,17 +34,17 @@ body {
 /* Topbar
  *****************************************/
 #topbar.frontpage, #topbar.frontpage-one-vocab {
-    background-color: var(--dark-color);
-    color: var(--white-color);
+    background-color: var(--white-color);
+    color: var(--dark-color);
 }
 
 #topbar.vocabpage, #topbar.termpage, #topbar.infopage, #topbar.feedbackpage {
-    background-color: var(--dark-color);
-    color: var(--white-color);
+    background-color: var(--white-color);
+    color: var(--dark-color);
 }
 
 #topbar a {
-    color: var(--white-color) !important;
+    color: var(--dark-color) !important;
 }
 
 #topbar h3 {
@@ -60,27 +60,27 @@ body {
 }
 
 #topbar.frontpage #topbar-nav-home, #topbar.frontpage-one-vocab #topbar-nav-home {
-    background-image: url("../pics/koti.svg");
+    background-image: url("../pics/koti-dark.svg");
 }
 
 #topbar.frontpage #topbar-nav-info, #topbar.frontpage-one-vocab #topbar-nav-info {
-    background-image: url("../pics/tietoa.svg");
+    background-image: url("../pics/tietoa-dark.svg");
 }
 
 #topbar.frontpage #topbar-nav-feedback, #topbar.frontpage-one-vocab #topbar-nav-feedback {
-    background-image: url("../pics/palaute.svg");
+    background-image: url("../pics/palaute-dark.svg");
 }
 
 #topbar.vocabpage #topbar-nav-home, #topbar.termpage #topbar-nav-home, #topbar.infopage #topbar-nav-home, #topbar.feedbackpage #topbar-nav-home {
-    background-image: url("../pics/koti.svg");
+    background-image: url("../pics/koti-dark.svg");
 }
 
 #topbar.vocabpage #topbar-nav-info, #topbar.termpage #topbar-nav-info, #topbar.infopage #topbar-nav-info, #topbar.feedbackpage #topbar-nav-info {
-    background-image: url("../pics/tietoa.svg");
+    background-image: url("../pics/tietoa-dark.svg");
 }
 
 #topbar.vocabpage #topbar-nav-feedback, #topbar.termpage #topbar-nav-feedback, #topbar.infopage #topbar-nav-feedback, #topbar.feedbackpage #topbar-nav-feedback {
-    background-image: url("../pics/palaute.svg");
+    background-image: url("../pics/palaute-dark.svg");
 }
 
 /* Headerbar
@@ -90,7 +90,7 @@ body {
 }
 
 #headerbar.vocabpage, #headerbar.termpage {
-    background-color: var(--white-color);
+    background-color: var(--medium-color);
 }
 
 #headerbar h1 {
@@ -108,6 +108,7 @@ body {
 }
 
 #search-vocab .dropdown-toggle {
+    background-color: var(--secondary-light-color);
     color: var(--dark-color);
     border: 1px solid var(--medium-color);
     border-radius: 0;
@@ -115,13 +116,14 @@ body {
 }
 
 #search-vocab input {
+    background-color: var(--secondary-light-color);
     border: 1px solid var(--medium-color);
 }
 
 #search-button {
     color: var(--white-color);
     background-color: var(--dark-color);
-    border: 1px solid var(--secondary-light-color);
+    border: 1px solid var(--medium-color);
     border-radius: 0;
 }
 
@@ -143,15 +145,15 @@ body {
 
 /***** Main container frontpage *****/
 #background.frontpage, #background.frontpage-one-vocab {
-    background-color: var(--white-color);
-    background-image: url(../pics/viivakuvio-f2f5f7.svg);
+    background-color: var(--light-color);
+    background-image: url(../pics/viivakuvio.svg);
     background-repeat: no-repeat;
     background-size: 650px;
     background-position: calc(100% + 41px) -55px;
 }
 
 #main-container.frontpage, #main-container.frontpage-one-vocab {
-    background-image: url(../pics/viivakuvio-dfe5ed.svg);
+    background-image: url(../pics/viivakuvio.svg);
     background-repeat: no-repeat;
     background-size: 650px;
     background-position: -41px calc(100% + 55px);
@@ -162,13 +164,13 @@ body {
 }
 
 #main-container.frontpage #vocab-box, #vocab-box .list-group-item {
-    background-color: var(--medium-color);
-    color: var(--dark-color);
+    background-color: var(--dark-color);
+    color: var(--white-color);
 }
 
 #main-container.frontpage #welcome-box {
-    background-color: var(--dark-color);
-    color: var(--white-color);
+    background-color: var(--medium-color);
+    color: var(--dark-color);
 }
 
 #main-container.frontpage #info-box {
@@ -185,14 +187,14 @@ body {
 }
 
 .vocab-category {
-    border-top: 1px solid var(--dark-color);
-    color: var(--dark-color);
+    border-top: 1px solid var(--medium-color);
+    color: var(--medium-color);
 }
 
 .vocab-category a {
-    color: var(--secondary-dark-color);
+    color: var(--white-color);
     font-weight: bold;
-    text-decoration: underline var(--secondary-dark-color) solid;
+    text-decoration: underline var(--white-color) solid;
     text-decoration-thickness: 1px;
 }
 
@@ -225,7 +227,7 @@ body {
 
 /***** Main container vocabpage *****/
 #main-container.vocabpage, #main-container.termpage {
-    background-color: var(--medium-color);
+    background-color: var(--light-color);
     padding: 1rem 0;
 }
 
@@ -241,7 +243,7 @@ body {
 
 /*** Sidebar ***/
 #sidebar .nav-item {
-    background-color: var(--light-color);
+    background-color: var(--secondary-light-color);
 }
 
 #sidebar .nav-link {
@@ -283,16 +285,16 @@ body {
     padding: 2rem 1rem;
     overflow: hidden;
     overflow-y: scroll;
-    scrollbar-color: var(--secondary-medium-color) var(--light-color);
+    scrollbar-color: var(--medium-color) var(--secondary-light-color);
     height: 600px; /*remove*/
 }
 
 #alpha-list::-webkit-scrollbar {
-    background: var(--light-color);
+    background: var(--secondary-light-color);
 }
 
 #alpha-list::-webkit-scrollbar-thumb {
-    background: var(--secondary-medium-color);
+    background: var(--medium-color);
 }
 
 #alpha-list li {
@@ -318,7 +320,7 @@ body {
 
 /***  Main content ***/
 .main-content-section {
-    border-bottom: 2px solid var(--medium-color);
+    border-bottom: 2px solid var(--light-color);
 }
 
 #main-table {
@@ -326,7 +328,7 @@ body {
 }
 
 #main-table tr {
-    border-top: 1px solid var(--medium-color)
+    border-top: 1px solid var(--secondary-light-color)
 }
 
 #main-table td {
@@ -405,14 +407,14 @@ body {
 
 /***** Main container feedbackpage *****/
 #main-container.feedbackpage {
-    background-image: url(../pics/viivakuvio-dfe5ed.svg);
+    background-image: url(../pics/viivakuvio.svg);
     background-repeat: no-repeat;
     background-size: 650px;
     background-position: calc(100% + 41px) -55px;
 }
 
 #feedback-form {
-    background-color: var(--white-color);
+    background-color: var(--medium-color);
     color: var(--dark-color);
     padding: 2.5rem 2rem 5rem;
 }
@@ -422,7 +424,7 @@ body {
 }
 
 #feedback-form input, #feedback-form select, #feedback-form textarea {
-    background-color: var(--light-color);
+    background-color: var(--secondary-light-color); /* this is possibly supposed to be #E3F6FF */
     border: none;
     border-radius: 0;
 }

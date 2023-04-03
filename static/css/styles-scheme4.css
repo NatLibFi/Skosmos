@@ -2,15 +2,17 @@
     /* Color definitions */
     --dark-color: #0d284e;
     --secondary-dark-color: #1b709d;
-    --medium-color: #dfe5ed;
-    --secondary-medium-color: #b8c9db;
-    --light-color: #f2f5f7;
+    --darker-color: #270245;
+    --accent-color: #39d796;
+    --medium-color: #0088ec;
+    --light-color: #bfe1fa;
+    --secondary-light-color: #dadee4;
     --white-color: #ffffff;
 
     /* Font definitions */
     --font-size: 14px;
     --font-family: 'Public Sans', sans-serif;
-    --font-family-heading: 'EB Garamond', serif;
+    --font-family-heading: 'EB Garamond', serif; 
 }
 
 body {
@@ -34,16 +36,20 @@ body {
 /* Topbar
  *****************************************/
 #topbar.frontpage, #topbar.frontpage-one-vocab {
-    background-color: var(--dark-color);
-    color: var(--white-color);
+    background-color: var(--white-color);
+    color: var(--dark-color);
 }
 
 #topbar.vocabpage, #topbar.termpage, #topbar.infopage, #topbar.feedbackpage {
-    background-color: var(--dark-color);
+    background-color: var(--medium-color);
     color: var(--white-color);
 }
 
-#topbar a {
+#topbar.frontpage a, #topbar.frontpage-one-vocab a {
+    color: var(--dark-color) !important;
+}
+
+#topbar.vocabpage a, #topbar.termpage a, #topbar.infopage a, #topbar.feedbackpage a {
     color: var(--white-color) !important;
 }
 
@@ -60,15 +66,15 @@ body {
 }
 
 #topbar.frontpage #topbar-nav-home, #topbar.frontpage-one-vocab #topbar-nav-home {
-    background-image: url("../pics/koti.svg");
+    background-image: url("../pics/koti-dark.svg");
 }
 
 #topbar.frontpage #topbar-nav-info, #topbar.frontpage-one-vocab #topbar-nav-info {
-    background-image: url("../pics/tietoa.svg");
+    background-image: url("../pics/tietoa-dark.svg");
 }
 
 #topbar.frontpage #topbar-nav-feedback, #topbar.frontpage-one-vocab #topbar-nav-feedback {
-    background-image: url("../pics/palaute.svg");
+    background-image: url("../pics/palaute-dark.svg");
 }
 
 #topbar.vocabpage #topbar-nav-home, #topbar.termpage #topbar-nav-home, #topbar.infopage #topbar-nav-home, #topbar.feedbackpage #topbar-nav-home {
@@ -86,7 +92,7 @@ body {
 /* Headerbar
  *****************************************/
 #headerbar.frontpage, #headerbar.frontpage-one-vocab {
-    color: var(--dark-color);
+    color: var(--white-color);
 }
 
 #headerbar.vocabpage, #headerbar.termpage {
@@ -108,14 +114,16 @@ body {
 }
 
 #search-vocab .dropdown-toggle {
+    background-color: var(--white-color);
     color: var(--dark-color);
-    border: 1px solid var(--medium-color);
+    border: 1px solid var(--secondary-light-color);
     border-radius: 0;
     width: 200px;
 }
 
 #search-vocab input {
-    border: 1px solid var(--medium-color);
+    background-color: var(--white-color);
+    border: 1px solid var(--secondary-light-color);
 }
 
 #search-button {
@@ -143,15 +151,15 @@ body {
 
 /***** Main container frontpage *****/
 #background.frontpage, #background.frontpage-one-vocab {
-    background-color: var(--white-color);
-    background-image: url(../pics/viivakuvio-f2f5f7.svg);
+    background-color: var(--darker-color);
+    background-image: url(../pics/viivakuvio-0088ec.svg);
     background-repeat: no-repeat;
     background-size: 650px;
     background-position: calc(100% + 41px) -55px;
 }
 
 #main-container.frontpage, #main-container.frontpage-one-vocab {
-    background-image: url(../pics/viivakuvio-dfe5ed.svg);
+    background-image: url(../pics/viivakuvio-0088ec.svg);
     background-repeat: no-repeat;
     background-size: 650px;
     background-position: -41px calc(100% + 55px);
@@ -162,17 +170,17 @@ body {
 }
 
 #main-container.frontpage #vocab-box, #vocab-box .list-group-item {
-    background-color: var(--medium-color);
+    background-color: var(--white-color);
     color: var(--dark-color);
 }
 
 #main-container.frontpage #welcome-box {
-    background-color: var(--dark-color);
+    background-color: var(--medium-color);
     color: var(--white-color);
 }
 
 #main-container.frontpage #info-box {
-    background-color: var(--medium-color);
+    background-color: var(--accent-color);
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -190,24 +198,24 @@ body {
 }
 
 .vocab-category a {
-    color: var(--secondary-dark-color);
+    color: var(--medium-color);
     font-weight: bold;
-    text-decoration: underline var(--secondary-dark-color) solid;
+    text-decoration: underline var(--medium-color) solid;
     text-decoration-thickness: 1px;
 }
 
 /***** Main container frontpage one vocab *****/
 #main-container.frontpage-one-vocab #vocab-box {
-    background-color: var(--dark-color);
+    background-color: var(--white-color);
 }
 
 #main-container.frontpage-one-vocab #welcome-box {
     background-color: var(--medium-color);
-    color: var(--dark-color);
+    color: var(--white-color);
 }
 
 #main-container.frontpage-one-vocab #info-box {
-    background-color: var(--medium-color);
+    background-color: var(--accent-color);
 }
 
 #main-container.frontpage-one-vocab #vocab-box {
@@ -218,14 +226,14 @@ body {
 }
 
 #main-container.frontpage-one-vocab #vocab-box a {
-    color: var(--white-color);
+    color: var(--dark-color);
     text-decoration: underline;
     text-decoration-thickness: 1px;
 }
 
 /***** Main container vocabpage *****/
 #main-container.vocabpage, #main-container.termpage {
-    background-color: var(--medium-color);
+    background-color: var(--darker-color);
     padding: 1rem 0;
 }
 
@@ -241,7 +249,7 @@ body {
 
 /*** Sidebar ***/
 #sidebar .nav-item {
-    background-color: var(--light-color);
+    background-color: var(--secondary-light-color);
 }
 
 #sidebar .nav-link {
@@ -250,12 +258,12 @@ body {
 }
 
 #sidebar .nav .active {
-    background-color: var(--dark-color);
+    background-color: var(--medium-color);
     color: var(--white-color) !important;
 }
 
 #sidebar .pagination {
-    background-color: var(--dark-color);
+    background-color: var(--medium-color);
     color: var(--white-color);
     padding: 1rem;
     margin: 0;
@@ -263,7 +271,7 @@ body {
 }
 
 #sidebar .page-item, #sidebar .page-link {
-    background-color: var(--dark-color);
+    background-color: var(--medium-color);
     color: var(--white-color) !important;
     font-weight: normal !important;
     border: none;
@@ -274,7 +282,7 @@ body {
 
 /* Not sure what these should be, probably something though */
 #sidebar .page-link:hover, #sidebar .page-link:active, #sidebar .page-link:focus {
-    background-color: var(--dark-color);
+    background-color: var(--medium-color);
     color: var(--white-color);
     box-shadow: none;
 }
@@ -283,16 +291,16 @@ body {
     padding: 2rem 1rem;
     overflow: hidden;
     overflow-y: scroll;
-    scrollbar-color: var(--secondary-medium-color) var(--light-color);
+    scrollbar-color: var(--accent-color) var(--secondary-light-color);
     height: 600px; /*remove*/
 }
 
 #alpha-list::-webkit-scrollbar {
-    background: var(--light-color);
+    background: var(--secondary-light-color);
 }
 
 #alpha-list::-webkit-scrollbar-thumb {
-    background: var(--secondary-medium-color);
+    background: var(--accent-color);
 }
 
 #alpha-list li {
@@ -312,13 +320,13 @@ body {
 }
 
 #tab-hierarchy {
-    background-color: var(--dark-color);
+    background-color: var(--medium-color);
     color: var(--white-color);
 }
 
 /***  Main content ***/
 .main-content-section {
-    border-bottom: 2px solid var(--medium-color);
+    border-bottom: 2px solid var(--darker-color);
 }
 
 #main-table {
@@ -326,7 +334,7 @@ body {
 }
 
 #main-table tr {
-    border-top: 1px solid var(--medium-color)
+    border-top: 1px solid var(--secondary-light-color)
 }
 
 #main-table td {
@@ -381,13 +389,13 @@ body {
 
 /***** Main container infopage *****/
 #main-container.infopage, #main-container.feedbackpage {
-    background-color: var(--light-color);
-    color: var(--dark-color);
+    background-color: var(--darker-color);
+    color: var(--white-color);
     padding: 4rem 0;
 }
 
 #main-container.infopage {
-    background-image: url(../pics/viivakuvio.svg);
+    background-image: url(../pics/viivakuvio-0088ec.svg);
     background-repeat: no-repeat;
     background-size: 650px;
     background-position: calc(100% + 41px) calc(100% + 55px);
@@ -398,14 +406,14 @@ body {
 }
 
 #main-container.infopage a {
-    color: var(--secondary-dark-color);
+    color: var(--white-color);
     text-decoration: underline;
     font-weight: bold;
 }
 
 /***** Main container feedbackpage *****/
 #main-container.feedbackpage {
-    background-image: url(../pics/viivakuvio-dfe5ed.svg);
+    background-image: url(../pics/viivakuvio-0088ec.svg);
     background-repeat: no-repeat;
     background-size: 650px;
     background-position: calc(100% + 41px) -55px;
@@ -422,7 +430,7 @@ body {
 }
 
 #feedback-form input, #feedback-form select, #feedback-form textarea {
-    background-color: var(--light-color);
+    background-color: var(--light-color); /* this is possibly supposed to be #E3F6FF */
     border: none;
     border-radius: 0;
 }
