@@ -31,6 +31,40 @@ body {
   font-size: 2.5em !important;
 }
 
+/* Font awesome
+ *****************************************/
+ #main-container.frontpage #info-box .fa-arrow-right {
+    color: var(--secondary-dark-color);
+}
+
+#main-container.frontpage-one-vocab #info-box .fa-arrow-right {
+    color: var(--secondary-dark-color);
+}
+
+#vocab-box .fa-arrow-right {
+    color: var(--secondary-dark-color);
+}
+
+#main-container.vocabpage .fa-arrow-right, #main-container.termpage .fa-arrow-right {
+    color: var(--dark-color);
+    font-size: 12px;
+}
+
+.fa-magnifying-glass {
+    color: var(--white-color);
+    font-size: 22px;
+    margin: calc((38px - 22px) / 2 ) 0; /* (button height - font height) / 2 */
+}
+
+.fa-copy {
+    color: var(--dark-color);
+    font-size: 30px;
+}
+
+.fa-download {
+    color: var(--dark-color);
+}
+
 /* Topbar
  *****************************************/
 #topbar.frontpage, #topbar.frontpage-one-vocab {
@@ -43,7 +77,11 @@ body {
     color: var(--white-color);
 }
 
-#topbar a {
+#topbar.frontpage a, #topbar.frontpage-one-vocab a {
+    color: var(--white-color) !important;
+}
+
+#topbar.vocabpage a, #topbar.termpage a, #topbar.infopage a, #topbar.feedbackpage a {
     color: var(--white-color) !important;
 }
 
@@ -119,10 +157,11 @@ body {
 }
 
 #search-button {
-    color: var(--white-color);
     background-color: var(--dark-color);
-    border: 1px solid var(--secondary-light-color);
+    border: 1px solid var(--medium-color);
     border-radius: 0;
+    padding: 0;
+    width: 38px;
 }
 
 #search-vocab a {
