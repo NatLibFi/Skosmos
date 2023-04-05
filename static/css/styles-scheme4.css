@@ -35,7 +35,7 @@ body {
 
 /* Font awesome
  *****************************************/
- #main-container.frontpage #info-box .fa-arrow-right {
+#main-container.frontpage #info-box .fa-arrow-right {
     color: var(--dark-color);
 }
 
@@ -50,6 +50,17 @@ body {
 #main-container.vocabpage .fa-arrow-right, #main-container.termpage .fa-arrow-right {
     color: var(--dark-color);
     font-size: 12px;
+}
+
+#main-container.searchpage .fa-arrow-right {
+    color: var(--dark-color);
+    font-size: 12px;
+}
+
+#main-container.searchpage .list-group .fa-solid, #main-container.searchpage .list-group .fa-regular {
+    color: var(--dark-color);
+    font-size: 16px;
+    width: 20px;
 }
 
 .fa-magnifying-glass {
@@ -90,6 +101,13 @@ body {
 #topbar h3 {
     display: inline;
     font-weight: bold;
+}
+
+#topbar span::after {
+    content: '﹀';
+    position: absolute;
+    top: 30px;
+    left: 200px;
 }
 
 .topbar-nav-link {
@@ -267,7 +285,7 @@ body {
 }
 
 /***** Main container vocabpage *****/
-#main-container.vocabpage, #main-container.termpage {
+#main-container.vocabpage, #main-container.termpage, #main-container.searchpage {
     background-color: var(--darker-color);
     padding: 1rem 0;
 }
@@ -282,22 +300,22 @@ body {
     background-color: var(--white-color);
 }
 
-/*** Sidebar ***/
-#sidebar .nav-item {
+/*** Sidebar termpage/vocabpage ***/
+#main-container.vocabpage #sidebar .nav-item, #main-container.termpage #sidebar .nav-item {
     background-color: var(--secondary-light-color);
 }
 
-#sidebar .nav-link {
+#main-container.vocabpage #sidebar .nav-link, #main-container.termpage #sidebar .nav-link {
     color: var(--dark-color) !important;
     transition: none;
 }
 
-#sidebar .nav .active {
+#main-container.vocabpage #sidebar .nav .active, #main-container.termpage #sidebar .nav .active {
     background-color: var(--medium-color);
     color: var(--white-color) !important;
 }
 
-#sidebar .pagination {
+#main-container.vocabpage #sidebar .pagination, #main-container.termpage #sidebar .pagination {
     background-color: var(--medium-color);
     color: var(--white-color);
     padding: 1rem;
@@ -305,7 +323,8 @@ body {
     flex-wrap: wrap;
 }
 
-#sidebar .page-item, #sidebar .page-link {
+#main-container.vocabpage #sidebar .page-item, #main-container.vocabpage #sidebar .page-link,
+#main-container.termpage #sidebar .page-item, #main-container.termpage #sidebar .page-link {
     background-color: var(--medium-color);
     color: var(--white-color) !important;
     font-weight: normal !important;
@@ -316,7 +335,8 @@ body {
 }
 
 /* Not sure what these should be, probably something though */
-#sidebar .page-link:hover, #sidebar .page-link:active, #sidebar .page-link:focus {
+#main-container.vocabpage #sidebar .page-link:hover, #main-container.vocabpage #sidebar .page-link:active, #main-container.vocabpage #sidebar .page-link:focus
+#main-container.termpage #sidebar .page-link:hover, #main-container.termpage #sidebar .page-link:active, #main-container.termpage #sidebar .page-link:focus {
     background-color: var(--medium-color);
     color: var(--white-color);
     box-shadow: none;
@@ -357,6 +377,25 @@ body {
 #tab-hierarchy {
     background-color: var(--medium-color);
     color: var(--white-color);
+}
+
+/*** sidebar serachpage ***/
+#main-container.searchpage #sidebar {
+    background-color: var(--medium-color);
+    color: var(--white-color);
+    height: 1000px; /* change */
+}
+
+#search-options input, #search-options select {
+    border: none;
+    border-radius: 0;
+}
+
+#search-options button {
+    background-color: var(--accent-color); /* Which bg color to use? */
+    color: var(--dark-color);
+    border: none;
+    border-radius: 0;
 }
 
 /***  Main content ***/
@@ -402,7 +441,7 @@ body {
     width: 40%;
 }
 
-/***** Main container termpage *****/
+/*** Main content termpage ***/
 #term-heading span {
     width: 30%;
     align-self: end;
@@ -420,6 +459,33 @@ body {
 .term-other-languages a {
     display: inline-block;
     width: 50%;
+}
+
+/*** Main content searchpage ***/
+.search-result {
+    border-top: 1px solid var(--darker-color);
+}
+
+.search-result-term a {
+    color: var(--secondary-dark-color);
+    font-family: var(--font-family-heading);
+    text-decoration: none;
+}
+
+.search-result .list-group-item {
+    border: none;
+}
+
+.search-result .list-group-item a {
+    color: var(--secondary-dark-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.uri-icon {
+    display: inline-block;
+    width: 20px;
+    font-size: 10px;
 }
 
 /***** Main container infopage *****/
