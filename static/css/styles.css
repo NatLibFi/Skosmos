@@ -50,6 +50,13 @@ body {
     font-size: 12px;
 }
 
+#main-container.termpage .fa-copy {
+    color: var(--dark-color);
+    font-size: 30px;
+    position: relative;
+    bottom: -3px;
+}
+
 #main-container.searchpage .fa-arrow-right {
     color: var(--dark-color);
     font-size: 12px;
@@ -61,15 +68,15 @@ body {
     width: 20px;
 }
 
+#main-container.searchpage .fa-copy {
+    position: relative;
+    bottom: 5px;
+}
+
 .fa-magnifying-glass {
     color: var(--white-color);
     font-size: 22px;
     margin: calc((38px - 22px) / 2 ) 0; /* (button height - font height) / 2 */
-}
-
-.fa-copy {
-    color: var(--dark-color);
-    font-size: 30px;
 }
 
 .fa-download {
