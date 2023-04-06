@@ -51,15 +51,28 @@ body {
     font-size: 12px;
 }
 
-#main-container.searchpage .fa-arrow-right {
+#main-container.termpage .fa-copy {
+    color: var(--dark-color);
+    font-size: 30px;
+    position: relative;
+    bottom: -3px;
+}
+
+#main-container.searchpage .fa-arrow-right, #main-container.searchpage-multi-vocab .fa-arrow-right {
     color: var(--dark-color);
     font-size: 12px;
 }
 
-#main-container.searchpage .list-group .fa-solid, #main-container.searchpage .list-group .fa-regular {
+#main-container.searchpage .list-group .fa-solid, #main-container.searchpage .list-group .fa-regular,
+#main-container.searchpage-multi-vocab .list-group .fa-solid, #main-container.searchpage-multi-vocab .list-group .fa-regular {
     color: var(--dark-color);
     font-size: 16px;
     width: 20px;
+}
+
+#main-container.searchpage .fa-copy, #main-container.searchpage-multi-vocab .fa-copy {
+    position: relative;
+    bottom: 5px;
 }
 
 .fa-magnifying-glass {
@@ -164,7 +177,11 @@ body {
     width: 600px;
 }
 
-#search-vocab .dropdown-toggle {
+#search-multi-vocab {
+    width: 800px;
+}
+
+#search-vocab .dropdown-toggle, #search-multi-vocab .dropdown-toggle {
     background-color: var(--secondary-light-color);
     color: var(--dark-color);
     border: 1px solid var(--medium-color);
@@ -172,7 +189,38 @@ body {
     width: 200px;
 }
 
-#search-vocab input {
+#search-vocab .dropdown-toggle::after, #search-multi-vocab .dropdown-toggle::after {
+    content: '﹀';
+    border: none;
+    position: absolute;
+    top: 13px;
+    margin-left: 6px;
+}
+
+#search-vocab .dropdown-toggle:hover, #search-multi-vocab .dropdown-toggle:hover,
+#search-vocab .dropdown-toggle:active, #search-multi-vocab .dropdown-toggle:active {
+    background-color: var(--secondary-light-color); /* What color to use? */
+}
+
+#search-vocab .dropdown-toggle.show, #search-multi-vocab .dropdown-toggle.show {
+    background-color: var(--secondary-light-color); /* What color to use? */
+}
+
+#search-vocab .dropdown-menu, #search-multi-vocab .dropdown-menu {
+    border-radius: 0;
+}
+
+#search-vocab .form-check-input, #search-multi-vocab .form-check-input {
+    background-color: var(--white-color);
+    border: 1px solid var(--dark-color);
+    border-radius: 0;
+}
+
+#search-vocab .form-check-input:checked, #search-multi-vocab .form-check-input:checked {
+    background-color: var(--dark-color);
+}
+
+#search-vocab input, #search-multi-vocab input {
     background-color: var(--secondary-light-color);
     border: 1px solid var(--medium-color);
 }
@@ -185,7 +233,7 @@ body {
     width: 38px;
 }
 
-#search-vocab a {
+#search-vocab a, #search-multi-vocab a {
     color: var(--dark-color);
     float: right;
 }
@@ -284,7 +332,7 @@ body {
 }
 
 /***** Main container vocabpage *****/
-#main-container.vocabpage, #main-container.termpage, #main-container.searchpage {
+#main-container.vocabpage, #main-container.termpage, #main-container.searchpage, #main-container.searchpage-multi-vocab {
     background-color: var(--light-color);
     padding: 1rem 0;
 }
