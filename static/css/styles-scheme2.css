@@ -183,14 +183,15 @@ body {
     width: 800px;
 }
 
-#search-vocab .dropdown-toggle, #search-multi-vocab .dropdown-toggle {
+#headerbar .dropdown-toggle {
+    background-color: var(--white-color);
     color: var(--dark-color);
     border: 1px solid var(--secondary-light-color);
     border-radius: 0;
     width: 200px;
 }
 
-#search-vocab .dropdown-toggle::after, #search-multi-vocab .dropdown-toggle::after {
+#headerbar .dropdown-toggle::after {
     content: '﹀';
     border: none;
     position: absolute;
@@ -198,30 +199,38 @@ body {
     margin-left: 6px;
 }
 
-#search-vocab .dropdown-toggle:hover, #search-multi-vocab .dropdown-toggle:hover,
-#search-vocab .dropdown-toggle:active, #search-multi-vocab .dropdown-toggle:active {
+#headerbar .dropdown-toggle:hover, #headerbar .dropdown-toggle:active {
     background-color: var(--white-color); /* What color to use? */
 }
 
-#search-vocab .dropdown-toggle.show, #search-multi-vocab .dropdown-toggle.show {
-    background-color: var(--white-color); /* What color to use? */
+#headerbar .dropdown-toggle.show {
+    background-color: var(--secondary-light-color); /* What color to use? */
 }
 
-#search-vocab .dropdown-menu, #search-multi-vocab .dropdown-menu {
+#headerbar .dropdown-menu {
+    border: 1px solid var(--secondary-light-color);
     border-radius: 0;
 }
 
-#search-vocab .form-check-input, #search-multi-vocab .form-check-input {
+#headerbar .dropdown-item:active {
+    background-color: var(--white-color);
+}
+
+#headerbar .dropdown-item:hover {
+    background-color: var(--lighter-color); /* What color to use? */
+}
+
+#headerbar .form-check-input {
     background-color: var(--white-color);
     border: 1px solid var(--dark-color);
     border-radius: 0;
 }
 
-#search-vocab .form-check-input:checked, #search-multi-vocab .form-check-input:checked {
+#headerbar .form-check-input:checked {
     background-color: var(--dark-color);
 }
 
-#search-vocab input, #search-multi-vocab input {
+#headerbar input {
     background-color: var(--white-color);
     border: 1px solid var(--secondary-light-color);
 }
