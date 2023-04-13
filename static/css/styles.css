@@ -1,12 +1,4 @@
 :root {
-    /* Color definitions */
-    --dark-color: #0d284e;
-    --secondary-dark-color: #1b709d;
-    --medium-color: #dfe5ed;
-    --secondary-medium-color: #b8c9db;
-    --light-color: #f2f5f7;
-    --white-color: #ffffff;
-
     /* Font definitions */
     --font-size: 14px;
     --font-family: 'Public Sans', sans-serif;
@@ -16,7 +8,7 @@
 body {
     font-family: var(--font-family);
     font-size: var(--font-size);
-    color: var(--dark-color);
+    color: var(--body-text);
 }
 
 .fs-1 {
@@ -34,37 +26,37 @@ body {
 /* Font awesome
  *****************************************/
 #main-container.frontpage #info-box .fa-arrow-right {
-    color: var(--secondary-dark-color);
+    color: var(--info-box-arrow);
 }
 
 #main-container.frontpage-one-vocab #info-box .fa-arrow-right {
-    color: var(--secondary-dark-color);
+    color: var(--info-box-one-arrow);
 }
 
 #vocab-box .fa-arrow-right {
-    color: var(--secondary-dark-color);
+    color: var(--vocab-box-one-arrow);
 }
 
 #main-container.vocabpage .fa-arrow-right, #main-container.termpage .fa-arrow-right {
-    color: var(--dark-color);
+    color: var(--vocab-text);
     font-size: 12px;
 }
 
 #main-container.termpage .fa-copy {
-    color: var(--dark-color);
+    color: var(--vocab-text);
     font-size: 30px;
     position: relative;
     bottom: -3px;
 }
 
 #main-container.searchpage .fa-arrow-right, #main-container.searchpage-multi-vocab .fa-arrow-right {
-    color: var(--dark-color);
+    color: var(--vocab-text);
     font-size: 12px;
 }
 
 #main-container.searchpage .list-group .fa-solid, #main-container.searchpage .list-group .fa-regular,
 #main-container.searchpage-multi-vocab .list-group .fa-solid, #main-container.searchpage-multi-vocab .list-group .fa-regular {
-    color: var(--dark-color);
+    color: var(--vocab-text);
     font-size: 16px;
     width: 20px;
 }
@@ -75,33 +67,33 @@ body {
 }
 
 .fa-magnifying-glass {
-    color: var(--white-color);
+    color: var(--search-button-text);
     font-size: 22px;
     margin: calc((38px - 22px) / 2 ) 0; /* (button height - font height) / 2 */
 }
 
 .fa-download {
-    color: var(--dark-color);
+    color: var(--vocab-text);
 }
 
 /* Topbar
  *****************************************/
 #topbar.frontpage, #topbar.frontpage-one-vocab {
-    background-color: var(--dark-color);
-    color: var(--white-color);
+    background-color: var(--topbar-bg-1);
+    color: var(--topbar-text-1);
 }
 
 #topbar.vocabpage, #topbar.termpage, #topbar.infopage, #topbar.feedbackpage {
-    background-color: var(--dark-color);
-    color: var(--white-color);
+    background-color: var(--topbar-bg-2);
+    color: var(--topbar-text-2);
 }
 
 #topbar.frontpage a, #topbar.frontpage-one-vocab a {
-    color: var(--white-color) !important;
+    color: var(--topbar-text-1) !important;
 }
 
 #topbar.vocabpage a, #topbar.termpage a, #topbar.infopage a, #topbar.feedbackpage a {
-    color: var(--white-color) !important;
+    color: var(--topbar-text-2) !important;
 }
 
 #topbar h3 {
@@ -124,37 +116,37 @@ body {
 }
 
 #topbar.frontpage #topbar-nav-home, #topbar.frontpage-one-vocab #topbar-nav-home {
-    background-image: url("../pics/koti.svg");
+    background-image: var(--topbar-home-1);
 }
 
 #topbar.frontpage #topbar-nav-info, #topbar.frontpage-one-vocab #topbar-nav-info {
-    background-image: url("../pics/tietoa.svg");
+    background-image: var(--topbar-info-1);
 }
 
 #topbar.frontpage #topbar-nav-feedback, #topbar.frontpage-one-vocab #topbar-nav-feedback {
-    background-image: url("../pics/palaute.svg");
+    background-image: var(--topbar-feedback-1);
 }
 
 #topbar.vocabpage #topbar-nav-home, #topbar.termpage #topbar-nav-home, #topbar.infopage #topbar-nav-home, #topbar.feedbackpage #topbar-nav-home {
-    background-image: url("../pics/koti.svg");
+    background-image: var(--topbar-home-2);
 }
 
 #topbar.vocabpage #topbar-nav-info, #topbar.termpage #topbar-nav-info, #topbar.infopage #topbar-nav-info, #topbar.feedbackpage #topbar-nav-info {
-    background-image: url("../pics/tietoa.svg");
+    background-image: var(--topbar-info-2);
 }
 
 #topbar.vocabpage #topbar-nav-feedback, #topbar.termpage #topbar-nav-feedback, #topbar.infopage #topbar-nav-feedback, #topbar.feedbackpage #topbar-nav-feedback {
-    background-image: url("../pics/palaute.svg");
+    background-image: var(--topbar-feedback-2);
 }
 
 /* Headerbar
  *****************************************/
 #headerbar.frontpage, #headerbar.frontpage-one-vocab {
-    color: var(--dark-color);
+    color: var(--headerbar-text-1);
 }
 
 #headerbar.vocabpage, #headerbar.termpage {
-    background-color: var(--white-color);
+    background-color: var(--headerbar-vocab-bg);
 }
 
 #headerbar h1 {
@@ -162,7 +154,7 @@ body {
 }
 
 #vocab-title a {
-    color: var(--dark-color);
+    color: var(--headerbar-text-2);
     font-family: var(--font-family-heading);
     text-decoration: none;
 }
@@ -176,9 +168,9 @@ body {
 }
 
 #headerbar .dropdown-toggle {
-    background-color: var(--white-color);
-    color: var(--dark-color);
-    border: 1px solid var(--medium-color);
+    background-color: var(--search-bg);
+    color: var(--headerbar-text-2);
+    border: 1px solid var(--search-border);
     border-radius: 0;
     width: 200px;
 }
@@ -192,51 +184,51 @@ body {
 }
 
 #headerbar .dropdown-toggle:hover, #headerbar .dropdown-toggle:active {
-    background-color: var(--white-color); /* What color to use? */
+    background-color: var(--search-dropdown-toggle-hover); /* What color to use? */
 }
 
 #headerbar .dropdown-toggle.show {
-    background-color: var(--medium-color); /* What color to use? */
+    background-color: var(--search-dropdown-toggle-show); /* What color to use? */
 }
 
 #headerbar .dropdown-menu {
-    border: 1px solid var(--medium-color);
+    border: 1px solid var(--search-border);
     border-radius: 0;
 }
 
 #headerbar .dropdown-item:active {
-    background-color: var(--white-color);
+    background-color: var(--search-dropdown-item-active);
 }
 
 #headerbar .dropdown-item:hover {
-    background-color: var(--medium-color); /* What color to use? */
+    background-color: var(--search-dropdown-item-hover); /* What color to use? */
 }
 
 #headerbar .form-check-input {
-    background-color: var(--white-color);
-    border: 1px solid var(--dark-color);
+    background-color: var(--search-bg);
+    border: 1px solid var(--search-border);
     border-radius: 0;
 }
 
 #headerbar .form-check-input:checked {
-    background-color: var(--dark-color);
+    background-color: var(--headerbar-text-2);
 }
 
 #headerbar input {
-    background-color: var(--white-color);
-    border: 1px solid var(--medium-color);
+    background-color: var(--search-bg);
+    border: 1px solid var(--search-border);
 }
 
 #search-button {
-    background-color: var(--dark-color);
-    border: 1px solid var(--medium-color);
+    background-color: var(--search-button-bg);
+    border: 1px solid var(--search-border);
     border-radius: 0;
     padding: 0;
     width: 38px;
 }
 
 #search-vocab a, #search-multi-vocab a {
-    color: var(--dark-color);
+    color: var(--headerbar-text-2);
     float: right;
 }
 
@@ -253,15 +245,15 @@ body {
 
 /***** Main container frontpage *****/
 #background.frontpage, #background.frontpage-one-vocab {
-    background-color: var(--white-color);
-    background-image: url(../pics/viivakuvio-f2f5f7.svg);
+    background-color: var(--main-bg-1);
+    background-image: var(--frontpage-stripes-1);
     background-repeat: no-repeat;
     background-size: 650px;
     background-position: calc(100% + 41px) -55px;
 }
 
 #main-container.frontpage, #main-container.frontpage-one-vocab {
-    background-image: url(../pics/viivakuvio-dfe5ed.svg);
+    background-image: var(--frontpage-stripes-2);
     background-repeat: no-repeat;
     background-size: 650px;
     background-position: -41px calc(100% + 55px);
@@ -272,17 +264,20 @@ body {
 }
 
 #main-container.frontpage #vocab-box, #vocab-box .list-group-item {
-    background-color: var(--medium-color);
-    color: var(--dark-color);
+    background-color: var(--vocab-box-bg);
+}
+
+#main-container.frontpage #vocab-box h2 {
+    color: var(--vocab-box-header);
 }
 
 #main-container.frontpage #welcome-box {
-    background-color: var(--dark-color);
-    color: var(--white-color);
+    background-color: var(--welcome-box-bg);
+    color: var(--welcome-box-text);
 }
 
 #main-container.frontpage #info-box {
-    background-color: var(--medium-color);
+    background-color: var(--info-box-bg);
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -290,34 +285,34 @@ body {
 }
 
 #info-box a {
-    color: var(--dark-color);
+    color: var(--info-box-text);
     text-decoration: none;
 }
 
 .vocab-category {
-    border-top: 1px solid var(--dark-color);
-    color: var(--dark-color);
+    border-top: 1px solid var(--vocab-box-text);
+    color: var(--vocab-box-text);
 }
 
 .vocab-category a {
-    color: var(--secondary-dark-color);
+    color: var(--vocab-box-link);
     font-weight: bold;
-    text-decoration: underline var(--secondary-dark-color) solid;
+    text-decoration: underline var(--vocab-box-link) solid;
     text-decoration-thickness: 1px;
 }
 
 /***** Main container frontpage one vocab *****/
 #main-container.frontpage-one-vocab #vocab-box {
-    background-color: var(--dark-color);
+    background-color: var(--vocab-box-one-bg);
 }
 
 #main-container.frontpage-one-vocab #welcome-box {
-    background-color: var(--medium-color);
-    color: var(--dark-color);
+    background-color: var(--welcome-box-one-bg);
+    color: var(--welcome-box-one-text);
 }
 
 #main-container.frontpage-one-vocab #info-box {
-    background-color: var(--medium-color);
+    background-color: var(--info-box-one-bg);
 }
 
 #main-container.frontpage-one-vocab #vocab-box {
@@ -328,45 +323,44 @@ body {
 }
 
 #main-container.frontpage-one-vocab #vocab-box a {
-    color: var(--white-color);
+    color: var(--vocab-box-one-text);
     text-decoration: underline;
     text-decoration-thickness: 1px;
 }
 
 /***** Main container vocabpage *****/
 #main-container.vocabpage, #main-container.termpage, #main-container.searchpage, #main-container.searchpage-multi-vocab {
-    background-color: var(--medium-color);
+    background-color: var(--main-bg-2);
     padding: 1rem 0;
 }
 
 #main-container.vocabpage a, #main-container.termpage a {
-    color: var(--secondary-dark-color);
+    color: var(--vocab-link);
     text-decoration: none;
     font-weight: bold;
 }
 
 #sidebar, #main-content {
-    background-color: var(--white-color);
+    background-color: var(--vocab-bg);
 }
 
 /*** Sidebar termpage/vocabpage ***/
 #main-container.vocabpage #sidebar .nav-item, #main-container.termpage #sidebar .nav-item {
-    background-color: var(--light-color);
+    background-color: var(--sidebar-tab-inactive-bg);
 }
 
 #main-container.vocabpage #sidebar .nav-link, #main-container.termpage #sidebar .nav-link {
-    color: var(--dark-color) !important;
+    color: var(--sidebar-tab-inactive-text) !important;
     transition: none;
 }
 
 #main-container.vocabpage #sidebar .nav .active, #main-container.termpage #sidebar .nav .active {
-    background-color: var(--dark-color);
-    color: var(--white-color) !important;
+    background-color: var(--sidebar-tab-active-bg);
+    color: var(--sidebar-tab-active-text) !important;
 }
 
 #main-container.vocabpage #sidebar .pagination, #main-container.termpage #sidebar .pagination {
-    background-color: var(--dark-color);
-    color: var(--white-color);
+    background-color: var(--sidebar-tab-active-bg);
     padding: 1rem;
     margin: 0;
     flex-wrap: wrap;
@@ -374,8 +368,8 @@ body {
 
 #main-container.vocabpage #sidebar .page-item, #main-container.vocabpage #sidebar .page-link,
 #main-container.termpage #sidebar .page-item, #main-container.termpage #sidebar .page-link {
-    background-color: var(--dark-color);
-    color: var(--white-color) !important;
+    background-color: var(--sidebar-tab-active-bg);
+    color: var(--sidebar-tab-active-text) !important;
     font-weight: normal !important;
     border: none;
     border-radius: 0 !important;
@@ -386,8 +380,8 @@ body {
 /* Not sure what these should be, probably something though */
 #main-container.vocabpage #sidebar .page-link:hover, #main-container.vocabpage #sidebar .page-link:active, #main-container.vocabpage #sidebar .page-link:focus
 #main-container.termpage #sidebar .page-link:hover, #main-container.termpage #sidebar .page-link:active, #main-container.termpage #sidebar .page-link:focus {
-    background-color: var(--dark-color);
-    color: var(--white-color);
+    background-color: var(--sidebar-tab-active-bg);
+    color: var(--sidebar-tab-active-text);
     box-shadow: none;
 }
 
@@ -395,16 +389,16 @@ body {
     padding: 2rem 1rem;
     overflow: hidden;
     overflow-y: scroll;
-    scrollbar-color: var(--secondary-medium-color) var(--light-color);
+    scrollbar-color: var(--sidebar-scrollbar-thumb) var(--sidebar-scrollbar-bg);
     height: 600px; /*remove*/
 }
 
 #alpha-list::-webkit-scrollbar {
-    background: var(--light-color);
+    background: var(--sidebar-scrollbar-bg);
 }
 
 #alpha-list::-webkit-scrollbar-thumb {
-    background: var(--secondary-medium-color);
+    background: var(--sidebar-scrollbar-thumb);
 }
 
 #alpha-list li {
@@ -412,26 +406,20 @@ body {
     border-radius: none;
 }
 
-#alpha-list a {
-    color: var(--secondary-dark-color);
-    text-decoration: none;
-    font-weight: bold;
-}
-
 #alpha-list .list-group-item.selected a {
-    color: var(--dark-color);
+    color: var(--vocab-text);
     font-size: 18px;
 }
 
 #tab-hierarchy {
-    background-color: var(--dark-color);
-    color: var(--white-color);
+    background-color: var(--sidebar-tab-active-bg);
+    color: var(--sidebar-tab-active-text);
 }
 
 /*** sidebar serachpage ***/
 #main-container.searchpage #sidebar {
-    background-color: var(--dark-color);
-    color: var(--white-color);
+    background-color: var(--sidebar-search-bg);
+    color: var(--sidebar-search-text);
     height: 1000px; /* change */
 }
 
@@ -441,15 +429,15 @@ body {
 }
 
 #search-options button {
-    background-color: var(--secondary-medium-color); /* Which bg color to use? */
-    color: var(--dark-color);
+    background-color: var(--sidebar-search-button-bg); /* Which bg color to use? */
+    color: var(--sidebar-search-button-text);
     border: none;
     border-radius: 0;
 }
 
 /***  Main content ***/
 .main-content-section {
-    border-bottom: 2px solid var(--medium-color);
+    border-bottom: 2px solid var(--main-bg-2);
 }
 
 #main-table {
@@ -457,18 +445,12 @@ body {
 }
 
 #main-table tr {
-    border-top: 1px solid var(--medium-color)
+    border-top: 1px solid var(--vocab-table-border);
 }
 
 #main-table td {
+    color: var(--vocab-text);
     border: none;
-    color: var(--dark-color)
-}
-
-#main-table a {
-    color: var(--secondary-dark-color) !important;
-    text-decoration: none;
-    font-weight: bold;
 }
 
 .main-table-label {
@@ -478,11 +460,13 @@ body {
 }
 
 #resource-table th, #term-table th {
+    color: var(--vocab-text);
     font-weight: bold;
-    border-bottom: 1px solid var(--dark-color);
+    border-bottom: 1px solid var(--vocab-text);
 }
 
 #resource-table td, #term-table td {
+    color: var(--vocab-text);
     border: none;
 }
 
@@ -512,21 +496,22 @@ body {
 
 /*** Main content searchpage ***/
 .search-result {
-    border-top: 1px solid var(--medium-color);
+    border-top: 1px solid var(--vocab-table-border);
 }
 
 .search-result-term a {
-    color: var(--secondary-dark-color);
+    color: var(--vocab-link);
     font-family: var(--font-family-heading);
     text-decoration: none;
 }
 
 .search-result .list-group-item {
+    color: var(--vocab-text);
     border: none;
 }
 
 .search-result .list-group-item a {
-    color: var(--secondary-dark-color);
+    color: var(--vocab-link);
     text-decoration: none;
     font-weight: bold;
 }
@@ -539,13 +524,13 @@ body {
 
 /***** Main container infopage *****/
 #main-container.infopage, #main-container.feedbackpage {
-    background-color: var(--light-color);
-    color: var(--dark-color);
+    background-color: var(--main-bg-3);
+    color: var(--infopage-text);
     padding: 4rem 0;
 }
 
 #main-container.infopage {
-    background-image: url(../pics/viivakuvio.svg);
+    background-image: var(--infopage-stripes);
     background-repeat: no-repeat;
     background-size: 650px;
     background-position: calc(100% + 41px) calc(100% + 55px);
@@ -556,22 +541,22 @@ body {
 }
 
 #main-container.infopage a {
-    color: var(--secondary-dark-color);
+    color: var(--infopage-link);
     text-decoration: underline;
     font-weight: bold;
 }
 
 /***** Main container feedbackpage *****/
 #main-container.feedbackpage {
-    background-image: url(../pics/viivakuvio-dfe5ed.svg);
+    background-image: var(--feedbackpage-stripes);
     background-repeat: no-repeat;
     background-size: 650px;
-    background-position: calc(100% + 41px) -55px;
+    background-position: var(--feedbackpage-stripes-pos);
 }
 
 #feedback-form {
-    background-color: var(--white-color);
-    color: var(--dark-color);
+    background-color: var(--feedback-form-bg);
+    color: var(--feedback-form-text);
     padding: 2.5rem 2rem 5rem;
 }
 
@@ -580,13 +565,13 @@ body {
 }
 
 #feedback-form input, #feedback-form select, #feedback-form textarea {
-    background-color: var(--light-color);
+    background-color: var(--feedback-form-input);
     border: none;
     border-radius: 0;
 }
 
 #feedback-form input::placeholder {
-    color: var(--dark-color);
+    color: var(--feedback-form-text);
 }
 
 #feedback-form textarea {
@@ -594,7 +579,7 @@ body {
 }
 
 #feedback-form button {
-    background-color: var(--dark-color);
+    background-color: var(--feedback-form-button-bg);
     border: none;
     border-radius: 0;
     font-weight: bold;
@@ -602,11 +587,11 @@ body {
 }
 
 #feedback-form select:valid {
-    color: var(--dark-color);
+    color: var(--feedback-form-text);
 }
 
 #feedback-form select:valid:focus {
-    color: var(--dark-color);
+    color: var(--feedback-form-text);
 }
 
 /* Footer
