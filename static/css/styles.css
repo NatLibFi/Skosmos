@@ -159,6 +159,11 @@ body {
     text-decoration: none;
 }
 
+#multi-vocab-title {
+    color: var(--headerbar-text-2);
+    font-family: var(--font-family-heading);
+}
+
 #search-vocab {
     width: 600px;
 }
@@ -260,7 +265,7 @@ body {
 }
 
 #vocab-box, #welcome-box, #info-box {
-    padding: 2rem 1.5rem;
+    padding: 2.5rem 2rem;
 }
 
 #main-container.frontpage #vocab-box, #vocab-box .list-group-item {
@@ -435,7 +440,28 @@ body {
     border-radius: 0;
 }
 
+#search-options select {
+    background-image: none;
+}
+
+.select-wrapper { /* Also used in feedback form */
+    position: relative;
+}
+
+.select-wrapper::after { /* Also used in feedback form */
+    color: var(--vocab-text);
+    content: '﹀';
+    font-size: 20px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
 /***  Main content ***/
+#main-content h2 {
+    font-size: 2.5rem;
+}
+
 .main-content-section {
     border-bottom: 2px solid var(--main-bg-2);
 }
@@ -584,6 +610,10 @@ body {
     border-radius: 0;
     font-weight: bold;
     float: right;
+}
+
+#feedback-form select {
+    background-image: none;
 }
 
 #feedback-form select:valid {
