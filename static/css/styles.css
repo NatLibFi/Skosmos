@@ -101,11 +101,17 @@ body {
     font-weight: bold;
 }
 
-#topbar span::after {
+#multi-search-toggle {
+    background-color: var(--topbar-bg-1);
+    color: var(--topbar-text-1);
+    border: none;
+}
+
+#multi-search-toggle::after {
     content: '﹀';
     position: absolute;
     top: 30px;
-    left: 200px;
+    left: 205px;
 }
 
 .topbar-nav-link {
@@ -149,17 +155,13 @@ body {
     background-color: var(--headerbar-vocab-bg);
 }
 
-#headerbar h1 {
-    font-weight: bold;
-}
-
 #vocab-title a {
     color: var(--headerbar-text-2);
     font-family: var(--font-family-heading);
     text-decoration: none;
 }
 
-#multi-vocab-title {
+#search-multi-vocab-title {
     color: var(--headerbar-text-2);
     font-family: var(--font-family-heading);
 }
@@ -170,6 +172,11 @@ body {
 
 #search-multi-vocab {
     width: 800px;
+}
+
+#search-vocab a, #search-multi-vocab a {
+    color: var(--headerbar-text-2);
+    float: right;
 }
 
 #headerbar .dropdown-toggle {
@@ -232,11 +239,6 @@ body {
     width: 38px;
 }
 
-#search-vocab a, #search-multi-vocab a {
-    color: var(--headerbar-text-2);
-    float: right;
-}
-
 /* Main container
  *****************************************/
 #main-container {
@@ -248,7 +250,7 @@ body {
     font-weight: bold;
 }
 
-/***** Main container frontpage *****/
+/***** Main container frontpage & frontpage one vacab *****/
 #background.frontpage, #background.frontpage-one-vocab {
     background-color: var(--main-bg-1);
     background-image: var(--frontpage-stripes-1);
@@ -268,8 +270,26 @@ body {
     padding: 2.5rem 2rem;
 }
 
+#info-box a {
+    color: var(--info-box-text);
+    text-decoration: none;
+}
+
+/*** Main container frontpage ***/
 #main-container.frontpage #vocab-box, #vocab-box .list-group-item {
     background-color: var(--vocab-box-bg);
+}
+
+.vocab-category {
+    border-top: 1px solid var(--vocab-box-text);
+    color: var(--vocab-box-text);
+}
+
+.vocab-category a {
+    color: var(--vocab-box-link);
+    font-weight: bold;
+    text-decoration: underline var(--vocab-box-link) solid;
+    text-decoration-thickness: 1px;
 }
 
 #main-container.frontpage #vocab-box h2 {
@@ -289,38 +309,9 @@ body {
     justify-content: center;
 }
 
-#info-box a {
-    color: var(--info-box-text);
-    text-decoration: none;
-}
-
-.vocab-category {
-    border-top: 1px solid var(--vocab-box-text);
-    color: var(--vocab-box-text);
-}
-
-.vocab-category a {
-    color: var(--vocab-box-link);
-    font-weight: bold;
-    text-decoration: underline var(--vocab-box-link) solid;
-    text-decoration-thickness: 1px;
-}
-
-/***** Main container frontpage one vocab *****/
+/*** Main container frontpage one vocab ***/
 #main-container.frontpage-one-vocab #vocab-box {
     background-color: var(--vocab-box-one-bg);
-}
-
-#main-container.frontpage-one-vocab #welcome-box {
-    background-color: var(--welcome-box-one-bg);
-    color: var(--welcome-box-one-text);
-}
-
-#main-container.frontpage-one-vocab #info-box {
-    background-color: var(--info-box-one-bg);
-}
-
-#main-container.frontpage-one-vocab #vocab-box {
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -333,13 +324,22 @@ body {
     text-decoration-thickness: 1px;
 }
 
-/***** Main container vocabpage *****/
+#main-container.frontpage-one-vocab #welcome-box {
+    background-color: var(--welcome-box-one-bg);
+    color: var(--welcome-box-one-text);
+}
+
+#main-container.frontpage-one-vocab #info-box {
+    background-color: var(--info-box-one-bg);
+}
+
+/***** Main container vocabpage & termpage & searchpage & searchpage multi vocab *****/
 #main-container.vocabpage, #main-container.termpage, #main-container.searchpage, #main-container.searchpage-multi-vocab {
     background-color: var(--main-bg-2);
     padding: 1rem 0;
 }
 
-#main-container.vocabpage a, #main-container.termpage a {
+#main-container.vocabpage a, #main-container.termpage a, #main-container.searchpage a, #main-container.searchpage-multi-vocab a {
     color: var(--vocab-link);
     text-decoration: none;
     font-weight: bold;
@@ -349,7 +349,7 @@ body {
     background-color: var(--vocab-bg);
 }
 
-/*** Sidebar termpage/vocabpage ***/
+/*** Sidebar termpage & vocabpage ***/
 #main-container.vocabpage #sidebar .nav-item, #main-container.termpage #sidebar .nav-item {
     background-color: var(--sidebar-tab-inactive-bg);
 }
@@ -457,7 +457,7 @@ body {
     right: 10px;
 }
 
-/***  Main content ***/
+/*****  Main content vocabpage & termpage *****/
 #main-content h2 {
     font-size: 2.5rem;
 }
@@ -520,13 +520,12 @@ body {
     width: 50%;
 }
 
-/*** Main content searchpage ***/
+/***** Main content searchpage & searchpage multi vocab *****/
 .search-result {
     border-top: 1px solid var(--vocab-table-border);
 }
 
 .search-result-term a {
-    color: var(--vocab-link);
     font-family: var(--font-family-heading);
     text-decoration: none;
 }
@@ -536,34 +535,29 @@ body {
     border: none;
 }
 
-.search-result .list-group-item a {
-    color: var(--vocab-link);
-    text-decoration: none;
-    font-weight: bold;
-}
-
 .uri-icon {
     display: inline-block;
     width: 20px;
     font-size: 10px;
 }
 
-/***** Main container infopage *****/
+/***** Main container infopage & feedbackpage *****/
 #main-container.infopage, #main-container.feedbackpage {
     background-color: var(--main-bg-3);
     color: var(--infopage-text);
     padding: 4rem 0;
 }
 
+#main-container.infopage .container, #main-container.feedbackpage .container {
+    padding: 0 12rem;
+}
+
+/*** Main container infopage ***/
 #main-container.infopage {
     background-image: var(--infopage-stripes);
     background-repeat: no-repeat;
     background-size: 650px;
     background-position: calc(100% + 41px) calc(100% + 55px);
-}
-
-#main-container.infopage .container, #main-container.feedbackpage .container {
-    padding: 0 12rem;
 }
 
 #main-container.infopage a {
@@ -572,7 +566,7 @@ body {
     font-weight: bold;
 }
 
-/***** Main container feedbackpage *****/
+/*** Main container feedbackpage ***/
 #main-container.feedbackpage {
     background-image: var(--feedbackpage-stripes);
     background-repeat: no-repeat;
