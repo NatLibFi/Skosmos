@@ -51,7 +51,7 @@ jobs:
         php_extensions: gettext intl xsl pcov
 
     - name: Check PHP code style
-      run: ./vendor/bin/php-cs-fixer --diff --dry-run
+      run: ./vendor/bin/php-cs-fixer fix src --diff --dry-run
 
     - name: Run PHPUnit tests
       uses: php-actions/phpunit@v3
