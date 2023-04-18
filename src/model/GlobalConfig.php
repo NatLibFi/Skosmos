@@ -15,8 +15,8 @@ EasyRdf\RdfNamespace::set('wdt', 'http://www.wikidata.org/prop/direct/');
 /**
  * GlobalConfig provides access to the Skosmos configuration in config.ttl.
  */
-class GlobalConfig extends BaseConfig {
-
+class GlobalConfig extends BaseConfig
+{
     /** Cache reference */
     private $cache;
     /** Location of the configuration file. Used for caching. */
@@ -34,7 +34,7 @@ class GlobalConfig extends BaseConfig {
     {
         $this->cache = new Cache();
         try {
-            $this->filePath = realpath( dirname(__FILE__) . "/" . $config_name );
+            $this->filePath = realpath(dirname(__FILE__) . "/" . $config_name);
             if (!file_exists($this->filePath)) {
                 throw new Exception('config.ttl file is missing, please provide one.');
             }
@@ -83,7 +83,7 @@ class GlobalConfig extends BaseConfig {
                     $this->cache->store($key, $this->graph);
                     $this->cache->store($nskey, $this->namespaces);
                 }
-                // @codeCoverageIgnoreEnd
+            // @codeCoverageIgnoreEnd
             } else { // APC not available, parse on every request
                 $this->parseConfig($this->filePath);
             }
@@ -97,7 +97,7 @@ class GlobalConfig extends BaseConfig {
             $this->initializeNamespaces();
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
-        }      
+        }
     }
 
     /**
@@ -125,10 +125,10 @@ class GlobalConfig extends BaseConfig {
     /**
      * Registers RDF namespaces from the config.ttl file for use by EasyRdf (e.g. serializing)
      */
-    private function initializeNamespaces() {
+    private function initializeNamespaces()
+    {
         foreach ($this->namespaces as $prefix => $fullUri) {
-            if ($prefix != '' && EasyRdf\RdfNamespace::get($prefix) === null) // if not already defined
-            {
+            if ($prefix != '' && EasyRdf\RdfNamespace::get($prefix) === null) { // if not already defined
                 EasyRdf\RdfNamespace::set($prefix, $fullUri);
             }
         }
@@ -269,7 +269,7 @@ class GlobalConfig extends BaseConfig {
      */
     public function getLogCaughtExceptions()
     {
-        return $this->getBoolean('skosmos:logCaughtExceptions', FALSE);
+        return $this->getBoolean('skosmos:logCaughtExceptions', false);
     }
 
     /**
@@ -278,7 +278,7 @@ class GlobalConfig extends BaseConfig {
      */
     public function getLoggingBrowserConsole()
     {
-        return $this->getBoolean('skosmos:logBrowserConsole', FALSE);
+        return $this->getBoolean('skosmos:logBrowserConsole', false);
     }
 
     /**
@@ -311,7 +311,7 @@ class GlobalConfig extends BaseConfig {
      */
     public function getUiLanguageDropdown()
     {
-        return $this->getBoolean('skosmos:uiLanguageDropdown', FALSE);
+        return $this->getBoolean('skosmos:uiLanguageDropdown', false);
     }
 
     /**
@@ -342,7 +342,7 @@ class GlobalConfig extends BaseConfig {
      */
     public function getHoneypotEnabled()
     {
-        return $this->getBoolean('skosmos:uiHoneypotEnabled', TRUE);
+        return $this->getBoolean('skosmos:uiHoneypotEnabled', true);
     }
 
     /**
@@ -358,6 +358,6 @@ class GlobalConfig extends BaseConfig {
      */
     public function getCollationEnabled()
     {
-        return $this->getBoolean('skosmos:sparqlCollationEnabled', FALSE);
+        return $this->getBoolean('skosmos:sparqlCollationEnabled', false);
     }
 }

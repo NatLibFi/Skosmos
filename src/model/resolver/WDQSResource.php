@@ -2,10 +2,10 @@
 
 class WDQSResource extends RemoteResource
 {
-    
-    const WDQS_ENDPOINT = "https://query.wikidata.org/sparql";
+    public const WDQS_ENDPOINT = "https://query.wikidata.org/sparql";
 
-    public function resolve(int $timeout) : ?EasyRdf\Resource {
+    public function resolve(int $timeout): ?EasyRdf\Resource
+    {
         try {
             // unregister the legacy "json" format as it causes problems with CONSTRUCT requests
             EasyRdf\Format::unregister('json');
@@ -14,7 +14,7 @@ class WDQSResource extends RemoteResource
             $httpclient->setConfig(array('timeout' => $timeout));
             $httpclient->setHeaders('Accept', 'text/turtle');
             EasyRdf\Http::setDefaultHttpClient($httpclient);
-            
+
             $uri = $this->uri;
             $query = <<<EOQ
 PREFIX wd:     <http://www.wikidata.org/entity/>

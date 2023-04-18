@@ -29,7 +29,7 @@ if (sizeof($parts) <= 2) {
     $lang = sizeof($parts) == 2 && $parts[1] !== '' ? $parts[1] : $controller->guessLanguage();
     header("Location: " . $lang . "/");
 } else {
-  if (array_key_exists($parts[1], $config->getLanguages())) { // global pages
+    if (array_key_exists($parts[1], $config->getLanguages())) { // global pages
         $request->setLang($parts[1]);
         $content_lang = $request->getQueryParam('clang');
         $request->setContentLang($content_lang);

@@ -21,7 +21,7 @@ class Vocabulary extends DataObject implements Modifiable
      */
     public function getConfig()
     {
-      return $this->config;
+        return $this->config;
     }
 
     /**
@@ -69,8 +69,7 @@ class Vocabulary extends DataObject implements Modifiable
      */
     public function getUriSpace()
     {
-        if ($this->urispace === null) // initialize cache
-        {
+        if ($this->urispace === null) { // initialize cache
             $urispace = $this->resource->getLiteral('void:uriSpace');
             if ($urispace) {
                 $this->urispace = $urispace->getValue();
@@ -166,10 +165,10 @@ class Vocabulary extends DataObject implements Modifiable
             $sparql = $this->getSparql();
             $result = $sparql->queryConceptScheme($defaultcs);
         } catch (EasyRdf\Http\Exception | EasyRdf\Exception | Throwable $e) {
-             if ($this->model->getConfig()->getLogCaughtExceptions()) {
-                 error_log('Caught exception: ' . $e->getMessage());
-             }
-             return null;
+            if ($this->model->getConfig()->getLogCaughtExceptions()) {
+                error_log('Caught exception: ' . $e->getMessage());
+            }
+            return null;
         }
         $conceptscheme = $result->resource($defaultcs);
         $this->order = array(
@@ -233,9 +232,9 @@ class Vocabulary extends DataObject implements Modifiable
         // filtering multiple labels
         if (isset($ret['dc:title'])) {
             unset($ret['dc11:title'], $ret['skos:prefLabel'], $ret['rdfs:label']);
-        } else if (isset($ret['dc11:title'])) {
+        } elseif (isset($ret['dc11:title'])) {
             unset($ret['skos:prefLabel'], $ret['rdfs:label']);
-        } else if (isset($ret['skos:prefLabel'])) {
+        } elseif (isset($ret['skos:prefLabel'])) {
             unset($ret['rdfs:label']);
         }
 
@@ -256,9 +255,9 @@ class Vocabulary extends DataObject implements Modifiable
         try {
             $conceptSchemes = $this->getSparql()->queryConceptSchemes($lang);
         } catch (EasyRdf\Http\Exception | EasyRdf\Exception | Throwable $e) {
-             if ($this->model->getConfig()->getLogCaughtExceptions()) {
-                 error_log('Caught exception: ' . $e->getMessage());
-             }
+            if ($this->model->getConfig()->getLogCaughtExceptions()) {
+                error_log('Caught exception: ' . $e->getMessage());
+            }
         }
         return $conceptSchemes;
     }
@@ -456,9 +455,9 @@ class Vocabulary extends DataObject implements Modifiable
         try {
             $conceptInfo = $sparql->queryConceptInfo($uri, $this->config->getArrayClassURI(), array($this), $clang);
         } catch (EasyRdf\Http\Exception | EasyRdf\Exception | Throwable $e) {
-             if ($this->model->getConfig()->getLogCaughtExceptions()) {
-                 error_log('Caught exception: ' . $e->getMessage());
-             }
+            if ($this->model->getConfig()->getLogCaughtExceptions()) {
+                error_log('Caught exception: ' . $e->getMessage());
+            }
         }
         return $conceptInfo;
     }
@@ -668,16 +667,19 @@ class Vocabulary extends DataObject implements Modifiable
         return $this->getSparql()->queryChangeList($prop, $clang, $offset, $limit, $showDeprecated);
     }
 
-    public function getTitle($lang=null) {
-      return $this->config->getTitle($lang);
+    public function getTitle($lang=null)
+    {
+        return $this->config->getTitle($lang);
     }
 
-    public function getShortName() {
-      return $this->config->getShortName();
+    public function getShortName()
+    {
+        return $this->config->getShortName();
     }
 
-    public function getId() {
-      return $this->config->getId();
+    public function getId()
+    {
+        return $this->config->getId();
     }
 
     public function getModifiedDate()

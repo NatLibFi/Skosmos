@@ -137,7 +137,8 @@ class ConceptPropertyValue extends VocabularyDataObject
 
     }
 
-    public function isExternal() {
+    public function isExternal()
+    {
         return $this->external;
     }
 
@@ -149,11 +150,13 @@ class ConceptPropertyValue extends VocabularyDataObject
 
     }
 
-    public function isReified() {
+    public function isReified()
+    {
         return (!$this->resource->label() && $this->resource->getLiteral('rdf:value'));
     }
 
-    public function getReifiedPropertyValues() {
+    public function getReifiedPropertyValues()
+    {
         $ret = array();
         $props = $this->resource->propertyUris();
         foreach($props as $prop) {

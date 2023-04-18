@@ -9,7 +9,7 @@ class Controller
      * How long to store retrieved disk configuration for HTTP 304 header
      * from git information.
      */
-    const GIT_MODIFIED_CONFIG_TTL = 600; // 10 minutes
+    public const GIT_MODIFIED_CONFIG_TTL = 600; // 10 minutes
 
     /**
      * The controller has to know the model to access the data stored there.
@@ -131,7 +131,8 @@ class Controller
      * @throws Exception if the vocabulary ID is not found in configuration
      * @return string containing the Skosmos link
      */
-    public function linkUrlFilter($uri, $vocab, $lang, $type = 'page', $clang = null, $term = null) {
+    public function linkUrlFilter($uri, $vocab, $lang, $type = 'page', $clang = null, $term = null)
+    {
         // $vocab can either be null, a vocabulary id (string) or a Vocabulary object
         if ($vocab === null) {
             // target vocabulary is unknown, best bet is to link to the plain URI

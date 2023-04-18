@@ -3,7 +3,7 @@
 /**
  * Importing the dependencies.
  */
-use \Punic\Language;
+use Punic\Language;
 
 /**
  * WebController is an extension of the Controller that handles all
@@ -116,13 +116,14 @@ class WebController extends Controller
      * The layout is wider if the left/right box templates have not been provided.
      * @return string css class for the container eg. 'voclist-wide' or 'voclist-right'
      */
-    private function listStyle() {
+    private function listStyle()
+    {
         $left = file_exists('view/left.inc');
         $right = file_exists('view/right.inc');
         $ret = 'voclist';
         if (!$left && !$right) {
             $ret .= '-wide';
-        } else if (!($left && $right) && ($right || $left)) {
+        } elseif (!($left && $right) && ($right || $left)) {
             $ret .= ($right) ? '-left' : '-right';
         }
         return $ret;
@@ -153,7 +154,8 @@ class WebController extends Controller
                 'lang_list' => $langList,
                 'request' => $request,
                 'list_style' => $listStyle
-            ));
+            )
+        );
     }
 
     /**
@@ -184,7 +186,8 @@ class WebController extends Controller
         $template = $this->twig->loadTemplate('concept.twig');
 
         $crumbs = $vocab->getBreadCrumbs($request->getContentLang(), $uri);
-        echo $template->render(array(
+        echo $template->render(
+            array(
             'search_results' => $results,
             'vocab' => $vocab,
             'concept_uri' => $uri,
@@ -232,7 +235,8 @@ class WebController extends Controller
                 'vocabList' => $vocabList,
                 'feedback_sent' => $feedbackSent,
                 'request' => $request,
-            ));
+            )
+        );
     }
 
     private function createFeedbackHeaders($fromName, $fromEmail, $toMail, $sender)
@@ -267,11 +271,17 @@ class WebController extends Controller
         $envelopeSender = $this->model->getConfig()->getFeedbackEnvelopeSender();
         // determine the sender address of the message
         $sender = $this->model->getConfig()->getFeedbackSender();
-        if (empty($sender)) $sender = $envelopeSender;
-        if (empty($sender)) $sender = $this->model->getConfig()->getFeedbackAddress();
+        if (empty($sender)) {
+            $sender = $envelopeSender;
+        }
+        if (empty($sender)) {
+            $sender = $this->model->getConfig()->getFeedbackAddress();
+        }
 
         // determine sender name - default to "anonymous user" if not given by user
-        if (empty($fromName)) $fromName = "anonymous user";
+        if (empty($fromName)) {
+            $fromName = "anonymous user";
+        }
         $headers = $this->createFeedbackHeaders($fromName, $fromEmail, $toMail, $sender);
         $params = empty($envelopeSender) ? '' : "-f $envelopeSender";
         // adding some information about the user for debugging purposes.
@@ -292,7 +302,8 @@ class WebController extends Controller
             echo $template->render(
                 array(
                     'languages' => $this->languages,
-                ));
+                )
+            );
 
             return;
         }
@@ -312,7 +323,8 @@ class WebController extends Controller
                 'languages' => $this->languages,
                 'server_instance' => $url,
                 'request' => $request,
-            ));
+            )
+        );
     }
 
     /**
@@ -381,7 +393,8 @@ class WebController extends Controller
                 'sorted_vocabs' => $sortedVocabs,
                 'request' => $request,
                 'parameters' => $parameters
-            ));
+            )
+        );
     }
 
     /**
@@ -407,7 +420,8 @@ class WebController extends Controller
                     'vocab' => $vocab,
                     'request' => $request,
                     'search_results' => $searchResults
-                ));
+                )
+            );
 
             return;
         }
@@ -431,7 +445,8 @@ class WebController extends Controller
                     'vocab' => $vocab,
                     'term' => $request->getQueryParam('q'),
                     'search_results' => $searchResults
-                ));
+                )
+            );
             return;
         }
         echo $template->render(
@@ -451,7 +466,8 @@ class WebController extends Controller
                 'types' => $vocabTypes,
                 'explicit_langcodes' => $langcodes,
                 'request' => $request,
-            ));
+            )
+        );
     }
 
     /**
@@ -469,7 +485,7 @@ class WebController extends Controller
         if ($defaultView === 'groups') {
             $this->invokeGroupIndex($request, true);
             return;
-        } else if ($defaultView === 'new') {
+        } elseif ($defaultView === 'new') {
             $this->invokeChangeList($request);
         }
         $pluginParameters = json_encode($vocab->getConfig()->getPluginParameters());
@@ -484,7 +500,8 @@ class WebController extends Controller
                 'active_tab' => $defaultView,
                 'request' => $request,
                 'plugin_params' => $pluginParameters
-            ));
+            )
+        );
     }
 
     /**
@@ -502,6 +519,7 @@ class WebController extends Controller
                 'vocab' => $request->getVocab(),
                 'message' => $message,
                 'requested_page' => filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            ));
+            )
+        );
     }
 }

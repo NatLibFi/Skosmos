@@ -10,7 +10,7 @@ class VocabularyConfig extends BaseConfig
     private $languageOrderCache = array();
     private $labelOverrides = array();
 
-    const DEFAULT_PROPERTY_ORDER = array("rdf:type", "dc:isReplacedBy",
+    public const DEFAULT_PROPERTY_ORDER = array("rdf:type", "dc:isReplacedBy",
     "skos:definition", "skos:broader", "isothes:broaderGeneric",
     "isothes:broaderPartitive", "isothes:broaderInstantial",
     "skos:narrower", "isothes:narrowerGeneric", "isothes:narrowerPartitive",
@@ -18,7 +18,7 @@ class VocabularyConfig extends BaseConfig
     "skos:note", "skos:scopeNote", "skos:historyNote", "rdfs:comment",
     "dc11:source", "dc:source", "skosmos:memberOf", "skosmos:memberOfArray");
 
-    const ISO25964_PROPERTY_ORDER = array("rdf:type", "dc:isReplacedBy",
+    public const ISO25964_PROPERTY_ORDER = array("rdf:type", "dc:isReplacedBy",
     // ISO 25964 allows placing all text fields (inc. SN and DEF) together
     // so we will do that, except for HN, which is clearly administrative
     "skos:note", "skos:scopeNote", "skos:definition", "rdfs:comment",
@@ -42,7 +42,7 @@ class VocabularyConfig extends BaseConfig
      * Get an ordered array of plugin names with order configured in skosmos:vocabularyPlugins
      * @return array of plugin names
      */
-    public function getPluginArray() : array
+    public function getPluginArray(): array
     {
         $this->setParameterizedPlugins();
         $pluginArray = array();
@@ -54,8 +54,7 @@ class VocabularyConfig extends BaseConfig
             foreach ($vocabularyPlugins as $plugin) {
                 if ($plugin instanceof EasyRdf\Literal) {
                     $pluginArray[] = $plugin->getValue();
-                }
-                else {
+                } else {
                     $pluginArray[] = $plugin->getLiteral('skosmos:usePlugin')->getValue();
                 }
             }
@@ -81,7 +80,7 @@ class VocabularyConfig extends BaseConfig
      * Sets array of parameterized plugins
      * @return void
      */
-    private function setParameterizedPlugins() : void
+    private function setParameterizedPlugins(): void
     {
         $this->pluginParameters = array();
 
@@ -109,7 +108,7 @@ class VocabularyConfig extends BaseConfig
      * @param Easyrdf\Resource $pluginResource
      * @return void
      */
-    private function setPluginParameters(Easyrdf\Resource $pluginResource) : void
+    private function setPluginParameters(Easyrdf\Resource $pluginResource): void
     {
         $pluginName = $pluginResource->getLiteral('skosmos:usePlugin')->getValue();
         $this->pluginParameters[$pluginName] = array();
@@ -134,7 +133,7 @@ class VocabularyConfig extends BaseConfig
      * Sets array of configured property label overrides
      *  @return void
      */
-    private function setPropertyLabelOverrides() : void
+    private function setPropertyLabelOverrides(): void
     {
         $this->labelOverrides = array();
         $overrides = $this->resource->allResources('skosmos:propertyLabelOverride');
@@ -150,7 +149,7 @@ class VocabularyConfig extends BaseConfig
      * @param Easyrdf\Resource $labelOverride
      * @return void
      */
-    private function setLabelOverride(Easyrdf\Resource $override) : void
+    private function setLabelOverride(Easyrdf\Resource $override): void
     {
         $labelProperty = $override->getResource('skosmos:property');
         $labelPropUri = $labelProperty->shorten();
@@ -165,7 +164,7 @@ class VocabularyConfig extends BaseConfig
         }
         $descriptions = $override->allLiterals('rdfs:comment'); //optionally override property label tooltips
         foreach ($descriptions as $description) {
-             $newOverrides['description'][$description->getLang()] = $description->getValue();
+            $newOverrides['description'][$description->getLang()] = $description->getValue();
         }
         $this->labelOverrides[$labelPropUri] = array_merge($newOverrides, $this->labelOverrides[$labelPropUri]);
     }
@@ -252,8 +251,9 @@ class VocabularyConfig extends BaseConfig
     public function getShortName()
     {
         $shortname = $this->getLiteral('skosmos:shortName');
-        if ($shortname)
-          return $shortname;
+        if ($shortname) {
+            return $shortname;
+        }
 
         // if no shortname exists fall back to the id
         return $this->getId();
@@ -281,7 +281,7 @@ class VocabularyConfig extends BaseConfig
 
     /**
      * Returns the sorting strategy for notation codes set in the config.ttl
-     * config: either "lexical", "natural", or null if sorting by notations is 
+     * config: either "lexical", "natural", or null if sorting by notations is
      * disabled. A "true" value in the configuration file is interpreted as
      * "lexical".
      * @return string|bool
@@ -341,9 +341,9 @@ class VocabularyConfig extends BaseConfig
                 $dataUrlLang = $langLit->getValue();
 
                 if (!isset($ret[$mimetype])) {
-                  $arr = array();
+                    $arr = array();
                 } else {
-                  $arr = $ret[$mimetype];
+                    $arr = $ret[$mimetype];
                 }
                 $arr[$dataUrlLang] = $url->getURI();
                 $ret[$mimetype] = $arr;
@@ -413,8 +413,7 @@ class VocabularyConfig extends BaseConfig
         $ret = array();
         foreach ($resources as $res) {
             $prop = $res->getURI();
-            if (EasyRdf\RdfNamespace::shorten($prop) !== null) // shortening property labels if possible
-            {
+            if (EasyRdf\RdfNamespace::shorten($prop) !== null) { // shortening property labels if possible
                 $prop = EasyRdf\RdfNamespace::shorten($prop);
             }
 
@@ -433,8 +432,7 @@ class VocabularyConfig extends BaseConfig
         $resources = $this->resource->allResources("skosmos:hasMultiLingualProperty");
         foreach ($resources as $res) {
             $prop = $res->getURI();
-            if (EasyRdf\RdfNamespace::shorten($prop) !== null) // shortening property labels if possible
-            {
+            if (EasyRdf\RdfNamespace::shorten($prop) !== null) { // shortening property labels if possible
                 $prop = EasyRdf\RdfNamespace::shorten($prop);
             }
 
@@ -548,7 +546,8 @@ class VocabularyConfig extends BaseConfig
      * Returns the parameters of parameterized plugins
      * @return array of plugin parameters
      */
-    public function getPluginParameters() {
+    public function getPluginParameters()
+    {
         return $this->pluginParameters;
     }
 
@@ -556,7 +555,8 @@ class VocabularyConfig extends BaseConfig
      * Get the list of property label overrides
      * @return array of custom property labels
      */
-    public function getPropertyLabelOverrides() {
+    public function getPropertyLabelOverrides()
+    {
         return $this->labelOverrides;
     }
 
@@ -577,7 +577,7 @@ class VocabularyConfig extends BaseConfig
         if ($this->showAlphabeticalIndex() === false) {
             if ($this->getShowHierarchy()) {
                 return 'hierarchy';
-            } else if ($this->getGroupClassURI()) {
+            } elseif ($this->getGroupClassURI()) {
                 return 'groups';
             }
         }
@@ -591,9 +591,8 @@ class VocabularyConfig extends BaseConfig
     public function getId()
     {
         $uriparts = explode("#", $this->resource->getURI());
-        if (count($uriparts) != 1)
-        // hash namespace
-        {
+        if (count($uriparts) != 1) {
+            // hash namespace
             return $uriparts[1];
         }
 
@@ -603,7 +602,8 @@ class VocabularyConfig extends BaseConfig
         return $uriparts[count($uriparts) - 1];
     }
 
-    public function getShowStatistics() {
+    public function getShowStatistics()
+    {
         return $this->getBoolean('skosmos:showStatistics', true);
     }
 
@@ -623,8 +623,7 @@ class VocabularyConfig extends BaseConfig
         $ret = array();
         foreach ($resources as $res) {
             $prop = $res->getURI();
-            if (EasyRdf\RdfNamespace::shorten($prop) !== null) // prefixing if possible
-            {
+            if (EasyRdf\RdfNamespace::shorten($prop) !== null) { // prefixing if possible
                 $prop = EasyRdf\RdfNamespace::shorten($prop);
             }
 
@@ -752,7 +751,7 @@ class VocabularyConfig extends BaseConfig
         } elseif ($short == 'skosmos:defaultPropertyOrder') {
             return self::DEFAULT_PROPERTY_ORDER;
         }
-        
+
         // check for custom order definition
         $orderList = $order->getResource('rdf:value');
         if ($orderList !== null && $orderList instanceof EasyRdf\Collection) {
@@ -763,7 +762,7 @@ class VocabularyConfig extends BaseConfig
             }
             return $ret;
         }
-        
+
         trigger_error("Property order for vocabulary '{$this->getShortName()}' unknown, using default order", E_USER_WARNING);
         return self::DEFAULT_PROPERTY_ORDER;
     }

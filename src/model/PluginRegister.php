@@ -1,9 +1,11 @@
 <?php
 
-class PluginRegister {
+class PluginRegister
+{
     private $requestedPlugins;
 
-    public function __construct($requestedPlugins=array()) {
+    public function __construct($requestedPlugins=array())
+    {
         $this->requestedPlugins = $requestedPlugins;
         $this->pluginOrder = array();
         foreach ($this->requestedPlugins as $index => $value) {
@@ -32,7 +34,8 @@ class PluginRegister {
      * Sort plugins by order defined in class constructor
      * @return array
      */
-    private function sortPlugins($plugins) {
+    private function sortPlugins($plugins)
+    {
         $sortedPlugins = array();
         $sortedPlugins = array_replace($this->pluginOrder, $plugins);
         return $sortedPlugins;
@@ -45,7 +48,8 @@ class PluginRegister {
      * @param boolean $raw interpret $type values as raw text instead of files
      * @return array
      */
-    private function filterPlugins($type, $raw=false) {
+    private function filterPlugins($type, $raw=false)
+    {
         $plugins = $this->getPlugins();
         $plugins = $this->sortPlugins($plugins);
         $ret = array();
@@ -55,8 +59,7 @@ class PluginRegister {
                     $ret[$name] = array();
                     if ($raw) {
                         $ret[$name] = $files[$type];
-                    }
-                    else {
+                    } else {
                         foreach ($files[$type] as $file) {
                             array_push($ret[$name], 'plugins/' . $name . '/' . $file);
                         }
@@ -74,7 +77,8 @@ class PluginRegister {
      * @param array $names the plugin name strings (foldernames) in an array
      * @return array
      */
-    private function filterPluginsByName($type, $names) {
+    private function filterPluginsByName($type, $names)
+    {
         $files = $this->filterPlugins($type);
         foreach ($files as $plugin => $filelist) {
             if (!in_array($plugin, $names)) {
@@ -89,7 +93,8 @@ class PluginRegister {
      * @param array $names the plugin name strings (foldernames) in an array
      * @return array
      */
-    public function getPluginsJS($names=null) {
+    public function getPluginsJS($names=null)
+    {
         if ($names) {
             $names = array_merge($this->requestedPlugins, $names);
             return $this->filterPluginsByName('js', $names);
@@ -102,7 +107,8 @@ class PluginRegister {
      * @param array $names the plugin name strings (foldernames) in an array
      * @return array
      */
-    public function getPluginsCSS($names=null) {
+    public function getPluginsCSS($names=null)
+    {
         if ($names) {
             $names = array_merge($this->requestedPlugins, $names);
             return $this->filterPluginsByName('css', $names);
@@ -115,7 +121,8 @@ class PluginRegister {
      * @param array $names the plugin name strings (foldernames) in an array
      * @return array
      */
-    public function getPluginsTemplates($names=null) {
+    public function getPluginsTemplates($names=null)
+    {
         if ($names) {
             $names = array_merge($this->requestedPlugins, $names);
             return $this->filterPluginsByName('templates', $names);
@@ -128,7 +135,8 @@ class PluginRegister {
      * @param array $names the plugin name strings (foldernames) in an array
      * @return array
      */
-    public function getTemplates($names=null) {
+    public function getTemplates($names=null)
+    {
         $templateStrings = array();
         $plugins = $this->getPluginsTemplates($names);
         foreach ($plugins as $folder => $templates) {
@@ -136,7 +144,7 @@ class PluginRegister {
                 if (file_exists($path)) {
                     $filename = explode('/', $path);
                     $filename = $filename[sizeof($filename)-1];
-                    $id = $folder . '-' . substr($filename, 0 , (strrpos($filename, ".")));
+                    $id = $folder . '-' . substr($filename, 0, (strrpos($filename, ".")));
                     $templateStrings[$id] = file_get_contents($path);
                 }
             }
@@ -149,7 +157,8 @@ class PluginRegister {
      * @param array $names the plugin name strings (foldernames) in an array
      * @return array
      */
-    public function getPluginCallbacks($names=null) {
+    public function getPluginCallbacks($names=null)
+    {
         if ($names) {
             $names = array_merge($this->requestedPlugins, $names);
             return $this->filterPluginsByName('callback', $names);
@@ -162,7 +171,8 @@ class PluginRegister {
      * in order configured with skosmos:vocabularyPlugins
      * @return array
      */
-    public function getCallbacks() {
+    public function getCallbacks()
+    {
         $ret = array();
         $sortedCallbacks = array();
         $plugins = $this->getPluginCallbacks($this->requestedPlugins);
@@ -185,9 +195,10 @@ class PluginRegister {
      * @param mixed[] $array Flattens this input array
      * @return array Flattened input
      */
-    protected function flatten($array) {
+    protected function flatten($array)
+    {
         $return = array();
-        array_walk_recursive($array, function($a) use (&$return) { $return[] = $a; });
+        array_walk_recursive($array, function ($a) use (&$return) { $return[] = $a; });
         return $return;
     }
 
@@ -195,8 +206,8 @@ class PluginRegister {
      * Returns a flattened array containing the external properties we are interested in saving
      * @return string[]
      */
-    public function getExtProperties() {
+    public function getExtProperties()
+    {
         return array_unique($this->flatten($this->filterPlugins('ext-properties', true)));
     }
 }
-

@@ -2,13 +2,13 @@
 
 class LabelSkosXL extends DataObject
 {
-
     public function __construct($model, $resource)
     {
         parent::__construct($model, $resource);
     }
 
-    public function getPrefLabel() {
+    public function getPrefLabel()
+    {
         $label = null;
         $labels = $this->resource->allResources('skosxl:prefLabel');
         foreach($labels as $labres) {
@@ -20,7 +20,8 @@ class LabelSkosXL extends DataObject
         return $label;
     }
 
-    public function getProperties() {
+    public function getProperties()
+    {
         $ret = array();
         $props = $this->resource->properties();
         foreach($props as $prop) {
@@ -34,11 +35,13 @@ class LabelSkosXL extends DataObject
         return $ret;
     }
 
-    public function getLiteral() {
+    public function getLiteral()
+    {
         return $this->resource->getLiteral('skosxl:literalForm')->getValue();
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->resource->getLiteral('skosxl:literalForm')->getValue();
     }
 }

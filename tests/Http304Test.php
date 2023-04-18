@@ -1,10 +1,9 @@
 <?php
 
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class Http304Test extends TestCase
 {
-
     /**
      * @var \Mockery\Mock|Model
      */
@@ -230,7 +229,7 @@ class Http304Test extends TestCase
         $this->assertEquals("", $content);
     }
 
-    public function tearDown() : void
+    public function tearDown(): void
     {
         parent::tearDown();
         \Mockery::close();

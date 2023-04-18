@@ -12,7 +12,8 @@ class Resolver
         $this->model = $model;
     }
 
-    private function startsWith(string $prefix, string $target) : bool {
+    private function startsWith(string $prefix, string $target): bool
+    {
         return strpos($target, $prefix) === 0;
     }
 
@@ -22,7 +23,8 @@ class Resolver
      * @param string $uri URI to resolve
      * @return EasyRdf\Resource
      */
-    public function resolve(string $uri, int $timeout): ?EasyRdf\Resource {
+    public function resolve(string $uri, int $timeout): ?EasyRdf\Resource
+    {
         if (preg_match('|http://id.loc.gov/[^/]+/[^/]+/.+|', $uri)) {
             $res = new LOCResource($this->model, $uri);
         } elseif ($this->startsWith('http://www.wikidata.org/entity/', $uri)) {

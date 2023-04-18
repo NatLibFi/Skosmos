@@ -82,7 +82,8 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
         return $this->resource->shorten() ? $this->resource->shorten() : $this->resource->getUri();
     }
 
-    private function getResourceLabel($res, $lang = '') {
+    private function getResourceLabel($res, $lang = '')
+    {
 
         if ($this->clang) {
             $lang = $this->clang;
@@ -247,4 +248,3 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
     }
 
 }
-

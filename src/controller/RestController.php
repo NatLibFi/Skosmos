@@ -6,7 +6,7 @@
 class RestController extends Controller
 {
     /* supported MIME types that can be used to return RDF data */
-    const SUPPORTED_FORMATS = 'application/rdf+xml text/turtle application/ld+json application/json application/marcxml+xml';
+    public const SUPPORTED_FORMATS = 'application/rdf+xml text/turtle application/ld+json application/json application/marcxml+xml';
     /* context array template */
     private $context = array(
         '@context' => array(
@@ -309,14 +309,14 @@ class RestController extends Controller
                 'deprecatedCount' => $vocabStats['http://www.w3.org/2004/02/skos/core#Collection']['deprecatedCount'],
             );
 
-        } else if (isset($vocabStats[$groupClass])) {
+        } elseif (isset($vocabStats[$groupClass])) {
             $ret['conceptGroups'] = array(
                 'class' => $groupClass,
                 'label' => isset($vocabStats[$groupClass]['label']) ? $vocabStats[$groupClass]['label'] : gettext(EasyRdf\RdfNamespace::shorten($groupClass)),
                 'count' => $vocabStats[$groupClass]['count'],
                 'deprecatedCount' => $vocabStats[$groupClass]['deprecatedCount'],
             );
-        } else if (isset($vocabStats[$arrayClass])) {
+        } elseif (isset($vocabStats[$arrayClass])) {
             $ret['arrays'] = array(
                 'class' => $arrayClass,
                 'label' => isset($vocabStats[$arrayClass]['label']) ? $vocabStats[$arrayClass]['label'] : gettext(EasyRdf\RdfNamespace::shorten($arrayClass)),
@@ -412,7 +412,9 @@ class RestController extends Controller
 
         $base = $request->getVocab() ? $this->getBaseHref() . "rest/v1/" . $request->getVocab()->getId() . "/" : $this->getBaseHref() . "rest/v1/";
 
-        $ret = array_merge_recursive($this->context, array(
+        $ret = array_merge_recursive(
+            $this->context,
+            array(
             '@context' => array(
                 'rdfs' => 'http://www.w3.org/2000/01/rdf-schema#',
                 'onki' => 'http://schema.onki.fi/onki#',
@@ -438,7 +440,9 @@ class RestController extends Controller
                 $hits[] = $res;
             }
         }
-        if (sizeof($hits) > 0) return $hits;
+        if (sizeof($hits) > 0) {
+            return $hits;
+        }
 
         // case 2: case-insensitive match on preferred label
         foreach ($results as $res) {
@@ -446,7 +450,9 @@ class RestController extends Controller
                 $hits[] = $res;
             }
         }
-        if (sizeof($hits) > 0) return $hits;
+        if (sizeof($hits) > 0) {
+            return $hits;
+        }
 
         if ($lang === null) {
             // case 1A: exact match on preferred label in any language
@@ -457,7 +463,9 @@ class RestController extends Controller
                     $hits[] = $res;
                 }
             }
-            if (sizeof($hits) > 0) return $hits;
+            if (sizeof($hits) > 0) {
+                return $hits;
+            }
 
             // case 2A: case-insensitive match on preferred label in any language
             foreach ($results as $res) {
@@ -467,7 +475,9 @@ class RestController extends Controller
                     $hits[] = $res;
                 }
             }
-            if (sizeof($hits) > 0) return $hits;
+            if (sizeof($hits) > 0) {
+                return $hits;
+            }
         }
 
         // case 3: exact match on alternate label
@@ -476,7 +486,9 @@ class RestController extends Controller
                 $hits[] = $res;
             }
         }
-        if (sizeof($hits) > 0) return $hits;
+        if (sizeof($hits) > 0) {
+            return $hits;
+        }
 
 
         // case 4: case-insensitive match on alternate label
@@ -485,7 +497,9 @@ class RestController extends Controller
                 $hits[] = $res;
             }
         }
-        if (sizeof($hits) > 0) return $hits;
+        if (sizeof($hits) > 0) {
+            return $hits;
+        }
 
         return $hits;
     }
@@ -502,7 +516,9 @@ class RestController extends Controller
             unset($res['voc']);
         }
 
-        $ret = array_merge_recursive($this->context, array(
+        $ret = array_merge_recursive(
+            $this->context,
+            array(
             '@context' => array('onki' => 'http://schema.onki.fi/onki#', 'results' => array('@id' => 'onki:results'), 'prefLabel' => 'skos:prefLabel', 'altLabel' => 'skos:altLabel', 'hiddenLabel' => 'skos:hiddenLabel'),
             'result' => $hits)
         );
@@ -555,7 +571,9 @@ class RestController extends Controller
         /* encode the results in a JSON-LD compatible array */
         $topconcepts = $vocab->getTopConcepts($scheme, $request->getLang());
 
-        $ret = array_merge_recursive($this->context, array(
+        $ret = array_merge_recursive(
+            $this->context,
+            array(
             '@context' => array('onki' => 'http://schema.onki.fi/onki#', 'topconcepts' => 'skos:hasTopConcept', 'notation' => 'skos:notation', 'label' => 'skos:prefLabel', '@language' => $request->getLang()),
             'uri' => $scheme,
             'topconcepts' => $topconcepts)
@@ -564,7 +582,8 @@ class RestController extends Controller
         return $this->returnJson($ret);
     }
 
-    private function redirectToVocabData($request) {
+    private function redirectToVocabData($request)
+    {
         $urls = $request->getVocab()->getConfig()->getDataURLs();
         if (sizeof($urls) == 0) {
             $vocid = $request->getVocab()->getId();
@@ -584,12 +603,13 @@ class RestController extends Controller
                 $vocid = $request->getVocab()->getId();
                 return $this->returnError('404', 'Not Found', "No download source URL known for vocabulary $vocid in language $dataLang");
             }
-		} else {
+        } else {
             header("Location: " . $urls[$format]);
-		}
+        }
     }
 
-    private function returnDataResults($results, $format) {
+    private function returnDataResults($results, $format)
+    {
         if ($format == 'application/ld+json' || $format == 'application/json') {
             // further compact JSON-LD document using a context
             $context = array(
@@ -640,7 +660,7 @@ class RestController extends Controller
 
         if ($request->getUri()) {
             $uri = $request->getUri();
-        } else if ($vocab !== null) { // whole vocabulary - redirect to download URL
+        } elseif ($vocab !== null) { // whole vocabulary - redirect to download URL
             return $this->redirectToVocabData($request);
         } else {
             return $this->returnError(400, 'Bad Request', "uri parameter missing");
@@ -736,10 +756,12 @@ class RestController extends Controller
             $labelResults['prefLabel'] = $labelResults['prefLabel'][0];
         }
 
-        $ret = array_merge_recursive($this->context,
-                                    array('@context' => array('prefLabel' => 'skos:prefLabel', 'altLabel' => 'skos:altLabel', 'hiddenLabel' => 'skos:hiddenLabel', '@language' => $request->getLang()),
+        $ret = array_merge_recursive(
+            $this->context,
+            array('@context' => array('prefLabel' => 'skos:prefLabel', 'altLabel' => 'skos:altLabel', 'hiddenLabel' => 'skos:hiddenLabel', '@language' => $request->getLang()),
                                     'uri' => $request->getUri()),
-                                    $labelResults);
+            $labelResults
+        );
 
         return $this->returnJson($ret);
     }
@@ -755,7 +777,9 @@ class RestController extends Controller
         $this->setLanguageProperties($request->getLang());
         $letters = $request->getVocab()->getAlphabet($request->getLang());
 
-        $ret = array_merge_recursive($this->context, array(
+        $ret = array_merge_recursive(
+            $this->context,
+            array(
             '@context' => array(
                 'indexLetters' => array(
                     '@id' => 'skosmos:indexLetters',
@@ -787,7 +811,9 @@ class RestController extends Controller
 
         $concepts = $request->getVocab()->searchConceptsAlphabetical($letter, $limit, $offset, $request->getLang());
 
-        $ret = array_merge_recursive($this->context, array(
+        $ret = array_merge_recursive(
+            $this->context,
+            array(
             '@context' => array(
                 'indexConcepts' => array(
                     '@id' => 'skosmos:indexConcepts',
@@ -807,7 +833,9 @@ class RestController extends Controller
             $results[] = array('uri' => $objuri, 'prefLabel' => $vals['label']);
         }
 
-        return array_merge_recursive($this->context, array(
+        return array_merge_recursive(
+            $this->context,
+            array(
             '@context' => array('prefLabel' => 'skos:prefLabel', $propname => $propuri, '@language' => $lang),
             'uri' => $uri,
             $propname => $results)
@@ -825,7 +853,9 @@ class RestController extends Controller
             $results[$objuri] = $result;
         }
 
-        return array_merge_recursive($this->context, array(
+        return array_merge_recursive(
+            $this->context,
+            array(
             '@context' => array('prefLabel' => 'skos:prefLabel', $dpropname => array('@id' => $dpropuri, '@type' => '@id'), $tpropname => array('@id' => $tpropuri, '@container' => '@index'), '@language' => $lang),
             'uri' => $uri,
             $tpropname => $results)
@@ -965,7 +995,9 @@ class RestController extends Controller
             }
         }
 
-        $ret = array_merge_recursive($this->context, array(
+        $ret = array_merge_recursive(
+            $this->context,
+            array(
             '@context' => array(
                 'onki' => 'http://schema.onki.fi/onki#',
                 'prefLabel' => 'skos:prefLabel',
@@ -998,7 +1030,9 @@ class RestController extends Controller
         }
         $results = $request->getVocab()->listConceptGroups($request->getLang());
 
-        $ret = array_merge_recursive($this->context, array(
+        $ret = array_merge_recursive(
+            $this->context,
+            array(
             '@context' => array('onki' => 'http://schema.onki.fi/onki#', 'prefLabel' => 'skos:prefLabel', 'groups' => 'onki:hasGroup', 'childGroups' => array('@id' => 'skos:member', '@type' => '@id'), 'hasMembers' => 'onki:hasMembers', '@language' => $request->getLang()),
             'uri' => '',
             'groups' => $results)
@@ -1022,7 +1056,9 @@ class RestController extends Controller
             return $this->returnError('404', 'Not Found', "Could not find group <{$request->getUri()}>");
         }
 
-        $ret = array_merge_recursive($this->context, array(
+        $ret = array_merge_recursive(
+            $this->context,
+            array(
             '@context' => array('prefLabel' => 'skos:prefLabel', 'members' => 'skos:member', '@language' => $request->getLang()),
             'uri' => $request->getUri(),
             'members' => $children)
@@ -1046,7 +1082,9 @@ class RestController extends Controller
             return $this->returnError('404', 'Not Found', "Could not find concept <{$request->getUri()}>");
         }
 
-        $ret = array_merge_recursive($this->context, array(
+        $ret = array_merge_recursive(
+            $this->context,
+            array(
             '@context' => array('prefLabel' => 'skos:prefLabel', 'narrower' => 'skos:narrower', 'notation' => 'skos:notation', 'hasChildren' => 'onki:hasChildren', '@language' => $request->getLang()),
             'uri' => $request->getUri(),
             'narrower' => $children)
@@ -1126,13 +1164,15 @@ class RestController extends Controller
                 $simpleChangeList[] = $concept;
             }
         }
-        return $this->returnJson(array_merge_recursive($this->context,
-                                                        array('@context' => array( '@language' => $request->getLang(),
+        return $this->returnJson(array_merge_recursive(
+            $this->context,
+            array('@context' => array( '@language' => $request->getLang(),
                                                                                      'prefLabel' => 'skos:prefLabel',
                                                                                      'xsd' => 'http://www.w3.org/2001/XMLSchema#',
                                                                                      'date' => array( '@id' => 'http://purl.org/dc/terms/date', '@type' => 'http://www.w3.org/2001/XMLSchema#dateTime') )
                                                         ),
-                                                        array('changeList' => $simpleChangeList)));
+            array('changeList' => $simpleChangeList)
+        ));
 
     }
 }

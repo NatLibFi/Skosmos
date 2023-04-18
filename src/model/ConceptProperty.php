@@ -83,7 +83,7 @@ class ConceptProperty
             return $help;
         }
 
-       // if not, see if there was a comment/definition for the property in the graph
+        // if not, see if there was a comment/definition for the property in the graph
         if ($this->tooltip !== null) {
             return $this->tooltip;
         }
@@ -116,7 +116,7 @@ class ConceptProperty
         # Note that getLabel() returns URIs in case of no label and may return a prefixed value which affects sorting
         if (!empty($this->values)) {
             if ($this->sort_by_notation) {
-                uasort($this->values, function($a, $b) {
+                uasort($this->values, function ($a, $b) {
                     $anot = $a->getNotation();
                     $bnot = $b->getNotation();
                     if ($anot == null) {
@@ -125,11 +125,9 @@ class ConceptProperty
                             return strcoll(strtolower($a->getLabel()), strtolower($b->getLabel()));
                         }
                         return 1;
-                    }
-                    else if ($bnot == null) {
+                    } elseif ($bnot == null) {
                         return -1;
-                    }
-                    else {
+                    } else {
                         // assume that notations are unique, choose strategy
                         if ($this->sort_by_notation == "lexical") {
                             return strcoll($anot, $bnot);
@@ -138,9 +136,8 @@ class ConceptProperty
                         }
                     }
                 });
-            }
-            else {
-                uasort($this->values, function($a, $b) {
+            } else {
+                uasort($this->values, function ($a, $b) {
                     // assume that labels are unique
                     return strcoll(strtolower($a->getLabel()), strtolower($b->getLabel()));
                 });

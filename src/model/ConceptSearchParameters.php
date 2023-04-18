@@ -5,7 +5,6 @@
  */
 class ConceptSearchParameters
 {
-
     private $config;
     private $request;
     private $vocabs;
@@ -65,13 +64,14 @@ class ConceptSearchParameters
         return null;
     }
 
-    public function getSearchTerm() : string
+    public function getSearchTerm(): string
     {
         $term = $this->request->getQueryParamRaw('q') !== null ? $this->request->getQueryParamRaw('q') : $this->request->getQueryParamRaw('query');
-        if ((!isset($term) || strlen(trim($term)) === 0) && $this->rest)
+        if ((!isset($term) || strlen(trim($term)) === 0) && $this->rest) {
             $term = $this->request->getQueryParamRaw('label');
+        }
         $term = trim(strval($term)); // surrounding whitespace is not considered significant
-        $term = Normalizer::normalize( $term, Normalizer::FORM_C ); //Normalize decomposed unicode characters #1184
+        $term = Normalizer::normalize($term, Normalizer::FORM_C); //Normalize decomposed unicode characters #1184
         if ($this->rest) {
             return $term;
         }
@@ -107,9 +107,9 @@ class ConceptSearchParameters
         $type = $this->request->getQueryParam('type') !== '' ? $this->request->getQueryParam('type') : null;
         if ($type && strpos($type, ' ')) {
             $type = explode(' ', $type);
-        } else if ($type && strpos($type, '+')) {
+        } elseif ($type && strpos($type, '+')) {
             $type = explode('+', $type);
-        } else if ($type && !is_array($type)) {
+        } elseif ($type && !is_array($type)) {
             // if only one type param given place it into an array regardless
             $type = array($type);
         }
@@ -119,11 +119,13 @@ class ConceptSearchParameters
         return $type;
     }
 
-    private function getQueryParam($name) {
+    private function getQueryParam($name)
+    {
         return $this->request->getQueryParam($name) !== '' ? $this->request->getQueryParam($name) : null;
     }
 
-    private function getQueryParamArray($name) {
+    private function getQueryParamArray($name)
+    {
         return $this->request->getQueryParam($name) ? explode(' ', urldecode($this->request->getQueryParam($name))) : [];
     }
 
@@ -155,27 +157,33 @@ class ConceptSearchParameters
         return $this->config->getSearchResultsSize();
     }
 
-    public function getUnique() {
+    public function getUnique()
+    {
         return $this->unique;
     }
 
-    public function setUnique($unique) {
+    public function setUnique($unique)
+    {
         $this->unique = $unique;
     }
 
-    public function getAdditionalFields() {
+    public function getAdditionalFields()
+    {
         return $this->getQueryParamArray('fields');
     }
 
-    public function getHidden() {
+    public function getHidden()
+    {
         return $this->hidden;
     }
 
-    public function setHidden($hidden) {
+    public function setHidden($hidden)
+    {
         $this->hidden = $hidden;
     }
 
-    public function getRest() {
+    public function getRest()
+    {
         return $this->rest;
     }
 }

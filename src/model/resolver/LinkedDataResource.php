@@ -2,7 +2,8 @@
 
 class LinkedDataResource extends RemoteResource
 {
-    public function resolve(int $timeout) : ?EasyRdf\Resource {
+    public function resolve(int $timeout): ?EasyRdf\Resource
+    {
         // prevent parsing errors for sources which return invalid JSON (see #447)
         // 1. Unregister the legacy RDF/JSON parser, we don't want to use it
         EasyRdf\Format::unregister('json');
@@ -24,7 +25,7 @@ class LinkedDataResource extends RemoteResource
             $this->model->getLogger()->info("LD resolution failed for <{$this->uri}>: $e");
             return null;
         }
-    
+
     }
 
 }

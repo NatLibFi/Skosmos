@@ -5,7 +5,6 @@
  */
 class Request
 {
-
     private $lang;
     private $clang;
     private $page;
@@ -74,7 +73,9 @@ class Request
      */
     public function getQueryParam($paramName)
     {
-        if (!isset($this->queryParams[$paramName])) return null;
+        if (!isset($this->queryParams[$paramName])) {
+            return null;
+        }
         $val = filter_var($this->queryParams[$paramName], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         return ($val !== null ? str_replace('\\', '', $val) : null);
     }
@@ -91,14 +92,16 @@ class Request
 
     public function getQueryParamPOST($paramName)
     {
-        if (!isset($this->queryParamsPOST[$paramName])) return null;
+        if (!isset($this->queryParamsPOST[$paramName])) {
+            return null;
+        }
         return filter_var($this->queryParamsPOST[$paramName], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     }
 
     public function getQueryParamBoolean($paramName, $default)
     {
         $val = $this->getQueryParamRaw($paramName);
-        if ($val !== NULL) {
+        if ($val !== null) {
             $val = filter_var($val, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
         }
         return ($val !== null) ? $val : $default;
@@ -106,7 +109,9 @@ class Request
 
     public function getServerConstant($paramName)
     {
-        if (!isset($this->serverConstants[$paramName])) return null;
+        if (!isset($this->serverConstants[$paramName])) {
+            return null;
+        }
         return filter_var($this->serverConstants[$paramName], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     }
 
@@ -247,8 +252,7 @@ class Request
      */
     public function setVocab($vocabid)
     {
-        if (strpos($vocabid, ' ') !== false) // if there are multiple vocabularies just storing the string
-        {
+        if (strpos($vocabid, ' ') !== false) { // if there are multiple vocabularies just storing the string
             $this->setVocabids($vocabid);
         } else {
             $this->vocab = $this->model->getVocabulary($vocabid);
@@ -264,11 +268,13 @@ class Request
         return $this->vocab;
     }
 
-    public function getVocabList() {
+    public function getVocabList()
+    {
         return $this->model->getVocabularyList();
     }
 
-    public function getPlugins() {
+    public function getPlugins()
+    {
         if ($this->vocab) {
             return $this->vocab->getConfig()->getPluginRegister();
         }
@@ -280,7 +286,7 @@ class Request
      * it cannot be determined. The version information is based on Git tags.
      * @return string version
      */
-    public function getVersion() : string
+    public function getVersion(): string
     {
         return $this->model->getVersion();
     }

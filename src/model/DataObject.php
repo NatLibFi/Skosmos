@@ -91,8 +91,7 @@ class DataObject
         if ($sortable !== null) {
             uksort($sortable, array($this, 'mycompare'));
             foreach ($sortable as $prop => $vals) {
-                if (is_array($prop)) // the ConceptProperty objects have their own sorting methods
-                {
+                if (is_array($prop)) { // the ConceptProperty objects have their own sorting methods
                     ksort($sortable[$prop]);
                 }
             }
@@ -136,8 +135,8 @@ class DataObject
      */
     public function getEnvLang()
     {
-       // get language from locale, same as used by gettext, set by Controller
-       return substr(getenv("LC_ALL"), 0, 2); // @codeCoverageIgnore
+        // get language from locale, same as used by gettext, set by Controller
+        return substr(getenv("LC_ALL"), 0, 2); // @codeCoverageIgnore
     }
 
     /**

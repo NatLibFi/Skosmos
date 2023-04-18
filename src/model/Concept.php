@@ -112,7 +112,8 @@ class Concept extends VocabularyDataObject implements Modifiable
      * Returns a boolean value indicating whether the resource is a group defined in the vocab config as skosmos:groupClass.
      * @return boolean
      */
-    public function isGroup() {
+    public function isGroup()
+    {
         $groupClass = $this->getVocab()->getConfig()->getGroupClassURI();
         if ($groupClass) {
             $groupClass = EasyRdf\RdfNamespace::shorten($groupClass) !== null ? EasyRdf\RdfNamespace::shorten($groupClass) : $groupClass;
@@ -315,8 +316,7 @@ class Concept extends VocabularyDataObject implements Modifiable
             foreach ($res->propertyUris() as $prop) {
                 $this->addPropertyValues($res, $prop, $seen);
             }
-        }
-        else {
+        } else {
             foreach ($props as $prop) {
                 if ($res->hasProperty($prop)) {
                     $this->addPropertyValues($res, $prop, $seen);
@@ -367,8 +367,7 @@ class Concept extends VocabularyDataObject implements Modifiable
 
             if (!is_null($lit) && $lit->getValue() === $obj->getValue() &&
                 $pos_reif->isA("rdf:Statement") &&
-                $pos_reif->hasProperty("rdf:predicate", new EasyRdf\Resource($pred, $sub->getGraph())))
-            {
+                $pos_reif->hasProperty("rdf:predicate", new EasyRdf\Resource($pred, $sub->getGraph()))) {
                 $this->addExternalTriplesToGraph($pos_reif, $seen);
             }
         }
@@ -387,8 +386,7 @@ class Concept extends VocabularyDataObject implements Modifiable
         foreach ($pos_reifs as $pos_reif) {
             if ($pos_reif->isA("rdf:Statement") &&
                 $pos_reif->hasProperty("rdf:object", $obj) &&
-                $pos_reif->hasProperty("rdf:predicate", new EasyRdf\Resource($pred, $sub->getGraph())))
-            {
+                $pos_reif->hasProperty("rdf:predicate", new EasyRdf\Resource($pred, $sub->getGraph()))) {
                 $this->addExternalTriplesToGraph($pos_reif, $seen);
             }
         }
@@ -534,16 +532,16 @@ class Concept extends VocabularyDataObject implements Modifiable
                 // note that this imply that the property has an rdf:type declared for the query to work
                 if(!$is_well_known && !$proplabel) {
                     $envLangLabels = $this->model->getDefaultSparql()->queryLabel($longUri, $this->getEnvLang());
-                    
+
                     $defaultPropLabel = $this->model->getDefaultSparql()->queryLabel($longUri, '');
 
-					if($envLangLabels) {
-						$proplabel = $envLangLabels[$this->getEnvLang()];
+                    if($envLangLabels) {
+                        $proplabel = $envLangLabels[$this->getEnvLang()];
                     } else {
-						if($defaultPropLabel) {
-							$proplabel = $defaultPropLabel[''];
-						}
-					}
+                        if($defaultPropLabel) {
+                            $proplabel = $defaultPropLabel[''];
+                        }
+                    }
                 }
 
                 // look for superproperties in the current graph
@@ -558,7 +556,7 @@ class Concept extends VocabularyDataObject implements Modifiable
                 }
 
                 // we're reading only one super property, even if there are multiple ones
-                $superprop = ($superprops)?$superprops[0]:null;
+                $superprop = ($superprops) ? $superprops[0] : null;
                 if ($superprop) {
                     $superprop = EasyRdf\RdfNamespace::shorten($superprop) ? EasyRdf\RdfNamespace::shorten($superprop) : $superprop;
                 }
@@ -687,12 +685,15 @@ class Concept extends VocabularyDataObject implements Modifiable
      * @param $lang UI language
      * @return String|null the translated label of skos:prefLabel subproperty, or null if not available
      */
-    public function getPreferredSubpropertyLabelTranslation($lang) {
+    public function getPreferredSubpropertyLabelTranslation($lang)
+    {
         $prefLabelProp = $this->graph->resource("skos:prefLabel");
         $subPrefLabelProps = $this->graph->resourcesMatching('rdfs:subPropertyOf', $prefLabelProp);
         foreach ($subPrefLabelProps as $subPrefLabelProp) {
             // return the first available translation
-            if ($subPrefLabelProp->label($lang)) return $subPrefLabelProp->label($lang);
+            if ($subPrefLabelProp->label($lang)) {
+                return $subPrefLabelProp->label($lang);
+            }
         }
         return null;
     }
@@ -800,14 +801,15 @@ class Concept extends VocabularyDataObject implements Modifiable
     /**
      * Gets the groups/arrays the concept belongs to.
      */
-    private function getCollections($includeArrays) {
+    private function getCollections($includeArrays)
+    {
         $groups = array();
         $collections = $this->graph->resourcesMatching('skos:member', $this->resource);
         if (isset($collections)) {
             $arrayClassURI = $this->vocab !== null ? $this->vocab->getConfig()->getArrayClassURI() : null;
             $arrayClass = $arrayClassURI !== null ? EasyRdf\RdfNamespace::shorten($arrayClassURI) : null;
             $superGroups = $this->resource->all('isothes:superGroup');
-            $superGroupUris = array_map(function($obj) { return $obj->getUri(); }, $superGroups);
+            $superGroupUris = array_map(function ($obj) { return $obj->getUri(); }, $superGroups);
             foreach ($collections as $collection) {
                 if (in_array($arrayClass, $collection->types()) === $includeArrays) {
                     // not adding the memberOf if the reverse resource is already covered by isothes:superGroup see issue #433
@@ -837,7 +839,8 @@ class Concept extends VocabularyDataObject implements Modifiable
         return $groups;
     }
 
-    public function getArrayProperties() {
+    public function getArrayProperties()
+    {
         return $this->getCollections(true);
     }
 
@@ -847,7 +850,8 @@ class Concept extends VocabularyDataObject implements Modifiable
      * @param string $langCode
      * @return string e.g. 'English'
      */
-    private function langToString($langCode) {
+    private function langToString($langCode)
+    {
         // using empty string as the language name when there is no langcode set
         $langName = '';
         if (!empty($langCode)) {
@@ -863,7 +867,8 @@ class Concept extends VocabularyDataObject implements Modifiable
      * @param string $key User-defined key for accessing the values
      * @return array LangCode-based multidimensional array ([string][string][ConceptPropertyValueLiteral]) or empty array if no values
      */
-    private function getForeignLabelList($prop, $key) {
+    private function getForeignLabelList($prop, $key)
+    {
         $ret = array();
         $labels = $this->resource->allLiterals($prop);
 
@@ -890,12 +895,10 @@ class Concept extends VocabularyDataObject implements Modifiable
         $langArray = array_keys($ret);
         foreach ($langArray as $lang) {
             $coll = collator_create($lang);
-            if (isset($ret[$lang]['prefLabel']))
-            {
+            if (isset($ret[$lang]['prefLabel'])) {
                 $coll->sort($ret[$lang]['prefLabel'], Collator::SORT_STRING);
             }
-            if (isset($ret[$lang]['altLabel']))
-            {
+            if (isset($ret[$lang]['altLabel'])) {
                 $coll->sort($ret[$lang]['altLabel'], Collator::SORT_STRING);
             }
             if ($lang !== '') {
@@ -927,7 +930,8 @@ class Concept extends VocabularyDataObject implements Modifiable
     /**
      * Dump concept graph as JSON-LD.
      */
-    public function dumpJsonLd() {
+    public function dumpJsonLd()
+    {
         $context = array(
             'skos' => EasyRdf\RdfNamespace::get("skos"),
             'isothes' => EasyRdf\RdfNamespace::get("isothes"),
@@ -958,8 +962,7 @@ class Concept extends VocabularyDataObject implements Modifiable
         if (!in_array($vocabUriSpace, $context, true)) {
             if (!isset($context[$vocabPrefix])) {
                 $context[$vocabPrefix] = $vocabUriSpace;
-            }
-            else if ($context[$vocabPrefix] !== $vocabUriSpace) {
+            } elseif ($context[$vocabPrefix] !== $vocabUriSpace) {
                 $i = 2;
                 while (isset($context[$vocabPrefix . $i]) && $context[$vocabPrefix . $i] !== $vocabUriSpace) {
                     $i += 1;

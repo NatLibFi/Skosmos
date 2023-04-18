@@ -14,7 +14,7 @@ class Model
     /** cache for Vocabulary objects */
     private $vocabsByUriSpace = null;
     /** how long to store retrieved URI information in APC cache */
-    const URI_FETCH_TTL = 86400; // 1 day
+    public const URI_FETCH_TTL = 86400; // 1 day
     private $globalConfig;
     private $logger;
     private $resolver;
@@ -33,14 +33,16 @@ class Model
      * Returns the GlobalConfig object given to the Model as a constructor parameter.
      * @return GlobalConfig
      */
-    public function getConfig() {
-      return $this->globalConfig;
+    public function getConfig()
+    {
+        return $this->globalConfig;
     }
 
     /**
      * Configures the logging facility
      */
-    private function initializeLogging() {
+    private function initializeLogging()
+    {
         $this->logger = new \Monolog\Logger('general');
         $formatter = new \Monolog\Formatter\LineFormatter("[%datetime%] %level_name% %message%\n");
         $formatter->allowInlineLineBreaks(true);
@@ -65,7 +67,8 @@ class Model
      * Return the logging facility
      * @return object logger
      */
-    public function getLogger() {
+    public function getLogger()
+    {
         return $this->logger;
     }
 
@@ -74,7 +77,7 @@ class Model
      * it cannot be determined. The version information is based on Git tags.
      * @return string version
      */
-    public function getVersion() : string
+    public function getVersion(): string
     {
         $ver = \Composer\InstalledVersions::getRootPackage()['pretty_version'];
         if ($ver === null) {
@@ -227,9 +230,9 @@ class Model
             // @TODO : in a global search showDeprecated will always be false and cannot be set globally
         }
 
-        $results = $sparql->queryConcepts($vocabs, $params->getAdditionalFields(), $params->getUnique(), $params,$showDeprecated);
+        $results = $sparql->queryConcepts($vocabs, $params->getAdditionalFields(), $params->getUnique(), $params, $showDeprecated);
         if ($params->getRest() && $results && $params->getSearchLimit() !== 0) {
-          $results = array_slice($results, $params->getOffset(), $params->getSearchLimit());
+            $results = array_slice($results, $params->getOffset(), $params->getSearchLimit());
         }
         $ret = array();
 
@@ -350,8 +353,7 @@ class Model
                 // register vocabulary ids as RDF namespace prefixes
                 $prefix = preg_replace('/\W+/', '', $voc->getId()); // strip non-word characters
                 try {
-                    if ($prefix != '' && EasyRdf\RdfNamespace::get($prefix) === null) // if not already defined
-                    {
+                    if ($prefix != '' && EasyRdf\RdfNamespace::get($prefix) === null) { // if not already defined
                         EasyRdf\RdfNamespace::set($prefix, $voc->getUriSpace());
                     }
 
@@ -568,7 +570,7 @@ class Model
                 $resource = $this->resolver->resolve($uri, $this->getConfig()->getHttpTimeout());
                 $this->globalConfig->getCache()->store($key, $resource, self::URI_FETCH_TTL);
             }
-            // @codeCoverageIgnoreEnd
+        // @codeCoverageIgnoreEnd
         } else { // APC not available, parse on every request
             $resource = $this->resolver->resolve($uri, $this->getConfig()->getHttpTimeout());
         }

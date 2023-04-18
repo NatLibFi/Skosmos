@@ -11,14 +11,14 @@ class Honeypot
     /**
      * Enable the Honeypot validation
      */
-    public function enable() : void
+    public function enable(): void
     {
         $this->disabled = false;
     }
     /**
      * Disable the Honeypot validation
      */
-    public function disable() : void
+    public function disable(): void
     {
         $this->disabled = true;
     }
@@ -28,7 +28,7 @@ class Honeypot
      * @param  string $honey_time
      * @return string
      */
-    public function generate($honey_name, $honey_time) : string
+    public function generate($honey_name, $honey_time): string
     {
         // Encrypt the current time
         $honey_time_encrypted = $this->getEncryptedTime();
@@ -43,7 +43,7 @@ class Honeypot
     * @param  mixed $value
     * @return boolean
     */
-    public function validateHoneypot($value) : bool
+    public function validateHoneypot($value): bool
     {
         if ($this->disabled) {
             return true;
@@ -57,7 +57,7 @@ class Honeypot
      * @param  int $minDelta minimum time difference in seconds
      * @return boolean
      */
-    public function validateHoneytime($value, $minDelta) : bool
+    public function validateHoneytime($value, $minDelta): bool
     {
         if ($this->disabled) {
             return true;
@@ -66,13 +66,13 @@ class Honeypot
         // Get the decrypted time
         $value = $this->decryptTime($value);
         // The current time should be greater than the time the form was built + minimum
-        return ( is_numeric($value) && time() > ($value + $minDelta) );
+        return (is_numeric($value) && time() > ($value + $minDelta));
     }
     /**
      * Get encrypted time
      * @return string
      */
-    public function getEncryptedTime() : string
+    public function getEncryptedTime(): string
     {
         return base64_encode(time());
     }
@@ -82,7 +82,7 @@ class Honeypot
      * @param  mixed $time
      * @return int|null
      */
-    public function decryptTime($time) : ?int
+    public function decryptTime($time): ?int
     {
         try {
             return intval(base64_decode($time));

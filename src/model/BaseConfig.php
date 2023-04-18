@@ -6,8 +6,7 @@
  */
 abstract class BaseConfig extends DataObject
 {
-
-	/**
+    /**
      * Returns a boolean value based on a literal value from the config.ttl configuration.
      * @param string $property the property to query
      * @param boolean $default the default value if the value is not set in configuration
@@ -57,8 +56,9 @@ abstract class BaseConfig extends DataObject
 
         // not found with selected language, try any language
         $literal = $this->getResource()->getLiteral($property);
-        if ($literal)
-          return $literal->getValue();
+        if ($literal) {
+            return $literal->getValue();
+        }
 
         return $default;
     }

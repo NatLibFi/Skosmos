@@ -30,14 +30,14 @@ class EntityController extends Controller
             $url = $baseurl . "$vocid/";
         } else {
 
-   	        if ($localname !== $uri && $localname === urlencode($localname)) {
-   	        // the URI can be shortened
-            $url = $baseurl . "$vocid/page/$localname";
+            if ($localname !== $uri && $localname === urlencode($localname)) {
+                // the URI can be shortened
+                $url = $baseurl . "$vocid/page/$localname";
             } else {
                 // must use full URI
-   	            $query = http_build_query(array('uri'=>$uri));
+                $query = http_build_query(array('uri'=>$uri));
                 $url = $baseurl . "$vocid/page/?" . $query;
-	        }
+            }
         }
         $this->redirect303($url);
     }
@@ -47,7 +47,8 @@ class EntityController extends Controller
      * web page for a resource or a REST API URL for retrieving its data.
      * @param Request $request
      */
-    public function redirect($request) {
+    public function redirect($request)
+    {
         /* determine parameters: URI and (optional) vocabulary */
         $request->setUri($request->getQueryParam('uri'));
         if ($request->getQueryParam('vocab')) {

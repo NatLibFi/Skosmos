@@ -2,7 +2,8 @@
 
 class LOCResource extends RemoteResource
 {
-    public function resolve(int $timeout) : ?EasyRdf\Resource {
+    public function resolve(int $timeout): ?EasyRdf\Resource
+    {
         $graph = new EasyRdf\Graph($this->uri);
         // guess the concept scheme based on the URI
         if (preg_match('|(http://id.loc.gov/[^/]+/[^/]+)/.*|', $this->uri, $matches)) {
