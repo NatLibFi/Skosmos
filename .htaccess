@@ -3,16 +3,16 @@ Options +FollowSymlinks -MultiViews -Indexes
 RewriteEngine on
 
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^entity$ entity.php [L]
+RewriteRule ^entity$ src/entity.php [L]
 
 RewriteRule ^rest/v1/swagger.json$ swagger.json [L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^rest/v1/(.*)$ rest.php/$1 [L]
+RewriteRule ^rest/v1/(.*)$ src/rest.php/$1 [L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond $0 !^resource/
-RewriteRule ^(.*)$ index.php/$1 [L] 
+RewriteRule ^(.*)$ src/index.php/$1 [L] 
 
 RewriteCond $0 ^favicon.ico$
 RewriteCond custom-favicon.ico -F

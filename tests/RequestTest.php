@@ -14,7 +14,7 @@ class RequestTest extends PHPUnit\Framework\TestCase
     bind_textdomain_codeset('skosmos', 'UTF-8');
     textdomain('skosmos');
 
-    $config = new GlobalConfig('/../tests/testconfig.ttl');
+    $config = new GlobalConfig('/../../tests/testconfig.ttl');
     $this->model = new Model($config);
     $this->request = new Request($this->model);
   }

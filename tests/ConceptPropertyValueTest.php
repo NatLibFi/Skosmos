@@ -15,7 +15,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
     bind_textdomain_codeset('skosmos', 'UTF-8');
     textdomain('skosmos');
 
-    $this->model = new Model(new GlobalConfig('/../tests/testconfig.ttl'));
+    $this->model = new Model(new GlobalConfig('/../../tests/testconfig.ttl'));
     $this->vocab = $this->model->getVocabulary('test');
     $results = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en');
     $this->concept = reset($results);

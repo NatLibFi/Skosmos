@@ -40,7 +40,7 @@ class Http304Test extends TestCase
         bindtextdomain('skosmos', 'resource/translations');
         bind_textdomain_codeset('skosmos', 'UTF-8');
         textdomain('skosmos');
-        $this->model = Mockery::mock(new Model(new GlobalConfig('/../tests/testconfig.ttl')))->makePartial();
+        $this->model = Mockery::mock(new Model(new GlobalConfig('/../../tests/testconfig.ttl')))->makePartial();
         $this->vocab = Mockery::mock($this->model->getVocabulary($vocabularyName))->makePartial();
         $this->controller = Mockery::mock('WebController')
             ->shouldAllowMockingProtectedMethods()

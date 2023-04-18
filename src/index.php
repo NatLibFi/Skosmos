@@ -4,10 +4,10 @@
  * Use Composer autoloader to automatically load library classes.
  */
 try {
-    if (!file_exists('./vendor/autoload.php')) {
+    if (!file_exists('../vendor/autoload.php')) {
         throw new Exception('Dependencies managed by Composer missing. Please run "php composer.phar install".');
     }
-    require_once 'vendor/autoload.php';
+    require_once '../vendor/autoload.php';
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage();
     return;

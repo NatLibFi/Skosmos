@@ -13,7 +13,7 @@ class ConceptPropertyTest extends PHPUnit\Framework\TestCase
     bind_textdomain_codeset('skosmos', 'UTF-8');
     textdomain('skosmos');
 
-    $this->model = new Model(new GlobalConfig('/../tests/testconfig.ttl'));
+    $this->model = new Model(new GlobalConfig('/../../tests/testconfig.ttl'));
   }
 
   /**

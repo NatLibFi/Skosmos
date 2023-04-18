@@ -1,10 +1,5 @@
 <?php
 
-require_once('model/GlobalConfig.php');
-require_once('model/Model.php');
-require_once('model/Request.php');
-require_once('controller/RestController.php');
-
 class RestControllerTest extends \PHPUnit\Framework\TestCase
 {
   /**
@@ -24,7 +19,7 @@ class RestControllerTest extends \PHPUnit\Framework\TestCase
     bind_textdomain_codeset('skosmos', 'UTF-8');
     textdomain('skosmos');
 
-    $globalConfig = new GlobalConfig('/../tests/testconfig.ttl');
+    $globalConfig = new GlobalConfig('/../../tests/testconfig.ttl');
     $this->model = Mockery::mock(new Model($globalConfig));
     $this->controller = new RestController($this->model);
   }

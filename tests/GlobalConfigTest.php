@@ -13,10 +13,10 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
 
     protected function setUp() : void
     {
-        $this->config = new GlobalConfig('/../tests/testconfig.ttl');
+        $this->config = new GlobalConfig('/../../tests/testconfig.ttl');
         $this->assertNotNull($this->config->getCache());
         $this->assertNotNull($this->config->getGraph());
-        $this->configWithDefaults = new GlobalConfig('/../tests/testconfig-fordefaults.ttl');
+        $this->configWithDefaults = new GlobalConfig('/../../tests/testconfig-fordefaults.ttl');
     }
 
     // --- tests for values that are overriding default values
@@ -136,14 +136,14 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
     public function testInitializeConfigWithoutGraph()
     {
         $this->expectOutputString('Error: config.ttl must have exactly one skosmos:Configuration');
-        $conf = new GlobalConfig('/../tests/testconfig-nograph.ttl');
+        $conf = new GlobalConfig('/../../tests/testconfig-nograph.ttl');
         $this->assertNotNull($conf);
     }
 
     public function testInexistentFile()
     {
         $this->expectOutputString('Error: config.ttl file is missing, please provide one.');
-        $conf = new GlobalConfig('/../tests/testconfig-idonotexist.ttl');
+        $conf = new GlobalConfig('/../../tests/testconfig-idonotexist.ttl');
         $this->assertNotNull($conf);
     }
 

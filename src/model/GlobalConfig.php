@@ -30,11 +30,11 @@ class GlobalConfig extends BaseConfig {
      */
     private $configModifiedTime = null;
 
-    public function __construct($config_name='/../config.ttl')
+    public function __construct($config_name='../../config.ttl')
     {
         $this->cache = new Cache();
         try {
-            $this->filePath = realpath( dirname(__FILE__) . $config_name );
+            $this->filePath = realpath( dirname(__FILE__) . "/" . $config_name );
             if (!file_exists($this->filePath)) {
                 throw new Exception('config.ttl file is missing, please provide one.');
             }

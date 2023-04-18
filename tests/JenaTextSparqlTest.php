@@ -13,7 +13,7 @@ class JenaTextSparqlTest extends PHPUnit\Framework\TestCase
     putenv("LANGUAGE=en_GB.utf8");
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');
-    $this->model = new Model(new GlobalConfig('/../tests/jenatestconfig.ttl'));
+    $this->model = new Model(new GlobalConfig('/../../tests/jenatestconfig.ttl'));
     $this->vocab = $this->model->getVocabulary('test');
     $this->graph = $this->vocab->getGraph();
     $this->params = $this->getMockBuilder('ConceptSearchParameters')->disableOriginalConstructor()->getMock();

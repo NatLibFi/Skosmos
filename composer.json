@@ -22,9 +22,10 @@
   "require-dev": {
     "phpunit/phpunit": "9.5.*",
     "symfony/dom-crawler": "5.4.*",
-    "mockery/mockery": "1.5.1"
+    "mockery/mockery": "1.5.1",
+    "friendsofphp/php-cs-fixer": "3.16.*"
   },
   "autoload": {
-    "classmap": ["controller/", "model/", "model/sparql/"]
+    "classmap": ["src/controller/", "src/model/", "src/model/sparql/"]
   }
 }

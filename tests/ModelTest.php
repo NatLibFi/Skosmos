@@ -10,7 +10,7 @@ class ModelTest extends PHPUnit\Framework\TestCase
     putenv("LANGUAGE=en_GB.utf8");
     putenv("LC_ALL=en_GB.utf8");
     setlocale(LC_ALL, 'en_GB.utf8');
-    $this->model = new Model(new GlobalConfig('/../tests/testconfig.ttl'));
+    $this->model = new Model(new GlobalConfig('/../../tests/testconfig.ttl'));
     $this->params = $this->getMockBuilder('ConceptSearchParameters')->disableOriginalConstructor()->getMock();
     $this->params->method('getVocabIds')->will($this->returnValue(array('test')));
     $this->params->method('getVocabs')->will($this->returnValue(array($this->model->getVocabulary('test'))));
@@ -26,7 +26,7 @@ class ModelTest extends PHPUnit\Framework\TestCase
    */
   public function testConstructorWithConfig()
   {
-    $model = new Model(new GlobalConfig('/../tests/testconfig.ttl'));
+    $model = new Model(new GlobalConfig('/../../tests/testconfig.ttl'));
     $this->assertNotNull($model);
   }
 
@@ -512,7 +512,7 @@ test:ta126
    * Issue: https://github.com/NatLibFi/Skosmos/pull/419
    */
   public function testGetRDFShouldNotIncludeExtraBlankNodesFromLists() {
-    $model = new Model(new GlobalConfig('/../tests/testconfig.ttl'));
+    $model = new Model(new GlobalConfig('/../../tests/testconfig.ttl'));
     $result = $model->getRDF('test', 'http://www.skosmos.skos/test/ta125', 'text/turtle');
     $resultGraph = new EasyRdf\Graph();
     $resultGraph->parse($result, "turtle");
