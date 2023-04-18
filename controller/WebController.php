@@ -129,15 +129,15 @@ class WebController extends Controller
     }
 
     /**
-     * Loads and renders the view containing all the vocabularies.
+     * Loads and renders the landing page view.
      * @param Request $request
      */
-    public function invokeVocabularies($request)
+    public function invokeLandingPage($request)
     {
         // set language parameters for gettext
         $this->setLanguageProperties($request->getLang());
         // load template
-        $template = $this->twig->loadTemplate('light.twig');
+        $template = $this->twig->loadTemplate('landing.twig');
         // set template variables
         $categoryLabel = $this->model->getClassificationLabel($request->getLang());
         $sortedVocabs = $this->model->getVocabularyList(false, true);
@@ -181,7 +181,7 @@ class WebController extends Controller
         $customLabels = $vocab->getConfig()->getPropertyLabelOverrides();
 
         $pluginParameters = json_encode($vocab->getConfig()->getPluginParameters());
-        $template = (in_array('skos:Concept', $results[0]->getType()) || in_array('skos:ConceptScheme', $results[0]->getType())) ? $this->twig->loadTemplate('concept-info.twig') : $this->twig->loadTemplate('group-contents.twig');
+        $template = $this->twig->loadTemplate('concept.twig');
 
         $crumbs = $vocab->getBreadCrumbs($request->getContentLang(), $uri);
         echo $template->render(array(
@@ -284,7 +284,7 @@ class WebController extends Controller
             mail($toAddress, $messageSubject, $message, $headers, $params);
         } catch (Exception $e) {
             header("HTTP/1.0 404 Not Found");
-            $template = $this->twig->loadTemplate('error-page.twig');
+            $template = $this->twig->loadTemplate('error.twig');
             if ($this->model->getConfig()->getLogCaughtExceptions()) {
                 error_log('Caught exception: ' . $e->getMessage());
             }
@@ -321,7 +321,7 @@ class WebController extends Controller
     public function invokeGlobalSearch($request)
     {
         $lang = $request->getLang();
-        $template = $this->twig->loadTemplate('vocab-search-listing.twig');
+        $template = $this->twig->loadTemplate('global-search.twig');
         $this->setLanguageProperties($lang);
 
         $parameters = new ConceptSearchParameters($request, $this->model->getConfig());
@@ -389,7 +389,7 @@ class WebController extends Controller
      */
     public function invokeVocabularySearch($request)
     {
-        $template = $this->twig->loadTemplate('vocab-search-listing.twig');
+        $template = $this->twig->loadTemplate('vocab-search.twig');
         $this->setLanguageProperties($request->getLang());
         $vocab = $request->getVocab();
         $searchResults = null;
@@ -455,71 +455,6 @@ class WebController extends Controller
     }
 
     /**
-     * Invokes the alphabetical listing for a specific vocabulary.
-     */
-    public function invokeAlphabeticalIndex($request)
-    {
-        $lang = $request->getLang();
-        $this->setLanguageProperties($lang);
-        $template = $this->twig->loadTemplate('alphabetical-index.twig');
-        $vocab = $request->getVocab();
-
-        $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
-        if ($request->getQueryParam('limit')) {
-            $count = $request->getQueryParam('limit');
-        } else {
-            $count = ($offset > 0) ? null : 250;
-        }
-
-        $contentLang = $request->getContentLang();
-
-        $allAtOnce = $vocab->getConfig()->getAlphabeticalFull();
-        if (!$allAtOnce) {
-            $letters = $vocab->getAlphabet($contentLang);
-            $letter = $request->getLetter();
-            if ($letter === '' && isset($letters[0])) {
-                $letter = $letters[0];
-            }
-            $searchResults = $vocab->searchConceptsAlphabetical($letter, $count, $offset, $contentLang);
-        } else {
-            $letters = null;
-            $searchResults = $vocab->searchConceptsAlphabetical('*', null, null, $contentLang);
-        }
-
-        $request->setContentLang($contentLang);
-
-        echo $template->render(
-            array(
-                'languages' => $this->languages,
-                'vocab' => $vocab,
-                'alpha_results' => $searchResults,
-                'letters' => $letters,
-                'all_letters' => $allAtOnce,
-                'request' => $request,
-            ));
-    }
-
-    /**
-     * Invokes the vocabulary group index page template.
-     * @param boolean $stats set to true to get vocabulary statistics visible.
-     */
-    public function invokeGroupIndex($request, $stats = false)
-    {
-        $lang = $request->getLang();
-        $this->setLanguageProperties($lang);
-        $template = $this->twig->loadTemplate('group-index.twig');
-        $vocab = $request->getVocab();
-
-        echo $template->render(
-            array(
-                'languages' => $this->languages,
-                'stats' => $stats,
-                'vocab' => $vocab,
-                'request' => $request,
-            ));
-    }
-
-    /**
      * Loads and renders the view containing a specific vocabulary.
      */
     public function invokeVocabularyHome($request)
@@ -539,7 +474,7 @@ class WebController extends Controller
         }
         $pluginParameters = json_encode($vocab->getConfig()->getPluginParameters());
 
-        $template = $this->twig->loadTemplate('vocab.twig');
+        $template = $this->twig->loadTemplate('vocab-home.twig');
 
         echo $template->render(
             array(
@@ -559,7 +494,7 @@ class WebController extends Controller
     {
         $this->setLanguageProperties($request->getLang());
         header("HTTP/1.0 404 Not Found");
-        $template = $this->twig->loadTemplate('error-page.twig');
+        $template = $this->twig->loadTemplate('error.twig');
         echo $template->render(
             array(
                 'languages' => $this->languages,
@@ -569,61 +504,4 @@ class WebController extends Controller
                 'requested_page' => filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
             ));
     }
-
-    /**
-     * Loads and renders the view containing a list of recent changes in the vocabulary.
-     * @param Request $request
-     */
-    public function invokeChangeList($request, $prop='dc:created')
-    {
-        $offset = ($request->getQueryParam('offset') && is_numeric($request->getQueryParam('offset')) && $request->getQueryParam('offset') >= 0) ? $request->getQueryParam('offset') : 0;
-        $limit = ($request->getQueryParam('limit') && is_numeric($request->getQueryParam('limit')) && $request->getQueryParam('limit') >= 0) ? $request->getQueryParam('limit') : 200;
-
-        $changeList = $this->getChangeList($request, $prop, $offset, $limit);
-        $bydate = $this->formatChangeList($changeList, $request->getLang());
-
-        // load template
-        $template = $this->twig->loadTemplate('changes.twig');
-
-        // render template
-        echo $template->render(
-            array(
-                'vocab' => $request->getVocab(),
-                'languages' => $this->languages,
-                'request' => $request,
-                'changeList' => $bydate)
-            );
-    }
-    /**
-     * Gets the list of newest concepts for a vocabulary according to timestamp indicated by a property
-     * @param Request $request
-     * @param string $prop the name of the property eg. 'dc:modified'.
-     * @param int $offset starting index offset
-     * @param int $limit maximum number of concepts to return
-     * @return Array list of concepts
-     */
-    public function getChangeList($request, $prop, $offset=0, $limit=200)
-    {
-        // set language parameters for gettext
-        $this->setLanguageProperties($request->getLang());
-
-        return $request->getVocab()->getChangeList($prop, $request->getContentLang(), $offset, $limit);
-    }
-
-    /**
-     * Formats the list of concepts as labels arranged by modification month
-     * @param Array $changeList
-     * @param string $lang the language for displaying dates in the change list
-     * @return array list of concepts as labels by month
-     */
-    public function formatChangeList($changeList, $lang)
-    {
-        $formatByDate = array();
-        foreach($changeList as $concept) {
-            $concept['datestring'] = Punic\Calendar::formatDate($concept['date'], 'medium', $lang);
-            $formatByDate[Punic\Calendar::getMonthName($concept['date'], 'wide', $lang, true) . Punic\Calendar::format($concept['date'], ' y', $lang) ][strtolower($concept['prefLabel'])] = $concept;
-        }
-        return $formatByDate;
-    }
-
 }

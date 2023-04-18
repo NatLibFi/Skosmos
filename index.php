@@ -35,7 +35,7 @@ if (sizeof($parts) <= 2) {
         $request->setContentLang($content_lang);
         ($parts[2] == 'about' || $parts[2] == 'feedback' || $parts[2] == 'search') ? $request->setPage($parts[2]) : $request->setPage('');
         if ($request->getPage() == '') {
-            $controller->invokeVocabularies($request);
+            $controller->invokeLandingPage($request);
         } elseif ($request->getPage() == 'about') {
             $controller->invokeAboutPage($request);
         } elseif ($request->getPage() == 'feedback') {
