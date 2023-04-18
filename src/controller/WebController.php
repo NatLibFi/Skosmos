@@ -38,7 +38,6 @@ class WebController extends Controller
         $loader = new Twig_Loader_Filesystem('src/view');
         // initialize Twig environment
         $this->twig = new Twig_Environment($loader, array('cache' => $tmpDir,'auto_reload' => true));
-        $this->twig->addExtension(new Twig_Extensions_Extension_I18n());
         // used for setting the base href for the relative urls
         $this->twig->addGlobal("BaseHref", $this->getBaseHref());
         // setting the service name string from the config.ttl
