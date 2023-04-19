@@ -3,10 +3,12 @@ build
 vendor
 report
 components
+node_modules
 plugins/*
 !README
 composer.phar
 composer.lock
+package-lock.json
 tests/jena-fuseki*
 .vagrant
 .project
