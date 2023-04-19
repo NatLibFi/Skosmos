@@ -42,6 +42,80 @@ If the hook complains and intercepts the commit, you can run PHP-CS-Fixer manual
 
     vendor/bin/php-cs-fixer fix src
 
+We expect contributors to code according to good coding practices also for front-end code. The Mozilla Developer Network has a strong position in the JavaScript/ECMAScript developer community, so we follow their example and use the [Prettier tool](https://prettier.io/docs/en/index.html) to validate the code.
+
+[Writing Style Guide](https://developer.mozilla.org/en-US/docs/MDN/Writing_guidelines/Writing_style_guide/Code_style_guide/JavaScript#general_guidelines_for_javascript_code_examples)
+
+To test how the Prettier tool works and what the rules are, you can visit the online version [here](https://prettier.io/playground/).
+
+Prettier validates and fixes the code with a pre-commit hook run on git commit. If there are style errors in the code, Prettier automatically corrects them in the files containing the code. If there are syntax errors, Prettier does not fix them, but will show you the errors that must be corrected before the commit can be performed successfully.
+
+If Prettier works unexpectedly, please let us know in the Skosmos [Users group](https://groups.google.com/g/skosmos-users).
+
+#### How to deploy Prettier in your Skosmos installation
+
+(In the same folder where the .git folder is located)
+
+1. 
+```npm install --save-dev --save-exact prettier```
+
+The package.json file will be updated with the new dependency and the node_modules folder will be updated.
+```
+"devDependencies": {
+    "prettier": "2.8.7",
+} 
+```
+[NPM Info](https://www.npmjs.com/package/prettier)
+
+2.
+Create a file prettier.config.js in the root of the Skosmos folder and add the following module:
+```
+module.exports = {
+    trailingComma: 'es5',
+    tabWidth: 4,
+    semi: false,
+    singleQuote: true,
+}
+```
+3.
+Backup .git/hooks/pre-commit-sample and create a file .git/hooks/pre-commit
+
+Write the following script to the file:
+```
+#!/bin/bash
+set -e
+npx prettier --config prettier.config.js --write *.vue *.js
+```
+4.
+To test how Prettier works, the next time you write some JavaScript code, you can deliberately make the code
+style error. After a successful commit, you can see the changes that Prettier made.
+
+Examples of style errors:
+
+In JavaScript objects, keys and values must either be on one line or all of them on different lines, but both ways cannot be used at the same time.
+
+The wrong ways:
+```
+const user = { name: "Kalle Koodari",
+  age: 30
+}
+```
+or
+```
+const user = {
+ name: "Kalle Koodari", age: 30 };
+```
+
+With string the double quotes should be used to minimize the use of the escape character.
+```
+let exampleStringWithDoubleQM = 'It\'s gettin\' better!'
+```
+will be modified as follows:
+```
+let exampleStringWithDoubleQM = "It's gettin' better!"
+```
+
+
 ### Unit tests
 
 If you've added new functionality or you've found out that the existing tests are lacking, we'd be happy if you could provide additional PHPUnit tests to cover it. Also see that your code passes all the existing tests by running PHPUnit. For more information, see the wiki page on [unit and integration tests](https://github.com/NatLibFi/Skosmos/wiki/Unit-and-integration-tests).
