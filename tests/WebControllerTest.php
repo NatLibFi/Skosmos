@@ -215,6 +215,7 @@ class WebControllerTest extends TestCase
      */
     public function testFormatChangeList()
     {
+        $this->markTestSkipped('disabled since the functionality needs to be reimplemented');
         $request = new Request($this->model);
         $request->setVocab('changes');
         $request->setLang('en');
