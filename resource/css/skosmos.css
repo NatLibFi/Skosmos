@@ -1,0 +1,740 @@
+:root {
+  /* Color definitions */
+  --dark-color: #0d284e;
+  --secondary-dark-color: #1b709d ;
+  --medium-color: #dfe5ed;
+  --secondary-medium-color: #b8c9db;
+  --light-color: #f2f5f7;
+  --white-color: #ffffff;
+
+  /* Font definitions */
+  --font-size: 14px;
+  --font-family: 'Public Sans', sans-serif;
+  --font-family-heading: 'EB Garamond', serif;
+}
+
+body {
+  color: var(--dark-color);
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+}
+
+.fs-1 {
+  font-size: 4.25em !important;
+}
+
+.fs-2 {
+  font-size: 3.25em !important;
+}
+
+.fs-3 {
+  font-size: 2.75em !important;
+}
+
+.bg-dark {
+  background-color: var(--dark-color) !important;
+}
+
+.bg-medium {
+  background-color: var(--medium-color) !important;
+}
+
+.bg-light {
+  background-color: var(--light-color) !important;
+}
+
+/* Font awesome
+ *****************************************/
+  #main-container.frontpage #info-box .fa-arrow-right {
+    color: var(--info-box-arrow);
+  }
+
+  #main-container.frontpage-one-vocab #info-box .fa-arrow-right {
+    color: var(--info-box-one-arrow);
+  }
+
+  #vocab-box .fa-arrow-right {
+    color: var(--vocab-box-one-arrow);
+  }
+
+  #main-container.vocabpage .fa-arrow-right, #main-container.termpage .fa-arrow-right {
+    color: var(--vocab-text);
+    font-size: 12px;
+  }
+
+  #main-container.termpage .fa-copy {
+    color: var(--vocab-text);
+    font-size: 30px;
+    position: relative;
+    bottom: -3px;
+  }
+
+  #main-container.searchpage .fa-arrow-right, #main-container.searchpage-multi-vocab .fa-arrow-right {
+    color: var(--vocab-text);
+    font-size: 12px;
+  }
+
+  #main-container.searchpage .list-group .fa-solid, #main-container.searchpage .list-group .fa-regular,
+  #main-container.searchpage-multi-vocab .list-group .fa-solid, #main-container.searchpage-multi-vocab .list-group .fa-regular {
+    color: var(--vocab-text);
+    font-size: 16px;
+    width: 20px;
+  }
+
+  #main-container.searchpage .fa-copy, #main-container.searchpage-multi-vocab .fa-copy {
+    position: relative;
+    bottom: 5px;
+  }
+
+  .fa-magnifying-glass {
+    color: var(--search-button-text);
+    font-size: 22px;
+    margin: calc((38px - 22px) / 2 ) 0; /* (button height - font height) / 2 */
+  }
+
+  .fa-download {
+    color: var(--vocab-text);
+  }
+
+  /* Topbar
+   *****************************************/
+  #topbar.frontpage, #topbar.frontpage-one-vocab {
+    background-color: var(--topbar-bg-1);
+    color: var(--topbar-text-1);
+  }
+
+  #topbar.vocabpage, #topbar.termpage, #topbar.infopage, #topbar.feedbackpage {
+    background-color: var(--topbar-bg-2);
+    color: var(--topbar-text-2);
+  }
+
+  #topbar.frontpage a, #topbar.frontpage-one-vocab a {
+    color: var(--topbar-text-1) !important;
+  }
+
+  #topbar.vocabpage a, #topbar.termpage a, #topbar.infopage a, #topbar.feedbackpage a {
+    color: var(--topbar-text-2) !important;
+  }
+
+  #topbar h3 {
+    display: inline;
+    font-weight: bold;
+  }
+
+  #multi-search-toggle {
+    background-color: var(--topbar-bg-1);
+    color: var(--topbar-text-1);
+    border: none;
+  }
+
+  #multi-search-toggle::after {
+    content: '﹀';
+    position: absolute;
+    top: 30px;
+    left: 205px;
+  }
+
+  .topbar-nav-link {
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size: 40%;
+    padding-left: 30px;
+  }
+
+  #topbar.frontpage #topbar-nav-home, #topbar.frontpage-one-vocab #topbar-nav-home {
+    background-image: var(--topbar-home-1);
+  }
+
+  #topbar.frontpage #topbar-nav-info, #topbar.frontpage-one-vocab #topbar-nav-info {
+    background-image: var(--topbar-info-1);
+  }
+
+  #topbar.frontpage #topbar-nav-feedback, #topbar.frontpage-one-vocab #topbar-nav-feedback {
+    background-image: var(--topbar-feedback-1);
+  }
+
+  #topbar.vocabpage #topbar-nav-home, #topbar.termpage #topbar-nav-home, #topbar.infopage #topbar-nav-home, #topbar.feedbackpage #topbar-nav-home {
+    background-image: var(--topbar-home-2);
+  }
+
+  #topbar.vocabpage #topbar-nav-info, #topbar.termpage #topbar-nav-info, #topbar.infopage #topbar-nav-info, #topbar.feedbackpage #topbar-nav-info {
+    background-image: var(--topbar-info-2);
+  }
+
+  #topbar.vocabpage #topbar-nav-feedback, #topbar.termpage #topbar-nav-feedback, #topbar.infopage #topbar-nav-feedback, #topbar.feedbackpage #topbar-nav-feedback {
+    background-image: var(--topbar-feedback-2);
+  }
+
+  /* Headerbar
+   *****************************************/
+  #headerbar.frontpage, #headerbar.frontpage-one-vocab {
+    color: var(--headerbar-text-1);
+  }
+
+  #headerbar.vocabpage, #headerbar.termpage {
+    background-color: var(--headerbar-vocab-bg);
+  }
+
+  #vocab-title a {
+    color: var(--headerbar-text-2);
+    font-family: var(--font-family-heading);
+    text-decoration: none;
+  }
+
+  #search-multi-vocab-title {
+    color: var(--headerbar-text-2);
+    font-family: var(--font-family-heading);
+  }
+
+  #search-vocab {
+    width: 600px;
+  }
+
+  #search-multi-vocab {
+    width: 800px;
+  }
+
+  #search-vocab a, #search-multi-vocab a {
+    color: var(--headerbar-text-2);
+    float: right;
+  }
+
+  #headerbar .dropdown-toggle {
+    background-color: var(--search-bg);
+    color: var(--headerbar-text-2);
+    border: 1px solid var(--search-border);
+    border-radius: 0;
+    width: 200px;
+  }
+
+  #headerbar .dropdown-toggle::after {
+    content: '﹀';
+    border: none;
+    position: absolute;
+    top: 13px;
+    margin-left: 6px;
+  }
+
+  #headerbar .dropdown-toggle:hover, #headerbar .dropdown-toggle:active {
+    background-color: var(--search-dropdown-toggle-hover); /* What color to use? */
+  }
+
+  #headerbar .dropdown-toggle.show {
+    background-color: var(--search-dropdown-toggle-show); /* What color to use? */
+  }
+
+  #headerbar .dropdown-menu {
+    border: 1px solid var(--search-border);
+    border-radius: 0;
+  }
+
+  #headerbar .dropdown-item:active {
+    background-color: var(--search-dropdown-item-active);
+  }
+
+  #headerbar .dropdown-item:hover {
+    background-color: var(--search-dropdown-item-hover); /* What color to use? */
+  }
+
+  #headerbar .form-check-input {
+    background-color: var(--search-bg);
+    border: 1px solid var(--search-border);
+    border-radius: 0;
+  }
+
+  #headerbar .form-check-input:checked {
+    background-color: var(--headerbar-text-2);
+  }
+
+  #headerbar input {
+    background-color: var(--search-bg);
+    border: 1px solid var(--search-border);
+  }
+
+  #search-button {
+    background-color: var(--search-button-bg);
+    border: 1px solid var(--search-border);
+    border-radius: 0;
+    padding: 0;
+    width: 38px;
+  }
+
+  /* Main container
+   *****************************************/
+  #main-container {
+    font-size: 16px;
+  }
+
+  #main-container h1, #main-container h2 {
+    font-family: var(--font-family-heading);
+    font-weight: bold;
+  }
+
+  /***** Main container frontpage & frontpage one vacab *****/
+  #background.frontpage, #background.frontpage-one-vocab {
+    background-color: var(--main-bg-1);
+    background-image: var(--frontpage-stripes-1);
+    background-repeat: no-repeat;
+    background-size: 650px;
+    background-position: calc(100% + 41px) -55px;
+  }
+
+  #main-container.frontpage, #main-container.frontpage-one-vocab {
+    background-image: var(--frontpage-stripes-2);
+    background-repeat: no-repeat;
+    background-size: 650px;
+    background-position: -41px calc(100% + 55px);
+  }
+
+  #vocab-box, #welcome-box, #info-box {
+    padding: 2.5rem 2rem;
+  }
+
+  #info-box a {
+    color: var(--info-box-text);
+    text-decoration: none;
+  }
+
+  /*** Main container frontpage ***/
+  #main-container.frontpage #vocab-box, #vocab-box .list-group-item {
+    background-color: var(--vocab-box-bg);
+  }
+
+  .vocab-category {
+    border-top: 1px solid var(--vocab-box-text);
+    color: var(--vocab-box-text);
+  }
+
+  .vocab-category a {
+    /** color: var(--secondary-medium-color) solid; **/
+    color: var(--vocab-box-link);
+    font-weight: bold;
+    text-decoration: underline var(--vocab-box-link) solid;
+    text-decoration-thickness: 1px;
+  }
+
+  #main-container.frontpage #vocab-box h2 {
+    color: var(--vocab-box-header);
+  }
+
+  #main-container.frontpage #welcome-box {
+    background-color: var(--welcome-box-bg);
+    color: var(--welcome-box-text);
+  }
+
+  #main-container.frontpage #info-box {
+    background-color: var(--info-box-bg);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /*** Main container frontpage one vocab ***/
+  #main-container.frontpage-one-vocab #vocab-box {
+    background-color: var(--vocab-box-one-bg);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  #main-container.frontpage-one-vocab #vocab-box a {
+    color: var(--vocab-box-one-text);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+  }
+
+  #main-container.frontpage-one-vocab #welcome-box {
+    background-color: var(--welcome-box-one-bg);
+    color: var(--welcome-box-one-text);
+  }
+
+  #main-container.frontpage-one-vocab #info-box {
+    background-color: var(--info-box-one-bg);
+  }
+
+  /***** Main container vocabpage & termpage & searchpage & searchpage multi vocab *****/
+  #main-container.vocabpage, #main-container.termpage, #main-container.searchpage, #main-container.searchpage-multi-vocab {
+    background-color: var(--main-bg-2);
+    padding: 1rem 0;
+  }
+
+  #main-container.vocabpage a, #main-container.termpage a, #main-container.searchpage a, #main-container.searchpage-multi-vocab a {
+    color: var(--vocab-link);
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  #sidebar, #main-content {
+    background-color: var(--vocab-bg);
+  }
+
+  /*** Sidebar termpage & vocabpage ***/
+  #main-container.vocabpage #sidebar .nav-item, #main-container.termpage #sidebar .nav-item {
+    background-color: var(--sidebar-tab-inactive-bg);
+  }
+
+  #main-container.vocabpage #sidebar .nav-link, #main-container.termpage #sidebar .nav-link {
+    color: var(--sidebar-tab-inactive-text) !important;
+    transition: none;
+  }
+
+  #main-container.vocabpage #sidebar .nav .active, #main-container.termpage #sidebar .nav .active {
+    background-color: var(--sidebar-tab-active-bg);
+    color: var(--sidebar-tab-active-text) !important;
+  }
+
+  #main-container.vocabpage #sidebar .pagination, #main-container.termpage #sidebar .pagination {
+    background-color: var(--sidebar-tab-active-bg);
+    padding: 1rem;
+    margin: 0;
+    flex-wrap: wrap;
+  }
+
+  #main-container.vocabpage #sidebar .page-item, #main-container.vocabpage #sidebar .page-link,
+  #main-container.termpage #sidebar .page-item, #main-container.termpage #sidebar .page-link {
+    background-color: var(--sidebar-tab-active-bg);
+    color: var(--sidebar-tab-active-text) !important;
+    font-weight: normal !important;
+    border: none;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    transition: none;
+  }
+
+  /* Not sure what these should be, probably something though */
+  #main-container.vocabpage #sidebar .page-link:hover, #main-container.vocabpage #sidebar .page-link:active, #main-container.vocabpage #sidebar .page-link:focus
+  #main-container.termpage #sidebar .page-link:hover, #main-container.termpage #sidebar .page-link:active, #main-container.termpage #sidebar .page-link:focus {
+    background-color: var(--sidebar-tab-active-bg);
+    color: var(--sidebar-tab-active-text);
+    box-shadow: none;
+  }
+
+  #alpha-list {
+    padding: 2rem 1rem;
+    overflow: hidden;
+    overflow-y: scroll;
+    scrollbar-color: var(--sidebar-scrollbar-thumb) var(--sidebar-scrollbar-bg);
+    height: 600px; /*remove*/
+  }
+
+  #alpha-list::-webkit-scrollbar {
+    background: var(--sidebar-scrollbar-bg);
+  }
+
+  #alpha-list::-webkit-scrollbar-thumb {
+    background: var(--sidebar-scrollbar-thumb);
+  }
+
+  #alpha-list li {
+    border: none;
+    border-radius: none;
+  }
+
+  #alpha-list .list-group-item.selected a {
+    color: var(--vocab-text);
+    font-size: 18px;
+  }
+
+  #tab-hierarchy {
+    background-color: var(--sidebar-tab-active-bg);
+    color: var(--sidebar-tab-active-text);
+  }
+
+  /*** sidebar serachpage ***/
+  #main-container.searchpage #sidebar {
+    background-color: var(--sidebar-search-bg);
+    color: var(--sidebar-search-text);
+    height: 1000px; /* change */
+  }
+
+  #search-options input, #search-options select {
+    border: none;
+    border-radius: 0;
+  }
+
+  #search-options button {
+    background-color: var(--sidebar-search-button-bg); /* Which bg color to use? */
+    color: var(--sidebar-search-button-text);
+    border: none;
+    border-radius: 0;
+  }
+
+  #search-options select {
+    background-image: none;
+  }
+
+  .select-wrapper { /* Also used in feedback form */
+    position: relative;
+  }
+
+  .select-wrapper::after { /* Also used in feedback form */
+    color: var(--vocab-text);
+    content: '﹀';
+    font-size: 20px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+
+  /*****  Main content vocabpage & termpage *****/
+  #main-content h2 {
+    font-size: 2.5rem;
+  }
+
+  .main-content-section {
+    border-bottom: 2px solid var(--main-bg-2);
+  }
+
+  #main-table {
+    margin-top: 4rem;
+  }
+
+  #main-table tr {
+    border-top: 1px solid var(--vocab-table-border);
+  }
+
+  #main-table td {
+    color: var(--vocab-text);
+    border: none;
+  }
+
+  .main-table-label {
+    width: 30%;
+    font-weight: bold;
+    font-size: 20px !important;
+  }
+
+  #resource-table th, #term-table th {
+    color: var(--vocab-text);
+    font-weight: bold;
+    border-bottom: 1px solid var(--vocab-text);
+  }
+
+  #resource-table td, #term-table td {
+    color: var(--vocab-text);
+    border: none;
+  }
+
+  .resource-table-label {
+    width: 40%;
+  }
+
+  /*** Main content termpage ***/
+  #term-heading span {
+    width: 30%;
+    align-self: end;
+  }
+
+  .copy-clipboard {
+    border: none;
+    font-size: 20px;
+  }
+
+  .copy-clipboard:active, .copy-clipboard:focus, .copy-clipboard:active:focus {
+    border: none;
+  }
+
+  .term-other-languages a {
+    display: inline-block;
+    width: 50%;
+  }
+
+  /***** Main content searchpage & searchpage multi vocab *****/
+  .search-result {
+    border-top: 1px solid var(--vocab-table-border);
+  }
+
+  .search-result-term a {
+    font-family: var(--font-family-heading);
+    text-decoration: none;
+  }
+
+  .search-result .list-group-item {
+    color: var(--vocab-text);
+    border: none;
+  }
+
+  .uri-icon {
+    display: inline-block;
+    width: 20px;
+    font-size: 10px;
+  }
+
+  /***** Main container infopage & feedbackpage *****/
+  #main-container.infopage, #main-container.feedbackpage {
+    background-color: var(--main-bg-3);
+    color: var(--infopage-text);
+    padding: 4rem 0;
+  }
+
+  #main-container.infopage .container, #main-container.feedbackpage .container {
+    padding: 0 12rem;
+  }
+
+  /*** Main container infopage ***/
+  #main-container.infopage {
+    background-image: var(--infopage-stripes);
+    background-repeat: no-repeat;
+    background-size: 650px;
+    background-position: calc(100% + 41px) calc(100% + 55px);
+  }
+
+  #main-container.infopage a {
+    color: var(--infopage-link);
+    text-decoration: underline;
+    font-weight: bold;
+  }
+
+  /*** Main container feedbackpage ***/
+  #main-container.feedbackpage {
+    background-image: var(--feedbackpage-stripes);
+    background-repeat: no-repeat;
+    background-size: 650px;
+    background-position: var(--feedbackpage-stripes-pos);
+  }
+
+  #feedback-form {
+    background-color: var(--feedback-form-bg);
+    color: var(--feedback-form-text);
+    padding: 2.5rem 2rem 5rem;
+  }
+
+  #feedback-form label {
+    font-weight: bold;
+  }
+
+  #feedback-form input, #feedback-form select, #feedback-form textarea {
+    background-color: var(--feedback-form-input);
+    border: none;
+    border-radius: 0;
+  }
+
+  #feedback-form input::placeholder {
+    color: var(--feedback-form-text);
+  }
+
+  #feedback-form textarea {
+    margin-bottom: 4rem;
+  }
+
+  #feedback-form button {
+    background-color: var(--feedback-form-button-bg);
+    border: none;
+    border-radius: 0;
+    font-weight: bold;
+    float: right;
+  }
+
+  #feedback-form select {
+    background-image: none;
+  }
+
+  #feedback-form select:valid {
+    color: var(--feedback-form-text);
+  }
+
+  #feedback-form select:valid:focus {
+    color: var(--feedback-form-text);
+  }
+
+  /* Footer
+   *****************************************/
+  #footer p {
+    max-width: 75%;
+  }
+
+  @media (min-width: 1200px) {
+    .container {
+      max-width: 1460px !important;
+    }
+  }
+
+  #vocabulary-list h2, #welcome-box h2, #vocab-info h2 {
+    font-family: var(--font-family-heading) !important;
+  }
+  header > h2 > a {
+    font-family: var(--font-family-heading) !important;
+    color: var(--dark-color)
+  }
+  #vocabulary-list .list-group-item {
+    background-color: var(--medium-color) !important;
+  }
+  #vocabulary-list .border-top {
+    border-top: 2px var(--dark-color) solid !important;
+    color: var(--secondary-dark-color);
+    text-decoration: underline var(--secondary-medium-color) solid;
+  }
+  #alphabetical-menu > .list-group > .list-group-item {
+    border: none !important;
+  }
+  #sidebar > div > .nav-tabs > .nav-item {
+    border: none !important;
+    border-image: none !important;
+    transition: none;
+  }
+  /*** Sidebar ***/
+  #sidebar .nav-item {
+    background-color: var(--light-color);
+  }
+  #sidebar .nav-link {
+    color: var(--dark-color) !important;
+  }
+  #sidebar .nav .active {
+    background-color: var(--dark-color);
+    color: var(--white-color) !important;
+  }
+  #sidebar .pagination {
+    background-color: var(--dark-color);
+    color: var(--white-color);
+  }
+  #sidebar .page-item, #sidebar .page-link {
+    background-color: var(--dark-color);
+    color: var(--white-color) !important;
+  }
+  #sidebar .page-link:hover, #sidebar .page-link:active, #sidebar .page-link:focus {
+    background-color: var(--dark-color);
+    color: var(--white-color);
+    scrollbar-color: var(--secondary-medium-color) var(--light-color);
+    background: var(--light-color);
+    background: var(--secondary-medium-color);
+    padding: 0.25rem 0.5rem;
+  }
+  #alpha-list a {
+    color: var(--secondary-dark-color);
+  }
+  #alpha-list .list-group-item.selected a {
+    color: var(--dark-color);
+    font-size: 18px;
+  }
+  #tab-hierarchy {
+    background-color: var(--dark-color);
+    color: var(--white-color);
+  }
+  #sidebar .page-item, #sidebar .page-link {
+    background-color: var(--dark-color);
+    color: var(--white-color) !important;
+    font-weight: normal !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    transition: none;
+  }
+  tr > td {
+    color: var(--dark-color);
+  }
+  tr > td > div > a {
+    color: var(--secondary-dark-color);
+    text-decoration: none !important;
+    font-weight: 700 !important;
+  }
+  td.main-table-label, .vocab-statistics > h3 {
+    font-size: 20px !important;
+  }
+  td.align-middle {
+    font-size: 16px;
+  }
+  table.vocab-info-literals > tbody > tr {
+    border-top: 1px solid var(--medium-color);
+  }
+

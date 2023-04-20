@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="{{ request.lang }}">
+<head>
+<base href="{{ BaseHref }}">
+<link rel="shortcut icon" href="favicon.ico">
+{% include 'meta.twig' %}
+<link href="vendor/twbs/bootstrap/dist/css/bootstrap.min.css" media="screen, print" rel="stylesheet" type="text/css">
+<link href="resource/css/fonts.css" media="screen, print" rel="stylesheet" type="text/css">
+<link href="resource/css/skosmos.css" media="screen, print" rel="stylesheet" type="text/css">
+{% if ServiceCustomCss %}
+<link href="{{ ServiceCustomCss }}" media="screen, print" rel="stylesheet" type="text/css">
+{% endif %}
+{% for plugin, files in request.plugins.pluginsCSS %}{% for file in files %}<link href="{{ file }}" media="screen, print" rel="stylesheet" type="text/css">{% endfor %}{% endfor %}
+
+<title>{{ ServiceName }}{% block title %}{% endblock %}</title>
+</head>
+<body{% if request.vocabid == '' and request.page != 'feedback' and request.page != 'about' %} class="bg-light frontpage-logo"{% else %} class="bg-medium vocab-{{ request.vocabid }}"{% endif %}>
+  <noscript>
+    <strong>{% trans "We're sorry but Skosmos doesn't work properly without JavaScript enabled. Please enable it to continue." %}</strong>
+  </noscript>
+  <a class="visually-hidden" id="skiptocontent" href="{{ request.langurl }}#maincontent">{% trans "Skip to main" %}</a>
+  <header>
+    <div class="container-fluid bg-dark d-flex my-auto py-3 px-4 text-bg-dark">
+      <span class="fs-6 py-3 text-light">Yhteishaku sanastoista v</span>
+      <ul class="nav nav-pills ms-auto my-auto text-light gx-3 py-3" id="topbar-nav">
+        <li class="nav-item">
+          <a href="{{ request.lang }}/{% if request.contentLang and request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}" id="navi1" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none" >
+                   {% trans "Vocabularies-nav" %}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ request.lang }}/about{% if request.contentLang and request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}" id="navi2" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none">
+                   {% trans "About page" %}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% if request.vocabid and vocab.title%}{{ request.vocabid }}/{% endif %}{{ request.lang }}/feedback{% if request.contentLang and request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}" id="navi3" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none">
+                   {% trans "Feedback" %}
+          </a>
+        </li>
+        {% if languages|length > 1 %}
+        {% for langcode, langdata in languages %}
+        {% if request.lang != langcode %}
+        <li class="nav-item" id="language">
+          <a class="fs-6 text-light ms-3 text-decoration-none" id="language-{{ langcode}}" href="{{ request.langurl(langcode) }}"> {{langdata.name}}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+      </ul>
+    </div>
+  </header>
+  <main class="container pb-5{% if request.vocabid == '' or global_search %} frontpage{% if list_style %} {{ list_style }}{% endif %}{% endif %}">
+    <div class="row gx-5 gy-5" tabindex="-1">
+      {% block error %}
+      {% endblock %}
+      {% if request.vocabid == '' and request.page != 'feedback' and request.page != 'about' and not global_search %}
+      <div class="col-md-7">
+        {% include 'vocabularylist.twig' %}
+      </div>
+      <div class="col-md-5">
+        {% include 'landing-welcome.twig' %}
+      </div>
+      {% else %}
+      <div class="col-md-4">
+      {% if request.vocabid != '' and request.page != 'feedback'  %}
+        {% include 'sidebar.twig' %}
+      {% endif %}
+      </div>
+      <div class="col-md-8">
+        {% block content %}
+        {% endblock %}
+      </div>
+      {% endif %}
+    </div>
+  </main>
+  <footer class="container bg-light pb-5">
+    <div class="row py-5">
+      <div class="col-md-7 pe-5">
+        <p class="fs-5">
+                  Skosmos is a web-based tool providing services for accessing controlled vocabularies,
+                  which are used by indexers describing documents and searchers looking
+                  for suitable keywords. Vocabularies are accessed via SPARQL endpoints containing SKOS vocabularies.
+        </p>
+      </div>
+      <div class="col-md-5 ps-5">
+        <span class="fs-5 fw-bold">Contact</span>
+        <p class="fs-5">Yhteystiedot?<p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
