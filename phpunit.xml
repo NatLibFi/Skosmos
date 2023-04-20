@@ -2,9 +2,9 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" colors="true" bootstrap="tests/bootstrap.php" processIsolation="true" convertDeprecationsToExceptions="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
   <coverage processUncoveredFiles="true">
     <include>
-      <directory suffix=".php">controller</directory>
-      <directory suffix=".php">model</directory>
-      <directory suffix=".php">model/sparql</directory>
+      <directory suffix=".php">src/controller</directory>
+      <directory suffix=".php">src/model</directory>
+      <directory suffix=".php">src/model/sparql</directory>
     </include>
     <exclude>
       <directory>vendor</directory>
