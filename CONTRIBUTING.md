@@ -42,21 +42,23 @@ If the hook complains and intercepts the commit, you can run PHP-CS-Fixer manual
 
     vendor/bin/php-cs-fixer fix src
 
-We expect contributors to code according to good coding practices also for front-end code. The Mozilla Developer Network has a strong position in the JavaScript/ECMAScript developer community, so we follow their example and use the [Prettier tool](https://prettier.io/docs/en/index.html) to validate the code.
+We expect contributors to code according to good coding practices also for front-end code. The Mozilla Developer Network has a strong position in the JavaScript/ECMAScript developer community, so we follow their example and we recommend you to use the [Prettier tool](https://prettier.io/docs/en/index.html) to validate the code. 
+
+We also use the ESLint code analysis tool in the pre-commit hook, so as long as there are errors in the JavaScript code, commit is not possible. ESLint is part of the Skosmos installation package, so you do not need to do any additional installation after ```npm install```.
+
+In addition to manually fixing the errors reported by ESLint (during the commit), we suggest that style errors be fixed using the Prettier tool. For example:
+```npx prettier --config .prettierrc --write *.js *.vue``` (automatically makes changes to files). ESLint rule reference can be found [here](https://eslint.org/docs/latest/rules/).
 
 [Guidelines for styling JavaScript code examples](https://developer.mozilla.org/en-US/docs/MDN/Writing_guidelines/Writing_style_guide/Code_style_guide/JavaScript#general_guidelines_for_javascript_code_examples)
 
 To test how the Prettier tool works and what the rules are, you can visit the online version [here](https://prettier.io/playground/).
+If Prettier or ESLint work unexpectedly, please let us know in the Skosmos [Users group](https://groups.google.com/g/skosmos-users).
 
-Prettier validates and fixes the code with a pre-commit hook run on git commit. If there are style errors in the code, Prettier automatically corrects them in the files containing the code. If there are syntax errors, Prettier does not fix them, but will show you the errors that must be corrected before the commit can be performed successfully.
-
-If Prettier works unexpectedly, please let us know in the Skosmos [Users group](https://groups.google.com/g/skosmos-users).
-
-#### How to deploy Prettier in your Skosmos installation
+#### How to deploy ESLint in your Skosmos installation
 
 Add the following line at the end of the pre-commit file you already edited earlier related to PHP-CS-Fixer:
 ```
-npx prettier --config prettier.config.js --write *.vue *.js
+npx eslint --ext .js *.js *.vue
 ```
 
 ### Unit tests
