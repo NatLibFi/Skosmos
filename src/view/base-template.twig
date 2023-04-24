@@ -16,26 +16,26 @@
 </head>
 <body{% if request.vocabid == '' and request.page != 'feedback' and request.page != 'about' %} class="bg-light frontpage-logo"{% else %} class="bg-medium vocab-{{ request.vocabid }}"{% endif %}>
   <noscript>
-    <strong>{% trans "We're sorry but Skosmos doesn't work properly without JavaScript enabled. Please enable it to continue." %}</strong>
+    <strong>We're sorry but Skosmos doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
   </noscript>
-  <a class="visually-hidden" id="skiptocontent" href="{{ request.langurl }}#maincontent">{% trans "Skip to main" %}</a>
+  <a class="visually-hidden" id="skiptocontent" href="{{ request.langurl }}#maincontent">Skip to main</a>
   <header>
     <div class="container-fluid bg-dark d-flex my-auto py-3 px-4 text-bg-dark">
       <span class="fs-6 py-3 text-light">Yhteishaku sanastoista v</span>
       <ul class="nav nav-pills ms-auto my-auto text-light gx-3 py-3" id="topbar-nav">
         <li class="nav-item">
           <a href="{{ request.lang }}/{% if request.contentLang and request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}" id="navi1" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none" >
-                   {% trans "Vocabularies-nav" %}
+                   Vocabularies-nav
           </a>
         </li>
         <li class="nav-item">
           <a href="{{ request.lang }}/about{% if request.contentLang and request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}" id="navi2" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none">
-                   {% trans "About page" %}
+                   About page
           </a>
         </li>
         <li class="nav-item">
           <a href="{% if request.vocabid and vocab.title%}{{ request.vocabid }}/{% endif %}{{ request.lang }}/feedback{% if request.contentLang and request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}" id="navi3" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none">
-                   {% trans "Feedback" %}
+                   Feedback
           </a>
         </li>
         {% if languages|length > 1 %}
