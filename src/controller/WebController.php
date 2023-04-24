@@ -35,7 +35,7 @@ class WebController extends Controller
         }
 
         // specify where to look for templates and cache
-        $loader = new Twig_Loader_Filesystem('src/view');
+        $loader = new Twig_Loader_Filesystem('view');
         // initialize Twig environment
         $this->twig = new Twig_Environment($loader, array('cache' => $tmpDir,'auto_reload' => true));
         // used for setting the base href for the relative urls
