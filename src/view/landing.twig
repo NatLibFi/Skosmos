@@ -1,0 +1,52 @@
+{% extends "base-template.twig" %}
+
+{% block content %}
+<div class="col-md-7">
+  <div class="px-4 py-4 bg-medium" id="vocabulary-list">
+    {% if request.vocabList|length == 0 %}
+    <h2 class="fs-2 fw-bold">{% trans "No vocabularies on the server!" %}</h2>
+    {% else %}
+      {% if category_label %}
+      <h2 class="fs-2 fw-bold py-3">{{ category_label }}</h2>
+      {% else %}
+      <h2 class="fs-2 fw-bold py-3">{% trans "Available vocabularies and ontologies" %}</h2>
+      {% endif %}
+      {% for vocabClassName,vocabArray in request.vocabList %}
+      <div class="vocab-category border-top border-dark-top">
+        <h3 class="fs-3 py-3">{{ vocabClassName }}</h3>
+        <ul class="list-group">
+        {% for vocab in vocabArray %}
+          <li class="list-group-item border-0 ps-0"><a class="fs-4 fw-bold" href="{{ vocab.id }}/{{ request.lang }}/{% if request.contentLang != request.lang and request.contentLang != '' and request.contentLang in vocab.config.languages %}?clang={{ request.contentLang }}{% endif %}">{{ vocab.title }}</a></li>
+        {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+</div>
+<div class="col-md-5">
+  <div class="gy-5 row h-100 flex-column">
+    <div class="col-md-12">
+      <div class="bg-dark px-5 py-5 text-light" id="welcome-box">
+
+        <h2 class="fw-bold fs-2">Welcome to the Skosmos browser demo</h2>
+        <p class="fs-4">
+        Skosmos is a web-based tool providing services for accessing controlled vocabularies, 
+        which are used by indexers describing documents and searchers looking
+        for suitable keywords. Vocabularies are accessed via SPARQL endpoints containing SKOS vocabularies.
+        </p>
+        <p class="fs-4">Skosmos is being developed at the National library of Finland.</p>
+
+      </div>
+    </div>
+    <div class="col-md-12 flex-grow-1">
+      <div class="bg-medium px-5 py-5" id="info-box">
+
+        <a class="fs-4 text-dark text-decoration-none" href="#">Skosmos is open source and on GitHub -></a>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
