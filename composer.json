@@ -26,10 +26,5 @@
   },
   "autoload": {
     "classmap": ["src/controller/", "src/model/", "src/model/sparql/"]
-  },
-  "config": {
-    "allow-plugins": {
-      "robloach/component-installer": true
-    }
   }
 }
