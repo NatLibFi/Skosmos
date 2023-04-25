@@ -29,16 +29,17 @@ If you see an issue that you'd like to fix feel free to do so. If possible let u
 
 Skosmos PHP code should follow [PSR-12](https://www.php-fig.org/psr/psr-12/) style. To help achieve this, [PHP-CS-Fixer](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer), a tool to automatically fix and verify PHP code style issues, is included as a development dependency that is installed via Composer.  There is also a code style check in the GitHub Actions CI pipeline that verifies the code style compliance.
 
-You can set up a pre-commit hook to automate style checking with PHP-CS-Fixer for every git commit by adding the following script to the file `.git/hooks/pre-commit`, which should have execute permission set:
+You must set up a pre-commit hook to automate style checking with PHP-CS-Fixer for every git commit by adding the following script to the file `.git/hooks/pre-commit`, which should have execute permission set. Pre-commit hook controls for ESLint (JavaScript linter) should also be added (more details about ESLint in the text below).
 
 ```bash
 #!/bin/bash
 
 set -e
 vendor/bin/php-cs-fixer fix --diff --dry-run src
+npx eslint --ext .js *.js *.vue
 ```
 
-If the hook complains and intercepts the commit, you can run PHP-CS-Fixer manually to reformat the PHP code using this command:
+If the hook complains about the PHP code styles and intercepts the commit, you can run PHP-CS-Fixer manually to reformat the PHP code using this command:
 
     vendor/bin/php-cs-fixer fix src
 
@@ -53,13 +54,6 @@ In addition to manually fixing the errors reported by ESLint (during the commit)
 
 To test how the Prettier tool works and what the rules are, you can visit the online version [here](https://prettier.io/playground/).
 If Prettier or ESLint work unexpectedly, please let us know in the Skosmos [Users group](https://groups.google.com/g/skosmos-users).
-
-#### How to deploy ESLint in your Skosmos installation
-
-Add the following line at the end of the pre-commit file you already edited earlier related to PHP-CS-Fixer:
-```
-npx eslint --ext .js *.js *.vue
-```
 
 ### Unit tests
 
