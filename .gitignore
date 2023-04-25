@@ -16,3 +16,4 @@ tests/jena-fuseki*
 .phpunit.result.cache
 .php-cs-fixer.cache
 /.idea
+*.swp
