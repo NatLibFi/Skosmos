@@ -29,31 +29,32 @@ If you see an issue that you'd like to fix feel free to do so. If possible let u
 
 Skosmos PHP code should follow [PSR-12](https://www.php-fig.org/psr/psr-12/) style. To help achieve this, [PHP-CS-Fixer](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer), a tool to automatically fix and verify PHP code style issues, is included as a development dependency that is installed via Composer.  There is also a code style check in the GitHub Actions CI pipeline that verifies the code style compliance.
 
-You must set up a pre-commit hook to automate style checking with PHP-CS-Fixer for every git commit by adding the following script to the file `.git/hooks/pre-commit`, which should have execute permission set. Pre-commit hook controls for ESLint (JavaScript linter) should also be added (more details about ESLint in the text below).
+We expect good coding practices also for front-end code. Among many others, we use [Standard JS](https://standardjs.com/) to validate the JavaScript code.
+
+You must set up a pre-commit hook to automate style checking with PHP-CS-Fixer for every git commit by adding the following script to the file `.git/hooks/pre-commit`, which should have execute permission set. Pre-commit hook for Standard JS validation should also be added (more details about Standard JS in the text below).
 
 ```bash
 #!/bin/bash
 
 set -e
 vendor/bin/php-cs-fixer fix --diff --dry-run src
-npx eslint --ext .js *.js *.vue
+
+JS_FILES_TO_BE_CHECKED="/installation_folder/skosmos/*.js /installation_folder/skosmos/some_other_folder/*.js
+"
+npx standard $JS_FILES_TO_BE_CHECKED
+
 ```
 
 If the hook complains about the PHP code styles and intercepts the commit, you can run PHP-CS-Fixer manually to reformat the PHP code using this command:
 
     vendor/bin/php-cs-fixer fix src
 
-We expect contributors to code according to good coding practices also for front-end code. The Mozilla Developer Network has a strong position in the JavaScript/ECMAScript developer community, so we follow their example and we recommend you to use the [Prettier tool](https://prettier.io/docs/en/index.html) to validate the code. 
+Fixing the errors reported by Standard JS, we suggest that style errors be fixed using the --fix flag. For example:
+```standard --fix *.js``` (automatically makes changes to files).
 
-We also use the ESLint code analysis tool in the pre-commit hook, so as long as there are errors in the JavaScript code, commit is not possible. ESLint is part of the Skosmos installation package, so you do not need to do any additional installation after ```npm install```.
+Standard JS is part of the Skosmos installation package, so you do not need to do any additional installation after ```npm install```.
 
-In addition to manually fixing the errors reported by ESLint (during the commit), we suggest that style errors be fixed using the Prettier tool. For example:
-```npx prettier --config .prettierrc --write *.js *.vue``` (automatically makes changes to files). ESLint rule reference can be found [here](https://eslint.org/docs/latest/rules/).
-
-[Guidelines for styling JavaScript code examples](https://developer.mozilla.org/en-US/docs/MDN/Writing_guidelines/Writing_style_guide/Code_style_guide/JavaScript#general_guidelines_for_javascript_code_examples)
-
-To test how the Prettier tool works and what the rules are, you can visit the online version [here](https://prettier.io/playground/).
-If Prettier or ESLint work unexpectedly, please let us know in the Skosmos [Users group](https://groups.google.com/g/skosmos-users).
+If PHP-CS-Fixer or Standard JS work unexpectedly, please let us know in the Skosmos [Users group](https://groups.google.com/g/skosmos-users).
 
 ### Unit tests
 
