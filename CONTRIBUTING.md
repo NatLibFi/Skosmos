@@ -39,8 +39,7 @@ You must set up a pre-commit hook to automate style checking with PHP-CS-Fixer f
 set -e
 vendor/bin/php-cs-fixer fix --diff --dry-run src
 
-JS_FILES_TO_BE_CHECKED="/installation_folder/skosmos/*.js /installation_folder/skosmos/some_other_folder/*.js
-"
+JS_FILES_TO_BE_CHECKED="/installation_folder/skosmos/*.js /installation_folder/skosmos/some_other_folder/*.js"
 npx standard $JS_FILES_TO_BE_CHECKED
 
 ```
