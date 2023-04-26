@@ -31,7 +31,7 @@ Skosmos PHP code should follow [PSR-12](https://www.php-fig.org/psr/psr-12/) sty
 
 We expect good coding practices also for front-end code. Among many others, we use [Standard JS](https://standardjs.com/) to validate the JavaScript code.
 
-You must set up a pre-commit hook to automate style checking with PHP-CS-Fixer for every git commit by adding the following script to the file `.git/hooks/pre-commit`, which should have execute permission set. Pre-commit hook for Standard JS validation should also be added (more details about Standard JS in the text below).
+You should set up a pre-commit hook to automate style checking with PHP-CS-Fixer for every git commit by adding the following script to the file `.git/hooks/pre-commit`, which should have execute permission set. Pre-commit hook for Standard JS validation should also be added (more details about Standard JS in the text below).
 
 ```bash
 #!/bin/bash
