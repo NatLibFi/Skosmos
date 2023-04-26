@@ -39,7 +39,7 @@ You should set up a pre-commit hook to automate style checking with PHP-CS-Fixer
 set -e
 vendor/bin/php-cs-fixer fix --diff --dry-run src
 
-JS_FILES_TO_BE_CHECKED="path_to_the_folder_containing_js-files/*.js 
+JS_FILES_TO_BE_CHECKED="resource/js/*.js" 
 npx standard $JS_FILES_TO_BE_CHECKED
 
 ```
@@ -49,7 +49,7 @@ If the hook complains about the PHP code styles and intercepts the commit, you c
     vendor/bin/php-cs-fixer fix src
 
 Fixing the errors reported by Standard JS, we suggest that style errors be fixed using the --fix flag. For example:
-```npx standard --fix path_to_the_folder_containing_js-files/*.js```. It automatically makes changes to files and it is possible to refer to several different folders.
+```npx standard --fix resource/js/*.js```. It automatically makes changes to files and it is possible to refer to several different folders.
 
 ### Unit tests
 
