@@ -60,7 +60,7 @@ jobs:
       run: ./vendor/bin/php-cs-fixer fix src --diff --dry-run
 
     - name: Check JavaScript code style
-      run: cd resource/js; npx standard *.js
+    - run: cd resource/js; npx standard *.js
 
     - name: Run PHPUnit tests
       uses: php-actions/phpunit@v3
