@@ -51,8 +51,6 @@ If the hook complains about the PHP code styles and intercepts the commit, you c
 Fixing the errors reported by Standard JS, we suggest that style errors be fixed using the --fix flag. For example:
 ```npx standard --fix path_to_the_folder_containing_js-files/*.js```. It automatically makes changes to files and it is possible to refer to several different folders.
 
-Standard JS is part of the Skosmos installation package, so you do not need to do any additional installation after ```npm install```.
-
 If PHP-CS-Fixer or Standard JS work unexpectedly, please let us know in the Skosmos [Users group](https://groups.google.com/g/skosmos-users).
 
 ### Unit tests
