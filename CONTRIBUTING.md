@@ -39,7 +39,7 @@ You should set up a pre-commit hook to automate style checking with PHP-CS-Fixer
 set -e
 vendor/bin/php-cs-fixer fix --diff --dry-run src
 
-JS_FILES_TO_BE_CHECKED="/path_to_the_folder_containing_js-files/*.js 
+JS_FILES_TO_BE_CHECKED="path_to_the_folder_containing_js-files/*.js 
 npx standard $JS_FILES_TO_BE_CHECKED
 
 ```
