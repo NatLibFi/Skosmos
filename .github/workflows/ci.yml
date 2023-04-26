@@ -50,12 +50,10 @@ jobs:
         php_version: ${{ matrix.php_version }}
         php_extensions: gettext intl xsl pcov
 
-    - name: Install Node
     - uses: actions/setup-node@v3
       with:
         node-version: 16.x
 
-    - name: Install JavaScript dependencies
       run: npm ci
 
     - name: Check PHP code style
