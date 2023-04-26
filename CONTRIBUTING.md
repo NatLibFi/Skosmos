@@ -29,18 +29,31 @@ If you see an issue that you'd like to fix feel free to do so. If possible let u
 
 Skosmos PHP code should follow [PSR-12](https://www.php-fig.org/psr/psr-12/) style. To help achieve this, [PHP-CS-Fixer](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer), a tool to automatically fix and verify PHP code style issues, is included as a development dependency that is installed via Composer.  There is also a code style check in the GitHub Actions CI pipeline that verifies the code style compliance.
 
-You can set up a pre-commit hook to automate style checking with PHP-CS-Fixer for every git commit by adding the following script to the file `.git/hooks/pre-commit`, which should have execute permission set:
+We expect good coding practices also for front-end code. Among many others, we use [Standard JS](https://standardjs.com/) to validate the JavaScript code. Standard JS is included as a development dependency that is installed by using ```npm install```.
+
+You should set up a pre-commit hook to automate style checking with PHP-CS-Fixer for every git commit by adding the following script to the file `.git/hooks/pre-commit`, which should have execute permission set. Pre-commit hook for Standard JS validation should also be added (more details about Standard JS in the text below).
 
 ```bash
 #!/bin/bash
 
 set -e
 vendor/bin/php-cs-fixer fix --diff --dry-run src
+
+cd resource/js 
+npx standard *.js
+
 ```
 
-If the hook complains and intercepts the commit, you can run PHP-CS-Fixer manually to reformat the PHP code using this command:
+If the hook complains about the PHP code styles and intercepts the commit, you can run PHP-CS-Fixer manually to reformat the PHP code using this command:
 
     vendor/bin/php-cs-fixer fix src
+
+Fixing the errors reported by Standard JS, we suggest that style errors be fixed using the --fix flag:
+```
+cd resource/js
+npx standard --fix *.js
+``` 
+It automatically makes changes to files and it is possible to refer to several different folders.
 
 ### Unit tests
 
