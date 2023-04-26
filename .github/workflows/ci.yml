@@ -56,7 +56,7 @@ jobs:
         node-version: 16.x
 
     - name: Install JavaScript dependencies
-      run: npm ci
+      run: npm install
 
     - name: Check PHP code style
       run: ./vendor/bin/php-cs-fixer fix src --diff --dry-run
