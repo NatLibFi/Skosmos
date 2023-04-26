@@ -1,3 +1,3 @@
-console.log("Hello");
+console.log('Hello')
 
-let itBe = "and go forward ..";
+const itBe = 'and go forward ..'
