@@ -29,7 +29,7 @@ If you see an issue that you'd like to fix feel free to do so. If possible let u
 
 Skosmos PHP code should follow [PSR-12](https://www.php-fig.org/psr/psr-12/) style. To help achieve this, [PHP-CS-Fixer](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer), a tool to automatically fix and verify PHP code style issues, is included as a development dependency that is installed via Composer.  There is also a code style check in the GitHub Actions CI pipeline that verifies the code style compliance.
 
-We expect good coding practices also for front-end code. Among many others, we use [Standard JS](https://standardjs.com/) to validate the JavaScript code.
+We expect good coding practices also for front-end code. Among many others, we use [Standard JS](https://standardjs.com/) to validate the JavaScript code. Standard JS is included as a development dependency that is installed by using ```npm install```.
 
 You should set up a pre-commit hook to automate style checking with PHP-CS-Fixer for every git commit by adding the following script to the file `.git/hooks/pre-commit`, which should have execute permission set. Pre-commit hook for Standard JS validation should also be added (more details about Standard JS in the text below).
 
