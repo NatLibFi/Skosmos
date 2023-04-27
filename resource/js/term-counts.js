@@ -5,7 +5,7 @@ const termCountsApp = Vue.createApp({
     }
   },
   mounted () {
-    fetch('https://api.finto.fi/rest/v1/yso/labelStatistics?lang=fi') /* What should this be? */
+    fetch('rest/v1/yso/labelStatistics?lang=fi')
       .then(data => {
         return data.json()
       })
@@ -16,7 +16,7 @@ const termCountsApp = Vue.createApp({
   },
   template: `
     <h3 class="fw-bold py-3">Term counts by language</h3>
-    <table class="table" id="statistics">
+    <table class="table" id="term-stats">
       <tbody>
         <tr>
           <th class="main-table-label fw-bold">Concept language</th>

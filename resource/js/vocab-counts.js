@@ -7,7 +7,7 @@ const resourceCountsApp = Vue.createApp({
     }
   },
   mounted () {
-    fetch('https://api.finto.fi/rest/v1/yso/vocabularyStatistics?lang=fi') /* What should this be? */
+    fetch('rest/v1/yso/vocabularyStatistics?lang=fi')
       .then(data => {
         return data.json()
       })
@@ -20,7 +20,7 @@ const resourceCountsApp = Vue.createApp({
   },
   template: `
     <h3 class="fw-bold py-3">Resource counts by type</h3>
-    <table class="table" id="counts">
+    <table class="table" id="resource-stats">
       <tbody>
         <tr><th class="versal">Type</th><th class="versal">Count</th></tr>
         <resource-counts :concepts="concepts" :subTypes="subTypes" :conceptGroups="conceptGroups"></resource-counts>
