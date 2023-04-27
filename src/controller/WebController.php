@@ -4,6 +4,9 @@
  * Importing the dependencies.
  */
 use Punic\Language;
+use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\Loader\PoFileLoader;
+use Symfony\Bridge\Twig\Extension\TranslationExtension;
 
 /**
  * WebController is an extension of the Controller that handles all
@@ -70,6 +73,15 @@ class WebController extends Controller
             $this->honeypot->disable();
         }
         $this->twig->addGlobal('honeypot', $this->honeypot);
+
+        // create and register the translation extension
+        // (Dummy version that only loads templates in English)
+        $translator = new Translator('en');
+        $translator->addLoader('po', new PoFileLoader());
+        $translator->addResource('po', __DIR__.'/../../resource/translations/skosmos_en.po', 'en');
+
+        $this->twig->addExtension(new TranslationExtension($translator));
+
     }
 
     /**
@@ -152,7 +164,8 @@ class WebController extends Controller
                 'languages' => $this->languages,
                 'lang_list' => $langList,
                 'request' => $request,
-                'list_style' => $listStyle
+                'list_style' => $listStyle,
+                'included' => get_included_files(),
             )
         );
     }
