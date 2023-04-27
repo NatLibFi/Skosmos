@@ -50,8 +50,19 @@ jobs:
         php_version: ${{ matrix.php_version }}
         php_extensions: gettext intl xsl pcov
 
+    - name: Install Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+
+    - name: Install JavaScript dependencies
+      run: npm install
+
     - name: Check PHP code style
       run: ./vendor/bin/php-cs-fixer fix src --diff --dry-run
+
+    - name: Check JavaScript code style
+      run: cd resource/js; npx standard *.js
 
     - name: Run PHPUnit tests
       uses: php-actions/phpunit@v3
