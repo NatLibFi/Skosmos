@@ -45,7 +45,7 @@ jobs:
           ${{ runner.os }}-php${{ matrix.php_version}}-skosmos3-
 
     - name: Install Composer dependencies
-      uses: php-actions/composer@v5
+      uses: php-actions/composer@v6
       with:
         php_version: ${{ matrix.php_version }}
         php_extensions: gettext intl xsl pcov
