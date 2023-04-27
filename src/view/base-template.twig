@@ -11,6 +11,7 @@
 <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" media="screen, print" rel="stylesheet" type="text/css">
 <link href="resource/css/fonts.css" media="screen, print" rel="stylesheet" type="text/css">
 <link href="resource/css/skosmos.css" media="screen, print" rel="stylesheet" type="text/css">
+<script src="node_modules/vue/dist/vue.global.js"></script>
 {% if ServiceCustomCss %}
 <link href="{{ ServiceCustomCss }}" media="screen, print" rel="stylesheet" type="text/css">
 {% endif %}
@@ -52,6 +53,14 @@
         {% endfor %}
         {% endif %}
       </ul>
+    </div>
+
+    <div class="container-fluid d-flex bg-light py-5 px-5 mb-5" id="headerbar">
+      {% if request.vocabid == '' %}
+      <h2 class="fs-1 fw-bold text-decoration-none">Skosmos<h2>
+      {% else %}
+      <h2 class="fs-2 fw-bold text-decoration-none"><a class="text-decoration-none" href="{% if request.vocabid != '' %}{{ request.vocabid  }}/{% endif %}{{ request.lang }}/{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{{ request.vocab.title(request.contentLang) }}</a></h2>
+      {% endif %}
     </div>
   </header>
   <main class="container pb-5{% if request.vocabid == '' or global_search %} frontpage{% if list_style %} {{ list_style }}{% endif %}{% endif %}">

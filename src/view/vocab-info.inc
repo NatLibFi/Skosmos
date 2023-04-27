@@ -46,19 +46,8 @@
     {% endif %}
     {% if vocab.config.showStatistics %}
     <div class="vocab-statistics">
-      <h3 class="fw-bold py-3">Resource counts by type</h3>
-      <table class="table" id="counts">
-        <tr><th class="versal">Type</th><th class="versal">Count</th></tr>
-      </table>
-      <table class="table" id="statistics">
-      <h3 class="fw-bold py-3">Term counts by language</h3>
-      <tr>
-        <th class="main-table-label fw-bold">Concept language</th>
-        <th class="main-table-label fw-bold">Preferred terms</th>
-        <th class="main-table-label fw-bold">Alternate terms</th>
-        <th class="main-table-label fw-bold">Hidden terms</th>
-      </tr>
-      </table>
+      <div id="resource-counts"></div>
+      <div id="term-counts"></div>
     </div>
     {% endif %}
     {% if vocab.config.dataURLs %}
@@ -88,3 +77,5 @@
     {% endif %}
   </div>
 </div>
+<script src="resource/js/vocab-counts.js"></script>
+<script src="resource/js/term-counts.js"></script>
