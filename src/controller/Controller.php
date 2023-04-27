@@ -107,7 +107,7 @@ class Controller
         $base_dir = str_replace("\\", "/", $base_dir); // fixing windows paths with \ (see #309)
         $doc_root = preg_replace("!{$script_name}$!", '', $script_filename);
         $base_url = preg_replace("!^{$doc_root}!", '', $base_dir);
-        $base_url = str_replace('/controller', '/', $base_url);
+        $base_url = str_replace('/src/controller', '/', $base_url);
         $protocol = $this->isSecure() ? 'https' : 'http';
         $port = filter_input(INPUT_SERVER, 'SERVER_PORT', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $disp_port = ($port == 80 || $port == 443) ? '' : ":$port";
