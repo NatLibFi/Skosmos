@@ -25,7 +25,7 @@ jobs:
         fetch-depth: 0
 
     - name: Cache Fuseki installation
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: tests/apache-jena-fuseki-*
         key: fuseki-${{ hashFiles('tests/init_fuseki.sh') }}
@@ -34,7 +34,7 @@ jobs:
       run: cd tests; sh ./init_fuseki.sh
     
     - name: Cache Composer dependencies
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: |
           /tmp/composer-cache
@@ -45,7 +45,7 @@ jobs:
           ${{ runner.os }}-php${{ matrix.php_version}}-skosmos3-
 
     - name: Install Composer dependencies
-      uses: php-actions/composer@v5
+      uses: php-actions/composer@v6
       with:
         php_version: ${{ matrix.php_version }}
         php_extensions: gettext intl xsl pcov
@@ -76,11 +76,11 @@ jobs:
         configuration: phpunit.xml
 
     - name: Publish code coverage to Code Climate
-      uses: paambaati/codeclimate-action@v2.7.5
+      uses: paambaati/codeclimate-action@v4.0.0
       env:
         CC_TEST_REPORTER_ID: fb98170a5c7ea9cc2bbab19ff26268335e6a11a4f8267ca935e5e8ff4624886c
       with:
         prefix: /app
 
     - name: Publish code coverage to Codecov
-      uses: codecov/codecov-action@v1
+      uses: codecov/codecov-action@v3
