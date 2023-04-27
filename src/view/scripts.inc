@@ -15,8 +15,8 @@
     {% if request.vocab %}
     var languageOrder = [{% for lang in request.vocab.config.languageOrder(request.contentLang) %}"{{ lang }}"{% if not loop.last %},{% endif %}{% endfor %}]
     var showNotation = {{ request.vocab.config.showNotation ? "true" : "false" }}
-    var sortByNotation = {% if request.vocab.config.sortByNotation %}"{{ request.vocab.config.sortByNotation }}"{% else %}null{% endif %}
-    var uriSpace = {% if request.vocab.uriSpace %}"{{ request.vocab.uriSpace }}"{% else %}null{% endif %}
+    var sortByNotation = {% if request.vocab.config.sortByNotation %}"{{ request.vocab.config.sortByNotation }}"{% else %}null{% endif ~%}
+    var uriSpace = {% if request.vocab.uriSpace %}"{{ request.vocab.uriSpace }}"{% else %}null{% endif ~%}
     var vocShortName = "{{ request.vocab.config.shortname }}"
     {% endif %}
 
