@@ -47,3 +47,6 @@
 {% for files in request.plugins.pluginsJS %}
   {% for file in files %}<script src="{{ file }}"></script>{% endfor %}
 {% endfor %}
+
+<!-- Vue.js -->
+<script src="node_modules/vue/dist/vue.global.js"></script>
