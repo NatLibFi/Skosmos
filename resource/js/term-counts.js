@@ -1,3 +1,5 @@
+/* global Vue */
+
 const termCountsApp = Vue.createApp({
   data () {
     return {

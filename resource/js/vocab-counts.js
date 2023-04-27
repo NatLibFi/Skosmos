@@ -1,3 +1,5 @@
+/* global Vue */
+
 const resourceCountsApp = Vue.createApp({
   data () {
     return {
