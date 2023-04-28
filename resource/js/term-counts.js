@@ -7,7 +7,7 @@ const termCountsApp = Vue.createApp({
     }
   },
   mounted () {
-    fetch('rest/v1/yso/labelStatistics?lang=fi')
+    fetch('rest/v1/' + SKOSMOS.vocab + '/labelStatistics?lang=' + SKOSMOS.lang)
       .then(data => {
         return data.json()
       })

@@ -9,7 +9,7 @@ const resourceCountsApp = Vue.createApp({
     }
   },
   mounted () {
-    fetch('rest/v1/yso/vocabularyStatistics?lang=fi')
+    fetch('rest/v1/' + SKOSMOS.vocab + '/vocabularyStatistics?lang=' + SKOSMOS.lang)
       .then(data => {
         return data.json()
       })
