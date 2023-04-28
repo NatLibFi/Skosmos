@@ -46,7 +46,7 @@ resourceCountsApp.component('resource-counts', {
       <td>* Käytöstä poistettu käsite</td>
       <td>{{ concepts.deprecatedCount }}</td>
     </tr>
-    <tr>
+    <tr v-if="conceptGroups">
       <td>{{ conceptGroups.label }}</td>
       <td>{{ conceptGroups.count }}</td>
     </tr>
