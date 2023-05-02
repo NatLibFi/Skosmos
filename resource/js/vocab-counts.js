@@ -1,4 +1,5 @@
 /* global Vue */
+/* global SKOSMOS */
 
 const resourceCountsApp = Vue.createApp({
   data () {

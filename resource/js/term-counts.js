@@ -1,4 +1,5 @@
 /* global Vue */
+/* global SKOSMOS */
 
 const termCountsApp = Vue.createApp({
   data () {
