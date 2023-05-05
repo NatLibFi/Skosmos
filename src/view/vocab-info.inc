@@ -1,4 +1,4 @@
-<div class="container">
+<div class="col-md-8">
   <div class="bg-light py-5 px-5" id="vocab-info">
     <h2 class="fw-bold fs-3 py-4">Vocabulary information</h2>
     {% set vocabInfo = vocab.info(request.contentLang) %}
