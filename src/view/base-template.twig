@@ -55,7 +55,7 @@
       </ul>
     </div>
 
-    <div class="container-fluid d-flex bg-light py-4 px-5 mb-5" id="headerbar">
+    <div class="container-fluid d-flex bg-light py-4 px-5" id="headerbar">
       {% if request.vocabid == '' %}
       <h2 class="fs-1 fw-bold text-decoration-none">Skosmos<h2>
       {% else %}
@@ -63,8 +63,8 @@
       {% endif %}
     </div>
   </header>
-  <main id="main-container" class="container pb-5{% if request.vocabid == '' or global_search %} frontpage{% elseif concept_uri != '' %} termpage{% elseif request.vocab != '' %} vocabpage{% if list_style %} {{ list_style }}{% endif %}{% endif %}">
-    <div class="row gx-5 gy-5" tabindex="-1">
+  <main id="main-container" class="py-5{% if request.vocabid == '' or global_search %} frontpage{% elseif concept_uri != '' %} termpage{% elseif request.vocab != '' %} vocabpage{% if list_style %} {{ list_style }}{% endif %}{% endif %}">
+    <div class="row" tabindex="-1">
     {% block content %}
     {% endblock %}
     </div>
