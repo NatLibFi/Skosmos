@@ -63,7 +63,7 @@
       {% endif %}
     </div>
   </header>
-  <main class="container pb-5{% if request.vocabid == '' or global_search %} frontpage{% if list_style %} {{ list_style }}{% endif %}{% endif %}">
+  <main id="main-container" class="container pb-5{% if request.vocabid == '' or global_search %} frontpage{% elseif concept_uri != '' %} termpage{% elseif request.vocab != '' %} vocabpage{% if list_style %} {{ list_style }}{% endif %}{% endif %}">
     <div class="row gx-5 gy-5" tabindex="-1">
     {% block content %}
     {% endblock %}
