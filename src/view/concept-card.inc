@@ -15,9 +15,8 @@
     <div class="container concept-info{% if concept.deprecated %} deprecated-concept{% endif %}">
       <div class="bg-light py-5 px-5 concept-main">
       {% spaceless %}
-      <div class="row{% if concept.type == 'skosext:DeprecatedConcept' %} deprecated{% endif %} property prop-preflabel">
-        <div class="property-label property-label-pref">
-          <h3 class="versal">
+      <div id="term-heading" class="d-flex">
+          <span>
             {% set subPrefLabelTranslation = concept.preferredSubpropertyLabelTranslation(request.lang) %}
             {% if subPrefLabelTranslation %}
               {{ subPrefLabelTranslation }}
@@ -26,16 +25,13 @@
             {% else %}
               skos:prefLabel
             {% endif %}
-          </h3>
-        </div>
+          </span>
         {% if concept.foundBy %} {# hit has been found through an alternative label #}
         <span class="versal">{{ concept.foundBy }} ></span>
         {% if concept.ExVocab is defined %}
         <span class="prefLabel conceptlabel redirected-vocab-id"> @{{ concept.ExVocab }}</span>
         {% endif %}
-      </div>
       {% else %}
-      <div class="property-value-column">
         {% apply spaceless %}
         {% if concept.notation %}<span class="notation" id="notation">{{ concept.notation }}</span>{% endif %}
         {% if concept.hasXlLabel %}
@@ -49,9 +45,9 @@
               {% endfor %}
             </div>
         </span>
-        <span class="prefLabel" id="pref-label">{{ concept.xlLabel }}</span>
+        <h1 id="pref-label">{{ concept.xlLabel }}</h1>
         {% else %}
-        <span class="prefLabel conceptlabel" id="pref-label">{{ concept.label }}</span>
+        <h1 id="pref-label">{{ concept.label }}</h1>
         {% if concept.label.lang != request.contentLang and concept.label.lang != '' %}
         <span class="prefLabelLang"> ({{ concept.label.lang }})</span>
         {% endif %}
@@ -61,9 +57,7 @@
           <span class="fa-regular fa-copy"></span>
         </button>
         {% endapply %}
-        </div>
       {% endif %}
-        <div class="col-md-12"><div class="preflabel-spacer"></div></div>
       </div>
       {% endspaceless %}
 
