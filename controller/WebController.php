@@ -103,7 +103,7 @@ class WebController extends Controller
         // using a random language from the configured UI languages when there is no accept language header set
         $acceptLanguage = filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE', FILTER_SANITIZE_FULL_SPECIAL_CHARS) ? filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE', FILTER_SANITIZE_FULL_SPECIAL_CHARS) : $langcodes[0];
         $bestLang = $this->negotiator->getBest($acceptLanguage, $langcodes);
-        if (isset($bestLang) && in_array($bestLang, $langcodes)) {
+        if (isset($bestLang) && in_array($bestLang->getValue(), $langcodes)) {
             return $bestLang->getValue();
         }
 
