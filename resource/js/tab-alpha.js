@@ -85,6 +85,30 @@ tabAlphaApp.component('tab-alpha', {
       }
 
       return SKOSMOS.vocab + '/' + SKOSMOS.lang + '/page/' + page + (clangParam !== '' ? clangSeparator + clangParam : '')
+    },
+    partialPageLoad (event, pageUri, conceptUri) {
+      event.preventDefault()
+
+      fetch(pageUri)
+        .then(data => {
+          return data.text()
+        })
+        .then(data => {
+          console.log(data)
+
+          // concept card HTML
+          const conceptHTML = document.createElement('div')
+          conceptHTML.innerHTML = data.trim()
+
+          // inserting concept card into vocab info
+          const mainContent = document.querySelector('#main-content')
+          mainContent.innerHTML = ''
+          mainContent.appendChild(conceptHTML.querySelector('#main-content'))
+
+          // what other properties should be changed?
+          SKOSMOS.uri = conceptUri
+          conceptMappingsApp.mount('#concept-mappings') // Vue apps can't be mounted multiple times so opening another concept page breaks mappings component
+        })
     }
   },
   template: `
@@ -97,7 +121,7 @@ tabAlphaApp.component('tab-alpha', {
     <ul class="list-group" id="alpha-list">
       <li v-for="concept in indexConcepts" class="list-group-item py-1">
         <template v-if="concept.altLabel">{{ concept.altLabel }} -> </template>
-        <a :href="getHref(concept.uri)">{{ concept.prefLabel }}</a>
+        <a :href="getHref(concept.uri)" @click="partialPageLoad($event, getHref(concept.uri), concept.uri)">{{ concept.prefLabel }}</a>
       </li>
     </ul>
   `
