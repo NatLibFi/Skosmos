@@ -64,21 +64,16 @@
         <tbody>
         {% for property in concept.properties %} {# loop through ConceptProperty objects #}
           {% if property.getSubPropertyOf != 'skos:hiddenLabel' %}
-          <trow class="{% if property.type == 'dc:isReplacedBy' %}replaced-by {% endif%}property prop-{{property.ID}}">
+          <tr class="{% if property.type == 'dc:isReplacedBy' %}replaced-by {% endif%}property prop-{{property.ID}}">
             <td class="main-table-label">
-              <h3 class="versal{% if property.type == 'rdf:type' %}-bold{% endif %}
-                {% if custom_labels[property.type]['description'][request.lang] %}property-click skosmos-tooltip-wrapper skosmos-tooltip t-top" data-title="{{ custom_labels[property.type]['description'][request.lang] }}
-                {% elseif property.description %} property-click skosmos-tooltip-wrapper skosmos-tooltip t-top" data-title="{{ property.description }}
-                {% endif %}">
                 {% if custom_labels[property.type]['label'][request.lang] %}
                   {{ custom_labels[property.type]['label'][request.lang] }}
                 {% else %}
                   {{ property.label }}
                 {% endif %}
-              </h3>
             </td>
           {% for propval in property.values %} {# loop through ConceptPropertyValue objects #}
-          {% if not loop.first %}<trow><td class="main-table-label"></td>{% endif %}
+          {% if not loop.first %}</tr><tr><td class="main-table-label"></td>{% endif %}
           <td class="align-middle">
             {% if propval.uri and propval.type != 'rdf:type' %} {# resources with URI #}
               {% if propval.label %}
@@ -127,15 +122,15 @@
                 {% endif %}
               {% endif %}
               </td>
-            </trow>
+            </tr>
           {% endfor %}
           {% endif %}
         {% endfor %}
-        </trow>
+        </tr>
       {% set foreignLabels = concept.foreignLabels %}
       {% if foreignLabels %}
-      <trow class="prop-other-languages">
-        <td class="main-table-label"><h3 class="versal property-click skosmos-tooltip-wrapper skosmos-tooltip t-top" data-title="foreign prefLabel help" >foreign prefLabels</h3></td>
+      <tr class="prop-other-languages">
+        <td class="main-table-label">foreign prefLabels</td>
         <td class="align-middle">
             {% for language,labels in foreignLabels %}
               {% for value in labels.prefLabel|default([])|merge(labels.altLabel|default([])) %}
@@ -164,12 +159,12 @@
             {% endfor %}
           </div>
         </td>
-      </trow>
+      </tr>
       {% endif %}
-      <trow>
+      <tr>
         <td class="main-table-label"><h3>URI</h3></td>
         <td class="align-middle">{{ concept.uri }}</td>
-      </trow>
+      </tr>
       </tbody>
     </table>
         <div class="row">
