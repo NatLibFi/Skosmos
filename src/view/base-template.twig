@@ -14,6 +14,7 @@
 {% if ServiceCustomCss %}
 <link href="{{ ServiceCustomCss }}" media="screen, print" rel="stylesheet" type="text/css">
 {% endif %}
+{% include "scripts.inc" %}
 {% for plugin, files in request.plugins.pluginsCSS %}{% for file in files %}<link href="{{ file }}" media="screen, print" rel="stylesheet" type="text/css">{% endfor %}{% endfor %}
 
 <title>{{ ServiceName }}{% block title %}{% endblock %}</title>
@@ -54,18 +55,20 @@
       </ul>
     </div>
 
-    <div class="container-fluid d-flex bg-light py-5 px-5 mb-5" id="headerbar">
+    <div class="container-fluid d-flex bg-light py-4 px-4" id="headerbar">
       {% if request.vocabid == '' %}
       <h2 class="fs-1 fw-bold text-decoration-none">Skosmos<h2>
       {% else %}
-      <h2 class="fs-2 fw-bold text-decoration-none"><a class="text-decoration-none" href="{% if request.vocabid != '' %}{{ request.vocabid  }}/{% endif %}{{ request.lang }}/{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{{ request.vocab.title(request.contentLang) }}</a></h2>
+      <h2 class="fs-2 fw-bold text-decoration-none" id="vocab-title"><a class="text-decoration-none" href="{% if request.vocabid != '' %}{{ request.vocabid  }}/{% endif %}{{ request.lang }}/{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{{ request.vocab.title(request.contentLang) }}</a></h2>
       {% endif %}
     </div>
   </header>
-  <main class="container pb-5{% if request.vocabid == '' or global_search %} frontpage{% if list_style %} {{ list_style }}{% endif %}{% endif %}">
-    <div class="row gx-5 gy-5" tabindex="-1">
-    {% block content %}
-    {% endblock %}
+  <main id="main-container" class="py-5{% if request.vocabid == '' or global_search %} frontpage{% elseif concept_uri != '' %} termpage{% elseif request.vocab != '' %} vocabpage{% if list_style %} {{ list_style }}{% endif %}{% endif %}">
+    <div class="container">
+      <div class="row" tabindex="-1">
+      {% block content %}
+      {% endblock %}
+      </div>
     </div>
   </main>
   <footer class="container bg-light pb-5">
