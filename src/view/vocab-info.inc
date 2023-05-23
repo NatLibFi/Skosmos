@@ -77,5 +77,3 @@
     {% endif %}
   </div>
 </div>
-<script src="resource/js/vocab-counts.js"></script>
-<script src="resource/js/term-counts.js"></script>
