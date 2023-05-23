@@ -14,7 +14,6 @@
 {% if ServiceCustomCss %}
 <link href="{{ ServiceCustomCss }}" media="screen, print" rel="stylesheet" type="text/css">
 {% endif %}
-{% include "scripts.inc" %}
 {% for plugin, files in request.plugins.pluginsCSS %}{% for file in files %}<link href="{{ file }}" media="screen, print" rel="stylesheet" type="text/css">{% endfor %}{% endfor %}
 
 <title>{{ ServiceName }}{% block title %}{% endblock %}</title>
@@ -86,5 +85,6 @@
       </div>
     </div>
   </footer>
+  {% include "scripts.inc" %}
 </body>
 </html>
