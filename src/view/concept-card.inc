@@ -60,97 +60,85 @@
       {% endif %}
       </div>
       {% endspaceless %}
-
-      {% for property in concept.properties %} {# loop through ConceptProperty objects #}
-        {% if property.getSubPropertyOf != 'skos:hiddenLabel' %}
-        <div class="row{% if property.type == 'dc:isReplacedBy' %} replaced-by{% endif%} property prop-{{property.ID}}">
-          <div class="property-label">
-            <h3 class="versal{% if property.type == 'rdf:type' %}-bold{% endif %}
-              {% if custom_labels[property.type]['description'][request.lang] %}property-click skosmos-tooltip-wrapper skosmos-tooltip t-top" data-title="{{ custom_labels[property.type]['description'][request.lang] }}
-              {% elseif property.description %} property-click skosmos-tooltip-wrapper skosmos-tooltip t-top" data-title="{{ property.description }}
-              {% endif %}">
-              {% if custom_labels[property.type]['label'][request.lang] %}
-                {{ custom_labels[property.type]['label'][request.lang] }}
-              {% else %}
-                {{ property.label }}
-              {% endif %}
-            </h3>
-          </div>
-          <div class="property-value-column"><div class="property-value-wrapper">
-        {% if request.vocab.config.hasMultiLingualProperty(property.type) %}
-          {% for language,labels in concept.allLabels(property.type) %}
-            {% for value in labels %}
-            <div class="row other-languages{% if loop.first %} first-of-language{% endif %}">
-            <div class="versal col-6{% if value.type == "skos:altLabel" %} replaced{% endif %}">{% if value.containsHtml %}{{ value.label|raw }}{% else %}{{ value.label }}{% endif %}</div><div class="versal col-6">{% if loop.first %} {{ language }}{% endif %}</div></div>
-            {% endfor %}
-          {% endfor %}
-        {% else %}
-        <ul>
-        {% for propval in property.values %} {# loop through ConceptPropertyValue objects #}
-            <li>
+      <table id="main-table" class="table">
+        <tbody>
+        {% for property in concept.properties %} {# loop through ConceptProperty objects #}
+          {% if property.getSubPropertyOf != 'skos:hiddenLabel' %}
+          <trow class="{% if property.type == 'dc:isReplacedBy' %}replaced-by {% endif%}property prop-{{property.ID}}">
+            <td class="main-table-label">
+              <h3 class="versal{% if property.type == 'rdf:type' %}-bold{% endif %}
+                {% if custom_labels[property.type]['description'][request.lang] %}property-click skosmos-tooltip-wrapper skosmos-tooltip t-top" data-title="{{ custom_labels[property.type]['description'][request.lang] }}
+                {% elseif property.description %} property-click skosmos-tooltip-wrapper skosmos-tooltip t-top" data-title="{{ property.description }}
+                {% endif %}">
+                {% if custom_labels[property.type]['label'][request.lang] %}
+                  {{ custom_labels[property.type]['label'][request.lang] }}
+                {% else %}
+                  {{ property.label }}
+                {% endif %}
+              </h3>
+            </td>
+          {% for propval in property.values %} {# loop through ConceptPropertyValue objects #}
+          {% if not loop.first %}<trow><td class="main-table-label"></td>{% endif %}
+          <td class="align-middle">
             {% if propval.uri and propval.type != 'rdf:type' %} {# resources with URI #}
               {% if propval.label %}
                 {% if propval.isExternal %}
                 <a href="{{ propval.uri | link_url(propval.exvocab, request.lang, 'page', request.contentLang) }}">{{ propval.label }}</a>{% if propval.exvocab %} ({{ propval.vocabname }}){% endif %}
-                {% else %}
-                {% if propval.isReified %} {# e.g. skos:definition's with resource values #}
-                <span class="versal reified-property-value tooltip-html">
-                  <img alt="Information" src="resource/pics/about.png">{% if propval.notation %}<span class="versal">{{ propval.notation }} </span>{% endif %} {{ propval.label(request.contentLang) }}
-                  <div class="reified-tooltip tooltip-html-content">{% for key, val in propval.reifiedPropertyValues %}<p><span class="tooltip-prop">{{ key }}</span>: <a href="{{ val.uri | link_url(val.exvocab, request.lang, 'page', request.contentLang) }}">{{ val.label(request.contentLang) }}</a></p>{% endfor %}</div>
-                </span>
-                {% else %}
-                    <a href="{{ propval.uri | link_url(propval.vocab, request.lang, 'page', request.contentLang) }}">{% if propval.notation %}<span class="versal">{{ propval.notation }} </span>{% endif %} {{ propval.label(request.contentLang) }}</a>
-                {% endif %}
-                {% endif %}
-                {% if propval.label.lang and (propval.label.lang != request.contentLang or explicit_langcodes) %}<span class="versal"> ({{ propval.label(request.contentLang).lang }})</span>{% endif %}
-                {% if propval.SubMembers %}<div class="subvalue"> {# if property is a group concept that has sub properties #}
-                  {% for sub_member in propval.SubMembers %}
-                    <a class="propertyvalue" href="{{ sub_member.uri | link_url(propval.vocab,request.lang) }}">{{ sub_member.label(request.contentLang) }}</a>
-                    {% if sub_member.lang and (sub_member.lang != request.lang or explicit_langcodes) %}<span class="propertyvalue"> ({{ sub_member.lang }})</span>{% endif %}
-                    <br />
-                  {% endfor %}
-                  </div>
-                {% endif %}
-              {% endif %}
-            {% elseif property.type == 'rdf:type' %}<p>{{ propval.label }}</p>
-            {% else %} {# Literals (no URI), eg. alternative labels as properties #}
-                {% if propval.lang == request.contentLang or propval.lang == null or not request.contentLang and propval.lang == request.lang %}
-                  {% if propval.hasXlProperties %}
-                  <span class="reified-property-value xl-label tooltip-html">
-                    <img alt="Information" src="resource/pics/about.png">
-                    <div class="reified-tooltip tooltip-html-content">
-                    {% for key, val in propval.xlLabel.properties %}
-                      <p><span class="tooltip-prop">{{ key }}</span>:
-                        <span class="versal">{{ val }}</span>
-                      </p>
+                  {% else %}
+                  {% if propval.isReified %} {# e.g. skos:definition's with resource values #}
+                  <span class="versal reified-property-value tooltip-html">
+                    <img alt="Information" src="resource/pics/about.png">{% if propval.notation %}<span class="versal">{{ propval.notation }} </span>{% endif %} {{ propval.label(request.contentLang) }}
+                    <div class="reified-tooltip tooltip-html-content">{% for key, val in propval.reifiedPropertyValues %}<p><span class="tooltip-prop">{{ key }}</span>: <a href="{{ val.uri | link_url(val.exvocab, request.lang, 'page', request.contentLang) }}">{{ val.label(request.contentLang) }}</a></p>{% endfor %}</div>
+                  </span>
+                  {% else %}
+                      <a href="{{ propval.uri | link_url(propval.vocab, request.lang, 'page', request.contentLang) }}">{% if propval.notation %}<span class="versal">{{ propval.notation }} </span>{% endif %} {{ propval.label(request.contentLang) }}</a>
+                  {% endif %}
+                  {% endif %}
+                  {% if propval.label.lang and (propval.label.lang != request.contentLang or explicit_langcodes) %}<span class="versal"> ({{ propval.label(request.contentLang).lang }})</span>{% endif %}
+                  {% if propval.SubMembers %}<div class="subvalue"> {# if property is a group concept that has sub properties #}
+                    {% for sub_member in propval.SubMembers %}
+                      <a class="propertyvalue" href="{{ sub_member.uri | link_url(propval.vocab,request.lang) }}">{{ sub_member.label(request.contentLang) }}</a>
+                      {% if sub_member.lang and (sub_member.lang != request.lang or explicit_langcodes) %}<span class="propertyvalue"> ({{ sub_member.lang }})</span>{% endif %}
+                      <br />
                     {% endfor %}
                     </div>
-                  </span>
                   {% endif %}
-                  <span{% if property.type == 'skos:altLabel' %} class="replaced"{% endif %}>
-                    {%- if propval.containsHtml %}{{ propval.label|raw }}{% else %}{{ propval.label }}{% endif %}
-                    {%- if propval.lang and (request.contentLang and propval.lang != request.contentLang or explicit_langcodes) %} ({{ propval.lang }}){% endif %}
-                    {%- if propval.datatype %} ({{ propval.datatype }}){% endif -%}
-                  </span>
+                {% endif %}
+              {% elseif property.type == 'rdf:type' %}<p>{{ propval.label }}</p>
+              {% else %} {# Literals (no URI), eg. alternative labels as properties #}
+                  {% if propval.lang == request.contentLang or propval.lang == null or not request.contentLang and propval.lang == request.lang %}
+                    {% if propval.hasXlProperties %}
+                    <span class="reified-property-value xl-label tooltip-html">
+                      <img alt="Information" src="resource/pics/about.png">
+                      <div class="reified-tooltip tooltip-html-content">
+                      {% for key, val in propval.xlLabel.properties %}
+                        <p><span class="tooltip-prop">{{ key }}</span>:
+                          <span class="versal">{{ val }}</span>
+                        </p>
+                      {% endfor %}
+                      </div>
+                    </span>
+                    {% endif %}
+                    <span{% if property.type == 'skos:altLabel' %} class="replaced"{% endif %}>
+                      {%- if propval.containsHtml %}{{ propval.label|raw }}{% else %}{{ propval.label }}{% endif %}
+                      {%- if propval.lang and (request.contentLang and propval.lang != request.contentLang or explicit_langcodes) %} ({{ propval.lang }}){% endif %}
+                      {%- if propval.datatype %} ({{ propval.datatype }}){% endif -%}
+                    </span>
+                {% endif %}
               {% endif %}
-            {% endif %}
-            </li>
+              </td>
+            </trow>
+          {% endfor %}
+          {% endif %}
         {% endfor %}
-        </ul>
-        {% endif %}
-        </div></div></div>
-        {% endif %}
-      {% endfor %}
+        </trow>
       {% set foreignLabels = concept.foreignLabels %}
       {% if foreignLabels %}
-      <div class="row property prop-other-languages">
-        <div class="property-label"><h3 class="versal property-click skosmos-tooltip-wrapper skosmos-tooltip t-top" data-title="foreign prefLabel help" >foreign prefLabels</h3></div>
-        <div class="property-value-column">
-          <div class="property-value-wrapper">
-            <ul>
-              {% for language,labels in foreignLabels %}
+      <trow class="prop-other-languages">
+        <td class="main-table-label"><h3 class="versal property-click skosmos-tooltip-wrapper skosmos-tooltip t-top" data-title="foreign prefLabel help" >foreign prefLabels</h3></td>
+        <td class="align-middle">
+            {% for language,labels in foreignLabels %}
               {% for value in labels.prefLabel|default([])|merge(labels.altLabel|default([])) %}
-              <li class="row other-languages{% if loop.first %} first-of-language{% endif %}">
                 <div class="col-6 versal{% if value.type == "skos:altLabel" %} replaced{%else %} versal-pref{% endif %}">
                   {% if value.hasXlProperties %}
                   <span class="reified-property-value xl-label tooltip-html">
@@ -172,25 +160,18 @@
                   {% endif %}
                 </div>
                 <div class="col-6 versal">{% if loop.first %}<p>{{ language }}</p>{% endif %}</div>
-              </li>
               {% endfor %}
-              {% endfor %}
-            </ul>
+            {% endfor %}
           </div>
-        </div>
-      </div>
+        </td>
+      </trow>
       {% endif %}
-        <div class="row property prop-uri">
-            <div class="property-label"><h3 class="versal">URI</h3></div>
-            <div class="property-value-column">
-                <div class="property-value-wrapper">
-                    <span class="versal uri-input-box" id="uri-input-box">{{ concept.uri }}</span>
-                    <button type="button" data-bs-toggle="tooltip" data-bs-placement="button" title="Copy to clipboard" class="btn btn-default btn-xs copy-clipboard" for="#uri-input-box">
-                      <span class="fa-regular fa-copy"></span>
-                    </button>
-                </div>
-            </div>
-        </div>
+      <trow>
+        <td class="main-table-label"><h3>URI</h3></td>
+        <td class="align-middle">{{ concept.uri }}</td>
+      </trow>
+      </tbody>
+    </table>
         <div class="row">
             <div class="property-label"><h3 class="versal">Download this concept in SKOS format:</h3></div>
             <div class="property-value-column">
