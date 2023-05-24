@@ -106,7 +106,6 @@ class WebController extends Controller
         $acceptLanguage = $request->getServerConstant('HTTP_ACCEPT_LANGUAGE') ? $request->getServerConstant('HTTP_ACCEPT_LANGUAGE') : $langcodes[0];
 
         $bestLang = $this->negotiator->getBest($acceptLanguage, $langcodes);
-
         if (isset($bestLang) && in_array($bestLang->getValue(), $langcodes)) {
             return $bestLang->getValue();
         }
