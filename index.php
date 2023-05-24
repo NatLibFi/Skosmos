@@ -26,7 +26,7 @@ $parts = explode('/', $path);
 if (sizeof($parts) <= 2) {
     // if language code missing, redirect to guessed language
     // in any case, redirect to <lang>/
-    $lang = sizeof($parts) == 2 && $parts[1] !== '' ? $parts[1] : $controller->guessLanguage();
+    $lang = sizeof($parts) == 2 && $parts[1] !== '' ? $parts[1] : $controller->guessLanguage($request);
     header("Location: " . $lang . "/");
 } else {
   if (array_key_exists($parts[1], $config->getLanguages())) { // global pages
@@ -50,12 +50,12 @@ if (sizeof($parts) <= 2) {
         try {
             $request->setVocab($parts[1]);
         } catch (Exception | ValueError $e) {
-            $request->setLang($controller->guessLanguage());
+            $request->setLang($controller->guessLanguage($request));
             $controller->invokeGenericErrorPage($request);
             return;
         }
         if (sizeof($parts) == 3) { // language code missing
-            $lang = $controller->guessLanguage();
+            $lang = $controller->guessLanguage($request);
             $newurl = $controller->getBaseHref() . $vocab . "/" . $lang . "/";
             header("Location: " . $newurl);
         } else {
@@ -97,7 +97,7 @@ if (sizeof($parts) <= 2) {
                     $controller->invokeGenericErrorPage($request);
                 }
             } else { // language code missing, redirect to some language version
-                $lang = $controller->guessLanguage($vocab);
+                $lang = $controller->guessLanguage($request, $vocab);
                 $newurl = $controller->getBaseHref() . $vocab . "/" . $lang . "/" . implode('/', array_slice($parts, 2));
                 $qs = $request->getServerConstant('QUERY_STRING');
                 if ($qs) {
