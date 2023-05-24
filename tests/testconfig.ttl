@@ -36,7 +36,9 @@
     # customize the base element. Set this if the automatic base url detection doesn't work. For example setups behind a proxy.
     skosmos:baseHref "http://tests.localhost/Skosmos/" ;
     # interface languages available, and the corresponding system locales
-    skosmos:languages ( [ rdfs:label "en" ; rdf:value "en_GB.utf8" ] ) ;
+    skosmos:languages ( [ rdfs:label "en" ; rdf:value "en_GB.utf8" ]
+                        [ rdfs:label "fi" ; rdf:value "fi_FI.utf8" ]
+                        [ rdfs:label "fr" ; rdf:value "fr_FR.utf8" ] ) ;
     # how many results (maximum) to load at a time on the search results page
     skosmos:searchResultsSize 5 ;
     # how many items (maximum) to retrieve in transitive property queries

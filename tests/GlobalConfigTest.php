@@ -58,7 +58,7 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
 
     public function testGetLanguages()
     {
-        $this->assertEquals(array('en' => 'en_GB.utf8'), $this->config->getLanguages());
+        $this->assertEquals(array('en' => 'en_GB.utf8', 'fi' => 'fi_FI.utf8', 'fr' => 'fr_FR.utf8'), $this->config->getLanguages());
     }
 
     public function testGetSearchResultsSize()
