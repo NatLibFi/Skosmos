@@ -248,11 +248,20 @@ class WebControllerTest extends TestCase
         $this->assertEquals($guessedLanguage, 'fi');
     }
 
-    public function testGuessLanguageAcceptLanguage() {
+    public function testGuessLanguageAcceptLanguageSimple() {
         $request = new Request($this->model);
         $request->setServerConstant('HTTP_ACCEPT_LANGUAGE', 'fr');
         $guessedLanguage = $this->webController->guessLanguage($request);
         $this->assertEquals($guessedLanguage, 'fr');
+    }
+
+    public function testGuessLanguageAcceptLanguageBestMatch() {
+        $request = new Request($this->model);
+        $request->setServerConstant('HTTP_ACCEPT_LANGUAGE', 'sv, de;q=0.9, fi;q=0.8, fr;q=0.5');
+        $guessedLanguage = $this->webController->guessLanguage($request);
+        // configured/available languages are en, fi, fr
+        // the best matching language for the given Accept-Language is fi
+        $this->assertEquals($guessedLanguage, 'fi');
     }
 
 }
