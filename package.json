@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "test-in-gui": "npx cypress open",
+    "test-in-cli": "npx cypress run"
+  },
   "dependencies": {
     "bootstrap": "^5.2.3",
     "vue": "^3.2.47"

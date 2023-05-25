@@ -11,7 +11,7 @@ export function terminalLog(violations) {
             violations.length === 1 ? '' : 's'
         } ${violations.length === 1 ? 'was' : 'were'} detected`
     )
-    // pluck specific keys to keep the table readable
+    // Styling the table
     const violationData = violations.map(
         ({ id, impact, description, nodes }) => ({
             id,
@@ -22,4 +22,24 @@ export function terminalLog(violations) {
     )
     cy.task('table', violationData)
 }
+
+export function getConfigurationForGUITests () {
+    return it('Goes through all needed levels', () => {
+        checkA11y(null, null, {
+            includedImpacts: ['minor', 'moderate', 'serious', 'critical' ],
+            runOnly: {
+                type: 'tag',
+                values: ['wcag2aa'],
+            }
+        })
+    })
+}
+
+export function getConfigurationForCLITests () {
+    return it('Logs (CLI)', () => {
+        cy.checkA11y(null, null, terminalLog)
+    })
+}
+
+
 
