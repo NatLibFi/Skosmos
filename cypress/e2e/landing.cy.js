@@ -1,3 +1,5 @@
+import { checkA11y } from '../support/accessibility.js'
+
 describe('Landing page', () => {
   it('links to vocabulary home', () => {
     // go to the Skosmos front page

@@ -4,7 +4,9 @@
     "vue": "^3.2.47"
   },
   "devDependencies": {
+    "axe-core": "^4.7.1",
     "cypress": "^12.10.0",
+    "cypress-axe": "^1.4.0",
     "standard": "^17.0.0"
   }
 }
