@@ -76,14 +76,16 @@ class WebController extends Controller
     /**
      * Guess the language of the user. Return a language string that is one
      * of the supported languages defined in the $LANGUAGES setting, e.g. "fi".
+     * @param Request $request HTTP request
      * @param string $vocid identifier for the vocabulary eg. 'yso'.
      * @return string returns the language choice as a numeric string value
      */
-    public function guessLanguage($vocid = null)
+    public function guessLanguage($request, $vocid = null)
     {
         // 1. select language based on SKOSMOS_LANGUAGE cookie
-        if (filter_input(INPUT_COOKIE, 'SKOSMOS_LANGUAGE', FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
-            return filter_input(INPUT_COOKIE, 'SKOSMOS_LANGUAGE', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $languageCookie = $request->getCookie('SKOSMOS_LANGUAGE');
+        if ($languageCookie) {
+            return $languageCookie;
         }
 
         // 2. if vocabulary given, select based on the default language of the vocabulary
@@ -101,9 +103,10 @@ class WebController extends Controller
         $this->negotiator = new \Negotiation\LanguageNegotiator();
         $langcodes = array_keys($this->languages);
         // using a random language from the configured UI languages when there is no accept language header set
-        $acceptLanguage = filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE', FILTER_SANITIZE_FULL_SPECIAL_CHARS) ? filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE', FILTER_SANITIZE_FULL_SPECIAL_CHARS) : $langcodes[0];
+        $acceptLanguage = $request->getServerConstant('HTTP_ACCEPT_LANGUAGE') ? $request->getServerConstant('HTTP_ACCEPT_LANGUAGE') : $langcodes[0];
+
         $bestLang = $this->negotiator->getBest($acceptLanguage, $langcodes);
-        if (isset($bestLang) && in_array($bestLang, $langcodes)) {
+        if (isset($bestLang) && in_array($bestLang->getValue(), $langcodes)) {
             return $bestLang->getValue();
         }
 
