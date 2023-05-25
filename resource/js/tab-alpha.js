@@ -76,8 +76,8 @@ tabAlphaApp.component('tab-alpha', {
       let clangSeparator = '?'
       let page = ''
 
-      if (uri.indexOf(SKOSMOS.uri_space) !== -1) {
-        page = uri.substr(SKOSMOS.uri_space.length)
+      if (uri.indexOf(SKOSMOS.uriSpace) !== -1) {
+        page = uri.substr(SKOSMOS.uriSpace.length)
 
         if (/[^a-zA-Z0-9-_.~]/.test(page) || page.indexOf('/') > -1) {
           // contains special characters or contains an additional '/' - fall back to full URI
