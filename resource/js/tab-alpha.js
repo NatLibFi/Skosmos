@@ -79,7 +79,7 @@ tabAlphaApp.component('tab-alpha', {
       if (uri.indexOf(SKOSMOS.uri_space) !== -1) {
         page = uri.substr(SKOSMOS.uri_space.length)
 
-        if (/[^a-zA-Z0-9-_\.~]/.test(page) || page.indexOf('/') > -1) {
+        if (/[^a-zA-Z0-9-_.~]/.test(page) || page.indexOf('/') > -1) {
           // contains special characters or contains an additional '/' - fall back to full URI
           page = '?uri=' + encodeURIComponent(uri)
           clangSeparator = '&'
@@ -101,8 +101,6 @@ tabAlphaApp.component('tab-alpha', {
           return data.text()
         })
         .then(data => {
-          console.log(data)
-
           // concept card HTML
           const conceptHTML = document.createElement('div')
           conceptHTML.innerHTML = data.trim()

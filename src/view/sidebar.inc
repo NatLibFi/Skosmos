@@ -73,21 +73,6 @@
     </div>
 
 
-    {% if letters %}
-    <div class="tab-pane-active" id="tab-alpha" role="tabpanel">
-      <h4 class="visually-hidden">Choose alphabetical listing letter</h4>
-      <ul class="pagination">
-      {% for letter in letters %} {# looping through all letters #}
-        <li class="page-item{% if letter == request.letter %} active{% endif %}">
-          <a class="page-link" href="{{ request.vocabid }}/{{ request.lang }}/index/{{ letter }}
-            {%- if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif -%}
-          "><span class="visually-hidden">{{ letter | lower }}</span><span aria-hidden=true>{{ letter }}</span></a>
-        </li>
-      {% endfor %}
-      </ul>
-    </div>
-    {% endif %}
-
     {% if request.page != 'search' %}
     <h4 class="visually-hidden">Listing vocabulary concepts alphabetically</h4>
     {% endif %}
