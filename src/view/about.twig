@@ -1,0 +1,25 @@
+{% extends "base-template.twig" %}
+{% block title %}: "About"{% endblock %}
+{% block content %}
+
+<div class="container">
+  <div class="mx-5">
+    <div class="px-3 pb-3 bg-light">
+      <h2 class="fs-3 mb-5">"About"</h2>
+      <p class="fs-6">
+      {% include 'about-info.inc' %}
+      </p>
+    </div>
+
+    <div id="about-extra-info">
+      <p>{% if ServiceName != 'SERVICE_NAME' %}{{ ServiceName }}
+      {% else %}Skosmos{% endif %} "layout designed by Hahmo"
+      </p>
+    </div>
+    <div id="version">
+      {% set version = request.version %}
+      <p>Skosmos version {{ version }}</p>
+    </div>
+  </div>
+</div>
+{% endblock %}
