@@ -135,7 +135,9 @@ class Request
 
     public function getCookie($paramName)
     {
-        if (!isset($this->cookies[$paramName])) return null;
+        if (!isset($this->cookies[$paramName])) {
+            return null;
+        }
         return filter_var($this->cookies[$paramName], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     }
 
