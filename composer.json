@@ -9,7 +9,7 @@
     "symfony/polyfill-php80": "1.*",
     "symfony/polyfill-php81": "1.*",
     "twig/twig": "^2.15.3",
-    "willdurand/negotiation": "3.0.*",
+    "willdurand/negotiation": "3.1.*",
     "punic/punic": "3.5.1",
     "ml/json-ld": "1.*",
     "ext-gettext": "*",
