@@ -3,8 +3,8 @@ import { checkA11y } from '../support/accessibility.js'
 describe('Accessibility', () => {
     before(() => {
         cy.visit('/')
-        cy.injectAxe();
-    });
+        cy.injectAxe()
+    })
 
     it('Should have no a11y violations', () => {
         checkA11y(null, null, {
@@ -13,7 +13,7 @@ describe('Accessibility', () => {
                 type: 'tag',
                 values: ['wcag2aa'],
             }
-        });
-    });
-});
+        })
+    })
+})
 
