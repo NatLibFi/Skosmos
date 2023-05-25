@@ -76,4 +76,7 @@
     {% endapply %}
     {% endif %}
   </div>
+  <!-- appendix / concept mapping properties -->
+  <div id="concept-mappings">
+  </div>
 </div>

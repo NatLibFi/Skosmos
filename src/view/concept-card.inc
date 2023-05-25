@@ -178,14 +178,6 @@
             </div>
         </div>
       </div>
-      <!-- appendix / concept mapping properties -->
-      <div
-          id="concept-mappings"
-          class="concept-appendix hidden"
-          data-concept-uri="{{ concept.uri }}"
-          data-concept-type="{{ concept.type[0] }}"
-          >
-      </div>
     </div>
     {% endfor %}
 
@@ -194,4 +186,7 @@
     <p>Error: Term "{{ term }}" not found in vocabulary!</p>
   </div>
   {% endif %}
+  <!-- appendix / concept mapping properties -->
+  <div id="concept-mappings">
+  </div>
 </div>
