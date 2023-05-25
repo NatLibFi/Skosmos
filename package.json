@@ -1,7 +1,7 @@
 {
   "scripts": {
     "test-in-gui": "npx cypress open",
-    "test-in-cli": "npx cypress run"
+    "test-in-cli": "npx cypress run --spec 'cypress/e2e/test-cli/*'"
   },
   "dependencies": {
     "bootstrap": "^5.2.3",
