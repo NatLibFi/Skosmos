@@ -10,9 +10,15 @@ const tabAlphaApp = Vue.createApp({
     }
   },
   mounted () {
+    // load alphabetical index if aplha tab is active when the page is first opened (otherwise only load the index when the tab is clicked)
+    // this should probably be done differently
+    if (document.querySelector('#alpha > a').classList.contains('active')) {
+      this.loadLetters()
+    }
   },
   methods: {
     loadLetters () {
+      // only load index the first time the page is opened or the alpha tab is clicked
       if (this.indexLetters.length === 0) {
         fetch('rest/v1/' + SKOSMOS.vocab + '/index/?lang=' + SKOSMOS.lang)
           .then(data => {
@@ -44,11 +50,11 @@ const tabAlphaApp = Vue.createApp({
   `
 })
 
-/* Custom directive used to add an event listened on clicks on an element outside of this component */
+/* Custom directive used to add an event listener on clicks on an element outside of this component */
 tabAlphaApp.directive('click-tab-alpha', {
   beforeMount: (el, binding) => {
     el.clickTabEvent = event => {
-      binding.value() // calling the method given as the attribute value
+      binding.value() // calling the method given as the attribute value (loadLetters)
     }
     document.querySelector('#alpha').addEventListener('click', el.clickTabEvent) // registering an event listener on clicks on the alpha nav-item element
   },
@@ -89,6 +95,7 @@ tabAlphaApp.component('tab-alpha', {
     partialPageLoad (event, pageUri, conceptUri) {
       event.preventDefault()
 
+      // fetching html content of the concept page
       fetch(pageUri)
         .then(data => {
           return data.text()
@@ -99,15 +106,26 @@ tabAlphaApp.component('tab-alpha', {
           // concept card HTML
           const conceptHTML = document.createElement('div')
           conceptHTML.innerHTML = data.trim()
+          const conceptMainContent = conceptHTML.querySelectorAll('#main-content > :not(#concept-mappings)') // all elements from concept card except concept mappings
+
+          // emptying vocab info
+          const mainContent = document.querySelector('#main-content')
+          const toBeRemoved = document.querySelectorAll('#main-content > :not(#concept-mappings)') // all elements from vocab info except concept mappings
+          for (let i = 0; i < toBeRemoved.length; i++) {
+            mainContent.removeChild(toBeRemoved[i])
+          }
 
           // inserting concept card into vocab info
-          const mainContent = document.querySelector('#main-content')
-          mainContent.innerHTML = ''
-          mainContent.appendChild(conceptHTML.querySelector('#main-content'))
+          for (let i = 0; i < conceptMainContent.length; i++) {
+            mainContent.prepend(conceptMainContent[i])
+          }
 
           // what other properties should be changed?
           SKOSMOS.uri = conceptUri
-          conceptMappingsApp.mount('#concept-mappings') // Vue apps can't be mounted multiple times so opening another concept page breaks mappings component
+
+          // custom event to signal that a new concept page is loaded
+          const event = new Event('loadConceptPage')
+          document.dispatchEvent(event)
         })
     }
   },

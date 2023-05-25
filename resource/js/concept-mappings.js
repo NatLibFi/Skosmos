@@ -11,6 +11,16 @@ const conceptMappingsApp = Vue.createApp({
     content_lang: SKOSMOS.content_lang
   },
   methods: {
+    loadMappings () {
+      fetch('https://api.finto.fi/rest/v1/' + SKOSMOS.vocab + '/mappings?uri=' + SKOSMOS.uri + '&external=true&clang=' + SKOSMOS.lang + '&lang=' + SKOSMOS.content_lang)
+        .then(data => {
+          return data.json()
+        })
+        .then(data => {
+          console.log(data.mappings)
+          this.mappings = this.group_by(data.mappings, 'typeLabel')
+        })
+    },
     // from https://stackoverflow.com/a/71505541
     group_by (arr, prop) {
       return arr.reduce(function (ret, x) {
@@ -21,16 +31,30 @@ const conceptMappingsApp = Vue.createApp({
     }
   },
   mounted () {
-    fetch('https://api.finto.fi/rest/v1/' + SKOSMOS.vocab + '/mappings?uri=' + SKOSMOS.uri + '&external=true&clang=' + SKOSMOS.lang + '&lang=' + SKOSMOS.content_lang)
-      .then(data => {
-        return data.json()
-      })
-      .then(data => {
-        console.log(data.mappings)
-        this.mappings = this.group_by(data.mappings, 'typeLabel')
-      })
+    // Only load mappings when on the concept page
+    // SKOSMOS variable should maybe have a separate property for current page
+    if (SKOSMOS.uri) {
+      this.loadMappings()
+    }
   },
-  template: '<concept-mappings :mappings="mappings"></concept-mappings>'
+  template: `
+    <div v-load-concept-page="loadMappings">
+      <concept-mappings :mappings="mappings" v-if="mappings.length !== 0"></concept-mappings>
+    </div>
+  `
+})
+
+/* Custom directive used to add an event listener for loading a concept page */
+conceptMappingsApp.directive('load-concept-page', {
+  mounted: (el, binding) => {
+    el.loadConceptPageEvent = event => {
+      binding.value() // calling the method given as the attribute value (loadMappings)
+    }
+    document.addEventListener('loadConceptPage', el.loadConceptPageEvent) // registering an event listener for loading a concept page
+  },
+  unmounted: el => {
+    document.removeEventListener('loadConceptPage', el.loadConceptPageEvent)
+  }
 })
 
 conceptMappingsApp.component('concept-mappings', {
