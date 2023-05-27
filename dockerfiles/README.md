@@ -46,19 +46,27 @@ without Docker Compose, you can try the following command before loading your
 vocabulary data. It starts a container in the same way our other example with
 the `docker-compose` command.
 
-    docker run --name fuseki -ti --rm \
-      --env "ADMIN_PASSWORD=admin" --env "JVM_ARGS=-Xmx2g" \
-      -p 3030:3030 \
-      --mount type=bind,src=$(pwd)/config/skosmos.ttl,dst=/fuseki/configuration/skosmos.ttl \
-      stain/jena-fuseki
+    export JENA_4_VERSION=4.8.0
+
+    docker build -t jena-fuseki:$JENA_4_VERSION \
+        --build-arg JENA_VERSION=$JENA_4_VERSION \
+        --no-cache dockerfiles/jena-fuseki2-docker
+
+    docker run --name fuseki --rm -ti \
+        -v $(pwd)/config/skosmos.ttl:/fuseki/skosmos.ttl \
+        -e "JAVA_OPTIONS=-Xmx2g -Xms1g" \
+        -p 3030:3030 \
+        jena-fuseki:$JENA_4_VERSION \
+        --config=/fuseki/skosmos.ttl
+
+    curl -XPOST  http://localhost:3030/skosmos/query -d "query=SELECT ?a WHERE { ?a ?b ?c }"
 
 ## Running with docker-compose
 
 The `docker-compose` provided configuration will prepare three containers.
-The first one called `skosmos-fuseki`, which uses the `stain/jena-fuseki`
-image for Jena, and starts a container with 2 GB of memory and `admin` as
-the user and password. The `docker-compose` service name of this container
-is `fuseki`.
+The first one called `skosmos-fuseki`, which uses the Apache Jena
+image for Fuseki, and starts a container with 2 GB of memory. The
+`docker-compose` service name of this container is `fuseki`.
 
 The second container is the `fuseki-cache`, a Varnish Cache container. It sits
 between the `skosmos-fuseki` and the `skosmos-web` (more on this below). The
