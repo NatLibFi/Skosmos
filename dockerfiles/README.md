@@ -1,5 +1,18 @@
 Dockerfiles for Skosmos.
 
+## Prerequisites
+
+The following software versions were tested successfully with
+the docker configuration files used in this document.
+
+- Ubuntu Linux jammy 22.04.3 LTS
+- Docker version 24.0.5, build ced0996
+- Docker Compose version v2.20.2
+- Internet connection to download base images and other dependencies
+- At least 1G of storage space for the images (~530M for Skosmos,
+  ~140M for Jena Fuseki, and ~260M for Varnish cache), or more
+  depending on your use of vocabularies and data
+
 ## Running with Docker
 
 The following commands will build and tag the image it with `skosmos:test`,
@@ -25,7 +38,7 @@ with the vocabulary data, and to be available at `http://localhost:3030`.
 For this last requisite you must create a
 [Docker network](https://docs.docker.com/network/network-tutorial-standalone/),
 use [`--net=host`](https://docs.docker.com/network/host/) or other mechanisms for
-that. See the section [Running with docker-compose](#running-with-docker-compose)
+that. See the section [Running with docker compose](#running-with-docker-compose)
 if you would like to use Docker Compose.
 
 To stop the container:
@@ -44,21 +57,29 @@ two files as necessary.
 **NOTE**: If you would like to start a Fuseki container to test with Docker only,
 without Docker Compose, you can try the following command before loading your
 vocabulary data. It starts a container in the same way our other example with
-the `docker-compose` command.
+the `docker compose` command.
 
-    docker run --name fuseki -ti --rm \
-      --env "ADMIN_PASSWORD=admin" --env "JVM_ARGS=-Xmx2g" \
-      -p 3030:3030 \
-      --mount type=bind,src=$(pwd)/config/skosmos.ttl,dst=/fuseki/configuration/skosmos.ttl \
-      stain/jena-fuseki
+    export JENA_4_VERSION=4.8.0
 
-## Running with docker-compose
+    docker build -t jena-fuseki:$JENA_4_VERSION \
+        --build-arg JENA_VERSION=$JENA_4_VERSION \
+        --no-cache dockerfiles/jena-fuseki2-docker
 
-The `docker-compose` provided configuration will prepare three containers.
-The first one called `skosmos-fuseki`, which uses the `stain/jena-fuseki`
-image for Jena, and starts a container with 2 GB of memory and `admin` as
-the user and password. The `docker-compose` service name of this container
-is `fuseki`.
+    docker run --name fuseki --rm -ti \
+        -v $(pwd)/config/skosmos.ttl:/fuseki/skosmos.ttl \
+        -e "JAVA_OPTIONS=-Xmx2g -Xms1g" \
+        -p 3030:3030 \
+        jena-fuseki:$JENA_4_VERSION \
+        --config=/fuseki/skosmos.ttl
+
+    curl -XPOST  http://localhost:3030/skosmos/query -d "query=SELECT ?a WHERE { ?a ?b ?c }"
+
+## Running with docker compose
+
+The `docker compose` provided configuration will prepare three containers.
+The first one called `skosmos-fuseki`, which uses the Apache Jena
+image for Fuseki, and starts a container with 2 GB of memory. The
+`docker compose` service name of this container is `fuseki`.
 
 The second container is the `fuseki-cache`, a Varnish Cache container. It sits
 between the `skosmos-fuseki` and the `skosmos-web` (more on this below). The
@@ -83,22 +104,22 @@ and `localhost:9031` respectively.
 To create the containers in this example setup, you can use this command
 from the `./dockerfiles/` directory:
 
-    docker-compose up -d
+    docker compose up -d
 
 Now Skosmos should be available at `http://localhost:9090/` from your
 host. See the [section below](#loading-vocabulary-data) to load vocabulary data.
 
 To stop:
 
-    docker-compose down
+    docker compose down
 
 ## Loading vocabulary data
 
-After you have your container running, with either Docker or `docker-compose`,
+After you have your container running, with either Docker or `docker compose`,
 you will need to load your vocabulary data.
 
 **NOTE**: In the example below, we use the Fuseki URL `localhost:3030`, which
-should work for the Docker setup. If you used `docker-compose`, you will have
+should work for the Docker setup. If you used `docker compose`, you will have
 to use `localhost:9030` instead.
 
     # load STW vocabulary data
