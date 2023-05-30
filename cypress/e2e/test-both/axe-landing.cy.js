@@ -1,4 +1,5 @@
-import { getConfigurationForGUITests } from '../../support/accessibility.js'
+// import { getConfigurationForCLITests } from '../../support/accessibility.js'
+import { testRunner } from '../../support/accessibility.js'
 
 describe('This is used to avoid unnecessary redundancy of code', () => {
     before(() => {
@@ -7,6 +8,7 @@ describe('This is used to avoid unnecessary redundancy of code', () => {
     })
 
     // Configuration for the accessibility test
-    getConfigurationForGUITests()
+    // getConfigurationForCLITests()
+    testRunner()
 })
 

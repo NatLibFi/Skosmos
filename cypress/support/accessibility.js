@@ -5,9 +5,10 @@ export const checkA11y = options => {
     })
 }
 export function terminalLog(violations) {
+    // const runForCLI = Cypress.env('cli') // true
     cy.task(
         'log',
-        `${violations.length} accessibility violation${
+         `${violations.length} accessibility violation${
             violations.length === 1 ? '' : 's'
         } ${violations.length === 1 ? 'was' : 'were'} detected`
     )
@@ -23,7 +24,22 @@ export function terminalLog(violations) {
     cy.task('table', violationData)
 }
 
-export function getConfigurationForGUITests () {
+export function testRunner () {
+    const runForCLI = Cypress.env('cli') // true
+    if (runForCLI) {
+        getConfigurationForCLITests()
+    } else {
+        getConfigurationForGUITests()
+    }
+}
+
+function getConfigurationForCLITests () {
+    return it('Logs (CLI)', () => {
+        cy.checkA11y(null, null, terminalLog)
+    })
+}
+
+function getConfigurationForGUITests () {
     return it('Goes through all needed levels', () => {
         checkA11y(null, null, {
             includedImpacts: ['minor', 'moderate', 'serious', 'critical' ],
@@ -32,12 +48,6 @@ export function getConfigurationForGUITests () {
                 values: ['wcag2aa'],
             }
         })
-    })
-}
-
-export function getConfigurationForCLITests () {
-    return it('Logs (CLI)', () => {
-        cy.checkA11y(null, null, terminalLog)
     })
 }
 
