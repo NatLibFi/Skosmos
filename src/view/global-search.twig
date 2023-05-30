@@ -1,0 +1,14 @@
+{% extends "base-template.twig" %}
+{% block title %}: "Search results"{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="mx-5">
+    <div class="px-3 pb-3 bg-light">
+      <h2 class="fs-3 mb-5">"Search"</h2>
+      <p class="fs-6">
+	{% include "search-results.inc" %}
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}
