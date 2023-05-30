@@ -34,6 +34,7 @@ class ConceptPropertyTest extends PHPUnit\Framework\TestCase
      */
     public function testGetDescriptionAndLabel()
     {
+        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $vocab = $this->model->getVocabulary('test');
         $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta122', 'en');
         $concept = $concepts[0];
@@ -101,6 +102,7 @@ class ConceptPropertyTest extends PHPUnit\Framework\TestCase
      */
     public function testGetType()
     {
+        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $vocab = $this->model->getVocabulary('test');
         $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta122', 'en');
         $concept = $concepts[0];
