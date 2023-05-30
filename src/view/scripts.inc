@@ -8,7 +8,7 @@ const SKOSMOS = {
   waypoint_results: {{ parameters ? parameters.searchLimit : "null" }},
   {%- if request.page == 'page' and search_results and search_results|length == 1 %}
   prefLabels: [{'lang': '{{ search_results|first.label.lang }}','label': '{{ search_results|first.label }}'}{% for lang in search_results|first.foreignLabels %}{% for literal in lang %}{% if literal.type == 'skos:prefLabel' %},{'lang': '{{literal.lang}}', 'label': '{{literal.label}}'}{% endif %}{% endfor %}{% endfor %}],
-  uri: "{{ search_results|first.uri }}",
+  uri: '{{ search_results|first.uri }}',
   {% endif %}
   {%- if request.vocab ~%}
   languageOrder: [{% for lang in request.vocab.config.languageOrder(request.contentLang) %}'{{ lang }}'{% if not loop.last %}, {% endif %}{% endfor %}],
