@@ -11,6 +11,11 @@
   --feedback-form-text: var(--dark-color);
   --feedback-form-input: var(--light-color);
   --feedback-form-button-bg: var(--dark-color);
+  --sidebar-search-bg: var(--dark-color);
+  --sidebar-search-text: var(--white-color);
+  --vocab-bg: var(--white-color);
+  --vocab-table-border: var(--medium-color);
+  --vocab-link: var(--secondary-dark-color);
 
   /* Font definitions */
   --font-size: 14px;
@@ -275,7 +280,7 @@ body {
     font-weight: bold;
   }
 
-  /***** Main container frontpage & frontpage one vacab *****/
+  /***** Main container frontpage & frontpage one vocab *****/
   #background.frontpage, #background.frontpage-one-vocab {
     background-color: var(--main-bg-1);
     background-image: var(--frontpage-stripes-1);
@@ -551,8 +556,9 @@ body {
     border-top: 1px solid var(--vocab-table-border);
   }
 
-  .search-result-term a {
+  .search-result-term {
     font-family: var(--font-family-heading);
+    font-size: 1.5rem;
     text-decoration: none;
   }
 
