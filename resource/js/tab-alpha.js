@@ -92,7 +92,54 @@ tabAlphaApp.component('tab-alpha', {
 
       return SKOSMOS.vocab + '/' + SKOSMOS.lang + '/page/' + page + (clangParam !== '' ? clangSeparator + clangParam : '')
     },
-    partialPageLoad (event, pageUri, conceptUri) {
+    updateMainContent (conceptHTML) {
+      // concept card
+      const conceptMainContent = conceptHTML.querySelectorAll('#main-content > :not(#concept-mappings)') // all elements from concept card except concept mappings
+
+      // emptying vocab info
+      const mainContent = document.querySelector('#main-content')
+      const toBeRemoved = document.querySelectorAll('#main-content > :not(#concept-mappings)') // all elements from vocab info except concept mappings
+      for (let i = 0; i < toBeRemoved.length; i++) {
+        mainContent.removeChild(toBeRemoved[i])
+      }
+
+      // inserting concept card into vocab info
+      for (let i = 0; i < conceptMainContent.length; i++) {
+        mainContent.prepend(conceptMainContent[i])
+      }
+    },
+    updateTitle (conceptHTML) {
+      document.title = conceptHTML.querySelector('title').innerHTML
+    },
+    updateJsonLD (conceptHTML) {
+      const JsonLD = document.querySelector('script[type="application/ld+json"]')
+      const newJsonLD = conceptHTML.querySelector('script[type="application/ld+json"]')
+      if (JsonLD) {
+        JsonLD.innerHTML = '{}'
+        if (newJsonLD) {
+          JsonLD.innerHTML = newJsonLD.innerHTML
+        }
+      } else if (newJsonLD) {
+        // insert after the first JS script as it is in the template
+        const elemBefore = document.querySelector('script')
+        console.log(elemBefore)
+        if (elemBefore) {
+          elemBefore.parentNode.insertBefore(newJsonLD, elemBefore.nextSibling)
+        }
+      }
+    },
+    updateSKOSMOS (conceptHTML) {
+      // array of variables between prefLabels and languageOrder
+      const variables = conceptHTML.innerHTML.substring(conceptHTML.innerHTML.indexOf('prefLabels:'), conceptHTML.innerHTML.indexOf('languageOrder:')).split('\n')
+
+      const prefStr = variables[0].replaceAll("'", '"') // JSON.parse only accepts double quotes
+      const newPrefs = JSON.parse(prefStr.substring(prefStr.indexOf('['), prefStr.lastIndexOf(']') + 1))
+      const newUri = variables[1].substring(variables[1].indexOf("'") + 1, variables[1].indexOf(',') - 1)
+
+      SKOSMOS.uri = newUri
+      SKOSMOS.prefLables = newPrefs
+    },
+    partialPageLoad (event, pageUri) {
       event.preventDefault()
 
       // fetching html content of the concept page
@@ -101,27 +148,19 @@ tabAlphaApp.component('tab-alpha', {
           return data.text()
         })
         .then(data => {
-          // concept card HTML
+          // updating url and history
+          if (window.history.pushState) { window.history.pushState({ url: pageUri }, '', pageUri) }
+
+          // concept page HTML
           const conceptHTML = document.createElement('div')
           conceptHTML.innerHTML = data.trim()
-          const conceptMainContent = conceptHTML.querySelectorAll('#main-content > :not(#concept-mappings)') // all elements from concept card except concept mappings
 
-          // emptying vocab info
-          const mainContent = document.querySelector('#main-content')
-          const toBeRemoved = document.querySelectorAll('#main-content > :not(#concept-mappings)') // all elements from vocab info except concept mappings
-          for (let i = 0; i < toBeRemoved.length; i++) {
-            mainContent.removeChild(toBeRemoved[i])
-          }
+          this.updateMainContent(conceptHTML)
+          this.updateTitle(conceptHTML)
+          this.updateJsonLD(conceptHTML)
+          this.updateSKOSMOS(conceptHTML)
 
-          // inserting concept card into vocab info
-          for (let i = 0; i < conceptMainContent.length; i++) {
-            mainContent.prepend(conceptMainContent[i])
-          }
-
-          // what other properties should be changed?
-          SKOSMOS.uri = conceptUri
-
-          // custom event to signal that a new concept page is loaded
+          // custom event to signal that a new concept page was loaded
           const event = new Event('loadConceptPage')
           document.dispatchEvent(event)
         })
@@ -137,7 +176,7 @@ tabAlphaApp.component('tab-alpha', {
     <ul class="list-group" id="alpha-list">
       <li v-for="concept in indexConcepts" class="list-group-item py-1">
         <template v-if="concept.altLabel">{{ concept.altLabel }} -> </template>
-        <a :href="getHref(concept.uri)" @click="partialPageLoad($event, getHref(concept.uri), concept.uri)">{{ concept.prefLabel }}</a>
+        <a :href="getHref(concept.uri)" @click="partialPageLoad($event, getHref(concept.uri))">{{ concept.prefLabel }}</a>
       </li>
     </ul>
   `
