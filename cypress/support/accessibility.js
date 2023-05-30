@@ -24,7 +24,7 @@ export function terminalLog(violations) {
     cy.task('table', violationData)
 }
 
-export function testRunner () {
+export function accessibilityTestRunner () {
     const runForCLI = Cypress.env('cli') // true
     if (runForCLI) {
         getConfigurationForCLITests()
