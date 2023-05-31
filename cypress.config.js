@@ -3,7 +3,7 @@ const { defineConfig } = require("cypress")
 module.exports = defineConfig({
   e2e: {
     // You also can run like this: npx cypress run --config "baseUrl=http://localhost/skosmos"
-    baseUrl: 'http://localhost/skosmos/fi',
+    baseUrl: 'http://localhost/skosmos',
     setupNodeEvents(on, config) {
       on('task', {
         log(message) {

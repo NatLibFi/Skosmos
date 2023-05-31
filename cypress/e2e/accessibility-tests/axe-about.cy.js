@@ -3,7 +3,7 @@ import {accessibilityTestRunner, testRunner} from '../../support/accessibility.j
 
 describe('This is used to avoid unnecessary redundancy of code', () => {
     before(() => {
-        cy.visit('/about')
+        cy.visit('/fi/about')
         cy.injectAxe()
     })
 

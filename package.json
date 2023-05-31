@@ -1,7 +1,11 @@
 {
   "scripts": {
-    "test-gui": "npx cypress open",
-    "test-cli": "npx cypress run --env cli=true --spec 'cypress/e2e/accessibility-tests/*'"
+    "test-accessibility-all-gui": "npx cypress open",
+    "test-accessibility-all-cli": "npx cypress run --env cli=true --spec 'cypress/e2e/accessibility-tests/*'",
+    "test-accessibility-about-cli": "npx cypress run --env cli=true --spec 'cypress/e2e/accessibility-tests/axe-about.cy.js'",
+    "test-accessibility-vocab-cli": "npx cypress run --env cli=true --spec 'cypress/e2e/accessibility-tests/axe-vocab.cy.js'",
+    "test-accessibility-feedback-cli": "npx cypress run --env cli=true --spec 'cypress/e2e/accessibility-tests/axe-feedback.cy.js'",
+    "test-accessibility-landing-cli": "npx cypress run --env cli=true --spec 'cypress/e2e/accessibility-tests/axe-landing.cy.js'"
   },
   "dependencies": {
     "bootstrap": "^5.2.3",
