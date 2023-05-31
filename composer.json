@@ -12,7 +12,6 @@
     "willdurand/negotiation": "3.1.*",
     "punic/punic": "3.5.1",
     "ml/json-ld": "1.*",
-    "ext-gettext": "*",
     "ext-intl": "*",
     "ext-mbstring": "*",
     "ext-xsl": "*",
