@@ -3,14 +3,16 @@
   {% block sidebar %}
     <div class="sidebar-buttons">
       {% set sidebarHeading = request.page != 'search' ? "Sidebar listing: list and traverse vocabulary contents by a criterion" : "Sidebar listing: vocabulary search options" %}
-      <h2 class="visually-hidden">sidebarHeading</h2>
+      <h2 class="visually-hidden">{{ sidebarHeading }}</h2>
       <ul class="nav nav-tabs-no-style">
       {% if request.page != 'search' %}
         {% set css_class = ['nav-link'] %}
         {% if request.vocab.config.showAlphabeticalIndex %}
         <h3 class="visually-hidden">List vocabulary concepts alphabetically</h3>
         {% if search_results|length != 1 or (term and search_results|length == 1) %}{% set css_class = css_class|merge(['bg-dark','text-light','active']) %}{% endif %}
-        <li id="alpha" class="nav-item"><a class="{{ css_class|join(' ') }}" href="{{ request.vocabid }}/{{ request.lang }}/index{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{% if vocab.config.showChangeList and vocab.config.groupClassURI %}A-Z{% else %}Alpha-nav{% endif %}</a></li>
+        <li id="alpha" class="nav-item">
+          <a class="{{ css_class|join(' ') }}" href="{{ request.vocabid }}/{{ request.lang }}{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}#tab-alpha" role="tab" data-bs-toggle="tab">{% if vocab.config.showChangeList and vocab.config.groupClassURI %}A-Z{% else %}Alpha-nav{% endif %}</a>
+        </li>
         {% endif %}
         {% set css_class = ['nav-link'] %}
         {% set disabledHierarchy = not vocab.config.showHierarchy and not search_results|length == 1 %}
@@ -20,26 +22,32 @@
         <h3 class="visually-hidden">List vocabulary concepts hierarchically</h3>
         {% if search_results|length == 1 and not term %}{% set css_class = css_class|merge(['active']) %}{% endif %}
         <li id="hierarchy{%- if disabledHierarchy %}-disabled{% endif -%}" class="nav-item">
-          <a class="{{ css_class|join(' ') }}" href="#" id="hier-trigger"
-          {% if disabledHierarchy%} data-title="hierarchy-disabled-help"{% endif %}
+          <a class="{{ css_class|join(' ') }}" href="{{ request.vocabid }}/{{ request.lang }}{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}#tab-hierarchy" id="hier-trigger"
+          {% if disabledHierarchy%} data-title="hierarchy-disabled-help"{% endif %} role="tab" data-bs-toggle="tab"
           >Hier-nav
           </a>
         </li>
         {% set css_class = ['nav-link'] %}
         {% if vocab.config.groupClassURI %}
         <h3 class="visually-hidden">List vocabulary concepts and groupings hierarchically</h3>
-        <li id="groups" class="nav-item"><a class="{{ css_class|join(' ') }}" href="{{ request.vocabid }}/{{ request.lang }}/groups{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">Group-nav</a></li>
+        <li id="groups" class="nav-item">
+          <a class="{{ css_class|join(' ') }}" href="{{ request.vocabid }}/{{ request.lang }}{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}#tab-groups" role="tab" data-bs-toggle="tab">Group-nav</a>
+        </li>
         {% endif %}
         {% if vocab.config.showChangeList %}
         {% if active_tab == 'new' %}{% set css_class = css_class|merge(['active']) %}{%  endif %}
         {% if vocab.config.showDeprecatedChanges %}
         <h3 class="visually-hidden">List vocabulary concepts by newest additions including removed</h3>
-        <li id="changes" class="nav-item"><a class="{{ css_class|join(' ') }}" href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">Changes-and-deprecations-nav</a></li>
+        <li id="changes" class="nav-item">
+          <a class="{{ css_class|join(' ') }}" href="{{ request.vocabid }}/{{ request.lang }}{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}#tab-changes" role="tab" data-bs-toggle="tab">Changes-and-deprecations-nav</a>
+        </li>
         {% else %}
         <h3 class="visually-hidden">List vocabulary concepts by newest additions</h3>
         {% set css_class = ['nav-link'] %}
         {% if active_tab == 'new' %}{% set css_class = css_class|merge(['active']) %}{%  endif %}
-        <li id="changes" class="nav-item"><a class="{{ css_class|join(' ') }}" href="{{ request.vocabid }}/{{ request.lang }}/new{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">Changes-nav</a></li>
+        <li id="changes" class="nav-item">
+          <a class="{{ css_class|join(' ') }}" href="{{ request.vocabid }}/{{ request.lang }}{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}#tab-changes" role="tab" data-bs-toggle="tab">Changes-nav</a>
+        </li>
         {% endif %}
         {% endif %}
         {% else %}
@@ -48,20 +56,22 @@
       {% endif %}
       </ul>
     </div>
-    {% if letters %}
-    <div class="tab-pane-active" id="tab-alpha" role="tabpanel">
-      <h4 class="visually-hidden">Choose alphabetical listing letter</h4>
-      <ul class="pagination">
-      {% for letter in letters %} {# looping through all letters #}
-        <li class="page-item{% if letter == request.letter %} active{% endif %}">
-          <a class="page-link" href="{{ request.vocabid }}/{{ request.lang }}/index/{{ letter }}
-            {%- if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif -%}
-          "><span class="visually-hidden">{{ letter | lower }}</span><span aria-hidden=true>{{ letter }}</span></a>
-        </li>
-      {% endfor %}
-      </ul>
+
+
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="tab-alpha">
+      </div>
+      <div role="tabpanel" class="tab-pane" id="tab-hierarchy">
+        <p>bbb</p>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="tab-groups">
+        <p>ccc</p>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="tab-changes">
+        <p>ddd</p>
+      </div>
     </div>
-    {% endif %}
+
 
     {% if request.page != 'search' %}
     <h4 class="visually-hidden">Listing vocabulary concepts alphabetically</h4>

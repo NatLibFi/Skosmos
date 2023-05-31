@@ -16,6 +16,7 @@ class Request
     private $queryParams;
     private $queryParamsPOST;
     private $serverConstants;
+    private $cookies;
 
     /**
      * Initializes the Request Object
@@ -44,6 +45,13 @@ class Request
         foreach (filter_input_array(INPUT_SERVER) ?: [] as $key => $val) {
             $this->serverConstants[$key] = $val;
         }
+
+        // Store cookies in a local array, so we can mock them in tests.
+        // We do not apply any filters at this point.
+        $this->cookies = [];
+        foreach (filter_input_array(INPUT_COOKIE) ?: [] as $key => $val) {
+            $this->cookies[$key] = $val;
+        }
     }
 
     /**
@@ -64,6 +72,16 @@ class Request
     public function setServerConstant($paramName, $value)
     {
         $this->serverConstants[$paramName] = $value;
+    }
+
+    /**
+     * Set a cookie to mock it in tests.
+     * @param string $paramName parameter name
+     * @param string $value parameter value
+     */
+    public function setCookie($paramName, $value)
+    {
+        $this->cookies[$paramName] = $value;
     }
 
     /**
@@ -113,6 +131,14 @@ class Request
             return null;
         }
         return filter_var($this->serverConstants[$paramName], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    }
+
+    public function getCookie($paramName)
+    {
+        if (!isset($this->cookies[$paramName])) {
+            return null;
+        }
+        return filter_var($this->cookies[$paramName], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     }
 
     public function getLang()
