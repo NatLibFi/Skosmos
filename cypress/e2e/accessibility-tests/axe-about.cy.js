@@ -1,6 +1,6 @@
 import { accessibilityTestRunner } from '../../support/accessibility.js'
 
-describe('This is used to avoid unnecessary redundancy of code', () => {
+describe('Check accessibility of the about page', () => {
   before(() => {
     cy.visit('/fi/about')
     cy.injectAxe()
