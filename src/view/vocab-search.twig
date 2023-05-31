@@ -1,0 +1,18 @@
+{% extends "base-template.twig" %}
+{% block title %}: {{ vocab.title(request.contentLang) }}{% endblock %}
+{% block content %}
+<div class="container">
+  {% include "search-results-filter.inc" %}
+
+  <div class="col-md-8 ps-3">
+    <div class="mx-5 bg-light">
+      <div class="p-5 pt-4">
+        <div class="search-count {% if limit_type or limit_parent or limit_group or limit_scheme %}search-limited{% endif %}">
+          <p class="py-2"><span class="fw-bold">{{ search_count }} results for</span> '{{ term }}'</p>
+        </div>
+  	  {% include "search-results.inc" %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
