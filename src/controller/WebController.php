@@ -4,7 +4,9 @@
  * Importing the dependencies.
  */
 use Punic\Language;
-
+use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\Loader\PoFileLoader;
+use Symfony\Bridge\Twig\Extension\TranslationExtension;
 /**
  * WebController is an extension of the Controller that handles all
  * the requests originating from the view of the website.
@@ -64,12 +66,31 @@ class WebController extends Controller
         });
         $this->twig->addFilter($langFilter);
 
+        foreach( $this->languages as $langcode => $value ) {
+            $translator = new Translator($langcode);
+            $translator->addLoader('po', new PoFileLoader());
+            $translator->addResource('po', __DIR__.'/../../resource/translations/skosmos_' . $langcode . '.po', $langcode);
+            $this->languages[$langcode]['name'] = $translator->trans('in_this_language');
+        }
+
         // create the honeypot
         $this->honeypot = new \Honeypot();
         if (!$this->model->getConfig()->getHoneypotEnabled()) {
             $this->honeypot->disable();
         }
         $this->twig->addGlobal('honeypot', $this->honeypot);
+    }
+
+    /**
+     * Creates and registers the translation extension and loads translation file.
+     * @param string $lang two character language code
+     */
+    public function addTranslations($lang)
+    {
+        $translator = new Translator($lang);
+        $translator->addLoader('po', new PoFileLoader());
+        $translator->addResource('po', __DIR__.'/../../resource/translations/skosmos_' . $lang . '.po', $lang);
+        $this->twig->addExtension(new TranslationExtension($translator));
     }
 
     /**
