@@ -131,7 +131,7 @@ tabAlphaApp.component('tab-alpha', {
     updateSKOSMOS (conceptHTML) {
       // new SKOSMOS object from concept page
       const skosmosScript = conceptHTML.querySelector('#skosmos-global-vars').innerHTML
-      const skosmosObject = skosmosScript.slice(skosmosScript.indexOf('{')).replaceAll("'", '"') // JSON.parse only accepts double quotes
+      const skosmosObject = skosmosScript.slice(skosmosScript.indexOf('{'))
       const newSKOSMOS = JSON.parse(skosmosObject)
 
       // replacing all values in the old SKOSMOS object with new ones
