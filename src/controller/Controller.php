@@ -42,8 +42,8 @@ class Controller
         foreach ($this->model->getConfig()->getLanguages() as $langcode => $locale) {
             $this->languages[$langcode] = array('locale' => $locale);
             $this->setLanguageProperties($langcode);
-            $this->languages[$langcode]['name'] = gettext('in_this_language');
-            $this->languages[$langcode]['lemma'] = Punic\Language::getName($langcode, $langcode);
+            //$this->languages[$langcode]['name'] = gettext('in_this_language');
+            //$this->languages[$langcode]['lemma'] = Punic\Language::getName($langcode, $langcode);
         }
     }
 
