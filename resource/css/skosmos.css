@@ -7,6 +7,8 @@
   --light-color: #f2f5f7;
   --alert-color: #a0270a;
   --white-color: #ffffff;
+  --sidebar-search-bg: var(--dark-color);
+  --sidebar-search-text: var(--white-color);
 
   /* Font definitions */
   --font-size: 14px;
