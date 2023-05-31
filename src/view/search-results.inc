@@ -33,8 +33,8 @@
     {% if property.type in PreferredProperties or property.type in concept.vocab.config.additionalSearchProperties  or property.type in concept.vocab.config.hierarchyProperty %}
     <div class="property">
       <span class="property-click skosmos-tooltip-wrapper skosmos-tooltip t-top" data-title="{{ property.description }}">
-        {% if property.type == 'skos:broader' %}<i class="property-hover fa-solid fa-hourglass"></i>
-          {% elseif property.type == 'skos:narrower' %}<i class="property-hover fa-solid fa-hourglass"></i>
+        {% if property.type == 'skos:broader' %}<i class="property-hover fa-solid fa-arrow-turn-up"></i>
+          {% elseif property.type == 'skos:narrower' %}<i class="property-hover fa-solid fa-arrow-turn-down"></i>
           {% elseif property.type == 'skos:altLabel' %}<i class="property-hover fa-solid fa-arrow-right"></i>
           {% elseif property.type == 'skos:related' %}<i class="property-hover fa-solid fa-cloud"></i>
           {% elseif property.type == 'skosmos:memberOf' %}<i class="property-hover fa-solid fa-layer-group"></i>
@@ -120,7 +120,7 @@
     {% endif %}
   {% endfor %}
   {% if concept.uri %}
-    <div><span class="versal uri-input-box">URI {{ concept.uri }}</span></div>
+    <div><span class="URI-icon">URI</span>&nbsp;<span class="versal uri-input-box">{{ concept.uri }}</span></div>
   {% endif %}
 </div>
 {% endfor %}
