@@ -7,6 +7,7 @@ use Punic\Language;
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\Loader\PoFileLoader;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
+
 /**
  * WebController is an extension of the Controller that handles all
  * the requests originating from the view of the website.
@@ -67,7 +68,7 @@ class WebController extends Controller
         });
         $this->twig->addFilter($langFilter);
 
-        foreach( $this->languages as $langcode => $value ) {
+        foreach($this->languages as $langcode => $value) {
             if (is_null($this->translator)) {
                 $this->translator = new Translator($langcode);
                 $this->twig->addExtension(new TranslationExtension($this->translator));
