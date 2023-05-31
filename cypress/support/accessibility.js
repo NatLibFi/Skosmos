@@ -5,7 +5,6 @@ export const checkA11y = options => {
     })
 }
 export function terminalLog(violations) {
-    // const runForCLI = Cypress.env('cli') // true
     cy.task(
         'log',
          `${violations.length} accessibility violation${
