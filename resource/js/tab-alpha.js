@@ -129,15 +129,15 @@ tabAlphaApp.component('tab-alpha', {
       }
     },
     updateSKOSMOS (conceptHTML) {
-      // array of variables between prefLabels and languageOrder
-      const variables = conceptHTML.innerHTML.substring(conceptHTML.innerHTML.indexOf('prefLabels:'), conceptHTML.innerHTML.indexOf('languageOrder:')).split('\n')
+      // new SKOSMOS object from concept page
+      const skosmosScript = conceptHTML.querySelector('#skosmos-global-vars').innerHTML
+      const skosmosObject = skosmosScript.slice(skosmosScript.indexOf('{')).replaceAll("'", '"') // JSON.parse only accepts double quotes
+      const newSKOSMOS = JSON.parse(skosmosObject)
 
-      const prefStr = variables[0].replaceAll("'", '"') // JSON.parse only accepts double quotes
-      const newPrefs = JSON.parse(prefStr.substring(prefStr.indexOf('['), prefStr.lastIndexOf(']') + 1))
-      const newUri = variables[1].substring(variables[1].indexOf("'") + 1, variables[1].indexOf(',') - 1)
-
-      SKOSMOS.uri = newUri
-      SKOSMOS.prefLables = newPrefs
+      // replacing all values in the old SKOSMOS object with new ones
+      for (const i in newSKOSMOS) {
+        SKOSMOS[i] = newSKOSMOS[i]
+      }
     },
     partialPageLoad (event, pageUri) {
       event.preventDefault()
