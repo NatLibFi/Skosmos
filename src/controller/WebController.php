@@ -19,6 +19,7 @@ class WebController extends Controller
      */
     public $twig;
     public $honeypot;
+    public $translator;
 
     /**
      * Constructor for the WebController.
@@ -67,10 +68,14 @@ class WebController extends Controller
         $this->twig->addFilter($langFilter);
 
         foreach( $this->languages as $langcode => $value ) {
-            $translator = new Translator($langcode);
-            $translator->addLoader('po', new PoFileLoader());
-            $translator->addResource('po', __DIR__.'/../../resource/translations/skosmos_' . $langcode . '.po', $langcode);
-            $this->languages[$langcode]['name'] = $translator->trans('in_this_language');
+            if (is_null($this->translator)) {
+                $this->translator = new Translator($langcode);
+                $this->twig->addExtension(new TranslationExtension($this->translator));
+            }
+            $this->translator->addLoader('po', new PoFileLoader());
+            $this->translator->addResource('po', __DIR__.'/../../resource/translations/skosmos_' . $langcode . '.po', $langcode);
+            $this->translator->setlocale($langcode);
+            $this->languages[$langcode]['name'] = $this->translator->trans('in_this_language');
         }
 
         // create the honeypot
@@ -83,14 +88,11 @@ class WebController extends Controller
 
     /**
      * Creates and registers the translation extension and loads translation file.
-     * @param string $lang two character language code
+     * @param string $lang two character language code 'fi' or compound language (locale) name such as 'fi_FI'
      */
-    public function addTranslations($lang)
+    public function setTranslationLocale($locale)
     {
-        $translator = new Translator($lang);
-        $translator->addLoader('po', new PoFileLoader());
-        $translator->addResource('po', __DIR__.'/../../resource/translations/skosmos_' . $lang . '.po', $lang);
-        $this->twig->addExtension(new TranslationExtension($translator));
+        $this->translator->setlocale($locale);
     }
 
     /**
