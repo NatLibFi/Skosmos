@@ -38,7 +38,7 @@ class ConceptPropertyValue extends VocabularyDataObject
 
     public function getLang()
     {
-        return $this->getEnvLang();
+        return $this->getLang();
     }
 
     public function getLabel($lang = '', $fallbackToUri = 'uri')

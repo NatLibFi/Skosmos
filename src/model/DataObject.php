@@ -131,12 +131,23 @@ class DataObject
     }
 
     /**
-     * Getter function to retrieve the ui language from the locale.
+     * Getter function to retrieve the ui language from Symfony translator.
      */
-    public function getEnvLang()
+    public function getLang()
     {
-        // get language from locale, same as used by gettext, set by Controller
-        return substr(getenv("LC_ALL"), 0, 2); // @codeCoverageIgnore
+        if (!is_null($this->model)) {
+            return $this->model->getLocale();
+        }
+    }
+
+    /**
+     * Get text translated in language set by SetLocale function
+     *
+     * @param string $text text to be translated
+     */
+    protected function getText($text)
+    {
+        return $this->model->getText($text);
     }
 
     /**

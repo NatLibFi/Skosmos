@@ -47,7 +47,7 @@ class ConceptProperty
         // we don't maintain DC 1.1 translations separate from DC Terms
         $prop = (substr($this->prop, 0, 5) == 'dc11:') ?
             str_replace('dc11:', 'dc:', $this->prop) : $this->prop;
-        $label = gettext($prop);
+        $label = $this->getText($prop);
         if ($label != $prop) {
             return $label;
         }
@@ -78,7 +78,7 @@ class ConceptProperty
         $helpprop = $this->prop . "_help";
 
         // see if we have a translation with the help text
-        $help = gettext($helpprop);
+        $help = $this->getText($helpprop);
         if ($help != $helpprop) {
             return $help;
         }

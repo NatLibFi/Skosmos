@@ -1,6 +1,12 @@
 <?php
 
 /**
+ * Importing the dependencies.
+ */
+use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\Loader\PoFileLoader;
+
+/**
  * Model provides access to the data.
  * @property EasyRdf\Graph $graph
  * @property GlobalConfig $globalConfig
@@ -18,6 +24,7 @@ class Model
     private $globalConfig;
     private $logger;
     private $resolver;
+    private $translator;
 
     /**
      * Initializes the Model object
@@ -27,6 +34,14 @@ class Model
         $this->globalConfig = $config;
         $this->initializeLogging();
         $this->resolver = new Resolver($this);
+
+        foreach ($this->getConfig()->getLanguages() as $langcode => $locale) {
+            if (is_null($this->translator)) {
+                $this->translator = new Translator($langcode);
+            }
+            $this->translator->addLoader('po', new PoFileLoader());
+            $this->translator->addResource('po', __DIR__.'/../../resource/translations/skosmos_' . $langcode . '.po', $langcode);
+        }
     }
 
     /**
@@ -131,12 +146,12 @@ class Model
     {
         $sparql = (isset($vocid)) ? $this->getVocabulary($vocid)->getSparql() : $this->getDefaultSparql();
         $result = $sparql->queryTypes($lang);
-
         foreach ($result as $uri => $values) {
             if (empty($values)) {
                 $shorteneduri = EasyRdf\RdfNamespace::shorten($uri);
                 if ($shorteneduri !== null) {
-                    $trans = gettext($shorteneduri);
+                    $this->translator->setlocale($lang);
+                    $trans = $this->getText($shorteneduri);
                     if ($trans) {
                         $result[$uri] = array('label' => $trans);
                     }
@@ -163,6 +178,43 @@ class Model
         }
         ksort($ret);
         return array_unique($ret);
+    }
+
+    /**
+     * Return Symfony Translator object for translations in given language.
+     * @return Translator Translator object from Symfony package
+     */
+    public function getTranslator()
+    {
+        return $this->translator;
+    }
+
+    /**
+     * Sets translation language for Symfony Translator objext
+     * @param string $lang two character language code 'fi' or compound language (locale) name such as 'fi_FI'
+     */
+    public function setLocale($locale)
+    {
+        $this->translator->setlocale($locale);
+    }
+
+    /**
+     * Gets translation language from Symfony Translator objext
+     * @return string $lang two character language code 'fi' or compound language (locale) name such as 'fi_FI'
+     */
+    public function getLocale()
+    {
+        return $this->translator->getlocale();
+    }
+
+    /**
+     * Get text translated in language set by SetLocale function
+     *
+     * @param string $text text to be translated
+     */
+    public function getText($text)
+    {
+        return $this->translator->trans($text);
     }
 
     /**
