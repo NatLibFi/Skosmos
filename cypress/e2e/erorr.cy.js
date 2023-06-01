@@ -8,4 +8,3 @@ describe('Error page', () => {
     cy.get('.alert h3').invoke('text').should('contain', '404 Error') 
   })
 })
-  
