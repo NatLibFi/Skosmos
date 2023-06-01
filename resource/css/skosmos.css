@@ -5,7 +5,7 @@
   --medium-color: #dfe5ed;
   --secondary-medium-color: #b8c9db;
   --light-color: #f2f5f7;
-  --red-color: #a0270a;
+  --alert-color: #a0270a;
   --white-color: #ffffff;
 
   /* Font definitions */
@@ -643,7 +643,7 @@ body {
   /* Error page
    *****************************************/
   .alert {
-    background-color: var(--red-color);
+    background-color: var(--alert-color);
     color: var(--white-color);
     border-radius: 0;
   }
