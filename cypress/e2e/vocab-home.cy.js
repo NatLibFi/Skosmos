@@ -14,13 +14,11 @@ describe('Vocabulary home page', () => {
 
   context('Statistics', () => {
     it('The amounts must match', () => {
-      let numberOfRows = 0
       cy.visit('/yso/fi')
       cy.get('#resource-counts')
         .find('tr')
         .then((row) => {
-          numberOfRows = row.length
-          for (let i = 0; i < numberOfRows; i++) {
+          for (let i = 0; i < row.length; i++) {
             cy.task('log', `tr:eq(${i}) td:eq(1)`)
             cy.get('#resource-counts')
               .find(`tr:eq(${i}) td:eq(1)`)
