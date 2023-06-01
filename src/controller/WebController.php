@@ -4,8 +4,6 @@
  * Importing the dependencies.
  */
 use Punic\Language;
-use Symfony\Component\Translation\Translator;
-use Symfony\Component\Translation\Loader\PoFileLoader;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
 
 /**
@@ -68,16 +66,8 @@ class WebController extends Controller
         });
         $this->twig->addFilter($langFilter);
 
-        foreach($this->languages as $langcode => $value) {
-            if (is_null($this->translator)) {
-                $this->translator = new Translator($langcode);
-                $this->twig->addExtension(new TranslationExtension($this->translator));
-            }
-            $this->translator->addLoader('po', new PoFileLoader());
-            $this->translator->addResource('po', __DIR__.'/../../resource/translations/skosmos_' . $langcode . '.po', $langcode);
-            $this->translator->setlocale($langcode);
-            $this->languages[$langcode]['name'] = $this->translator->trans('in_this_language');
-        }
+        $this->translator = $model->getTranslator();
+        $this->twig->addExtension(new TranslationExtension($this->translator));
 
         // create the honeypot
         $this->honeypot = new \Honeypot();
@@ -85,15 +75,6 @@ class WebController extends Controller
             $this->honeypot->disable();
         }
         $this->twig->addGlobal('honeypot', $this->honeypot);
-    }
-
-    /**
-     * Creates and registers the translation extension and loads translation file.
-     * @param string $lang two character language code 'fi' or compound language (locale) name such as 'fi_FI'
-     */
-    public function setTranslationLocale($locale)
-    {
-        $this->translator->setlocale($locale);
     }
 
     /**
@@ -162,7 +143,8 @@ class WebController extends Controller
     public function invokeLandingPage($request)
     {
         // set language parameters for gettext
-        $this->setLanguageProperties($request->getLang());
+        //$this->setLanguageProperties($request->getLang());
+        $this->setLocale($request->getLang());
         // load template
         $template = $this->twig->loadTemplate('landing.twig');
         // set template variables
@@ -192,7 +174,7 @@ class WebController extends Controller
     public function invokeVocabularyConcept(Request $request)
     {
         $lang = $request->getLang();
-        $this->setLanguageProperties($lang);
+        $this->setLocale($request->getLang());
         $vocab = $request->getVocab();
 
         $langcodes = $vocab->getConfig()->getShowLangCodes();
@@ -233,7 +215,8 @@ class WebController extends Controller
     public function invokeFeedbackForm($request)
     {
         $template = $this->twig->loadTemplate('feedback.twig');
-        $this->setLanguageProperties($request->getLang());
+        //$this->setLanguageProperties($request->getLang());
+        $this->setLocale($request->getLang());
         $vocabList = $this->model->getVocabularyList(false);
         $vocab = $request->getVocab();
 
@@ -341,7 +324,8 @@ class WebController extends Controller
     public function invokeAboutPage($request)
     {
         $template = $this->twig->loadTemplate('about.twig');
-        $this->setLanguageProperties($request->getLang());
+        //$this->setLanguageProperties($request->getLang());
+        $this->setLocale($request->getLang());
         $url = $request->getServerConstant('HTTP_HOST');
 
         echo $template->render(
@@ -360,7 +344,8 @@ class WebController extends Controller
     {
         $lang = $request->getLang();
         $template = $this->twig->loadTemplate('global-search.twig');
-        $this->setLanguageProperties($lang);
+        //$this->setLanguageProperties($lang);
+        $this->setLocale($request->getLang());
 
         $parameters = new ConceptSearchParameters($request, $this->model->getConfig());
 
@@ -429,7 +414,8 @@ class WebController extends Controller
     public function invokeVocabularySearch($request)
     {
         $template = $this->twig->loadTemplate('vocab-search.twig');
-        $this->setLanguageProperties($request->getLang());
+        //$this->setLanguageProperties($request->getLang());
+        $this->setLocale($request->getLang());
         $vocab = $request->getVocab();
         $searchResults = null;
         try {
@@ -503,7 +489,8 @@ class WebController extends Controller
     {
         $lang = $request->getLang();
         // set language parameters for gettext
-        $this->setLanguageProperties($lang);
+        //$this->setLanguageProperties($lang);
+        $this->setLocale($request->getLang());
         $vocab = $request->getVocab();
 
         $defaultView = $vocab->getConfig()->getDefaultSidebarView();
@@ -535,7 +522,8 @@ class WebController extends Controller
      */
     public function invokeGenericErrorPage($request, $message = null)
     {
-        $this->setLanguageProperties($request->getLang());
+        //$this->setLanguageProperties($request->getLang());
+        $this->setLocale($request->getLang());
         header("HTTP/1.0 404 Not Found");
         $template = $this->twig->loadTemplate('error.twig');
         echo $template->render(
