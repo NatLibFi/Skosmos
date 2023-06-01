@@ -38,7 +38,7 @@ function getConfigurationForCLITests () {
   })
 }
 function getConfigurationForGUITests () {
-  return it('Goes through all needed levels', () => {
+  return it('Check for possible accessibility errors at all logging levels set below in accordance with WCAG AA requirements', () => {
     checkA11y(null, null, {
       includedImpacts: ['minor', 'moderate', 'serious', 'critical'],
       runOnly: {
