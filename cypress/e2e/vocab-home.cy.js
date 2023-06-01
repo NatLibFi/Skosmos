@@ -12,30 +12,10 @@ describe('Vocabulary home page', () => {
     })
   })
 
-  /*  context('partial page load', () => {
-    it('does a partial page load', () => {
-      // go to the YSO home page (Allärs does not have an index in the backend for some reason)
-      cy.visit('/yso/fi')
-      // click on the first concept in the alphabetical index
-      cy.get('#alpha-list').find('a').first().click()
-      // check that the term heading exists
-      cy.get('#term-heading')
-    })
-
-    it('updates mappings component after partial page load', () => {
-      // go to the YSO home page
-      cy.visit('/yso/fi')
-      // click on the first concept in the alphabetical index
-      cy.get('#alpha-list').find('a').first().click()
-      // check that concept mappings is not empty
-      cy.get('#concept-mappings').should('not.be.empty')
-    })
-  }) */
-
   context('Statistics', () => {
     it('The amounts must match', () => {
       let numberOfRows = 0
-      cy.visit('/juho/fi')
+      cy.visit('/yso/fi')
       cy.get('#resource-counts')
         .find('tr')
         .then((row) => {
