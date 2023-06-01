@@ -1,0 +1,13 @@
+{% extends "base-template.twig" %}
+{% block title %}: "Error"{% endblock %}
+{% block content %}
+{% set pageError = request.vocabid != '' and request.page == 'page' %}
+{% if pageError %}
+{% include "sidebar.inc" %}
+{% endif %}
+<div class="container{% if pageError %} col-md-8" id="main-content{% endif %}">
+  <div class="alert">
+    <h3>{% if not message%}404 Error: The page {{ requested_page }} cannot be found.{% else %}{{ message }}{% endif %}</h3>
+  </div>
+</div>
+{% endblock %}
