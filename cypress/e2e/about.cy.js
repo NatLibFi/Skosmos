@@ -1,5 +1,5 @@
 describe('About page', () => {
-it('Contains version number information', () => {
+  it('Contains version number information', () => {
     // go to the Skosmos about page
     cy.visit('/en/about')
     // check that the version information should mention it's Skosmos and something that looks like version number
