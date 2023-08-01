@@ -3,84 +3,103 @@ name: CI
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
-  build-test:
+#  build-test:
+#    runs-on: ubuntu-latest
+#    permissions:
+#      packages: write
+#    timeout-minutes: 10
+#    continue-on-error: ${{ matrix.experimental }}
+#    strategy:
+#      fail-fast: false
+#      matrix:
+#        php_version: ["8.0", "8.1"]
+#        experimental: [false]
+#        include:
+#          - php_version: "8.2"
+#            experimental: true
+#
+#    steps:
+#    - name: Check out repository code
+#      uses: actions/checkout@v3
+#      with:
+#        fetch-depth: 0
+#
+#    - name: Cache Fuseki installation
+#      uses: actions/cache@v3
+#      with:
+#        path: tests/apache-jena-fuseki-*
+#        key: fuseki-${{ hashFiles('tests/init_fuseki.sh') }}
+#
+#    - name: Start up Fuseki
+#      run: cd tests; sh ./init_fuseki.sh
+#
+#    - name: Cache Composer dependencies
+#      uses: actions/cache@v3
+#      with:
+#        path: |
+#          /tmp/composer-cache
+#          vendor
+#          components
+#        key: ${{ runner.os }}-php${{ matrix.php_version}}-skosmos3-${{ hashFiles('**/composer.json') }}
+#        restore-keys: |
+#          ${{ runner.os }}-php${{ matrix.php_version}}-skosmos3-
+#
+#    - name: Install Composer dependencies
+#      uses: php-actions/composer@v6
+#      with:
+#        php_version: ${{ matrix.php_version }}
+#        php_extensions: gettext intl xsl pcov
+#
+#    - name: Install Node
+#      uses: actions/setup-node@v3
+#      with:
+#        node-version: 16.x
+#
+#    - name: Install JavaScript dependencies
+#      run: npm install
+#
+#    - name: Check PHP code style
+#      run: ./vendor/bin/php-cs-fixer fix src --diff --dry-run
+#
+#    - name: Check JavaScript code style
+#      run: cd resource/js; npx standard *.js
+#
+#    - name: Run PHPUnit tests
+#      uses: php-actions/phpunit@v3
+#      env:
+#        LANGUAGE: fr
+#      with:
+#        version: 9.5
+#        php_version: ${{ matrix.php_version }}
+#        php_extensions: gettext intl xsl pcov
+#        memory_limit: 512M
+#        configuration: phpunit.xml
+#
+#    - name: Publish code coverage to Code Climate
+#      uses: paambaati/codeclimate-action@v4.0.0
+#      env:
+#        CC_TEST_REPORTER_ID: fb98170a5c7ea9cc2bbab19ff26268335e6a11a4f8267ca935e5e8ff4624886c
+#      with:
+#        prefix: /app
+#
+#    - name: Publish code coverage to Codecov
+#      uses: codecov/codecov-action@v3
+
+  cypress-run:
     runs-on: ubuntu-latest
-    permissions:
-      packages: write
-    timeout-minutes: 10
-    continue-on-error: ${{ matrix.experimental }}
-    strategy:
-      fail-fast: false
-      matrix:
-        php_version: ["8.0", "8.1"]
-        experimental: [false]
-        include:
-          - php_version: "8.2"
-            experimental: true
-
     steps:
-    - name: Check out repository code
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-
-    - name: Cache Fuseki installation
-      uses: actions/cache@v3
-      with:
-        path: tests/apache-jena-fuseki-*
-        key: fuseki-${{ hashFiles('tests/init_fuseki.sh') }}
-
-    - name: Start up Fuseki
-      run: cd tests; sh ./init_fuseki.sh
-    
-    - name: Cache Composer dependencies
-      uses: actions/cache@v3
-      with:
-        path: |
-          /tmp/composer-cache
-          vendor
-          components
-        key: ${{ runner.os }}-php${{ matrix.php_version}}-skosmos3-${{ hashFiles('**/composer.json') }}
-        restore-keys: |
-          ${{ runner.os }}-php${{ matrix.php_version}}-skosmos3-
-
-    - name: Install Composer dependencies
-      uses: php-actions/composer@v6
-      with:
-        php_version: ${{ matrix.php_version }}
-        php_extensions: gettext intl xsl pcov
-
-    - name: Install Node
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16.x
-
-    - name: Install JavaScript dependencies
-      run: npm install
-
-    - name: Check PHP code style
-      run: ./vendor/bin/php-cs-fixer fix src --diff --dry-run
-
-    - name: Check JavaScript code style
-      run: cd resource/js; npx standard *.js
-
-    - name: Run PHPUnit tests
-      uses: php-actions/phpunit@v3
-      env:
-        LANGUAGE: fr
-      with:
-        version: 9.5
-        php_version: ${{ matrix.php_version }}
-        php_extensions: gettext intl xsl pcov
-        memory_limit: 512M
-        configuration: phpunit.xml
-
-    - name: Publish code coverage to Code Climate
-      uses: paambaati/codeclimate-action@v4.0.0
-      env:
-        CC_TEST_REPORTER_ID: fb98170a5c7ea9cc2bbab19ff26268335e6a11a4f8267ca935e5e8ff4624886c
-      with:
-        prefix: /app
-
-    - name: Publish code coverage to Codecov
-      uses: codecov/codecov-action@v3
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: yarn
+      - name: Install
+        run: yarn install
+      - name: Start Skosmos
+        run: cd dockerfiles && docker compose up -d
+      - name: Test
+        run: yarn run test:e2e
