@@ -59,6 +59,10 @@ It automatically makes changes to files and it is possible to refer to several d
 
 If you've added new functionality or you've found out that the existing tests are lacking, we'd be happy if you could provide additional PHPUnit tests to cover it. Also see that your code passes all the existing tests by running PHPUnit. For more information, see the wiki page on [unit and integration tests](https://github.com/NatLibFi/Skosmos/wiki/Unit-and-integration-tests).
 
+### Accessibility tests
+
+Cypress AXE tests are used to improve and ensure accessibility. Detailed instructions for adopting Cypress AXE and creating tests can be found [here](https://github.com/NatLibFi/Skosmos/wiki/Cypress-AXE-accessibility-testing).
+
 ### Making a commit and a pull request
 
 Please add a concise commit message for your contributions. In addition to describing the changes made include references to related issue numbers eg. "Description of the changes in the commit, related to #22". Then the GitHub issue tracker automatically links the related commits to the issue page. This makes debugging persistent bugs easier.
