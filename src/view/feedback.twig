@@ -1,0 +1,48 @@
+{% extends "base-template.twig" %}
+
+{% block title %}: "Feedback"{% endblock %}
+{% block content %}
+
+  <div id="feedback-form" class="mx-auto" style="max-width: 50rem">
+    {% if feedback_sent %}
+    <h2>"Feedback has been sent!"</h2>
+    <p id="feedback-thanks">"Thank you for your feedback"</p>
+
+    {% else %}
+    <h2>"Contact us!"</h2>
+    <p class="py-3">"feedback_enter_name_email"</p>
+    <div id="feedback-content" class="p-3">
+      <form id="feedback-fields" method="post" action="{% if request.vocab %}{{request.vocab.id}}/{% endif %}{{ request.lang }}/feedback">
+        {% if vocabList -%}
+        <div class="mb-4">
+          <label for="select-vocabulary">Vocabulary</label>
+          <select id="select-vocabulary" class="form-select" aria-label="Select a vocabulary">
+            <option>"Not to a specific vocabulary"</option>
+            {% for option in vocabList %}<option value="{{ option.id }}">{{ option.title }}</option>{% endfor %}
+          </select>
+        </div>
+        {% endif -%}
+        <div class="mb-4">
+          <label for="name" class="form-label">"Name:"</label>
+          <input id="name" class="form-control" type="text" size="40" name="name" placeholder="Enter your name">
+        </div>
+        <div class="mb-4">
+          <label for="email" class="form-label">"E-mail:"</label>
+          <input id="email" class="form-control" type="text" size="40" name="email" placeholder="Enter your e-mail address">
+        </div>
+        <div class="mb-4">
+          <label for="msgsubject" class="form-label">"Subject:" *</label>
+          <input id="msgsubject" class="form-control" type="text" size="40" name="msgsubject" placeholder="Write a subject" >
+        </div>
+        <div class="mb-4">
+          <label for="message" class="form-label">"Message:" *</label>
+          <textarea id="message" class="form-control" name="message"></textarea>
+        </div>
+        {{ honeypot.generate('item-description', 'user-captcha')|raw }}
+        <button type="submit" class="btn btn-primary" id="send-feedback">"Send feedback"</button>
+        {% if not feedback_sent %}<p>* "Value is required and can not be empty"</p>{% endif %}
+      </form>
+    {% endif -%}
+    </div>
+  </div>
+{% endblock %}

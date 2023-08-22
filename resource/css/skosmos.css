@@ -6,6 +6,10 @@
   --secondary-medium-color: #b8c9db;
   --light-color: #f2f5f7;
   --white-color: #ffffff;
+  --feedback-form-bg: var(--white-color);
+  --feedback-form-text: var(--dark-color);
+  --feedback-form-input: var(--light-color);
+  --feedback-form-button-bg: var(--dark-color);
 
   /* Font definitions */
   --font-size: 14px;
@@ -103,7 +107,7 @@ body {
     color: var(--topbar-text-1);
   }
 
-  #topbar.vocabpage, #topbar.termpage, #topbar.infopage, #topbar.feedbackpage {
+  #topbar.vocabpage, #topbar.termpage, #topbar.infopage {
     background-color: var(--topbar-bg-2);
     color: var(--topbar-text-2);
   }
@@ -112,7 +116,7 @@ body {
     color: var(--topbar-text-1) !important;
   }
 
-  #topbar.vocabpage a, #topbar.termpage a, #topbar.infopage a, #topbar.feedbackpage a {
+  #topbar.vocabpage a, #topbar.termpage a, #topbar.infopage a {
     color: var(--topbar-text-2) !important;
   }
 
@@ -465,11 +469,11 @@ body {
     background-image: none;
   }
 
-  .select-wrapper { /* Also used in feedback form */
+  .select-wrapper {
     position: relative;
   }
 
-  .select-wrapper::after { /* Also used in feedback form */
+  .select-wrapper::after {
     color: var(--vocab-text);
     content: '﹀';
     font-size: 20px;
@@ -562,18 +566,17 @@ body {
     font-size: 10px;
   }
 
-  /***** Main container infopage & feedbackpage *****/
-  #main-container.infopage, #main-container.feedbackpage {
+  /***** Main container infopage *****/
+  #main-container.infopage {
     background-color: var(--main-bg-3);
     color: var(--infopage-text);
     padding: 4rem 0;
   }
 
-  #main-container.infopage .container, #main-container.feedbackpage .container {
+  #main-container.infopage .container {
     padding: 0 12rem;
   }
 
-  /*** Main container infopage ***/
   #main-container.infopage {
     background-image: var(--infopage-stripes);
     background-repeat: no-repeat;
@@ -587,26 +590,37 @@ body {
     font-weight: bold;
   }
 
-  /*** Main container feedbackpage ***/
+  /*** Feedback page ***/
+
+/*
   #main-container.feedbackpage {
     background-image: var(--feedbackpage-stripes);
     background-repeat: no-repeat;
     background-size: 650px;
     background-position: var(--feedbackpage-stripes-pos);
   }
+*/
+
+
+  #feedback-form {
+    max-width: 50rem;
+  }
+
+  #feedback-form button {
+    background-color: var(--feedback-form-button-bg);
+    border: none;
+    border-radius: 0;
+    font-weight: bold;
+    float: right;
+  }
 
   #feedback-form {
     background-color: var(--feedback-form-bg);
     color: var(--feedback-form-text);
-    padding: 2.5rem 2rem 5rem;
-  }
-
-  #feedback-form label {
-    font-weight: bold;
   }
 
   #feedback-form input, #feedback-form select, #feedback-form textarea {
-    background-color: var(--feedback-form-input);
+    background-color: var(--feedback-form-bg);
     border: none;
     border-radius: 0;
   }
@@ -619,12 +633,10 @@ body {
     margin-bottom: 4rem;
   }
 
-  #feedback-form button {
-    background-color: var(--feedback-form-button-bg);
-    border: none;
-    border-radius: 0;
+  
+
+  #feedback-form label {
     font-weight: bold;
-    float: right;
   }
 
   #feedback-form select {
