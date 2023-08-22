@@ -218,6 +218,7 @@ public function testGetLabelForDatatypeIfNull() {
   /**
    * @covers ConceptPropertyValueLiteral::getXlLabel
    * @covers ConceptPropertyValueLiteral::hasXlProperties
+   * @covers LabelSkosXL::getLang
    */
   public function testGetXlPropertiesByLang() {
     $voc = $this->model->getVocabulary('xl');
