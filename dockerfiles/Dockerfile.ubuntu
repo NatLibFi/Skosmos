@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 LABEL maintainer="National Library of Finland"
 LABEL version="0.1"
@@ -7,19 +7,17 @@ LABEL description="A Docker image for Skosmos with Apache httpd."
 ARG DEBIAN_FRONTEND=noninteractive
 
 # git is necessary for some composer packages e.g. davidstutz/bootstrap-multiselect
-# gettext is necessary as php-gettext was available in 18.04, but not in 20.04
 RUN apt-get update && apt-get install -y \
     apache2 \
     curl \
-    gettext \
     git \
-    libapache2-mod-php7.4 \
+    libapache2-mod-php8.1 \
     locales \
-    php7.4 \
-    php7.4-curl \
-    php7.4-xsl \
-    php7.4-intl \
-    php7.4-mbstring \
+    php8.1 \
+    php8.1-curl \
+    php8.1-xsl \
+    php8.1-intl \
+    php8.1-mbstring \
     php-apcu \
     php-zip \
     unzip \
@@ -53,7 +51,7 @@ ENV LC_ALL=en_US.UTF-8
 ENV LANG=en_US.UTF-8  
 
 # timezone
-RUN sed -i 's/;date.timezone =/date.timezone = "UTC"/g' /etc/php/7.4/apache2/php.ini
+RUN sed -i 's/;date.timezone =/date.timezone = "UTC"/g' /etc/php/8.1/apache2/php.ini
 
 COPY dockerfiles/config/000-default.conf /etc/apache2/sites-available/000-default.conf
 
