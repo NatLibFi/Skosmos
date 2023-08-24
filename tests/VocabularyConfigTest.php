@@ -91,6 +91,24 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     }
 
     /**
+     * @covers VocabularyConfig::getSidebarViews
+     */
+    public function testGetSidebarViews()
+    {
+        $vocab = $this->model->getVocabulary('testdiff');
+        $this->assertEquals(['alphabetical', 'hierarchy', 'groups'], $vocab->getConfig()->getSidebarViews());
+    }
+
+    /**
+     * @covers VocabularyConfig::getSidebarViews
+     */
+    public function testGetSidebarViewsWhenNotSet()
+    {
+        $vocab = $this->model->getVocabulary('test');
+        $this->assertEquals(['alphabetical', 'hierarchy', 'groups', 'changes'], $vocab->getConfig()->getSidebarViews());
+    }
+
+    /**
      * @covers VocabularyConfig::getShowLangCodes
      */
     public function testGetShowLangCodesWhenSetToTrue()
@@ -130,26 +148,6 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
         $this->expectError();
         $this->expectErrorMessage("Default language for vocabulary 'testdiff' unknown, choosing 'en'.");
         $lang = $vocab->getConfig()->getDefaultLanguage();
-    }
-
-    /**
-     * @covers VocabularyConfig::getAlphabeticalFull
-     */
-    public function testGetFullAlphabeticalIndex()
-    {
-        $vocab = $this->model->getVocabulary('testdiff');
-        $boolean = $vocab->getConfig()->getAlphabeticalFull();
-        $this->assertEquals(true, $boolean);
-    }
-
-    /**
-     * @covers VocabularyConfig::getAlphabeticalFull
-     */
-    public function testGetFullAlphabeticalIndexWhenNotSet()
-    {
-        $vocab = $this->model->getVocabulary('test');
-        $boolean = $vocab->getConfig()->getAlphabeticalFull();
-        $this->assertEquals(false, $boolean);
     }
 
     /**
@@ -273,33 +271,37 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers VocabularyConfig::getShowHierarchy
+     * @covers VocabularyConfig::getShowTopConcepts
      */
-    public function testGetShowHierarchy()
+    public function testGetShowTopConcepts()
     {
         $vocab = $this->model->getVocabulary('test');
-        $uri = $vocab->getConfig()->getShowHierarchy();
+        $uri = $vocab->getConfig()->getShowTopConcepts();
         $this->assertEquals(true, $uri);
     }
 
 
     /**
-     * @covers VocabularyConfig::getShowHierarchy
+     * @covers VocabularyConfig::getShowTopConcepts
+     * 
+     * @todo change name
      */
-    public function testGetShowHierarchySetToFalse()
+    public function testGetShowTopConceptsSetToFalse()
     {
         $vocab = $this->model->getVocabulary('testdiff');
-        $uri = $vocab->getConfig()->getShowHierarchy();
+        $uri = $vocab->getConfig()->getShowTopConcepts();
         $this->assertEquals(false, $uri);
     }
 
     /**
-     * @covers VocabularyConfig::getShowHierarchy
+     * @covers VocabularyConfig::getShowTopConcepts
+     * 
+     * @todo change name
      */
-    public function testGetShowHierarchyNotSet()
+    public function testGetShowTopConceptsNotSet()
     {
         $vocab = $this->model->getVocabulary('groups');
-        $uri = $vocab->getConfig()->getShowHierarchy();
+        $uri = $vocab->getConfig()->getShowTopConcepts();
         $this->assertEquals(false, $uri);
     }
 
@@ -338,16 +340,6 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     {
         $vocab = $this->model->getVocabulary('test');
         $this->assertEquals('Test ontology', $vocab->getConfig()->getTitle('en'));
-    }
-
-    /**
-     * @covers VocabularyConfig::showChangeList
-     * @covers VocabularyConfig::getBoolean
-     */
-    public function testShowChangeListDefaultValue()
-    {
-        $vocab = $this->model->getVocabulary('test');
-        $this->assertEquals(false, $vocab->getConfig()->showChangeList());
     }
 
     /**
@@ -516,15 +508,6 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
         $vocab = $this->model->getVocabulary('subtag');
         $this->assertEquals(array('en', 'fr', 'de', 'sv'), $vocab->getConfig()->getLanguageOrder('en'));
         $this->assertEquals(array('fi', 'fr', 'de', 'sv', 'en'), $vocab->getConfig()->getLanguageOrder('fi'));
-    }
-
-    /**
-     * @covers VocabularyConfig::showAlphabeticalIndex
-     */
-    public function testShowAlphabeticalIndex()
-    {
-        $vocab = $this->model->getVocabulary('testdiff');
-        $this->assertTrue($vocab->getConfig()->showAlphabeticalIndex());
     }
 
     /**

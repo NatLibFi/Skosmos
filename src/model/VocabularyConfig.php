@@ -235,15 +235,6 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
-     * Whether the alphabetical index is small enough to be shown all at once.
-     * @return boolean true if all concepts can be shown at once.
-     */
-    public function getAlphabeticalFull()
-    {
-        return $this->getBoolean('skosmos:fullAlphabeticalIndex');
-    }
-
-    /**
      * Returns a short name for a vocabulary if configured. If that has not been set
      * using vocabId as a fallback.
      * @return string
@@ -296,15 +287,6 @@ class VocabularyConfig extends BaseConfig
         $bvalue = $this->getBoolean('skosmos:sortByNotation');
         // "true" is interpreted as "lexical"
         return $bvalue ? "lexical" : null;
-    }
-
-    /**
-     * Returns a boolean value set in the config.ttl config.
-     * @return boolean
-     */
-    public function showChangeList()
-    {
-        return $this->getBoolean('skosmos:showChangeList');
     }
 
     /**
@@ -448,7 +430,7 @@ class VocabularyConfig extends BaseConfig
      * Returns a boolean value set in the config.ttl config.
      * @return boolean
      */
-    public function getShowHierarchy()
+    public function getShowTopConcepts()
     {
         return $this->getBoolean('skosmos:showTopConcepts');
     }
@@ -569,19 +551,29 @@ class VocabularyConfig extends BaseConfig
         $defview = $this->resource->getLiteral('skosmos:defaultSidebarView');
         if ($defview) {
             $value = $defview->getValue();
-            if ($value === 'groups' || $value === 'hierarchy' || $value === 'new') {
+            if (in_array($value, ['hierarchy', 'alphabetical', 'fullalphabetical', 'changes', 'groups'])) {
                 return $value;
-            }
-
-        }
-        if ($this->showAlphabeticalIndex() === false) {
-            if ($this->getShowHierarchy()) {
-                return 'hierarchy';
-            } elseif ($this->getGroupClassURI()) {
-                return 'groups';
             }
         }
         return 'alphabetical'; // if not defined displaying the alphabetical index
+    }
+
+    /**
+     * Returns sidebar views used in this vocabulary
+     * @return array of available views
+     */
+    public function getSidebarViews()
+    {
+        $views = $this->resource->getResource('skosmos:sidebarViews');
+        if ($views) {
+            $viewsArray = array();
+            foreach ($views as $view) {
+                $viewsArray[] = $view->getValue();
+            }
+            return $viewsArray;
+        }
+        return array("alphabetical", "hierarchy", "groups", "changes"); // if not defined using all views in default order
+
     }
 
     /**
@@ -639,15 +631,6 @@ class VocabularyConfig extends BaseConfig
     public function showNotation()
     {
         return $this->getBoolean('skosmos:showNotation', true);
-    }
-
-    /**
-     * Returns a boolean value set in the config.ttl config.
-     * @return boolean
-     */
-    public function showAlphabeticalIndex()
-    {
-        return $this->getBoolean('skosmos:showAlphabeticalIndex', true);
     }
 
     /**
