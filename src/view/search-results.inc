@@ -14,7 +14,7 @@
       <span class="fst-italic">{{ concept.foundBy }}{% if explicit_langcodes or request.queryparam('anylang') and concept.contentLang != '' %} ({{ concept.contentLang }}){% endif %}</span>
       &nbsp;<i class="fa-solid fa-arrow-right"></i>&nbsp;
       {% if concept.notation %}<span>{{ concept.notation }}&nbsp;</span>{% endif %}
-      <a class="fw-bold fs-5" href="{% if 'isothes:ConceptGroup' in concept.type %}{{ concept.uri | link_url(concept.vocab,request.lang,'page',concept.contentLang) }}{% else %}{{ concept.uri | link_url(concept.vocab,request.lang,'page',concept.contentLang) }}{% endif %}">{{ concept.label(request.contentLang) }}</a>
+      <a class="fw-bold" href="{% if 'isothes:ConceptGroup' in concept.type %}{{ concept.uri | link_url(concept.vocab,request.lang,'page',concept.contentLang) }}{% else %}{{ concept.uri | link_url(concept.vocab,request.lang,'page',concept.contentLang) }}{% endif %}">{{ concept.label(request.contentLang) }}</a>
       {% if explicit_langcodes or request.queryparam('anylang') %}<span> ({{ concept.label.lang }})</span>{% endif %}
       </span>
     {% else %}
