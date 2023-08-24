@@ -56,7 +56,7 @@ two files as necessary.
 
 **NOTE**: If you would like to start a Fuseki container to test with Docker only,
 without Docker Compose, you can try the following command before loading your
-vocabulary data. It starts a container in the same way our other example with
+vocabulary data. It starts a container in the same way as our other example with
 the `docker compose` command.
 
     export JENA_4_VERSION=4.8.0
@@ -66,7 +66,7 @@ the `docker compose` command.
         --no-cache dockerfiles/jena-fuseki2-docker
 
     docker run --name fuseki --rm -ti \
-        -v $(pwd)/config/skosmos.ttl:/fuseki/skosmos.ttl \
+        -v $(pwd)/dockerfiles/config/skosmos.ttl:/fuseki/skosmos.ttl \
         -e "JAVA_OPTIONS=-Xmx2g -Xms1g" \
         -p 3030:3030 \
         jena-fuseki:$JENA_4_VERSION \
