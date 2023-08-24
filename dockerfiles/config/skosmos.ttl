@@ -1,85 +1,73 @@
 @prefix :      <http://base/#> .
 @prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix tdb2:  <http://jena.apache.org/2016/tdb#> .
-@prefix ja:    <http://jena.hpl.hp.com/2005/11/Assembler#> .
 @prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix fuseki: <http://jena.apache.org/fuseki#> .
+@prefix tdb2:  <http://jena.apache.org/2016/tdb#> .
 @prefix text:  <http://jena.apache.org/text#> .
 @prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix fuseki: <http://jena.apache.org/fuseki#> .
 
-ja:DatasetTxnMem  rdfs:subClassOf  ja:RDFDataset .
-ja:MemoryDataset  rdfs:subClassOf  ja:RDFDataset .
-ja:RDFDatasetOne  rdfs:subClassOf  ja:RDFDataset .
-ja:RDFDatasetSink  rdfs:subClassOf  ja:RDFDataset .
-ja:RDFDatasetZero  rdfs:subClassOf  ja:RDFDataset .
+[] rdf:type fuseki:Server ;
+   fuseki:services (
+     :skosmos_service
+   )
+.
 
-tdb2:DatasetTDB  rdfs:subClassOf  ja:RDFDataset .
-tdb2:DatasetTDB2  rdfs:subClassOf  ja:RDFDataset .
-
-tdb2:GraphTDB  rdfs:subClassOf  ja:Model .
-tdb2:GraphTDB2  rdfs:subClassOf  ja:Model .
-
-<http://jena.hpl.hp.com/2008/tdb#DatasetTDB>
-    rdfs:subClassOf  ja:RDFDataset .
-
-<http://jena.hpl.hp.com/2008/tdb#GraphTDB>
-    rdfs:subClassOf  ja:Model .
-
-text:TextDataset
-    rdfs:subClassOf  ja:RDFDataset .
-
-:service_tdb_all  a               fuseki:Service ;
-    rdfs:label                    "TDB2+text skosmos" ;
-    fuseki:dataset                :text_dataset ;
-    fuseki:name                   "skosmos" ;
-    fuseki:serviceQuery           "query" , "" , "sparql" ;
-    fuseki:serviceReadGraphStore  "get" ;
-    fuseki:serviceReadQuads       "" ;
+:skosmos_service rdf:type fuseki:Service ;
+    rdfs:label                        "TDB2+text skosmos" ;
+    fuseki:name                       "skosmos" ;
+    fuseki:serviceQuery               "query" , "" , "sparql" ;
+    fuseki:serviceReadGraphStore      "get" ;
+    fuseki:serviceReadQuads           "" ;
     fuseki:serviceReadWriteGraphStore "data" ;
-    fuseki:serviceReadWriteQuads  "" ;
-    fuseki:serviceUpdate          "" , "update" ;
-    fuseki:serviceUpload          "upload" .
+    fuseki:serviceReadWriteQuads      "" ;
+    fuseki:serviceUpdate              "" , "update" ;
+    fuseki:serviceUpload              "upload" ;
+    fuseki:dataset                    :text_dataset
+.
 
-:text_dataset a text:TextDataset ;
-    text:dataset :tdb_dataset_readwrite ;
-    text:index :index_lucene .
+:text_dataset rdf:type text:TextDataset ;
+    text:dataset    :tdb_dataset_readwrite ;
+    text:index      <#indexLucene>
+.
 
-:tdb_dataset_readwrite
-    a tdb2:DatasetTDB2 ;
-    # tdb2:unionDefaultGraph true ;
-    tdb2:location  "/fuseki/databases/skosmos" .
+:tdb_dataset_readwrite rdf:type tdb2:DatasetTDB2 ;
+    tdb2:location               "/fuseki/databases/skosmos" ;
+    # tdb2:unionDefaultGraph    true ;
+.
 
-:index_lucene a text:TextIndexLucene ;
-    text:directory <file:/fuseki/databases/skosmos/text> ;
-    text:entityMap :entity_map ;
-    text:storeValues true .
+<#indexLucene> rdf:type text:TextIndexLucene ;
+    text:directory      <file:/fuseki/databases/skosmos/text> ;
+    text:entityMap      <#entMap> ;
+    text:storeValues    true
+.
 
 # Text index configuration for Skosmos
-:entity_map a text:EntityMap ;
-    text:entityField      "uri" ;
-    text:graphField       "graph" ;
+<#entMap> rdf:type text:EntityMap ;
     text:defaultField     "pref" ;
+    text:entityField      "uri" ;
     text:uidField         "uid" ;
     text:langField        "lang" ;
+    text:graphField       "graph" ;
     text:map (
          # skos:prefLabel
          [ text:field "pref" ;
            text:predicate skos:prefLabel ;
-           text:analyzer [ a text:LowerCaseKeywordAnalyzer ]
+           text:analyzer [ rdf:type text:LowerCaseKeywordAnalyzer ]
          ]
          # skos:altLabel
          [ text:field "alt" ;
            text:predicate skos:altLabel ;
-           text:analyzer [ a text:LowerCaseKeywordAnalyzer ]
+           text:analyzer [ rdf:type text:LowerCaseKeywordAnalyzer ]
          ]
          # skos:hiddenLabel
          [ text:field "hidden" ;
            text:predicate skos:hiddenLabel ;
-           text:analyzer [ a text:LowerCaseKeywordAnalyzer ]
+           text:analyzer [ rdf:type text:LowerCaseKeywordAnalyzer ]
          ]
          # skos:notation
          [ text:field "notation" ;
            text:predicate skos:notation ;
-           text:analyzer [ a text:LowerCaseKeywordAnalyzer ]
+           text:analyzer [ rdf:type text:LowerCaseKeywordAnalyzer ]
          ]
-     ) .
+     )
+.
