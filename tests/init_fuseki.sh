@@ -1,37 +1,16 @@
 #!/bin/bash
-# Note: This script must be sourced from within bash, e.g. ". init_fuseki.sh"
 
-FUSEKI_VERSION=${FUSEKI_VERSION:-4.4.0}
+# Build and start up containers (skosmos, skosmos-cache, fuseki)
+cd ../dockerfiles
+docker compose up -d --build
 
-if [ "$FUSEKI_VERSION" = "SNAPSHOT" ]; then
-    # find out the latest snapshot version and its download URL by parsing Apache directory listings
-    snapshotdir="https://repository.apache.org/content/repositories/snapshots/org/apache/jena/apache-jena-fuseki/"
-    latestdir=$(wget -q -O- "$snapshotdir" | grep 'a href=' | cut -d '"' -f 2 | grep SNAPSHOT | tail -n 1)
-    FUSEKI_VERSION=$(basename "$latestdir")
-    fusekiurl=$(wget -q -O- "$latestdir" | grep 'a href=' | cut -d '"' -f 2 | grep '\.tar\.gz$' | tail -n 1)
-else
-    fusekiurl="https://repository.apache.org/content/repositories/releases/org/apache/jena/apache-jena-fuseki/$FUSEKI_VERSION/apache-jena-fuseki-$FUSEKI_VERSION.tar.gz"
-fi
+# FIXME: should check that it's up instead of blindly waiting 5 seconds
+echo "Waiting for Fuseki to get ready"
+sleep 5
 
-if [ ! -f "apache-jena-fuseki-$FUSEKI_VERSION/fuseki-server" ]; then
-    echo "fuseki server file not found - downloading it"
-    wget --no-verbose --output-document=fuseki-dist.tar.gz "$fusekiurl"
-    echo "uncompressing fuseki distribution"
-    tar -zxf fuseki-dist.tar.gz
-fi
-
-cd "apache-jena-fuseki-$FUSEKI_VERSION"
-chmod +x fuseki-server bin/s-put
-./fuseki-server --port=13030 --config ../fuseki-assembler.ttl &
-until curl --output /dev/null --silent --head --fail http://localhost:13030; do
-    printf '.'
-    sleep 2
-done
-
-for fn in ../test-vocab-data/*.ttl; do
+for fn in ../tests/test-vocab-data/*.ttl; do
     name=$(basename "${fn}" .ttl)
-    $(./bin/s-put http://localhost:13030/skosmos-test/data "http://www.skosmos.skos/$name/" "$fn")
+    echo "Loading test vocabulary $name"
+    curl -I -X POST -H Content-Type:text/turtle -T "$fn" -G http://localhost:9030/skosmos/data --data-urlencode graph="http://www.skosmos.skos/$name/"
+    echo
 done
-
-cd ..
-

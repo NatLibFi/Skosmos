@@ -22,7 +22,7 @@
 
 :config a skosmos:Configuration ;
     # SPARQL endpoint defaults to $SKOSMOS_SPARQL_ENDPOINT environment var
-    # skosmos:sparqlEndpoint <http://localhost:13030/skosmos-test/sparql> ;
+    # skosmos:sparqlEndpoint <http://localhost:9030/skosmos/sparql> ;
     # sparql-query extension, or "Generic" for plain SPARQL 1.1
     # set to "JenaText" instead if you use Fuseki with jena-text index
     # skosmos:sparqlDialect "JenaText" ;

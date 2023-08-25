@@ -117,7 +117,7 @@ class ModelTest extends PHPUnit\Framework\TestCase
     public function testGetVocabularyByInvalidGraphUri()
     {
         $this->expectException(ValueError::class);
-        $this->expectExceptionMessage("no vocabulary found for graph http://no/address and endpoint http://localhost:13030/skosmos-test/sparql");
+        $this->expectExceptionMessage("no vocabulary found for graph http://no/address and endpoint http://localhost:9030/skosmos/sparql");
         $vocab = $this->model->getVocabularyByGraph('http://no/address');
         $this->assertInstanceOf('Vocabulary', $vocab);
     }
