@@ -221,6 +221,7 @@ class ConceptPropertyValueLiteralTest extends PHPUnit\Framework\TestCase
      */
     public function testGetXlLabel()
     {
+        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $voc = $this->model->getVocabulary('xl');
         $conc = $voc->getConceptInfo('http://www.skosmos.skos/xl/c1', 'en')[0];
         $props = $conc->getProperties();

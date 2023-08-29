@@ -416,7 +416,7 @@ class Concept extends VocabularyDataObject implements Modifiable
             if (in_array($prop, $this->MAPPING_PROPERTIES) && !in_array($prop, $this->DELETED_PROPERTIES)) {
                 $propres = new EasyRdf\Resource($prop, $this->graph);
                 $proplabel = $propres->label($this->getLang()) ? $propres->label($this->getLang()) : $propres->label(); // current language
-                $propobj = new ConceptProperty($prop, $proplabel);
+                $propobj = new ConceptProperty($this->model, $prop, $proplabel);
                 if ($propobj->getLabel() !== null) {
                     // only display properties for which we have a label
                     $ret[$prop] = $propobj;
@@ -561,7 +561,7 @@ class Concept extends VocabularyDataObject implements Modifiable
                     $superprop = EasyRdf\RdfNamespace::shorten($superprop) ? EasyRdf\RdfNamespace::shorten($superprop) : $superprop;
                 }
                 $sort_by_notation = $this->vocab->getConfig()->getSortByNotation();
-                $propobj = new ConceptProperty($prop, $proplabel, $prophelp, $superprop, $sort_by_notation);
+                $propobj = new ConceptProperty($this->model, $prop, $proplabel, $prophelp, $superprop, $sort_by_notation);
 
                 if ($propobj->getLabel() !== null) {
                     // only display properties for which we have a label
@@ -618,7 +618,7 @@ class Concept extends VocabularyDataObject implements Modifiable
             }
         }
 
-        $groupPropObj = new ConceptProperty('skosmos:memberOf', null);
+        $groupPropObj = new ConceptProperty($this->model, 'skosmos:memberOf', null);
         foreach ($this->getGroupProperties() as $propVals) {
             foreach ($propVals as $propVal) {
                 $groupPropObj->addValue($propVal);
@@ -626,7 +626,7 @@ class Concept extends VocabularyDataObject implements Modifiable
         }
         $ret['skosmos:memberOf'] = $groupPropObj;
 
-        $arrayPropObj = new ConceptProperty('skosmos:memberOfArray', null);
+        $arrayPropObj = new ConceptProperty($this->model, 'skosmos:memberOfArray', null);
         foreach ($this->getArrayProperties() as $propVals) {
             foreach ($propVals as $propVal) {
                 $arrayPropObj->addValue($propVal);
@@ -846,7 +846,7 @@ class Concept extends VocabularyDataObject implements Modifiable
 
     /**
      * Given a language code, gets its name in UI language via Punic or alternatively
-     * tries to search for a model->getText translation.
+     * tries to search for getText translation from Model.
      * @param string $langCode
      * @return string e.g. 'English'
      */

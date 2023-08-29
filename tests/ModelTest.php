@@ -623,4 +623,14 @@ test:ta125
         $this->assertEquals('testiarvo', $this->model->getResourceLabel($mockres, 'fi'));
     }
 
+    /**
+     * @covers Model::getText
+     * @covers Model::setLocale
+     */
+    public function testGetText()
+    {
+        $this->model->setLocale('fi');
+        $this->assertEquals('Luotu', $this->model->getText('skosmos:created'));
+    }
+
 }

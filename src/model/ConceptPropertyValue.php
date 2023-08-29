@@ -165,11 +165,11 @@ class ConceptPropertyValue extends VocabularyDataObject
                 str_replace('dc11:', 'dc:', $prop) : $prop;
             foreach ($this->resource->allLiterals($prop) as $val) {
                 if ($prop !== 'rdf:value') { // shown elsewhere
-                    $ret[gettext($propkey)] = new ConceptPropertyValueLiteral($this->model, $this->vocab, $this->resource, $val, $prop);
+                    $ret[$this->model->getText($propkey)] = new ConceptPropertyValueLiteral($this->model, $this->vocab, $this->resource, $val, $prop);
                 }
             }
             foreach ($this->resource->allResources($prop) as $val) {
-                $ret[gettext($propkey)] = new ConceptPropertyValue($this->model, $this->vocab, $val, $prop, $this->clang);
+                $ret[$this->model->getText($propkey)] = new ConceptPropertyValue($this->model, $this->vocab, $val, $prop, $this->clang);
             }
         }
         return $ret;

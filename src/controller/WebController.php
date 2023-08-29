@@ -142,9 +142,7 @@ class WebController extends Controller
      */
     public function invokeLandingPage($request)
     {
-        // set language parameters for gettext
-        //$this->setLanguageProperties($request->getLang());
-        $this->setLocale($request->getLang());
+        $this->model->setLocale($request->getLang());
         // load template
         $template = $this->twig->loadTemplate('landing.twig');
         // set template variables
@@ -174,7 +172,7 @@ class WebController extends Controller
     public function invokeVocabularyConcept(Request $request)
     {
         $lang = $request->getLang();
-        $this->setLocale($request->getLang());
+        $this->model->setLocale($request->getLang());
         $vocab = $request->getVocab();
 
         $langcodes = $vocab->getConfig()->getShowLangCodes();
@@ -216,7 +214,7 @@ class WebController extends Controller
     {
         $template = $this->twig->loadTemplate('feedback.twig');
         //$this->setLanguageProperties($request->getLang());
-        $this->setLocale($request->getLang());
+        $this->model->setLocale($request->getLang());
         $vocabList = $this->model->getVocabularyList(false);
         $vocab = $request->getVocab();
 
@@ -325,7 +323,7 @@ class WebController extends Controller
     {
         $template = $this->twig->loadTemplate('about.twig');
         //$this->setLanguageProperties($request->getLang());
-        $this->setLocale($request->getLang());
+        $this->model->setLocale($request->getLang());
         $url = $request->getServerConstant('HTTP_HOST');
 
         echo $template->render(
@@ -345,7 +343,7 @@ class WebController extends Controller
         $lang = $request->getLang();
         $template = $this->twig->loadTemplate('global-search.twig');
         //$this->setLanguageProperties($lang);
-        $this->setLocale($request->getLang());
+        $this->model->setLocale($request->getLang());
 
         $parameters = new ConceptSearchParameters($request, $this->model->getConfig());
 
@@ -415,7 +413,7 @@ class WebController extends Controller
     {
         $template = $this->twig->loadTemplate('vocab-search.twig');
         //$this->setLanguageProperties($request->getLang());
-        $this->setLocale($request->getLang());
+        $this->model->setLocale($request->getLang());
         $vocab = $request->getVocab();
         $searchResults = null;
         try {
@@ -488,9 +486,7 @@ class WebController extends Controller
     public function invokeVocabularyHome($request)
     {
         $lang = $request->getLang();
-        // set language parameters for gettext
-        //$this->setLanguageProperties($lang);
-        $this->setLocale($request->getLang());
+        $this->model->setLocale($request->getLang());
         $vocab = $request->getVocab();
 
         $defaultView = $vocab->getConfig()->getDefaultSidebarView();
@@ -523,7 +519,7 @@ class WebController extends Controller
     public function invokeGenericErrorPage($request, $message = null)
     {
         //$this->setLanguageProperties($request->getLang());
-        $this->setLocale($request->getLang());
+        $this->model->setLocale($request->getLang());
         header("HTTP/1.0 404 Not Found");
         $template = $this->twig->loadTemplate('error.twig');
         echo $template->render(
