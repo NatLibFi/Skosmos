@@ -102,7 +102,6 @@
 {% endif -%}
 {%- for property in conceptProperties %} {# loop through ConceptProperty objects #}
   {%~ if property.type == 'rdf:type' ~%}
-  {{ property.type }}
     <li class="list-group-item px-0 py-1">
       <span class="property-click skosmos-tooltip-wrapper skosmos-tooltip t-top" data-title="concept_types">
         <i class="property-hover fa-solid fa-arrows-to-circle"></i>
