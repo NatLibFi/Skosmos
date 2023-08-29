@@ -31,7 +31,7 @@ if (sizeof($parts) <= 2) {
 } else {
     if (array_key_exists($parts[1], $config->getLanguages())) { // global pages
         $request->setLang($parts[1]);
-        $controller->setLocale($parts[1]);
+        $model->setLocale($parts[1]);
         $content_lang = $request->getQueryParam('clang');
         $request->setContentLang($content_lang);
         ($parts[2] == 'about' || $parts[2] == 'feedback' || $parts[2] == 'search') ? $request->setPage($parts[2]) : $request->setPage('');

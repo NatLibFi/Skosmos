@@ -141,16 +141,6 @@ class DataObject
     }
 
     /**
-     * Get text translated in language set by SetLocale function
-     *
-     * @param string $text text to be translated
-     */
-    protected function getText($text)
-    {
-        return $this->model->getText($text);
-    }
-
-    /**
      * Getter function for retrieving the resource.
      */
     public function getResource()

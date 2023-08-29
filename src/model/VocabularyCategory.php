@@ -36,7 +36,7 @@ class VocabularyCategory extends DataObject
             $label = $this->resource->label($this->getLang());
             return is_null($label) ? $this->resource->localName() : $label->getValue();
         }
-        return gettext('Vocabularies');
+        return $this->model->getText('Vocabularies');
     }
 
 }

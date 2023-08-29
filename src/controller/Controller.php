@@ -36,33 +36,12 @@ class Controller
         $this->languages = array();
         foreach ($this->model->getConfig()->getLanguages() as $langcode => $locale) {
             $this->languages[$langcode] = array('locale' => $locale);
-            $this->setLocale($langcode);
+            $this->model->setLocale($langcode);
             $this->translator = $this->model->getTranslator();
             $this->translator->setlocale($langcode);
             $this->languages[$langcode]['name'] = $this->translator->trans('in_this_language');
             $this->languages[$langcode]['lemma'] = Punic\Language::getName($langcode, $langcode);
         }
-    }
-
-    /**
-     * Changes translation language for Symfony Translator.
-     * @param string $lang two character language code 'fi' or compound language (locale) name such as 'fi_FI'
-     */
-    public function setLocale($locale)
-    {
-        if (!is_null($this->translator)) {
-            $this->model->setlocale($locale);
-        }
-    }
-
-    /**
-     * Get text translated in language set by SetLocale function
-     *
-     * @param string $text text to be translated
-     */
-    protected function getText($text)
-    {
-        return $this->model->getText($text);
     }
 
     /**

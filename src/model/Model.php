@@ -150,7 +150,7 @@ class Model
             if (empty($values)) {
                 $shorteneduri = EasyRdf\RdfNamespace::shorten($uri);
                 if ($shorteneduri !== null) {
-                    $this->translator->setlocale($lang);
+                    if (isset($lang)) $this->translator->setlocale($lang);
                     $trans = $this->getText($shorteneduri);
                     if ($trans) {
                         $result[$uri] = array('label' => $trans);
