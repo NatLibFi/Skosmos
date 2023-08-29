@@ -106,11 +106,11 @@
       <span class="property-click skosmos-tooltip-wrapper skosmos-tooltip t-top" data-title="concept_types">
         <i class="property-hover fa-solid fa-arrows-to-circle"></i>
       </span>
-      <div class="property-values">
+      <span class="property-values">
       {%~ for propval in property.values ~%} {# loop through ConceptPropertyValue objects #}
         <span class="versal value">{{ propval.label }}</span>
       {%~ endfor ~%}
-      </div>
+      </span>
     </li>
   {%~ endif ~%}
 {% endfor -%}
