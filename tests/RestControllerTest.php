@@ -12,13 +12,6 @@ class RestControllerTest extends \PHPUnit\Framework\TestCase
     private $controller;
     protected function setUp(): void
     {
-        putenv("LANGUAGE=en_GB.utf8");
-        putenv("LC_ALL=en_GB.utf8");
-        setlocale(LC_ALL, 'en_GB.utf8');
-        bindtextdomain('skosmos', 'resource/translations');
-        bind_textdomain_codeset('skosmos', 'UTF-8');
-        textdomain('skosmos');
-
         $globalConfig = new GlobalConfig('/../../tests/testconfig.ttl');
         $this->model = Mockery::mock(new Model($globalConfig));
         $this->controller = new RestController($this->model);
