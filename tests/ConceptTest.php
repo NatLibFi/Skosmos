@@ -12,13 +12,6 @@ class ConceptTest extends PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        putenv("LANGUAGE=en_GB.utf8");
-        putenv("LC_ALL=en_GB.utf8");
-        setlocale(LC_ALL, 'en_GB.utf8');
-        bindtextdomain('skosmos', 'resource/translations');
-        bind_textdomain_codeset('skosmos', 'UTF-8');
-        textdomain('skosmos');
-
         $this->model = new Model(new GlobalConfig('/../../tests/testconfig.ttl'));
         $this->vocab = $this->model->getVocabulary('test');
         $results = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en');
