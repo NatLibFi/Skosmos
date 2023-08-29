@@ -273,7 +273,7 @@ body {
     font-weight: bold;
   }
 
-  /***** Main container frontpage & frontpage one vacab *****/
+  /***** Main container frontpage & frontpage one vocab *****/
   #background.frontpage, #background.frontpage-one-vocab {
     background-color: var(--main-bg-1);
     background-image: var(--frontpage-stripes-1);
