@@ -890,7 +890,6 @@ EOD;
      */
     public function testVocabularyStatistics()
     {
-        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $request = new Request($this->model);
         $request->setQueryParam('format', 'application/json');
         $request->setVocab('test');

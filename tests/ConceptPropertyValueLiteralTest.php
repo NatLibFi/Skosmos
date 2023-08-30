@@ -64,7 +64,6 @@ class ConceptPropertyValueLiteralTest extends PHPUnit\Framework\TestCase
     */
     public function testGetLabelForDatatype()
     {
-        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $vocab = $this->model->getVocabulary('test');
         $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en');
         $props = $concepts[0]->getProperties();
@@ -77,7 +76,6 @@ class ConceptPropertyValueLiteralTest extends PHPUnit\Framework\TestCase
     */
     public function testGetNotationDatatypeWithoutLabel()
     {
-        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $vocab = $this->model->getVocabulary('test');
         $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta128', 'en');
         $props = $concepts[0]->getProperties();
@@ -90,7 +88,6 @@ class ConceptPropertyValueLiteralTest extends PHPUnit\Framework\TestCase
      */
     public function testGetLabelForDatatypeIfNull()
     {
-        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $vocab = $this->model->getVocabulary('test');
         $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta126', 'en');
         $props = $concepts[0]->getProperties();
@@ -214,7 +211,6 @@ class ConceptPropertyValueLiteralTest extends PHPUnit\Framework\TestCase
      */
     public function testGetXlLabel()
     {
-        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $voc = $this->model->getVocabulary('xl');
         $conc = $voc->getConceptInfo('http://www.skosmos.skos/xl/c1', 'en')[0];
         $props = $conc->getProperties();

@@ -21,8 +21,6 @@ class Controller
 
     protected $languages;
 
-    protected $translator;
-
     /**
      * Initializes the Model object.
      */
@@ -37,9 +35,7 @@ class Controller
         foreach ($this->model->getConfig()->getLanguages() as $langcode => $locale) {
             $this->languages[$langcode] = array('locale' => $locale);
             $this->model->setLocale($langcode);
-            $this->translator = $this->model->getTranslator();
-            $this->translator->setlocale($langcode);
-            $this->languages[$langcode]['name'] = $this->translator->trans('in_this_language');
+            $this->languages[$langcode]['name'] = $this->model->getText('in_this_language');
             $this->languages[$langcode]['lemma'] = Punic\Language::getName($langcode, $langcode);
         }
     }

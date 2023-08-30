@@ -213,7 +213,6 @@ class WebController extends Controller
     public function invokeFeedbackForm($request)
     {
         $template = $this->twig->loadTemplate('feedback.twig');
-        //$this->setLanguageProperties($request->getLang());
         $this->model->setLocale($request->getLang());
         $vocabList = $this->model->getVocabularyList(false);
         $vocab = $request->getVocab();
@@ -322,7 +321,6 @@ class WebController extends Controller
     public function invokeAboutPage($request)
     {
         $template = $this->twig->loadTemplate('about.twig');
-        //$this->setLanguageProperties($request->getLang());
         $this->model->setLocale($request->getLang());
         $url = $request->getServerConstant('HTTP_HOST');
 
@@ -342,7 +340,6 @@ class WebController extends Controller
     {
         $lang = $request->getLang();
         $template = $this->twig->loadTemplate('global-search.twig');
-        //$this->setLanguageProperties($lang);
         $this->model->setLocale($request->getLang());
 
         $parameters = new ConceptSearchParameters($request, $this->model->getConfig());
@@ -412,7 +409,6 @@ class WebController extends Controller
     public function invokeVocabularySearch($request)
     {
         $template = $this->twig->loadTemplate('vocab-search.twig');
-        //$this->setLanguageProperties($request->getLang());
         $this->model->setLocale($request->getLang());
         $vocab = $request->getVocab();
         $searchResults = null;
@@ -518,7 +514,6 @@ class WebController extends Controller
      */
     public function invokeGenericErrorPage($request, $message = null)
     {
-        //$this->setLanguageProperties($request->getLang());
         $this->model->setLocale($request->getLang());
         header("HTTP/1.0 404 Not Found");
         $template = $this->twig->loadTemplate('error.twig');
