@@ -549,13 +549,21 @@ class VocabularyConfig extends BaseConfig
     public function getDefaultSidebarView()
     {
         $defview = $this->resource->getLiteral('skosmos:defaultSidebarView');
+        $sidebarViews = $this->getSidebarViews();
         if ($defview) {
             $value = $defview->getValue();
-            if (in_array($value, ['hierarchy', 'alphabetical', 'fullalphabetical', 'changes', 'groups'])) {
+            if (in_array($value, $sidebarViews)) {
                 return $value;
+            } else {
+                return $sidebarViews[0]; // if not in sidebarViews, displaying first provided view
             }
         }
-        return 'alphabetical'; // if not defined displaying alphabetical index
+
+        if (in_array('alphabetical', $sidebarViews)) {
+            return 'alphabetical'; // if not defined, displaying alphabetical index
+        } else {
+            return $sidebarViews[0]; // if no alphabetical index, displaying first provided view
+        }
     }
 
     /**
@@ -565,13 +573,21 @@ class VocabularyConfig extends BaseConfig
     public function getDefaultConceptSidebarView()
     {
         $defview = $this->resource->getLiteral('skosmos:defaultConceptSidebarView');
+        $sidebarViews = $this->getSidebarViews();
         if ($defview) {
             $value = $defview->getValue();
-            if (in_array($value, ['hierarchy', 'alphabetical', 'fullalphabetical', 'changes', 'groups'])) {
+            if (in_array($value, $sidebarViews)) {
                 return $value;
+            } else {
+                return $sidebarViews[0]; // if not in sidebarViews, displaying first provided view
             }
         }
-        return 'hierarchy'; // if not defined displaying hierachy
+        
+        if (in_array('hierarchy', $sidebarViews)) {
+            return 'hierarchy'; // if not defined, displaying hierarchy
+        } else {
+            return $sidebarViews[0]; // if no hierarchy, displaying first provided view
+        }
     }
 
     /**
@@ -584,11 +600,13 @@ class VocabularyConfig extends BaseConfig
         if ($views) {
             $viewsArray = array();
             foreach ($views as $view) {
-                $viewsArray[] = $view->getValue();
+                if (in_array($view, array('hierarchy', 'alphabetical', 'fullalphabetical', 'changes', 'groups'))) {
+                    $viewsArray[] = $view->getValue();
+                }
             }
             return $viewsArray;
         }
-        return array("alphabetical", "hierarchy", "groups", "changes"); // if not defined using all views in default order
+        return array('alphabetical', 'hierarchy', 'groups', 'changes'); // if not defined, using all views in default order
 
     }
 
