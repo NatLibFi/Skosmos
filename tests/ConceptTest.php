@@ -110,6 +110,9 @@ class ConceptTest extends PHPUnit\Framework\TestCase
      */
     public function testGetForeignLabels()
     {
+        # make sure UK English collation is being used as the default
+        setlocale(LC_ALL, "en_GB.utf8");
+
         $labels = $this->concept->getForeignLabels();
 
         $this->assertEquals('Karppi', $labels['Finnish']['prefLabel'][0]->getLabel());
