@@ -176,7 +176,6 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
 
     public function testGetReifiedPropertyValues()
     {
-        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $vocab = $this->model->getVocabulary('xl');
         $concept = $vocab->getConceptInfo('http://www.skosmos.skos/xl/c1', 'en')[0];
         $props = $concept->getProperties();

@@ -167,7 +167,6 @@ class ConceptTest extends PHPUnit\Framework\TestCase
      */
     public function testGetPropertiesCorrectNumberOfProperties()
     {
-        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $props = $this->concept->getProperties();
 
         $this->assertEquals(9, sizeof($props));
@@ -182,7 +181,6 @@ class ConceptTest extends PHPUnit\Framework\TestCase
      */
     public function testGetPropertiesCorrectOrderOfProperties()
     {
-        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $props = $this->concept->getProperties();
         $expected = array(0 => 'rdf:type', 1 => 'skos:broader', 2 => 'skos:narrower', 3 => 'skos:altLabel',
             4 => 'skos:scopeNote', 5 => 'http://www.skosmos.skos/multiLingOff', 6 => 'http://www.skosmos.skos/multiLingOn',
@@ -217,7 +215,6 @@ class ConceptTest extends PHPUnit\Framework\TestCase
      */
     public function testGetMappingPropertiesWithIdenticalLabels()
     {
-        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $vocab = $this->model->getVocabulary('duplicates');
         $concepts = $vocab->getConceptInfo("http://www.skosmos.skos/dup/d3", "en");
         $concept = $concepts[0];
@@ -340,7 +337,6 @@ class ConceptTest extends PHPUnit\Framework\TestCase
      */
     public function testGetPropertiesTypes()
     {
-        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $props = $this->concept->getProperties();
         $propvals = $props['rdf:type']->getValues();
         $this->assertCount(1, $propvals); // should only have type meta:TestClass, not skos:Concept (see #200)
@@ -452,7 +448,6 @@ class ConceptTest extends PHPUnit\Framework\TestCase
      */
     public function testGetPropertiesWithNarrowersPartOfACollection()
     {
-        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $model = new Model(new GlobalConfig('/../../tests/testconfig.ttl'));
         $vocab = $model->getVocabulary('groups');
         $concept = $vocab->getConceptInfo("http://www.skosmos.skos/groups/ta1", "en");
@@ -549,7 +544,6 @@ class ConceptTest extends PHPUnit\Framework\TestCase
      */
     public function testGetPropertiesDefinitionLiteral()
     {
-        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $vocab = $this->model->getVocabulary('test');
         $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta115', 'en');
         $concept = $concepts[0];
@@ -564,7 +558,6 @@ class ConceptTest extends PHPUnit\Framework\TestCase
      */
     public function testGetPropertiesDefinitionResource()
     {
-        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $vocab = $this->model->getVocabulary('test');
         $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta122', 'en');
         $concept = $concepts[0];
