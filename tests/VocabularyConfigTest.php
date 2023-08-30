@@ -91,6 +91,26 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     }
 
     /**
+     * @covers VocabularyConfig::getDefaultConceptSidebarView
+     */
+    public function testGetDefaultConceptSidebarView()
+    {
+        $vocab = $this->model->getVocabulary('testdiff');
+        $default = $vocab->getConfig()->getDefaultConceptSidebarView();
+        $this->assertEquals('groups', $default);
+    }
+
+    /**
+     * @covers VocabularyConfig::getDefaultConcpetSidebarView
+     */
+    public function testGetDefaultConceptSidebarViewWhenNotSet()
+    {
+        $vocab = $this->model->getVocabulary('test');
+        $default = $vocab->getConfig()->getDefaultConceptSidebarView();
+        $this->assertEquals('hierarchy', $default);
+    }
+
+    /**
      * @covers VocabularyConfig::getSidebarViews
      */
     public function testGetSidebarViews()

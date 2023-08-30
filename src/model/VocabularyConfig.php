@@ -555,7 +555,23 @@ class VocabularyConfig extends BaseConfig
                 return $value;
             }
         }
-        return 'alphabetical'; // if not defined displaying the alphabetical index
+        return 'alphabetical'; // if not defined displaying alphabetical index
+    }
+
+    /**
+     * Returns the concept page default sidebar view.
+     * @return string name of the view
+     */
+    public function getDefaultConceptSidebarView()
+    {
+        $defview = $this->resource->getLiteral('skosmos:defaultConceptSidebarView');
+        if ($defview) {
+            $value = $defview->getValue();
+            if (in_array($value, ['hierarchy', 'alphabetical', 'fullalphabetical', 'changes', 'groups'])) {
+                return $value;
+            }
+        }
+        return 'hierarchy'; // if not defined displaying hierachy
     }
 
     /**
