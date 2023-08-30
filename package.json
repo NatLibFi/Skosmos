@@ -1,11 +1,15 @@
 {
   "scripts": {
     "test-accessibility-gui-all": "npx cypress open",
-    "test-accessibility-cli-all": "npx cypress run --env cli=true --spec 'cypress/e2e/accessibility-tests/*'",
-    "test-accessibility-cli-about": "npx cypress run --env cli=true --spec 'cypress/e2e/accessibility-tests/axe-about.cy.js'",
-    "test-accessibility-cli-vocab": "npx cypress run --env cli=true --spec 'cypress/e2e/accessibility-tests/axe-vocab.cy.js'",
-    "test-accessibility-cli-feedback": "npx cypress run --env cli=true --spec 'cypress/e2e/accessibility-tests/axe-feedback.cy.js'",
-    "test-accessibility-cli-landing": "npx cypress run --env cli=true --spec 'cypress/e2e/accessibility-tests/axe-landing.cy.js'"
+    "test-accessibility-cli-all": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility-tests/*'",
+    "test-accessibility-cli-about": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility-tests/axe-about.cy.js'",
+    "test-accessibility-cli-concept": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility-tests/axe-concept.cy.js'",
+    "test-accessibility-cli-feedback": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility-tests/axe-feedback.cy.js'",
+    "test-accessibility-cli-global-search": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility-tests/axe-global-search.cy.js'",
+    "test-accessibility-cli-landing": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility-tests/axe-landing.cy.js'",
+    "test-accessibility-cli-vocab": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility-tests/axe-vocab.cy.js'",
+    "test-accessibility-cli-vocab-home": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility-tests/axe-vocab-home.cy.js'",
+    "test-accessibility-cli-vocab-search": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility-tests/axe-vocab-search.cy.js'"
   },
   "dependencies": {
     "bootstrap": "^5.2.3",
@@ -13,7 +17,7 @@
   },
   "devDependencies": {
     "axe-core": "^4.7.1",
-    "cypress": "^12.10.0",
+    "cypress": "^12.17.4",
     "cypress-axe": "^1.4.0",
     "standard": "^17.0.0"
   }

@@ -1,8 +1,9 @@
 const { defineConfig } = require("cypress")
 
 module.exports = defineConfig({
+  projectRoot: "tests",
   e2e: {
-    // You also can run like this: npx cypress run --config "baseUrl=http://localhost/skosmos"
+    // You also can run like this: npx cypress run --config "baseUrl=http://localhost/Skosmos"
     baseUrl: 'http://localhost/Skosmos',
     setupNodeEvents(on, config) {
       on('task', {
@@ -16,5 +17,11 @@ module.exports = defineConfig({
         }
       })
     },
-  },
+    supportFile: false,
+    specPattern: [
+      'tests/cypress/accessibility-tests/**/*.cy.js',
+      'tests/cypress/template-tests/**/*.cy.js',
+      'tests/cypress/e2e/**/*.cy.js'
+    ]
+  }
 })
