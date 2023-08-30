@@ -4,9 +4,16 @@
 cd ../dockerfiles
 docker compose up -d --build
 
-# FIXME: should check that it's up instead of blindly waiting 5 seconds
 echo "Waiting for Fuseki to get ready"
-sleep 5
+while true; do
+    if curl -fs http://localhost:9030/skosmos/ -o /dev/null; then
+        echo "Fuseki is up!"
+        break
+    else
+        echo "...waiting..."
+        sleep 1
+    fi
+done
 
 for fn in ../tests/test-vocab-data/*.ttl; do
     name=$(basename "${fn}" .ttl)
