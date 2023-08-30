@@ -19,8 +19,8 @@ module.exports = defineConfig({
     },
     supportFile: false,
     specPattern: [
-      'tests/cypress/accessibility-tests/**/*.cy.js',
-      'tests/cypress/template-tests/**/*.cy.js',
+      'tests/cypress/accessibility/**/*.cy.js',
+      'tests/cypress/template/**/*.cy.js',
       'tests/cypress/e2e/**/*.cy.js'
     ]
   }

@@ -1,15 +1,15 @@
 {
   "scripts": {
     "test-accessibility-gui-all": "npx cypress open",
-    "test-accessibility-cli-all": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility-tests/*'",
-    "test-accessibility-cli-about": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility-tests/axe-about.cy.js'",
-    "test-accessibility-cli-concept": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility-tests/axe-concept.cy.js'",
-    "test-accessibility-cli-feedback": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility-tests/axe-feedback.cy.js'",
-    "test-accessibility-cli-global-search": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility-tests/axe-global-search.cy.js'",
-    "test-accessibility-cli-landing": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility-tests/axe-landing.cy.js'",
-    "test-accessibility-cli-vocab": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility-tests/axe-vocab.cy.js'",
-    "test-accessibility-cli-vocab-home": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility-tests/axe-vocab-home.cy.js'",
-    "test-accessibility-cli-vocab-search": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility-tests/axe-vocab-search.cy.js'"
+    "test-accessibility-cli-all": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility/*'",
+    "test-accessibility-cli-about": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility/axe-about.cy.js'",
+    "test-accessibility-cli-concept": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility/axe-concept.cy.js'",
+    "test-accessibility-cli-feedback": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility/axe-feedback.cy.js'",
+    "test-accessibility-cli-global-search": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility/axe-global-search.cy.js'",
+    "test-accessibility-cli-landing": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility/axe-landing.cy.js'",
+    "test-accessibility-cli-vocab": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility/axe-vocab.cy.js'",
+    "test-accessibility-cli-vocab-home": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility/axe-vocab-home.cy.js'",
+    "test-accessibility-cli-vocab-search": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility/axe-vocab-search.cy.js'"
   },
   "dependencies": {
     "bootstrap": "^5.2.3",
