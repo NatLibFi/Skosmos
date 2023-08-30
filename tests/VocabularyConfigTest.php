@@ -101,7 +101,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers VocabularyConfig::getDefaultConcpetSidebarView
+     * @covers VocabularyConfig::getDefaultConceptSidebarView
      */
     public function testGetDefaultConceptSidebarViewWhenNotSet()
     {
