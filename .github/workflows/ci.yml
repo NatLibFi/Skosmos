@@ -24,12 +24,6 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Cache Fuseki installation
-      uses: actions/cache@v3
-      with:
-        path: tests/apache-jena-fuseki-*
-        key: fuseki-${{ hashFiles('tests/init_fuseki.sh') }}
-
     - name: Start up Fuseki
       run: cd tests; ./init_fuseki.sh
     
