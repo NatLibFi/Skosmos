@@ -1,6 +1,6 @@
 {% block content %}
   {%~ if search_results is not null and search_results|length == 0 ~%}
-  <p class="no-results">"The search provided no results."</p>
+  <p class="no-results">{{ "The search provided no results." | trans }}</p>
   {%~ endif ~%}
 
 {%~ for concept in search_results ~%} {# loop through the hits #}
