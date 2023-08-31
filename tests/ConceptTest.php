@@ -12,13 +12,6 @@ class ConceptTest extends PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        putenv("LANGUAGE=en_GB.utf8");
-        putenv("LC_ALL=en_GB.utf8");
-        setlocale(LC_ALL, 'en_GB.utf8');
-        bindtextdomain('skosmos', 'resource/translations');
-        bind_textdomain_codeset('skosmos', 'UTF-8');
-        textdomain('skosmos');
-
         $this->model = new Model(new GlobalConfig('/../../tests/testconfig.ttl'));
         $this->vocab = $this->model->getVocabulary('test');
         $results = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en');
@@ -117,6 +110,9 @@ class ConceptTest extends PHPUnit\Framework\TestCase
      */
     public function testGetForeignLabels()
     {
+        # make sure UK English collation is being used as the default
+        setlocale(LC_ALL, "en_GB.utf8");
+
         $labels = $this->concept->getForeignLabels();
 
         $this->assertEquals('Karppi', $labels['Finnish']['prefLabel'][0]->getLabel());
@@ -174,7 +170,6 @@ class ConceptTest extends PHPUnit\Framework\TestCase
      */
     public function testGetPropertiesCorrectNumberOfProperties()
     {
-        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $props = $this->concept->getProperties();
 
         $this->assertEquals(9, sizeof($props));
@@ -189,7 +184,6 @@ class ConceptTest extends PHPUnit\Framework\TestCase
      */
     public function testGetPropertiesCorrectOrderOfProperties()
     {
-        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $props = $this->concept->getProperties();
         $expected = array(0 => 'rdf:type', 1 => 'skos:broader', 2 => 'skos:narrower', 3 => 'skos:altLabel',
             4 => 'skos:scopeNote', 5 => 'http://www.skosmos.skos/multiLingOff', 6 => 'http://www.skosmos.skos/multiLingOn',
@@ -224,7 +218,6 @@ class ConceptTest extends PHPUnit\Framework\TestCase
      */
     public function testGetMappingPropertiesWithIdenticalLabels()
     {
-        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $vocab = $this->model->getVocabulary('duplicates');
         $concepts = $vocab->getConceptInfo("http://www.skosmos.skos/dup/d3", "en");
         $concept = $concepts[0];
@@ -347,7 +340,6 @@ class ConceptTest extends PHPUnit\Framework\TestCase
      */
     public function testGetPropertiesTypes()
     {
-        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $props = $this->concept->getProperties();
         $propvals = $props['rdf:type']->getValues();
         $this->assertCount(1, $propvals); // should only have type meta:TestClass, not skos:Concept (see #200)
@@ -555,7 +547,6 @@ class ConceptTest extends PHPUnit\Framework\TestCase
      */
     public function testGetPropertiesDefinitionLiteral()
     {
-        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $vocab = $this->model->getVocabulary('test');
         $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta115', 'en');
         $concept = $concepts[0];
@@ -570,7 +561,6 @@ class ConceptTest extends PHPUnit\Framework\TestCase
      */
     public function testGetPropertiesDefinitionResource()
     {
-        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $vocab = $this->model->getVocabulary('test');
         $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta122', 'en');
         $concept = $concepts[0];

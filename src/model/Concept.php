@@ -415,8 +415,8 @@ class Concept extends VocabularyDataObject implements Modifiable
 
             if (in_array($prop, $this->MAPPING_PROPERTIES) && !in_array($prop, $this->DELETED_PROPERTIES)) {
                 $propres = new EasyRdf\Resource($prop, $this->graph);
-                $proplabel = $propres->label($this->getEnvLang()) ? $propres->label($this->getEnvLang()) : $propres->label(); // current language
-                $propobj = new ConceptProperty($prop, $proplabel);
+                $proplabel = $propres->label($this->getLang()) ? $propres->label($this->getLang()) : $propres->label(); // current language
+                $propobj = new ConceptProperty($this->model, $prop, $proplabel);
                 if ($propobj->getLabel() !== null) {
                     // only display properties for which we have a label
                     $ret[$prop] = $propobj;
@@ -513,30 +513,30 @@ class Concept extends VocabularyDataObject implements Modifiable
             if (!in_array($prop, $this->deleted) || ($this->isGroup() === false && $prop === 'skos:member')) {
                 // retrieve property label and super properties from the current vocabulary first
                 $propres = new EasyRdf\Resource($prop, $this->graph);
-                $proplabel = $propres->label($this->getEnvLang()) ? $propres->label($this->getEnvLang()) : $propres->label();
+                $proplabel = $propres->label($this->getLang()) ? $propres->label($this->getLang()) : $propres->label();
 
-                $prophelp = $propres->getLiteral('rdfs:comment|skos:definition', $this->getEnvLang());
+                $prophelp = $propres->getLiteral('rdfs:comment|skos:definition', $this->getLang());
                 if ($prophelp === null) {
                     // try again without language restriction
                     $prophelp = $propres->getLiteral('rdfs:comment|skos:definition');
                 }
 
-                // check if the property is one of the well-known properties for which we have a gettext translation
+                // check if the property is one of the well-known properties for which we have a translation
                 // if it is then we can skip the additional lookups in the default graph
                 $propkey = (substr($prop, 0, 5) == 'dc11:') ?
                     str_replace('dc11:', 'dc:', $prop) : $prop;
-                $is_well_known = (gettext($propkey) != $propkey);
+                $is_well_known = ($this->model->getText($propkey) != $propkey);
 
                 // if not found in current vocabulary, look up in the default graph to be able
                 // to read an ontology loaded in a separate graph
                 // note that this imply that the property has an rdf:type declared for the query to work
                 if(!$is_well_known && !$proplabel) {
-                    $envLangLabels = $this->model->getDefaultSparql()->queryLabel($longUri, $this->getEnvLang());
+                    $envLangLabels = $this->model->getDefaultSparql()->queryLabel($longUri, $this->getLang());
 
                     $defaultPropLabel = $this->model->getDefaultSparql()->queryLabel($longUri, '');
 
                     if($envLangLabels) {
-                        $proplabel = $envLangLabels[$this->getEnvLang()];
+                        $proplabel = $envLangLabels[$this->getLang()];
                     } else {
                         if($defaultPropLabel) {
                             $proplabel = $defaultPropLabel[''];
@@ -561,7 +561,7 @@ class Concept extends VocabularyDataObject implements Modifiable
                     $superprop = EasyRdf\RdfNamespace::shorten($superprop) ? EasyRdf\RdfNamespace::shorten($superprop) : $superprop;
                 }
                 $sort_by_notation = $this->vocab->getConfig()->getSortByNotation();
-                $propobj = new ConceptProperty($prop, $proplabel, $prophelp, $superprop, $sort_by_notation);
+                $propobj = new ConceptProperty($this->model, $prop, $proplabel, $prophelp, $superprop, $sort_by_notation);
 
                 if ($propobj->getLabel() !== null) {
                     // only display properties for which we have a label
@@ -618,7 +618,7 @@ class Concept extends VocabularyDataObject implements Modifiable
             }
         }
 
-        $groupPropObj = new ConceptProperty('skosmos:memberOf', null);
+        $groupPropObj = new ConceptProperty($this->model, 'skosmos:memberOf', null);
         foreach ($this->getGroupProperties() as $propVals) {
             foreach ($propVals as $propVal) {
                 $groupPropObj->addValue($propVal);
@@ -626,7 +626,7 @@ class Concept extends VocabularyDataObject implements Modifiable
         }
         $ret['skosmos:memberOf'] = $groupPropObj;
 
-        $arrayPropObj = new ConceptProperty('skosmos:memberOfArray', null);
+        $arrayPropObj = new ConceptProperty($this->model, 'skosmos:memberOfArray', null);
         foreach ($this->getArrayProperties() as $propVals) {
             foreach ($propVals as $propVal) {
                 $arrayPropObj->addValue($propVal);
@@ -733,14 +733,14 @@ class Concept extends VocabularyDataObject implements Modifiable
 
             // making a human readable string from the timestamps
             if ($created != '') {
-                $ret = gettext('skosmos:created') . ' ' . (Punic\Calendar::formatDate($created, 'short', $this->getEnvLang()));
+                $ret = $this->model->getText('skosmos:created') . ' ' . (Punic\Calendar::formatDate($created, 'short', $this->getLang()));
             }
 
             if ($modified != '') {
                 if ($created != '') {
-                    $ret .= ', ' . gettext('skosmos:modified') . ' ' . (Punic\Calendar::formatDate($modified, 'short', $this->getEnvLang()));
+                    $ret .= ', ' . $this->model->getText('skosmos:modified') . ' ' . (Punic\Calendar::formatDate($modified, 'short', $this->getLang()));
                 } else {
-                    $ret .= ' ' . ucfirst(gettext('skosmos:modified')) . ' ' . (Punic\Calendar::formatDate($modified, 'short', $this->getEnvLang()));
+                    $ret .= ' ' . ucfirst($this->model->getText('skosmos:modified')) . ' ' . (Punic\Calendar::formatDate($modified, 'short', $this->getLang()));
                 }
 
             }
@@ -749,11 +749,11 @@ class Concept extends VocabularyDataObject implements Modifiable
             $ret = '';
             if ($this->resource->get('dc:modified')) {
                 $modified = (string) $this->resource->get('dc:modified');
-                $ret = gettext('skosmos:modified') . ' ' . $modified;
+                $ret = $this->model->getText('skosmos:modified') . ' ' . $modified;
             }
             if ($this->resource->get('dc:created')) {
                 $created .= (string) $this->resource->get('dc:created');
-                $ret .= ' ' . gettext('skosmos:created') . ' ' . $created;
+                $ret .= ' ' . $this->model->getText('skosmos:created') . ' ' . $created;
             }
         }
         return $ret;
@@ -846,7 +846,7 @@ class Concept extends VocabularyDataObject implements Modifiable
 
     /**
      * Given a language code, gets its name in UI language via Punic or alternatively
-     * tries to search for a gettext translation.
+     * tries to search for getText translation from Model.
      * @param string $langCode
      * @return string e.g. 'English'
      */
@@ -855,7 +855,7 @@ class Concept extends VocabularyDataObject implements Modifiable
         // using empty string as the language name when there is no langcode set
         $langName = '';
         if (!empty($langCode)) {
-            $langName = Punic\Language::getName($langCode, $this->getEnvLang()) !== $langCode ? Punic\Language::getName($langCode, $this->getEnvLang()) : gettext($langCode);
+            $langName = Punic\Language::getName($langCode, $this->getLang()) !== $langCode ? Punic\Language::getName($langCode, $this->getLang()) : $this->model->getText($langCode);
         }
         return $langName;
     }
@@ -875,7 +875,7 @@ class Concept extends VocabularyDataObject implements Modifiable
         foreach ($labels as $lit) {
             // filtering away subsets of the current language eg. en vs en-GB
             $langCode = strval($lit->getLang());
-            if ($langCode != $this->clang && strpos($langCode, $this->getEnvLang() . '-') !== 0) {
+            if ($langCode != $this->clang && strpos($langCode, $this->getLang() . '-') !== 0) {
                 $ret[$langCode][$key][] = new ConceptPropertyValueLiteral($this->model, $this->vocab, $this->resource, $lit, $prop);
             }
         }
@@ -921,7 +921,7 @@ class Concept extends VocabularyDataObject implements Modifiable
         // shortening property labels if possible, EasyRdf requires full URIs to be in angle brackets
         $property = (EasyRdf\RdfNamespace::shorten($property) !== null) ? EasyRdf\RdfNamespace::shorten($property) : "<$property>";
         foreach ($this->resource->allLiterals($property) as $lit) {
-            $labels[Punic\Language::getName($lit->getLang(), $this->getEnvLang())][] = new ConceptPropertyValueLiteral($this->model, $this->vocab, $this->resource, $lit, $property);
+            $labels[Punic\Language::getName($lit->getLang(), $this->getLang())][] = new ConceptPropertyValueLiteral($this->model, $this->vocab, $this->resource, $lit, $property);
         }
         ksort($labels);
         return $labels;

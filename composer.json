@@ -12,11 +12,14 @@
     "willdurand/negotiation": "3.1.*",
     "punic/punic": "3.5.1",
     "ml/json-ld": "1.*",
-    "ext-gettext": "*",
     "ext-intl": "*",
     "ext-mbstring": "*",
     "ext-xsl": "*",
-    "monolog/monolog": "1.27.*"
+    "monolog/monolog": "1.27.*",
+    "symfony/translation": "6.0.*",
+    "symfony/translation-contracts": "3.0.*",
+    "symfony/twig-bundle": "6.0.*",
+    "symfony/config": "6.0.*"
   },
   "require-dev": {
     "phpunit/phpunit": "9.5.*",

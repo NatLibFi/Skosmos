@@ -196,12 +196,12 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
             'hrefLink' => $hrefLink, // link to resource as displayed in the UI
             'lang' => $propertyLang, // TBD: could it be part of the prefLabel?
             'vocabName' => (string) $this->getVocabName(), // vocabulary as displayed in the UI
-            'typeLabel' => gettext($this->type), // a text used in the UI instead of, for example, skos:closeMatch
+            'typeLabel' => $this->model->getText($this->type), // a text used in the UI instead of, for example, skos:closeMatch
         ];
 
         $helpprop = $this->type . "_help";
         // see if we have a translation for the property help text
-        $help = gettext($helpprop);
+        $help = $this->model->getText($helpprop);
         if ($help != $helpprop) {
             $ret['description'] = $help;
         }

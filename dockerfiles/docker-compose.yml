@@ -4,26 +4,31 @@ services:
   fuseki:
     container_name: skosmos-fuseki
     hostname: fuseki
-    image: stain/jena-fuseki
+    build:
+      context: ../dockerfiles/jena-fuseki2-docker
+      dockerfile: Dockerfile
+      args:
+        JENA_VERSION: 4.8.0
+    command: --config=/fuseki/skosmos.ttl
     environment:
-      - ADMIN_PASSWORD=admin
-      - JVM_ARGS=-Xmx2g
+      - JAVA_OPTIONS=-Xmx2g -Xms1g
     ports:
-      - 9030:3030
-  # You can uncomment the line below to have a local volume bound onto the container, or
-  # visit https://hub.docker.com/r/stain/jena-fuseki/ for other alternatives
-  # volumes:
-  #  - ${PWD}/fuseki:/fuseki
+      - '9030:3030'
     volumes:
-      - type: bind
-        source: ./config/skosmos.ttl
-        target: /fuseki/configuration/skosmos.ttl
+      # You can uncomment the lines below to persist data used in the
+      # container. For more complete documentation about it, please
+      # consult the official Apache Jena docs at
+      # https://github.com/apache/jena/tree/main/jena-fuseki2/jena-fuseki-docker
+      # - ./databases:/fuseki/databases
+      # - ./logs:/fuseki/logs
+      - ./config/skosmos.ttl:/fuseki/skosmos.ttl
+    user: 'fuseki:fuseki'
   fuseki-cache:
     container_name: skosmos-fuseki-cache
     hostname: fuseki-cache
     image: varnish
     ports:
-      - 9031:80
+      - '9031:80'
     volumes:
       - type: bind
         source: ./config/varnish-default.vcl
@@ -35,7 +40,7 @@ services:
       context: ..
       dockerfile: dockerfiles/Dockerfile.ubuntu
     ports:
-      - 9090:80
+      - '9090:80'
     depends_on:
       - fuseki
       - fuseki-cache

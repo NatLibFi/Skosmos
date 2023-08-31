@@ -516,7 +516,7 @@ class VocabularyConfig extends BaseConfig
         $langs = $this->resource->allLiterals('skosmos:language');
         $ret = array();
         foreach ($langs as $lang) {
-            $langlit = Punic\Language::getName($lang->getValue(), $this->getEnvLang());
+            $langlit = Punic\Language::getName($lang->getValue(), $this->getLang());
             $ret[$langlit] = $lang->getValue();
         }
         ksort($ret);

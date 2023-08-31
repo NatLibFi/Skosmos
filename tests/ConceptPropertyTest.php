@@ -6,13 +6,6 @@ class ConceptPropertyTest extends PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        putenv("LANGUAGE=en_GB.utf8");
-        putenv("LC_ALL=en_GB.utf8");
-        setlocale(LC_ALL, 'en_GB.utf8');
-        bindtextdomain('skosmos', 'resource/translations');
-        bind_textdomain_codeset('skosmos', 'UTF-8');
-        textdomain('skosmos');
-
         $this->model = new Model(new GlobalConfig('/../../tests/testconfig.ttl'));
     }
 
@@ -22,7 +15,7 @@ class ConceptPropertyTest extends PHPUnit\Framework\TestCase
      */
     public function testGetConstructAndLabel()
     {
-        $prop = new ConceptProperty('skosmos:testLabel', 'Test label');
+        $prop = new ConceptProperty($this->model, 'skosmos:testLabel', 'Test label');
         $this->assertEquals('Test label', $prop->getLabel());
     }
 
@@ -34,7 +27,6 @@ class ConceptPropertyTest extends PHPUnit\Framework\TestCase
      */
     public function testGetDescriptionAndLabel()
     {
-        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $vocab = $this->model->getVocabulary('test');
         $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta122', 'en');
         $concept = $concepts[0];
@@ -62,7 +54,7 @@ class ConceptPropertyTest extends PHPUnit\Framework\TestCase
      */
     public function testGetLabelReturnsNullWhenThereIsNoLabel()
     {
-        $prop = new ConceptProperty('skosmos:type', null);
+        $prop = new ConceptProperty($this->model, 'skosmos:type', null);
         $this->assertEquals(null, $prop->getLabel());
     }
 
@@ -102,7 +94,6 @@ class ConceptPropertyTest extends PHPUnit\Framework\TestCase
      */
     public function testGetType()
     {
-        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $vocab = $this->model->getVocabulary('test');
         $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta122', 'en');
         $concept = $concepts[0];
@@ -207,7 +198,7 @@ class ConceptPropertyTest extends PHPUnit\Framework\TestCase
      */
     public function testGetIDShortenedURI()
     {
-        $prop = new ConceptProperty('skosmos:testLabel', 'Test label');
+        $prop = new ConceptProperty($this->model, 'skosmos:testLabel', 'Test label');
         $this->assertEquals('skosmos_testLabel', $prop->getID());
     }
 
@@ -216,7 +207,7 @@ class ConceptPropertyTest extends PHPUnit\Framework\TestCase
      */
     public function testGetIDFullURI()
     {
-        $prop = new ConceptProperty('http://rdaregistry.info/Elements/a/P50008', 'has hierarchical superior');
+        $prop = new ConceptProperty($this->model, 'http://rdaregistry.info/Elements/a/P50008', 'has hierarchical superior');
         $this->assertEquals('http___rdaregistry_info_Elements_a_P50008', $prop->getID());
     }
 

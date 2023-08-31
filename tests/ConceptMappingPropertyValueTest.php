@@ -9,13 +9,6 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        putenv("LANGUAGE=en_GB.utf8");
-        putenv("LC_ALL=en_GB.utf8");
-        setlocale(LC_ALL, 'en_GB.utf8');
-        bindtextdomain('skosmos', 'resource/translations');
-        bind_textdomain_codeset('skosmos', 'UTF-8');
-        textdomain('skosmos');
-
         $this->model = new Model(new GlobalConfig('/../../tests/testconfig.ttl'));
         $this->vocab = $this->model->getVocabulary('mapping');
         $concepts = $this->vocab->getConceptInfo('http://www.skosmos.skos/mapping/m1', 'en');
@@ -41,7 +34,6 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
      */
     public function testGetLabelFromExternalVocabulary()
     {
-        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $propvals = $this->props['skos:exactMatch']->getValues();
         $this->assertEquals('Eel', $propvals['Eel http://www.skosmos.skos/test/ta115']->getLabel()->getValue());
     }
@@ -135,7 +127,6 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
      */
     public function testGetExVocab()
     {
-        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $propvals = $this->props['skos:exactMatch']->getValues();
         $this->assertInstanceOf('Vocabulary', $propvals['Eel http://www.skosmos.skos/test/ta115']->getExVocab());
         $this->assertEquals('test', $propvals['Eel http://www.skosmos.skos/test/ta115']->getExVocab()->getId());
@@ -146,7 +137,6 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
      */
     public function testGetVocabNameWithExternalVocabulary()
     {
-        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $propvals = $this->props['skos:exactMatch']->getValues();
         $this->assertEquals('Test ontology', $propvals['Eel http://www.skosmos.skos/test/ta115']->getVocabName());
     }
@@ -156,7 +146,6 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
      */
     public function testGetUri()
     {
-        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $propvals = $this->props['skos:exactMatch']->getValues();
         $this->assertEquals('http://www.skosmos.skos/test/ta115', $propvals['Eel http://www.skosmos.skos/test/ta115']->getUri());
     }
@@ -166,7 +155,6 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
      */
     public function testGetVocab()
     {
-        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $propvals = $this->props['skos:exactMatch']->getValues();
         $this->assertEquals($this->vocab, $propvals['Eel http://www.skosmos.skos/test/ta115']->getVocab());
     }
@@ -176,7 +164,6 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
      */
     public function testGetType()
     {
-        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $propvals = $this->props['skos:exactMatch']->getValues();
         $this->assertEquals('skos:exactMatch', $propvals['Eel http://www.skosmos.skos/test/ta115']->getType());
     }
@@ -186,7 +173,6 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
      */
     public function testToString()
     {
-        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $propvals = $this->props['skos:exactMatch']->getValues();
         $this->assertEquals('Eel', $propvals['Eel http://www.skosmos.skos/test/ta115']->__toString());
     }
@@ -196,7 +182,6 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
      */
     public function testAsJskos()
     {
-        $this->markTestSkipped('disabled since the functionality needs to be reimplemented after the new translation component is in use');
         $propvals = $this->props['skos:exactMatch']->getValues();
         $this->assertEquals([
           'type' => [

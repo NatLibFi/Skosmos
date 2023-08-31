@@ -33,10 +33,10 @@ class VocabularyCategory extends DataObject
     public function getTitle()
     {
         if ($this->resource) {
-            $label = $this->resource->label($this->getEnvLang());
+            $label = $this->resource->label($this->getLang());
             return is_null($label) ? $this->resource->localName() : $label->getValue();
         }
-        return gettext('Vocabularies');
+        return $this->model->getText('Vocabularies');
     }
 
 }

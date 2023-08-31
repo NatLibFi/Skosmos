@@ -147,7 +147,7 @@ class Vocabulary extends DataObject implements Modifiable
     {
         $ret = array();
         if (!$lang) {
-            $lang = $this->getEnvLang();
+            $lang = $this->getLang();
         }
 
         // get metadata (literals only e.g. name) from vocabulary configuration file
@@ -249,7 +249,7 @@ class Vocabulary extends DataObject implements Modifiable
     public function getConceptSchemes($lang = '')
     {
         if ($lang === '') {
-            $lang = $this->getEnvLang();
+            $lang = $this->getLang();
         }
         $conceptSchemes = null;
         try {
@@ -303,7 +303,7 @@ class Vocabulary extends DataObject implements Modifiable
     public function getTopConcepts($conceptScheme = null, $lang = '')
     {
         if ($lang === '') {
-            $lang = $this->getEnvLang();
+            $lang = $this->getLang();
         }
         $fallback = $this->config->getDefaultLanguage();
 
@@ -366,7 +366,7 @@ class Vocabulary extends DataObject implements Modifiable
      */
     public function getConceptHierarchy($uri, $lang)
     {
-        $lang = $lang ? $lang : $this->getEnvLang();
+        $lang = $lang ? $lang : $this->getLang();
         $fallback = count($this->config->getLanguageOrder($lang)) > 1 ? $this->config->getLanguageOrder($lang)[1] : $this->config->getDefaultLanguage();
         $props = $this->config->getHierarchyProperty();
         return $this->getSparql()->queryParentList($uri, $lang, $fallback, $props);
@@ -378,7 +378,7 @@ class Vocabulary extends DataObject implements Modifiable
      */
     public function getConceptChildren($uri, $lang)
     {
-        $lang = $lang ? $lang : $this->getEnvLang();
+        $lang = $lang ? $lang : $this->getLang();
         $fallback = count($this->config->getLanguageOrder($lang)) > 1 ? $this->config->getLanguageOrder($lang)[1] : $this->config->getDefaultLanguage();
         $props = $this->config->getHierarchyProperty();
         return $this->getSparql()->queryChildren($uri, $lang, $fallback, $props);
@@ -391,7 +391,7 @@ class Vocabulary extends DataObject implements Modifiable
      */
     public function getConceptNarrowers($uri, $lang)
     {
-        $lang = $lang ? $lang : $this->getEnvLang();
+        $lang = $lang ? $lang : $this->getLang();
         return $this->getSparql()->queryProperty($uri, 'skos:narrower', $lang);
     }
 
@@ -403,7 +403,7 @@ class Vocabulary extends DataObject implements Modifiable
      */
     public function getConceptTransitiveNarrowers($uri, $limit, $lang)
     {
-        $lang = $lang ? $lang : $this->getEnvLang();
+        $lang = $lang ? $lang : $this->getLang();
         return $this->getSparql()->queryTransitiveProperty($uri, array('skos:narrower'), $lang, $limit);
     }
 
@@ -414,7 +414,7 @@ class Vocabulary extends DataObject implements Modifiable
      */
     public function getConceptBroaders($uri, $lang)
     {
-        $lang = $lang ? $lang : $this->getEnvLang();
+        $lang = $lang ? $lang : $this->getLang();
         return $this->getSparql()->queryProperty($uri, 'skos:broader', $lang);
     }
 
@@ -427,7 +427,7 @@ class Vocabulary extends DataObject implements Modifiable
      */
     public function getConceptTransitiveBroaders($uri, $limit, $any, $lang)
     {
-        $lang = $lang ? $lang : $this->getEnvLang();
+        $lang = $lang ? $lang : $this->getLang();
         $fallback = $this->config->getDefaultLanguage();
         return $this->getSparql()->queryTransitiveProperty($uri, array('skos:broader'), $lang, $limit, $any, $fallback);
     }
@@ -439,7 +439,7 @@ class Vocabulary extends DataObject implements Modifiable
      */
     public function getConceptRelateds($uri, $lang)
     {
-        $lang = $lang ? $lang : $this->getEnvLang();
+        $lang = $lang ? $lang : $this->getLang();
         return $this->getSparql()->queryProperty($uri, 'skos:related', $lang);
     }
 
@@ -470,7 +470,7 @@ class Vocabulary extends DataObject implements Modifiable
     public function listConceptGroups($clang = null)
     {
         if ($clang === null || $clang == '') {
-            $clang = $this->getEnvLang();
+            $clang = $this->getLang();
         }
 
         $ret = array();
@@ -495,7 +495,7 @@ class Vocabulary extends DataObject implements Modifiable
     public function listConceptGroupContents($glname, $clang)
     {
         if (!$clang) {
-            $clang = $this->config->getEnvLang();
+            $clang = $this->getLang();
         }
 
         $ret = array();

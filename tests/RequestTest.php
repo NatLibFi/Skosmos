@@ -7,13 +7,6 @@ class RequestTest extends PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        putenv("LANGUAGE=en_GB.utf8");
-        putenv("LC_ALL=en_GB.utf8");
-        setlocale(LC_ALL, 'en_GB.utf8');
-        bindtextdomain('skosmos', 'resource/translations');
-        bind_textdomain_codeset('skosmos', 'UTF-8');
-        textdomain('skosmos');
-
         $config = new GlobalConfig('/../../tests/testconfig.ttl');
         $this->model = new Model($config);
         $this->request = new Request($this->model);

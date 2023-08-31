@@ -48,7 +48,7 @@ jobs:
       uses: php-actions/composer@v6
       with:
         php_version: ${{ matrix.php_version }}
-        php_extensions: gettext intl xsl pcov
+        php_extensions: intl xsl pcov
 
     - name: Install Node
       uses: actions/setup-node@v3
@@ -71,7 +71,7 @@ jobs:
       with:
         version: 9.5
         php_version: ${{ matrix.php_version }}
-        php_extensions: gettext intl xsl pcov
+        php_extensions: intl xsl pcov
         memory_limit: 512M
         configuration: phpunit.xml
 

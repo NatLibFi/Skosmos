@@ -33,12 +33,6 @@ class Http304Test extends TestCase
      */
     public function initObjects(string $vocabularyName)
     {
-        putenv("LANGUAGE=en_GB.utf8");
-        putenv("LC_ALL=en_GB.utf8");
-        setlocale(LC_ALL, 'en_GB.utf8');
-        bindtextdomain('skosmos', 'resource/translations');
-        bind_textdomain_codeset('skosmos', 'UTF-8');
-        textdomain('skosmos');
         $this->model = Mockery::mock(new Model(new GlobalConfig('/../../tests/testconfig.ttl')))->makePartial();
         $this->vocab = Mockery::mock($this->model->getVocabulary($vocabularyName))->makePartial();
         $this->controller = Mockery::mock('WebController')

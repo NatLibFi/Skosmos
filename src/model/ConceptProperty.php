@@ -21,14 +21,16 @@ class ConceptProperty
 
     /**
      * Label parameter seems to be optional in this phase.
+     * @param string $model Model object for using Symfony translator
      * @param string $prop property type eg. 'rdf:type'.
      * @param string $label property label
      * @param string $tooltip property tooltip/description
      * @param string $super URI of superproperty
      * @param boolean $sort_by_notation whether to sort the property values by their notation code
      */
-    public function __construct($prop, $label, $tooltip=null, $super=null, $sort_by_notation=false)
+    public function __construct($model, $prop, $label, $tooltip=null, $super=null, $sort_by_notation=false)
     {
+        $this->model = $model;
         $this->prop = $prop;
         $this->label = $label;
         $this->tooltip = $tooltip;
@@ -47,7 +49,7 @@ class ConceptProperty
         // we don't maintain DC 1.1 translations separate from DC Terms
         $prop = (substr($this->prop, 0, 5) == 'dc11:') ?
             str_replace('dc11:', 'dc:', $this->prop) : $this->prop;
-        $label = gettext($prop);
+        $label = $this->model->getText($prop);
         if ($label != $prop) {
             return $label;
         }
@@ -78,7 +80,7 @@ class ConceptProperty
         $helpprop = $this->prop . "_help";
 
         // see if we have a translation with the help text
-        $help = gettext($helpprop);
+        $help = $this->model->getText($helpprop);
         if ($help != $helpprop) {
             return $help;
         }

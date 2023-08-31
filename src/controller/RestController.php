@@ -64,7 +64,7 @@ class RestController extends Controller
             return $this->returnError(400, "Bad Request", "lang parameter missing");
         }
 
-        $this->setLanguageProperties($request->getLang());
+        $this->model->setLocale($request->getLang());
 
         $vocabs = array();
         foreach ($this->model->getVocabularies() as $voc) {
@@ -259,7 +259,7 @@ class RestController extends Controller
         if ($this->notModified($request->getVocab())) {
             return null;
         }
-        $this->setLanguageProperties($request->getLang());
+        $this->model->setLocale($request->getLang());
         $arrayClass = $request->getVocab()->getConfig()->getArrayClassURI();
         $groupClass = $request->getVocab()->getConfig()->getGroupClassURI();
         $queryLang = $request->getQueryParam('lang') ?? $request->getLang();
@@ -294,7 +294,7 @@ class RestController extends Controller
             'title' => $request->getVocab()->getConfig()->getTitle(),
             'concepts' => array(
                 'class' => 'http://www.w3.org/2004/02/skos/core#Concept',
-                'label' => gettext('skos:Concept'),
+                'label' => $this->model->getText('skos:Concept'),
                 'count' => isset($vocabStats['http://www.w3.org/2004/02/skos/core#Concept']) ? $vocabStats['http://www.w3.org/2004/02/skos/core#Concept']['count'] : 0,
                 'deprecatedCount' => isset($vocabStats['http://www.w3.org/2004/02/skos/core#Concept']) ? $vocabStats['http://www.w3.org/2004/02/skos/core#Concept']['deprecatedCount'] : 0,
             ),
@@ -304,7 +304,7 @@ class RestController extends Controller
         if (isset($vocabStats['http://www.w3.org/2004/02/skos/core#Collection'])) {
             $ret['conceptGroups'] = array(
                 'class' => 'http://www.w3.org/2004/02/skos/core#Collection',
-                'label' => gettext('skos:Collection'),
+                'label' => $this->model->getText('skos:Collection'),
                 'count' => $vocabStats['http://www.w3.org/2004/02/skos/core#Collection']['count'],
                 'deprecatedCount' => $vocabStats['http://www.w3.org/2004/02/skos/core#Collection']['deprecatedCount'],
             );
@@ -312,14 +312,14 @@ class RestController extends Controller
         } elseif (isset($vocabStats[$groupClass])) {
             $ret['conceptGroups'] = array(
                 'class' => $groupClass,
-                'label' => isset($vocabStats[$groupClass]['label']) ? $vocabStats[$groupClass]['label'] : gettext(EasyRdf\RdfNamespace::shorten($groupClass)),
+                'label' => isset($vocabStats[$groupClass]['label']) ? $vocabStats[$groupClass]['label'] : $this->model->getText(EasyRdf\RdfNamespace::shorten($groupClass)),
                 'count' => $vocabStats[$groupClass]['count'],
                 'deprecatedCount' => $vocabStats[$groupClass]['deprecatedCount'],
             );
         } elseif (isset($vocabStats[$arrayClass])) {
             $ret['arrays'] = array(
                 'class' => $arrayClass,
-                'label' => isset($vocabStats[$arrayClass]['label']) ? $vocabStats[$arrayClass]['label'] : gettext(EasyRdf\RdfNamespace::shorten($arrayClass)),
+                'label' => isset($vocabStats[$arrayClass]['label']) ? $vocabStats[$arrayClass]['label'] : $this->model->getText(EasyRdf\RdfNamespace::shorten($arrayClass)),
                 'count' => $vocabStats[$arrayClass]['count'],
                 'deprecatedCount' => $vocabStats[$arrayClass]['deprecatedCount'],
             );
@@ -338,7 +338,7 @@ class RestController extends Controller
             return null;
         }
         $lang = $request->getLang();
-        $this->setLanguageProperties($request->getLang());
+        $this->model->setLocale($request->getLang());
         $vocabStats = $request->getVocab()->getLabelStatistics();
 
         /* encode the results in a JSON-LD compatible array */
@@ -398,7 +398,7 @@ class RestController extends Controller
             return null;
         }
 
-        $this->setLanguageProperties($request->getLang());
+        $this->model->setLocale($request->getLang());
 
         $queriedtypes = $this->model->getTypes($vocid, $request->getLang());
 
@@ -687,7 +687,7 @@ class RestController extends Controller
      */
     public function mappings(Request $request)
     {
-        $this->setLanguageProperties($request->getLang());
+        $this->model->setLocale($request->getLang());
         $vocab = $request->getVocab();
         if ($this->notModified($vocab)) {
             return null;
@@ -774,7 +774,7 @@ class RestController extends Controller
 
     public function indexLetters($request)
     {
-        $this->setLanguageProperties($request->getLang());
+        $this->model->setLocale($request->getLang());
         $letters = $request->getVocab()->getAlphabet($request->getLang());
 
         $ret = array_merge_recursive(
@@ -802,7 +802,7 @@ class RestController extends Controller
 
     public function indexConcepts($letter, $request)
     {
-        $this->setLanguageProperties($request->getLang());
+        $this->model->setLocale($request->getLang());
 
         $offset_param = $request->getQueryParam('offset');
         $offset = (is_numeric($offset_param) && $offset_param >= 0) ? $offset_param : 0;

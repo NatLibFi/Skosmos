@@ -30,36 +30,13 @@ class Controller
         $this->negotiator = new \Negotiation\Negotiator();
         $domain = 'skosmos';
 
-        // Specify the location of the translation tables
-        bindtextdomain($domain, 'resource/translations');
-        bind_textdomain_codeset($domain, 'UTF-8');
-
-        // Choose domain for translations
-        textdomain($domain);
-
         // Build arrays of language information, with 'locale' and 'name' keys
         $this->languages = array();
         foreach ($this->model->getConfig()->getLanguages() as $langcode => $locale) {
             $this->languages[$langcode] = array('locale' => $locale);
-            $this->setLanguageProperties($langcode);
-            $this->languages[$langcode]['name'] = gettext('in_this_language');
+            $this->model->setLocale($langcode);
+            $this->languages[$langcode]['name'] = $this->model->getText('in_this_language');
             $this->languages[$langcode]['lemma'] = Punic\Language::getName($langcode, $langcode);
-        }
-    }
-
-    /**
-     * Sets the locale language properties from the parameter (used by gettext and some Model classes).
-     * @param string $lang language parameter eg. 'fi' for Finnish.
-     */
-    public function setLanguageProperties($lang)
-    {
-        if (array_key_exists($lang, $this->languages)) {
-            $locale = $this->languages[$lang]['locale'];
-            putenv("LANGUAGE=$locale");
-            putenv("LC_ALL=$locale");
-            setlocale(LC_ALL, $locale);
-        } else {
-            trigger_error("Unsupported language '$lang', not setting locale", E_USER_WARNING);
         }
     }
 
