@@ -177,6 +177,8 @@
 	skosmos:fullAlphabeticalIndex "true";
 	skosmos:explicitLanguageTags "true";
 	skosmos:defaultSidebarView "groups";
+	skosmos:defaultConceptSidebarView "groups";
+	skosmos:sidebarViews ( "alphabetical" "hierarchy" "groups" );
 	skosmos:showTopConcepts "false";
     skosmos:hierarchyProperty isothes:broaderGeneric;
 	skosmos:sparqlGraph <http://www.skosmos.skos/testdiff/> ;

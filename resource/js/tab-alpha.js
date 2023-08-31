@@ -10,15 +10,15 @@ const tabAlphaApp = Vue.createApp({
     }
   },
   mounted () {
-    // load alphabetical index if aplha tab is active when the page is first opened (otherwise only load the index when the tab is clicked)
+    // load alphabetical index if alphabetical tab is active when the page is first opened (otherwise only load the index when the tab is clicked)
     // this should probably be done differently
-    if (document.querySelector('#alpha > a').classList.contains('active')) {
+    if (document.querySelector('#alphabetical > a').classList.contains('active')) {
       this.loadLetters()
     }
   },
   methods: {
     loadLetters () {
-      // only load index the first time the page is opened or the alpha tab is clicked
+      // only load index the first time the page is opened or the alphabetical tab is clicked
       if (this.indexLetters.length === 0) {
         fetch('rest/v1/' + SKOSMOS.vocab + '/index/?lang=' + SKOSMOS.lang)
           .then(data => {
@@ -44,22 +44,22 @@ const tabAlphaApp = Vue.createApp({
     }
   },
   template: `
-    <div v-click-tab-alpha="loadLetters">
+    <div v-click-tab-alphabetical="loadLetters">
       <tab-alpha :index-letters="indexLetters" :index-concepts="indexConcepts" v-if="indexLetters" @load-concepts="loadConcepts($event)"></tab-alpha>
     </div>
   `
 })
 
 /* Custom directive used to add an event listener on clicks on an element outside of this component */
-tabAlphaApp.directive('click-tab-alpha', {
+tabAlphaApp.directive('click-tab-alphabetical', {
   beforeMount: (el, binding) => {
     el.clickTabEvent = event => {
       binding.value() // calling the method given as the attribute value (loadLetters)
     }
-    document.querySelector('#alpha').addEventListener('click', el.clickTabEvent) // registering an event listener on clicks on the alpha nav-item element
+    document.querySelector('#alphabetical').addEventListener('click', el.clickTabEvent) // registering an event listener on clicks on the alphabetical nav-item element
   },
   unmounted: el => {
-    document.querySelector('#alpha').removeEventListener('click', el.clickTabEvent)
+    document.querySelector('#alphabetical').removeEventListener('click', el.clickTabEvent)
   }
 })
 
@@ -182,4 +182,4 @@ tabAlphaApp.component('tab-alpha', {
   `
 })
 
-tabAlphaApp.mount('#tab-alpha')
+tabAlphaApp.mount('#tab-alphabetical')

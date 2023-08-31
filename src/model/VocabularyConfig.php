@@ -235,15 +235,6 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
-     * Whether the alphabetical index is small enough to be shown all at once.
-     * @return boolean true if all concepts can be shown at once.
-     */
-    public function getAlphabeticalFull()
-    {
-        return $this->getBoolean('skosmos:fullAlphabeticalIndex');
-    }
-
-    /**
      * Returns a short name for a vocabulary if configured. If that has not been set
      * using vocabId as a fallback.
      * @return string
@@ -296,15 +287,6 @@ class VocabularyConfig extends BaseConfig
         $bvalue = $this->getBoolean('skosmos:sortByNotation');
         // "true" is interpreted as "lexical"
         return $bvalue ? "lexical" : null;
-    }
-
-    /**
-     * Returns a boolean value set in the config.ttl config.
-     * @return boolean
-     */
-    public function showChangeList()
-    {
-        return $this->getBoolean('skosmos:showChangeList');
     }
 
     /**
@@ -448,7 +430,7 @@ class VocabularyConfig extends BaseConfig
      * Returns a boolean value set in the config.ttl config.
      * @return boolean
      */
-    public function getShowHierarchy()
+    public function getShowTopConcepts()
     {
         return $this->getBoolean('skosmos:showTopConcepts');
     }
@@ -567,21 +549,65 @@ class VocabularyConfig extends BaseConfig
     public function getDefaultSidebarView()
     {
         $defview = $this->resource->getLiteral('skosmos:defaultSidebarView');
+        $sidebarViews = $this->getSidebarViews();
         if ($defview) {
             $value = $defview->getValue();
-            if ($value === 'groups' || $value === 'hierarchy' || $value === 'new') {
+            if (in_array($value, $sidebarViews)) {
                 return $value;
+            } else {
+                return $sidebarViews[0]; // if not in sidebarViews, displaying first provided view
             }
+        }
 
+        if (in_array('alphabetical', $sidebarViews)) {
+            return 'alphabetical'; // if not defined, displaying alphabetical index
+        } else {
+            return $sidebarViews[0]; // if no alphabetical index, displaying first provided view
         }
-        if ($this->showAlphabeticalIndex() === false) {
-            if ($this->getShowHierarchy()) {
-                return 'hierarchy';
-            } elseif ($this->getGroupClassURI()) {
-                return 'groups';
+    }
+
+    /**
+     * Returns the concept page default sidebar view.
+     * @return string name of the view
+     */
+    public function getDefaultConceptSidebarView()
+    {
+        $defview = $this->resource->getLiteral('skosmos:defaultConceptSidebarView');
+        $sidebarViews = $this->getSidebarViews();
+        if ($defview) {
+            $value = $defview->getValue();
+            if (in_array($value, $sidebarViews)) {
+                return $value;
+            } else {
+                return $sidebarViews[0]; // if not in sidebarViews, displaying first provided view
             }
         }
-        return 'alphabetical'; // if not defined displaying the alphabetical index
+
+        if (in_array('hierarchy', $sidebarViews)) {
+            return 'hierarchy'; // if not defined, displaying hierarchy
+        } else {
+            return $sidebarViews[0]; // if no hierarchy, displaying first provided view
+        }
+    }
+
+    /**
+     * Returns sidebar views used in this vocabulary
+     * @return array of available views
+     */
+    public function getSidebarViews()
+    {
+        $views = $this->resource->getResource('skosmos:sidebarViews');
+        if ($views) {
+            $viewsArray = array();
+            foreach ($views as $view) {
+                if (in_array($view, array('hierarchy', 'alphabetical', 'fullalphabetical', 'changes', 'groups'))) {
+                    $viewsArray[] = $view->getValue();
+                }
+            }
+            return $viewsArray;
+        }
+        return array('alphabetical', 'hierarchy', 'groups', 'changes'); // if not defined, using all views in default order
+
     }
 
     /**
@@ -639,15 +665,6 @@ class VocabularyConfig extends BaseConfig
     public function showNotation()
     {
         return $this->getBoolean('skosmos:showNotation', true);
-    }
-
-    /**
-     * Returns a boolean value set in the config.ttl config.
-     * @return boolean
-     */
-    public function showAlphabeticalIndex()
-    {
-        return $this->getBoolean('skosmos:showAlphabeticalIndex', true);
     }
 
     /**
