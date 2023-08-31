@@ -551,6 +551,7 @@ body {
 
   .search-result-term a {
     font-family: var(--font-family-heading);
+    font-size: 1.25rem;
     text-decoration: none;
   }
 
