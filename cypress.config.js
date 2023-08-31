@@ -22,6 +22,8 @@ module.exports = defineConfig({
       'tests/cypress/accessibility/**/*.cy.js',
       'tests/cypress/template/**/*.cy.js',
       'tests/cypress/e2e/**/*.cy.js'
-    ]
+    ],
+    screenshotsFolder: 'tests/cypress/screenshots',
+    videosFolder: 'tests/cypress/videos'
   }
 })
