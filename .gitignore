@@ -15,7 +15,7 @@ tests/jena-fuseki*
 .DS_Store
 .phpunit.result.cache
 .php-cs-fixer.cache
-cypress/videos/
-cypress/screenshots/
+tests/cypress/videos/
+tests/cypress/screenshots/
 /.idea
 *.swp
