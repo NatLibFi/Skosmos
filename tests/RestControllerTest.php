@@ -918,7 +918,7 @@ EOD;
     },
     "count": "void:entities",
     "@language": "en",
-    "@base": "http://tests.localhost/Skosmos/rest/v1/test/"
+    "@base": "http://:/rest/v1/test/"
   },
   "uri": "",
   "id": "test",

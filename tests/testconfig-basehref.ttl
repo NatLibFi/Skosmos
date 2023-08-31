@@ -1,0 +1,52 @@
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wv: <http://vocab.org/waiver/terms/norms> .
+@prefix sd: <http://www.w3.org/ns/sparql-service-description#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix skosmos: <http://purl.org/net/skosmos#> .
+@prefix isothes: <http://purl.org/iso25964/skos-thes#> .
+@prefix mdrtype: <http://publications.europa.eu/resource/authority/dataset-type/> .
+@prefix : <http://base/#> .
+
+# Skosmos main configuration
+
+:config a skosmos:Configuration ;
+    # customize the base element. Set this if the automatic base url detection doesn't work. For example setups behind a proxy.
+    skosmos:baseHref "http://tests.localhost/Skosmos/" ;
+    skosmos:templateCache "/tmp/skosmos-template-cache-tests" .
+
+:test a skosmos:Vocabulary, void:Dataset ;
+	dc:title "Test ontology"@en ;
+	dc:subject :cat_science ;
+    dc:type mdrtype:ONTOLOGY ;
+	void:dataDump <http://skosmos.skos/dump/test/> ;
+	void:sparqlEndpoint <http://localhost:13030/skosmos-test/sparql> ;
+	void:uriSpace "http://www.skosmos.skos/test/";
+    skos:prefLabel "Test ontology"@en ;
+	skosmos:arrayClass isothes:ThesaurusArray ;
+	skosmos:defaultLanguage "en";
+  skosmos:feedbackRecipient "developer@vocabulary.org";
+	skosmos:groupClass skos:Collection;
+	skosmos:language "en";
+	skosmos:showTopConcepts "true";
+	skosmos:shortName "Test short",
+                    "Testi lyhyt"@fi;
+	skosmos:sparqlGraph <http://www.skosmos.skos/test/> .
+
+:cat_science a skos:Concept ;
+	skos:topConceptOf :categories ;
+	skos:inScheme :categories ;
+	skos:prefLabel "Luonnontieteet ja lääketiede"@fi,
+	"Naturvetenskap och medicin"@sv,
+	"Science and medicine"@en .
+
+mdrtype:THESAURUS a skos:Concept ;
+	skos:prefLabel "Тезаурус"@bg, "Tezaurus"@cs, "Tesaurus"@da, "Thesaurus"@de, "Θησαυρός"@el, "Thesaurus"@en, "Tesaurus"@et, "Tesaurus"@fi, "Thésaurus"@fr, "Pojmovnik"@hr, "Tezaurusz"@hu, "Tesauro"@it, "Tēzaurs"@lv, "Tezauras"@lt, "Teżawru"@mt, "Thesaurus"@nl, "Tesaurus"@no, "Tezaurus"@pl, "Tesauro"@pt, "Tezaur"@ro, "Synonymický slovník"@sk, "Tezaver"@sl, "Tesauro"@es, "Tesaurus"@sv .
+
+mdrtype:ONTOLOGY a skos:Concept ;
+    skos:prefLabel "Онтология"@bg, "Ontologie"@cs, "Ontologi"@da, "Ontologie"@de, "Οντολογία"@el, "Ontology"@en, "Ontoloogia"@et, "Ontologia"@fi, "Ontologie"@fr, "Ontologija"@hr, "Ontológia"@hu, "Ontologia"@it, "Ontoloģija"@lv, "Ontologija"@lt, "Ontoloġija"@mt, "Ontologie"@nl, "Ontologi"@no, "Struktura pojęciowa"@pl, "Ontologia"@pt, "Ontologie"@ro, "Ontológia"@sk, "Ontologija"@sl, "Ontología"@es, "Ontologi"@sv .

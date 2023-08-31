@@ -4,7 +4,7 @@ module.exports = defineConfig({
   projectRoot: "tests",
   e2e: {
     // You also can run like this: npx cypress run --config "baseUrl=http://localhost/Skosmos"
-    baseUrl: 'http://localhost/Skosmos',
+    baseUrl: 'http://localhost:9090/',
     setupNodeEvents(on, config) {
       on('task', {
         log(message) {
