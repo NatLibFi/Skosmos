@@ -7,6 +7,10 @@
   --light-color: #f2f5f7;
   --alert-color: #a0270a;
   --white-color: #ffffff;
+  --feedback-form-bg: var(--white-color);
+  --feedback-form-text: var(--dark-color);
+  --feedback-form-input: var(--light-color);
+  --feedback-form-button-bg: var(--dark-color);
 
   /* Font definitions */
   --font-size: 14px;
