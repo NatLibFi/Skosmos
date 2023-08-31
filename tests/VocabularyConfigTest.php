@@ -304,7 +304,6 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     /**
      * @covers VocabularyConfig::getShowTopConcepts
      * 
-     * @todo change name
      */
     public function testGetShowTopConceptsSetToFalse()
     {
@@ -316,7 +315,6 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     /**
      * @covers VocabularyConfig::getShowTopConcepts
      * 
-     * @todo change name
      */
     public function testGetShowTopConceptsNotSet()
     {

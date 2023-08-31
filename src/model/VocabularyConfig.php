@@ -582,7 +582,7 @@ class VocabularyConfig extends BaseConfig
                 return $sidebarViews[0]; // if not in sidebarViews, displaying first provided view
             }
         }
-        
+
         if (in_array('hierarchy', $sidebarViews)) {
             return 'hierarchy'; // if not defined, displaying hierarchy
         } else {
