@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # Build and start up containers (skosmos, skosmos-cache, fuseki)
-cd ../dockerfiles
 docker compose up -d --build
 
 echo "Waiting for Fuseki to get ready"
