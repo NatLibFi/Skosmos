@@ -26,6 +26,16 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
     }
 
     /**
+     * @covers ConceptPropertyValue::getLang
+     */
+    public function testGetLang()
+    {
+        $props = $this->concept->getProperties();
+        $propvals = $props['skos:narrower']->getValues();
+        $this->assertEquals('en', $propvals['Crucian carp http://www.skosmos.skos/test/ta121']->getLang());
+    }
+
+    /**
      * @covers ConceptPropertyValue::getLabel
      */
     public function testGetLabel()
