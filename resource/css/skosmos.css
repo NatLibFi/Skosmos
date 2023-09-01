@@ -7,6 +7,8 @@
   --light-color: #f2f5f7;
   --alert-color: #a0270a;
   --white-color: #ffffff;
+  --sidebar-search-bg: var(--dark-color);
+  --sidebar-search-text: var(--white-color);
 
   /* Font definitions */
   --font-size: 14px;
@@ -271,7 +273,7 @@ body {
     font-weight: bold;
   }
 
-  /***** Main container frontpage & frontpage one vacab *****/
+  /***** Main container frontpage & frontpage one vocab *****/
   #background.frontpage, #background.frontpage-one-vocab {
     background-color: var(--main-bg-1);
     background-image: var(--frontpage-stripes-1);
@@ -549,6 +551,7 @@ body {
 
   .search-result-term a {
     font-family: var(--font-family-heading);
+    font-size: 1.25rem;
     text-decoration: none;
   }
 

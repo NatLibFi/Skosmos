@@ -1,0 +1,102 @@
+:root {
+    /* Color definitions */
+    --dark-color: #0d284e;
+    --secondary-dark-color: #1b709d;
+    --accent-color: #0088ec;
+    --medium-color: #8fdbff;
+    --light-color: #d9f0f4;
+    --secondary-light-color: #ebf7f9;
+    --white-color: #ffffff;
+
+
+    /* Element color definitions */
+    --body-text: var(--dark-color);
+
+
+    --topbar-bg-1: var(--white-color);
+    --topbar-bg-2: var(--white-color);
+    --topbar-text-1: var(--dark-color);
+    --topbar-text-2: var(--dark-color);
+    --topbar-home-1: url("../pics/koti-dark.svg");
+    --topbar-home-2: url("../pics/koti-dark.svg");
+    --topbar-info-1: url("../pics/tietoa-dark.svg");
+    --topbar-info-2: url("../pics/tietoa-dark.svg");
+    --topbar-feedback-1: url("../pics/palaute-dark.svg");
+    --topbar-feedback-2: url("../pics/palaute-dark.svg");
+
+
+    --headerbar-vocab-bg: var(--medium-color);
+    --headerbar-text-1: var(--dark-color);
+    --headerbar-text-2: var(--dark-color);
+    --search-bg: var(--secondary-light-color);
+    --search-border: var(--medium-color);
+    --search-dropdown-toggle-hover: var(--secondary-light-color);
+    --search-dropdown-toggle-show: var(--light-color);
+    --search-dropdown-item-active: var(--white-color);
+    --search-dropdown-item-hover: var(--light-color);
+    --search-button-bg: var(--dark-color);
+    --search-button-text: var(--white-color);
+
+
+    --main-bg-1: var(--light-color);
+    --main-bg-2: var(--light-color);
+    --main-bg-3: var(--light-color);
+
+    --frontpage-stripes-1: url(../pics/viivakuvio.svg);
+    --frontpage-stripes-2: url(../pics/viivakuvio.svg);
+    --infopage-stripes: url(../pics/viivakuvio.svg);
+    --feedbackpage-stripes: url(../pics/viivakuvio.svg);
+    --feedbackpage-stripes-pos: calc(100% + 41px) calc(100% + 55px);
+
+
+    --vocab-box-bg: var(--dark-color);
+    --vocab-box-text: var(--medium-color);
+    --vocab-box-header: var(--white-color);
+    --vocab-box-link: var(--white-color);
+
+    --welcome-box-bg: var(--medium-color);
+    --welcome-box-text: var(--dark-color);
+
+    --info-box-bg: var(--medium-color);
+    --info-box-text: var(--dark-color);
+    --info-box-arrow: var(--dark-color);
+
+
+    --vocab-box-one-bg: var(--dark-color);
+    --vocab-box-one-text: var(--white-color);
+    --vocab-box-one-arrow: var(--accent-color);
+
+    --welcome-box-one-bg: var(--medium-color);
+    --welcome-box-one-text: var(--dark-color);
+
+    --info-box-one-bg: var(--medium-color);
+    --info-box-one-text: var(--dark-color);
+    --info-box-one-arrow: var(--white-color);
+
+
+    --vocab-bg: var(--white-color);
+    --vocab-text: var(--dark-color);
+    --vocab-link: var(--secondary-dark-color);
+    --vocab-table-border: var(--light-color);
+
+    --sidebar-tab-active-bg: var(--dark-color);
+    --sidebar-tab-active-text: var(--white-color);
+    --sidebar-tab-inactive-bg: var(--secondary-light-color);
+    --sidebar-tab-inactive-text: var(--dark-color);
+    --sidebar-scrollbar-bg: var(--secondary-light-color);
+    --sidebar-scrollbar-thumb: var(--medium-color);
+    --sidebar-search-bg: var(--dark-color);
+    --sidebar-search-text: var(--white-color);
+    --sidebar-search-button-bg: var(--medium-color);
+    --sidebar-search-button-text: var(--dark-color);
+
+
+    --infopage-text: var(--dark-color);
+    --infopage-link: var(--secondary-dark-color);
+
+
+    --feedback-form-bg: var(--medium-color);
+    --feedback-form-text: var(--dark-color);
+    --feedback-form-input: var(--secondary-light-color);
+    --feedback-form-button-bg: var(--dark-color);
+}
