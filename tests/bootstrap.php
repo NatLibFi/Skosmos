@@ -5,8 +5,8 @@ error_reporting(E_ALL);
 // make sure that a SPARQL endpoint is set by an environment variable
 $endpoint = getenv('SKOSMOS_SPARQL_ENDPOINT');
 if (!$endpoint) {
-    // default to Fuseki running on localhost:13030 as provided by init_fuseki.sh
-    putenv('SKOSMOS_SPARQL_ENDPOINT=http://localhost:13030/skosmos-test/sparql');
+    // default to Fuseki running on localhost:9030 as provided by init_fuseki.sh
+    putenv('SKOSMOS_SPARQL_ENDPOINT=http://localhost:9030/skosmos/sparql');
 }
 
 # Allow running git commands in the php-actions/phpunit container
