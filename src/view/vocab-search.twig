@@ -9,7 +9,7 @@
       <div class="col-md-8 ps-3" id="main-content">
         <div class="p-5 pt-4">
           <div class="search-count {% if limit_type or limit_parent or limit_group or limit_scheme %}search-limited{% endif %}">
-            <p class="py-2"><span class="fw-bold">{{ search_count }} results for</span> '{{ term }}'</p>
+            <p class="py-2"><span class="fw-bold">{{ "%search_count% results for '%term%'" | trans({'%search_count%': search_count, '%term%' : term}) }}</span></p>
           </div>
   	      {% include "search-results.inc" %}
         </div>
