@@ -78,3 +78,25 @@ jobs:
 
     - name: Publish code coverage to Codecov
       uses: codecov/codecov-action@v3
+
+  cypress-test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Start up containers
+      run: cd tests; ./init_containers.sh
+
+    - name: Install Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+
+    - name: Install JavaScript dependencies
+      run: npm install
+
+    - name: Run Cypress tests
+      run: npx cypress run
