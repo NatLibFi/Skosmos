@@ -17,3 +17,5 @@ services:
       - type: bind
         source: testconfig.ttl
         target: /var/www/html/config.ttl
+    environment:
+      SKOSMOS_SPARQL_ENDPOINT: http://fuseki-cache:80/skosmos/sparql
