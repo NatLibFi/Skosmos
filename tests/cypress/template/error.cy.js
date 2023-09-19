@@ -5,6 +5,6 @@ describe('Error page', () => {
     // go to a non-existing page
     cy.visit('/404', {failOnStatusCode: false})
     // check that the page contains 404 error code
-    cy.get('.alert h3').invoke('text').should('contain', '404 Error') 
+    cy.get('.alert span').invoke('text').should('contain', '404 Error')
   })
 })

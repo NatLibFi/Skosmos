@@ -22,7 +22,7 @@
 
 :config a skosmos:Configuration ;
     # SPARQL endpoint defaults to $SKOSMOS_SPARQL_ENDPOINT environment var
-    # skosmos:sparqlEndpoint <http://localhost:13030/skosmos-test/sparql> ;
+    # skosmos:sparqlEndpoint <http://localhost:9030/skosmos/sparql> ;
     # sparql-query extension, or "Generic" for plain SPARQL 1.1
     # set to "JenaText" instead if you use Fuseki with jena-text index
     # skosmos:sparqlDialect "JenaText" ;
@@ -34,7 +34,7 @@
     # customize the service name
     skosmos:serviceName "Skosmos being tested" ;
     # customize the base element. Set this if the automatic base url detection doesn't work. For example setups behind a proxy.
-    skosmos:baseHref "http://tests.localhost/Skosmos/" ;
+    #skosmos:baseHref "http://localhost/Skosmos/" ;
     # interface languages available, and the corresponding system locales
     skosmos:languages ( [ rdfs:label "en" ; rdf:value "en_GB.utf8" ]
                         [ rdfs:label "fi" ; rdf:value "fi_FI.utf8" ]
@@ -177,6 +177,8 @@
 	skosmos:fullAlphabeticalIndex "true";
 	skosmos:explicitLanguageTags "true";
 	skosmos:defaultSidebarView "groups";
+	skosmos:defaultConceptSidebarView "groups";
+	skosmos:sidebarViews ( "alphabetical" "hierarchy" "groups" );
 	skosmos:showTopConcepts "false";
     skosmos:hierarchyProperty isothes:broaderGeneric;
 	skosmos:sparqlGraph <http://www.skosmos.skos/testdiff/> ;

@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+  fuseki:
+    extends:
+      file: ../dockerfiles/docker-compose.yml
+      service: fuseki
+  fuseki-cache:
+    extends:
+      file: ../dockerfiles/docker-compose.yml
+      service: fuseki-cache
+  skosmos:
+    extends:
+      file: ../dockerfiles/docker-compose.yml
+      service: skosmos
+    volumes:
+      - type: bind
+        source: testconfig.ttl
+        target: /var/www/html/config.ttl
