@@ -10,6 +10,8 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
     private $config;
     /** @var GlobalConfig */
     private $configWithDefaults;
+    /** @var GlobalConfig */
+    private $configWithBaseHref;
 
     protected function setUp(): void
     {
@@ -17,6 +19,7 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
         $this->assertNotNull($this->config->getCache());
         $this->assertNotNull($this->config->getGraph());
         $this->configWithDefaults = new GlobalConfig('/../../tests/testconfig-fordefaults.ttl');
+        $this->configWithBaseHref = new GlobalConfig('/../../tests/testconfig-basehref.ttl');
     }
 
     // --- tests for values that are overriding default values
@@ -53,7 +56,7 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
 
     public function testGetBaseHref()
     {
-        $this->assertEquals("http://tests.localhost/Skosmos/", $this->config->getBaseHref());
+        $this->assertEquals("http://tests.localhost/Skosmos/", $this->configWithBaseHref->getBaseHref());
     }
 
     public function testGetLanguages()

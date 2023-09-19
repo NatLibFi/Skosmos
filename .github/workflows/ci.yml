@@ -24,8 +24,8 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Start up Fuseki
-      run: cd tests; ./init_fuseki.sh
+    - name: Start up containers
+      run: cd tests; ./init_containers.sh
     
     - name: Cache Composer dependencies
       uses: actions/cache@v3
