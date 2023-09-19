@@ -16,8 +16,10 @@
         <label class="form-label" for="vocab-select">Vocabulary</label> {# translation should be added, currently doesn't exist #}
         <div class="select-wrapper">
           <select class="form-select" id="vocab-select" name="vocab">
-            <option value="">{{ 'Not to a specific vocabulary' | trans }}</option>
-            {% for option in vocabList %}<option value="{{ option.id }}">{{ option.title }}</option>{% endfor %}
+            <option value="" {% if not request.vocab %}selected{% endif %}>{{ 'Not to a specific vocabulary' | trans }}</option>
+            {% for option in vocabList %}
+              <option value="{{ option.id }}" {% if request.vocab.id == option.id %}selected{% endif %}>{{ option.title }}</option>
+            {% endfor %}
           </select>
         </div>
       </div>
@@ -39,7 +41,6 @@
       </div>
 
       <div>
-        <p>{{ feedback_sent }}</p>
         <span>* {{ 'Value is required and can not be empty' | trans }}</span>
         {{ honeypot.generate('item-description', 'user-captcha')|raw }}
         <button type="submit" class="btn btn-primary" id="submit-feedback">{{ 'Send feedback' | trans }}</button>
