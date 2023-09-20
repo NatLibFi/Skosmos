@@ -27,6 +27,8 @@ services:
     container_name: skosmos-fuseki-cache
     hostname: fuseki-cache
     image: varnish
+    security_opt:
+      - seccomp:unconfined
     ports:
       - '9031:80'
     volumes:
