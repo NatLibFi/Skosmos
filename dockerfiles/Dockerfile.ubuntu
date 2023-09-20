@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 COPY package.json ./
 
 # install node.js dependencies e.g. Vue (but not the development dependencies)
-RUN npm install --omit=dev
+RUN npm install --omit=dev --ignore-scripts
 
 # Stage 1: runtime image
 FROM ubuntu:22.04
