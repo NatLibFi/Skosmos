@@ -132,9 +132,12 @@ msgstr "Sisällön kieli"
 msgid "Download this concept in SKOS format:"
 msgstr "Lataa tämä käsite:"
 
+msgid "Vocabulary"
+msgstr "Sanasto"
+
 #: /tmp/cache/587c830e6b9a0/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:144
 msgid "E-mail:"
-msgstr "Sähköpostiosoite:"
+msgstr "Sähköpostiosoite"
 
 #: /tmp/cache/587c830e6b9a0/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:220
 msgid "Enter search term"
@@ -206,11 +209,11 @@ msgstr "Ladataan sisältöä"
 
 #: /tmp/cache/587c830e6b9a0/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:152
 msgid "Message:"
-msgstr "Viesti:"
+msgstr "Viesti"
 
 #: /tmp/cache/587c830e6b9a0/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:136
 msgid "Name:"
-msgstr "Nimi:"
+msgstr "Nimi"
 
 #: /tmp/cache/587c830e6b9a0/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:23
 msgid "No results"
@@ -848,7 +851,7 @@ msgid "Sidebar listing: list and traverse vocabulary contents by a criterion"
 msgstr "Sivupalkin lista: listaa ja selaa käsitteitä eri kriteerien mukaan"
 
 msgid "Subject:"
-msgstr "Aihe:"
+msgstr "Aihe"
 
 msgid "Write a subject"
 msgstr "Kirjoita aihe"
