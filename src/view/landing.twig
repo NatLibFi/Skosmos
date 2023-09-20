@@ -4,12 +4,12 @@
 <div class="col-md-7">
   <div class="px-4 py-4 bg-medium" id="vocabulary-list">
     {% if request.vocabList|length == 0 %}
-    <h2 class="fs-2 fw-bold">No vocabularies on the server!</h2>
+    <h2 class="fs-2 fw-bold">{{ "No vocabularies on the server!" | trans }}</h2>
     {% else %}
       {% if category_label %}
       <h2 class="fs-2 fw-bold py-3">{{ category_label }}</h2>
       {% else %}
-      <h2 class="fs-2 fw-bold py-3">Available vocabularies and ontologies</h2>
+      <h2 class="fs-2 fw-bold py-3">{{ "Available vocabularies and ontologies" | trans }}</h2>
       {% endif %}
       {% for vocabClassName,vocabArray in request.vocabList %}
       <div class="vocab-category border-top border-dark-top">
