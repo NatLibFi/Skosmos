@@ -141,7 +141,7 @@ msgid "Vocabulary"
 msgstr "Sátneráju"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:144
-msgid "E-mail:"
+msgid "E-mail"
 msgstr "E-poasta"
 
 #: /tmp/cache/587c83c09abaa/9a/9a6d69d72b35f38585477d2f25d50cacf270791aa84e4d523f237566dd428822.php:220
@@ -213,11 +213,11 @@ msgid "Loading more items"
 msgstr "Sisdoallu luđejuvvo"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:152
-msgid "Message:"
+msgid "Message"
 msgstr "Dieđáhus"
 
 #: /tmp/cache/587c83c09abaa/4a/4a8733799c4f4aa865ece4715881ffcbef92985ed08edc2acd445e7b0c129fab.php:136
-msgid "Name:"
+msgid "Name"
 msgstr "Namma"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:23
@@ -841,7 +841,7 @@ msgstr "Ohcanbohtosat"
 msgid "Sidebar listing: list and traverse vocabulary contents by a criterion"
 msgstr "Siidobielkká listu: ordne ja bláđe doahpagiid sierra kriteraid mielde. "
 
-msgid "Subject:"
+msgid "Subject"
 msgstr "Fáddá"
 
 msgid "Write a subject"
