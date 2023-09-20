@@ -1,3 +1,13 @@
+# Stage 0: install Node dependencies
+FROM node:18-alpine AS npm-installer
+
+WORKDIR /usr/src/app
+COPY package.json ./
+
+# install node.js dependencies e.g. Vue (but not the development dependencies)
+RUN npm install --omit=dev
+
+# Stage 1: runtime image
 FROM ubuntu:22.04
 
 LABEL maintainer="National Library of Finland"
@@ -6,7 +16,6 @@ LABEL description="A Docker image for Skosmos with Apache httpd."
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-# git is necessary for some composer packages e.g. davidstutz/bootstrap-multiselect
 RUN apt-get update && apt-get install -y \
     apache2 \
     curl \
@@ -76,6 +85,8 @@ RUN php composer.phar install --no-dev --no-autoloader
 COPY . /var/www/html
 RUN php composer.phar install --no-dev
 
+# install Node modules (from npm-installer stage)
+COPY --from=npm-installer /usr/src/app/node_modules /var/www/html/node_modules
 
 # Configure Skosmos
 COPY dockerfiles/config/config-docker.ttl /var/www/html/config.ttl
