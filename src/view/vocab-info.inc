@@ -1,10 +1,10 @@
 <div class="col-md-8" id="main-content"> <!-- id for partial page load -->
   <div class="bg-light py-5 px-5" id="vocab-info">
-    <h2 class="fw-bold fs-3 py-4">Vocabulary information</h2>
+    <h2 class="fw-bold fs-3 py-4">{{ "Vocabulary information" | trans }}</h2>
     {% set vocabInfo = vocab.info(request.contentLang) %}
     {% if not vocabInfo %}
     <div class="alert alert-danger" role="alert">
-        Error: Failed to retrieve vocabulary information!
+        {{ "Error: Failed to retrieve vocabulary information!" | trans }}
     </div>
     {% else %}
     <table class="vocab-info-literals">
@@ -12,7 +12,7 @@
         {% for key, values in vocabInfo %}
         {% set keytrans = key %}
         <tr>
-          <td class="main-table-label fw-bold">{{ keytrans }}</td>
+          <td class="main-table-label fw-bold">{{ keytrans | trans }}</td>
           <td class="align-middle">
             {% for val in values %}
             <div class="property-value-wrapper">
@@ -53,7 +53,7 @@
     {% if vocab.config.dataURLs %}
     {% apply spaceless %}
     <div class="download-links">
-      <span class="versal">Download this vocabulary:</span>
+      <span class="versal">{{ "Download this vocabulary:" | trans }}</span>
         {% if 'application/rdf+xml' in vocab.config.dataURLs|keys %}
           <a href="rest/v1/{{ request.vocabid }}/data?format=application/rdf%2Bxml">RDF/XML</a>
         {% endif %}
