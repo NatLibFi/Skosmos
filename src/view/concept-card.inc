@@ -183,7 +183,7 @@
 
   {% else %}
   <div class="alert alert-danger">
-    <p>{% trans %}Error: Term "{{ term }}" not found in vocabulary!{% endtrans %}</p>
+    <p>{% trans %}Error: Term %term% not found in vocabulary!{% endtrans %}</p>
   </div>
   {% endif %}
   <!-- appendix / concept mapping properties -->
