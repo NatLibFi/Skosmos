@@ -15,7 +15,6 @@ const resourceCountsApp = Vue.createApp({
         return data.json()
       })
       .then(data => {
-        console.log('resource count', data)
         this.concepts = data.concepts
         this.subTypes = data.subTypes
         this.conceptGroups = data.conceptGroups

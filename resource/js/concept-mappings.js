@@ -17,7 +17,6 @@ const conceptMappingsApp = Vue.createApp({
           return data.json()
         })
         .then(data => {
-          console.log(data.mappings)
           this.mappings = this.group_by(data.mappings, 'typeLabel')
         })
     },

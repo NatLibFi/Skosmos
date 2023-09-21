@@ -25,7 +25,6 @@ const tabAlphaApp = Vue.createApp({
             return data.json()
           })
           .then(data => {
-            console.log(data)
             this.indexLetters = data.indexLetters
             this.loadConcepts(this.indexLetters[0])
           })
@@ -38,7 +37,6 @@ const tabAlphaApp = Vue.createApp({
           return data.json()
         })
         .then(data => {
-          console.log(data)
           this.indexConcepts = data.indexConcepts
         })
     }
@@ -122,7 +120,6 @@ tabAlphaApp.component('tab-alpha', {
       } else if (newJsonLD) {
         // insert after the first JS script as it is in the template
         const elemBefore = document.querySelector('script')
-        console.log(elemBefore)
         if (elemBefore) {
           elemBefore.parentNode.insertBefore(newJsonLD, elemBefore.nextSibling)
         }
