@@ -33,7 +33,7 @@ const tabAlphaApp = Vue.createApp({
     },
     loadConcepts (letter) {
       this.selectedLetter = letter
-      fetch('https://api.finto.fi/rest/v1/' + SKOSMOS.vocab + '/index/' + this.selectedLetter + '?lang=' + SKOSMOS.lang + '&limit=50')
+      fetch('rest/v1/' + SKOSMOS.vocab + '/index/' + this.selectedLetter + '?lang=' + SKOSMOS.lang + '&limit=50')
         .then(data => {
           return data.json()
         })
