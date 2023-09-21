@@ -66,11 +66,11 @@
           {% if property.getSubPropertyOf != 'skos:hiddenLabel' %}
           <tr class="{% if property.type == 'dc:isReplacedBy' %}replaced-by {% endif%}property prop-{{property.ID}}">
             <td class="main-table-label">
-                {% if custom_labels[property.type]['label'][request.lang] %}
+                {%- if custom_labels[property.type]['label'][request.lang] -%}
                   {{ custom_labels[property.type]['label'][request.lang] }}
-                {% else %}
+                {%- else -%}
                   {{ property.label }}
-                {% endif %}
+                {%- endif -%}
             </td>
           {% for propval in property.values %} {# loop through ConceptPropertyValue objects #}
           {% if not loop.first %}</tr><tr><td class="main-table-label"></td>{% endif %}
@@ -86,7 +86,7 @@
                     <div class="reified-tooltip tooltip-html-content">{% for key, val in propval.reifiedPropertyValues %}<p><span class="tooltip-prop">{{ key }}</span>: <a href="{{ val.uri | link_url(val.exvocab, request.lang, 'page', request.contentLang) }}">{{ val.label(request.contentLang) }}</a></p>{% endfor %}</div>
                   </span>
                   {% else %}
-                      <a href="{{ propval.uri | link_url(propval.vocab, request.lang, 'page', request.contentLang) }}">{% if propval.notation %}<span class="versal">{{ propval.notation }} </span>{% endif %} {{ propval.label(request.contentLang) }}</a>
+                      <a href="{{ propval.uri | link_url(propval.vocab, request.lang, 'page', request.contentLang) }}">{% if propval.notation %}<span class="versal">{{ propval.notation }} </span>{% endif %}{{ propval.label(request.contentLang) }}</a>
                   {% endif %}
                   {% endif %}
                   {% if propval.label.lang and (propval.label.lang != request.contentLang or explicit_langcodes) %}<span class="versal"> ({{ propval.label(request.contentLang).lang }})</span>{% endif %}
@@ -161,8 +161,8 @@
         </td>
       </tr>
       {% endif %}
-      <tr>
-        <td class="main-table-label"><h3>URI</h3></td>
+      <tr class="prop-uri">
+        <td class="main-table-label">URI</td>
         <td class="align-middle">{{ concept.uri }}</td>
       </tr>
       </tbody>
