@@ -13,7 +13,6 @@ const termCountsApp = Vue.createApp({
         return data.json()
       })
       .then(data => {
-        console.log('term count', data)
         this.languages = data.languages
       })
   },

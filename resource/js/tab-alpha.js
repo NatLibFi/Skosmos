@@ -25,7 +25,6 @@ const tabAlphaApp = Vue.createApp({
             return data.json()
           })
           .then(data => {
-            console.log(data)
             this.indexLetters = data.indexLetters
             this.loadConcepts(this.indexLetters[0])
           })
@@ -33,12 +32,11 @@ const tabAlphaApp = Vue.createApp({
     },
     loadConcepts (letter) {
       this.selectedLetter = letter
-      fetch('https://api.finto.fi/rest/v1/' + SKOSMOS.vocab + '/index/' + this.selectedLetter + '?lang=' + SKOSMOS.lang + '&limit=50')
+      fetch('rest/v1/' + SKOSMOS.vocab + '/index/' + this.selectedLetter + '?lang=' + SKOSMOS.lang + '&limit=50')
         .then(data => {
           return data.json()
         })
         .then(data => {
-          console.log(data)
           this.indexConcepts = data.indexConcepts
         })
     }
@@ -122,7 +120,6 @@ tabAlphaApp.component('tab-alpha', {
       } else if (newJsonLD) {
         // insert after the first JS script as it is in the template
         const elemBefore = document.querySelector('script')
-        console.log(elemBefore)
         if (elemBefore) {
           elemBefore.parentNode.insertBefore(newJsonLD, elemBefore.nextSibling)
         }
