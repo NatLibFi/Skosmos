@@ -32,8 +32,8 @@
     {%~ if property.type in PreferredProperties or property.type in concept.vocab.config.additionalSearchProperties  or property.type in concept.vocab.config.hierarchyProperty ~%}
     <li class="list-group-item px-0 py-1">
       <span class="property-click skosmos-tooltip-wrapper skosmos-tooltip t-top" data-title="{{ property.description }}">
-  {%- if property.type == 'skos:broader' -%}<i class="property-hover fa-solid fa-arrow-turn-up"></i>
-  {%- elseif property.type == 'skos:narrower' -%}<i class="property-hover fa-solid fa-arrow-turn-down"></i>
+  {%- if property.type == 'skos:broader' -%}<i class="property-hover fa-solid fa-arrow-turn-up fa-rotate-270"></i>
+  {%- elseif property.type == 'skos:narrower' -%}<i class="property-hover fa-solid fa-arrow-turn-up fa-rotate-90"></i>
   {%- elseif property.type == 'skos:altLabel' -%}<i class="property-hover fa-solid fa-arrow-right"></i>
   {%- elseif property.type == 'skos:related' -%}<i class="property-hover fa-solid fa-cloud"></i>
   {%- elseif property.type == 'skosmos:memberOf' -%}<i class="property-hover fa-solid fa-layer-group"></i>
@@ -114,7 +114,7 @@
     <li class="list-group-item px-0 py-1">
       <span class="URI-icon">URI</span>
       <span class="search-result-uri">{{ concept.uri }}</span>
-      <i class="fa-solid fa-copy"></i> <!-- no copy to clipboard functionality yet -->
+      <i class="fa-regular fa-copy"></i> <!-- no copy to clipboard functionality yet -->
     </li>
 {%~ endif ~%}
   </ul>
