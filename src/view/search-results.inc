@@ -75,7 +75,7 @@
     <span class="property-click skosmos-tooltip-wrapper skosmos-tooltip t-top" data-title="foreign prefLabel help"><i class="property-hover fa-solid fa-globe"></i></span>
     {%-  for langstring, labels in foreignLabels  %}
       {%- for label in labels.prefLabel|default([])|merge(labels.altLabel|default([])) %}
-    <span class="{% if label.type == 'skos:prefLabel' %} prefLabel{% elseif label.type == 'skos:altLabel' %} replaced{% endif %} proplabel">{{ label }}</span>{%- if label.lang %}({{ label.lang }}){% endif -%}{%- if loop.last == false %}, {% endif -%}
+    <span class="{% if label.type == 'skos:prefLabel' %}prefLabel{% elseif label.type == 'skos:altLabel' %}replaced{% endif %} proplabel">{{ label }}</span>{%- if label.lang %} ({{ label.lang }}){% endif -%}{%- if loop.last == false %}, {% endif -%}
       {% endfor -%}
       {%- if loop.last == false %}, {% endif -%}
     {% endfor -%}
@@ -112,7 +112,7 @@
 {% endfor -%}
 {%~ if concept.uri ~%}
     <li class="list-group-item px-0 py-1">
-      <span class="URI-icon">URI</span>
+      <span class="uri-icon">URI</span>
       <span class="search-result-uri">{{ concept.uri }}</span>
       <i class="fa-regular fa-copy"></i> <!-- no copy to clipboard functionality yet -->
     </li>

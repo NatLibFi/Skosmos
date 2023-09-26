@@ -557,7 +557,7 @@ body {
     border-top: 1px solid var(--vocab-table-border);
   }
 
-  .search-result-term {
+  .search-result-term a {
     font-family: var(--font-family-heading);
     font-size: 1.5rem;
     text-decoration: none;
@@ -571,7 +571,17 @@ body {
   .uri-icon {
     display: inline-block;
     width: 20px;
-    font-size: 10px;
+    font-size: 0.75rem;
+    text-align: center;
+  }
+  
+  .prefLabel.proplabel {
+    font-weight: bold;
+    color: var(--secondary-dark-color);
+  }
+  
+  .replaced {
+    font-style: italic;  
   }
 
   /***** Main container infopage & feedbackpage *****/
