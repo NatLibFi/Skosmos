@@ -1,5 +1,5 @@
 {% extends "base-template.twig" %}
-{% block title %}: {{ vocab.title(request.contentLang) }}{% endblock %}
+{% block title %}: {{ vocab.shortName(request.contentLang) }} '{{ term }}'{% endblock %}
 {% block content %}
 <main class="searchpage py-5" id="main-container" >
   <div class="container">
