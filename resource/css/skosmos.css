@@ -368,7 +368,6 @@ body {
   /***** Main container vocabpage & termpage & searchpage & searchpage multi vocab *****/
   #main-container.vocabpage, #main-container.termpage, #main-container.searchpage, #main-container.searchpage-multi-vocab {
     background-color: var(--main-bg-2);
-    padding: 1rem 0;
   }
 
   #main-container.vocabpage a, #main-container.termpage a, #main-container.searchpage a, #main-container.searchpage-multi-vocab a {
@@ -379,6 +378,7 @@ body {
 
   #sidebar, #main-content {
     background-color: var(--vocab-bg);
+    margin-left: 1rem;
   }
 
   /*** Sidebar termpage & vocabpage ***/
@@ -553,6 +553,13 @@ body {
   }
 
   /***** Main content searchpage & searchpage multi vocab *****/
+    span.nb {
+    background-color: #FAE196;
+    font-size: 1.25rem;
+    padding-left: 0.4rem;
+    margin-right: 0.4rem;
+  }
+
   .search-result {
     border-top: 1px solid var(--vocab-table-border);
   }
