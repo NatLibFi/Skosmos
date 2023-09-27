@@ -562,6 +562,7 @@ body {
 
   .search-result {
     border-top: 1px solid var(--vocab-table-border);
+    margin-top: 2.5rem;
   }
 
   .search-result-term a {

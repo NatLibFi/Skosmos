@@ -5,7 +5,7 @@
 
 {%~ for concept in search_results ~%} {# loop through the hits #}
 
-<div class="search-result mt-5 pt-1">
+<div class="search-result pt-1">
   <div class="search-result-term">
   {%- if vocab == '' and concept.vocab.id is defined %}<span class="fw-bold" data-title="{{ concept.vocabTitle }}">{{ concept.shortName }}: </span>{% endif -%}
   {%- if concept.foundBy %} {# hit has been found through an alt/hidden/another language label #}
