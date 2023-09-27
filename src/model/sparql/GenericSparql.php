@@ -2333,14 +2333,17 @@ EOQ;
             $deprecatedVars = '?replacedBy ?deprecated ?replacingLabel';
             $deprecatedOptions = <<<EOQ
 UNION {
-    ?concept dc:isReplacedBy ?replacedBy ; dc:modified ?date2 .
+    ?concept owl:deprecated True; dc:modified ?date2 .
+    BIND(True as ?deprecated)
     BIND(COALESCE(?date2, ?date) AS ?date)
     OPTIONAL {
-        ?replacedBy skos:prefLabel ?replacingLabel .
-        FILTER (langMatches(lang(?replacingLabel), '$lang'))
+        ?concept dc:isReplacedBy ?replacedBy .
+        OPTIONAL {
+            ?replacedBy skos:prefLabel ?replacingLabel .
+            FILTER (langMatches(lang(?replacingLabel), '$lang'))
+        }
     }
 }
-OPTIONAL { ?concept owl:deprecated ?deprecated . }
 EOQ;
         }
 
@@ -2386,6 +2389,11 @@ EOQ;
                 }
             }
 
+            if (isset($row->deprecated)) {
+                $concept['deprecated'] = $row->deprecated->getValue();
+            } else {
+                $concept['deprecated'] = false;
+            }
             if (isset($row->replacedBy)) {
                 $concept['replacedBy'] = $row->replacedBy->getURI();
             }

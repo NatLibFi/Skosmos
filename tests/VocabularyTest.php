@@ -478,8 +478,8 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
     {
         $vocab = $this->model->getVocabulary('changes');
         $changeList = $vocab->getChangeList('dc:created', 'en', 0, 5);
-        $expected = array('uri' => 'http://www.skosmos.skos/changes/d3', 'prefLabel' => 'Hurr Durr', 'date' => DateTime::__set_state(array('date' => '2010-02-12 10:26:39.000000', 'timezone_type' => 3, 'timezone' => 'UTC')));
-        $this->assertEquals($expected, $changeList[1]);
+        $expected = array('uri' => 'http://www.skosmos.skos/changes/d3', 'prefLabel' => 'Hurr Durr', 'date' => DateTime::__set_state(array('date' => '2010-02-12 10:26:39.000000', 'timezone_type' => 3, 'timezone' => 'UTC')), 'deprecated' => false);
+        $this->assertEquals($expected, $changeList[2]);
     }
 
     /**
