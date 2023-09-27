@@ -24,7 +24,6 @@
       {%~ if concept.notation  %}<span class="notation">{{ concept.notation }}&nbsp;</span>{%  endif ~%}
     <a class="prefLabel conceptlabel" href="{%~ if "isothes:ConceptGroup" in concept.type ~%}{{ concept.uri | link_url(concept.vocab, request.lang, 'page') }}{%~ elseif concept.exvocab is defined%}{{ concept.uri | link_url(concept.exvocab,concept.contentLang) }}{%~ else ~%}{{ concept.uri | link_url(concept.vocab,request.lang,'page',concept.contentLang) }}{%~ endif ~%}">{{ concept.label(request.contentLang) }}</a>{%~ if explicit_langcodes or request.queryparam('anylang') ~%} ({{ concept.contentLang }}){%~ endif ~%}
   {% endif -%}
-  {%- if concept.type == 'skosext:DeprecatedConcept' %}<span class="deprecated-alert">"deprecated"</span>{% endif -%}
   </div>
   <ul class="list-group">
   {% set conceptProperties = concept.properties %}
@@ -41,16 +40,8 @@
   {%- else -%}<i class="property-hover fa-solid fa-globe"></i>
   {%- endif -%}
       </span>
-    {%~ set previous = false ~%}
     {%- for propval in property.values -%} {# loop through ConceptPropertyValue objects #}
       {%~ set outerLast = loop.last ~%}
-      {%- if propval.SubMembers ~%} {# if property is a group concept that has sub properties #}
-        {%- for sub_member in propval.SubMembers ~%}
-          {%~ if previous != sub_member.label ~%}{{ sub_member.label }}{%- if sub_member.lang or explicit_langcodes ~%} ({{ sub_member.lang }}){%~ endif -%}{%- if not outerLast %}, {% endif %}
-          {%~ endif ~%}
-          {%~ set previous = sub_member.label ~%}
-        {%~ endfor -%}
-      {%- else ~%}
         {%- if propval.uri ~%} {# resources with URI #}
           {%- if propval.label ~%}
             {%- if propval.exvocab and propval.exvocab != propval.vocab ~%}{# if the property is located in a another vocabulary #}{{ propval.label }}
@@ -61,7 +52,6 @@
         {%~ endif -%}
         {%~ else ~%} {# Literals (no URI), eg. alternative labels as properties #}
         <span class="{%~ if propval.type == 'skos:altLabel' %}replaced {% endif ~%}">{{ propval.label }}{%- if not loop.last -%}, {% endif %}</span>
-        {%~ endif %}
       {%~ endif %}
     {%- endfor %}
     </li>
