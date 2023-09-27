@@ -51,7 +51,7 @@
           {%- if propval.lang and (propval.lang != request.lang) or explicit_langcodes %} ({{ propval.lang }}){%~ endif -%}{%- if not loop.last ~%}, {%~ endif ~%}
         {%~ endif -%}
         {%~ else ~%} {# Literals (no URI), eg. alternative labels as properties #}
-        <span class="{%~ if propval.type == 'skos:altLabel' %}replaced {% endif ~%}">{{ propval.label }}{%- if not loop.last -%}, {% endif %}</span>
+        <span class="{%~ if propval.type == 'skos:altLabel' %}altLabel proplabel{% endif ~%}">{{ propval.label }}{%- if not loop.last -%}, {% endif %}</span>
       {%~ endif %}
     {%- endfor %}
     </li>
@@ -63,7 +63,7 @@
     <span class="skosmos-tooltip" data-title="foreign prefLabel help"><i class="property-hover fa-solid fa-globe"></i></span>
     {%-  for langstring, labels in foreignLabels  ~%}
       {%~ for label in labels.prefLabel|default([])|merge(labels.altLabel|default([])) ~%}
-    <span class="{% if label.type == 'skos:prefLabel' %}prefLabel{% elseif label.type == 'skos:altLabel' %}replaced{% endif %} proplabel">{{ label }}</span>{%~ if label.lang %} ({{ label.lang }}){% endif ~%}{%- if loop.last == false %}, {% endif -%}
+    <span class="{% if label.type == 'skos:prefLabel' %}prefLabel{% elseif label.type == 'skos:altLabel' %}altLabel{% endif %} proplabel">{{ label }}</span>{%~ if label.lang %} ({{ label.lang }}){% endif ~%}{%- if loop.last == false %}, {% endif -%}
       {%~ endfor ~%}
       {%- if loop.last == false -%}, {%- endif -%}
     {%~ endfor ~%}

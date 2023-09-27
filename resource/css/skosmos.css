@@ -587,7 +587,7 @@ body {
     color: var(--secondary-dark-color);
   }
   
-  .replaced {
+  .altLabel.proplabel {
     font-style: italic;  
   }
 
