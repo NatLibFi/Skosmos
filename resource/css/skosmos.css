@@ -553,13 +553,6 @@ body {
   }
 
   /***** Main content searchpage & searchpage multi vocab *****/
-    span.nb {
-    background-color: #FAE196;
-    font-size: 1.25rem;
-    padding-left: 0.4rem;
-    margin-right: 0.4rem;
-  }
-
   .search-result {
     border-top: 1px solid var(--vocab-table-border);
     margin-top: 2.5rem;

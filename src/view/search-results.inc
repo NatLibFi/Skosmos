@@ -33,7 +33,7 @@
       <span class="skosmos-tooltip" data-title="{{ property.description }}">
   {%- if property.type == 'skos:broader' -%}<i class="property-hover fa-solid fa-arrow-turn-up fa-rotate-270"></i>
   {%- elseif property.type == 'skos:narrower' -%}<i class="property-hover fa-solid fa-arrow-turn-up fa-rotate-90"></i>
-  {%- elseif property.type == 'skos:altLabel' -%}<i class="property-hover fa-solid fa-arrow-right"></i>
+  {%- elseif property.type == 'skos:altLabel' -%}<i class="property-hover fa-solid fa-ban"></i>
   {%- elseif property.type == 'skos:related' -%}<i class="property-hover fa-solid fa-cloud"></i>
   {%- elseif property.type == 'skosmos:memberOf' -%}<i class="property-hover fa-solid fa-layer-group"></i>
   {%- elseif property.type == 'skos:note' -%}<i class="property-hover fa-solid fa-note-sticky"></i>
