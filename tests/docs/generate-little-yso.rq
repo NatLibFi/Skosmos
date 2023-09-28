@@ -1,0 +1,115 @@
+PREFIX allars: <http://www.yso.fi/onto/allars/>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX isothes: <http://purl.org/iso25964/skos-thes#>
+PREFIX koko: <http://www.yso.fi/onto/koko/>
+PREFIX lcsh: <http://id.loc.gov/authorities/subjects>
+PREFIX ns3: <http://metadataregistry.org/uri/profile/regap/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdau: <http://rdaregistry.info/Elements/u/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX skosext: <http://purl.org/finnonto/schema/skosext#>
+PREFIX skosxl: <http://www.w3.org/2008/05/skos-xl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX ysa: <http://www.yso.fi/onto/ysa/>
+PREFIX yso: <http://www.yso.fi/onto/yso/>
+PREFIX yso-meta: <http://www.yso.fi/onto/yso-meta/>
+PREFIX ysometa: <http://www.yso.fi/onto/yso-meta/2007-03-02/>
+
+CONSTRUCT {
+    ?c ?p ?o .
+    ?c2 ?p2 ?o2 .
+    #?c ?rel ?c2 .
+    ?type ?typePred ?typeLiteral .
+    ?type2 ?typePred2 ?typeLiteral2 .
+    <http://www.yso.fi/onto/yso/p26593> ?cP ?cO .
+    ?coll ?collP ?collO .
+    ?coll2 ?coll2P ?coll2O .
+    ?coll a ?collType .
+    ?coll2 a ?collType2 .
+    ?collType ?collTypePred ?collTypeLiteral .
+    ?collType2 ?collTypePred2 ?collTypeLiteral2 .
+    ?skosxlLabelX ?skosxlPropX ?skosxlLabelObjectX .
+    ?skosxlLabelY ?skosxlPropY ?skosxlLabelObjectY .
+    #?startConcept skos:broader* ?endConcept .
+    #?startConceptS ?startConceptP ?startConceptO .
+    #?endConceptS ?endConceptP ?endConceptO .
+    ?broaderS ?broaderP ?broaderPO .
+    ?ontS ?ontP ?ontO .
+}
+
+WHERE {
+  GRAPH <http://www.yso.fi/onto/yso/> {
+    {
+      ?whatEver a ?type .
+      ?type ?typePred ?typeLiteral .
+      FILTER(isLiteral(?typeLiteral))
+    }
+    UNION {
+      ?c a skos:Concept .
+      <http://www.yso.fi/onto/yso/p26593> skos:member ?c .
+      ?c ?p ?o .
+    }
+    UNION {
+      ?c a skos:Concept .
+      <http://www.yso.fi/onto/yso/p26593> skos:member ?c .
+      <http://www.yso.fi/onto/yso/p26593> skos:member ?c2 .
+      ?c ?rel ?c2 .
+      ?c2 ?p2 ?o2 .
+      ?c2 a ?type2 .
+      ?type2 ?typePred2 ?typeLiteral2 .
+      FILTER(isLiteral(?typeLiteral2))
+    }
+    UNION {
+      <http://www.yso.fi/onto/yso/p26593> ?cP ?cO .
+    }
+    UNION
+    {
+      <http://www.yso.fi/onto/yso/p26593> skos:member ?c .
+      ?coll skos:member ?c .
+      ?coll ?collP ?collO .
+      ?coll a skos:Collection .
+      ?coll a ?collType .
+      ?collType ?collTypePred ?collTypeLiteral .
+      FILTER(isLiteral(?collTypeLiteral)) 
+    }
+    UNION
+    {
+      <http://www.yso.fi/onto/yso/p26593> skos:member ?c .
+      ?c ?rel ?c2 .
+      ?coll2 skos:member ?c2 .
+      ?coll2 ?coll2P ?coll2O .
+      ?coll2 a skos:Collection .
+      ?coll2 a ?collType2 .
+      ?collType2 ?collTypePred2 ?collTypeLiteral2 .
+      FILTER(isLiteral(?collTypeLiteral2)) 
+    }
+    UNION
+    {
+      <http://www.yso.fi/onto/yso/p26593> skos:member ?cX .
+      ?cX skosxl:prefLabel ?skosxlLabelX .
+      ?skosxlLabelX ?skosxlPropX ?skosxlLabelObjectX .
+    }
+    UNION
+    {
+      <http://www.yso.fi/onto/yso/p26593> skos:member ?c .
+      ?c ?rel ?cY .
+      ?cY skosxl:prefLabel ?skosxlLabelY .
+      ?skosxlLabelY ?skosxlPropY ?skosxlLabelObjectY .
+    }
+    UNION 
+    {
+      <http://www.yso.fi/onto/yso/p26593> skos:member ?startConcept .
+      ?startConcept skos:broader* ?broaderS .
+      ?broaderS ?broaderP ?broaderPO .
+    }
+    UNION 
+    {
+    ?ontS ?ontP ?ontO .
+    ?ontS a skos:ConceptScheme .
+    }
+  }
+}
