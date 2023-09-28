@@ -1,6 +1,6 @@
 # Little YSO for Skosmos testing
 
-To make Skosmos testing easier, the tests utilize the same test data. This data is added to Fuseki, which is running in a Docker container (skosmos-fuseki).
+One of the test vocabularies used for Skosmos tests is called `little-yso`. This is a small subset of concepts related to archaeology that have been extracted from the General Finnish Ontology YSO. YSO is copyrighted by National Library of Finland, Semantic Computing Research Group (SeCo) and The Finnish Terminology Centre TSK. It is used here according to the CC By 4.0 license.
 
 The test data can be found in the directory tests/test-vocab-data/little-yso.ttl, and its configuration is located in the tests/testconfig.ttl file under the section ':test-with-little-yso'.
 
