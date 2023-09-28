@@ -42,7 +42,7 @@
         <h5 class="versal versal-bold">{{day}}</h5>
         {% for concept in concepts %}
           <li><a href="{{ concept.uri | link_url(vocab,request.lang,'page', request.contentLang) }}">
-            {% if concept.replacedBy is defined %}
+            {% if concept.deprecated %}
               <s>{{ concept.prefLabel }}</s>
               {% else %}
               {{ concept.prefLabel }}
