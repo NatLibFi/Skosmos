@@ -112,13 +112,13 @@
     skosmos:alphabeticalListQualifier skos:broader ;
     skosmos:sparqlGraph <http://www.skosmos.skos/test-qualified-broader/> .
 
-:test-with-default-settings a skosmos:Vocabulary, void:Dataset ;
+:test-with-little-yso a skosmos:Vocabulary, void:Dataset ;
 	  dc:title "Pikku-YSO (Arkeologia-ryhmä)"@fi,
       "Lilla YSO (Arkeologi-gruppen)"@sv,
       "Little YSO (Archeology Group)"@en ;
 	  dc:subject :cat_science ;
 	  dc:type mdrtype:ONTOLOGY ;
-	  void:dataDump <http://skosmos.skos/dump/test/test-with-default-settings.ttl> ;
+	  void:dataDump <http://skosmos.skos/dump/test/test-with-little-yso.ttl> ;
 	  void:uriSpace "http://www.yso.fi/onto/yso/";
 	  skos:prefLabel "Test with default settings"@en ;
 	  skosmos:arrayClass isothes:ThesaurusArray ;
@@ -131,7 +131,7 @@
 	  skosmos:shortName "Test short",
 	  "TWDS lyhyt"@fi;
 	  skosmos:hasMultiLingualProperty <http://www.skosmos.skos/multiLingOn>;
-	  skosmos:sparqlGraph <http://www.skosmos.skos/front-tests/> .
+	  skosmos:sparqlGraph <http://www.skosmos.skos/little-yso/> .
 
 :test-qualified-notation a skosmos:Vocabulary, void:Dataset ;
     dc:title "Test qualified alphabetical listing queries (skos:notation)"@en ;
