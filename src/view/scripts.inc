@@ -21,8 +21,9 @@ const SKOSMOS = {
   "pluginParameters": {{ plugin_params|raw }},
   {%- endif %}
   {%- if request.plugins.callbacks ~%}
-  "pluginCallbacks": [{% for function in request.plugins.callbacks %}{% if not loop.first %}, {% endif %}"{{ function }}"{% endfor %}]
+  "pluginCallbacks": [{% for function in request.plugins.callbacks %}{% if not loop.first %}, {% endif %}"{{ function }}"{% endfor %}],
   {%- endif ~%}
+  "activeTab": ""
 }
 </script>
 
@@ -45,6 +46,9 @@ const SKOSMOS = {
 
 <!-- Vue.js -->
 <script src="node_modules/vue/dist/vue.global.js"></script>
+
+<!-- Helper methods shared by Vue.js components -->
+<script src="resource/js/partial-page-load.js"></script>
 
 <!-- Vue.js components -->
 <script src="resource/js/vocab-counts.js"></script>
