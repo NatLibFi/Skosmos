@@ -94,7 +94,7 @@
     <span class="skosmos-tooltip" data-title="concept_types">
       <i class="property-hover fa-solid fa-arrows-to-circle"></i>
     </span>
-      {% for propval in property.values %}{{ propval.label }}{% if loop.last == false %}, {% endif %}{% endfor %}
+    {%- for propval in property.values %}{{ propval.label | trans }}{% if loop.last == false %}, {% endif %}{% endfor %}
 
   </li>
   {%~ endif -%}
