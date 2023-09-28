@@ -11,6 +11,9 @@
 <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" media="screen, print" rel="stylesheet" type="text/css">
 <link href="resource/css/fonts.css" media="screen, print" rel="stylesheet" type="text/css">
 <link href="resource/css/skosmos.css" media="screen, print" rel="stylesheet" type="text/css">
+<link href="resource/fontawesome/css/fontawesome.css" rel="stylesheet">
+<link href="resource/fontawesome/css/solid.css" rel="stylesheet">
+<link href="resource/fontawesome/css/regular.css" rel="stylesheet">
 {% if ServiceCustomCss %}
 <link href="{{ ServiceCustomCss }}" media="screen, print" rel="stylesheet" type="text/css">
 {% endif %}
@@ -18,7 +21,7 @@
 
 <title>{{ ServiceName }}{% block title %}{% endblock %}</title>
 </head>
-<body{% if request.vocabid == '' and request.page != 'feedback' and request.page != 'about' %} class="bg-light frontpage-logo"{% else %} class="bg-medium vocab-{{ request.vocabid }}"{% endif %}>
+<body{% if request.vocabid == '' and request.page != 'feedback' and request.page != 'about' and request.page != 'search' %} class="bg-light frontpage-logo"{% else %} class="bg-medium vocab-{{ request.vocabid }}"{% endif %}>
   <noscript>
     <strong>We're sorry but Skosmos doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
   </noscript>
@@ -62,7 +65,7 @@
       {% endif %}
     </div>
   </header>
-  <main id="main-container" class="py-5{% if request.vocabid == '' or global_search %} frontpage{% elseif concept_uri != '' %} termpage{% elseif request.vocab != '' %} vocabpage{% if list_style %} {{ list_style }}{% endif %}{% endif %}">
+  <main id="main-container" class="{% if request.vocabid == '' or global_search %} frontpage{% elseif concept_uri != '' %} termpage{% elseif request.vocab != '' %} vocabpage{% if list_style %} {{ list_style }}{% endif %}{% endif %}">
     <div class="container">
       <div class="row" tabindex="-1">
       {% block content %}
