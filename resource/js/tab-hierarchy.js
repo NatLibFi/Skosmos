@@ -55,9 +55,8 @@ const tabHierApp = Vue.createApp({
         })
     },
     loadConceptHierarchy () {
-      // using relative url gives 500 error code for some reason
       this.loading = true
-      fetch('https://api.finto.fi/rest/v1/' + SKOSMOS.vocab + '/hierarchy/?uri=' + SKOSMOS.uri + '&lang=' + SKOSMOS.lang)
+      fetch('rest/v1/' + SKOSMOS.vocab + '/hierarchy/?uri=' + SKOSMOS.uri + '&lang=' + SKOSMOS.lang)
         .then(data => {
           return data.json()
         })
