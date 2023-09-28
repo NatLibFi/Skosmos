@@ -572,8 +572,7 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
     {
         $vocab = $this->model->getVocabulary('test');
         $concept = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en');
-        $this->assertInstanceOf('Concept', $concept[0]);
-        $this->assertEquals(1, sizeof($concept));
+        $this->assertInstanceOf('Concept', $concept);
     }
 
     /**

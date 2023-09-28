@@ -10,8 +10,7 @@ class ConceptPropertyValueLiteralTest extends PHPUnit\Framework\TestCase
     {
         $this->model = new Model(new GlobalConfig('/../../tests/testconfig.ttl'));
         $this->vocab = $this->model->getVocabulary('test');
-        $results = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en');
-        $this->concept = reset($results);
+        $this->concept = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en');
     }
 
     /**
@@ -41,8 +40,8 @@ class ConceptPropertyValueLiteralTest extends PHPUnit\Framework\TestCase
     public function testGetLabelThatIsADate()
     {
         $vocab = $this->model->getVocabulary('dates');
-        $concepts = $vocab->getConceptInfo("http://www.skosmos.skos/date/d1", "en");
-        $props = $concepts[0]->getProperties();
+        $concept = $vocab->getConceptInfo("http://www.skosmos.skos/date/d1", "en");
+        $props = $concept->getProperties();
         $propvals = $props['http://www.skosmos.skos/date/ownDate']->getValues();
         $this->assertStringContainsString('8/8/15', $propvals['8/8/15']->getLabel());
     }
@@ -54,8 +53,8 @@ class ConceptPropertyValueLiteralTest extends PHPUnit\Framework\TestCase
     {
         $this->expectWarning();
         $vocab = $this->model->getVocabulary('dates');
-        $concepts = $vocab->getConceptInfo("http://www.skosmos.skos/date/d2", "en");
-        $props = $concepts[0]->getProperties();
+        $concept = $vocab->getConceptInfo("http://www.skosmos.skos/date/d2", "en");
+        $props = $concept->getProperties();
         $propvals = $props['http://www.skosmos.skos/date/ownDate']->getValues();
     }
 
@@ -65,8 +64,8 @@ class ConceptPropertyValueLiteralTest extends PHPUnit\Framework\TestCase
     public function testGetLabelForDatatype()
     {
         $vocab = $this->model->getVocabulary('test');
-        $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en');
-        $props = $concepts[0]->getProperties();
+        $concept = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en');
+        $props = $concept->getProperties();
         $propvals = $props['skos:notation']->getValues();
         $this->assertEquals('NameOfTheDatatype', $propvals['665']->getDatatype());
     }
@@ -77,8 +76,8 @@ class ConceptPropertyValueLiteralTest extends PHPUnit\Framework\TestCase
     public function testGetNotationDatatypeWithoutLabel()
     {
         $vocab = $this->model->getVocabulary('test');
-        $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta128', 'en');
-        $props = $concepts[0]->getProperties();
+        $concept = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta128', 'en');
+        $props = $concept->getProperties();
         $propvals = $props['skos:notation']->getValues();
         $this->assertNull($propvals['testnotation']->getDatatype());
     }
@@ -89,8 +88,8 @@ class ConceptPropertyValueLiteralTest extends PHPUnit\Framework\TestCase
     public function testGetLabelForDatatypeIfNull()
     {
         $vocab = $this->model->getVocabulary('test');
-        $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta126', 'en');
-        $props = $concepts[0]->getProperties();
+        $concept = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta126', 'en');
+        $props = $concept->getProperties();
         $propvals = $props['skos:notation']->getValues();
         $this->assertNull($propvals['12.34']->getDatatype());
     }
@@ -212,7 +211,7 @@ class ConceptPropertyValueLiteralTest extends PHPUnit\Framework\TestCase
     public function testGetXlLabel()
     {
         $voc = $this->model->getVocabulary('xl');
-        $conc = $voc->getConceptInfo('http://www.skosmos.skos/xl/c1', 'en')[0];
+        $conc = $voc->getConceptInfo('http://www.skosmos.skos/xl/c1', 'en');
         $props = $conc->getProperties();
         $vals = $props['skos:altLabel']->getValues();
         $val = reset($vals);

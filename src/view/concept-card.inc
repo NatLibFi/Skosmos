@@ -1,6 +1,4 @@
 <div class="col-md-8" id="main-content"> <!-- id for partial page load -->
-  {% if search_results %}
-    {% for concept in search_results %} {# loop through the hits #}
     <h2 class="visually-hidden">Concept information</h2>
     {% if concept.deprecated %}
     <div class="alert alert-danger">
@@ -179,13 +177,7 @@
         </div>
       </div>
     </div>
-    {% endfor %}
 
-  {% else %}
-  <div class="alert alert-danger">
-    <p>{% trans %}Error: Term %term% not found in vocabulary!{% endtrans %}</p>
-  </div>
-  {% endif %}
   <!-- appendix / concept mapping properties -->
   <div id="concept-mappings">
   </div>

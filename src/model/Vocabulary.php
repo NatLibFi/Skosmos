@@ -444,22 +444,23 @@ class Vocabulary extends DataObject implements Modifiable
     }
 
     /**
-     * Makes a query into the sparql endpoint for a concept.
-     * @param string $uri the full URI of the concept
-     * @return Concept[]
+     * Get all information about a single concept.
+     * @param string $uri full URI of the concept
+     * @param string $clang content language
+     * @return Concept
      */
-    public function getConceptInfo($uri, $clang)
+    public function getConceptInfo(string $uri, string $clang): Concept
     {
         $sparql = $this->getSparql();
         $conceptInfo = null;
         try {
-            $conceptInfo = $sparql->queryConceptInfo($uri, $this->config->getArrayClassURI(), array($this), $clang);
+            $conceptInfo = $sparql->queryConceptInfo([$uri], $this->config->getArrayClassURI(), array($this), $clang);
         } catch (EasyRdf\Http\Exception | EasyRdf\Exception | Throwable $e) {
             if ($this->model->getConfig()->getLogCaughtExceptions()) {
                 error_log('Caught exception: ' . $e->getMessage());
             }
         }
-        return $conceptInfo;
+        return $conceptInfo[0];
     }
 
     /**
