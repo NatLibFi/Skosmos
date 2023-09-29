@@ -50,6 +50,7 @@ const updateSKOSMOS = (conceptHTML) => {
   }
 }
 
+/* eslint-disable no-unused-vars */
 const partialPageLoad = (event, pageUri) => {
   event.preventDefault()
 
@@ -79,3 +80,4 @@ const partialPageLoad = (event, pageUri) => {
       document.dispatchEvent(event)
     })
 }
+/* eslint-disable no-unused-vars */
