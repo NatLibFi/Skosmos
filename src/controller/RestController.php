@@ -973,7 +973,7 @@ class RestController extends Controller
             }
         }
 
-        if ($request->getVocab()->getConfig()->getShowHierarchy()) {
+        if (in_array('hierarchy', $request->getVocab()->getConfig()->getSidebarViews())) {
             $schemes = $request->getVocab()->getConceptSchemes($request->getLang());
             foreach ($schemes as $scheme) {
                 if (!isset($scheme['title']) && !isset($scheme['label']) && !isset($scheme['prefLabel'])) {
