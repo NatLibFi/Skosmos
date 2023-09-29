@@ -7,13 +7,13 @@ const updateMainContent = (conceptHTML) => {
   // emptying vocab info
   const mainContent = document.querySelector('#main-content')
   const toBeRemoved = document.querySelectorAll('#main-content > :not(#concept-mappings)') // all elements from vocab info except concept mappings
-  for (let i = 0; i < toBeRemoved.length; i++) {
-    mainContent.removeChild(toBeRemoved[i])
+  for (const elem of toBeRemoved) {
+    mainContent.removeChild(elem)
   }
 
   // inserting concept card into vocab info
-  for (let i = 0; i < conceptMainContent.length; i++) {
-    mainContent.prepend(conceptMainContent[i])
+  for (const elem of conceptMainContent) {
+    mainContent.prepend(elem)
   }
 }
 
