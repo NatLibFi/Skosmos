@@ -1,6 +1,6 @@
 /* global Vue */
 /* global SKOSMOS */
-/* global partialPageLoad */
+/* global partialPageLoad, getConceptURL */
 
 const tabAlphaApp = Vue.createApp({
   data () {
@@ -12,7 +12,8 @@ const tabAlphaApp = Vue.createApp({
   },
   provide () {
     return {
-      partialPageLoad
+      partialPageLoad,
+      getConceptURL
     }
   },
   mounted () {
@@ -70,32 +71,11 @@ tabAlphaApp.directive('click-tab-alphabetical', {
 tabAlphaApp.component('tab-alpha', {
   props: ['indexLetters', 'indexConcepts'],
   emits: ['loadConcepts'],
-  inject: ['partialPageLoad'],
+  inject: ['partialPageLoad', 'getConceptURL'],
   methods: {
     loadConcepts (event, letter) {
       event.preventDefault()
       this.$emit('loadConcepts', letter)
-    },
-    getHref (uri) {
-      const clangParam = (SKOSMOS.content_lang !== SKOSMOS.lang) ? 'clang=' + SKOSMOS.content_lang : ''
-      let clangSeparator = '?'
-      let page = ''
-
-      if (uri.indexOf(SKOSMOS.uriSpace) !== -1) {
-        page = uri.substr(SKOSMOS.uriSpace.length)
-
-        if (/[^a-zA-Z0-9-_.~]/.test(page) || page.indexOf('/') > -1) {
-          // contains special characters or contains an additional '/' - fall back to full URI
-          page = '?uri=' + encodeURIComponent(uri)
-          clangSeparator = '&'
-        }
-      } else {
-        // not within URI space - fall back to full URI
-        page = '?uri=' + encodeURIComponent(uri)
-        clangSeparator = '&'
-      }
-
-      return SKOSMOS.vocab + '/' + SKOSMOS.lang + '/page/' + page + (clangParam !== '' ? clangSeparator + clangParam : '')
     }
   },
   template: `
@@ -108,7 +88,7 @@ tabAlphaApp.component('tab-alpha', {
     <ul class="list-group" id="alpha-list">
       <li v-for="concept in indexConcepts" class="list-group-item py-1">
         <template v-if="concept.altLabel">{{ concept.altLabel }} -> </template>
-        <a :href="getHref(concept.uri)" @click="partialPageLoad($event, getHref(concept.uri))">{{ concept.prefLabel }}</a>
+        <a :href="getConceptURL(concept.uri)" @click="partialPageLoad($event, getConceptURL(concept.uri))">{{ concept.prefLabel }}</a>
       </li>
     </ul>
   `

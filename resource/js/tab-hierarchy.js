@@ -1,6 +1,6 @@
 /* global Vue */
 /* global SKOSMOS */
-/* global partialPageLoad */
+/* global partialPageLoad, getConceptURL */
 
 const tabHierApp = Vue.createApp({
   data () {
@@ -11,7 +11,8 @@ const tabHierApp = Vue.createApp({
   },
   provide () {
     return {
-      partialPageLoad
+      partialPageLoad,
+      getConceptURL
     }
   },
   mounted () {
@@ -167,7 +168,7 @@ tabHierApp.directive('click-tab-hierarchy', {
 tabHierApp.component('tab-hier', {
   props: ['concept'],
   emits: ['loadChildren'],
-  inject: ['partialPageLoad'],
+  inject: ['partialPageLoad', 'getConceptURL'],
   methods: {
     handleClickOpenEvent (concept) {
       concept.isOpen = !concept.isOpen
@@ -176,38 +177,17 @@ tabHierApp.component('tab-hier', {
     handleClickConceptEvent (event, concept) {
       concept.isOpen = true
       this.$emit('loadChildren', concept)
-      this.partialPageLoad(event, this.getHref(concept.uri))
+      this.partialPageLoad(event, this.getConceptURL(concept.uri))
     },
     loadChildrenRecursive (concept) {
       this.$emit('loadChildren', concept)
-    },
-    getHref (uri) {
-      const clangParam = (SKOSMOS.content_lang !== SKOSMOS.lang) ? 'clang=' + SKOSMOS.content_lang : ''
-      let clangSeparator = '?'
-      let page = ''
-
-      if (uri.indexOf(SKOSMOS.uriSpace) !== -1) {
-        page = uri.substr(SKOSMOS.uriSpace.length)
-
-        if (/[^a-zA-Z0-9-_.~]/.test(page) || page.indexOf('/') > -1) {
-          // contains special characters or contains an additional '/' - fall back to full URI
-          page = '?uri=' + encodeURIComponent(uri)
-          clangSeparator = '&'
-        }
-      } else {
-        // not within URI space - fall back to full URI
-        page = '?uri=' + encodeURIComponent(uri)
-        clangSeparator = '&'
-      }
-
-      return SKOSMOS.vocab + '/' + SKOSMOS.lang + '/page/' + page + (clangParam !== '' ? clangSeparator + clangParam : '')
     }
   },
   template: `
     <li>
       <div>
         <button v-if="concept.hasChildren" @click="handleClickOpenEvent(concept)"></button>
-        <a :href="getHref(concept.uri)" @click="handleClickConceptEvent($event, concept)">
+        <a :href="getConceptURL(concept.uri)" @click="handleClickConceptEvent($event, concept)">
           {{ concept.label }}
         </a>
       </div>
