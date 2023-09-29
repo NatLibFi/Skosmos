@@ -48,6 +48,7 @@ const SKOSMOS = {
 
 <!-- Helper methods shared by Vue.js components -->
 <script src="resource/js/partial-page-load.js"></script>
+<script src="resource/js/get-concept-url.js"></script>
 
 <!-- Vue.js components -->
 <script src="resource/js/vocab-counts.js"></script>
