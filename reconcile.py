@@ -28,7 +28,7 @@ def jsonpify(obj):
         return jsonify(obj)
 
 
-def search(raw_query, query_type, limit, vocid):
+def search(raw_query, vocid, limit, query_type=""):
     print("search", raw_query, query_type)
 
     params = {"query": raw_query + "*", "maxhits": limit, "type": query_type, "unique": "true"}
@@ -63,7 +63,13 @@ def metadata(vocid):
         "defaultTypes": query_types,
         "view": {
             "url": "{{id}}"
-        }
+        },
+        "suggest": {
+                "entity": {
+                    "service_path": "/suggest/entity",
+                    "service_url": request.url_root + vocid + "/reconcile"
+                }
+            },
     }
 
     return service_metadata
@@ -81,12 +87,24 @@ def reconcile(vocid):
         for (key, query) in queries.items():
             qtype = query.get('type')
             limit = query.get('limit')
-            data = search(query['query'], query_type=qtype, limit=limit, vocid=vocid)
+            data = search(query['query'], vocid=vocid, limit=limit, query_type=qtype)
             results[key] = {"result": data}
         return jsonpify(results)
     # If no 'queries' parameter is supplied then
     # we should return the service metadata.
     return jsonpify(metadata(vocid))
+
+@app.route("/<vocid>/reconcile/suggest/entity", methods=['GET'])
+def suggest(vocid):
+    prefix = request.args.get("prefix")
+    cursor = int(request.args.get("cursor")) if request.args.get("cursor") else 0
+    limit = cursor + 20
+
+    result = search(prefix, vocid=vocid, limit=limit)
+    print(result)
+
+    results = [{"id": res["id"], "name": res["name"], "notable": res["type"]} for res in result]
+    return {"result": results[cursor:]}
 
 if __name__ == '__main__':
     from optparse import OptionParser
