@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+ 
+<head>
+  <meta charset="utf-8" />
+</head>
+ 
+<body>
+  <div style="height: 300px; width: 300px;">
+    <p><a href="{{ uri }}">{{ prefLabel }}</a></p>
+    <p>broader:</p>
+    {% for result in broader %}
+      <ul>
+        <li>{{ result["prefLabel"] }}</li>
+      </ul>
+    {% endfor %}
+    <p>narrower:</p>
+    {% for result in narrower %}
+      <ul>
+        <li>{{ result["prefLabel"] }}</li>
+      </ul>
+    {% endfor %}
+  </div>
+</body>
+ 
+</html>

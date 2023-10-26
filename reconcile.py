@@ -3,7 +3,7 @@
 import requests
 
 
-from flask import Flask
+from flask import Flask, render_template
 from flask import request
 from flask import jsonify
 from flask_cors import CORS
@@ -65,11 +65,16 @@ def metadata(vocid):
             "url": "{{id}}"
         },
         "suggest": {
-                "entity": {
-                    "service_path": "/suggest/entity",
-                    "service_url": request.url_root + vocid + "/reconcile"
-                }
-            },
+            "entity": {
+                "service_path": "/suggest/entity",
+                "service_url": request.url_root + vocid + "/reconcile"
+            }
+        },
+        "preview": {
+            "url": request.url_root + vocid + "/reconcile/preview?id={{id}}",
+            "width": 300,
+            "height": 300
+        }
     }
 
     return service_metadata
@@ -105,6 +110,16 @@ def suggest(vocid):
 
     results = [{"id": res["id"], "name": res["name"], "notable": res["type"]} for res in result]
     return {"result": results[cursor:]}
+
+@app.route("/<vocid>/reconcile/preview", methods=['GET'])
+def preview(vocid):
+    uri = request.args.get("id")
+
+    prefLabel = requests.get(api_base_url + vocid + "/label", params={"uri": uri}).json()["prefLabel"]
+    broader = requests.get(api_base_url + vocid + "/broader", params={"uri": uri}).json()["broader"]
+    narrower = requests.get(api_base_url + vocid + "/narrower", params={"uri": uri}).json()["narrower"]
+    
+    return render_template("preview.html", uri=uri, prefLabel=prefLabel, broader=broader, narrower=narrower)
 
 if __name__ == '__main__':
     from optparse import OptionParser
