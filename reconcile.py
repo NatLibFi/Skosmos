@@ -29,9 +29,9 @@ def jsonpify(obj):
 
 
 def search(raw_query, vocid, limit, lang, query_type=""):
-    print("search", raw_query, query_type)
+    print('search', raw_query, query_type)
 
-    params = {"query": raw_query + "*", "maxhits": limit, "type": query_type, "unique": "true", "lang": lang}
+    params = {'query': raw_query + "*", 'maxhits': limit, 'type': query_type, 'unique': "true", 'lang': lang}
     search_results = requests.get(api_base_url + vocid + "/search/", params=params).json()['results']
 
     results = [{'id': res['uri'],
@@ -47,33 +47,33 @@ def search(raw_query, vocid, limit, lang, query_type=""):
 
 
 def metadata(vocid, lang):
-    vocab = requests.get(api_base_url + vocid + "/", params={"lang": lang})
+    vocab = requests.get(api_base_url + vocid + "/", params={'lang': lang})
     title = vocab.json()['title']
     concept_schemes = vocab.json()['conceptschemes']
 
-    types = requests.get(api_base_url + vocid + "/types/", params={"lang": lang}).json()['types']
+    types = requests.get(api_base_url + vocid + "/types/", params={'lang': lang}).json()['types']
     query_types = [{'id': type['uri'],
                     'name': type['label']}
                     for type in types]
 
     service_metadata = {
-        "name": "Reconciliation service for " + title,
-        "identifierSpace": concept_schemes[0]["uri"],
-        "schemaSpace": "",
-        "defaultTypes": query_types,
-        "view": {
-            "url": "{{id}}"
+        'name': "Reconciliation service for " + title,
+        'identifierSpace': concept_schemes[0]['uri'],
+        'schemaSpace': "",
+        'defaultTypes': query_types,
+        'view': {
+            'url': "{{id}}"
         },
-        "suggest": {
-            "entity": {
-                "service_path": "/suggest/entity",
-                "service_url": request.url_root + vocid + "/" + lang + "/reconcile"
+        'suggest': {
+            'entity': {
+                'service_path': "/suggest/entity",
+                'service_url': request.url_root + vocid + "/" + lang + "/reconcile"
             }
         },
-        "preview": {
-            "url": request.url_root + vocid + "/" + lang + "/reconcile/preview?id={{id}}",
-            "width": 300,
-            "height": 300
+        'preview': {
+            'url': request.url_root + vocid + "/" + lang + "/reconcile/preview?id={{id}}",
+            'width': 300,
+            'height': 300
         }
     }
 
@@ -93,7 +93,7 @@ def reconcile(lang, vocid):
             qtype = query.get('type')
             limit = query.get('limit')
             data = search(query['query'], vocid=vocid, limit=limit, lang=lang, query_type=qtype)
-            results[key] = {"result": data}
+            results[key] = {'result': data}
         return jsonpify(results)
     # If no 'queries' parameter is supplied then
     # we should return the service metadata.
@@ -101,23 +101,23 @@ def reconcile(lang, vocid):
 
 @app.route("/<vocid>/<lang>/reconcile/suggest/entity", methods=['GET'])
 def suggest(vocid, lang):
-    prefix = request.args.get("prefix")
-    cursor = int(request.args.get("cursor")) if request.args.get("cursor") else 0
+    prefix = request.args.get('prefix')
+    cursor = int(request.args.get('cursor')) if request.args.get('cursor') else 0
     limit = cursor + 20
 
     result = search(prefix, vocid=vocid, limit=limit, lang=lang)
 
-    results = [{"id": res["id"], "name": res["name"], "notable": res["type"]} for res in result]
-    return {"result": results[cursor:]}
+    results = [{'id': res['id'], 'name': res['name'], 'notable': res['type']} for res in result]
+    return {'result': results[cursor:]}
 
 @app.route("/<vocid>/<lang>/reconcile/preview", methods=['GET'])
 def preview(vocid, lang):
-    uri = request.args.get("id")
+    uri = request.args.get('id')
 
-    params = {"uri": uri, "lang": lang}
-    prefLabel = requests.get(api_base_url + vocid + "/label/", params=params).json()["prefLabel"]
-    broader = requests.get(api_base_url + vocid + "/broader/", params=params).json()["broader"]
-    narrower = requests.get(api_base_url + vocid + "/narrower/", params=params).json()["narrower"]
+    params = {'uri': uri, 'lang': lang}
+    prefLabel = requests.get(api_base_url + vocid + "/label/", params=params).json()['prefLabel']
+    broader = requests.get(api_base_url + vocid + "/broader/", params=params).json()['broader']
+    narrower = requests.get(api_base_url + vocid + "/narrower/", params=params).json()['narrower']
     
     return render_template("preview.html", uri=uri, prefLabel=prefLabel, broader=broader, narrower=narrower)
 
