@@ -240,4 +240,15 @@ class RequestTest extends PHPUnit\Framework\TestCase
     $this->assertEquals("http//example.com", $langurl);
   }
 
+  /**
+   * @covers Request::getLangUrl
+   */
+  public function testGetEncodedUrld() {
+    $this->request->setServerConstant('SCRIPT_NAME', '/Skosmos/index.php');
+    $this->request->setServerConstant('REQUEST_URI', '/Skosmos/afo/fi/page/?uri=http://www.yso.fi/onto/yso/p1669');
+    $this->request->setLang('en');
+    $langurl = $this->request->getLangUrl();
+    $this->assertEquals("afo/fi/page/?uri=http%3A%2F%2Fwww.yso.fi%2Fonto%2Fyso%2Fp1669", $langurl);
+  }
+
 }

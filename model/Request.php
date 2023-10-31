@@ -208,6 +208,11 @@ class Request
         if ($newlang !== null) {
             $langurl = preg_replace("#^(.*/)?{$this->lang}/#", "$1{$newlang}/", $langurl);
         }
+        if (str_contains($langurl, '?')) {
+            $urlparts = explode('?', $langurl);
+            $langurl = $urlparts[0] . '?' . urlencode($urlparts[1]);
+            $langurl = str_replace("%3D", "=", $langurl);
+        }
         // make sure that the resulting URL isn't interpreted as an absolute URL
         $langurl = str_replace(":", "", $langurl);
         return $langurl;
