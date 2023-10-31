@@ -442,11 +442,12 @@ function getTreeConfiguration() {
             req_kind: $.ajaxQ.requestKind.SIDEBAR_PRIVILEGED,
             success: function (response) {
               schemeObjects = schemeRoot(response.conceptschemes);
-              // if there are multiple concept schemes display those at the top level
-              if (schemeObjects.length > 1 && node.id === '#' && $('#vocab-info').length) {
+              // if there are multiple concept schemes and none of them is the main concept scheme,
+              // display them all at the top level
+              if (schemeObjects.length > 1 && node.id === '#' && $('#vocab-info').length && response.mainConceptScheme === null) {
                 return cb(schemeObjects);
-              } 
-              // if there was only one concept scheme display it's top concepts at the top level 
+              }
+              // if there was only one concept scheme (possibly main) display its top concepts at the top level 
               else if(node.id === '#' && $('#vocab-info').length) { 
                 $.ajax({
                   data: $.param({'lang': clang}),
