@@ -2,10 +2,9 @@ version: '3.7'
 
 services:
   fuseki:
-    container_name: skosmos-fuseki
     hostname: fuseki
     build:
-      context: ../dockerfiles/jena-fuseki2-docker
+      context: ./dockerfiles/jena-fuseki2-docker
       dockerfile: Dockerfile
       args:
         JENA_VERSION: 4.8.0
@@ -13,38 +12,36 @@ services:
     environment:
       - JAVA_OPTIONS=-Xmx2g -Xms1g
     ports:
-      - '9030:3030'
+      - ${FUSEKI_PORT:-9030}:3030
     volumes:
       # You can uncomment the lines below to persist data used in the
       # container. For more complete documentation about it, please
       # consult the official Apache Jena docs at
       # https://github.com/apache/jena/tree/main/jena-fuseki2/jena-fuseki-docker
-      # - ./databases:/fuseki/databases
-      # - ./logs:/fuseki/logs
-      - ./config/skosmos.ttl:/fuseki/skosmos.ttl
+      # - ./dockerfiles/databases:/fuseki/databases
+      # - ./dockerfiles/logs:/fuseki/logs
+      - ./dockerfiles/config/skosmos.ttl:/fuseki/skosmos.ttl
     user: 'fuseki:fuseki'
   fuseki-cache:
-    container_name: skosmos-fuseki-cache
     hostname: fuseki-cache
     image: varnish
     ports:
-      - '9031:80'
+      - ${CACHE_PORT:-9031}:80
     volumes:
       - type: bind
-        source: ./config/varnish-default.vcl
+        source: ./dockerfiles/config/varnish-default.vcl
         target: /etc/varnish/default.vcl
   skosmos:
-    container_name: skosmos-web
     hostname: skosmos
     build:
-      context: ..
+      context: .
       dockerfile: dockerfiles/Dockerfile.ubuntu
     ports:
-      - '9090:80'
+      - ${SKOSMOS_PORT:-9090}:80
     depends_on:
       - fuseki
       - fuseki-cache
     volumes:
       - type: bind
-        source: ./config/config-docker-compose.ttl
+        source: ./dockerfiles/config/config-docker-compose.ttl
         target: /var/www/html/config.ttl
