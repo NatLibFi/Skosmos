@@ -686,7 +686,7 @@ $(function() { // DOCUMENT READY
               if (toBeRemoved !== null) { item.type.splice(toBeRemoved, 1); }
             }
             if (item.distinguisherLabels) {
-              item.distinguisherLabel = item.distinguisherLabels.join();
+              item.distinguisherLabel = item.distinguisherLabels.join(", ");
             }
             return item;
           }));

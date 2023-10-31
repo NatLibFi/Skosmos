@@ -952,6 +952,7 @@ EOF;
             "OPTIONAL {\n" .
             "  ?s skos:prefLabel ?label . ?s2 skos:prefLabel ?label . FILTER(?s2 != ?s)\n" .
             "  ?s $distinguisher ?distinguisher.\n" .
+            "  FILTER (!isLiteral(?distinguisher) || (LANG(?distinguisher) = LANG(?label)))" .
             "  OPTIONAL {\n" .
             "    ?distinguisher skos:prefLabel ?distLabel .\n" .
             "    $distinguishercondLabel\n" .
