@@ -99,10 +99,13 @@ extension.
 
 **NOTE**: `fuseki:3030` and `fuseki-cache:80` are from the internal Docker network.
 To the host machine Docker Compose is exposing these values as `localhost:3030`
-and `localhost:9031` respectively.
+and `localhost:9031` respectively. The default host port numbers can be overriden
+by setting `SKOSMOS_PORT`, `FUSEKI_PORT`, and `CACHE_PORT` env variables in an
+`.env` file. This is useful when running multiple Skosmos Docker Compose instances
+on the same host but with different port numbers.
 
 To create the containers in this example setup, you can use this command
-from the `./dockerfiles/` directory:
+from the parent directory (where `docker-compose.yml` is located):
 
     docker compose up -d
 
