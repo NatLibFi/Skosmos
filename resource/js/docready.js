@@ -687,6 +687,9 @@ $(function() { // DOCUMENT READY
               }
               if (toBeRemoved !== null) { item.type.splice(toBeRemoved, 1); }
             }
+            if (item.distinguisherLabels) {
+              item.distinguisherLabel = item.distinguisherLabels.join(", ");
+            }
             return item;
           }));
       }
@@ -700,13 +703,14 @@ $(function() { // DOCUMENT READY
 
   var autocompleteTemplate =[
     '<div class="autocomplete-label">',
-    '<div>',
+    '{{# if typeLabel }}<div class="concept-type">{{typeLabel}}</div>{{/if}}',
+    '<div class="concept-label-wrapper">',
     '{{# if matched }}<span>{{matched}}{{# if lang}} ({{lang}}){{/if}} = </span>{{/if}}',
     '{{# if replaced }}<span class="replaced">{{replaced}}{{# if lang}} ({{lang}}){{/if}} &rarr; </span>{{/if}}',
     '{{# if notation }}<span>{{notation}}</span>{{/if}}',
-    '<span>{{label}}{{# if lang}}{{# unless matched }}<span>({{lang}})</span>{{/unless}}{{/if}}</span>',
-    '{{# if typeLabel }}<span class="concept-type">{{typeLabel}}</span>{{/if}}',
+    '<span class="concept-label">{{label}}{{# if lang}}{{# unless matched }}<span>({{lang}})</span>{{/unless}}{{/if}}</span>',
     '</div>',
+    '{{# if distinguisherLabel }}<div class="concept-distinguisher">{{distinguisherLabel}}</div>{{/if}}',
     '<div class="vocab">{{vocabLabel}}</div>',
     '</div>'
   ].join('');

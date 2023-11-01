@@ -716,6 +716,99 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
    * @covers GenericSparql::generateConceptSearchQueryCondition
    * @covers GenericSparql::generateConceptSearchQueryInner
    * @covers GenericSparql::generateConceptSearchQuery
+   */
+  public function testQueryConceptsResultDistinguisher()
+  {
+    $voc = $this->model->getVocabulary('duplabel');
+    $graph = $voc->getGraph();
+    $sparql = new GenericSparql($this->endpoint, $graph, $this->model);
+    $this->params->method('getVocabs')->will($this->returnValue(array($voc)));
+    $this->params->method('getLang')->will($this->returnValue('en'));
+    $this->params->method('getSearchTerm')->willReturn('*Ident*');
+    $actual = $sparql->queryConcepts(array($voc), null, null, $this->params);
+
+    $order = array();
+    foreach ($actual as $concept) {
+        // use local name instead of preferred label as most matches are identical
+        array_push($order, $concept['localname']);
+    }
+    $orderExpected = array(
+      'r11', // before d1a because of match before d1a (1 < I)
+      'd1a', // before d1f because of d1a before d1f
+      'd1f', // before d1d because of no distLabels < distlabel
+      'd1d', // before d1e because of order of 2nd distlabel (h < I, same 1st distlabel)
+      'd1e', // before d1b because of order of 1st distlabel (c < I)
+      'd1b', // before d1c because of d1b before d1c (same distlabel)
+      'd1c', // before r1z because of match before r1z (I < L)
+      'r1z', // last
+    );
+    $this->assertEquals($order, $orderExpected);
+
+    $expectedDistinguisherLabels = array(
+      3 => array(
+        0 => 'concept 1',
+        1 => 'http://www.skosmos.skos/duplabel/no',
+        2 => 'Indiscriminating example'
+      ),
+      4 => array(
+        0 => 'concept 1',
+        1 => 'Indiscriminating example'
+      ),
+      5 => array(
+        0 => 'Indiscriminating example'
+      ),
+      6 => array(
+        0 => 'Indiscriminating example'
+      ),
+    );
+
+    $resultCountModulo = count($actual) - 1 ; // helper variable for nifty comparisons below
+
+    foreach ($actual as $index => $concept) {
+      $modulo = $index % $resultCountModulo;
+      if ($modulo > 0) { // All but first and last should have 'Identical label' as their preffered label
+          $this->assertEquals('Identical label', $concept['prefLabel']);
+      }
+      if ($modulo < 3) { // Only indices 3-6 should have distinguisherLabels
+        $this->assertArrayNotHasKey('distinguisherLabels', $concept);
+      } else {
+        $this->assertArrayHasKey('distinguisherLabels', $concept);
+        $this->assertEquals($expectedDistinguisherLabels[$index], $concept['distinguisherLabels']);
+      }
+    }
+  }
+
+  /**
+   * @covers GenericSparql::queryConcepts
+   * @covers GenericSparql::generateConceptSearchQueryCondition
+   * @covers GenericSparql::generateConceptSearchQueryInner
+   * @covers GenericSparql::generateConceptSearchQuery
+   */
+  public function testQueryConceptsResultDistinguisherForConceptSchemes()
+  {
+    $voc = $this->model->getVocabulary('duplabel');
+    $graph = $voc->getGraph();
+    $sparql = new GenericSparql($this->endpoint, $graph, $this->model);
+    $this->params->method('getVocabs')->will($this->returnValue(array($voc)));
+    $this->params->method('getLang')->will($this->returnValue('en'));
+    $this->params->method('getSearchTerm')->willReturn('Concept*');
+    $actual = $sparql->queryConcepts(array($voc), null, null, $this->params);
+
+    $this->assertCount(2, $actual);
+
+    foreach ($actual as $index => $concept) {
+      $this->assertEquals("http://www.skosmos.skos/duplabel/c1-in-cs$index", $concept['uri']);
+      $this->assertEquals("concept 1", $concept['prefLabel']);
+      $this->assertArrayHasKey('distinguisherLabels', $concept);
+      $this->assertEquals(array(0 => "Concept Scheme $index"), $concept['distinguisherLabels']);
+    }
+  }
+
+  /**
+   * @covers GenericSparql::queryConcepts
+   * @covers GenericSparql::generateConceptSearchQueryCondition
+   * @covers GenericSparql::generateConceptSearchQueryInner
+   * @covers GenericSparql::generateConceptSearchQuery
    * @covers GenericSparql::transformConceptSearchResults
    * @covers GenericSparql::transformConceptSearchResult
    * @covers GenericSparql::shortenUri

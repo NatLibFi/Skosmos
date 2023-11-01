@@ -286,6 +286,19 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
   }
 
   /**
+   * @covers VocabularyConfig::getResultDistinguisher
+   */
+  public function testResultDistinguisher() {
+    $vocab = $this->model->getVocabulary('duplabel');
+    $prop = $vocab->getConfig()->getResultDistinguisher();
+    $this->assertEquals('skos:closeMatch|skos:inScheme', $prop);
+
+    $vocab = $this->model->getVocabulary('dates');
+    $prop = $vocab->getConfig()->getResultDistinguisher();
+    $this->assertNull($prop);
+  }
+
+  /**
    * @covers VocabularyConfig::hasMultiLingualProperty
    */
   public function testHasMultiLingualProperty() {

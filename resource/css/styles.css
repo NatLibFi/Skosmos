@@ -2101,7 +2101,7 @@ span.date-info {
   width: 280px;
 }
 
-.vocab, .concept-type {
+.vocab, .concept-type, .concept-distinguisher {
   font-size: 12px;
 }
 
@@ -2109,16 +2109,35 @@ span.date-info {
   float: right;
 }
 
-.tt-selectable > .concept-type, .autocomplete-label > div:first-child > span.concept-type {
+.tt-selectable .concept-distinguisher {
+  word-wrap: break-word;
+}
+
+.tt-selectable > .concept-type {
   float: right;
   height: auto;
+  text-align: right;
+  word-break: break-word;
+  margin-left: 4px;
+}
+
+.tt-selectable .concept-label-wrapper, .tt-selectable .concept-distinguisher, .tt-selectable .vocab {
+  float: left;
+}
+
+.tt-selectable .concept-distinguisher, .tt-selectable .vocab {
+  width: 100%;
 }
 
 .tt-selectable {
   overflow: hidden;
 }
 
-.autocomplete-label > div:first-child > span:first-child, .autocomplete-label > div:first-child > span.replaced + span {
+.autocomplete-label .replaced, .autocomplete-label .tt-highlight, .autocomplete-label .concept-label {
+  word-break: break-word;
+}
+
+.autocomplete-label .concept-label, .autocomplete-label > div:first-child > span.replaced + span {
   color: var(--medium-color);
   margin: 0;
 }
