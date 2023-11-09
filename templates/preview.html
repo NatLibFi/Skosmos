@@ -5,21 +5,56 @@
   <meta charset="utf-8" />
 </head>
  
-<body>
-  <div style="height: 300px; width: 300px;">
-    <p><a href="{{ uri }}">{{ prefLabel }}</a></p>
-    <p>broader:</p>
-    {% for result in broader %}
-      <ul>
-        <li>{{ result["prefLabel"] }}</li>
-      </ul>
-    {% endfor %}
-    <p>narrower:</p>
-    {% for result in narrower %}
-      <ul>
-        <li>{{ result["prefLabel"] }}</li>
-      </ul>
-    {% endfor %}
+<body style="margin: 0; font-family: Arial; sans-serif">
+  <div style="width: 294px; overflow: hidden; padding: 0 3px; font-size: 0.7em; ">
+    <div style="margin-bottom: 3px;">
+      {% if context.pref_label %}
+        <a href="{{ context.uri }}" target="_blank" style="text-decoration: none;">{{ context.pref_label[0].label }}</a>
+      {% endif %}
+      {% for label in context.alt_labels %}
+        <span style="color: #505050; font-style: italic;">
+          {{ label.label }}{{ ", " if not loop.last else "" }}
+        </span>
+      {% endfor %}
+      <br>
+      {% for label in context.other_pref_labels %}
+        <span style="color: #505050;">
+          {{ label.label }} ({{ label.lang }}){{ ", " if not loop.last else "" }}
+        </span>
+      {% endfor %}
+    </div>
+    {% if context.definition %}
+    <div style="margin-bottom: 3px;">
+      <span>{{ context.definition[0].definition }}</span>
+    </div>
+    {% endif %}
+    {% if context.broader %}
+    <div style="margin-bottom: 3px;">
+      Broader concept{{ "s" if context.broader|length > 1 else "" }}:
+      {% for concept in context.broader[:15] %}
+        <a href="{{ concept.uri }}" target="_blank" style="text-decoration: none">{{ concept.label }}</a>
+        {%- if not loop.last -%}
+          <span>, </span>
+        {%- elif context.broader|length > 15 -%}
+          <span>...</span>
+        {%- endif -%}
+      {% endfor %}
+    </div>
+    {% endif %}
+    {% if context.narrower %}
+    <div style="margin-bottom: 3px;">
+      Narrower concept{{ "s" if context.narrower|length > 1 else "" }}:
+      {% for concept in context.narrower[:15] %}
+        <a href="{{ concept.uri }}" target="_blank" style="text-decoration: none">{{ concept.label }}</a>
+        {%- if not loop.last -%}
+          <span>, </span>
+        {%- elif context.narrower|length > 15 -%}
+          <span>...</span>
+        {%- endif -%}
+      {% endfor %}
+    </div>
+    {% endif %}
+
   </div>
 </body>
  

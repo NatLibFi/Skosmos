@@ -2,18 +2,19 @@
 
 import requests
 
-
 from flask import Flask, render_template
 from flask import request
 from flask import jsonify
 from flask_cors import CORS
+
+import rdflib
 
 import json
 
 app = Flask(__name__)
 CORS(app)
 
-api_base_url = 'https://api.dev.finto.fi/rest/v1/'
+api_base_url = 'https://api.dev.finto.fi/rest/v1/' #'https://vocabularies.unesco.org/browser/rest/v1/'
 
 def jsonpify(obj):
     """
@@ -73,11 +74,26 @@ def metadata(vocid, lang):
         'preview': {
             'url': request.url_root + vocid + "/" + lang + "/reconcile/preview?id={{id}}",
             'width': 300,
-            'height': 300
+            'height': 100
         }
     }
 
     return service_metadata
+
+def sparql_query(data, query):
+    g=rdflib.Graph()
+    g.parse(data=data, format="xml")
+
+    qres = g.query(query)
+
+    res = []
+    for row in qres:
+        d = {}
+        for l in row.labels:
+            d[l] = str(row[l])
+        res += [d]
+
+    return res
 
 @app.route("/<vocid>/<lang>/reconcile", methods=['POST', 'GET'])
 def reconcile(lang, vocid):
@@ -114,12 +130,92 @@ def suggest(vocid, lang):
 def preview(vocid, lang):
     uri = request.args.get('id')
 
-    params = {'uri': uri, 'lang': lang}
-    prefLabel = requests.get(api_base_url + vocid + "/label/", params=params).json()['prefLabel']
-    broader = requests.get(api_base_url + vocid + "/broader/", params=params).json()['broader']
-    narrower = requests.get(api_base_url + vocid + "/narrower/", params=params).json()['narrower']
+    params = {'uri': uri, 'lang': lang, 'format': "application/rdf+xml"}
+    data = requests.get(api_base_url + vocid + "/data", params=params).text
+    print(data)
+
+    context = {'uri': uri, 'lang': lang}
+
+    pref_label_query = """
+        PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+        SELECT ?label
+        WHERE {
+            <%s> skos:prefLabel ?label .
+
+            FILTER (lang(?label) = '%s')
+        }
+    """ % (uri, lang)
+    context['pref_label'] = sparql_query(data, pref_label_query)
+
+    other_pref_labels_query = """
+        PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+        SELECT ?label (lang(?label) as ?lang)
+        WHERE {
+            <%s> skos:prefLabel ?label .
+
+            FILTER (lang(?label) != '%s')
+        }
+    """ % (uri, lang)
+    context['other_pref_labels'] = sparql_query(data, other_pref_labels_query)
+
+    alt_labels_query = """
+        PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+        SELECT ?label
+        WHERE {
+            <%s> skos:altLabel ?label .
+
+            FILTER (lang(?label) = '%s')
+        }
+    """ % (uri, lang)
+    context['alt_labels'] = sparql_query(data, alt_labels_query)
+
+    broader_query = """
+        PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+        SELECT ?label (?broader as ?uri)
+        WHERE {
+            <%s> skos:broader ?broader .
+            ?broader skos:prefLabel ?label .
+
+            FILTER (lang(?label) = '%s')
+        }
+    """ % (uri, lang)
+    context['broader'] = sparql_query(data, broader_query)
+
+    narrower_query = """
+        PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+        SELECT ?label (?narrower as ?uri)
+        WHERE {
+            <%s> skos:narrower ?narrower .
+            ?narrower skos:prefLabel ?label .
+
+            FILTER (lang(?label) = '%s')
+        }
+    """ % (uri, lang)
+    context['narrower'] = sparql_query(data, narrower_query)
+
+    definition_query = """
+        PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+        SELECT ?definition
+        WHERE {
+            <%s> skos:definition ?definition .
+
+            FILTER (lang(?definition) = '%s')
+        }
+    """ % (uri, lang)
+    context['definition'] = sparql_query(data, definition_query)
+
+    exact_match_query = """
+        PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+        SELECT (?exact_match as ?uri)
+        WHERE {
+            <%s> skos:exactMatch ?exact_match .
+        }
+    """ % (uri)
+    context['exact_match'] = sparql_query(data, exact_match_query)
+
+    print(json.dumps(context, indent=2))
     
-    return render_template("preview.html", uri=uri, prefLabel=prefLabel, broader=broader, narrower=narrower)
+    return render_template("preview.html", context=context)
 
 if __name__ == '__main__':
     from optparse import OptionParser
