@@ -6,6 +6,7 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
      * @var Model
      */
     private $model;
+    private $jenamodel;
 
     protected function setUp(): void
     {

@@ -5,6 +5,8 @@
  */
 class ConceptProperty
 {
+    /** stores the Model object (used for translations) */
+    private $model;
     /** stores the property type */
     private $prop;
     /** stores the property supertype */
