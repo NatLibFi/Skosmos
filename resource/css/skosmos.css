@@ -534,7 +534,8 @@ body {
   /*** Main content termpage ***/
   #term-heading span {
     width: 30%;
-    align-self: end;
+    align-self: start;
+    padding-top: 1.2rem;
   }
 
   .copy-clipboard {
