@@ -5,6 +5,8 @@ class PluginRegisterTest extends PHPUnit\Framework\TestCase
     private $model;
     private $concept;
     private $mockpr;
+    private $stubplugs;
+    private $vocab;
 
     protected function setUp(): void
     {

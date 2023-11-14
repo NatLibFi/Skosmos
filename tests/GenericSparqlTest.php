@@ -7,6 +7,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     private $sparql;
     private $vocab;
     private $params;
+    private $endpoint;
 
     protected function setUp(): void
     {

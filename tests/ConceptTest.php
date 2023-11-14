@@ -6,6 +6,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
      * @var Model
      */
     private $model;
+    private $vocab;
     private $concept;
     private $cbdVocab;
     private $cbdGraph;

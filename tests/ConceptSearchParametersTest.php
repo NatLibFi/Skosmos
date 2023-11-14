@@ -14,11 +14,6 @@ class ConceptSearchParametersTest extends PHPUnit\Framework\TestCase
         $this->model = new Model(new GlobalConfig('/../../tests/testconfig.ttl'));
     }
 
-    protected function tearDown(): void
-    {
-        $this->params = null;
-    }
-
     /**
      * @covers ConceptSearchParameters::__construct
      * @covers ConceptSearchParameters::getSearchLimit

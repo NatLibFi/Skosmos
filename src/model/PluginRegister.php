@@ -3,6 +3,7 @@
 class PluginRegister
 {
     private $requestedPlugins;
+    private $pluginOrder;
 
     public function __construct($requestedPlugins=array())
     {
