@@ -548,6 +548,9 @@ body {
   }
 
   /***** Main content searchpage & searchpage multi vocab *****/
+  #search-results {
+    background-color: var(--vocab-bg);
+  }
   .search-result {
     border-top: 1px solid var(--vocab-table-border);
     margin-top: 2.5rem;
