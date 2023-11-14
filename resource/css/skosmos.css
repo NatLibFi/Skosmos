@@ -497,32 +497,32 @@ body {
     border-bottom: 2px solid var(--main-bg-2);
   }
 
-  #main-table {
-    margin-top: 4rem;
+  #pref-label {
+    padding-bottom: 4rem;
   }
 
-  #main-table tr {
+  .property {
     border-top: 1px solid var(--vocab-table-border);
+    padding: .5rem 0;
   }
 
-  #main-table td {
-    color: var(--vocab-text);
-    border: none;
-  }
-
-  .main-table-label {
-    width: 30%;
+  .property-label {
     font-weight: bold;
     font-size: 20px !important;
   }
 
-  #resource-table th, #term-table th {
+  .property-value {
+    color: var(--vocab-text);
+    border: none;
+  }
+
+  #resource-table th {
     color: var(--vocab-text);
     font-weight: bold;
     border-bottom: 1px solid var(--vocab-text);
   }
 
-  #resource-table td, #term-table td {
+  #resource-table td {
     color: var(--vocab-text);
     border: none;
   }
@@ -532,10 +532,13 @@ body {
   }
 
   /*** Main content termpage ***/
-  #term-heading span {
-    width: 30%;
+  #concept-heading {
     align-self: start;
-    padding-top: 1.2rem;
+    padding-top: 1.25rem;
+  }
+
+  #concept-label h2 {
+    float: left;
   }
 
   .copy-clipboard {
@@ -554,7 +557,7 @@ body {
     margin-bottom: 0;
   }
 
-  .term-other-languages .label {
+  #concept-other-languages .label {
     display: inline-block;
     width: 50%;
   }
@@ -769,7 +772,7 @@ body {
     text-decoration: none !important;
     font-weight: 700 !important;
   }
-  td.main-table-label, .vocab-statistics > h3 {
+  .vocab-statistics > h3 {
     font-size: 20px !important;
   }
   td.align-middle {
