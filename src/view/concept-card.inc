@@ -29,13 +29,24 @@
             </td>
           </tr>
           {% endfor %}
+          {% set foreignLabels = concept.foreignLabels %}
+          {% if foreignLabels %}
           <tr>
-            <td class="main-table-label px-0">Muunkieliset termit</td>
+            <td class="main-table-label px-0">{{ 'foreign prefLabels'|trans }}</td>
             <td class="term-other-languages align-middle px-0">
-              <a href="#">A General descriptors</a>
-              <span>englanti</span>
+                {% for language,labels in foreignLabels %}
+                {% for value in labels.prefLabel|default([])|merge(labels.altLabel|default([])) %}
+                {% if value.type == "skos:prefLabel" and value.lang in request.vocab.config.languages %}
+                <a class="label" href='{{ concept.uri|link_url(request.vocabid,request.lang, 'page', value.lang) }}' hreflang='{{ value.lang }}'>{{ value.label }}</a>
+                {% else %}
+                <span class="label">{{ value.label }}</span>
+                {% endif %}
+                {% if loop.first %}<span>{{ language }}</span>{% endif %}
+                {% endfor %}
+                {% endfor %}
             </td>
           </tr>
+          {% endif %}
           <tr>
             <td class="main-table-label px-0">URI</td>
             <td class="align-middle px-0"><a href="#">{{ concept.uri }}</a></td>

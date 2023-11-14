@@ -553,7 +553,7 @@ body {
     margin-bottom: 0;
   }
 
-  .term-other-languages a {
+  .term-other-languages .label {
     display: inline-block;
     width: 50%;
   }
