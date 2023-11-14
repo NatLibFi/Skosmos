@@ -13,21 +13,22 @@
 
       <table class="table" id="main-table">
         <tbody>
-          <tr>
-            <td class="main-table-label px-0">Tyyppi</td>
-            <td class="align-middle px-0">Thsys</td>
-          </tr>
-          <tr>
-            <td class="main-table-label px-0">Alakäsitteet</td>
+          {% for property in concept.properties %}
+          <tr class="property prop-{{property.ID}}">
+            <td class="main-table-label px-0">{{ property.label }}</td>
             <td class="align-middle px-0">
-              <a href="#">A.00 Allgemeinwörter</a><br>
-              <a href="#">A.01 Regionaladjektive und Sprache</a>
+              <ul>
+              {% for propval in property.values %}
+                {% if propval.uri %} {# resources with URI #}
+                <li><a href="{{ propval.uri | link_url(propval.vocab, request.lang, 'page', request.contentLang) }}">{% if propval.notation %}<span class="versal">{{ propval.notation }} </span>{% endif %} {{ propval.label(request.contentLang) }}</a></li>
+                {% else %} {# literals, e.g. altLabels #}
+                <li>{{ propval.label }}</li>
+                {% endif %}
+              {% endfor %}
+              </li>
             </td>
           </tr>
-          <tr>
-            <td class="main-table-label px-0">Notaatio</td>
-            <td class="align-middle px-0">A</td>
-          </tr>
+          {% endfor %}
           <tr>
             <td class="main-table-label px-0">Muunkieliset termit</td>
             <td class="term-other-languages align-middle px-0">

@@ -376,6 +376,10 @@ body {
     font-weight: bold;
   }
 
+  #sidebar, #main-content {
+    background-color: var(--vocab-bg);
+  }
+
   /*** Sidebar termpage & vocabpage ***/
   #main-container.vocabpage #sidebar .nav-item, #main-container.termpage #sidebar .nav-item {
     background-color: var(--sidebar-tab-inactive-bg);
@@ -540,6 +544,13 @@ body {
 
   .copy-clipboard:active, .copy-clipboard:focus, .copy-clipboard:active:focus {
     border: none;
+  }
+
+  .property ul, .property li {
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 0;
+    margin-bottom: 0;
   }
 
   .term-other-languages a {
