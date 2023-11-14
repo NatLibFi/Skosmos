@@ -376,11 +376,6 @@ body {
     font-weight: bold;
   }
 
-  #sidebar, #main-content {
-    background-color: var(--vocab-bg);
-    margin-left: 1rem;
-  }
-
   /*** Sidebar termpage & vocabpage ***/
   #main-container.vocabpage #sidebar .nav-item, #main-container.termpage #sidebar .nav-item {
     background-color: var(--sidebar-tab-inactive-bg);
