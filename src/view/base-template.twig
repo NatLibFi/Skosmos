@@ -62,6 +62,7 @@
       <h2 class="fs-1 fw-bold text-decoration-none">Skosmos<h2>
       {% else %}
       <h2 class="fs-2 fw-bold text-decoration-none" id="vocab-title"><a class="text-decoration-none" href="{% if request.vocabid != '' %}{{ request.vocabid  }}/{% endif %}{{ request.lang }}/{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{{ request.vocab.title(request.contentLang) }}</a></h2>
+      <div id="search-vocab"></div>
       {% endif %}
     </div>
   </header>
