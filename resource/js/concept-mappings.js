@@ -12,12 +12,11 @@ const conceptMappingsApp = Vue.createApp({
   },
   methods: {
     loadMappings () {
-      fetch('https://api.finto.fi/rest/v1/' + SKOSMOS.vocab + '/mappings?uri=' + SKOSMOS.uri + '&external=true&clang=' + SKOSMOS.lang + '&lang=' + SKOSMOS.content_lang)
+      fetch('rest/v1/' + SKOSMOS.vocab + '/mappings?uri=' + SKOSMOS.uri + '&external=true&clang=' + SKOSMOS.lang + '&lang=' + SKOSMOS.content_lang)
         .then(data => {
           return data.json()
         })
         .then(data => {
-          console.log(data.mappings)
           this.mappings = this.group_by(data.mappings, 'typeLabel')
         })
     },

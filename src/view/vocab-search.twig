@@ -1,0 +1,22 @@
+{% extends "base-template.twig" %}
+{% block title %}: {{ vocab.shortName(request.contentLang) }} '{{ term }}'{% endblock %}
+{% block content %}
+<main class="searchpage py-5" id="main-container" >
+  <div class="container">
+    <div class="row">
+      {% include "search-results-filter.inc" %}
+      
+      <div class="col-md-7 ps-3" id="main-content">
+        <div class="p-4 pt-4" id="search-results">
+          <div class="search-count">
+            <p class="py-2">
+              <span class="fw-bold">{{ "%search_count% results for '%term%'" | trans({'%search_count%': search_count, '%term%' : term}) }}</span>
+            </p>
+          </div>
+  	      {% include "search-results.inc" %}
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

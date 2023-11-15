@@ -580,7 +580,7 @@ test:ta125
     public function testGetLanguages()
     {
         $languages = $this->model->getLanguages('en');
-        $expected = array('English' => 'en');
+        $expected = array('English' => 'en', 'Finnish' => 'fi', 'Northern Sami' => 'se', 'Swedish' => 'sv');
         $this->assertEquals($expected, $languages);
     }
 

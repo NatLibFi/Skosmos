@@ -7,6 +7,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     private $sparql;
     private $vocab;
     private $params;
+    private $endpoint;
 
     protected function setUp(): void
     {
@@ -1175,8 +1176,14 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
         foreach($actual as $concept) {
             array_push($order, $concept['prefLabel']);
         }
-        $this->assertEquals(4, sizeof($actual));
-        $this->assertEquals(array('Fourth date', 'Hurr Durr', 'Second date', 'A date'), $order);
+
+        $this->assertEquals(5, sizeof($actual));
+        $this->assertEquals(array('No replacement', 'Fourth date', 'Hurr Durr', 'Second date', 'A date'), $order);
+
+        // check that deprecated status is correct
+        $this->assertTrue($actual[0]['deprecated']);  // 'No replacement'
+        $this->assertTrue($actual[1]['deprecated']);  // 'Fourth date'
+        $this->assertFalse($actual[2]['deprecated']); // 'Hurr Durr'
     }
 
 

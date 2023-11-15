@@ -46,8 +46,13 @@ const SKOSMOS = {
 <!-- Vue.js -->
 <script src="node_modules/vue/dist/vue.global.js"></script>
 
+<!-- Helper methods shared by Vue.js components -->
+<script src="resource/js/partial-page-load.js"></script>
+<script src="resource/js/get-concept-url.js"></script>
+
 <!-- Vue.js components -->
 <script src="resource/js/vocab-counts.js"></script>
 <script src="resource/js/term-counts.js"></script>
 <script src="resource/js/concept-mappings.js"></script>
-<script src="resource/js/tab-alpha.js"><script>
+<script src="resource/js/tab-alpha.js"></script>
+<script src="resource/js/tab-hierarchy.js"></script>

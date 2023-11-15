@@ -5,6 +5,7 @@
  */
 class VocabularyConfig extends BaseConfig
 {
+    private $globalPlugins;
     private $pluginRegister;
     private $pluginParameters = array();
     private $languageOrderCache = array();

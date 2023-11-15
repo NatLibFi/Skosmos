@@ -6,6 +6,7 @@ class FeedbackTest extends PHPUnit\Framework\TestCase
 {
     private $model;
     private $request;
+    private $controller;
 
     protected function setUp(): void
     {

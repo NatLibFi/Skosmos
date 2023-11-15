@@ -7,7 +7,7 @@
 {% endif %}
 <div class="container{% if pageError %} col-md-8" id="main-content{% endif %}">
   <div class="alert py-5 px-5">
-    <span class="fw-bold fs-5">{% if not message%}404 Error: The page {{ requested_page }} cannot be found.{% else %}{{ message }}{% endif %}</span>
+    <span class="fw-bold fs-5">{% if not message%}{% trans %}404 Error: The page %requested_page% cannot be found.{% endtrans %}{% else %}{{ message }}{% endif %}</span>
   </div>
 </div>
 {% endblock %}

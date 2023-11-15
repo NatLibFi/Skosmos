@@ -4,12 +4,12 @@
     <h2 class="visually-hidden">Concept information</h2>
     {% if concept.deprecated %}
     <div class="alert alert-danger">
-      <p class="deprecated-alert">deprecated</p>
+      <p class="deprecated-alert">{{ "deprecated" | trans }}</p>
     </div>
     {% endif %}
     {% if concept.label.lang != request.contentLang %}
     <div class="alert alert-lang">
-      <p class="language-alert">There is no term for this concept in this language</p>
+      <p class="language-alert">{{ "There is no term for this concept in this language" | trans }}</p>
     </div>
     {% endif %}
     <div class="container concept-info{% if concept.deprecated %} deprecated-concept{% endif %}">
@@ -130,7 +130,7 @@
       {% set foreignLabels = concept.foreignLabels %}
       {% if foreignLabels %}
       <tr class="prop-other-languages">
-        <td class="main-table-label">foreign prefLabels</td>
+        <td class="main-table-label">{{ "foreign prefLabels" | trans }}</td>
         <td class="align-middle">
             {% for language,labels in foreignLabels %}
               {% for value in labels.prefLabel|default([])|merge(labels.altLabel|default([])) %}
@@ -168,7 +168,7 @@
       </tbody>
     </table>
         <div class="row">
-            <div class="property-label"><h3 class="versal">Download this concept in SKOS format:</h3></div>
+            <div class="property-label"><h3 class="versal">{{ "Download this concept in SKOS format:" | trans }}</h3></div>
             <div class="property-value-column">
 <span class="versal concept-download-links"><a href="rest/v1/{% if concept.vocab %}{{ concept.vocab.id }}{% else %}{{ vocab.id }}{% endif %}/data?uri={{ concept.uri|url_encode }}&amp;format=application/rdf%2Bxml">RDF/XML</a>
           <a href="rest/v1/{% if concept.vocab %}{{ concept.vocab.id }}{% else %}{{ vocab.id }}{% endif %}/data?uri={{ concept.uri|url_encode }}&amp;format=text/turtle">
@@ -183,7 +183,7 @@
 
   {% else %}
   <div class="alert alert-danger">
-    <p>Error: Term "{{ term }}" not found in vocabulary!</p>
+    <p>{% trans %}Error: Term %term% not found in vocabulary!{% endtrans %}</p>
   </div>
   {% endif %}
   <!-- appendix / concept mapping properties -->
