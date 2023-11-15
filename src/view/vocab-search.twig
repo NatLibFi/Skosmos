@@ -7,7 +7,7 @@
       {% include "search-results-filter.inc" %}
       
       <div class="col-md-7 ps-3" id="main-content">
-        <div class="p-4 pt-4">
+        <div class="p-4 pt-4" id="search-results">
           <div class="search-count">
             <p class="py-2">
               <span class="fw-bold">{{ "%search_count% results for '%term%'" | trans({'%search_count%': search_count, '%term%' : term}) }}</span>
