@@ -18,7 +18,7 @@ describe('Front page -> lang -> vocab -> cLang -> search -> concept page', () =>
   });
 
   it('should perform a search fuction and go to the search result page', () => {
-    // This following be replaced with actual implementation once available
+    // The following will be replaced with actual implementation once available
     cy.visit('/yso/fi/search?query=tiede');
 
     // Potentially wait for a long time (10-20 seconds)
@@ -27,10 +27,9 @@ describe('Front page -> lang -> vocab -> cLang -> search -> concept page', () =>
 
   it('should select the text "tiede" from the search results and navigate to the concept page', () => {
     cy.visit('/yso/fi/search?query=tiede');
-    // Potentially wait for a long time again (10-20 seconds)
-    cy.wait(10000);
+       cy.wait(10000);
 
-    // Select the text 'tiede' from the list and go to the page the link is directing
+    // Select the text 'tiede' from the list and go to the page the link is leads to
     cy.get('.search-result-term a.prefLabel').contains('tiede')
       .click();
 
