@@ -3,10 +3,10 @@
 
     <div class="main-content-section p-5">
 
-      <div class="row">
-        <div class="col-sm-4 px-0" id="concept-heading">{{ "skos:prefLabel" | trans }}</div>
+      <div class="row" id="concept-heading">
+        <div class="col-sm-4 px-0" id="concept-property-label">{{ "skos:prefLabel" | trans }}</div>
         <div class="col-sm-8" id="concept-label">
-          <h2 class="mb-0" id="pref-label">{{ concept.label }}</h2>
+          <h2 class="mb-0">{{ concept.label }}</h2>
           <button class="btn btn-default copy-clipboard" type="button" data-bs-toggle="tooltip" data-bs-placement="button" title="{{ "Copy to clipboard" | trans }}" for="#pref-label">
           <i class="fa-regular fa-copy"></i>
           </button>
@@ -20,7 +20,7 @@
           <ul class="align-bottom">
           {% for propval in property.values %}
             {% if propval.uri %} {# resources with URI #}
-            <li><a href="{{ propval.uri | link_url(propval.vocab, request.lang, 'page', request.contentLang) }}">{% if propval.notation %}<span class="versal">{{ propval.notation }} </span>{% endif %} {{ propval.label(request.contentLang) }}</a></li>
+            <li><a href="{{ propval.uri | link_url(propval.vocab, request.lang, 'page', request.contentLang) }}">{% if propval.notation %}<span class="versal">{{ propval.notation }}</span> {% endif %}{{ propval.label(request.contentLang) }}</a></li>
             {% else %} {# literals, e.g. altLabels #}
             <li>{{ propval.label }}</li>
             {% endif %}

@@ -497,7 +497,7 @@ body {
     border-bottom: 2px solid var(--main-bg-2);
   }
 
-  #pref-label {
+  #concept-heading {
     padding-bottom: 4rem;
   }
 
@@ -532,7 +532,7 @@ body {
   }
 
   /*** Main content termpage ***/
-  #concept-heading {
+  #concept-property-label {
     align-self: start;
     padding-top: 1.25rem;
   }
