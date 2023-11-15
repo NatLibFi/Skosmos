@@ -112,26 +112,27 @@
     skosmos:alphabeticalListQualifier skos:broader ;
     skosmos:sparqlGraph <http://www.skosmos.skos/test-qualified-broader/> .
 
-:test-with-little-yso a skosmos:Vocabulary, void:Dataset ;
-	  dc:title "Pikku-YSO (Arkeologia-ryhmä)"@fi,
-      "Lilla YSO (Arkeologi-gruppen)"@sv,
-      "Little YSO (Archeology Group)"@en ;
-	  dc:subject :cat_science ;
-	  dc:type mdrtype:ONTOLOGY ;
-	  void:dataDump <http://skosmos.skos/dump/test/test-with-little-yso.ttl> ;
-	  void:uriSpace "http://www.yso.fi/onto/yso/";
-	  skos:prefLabel "Test with default settings"@en ;
-	  skosmos:arrayClass isothes:ThesaurusArray ;
-	  skosmos:defaultLanguage "en";
-	  skosmos:feedbackRecipient "developer@vocabulary.org";
-	  skosmos:groupClass skos:Collection;
-	  skosmos:marcSourceCode "ysa/fi"@fi, "allärs/sv"@sv;
-	  skosmos:language "en";
-	  skosmos:showTopConcepts "true";
-	  skosmos:shortName "Test short",
-	  "TWDS lyhyt"@fi;
-	  skosmos:hasMultiLingualProperty <http://www.skosmos.skos/multiLingOn>;
-	  skosmos:sparqlGraph <http://www.skosmos.skos/little-yso/> .
+:yso a skosmos:Vocabulary, void:Dataset ;
+    dc:title "YSO - Yleinen suomalainen ontologia (arkeologia)"@fi,
+            "ALLFO - Allmän finländsk ontologi (arkeologi)"@sv,
+            "YSO - General Finnish ontology (archaeology)"@en,
+            "YSO - Almmolaš suopmelaš ontologiija (arkeologiija)"@se ;
+    dc:subject :cat_science ;
+    dc:type mdrtype:ONTOLOGY ;
+    void:dataDump <http://skosmos.skos/dump/test/yso.ttl> ;
+    void:uriSpace "http://www.yso.fi/onto/yso/";
+    skosmos:groupClass isothes:ConceptGroup;
+    skosmos:arrayClass isothes:ThesaurusArray ;
+    skosmos:defaultLanguage "fi";
+    skosmos:marcSourceCode "yso/fin"@fi, "yso/swe"@sv, "yso/eng"@en;
+    skosmos:language "fi", "sv", "se", "en";
+    skosmos:showTopConcepts "true";
+    skosmos:showChangeList "true" ;
+    skosmos:showDeprecatedChanges "true" ;
+    skosmos:showPropertyInSearch skos:note ;
+    skosmos:useModifiedDate "true";
+    skosmos:shortName "YSO"@fi, "ALLFO"@sv, "YSO"@en, "YSO"@se ;
+    skosmos:sparqlGraph <http://www.skosmos.skos/yso/> .
 
 :test-qualified-notation a skosmos:Vocabulary, void:Dataset ;
     dc:title "Test qualified alphabetical listing queries (skos:notation)"@en ;
