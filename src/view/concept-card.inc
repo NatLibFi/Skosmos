@@ -43,7 +43,7 @@
                 {% if value.type == "skos:prefLabel" and value.lang in request.vocab.config.languages %}
                 <li><a href='{{ concept.uri|link_url(request.vocabid,request.lang, 'page', value.lang) }}' hreflang='{{ value.lang }}'>{{ value.label }}</a></li>
                 {% else %}
-                <li>{{ value.label }}</li>
+                <li class="altlabel">{{ value.label }}</li>
                 {% endif %}
                 {% endfor %}
               </ul>
