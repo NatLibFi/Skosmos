@@ -41,7 +41,6 @@ describe('Concept page', () => {
     // check the definition text
     cy.get('.prop-skos_definition .reified-property-value').invoke('text').should('contain', 'The black sea bass')
   })
-
   it('contains broader concept', () => {
     cy.visit('/yso/en/page/p21685') // go to "music research" concept page
 
@@ -50,6 +49,57 @@ describe('Concept page', () => {
 
     // check the broader concept
     cy.get('.prop-skos_broader .property-value a').invoke('text').should('equal', 'research')
+  })
+  it('contains narrower concepts', () => {
+    cy.visit('/yso/en/page/p21685') // go to "music research" concept page
+
+    // check the property name
+    cy.get('.prop-skos_narrower .property-label').invoke('text').should('equal', 'Narrower concepts')
+
+    // check that we have the correct number of narrower concepts
+    cy.get('.prop-skos_narrower .property-value').find('li').should('have.length', 8)
+  })
+  it('contains related concepts', () => {
+    cy.visit('/yso/en/page/p21685') // go to "music research" concept page
+
+    // check the property name
+    cy.get('.prop-skos_related .property-label').invoke('text').should('equal', 'Related concepts')
+
+    // check that we have the correct number of related concepts
+    cy.get('.prop-skos_related .property-value').find('li').should('have.length', 3)
+  })
+  it('contains altLabels (entry terms)', () => {
+    cy.visit('/yso/en/page/p21685') // go to "music research" concept page
+
+    // check the property name
+    cy.get('.prop-skos_altLabel .property-label').invoke('text').should('equal', 'Entry terms')
+
+    // check that we have the correct number of altLabels
+    cy.get('.prop-skos_altLabel .property-value').find('li').should('have.length', 1)
+
+    // check the altLabel value
+    cy.get('.prop-skos_altLabel .property-value li').invoke('text').should('equal', 'musicology (research activity)')
+  })
+  it('contains groups', () => {
+    cy.visit('/yso/en/page/p38289') // go to "music archaeology" concept page
+
+    // check the property name
+    cy.get('.prop-skosmos_memberOf .property-label').invoke('text').should('equal', 'Belongs to group')
+
+    // check that we have the correct number of groups
+    cy.get('.prop-skosmos_memberOf .property-value').find('li').should('have.length', 1)
+
+    // check the first group value
+    cy.get('.prop-skosmos_memberOf .property-value a').invoke('text').should('equal', '51 Archaeology')
+  })
+  it('contains terms in other languages', () => {
+    cy.visit('/yso/en/page/p21685') // go to "music research" concept page
+
+    // check the property name
+    cy.get('.prop-foreignlabels .property-label').invoke('text').should('equal', 'In other languages')
+
+    // check that we have the correct number of languages
+    cy.get('#concept-other-languages').find('.row').should('have.length', 3)
   })
   it('contains concept URI', () => {
     cy.visit('/yso/en/page/p21685') // go to "music research" concept page

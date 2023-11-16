@@ -7,7 +7,7 @@
         <div class="col-sm-4 px-0" id="concept-property-label">{{ "skos:prefLabel" | trans }}</div>
         <div class="col-sm-8" id="concept-label">
           <h1 class="mb-0">{{ concept.label }}</h1>
-          <button class="btn btn-default copy-clipboard" type="button" data-bs-toggle="tooltip" data-bs-placement="button" title="{{ "Copy to clipboard" | trans }}" for="#pref-label">
+          <button class="btn btn-default copy-clipboard" type="button" data-bs-toggle="tooltip" data-bs-placement="button" title="{{ "Copy to clipboard" | trans }}">
           <i class="fa-regular fa-copy"></i>
           </button>
         </div>
@@ -25,7 +25,7 @@
             <li>{{ propval.label }}</li>
             {% endif %}
           {% endfor %}
-          </li>
+          </ul>
         </div>
       </div>
       {% endfor %}
@@ -34,16 +34,22 @@
       <div class="row property prop-foreignlabels">
         <div class="col-sm-4 px-0 property-label"><h2>{{ 'foreign prefLabels'|trans }}</h2></div>
         <div class="col-sm-8" id="concept-other-languages">
-            {% for language,labels in foreignLabels %}
-            {% for value in labels.prefLabel|default([])|merge(labels.altLabel|default([])) %}
-            {% if value.type == "skos:prefLabel" and value.lang in request.vocab.config.languages %}
-            <a class="label" href='{{ concept.uri|link_url(request.vocabid,request.lang, 'page', value.lang) }}' hreflang='{{ value.lang }}'>{{ value.label }}</a>
-            {% else %}
-            <span class="label">{{ value.label }}</span>
-            {% endif %}
-            {% if loop.first %}<span>{{ language }}</span>{% endif %}
-            {% endfor %}
-            {% endfor %}
+          {% for language,labels in foreignLabels %}
+          <div class="row">
+            <div class="col-sm-6 order-last"><h3>{{ language }}</h3></div>
+            <div class="col-sm-6">
+              <ul>
+                {% for value in labels.prefLabel|default([])|merge(labels.altLabel|default([])) %}
+                {% if value.type == "skos:prefLabel" and value.lang in request.vocab.config.languages %}
+                <li><a href='{{ concept.uri|link_url(request.vocabid,request.lang, 'page', value.lang) }}' hreflang='{{ value.lang }}'>{{ value.label }}</a></li>
+                {% else %}
+                <li>{{ value.label }}</li>
+                {% endif %}
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          {% endfor %}
         </div>
       </div>
       {% endif %}
@@ -64,5 +70,8 @@
 
     </div>
 
+  </div>
+  <!-- appendix / concept mapping properties -->
+  <div id="concept-mappings">
   </div>
 </div>

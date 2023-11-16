@@ -558,9 +558,9 @@ body {
     margin-bottom: 0;
   }
 
-  #concept-other-languages .label {
-    display: inline-block;
-    width: 50%;
+  .prop-foreignlabels h3 {
+    font-size: 1rem;
+    margin-bottom: 0;
   }
 
   #download-links li {
