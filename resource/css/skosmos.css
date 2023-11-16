@@ -276,7 +276,7 @@ body {
     font-size: 16px;
   }
 
-  #main-container h1, #main-container h2 {
+  #main-container h1 {
     font-family: var(--font-family-heading);
     font-weight: bold;
   }
@@ -506,9 +506,10 @@ body {
     padding: .5rem 0;
   }
 
-  .property-label {
+  .property-label h2 {
     font-weight: bold;
     font-size: 20px !important;
+    margin-bottom: 0;
   }
 
   .property-value {
@@ -537,7 +538,7 @@ body {
     padding-top: 1.25rem;
   }
 
-  #concept-label h2 {
+  #concept-label h1 {
     float: left;
   }
 
@@ -560,6 +561,10 @@ body {
   #concept-other-languages .label {
     display: inline-block;
     width: 50%;
+  }
+
+  #download-links li {
+    display: inline-block;
   }
 
   /***** Main content searchpage & searchpage multi vocab *****/

@@ -6,7 +6,7 @@
       <div class="row" id="concept-heading">
         <div class="col-sm-4 px-0" id="concept-property-label">{{ "skos:prefLabel" | trans }}</div>
         <div class="col-sm-8" id="concept-label">
-          <h2 class="mb-0">{{ concept.label }}</h2>
+          <h1 class="mb-0">{{ concept.label }}</h1>
           <button class="btn btn-default copy-clipboard" type="button" data-bs-toggle="tooltip" data-bs-placement="button" title="{{ "Copy to clipboard" | trans }}" for="#pref-label">
           <i class="fa-regular fa-copy"></i>
           </button>
@@ -15,7 +15,7 @@
 
       {% for property in concept.properties %}
       <div class="row property prop-{{property.ID}}">
-        <div class="col-sm-4 px-0 property-label">{{ property.label }}</div>
+        <div class="col-sm-4 px-0 property-label"><h2>{{ property.label}}</h2></div>
         <div class="col-sm-8 align-self-center property-value">
           <ul class="align-bottom">
           {% for propval in property.values %}
@@ -32,7 +32,7 @@
       {% set foreignLabels = concept.foreignLabels %}
       {% if foreignLabels %}
       <div class="row property prop-foreignlabels">
-        <div class="col-sm-4 px-0 property-label">{{ 'foreign prefLabels'|trans }}</div>
+        <div class="col-sm-4 px-0 property-label"><h2>{{ 'foreign prefLabels'|trans }}</h2></div>
         <div class="col-sm-8" id="concept-other-languages">
             {% for language,labels in foreignLabels %}
             {% for value in labels.prefLabel|default([])|merge(labels.altLabel|default([])) %}
@@ -48,15 +48,17 @@
       </div>
       {% endif %}
       <div class="row property prop-uri">
-        <div class="col-sm-4 px-0 property-label">URI</div>
+        <div class="col-sm-4 px-0 property-label"><h2>URI</h2></div>
         <div class="col-sm-8" id="concept-uri"><a href="#">{{ concept.uri }}</a></div>
       </div>
       <div class="row property prop-download">
-        <div class="col-sm-4 px-0 property-label"><i class="fa-solid fa-download"></i> {{ "Download this concept" | trans }}</div>
+        <div class="col-sm-4 px-0 property-label"><h2><i class="fa-solid fa-download"></i> {{ "Download this concept" | trans }}</h2></div>
         <div class="col-sm-8" id="download-links">
-          <a class="me-3" href="rest/v1/{% if concept.vocab %}{{ concept.vocab.id }}{% else %}{{ vocab.id }}{% endif %}/data?uri={{ concept.uri|url_encode }}&amp;format=application/rdf%2Bxml">RDF/XML</a>
-          <a class="me-3" href="rest/v1/{% if concept.vocab %}{{ concept.vocab.id }}{% else %}{{ vocab.id }}{% endif %}/data?uri={{ concept.uri|url_encode }}&amp;format=text/turtle">TURTLE</a>
-          <a href="rest/v1/{% if concept.vocab %}{{ concept.vocab.id }}{% else %}{{ vocab.id }}{% endif %}/data?uri={{ concept.uri|url_encode }}&amp;format=application/ld%2Bjson">JSON-LD</a>
+          <ul>
+            <li><a class="me-3" href="rest/v1/{% if concept.vocab %}{{ concept.vocab.id }}{% else %}{{ vocab.id }}{% endif %}/data?uri={{ concept.uri|url_encode }}&amp;format=application/rdf%2Bxml">RDF/XML</a></li>
+            <li><a class="me-3" href="rest/v1/{% if concept.vocab %}{{ concept.vocab.id }}{% else %}{{ vocab.id }}{% endif %}/data?uri={{ concept.uri|url_encode }}&amp;format=text/turtle">TURTLE</a></li>
+            <li><a href="rest/v1/{% if concept.vocab %}{{ concept.vocab.id }}{% else %}{{ vocab.id }}{% endif %}/data?uri={{ concept.uri|url_encode }}&amp;format=application/ld%2Bjson">JSON-LD</a></li>
+          </ul>
         </div>
       </div>
 

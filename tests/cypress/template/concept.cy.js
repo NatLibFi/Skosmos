@@ -6,7 +6,7 @@ describe('Concept page', () => {
     cy.get('#vocab-title > a').invoke('text').should('equal', 'YSO - General Finnish ontology (archaeology)')
 
     // check the concept prefLabel
-    cy.get('#concept-heading h2').invoke('text').should('equal', 'music research')
+    cy.get('#concept-heading h1').invoke('text').should('equal', 'music research')
   })
   it('contains concept type', () => {
     cy.visit('/yso/en/page/p21685') // go to "music research" concept page
