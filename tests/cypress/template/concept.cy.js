@@ -110,4 +110,11 @@ describe('Concept page', () => {
     // check the broader concept
     cy.get('#concept-uri').invoke('text').should('equal', 'http://www.yso.fi/onto/yso/p21685')
   })
+  it('contains mappings', () => {
+    cy.visit('/yso/en/page/p21685') // go to "music research" concept page
+
+    // check that we have some mappings
+    cy.get('#concept-mappings').should('not.be.empty')
+
+  })
 })
