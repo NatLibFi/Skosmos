@@ -16,7 +16,7 @@ CORS(app)
 
 api_base_url = 'https://api.dev.finto.fi/rest/v1/' #'https://vocabularies.unesco.org/browser/rest/v1/'
 
-def jsonpify(obj):
+def _jsonpify(obj):
     """
     Helper to support JSONP
     """
@@ -28,8 +28,46 @@ def jsonpify(obj):
     except KeyError:
         return jsonify(obj)
 
+def _make_sparql_query(data, query):
+    g=rdflib.Graph()
+    g.parse(data=data, format="xml")
 
-def search(raw_query, vocid, limit, lang, query_type=""):
+    qres = g.query(query)
+
+    res = []
+    for row in qres:
+        d = {}
+        for l in row.labels:
+            d[l] = str(row[l])
+        res += [d]
+
+    return res
+
+def _get_properties():
+    return [
+        {
+            'id': "uri",
+            'name': "URI"
+        },
+        {
+            'id': "narrower",
+            'name': "narrower"
+        },
+        {
+            'id': "broader",
+            'name': "broader"
+        },
+        {
+            'id': "altLabel",
+            'name': "altLabels"
+        },
+        {
+            'id': "prefLabel",
+            'name': "prefLabels in other languages"
+        },
+    ]
+
+def _search(raw_query, vocid, limit, lang, query_type=""):
     print('search', raw_query, query_type)
 
     params = {'query': raw_query + "*", 'maxhits': limit, 'type': query_type, 'unique': "true", 'lang': lang}
@@ -47,7 +85,7 @@ def search(raw_query, vocid, limit, lang, query_type=""):
     return results
 
 
-def metadata(vocid, lang):
+def _metadata(vocid, lang):
     vocab = requests.get(api_base_url + vocid + "/", params={'lang': lang})
     title = vocab.json()['title']
     concept_schemes = vocab.json()['conceptschemes']
@@ -58,7 +96,7 @@ def metadata(vocid, lang):
                     for type in types]
 
     service_metadata = {
-        'name': "Reconciliation service for " + title,
+        'name': "Reconciliation service for " + title + " (" + lang + ")",
         'identifierSpace': concept_schemes[0]['uri'],
         'schemaSpace': "",
         'defaultTypes': query_types,
@@ -75,45 +113,135 @@ def metadata(vocid, lang):
             'url': request.url_root + vocid + "/" + lang + "/reconcile/preview?id={{id}}",
             'width': 300,
             'height': 100
+        },
+        'extend': {
+            'property_settings': [
+                {
+                    'name': "limit",
+                    'label': "Limit",
+                    'type': "number",
+                    'default': 0,
+                    'help_text': "Maximum number of values to return per row"
+                }
+            ],
+            'propose_properties': {
+                'service_path': "/propose_properties",
+                'service_url': request.url_root + vocid + "/" + lang + "/reconcile"
+            }
         }
     }
 
-    return service_metadata
+    return _jsonpify(service_metadata)
 
-def sparql_query(data, query):
-    g=rdflib.Graph()
-    g.parse(data=data, format="xml")
+def _reconcile(queries, vocid, lang):
+    queries = json.loads(queries)
+    results = {}
+    for (key, query) in queries.items():
+        qtype = query.get('type')
+        limit = query.get('limit')
+        data = _search(query['query'], vocid=vocid, limit=limit, lang=lang, query_type=qtype)
+        results[key] = {'result': data}
+    return _jsonpify(results)
 
-    qres = g.query(query)
+def _extend(extend, vocid, lang):
+    extend = json.loads(extend)
 
-    res = []
-    for row in qres:
-        d = {}
-        for l in row.labels:
-            d[l] = str(row[l])
-        res += [d]
+    rows = {}
+    for uri in extend['ids']:
+        params = {'uri': uri, 'lang': lang, 'format': "application/rdf+xml"}
+        data = requests.get(api_base_url + vocid + "/data", params=params).text
 
-    return res
+        result = {}
+        for prop in extend['properties']:
+            limit = int(prop.get('settings').get('limit')) if prop.get('settings') else None
+
+            if prop['id'] == 'uri':
+                result[prop['id']] = [{'str': uri}]
+
+            elif prop['id'] == 'narrower':
+                query = """
+                    PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+                    SELECT ?label (?narrower as ?uri)
+                    WHERE {
+                        <%s> skos:narrower ?narrower .
+                        ?narrower skos:prefLabel ?label .
+
+                        FILTER (lang(?label) = '%s')
+                    }
+                """ % (uri, lang)
+                narrower = _make_sparql_query(data, query)
+                result[prop['id']] = [{"id": n["uri"], "name": n["label"]} for n in narrower[:limit]]
+
+            elif prop['id'] == 'broader':
+                query = """
+                    PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+                    SELECT ?label (?broader as ?uri)
+                    WHERE {
+                        <%s> skos:broader ?broader .
+                        ?broader skos:prefLabel ?label .
+
+                        FILTER (lang(?label) = '%s')
+                    }
+                """ % (uri, lang)
+                broader = _make_sparql_query(data, query)
+                result[prop['id']] = [{"id": b["uri"], "name": b["label"]} for b in broader[:limit]]
+
+            elif prop['id'] == 'altLabel':
+                query = """
+                    PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+                    SELECT ?label
+                    WHERE {
+                        <%s> skos:altLabel ?label .
+
+                        FILTER (lang(?label) = '%s')
+                    }
+                """ % (uri, lang)
+                alt = _make_sparql_query(data, query)
+                result[prop['id']] = [{"str": a["label"]} for a in alt[:limit]]
+
+            elif prop['id'] == 'prefLabel':
+                query = """
+                    PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+                    SELECT ?label (lang(?label) as ?lang)
+                    WHERE {
+                        <%s> skos:prefLabel ?label .
+
+                        FILTER (lang(?label) != '%s')
+                    }
+                """ % (uri, lang)
+                pref = _make_sparql_query(data, query)
+                result[prop['id']] = [{"str": l["label"]} for l in pref[:limit]]
+            
+        rows[uri] = result
+
+    meta = []
+    for p in _get_properties():
+        if {'id': p['id']} in extend['properties']:
+            meta += [p]
+
+    ret = {"meta": meta, "rows": rows}
+    
+    return _jsonpify(ret)
 
 @app.route("/<vocid>/<lang>/reconcile", methods=['POST', 'GET'])
 def reconcile(lang, vocid):
-    # If a 'queries' parameter is supplied then it is a dictionary
-    # of (key, query) pairs representing a batch of queries. We
-    # should return a dictionary of (key, results) pairs.
+    # If a 'queries' parameter is supplied, it is a dictionary
+    # of (key, query) pairs representing a batch of queries.
+    # Returns a dictionary of (key, results) pairs.
     queries = request.form.get('queries') if request.form.get('queries') else request.args.get('queries')
+    # If a 'extend' parameter is supplied, it is a dictionary
+    # with a list of entity uris and a list of properties
+    # Returns a dictionary with a list of properties and a dictionary of (uri, property_value) pairs.
+    extend = request.form.get('extend') if request.form.get('extend') else request.args.get('extend')
 
     if queries:
-        queries = json.loads(queries)
-        results = {}
-        for (key, query) in queries.items():
-            qtype = query.get('type')
-            limit = query.get('limit')
-            data = search(query['query'], vocid=vocid, limit=limit, lang=lang, query_type=qtype)
-            results[key] = {'result': data}
-        return jsonpify(results)
-    # If no 'queries' parameter is supplied then
-    # we should return the service metadata.
-    return jsonpify(metadata(vocid, lang))
+        return _reconcile(queries, vocid, lang)
+    elif extend:
+        return _extend(extend, vocid, lang)
+    else:
+    # If no 'queries' or 'extend' parameter is supplied,
+    # return the service metadata.
+        return _metadata(vocid, lang)
 
 @app.route("/<vocid>/<lang>/reconcile/suggest/entity", methods=['GET'])
 def suggest(vocid, lang):
@@ -121,10 +249,26 @@ def suggest(vocid, lang):
     cursor = int(request.args.get('cursor')) if request.args.get('cursor') else 0
     limit = cursor + 20
 
-    result = search(prefix, vocid=vocid, limit=limit, lang=lang)
+    result = _search(prefix, vocid=vocid, limit=limit, lang=lang)
 
     results = [{'id': res['id'], 'name': res['name'], 'notable': res['type']} for res in result]
     return {'result': results[cursor:]}
+
+@app.route("/<vocid>/<lang>/reconcile/propose_properties", methods=['GET'])
+def propose_properties(vocid, lang):
+    qtype = request.args.get('type')
+    limit = int(request.args.get('limit')) if request.args.get('limit') else None
+
+    properties = _get_properties()
+
+    ret = {
+        "type": qtype,
+        "properties": properties[:limit]
+    }
+    if (limit):
+        ret['limit'] = limit
+
+    return ret
 
 @app.route("/<vocid>/<lang>/reconcile/preview", methods=['GET'])
 def preview(vocid, lang):
@@ -145,7 +289,7 @@ def preview(vocid, lang):
             FILTER (lang(?label) = '%s')
         }
     """ % (uri, lang)
-    context['pref_label'] = sparql_query(data, pref_label_query)
+    context['pref_label'] = _make_sparql_query(data, pref_label_query)
 
     other_pref_labels_query = """
         PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
@@ -156,7 +300,7 @@ def preview(vocid, lang):
             FILTER (lang(?label) != '%s')
         }
     """ % (uri, lang)
-    context['other_pref_labels'] = sparql_query(data, other_pref_labels_query)
+    context['other_pref_labels'] = _make_sparql_query(data, other_pref_labels_query)
 
     alt_labels_query = """
         PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
@@ -167,7 +311,7 @@ def preview(vocid, lang):
             FILTER (lang(?label) = '%s')
         }
     """ % (uri, lang)
-    context['alt_labels'] = sparql_query(data, alt_labels_query)
+    context['alt_labels'] = _make_sparql_query(data, alt_labels_query)
 
     broader_query = """
         PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
@@ -179,7 +323,7 @@ def preview(vocid, lang):
             FILTER (lang(?label) = '%s')
         }
     """ % (uri, lang)
-    context['broader'] = sparql_query(data, broader_query)
+    context['broader'] = _make_sparql_query(data, broader_query)
 
     narrower_query = """
         PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
@@ -191,7 +335,7 @@ def preview(vocid, lang):
             FILTER (lang(?label) = '%s')
         }
     """ % (uri, lang)
-    context['narrower'] = sparql_query(data, narrower_query)
+    context['narrower'] = _make_sparql_query(data, narrower_query)
 
     definition_query = """
         PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
@@ -202,16 +346,7 @@ def preview(vocid, lang):
             FILTER (lang(?definition) = '%s')
         }
     """ % (uri, lang)
-    context['definition'] = sparql_query(data, definition_query)
-
-    exact_match_query = """
-        PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
-        SELECT (?exact_match as ?uri)
-        WHERE {
-            <%s> skos:exactMatch ?exact_match .
-        }
-    """ % (uri)
-    context['exact_match'] = sparql_query(data, exact_match_query)
+    context['definition'] = _make_sparql_query(data, definition_query)
 
     print(json.dumps(context, indent=2))
     
