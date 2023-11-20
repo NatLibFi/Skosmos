@@ -78,8 +78,8 @@ def _search(raw_query, vocid, limit, lang, query_type=""):
                 'score': 1,
                 'match': res['prefLabel'] == raw_query,
                 'type': [{
-                    'id': type.replace('skos:', 'http://www.w3.org/2004/02/skos/core#'),
-                    'name': type.replace('skos:', 'http://www.w3.org/2004/02/skos/core#')
+                    'id': type,
+                    'name': type
                 } for type in res['type']]}
             for res in search_results]
     return results
@@ -139,8 +139,8 @@ def _reconcile(queries, vocid, lang):
     for (key, query) in queries.items():
         qtype = query.get('type')
         limit = query.get('limit')
-        data = _search(query['query'], vocid=vocid, limit=limit, lang=lang, query_type=qtype)
-        results[key] = {'result': data}
+        result = _search(query['query'], vocid=vocid, limit=limit, lang=lang, query_type=qtype)
+        results[key] = {'result': result}
     return _jsonpify(results)
 
 def _extend(extend, vocid, lang):
@@ -252,7 +252,7 @@ def suggest(vocid, lang):
     result = _search(prefix, vocid=vocid, limit=limit, lang=lang)
 
     results = [{'id': res['id'], 'name': res['name'], 'notable': res['type']} for res in result]
-    return {'result': results[cursor:]}
+    return _jsonpify({'result': results[cursor:]})
 
 @app.route("/<vocid>/<lang>/reconcile/propose_properties", methods=['GET'])
 def propose_properties(vocid, lang):
@@ -268,7 +268,7 @@ def propose_properties(vocid, lang):
     if (limit):
         ret['limit'] = limit
 
-    return ret
+    return _jsonpify(ret)
 
 @app.route("/<vocid>/<lang>/reconcile/preview", methods=['GET'])
 def preview(vocid, lang):
