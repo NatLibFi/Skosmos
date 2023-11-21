@@ -587,7 +587,7 @@ body {
 
   .main-content-section {
     background-color: var(--vocab-bg);
-    border-bottom: 2px solid var(--main-bg-2);
+    margin-bottom: 3px;
   }
 
   #concept-heading {
