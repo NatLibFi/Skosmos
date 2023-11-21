@@ -376,7 +376,7 @@ body {
     font-weight: bold;
   }
 
-  #sidebar, #main-content {
+  #sidebar {
     background-color: var(--vocab-bg);
   }
 
@@ -494,6 +494,7 @@ body {
   }
 
   .main-content-section {
+    background-color: var(--vocab-bg);
     border-bottom: 2px solid var(--main-bg-2);
   }
 
