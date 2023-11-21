@@ -25,7 +25,7 @@ class RestController extends Controller
         // wrap with JSONP callback if requested
         if (filter_input(INPUT_GET, 'callback', FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
             header("Content-type: application/javascript; charset=utf-8");
-            echo filter_input(INPUT_GET, 'callback', FILTER_UNSAFE_RAW) . "(" . json_encode($data) . ");";
+            echo filter_input(INPUT_GET, 'callback', FILTER_SANITIZE_FULL_SPECIAL_CHARS) . "(" . json_encode($data) . ");";
             return;
         }
 
