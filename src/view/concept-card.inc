@@ -19,7 +19,7 @@
         <div class="col-sm-8 align-self-center property-value">
           <ul class="align-bottom">
           {% for propval in property.values %}
-            {% if propval.uri %} {# resources with URI #}
+            {% if propval.uri and property.type != 'rdf:type' %} {# resources with URI #}
             <li><a href="{{ propval.uri | link_url(propval.vocab, request.lang, 'page', request.contentLang) }}">{% if propval.notation %}<span class="versal">{{ propval.notation }}</span> {% endif %}{{ propval.label(request.contentLang) }}</a></li>
             {% else %} {# literals, e.g. altLabels #}
             <li>{{ propval.label }}</li>

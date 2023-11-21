@@ -15,7 +15,7 @@ describe('Concept page', () => {
     cy.get('.prop-rdf_type .property-label').invoke('text').should('equal', 'Type')
 
     // check the concept type
-    cy.get('.prop-rdf_type .property-value a').invoke('text').should('equal', 'General concept')
+    cy.get('.prop-rdf_type .property-value li').invoke('text').should('equal', 'General concept')
   })
   it('contains definition in Finnish', () => {
     cy.visit('/yso/en/page/p21685?clang=fi') // go to "music research" concept page (Finnish content language)
