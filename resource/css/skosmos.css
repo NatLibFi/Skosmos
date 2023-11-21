@@ -13,6 +13,12 @@
   --feedback-form-button-bg: var(--dark-color);
   --sidebar-search-bg: var(--dark-color);
   --sidebar-search-text: var(--white-color);
+  --sidebar-tab-inactive-bg: var(--light-color);
+  --sidebar-tab-inactive-text: var(--dark-color);
+  --sidebar-tab-active-bg: var(--dark-color);
+  --sidebar-tab-active-text: var(--white-color);
+  --sidebar-scrollbar-bg: var(--light-color);
+  --sidebar-scrollbar-thumb: var(--secondary-medium-color);
   --vocab-bg: var(--white-color);
   --vocab-table-border: var(--medium-color);
   --vocab-link: var(--secondary-dark-color);
@@ -70,6 +76,7 @@ body {
   #main-container.vocabpage .fa-arrow-right, #main-container.termpage .fa-arrow-right {
     color: var(--vocab-text);
     font-size: 12px;
+    margin: 0 5px;
   }
 
   #main-container.termpage .fa-copy {
@@ -377,12 +384,25 @@ body {
   }
 
   /*** Sidebar termpage & vocabpage ***/
-  #main-container.vocabpage #sidebar .nav-item, #main-container.termpage #sidebar .nav-item {
+  #main-container.vocabpage #sidebar-col, #main-container.termpage #sidebar-col {
+    background-color: var(--vocab-bg);
+    background-clip: content-box, padding-box;
+  }
+
+  #main-container.vocabpage #sidebar, #main-container.termpage #sidebar {
+    background-color: var(--vocab-bg);
+  }
+
+  #main-container.vocabpage #sidebar .nav, #main-container.termpage #sidebar .nav {
     background-color: var(--sidebar-tab-inactive-bg);
   }
 
   #main-container.vocabpage #sidebar .nav-link, #main-container.termpage #sidebar .nav-link {
     color: var(--sidebar-tab-inactive-text) !important;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: none;
   }
 
@@ -407,45 +427,50 @@ body {
     border-radius: 0 !important;
     margin: 0 !important;
     transition: none;
+    width: 35px;
   }
 
-  /* Not sure what these should be, probably something though */
-  #main-container.vocabpage #sidebar .page-link:hover, #main-container.vocabpage #sidebar .page-link:active, #main-container.vocabpage #sidebar .page-link:focus
+  #main-container.vocabpage #sidebar .page-link, #main-container.termpage #sidebar .page-link {
+    display: flex;
+    align-content: center;
+    text-align: center;
+  }
+
+  /* what to do with these */
+  #main-container.vocabpage #sidebar .page-link:hover, #main-container.vocabpage #sidebar .page-link:active, #main-container.vocabpage #sidebar .page-link:focus,
   #main-container.termpage #sidebar .page-link:hover, #main-container.termpage #sidebar .page-link:active, #main-container.termpage #sidebar .page-link:focus {
     background-color: var(--sidebar-tab-active-bg);
     color: var(--sidebar-tab-active-text);
     box-shadow: none;
   }
 
-  #alpha-list {
+  .sidebar-list {
     padding: 2rem 1rem;
-    overflow: hidden;
     overflow-y: scroll;
     scrollbar-color: var(--sidebar-scrollbar-thumb) var(--sidebar-scrollbar-bg);
-    height: 600px; /*remove*/
+    max-height: 1000px; /* needs to be changed */
   }
 
-  #alpha-list::-webkit-scrollbar {
+  .sidebar-list::-webkit-scrollbar {
     background: var(--sidebar-scrollbar-bg);
   }
 
-  #alpha-list::-webkit-scrollbar-thumb {
+  .sidebar-list::-webkit-scrollbar-thumb {
     background: var(--sidebar-scrollbar-thumb);
   }
 
-  #alpha-list li {
+  .sidebar-list li {
     border: none;
     border-radius: none;
   }
 
-  #alpha-list .list-group-item.selected a {
-    color: var(--vocab-text);
-    font-size: 18px;
+  .sidebar-list a {
+    font-weight: bold !important;
   }
 
-  #tab-hierarchy {
-    background-color: var(--sidebar-tab-active-bg);
-    color: var(--sidebar-tab-active-text);
+  .sidebar-list .list-group-item a.selected {
+    color: var(--vocab-text) !important;
+    font-weight: bold !important;
   }
 
   /*** sidebar serachpage ***/
@@ -698,12 +723,14 @@ body {
   #alphabetical-menu > .list-group > .list-group-item {
     border: none !important;
   }
+  
+  /*** Sidebar ***/
+  /*
   #sidebar > div > .nav-tabs > .nav-item {
     border: none !important;
     border-image: none !important;
     transition: none;
   }
-  /*** Sidebar ***/
   #sidebar .nav-item {
     background-color: var(--light-color);
   }
@@ -749,6 +776,7 @@ body {
     margin: 0 !important;
     transition: none;
   }
+  */
   tr > td {
     color: var(--dark-color);
   }

@@ -6,7 +6,8 @@ const tabHierApp = Vue.createApp({
   data () {
     return {
       hierarchy: [],
-      loading: false
+      loading: false,
+      selectedConcept: ''
     }
   },
   provide () {
@@ -121,6 +122,7 @@ const tabHierApp = Vue.createApp({
           }
 
           this.loading = false
+          this.selectedConcept = SKOSMOS.uri
           console.log(this.hierarchy)
         })
     },
@@ -143,9 +145,14 @@ const tabHierApp = Vue.createApp({
   },
   template: `
     <div v-click-tab-hierarchy="handleClickHierarchyEvent">
-      <ul v-if="!loading">
+      <ul class="list-group sidebar-list" v-if="!loading">
         <template v-for="c in hierarchy">
-          <tab-hier :concept="c" @load-children="loadChildren($event)"></tab-hier>
+          <tab-hier
+            :concept="c"
+            :selectedConcept="selectedConcept"
+            @load-children="loadChildren($event)"
+            @select-concept="selectedConcept = $event"
+          ></tab-hier>
         </template>
       </ul>
       <template v-else>Loading...</template><!-- Add a spinner or equivalent -->
@@ -166,8 +173,8 @@ tabHierApp.directive('click-tab-hierarchy', {
 })
 
 tabHierApp.component('tab-hier', {
-  props: ['concept'],
-  emits: ['loadChildren'],
+  props: ['concept', 'selectedConcept'],
+  emits: ['loadChildren', 'selectConcept'],
   inject: ['partialPageLoad', 'getConceptURL'],
   methods: {
     handleClickOpenEvent (concept) {
@@ -177,23 +184,34 @@ tabHierApp.component('tab-hier', {
     handleClickConceptEvent (event, concept) {
       concept.isOpen = true
       this.$emit('loadChildren', concept)
+      this.$emit('selectConcept', concept.uri)
       this.partialPageLoad(event, this.getConceptURL(concept.uri))
     },
     loadChildrenRecursive (concept) {
       this.$emit('loadChildren', concept)
+    },
+    selectConceptRecursive (concept) {
+      this.$emit('selectConcept', concept)
     }
   },
   template: `
-    <li>
+    <li class="list-group-item">
       <div>
         <button v-if="concept.hasChildren" @click="handleClickOpenEvent(concept)"></button>
-        <a :href="getConceptURL(concept.uri)" @click="handleClickConceptEvent($event, concept)">
-          {{ concept.label }}
-        </a>
+        <a 
+          :class="{ 'selected': selectedConcept === concept.uri }"
+          :href="getConceptURL(concept.uri)"
+          @click="handleClickConceptEvent($event, concept)"
+        >{{ concept.label }}</a>
       </div>
-      <ul v-if="concept.children.length !== 0 && concept.isOpen">
+      <ul class="list-group" v-if="concept.children.length !== 0 && concept.isOpen">
         <template v-for="c in concept.children">
-          <tab-hier :concept="c" @load-children="loadChildrenRecursive($event)"></tab-hier>
+          <tab-hier
+            :concept="c"
+            :selectedConcept="selectedConcept"
+            @load-children="loadChildrenRecursive($event)"
+            @select-concept="selectConceptRecursive($event)"
+          ></tab-hier>
         </template>
       </ul>
     </li>

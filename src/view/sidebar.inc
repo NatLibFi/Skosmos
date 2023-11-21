@@ -1,5 +1,5 @@
-<div class="col-md-4">
-  <div class="bg-light" id="sidebar">
+<div class="col-md-4" id="sidebar-col">
+  <div id="sidebar">
   {% block sidebar %}
     <div class="sidebar-buttons">
       <h2 class="visually-hidden">{{'Sidebar listing: list and traverse vocabulary contents by a criterion' | trans}}</h2>
@@ -33,9 +33,7 @@
         {# active_class is used to set initial active tab #}
         {# On vocab page active tab is set to defaultSidebarView, on concept page active tab is set to defaultConceptSidebarView #}
         {% set active_class = (request.page == 'vocab' and view == vocab.config.defaultSidebarView) or (request.page == 'page' and view == vocab.config.defaultConceptSidebarView) %}
-        <div class="tab-pane{% if active_class %} active{% endif %}" id="tab-{{ view }}" role="tabpanel">
-          {{ view }} {# should be removed #}
-        </div>
+        <div class="tab-pane{% if active_class %} active{% endif %}" id="tab-{{ view }}" role="tabpanel"></div>
       {% endfor %}
     </div>
 
