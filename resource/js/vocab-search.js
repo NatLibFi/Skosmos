@@ -11,29 +11,28 @@ const vocabSearch = Vue.createApp({
     }
   },
   mounted () {
-      this.languages = SKOSMOS.languageOrder
-      this.selectedLanguage = SKOSMOS.content_lang
+    this.languages = SKOSMOS.languageOrder
+    this.selectedLanguage = SKOSMOS.content_lang
   },
   methods: {
-    autoComplete() {
-      if (!this.searchTerm) return;
-      console.log("Auto complete: " + this.searchTerm)
+    autoComplete () {
+      if (!this.searchTerm) return
+      console.log('Auto complete: ' + this.searchTerm)
     },
-    gotoSearchPage() {
-        if (!this.searchTerm) return;
+    gotoSearchPage () {
+      if (!this.searchTerm) return
 
-        var currentVocab = SKOSMOS.vocab + "/" + SKOSMOS.lang + "/"
-        var vocabHref = window.location.href.substring(0, window.location.href.lastIndexOf(SKOSMOS.vocab)) + currentVocab
-        var langParam = "&clang=" + SKOSMOS.content_lang
-        if (this.selectedLanguage == 'all') langParam += "&anylang=on"
-        var searchUrl = vocabHref + "search?q=" + this.searchTerm + langParam
+      const currentVocab = SKOSMOS.vocab + '/' + SKOSMOS.lang + '/'
+      const vocabHref = window.location.href.substring(0, window.location.href.lastIndexOf(SKOSMOS.vocab)) + currentVocab
+      let langParam = '&clang=' + SKOSMOS.content_lang
+      if (this.selectedLanguage === 'all') langParam += '&anylang=on'
+      const searchUrl = vocabHref + 'search?q=' + this.searchTerm + langParam
 
-        location.href = searchUrl;
+      window.location.href = searchUrl
     },
-    changeLang() {
-        console.log(this.selectedLanguage);
-        // Partial page load to change content language
-        return;
+    changeLang () {
+      console.log(this.selectedLanguage)
+      // Partial page load to change content language
     }
   },
   template: `
