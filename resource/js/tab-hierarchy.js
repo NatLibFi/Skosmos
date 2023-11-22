@@ -205,7 +205,7 @@ tabHierApp.component('tab-hier', {
       >
         <i>{{ concept.isOpen ? '&#x25E2;' : '&#x25FF;' }}</i>
       </button>
-      <span :class="{ 'last': isLast, 'open': concept.isOpen }">
+      <span :class="{ 'last': isLast }">
         <a :class="{ 'selected': selectedConcept === concept.uri }"
           :href="getConceptURL(concept.uri)"
           @click="handleClickConceptEvent($event, concept)"

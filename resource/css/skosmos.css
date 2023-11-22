@@ -447,7 +447,7 @@ body {
 
   .sidebar-list {
     padding: 2rem 1rem;
-    overflow-y: scroll;
+    overflow: auto;
     scrollbar-color: var(--sidebar-scrollbar-thumb) var(--sidebar-scrollbar-bg);
     max-height: 1000px; /* needs to be changed */
   }
@@ -491,23 +491,20 @@ body {
     content: '';
     position: absolute;
     left: 16px;
-    bottom: 0;
+    top: 0;
     width: 10px;
-    height: 50%;
-    border-top: 1px dashed var(--vocab-text);
+    height: 13px;
+    border-bottom: 1px dashed var(--vocab-text);
   }
 
   /* hiding bottom of vertical line on last concept of list */
   #tab-hierarchy .sidebar-list .list-group-item span.last::before {
+    top: auto;
+    bottom: 0;
+    height: calc(100% - 13px);
     border-left: 1px solid var(--vocab-bg);
-  }
-
-  /* horizontal line before opened concept */
-  #tab-hierarchy .sidebar-list .list-group-item span.open::before {
-    top: 0;
-    height: 13px;
-    border-bottom: 1px dashed var(--vocab-text);
-    border-top: none;
+    border-top: 1px dashed var(--vocab-text);
+    border-bottom: none;
   }
 
   #tab-hierarchy .sidebar-list .list-group-item a.selected {
