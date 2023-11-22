@@ -43,6 +43,14 @@ const SKOSMOS = {
 <!-- Bootstrap -->
 <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
 
+<!-- Enable Bootstrap popovers -->
+<script>
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+      return new bootstrap.Popover(popoverTriggerEl)
+    })
+</script>
+
 <!-- Vue.js -->
 <script src="node_modules/vue/dist/vue.global.js"></script>
 

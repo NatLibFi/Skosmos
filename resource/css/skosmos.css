@@ -19,6 +19,11 @@
   --sidebar-tab-active-text: var(--white-color);
   --sidebar-scrollbar-bg: var(--light-color);
   --sidebar-scrollbar-thumb: var(--secondary-medium-color);
+  --search-bg: var(--white-color);
+  --search-border: var(--dark-color);
+  --search-button-bg: var(--dark-color);
+  --search-button-text: var(--white-color);
+  --search-dropdown-toggle-hover: var(--light-color);
   --vocab-bg: var(--white-color);
   --vocab-text: var(--dark-color);
   --vocab-table-border: var(--medium-color);
@@ -205,17 +210,17 @@ body {
     font-family: var(--font-family-heading);
   }
 
-  #search-vocab {
-    width: 600px;
-  }
-
   #search-multi-vocab {
     width: 800px;
   }
 
-  #search-vocab a, #search-multi-vocab a {
+  #search-wrapper {
     color: var(--headerbar-text-2);
     float: right;
+}
+
+  #search-wrapper select, input, button {
+    height: 100%;
   }
 
   #headerbar .dropdown-toggle {
@@ -223,15 +228,7 @@ body {
     color: var(--headerbar-text-2);
     border: 1px solid var(--search-border);
     border-radius: 0;
-    width: 200px;
-  }
-
-  #headerbar .dropdown-toggle::after {
-    content: '﹀';
-    border: none;
-    position: absolute;
-    top: 13px;
-    margin-left: 6px;
+    width: 100px;
   }
 
   #headerbar .dropdown-toggle:hover, #headerbar .dropdown-toggle:active {
