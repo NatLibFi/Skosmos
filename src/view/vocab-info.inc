@@ -1,5 +1,5 @@
 <div class="col-md-8" id="main-content"> <!-- id for partial page load -->
-  <div class="bg-light py-5 px-5" id="vocab-info">
+  <div class="main-content-section py-5 px-5" id="vocab-info">
     <h2 class="fw-bold fs-3 py-4">{{ "Vocabulary information" | trans }}</h2>
     {% set vocabInfo = vocab.info(request.contentLang) %}
     {% if not vocabInfo %}
