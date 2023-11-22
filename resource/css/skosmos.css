@@ -791,59 +791,6 @@ body {
     border: none !important;
   }
   
-  /*** Sidebar ***/
-  /*
-  #sidebar > div > .nav-tabs > .nav-item {
-    border: none !important;
-    border-image: none !important;
-    transition: none;
-  }
-  #sidebar .nav-item {
-    background-color: var(--light-color);
-  }
-  #sidebar .nav-link {
-    color: var(--dark-color) !important;
-  }
-  #sidebar .nav .active {
-    background-color: var(--dark-color);
-    color: var(--white-color) !important;
-  }
-  #sidebar .pagination {
-    background-color: var(--dark-color);
-    color: var(--white-color);
-  }
-  #sidebar .page-item, #sidebar .page-link {
-    background-color: var(--dark-color);
-    color: var(--white-color) !important;
-  }
-  #sidebar .page-link:hover, #sidebar .page-link:active, #sidebar .page-link:focus {
-    background-color: var(--dark-color);
-    color: var(--white-color);
-    scrollbar-color: var(--secondary-medium-color) var(--light-color);
-    background: var(--light-color);
-    background: var(--secondary-medium-color);
-    padding: 0.25rem 0.5rem;
-  }
-  #alpha-list a {
-    color: var(--secondary-dark-color);
-  }
-  #alpha-list .list-group-item.selected a {
-    color: var(--dark-color);
-    font-size: 18px;
-  }
-  #tab-hierarchy {
-    background-color: var(--dark-color);
-    color: var(--white-color);
-  }
-  #sidebar .page-item, #sidebar .page-link {
-    background-color: var(--dark-color);
-    color: var(--white-color) !important;
-    font-weight: normal !important;
-    border-radius: 0 !important;
-    margin: 0 !important;
-    transition: none;
-  }
-  */
   tr > td {
     color: var(--dark-color);
   }
