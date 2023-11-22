@@ -20,6 +20,7 @@
   --sidebar-scrollbar-bg: var(--light-color);
   --sidebar-scrollbar-thumb: var(--secondary-medium-color);
   --vocab-bg: var(--white-color);
+  --vocab-text: var(--dark-color);
   --vocab-table-border: var(--medium-color);
   --vocab-link: var(--secondary-dark-color);
 
@@ -459,7 +460,7 @@ body {
     background: var(--sidebar-scrollbar-thumb);
   }
 
-  .sidebar-list li {
+  .sidebar-list .list-group-item {
     border: none;
     border-radius: none;
   }
@@ -468,9 +469,78 @@ body {
     font-weight: bold !important;
   }
 
-  .sidebar-list .list-group-item a.selected {
+  /*** sidebar hierarchy tab ***/
+  #tab-hierarchy .sidebar-list .list-group-item {
+    border-left: 1px dashed var(--vocab-text);
+    border-radius: 0;
+  }
+
+  #tab-hierarchy .sidebar-list .list-group-item.top-concept {
+    border: none;
+  }
+
+  #tab-hierarchy .sidebar-list .list-group-item span {
+    display: inline-block;
+    border-left: 1px dashed var(--vocab-text);
+    margin-left: 16px;
+    padding-left: 14px;
+  }
+
+  /* horizontal line before concept */
+  #tab-hierarchy .sidebar-list .list-group-item span::before {
+    content: '';
+    position: absolute;
+    left: 16px;
+    bottom: 0;
+    width: 10px;
+    height: 50%;
+    border-top: 1px dashed var(--vocab-text);
+  }
+
+  /* hiding bottom of vertical line on last concept of list */
+  #tab-hierarchy .sidebar-list .list-group-item span.last::before {
+    border-left: 1px solid var(--vocab-bg);
+  }
+
+  /* horizontal line before opened concept */
+  #tab-hierarchy .sidebar-list .list-group-item span.open::before {
+    top: 0;
+    height: 13px;
+    border-bottom: 1px dashed var(--vocab-text);
+    border-top: none;
+  }
+
+  #tab-hierarchy .sidebar-list .list-group-item a.selected {
     color: var(--vocab-text) !important;
-    font-weight: bold !important;
+  }
+
+  .hierarchy-button {
+    background-color: transparent;
+    color: var(--vocab-text);
+    border: none;
+    padding: 0;
+    font-size: 10px;
+  }
+
+  .hierarchy-button:hover, .hierarchy-button:active {
+    background-color: transparent !important;
+    color: var(--vocab-text) !important;
+  }
+
+  .hierarchy-button i {
+    transform: rotate(-45deg);
+    position: absolute;
+    top: 4px;
+    left: 5px;
+    width: 15px;
+    z-index: 1;
+  }
+
+  .hierarchy-button.open i {
+    transform: rotate(0deg);
+    top: 1px;
+    left: 5px;
+    width: 20px;
   }
 
   /*** sidebar serachpage ***/

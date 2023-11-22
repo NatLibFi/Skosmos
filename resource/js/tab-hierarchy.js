@@ -145,11 +145,13 @@ const tabHierApp = Vue.createApp({
   },
   template: `
     <div v-click-tab-hierarchy="handleClickHierarchyEvent">
-      <ul class="list-group sidebar-list" v-if="!loading">
-        <template v-for="c in hierarchy">
+      <ul class="list-group sidebar-list p-0" v-if="!loading">
+        <template v-for="(c, i) in hierarchy">
           <tab-hier
             :concept="c"
             :selectedConcept="selectedConcept"
+            :isTopConcept="true"
+            :isLast="i == hierarchy.length - 1 && !c.isOpen"
             @load-children="loadChildren($event)"
             @select-concept="selectedConcept = $event"
           ></tab-hier>
@@ -173,7 +175,7 @@ tabHierApp.directive('click-tab-hierarchy', {
 })
 
 tabHierApp.component('tab-hier', {
-  props: ['concept', 'selectedConcept'],
+  props: ['concept', 'selectedConcept', 'isTopConcept', 'isLast'],
   emits: ['loadChildren', 'selectConcept'],
   inject: ['partialPageLoad', 'getConceptURL'],
   methods: {
@@ -195,20 +197,27 @@ tabHierApp.component('tab-hier', {
     }
   },
   template: `
-    <li class="list-group-item">
-      <div>
-        <button v-if="concept.hasChildren" @click="handleClickOpenEvent(concept)"></button>
-        <a 
-          :class="{ 'selected': selectedConcept === concept.uri }"
+    <li class="list-group-item p-0" :class="{ 'top-concept': isTopConcept }">
+      <button type="button" class="hierarchy-button btn btn-primary"
+        :class="{ 'open': concept.isOpen }"
+        v-if="concept.hasChildren"
+        @click="handleClickOpenEvent(concept)"
+      >
+        <i>{{ concept.isOpen ? '&#x25E2;' : '&#x25FF;' }}</i>
+      </button>
+      <span :class="{ 'last': isLast, 'open': concept.isOpen }">
+        <a :class="{ 'selected': selectedConcept === concept.uri }"
           :href="getConceptURL(concept.uri)"
           @click="handleClickConceptEvent($event, concept)"
         >{{ concept.label }}</a>
-      </div>
-      <ul class="list-group" v-if="concept.children.length !== 0 && concept.isOpen">
-        <template v-for="c in concept.children">
+      </span>
+      <ul class="list-group px-3" v-if="concept.children.length !== 0 && concept.isOpen">
+        <template v-for="(c, i) in concept.children">
           <tab-hier
             :concept="c"
             :selectedConcept="selectedConcept"
+            :isTopConcept="false"
+            :isLast="i == concept.children.length - 1 && !c.isOpen"
             @load-children="loadChildrenRecursive($event)"
             @select-concept="selectConceptRecursive($event)"
           ></tab-hier>
