@@ -32,15 +32,15 @@
         <p>{% trans "feedback_enter_name_email" %}</p>
         <p>
           <label for="name" class="form-label">{% trans %}Name:{% endtrans %}</label>
-          <input id="name" class="form-control" type="text" size="40" name="name" placeholder="{% trans %}Enter your name{% endtrans %}">
+          <input id="name" class="form-control" type="text" size="40" maxlength="255" name="name" placeholder="{% trans %}Enter your name{% endtrans %}">
         </p>
         <p>
           <label for="email" class="form-label">{% trans %}E-mail:{% endtrans %}</label>
-          <input id="email" class="form-control" type="text" size="40" name="email" placeholder="{% trans %}Enter your e-mail address{% endtrans %}">
+          <input id="email" class="form-control" type="text" size="40" maxlength="255" name="email" placeholder="{% trans %}Enter your e-mail address{% endtrans %}">
         </p>
         <p>
           <label for="msgsubject" class="form-label">{% trans %}Subject:{% endtrans %} *</label>
-          <input id="msgsubject" class="form-control" type="text" size="40" name="msgsubject" placeholder="{% trans %}Write a subject{% endtrans %}" >
+          <input id="msgsubject" class="form-control" type="text" size="40" maxlength="255" name="msgsubject" placeholder="{% trans %}Write a subject{% endtrans %}" >
         </p>
         <p>
           <label for="message" class="form-label">{% trans %}Message:{% endtrans %} *</label>
