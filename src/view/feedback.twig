@@ -4,11 +4,11 @@
 {% block content %}
 
   {% if feedback_sent %}
-    <h2>{{ 'Feedback has been sent!' | trans }}</h2>
+    <h1>{{ 'Feedback has been sent!' | trans }}</h1>
     <p id="feedback-thanks">{{ 'Thank you for your feedback' | trans }}</p>
   {% else %}
 
-    <h2 class="fs-3 mb-5">{{ 'Contact us!' | trans}}</h2>
+    <h1 class="fs-3 mb-5">{{ 'Contact us!' | trans}}</h1>
     <p class="fs-5 mb-5">{{ 'feedback_enter_name_email' | trans }}</p>
     
     <form id="feedback-form" method="post" action="{% if request.vocab %}{{request.vocab.id}}/{% endif %}{{ request.lang }}/feedback">
