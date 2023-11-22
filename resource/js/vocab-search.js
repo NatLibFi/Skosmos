@@ -30,8 +30,9 @@ const vocabSearch = Vue.createApp({
       window.location.href = searchUrl
     },
     changeLang () {
-      console.log(this.selectedLanguage)
-      // Partial page load to change content language
+      SKOSMOS.content_lang = this.selectedLanguage
+      console.log(SKOSMOS.content_lang)
+      // Partial page load to change content according to the new content language:
     }
   },
   template: `
