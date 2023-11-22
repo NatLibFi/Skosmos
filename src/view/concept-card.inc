@@ -7,7 +7,8 @@
         <div class="col-sm-4 px-0" id="concept-property-label">{{ "skos:prefLabel" | trans }}</div>
         <div class="col-sm-8" id="concept-label">
           <h1 class="mb-0">{{ concept.label }}</h1>
-          <button class="btn btn-default copy-clipboard" type="button" data-bs-toggle="tooltip" data-bs-placement="button" title="{{ "Copy to clipboard" | trans }}">
+          <button class="btn btn-default copy-clipboard" type="button"
+                  data-bs-toggle="tooltip" data-bs-placement="button" title="{{ 'Copy to clipboard' | trans }}">
           <i class="fa-regular fa-copy"></i>
           </button>
         </div>
@@ -20,7 +21,11 @@
           <ul class="align-bottom">
           {% for propval in property.values %}
             {% if propval.uri and property.type != 'rdf:type' %} {# resources with URI #}
-            <li><a href="{{ propval.uri | link_url(propval.vocab, request.lang, 'page', request.contentLang) }}">{% if propval.notation %}<span class="versal">{{ propval.notation }}</span> {% endif %}{{ propval.label(request.contentLang) }}</a></li>
+            <li>
+              <a href="{{ propval.uri | link_url(propval.vocab, request.lang, 'page', request.contentLang) }}">
+                {{ propval.label(request.contentLang) }}
+              </a>
+            </li>
             {% else %} {# literals, e.g. altLabels #}
             <li>{{ propval.label }}</li>
             {% endif %}
@@ -41,7 +46,10 @@
               <ul>
                 {% for value in labels.prefLabel|default([])|merge(labels.altLabel|default([])) %}
                 {% if value.type == "skos:prefLabel" and value.lang in request.vocab.config.languages %}
-                <li><a href='{{ concept.uri|link_url(request.vocabid,request.lang, 'page', value.lang) }}' hreflang='{{ value.lang }}'>{{ value.label }}</a></li>
+                <li>
+                  <a href="{{ concept.uri|link_url(request.vocabid,request.lang, 'page', value.lang) }}"
+                     hreflang="{{ value.lang }}">{{ value.label }}</a>
+                </li>
                 {% else %}
                 <li class="altlabel">{{ value.label }}</li>
                 {% endif %}
@@ -58,12 +66,20 @@
         <div class="col-sm-8" id="concept-uri"><a href="#">{{ concept.uri }}</a></div>
       </div>
       <div class="row property prop-download">
-        <div class="col-sm-4 px-0 property-label"><h2><i class="fa-solid fa-download"></i> {{ "Download this concept" | trans }}</h2></div>
+        <div class="col-sm-4 px-0 property-label">
+          <h2><i class="fa-solid fa-download"></i> {{ "Download this concept" | trans }}</h2>
+        </div>
         <div class="col-sm-8" id="download-links">
           <ul>
-            <li><a class="me-3" href="rest/v1/{% if concept.vocab %}{{ concept.vocab.id }}{% else %}{{ vocab.id }}{% endif %}/data?uri={{ concept.uri|url_encode }}&amp;format=application/rdf%2Bxml">RDF/XML</a></li>
-            <li><a class="me-3" href="rest/v1/{% if concept.vocab %}{{ concept.vocab.id }}{% else %}{{ vocab.id }}{% endif %}/data?uri={{ concept.uri|url_encode }}&amp;format=text/turtle">TURTLE</a></li>
-            <li><a href="rest/v1/{% if concept.vocab %}{{ concept.vocab.id }}{% else %}{{ vocab.id }}{% endif %}/data?uri={{ concept.uri|url_encode }}&amp;format=application/ld%2Bjson">JSON-LD</a></li>
+            <li>
+              <a class="me-3" href="rest/v1/{{ vocab.id }}/data?uri={{ concept.uri|url_encode }}&amp;format=application/rdf%2Bxml">RDF/XML</a>
+            </li>
+            <li>
+              <a class="me-3"href="rest/v1/{{ vocab.id }}/data?uri={{ concept.uri|url_encode }}&amp;format=text/turtle">TURTLE</a>
+            </li>
+            <li>
+              <a href="rest/v1/{{ vocab.id }}/data?uri={{ concept.uri|url_encode }}&amp;format=application/ld%2Bjson">JSON-LD</a>
+            </li>
           </ul>
         </div>
       </div>
