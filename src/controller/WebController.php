@@ -178,12 +178,12 @@ class WebController extends Controller
         $langcodes = $vocab->getConfig()->getShowLangCodes();
         $uri = $vocab->getConceptURI($request->getUri()); // make sure it's a full URI
 
-        $results = $vocab->getConceptInfo($uri, $request->getContentLang());
-        if (!$results) {
+        $concept = $vocab->getConceptInfo($uri, $request->getContentLang());
+        if (empty($concept)) {
             $this->invokeGenericErrorPage($request);
             return;
         }
-        if ($this->notModified($results[0])) {
+        if ($this->notModified($concept)) {
             return;
         }
         $customLabels = $vocab->getConfig()->getPropertyLabelOverrides();
@@ -194,7 +194,7 @@ class WebController extends Controller
         $crumbs = $vocab->getBreadCrumbs($request->getContentLang(), $uri);
         echo $template->render(
             array(
-            'search_results' => $results,
+            'concept' => $concept,
             'vocab' => $vocab,
             'concept_uri' => $uri,
             'languages' => $this->languages,

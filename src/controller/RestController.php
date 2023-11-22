@@ -25,7 +25,7 @@ class RestController extends Controller
         // wrap with JSONP callback if requested
         if (filter_input(INPUT_GET, 'callback', FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
             header("Content-type: application/javascript; charset=utf-8");
-            echo filter_input(INPUT_GET, 'callback', FILTER_UNSAFE_RAW) . "(" . json_encode($data) . ");";
+            echo filter_input(INPUT_GET, 'callback', FILTER_SANITIZE_FULL_SPECIAL_CHARS) . "(" . json_encode($data) . ");";
             return;
         }
 
@@ -700,12 +700,10 @@ class RestController extends Controller
 
         $queryExVocabs = $request->getQueryParamBoolean('external', true);
 
-        $results = $vocab->getConceptInfo($uri, $request->getContentLang());
-        if (empty($results)) {
+        $concept = $vocab->getConceptInfo($uri, $request->getContentLang());
+        if (empty($concept)) {
             return $this->returnError(404, 'Bad Request', "no concept found with given uri");
         }
-
-        $concept = $results[0];
 
         $mappings = [];
         foreach ($concept->getMappingProperties() as $mappingProperty) {

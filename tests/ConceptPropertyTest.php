@@ -28,8 +28,7 @@ class ConceptPropertyTest extends PHPUnit\Framework\TestCase
     public function testGetDescriptionAndLabel()
     {
         $vocab = $this->model->getVocabulary('test');
-        $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta122', 'en');
-        $concept = $concepts[0];
+        $concept = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta122', 'en');
         $props = $concept->getProperties();
         $propvals = $props['skos:definition']->getValues();
         $this->assertEquals('Definition', $props['skos:definition']->getLabel());
@@ -42,8 +41,7 @@ class ConceptPropertyTest extends PHPUnit\Framework\TestCase
     public function testGetLabel()
     {
         $vocab = $this->model->getVocabulary('dates');
-        $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/date/d1', 'en');
-        $concept = $concepts[0];
+        $concept = $vocab->getConceptInfo('http://www.skosmos.skos/date/d1', 'en');
         $props = $concept->getProperties();
         $proplabel = $props['http://www.skosmos.skos/date/ownDate']->getLabel();
         $this->assertEquals('This is also a dateTime', $proplabel->getValue());
@@ -65,8 +63,7 @@ class ConceptPropertyTest extends PHPUnit\Framework\TestCase
     public function testGetDescriptionAndLabelForCustomProperty()
     {
         $vocab = $this->model->getVocabulary('test');
-        $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en');
-        $concept = $concepts[0];
+        $concept = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en');
         $props = $concept->getProperties();
         $prop = $props["http://www.skosmos.skos/testprop"];
         $this->assertEquals('Skosmos test property', $prop->getLabel());
@@ -80,8 +77,7 @@ class ConceptPropertyTest extends PHPUnit\Framework\TestCase
     public function testGetDescriptionAndLabelForCustomPropertyMissingDesc()
     {
         $vocab = $this->model->getVocabulary('test-notation-sort');
-        $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta0112', 'en');
-        $concept = $concepts[0];
+        $concept = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta0112', 'en');
         $props = $concept->getProperties();
         $prop = $props["http://www.skosmos.skos/testprop"];
         $this->assertEquals('Skosmos test property', $prop->getLabel());
@@ -95,8 +91,7 @@ class ConceptPropertyTest extends PHPUnit\Framework\TestCase
     public function testGetType()
     {
         $vocab = $this->model->getVocabulary('test');
-        $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta122', 'en');
-        $concept = $concepts[0];
+        $concept = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta122', 'en');
         $props = $concept->getProperties();
         $this->assertEquals('skos:definition', $props['skos:definition']->getType());
     }
@@ -108,8 +103,7 @@ class ConceptPropertyTest extends PHPUnit\Framework\TestCase
     public function testAddValue()
     {
         $vocab = $this->model->getVocabulary('test');
-        $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta1', 'en');
-        $concept = $concepts[0];
+        $concept = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta1', 'en');
         $props = $concept->getProperties();
         $prevlabel = null;
         foreach($props['skos:narrower']->getValues() as $val) {
@@ -129,8 +123,7 @@ class ConceptPropertyTest extends PHPUnit\Framework\TestCase
     {
         # the vocabulary is configured to use lexical sorting
         $vocab = $this->model->getVocabulary('test-notation-sort');
-        $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta01', 'en');
-        $concept = $concepts[0];
+        $concept = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta01', 'en');
         $props = $concept->getProperties();
         $expected = array(
           "test:ta0111", # 33.01
@@ -159,8 +152,7 @@ class ConceptPropertyTest extends PHPUnit\Framework\TestCase
     {
         # the vocabulary is configured to use natural sorting
         $vocab = $this->model->getVocabulary('testNotation');
-        $concepts = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta01', 'en');
-        $concept = $concepts[0];
+        $concept = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta01', 'en');
         $props = $concept->getProperties();
         $expected = array(
           "test:ta0111", # 33.01
@@ -187,8 +179,7 @@ class ConceptPropertyTest extends PHPUnit\Framework\TestCase
     public function testGetPropertiesSubClassOfHiddenLabel()
     {
         $vocab = $this->model->getVocabulary('subclass');
-        $results = $vocab->getConceptInfo('http://www.skosmos.skos/sub/d1', 'en');
-        $concept = reset($results);
+        $concept = $vocab->getConceptInfo('http://www.skosmos.skos/sub/d1', 'en');
         $props = $concept->getProperties();
         $this->assertEquals('skos:hiddenLabel', $props['subclass:prop1']->getSubPropertyOf());
     }

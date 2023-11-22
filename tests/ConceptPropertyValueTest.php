@@ -10,8 +10,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
     {
         $this->model = new Model(new GlobalConfig('/../../tests/testconfig.ttl'));
         $this->vocab = $this->model->getVocabulary('test');
-        $results = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en');
-        $this->concept = reset($results);
+        $this->concept = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en');
     }
 
     /**
@@ -113,8 +112,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
      */
     public function testGetNotation()
     {
-        $results = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta121', 'en');
-        $concept = reset($results);
+        $concept = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta121', 'en');
         $props = $concept->getProperties();
         $propvals = $props['skos:broader']->getValues();
         $this->assertEquals(665, $propvals['665 Carp http://www.skosmos.skos/test/ta112']->getNotation());
@@ -136,8 +134,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
      */
     public function testToStringWhenSortByNotationNotSet()
     {
-        $results = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta121', 'en');
-        $concept = reset($results);
+        $concept = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta121', 'en');
         $props = $concept->getProperties();
         $propvals = $props['skos:broader']->getValues();
         $this->assertEquals('Carp', (string)$propvals['665 Carp http://www.skosmos.skos/test/ta112']);
@@ -150,8 +147,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
      */
     public function testSubmemberSorting()
     {
-        $results = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta121', 'en');
-        $concept = reset($results);
+        $concept = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta121', 'en');
         $props = $concept->getProperties();
         $propvals = $props['skos:broader']->getValues();
         $prop = reset($propvals);
@@ -187,7 +183,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
     public function testGetReifiedPropertyValues()
     {
         $vocab = $this->model->getVocabulary('xl');
-        $concept = $vocab->getConceptInfo('http://www.skosmos.skos/xl/c1', 'en')[0];
+        $concept = $vocab->getConceptInfo('http://www.skosmos.skos/xl/c1', 'en');
         $props = $concept->getProperties();
         $vals = $props['skos:definition']->getValues();
         $val = reset($vals);
