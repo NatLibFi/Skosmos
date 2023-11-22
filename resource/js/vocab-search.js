@@ -5,7 +5,7 @@ const vocabSearch = Vue.createApp({
   data () {
     return {
       languages: [],
-      selectedLanguage: null,
+      selectedLanguage: "",
       searchTerm: null,
       autoCompeteResults: []
     }
@@ -37,7 +37,7 @@ const vocabSearch = Vue.createApp({
   template: `
     <div class="d-flex mb-2 my-auto ms-auto">
     <form class="input-group" id="search-wrapper">
-      <select v-model="selectedLanguage" @change="changeLang" class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <select v-model="selectedLanguage" @change="changeLang" class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown-item" aria-expanded="false">
         <option class="dropdown-item" v-for="lang in languages" v-bind:value="lang" >{{ lang }}</option>
         <option class="dropdown-item" value="all">All</option>
       </select>
