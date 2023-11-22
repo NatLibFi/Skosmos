@@ -73,17 +73,15 @@ class Http304Test extends TestCase
             ->shouldReceive("getConceptURI")
             ->andReturn("");
 
-        $concepts = [];
         $concept = Mockery::mock("Concept")->makePartial();
         $concept->allows([
             "getType" => ["skos:Concept"]
         ]);
         $concept->shouldReceive("getVocab")
             ->andReturn($this->vocab);
-        $concepts[] = $concept;
         $this->vocab
             ->shouldReceive("getConceptInfo")
-            ->andReturn($concepts);
+            ->andReturn($concept);
         $this->vocab
             ->shouldReceive("getBreadCrumbs")
             ->andReturn([
@@ -119,17 +117,15 @@ class Http304Test extends TestCase
             ->shouldReceive("getConceptURI")
             ->andReturn("");
 
-        $concepts = [];
         $concept = Mockery::mock("Concept")->makePartial();
         $concept->allows([
             "getType" => ["skos:Concept"]
         ]);
         $concept->shouldReceive("getVocab")
             ->andReturn($this->vocab);
-        $concepts[] = $concept;
         $this->vocab
             ->shouldReceive("getConceptInfo")
-            ->andReturn($concepts);
+            ->andReturn($concept);
         $this->vocab
             ->shouldReceive("getBreadCrumbs")
             ->andReturn([
@@ -175,17 +171,15 @@ class Http304Test extends TestCase
             ->shouldReceive("getConceptURI")
             ->andReturn("");
 
-        $concepts = [];
         $concept = Mockery::mock("Concept")->makePartial();
         $concept->allows([
             "getType" => ["skos:Concept"]
         ]);
         $concept->shouldReceive("getVocab")
             ->andReturn($this->vocab);
-        $concepts[] = $concept;
         $this->vocab
             ->shouldReceive("getConceptInfo")
-            ->andReturn($concepts);
+            ->andReturn($concept);
         $this->vocab
             ->shouldReceive("getBreadCrumbs")
             ->andReturn([

@@ -700,12 +700,10 @@ class RestController extends Controller
 
         $queryExVocabs = $request->getQueryParamBoolean('external', true);
 
-        $results = $vocab->getConceptInfo($uri, $request->getContentLang());
-        if (empty($results)) {
+        $concept = $vocab->getConceptInfo($uri, $request->getContentLang());
+        if (empty($concept)) {
             return $this->returnError(404, 'Bad Request', "no concept found with given uri");
         }
-
-        $concept = $results[0];
 
         $mappings = [];
         foreach ($concept->getMappingProperties() as $mappingProperty) {

@@ -6,9 +6,9 @@ const SKOSMOS = {
   "lang": "{{ request.lang }}",
   "vocab": "{{ request.vocabid }}",
   "waypoint_results": {{ parameters ? parameters.searchLimit : "null" }},
-  {%- if request.page == "page" and search_results and search_results|length == 1 %}
-  "prefLabels": [{"lang": "{{ search_results|first.label.lang }}","label": "{{ search_results|first.label }}"}{% for lang in search_results|first.foreignLabels %}{% for literal in lang %}{% if literal.type == "skos:prefLabel" %},{"lang": "{{literal.lang}}", "label": "{{literal.label}}"}{% endif %}{% endfor %}{% endfor %}],
-  "uri": "{{ search_results|first.uri }}",
+  {%- if request.page == "page" and concept %}
+  "prefLabels": [{"lang": "{{ concept.label.lang }}","label": "{{ concept.label }}"}{% for lang in concept.foreignLabels %}{% for literal in lang %}{% if literal.type == "skos:prefLabel" %},{"lang": "{{literal.lang}}", "label": "{{literal.label}}"}{% endif %}{% endfor %}{% endfor %}],
+  "uri": "{{ concept.uri }}",
   {% endif %}
   {%- if request.vocab ~%}
   "languageOrder": [{% for lang in request.vocab.config.languageOrder(request.contentLang) %}"{{ lang }}"{% if not loop.last %}, {% endif %}{% endfor %}],
@@ -28,8 +28,8 @@ const SKOSMOS = {
 
 <!-- Search result data -->
 <script type="application/ld+json">
-  {%- if search_results and search_results|length == 1 -%}
-    {{ search_results|first.dumpJsonLd|raw }}
+  {%- if concept -%}
+    {{ concept.dumpJsonLd|raw }}
   {%- else -%}
     {}
   {%- endif -%}

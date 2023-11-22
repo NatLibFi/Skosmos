@@ -276,7 +276,7 @@ body {
     font-size: 16px;
   }
 
-  #main-container h1, #main-container h2 {
+  #main-container h1 {
     font-family: var(--font-family-heading);
     font-weight: bold;
   }
@@ -374,6 +374,10 @@ body {
     color: var(--vocab-link);
     text-decoration: none;
     font-weight: bold;
+  }
+
+  #sidebar {
+    background-color: var(--vocab-bg);
   }
 
   /*** Sidebar termpage & vocabpage ***/
@@ -490,35 +494,37 @@ body {
   }
 
   .main-content-section {
+    background-color: var(--vocab-bg);
     border-bottom: 2px solid var(--main-bg-2);
   }
 
-  #main-table {
-    margin-top: 4rem;
+  #concept-heading {
+    padding-bottom: 4rem;
   }
 
-  #main-table tr {
+  .property {
     border-top: 1px solid var(--vocab-table-border);
+    padding: .5rem 0;
   }
 
-  #main-table td {
+  .property-label h2 {
+    font-weight: bold;
+    font-size: 20px !important;
+    margin-bottom: 0;
+  }
+
+  .property-value {
     color: var(--vocab-text);
     border: none;
   }
 
-  .main-table-label {
-    width: 30%;
-    font-weight: bold;
-    font-size: 20px !important;
-  }
-
-  #resource-table th, #term-table th {
+  #resource-table th {
     color: var(--vocab-text);
     font-weight: bold;
     border-bottom: 1px solid var(--vocab-text);
   }
 
-  #resource-table td, #term-table td {
+  #resource-table td {
     color: var(--vocab-text);
     border: none;
   }
@@ -528,9 +534,13 @@ body {
   }
 
   /*** Main content termpage ***/
-  #term-heading span {
-    width: 30%;
-    align-self: end;
+  #concept-property-label {
+    align-self: start;
+    padding-top: 1.25rem;
+  }
+
+  #concept-label h1 {
+    float: left;
   }
 
   .copy-clipboard {
@@ -542,9 +552,24 @@ body {
     border: none;
   }
 
-  .term-other-languages a {
+  .property ul, .property li {
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 0;
+    margin-bottom: 0;
+  }
+
+  .prop-skos_altLabel .property-value li, .altlabel {
+    font-style: italic;
+  }
+
+  .prop-foreignlabels h3 {
+    font-size: 1rem;
+    margin-bottom: 0;
+  }
+
+  #download-links li {
     display: inline-block;
-    width: 50%;
   }
 
   /***** Main content searchpage & searchpage multi vocab *****/
@@ -757,7 +782,7 @@ body {
     text-decoration: none !important;
     font-weight: 700 !important;
   }
-  td.main-table-label, .vocab-statistics > h3 {
+  .vocab-statistics > h3 {
     font-size: 20px !important;
   }
   td.align-middle {

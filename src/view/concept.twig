@@ -1,5 +1,5 @@
 {% extends "base-template.twig" %}
-{% block title %}: {{ vocab.shortName }}{% if search_results|length == 1 %}: {{ concept_label }}{% endif %}{% endblock %}
+{% block title %}: {{ vocab.shortName }}: {{ concept_label }}{% endblock %}
 
 {% block content %}
   {% include "sidebar.inc" %}

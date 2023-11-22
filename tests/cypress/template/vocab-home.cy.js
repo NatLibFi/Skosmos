@@ -2,7 +2,7 @@ describe('Vocabulary home page', () => {
   it('contains vocabulary title', () => {
     cy.visit('/test/en') // go to the "Test ontology" home page
 
-    // check that the vocabulary title is not empty
+    // check that the vocabulary title is correct
     cy.get('#vocab-title > a').invoke('text').should('equal', 'Test ontology')
   })
   it('shows alphabetical index letters', () => {
