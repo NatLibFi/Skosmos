@@ -116,5 +116,26 @@ describe('Concept page', () => {
     // check that we have some mappings
     cy.get('#concept-mappings').should('not.be.empty')
 
+    // check the first mapping property name
+    cy.get('.prop-mapping h2').eq(0).contains('Closely matching concepts')
+    // check the first mapping property values
+    cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).contains('Musicology')
+    cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).find('a').should('have.attr', 'href', 'http://id.loc.gov/authorities/subjects/sh85089048')
+    cy.get('.prop-mapping').eq(0).find('.prop-mapping-vocab').eq(0).contains('Library of Congress Subject Headings')
+    cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(1).contains('musicology')
+    cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(1).find('a').should('have.attr', 'href', 'http://www.wikidata.org/entity/Q164204')
+    cy.get('.prop-mapping').eq(0).find('.prop-mapping-vocab').eq(1).contains('www.wikidata.org')
+    // check that the second mapping property has the right number of entries
+    cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').should('have.length', 2)
+
+    // check the second mapping property name
+    cy.get('.prop-mapping h2').eq(1).contains('Exactly matching concepts')
+    // check the second mapping property values (only one should be enough)
+    cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(0).contains('musiikintutkimus (fi)')
+    cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(0).find('a').invoke('text').should('equal', 'musiikintutkimus')
+    cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(0).find('a').should('have.attr', 'href', 'http://www.yso.fi/onto/ysa/Y155072')
+    cy.get('.prop-mapping').eq(1).find('.prop-mapping-vocab').eq(0).contains('YSA - Yleinen suomalainen asiasanasto')
+    // check that the second mapping property has the right number of entries
+    cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').should('have.length', 3)
   })
 })
