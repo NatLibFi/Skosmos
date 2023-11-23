@@ -515,7 +515,10 @@ class Model
         if ($this->vocabsByUriSpace === null) { // initialize cache
             $this->vocabsByUriSpace = array();
             foreach ($this->getVocabularies() as $voc) {
-                $this->vocabsByUriSpace[$voc->getUriSpace()][] = $voc;
+                $uriSpace = $voc->getUriSpace();
+                if ($uriSpace) {
+                    $this->vocabsByUriSpace[$uriSpace][] = $voc;
+                }
             }
         }
 
