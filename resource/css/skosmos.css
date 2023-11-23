@@ -608,7 +608,7 @@ body {
 
   .main-content-section {
     background-color: var(--vocab-bg);
-    border-bottom: 2px solid var(--main-bg-2);
+    margin-bottom: .2rem;
   }
 
   #concept-heading {
@@ -618,6 +618,10 @@ body {
   .property {
     border-top: 1px solid var(--vocab-table-border);
     padding: .5rem 0;
+  }
+
+  .property.prop-mapping {
+    border-top: none;
   }
 
   .property-label h2 {
