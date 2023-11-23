@@ -17,9 +17,21 @@ describe('Front page -> lang -> vocab -> cLang -> search -> concept page', () =>
     cy.get('.btn.btn-outline-secondary.dropdown-toggle').select('fi');
 
     // Write a search term "arkeologia" and press enter
-    cy.get('.form-control').type('arkeologia').type('{enter}');
+    cy.get('.form-control').type('arkeolog').type('{enter}');
 
-    // Check that the search result page contains "arkeologia"
-    cy.get('.search-result-term a').should('include.text', 'arkeologia');
+    // Check that the search result page contains 5 results
+    cy.get('.search-result').should('have.length', 5);
+
+    // Check that the search result page contains "kaivaukset"
+    cy.get('.search-result-term a').should('include.text', 'kaivaukset');
+
+    // Select "kaivaukset"
+    cy.contains('.search-result-term a', 'kaivaukset').click();
+
+    // Confirm that we are on the correct page (kaivaukset) and language (fi)
+    cy.url().should('include', '/yso/en/page/p14173?clang=fi');
+
+    // Confirm that the prefLabel on the page is "kaivaukset"
+    cy.get('h1').should('have.text', 'kaivaukset');
   });
 });
