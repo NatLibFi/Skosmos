@@ -56,3 +56,4 @@ const SKOSMOS = {
 <script src="resource/js/concept-mappings.js"></script>
 <script src="resource/js/tab-alpha.js"></script>
 <script src="resource/js/tab-hierarchy.js"></script>
+<script src="resource/js/vocab-search.js"></script>
