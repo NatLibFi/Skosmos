@@ -60,14 +60,14 @@ conceptMappingsApp.component('concept-mappings', {
   props: ['mappings'],
   inject: ['content_lang'],
   template: `
-    <div class="row prop-mapping" v-for="mapping in Object.entries(mappings)">
+    <div class="row property prop-mapping" v-for="mapping in Object.entries(mappings)">
       <div class="col-sm-4 px-0 property-label" :title="mapping[1][0].description"><h2>{{ mapping[0] }}</h2></div>
       <div class="col-sm-8">
         <div class="row mb-2" v-for="m in mapping[1]">
-          <div class="col-sm-4">
+          <div class="col-sm-4 prop-mapping-label">
             <a :href="m.hrefLink">{{ m.prefLabel }}</a><span v-if="m.lang && m.lang !== this.content_lang"> ({{ m.lang }})</span>
           </div>
-          <div class="col-sm-8">{{ m.vocabName }}</div>
+          <div class="col-sm-8 prop-mapping-vocab">{{ m.vocabName }}</div>
         </div>
       </div>
     </div>
