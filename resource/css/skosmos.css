@@ -13,7 +13,19 @@
   --feedback-form-button-bg: var(--dark-color);
   --sidebar-search-bg: var(--dark-color);
   --sidebar-search-text: var(--white-color);
+  --sidebar-tab-inactive-bg: var(--light-color);
+  --sidebar-tab-inactive-text: var(--dark-color);
+  --sidebar-tab-active-bg: var(--dark-color);
+  --sidebar-tab-active-text: var(--white-color);
+  --sidebar-scrollbar-bg: var(--light-color);
+  --sidebar-scrollbar-thumb: var(--secondary-medium-color);
+  --search-bg: var(--white-color);
+  --search-border: var(--medium-color);
+  --search-button-bg: var(--dark-color);
+  --search-button-text: var(--white-color);
+  --search-dropdown-toggle-hover: var(--light-color);
   --vocab-bg: var(--white-color);
+  --vocab-text: var(--dark-color);
   --vocab-table-border: var(--medium-color);
   --vocab-link: var(--secondary-dark-color);
 
@@ -70,6 +82,7 @@ body {
   #main-container.vocabpage .fa-arrow-right, #main-container.termpage .fa-arrow-right {
     color: var(--vocab-text);
     font-size: 12px;
+    margin: 0 5px;
   }
 
   #main-container.termpage .fa-copy {
@@ -197,17 +210,17 @@ body {
     font-family: var(--font-family-heading);
   }
 
-  #search-vocab {
-    width: 600px;
-  }
-
   #search-multi-vocab {
     width: 800px;
   }
 
-  #search-vocab a, #search-multi-vocab a {
+  #search-wrapper {
     color: var(--headerbar-text-2);
     float: right;
+}
+
+  #search-wrapper select, #search-wrapper input, #search-wrapper button {
+    height: 100%;
   }
 
   #headerbar .dropdown-toggle {
@@ -215,15 +228,7 @@ body {
     color: var(--headerbar-text-2);
     border: 1px solid var(--search-border);
     border-radius: 0;
-    width: 200px;
-  }
-
-  #headerbar .dropdown-toggle::after {
-    content: '﹀';
-    border: none;
-    position: absolute;
-    top: 13px;
-    margin-left: 6px;
+    width: 100px;
   }
 
   #headerbar .dropdown-toggle:hover, #headerbar .dropdown-toggle:active {
@@ -262,12 +267,36 @@ body {
     border: 1px solid var(--search-border);
   }
 
+  /* Remove built-in x button from Internet Explorer */
+  #headerbar input[type=search]::-ms-clear { display: none; width : 0; height: 0; }
+  #headerbar input[type=search]::-ms-reveal { display: none; width : 0; height: 0; }
+  
+  /* Remove built-in x button from Chrome */
+  #headerbar input[type="search"]::-webkit-search-decoration,
+  #headerbar input[type="search"]::-webkit-search-cancel-button,
+  #headerbar input[type="search"]::-webkit-search-results-button,
+  #headerbar input[type="search"]::-webkit-search-results-decoration { display: none; }
+
   #search-button {
     background-color: var(--search-button-bg);
     border: 1px solid var(--search-border);
     border-radius: 0;
     padding: 0;
     width: 38px;
+  }
+
+  #clear-button {
+    position: absolute;
+    color: var(--vocab-text);
+    background: none;
+    border: none;
+    top: 0;
+    right: 38px;
+    height: 40px;
+    width: 40px;
+    padding: 0;
+    font-size: 20px;
+    z-index: 5;
   }
 
   /* Main container
@@ -381,12 +410,25 @@ body {
   }
 
   /*** Sidebar termpage & vocabpage ***/
-  #main-container.vocabpage #sidebar .nav-item, #main-container.termpage #sidebar .nav-item {
+  #main-container.vocabpage #sidebar-col, #main-container.termpage #sidebar-col {
+    background-color: var(--vocab-bg);
+    background-clip: content-box, padding-box;
+  }
+
+  #main-container.vocabpage #sidebar, #main-container.termpage #sidebar {
+    background-color: var(--vocab-bg);
+  }
+
+  #main-container.vocabpage #sidebar .nav, #main-container.termpage #sidebar .nav {
     background-color: var(--sidebar-tab-inactive-bg);
   }
 
   #main-container.vocabpage #sidebar .nav-link, #main-container.termpage #sidebar .nav-link {
     color: var(--sidebar-tab-inactive-text) !important;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: none;
   }
 
@@ -411,45 +453,116 @@ body {
     border-radius: 0 !important;
     margin: 0 !important;
     transition: none;
+    width: 35px;
   }
 
-  /* Not sure what these should be, probably something though */
-  #main-container.vocabpage #sidebar .page-link:hover, #main-container.vocabpage #sidebar .page-link:active, #main-container.vocabpage #sidebar .page-link:focus
+  #main-container.vocabpage #sidebar .page-link, #main-container.termpage #sidebar .page-link {
+    display: flex;
+    align-content: center;
+    text-align: center;
+  }
+
+  /* what to do with these */
+  #main-container.vocabpage #sidebar .page-link:hover, #main-container.vocabpage #sidebar .page-link:active, #main-container.vocabpage #sidebar .page-link:focus,
   #main-container.termpage #sidebar .page-link:hover, #main-container.termpage #sidebar .page-link:active, #main-container.termpage #sidebar .page-link:focus {
     background-color: var(--sidebar-tab-active-bg);
     color: var(--sidebar-tab-active-text);
     box-shadow: none;
   }
 
-  #alpha-list {
+  .sidebar-list {
     padding: 2rem 1rem;
-    overflow: hidden;
-    overflow-y: scroll;
+    overflow: auto;
     scrollbar-color: var(--sidebar-scrollbar-thumb) var(--sidebar-scrollbar-bg);
-    height: 600px; /*remove*/
+    max-height: 1000px; /* needs to be changed */
   }
 
-  #alpha-list::-webkit-scrollbar {
+  .sidebar-list::-webkit-scrollbar {
     background: var(--sidebar-scrollbar-bg);
   }
 
-  #alpha-list::-webkit-scrollbar-thumb {
+  .sidebar-list::-webkit-scrollbar-thumb {
     background: var(--sidebar-scrollbar-thumb);
   }
 
-  #alpha-list li {
+  .sidebar-list .list-group-item {
     border: none;
     border-radius: none;
   }
 
-  #alpha-list .list-group-item.selected a {
-    color: var(--vocab-text);
-    font-size: 18px;
+  .sidebar-list a {
+    font-weight: bold !important;
   }
 
-  #tab-hierarchy {
-    background-color: var(--sidebar-tab-active-bg);
-    color: var(--sidebar-tab-active-text);
+  /*** sidebar hierarchy tab ***/
+  #tab-hierarchy .sidebar-list .list-group-item {
+    border-left: 1px dashed var(--vocab-text);
+    border-radius: 0;
+  }
+
+  #tab-hierarchy .sidebar-list .list-group-item.top-concept {
+    border: none;
+  }
+
+  #tab-hierarchy .sidebar-list .list-group-item span {
+    display: inline-block;
+    border-left: 1px dashed var(--vocab-text);
+    margin-left: 16px;
+    padding-left: 14px;
+  }
+
+  /* horizontal line before concept */
+  #tab-hierarchy .sidebar-list .list-group-item span::before {
+    content: '';
+    position: absolute;
+    left: 16px;
+    top: 0;
+    width: 10px;
+    height: 13px;
+    border-bottom: 1px dashed var(--vocab-text);
+  }
+
+  /* hiding bottom of vertical line on last concept of list */
+  #tab-hierarchy .sidebar-list .list-group-item span.last::before {
+    top: auto;
+    bottom: 0;
+    height: calc(100% - 13px);
+    border-left: 1px solid var(--vocab-bg);
+    border-top: 1px dashed var(--vocab-text);
+    border-bottom: none;
+  }
+
+  #tab-hierarchy .sidebar-list .list-group-item a.selected {
+    color: var(--vocab-text) !important;
+  }
+
+  .hierarchy-button {
+    background-color: transparent;
+    color: var(--vocab-text);
+    border: none;
+    padding: 0;
+    font-size: 10px;
+  }
+
+  .hierarchy-button:hover, .hierarchy-button:active {
+    background-color: transparent !important;
+    color: var(--vocab-text) !important;
+  }
+
+  .hierarchy-button i {
+    transform: rotate(-45deg);
+    position: absolute;
+    top: 4px;
+    left: 5px;
+    width: 15px;
+    z-index: 1;
+  }
+
+  .hierarchy-button.open i {
+    transform: rotate(0deg);
+    top: 1px;
+    left: 5px;
+    width: 20px;
   }
 
   /*** sidebar serachpage ***/
@@ -495,7 +608,7 @@ body {
 
   .main-content-section {
     background-color: var(--vocab-bg);
-    border-bottom: 2px solid var(--main-bg-2);
+    margin-bottom: .2rem;
   }
 
   #concept-heading {
@@ -505,6 +618,10 @@ body {
   .property {
     border-top: 1px solid var(--vocab-table-border);
     padding: .5rem 0;
+  }
+
+  .property.prop-mapping {
+    border-top: none;
   }
 
   .property-label h2 {
@@ -723,57 +840,7 @@ body {
   #alphabetical-menu > .list-group > .list-group-item {
     border: none !important;
   }
-  #sidebar > div > .nav-tabs > .nav-item {
-    border: none !important;
-    border-image: none !important;
-    transition: none;
-  }
-  /*** Sidebar ***/
-  #sidebar .nav-item {
-    background-color: var(--light-color);
-  }
-  #sidebar .nav-link {
-    color: var(--dark-color) !important;
-  }
-  #sidebar .nav .active {
-    background-color: var(--dark-color);
-    color: var(--white-color) !important;
-  }
-  #sidebar .pagination {
-    background-color: var(--dark-color);
-    color: var(--white-color);
-  }
-  #sidebar .page-item, #sidebar .page-link {
-    background-color: var(--dark-color);
-    color: var(--white-color) !important;
-  }
-  #sidebar .page-link:hover, #sidebar .page-link:active, #sidebar .page-link:focus {
-    background-color: var(--dark-color);
-    color: var(--white-color);
-    scrollbar-color: var(--secondary-medium-color) var(--light-color);
-    background: var(--light-color);
-    background: var(--secondary-medium-color);
-    padding: 0.25rem 0.5rem;
-  }
-  #alpha-list a {
-    color: var(--secondary-dark-color);
-  }
-  #alpha-list .list-group-item.selected a {
-    color: var(--dark-color);
-    font-size: 18px;
-  }
-  #tab-hierarchy {
-    background-color: var(--dark-color);
-    color: var(--white-color);
-  }
-  #sidebar .page-item, #sidebar .page-link {
-    background-color: var(--dark-color);
-    color: var(--white-color) !important;
-    font-weight: normal !important;
-    border-radius: 0 !important;
-    margin: 0 !important;
-    transition: none;
-  }
+  
   tr > td {
     color: var(--dark-color);
   }

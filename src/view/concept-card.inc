@@ -41,8 +41,8 @@
         <div class="col-sm-8" id="concept-other-languages">
           {% for language,labels in foreignLabels %}
           <div class="row">
-            <div class="col-sm-6 order-last"><h3>{{ language }}</h3></div>
-            <div class="col-sm-6">
+            <div class="col-sm-7 order-last"><h3>{{ language }}</h3></div>
+            <div class="col-sm-5">
               <ul>
                 {% for value in labels.prefLabel|default([])|merge(labels.altLabel|default([])) %}
                 {% if value.type == "skos:prefLabel" and value.lang in request.vocab.config.languages %}
@@ -83,11 +83,10 @@
           </ul>
         </div>
       </div>
-
+    </div>
+    <!-- appendix / concept mapping properties -->
+    <div id="concept-mappings" class="main-content-section p-5">
     </div>
 
-  </div>
-  <!-- appendix / concept mapping properties -->
-  <div id="concept-mappings">
   </div>
 </div>
