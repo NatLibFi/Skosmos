@@ -291,7 +291,6 @@ def preview(vocid, lang):
 
     params = {'uri': uri, 'lang': lang, 'format': "application/rdf+xml"}
     data = requests.get(api_base_url + vocid + "/data", params=params).text
-    print(data)
 
     context = {'uri': uri, 'lang': lang}
 
@@ -362,8 +361,6 @@ def preview(vocid, lang):
         }
     """ % (uri, lang)
     context['definition'] = _make_sparql_query(data, definition_query)
-
-    print(json.dumps(context, indent=2))
     
     return render_template("preview.html", context=context)
 
