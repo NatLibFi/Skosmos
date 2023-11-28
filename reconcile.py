@@ -69,7 +69,7 @@ def _get_properties():
         },
     ]
 
-def _search(raw_query, vocid, limit, lang, query_type=""):
+def _search(raw_query, vocid, lang, limit=None, query_type=""):
     print('search', raw_query, query_type)
 
     # first, do a search with raw query
@@ -156,7 +156,7 @@ def _reconcile(queries, vocid, lang):
     for (key, query) in queries.items():
         qtype = query.get('type')
         limit = query.get('limit')
-        result = _search(query['query'], vocid=vocid, limit=limit, lang=lang, query_type=qtype)
+        result = _search(query['query'], vocid=vocid, lang=lang, limit=limit, query_type=qtype)
         results[key] = {'result': result}
     return _jsonpify(results)
 
@@ -263,13 +263,11 @@ def reconcile(lang, vocid):
 @app.route("/<vocid>/<lang>/reconcile/suggest/entity", methods=['GET'])
 def suggest(vocid, lang):
     prefix = request.args.get('prefix')
-    cursor = int(request.args.get('cursor')) if request.args.get('cursor') else 0
-    limit = cursor + 20
 
-    result = _search(prefix, vocid=vocid, limit=limit, lang=lang)
+    result = _search(prefix, vocid=vocid, lang=lang)
 
     results = [{'id': res['id'], 'name': res['name'], 'notable': res['type']} for res in result]
-    return _jsonpify({'result': results[cursor:]})
+    return _jsonpify({'result': results})
 
 @app.route("/<vocid>/<lang>/reconcile/propose_properties", methods=['GET'])
 def propose_properties(vocid, lang):
