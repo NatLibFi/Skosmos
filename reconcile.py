@@ -11,6 +11,8 @@ import rdflib
 
 import json
 
+import re
+
 app = Flask(__name__)
 CORS(app)
 
@@ -70,19 +72,34 @@ def _get_properties():
 def _search(raw_query, vocid, limit, lang, query_type=""):
     print('search', raw_query, query_type)
 
-    params = {'query': raw_query + "*", 'maxhits': limit, 'type': query_type, 'unique': "true", 'lang': lang}
+    # first, do a search with raw query
+    params = {'query': raw_query + "*", 'type': query_type, 'unique': "true", 'lang': lang}
     search_results = requests.get(api_base_url + vocid + "/search/", params=params).json()['results']
+
+    # next, do a search with the beginning of the query and contents of parentheses
+    main_query = re.findall(r"^(.*?)(?=-\s|\(|,|$)", raw_query) # everything before first '(', '- ', or ','
+    parentheses = re.findall(r"\((.*?)\)", raw_query) # everything inside parentheses
+
+    if main_query and main_query[0] and main_query[0] is not raw_query:
+        params['query'] = main_query[0].strip() + "*"
+        res = requests.get(api_base_url + vocid + "/search/", params=params).json()['results']
+        search_results += [x for x in res if x not in search_results] # add result to the end of search results without duplicates
+
+    for query in parentheses:
+        params['query'] = query + "*"
+        res = requests.get(api_base_url + vocid + "/search/", params=params).json()['results']
+        search_results += [x for x in res if x not in search_results] # add result to the end of search results without duplicates
 
     results = [{'id': res['uri'],
                 'name': res['prefLabel'],
                 'score': 1,
                 'match': res['prefLabel'] == raw_query,
                 'type': [{
-                    'id': type,
-                    'name': type
-                } for type in res['type']]}
+                    'id': t,
+                    'name': t
+                } for t in res['type']]}
             for res in search_results]
-    return results
+    return results[:limit]
 
 
 def _metadata(vocid, lang):
