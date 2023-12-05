@@ -41,6 +41,7 @@ class RequestTest extends PHPUnit\Framework\TestCase
   }
 
   /**
+   * @covers Request::setQueryParamPOST
    * @covers Request::getQueryParamPOST
    */
   public function testGetQueryParamPOSTSimple() {
@@ -49,6 +50,7 @@ class RequestTest extends PHPUnit\Framework\TestCase
   }
 
   /**
+   * @covers Request::setQueryParamPOST
    * @covers Request::getQueryParamPOST
    */
   public function testGetQueryParamPOSTTruncated() {
@@ -57,6 +59,7 @@ class RequestTest extends PHPUnit\Framework\TestCase
   }
 
   /**
+   * @covers Request::setQueryParamPOST
    * @covers Request::getQueryParamPOST
    */
   public function testGetQueryParamPOSTNotTruncated() {
