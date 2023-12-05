@@ -215,9 +215,9 @@ class WebController extends Controller
         if ($request->getQueryParamPOST('message')) {
             $feedbackSent = true;
             $feedbackMsg = $request->getQueryParamPOST('message');
-            $feedbackName = substr($request->getQueryParamPOST('name'), 0, 255);
-            $feedbackEmail = substr($request->getQueryParamPOST('email'), 0, 255);
-            $msgSubject = substr($request->getQueryParamPOST('msgsubject'), 0, 255);
+            $feedbackName = $request->getQueryParamPOST('name', 255);
+            $feedbackEmail = $request->getQueryParamPOST('email', 255);
+            $msgSubject = $request->getQueryParamPOST('msgsubject', 255);
             $feedbackVocab = $request->getQueryParamPOST('vocab');
             $feedbackVocabEmail = ($feedbackVocab !== null && $feedbackVocab !== '') ?
                 $this->model->getVocabulary($feedbackVocab)->getConfig()->getFeedbackRecipient() : null;
