@@ -638,6 +638,17 @@ class ConceptTest extends PHPUnit\Framework\TestCase
   }
 
   /**
+   * @covers Concept::getConceptModifiedDate
+   */
+  public function testGetConceptModifiedDateNullWhenNotAvailable() {
+    $vocab = $this->model->getVocabulary('test');
+    $results = $vocab->getConceptInfo('http://www.skosmos.skos/test/ta111', 'en');
+    $concept = reset($results);
+    $modifiedDate = $concept->getConceptModifiedDate();
+    $this->assertNull($modifiedDate);
+  }
+
+  /**
    * @covers Concept::hasXlLabel
    */
   public function testHasXlLabelTrue() {
