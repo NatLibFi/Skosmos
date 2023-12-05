@@ -66,6 +66,16 @@ class Request
     }
 
     /**
+     * Set a POST query parameter to mock it in tests.
+     * @param string $paramName parameter name
+     * @param string $value parameter value
+     */
+    public function setQueryParamPOST($paramName, $value)
+    {
+        $this->queryParamsPOST[$paramName] = $value;
+    }
+
+    /**
      * Set a SERVER constant to mock it in tests.
      * @param string $paramName parameter name
      * @param string $value parameter value
@@ -107,10 +117,21 @@ class Request
         return isset($this->queryParams[$paramName]) ? $this->queryParams[$paramName] : null;
     }
 
-    public function getQueryParamPOST($paramName)
+    /**
+     * Return the requested POST query parameter as a string. Backslashes are stripped for security reasons.
+     * @param string $paramName parameter name
+     * @param int $maxlength maximum length of parameter, or null if unlimited
+     * @return string parameter content, or null if no parameter found
+     */
+    public function getQueryParamPOST($paramName, $maxlength=null)
     {
         if (!isset($this->queryParamsPOST[$paramName])) return null;
-        return filter_var($this->queryParamsPOST[$paramName], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $val = filter_var($this->queryParamsPOST[$paramName], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        if ($maxlength !== null) {
+            return substr($val, 0, $maxlength);
+        } else {
+            return $val;
+        }
     }
 
     public function getQueryParamBoolean($paramName, $default)
