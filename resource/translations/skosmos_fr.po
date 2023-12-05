@@ -1,7 +1,8 @@
-# 
+# Translators:
 # Translators:
 # Nathalie Vedovotto <nathalie.vedovotto@inist.fr>, 2017
 # osma <osma.suominen@helsinki.fi>, 2015,2017,2020
+# plecor, 2023
 # Thomas Francart <thomas.francart@sparna.fr>, 2016
 # Thomas Francart <thomas.francart@sparna.fr>, 2015-2016,2018
 # Yksityis Yrittäjä <okko.vainonen@helsinki.fi>, 2021
@@ -11,8 +12,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-16 10:26+0200\n"
 "PO-Revision-Date: 2015-06-18 07:06+0000\n"
-"Last-Translator: Yksityis Yrittäjä <okko.vainonen@helsinki.fi>, 2021\n"
-"Language-Team: French (http://www.transifex.com/national-library-of-finland/skosmos/language/fr/)\n"
+"Last-Translator: plecor, 2023\n"
+"Language-Team: French (http://app.transifex.com/national-library-of-finland/skosmos/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -26,7 +27,7 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 
 msgid "Download this vocabulary:"
-msgstr ""
+msgstr "Télécharger ce vocabulaire :"
 
 #: controller/Controller.php:38
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:21
@@ -118,7 +119,7 @@ msgid "Changes-nav"
 msgstr "Nouveautés"
 
 msgid "Changes-and-deprecations-nav"
-msgstr ""
+msgstr "Nouveautés et dépréciations"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:122
 msgid "Clear limitations"
@@ -254,7 +255,7 @@ msgid "show all # paths"
 msgstr "voir tous les # chemins"
 
 msgid "show all # values"
-msgstr ""
+msgstr "voir toutes les # valeurs"
 
 #: /tmp/cache/587c83c09abaa/58/58e9c1cebb82d52daf56fab57cd7b86ed47b1d8a86a915177156746eef73248e.php:72
 msgid "Skosmos version %version%"
@@ -436,16 +437,16 @@ msgid "from all"
 msgstr "Partout"
 
 msgid "wgs84:lat"
-msgstr ""
+msgstr "Latitude"
 
 msgid "wgs84:lat_help"
-msgstr ""
+msgstr "Latitude en degrés décimaux selon le système WGS 84"
 
 msgid "wgs84:long"
-msgstr ""
+msgstr "Longitude"
 
 msgid "wgs84:long_help"
-msgstr ""
+msgstr "Longitude en degrés décimaux selon le système WGS 84"
 
 #: /tmp/cache/587c83c09abaa/bf/bf6437cf02d4bf892eccfe46511488719628e22df92da5026f31c555a6a1fa6f.php:81
 #: /tmp/cache/587c83c09abaa/92/926cb0fdbe92b0165a1a13c21243442890c70779003bbc2fe1230ff221742de9.php:90
@@ -689,7 +690,7 @@ msgid "skosext:partOf_help"
 msgstr "L'ensemble duquel ce concept est une partie."
 
 msgid "skosmos:marcSourceCode"
-msgstr ""
+msgstr "Code source MARC"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:548
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:201
@@ -785,49 +786,49 @@ msgid "search_example_text"
 msgstr "Pour les recherches avec troncature, utilisez le symbole * , par exemple *animal ou *brevet*. La recherche utilise automatiquement une troncature en fin de mot, même sans le symbole de troncature : la recherche chat donnera donc les mêmes résultats que chat*."
 
 msgid "feedback_enter_name_email"
-msgstr ""
+msgstr "Merci de renseigner votre nom et votre email si vous souhaitez recevoir une réponse directe. Vous avez aussi l'option de transmettre votre commentaire anonymement. NB : les commentaires concernant un vocabulaire spécifique sont transmis directement à son administrateur."
 
 msgid "concept_types"
 msgstr ""
 
 msgid "Skip to main"
-msgstr ""
+msgstr "Passer au contenu principal"
 
 msgid "Available vocabularies and ontologies"
-msgstr ""
+msgstr "Vocabulaires et ontologies disponibles"
 
 msgid "Search from selected vocabularies"
 msgstr ""
 
 msgid "List vocabulary concepts alphabetically"
-msgstr ""
+msgstr "Lister les concepts du vocabulaire par ordre alphabétique"
 
 msgid "List vocabulary concepts and groupings hierarchically"
-msgstr ""
+msgstr "Lister les groupes et concepts du vocabulaire par ordre hiérarchique"
 
 msgid "List vocabulary concepts by newest additions"
-msgstr ""
+msgstr "Lister les concepts du vocabulaire par ordre d'ajout"
 
 msgid "List vocabulary concepts hierarchically"
-msgstr ""
+msgstr "Lister les concepts du vocabulaire par ordre hiérarchique"
 
 msgid "Choose alphabetical listing letter"
-msgstr ""
+msgstr "Sélectionner la lettre pour la liste alphabétique"
 
 msgid "Concept information"
 msgstr ""
 
 msgid "Hierarchical listing of vocabulary concepts"
-msgstr ""
+msgstr "Liste des concepts du vocabulaire par ordre hiérarchique"
 
 msgid "Hierarchical listing of vocabulary concepts and groupings"
-msgstr ""
+msgstr "Liste des groupes et concepts du vocabulaire par ordre hiérarchique"
 
 msgid "Listing vocabulary concepts alphabetically"
-msgstr ""
+msgstr "Liste des concepts du vocabulaire par ordre alphabétique"
 
 msgid "Listing vocabulary concepts by newest additions"
-msgstr ""
+msgstr "Liste des concepts du vocabulaire par ordre d'ajout"
 
 msgid "Prefer using"
 msgstr ""
@@ -836,16 +837,16 @@ msgid "Search options tab"
 msgstr ""
 
 msgid "Search results"
-msgstr ""
+msgstr "Résultats de recherche"
 
 msgid "Sidebar listing: list and traverse vocabulary contents by a criterion"
 msgstr ""
 
 msgid "Subject:"
-msgstr ""
+msgstr "Sujet :"
 
 msgid "Write a subject"
-msgstr ""
+msgstr "Saisissez votre sujet"
 
 msgid "Select a vocabulary"
 msgstr ""
@@ -853,19 +854,19 @@ msgstr ""
 msgid ""
 "We're sorry but Skosmos doesn't work properly without JavaScript enabled. "
 "Please enable it to continue."
-msgstr ""
+msgstr "Nous sommes désolés mais Skosmos ne fonctionne pas correctement sans Javascript. Merci de l'activer pour poursuivre."
 
 msgid "Deprecated concept"
-msgstr ""
+msgstr "Concept déprécié"
 
 msgid "Error: Search failed!"
-msgstr ""
+msgstr "Erreur : La recherche a échoué !"
 
 msgid "Error: Failed to retrieve vocabulary information!"
-msgstr ""
+msgstr "Erreur : La description du vocabulaire n'a pas pu être récupérée !"
 
 msgid "Error: Loading more items failed!"
-msgstr ""
+msgstr "Erreur : Le chargement de plus de données a échoué !"
 
 msgid "Retry"
 msgstr ""
@@ -874,7 +875,7 @@ msgid "skos:notation"
 msgstr ""
 
 msgid "skos:notation_help"
-msgstr ""
+msgstr "Code qui identifie de manière unique un concept au sein d'un schéma de concept"
 
 msgid "Information"
 msgstr ""
