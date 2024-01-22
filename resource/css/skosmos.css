@@ -158,6 +158,17 @@ body {
     left: 205px;
   }
 
+  #skosmos-logo-top {
+    background-image: url(../pics/skosmos-NEGA-RGB.svg);
+    background-repeat: no-repeat;
+    width: 140px;
+    height: 50px;
+  }
+
+  #skosmos-logo-top h2 {
+    text-indent: -100%;
+  }
+
   .topbar-nav-link {
     background-position: left center;
     background-repeat: no-repeat;
@@ -197,6 +208,15 @@ body {
 
   #headerbar.vocabpage, #headerbar.termpage {
     background-color: var(--headerbar-vocab-bg);
+  }
+
+  #skosmos-logo {
+    background-image: url(../pics/skosmos-RGB.svg);
+    background-repeat: no-repeat;
+    background-position: -20px -20px;
+    width: 400px;
+    height: 110px;
+    background-size: 400px;
   }
 
   #vocab-title a {

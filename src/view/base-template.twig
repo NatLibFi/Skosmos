@@ -28,7 +28,13 @@
   <a class="visually-hidden" id="skiptocontent" href="{{ request.langurl }}#maincontent">Skip to main</a>
   <header>
     <div class="container-fluid bg-dark d-flex my-auto py-3 px-4 text-bg-dark">
-      <span class="fs-6 py-3 text-light">Yhteishaku sanastoista v</span>
+      {% if request.vocabid == '' and request.page != 'about' and request.page != 'feedback' %}
+        <span class="fs-6 py-3 text-light">Yhteishaku sanastoista v</span>
+      {% else %}
+        <a id="skosmos-logo-top" href="{{ request.lang }}/{% if request.contentLang and request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}">
+          <h2 class="visually-hidden">Skosmos</h2>
+        </a>
+      {% endif %}
       <ul class="nav nav-pills ms-auto my-auto text-light gx-3 py-3" id="topbar-nav">
         <li class="nav-item">
           <a href="{{ request.lang }}/{% if request.contentLang and request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}" id="navi1" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none" >
@@ -59,7 +65,9 @@
 
     <div class="container-fluid d-flex justify-content-between bg-light py-4 px-4" id="headerbar">
       {% if request.vocabid == '' %}
-      <h2 class="fs-1 fw-bold text-decoration-none">Skosmos<h2>
+        <div id="skosmos-logo">
+          <h1 class="visually-hidden">Skosmos</h1>
+        </div>
       {% else %}
       <h2 class="fs-2 fw-bold text-decoration-none" id="vocab-title"><a class="text-decoration-none" href="{% if request.vocabid != '' %}{{ request.vocabid  }}/{% endif %}{{ request.lang }}/{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{{ request.vocab.title(request.contentLang) }}</a></h2>
       <div class="d-flex justify-content-end align-items-end" id="search-vocab"></div>
