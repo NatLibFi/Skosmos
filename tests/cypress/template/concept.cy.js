@@ -80,6 +80,21 @@ describe('Concept page', () => {
     // check the altLabel value
     cy.get('.prop-skos_altLabel .property-value li').invoke('text').should('equal', 'musicology (research activity)')
   })
+  it('contains scope notes, with HTML links', () => {
+    cy.visit('/yso/fi/page/p39138') // go to "ukonvaajat" concept page (in Finnish)
+
+    // check the property name
+    cy.get('.prop-skos_scopeNote .property-label').invoke('text').should('equal', 'Käyttöhuomautus')
+
+    // check that we have the correct number of scopeNotes
+    cy.get('.prop-skos_scopeNote .property-value').find('li').should('have.length', 1)
+
+    // check the scopeNote value
+    cy.get('.prop-skos_scopeNote .property-value li').invoke('text').should('equal', 'Ukonvaajoiksi on nimitetty myös maahan osuneen salamaniskun muodostamia mineraalirakenteita. Näistä käytetään käsitettä fulguriitit.')
+
+    // check the link within the scopeNote
+    cy.get('.prop-skos_scopeNote .property-value li a').should('have.attr', 'href', 'http://www.yso.fi/onto/yso/p39144')
+  })
   it('contains groups', () => {
     cy.visit('/yso/en/page/p38289') // go to "music archaeology" concept page
 
@@ -91,6 +106,13 @@ describe('Concept page', () => {
 
     // check the first group value
     cy.get('.prop-skosmos_memberOf .property-value a').invoke('text').should('equal', '51 Archaeology')
+  })
+  it("doesn't contain subproperties of skos:hiddenLabel", () => {
+    cy.visit('/subclass/en/page/d1') // go to "ukonvaajat" concept page (in Finnish)
+
+    // make sure that the hidden property is not shown
+    cy.contains('This subproperty should not be shown in the UI').should('not.exist')
+    cy.contains('Do not show this').should('not.exist')
   })
   it('contains terms in other languages', () => {
     cy.visit('/yso/en/page/p21685') // go to "music research" concept page
@@ -109,6 +131,16 @@ describe('Concept page', () => {
 
     // check the broader concept
     cy.get('#concept-uri').invoke('text').should('equal', 'http://www.yso.fi/onto/yso/p21685')
+  })
+  it('contains created & modified times (English)', () => {
+    cy.visit('/yso/en/page/p21685') // go to "music research" concept page (English)
+
+    cy.get('#date-info').invoke('text').should('equal', 'Created 10/25/07, last modified 2/8/23')
+  })
+  it('contains created & modified times (Finnish)', () => {
+    cy.visit('/yso/fi/page/p21685') // go to "musiikintutkimus" concept page (Finnish)
+
+    cy.get('#date-info').invoke('text').should('equal', 'Luotu 25.10.2007, viimeksi muokattu 8.2.2023')
   })
   it('contains mappings', () => {
     cy.visit('/yso/en/page/p21685') // go to "music research" concept page
