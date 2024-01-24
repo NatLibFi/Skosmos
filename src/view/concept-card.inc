@@ -14,7 +14,7 @@
         </div>
       </div>
 
-      {% for property in concept.properties %}
+      {% for property in concept.properties %}{% if property.getSubPropertyOf != 'skos:hiddenLabel' %}
       <div class="row property prop-{{property.ID}}">
         <div class="col-sm-4 px-0 property-label"><h2>{{ property.label}}</h2></div>
         <div class="col-sm-8 align-self-center property-value">
@@ -33,7 +33,7 @@
           </ul>
         </div>
       </div>
-      {% endfor %}
+      {% endif %}{% endfor %}
       {% set foreignLabels = concept.foreignLabels %}
       {% if foreignLabels %}
       <div class="row property prop-foreignlabels">
