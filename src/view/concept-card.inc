@@ -81,6 +81,9 @@
               <a href="rest/v1/{{ vocab.id }}/data?uri={{ concept.uri|url_encode }}&amp;format=application/ld%2Bjson">JSON-LD</a>
             </li>
           </ul>
+          {% if concept.date %}
+          <div id="date-info">{{ concept.date }}</div>
+          {% endif %}
         </div>
       </div>
     </div>
