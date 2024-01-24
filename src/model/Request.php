@@ -130,7 +130,7 @@ class Request
         if (!isset($this->serverConstants[$paramName])) {
             return null;
         }
-        return filter_var($this->serverConstants[$paramName], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        return filter_var($this->serverConstants[$paramName], FILTER_SANITIZE_ADD_SLASHES);
     }
 
     public function getCookie($paramName)

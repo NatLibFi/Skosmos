@@ -38,6 +38,7 @@
     # interface languages available, and the corresponding system locales
     skosmos:languages ( [ rdfs:label "en" ; rdf:value "en_GB.utf8" ]
                         [ rdfs:label "fi" ; rdf:value "fi_FI.utf8" ]
+                        [ rdfs:label "sv" ; rdf:value "sv_SE.utf8" ]
                         [ rdfs:label "fr" ; rdf:value "fr_FR.utf8" ] ) ;
     # how many results (maximum) to load at a time on the search results page
     skosmos:searchResultsSize 5 ;
