@@ -256,4 +256,31 @@ class RequestTest extends PHPUnit\Framework\TestCase
         $this->assertEquals("http//example.com", $langurl);
     }
 
+  /**
+   * @covers Request::getServerConstant
+   */
+  public function testGetServerConstant() {
+    $this->request->setServerConstant('PATH_INFO', '/myvocab/index/X');
+    $path_info = $this->request->getServerConstant('PATH_INFO');
+    $this->assertEquals('/myvocab/index/X', $path_info);
+  }
+
+  /**
+   * @covers Request::getServerConstant
+   */
+  public function testGetServerConstantDiacriticNotEncoded() {
+    $this->request->setServerConstant('PATH_INFO', '/myvocab/index/Ä');
+    $path_info = $this->request->getServerConstant('PATH_INFO');
+    $this->assertEquals('/myvocab/index/Ä', $path_info);
+  }
+
+  /**
+   * @covers Request::getServerConstant
+   */
+  public function testGetServerConstantQuoteIsEncoded() {
+    $this->request->setServerConstant('PATH_INFO', "/myvocab/index/'");
+    $path_info = $this->request->getServerConstant('PATH_INFO');
+    $this->assertEquals("/myvocab/index/\'", $path_info);
+  }
+
 }

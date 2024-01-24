@@ -39,4 +39,15 @@ describe('Vocabulary home page', () => {
     // check that the first entry is Carp
     cy.get('#tab-alphabetical .sidebar-list').children().first().invoke('text').should('equal', 'Carp')
   })
-})
+  it('alphabetical index diacritic letters are clickable', () => {
+    cy.visit('/yso/sv/') // go to the YSO home page in Swedish language
+
+    // click on the last letter (Ö)
+    cy.get('#tab-alphabetical .pagination :nth-last-child(1) > .page-link').click()
+
+    // check that we have the correct number of entries
+    cy.get('#tab-alphabetical .sidebar-list').children().should('have.length', 4)
+
+    // check that the first entry is "östliga handelsvägar"
+    cy.get('#tab-alphabetical .sidebar-list').children().first().children().first().invoke('text').should('equal', 'östliga handelsvägar')
+  })})

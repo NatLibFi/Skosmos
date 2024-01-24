@@ -2,13 +2,18 @@
 
 ## Supported Versions
 
-Following Skosmos versions are currently being supported with security updates by the Skosmos development team at the National Library of Finland. The "current development branch" means the master branch of the repository, whereas the "maintenance branch" is a branch called `vX.X-maintenance`, where the version number `X.X` corresponds to the latest [release](https://github.com/NatLibFi/Skosmos/releases) of Skosmos.
+The following Skosmos versions are currently being supported with security updates by the Skosmos development team at the National Library of Finland.
 
-| Version                     | Supported          |
-| --------------------------- | ------------------ |
-| Current development branch  |  ✔️                 |
-| Current maintenance branch  |  ✔️                 |
-| Older versions              | :x:                |
+* The "current Skosmos 3 development branch" means the `main` branch of the repository.
+* The "current Skosmos 2 development branch" means the `skosmos-2` branch of the repository
+* The "maintenance branch" is a branch called `vX.X-maintenance`, where the version number `X.X` corresponds to the latest [release](https://github.com/NatLibFi/Skosmos/releases) of Skosmos
+
+| Version                               | Supported          |
+| ------------------------------------- | ------------------ |
+| Current Skosmos 3 development branch  | :x:                |
+| Current Skosmos 2 development branch  |  ✔️                 |
+| Current maintenance branch            |  ✔️                 |
+| Older versions                        | :x:                |
 
 ## Reporting a Vulnerability
 
