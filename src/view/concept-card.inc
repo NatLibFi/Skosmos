@@ -27,7 +27,7 @@
               </a>
             </li>
             {% else %} {# literals, e.g. altLabels #}
-            <li>{{ propval.label }}</li>
+            <li>{% if propval.containsHtml %}{{ propval.label|raw }}{% else %}{{ propval.label }}{% endif %}</li>
             {% endif %}
           {% endfor %}
           </ul>
