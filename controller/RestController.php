@@ -225,6 +225,10 @@ class RestController extends Controller
                 'uri' => '@id',
                 'type' => '@type',
                 'conceptschemes' => 'onki:hasConceptScheme',
+                'mainConceptScheme' => array(
+                    '@id' => 'onki:mainConceptScheme',
+                    '@type' => '@id'
+                ),
                 'id' => 'onki:vocabularyIdentifier',
                 'defaultLanguage' => 'onki:defaultLanguage',
                 'languages' => 'onki:language',
@@ -241,6 +245,7 @@ class RestController extends Controller
             'defaultLanguage' => $vocab->getConfig()->getDefaultLanguage(),
             'languages' => array_values($vocab->getConfig()->getLanguages()),
             'conceptschemes' => $conceptschemes,
+            'mainConceptScheme' => $vocab->getConfig()->getMainConceptSchemeURI()
         );
 
         if ($vocab->getConfig()->getTypes($request->getLang())) {
