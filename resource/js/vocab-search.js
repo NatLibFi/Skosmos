@@ -7,12 +7,14 @@ const vocabSearch = Vue.createApp({
       languages: [],
       selectedLanguage: null,
       searchTerm: null,
-      autoCompeteResults: []
+      autoCompeteResults: [],
+      languageStrings: null
     }
   },
   mounted () {
     this.languages = SKOSMOS.languageOrder
     this.selectedLanguage = SKOSMOS.content_lang
+    this.languageStrings = SKOSMOS.language_strings[SKOSMOS.lang]
   },
   methods: {
     autoComplete () {
@@ -38,12 +40,11 @@ const vocabSearch = Vue.createApp({
   template: `
     <div class="d-flex mb-2 my-auto ms-auto">
       <div class="input-group" id="search-wrapper">
-        <select class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown-item" aria-expanded="false"
+        <select class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown-item" aria-expanded="false"
           v-model="selectedLanguage"
           @change="changeLang()"
         >
-          <option class="dropdown-item" v-for="lang in languages" :value="lang">{{ lang }}</option>
-          <option class="dropdown-item" value="all">All</option>
+          <option class="dropdown-item" v-for="(value, key) in languageStrings" :value="key">{{ value }}</option>
         </select>
         <input type="search" class="form-control" aria-label="Text input with dropdown button" placeholder="Search..."
           v-model="searchTerm"
