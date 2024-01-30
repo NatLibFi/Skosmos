@@ -10,22 +10,16 @@
         <ol>
           {% for crumb in path %}
             {% if crumb.hiddenLabel %}
-              <li class="breadcrumb-toggle">
-                <a href=".breadcrumb-collapse" data-bs-target=".breadcrumb-collapse" data-bs-toggle="collapse" role="button" aria-expanded="false">...</a>
-              </li>
+              <li class="breadcrumb-toggle"><a href=".breadcrumb-collapse" data-bs-target=".breadcrumb-collapse" data-bs-toggle="collapse" role="button" aria-expanded="false">...</a></li>
               {% for hiddenCrumb in hidden_breadcrumbs[path_idx] %}
-              <li class="breadcrumb collapse multi-collapse breadcrumb-collapse">
-                <a href="{{ hiddenCrumb.uri|link_url(vocab,request.lang,'page',request.contentLang) }}">{{ hiddenCrumb.hiddenLabel }}</a>
-              </li>
+              <li class="breadcrumb collapse multi-collapse breadcrumb-collapse"><a href="{{ hiddenCrumb.uri|link_url(vocab,request.lang,'page',request.contentLang) }}">{{ hiddenCrumb.hiddenLabel }}</a></li>
               {% endfor %}
             {% else %}
-              <li class="breadcrumb">
-                <a
+              <li class="breadcrumb"><a
                   {% if loop.last %}aria-current="page" class="breadcrumb-current"
                   {% else %}href="{{ crumb.uri|link_url(vocab,request.lang,'page',request.contentLang) }}"
                   {% endif %}
-                  >{{ crumb.prefLabel }}</a>
-              </li>
+                  >{{ crumb.prefLabel }}</a></li>
             {% endif %}
           {% endfor %}
         </ol>
