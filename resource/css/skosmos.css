@@ -671,6 +671,28 @@ body {
   }
 
   /*** Main content termpage ***/
+  nav#concept-breadcrumbs ol {
+    list-style: none;
+  }
+
+  nav#concept-breadcrumbs li, nav#concept-breadcrumbs li.collapse.show {
+    display: inline;
+  }
+
+  nav#concept-breadcrumbs li.collapse {
+    display: none;
+  }
+
+  nav#concept-breadcrumbs li + li::before {
+    display: inline-block;
+    content: ">";
+  }
+
+  nav#concept-breadcrumbs .breadcrumb-current {
+    color: black;
+    font-weight: normal;
+  }
+
   #concept-property-label {
     align-self: start;
     padding-top: 1.25rem;
