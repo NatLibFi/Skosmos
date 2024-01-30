@@ -3,6 +3,7 @@
 
     <div class="main-content-section px-5 py-4">
 
+      {% if visible_breadcrumbs and visible_breadcrumbs[0]|length > 1 %}
       <nav class="row" id="concept-breadcrumbs" aria-label='{{ "Breadcrumbs" | trans }}'>
         {% for path in visible_breadcrumbs %}
         <ol>
@@ -29,6 +30,7 @@
         </ol>
         {% endfor %}
       </nav>
+      {% endif %}
 
       <div class="row" id="concept-heading">
         <div class="col-sm-4 px-0" id="concept-property-label">{{ "skos:prefLabel" | trans }}</div>

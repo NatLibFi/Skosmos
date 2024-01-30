@@ -632,6 +632,7 @@ body {
   }
 
   #concept-heading {
+    margin-top: 2rem;
     padding-bottom: 4rem;
   }
 
@@ -671,10 +672,6 @@ body {
   }
 
   /*** Main content termpage ***/
-  nav#concept-breadcrumbs {
-    margin-bottom: 2rem;
-  }
-
   nav#concept-breadcrumbs ol {
     list-style: none;
     padding-left: 0;
