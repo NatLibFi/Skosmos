@@ -32,7 +32,7 @@ const vocabSearch = Vue.createApp({
     },
     changeLang () {
       SKOSMOS.content_lang = this.selectedLanguage
-￼      // TODO: Impelemnt partial page load to change content according to the new content language
+      // TODO: Impelemnt partial page load to change content according to the new content language
     }
   },
   template: `
