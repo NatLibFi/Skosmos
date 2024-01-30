@@ -19,7 +19,7 @@ const vocabSearch = Vue.createApp({
   methods: {
     autoComplete () {
       if (!this.searchTerm) return
-      console.log('Auto complete: ' + this.searchTerm)
+      // TODO: Implement autocomplete here
     },
     gotoSearchPage () {
       if (!this.searchTerm) return
@@ -33,8 +33,7 @@ const vocabSearch = Vue.createApp({
     },
     changeLang () {
       SKOSMOS.content_lang = this.selectedLanguage
-      console.log(SKOSMOS.content_lang)
-      // Partial page load to change content according to the new content language:
+      // TODO: Impelemnt partial page load to change content according to the new content language
     }
   },
   template: `
