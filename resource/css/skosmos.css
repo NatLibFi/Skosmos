@@ -822,6 +822,15 @@ body {
     color: var(--feedback-form-text);
   }
 
+ /* About page
+   *****************************************/
+  #aboutid-korjaa a {
+    font-size: 0,8ems;
+    color: var(--vocab-link);
+    text-decoration: underline var(--secondary-medium-color) solid;
+    font-weight: 400;
+  }
+
   /* Error page
    *****************************************/
   .alert {

@@ -35,32 +35,34 @@
           <h2 class="visually-hidden">Skosmos</h2>
         </a>
       {% endif %}
-      <ul class="nav nav-pills ms-auto my-auto text-light gx-3 py-3" id="topbar-nav">
-        <li class="nav-item">
-          <a href="{{ request.lang }}/{% if request.contentLang and request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}" id="navi1" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none" >
-                   {{ "Vocabularies" | trans }}
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ request.lang }}/about{% if request.contentLang and request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}" id="navi2" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none">
-                   {{ "About" | trans }}
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{% if request.vocabid and vocab.title%}{{ request.vocabid }}/{% endif %}{{ request.lang }}/feedback{% if request.contentLang and request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}" id="navi3" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none">
-                   {{ "Feedback" | trans }}
-          </a>
-        </li>
-        {% if languages|length > 1 %}
-        {% for langcode, langdata in languages %}
-        {% if request.lang != langcode %}
-        <li class="nav-item" id="language">
-          <a class="fs-6 text-light ms-3 text-decoration-none" id="language-{{ langcode}}" href="{{ request.langurl(langcode) }}"> {{ langdata.name }}</a>
-        </li>
-        {% endif %}
-        {% endfor %}
-        {% endif %}
-      </ul>
+      <nav>
+        <ul class="nav nav-pills ms-auto my-auto text-light gx-3 py-3" id="topbar-nav">
+          <li class="nav-item">
+            <a href="{{ request.lang }}/{% if request.contentLang and request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}" id="navi1" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none" >
+                     {{ "Vocabularies" | trans }}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ request.lang }}/about{% if request.contentLang and request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}" id="navi2" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none">
+                     {{ "About" | trans }}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% if request.vocabid and vocab.title%}{{ request.vocabid }}/{% endif %}{{ request.lang }}/feedback{% if request.contentLang and request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}" id="navi3" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none">
+                     {{ "Feedback" | trans }}
+            </a>
+          </li>
+          {% if languages|length > 1 %}
+          {% for langcode, langdata in languages %}
+          {% if request.lang != langcode %}
+          <li class="nav-item" id="language">
+            <a class="fs-6 text-light ms-3 text-decoration-none" id="language-{{ langcode}}" href="{{ request.langurl(langcode) }}"> {{ langdata.name }}</a>
+          </li>
+          {% endif %}
+          {% endfor %}
+          {% endif %}
+        </ul>
+      </nav>
     </div>
 
     <div class="container-fluid d-flex justify-content-between bg-light py-4 px-4" id="headerbar">
