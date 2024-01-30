@@ -1,4 +1,91 @@
 describe('Concept page', () => {
+  it("doesn't contain breadcrumbs for top concepts", () => {
+    cy.visit('/yso/en/page/p8691') // go to "properties" concept page
+
+    // check that there are no breadcrumbs on the page
+    cy.get('#concept-breadcrumbs').should('not.exist')
+  })
+  it("contains unshortened breadcrumbs (up to 5 levels)", () => {
+    cy.visit('/yso/en/page/p7347') // go to "ancient castles" concept page
+
+    // check that there are breadcrumbs on the page
+    cy.get('#concept-breadcrumbs').should('exist')
+
+    // check that there is no expand link for breadcrumbs
+    cy.get('.breadcrumb-toggle').should('not.exist')
+
+    // check that there are 5 breadcrumb links
+    cy.get('#concept-breadcrumbs ol').find('li').should('have.length', 5)
+
+    // check the first breadcrumb
+    cy.get('#concept-breadcrumbs ol li').first().invoke('text').should('equal', 'properties')
+
+    // check the last breadcrumb
+    cy.get('#concept-breadcrumbs ol li').last().invoke('text').should('equal', 'ancient castles')
+    cy.get('#concept-breadcrumbs ol li a').last().should('have.class', 'breadcrumb-current')
+  })
+  it("contains shortened breadcrumbs (more than 5 levels)", () => {
+    cy.visit('/yso/en/page/p1265') // go to "archaeology" concept page
+
+    // check that there are breadcrumbs on the page
+    cy.get('#concept-breadcrumbs').should('exist')
+
+    // check that there is an expand link for breadcrumbs
+    cy.get('.breadcrumb-toggle').should('exist')
+
+    // check that there are 8 breadcrumb links
+    cy.get('#concept-breadcrumbs ol').find('li').should('have.length', 8)
+
+    // check that there are 2 hidden breadcrumb links
+    cy.get('#concept-breadcrumbs ol').find('li.collapse').should('have.length', 2)
+
+    // check that there are no breadcrumb links currently shown
+    cy.get('#concept-breadcrumbs ol').find('li.show').should('have.length', 0)
+
+    // check the first breadcrumb (expand link)
+    cy.get('#concept-breadcrumbs ol li').first().invoke('text').should('equal', '...')
+
+    // check the last breadcrumb
+    cy.get('#concept-breadcrumbs ol li').last().invoke('text').should('equal', 'archaeology')
+    cy.get('#concept-breadcrumbs ol li a').last().should('have.class', 'breadcrumb-current')
+
+    // click the expand link
+    cy.get('#concept-breadcrumbs ol li').first().click()
+
+    // check that there are 2 breadcrumb links currently shown
+    cy.get('#concept-breadcrumbs ol').find('li.show').should('have.length', 2)
+  })
+  it("contains shortened breadcrumbs (two different paths)", () => {
+    cy.visit('/yso/en/page/p38289') // go to "music archaeology" concept page
+
+    // check that there are breadcrumbs on the page
+    cy.get('#concept-breadcrumbs').should('exist')
+
+    // check that there are 2 sets of breadcrumbs
+    cy.get('#concept-breadcrumbs').find('ol').should('have.length', 2)
+
+    // check that there are 2 expand links for breadcrumbs
+    cy.get('#concept-breadcrumbs').find('.breadcrumb-toggle').should('have.length', 2)
+
+    // check that there are 4 hidden breadcrumb links
+    cy.get('#concept-breadcrumbs ol').find('li.collapse').should('have.length', 4)
+
+    // check that there are no breadcrumb links currently shown
+    cy.get('#concept-breadcrumbs ol').find('li.show').should('have.length', 0)
+
+    // check the first breadcrumb (expand link)
+    cy.get('#concept-breadcrumbs ol li').first().invoke('text').should('equal', '...')
+
+    // check the last breadcrumb
+    cy.get('#concept-breadcrumbs ol li').last().invoke('text').should('equal', 'music archaeology')
+    cy.get('#concept-breadcrumbs ol li a').last().should('have.class', 'breadcrumb-current')
+
+    // click the expand link
+    cy.get('#concept-breadcrumbs ol li').first().click()
+
+    // check that there are 2 breadcrumb links currently shown
+    cy.get('#concept-breadcrumbs ol').find('li.show').should('have.length', 4)
+  })
   it('contains concept preflabel', () => {
     cy.visit('/yso/en/page/p21685') // go to "music research" concept page
 
