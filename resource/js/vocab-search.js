@@ -7,7 +7,131 @@ const vocabSearch = Vue.createApp({
       languages: [],
       selectedLanguage: null,
       searchTerm: null,
-      autoCompeteResults: [],
+      autoCompeteResults: [ //static mockup to display results
+      {
+      "uri": "http://www.yso.fi/onto/yso/p19378",
+      "type": [
+        "skos:Concept",
+        "http://www.yso.fi/onto/yso-meta/Concept"
+      ],
+      "localname": "p19378",
+      "prefLabel": "kissa",
+      "lang": "fi",
+      "vocab": "yso"
+    },
+    {
+      "uri": "http://www.yso.fi/onto/yso/p864",
+      "type": [
+        "skos:Concept",
+        "http://www.yso.fi/onto/yso-meta/Concept"
+      ],
+      "localname": "p864",
+      "prefLabel": "kissaeläimet",
+      "lang": "fi",
+      "vocab": "yso"
+    },
+    {
+      "uri": "http://www.yso.fi/onto/yso/p18191",
+      "type": [
+        "skos:Concept",
+        "http://www.yso.fi/onto/yso-meta/Concept"
+      ],
+      "localname": "p18191",
+      "prefLabel": "kissamaki",
+      "lang": "fi",
+      "vocab": "yso"
+    },
+    {
+      "uri": "http://www.yso.fi/onto/yso/p17951",
+      "type": [
+        "skos:Concept",
+        "http://www.yso.fi/onto/yso-meta/Concept"
+      ],
+      "localname": "p17951",
+      "prefLabel": "kissanhuuto-oireyhtymä",
+      "lang": "fi",
+      "vocab": "yso"
+    },
+    {
+      "uri": "http://www.yso.fi/onto/yso/p29087",
+      "type": [
+        "skos:Concept",
+        "http://www.yso.fi/onto/yso-meta/Concept"
+      ],
+      "localname": "p29087",
+      "prefLabel": "kissankasvattajat",
+      "lang": "fi",
+      "hiddenLabel": "kissankasvattaja",
+      "vocab": "yso"
+    },
+    {
+      "uri": "http://www.yso.fi/onto/yso/p29087",
+      "type": [
+        "skos:Concept",
+        "http://www.yso.fi/onto/yso-meta/Concept"
+      ],
+      "localname": "p29087",
+      "prefLabel": "kissankasvattajat",
+      "lang": "fi",
+      "vocab": "yso"
+    },
+    {
+      "uri": "http://www.yso.fi/onto/yso/p21153",
+      "type": [
+        "skos:Concept",
+        "http://www.yso.fi/onto/yso-meta/Concept"
+      ],
+      "localname": "p21153",
+      "prefLabel": "kissankello",
+      "lang": "fi",
+      "vocab": "yso"
+    },
+    {
+      "uri": "http://www.yso.fi/onto/yso/p29557",
+      "type": [
+        "skos:Concept",
+        "http://www.yso.fi/onto/yso-meta/Concept"
+      ],
+      "localname": "p29557",
+      "prefLabel": "kissankäpälälude",
+      "lang": "fi",
+      "vocab": "yso"
+    },
+    {
+      "uri": "http://www.yso.fi/onto/yso/p26343",
+      "type": [
+        "skos:Concept",
+        "http://www.yso.fi/onto/yso-meta/Concept"
+      ],
+      "localname": "p26343",
+      "prefLabel": "kissanäyttelyt",
+      "lang": "fi",
+      "hiddenLabel": "kissanäyttely",
+      "vocab": "yso"
+    },
+    {
+      "uri": "http://www.yso.fi/onto/yso/p26343",
+      "type": [
+        "skos:Concept",
+        "http://www.yso.fi/onto/yso-meta/Concept"
+      ],
+      "localname": "p26343",
+      "prefLabel": "kissanäyttelyt",
+      "lang": "fi",
+      "vocab": "yso"
+    },
+    {
+      "uri": "http://www.yso.fi/onto/yso/p19378",
+      "type": [
+        "skos:Concept",
+        "http://www.yso.fi/onto/yso-meta/Concept"
+      ],
+      "localname": "p19378",
+      "prefLabel": "kissa",
+      "lang": "fi",
+      "altLabel": "kissat",
+      "vocab": "yso"
+    } ],
       languageStrings: null
     }
   },
@@ -18,7 +142,6 @@ const vocabSearch = Vue.createApp({
   },
   methods: {
     autoComplete () {
-
     },
     gotoSearchPage () {
       if (!this.searchTerm) return
@@ -32,7 +155,7 @@ const vocabSearch = Vue.createApp({
     },
     changeLang () {
       SKOSMOS.content_lang = this.selectedLanguage
-      // TODO: Impelemnt partial page load to change content according to the new content language
+      // TODO: Impelement partial page load to change content according to the new content language
     }
   },
   template: `
