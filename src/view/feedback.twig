@@ -15,7 +15,8 @@
       <div class="mb-4">
         <label class="form-label" for="vocab-select">{{ 'Vocabulary' | trans }}</label>
         <div class="select-wrapper">
-          <select class="form-select" id="vocab-select" name="vocab">
+          <label for="vocab-select">Select a language</label>
+          <select class="form-select" id="vocab-select" name="vocab" aria-label="Select a language">
             <option value="" {% if not request.vocab %}selected{% endif %}>{{ 'Not to a specific vocabulary' | trans }}</option>
             {% for option in vocabList %}
               <option value="{{ option.id }}" {% if request.vocab.id == option.id %}selected{% endif %}>{{ option.title }}</option>

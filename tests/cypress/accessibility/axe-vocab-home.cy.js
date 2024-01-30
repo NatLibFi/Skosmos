@@ -6,7 +6,7 @@ import 'cypress-axe';
     - test to be skipped: describe.skip('Check accessibility of ... */
 describe('Check accessibility of the vocab-home page', () => {
   before(() => {
-    cy.visit('/agrovoc/fi/')
+    cy.visit('/yso/en/')
     cy.injectAxe()
   })
 
