@@ -6,13 +6,14 @@
       {% if visible_breadcrumbs and visible_breadcrumbs[0]|length > 1 %}
       <nav class="row" id="concept-breadcrumbs" aria-label='{{ "Breadcrumbs" | trans }}'>
         {% for path in visible_breadcrumbs %}
+        {% set path_idx = loop.index0 %}
         <ol>
           {% for crumb in path %}
             {% if crumb.hiddenLabel %}
               <li class="breadcrumb-toggle">
                 <a href=".breadcrumb-collapse" data-bs-target=".breadcrumb-collapse" data-bs-toggle="collapse" role="button" aria-expanded="false">...</a>
               </li>
-              {% for hiddenCrumb in hidden_breadcrumbs[loop.index] %}
+              {% for hiddenCrumb in hidden_breadcrumbs[path_idx] %}
               <li class="breadcrumb collapse multi-collapse breadcrumb-collapse">
                 <a href="{{ hiddenCrumb.uri|link_url(vocab,request.lang,'page',request.contentLang) }}">{{ hiddenCrumb.hiddenLabel }}</a>
               </li>
