@@ -249,7 +249,8 @@ body {
     color: var(--headerbar-text-2);
     border: 1px solid var(--search-border);
     border-radius: 0;
-    width: 200px;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
 
   #headerbar .dropdown-toggle:hover, #headerbar .dropdown-toggle:active {
