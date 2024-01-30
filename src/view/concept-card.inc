@@ -3,7 +3,7 @@
 
     <div class="main-content-section px-5 py-4">
 
-      <nav class="row" id="concept-breadcrumbs" aria-label="Breadcrumb">
+      <nav class="row" id="concept-breadcrumbs" aria-label='{{ "Breadcrumbs" | trans }}'>
         {% for path in visible_breadcrumbs %}
         <ol>
           {% for crumb in path %}

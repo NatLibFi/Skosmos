@@ -876,3 +876,6 @@ msgstr "Code that uniquely identifies a concept within a concept scheme."
 
 msgid "Information"
 msgstr "Information"
+
+msgid "Breadcrumbs"
+msgstr "Breadcrumbs"
