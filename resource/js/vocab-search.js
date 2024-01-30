@@ -18,7 +18,7 @@ const vocabSearch = Vue.createApp({
   },
   methods: {
     autoComplete () {
-      // TODO: Implement autocomplete here using this.searchTerm as input
+
     },
     gotoSearchPage () {
       if (!this.searchTerm) return
@@ -31,10 +31,8 @@ const vocabSearch = Vue.createApp({
       window.location.href = searchUrl
     },
     changeLang () {
-      /* TODO: Impelemnt partial page load:
-       * - change content according to the new content language
-       * - SKOSMOS.content_lang = this.selectedLanguage
-       */
+      SKOSMOS.content_lang = this.selectedLanguage
+￼      // TODO: Impelemnt partial page load to change content according to the new content language
     }
   },
   template: `
