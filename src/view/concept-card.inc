@@ -1,7 +1,7 @@
 <div class="col-md-8 ps-3">
   <div class="pt-3" id="main-content">
 
-    <div class="main-content-section p-5">
+    <div class="main-content-section px-5 py-4">
 
       <nav class="row" id="concept-breadcrumbs" aria-label="Breadcrumb">
         {% for path in visible_breadcrumbs %}
@@ -12,12 +12,12 @@
                 <a href=".breadcrumb-collapse" data-bs-target=".breadcrumb-collapse" data-bs-toggle="collapse" role="button" aria-expanded="false">...</a>
               </li>
               {% for hiddenCrumb in hidden_breadcrumbs[loop.index] %}
-              <li class="collapse multi-collapse breadcrumb-collapse">
+              <li class="breadcrumb collapse multi-collapse breadcrumb-collapse">
                 <a href="{{ hiddenCrumb.uri|link_url(vocab,request.lang,'page',request.contentLang) }}">{{ hiddenCrumb.hiddenLabel }}</a>
               </li>
               {% endfor %}
             {% else %}
-              <li>
+              <li class="breadcrumb">
                 <a
                   {% if loop.last %}aria-current="page" class="breadcrumb-current"
                   {% else %}href="{{ crumb.uri|link_url(vocab,request.lang,'page',request.contentLang) }}"

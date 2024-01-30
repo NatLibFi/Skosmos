@@ -671,20 +671,25 @@ body {
   }
 
   /*** Main content termpage ***/
+  nav#concept-breadcrumbs {
+    margin-bottom: 2rem;
+  }
+
   nav#concept-breadcrumbs ol {
     list-style: none;
+    padding-left: 0;
+    margin-bottom: 0.5rem;
   }
 
   nav#concept-breadcrumbs li, nav#concept-breadcrumbs li.collapse.show {
     display: inline;
   }
 
-  nav#concept-breadcrumbs li.collapse {
+  nav#concept-breadcrumbs li.collapse, nav#concept-breadcrumbs li:has(a[aria-expanded="true"]) {
     display: none;
   }
 
-  nav#concept-breadcrumbs li + li::before {
-    display: inline-block;
+  nav#concept-breadcrumbs li.breadcrumb + li::before {
     content: ">";
   }
 
