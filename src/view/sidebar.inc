@@ -10,7 +10,7 @@
           {% elseif view == 'hierarchy' %} {% set view_trans_text = ['Hier-nav', 'List vocabulary concepts hierarchically'] %}
           {% elseif view == 'groups' %} {% set view_trans_text = ['Group-nav', 'List vocabulary concepts and groupings hierarchically'] %}
           {% else %} {% set view_trans_text = vocab.config.showDeprecatedChanges ? ['Changes-and-deprecations-nav', 'List vocabulary concepts by newest additions including removed'] : ['Changes-nav', 'List vocabulary concepts by newest additions'] %}{% endif %}
-          <h3 class="visually-hidden">{{ view_trans_text[1] | trans }}</h3>
+          <span class="visually-hidden">{{ view_trans_text[1] | trans }}</span>
           {# active_class is used to set initial active tab and disabled_class is used to disable hierarchy tab #}
           {# On vocab page active tab is set to defaultSidebarView, on concept page active tab is set to defaultConceptSidebarView #}
           {% set active_class = (request.page == 'vocab' and view == vocab.config.defaultSidebarView) or (request.page == 'page' and view == vocab.config.defaultConceptSidebarView) %}
