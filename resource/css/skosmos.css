@@ -687,7 +687,7 @@ body {
   }
 
   nav#concept-breadcrumbs li.breadcrumb + li::before {
-    content: ">";
+    content: "> ";
   }
 
   nav#concept-breadcrumbs .breadcrumb-current {
