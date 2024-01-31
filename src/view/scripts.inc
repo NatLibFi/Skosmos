@@ -21,8 +21,24 @@ const SKOSMOS = {
   "pluginParameters": {{ plugin_params|raw }},
   {%- endif %}
   {%- if request.plugins.callbacks ~%}
-  "pluginCallbacks": [{% for function in request.plugins.callbacks %}{% if not loop.first %}, {% endif %}"{{ function }}"{% endfor %}]
+  "pluginCallbacks": [{% for function in request.plugins.callbacks %}{% if not loop.first %}, {% endif %}"{{ function }}"{% endfor %}],
   {%- endif ~%}
+  //This is a mockup version of language_strings, the mechanism for fetching the translations strings for JS components is missing
+  "language_strings" :{ "fi": { "fi": "suomi",
+                                "en": "englanti",
+                                "se": "pohjoissaame",
+                                "sv": "ruotsi",
+                                "all": "kaikilla kielillä"},
+                        "sv": { "fi": "finska",
+                                "en": "engelska",
+                                "se": "nordsamiska",
+                                "sv": "svenska",
+                                "all": "på alla språk"},
+                        "en": { "fi": "Finnish",
+                                "en": "English",
+                                "se": "Northern Sami",
+                                "sv": "Swedish",
+                                "all": "In all languages"},},
 }
 </script>
 
