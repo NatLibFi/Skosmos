@@ -53,7 +53,7 @@ const vocabSearch = Vue.createApp({
         <button id="clear-button" class="btn btn-danger" type="clear" v-if="searchTerm" @click="searchTerm = ''">
           <i class="fa-solid fa-xmark"></i>
         </button>
-        <button id="search-button" class="btn btn-outline-secondary" @click="gotoSearchPage()">
+        <button id="search-button" class="btn btn-outline-secondary" @click="gotoSearchPage()" aria-label="go to the search page">
           <i class="fa-solid fa-magnifying-glass"></i>
         </button>
       </div>

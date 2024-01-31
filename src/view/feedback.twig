@@ -44,7 +44,7 @@
       <div>
         <span>* {{ 'Value is required and can not be empty' | trans }}</span>
         {{ honeypot.generate('item-description', 'user-captcha')|raw }}
-        <button type="submit" class="btn btn-primary" id="submit-feedback">{{ 'Send feedback' | trans }}</button>
+        <button type="submit" class="btn btn-primary" id="submit-feedback" aria-label="Send feedback">{{ 'Send feedback' | trans }}</button>
       </div>
     </form>
   {% endif -%}

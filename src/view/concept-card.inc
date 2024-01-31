@@ -8,7 +8,7 @@
         <div class="col-sm-8" id="concept-label">
           <h1 class="mb-0">{{ concept.label }}</h1>
           <button class="btn btn-default copy-clipboard" type="button"
-                  data-bs-toggle="tooltip" data-bs-placement="button" title="{{ 'Copy to clipboard' | trans }}">
+                  data-bs-toggle="tooltip" data-bs-placement="button" title="{{ 'Copy to clipboard' | trans }}" aria-label="Copy to clipboard">
           <i class="fa-regular fa-copy"></i>
           </button>
         </div>
