@@ -199,8 +199,8 @@ class WebController extends Controller
             'concept_uri' => $uri,
             'languages' => $this->languages,
             'explicit_langcodes' => $langcodes,
-            'bread_crumbs' => $crumbs['breadcrumbs'],
-            'combined' => $crumbs['combined'],
+            'visible_breadcrumbs' => $crumbs['breadcrumbs'],
+            'hidden_breadcrumbs' => $crumbs['combined'],
             'request' => $request,
             'plugin_params' => $pluginParameters,
             'custom_labels' => $customLabels)
