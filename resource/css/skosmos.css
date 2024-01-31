@@ -741,6 +741,10 @@ body {
     display: inline-block;
   }
 
+  #date-info {
+    font-size: 0.85rem;
+  }
+
   /***** Main content searchpage & searchpage multi vocab *****/
   #search-results {
     background-color: var(--vocab-bg);
