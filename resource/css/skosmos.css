@@ -98,11 +98,6 @@ body {
     text-align: center;
   }
 
-  #main-container.searchpage .fa-copy, #main-container.searchpage-multi-vocab .fa-copy {
-    position: relative;
-    bottom: 5px;
-  }
-
   .fa-magnifying-glass {
     color: var(--search-button-text);
     font-size: 22px;
