@@ -14,7 +14,7 @@
         </div>
       </div>
 
-      {% for property in concept.properties %}
+      {% for property in concept.properties %}{% if property.getSubPropertyOf != 'skos:hiddenLabel' %}
       <div class="row property prop-{{property.ID}}">
         <div class="col-sm-4 px-0 property-label"><h2>{{ property.label}}</h2></div>
         <div class="col-sm-8 align-self-center property-value">
@@ -27,13 +27,13 @@
               </a>
             </li>
             {% else %} {# literals, e.g. altLabels #}
-            <li>{{ propval.label }}</li>
+            <li>{% if propval.containsHtml %}{{ propval.label|raw }}{% else %}{{ propval.label }}{% endif %}</li>
             {% endif %}
           {% endfor %}
           </ul>
         </div>
       </div>
-      {% endfor %}
+      {% endif %}{% endfor %}
       {% set foreignLabels = concept.foreignLabels %}
       {% if foreignLabels %}
       <div class="row property prop-foreignlabels">
@@ -81,6 +81,9 @@
               <a href="rest/v1/{{ vocab.id }}/data?uri={{ concept.uri|url_encode }}&amp;format=application/ld%2Bjson">JSON-LD</a>
             </li>
           </ul>
+          {% if concept.date %}
+          <div id="date-info">{{ concept.date }}</div>
+          {% endif %}
         </div>
       </div>
     </div>

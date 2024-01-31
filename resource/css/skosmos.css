@@ -237,6 +237,7 @@ body {
   #search-wrapper {
     color: var(--headerbar-text-2);
     float: right;
+    height: 3.5em;
 }
 
   #search-wrapper select, #search-wrapper input, #search-wrapper button {
@@ -248,7 +249,8 @@ body {
     color: var(--headerbar-text-2);
     border: 1px solid var(--search-border);
     border-radius: 0;
-    width: 100px;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
 
   #headerbar .dropdown-toggle:hover, #headerbar .dropdown-toggle:active {
@@ -302,7 +304,7 @@ body {
     border: 1px solid var(--search-border);
     border-radius: 0;
     padding: 0;
-    width: 38px;
+    width: 3.5em;
   }
 
   #clear-button {
@@ -311,7 +313,7 @@ body {
     background: none;
     border: none;
     top: 0;
-    right: 38px;
+    right: 50px;
     height: 40px;
     width: 40px;
     padding: 0;
@@ -707,6 +709,10 @@ body {
 
   #download-links li {
     display: inline-block;
+  }
+
+  #date-info {
+    font-size: 0.85rem;
   }
 
   /***** Main content searchpage & searchpage multi vocab *****/
