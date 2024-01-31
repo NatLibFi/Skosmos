@@ -7,9 +7,16 @@ const vocabSearch = Vue.createApp({
       languages: [],
       selectedLanguage: null,
       searchTerm: null,
-      autoCompeteResults: [ //static mockup to display results
-      {
-      "uri": "http://www.yso.fi/onto/yso/p19378",
+      autoCompeteResults: [],
+      languageStrings: null
+    }
+  },
+  mounted () {
+    this.languages = SKOSMOS.languageOrder
+    this.selectedLanguage = SKOSMOS.content_lang
+    this.languageStrings = SKOSMOS.language_strings[SKOSMOS.lang]
+    this.autoCompeteResults = [
+    { "uri": "http://www.yso.fi/onto/yso/p19378",
       "type": [
         "skos:Concept",
         "http://www.yso.fi/onto/yso-meta/Concept"
@@ -131,27 +138,30 @@ const vocabSearch = Vue.createApp({
       "lang": "fi",
       "altLabel": "kissat",
       "vocab": "yso"
-    } ],
-      languageStrings: null
     }
-  },
-  mounted () {
-    this.languages = SKOSMOS.languageOrder
-    this.selectedLanguage = SKOSMOS.content_lang
-    this.languageStrings = SKOSMOS.language_strings[SKOSMOS.lang]
+    ]
   },
   methods: {
     autoComplete () {
     /* Take the input string
      *   - Once user has stopped typing aftes X ms, submit the search
      *   - Append an asterix after the search term
-     *   - Display a waiting spinner?
+     *   - Display a waiting spinner? : NO
      *   - Process the search results into autoCompeteResults
-     *   - If the user writes more text in addition to previously given input (startswith), don't perform search, but filter the existing result list
-     *   - When the result is done, display the dropdown
-     *   - When user clears the text box or deletes the contents, hide the dropdown
+     *   - If the user writes more text in addition to previously given input (startswith), don't perform search
+     *     - But wait for X ms and filter the existing result list
+     *   - When the result list is calculated, display the dropdown
+     *   - If there are no results, display a dropdown with no results -message
+     *   - Hide the dropdown list, if the user
+     *     - Clears the text box from the clear-button
+     *     - Deletes the contentents of the input field
+     *     - Clicks on somewhere outside of the search result dropdown
+     *
+     *   - Input element should be rectangular
      */
-    
+    //if (autoCompleteResults) {
+
+
     },
     gotoSearchPage () {
       if (!this.searchTerm) return
@@ -169,19 +179,35 @@ const vocabSearch = Vue.createApp({
     }
   },
   template: `
-    <div class="d-flex mb-2 my-auto ms-auto">
-      <div class="input-group" id="search-wrapper">
+    <div class="d-flex my-auto ms-auto">
+      <div class="d-flex justify-content-end input-group ms-auto" id="search-wrapper">
         <select class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown-item" aria-expanded="false"
           v-model="selectedLanguage"
           @change="changeLang()"
         >
           <option class="dropdown-item" v-for="(value, key) in languageStrings" :value="key">{{ value }}</option>
         </select>
-        <input type="search" class="form-control" aria-label="Text input with dropdown button" placeholder="Search..."
+        <span class="dropdown">
+        <input type="search"
+          class="form-control"
+          id="search-field"
+          aria-expanded="false"
+          autocomplete="off"
+          data-bs-toggle="dropdown"
+          aria-label="Text input with dropdown button"
+          placeholder="Search..."
           v-model="searchTerm"
           @input="autoComplete()"
           @keyup.enter="gotoSearchPage()"
         >
+        <ul class="dropdown-menu w-100" aria-labelledby="search-field">
+          <li v-for="country in autoCompeteResults"
+              :key="country.prefLabel"
+              class="cursor-pointer hover:bg-gray-100 p-1" >
+            {{ country.prefLabel }}
+          </li>
+        </ul>
+        </span>
         <button id="clear-button" class="btn btn-danger" type="clear" v-if="searchTerm" @click="searchTerm = ''">
           <i class="fa-solid fa-xmark"></i>
         </button>
