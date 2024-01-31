@@ -15,7 +15,34 @@ const vocabSearch = Vue.createApp({
     this.languages = SKOSMOS.languageOrder
     this.selectedLanguage = SKOSMOS.content_lang
     this.languageStrings = SKOSMOS.language_strings[SKOSMOS.lang]
-    this.autoCompeteResults = [
+    this.autoCompeteResults = []
+  },
+  methods: {
+    autoComplete () {
+    /* Take the input string
+     *   - Once user has stopped typing aftes X ms, submit the search
+     *   - Append an asterix after the search term
+     *   - Display a waiting spinner? : NO
+     *   - Process the search results into autoCompeteResults
+     *   - If the user writes more text in addition to previously given input (startswith), don't perform search
+     *     - But wait for X ms and filter the existing result list
+     *   - When the result list is calculated, display the dropdown
+     *   - If there are no results, display a dropdown with no results -message
+     *   - Hide the dropdown list, if the user
+     *     - Clears the text box from the clear-button
+     *     - Deletes the contentents of the input field
+     *     - Clicks on somewhere outside of the search result dropdown
+     *
+     *   - Input element should be rectangular
+     */
+      var delay_ms = 500;
+      //cancel pending API calls
+      clearTimeout(this._timerId)
+      // delay new call 500ms
+      this._timerId = setTimeout( () => { this.search() }, delay_ms )
+    },
+    search() {
+        this.autoCompeteResults = [
     { "uri": "http://www.yso.fi/onto/yso/p19378",
       "type": [
         "skos:Concept",
@@ -140,28 +167,15 @@ const vocabSearch = Vue.createApp({
       "vocab": "yso"
     }
     ]
-  },
-  methods: {
-    autoComplete () {
-    /* Take the input string
-     *   - Once user has stopped typing aftes X ms, submit the search
-     *   - Append an asterix after the search term
-     *   - Display a waiting spinner? : NO
-     *   - Process the search results into autoCompeteResults
-     *   - If the user writes more text in addition to previously given input (startswith), don't perform search
-     *     - But wait for X ms and filter the existing result list
-     *   - When the result list is calculated, display the dropdown
-     *   - If there are no results, display a dropdown with no results -message
-     *   - Hide the dropdown list, if the user
-     *     - Clears the text box from the clear-button
-     *     - Deletes the contentents of the input field
-     *     - Clicks on somewhere outside of the search result dropdown
-     *
-     *   - Input element should be rectangular
-     */
-    //if (autoCompleteResults) {
-
-
+      this.renderResults()
+    },
+    renderResults() {
+        var element = document.getElementById("search-autocomplete-results")
+        element.classList.add("show");
+    },
+    hideDropdown() {
+        var element = document.getElementById("search-autocomplete-results")
+        element.classList.remove("show");
     },
     gotoSearchPage () {
       if (!this.searchTerm) return
@@ -188,27 +202,28 @@ const vocabSearch = Vue.createApp({
           <option class="dropdown-item" v-for="(value, key) in languageStrings" :value="key">{{ value }}</option>
         </select>
         <span class="dropdown">
-        <input type="search"
-          class="form-control"
-          id="search-field"
-          aria-expanded="false"
-          autocomplete="off"
-          data-bs-toggle="dropdown"
-          aria-label="Text input with dropdown button"
-          placeholder="Search..."
-          v-model="searchTerm"
-          @input="autoComplete()"
-          @keyup.enter="gotoSearchPage()"
-        >
-        <ul class="dropdown-menu w-100" aria-labelledby="search-field">
-          <li v-for="country in autoCompeteResults"
-              :key="country.prefLabel"
+          <input type="search"
+            class="form-control"
+            id="search-field"
+            aria-expanded="false"
+            autocomplete="off"
+            data-bs-toggle=""
+            aria-label="Text input with dropdown button"
+            placeholder="Search..."
+            v-model="searchTerm"
+            @input="autoComplete()"
+            @keyup.enter="gotoSearchPage()"
+            @click="">
+          <ul id="search-autocomplete-results" class="dropdown-menu w-100"
+            aria-labelledby="search-field">
+            <li v-for="result in autoCompeteResults"
+              :key="result.prefLabel"
               class="cursor-pointer hover:bg-gray-100 p-1" >
-            {{ country.prefLabel }}
-          </li>
-        </ul>
+              {{ result.prefLabel }}
+            </li>
+          </ul>
         </span>
-        <button id="clear-button" class="btn btn-danger" type="clear" v-if="searchTerm" @click="searchTerm = ''">
+        <button id="clear-button" class="btn btn-danger" type="clear" v-if="searchTerm" @click="searchTerm = ''" @click="hideDropdown()">
           <i class="fa-solid fa-xmark"></i>
         </button>
         <button id="search-button" class="btn btn-outline-secondary" @click="gotoSearchPage()">
