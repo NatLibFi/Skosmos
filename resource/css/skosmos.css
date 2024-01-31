@@ -85,13 +85,6 @@ body {
     margin: 0 5px;
   }
 
-  #main-container.termpage .fa-copy {
-    color: var(--vocab-text);
-    font-size: 30px;
-    position: relative;
-    bottom: -3px;
-  }
-
   #main-container.searchpage .fa-arrow-right, #main-container.searchpage-multi-vocab .fa-arrow-right {
     color: var(--vocab-text);
     font-size: 12px;
@@ -706,12 +699,21 @@ body {
     float: left;
   }
 
-  .copy-clipboard {
-    border: none;
-    font-size: 20px;
+  #copy-preflabel .fa-copy {
+    color: var(--vocab-text);
+    font-size: 30px;
+    position: relative;
+    bottom: -3px;
   }
 
-  .copy-clipboard:active, .copy-clipboard:focus, .copy-clipboard:active:focus {
+  #copy-uri .fa-copy {
+    color: var(--vocab-text);
+    position: relative;
+    bottom: 3px;
+    left: -0.6rem;
+  }
+
+  .copy-clipboard, .copy-clipboard:active, .copy-clipboard:focus, .copy-clipboard:active:focus {
     border: none;
   }
 

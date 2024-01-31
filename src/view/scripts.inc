@@ -73,3 +73,6 @@ const SKOSMOS = {
 <script src="resource/js/tab-alpha.js"></script>
 <script src="resource/js/tab-hierarchy.js"></script>
 <script src="resource/js/vocab-search.js"></script>
+
+<!-- Other (non-Vue) JS functionality -->
+<script src="resource/js/copy-to-clipboard.js"></script>

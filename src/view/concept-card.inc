@@ -28,12 +28,12 @@
       {% endif %}
 
       <div class="row" id="concept-heading">
-        <div class="col-sm-4 px-0" id="concept-property-label">{{ "skos:prefLabel" | trans }}</div>
+        <div class="col-sm-4 px-0 user-select-all" id="concept-property-label">{{ "skos:prefLabel" | trans }}</div>
         <div class="col-sm-8" id="concept-label">
-          <h1 class="mb-0">{{ concept.label }}</h1>
-          <button class="btn btn-default copy-clipboard" type="button"
+          <h1 id="concept-preflabel" class="mb-0">{{ concept.label }}</h1>
+          <button class="btn btn-default copy-clipboard" type="button" id="copy-preflabel"
                   data-bs-toggle="tooltip" data-bs-placement="button" title="{{ 'Copy to clipboard' | trans }}">
-          <i class="fa-regular fa-copy"></i>
+            <i class="fa-regular fa-copy"></i>
           </button>
         </div>
       </div>
@@ -87,7 +87,13 @@
       {% endif %}
       <div class="row property prop-uri">
         <div class="col-sm-4 px-0 property-label"><h2>URI</h2></div>
-        <div class="col-sm-8" id="concept-uri"><a href="#">{{ concept.uri }}</a></div>
+        <div class="col-sm-8">
+          <a href="#" id="concept-uri">{{ concept.uri }}</a>
+          <button class="btn btn-default copy-clipboard" type="button" id="copy-uri"
+                  data-bs-toggle="tooltip" data-bs-placement="button" title="{{ 'Copy to clipboard' | trans }}">
+            <i class="fa-regular fa-copy"></i>
+          </button>
+        </div>
       </div>
       <div class="row property prop-download">
         <div class="col-sm-4 px-0 property-label">
