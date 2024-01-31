@@ -7,9 +7,16 @@ const vocabSearch = Vue.createApp({
       languages: [],
       selectedLanguage: null,
       searchTerm: null,
-      autoCompeteResults: [ //static mockup to display results
-      {
-      "uri": "http://www.yso.fi/onto/yso/p19378",
+      autoCompeteResults: [],
+      languageStrings: null
+    }
+  },
+  mounted () {
+    this.languages = SKOSMOS.languageOrder
+    this.selectedLanguage = SKOSMOS.content_lang
+    this.languageStrings = SKOSMOS.language_strings[SKOSMOS.lang]
+    this.autoCompeteResults = [
+    { "uri": "http://www.yso.fi/onto/yso/p19378",
       "type": [
         "skos:Concept",
         "http://www.yso.fi/onto/yso-meta/Concept"
@@ -131,14 +138,8 @@ const vocabSearch = Vue.createApp({
       "lang": "fi",
       "altLabel": "kissat",
       "vocab": "yso"
-    } ],
-      languageStrings: null
     }
-  },
-  mounted () {
-    this.languages = SKOSMOS.languageOrder
-    this.selectedLanguage = SKOSMOS.content_lang
-    this.languageStrings = SKOSMOS.language_strings[SKOSMOS.lang]
+    ]
   },
   methods: {
     autoComplete () {
@@ -159,19 +160,35 @@ const vocabSearch = Vue.createApp({
     }
   },
   template: `
-    <div class="d-flex mb-2 my-auto ms-auto">
-      <div class="input-group" id="search-wrapper">
+    <div class="d-flex my-auto ms-auto">
+      <div class="d-flex justify-content-end input-group ms-auto" id="search-wrapper">
         <select class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown-item" aria-expanded="false"
           v-model="selectedLanguage"
           @change="changeLang()"
         >
           <option class="dropdown-item" v-for="(value, key) in languageStrings" :value="key">{{ value }}</option>
         </select>
-        <input type="search" class="form-control" aria-label="Text input with dropdown button" placeholder="Search..."
+        <span class="dropdown">
+        <input type="search"
+          class="form-control"
+          id="search-field"
+          aria-expanded="false"
+          autocomplete="off"
+          data-bs-toggle="dropdown"
+          aria-label="Text input with dropdown button"
+          placeholder="Search..."
           v-model="searchTerm"
           @input="autoComplete()"
           @keyup.enter="gotoSearchPage()"
         >
+        <ul class="dropdown-menu w-100" aria-labelledby="search-field">
+          <li v-for="country in autoCompeteResults"
+              :key="country.prefLabel"
+              class="cursor-pointer hover:bg-gray-100 p-1" >
+            {{ country.prefLabel }}
+          </li>
+        </ul>
+        </span>
         <button id="clear-button" class="btn btn-danger" type="clear" v-if="searchTerm" @click="searchTerm = ''">
           <i class="fa-solid fa-xmark"></i>
         </button>

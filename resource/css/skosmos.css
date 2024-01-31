@@ -275,6 +275,10 @@ body {
   #headerbar input {
     background-color: var(--search-bg);
     border: 1px solid var(--search-border);
+
+  }
+  #headerbar span.dropdown {
+    width: 25rem;
   }
   
   #headerbar .autocomplete {
