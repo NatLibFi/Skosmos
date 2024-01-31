@@ -49,7 +49,7 @@ class Http304Test extends TestCase
         $mockedTemplate = Mockery::mock();
         $mockedTemplate->shouldReceive("render")->andReturn("rendered");
         $this->twig->allows([
-            "loadTemplate" => $mockedTemplate
+            "load" => $mockedTemplate
         ]);
         $this->controller->twig = $this->twig;
     }
