@@ -1,6 +1,6 @@
 describe('Concept page', () => {
   it("doesn't contain breadcrumbs for top concepts", () => {
-    cy.visit('/yso/en/page/p8691') // go to "properties" concept page
+    cy.visit('/yso/en/page/p4762') // go to "objects" concept page
 
     // check that there are no breadcrumbs on the page
     cy.get('#concept-breadcrumbs').should('not.exist')
