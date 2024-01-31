@@ -17,14 +17,18 @@ async function copyToClipboard (id) {
 // register the copyToClipboard function as event an handler for the copy buttons
 const copyPrefElem = document.getElementById('copy-preflabel')
 if (copyPrefElem) {
-  copyPrefElem.addEventListener('click', async () => {
-    await copyToClipboard('concept-preflabel')
+  copyPrefElem.addEventListener('click', () => {
+    (async () => {
+      await copyToClipboard('concept-preflabel')
+    })()
   })
 }
 
 const copyUriElem = document.getElementById('copy-uri')
 if (copyUriElem) {
-  copyUriElem.addEventListener('click', async () => {
-    await copyToClipboard('concept-uri')
+  copyUriElem.addEventListener('click', () => {
+    (async () => {
+      await copyToClipboard('concept-preflabel')
+    })()
   })
 }
