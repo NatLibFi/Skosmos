@@ -35,147 +35,148 @@ const vocabSearch = Vue.createApp({
      *
      *   - Input element should be rectangular
      */
-      var delay_ms = 500;
-      //cancel pending API calls
+      const delayMs = 500
+      // cancel pending API calls
       clearTimeout(this._timerId)
       // delay new call 500ms
-      this._timerId = setTimeout( () => { this.search() }, delay_ms )
+      this._timerId = setTimeout(() => { this.search() }, delayMs)
     },
-    search() {
-        this.autoCompeteResults = [
-    { "uri": "http://www.yso.fi/onto/yso/p19378",
-      "type": [
-        "skos:Concept",
-        "http://www.yso.fi/onto/yso-meta/Concept"
-      ],
-      "localname": "p19378",
-      "prefLabel": "kissa",
-      "lang": "fi",
-      "vocab": "yso"
-    },
-    {
-      "uri": "http://www.yso.fi/onto/yso/p864",
-      "type": [
-        "skos:Concept",
-        "http://www.yso.fi/onto/yso-meta/Concept"
-      ],
-      "localname": "p864",
-      "prefLabel": "kissaeläimet",
-      "lang": "fi",
-      "vocab": "yso"
-    },
-    {
-      "uri": "http://www.yso.fi/onto/yso/p18191",
-      "type": [
-        "skos:Concept",
-        "http://www.yso.fi/onto/yso-meta/Concept"
-      ],
-      "localname": "p18191",
-      "prefLabel": "kissamaki",
-      "lang": "fi",
-      "vocab": "yso"
-    },
-    {
-      "uri": "http://www.yso.fi/onto/yso/p17951",
-      "type": [
-        "skos:Concept",
-        "http://www.yso.fi/onto/yso-meta/Concept"
-      ],
-      "localname": "p17951",
-      "prefLabel": "kissanhuuto-oireyhtymä",
-      "lang": "fi",
-      "vocab": "yso"
-    },
-    {
-      "uri": "http://www.yso.fi/onto/yso/p29087",
-      "type": [
-        "skos:Concept",
-        "http://www.yso.fi/onto/yso-meta/Concept"
-      ],
-      "localname": "p29087",
-      "prefLabel": "kissankasvattajat",
-      "lang": "fi",
-      "hiddenLabel": "kissankasvattaja",
-      "vocab": "yso"
-    },
-    {
-      "uri": "http://www.yso.fi/onto/yso/p29087",
-      "type": [
-        "skos:Concept",
-        "http://www.yso.fi/onto/yso-meta/Concept"
-      ],
-      "localname": "p29087",
-      "prefLabel": "kissankasvattajat",
-      "lang": "fi",
-      "vocab": "yso"
-    },
-    {
-      "uri": "http://www.yso.fi/onto/yso/p21153",
-      "type": [
-        "skos:Concept",
-        "http://www.yso.fi/onto/yso-meta/Concept"
-      ],
-      "localname": "p21153",
-      "prefLabel": "kissankello",
-      "lang": "fi",
-      "vocab": "yso"
-    },
-    {
-      "uri": "http://www.yso.fi/onto/yso/p29557",
-      "type": [
-        "skos:Concept",
-        "http://www.yso.fi/onto/yso-meta/Concept"
-      ],
-      "localname": "p29557",
-      "prefLabel": "kissankäpälälude",
-      "lang": "fi",
-      "vocab": "yso"
-    },
-    {
-      "uri": "http://www.yso.fi/onto/yso/p26343",
-      "type": [
-        "skos:Concept",
-        "http://www.yso.fi/onto/yso-meta/Concept"
-      ],
-      "localname": "p26343",
-      "prefLabel": "kissanäyttelyt",
-      "lang": "fi",
-      "hiddenLabel": "kissanäyttely",
-      "vocab": "yso"
-    },
-    {
-      "uri": "http://www.yso.fi/onto/yso/p26343",
-      "type": [
-        "skos:Concept",
-        "http://www.yso.fi/onto/yso-meta/Concept"
-      ],
-      "localname": "p26343",
-      "prefLabel": "kissanäyttelyt",
-      "lang": "fi",
-      "vocab": "yso"
-    },
-    {
-      "uri": "http://www.yso.fi/onto/yso/p19378",
-      "type": [
-        "skos:Concept",
-        "http://www.yso.fi/onto/yso-meta/Concept"
-      ],
-      "localname": "p19378",
-      "prefLabel": "kissa",
-      "lang": "fi",
-      "altLabel": "kissat",
-      "vocab": "yso"
-    }
-    ]
+    search () {
+      this.autoCompeteResults = [
+        {
+          uri: 'http://www.yso.fi/onto/yso/p19378',
+          type: [
+            'skos:Concept',
+            'http://www.yso.fi/onto/yso-meta/Concept'
+          ],
+          localname: 'p19378',
+          prefLabel: 'kissa',
+          lang: 'fi',
+          vocab: 'yso'
+        },
+        {
+          uri: 'http://www.yso.fi/onto/yso/p864',
+          type: [
+            'skos:Concept',
+            'http://www.yso.fi/onto/yso-meta/Concept'
+          ],
+          localname: 'p864',
+          prefLabel: 'kissaeläimet',
+          lang: 'fi',
+          vocab: 'yso'
+        },
+        {
+          uri: 'http://www.yso.fi/onto/yso/p18191',
+          type: [
+            'skos:Concept',
+            'http://www.yso.fi/onto/yso-meta/Concept'
+          ],
+          localname: 'p18191',
+          prefLabel: 'kissamaki',
+          lang: 'fi',
+          vocab: 'yso'
+        },
+        {
+          uri: 'http://www.yso.fi/onto/yso/p17951',
+          type: [
+            'skos:Concept',
+            'http://www.yso.fi/onto/yso-meta/Concept'
+          ],
+          localname: 'p17951',
+          prefLabel: 'kissanhuuto-oireyhtymä',
+          lang: 'fi',
+          vocab: 'yso'
+        },
+        {
+          uri: 'http://www.yso.fi/onto/yso/p29087',
+          type: [
+            'skos:Concept',
+            'http://www.yso.fi/onto/yso-meta/Concept'
+          ],
+          localname: 'p29087',
+          prefLabel: 'kissankasvattajat',
+          lang: 'fi',
+          hiddenLabel: 'kissankasvattaja',
+          vocab: 'yso'
+        },
+        {
+          uri: 'http://www.yso.fi/onto/yso/p29087',
+          type: [
+            'skos:Concept',
+            'http://www.yso.fi/onto/yso-meta/Concept'
+          ],
+          localname: 'p29087',
+          prefLabel: 'kissankasvattajat',
+          lang: 'fi',
+          vocab: 'yso'
+        },
+        {
+          uri: 'http://www.yso.fi/onto/yso/p21153',
+          type: [
+            'skos:Concept',
+            'http://www.yso.fi/onto/yso-meta/Concept'
+          ],
+          localname: 'p21153',
+          prefLabel: 'kissankello',
+          lang: 'fi',
+          vocab: 'yso'
+        },
+        {
+          uri: 'http://www.yso.fi/onto/yso/p29557',
+          type: [
+            'skos:Concept',
+            'http://www.yso.fi/onto/yso-meta/Concept'
+          ],
+          localname: 'p29557',
+          prefLabel: 'kissankäpälälude',
+          lang: 'fi',
+          vocab: 'yso'
+        },
+        {
+          uri: 'http://www.yso.fi/onto/yso/p26343',
+          type: [
+            'skos:Concept',
+            'http://www.yso.fi/onto/yso-meta/Concept'
+          ],
+          localname: 'p26343',
+          prefLabel: 'kissanäyttelyt',
+          lang: 'fi',
+          hiddenLabel: 'kissanäyttely',
+          vocab: 'yso'
+        },
+        {
+          uri: 'http://www.yso.fi/onto/yso/p26343',
+          type: [
+            'skos:Concept',
+            'http://www.yso.fi/onto/yso-meta/Concept'
+          ],
+          localname: 'p26343',
+          prefLabel: 'kissanäyttelyt',
+          lang: 'fi',
+          vocab: 'yso'
+        },
+        {
+          uri: 'http://www.yso.fi/onto/yso/p19378',
+          type: [
+            'skos:Concept',
+            'http://www.yso.fi/onto/yso-meta/Concept'
+          ],
+          localname: 'p19378',
+          prefLabel: 'kissa',
+          lang: 'fi',
+          altLabel: 'kissat',
+          vocab: 'yso'
+        }
+      ]
       this.renderResults()
     },
-    renderResults() {
-        var element = document.getElementById("search-autocomplete-results")
-        element.classList.add("show");
+    renderResults () {
+      const element = document.getElementById('search-autocomplete-results')
+      element.classList.add('show')
     },
-    hideDropdown() {
-        var element = document.getElementById("search-autocomplete-results")
-        element.classList.remove("show");
+    hideDropdown () {
+      const element = document.getElementById('search-autocomplete-results')
+      element.classList.remove('show')
     },
     gotoSearchPage () {
       if (!this.searchTerm) return
