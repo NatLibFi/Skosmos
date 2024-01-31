@@ -43,8 +43,8 @@ const vocabSearch = Vue.createApp({
     },
     search () {
       fetch('rest/v1/' + SKOSMOS.vocab + '/search?query=' + this.searchTerm + '*' + '&lang=' + SKOSMOS.lang)
-      .then( data => { return data.json() } )
-      .then( data => this.autoCompeteResults = data.results )
+        .then(data => data.json())
+        .then(data => { this.autoCompeteResults = data.results })
 
       this.renderResults()
     },
@@ -55,6 +55,7 @@ const vocabSearch = Vue.createApp({
     hideDropdown () {
       const element = document.getElementById('search-autocomplete-results')
       element.classList.remove('show')
+      this.autoCompeteResults = []
     },
     gotoSearchPage () {
       if (!this.searchTerm) return
