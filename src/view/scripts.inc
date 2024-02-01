@@ -1,4 +1,5 @@
 <!-- Skosmos variables passed from the backend to the frontend code-->
+<!-- NB: Do not add comments inside the JS object as it would break JSON parsing -->
 <script id="skosmos-global-vars">
 const SKOSMOS = {
   "content_lang": "{{ request.contentLang }}",
@@ -23,7 +24,6 @@ const SKOSMOS = {
   {%- if request.plugins.callbacks ~%}
   "pluginCallbacks": [{% for function in request.plugins.callbacks %}{% if not loop.first %}, {% endif %}"{{ function }}"{% endfor %}],
   {%- endif ~%}
-  //This is a mockup version of language_strings, the mechanism for fetching the translations strings for JS components is missing
   "language_strings" :{ "fi": { "fi": "suomi",
                                 "en": "englanti",
                                 "se": "pohjoissaame",
