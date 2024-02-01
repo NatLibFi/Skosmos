@@ -7,7 +7,6 @@ const vocabSearch = Vue.createApp({
       languages: [],
       selectedLanguage: null,
       searchTerm: null,
-      autoCompeteResultsCache: [],
       renderedResultsList: [],
       languageStrings: null,
       msgs: null
@@ -18,7 +17,6 @@ const vocabSearch = Vue.createApp({
     this.selectedLanguage = SKOSMOS.content_lang
     this.languageStrings = SKOSMOS.language_strings[SKOSMOS.lang] ?? SKOSMOS.language_strings.en
     this.msgs = SKOSMOS.msgs[SKOSMOS.lang] ?? SKOSMOS.msgs.en
-    this.autoCompeteResultsCache = []
     this.renderedResultsList = []
   },
   methods: {
@@ -30,6 +28,8 @@ const vocabSearch = Vue.createApp({
 
       // cancel pending API calls when method is called
       clearTimeout(this._timerId)
+
+      // is the search term is in cache, use the cache
 
       // delay call, but don't execute if the search term is not at least two characters
       if (this.searchTerm.length > 1) {
@@ -44,7 +44,7 @@ const vocabSearch = Vue.createApp({
       fetch('rest/v1/' + SKOSMOS.vocab + '/search?query=' + this.formatSearchTerm() + '&lang=' + SKOSMOS.lang)
         .then(data => data.json())
         .then(data => {
-          this.autoCompeteResultsCache[this.searchTerm] = data.results // update cache
+          this.renderedResultsList = data.results // update results (update cache if it is implemented)
           this.renderResults() // render after the fetch has finished
         })
     },
@@ -59,11 +59,11 @@ const vocabSearch = Vue.createApp({
      * TODO: Showing labels in other languages, extra concept information and such goes here
      */
     renderResults () {
-      this.renderedResultsList = this.autoCompeteResultsCache[this.searchTerm] // fetch form cache
+      // get the results list form cache if it is implemented
 
       this.renderedResultsList.forEach(result => {
         if ('uri' in result) { // change uris to Skosmos page urls
-          result.uri = 'entity?uri=' + result.uri
+          result.uri = SKOSMOS.vocab + '/' +  SKOSMOS.lang + '/page?uri=' +  encodeURIComponent(result.uri)
         }
       })
 
