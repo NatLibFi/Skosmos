@@ -48,10 +48,10 @@ const vocabSearch = Vue.createApp({
           this.renderResults() // render after the fetch has finished
         })
     },
-    formatSearchTerm() {
-        if (this.searchTerm.includes('\*')) { return this.searchTerm }
-        const formatted = this.searchTerm + '*'
-        return formatted
+    formatSearchTerm () {
+      if (this.searchTerm.includes('*')) { return this.searchTerm }
+      const formatted = this.searchTerm + '*'
+      return formatted
     },
     /*
      * renderResults is used when the search string has been indexed in the cache
@@ -59,9 +59,11 @@ const vocabSearch = Vue.createApp({
      */
     renderResults () {
       this.renderedResultsList = this.autoCompeteResultsCache[this.searchTerm] // fetch form cache
-      if (this.renderedResultsList.length == 0) {
-        this.renderedResultsList.push({ "prefLabel": this.msgs['No results'],
-                                       "lang": SKOSMOS.lang })
+      if (this.renderedResultsList.length === 0) {
+        this.renderedResultsList.push({
+          prefLabel: this.msgs['No results'],
+          lang: SKOSMOS.lang
+        })
       }
       const element = document.getElementById('search-autocomplete-results')
       element.classList.add('show')
