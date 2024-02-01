@@ -22,9 +22,6 @@ const vocabSearch = Vue.createApp({
     this.renderedResultsList = []
   },
   methods: {
-    /*
-     *
-     */
     autoComplete () {
       const delayMs = 300
 
@@ -44,12 +41,17 @@ const vocabSearch = Vue.createApp({
      * search calls renderResults for displaying the response
      */
     search () {
-      fetch('rest/v1/' + SKOSMOS.vocab + '/search?query=' + this.searchTerm + '*' + '&lang=' + SKOSMOS.lang)
+      fetch('rest/v1/' + SKOSMOS.vocab + '/search?query=' + this.formatSearchTerm() + '&lang=' + SKOSMOS.lang)
         .then(data => data.json())
         .then(data => {
           this.autoCompeteResultsCache[this.searchTerm] = data.results // update cache
           this.renderResults() // render after the fetch has finished
         })
+    },
+    formatSearchTerm() {
+        if (this.searchTerm.includes('\*')) { return this.searchTerm }
+        const formatted = this.searchTerm + '*'
+        return formatted
     },
     /*
      * renderResults is used when the search string has been indexed in the cache
@@ -57,6 +59,10 @@ const vocabSearch = Vue.createApp({
      */
     renderResults () {
       this.renderedResultsList = this.autoCompeteResultsCache[this.searchTerm] // fetch form cache
+      if (this.renderedResultsList.length == 0) {
+        this.renderedResultsList.push({ "prefLabel": this.msgs['No results'],
+                                       "lang": SKOSMOS.lang })
+      }
       const element = document.getElementById('search-autocomplete-results')
       element.classList.add('show')
     },
