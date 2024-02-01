@@ -38,7 +38,7 @@ const SKOSMOS = {
                                 "en": "English",
                                 "se": "Northern Sami",
                                 "sv": "Swedish",
-                                "all": "In all languages"},},
+                                "all": "In all languages"}}
 }
 </script>
 
