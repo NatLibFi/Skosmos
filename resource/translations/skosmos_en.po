@@ -879,3 +879,6 @@ msgstr "Information"
 
 msgid "Breadcrumbs"
 msgstr "Breadcrumbs"
+
+msgid "Copy to clipboard"
+msgstr "Copy to clipboard"

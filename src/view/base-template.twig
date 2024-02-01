@@ -18,15 +18,11 @@
 <link href="{{ ServiceCustomCss }}" media="screen, print" rel="stylesheet" type="text/css">
 {% endif %}
 {% for plugin, files in request.plugins.pluginsCSS %}{% for file in files %}<link href="{{ file }}" media="screen, print" rel="stylesheet" type="text/css">{% endfor %}{% endfor %}
-
 <title>{{ ServiceName }}{% block title %}{% endblock %}</title>
 </head>
 <body{% if request.vocabid == '' and request.page != 'feedback' and request.page != 'about' and request.page != 'search' %} class="bg-light frontpage-logo"{% else %} class="bg-medium vocab-{{ request.vocabid }}"{% endif %}>
-  <noscript>
-    <strong>We're sorry but Skosmos doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-  </noscript>
-  <a class="visually-hidden" id="skiptocontent" href="{{ request.langurl }}#maincontent">Skip to main</a>
   <header>
+    <a class="visually-hidden" id="skiptocontent" href="{{ request.langurl }}#maincontent">Skip to main</a>
     <div class="container-fluid bg-dark d-flex my-auto py-3 px-4 text-bg-dark">
       {% if request.vocabid == '' and request.page != 'about' and request.page != 'feedback' %}
         <span class="fs-6 py-3 text-light">Yhteishaku sanastoista v</span>
@@ -62,7 +58,6 @@
         {% endif %}
       </ul>
     </div>
-
     <div class="container-fluid bg-light py-4 px-4" id="headerbar">
       {% if request.vocabid == '' %}
         <div id="skosmos-logo">
@@ -82,6 +77,9 @@
   </header>
   <main id="main-container" class="{% if request.vocabid == '' or global_search %} frontpage{% elseif concept_uri != '' %} termpage{% elseif request.vocab != '' %} vocabpage{% if list_style %} {{ list_style }}{% endif %}{% endif %}">
     <div class="container">
+      <noscript>
+        <strong>We're sorry but Skosmos doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+      </noscript>
       <div class="row" tabindex="-1">
       {% block content %}
       {% endblock %}
