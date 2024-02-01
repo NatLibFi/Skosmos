@@ -264,6 +264,7 @@ body {
   #headerbar .dropdown-menu {
     border: 1px solid var(--search-border);
     border-radius: 0;
+    padding: 0;
     max-height: 20rem;
     overflow: auto;
   }
@@ -289,35 +290,24 @@ body {
   #headerbar input {
     background-color: var(--search-bg);
     border: 1px solid var(--search-border);
-
+    border-radius: 0;
   }
+
   #headerbar span.dropdown {
     width: 25rem;
   }
+
   #headerbar .autocomplete {
     position: relative;
   }
-  
-  #headerbar .autocomplete-results {
-    padding: 0;
-    margin: 0;
-    border: 1px solid #eeeeee;
-    height: 120px;
-    min-height: 1em;
-    max-height: 6em;    
-    overflow: auto;
-  }
 
   #headerbar .autocomplete-result {
-    list-style: none;
-    text-align: left;
-    padding: 4px 2px;
-    cursor: pointer;
+    border: 1px solid var(--search-border);
   }
 
-  #headerbar .autocomplete-result:hover {
-    background-color: #4AAE9B;
-    color: white;
+  #headerbar .autocomplete-result a {
+    color: var(--vocab-link);
+    text-decoration: none;
   }
 
   /* Remove built-in x button from Internet Explorer */
