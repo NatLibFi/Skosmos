@@ -63,7 +63,7 @@ const vocabSearch = Vue.createApp({
 
       this.renderedResultsList.forEach(result => {
         if ('uri' in result) { // change uris to Skosmos page urls
-          result.uri = SKOSMOS.vocab + '/' +  SKOSMOS.lang + '/page?uri=' +  encodeURIComponent(result.uri)
+          result.uri = SKOSMOS.vocab + '/' + SKOSMOS.lang + '/page?uri=' + encodeURIComponent(result.uri)
         }
       })
 
