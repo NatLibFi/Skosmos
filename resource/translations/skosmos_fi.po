@@ -888,3 +888,6 @@ msgstr "Tietoja"
 
 msgid "Breadcrumbs"
 msgstr "Murupolut"
+
+msgid "Copy to clipboard"
+msgstr "Kopioi leikepöydälle"
