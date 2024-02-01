@@ -38,7 +38,10 @@ const SKOSMOS = {
                                 "en": "English",
                                 "se": "Northern Sami",
                                 "sv": "Swedish",
-                                "all": "In all languages"}}
+                                "all": "In all languages"},},
+  "msgs" : { "fi": { "No results": "Ei hakutuloksia",},
+             "sv": { "No results": "Inga sökresultat",},
+             "en": { "No results": "No results",},},
 }
 </script>
 
