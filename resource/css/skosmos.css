@@ -264,6 +264,8 @@ body {
   #headerbar .dropdown-menu {
     border: 1px solid var(--search-border);
     border-radius: 0;
+    max-height: 20rem;
+    overflow: auto;
   }
 
   #headerbar .dropdown-item:active {
@@ -292,7 +294,6 @@ body {
   #headerbar span.dropdown {
     width: 25rem;
   }
-  
   #headerbar .autocomplete {
     position: relative;
   }
