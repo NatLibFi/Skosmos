@@ -863,10 +863,10 @@ body {
  /* About page
    *****************************************/
   #about-content a {
-    font-size: 0,8ems;
+    font-size: 1.0em;
     color: var(--vocab-link);
     text-decoration: underline var(--secondary-medium-color) solid;
-    font-weight: 400;
+    font-weight: 700;
   }
 
   /* Footer
