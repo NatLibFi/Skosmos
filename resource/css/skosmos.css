@@ -694,7 +694,7 @@ body {
     display: inline;
   }
 
-  #copy-preflabel .fa-copy {
+  #copy-preflabel {
     color: var(--vocab-text);
     font-size: 30px;
     position: relative;
@@ -702,15 +702,15 @@ body {
     left: 5px;
   }
 
-  #copy-uri .fa-copy {
+  #copy-uri {
     color: var(--vocab-text);
     position: relative;
-    bottom: 3px;
-    left: -0.6rem;
+    bottom: 4px;
   }
 
-  .copy-clipboard, .copy-clipboard:active, .copy-clipboard:focus, .copy-clipboard:active:focus {
-    border: none;
+  .copy-clipboard:focus {
+    border: 1px solid var(--vocab-text);
+    border-radius: 3px;
   }
 
   .property ul, .property li {
