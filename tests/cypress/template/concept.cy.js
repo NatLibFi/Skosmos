@@ -98,8 +98,13 @@ describe('Concept page', () => {
   it('concept preflabel can be copied to clipboard', () => {
     cy.visit('/yso/en/page/p21685') // go to "music research" concept page
 
+    // click the copy to clipboard button next to the prefLabel
     cy.get('#copy-preflabel').click()
 
+    // check that the clipboard now contains "music research"
+    // NOTE: This test may fail when running Cypress interactively in a browser.
+    // The reason is browser security policies for accessing the clipboard.
+    // If that happens, make sure the browser window has focus and re-run the test.
     cy.window().its('navigator.clipboard').invoke('readText').then((result) => {}).should('equal', 'music research');
   })
   it('contains concept type', () => {
@@ -229,8 +234,13 @@ describe('Concept page', () => {
   it('concept URI can be copied to clipboard', () => {
     cy.visit('/yso/en/page/p21685') // go to "music research" concept page
 
+    // click the copy to clipboard button next to the URI
     cy.get('#copy-uri').click()
 
+    // check that the clipboard now contains "http://www.yso.fi/onto/yso/p21685"
+    // NOTE: This test may fail when running Cypress interactively in a browser.
+    // The reason is browser security policies for accessing the clipboard.
+    // If that happens, make sure the browser window has focus and re-run the test.
     cy.window().its('navigator.clipboard').invoke('readText').then((result) => {}).should('equal', 'http://www.yso.fi/onto/yso/p21685');
   })
   it('contains created & modified times (English)', () => {
