@@ -24,7 +24,7 @@ const SKOSMOS = {
   {%- if request.plugins.callbacks ~%}
   "pluginCallbacks": [{% for function in request.plugins.callbacks %}{% if not loop.first %}, {% endif %}"{{ function }}"{% endfor %}],
   {%- endif ~%}
-  "language_strings" :{ "fi": { "fi": "suomi",
+  "language_strings": { "fi": { "fi": "suomi",
                                 "en": "englanti",
                                 "se": "pohjoissaame",
                                 "sv": "ruotsi",
@@ -73,3 +73,6 @@ const SKOSMOS = {
 <script src="resource/js/tab-alpha.js"></script>
 <script src="resource/js/tab-hierarchy.js"></script>
 <script src="resource/js/vocab-search.js"></script>
+
+<!-- Other (non-Vue) JS functionality -->
+<script src="resource/js/copy-to-clipboard.js"></script>

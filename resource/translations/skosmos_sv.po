@@ -887,3 +887,6 @@ msgstr "Information"
 
 msgid "Breadcrumbs"
 msgstr "Brödsmulor"
+
+msgid "Copy to clipboard"
+msgstr "Kopiera till urklipp"

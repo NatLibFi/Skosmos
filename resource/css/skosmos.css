@@ -85,13 +85,6 @@ body {
     margin: 0 5px;
   }
 
-  #main-container.termpage .fa-copy {
-    color: var(--vocab-text);
-    font-size: 30px;
-    position: relative;
-    bottom: -3px;
-  }
-
   #main-container.searchpage .fa-arrow-right, #main-container.searchpage-multi-vocab .fa-arrow-right {
     color: var(--vocab-text);
     font-size: 12px;
@@ -103,11 +96,6 @@ body {
     font-size: 16px;
     width: 20px;
     text-align: center;
-  }
-
-  #main-container.searchpage .fa-copy, #main-container.searchpage-multi-vocab .fa-copy {
-    position: relative;
-    bottom: 5px;
   }
 
   .fa-magnifying-glass {
@@ -703,16 +691,26 @@ body {
   }
 
   #concept-label h1 {
-    float: left;
+    display: inline;
   }
 
-  .copy-clipboard {
-    border: none;
-    font-size: 20px;
+  #copy-preflabel {
+    color: var(--vocab-text);
+    font-size: 30px;
+    position: relative;
+    bottom: 10px;
+    left: 5px;
   }
 
-  .copy-clipboard:active, .copy-clipboard:focus, .copy-clipboard:active:focus {
-    border: none;
+  #copy-uri {
+    color: var(--vocab-text);
+    position: relative;
+    bottom: 4px;
+  }
+
+  .copy-clipboard:focus {
+    border: 1px solid var(--vocab-text);
+    border-radius: 3px;
   }
 
   .property ul, .property li {

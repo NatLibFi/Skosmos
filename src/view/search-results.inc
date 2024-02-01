@@ -103,7 +103,6 @@
   <li class="list-group-item px-0 py-1">
       <span class="uri-icon">URI</span>
       <span class="search-result-uri">{{ concept.uri }}</span>
-    <i class="fa-regular fa-copy"></i> <!-- no copy to clipboard functionality yet -->
   </li>
 {%~ endif ~%}
   </ul>
