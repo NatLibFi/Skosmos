@@ -75,7 +75,6 @@ const vocabSearch = Vue.createApp({
       }
       const element = document.getElementById('search-autocomplete-results')
       element.classList.add('show')
-      console.log(this.renderedResultsList)
     },
     hideDropdown () {
       const element = document.getElementById('search-autocomplete-results')
@@ -95,6 +94,10 @@ const vocabSearch = Vue.createApp({
     changeLang () {
       SKOSMOS.content_lang = this.selectedLanguage
       // TODO: Impelement partial page load to change content according to the new content language
+    },
+    resetSearchTermAndHideDropdown () {
+      this.searchTerm = ''
+      this.hideDropdown()
     }
   },
   template: `
@@ -123,7 +126,7 @@ const vocabSearch = Vue.createApp({
             aria-labelledby="search-field">
             <li v-for="result in renderedResultsList"
               :key="result.prefLabel"
-              class="cursor-pointer hover:bg-gray-100 p-1" >
+              class="autocomplete-result" >
               <template v-if="result.uri">
                 <a :href="result.uri">{{ result.prefLabel }}</a>
               </template>
@@ -133,7 +136,7 @@ const vocabSearch = Vue.createApp({
             </li>
           </ul>
         </span>
-        <button id="clear-button" class="btn btn-danger" type="clear" v-if="searchTerm" @click="searchTerm = ''" @click="hideDropdown()">
+        <button id="clear-button" class="btn btn-danger" type="clear" v-if="searchTerm" @click="resetSearchTermAndHideDropdown()">
           <i class="fa-solid fa-xmark"></i>
         </button>
         <button id="search-button" class="btn btn-outline-secondary" @click="gotoSearchPage()">
