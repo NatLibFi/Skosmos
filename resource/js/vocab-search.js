@@ -7,55 +7,63 @@ const vocabSearch = Vue.createApp({
       languages: [],
       selectedLanguage: null,
       searchTerm: null,
-      autoCompeteResults: [],
-      languageStrings: null
+      autoCompeteResultsCache: [],
+      renderedResultsList: [],
+      languageStrings: null,
+      msgs: null
     }
   },
   mounted () {
     this.languages = SKOSMOS.languageOrder
     this.selectedLanguage = SKOSMOS.content_lang
     this.languageStrings = SKOSMOS.language_strings[SKOSMOS.lang]
-    this.autoCompeteResults = []
+    this.msgs = SKOSMOS.msgs[SKOSMOS.lang]
+    this.autoCompeteResultsCache = []
+    this.renderedResultsList = []
   },
   methods: {
-    autoComplete () {
-    /* Take the input string
-     *   - Once user has stopped typing aftes X ms, submit the search
-     *   - Append an asterix after the search term
-     *   - Display a waiting spinner? : NO
-     *   - Process the search results into autoCompeteResults
-     *   - If the user writes more text in addition to previously given input (startswith), don't perform search
-     *     - But wait for X ms and filter the existing result list
-     *   - When the result list is calculated, display the dropdown
-     *   - If there are no results, display a dropdown with no results -message
-     *   - Hide the dropdown list, if the user
-     *     - Clears the text box from the clear-button
-     *     - Deletes the contentents of the input field
-     *     - Clicks on somewhere outside of the search result dropdown
+    /*
      *
-     *   - Input element should be rectangular
      */
-      const delayMs = 500
-      // cancel pending API calls
+    autoComplete () {
+      const delayMs = 300
+
+      // when new autocomplete is fired, empty the preivous result
+      this.hideDropdown()
+
+      // cancel pending API calls when method is called
       clearTimeout(this._timerId)
-      // delay new call 500ms
-      this._timerId = setTimeout(() => { this.search() }, delayMs)
+
+      // delay call, but don't execute if the search term is not at least two characters
+      if (this.searchTerm.length > 1) {
+        this._timerId = setTimeout(() => { this.search() }, delayMs)
+      }
     },
+    /*
+     * search should fetch the response and save it to cache
+     * search calls renderResults for displaying the response
+     */
     search () {
       fetch('rest/v1/' + SKOSMOS.vocab + '/search?query=' + this.searchTerm + '*' + '&lang=' + SKOSMOS.lang)
         .then(data => data.json())
-        .then(data => { this.autoCompeteResults = data.results })
-
-      this.renderResults()
+        .then(data => {
+          this.autoCompeteResultsCache[this.searchTerm] = data.results // update cache
+          this.renderResults() // render after the fetch has finished
+        })
     },
+    /*
+     * renderResults is used when the search string has been indexed in the cache
+     * it also shows the autocomplete results list
+     */
     renderResults () {
+      this.renderedResultsList = this.autoCompeteResultsCache[this.searchTerm] // fetch form cache
       const element = document.getElementById('search-autocomplete-results')
       element.classList.add('show')
     },
     hideDropdown () {
       const element = document.getElementById('search-autocomplete-results')
       element.classList.remove('show')
-      this.autoCompeteResults = []
+      this.renderedResultsList = []
     },
     gotoSearchPage () {
       if (!this.searchTerm) return
@@ -96,7 +104,7 @@ const vocabSearch = Vue.createApp({
             @click="">
           <ul id="search-autocomplete-results" class="dropdown-menu w-100"
             aria-labelledby="search-field">
-            <li v-for="result in autoCompeteResults"
+            <li v-for="result in renderedResultsList"
               :key="result.prefLabel"
               class="cursor-pointer hover:bg-gray-100 p-1" >
               {{ result.prefLabel }}
