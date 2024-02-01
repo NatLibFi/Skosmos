@@ -37,9 +37,9 @@ class WebController extends Controller
         }
 
         // specify where to look for templates and cache
-        $loader = new Twig_Loader_Filesystem(__DIR__ . '/../view');
+        $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../view');
         // initialize Twig environment
-        $this->twig = new Twig_Environment($loader, array('cache' => $tmpDir,'auto_reload' => true));
+        $this->twig = new \Twig\Environment($loader, array('cache' => $tmpDir,'auto_reload' => true));
         // used for setting the base href for the relative urls
         $this->twig->addGlobal("BaseHref", $this->getBaseHref());
         // setting the service name string from the config.ttl
@@ -58,10 +58,10 @@ class WebController extends Controller
         $this->twig->addGlobal("PreferredProperties", array('skos:prefLabel', 'skos:narrower', 'skos:broader', 'skosmos:memberOf', 'skos:altLabel', 'skos:related'));
 
         // register a Twig filter for generating URLs for vocabulary resources (concepts and groups)
-        $this->twig->addFilter(new Twig_SimpleFilter('link_url', array($this, 'linkUrlFilter')));
+        $this->twig->addFilter(new \Twig\TwigFilter('link_url', array($this, 'linkUrlFilter')));
 
         // register a Twig filter for generating strings from language codes with CLDR
-        $langFilter = new Twig_SimpleFilter('lang_name', function ($langcode, $lang) {
+        $langFilter = new \Twig\TwigFilter('lang_name', function ($langcode, $lang) {
             return Language::getName($langcode, $lang);
         });
         $this->twig->addFilter($langFilter);
@@ -144,7 +144,7 @@ class WebController extends Controller
     {
         $this->model->setLocale($request->getLang());
         // load template
-        $template = $this->twig->loadTemplate('landing.twig');
+        $template = $this->twig->load('landing.twig');
         // set template variables
         $categoryLabel = $this->model->getClassificationLabel($request->getLang());
         $sortedVocabs = $this->model->getVocabularyList(false, true);
@@ -189,7 +189,7 @@ class WebController extends Controller
         $customLabels = $vocab->getConfig()->getPropertyLabelOverrides();
 
         $pluginParameters = json_encode($vocab->getConfig()->getPluginParameters());
-        $template = $this->twig->loadTemplate('concept.twig');
+        $template = $this->twig->load('concept.twig');
 
         $crumbs = $vocab->getBreadCrumbs($request->getContentLang(), $uri);
         echo $template->render(
@@ -199,8 +199,8 @@ class WebController extends Controller
             'concept_uri' => $uri,
             'languages' => $this->languages,
             'explicit_langcodes' => $langcodes,
-            'bread_crumbs' => $crumbs['breadcrumbs'],
-            'combined' => $crumbs['combined'],
+            'visible_breadcrumbs' => $crumbs['breadcrumbs'],
+            'hidden_breadcrumbs' => $crumbs['combined'],
             'request' => $request,
             'plugin_params' => $pluginParameters,
             'custom_labels' => $customLabels)
@@ -212,7 +212,7 @@ class WebController extends Controller
      */
     public function invokeFeedbackForm($request)
     {
-        $template = $this->twig->loadTemplate('feedback.twig');
+        $template = $this->twig->load('feedback.twig');
         $this->model->setLocale($request->getLang());
         $vocabList = $this->model->getVocabularyList(false);
         $vocab = $request->getVocab();
@@ -300,7 +300,7 @@ class WebController extends Controller
             mail($toAddress, $messageSubject, $message, $headers, $params);
         } catch (Exception $e) {
             header("HTTP/1.0 404 Not Found");
-            $template = $this->twig->loadTemplate('error.twig');
+            $template = $this->twig->load('error.twig');
             if ($this->model->getConfig()->getLogCaughtExceptions()) {
                 error_log('Caught exception: ' . $e->getMessage());
             }
@@ -320,7 +320,7 @@ class WebController extends Controller
      */
     public function invokeAboutPage($request)
     {
-        $template = $this->twig->loadTemplate('about.twig');
+        $template = $this->twig->load('about.twig');
         $this->model->setLocale($request->getLang());
         $url = $request->getServerConstant('HTTP_HOST');
 
@@ -339,7 +339,7 @@ class WebController extends Controller
     public function invokeGlobalSearch($request)
     {
         $lang = $request->getLang();
-        $template = $this->twig->loadTemplate('global-search.twig');
+        $template = $this->twig->load('global-search.twig');
         $this->model->setLocale($request->getLang());
 
         $parameters = new ConceptSearchParameters($request, $this->model->getConfig());
@@ -408,7 +408,7 @@ class WebController extends Controller
      */
     public function invokeVocabularySearch($request)
     {
-        $template = $this->twig->loadTemplate('vocab-search.twig');
+        $template = $this->twig->load('vocab-search.twig');
         $this->model->setLocale($request->getLang());
         $vocab = $request->getVocab();
         $searchResults = null;
@@ -495,7 +495,7 @@ class WebController extends Controller
         }
         $pluginParameters = json_encode($vocab->getConfig()->getPluginParameters());
 
-        $template = $this->twig->loadTemplate('vocab-home.twig');
+        $template = $this->twig->load('vocab-home.twig');
 
         echo $template->render(
             array(
@@ -516,7 +516,7 @@ class WebController extends Controller
     {
         $this->model->setLocale($request->getLang());
         header("HTTP/1.0 404 Not Found");
-        $template = $this->twig->loadTemplate('error.twig');
+        $template = $this->twig->load('error.twig');
         echo $template->render(
             array(
                 'languages' => $this->languages,

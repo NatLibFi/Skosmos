@@ -1,7 +1,31 @@
 <div class="col-md-8 ps-3">
   <div class="pt-3" id="main-content">
 
-    <div class="main-content-section p-5">
+    <div class="main-content-section px-5 py-4">
+
+      {% if visible_breadcrumbs and visible_breadcrumbs[0]|length > 1 %}
+      <nav class="row" id="concept-breadcrumbs" aria-label='{{ "Breadcrumbs" | trans }}'>
+        {% for path in visible_breadcrumbs %}
+        {% set path_idx = loop.index0 %}
+        <ol>
+          {% for crumb in path %}
+            {% if crumb.hiddenLabel %}
+              <li class="breadcrumb-toggle"><a href=".breadcrumb-collapse" data-bs-target=".breadcrumb-collapse" data-bs-toggle="collapse" role="button" aria-expanded="false">...</a></li>
+              {% for hiddenCrumb in hidden_breadcrumbs[path_idx] %}
+              <li class="breadcrumb collapse multi-collapse breadcrumb-collapse"><a href="{{ hiddenCrumb.uri|link_url(vocab,request.lang,'page',request.contentLang) }}">{{ hiddenCrumb.hiddenLabel }}</a></li>
+              {% endfor %}
+            {% else %}
+              <li class="breadcrumb"><a
+                  {% if loop.last %}aria-current="page" class="breadcrumb-current"
+                  {% else %}href="{{ crumb.uri|link_url(vocab,request.lang,'page',request.contentLang) }}"
+                  {% endif %}
+                  >{{ crumb.prefLabel }}</a></li>
+            {% endif %}
+          {% endfor %}
+        </ol>
+        {% endfor %}
+      </nav>
+      {% endif %}
 
       <div class="row" id="concept-heading">
         <div class="col-sm-4 px-0" id="concept-property-label">{{ "skos:prefLabel" | trans }}</div>
