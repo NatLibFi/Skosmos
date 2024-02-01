@@ -54,4 +54,22 @@ describe('Vocab search bar', () => {
       })
   })
 
+  it('No results are displayed for autocomplete if there is not at leas two charecters in the search term', () => {
+    // go to YSO vocab front page
+    cy.visit('/yso/en/')
+
+    cy.get('#search-field').type('k'); // even if the search yields no results, there shoulde a single line in the result list
+    cy.get('#search-autocomplete-results', { timeout: 20000 }).should('not.be.visible');
+  })
+
+  it('Clear button should hide the autocomplete list', () => {
+    // go to YSO vocab front page
+    cy.visit('/yso/en/')
+
+    cy.get('#search-field').type('kas');
+    cy.get('#search-autocomplete-results', { timeout: 20000 }).should('be.visible'); // the autocomplete should appear
+
+    cy.get('#clear-button').click()
+    cy.get('#search-autocomplete-results').should('not.be.visible'); // the autocomplete should disappear
+  })
 })
