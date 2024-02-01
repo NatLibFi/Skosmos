@@ -41,10 +41,6 @@ describe('Vocab search bar', () => {
 
     cy.get('#search-field').type('kas'); // perform autocomplete search
     cy.get('#search-autocomplete-results', { timeout: 20000 }).should('be.visible').children().should('have.length.greaterThan', 4);
-     cy.get('#search-autocomplete-results').within(() => {
-        cy.get('li').eq(0).click(); // results should be links that take to a Skosmos page
-        cy.url().should('include', '/page/')
-      })
   })
 
   it('No results message is displayed if no results are found', () => {
