@@ -691,14 +691,15 @@ body {
   }
 
   #concept-label h1 {
-    float: left;
+    display: inline;
   }
 
   #copy-preflabel .fa-copy {
     color: var(--vocab-text);
     font-size: 30px;
     position: relative;
-    bottom: -3px;
+    bottom: 10px;
+    left: 5px;
   }
 
   #copy-uri .fa-copy {

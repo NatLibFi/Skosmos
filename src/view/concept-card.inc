@@ -31,7 +31,7 @@
         <div class="col-sm-4 px-0" id="concept-property-label">{{ "skos:prefLabel" | trans }}</div>
         <div class="col-sm-8" id="concept-label">
           <h1 id="concept-preflabel" class="mb-0 user-select-all">{{ concept.label }}</h1>
-          <button class="btn btn-default copy-clipboard" type="button" id="copy-preflabel"
+          <button class="btn btn-default copy-clipboard px-0" type="button" id="copy-preflabel"
                   data-bs-toggle="tooltip" data-bs-placement="button" title="{{ 'Copy to clipboard' | trans }}">
             <i class="fa-regular fa-copy"></i>
           </button>
