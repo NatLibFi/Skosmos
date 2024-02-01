@@ -16,8 +16,8 @@ const vocabSearch = Vue.createApp({
   mounted () {
     this.languages = SKOSMOS.languageOrder
     this.selectedLanguage = SKOSMOS.content_lang
-    this.languageStrings = SKOSMOS.language_strings[SKOSMOS.lang]
-    this.msgs = SKOSMOS.msgs[SKOSMOS.lang]
+    this.languageStrings = SKOSMOS.language_strings[SKOSMOS.lang] ?? SKOSMOS.language_strings.en
+    this.msgs = SKOSMOS.msgs[SKOSMOS.lang] ?? SKOSMOS.msgs.en
     this.autoCompeteResultsCache = []
     this.renderedResultsList = []
   },
@@ -56,10 +56,18 @@ const vocabSearch = Vue.createApp({
     /*
      * renderResults is used when the search string has been indexed in the cache
      * it also shows the autocomplete results list
+     * TODO: Showing labels in other languages, extra concept information and such goes here
      */
     renderResults () {
       this.renderedResultsList = this.autoCompeteResultsCache[this.searchTerm] // fetch form cache
-      if (this.renderedResultsList.length === 0) {
+
+      this.renderedResultsList.forEach(result => {
+        if ('uri' in result) { // change uris to Skosmos page urls
+          result.uri = 'entity?uri=' + result.uri
+        }
+      })
+
+      if (this.renderedResultsList.length === 0) { // show no results message
         this.renderedResultsList.push({
           prefLabel: this.msgs['No results'],
           lang: SKOSMOS.lang
@@ -67,6 +75,7 @@ const vocabSearch = Vue.createApp({
       }
       const element = document.getElementById('search-autocomplete-results')
       element.classList.add('show')
+      console.log(this.renderedResultsList)
     },
     hideDropdown () {
       const element = document.getElementById('search-autocomplete-results')
@@ -115,7 +124,12 @@ const vocabSearch = Vue.createApp({
             <li v-for="result in renderedResultsList"
               :key="result.prefLabel"
               class="cursor-pointer hover:bg-gray-100 p-1" >
-              {{ result.prefLabel }}
+              <template v-if="result.uri">
+                <a :href="result.uri">{{ result.prefLabel }}</a>
+              </template>
+              <template v-else>
+                {{ result.prefLabel }}
+              </template>
             </li>
           </ul>
         </span>
