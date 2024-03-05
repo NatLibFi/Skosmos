@@ -76,6 +76,11 @@ class ConceptPropertyValueLiteral extends VocabularyDataObject
         return $this->literal->getValue();
     }
 
+    public function getSortKey()
+    {
+        return strtolower($this->getLabel());
+    }
+
     public function getUri()
     {
         return null;

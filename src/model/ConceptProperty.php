@@ -142,8 +142,8 @@ class ConceptProperty
                 });
             } else {
                 uasort($this->values, function ($a, $b) {
-                    // assume that labels are unique
-                    return strcoll(strtolower($a->getLabel()), strtolower($b->getLabel()));
+                    // assume that sort keys are unique
+                    return strcoll($a->getSortKey(), $b->getSortKey());
                 });
             }
         }

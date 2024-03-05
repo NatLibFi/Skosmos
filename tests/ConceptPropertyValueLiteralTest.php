@@ -25,6 +25,16 @@ class ConceptPropertyValueLiteralTest extends PHPUnit\Framework\TestCase
     }
 
     /**
+     * @covers ConceptPropertyValueLiteral::getSortKey
+     */
+    public function testGetSortKey()
+    {
+        $props = $this->concept->getProperties();
+        $propvals = $props['skos:scopeNote']->getValues();
+        $this->assertEquals('carp are oily freshwater fish', $propvals['Carp are oily freshwater fish']->getSortKey());
+    }
+
+    /**
      * @covers ConceptPropertyValueLiteral::getLabel
      */
     public function testGetLabel()

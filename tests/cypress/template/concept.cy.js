@@ -274,10 +274,10 @@ describe('Concept page', () => {
     // check the second mapping property name
     cy.get('.prop-mapping h2').eq(1).contains('Exactly matching concepts')
     // check the second mapping property values (only one should be enough)
-    cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(0).contains('musiikintutkimus (fi)')
-    cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(0).find('a').invoke('text').should('equal', 'musiikintutkimus')
-    cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(0).find('a').should('have.attr', 'href', 'http://www.yso.fi/onto/ysa/Y155072')
-    cy.get('.prop-mapping').eq(1).find('.prop-mapping-vocab').eq(0).contains('YSA - Yleinen suomalainen asiasanasto')
+    cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(2).contains('musiikintutkimus (fi)')
+    cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(2).find('a').invoke('text').should('equal', 'musiikintutkimus')
+    cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(2).find('a').should('have.attr', 'href', 'http://www.yso.fi/onto/ysa/Y155072')
+    cy.get('.prop-mapping').eq(1).find('.prop-mapping-vocab').eq(2).contains('YSA - Yleinen suomalainen asiasanasto')
     // check that the second mapping property has the right number of entries
     cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').should('have.length', 3)
   })
