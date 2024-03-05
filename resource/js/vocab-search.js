@@ -7,6 +7,7 @@ const vocabSearch = Vue.createApp({
       languages: [],
       selectedLanguage: null,
       searchTerm: null,
+      searchCounter: null,
       renderedResultsList: [],
       languageStrings: null,
       msgs: null
@@ -15,6 +16,7 @@ const vocabSearch = Vue.createApp({
   mounted () {
     this.languages = SKOSMOS.languageOrder
     this.selectedLanguage = SKOSMOS.content_lang
+    this.searchCounter = 0
     this.languageStrings = SKOSMOS.language_strings[SKOSMOS.lang] ?? SKOSMOS.language_strings.en
     this.msgs = SKOSMOS.msgs[SKOSMOS.lang] ?? SKOSMOS.msgs.en
     this.renderedResultsList = []
@@ -41,11 +43,16 @@ const vocabSearch = Vue.createApp({
      * search calls renderResults for displaying the response
      */
     search () {
+      const mySearchCounter = this.searchCounter +1 // make sure we can identify this search later in case of several ongoing searches
+      this.searchCounter = mySearchCounter
+
       fetch('rest/v1/' + SKOSMOS.vocab + '/search?query=' + this.formatSearchTerm() + '&lang=' + SKOSMOS.lang)
         .then(data => data.json())
         .then(data => {
-          this.renderedResultsList = data.results // update results (update cache if it is implemented)
-          this.renderResults() // render after the fetch has finished
+          if (mySearchCounter == this.searchCounter) {
+            this.renderedResultsList = data.results // update results (update cache if it is implemented)
+            this.renderResults() // render after the fetch has finished
+          }
         })
     },
     formatSearchTerm () {
