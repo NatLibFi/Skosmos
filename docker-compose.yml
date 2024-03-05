@@ -40,9 +40,6 @@ services:
       dockerfile: dockerfiles/Dockerfile.ubuntu
     ports:
       - ${SKOSMOS_PORT:-9090}:80
-    depends_on:
-      - fuseki
-      - fuseki-cache
     volumes:
       - type: bind
         source: ./dockerfiles/config/config-docker-compose.ttl
