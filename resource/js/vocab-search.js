@@ -25,7 +25,7 @@ const vocabSearch = Vue.createApp({
     autoComplete () {
       const delayMs = 300
 
-      // when new autocomplete is fired, empty the preivous result
+      // when new autocomplete is fired, empty the previous result
       this.hideDropdown()
 
       // cancel pending API calls when method is called
