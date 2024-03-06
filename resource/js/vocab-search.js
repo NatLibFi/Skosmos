@@ -20,6 +20,10 @@ const vocabSearch = Vue.createApp({
     this.languageStrings = SKOSMOS.language_strings[SKOSMOS.lang] ?? SKOSMOS.language_strings.en
     this.msgs = SKOSMOS.msgs[SKOSMOS.lang] ?? SKOSMOS.msgs.en
     this.renderedResultsList = []
+    document.addEventListener('click', this.onClickOutside)
+  },
+  beforeUnmount () {
+    document.removeEventListener('click', this.onClickOutside);
   },
   methods: {
     autoComplete () {
@@ -61,9 +65,11 @@ const vocabSearch = Vue.createApp({
       return formatted
     },
     renderMatchingPart (searchTerm, label) {
-      if (label && label.includes(searchTerm)) {
-        return label.replace(searchTerm, `<b>${searchTerm}</b>`)
+      const regex = new RegExp(searchTerm, "i") // case insensitive matching
+      if (label && regex.test(searchTerm)) {
+        return label.replace(regex, (match) => `<b>${match}</b>`)
       }
+      return label
     },
     translateType (type) {
       return SKOSMOS.msgs[SKOSMOS.lang][type]
@@ -75,7 +81,7 @@ const vocabSearch = Vue.createApp({
      */
     renderResults () {
       // get the results list form cache if it is implemented
-
+      console.log(this.renderedResultsList)
       const renderedSearchTerm = this.searchTerm // save the search term in case it changes while rendering
       this.renderedResultsList.forEach(result => {
         const hitPref = this.renderMatchingPart(renderedSearchTerm, result.prefLabel)
@@ -132,6 +138,13 @@ const vocabSearch = Vue.createApp({
     resetSearchTermAndHideDropdown () {
       this.searchTerm = ''
       this.hideDropdown()
+    },
+    onClickOutside(event) {
+      const listener = document.getElementById('search-autocomplete-results');
+      // Check if the clicked element is outside your element
+      if (listener && !listener.contains(event.target)) {
+        this.hideDropdown();
+      }
     }
   },
   template: `
@@ -158,7 +171,7 @@ const vocabSearch = Vue.createApp({
             @click="">
           <ul id="search-autocomplete-results" class="dropdown-menu"
             aria-labelledby="search-field">
-            <li class="autocomplete-result row pb-1 ps-2" v-for="result in renderedResultsList"
+            <li class="autocomplete-result row pb-1" v-for="result in renderedResultsList"
               :key="result.prefLabel" >
               <template v-if="result.uri">
                 <div class="col" v-html="result.rendered"></div>
