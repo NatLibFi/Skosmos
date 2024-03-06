@@ -423,6 +423,7 @@ body {
   #main-container.vocabpage #sidebar-col, #main-container.termpage #sidebar-col {
     background-color: var(--vocab-bg);
     background-clip: content-box, padding-box;
+    min-height: 1000px; /* What should this be? */
   }
 
   #main-container.vocabpage #sidebar, #main-container.termpage #sidebar {
@@ -482,9 +483,9 @@ body {
 
   .sidebar-list {
     padding: 2rem 1rem;
-    overflow: auto;
+    overflow-y: scroll;
     scrollbar-color: var(--sidebar-scrollbar-thumb) var(--sidebar-scrollbar-bg);
-    max-height: 1000px; /* needs to be changed */
+    position: absolute;
   }
 
   .sidebar-list::-webkit-scrollbar {
