@@ -60,6 +60,11 @@ const vocabSearch = Vue.createApp({
       const formatted = this.searchTerm + '*'
       return formatted
     },
+    renderMatchingPart(searchTerm, label) {
+      if (label && label.includes(searchTerm)) {
+        return label.replace(searchTerm, `<b>${searchTerm}</b>`)
+      }
+    },
     /*
      * renderResults is used when the search string has been indexed in the cache
      * it also shows the autocomplete results list
@@ -68,9 +73,20 @@ const vocabSearch = Vue.createApp({
     renderResults () {
       // get the results list form cache if it is implemented
 
+      const renderedSearchTerm = this.searchTerm // save the search term in case it changes while rendering
       this.renderedResultsList.forEach(result => {
+        let hitPref = this.renderMatchingPart(renderedSearchTerm, result.prefLabel);
+        let hitAlt = this.renderMatchingPart(renderedSearchTerm, result.altLabel);
+        let hitHidden = this.renderMatchingPart(renderedSearchTerm, result.hiddenLabel);
         if ('uri' in result) { // change uris to Skosmos page urls
           result.uri = SKOSMOS.vocab + '/' + SKOSMOS.lang + '/page?uri=' + encodeURIComponent(result.uri)
+        }
+        if (hitHidden) {
+          result.rendered = '<a :href="' + result.uri + '">' + result.prefLabel + '</a>'
+        } else if (hitAlt) {
+          result.rendered = hitAlt + ' <i class="fa-solid fa-arrow-right"></i>&nbsp;' + '<a :href="' + result.uri + '">' + result.prefLabel + '</a>'
+        } else if (hitPref) {
+          result.rendered = '<a :href="' + result.uri + '">' + hitPref + '</a>'
         }
       })
 
@@ -135,7 +151,7 @@ const vocabSearch = Vue.createApp({
               :key="result.prefLabel"
               class="autocomplete-result" >
               <template v-if="result.uri">
-                <a :href="result.uri">{{ result.prefLabel }}</a>
+                <span v-html="result.rendered"></span>
               </template>
               <template v-else>
                 {{ result.prefLabel }}
