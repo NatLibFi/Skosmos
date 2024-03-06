@@ -253,6 +253,7 @@ body {
     border: 1px solid var(--search-border);
     border-radius: 0;
     padding: 0;
+    width: 114%;
     max-height: 20rem;
     overflow: auto;
   }
@@ -291,11 +292,16 @@ body {
 
   #headerbar .autocomplete-result {
     border: 1px solid var(--search-border);
+    margin-right: auto;
   }
 
   #headerbar .autocomplete-result a {
     color: var(--vocab-link);
     text-decoration: none;
+  }
+
+  #headerbar .autocomplete-result span {
+    white-space: nowrap;
   }
 
   /* Remove built-in x button from Internet Explorer */
