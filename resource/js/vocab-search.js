@@ -43,7 +43,7 @@ const vocabSearch = Vue.createApp({
      * search calls renderResults for displaying the response
      */
     search () {
-      const mySearchCounter = this.searchCounter +1 // make sure we can identify this search later in case of several ongoing searches
+      const mySearchCounter = this.searchCounter + 1 // make sure we can identify this search later in case of several ongoing searches
       this.searchCounter = mySearchCounter
 
       fetch('rest/v1/' + SKOSMOS.vocab + '/search?query=' + this.formatSearchTerm() + '&lang=' + SKOSMOS.lang)
@@ -60,10 +60,13 @@ const vocabSearch = Vue.createApp({
       const formatted = this.searchTerm + '*'
       return formatted
     },
-    renderMatchingPart(searchTerm, label) {
+    renderMatchingPart (searchTerm, label) {
       if (label && label.includes(searchTerm)) {
         return label.replace(searchTerm, `<b>${searchTerm}</b>`)
       }
+    },
+    translateType (type) {
+      return SKOSMOS.msgs[SKOSMOS.lang][type]
     },
     /*
      * renderResults is used when the search string has been indexed in the cache
@@ -75,19 +78,27 @@ const vocabSearch = Vue.createApp({
 
       const renderedSearchTerm = this.searchTerm // save the search term in case it changes while rendering
       this.renderedResultsList.forEach(result => {
-        let hitPref = this.renderMatchingPart(renderedSearchTerm, result.prefLabel);
-        let hitAlt = this.renderMatchingPart(renderedSearchTerm, result.altLabel);
-        let hitHidden = this.renderMatchingPart(renderedSearchTerm, result.hiddenLabel);
+        const hitPref = this.renderMatchingPart(renderedSearchTerm, result.prefLabel)
+        const hitAlt = this.renderMatchingPart(renderedSearchTerm, result.altLabel)
+        const hitHidden = this.renderMatchingPart(renderedSearchTerm, result.hiddenLabel)
         if ('uri' in result) { // change uris to Skosmos page urls
           result.uri = SKOSMOS.vocab + '/' + SKOSMOS.lang + '/page?uri=' + encodeURIComponent(result.uri)
         }
+        // render search result labels
         if (hitHidden) {
-          result.rendered = '<a :href="' + result.uri + '">' + result.prefLabel + '</a>'
+          result.rendered = '<a href="' + result.uri + '">' + result.prefLabel + '</a>'
         } else if (hitAlt) {
-          result.rendered = hitAlt + ' <i class="fa-solid fa-arrow-right"></i>&nbsp;' + '<a :href="' + result.uri + '">' + result.prefLabel + '</a>'
+          result.rendered = hitAlt + ' <span class="d-inline"><i class="fa-solid fa-arrow-right"></i>&nbsp;' + '<a href="' + result.uri + '">' + hitPref ?? result.prefLabel + '</a></span>'
         } else if (hitPref) {
-          result.rendered = '<a :href="' + result.uri + '">' + hitPref + '</a>'
+          result.rendered = '<a href="' + result.uri + '">' + hitPref + '</a>'
         }
+        // render search result renderedTypes
+
+        if (result.type.length > 1) { // remove the type for SKOS concepts if the result has more than one type
+          result.type.splice(result.type.indexOf('skos:Concept'), 1)
+        }
+        // use the translateType function to map translations for the type IRIs
+        result.renderedType = result.type.map(this.translateType).join(', ')
       })
 
       if (this.renderedResultsList.length === 0) { // show no results message
@@ -145,13 +156,13 @@ const vocabSearch = Vue.createApp({
             @input="autoComplete()"
             @keyup.enter="gotoSearchPage()"
             @click="">
-          <ul id="search-autocomplete-results" class="dropdown-menu w-100"
+          <ul id="search-autocomplete-results" class="dropdown-menu"
             aria-labelledby="search-field">
-            <li v-for="result in renderedResultsList"
-              :key="result.prefLabel"
-              class="autocomplete-result" >
+            <li class="autocomplete-result row pb-1 ps-2" v-for="result in renderedResultsList"
+              :key="result.prefLabel" >
               <template v-if="result.uri">
-                <span v-html="result.rendered"></span>
+                <div class="col" v-html="result.rendered"></div>
+                <div class="col-auto align-self-end pe-1" v-html="result.renderedType"></div>
               </template>
               <template v-else>
                 {{ result.prefLabel }}

@@ -39,9 +39,15 @@ const SKOSMOS = {
                                 "se": "Northern Sami",
                                 "sv": "Swedish",
                                 "all": "In all languages"},},
-  "msgs" : { "fi": { "No results": "Ei hakutuloksia",},
-             "sv": { "No results": "Inga sökresultat",},
-             "en": { "No results": "No results",},},
+  "msgs" : { "fi": { "No results": "Ei hakutuloksia",
+                     "http://www.yso.fi/onto/yso-meta/Concept": "Yleiskäsite",
+                     "skos:Concept": "Käsite",},
+             "sv": { "No results": "Inga sökresultat",
+                     "http://www.yso.fi/onto/yso-meta/Concept": "Allmänbegrepp",
+                     "skos:Concept": "Begrepp",},
+             "en": { "No results": "No results",
+                     "http://www.yso.fi/onto/yso-meta/Concept": "General concept",
+                     "skos:Concept": "Concept",},},
 }
 </script>
 
