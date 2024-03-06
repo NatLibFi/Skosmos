@@ -23,7 +23,7 @@ const vocabSearch = Vue.createApp({
     document.addEventListener('click', this.onClickOutside)
   },
   beforeUnmount () {
-    document.removeEventListener('click', this.onClickOutside);
+    document.removeEventListener('click', this.onClickOutside)
   },
   methods: {
     autoComplete () {
@@ -53,7 +53,7 @@ const vocabSearch = Vue.createApp({
       fetch('rest/v1/' + SKOSMOS.vocab + '/search?query=' + this.formatSearchTerm() + '&lang=' + SKOSMOS.lang)
         .then(data => data.json())
         .then(data => {
-          if (mySearchCounter == this.searchCounter) {
+          if (mySearchCounter === this.searchCounter) {
             this.renderedResultsList = data.results // update results (update cache if it is implemented)
             this.renderResults() // render after the fetch has finished
           }
@@ -65,7 +65,7 @@ const vocabSearch = Vue.createApp({
       return formatted
     },
     renderMatchingPart (searchTerm, label) {
-      const regex = new RegExp(searchTerm, "i") // case insensitive matching
+      const regex = new RegExp(searchTerm, 'i') // case insensitive matching
       if (label && regex.test(searchTerm)) {
         return label.replace(regex, (match) => `<b>${match}</b>`)
       }
@@ -139,11 +139,11 @@ const vocabSearch = Vue.createApp({
       this.searchTerm = ''
       this.hideDropdown()
     },
-    onClickOutside(event) {
-      const listener = document.getElementById('search-autocomplete-results');
+    onClickOutside (event) {
+      const listener = document.getElementById('search-autocomplete-results')
       // Check if the clicked element is outside your element
       if (listener && !listener.contains(event.target)) {
-        this.hideDropdown();
+        this.hideDropdown()
       }
     }
   },

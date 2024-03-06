@@ -292,7 +292,7 @@ body {
 
   #headerbar .autocomplete-result {
     border: 1px solid var(--search-border);
-    margin-right: auto;
+    margin: auto;
   }
 
   #headerbar .autocomplete-result a {
