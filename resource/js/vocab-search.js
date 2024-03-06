@@ -94,7 +94,7 @@ const vocabSearch = Vue.createApp({
         if (hitHidden) {
           result.rendered = '<a href="' + result.uri + '">' + result.prefLabel + '</a>'
         } else if (hitAlt) {
-          result.rendered = hitAlt + ' <span class="d-inline"><i class="fa-solid fa-arrow-right"></i>&nbsp;' + '<a href="' + result.uri + '">' + hitPref + '</a></span>'
+          result.rendered = hitAlt + ' <span class="d-inline">&rarr;&nbsp;' + '<a href="' + result.uri + '">' + hitPref + '</a></span>'
         } else if (hitPref) {
           result.rendered = '<a href="' + result.uri + '">' + hitPref + '</a>'
         }
