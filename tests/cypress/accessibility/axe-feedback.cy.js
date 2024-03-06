@@ -30,31 +30,51 @@ function fillInFormFields() {
     cy.log('The subject is:', messageValue);
   });
 }
-
-describe('!!! Kesken: Drop-down-menun hover-testi ', () => {
+describe('Accessibility tests for dropdown menu', () => {
   before(() => {
     cy.visit('/fi/feedback')
-    cy.wait(3000)
+  });
+
+  it('should have accessible dropdown menu', () => {
+
+    // Listataan lapsielementit
+    cy.get('#vocab-select').children().each(($el) => {
+      cy.log($el[0].tagName);
+      cy.log($el.text());
+    });
     
-    cy.get('#vocab-select').select('');
-
-    cy.wait(3000)
-
-    // Avataan lista ja hoveroidaan YSOn kohdalle (pitäisi näkyä vahvennettuna)
-    cy.get('#vocab-select').siblings('.select-wrapper').find('option').contains('YSO - Yleinen suomalainen ontologia (arkeologia)').then($option => {
-      $option.trigger('mouseover');
-      cy.injectAxe();
-      cy.checkA11y($option, {
-        includedImpacts: ['critical', 'serious'],
-        rules: {
-          // Mieti tarvitaanko jotain sääntöjä lisää
-        }
+    // Haetaan testin vuoksi "oletus" ilman aiempia kutsuja
+    cy.get('#vocab-select').invoke('val').then((value) => {
+      cy.get('#vocab-select').find(`option[value="${value}"]`).invoke('text').then((text) => {
+        cy.log('Oletus', text);
       });
     });
 
-  })
-  // accessibilityTestRunner() // Lähtökohtaisesti tämä pitäisi olla se, mitä käytetään eikö tuo checkA11y, mutta tutkitaan tätä
-})
+    cy.get('#vocab-select').invoke('val').then((value) => {
+      cy.log('Selected:', value);
+    });
+    
+    // Jos tätä ei kutsuta, tulee alempana olevaan (X) "Ei tiettyyn sanastoon" eli ensimmäinen option, muuten tulee tässä selectoidun tiedot
+    // Mielenkiintoisen implisiittistä toimintaa. Parempi olisi jos tekisi vain niin kuin pyydetään.
+    // Lopulta kuitenkaan nämä eivät vaikuttane siihen, miksi drop-down ei aukea, mutta auttamat varmistamaan, että
+    // elementtiin päästään kiinni
+    // cy.get('#vocab-select').select('yso');
+    cy.get('#vocab-select').select('test');
+    
+    // X Oletustietoja lisää, riippuen yllä tehdyistä toimista
+    cy.get('#vocab-select').invoke('val').then((value) => {
+      cy.get('#vocab-select').find(`option[value="${value}"]`).invoke('text').then((text) => {
+        cy.log('Oletustietoja implisiittisin argumetein:', text);
+      });
+    });
+
+    cy.screenshot('dropdown-opened');
+
+    cy.injectAxe();
+    accessibilityTestRunner();
+  });
+});
+
 
 describe('Testataan itse formia ennen submittausta', () => {
   before(() => {
