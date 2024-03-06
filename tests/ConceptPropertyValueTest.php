@@ -35,6 +35,16 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
     }
 
     /**
+     * @covers ConceptPropertyValue::getSortKey
+     */
+    public function testGetSortKey()
+    {
+        $props = $this->concept->getProperties();
+        $propvals = $props['skos:narrower']->getValues();
+        $this->assertEquals('crucian carp', $propvals['Crucian carp http://www.skosmos.skos/test/ta121']->getSortKey());
+    }
+
+    /**
      * @covers ConceptPropertyValue::getLabel
      */
     public function testGetLabel()

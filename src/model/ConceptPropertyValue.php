@@ -41,6 +41,11 @@ class ConceptPropertyValue extends VocabularyDataObject
         return $this->model->getLocale();
     }
 
+    public function getSortKey()
+    {
+        return strtolower($this->getLabel());
+    }
+
     public function getLabel($lang = '', $fallbackToUri = 'uri')
     {
         if ($this->clang) {
