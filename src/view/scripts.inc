@@ -1,7 +1,7 @@
 <!-- Skosmos variables passed from the backend to the frontend code-->
 <!-- NB: Do not add comments inside the JS object as it would break JSON parsing -->
 <script id="skosmos-global-vars">
-const SKOSMOS = {
+window.SKOSMOS = {
   "content_lang": "{{ request.contentLang }}",
   "explicitLangCodes": {{ explicit_langcodes ? "true" : "false" }},
   "lang": "{{ request.lang }}",

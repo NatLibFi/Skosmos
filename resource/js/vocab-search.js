@@ -1,5 +1,4 @@
 /* global Vue */
-/* global SKOSMOS */
 
 const vocabSearch = Vue.createApp({
   data () {
@@ -12,9 +11,9 @@ const vocabSearch = Vue.createApp({
     }
   },
   mounted () {
-    this.languages = SKOSMOS.languageOrder
-    this.selectedLanguage = SKOSMOS.content_lang
-    this.languageStrings = SKOSMOS.language_strings[SKOSMOS.lang]
+    this.languages = window.SKOSMOS.languageOrder
+    this.selectedLanguage = window.SKOSMOS.content_lang
+    this.languageStrings = window.SKOSMOS.language_strings[window.SKOSMOS.lang]
   },
   methods: {
     autoComplete () {
@@ -23,15 +22,15 @@ const vocabSearch = Vue.createApp({
     gotoSearchPage () {
       if (!this.searchTerm) return
 
-      const currentVocab = SKOSMOS.vocab + '/' + SKOSMOS.lang + '/'
-      const vocabHref = window.location.href.substring(0, window.location.href.lastIndexOf(SKOSMOS.vocab)) + currentVocab
-      let langParam = '&clang=' + SKOSMOS.content_lang
+      const currentVocab = window.SKOSMOS.vocab + '/' + window.SKOSMOS.lang + '/'
+      const vocabHref = window.location.href.substring(0, window.location.href.lastIndexOf(window.SKOSMOS.vocab)) + currentVocab
+      let langParam = '&clang=' + window.SKOSMOS.content_lang
       if (this.selectedLanguage === 'all') langParam += '&anylang=on'
       const searchUrl = vocabHref + 'search?q=' + this.searchTerm + langParam
       window.location.href = searchUrl
     },
     changeLang () {
-      SKOSMOS.content_lang = this.selectedLanguage
+      window.SKOSMOS.content_lang = this.selectedLanguage
       // TODO: Impelemnt partial page load to change content according to the new content language
     }
   },

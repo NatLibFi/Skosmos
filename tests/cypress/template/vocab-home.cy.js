@@ -63,8 +63,11 @@ describe('Vocabulary home page', () => {
     // check the concept prefLabel
     cy.get('#concept-heading h1').invoke('text').should('equal', 'care institutions')
 
-    // check that concept mappings is not empty
-    cy.get('#concept-mappings').should('not.be.empty')
+    // check that the SKOSMOS object matches the newly loaded concept
+    cy.window().then((win) => {
+      expect(win.SKOSMOS.uri).to.equal('http://www.yso.fi/onto/yso/p6034');
+      expect(win.SKOSMOS.prefLabels[0]['label']).to.equal("care institutions");
+    })
   })
   it('clicking on hierarchy entries performs partial page load', () => {
     cy.visit('/test/en') // go to the "Test ontology" home page
@@ -77,5 +80,11 @@ describe('Vocabulary home page', () => {
 
     // check the concept prefLabel
     cy.get('#concept-heading h1').invoke('text').should('equal', 'Fish')
+
+    // check that the SKOSMOS object matches the newly loaded concept
+    cy.window().then((win) => {
+      expect(win.SKOSMOS.uri).to.equal('http://www.skosmos.skos/test/ta1');
+      expect(win.SKOSMOS.prefLabels[0]['label']).to.equal("Fish");
+    })
   })
 })

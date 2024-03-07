@@ -1,5 +1,4 @@
 /* global Vue */
-/* global SKOSMOS */
 /* global partialPageLoad, getConceptURL */
 
 const tabAlphaApp = Vue.createApp({
@@ -27,7 +26,7 @@ const tabAlphaApp = Vue.createApp({
   methods: {
     handleClickAlphabeticalEvent () {
       // only load index the first time the page is opened or if selected concept has changed
-      if (this.indexLetters.length === 0 || this.selectedConcept !== SKOSMOS.uri) {
+      if (this.indexLetters.length === 0 || this.selectedConcept !== window.SKOSMOS.uri) {
         this.selectedConcept = ''
         this.indexLetters = []
         this.indexConcepts = []
@@ -36,7 +35,7 @@ const tabAlphaApp = Vue.createApp({
     },
     loadLetters () {
       this.loadingLetters = true
-      fetch('rest/v1/' + SKOSMOS.vocab + '/index/?lang=' + SKOSMOS.lang)
+      fetch('rest/v1/' + window.SKOSMOS.vocab + '/index/?lang=' + window.SKOSMOS.lang)
         .then(data => {
           return data.json()
         })
@@ -48,7 +47,7 @@ const tabAlphaApp = Vue.createApp({
     },
     loadConcepts (letter) {
       this.loadingConcepts = true
-      fetch('rest/v1/' + SKOSMOS.vocab + '/index/' + letter + '?lang=' + SKOSMOS.lang + '&limit=50')
+      fetch('rest/v1/' + window.SKOSMOS.vocab + '/index/' + letter + '?lang=' + window.SKOSMOS.lang + '&limit=50')
         .then(data => {
           return data.json()
         })
