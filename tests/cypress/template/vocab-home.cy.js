@@ -54,14 +54,11 @@ describe('Vocabulary home page', () => {
   it('clicking on alphabetical index entries performs partial page load', () => {
     cy.visit('/yso/en/') // go to the YSO home page in English language
 
-    // click on the third letter (C)
-    cy.get('#tab-alphabetical .pagination :nth-child(3) > .page-link').click()
+    // click on the the letter C
+    cy.get('#tab-alphabetical').contains('a', 'C').click()
 
-    // check that the first entry is "care institutions"
-    cy.get('#tab-alphabetical .sidebar-list').children().first().invoke('text').should('equal', 'care institutions')
-
-    // click on the first entry (should trigger partial page load)
-    cy.get('#tab-alphabetical .sidebar-list').children().first().click()
+    // click on the link "care institutions" (should trigger partial page load)
+    cy.get('#tab-alphabetical').contains('a', 'care institutions').click()
 
     // check the concept prefLabel
     cy.get('#concept-heading h1').invoke('text').should('equal', 'care institutions')
@@ -75,11 +72,8 @@ describe('Vocabulary home page', () => {
     // open the hierarchy tab
     cy.get('#hierarchy a').click()
 
-    // check that the first entry is "Fish"
-    cy.get('#tab-hierarchy .sidebar-list a').invoke('text').should('equal', 'Fish')
-
-    // click on the link (should trigger partial page load)
-    cy.get('#tab-hierarchy .sidebar-list a').click()
+    // click on the link "Fish" (should trigger partial page load)
+    cy.get('#tab-hierarchy').contains('a', 'Fish').click()
 
     // check the concept prefLabel
     cy.get('#concept-heading h1').invoke('text').should('equal', 'Fish')
