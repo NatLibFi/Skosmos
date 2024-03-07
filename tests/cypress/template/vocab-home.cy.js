@@ -50,4 +50,38 @@ describe('Vocabulary home page', () => {
 
     // check that the first entry is "östliga handelsvägar"
     cy.get('#tab-alphabetical .sidebar-list .list-group').children().first().children().first().invoke('text').should('equal', 'östliga handelsvägar')
-  })})
+  })
+  it('clicking on alphabetical index entries performs partial page load', () => {
+    cy.visit('/yso/en/') // go to the YSO home page in English language
+
+    // click on the third letter (C)
+    cy.get('#tab-alphabetical .pagination :nth-child(3) > .page-link').click()
+
+    // check that the first entry is "care institutions"
+    cy.get('#tab-alphabetical .sidebar-list').children().first().invoke('text').should('equal', 'care institutions')
+
+    // click on the first entry (should trigger partial page load)
+    cy.get('#tab-alphabetical .sidebar-list').children().first().click()
+
+    // check the concept prefLabel
+    cy.get('#concept-heading h1').invoke('text').should('equal', 'care institutions')
+
+    // check that concept mappings is not empty
+    cy.get('#concept-mappings').should('not.be.empty')
+  })
+  it('clicking on hierarchy entries performs partial page load', () => {
+    cy.visit('/test/en') // go to the "Test ontology" home page
+
+    // open the hierarchy tab
+    cy.get('#hierarchy a').click()
+
+    // check that the first entry is "Fish"
+    cy.get('#tab-hierarchy .sidebar-list a').invoke('text').should('equal', 'Fish')
+
+    // click on the link (should trigger partial page load)
+    cy.get('#tab-hierarchy .sidebar-list a').click()
+
+    // check the concept prefLabel
+    cy.get('#concept-heading h1').invoke('text').should('equal', 'Fish')
+  })
+})
