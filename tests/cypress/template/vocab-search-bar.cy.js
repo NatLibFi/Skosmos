@@ -2,7 +2,7 @@ describe('Vocab search bar', () => {
   it('search can be done with a chosen content language', () => {
     // go to YSO vocab front page
     cy.visit('/yso/fi/')
-    
+
     // Select an option from the dropdown
     cy.get('#search-wrapper select').select('sv');
 
@@ -20,7 +20,7 @@ describe('Vocab search bar', () => {
   it('search can be done with all languages', () => {
     // go to YSO vocab front page
     cy.visit('/yso/fi/')
-      
+
     // Choose 'all' languages
     cy.get('#search-wrapper select').select('all');
 
@@ -62,6 +62,10 @@ describe('Vocab search bar', () => {
     cy.get('#search-autocomplete-results', { timeout: 20000 }).should('not.be.visible');
   })
 
+  it('The autocomplete list should not change due to previous searches completing', () => {
+    //No-op placeholder
+  })
+
   it('Clear button should hide the autocomplete list', () => {
     // go to YSO vocab front page
     cy.visit('/yso/en/')
@@ -71,5 +75,24 @@ describe('Vocab search bar', () => {
 
     cy.get('#clear-button').click()
     cy.get('#search-autocomplete-results').should('not.be.visible'); // the autocomplete should disappear
+  })
+
+  it('Emptying the text search field hides the autocomplete list', () => {
+    //No-op placeholder
+  })
+
+  it('Clicking outside of the autocomplete list hides the autocomplete list', () => {
+    // go to YSO vocab front page
+    cy.visit('/yso/en/')
+
+    cy.get('#search-field').type('kas');
+    cy.get('#search-autocomplete-results', { timeout: 20000 }).should('be.visible'); // the autocomplete should appear
+
+    cy.get('#main-container').click({ force: true }); // using force true to click on elements not considered actionable
+    cy.get('#search-autocomplete-results').should('not.be.visible'); // the autocomplete should disappear
+  })
+
+  it('AltLabel search results should bold the matching parts of altLabel and prefLabel', () => {
+    //No-op placeholder
   })
 })
