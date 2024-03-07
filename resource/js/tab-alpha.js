@@ -99,7 +99,7 @@ tabAlphaApp.component('tab-alpha', {
       partialPageLoad(event, getConceptURL(uri))
       this.$emit('selectConcept', uri)
     },
-    getStyle () {
+    getListStyle () {
       // get height and width of pagination and sidebar tabs elements if they exist
       const height = this.$refs.pagination && this.$refs.pagination.clientHeight + document.getElementById('sidebar-tabs').clientHeight
       const width = this.$refs.pagination && this.$refs.pagination.clientWidth
@@ -129,7 +129,7 @@ tabAlphaApp.component('tab-alpha', {
       </div>
     </template>
     <template v-else>
-      <div class="sidebar-list" :style="getStyle()">
+      <div class="sidebar-list" :style="getListStyle()">
         <ul class="list-group" v-if="indexConcepts.length !== 0">
           <li v-for="concept in indexConcepts" class="list-group-item py-1 px-2">
             <template v-if="concept.altLabel">

@@ -141,23 +141,33 @@ const tabHierApp = Vue.createApp({
             console.log(this.hierarchy)
           })
       }
+    },
+    getListStyle () {
+      const height = document.getElementById('sidebar-tabs').clientHeight
+      const width = document.getElementById('sidebar-tabs').clientWidth
+      return {
+        height: 'calc( 100% - ' + height + 'px)',
+        width: width + 'px'
+      }
     }
   },
   template: `
     <div v-click-tab-hierarchy="handleClickHierarchyEvent">
-      <ul class="list-group sidebar-list p-0" v-if="!loading">
-        <template v-for="(c, i) in hierarchy">
-          <tab-hier
-            :concept="c"
-            :selectedConcept="selectedConcept"
-            :isTopConcept="true"
-            :isLast="i == hierarchy.length - 1 && !c.isOpen"
-            @load-children="loadChildren($event)"
-            @select-concept="selectedConcept = $event"
-          ></tab-hier>
-        </template>
-      </ul>
+      <div class="sidebar-list p-0" :style="getListStyle()">
+        <ul class="list-group" v-if="!loading">
+          <template v-for="(c, i) in hierarchy">
+            <tab-hier
+              :concept="c"
+              :selectedConcept="selectedConcept"
+              :isTopConcept="true"
+              :isLast="i == hierarchy.length - 1 && !c.isOpen"
+              @load-children="loadChildren($event)"
+              @select-concept="selectedConcept = $event"
+            ></tab-hier>
+          </template>
+        </ul>
       <template v-else>Loading...</template><!-- Add a spinner or equivalent -->
+      </div>
     </div>
   `
 })
@@ -184,6 +194,7 @@ tabHierApp.component('tab-hier', {
       this.$emit('loadChildren', concept)
     },
     handleClickConceptEvent (event, concept) {
+      console.log(concept)
       concept.isOpen = true
       this.$emit('loadChildren', concept)
       this.$emit('selectConcept', concept.uri)

@@ -423,7 +423,7 @@ body {
   #main-container.vocabpage #sidebar-col, #main-container.termpage #sidebar-col {
     background-color: var(--vocab-bg);
     background-clip: content-box, padding-box;
-    min-height: 1000px; /* What should this be? */
+    min-height: 1000px;
   }
 
   #main-container.vocabpage #sidebar, #main-container.termpage #sidebar {
