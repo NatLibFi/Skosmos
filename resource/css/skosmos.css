@@ -299,32 +299,6 @@ body {
     color: var(--vocab-link);
     text-decoration: none;
   }
-  
-  #headerbar .autocomplete {
-    position: relative;
-  }
-  
-  #headerbar .autocomplete-results {
-    padding: 0;
-    margin: 0;
-    border: 1px solid #eeeeee;
-    height: 120px;
-    min-height: 1em;
-    max-height: 6em;    
-    overflow: auto;
-  }
-
-  #headerbar .autocomplete-result {
-    list-style: none;
-    text-align: left;
-    padding: 4px 2px;
-    cursor: pointer;
-  }
-
-  #headerbar .autocomplete-result:hover {
-    background-color: #4AAE9B;
-    color: white;
-  }
 
   #headerbar .autocomplete-result span {
     white-space: nowrap;
