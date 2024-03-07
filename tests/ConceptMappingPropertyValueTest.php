@@ -27,6 +27,18 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
     }
 
     /**
+     * @covers ConceptMappingPropertyValue::getSortKey
+     * @covers ConceptMappingPropertyValue::getLabel
+     * @covers ConceptMappingPropertyValue::queryLabel
+     * @covers DataObject::getExternalLabel
+     */
+    public function testGetSortKey()
+    {
+        $propvals = $this->props['skos:exactMatch']->getValues();
+        $this->assertEquals('test ontology: eel', $propvals['Eel http://www.skosmos.skos/test/ta115']->getSortKey());
+    }
+
+    /**
      * @covers ConceptMappingPropertyValue::getLabel
      * @covers ConceptMappingPropertyValue::queryLabel
      * @covers DataObject::getExternalLabel

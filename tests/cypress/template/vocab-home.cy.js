@@ -19,7 +19,7 @@ describe('Vocabulary home page', () => {
   it('shows alphabetical index entries', () => {
     cy.visit('/test/en') // go to the "Test ontology" home page
 
-    const entries = cy.get('#tab-alphabetical .sidebar-list').children()
+    const entries = cy.get('#tab-alphabetical .sidebar-list .list-group').children()
 
     // check that we have the correct number of entries
     entries.should('have.length', 3)
@@ -34,10 +34,10 @@ describe('Vocabulary home page', () => {
     cy.get('#tab-alphabetical .pagination :nth-child(2) > .page-link').click()
 
     // check that we have the correct number of entries
-    cy.get('#tab-alphabetical .sidebar-list').children().should('have.length', 2)
+    cy.get('#tab-alphabetical .sidebar-list .list-group').children().should('have.length', 2)
 
     // check that the first entry is Carp
-    cy.get('#tab-alphabetical .sidebar-list').children().first().invoke('text').should('equal', 'Carp')
+    cy.get('#tab-alphabetical .sidebar-list .list-group').children().first().invoke('text').should('equal', 'Carp')
   })
   it('alphabetical index diacritic letters are clickable', () => {
     cy.visit('/yso/sv/') // go to the YSO home page in Swedish language
@@ -46,8 +46,8 @@ describe('Vocabulary home page', () => {
     cy.get('#tab-alphabetical .pagination :nth-last-child(1) > .page-link').click()
 
     // check that we have the correct number of entries
-    cy.get('#tab-alphabetical .sidebar-list').children().should('have.length', 4)
+    cy.get('#tab-alphabetical .sidebar-list .list-group').children().should('have.length', 4)
 
     // check that the first entry is "östliga handelsvägar"
-    cy.get('#tab-alphabetical .sidebar-list').children().first().children().first().invoke('text').should('equal', 'östliga handelsvägar')
+    cy.get('#tab-alphabetical .sidebar-list .list-group').children().first().children().first().invoke('text').should('equal', 'östliga handelsvägar')
   })})

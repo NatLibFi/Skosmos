@@ -98,6 +98,15 @@ tabAlphaApp.component('tab-alpha', {
     loadConcept (event, uri) {
       partialPageLoad(event, getConceptURL(uri))
       this.$emit('selectConcept', uri)
+    },
+    getListStyle () {
+      // get height and width of pagination and sidebar tabs elements if they exist
+      const height = this.$refs.pagination && this.$refs.pagination.clientHeight + document.getElementById('sidebar-tabs').clientHeight
+      const width = this.$refs.pagination && this.$refs.pagination.clientWidth
+      return {
+        height: 'calc( 100% - ' + height + 'px)',
+        width: width + 'px'
+      }
     }
   },
   template: `
@@ -107,7 +116,7 @@ tabAlphaApp.component('tab-alpha', {
       </div>
     </template>
     <template v-else>
-      <ul class="pagination" v-if="indexLetters.length !== 0">
+      <ul class="pagination" v-if="indexLetters.length !== 0" ref="pagination">
         <li v-for="letter in indexLetters" class="page-item">
           <a class="page-link" href="#" @click="loadConcepts($event, letter)">{{ letter }}</a>
         </li>
@@ -120,17 +129,19 @@ tabAlphaApp.component('tab-alpha', {
       </div>
     </template>
     <template v-else>
-      <ul class="list-group sidebar-list" v-if="indexConcepts.length !== 0">
-        <li v-for="concept in indexConcepts" class="list-group-item py-1 px-2">
-          <template v-if="concept.altLabel">
-            <span class="fst-italic">{{ concept.altLabel }}</span>
-            <i class="fa-solid fa-arrow-right"></i>
-          </template>
-          <a :class="{ 'selected': selectedConcept === concept.uri }"
-            :href="getConceptURL(concept.uri)" @click="loadConcept($event, concept.uri)"
-          >{{ concept.prefLabel }}</a>
-        </li>
-      </ul>
+      <div class="sidebar-list" :style="getListStyle()">
+        <ul class="list-group" v-if="indexConcepts.length !== 0">
+          <li v-for="concept in indexConcepts" class="list-group-item py-1 px-2">
+            <template v-if="concept.altLabel">
+              <span class="fst-italic">{{ concept.altLabel }}</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </template>
+            <a :class="{ 'selected': selectedConcept === concept.uri }"
+              :href="getConceptURL(concept.uri)" @click="loadConcept($event, concept.uri)"
+            >{{ concept.prefLabel }}</a>
+          </li>
+        </ul>
+      </div>
     </template>
   `
 })

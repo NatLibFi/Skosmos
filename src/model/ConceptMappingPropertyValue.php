@@ -55,6 +55,11 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
         return $label;
     }
 
+    public function getSortKey()
+    {
+        return strtolower($this->getVocabName() . ": " . $this->getLabel());
+    }
+
     private function queryLabel($lang = '', $queryExVocabs = true)
     {
         if ($this->clang) {
