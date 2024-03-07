@@ -3,8 +3,7 @@ const a11yOptions = {
     type: 'tag',
     values: ['wcag21aa']
   }
-};
-
+}
 const checkA11y = options => {
   cy.checkA11y(null, options, violations => {
     console.log(`${violations.length} violation(s) detected`)
@@ -29,7 +28,6 @@ function terminalLog (violations) {
   )
   cy.task('table', violationData)
 }
-
 export function accessibilityTestRunner () {
   const runForCLI = Cypress.env('cli') // true
   if (runForCLI) {
@@ -38,7 +36,6 @@ export function accessibilityTestRunner () {
     getConfigurationForGUITests()
   }
 }
-
 function getConfigurationForCLITests () {
   return it('Logs (CLI)', () => {
     cy.checkA11y(null, a11yOptions, terminalLog)
