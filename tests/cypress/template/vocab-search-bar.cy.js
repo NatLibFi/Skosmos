@@ -63,7 +63,16 @@ describe('Vocab search bar', () => {
   })
 
   it('The autocomplete list should not change due to previous searches completing', () => {
-    //No-op placeholder
+    // go to YSO vocab front page
+    cy.visit('/yso/fi/')
+
+    cy.get('#search-field').type('ka');
+    cy.wait(300);
+    cy.get('#search-field').type('i');
+    cy.get('#search-autocomplete-results', { timeout: 20000 }).should('be.visible'); // the autocomplete should appear
+    cy.get('#search-autocomplete-results').children().should('have.length', 2)
+    cy.wait(10000); // wait extra 10 seconds to see if the 'ka' search adds results to the list
+    cy.get('#search-autocomplete-results').children().should('have.length', 2)
   })
 
   it('Clear button should hide the autocomplete list', () => {
@@ -100,6 +109,15 @@ describe('Vocab search bar', () => {
   })
 
   it('AltLabel search results should bold the matching parts of altLabel and prefLabel', () => {
-    //No-op placeholder
+    // go to YSO vocab front page
+    cy.visit('/yso/fi/')
+
+    cy.get('#search-field').type('zikkur');
+    cy.get('#search-autocomplete-results', { timeout: 20000 }).should('be.visible'); // the autocomplete should appear
+
+    cy.get('#search-autocomplete-results').within(() => { // the first result should have text 'zikkur' appearing twice in bold
+      cy.get('li').last().find('b').eq(0).should('have.text', 'zikkur')
+      cy.get('li').last().find('b').eq(1).should('have.text', 'zikkur')
+    })
   })
 })
