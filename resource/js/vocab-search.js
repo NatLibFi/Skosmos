@@ -32,20 +32,16 @@ const vocabSearch = Vue.createApp({
       // when new autocomplete is fired, empty the previous result
       this.hideDropdown()
 
-      // cancel pending API calls when method is called
+      // cancel the timer for upcoming API call
       clearTimeout(this._timerId)
 
-      // is the search term is in cache, use the cache
+      // TODO: if the search term is in cache, use the cache
 
       // delay call, but don't execute if the search term is not at least two characters
       if (this.searchTerm.length > 1) {
         this._timerId = setTimeout(() => { this.search() }, delayMs)
       }
     },
-    /*
-     * search should fetch the response and save it to cache
-     * search calls renderResults for displaying the response
-     */
     search () {
       const mySearchCounter = this.searchCounter + 1 // make sure we can identify this search later in case of several ongoing searches
       this.searchCounter = mySearchCounter
@@ -88,15 +84,15 @@ const vocabSearch = Vue.createApp({
         const hitAlt = this.renderMatchingPart(renderedSearchTerm, result.altLabel)
         const hitHidden = this.renderMatchingPart(renderedSearchTerm, result.hiddenLabel)
         if ('uri' in result) { // change uris to Skosmos page urls
-          result.uri = SKOSMOS.vocab + '/' + SKOSMOS.lang + '/page?uri=' + encodeURIComponent(result.uri)
+          result.pageUrl = SKOSMOS.vocab + '/' + SKOSMOS.lang + '/page?uri=' + encodeURIComponent(result.uri)
         }
         // render search result labels
         if (hitHidden) {
-          result.rendered = '<a href="' + result.uri + '">' + result.prefLabel + '</a>'
+          result.rendered = '<a href="' + result.pageUrl + '">' + result.prefLabel + '</a>'
         } else if (hitAlt) {
-          result.rendered = hitAlt + ' <span class="d-inline">&rarr;&nbsp;' + '<a href="' + result.uri + '">' + hitPref + '</a></span>'
+          result.rendered = hitAlt + ' <span class="d-inline">&rarr;&nbsp;' + '<a href="' + result.pageUrl + '">' + hitPref + '</a></span>'
         } else if (hitPref) {
-          result.rendered = '<a href="' + result.uri + '">' + hitPref + '</a>'
+          result.rendered = '<a href="' + result.pageUrl + '">' + hitPref + '</a>'
         }
         // render search result renderedTypes
 
@@ -173,7 +169,7 @@ const vocabSearch = Vue.createApp({
             aria-labelledby="search-field">
             <li class="autocomplete-result row pb-1" v-for="result in renderedResultsList"
               :key="result.prefLabel" >
-              <template v-if="result.uri">
+              <template v-if="result.pageUrl">
                 <div class="col" v-html="result.rendered"></div>
                 <div class="col-auto align-self-end pe-1" v-html="result.renderedType"></div>
               </template>
