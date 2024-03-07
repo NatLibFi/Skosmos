@@ -1,3 +1,10 @@
+const a11yOptions = {
+  runOnly: {
+    type: 'tag',
+    values: ['wcag21aa']
+  }
+};
+
 const checkA11y = options => {
   cy.checkA11y(null, options, violations => {
     console.log(`${violations.length} violation(s) detected`)
@@ -34,11 +41,11 @@ export function accessibilityTestRunner () {
 
 function getConfigurationForCLITests () {
   return it('Logs (CLI)', () => {
-    cy.checkA11y(null, null, terminalLog)
+    cy.checkA11y(null, a11yOptions, terminalLog)
   })
 }
 function getConfigurationForGUITests () {
   return it('Check for possible accessibility errors at all logging levels set below in accordance with WCAG AA requirements', () => {
-    checkA11y(null)
+    checkA11y(a11yOptions)
   })
 }
