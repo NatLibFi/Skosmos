@@ -46,7 +46,8 @@ const vocabSearch = Vue.createApp({
       const mySearchCounter = this.searchCounter + 1 // make sure we can identify this search later in case of several ongoing searches
       this.searchCounter = mySearchCounter
 
-      fetch('rest/v1/' + SKOSMOS.vocab + '/search?query=' + this.formatSearchTerm() + '&lang=' + SKOSMOS.lang)
+      const skosmosSearchUrl = 'rest/v1/' + SKOSMOS.vocab + '/search?query=' + this.formatSearchTerm() + '&lang=' + SKOSMOS.lang
+      fetch(skosmosSearchUrl)
         .then(data => data.json())
         .then(data => {
           if (mySearchCounter === this.searchCounter) {
@@ -58,7 +59,7 @@ const vocabSearch = Vue.createApp({
     formatSearchTerm () {
       if (this.searchTerm.includes('*')) { return this.searchTerm }
       const formatted = this.searchTerm + '*'
-      return formatted
+      return encodeURIComponent(formatted)
     },
     renderMatchingPart (searchTerm, label) {
       const regex = new RegExp(searchTerm, 'i') // case insensitive matching
@@ -124,12 +125,12 @@ const vocabSearch = Vue.createApp({
       const vocabHref = window.location.href.substring(0, window.location.href.lastIndexOf(SKOSMOS.vocab)) + currentVocab
       let langParam = '&clang=' + SKOSMOS.content_lang
       if (this.selectedLanguage === 'all') langParam += '&anylang=on'
-      const searchUrl = vocabHref + 'search?q=' + this.searchTerm + langParam
+      const searchUrl = vocabHref + 'search?q=' + encodeURIComponent(this.searchTerm) + langParam
       window.location.href = searchUrl
     },
     changeLang () {
       SKOSMOS.content_lang = this.selectedLanguage
-      // TODO: Impelement partial page load to change content according to the new content language
+      // TODO: Implement partial page load to change content according to the new content language
     },
     resetSearchTermAndHideDropdown () {
       this.searchTerm = ''
