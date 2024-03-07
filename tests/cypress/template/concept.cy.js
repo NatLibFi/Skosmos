@@ -83,6 +83,7 @@ describe('Concept page', () => {
       cy.get('#concept-mappings').should('not.be.empty')
 
       // check the first mapping property name
+      // NOTE: we need to increase the timeout as the mappings can take a long time to load
       cy.get('.prop-mapping h2', {'timeout': 10000}).eq(0).contains('Closely matching concepts')
       // check the first mapping property values
       cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).contains('Labyrinths')
