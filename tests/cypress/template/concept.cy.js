@@ -70,6 +70,42 @@ describe('Concept page', () => {
       // If that happens, make sure the browser window has focus and re-run the test.
       cy.window().its('navigator.clipboard').invoke('readText').then((result) => {}).should('equal', 'http://www.yso.fi/onto/yso/p39473');
     })
+    it('contains mappings / ' + pageLoadType, () => {
+      if (pageLoadType == "full") {
+        cy.visit('/yso/en/page/p14174') // go to "labyrinths" concept page
+      } else {
+        cy.visit('/yso/en/page/p5714') // go to "prehistoric graves" concept page
+        // click on the link to "labyrinths" to trigger partial page load
+        cy.get('#tab-hierarchy').contains('a', 'labyrinths').click()
+      }
+
+      // check that we have some mappings
+      cy.get('#concept-mappings').should('not.be.empty')
+
+      // check the first mapping property name
+      cy.get('.prop-mapping h2').eq(0).contains('Closely matching concepts')
+      // check the first mapping property values
+      cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).contains('Labyrinths')
+      cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).find('a').should('have.attr', 'href', 'http://id.loc.gov/authorities/subjects/sh85073793')
+      cy.get('.prop-mapping').eq(0).find('.prop-mapping-vocab').eq(0).contains('Library of Congress Subject Headings')
+      // check that the first mapping property has the right number of entries
+      cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').should('have.length', 1)
+
+      // check the second mapping property name
+      cy.get('.prop-mapping h2').eq(1).contains('Exactly matching concepts')
+      // check the second mapping property values
+      cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(0).contains('labyrinter (sv)')
+      cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(0).find('a').invoke('text').should('equal', 'labyrinter')
+      cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(0).find('a').should('have.attr', 'href', 'http://www.yso.fi/onto/allars/Y21700')
+      cy.get('.prop-mapping').eq(1).find('.prop-mapping-vocab').eq(0).contains('Allärs - General thesaurus in Swedish')
+      // skipping the middle one (mapping to KOKO concept) as it's similar to the others
+      cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(2).contains('labyrintit (fi)')
+      cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(2).find('a').invoke('text').should('equal', 'labyrintit')
+      cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(2).find('a').should('have.attr', 'href', 'http://www.yso.fi/onto/ysa/Y108389')
+      cy.get('.prop-mapping').eq(1).find('.prop-mapping-vocab').eq(2).contains('YSA - Yleinen suomalainen asiasanasto')
+      // check that the second mapping property has the right number of entries
+      cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').should('have.length', 3)
+    })
 
   });
 
@@ -287,33 +323,5 @@ describe('Concept page', () => {
     cy.visit('/yso/fi/page/p21685') // go to "musiikintutkimus" concept page (Finnish)
 
     cy.get('#date-info').invoke('text').should('equal', 'Luotu 25.10.2007, viimeksi muokattu 8.2.2023')
-  })
-  it('contains mappings', () => {
-    cy.visit('/yso/en/page/p21685') // go to "music research" concept page
-
-    // check that we have some mappings
-    cy.get('#concept-mappings').should('not.be.empty')
-
-    // check the first mapping property name
-    cy.get('.prop-mapping h2').eq(0).contains('Closely matching concepts')
-    // check the first mapping property values
-    cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).contains('Musicology')
-    cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).find('a').should('have.attr', 'href', 'http://id.loc.gov/authorities/subjects/sh85089048')
-    cy.get('.prop-mapping').eq(0).find('.prop-mapping-vocab').eq(0).contains('Library of Congress Subject Headings')
-    cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(1).contains('musicology')
-    cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(1).find('a').should('have.attr', 'href', 'http://www.wikidata.org/entity/Q164204')
-    cy.get('.prop-mapping').eq(0).find('.prop-mapping-vocab').eq(1).contains('www.wikidata.org')
-    // check that the second mapping property has the right number of entries
-    cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').should('have.length', 2)
-
-    // check the second mapping property name
-    cy.get('.prop-mapping h2').eq(1).contains('Exactly matching concepts')
-    // check the second mapping property values (only one should be enough)
-    cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(2).contains('musiikintutkimus (fi)')
-    cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(2).find('a').invoke('text').should('equal', 'musiikintutkimus')
-    cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(2).find('a').should('have.attr', 'href', 'http://www.yso.fi/onto/ysa/Y155072')
-    cy.get('.prop-mapping').eq(1).find('.prop-mapping-vocab').eq(2).contains('YSA - Yleinen suomalainen asiasanasto')
-    // check that the second mapping property has the right number of entries
-    cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').should('have.length', 3)
   })
 })
