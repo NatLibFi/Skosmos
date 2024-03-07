@@ -37,6 +37,40 @@ describe('Concept page', () => {
       // If that happens, make sure the browser window has focus and re-run the test.
       cy.window().its('navigator.clipboard').invoke('readText').then((result) => {}).should('equal', 'burial mounds');
     })
+    it('contains concept URI / ' + pageLoadType, () => {
+      if (pageLoadType == "full") {
+        cy.visit('/yso/en/page/p39473') // go to "burial mounds" concept page
+      } else {
+        cy.visit('/yso/en/page/p5714') // go to "prehistoric graves" concept page
+        // click on the link to "burial mounds" to trigger partial page load
+        cy.get('#tab-hierarchy').contains('a', 'burial mounds').click()
+      }
+
+      // check the property name
+      cy.get('.prop-uri .property-label').invoke('text').should('equal', 'URI')
+
+      // check the concept URI
+      cy.get('#concept-uri').invoke('text').should('equal', 'http://www.yso.fi/onto/yso/p39473')
+    })
+    it('concept URI can be copied to clipboard / ' + pageLoadType, () => {
+      if (pageLoadType == "full") {
+        cy.visit('/yso/en/page/p39473') // go to "burial mounds" concept page
+      } else {
+        cy.visit('/yso/en/page/p5714') // go to "prehistoric graves" concept page
+        // click on the link to "burial mounds" to trigger partial page load
+        cy.get('#tab-hierarchy').contains('a', 'burial mounds').click()
+      }
+
+      // click the copy to clipboard button next to the URI
+      cy.get('#copy-uri').click()
+
+      // check that the clipboard now contains "http://www.yso.fi/onto/yso/p39473"
+      // NOTE: This test may fail when running Cypress interactively in a browser.
+      // The reason is browser security policies for accessing the clipboard.
+      // If that happens, make sure the browser window has focus and re-run the test.
+      cy.window().its('navigator.clipboard').invoke('readText').then((result) => {}).should('equal', 'http://www.yso.fi/onto/yso/p39473');
+    })
+
   });
 
   // tests that only need to be executed with full page load
@@ -243,27 +277,6 @@ describe('Concept page', () => {
 
     // check that we have the correct number of languages
     cy.get('#concept-other-languages').find('.row').should('have.length', 3)
-  })
-  it('contains concept URI', () => {
-    cy.visit('/yso/en/page/p21685') // go to "music research" concept page
-
-    // check the property name
-    cy.get('.prop-uri .property-label').invoke('text').should('equal', 'URI')
-
-    // check the broader concept
-    cy.get('#concept-uri').invoke('text').should('equal', 'http://www.yso.fi/onto/yso/p21685')
-  })
-  it('concept URI can be copied to clipboard', () => {
-    cy.visit('/yso/en/page/p21685') // go to "music research" concept page
-
-    // click the copy to clipboard button next to the URI
-    cy.get('#copy-uri').click()
-
-    // check that the clipboard now contains "http://www.yso.fi/onto/yso/p21685"
-    // NOTE: This test may fail when running Cypress interactively in a browser.
-    // The reason is browser security policies for accessing the clipboard.
-    // If that happens, make sure the browser window has focus and re-run the test.
-    cy.window().its('navigator.clipboard').invoke('readText').then((result) => {}).should('equal', 'http://www.yso.fi/onto/yso/p21685');
   })
   it('contains created & modified times (English)', () => {
     cy.visit('/yso/en/page/p21685') // go to "music research" concept page (English)
