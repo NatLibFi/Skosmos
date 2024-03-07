@@ -1,4 +1,46 @@
 describe('Concept page', () => {
+  const pageLoadTypes = ["full", "partial"]
+
+  // tests that should be executed both with and without partial page load
+
+  pageLoadTypes.forEach((pageLoadType) => {
+    it('contains concept preflabel / ' + pageLoadType, () => {
+      if (pageLoadType == "full") {
+        cy.visit('/yso/en/page/p39473') // go to "burial mounds" concept page
+      } else {
+        cy.visit('/yso/en/page/p5714') // go to "prehistoric graves" concept page
+        // click on the link to "burial mounds" to trigger partial page load
+        cy.get('#tab-hierarchy').contains('a', 'burial mounds').click()
+      }
+
+      // check that the vocabulary title is correct
+      cy.get('#vocab-title > a').invoke('text').should('equal', 'YSO - General Finnish ontology (archaeology)')
+
+      // check the concept prefLabel
+      cy.get('#concept-heading h1').invoke('text').should('equal', 'burial mounds')
+    })
+    it('concept preflabel can be copied to clipboard / ' + pageLoadType, () => {
+      if (pageLoadType == "full") {
+        cy.visit('/yso/en/page/p39473') // go to "burial mounds" concept page
+      } else {
+        cy.visit('/yso/en/page/p5714') // go to "prehistoric graves" concept page
+        // click on the link to "burial mounds" to trigger partial page load
+        cy.get('#tab-hierarchy').contains('a', 'burial mounds').click()
+      }
+
+      // click the copy to clipboard button next to the prefLabel
+      cy.get('#copy-preflabel').click()
+
+      // check that the clipboard now contains "music pyramids"
+      // NOTE: This test may fail when running Cypress interactively in a browser.
+      // The reason is browser security policies for accessing the clipboard.
+      // If that happens, make sure the browser window has focus and re-run the test.
+      cy.window().its('navigator.clipboard').invoke('readText').then((result) => {}).should('equal', 'burial mounds');
+    })
+  });
+
+  // tests that only need to be executed with full page load
+
   it("doesn't contain breadcrumbs for top concepts", () => {
     cy.visit('/yso/en/page/p4762') // go to "objects" concept page
 
@@ -86,27 +128,7 @@ describe('Concept page', () => {
     // check that there are 2 breadcrumb links currently shown
     cy.get('#concept-breadcrumbs ol').find('li.show').should('have.length', 4)
   })
-  it('contains concept preflabel', () => {
-    cy.visit('/yso/en/page/p21685') // go to "music research" concept page
 
-    // check that the vocabulary title is correct
-    cy.get('#vocab-title > a').invoke('text').should('equal', 'YSO - General Finnish ontology (archaeology)')
-
-    // check the concept prefLabel
-    cy.get('#concept-heading h1').invoke('text').should('equal', 'music research')
-  })
-  it('concept preflabel can be copied to clipboard', () => {
-    cy.visit('/yso/en/page/p21685') // go to "music research" concept page
-
-    // click the copy to clipboard button next to the prefLabel
-    cy.get('#copy-preflabel').click()
-
-    // check that the clipboard now contains "music research"
-    // NOTE: This test may fail when running Cypress interactively in a browser.
-    // The reason is browser security policies for accessing the clipboard.
-    // If that happens, make sure the browser window has focus and re-run the test.
-    cy.window().its('navigator.clipboard').invoke('readText').then((result) => {}).should('equal', 'music research');
-  })
   it('contains concept type', () => {
     cy.visit('/yso/en/page/p21685') // go to "music research" concept page
 
