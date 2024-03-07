@@ -78,7 +78,14 @@ describe('Vocab search bar', () => {
   })
 
   it('Emptying the text search field hides the autocomplete list', () => {
-    //No-op placeholder
+    // go to YSO vocab front page
+    cy.visit('/yso/en/')
+
+    cy.get('#search-field').type('kis');
+    cy.get('#search-autocomplete-results', { timeout: 20000 }).should('be.visible'); // the autocomplete should appear
+
+    cy.get('#search-field').clear();
+    cy.get('#search-autocomplete-results').should('not.be.visible'); // the autocomplete should disappear
   })
 
   it('Clicking outside of the autocomplete list hides the autocomplete list', () => {
