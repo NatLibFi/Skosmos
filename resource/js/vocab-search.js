@@ -76,8 +76,8 @@ const vocabSearch = Vue.createApp({
      * TODO: Showing labels in other languages, extra concept information and such goes here
      */
     renderResults () {
-      // get the results list form cache if it is implemented
-      console.log(this.renderedResultsList)
+      // TODO: get the results list form cache if it is implemented
+
       const renderedSearchTerm = this.searchTerm // save the search term in case it changes while rendering
       this.renderedResultsList.forEach(result => {
         const hitPref = this.renderMatchingPart(renderedSearchTerm, result.prefLabel)
