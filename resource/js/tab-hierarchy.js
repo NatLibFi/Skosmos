@@ -166,7 +166,7 @@ const tabHierApp = Vue.createApp({
             ></tab-hier>
           </template>
         </ul>
-      <template v-else>Loading...</template><!-- Add a spinner or equivalent -->
+        <template v-else>Loading...</template><!-- Add a spinner or equivalent -->
       </div>
     </div>
   `
@@ -194,7 +194,6 @@ tabHierApp.component('tab-hier', {
       this.$emit('loadChildren', concept)
     },
     handleClickConceptEvent (event, concept) {
-      console.log(concept)
       concept.isOpen = true
       this.$emit('loadChildren', concept)
       this.$emit('selectConcept', concept.uri)
