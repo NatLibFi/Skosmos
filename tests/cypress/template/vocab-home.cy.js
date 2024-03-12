@@ -68,6 +68,24 @@ describe('Vocabulary home page', () => {
       expect(win.SKOSMOS.uri).to.equal('http://www.yso.fi/onto/yso/p6034');
       expect(win.SKOSMOS.prefLabels[0]['label']).to.equal("care institutions");
     })
+
+    // check that we have some mappings
+    cy.get('#concept-mappings').should('not.be.empty')
+
+    // check the second mapping property name
+    cy.get('.prop-mapping h2').eq(0).contains('Exactly matching concepts')
+    // check the second mapping property values
+    cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).contains('vårdinrättningar (sv)')
+    cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).find('a').invoke('text').should('equal', 'vårdinrättningar')
+    cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).find('a').should('have.attr', 'href', 'http://www.yso.fi/onto/allars/Y29009')
+    cy.get('.prop-mapping').eq(0).find('.prop-mapping-vocab').eq(0).contains('Allärs - General thesaurus in Swedish')
+    // skipping the middle one (mapping to KOKO concept) as it's similar to the others
+    cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(2).contains('hoitolaitokset (fi)')
+    cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(2).find('a').invoke('text').should('equal', 'hoitolaitokset')
+    cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(2).find('a').should('have.attr', 'href', 'http://www.yso.fi/onto/ysa/Y95404')
+    cy.get('.prop-mapping').eq(0).find('.prop-mapping-vocab').eq(2).contains('YSA - Yleinen suomalainen asiasanasto')
+    // check that the second mapping property has the right number of entries
+    cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').should('have.length', 3)
   })
   it('clicking on hierarchy entries performs partial page load', () => {
     cy.visit('/test/en') // go to the "Test ontology" home page
@@ -86,5 +104,18 @@ describe('Vocabulary home page', () => {
       expect(win.SKOSMOS.uri).to.equal('http://www.skosmos.skos/test/ta1');
       expect(win.SKOSMOS.prefLabels[0]['label']).to.equal("Fish");
     })
+
+    // check that we have some mappings
+    cy.get('#concept-mappings').should('not.be.empty')
+
+    // check the second mapping property name
+    cy.get('.prop-mapping h2').eq(0).contains('Exactly matching concepts')
+    // check the second mapping property values
+    cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).find('a').invoke('text').should('equal', 'fish')
+    cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).find('a').should('have.attr', 'href', 'http://www.wikidata.org/entity/Q152')
+    cy.get('.prop-mapping').eq(0).find('.prop-mapping-vocab').eq(0).contains('www.wikidata.org')
+
+    // check that the second mapping property has the right number of entries
+    cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').should('have.length', 1)
   })
 })
