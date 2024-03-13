@@ -98,11 +98,11 @@ const vocabSearch = Vue.createApp({
         }
         // render search result labels
         if (hitHidden) {
-          result.rendered = '<a href="' + result.pageUrl + '">' + result.prefLabel + '</a>'
+          result.rendered = '<span class="result">' + result.prefLabel + '</span>'
         } else if (hitAlt) {
-          result.rendered = hitAlt + ' <span class="d-inline">&rarr;&nbsp;' + '<a href="' + result.pageUrl + '">' + hitPref + '</a></span>'
+          result.rendered = hitAlt + ' <span class="d-inline">&rarr;&nbsp;' + '<span class="result">' + hitPref + '</span></span>'
         } else if (hitPref) {
-          result.rendered = '<a href="' + result.pageUrl + '">' + hitPref + '</a>'
+          result.rendered = '<span class="result">' + hitPref + '</span>'
         }
         // render search result renderedTypes
         if (result.type.length > 1) { // remove the type for SKOS concepts if the result has more than one type
@@ -177,11 +177,15 @@ const vocabSearch = Vue.createApp({
             @click="">
           <ul id="search-autocomplete-results" class="dropdown-menu"
             aria-labelledby="search-field">
-            <li class="autocomplete-result row pb-1" v-for="result in renderedResultsList"
+            <li class="autocomplete-result container" v-for="result in renderedResultsList"
               :key="result.prefLabel" >
               <template v-if="result.pageUrl">
-                <div class="col" v-html="result.rendered"></div>
-                <div class="col-auto align-self-end pe-1" v-html="result.renderedType"></div>
+                <a :href=result.pageUrl>
+                  <div class="row pb-1">
+                    <div class="col" v-html="result.rendered"></div>
+                    <div class="col-auto align-self-end pe-1" v-html="result.renderedType"></div>
+                  </div>
+                </a>
               </template>
               <template v-else>
                 {{ result.prefLabel }}

@@ -295,12 +295,16 @@ body {
     margin: auto;
   }
 
-  #headerbar .autocomplete-result a {
-    color: var(--vocab-link);
+  #headerbar .autocomplete-result * {
     text-decoration: none;
+    color: inherit;
   }
 
-  #headerbar .autocomplete-result span {
+  #headerbar .autocomplete-result span.result {
+    color: var(--vocab-link);
+  }
+
+  #headerbar .autocomplete-result span.d-inline {
     white-space: nowrap;
   }
 
