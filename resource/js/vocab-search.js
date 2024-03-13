@@ -1,5 +1,4 @@
 /* global Vue */
-/* global SKOSMOS */
 
 const vocabSearch = Vue.createApp({
   data () {
@@ -14,11 +13,11 @@ const vocabSearch = Vue.createApp({
     }
   },
   mounted () {
-    this.languages = SKOSMOS.languageOrder
-    this.selectedLanguage = SKOSMOS.content_lang
+    this.languages = window.SKOSMOS.languageOrder
+    this.selectedLanguage = window.SKOSMOS.content_lang
     this.searchCounter = 0
-    this.languageStrings = SKOSMOS.language_strings[SKOSMOS.lang] ?? SKOSMOS.language_strings.en
-    this.msgs = SKOSMOS.msgs[SKOSMOS.lang] ?? SKOSMOS.msgs.en
+    this.languageStrings = window.SKOSMOS.language_strings[window.SKOSMOS.lang] ?? window.SKOSMOS.language_strings.en
+    this.msgs = window.SKOSMOS.msgs[window.SKOSMOS.lang] ?? window.SKOSMOS.msgs.en
     this.renderedResultsList = []
     document.addEventListener('click', this.onClickOutside)
   },
@@ -46,8 +45,8 @@ const vocabSearch = Vue.createApp({
       const mySearchCounter = this.searchCounter + 1 // make sure we can identify this search later in case of several ongoing searches
       this.searchCounter = mySearchCounter
 
-      let skosmosSearchUrl = 'rest/v1/' + SKOSMOS.vocab + '/search?'
-      const skosmosSearchUrlParams = new URLSearchParams({ query: this.formatSearchTerm(), lang: SKOSMOS.lang })
+      let skosmosSearchUrl = 'rest/v1/' + window.SKOSMOS.vocab + '/search?'
+      const skosmosSearchUrlParams = new URLSearchParams({ query: this.formatSearchTerm(), lang: window.SKOSMOS.lang })
       skosmosSearchUrl += skosmosSearchUrlParams.toString()
 
       fetch(skosmosSearchUrl)
@@ -77,7 +76,7 @@ const vocabSearch = Vue.createApp({
       return null
     },
     translateType (type) {
-      return SKOSMOS.msgs[SKOSMOS.lang][type]
+      return window.SKOSMOS.msgs[window.SKOSMOS.lang][type]
     },
     /*
      * renderResults is used when the search string has been indexed in the cache
@@ -92,7 +91,7 @@ const vocabSearch = Vue.createApp({
         const hitAlt = 'altLabel' in result ? this.renderMatchingPart(renderedSearchTerm, result.altLabel) : null
         const hitHidden = 'hiddenLabel' in result ? this.renderMatchingPart(renderedSearchTerm, result.hiddenLabel) : null
         if ('uri' in result) { // create relative Skosmos page URL from the search result URI
-          result.pageUrl = SKOSMOS.vocab + '/' + SKOSMOS.lang + '/page?'
+          result.pageUrl = window.SKOSMOS.vocab + '/' + window.SKOSMOS.lang + '/page?'
           const urlParams = new URLSearchParams({ uri: result.uri })
           result.pageUrl += urlParams.toString()
         }
@@ -115,7 +114,7 @@ const vocabSearch = Vue.createApp({
       if (this.renderedResultsList.length === 0) { // show no results message
         this.renderedResultsList.push({
           prefLabel: this.msgs['No results'],
-          lang: SKOSMOS.lang
+          lang: window.SKOSMOS.lang
         })
       }
       const element = document.getElementById('search-autocomplete-results')
@@ -129,16 +128,15 @@ const vocabSearch = Vue.createApp({
     gotoSearchPage () {
       if (!this.searchTerm) return
 
-      const currentVocab = SKOSMOS.vocab + '/' + SKOSMOS.lang + '/'
-      const vocabHref = window.location.href.substring(0, window.location.href.lastIndexOf(SKOSMOS.vocab)) + currentVocab
-      let searchUrlParams = new URLSearchParams({ clang: SKOSMOS.content_lang })
-      searchParams.set("q", this.searchTerm)
-      if (this.selectedLanguage === 'all') searchParams.set("anylang", "on")
+      const currentVocab = window.SKOSMOS.vocab + '/' + window.SKOSMOS.lang + '/'
+      const vocabHref = window.location.href.substring(0, window.location.href.lastIndexOf(window.SKOSMOS.vocab)) + currentVocab
+      const searchUrlParams = new URLSearchParams({ clang: window.SKOSMOS.content_lang, q: this.searchTerm })
+      if (this.selectedLanguage === 'all') searchUrlParams.set('anylang', 'on')
       const searchUrl = vocabHref + 'search?' + searchUrlParams.toString()
       window.location.href = searchUrl
     },
     changeLang () {
-      SKOSMOS.content_lang = this.selectedLanguage
+      window.SKOSMOS.content_lang = this.selectedLanguage
       // TODO: Implement (a normal) page load to change content according to the new content language
     },
     resetSearchTermAndHideDropdown () {
