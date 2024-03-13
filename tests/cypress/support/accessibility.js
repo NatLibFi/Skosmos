@@ -1,7 +1,7 @@
 const a11yOptions = {
   runOnly: {
     type: 'tag',
-    values: ['wcag21aa']
+    values: ['wcag21aa'] // WCAG 2.1 Level AA
   }
 }
 const checkA11y = options => {
@@ -38,11 +38,11 @@ export function accessibilityTestRunner () {
 }
 function getConfigurationForCLITests () {
   return it('Logs (CLI)', () => {
-    cy.checkA11y(null, a11yOptions, terminalLog)
+    cy.checkA11y(null, null, terminalLog)
   })
 }
 function getConfigurationForGUITests () {
   return it('Check for possible accessibility errors at all logging levels set below in accordance with WCAG AA requirements', () => {
-    checkA11y(a11yOptions)
+    checkA11y(null, a11yOptions)
   })
 }
