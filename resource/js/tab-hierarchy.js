@@ -5,7 +5,7 @@ const tabHierApp = Vue.createApp({
   data () {
     return {
       hierarchy: [],
-      loading: false,
+      loading: true,
       selectedConcept: ''
     }
   },
@@ -152,18 +152,14 @@ const tabHierApp = Vue.createApp({
   },
   template: `
     <div v-click-tab-hierarchy="handleClickHierarchyEvent">
-      <div class="sidebar-list p-0" :style="getListStyle()">
+      <div id="hierarchy-list" class="sidebar-list p-0" :style="getListStyle()">
         <ul class="list-group" v-if="!loading">
-          <template v-for="(c, i) in hierarchy">
-            <tab-hier
-              :concept="c"
-              :selectedConcept="selectedConcept"
-              :isTopConcept="true"
-              :isLast="i == hierarchy.length - 1 && !c.isOpen"
-              @load-children="loadChildren($event)"
-              @select-concept="selectedConcept = $event"
-            ></tab-hier>
-          </template>
+          <tab-hier-wrapper
+            :hierarchy="hierarchy"
+            :selectedConcept="selectedConcept"
+            @load-children="loadChildren($event)"
+            @select-concept="selectedConcept = $event"
+          ></tab-hier-wrapper>
         </ul>
         <template v-else>Loading...</template><!-- Add a spinner or equivalent -->
       </div>
@@ -181,6 +177,52 @@ tabHierApp.directive('click-tab-hierarchy', {
   unmounted: el => {
     document.querySelector('#hierarchy').removeEventListener('click', el.clickTabEvent)
   }
+})
+
+tabHierApp.component('tab-hier-wrapper', {
+  props: ['hierarchy', 'selectedConcept'],
+  emits: ['loadChildren', 'selectConcept'],
+  mounted() {
+    // check that selected concept exists
+    if (document.querySelector('.list-group-item .selected')) {
+      const selected = document.querySelectorAll('.list-group-item .selected')[0]
+      const list = document.querySelector('#hierarchy-list')
+
+      // distances to the top of the page
+      const selectedTop = selected.getBoundingClientRect().top
+      const listTop = list.getBoundingClientRect().top
+
+      // height of the visible portion of the list element
+      const listHeight = list.getBoundingClientRect().bottom < window.innerHeight ?
+        list.getBoundingClientRect().height :
+        window.innerHeight - listTop
+
+      list.scrollBy({
+        top: selectedTop - listTop - listHeight / 2, // set top selected element to the middle of list element
+        behavior: "smooth"
+      })
+    }
+  },
+  methods: {
+    loadChildren (concept) {
+      this.$emit('loadChildren', concept)
+    },
+    selectConcept (concept) {
+      this.$emit('selectConcept', concept)
+    },
+  },
+  template: `
+    <template v-for="(c, i) in hierarchy" >
+      <tab-hier
+        :concept="c"
+        :selectedConcept="selectedConcept"
+        :isTopConcept="true"
+        :isLast="i == hierarchy.length - 1 && !c.isOpen"
+        @load-children="loadChildren($event)"
+        @select-concept="selectConcept($event)"
+      ></tab-hier>
+    </template>
+  `
 })
 
 tabHierApp.component('tab-hier', {
