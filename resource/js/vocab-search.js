@@ -57,16 +57,22 @@ const vocabSearch = Vue.createApp({
         })
     },
     formatSearchTerm () {
-      if (this.searchTerm.includes('*')) { return this.searchTerm }
+      if (this.searchTerm.includes('*')) { return encodeURIComponent(this.searchTerm) }
       const formatted = this.searchTerm + '*'
       return encodeURIComponent(formatted)
     },
     renderMatchingPart (searchTerm, label) {
-      const regex = new RegExp(searchTerm, 'i') // case insensitive matching
-      if (label && regex.test(searchTerm)) {
-        return label.replace(regex, (match) => `<b>${match}</b>`)
+      if (label) {
+        const searchTermLowerCase = searchTerm.toLowerCase()
+        const labelLowerCase = label.toLowerCase()
+        if (labelLowerCase.includes(searchTermLowerCase)) {
+          const startIndex = labelLowerCase.indexOf(searchTermLowerCase)
+          const endIndex = startIndex + searchTermLowerCase.length
+          return label.substring(0, startIndex) + `<b>${label.substring(startIndex, endIndex)}</b>` + label.substring(endIndex)
+        }
+        return label
       }
-      return label
+      return null
     },
     translateType (type) {
       return SKOSMOS.msgs[SKOSMOS.lang][type]
@@ -78,14 +84,15 @@ const vocabSearch = Vue.createApp({
      */
     renderResults () {
       // TODO: get the results list form cache if it is implemented
-
       const renderedSearchTerm = this.searchTerm // save the search term in case it changes while rendering
       this.renderedResultsList.forEach(result => {
-        const hitPref = this.renderMatchingPart(renderedSearchTerm, result.prefLabel)
-        const hitAlt = this.renderMatchingPart(renderedSearchTerm, result.altLabel)
-        const hitHidden = this.renderMatchingPart(renderedSearchTerm, result.hiddenLabel)
-        if ('uri' in result) { // change uris to Skosmos page urls
-          result.pageUrl = SKOSMOS.vocab + '/' + SKOSMOS.lang + '/page?uri=' + encodeURIComponent(result.uri)
+        const hitPref = 'prefLabel' in result ? this.renderMatchingPart(renderedSearchTerm, result.prefLabel) : null
+        const hitAlt = 'altLabel' in result ? this.renderMatchingPart(renderedSearchTerm, result.altLabel) : null
+        const hitHidden = 'hiddenLabel' in result ? this.renderMatchingPart(renderedSearchTerm, result.hiddenLabel) : null
+        if ('uri' in result) { // create relative Skosmos page URL from the search result URI
+          result.pageUrl = SKOSMOS.vocab + '/' + SKOSMOS.lang + '/page'
+          const urlParams = new URLSearchParams({ uri: encodeURIComponent(result.uri) })
+          result.pageUrl += urlParams.toString()
         }
         // render search result labels
         if (hitHidden) {
@@ -96,7 +103,6 @@ const vocabSearch = Vue.createApp({
           result.rendered = '<a href="' + result.pageUrl + '">' + hitPref + '</a>'
         }
         // render search result renderedTypes
-
         if (result.type.length > 1) { // remove the type for SKOS concepts if the result has more than one type
           result.type.splice(result.type.indexOf('skos:Concept'), 1)
         }
@@ -130,7 +136,7 @@ const vocabSearch = Vue.createApp({
     },
     changeLang () {
       SKOSMOS.content_lang = this.selectedLanguage
-      // TODO: Implement partial page load to change content according to the new content language
+      // TODO: Implement (a normal) page load to change content according to the new content language
     },
     resetSearchTermAndHideDropdown () {
       this.searchTerm = ''
@@ -158,7 +164,7 @@ const vocabSearch = Vue.createApp({
             class="form-control"
             id="search-field"
             aria-expanded="false"
-            autocomplete="off"
+             autocomplete="off"
             data-bs-toggle=""
             aria-label="Text input with dropdown button"
             placeholder="Search..."
