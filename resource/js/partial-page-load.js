@@ -1,23 +1,23 @@
 const fetchWithAbort = (function () {
-  let controller = null
+  const controllers = {}
 
-  return function (url, options = {}) {
-    // Abort the previous request if it exists
-    if (controller) {
-      controller.abort()
+  return function (url, category, options = {}) {
+    // Abort the previous request in the same category if it exists
+    if (controllers[category]) {
+      controllers[category].abort()
     }
 
     // Create a new AbortController instance for this request
-    controller = new AbortController()
+    controllers[category] = new AbortController()
 
     // Add the AbortController signal to the fetch options
-    options.signal = controller.signal
+    options.signal = controllers[category].signal
 
     // Perform the fetch request
     return fetch(url, options)
       .then(response => {
-        // Clear the controller after the request is done
-        controller = null
+        // Remove the abort controller after the request is done
+        delete controllers[category]
         return response
       })
   }
@@ -78,7 +78,7 @@ const partialPageLoad = (event, pageUri) => {
   event.preventDefault()
 
   // fetching html content of the concept page
-  fetchWithAbort(pageUri)
+  fetchWithAbort(pageUri, 'concept')
     .then(data => {
       return data.text()
     })

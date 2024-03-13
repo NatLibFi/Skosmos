@@ -12,7 +12,8 @@ const conceptMappingsApp = Vue.createApp({
   },
   methods: {
     loadMappings () {
-      fetchWithAbort('rest/v1/' + window.SKOSMOS.vocab + '/mappings?uri=' + window.SKOSMOS.uri + '&external=true&clang=' + window.SKOSMOS.lang + '&lang=' + window.SKOSMOS.content_lang)
+      const url = 'rest/v1/' + window.SKOSMOS.vocab + '/mappings?uri=' + window.SKOSMOS.uri + '&external=true&clang=' + window.SKOSMOS.lang + '&lang=' + window.SKOSMOS.content_lang
+      fetchWithAbort(url, 'concept')
         .then(data => {
           return data.json()
         })
