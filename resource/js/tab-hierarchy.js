@@ -183,8 +183,8 @@ tabHierApp.component('tab-hier-wrapper', {
   props: ['hierarchy', 'selectedConcept'],
   emits: ['loadChildren', 'selectConcept'],
   mounted() {
-    // check that selected concept exists
-    if (document.querySelector('.list-group-item .selected')) {
+    // scroll automatically to selected concept after the whole hierarchy tree has been mounted
+    if (this.selectedConcept) {
       const selected = document.querySelectorAll('.list-group-item .selected')[0]
       const list = document.querySelector('#hierarchy-list')
 
@@ -193,12 +193,12 @@ tabHierApp.component('tab-hier-wrapper', {
       const listTop = list.getBoundingClientRect().top
 
       // height of the visible portion of the list element
-      const listHeight = list.getBoundingClientRect().bottom < window.innerHeight ?
-        list.getBoundingClientRect().height :
-        window.innerHeight - listTop
+      const listHeight = list.getBoundingClientRect().bottom < window.innerHeight
+        ? list.getBoundingClientRect().height
+        : window.innerHeight - listTop
 
       list.scrollBy({
-        top: selectedTop - listTop - listHeight / 2, // set top selected element to the middle of list element
+        top: selectedTop - listTop - listHeight / 2, // scroll top of selected element to the middle of list element
         behavior: "smooth"
       })
     }
