@@ -1,5 +1,5 @@
 /* global Vue */
-/* global partialPageLoad, getConceptURL */
+/* global partialPageLoad, getConceptURL, fetchWithAbort */
 
 const tabAlphaApp = Vue.createApp({
   data () {
@@ -47,13 +47,21 @@ const tabAlphaApp = Vue.createApp({
     },
     loadConcepts (letter) {
       this.loadingConcepts = true
-      fetch('rest/v1/' + window.SKOSMOS.vocab + '/index/' + letter + '?lang=' + window.SKOSMOS.lang + '&limit=50')
+      const url = 'rest/v1/' + window.SKOSMOS.vocab + '/index/' + letter + '?lang=' + window.SKOSMOS.lang + '&limit=50'
+      fetchWithAbort(url, 'alpha')
         .then(data => {
           return data.json()
         })
         .then(data => {
           this.indexConcepts = data.indexConcepts
           this.loadingConcepts = false
+        })
+        .catch(error => {
+          if (error.name === 'AbortError') {
+            console.log('Fetch aborted for letter ' + letter)
+          } else {
+            throw error
+          }
         })
     }
   },
