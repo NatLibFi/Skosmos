@@ -71,7 +71,9 @@ const vocabSearch = Vue.createApp({
         if (labelLowerCase.includes(searchTermLowerCase)) {
           const startIndex = labelLowerCase.indexOf(searchTermLowerCase)
           const endIndex = startIndex + searchTermLowerCase.length
-          return label.substring(0, startIndex) + `<b>${label.substring(startIndex, endIndex)}</b>` + label.substring(endIndex)
+          return { before: label.substring(0, startIndex),
+                   match: label.substring(startIndex, endIndex),
+                   after: label.substring(endIndex) }
         }
         return label
       }
@@ -89,21 +91,21 @@ const vocabSearch = Vue.createApp({
       // TODO: get the results list form cache if it is implemented
       const renderedSearchTerm = this.searchTerm // save the search term in case it changes while rendering
       this.renderedResultsList.forEach(result => {
-        const hitPref = 'prefLabel' in result ? this.renderMatchingPart(renderedSearchTerm, result.prefLabel) : null
-        const hitAlt = 'altLabel' in result ? this.renderMatchingPart(renderedSearchTerm, result.altLabel) : null
-        const hitHidden = 'hiddenLabel' in result ? this.renderMatchingPart(renderedSearchTerm, result.hiddenLabel) : null
+        if ('hiddenLabel' in result) {
+          result.hitType = 'hidden'
+          result.hit = this.renderMatchingPart(renderedSearchTerm, result.prefLabel)
+        } else if ('altLabel' in result) {
+          result.hitType = 'alt'
+          result.hit = this.renderMatchingPart(renderedSearchTerm, result.altLabel)
+          result.hitPref = this.renderMatchingPart(renderedSearchTerm, result.prefLabel)
+        } else if ('prefLabel' in result) {
+          result.hitType = 'pref'
+          result.hit = this.renderMatchingPart(renderedSearchTerm, result.prefLabel)
+        }
         if ('uri' in result) { // create relative Skosmos page URL from the search result URI
           result.pageUrl = window.SKOSMOS.vocab + '/' + window.SKOSMOS.lang + '/page?'
           const urlParams = new URLSearchParams({ uri: result.uri })
           result.pageUrl += urlParams.toString()
-        }
-        // render search result labels
-        if (hitHidden) {
-          result.rendered = '<span class="result">' + result.prefLabel + '</span>'
-        } else if (hitAlt) {
-          result.rendered = hitAlt + ' <span class="d-inline">&rarr;&nbsp;' + '<span class="result">' + hitPref + '</span></span>'
-        } else if (hitPref) {
-          result.rendered = '<span class="result">' + hitPref + '</span>'
         }
         // render search result renderedTypes
         if (result.type.length > 1) { // remove the type for SKOS concepts if the result has more than one type
@@ -192,7 +194,45 @@ const vocabSearch = Vue.createApp({
               <template v-if="result.pageUrl">
                 <a :href=result.pageUrl>
                   <div class="row pb-1">
-                    <div class="col" v-html="result.rendered"></div>
+                    <div class="col" v-if="result.hitType == 'hidden'">
+                      <span class="result">
+                        <template v-if="result.hit.hasOwnProperty('match')">
+                          {{ result.hit.before }}<b>{{ result.hit.match }}</b>{{ result.hit.after }}
+                        </template>
+                        <template v-else>
+                          {{ result.hit }}
+                        </template>
+                      </span>
+                    </div>
+                    <div class="col" v-else-if="result.hitType == 'alt'">
+                      <span>
+                        <template v-if="result.hit.hasOwnProperty('match')">
+                          {{ result.hit.before }}<b>{{ result.hit.match }}</b>{{ result.hit.after }}
+                        </template>
+                        <template v-else>
+                          {{ result.hit }}
+                        </template>
+                      </span>
+                      <span class="d-inline">&rarr;&nbsp;</span>
+                      <span class="result">
+                        <template v-if="result.hitPref.hasOwnProperty('match')">
+                          {{ result.hitPref.before }}<b>{{ result.hitPref.match }}</b>{{ result.hitPref.after }}
+                        </template>
+                        <template v-else>
+                          {{ result.hitPref }}
+                        </template>
+                      </span>
+                    </div>
+                    <div class="col" v-else-if="result.hitType == 'pref'">
+                      <span class="result">
+                        <template v-if="result.hit.hasOwnProperty('match')">
+                          {{ result.hit.before }}<b>{{ result.hit.match }}</b>{{ result.hit.after }}
+                        </template>
+                        <template v-else>
+                          {{ result.hit }}
+                        </template>
+                      </span>
+                    </div>
                     <div class="col-auto align-self-end pe-1" v-html="result.renderedType"></div>
                   </div>
                 </a>
