@@ -1,3 +1,28 @@
+const fetchWithAbort = (function () {
+  let controller = null
+
+  return function (url, options = {}) {
+    // Abort the previous request if it exists
+    if (controller) {
+      controller.abort()
+    }
+
+    // Create a new AbortController instance for this request
+    controller = new AbortController()
+
+    // Add the AbortController signal to the fetch options
+    options.signal = controller.signal
+
+    // Perform the fetch request
+    return fetch(url, options)
+      .then(response => {
+        // Clear the controller after the request is done
+        controller = null
+        return response
+      })
+  }
+})()
+
 const updateMainContent = (conceptHTML) => {
   // concept card
   const conceptMainContent = conceptHTML.querySelectorAll('#main-content > :not(#concept-mappings)') // all elements from concept card except concept mappings
@@ -53,7 +78,7 @@ const partialPageLoad = (event, pageUri) => {
   event.preventDefault()
 
   // fetching html content of the concept page
-  fetch(pageUri)
+  fetchWithAbort(pageUri)
     .then(data => {
       return data.text()
     })
@@ -76,6 +101,13 @@ const partialPageLoad = (event, pageUri) => {
       // custom event to signal that a new concept page was loaded
       const event = new Event('loadConceptPage')
       document.dispatchEvent(event)
+    })
+    .catch(error => {
+      if (error.name === 'AbortError') {
+        console.log('Fetch aborted for ' + pageUri)
+      } else {
+        throw error
+      }
     })
 }
 /* eslint-disable no-unused-vars */
