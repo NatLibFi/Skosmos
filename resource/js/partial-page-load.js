@@ -1,5 +1,3 @@
-/* global SKOSMOS */
-
 const updateMainContent = (conceptHTML) => {
   // concept card
   const conceptMainContent = conceptHTML.querySelectorAll('#main-content > :not(#concept-mappings)') // all elements from concept card except concept mappings
@@ -39,14 +37,14 @@ const updateJsonLD = (conceptHTML) => {
 }
 
 const updateSKOSMOS = (conceptHTML) => {
-  // new SKOSMOS object from concept page
+  // new window.SKOSMOS object from concept page
   const skosmosScript = conceptHTML.querySelector('#skosmos-global-vars').innerHTML
   const skosmosObject = skosmosScript.slice(skosmosScript.indexOf('{'))
   const newSKOSMOS = JSON.parse(skosmosObject)
 
-  // replacing all values in the old SKOSMOS object with new ones
+  // replacing all values in the old window.SKOSMOS object with new ones
   for (const i in newSKOSMOS) {
-    SKOSMOS[i] = newSKOSMOS[i]
+    window.SKOSMOS[i] = newSKOSMOS[i]
   }
 }
 

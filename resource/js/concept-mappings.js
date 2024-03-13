@@ -1,5 +1,4 @@
 /* global Vue */
-/* global SKOSMOS */
 
 const conceptMappingsApp = Vue.createApp({
   data () {
@@ -8,11 +7,11 @@ const conceptMappingsApp = Vue.createApp({
     }
   },
   provide: {
-    content_lang: SKOSMOS.content_lang
+    content_lang: window.SKOSMOS.content_lang
   },
   methods: {
     loadMappings () {
-      fetch('rest/v1/' + SKOSMOS.vocab + '/mappings?uri=' + SKOSMOS.uri + '&external=true&clang=' + SKOSMOS.lang + '&lang=' + SKOSMOS.content_lang)
+      fetch('rest/v1/' + window.SKOSMOS.vocab + '/mappings?uri=' + window.SKOSMOS.uri + '&external=true&clang=' + window.SKOSMOS.lang + '&lang=' + window.SKOSMOS.content_lang)
         .then(data => {
           return data.json()
         })
@@ -31,8 +30,8 @@ const conceptMappingsApp = Vue.createApp({
   },
   mounted () {
     // Only load mappings when on the concept page
-    // SKOSMOS variable should maybe have a separate property for current page
-    if (SKOSMOS.uri) {
+    // window.SKOSMOS variable should maybe have a separate property for current page
+    if (window.SKOSMOS.uri) {
       this.loadMappings()
     }
   },
