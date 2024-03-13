@@ -215,14 +215,14 @@ const vocabSearch = Vue.createApp({
                           {{ result.hit }}
                         </template>
                       </span>
-                      <span class="d-inline">&rarr;&nbsp;</span>
-                      <span class="result">
-                        <template v-if="result.hitPref.hasOwnProperty('match')">
-                          {{ result.hitPref.before }}<b>{{ result.hitPref.match }}</b>{{ result.hitPref.after }}
-                        </template>
-                        <template v-else>
-                          {{ result.hitPref }}
-                        </template>
+                      <span> &rarr;&nbsp;<span class="result">
+                          <template v-if="result.hitPref.hasOwnProperty('match')">
+                            {{ result.hitPref.before }}<b>{{ result.hitPref.match }}</b>{{ result.hitPref.after }}
+                          </template>
+                          <template v-else>
+                            {{ result.hitPref }}
+                          </template>
+                        </span>
                       </span>
                     </div>
                     <div class="col" v-else-if="result.hitType == 'pref'">
