@@ -46,7 +46,10 @@ const vocabSearch = Vue.createApp({
       const mySearchCounter = this.searchCounter + 1 // make sure we can identify this search later in case of several ongoing searches
       this.searchCounter = mySearchCounter
 
-      const skosmosSearchUrl = 'rest/v1/' + SKOSMOS.vocab + '/search?query=' + this.formatSearchTerm() + '&lang=' + SKOSMOS.lang
+      let skosmosSearchUrl = 'rest/v1/' + SKOSMOS.vocab + '/search?'
+      const skosmosSearchUrlParams = new URLSearchParams({ query: this.formatSearchTerm(), lang: SKOSMOS.lang })
+      skosmosSearchUrl += skosmosSearchUrlParams.toString()
+
       fetch(skosmosSearchUrl)
         .then(data => data.json())
         .then(data => {
@@ -57,9 +60,8 @@ const vocabSearch = Vue.createApp({
         })
     },
     formatSearchTerm () {
-      if (this.searchTerm.includes('*')) { return encodeURIComponent(this.searchTerm) }
-      const formatted = this.searchTerm + '*'
-      return encodeURIComponent(formatted)
+      if (this.searchTerm.includes('*')) { return this.searchTerm }
+      return this.searchTerm + '*'
     },
     renderMatchingPart (searchTerm, label) {
       if (label) {
@@ -90,8 +92,8 @@ const vocabSearch = Vue.createApp({
         const hitAlt = 'altLabel' in result ? this.renderMatchingPart(renderedSearchTerm, result.altLabel) : null
         const hitHidden = 'hiddenLabel' in result ? this.renderMatchingPart(renderedSearchTerm, result.hiddenLabel) : null
         if ('uri' in result) { // create relative Skosmos page URL from the search result URI
-          result.pageUrl = SKOSMOS.vocab + '/' + SKOSMOS.lang + '/page'
-          const urlParams = new URLSearchParams({ uri: encodeURIComponent(result.uri) })
+          result.pageUrl = SKOSMOS.vocab + '/' + SKOSMOS.lang + '/page?'
+          const urlParams = new URLSearchParams({ uri: result.uri })
           result.pageUrl += urlParams.toString()
         }
         // render search result labels
@@ -129,9 +131,10 @@ const vocabSearch = Vue.createApp({
 
       const currentVocab = SKOSMOS.vocab + '/' + SKOSMOS.lang + '/'
       const vocabHref = window.location.href.substring(0, window.location.href.lastIndexOf(SKOSMOS.vocab)) + currentVocab
-      let langParam = '&clang=' + SKOSMOS.content_lang
-      if (this.selectedLanguage === 'all') langParam += '&anylang=on'
-      const searchUrl = vocabHref + 'search?q=' + encodeURIComponent(this.searchTerm) + langParam
+      let searchUrlParams = new URLSearchParams({ clang: SKOSMOS.content_lang })
+      searchParams.set("q", this.searchTerm)
+      if (this.selectedLanguage === 'all') searchParams.set("anylang", "on")
+      const searchUrl = vocabHref + 'search?' + searchUrlParams.toString()
       window.location.href = searchUrl
     },
     changeLang () {
