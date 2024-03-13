@@ -71,9 +71,11 @@ const vocabSearch = Vue.createApp({
         if (labelLowerCase.includes(searchTermLowerCase)) {
           const startIndex = labelLowerCase.indexOf(searchTermLowerCase)
           const endIndex = startIndex + searchTermLowerCase.length
-          return { before: label.substring(0, startIndex),
-                   match: label.substring(startIndex, endIndex),
-                   after: label.substring(endIndex) }
+          return {
+            before: label.substring(0, startIndex),
+            match: label.substring(startIndex, endIndex),
+            after: label.substring(endIndex)
+          }
         }
         return label
       }
