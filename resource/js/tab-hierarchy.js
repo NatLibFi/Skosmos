@@ -1,5 +1,4 @@
 /* global Vue */
-/* global SKOSMOS */
 /* global partialPageLoad, getConceptURL */
 
 const tabHierApp = Vue.createApp({
@@ -31,7 +30,7 @@ const tabHierApp = Vue.createApp({
     },
     loadHierarchy () {
       // if we are on a concept page, load hierarchy for the concept, otherwise load top concepts
-      if (SKOSMOS.uri) {
+      if (window.SKOSMOS.uri) {
         this.loadConceptHierarchy()
       } else {
         this.loadTopConcepts()
@@ -39,7 +38,7 @@ const tabHierApp = Vue.createApp({
     },
     loadTopConcepts () {
       this.loading = true
-      fetch('rest/v1/' + SKOSMOS.vocab + '/topConcepts/?lang=' + SKOSMOS.lang)
+      fetch('rest/v1/' + window.SKOSMOS.vocab + '/topConcepts/?lang=' + window.SKOSMOS.lang)
         .then(data => {
           return data.json()
         })
@@ -58,7 +57,7 @@ const tabHierApp = Vue.createApp({
     },
     loadConceptHierarchy () {
       this.loading = true
-      fetch('rest/v1/' + SKOSMOS.vocab + '/hierarchy/?uri=' + SKOSMOS.uri + '&lang=' + SKOSMOS.lang)
+      fetch('rest/v1/' + window.SKOSMOS.vocab + '/hierarchy/?uri=' + window.SKOSMOS.uri + '&lang=' + window.SKOSMOS.lang)
         .then(data => {
           return data.json()
         })
@@ -122,14 +121,14 @@ const tabHierApp = Vue.createApp({
           }
 
           this.loading = false
-          this.selectedConcept = SKOSMOS.uri
+          this.selectedConcept = window.SKOSMOS.uri
           console.log(this.hierarchy)
         })
     },
     loadChildren (concept) {
       // load children only if concept has children but they have not been loaded yet
       if (concept.children.length === 0 && concept.hasChildren) {
-        fetch('rest/v1/' + SKOSMOS.vocab + '/children?uri=' + concept.uri + '&lang=' + SKOSMOS.lang)
+        fetch('rest/v1/' + window.SKOSMOS.vocab + '/children?uri=' + concept.uri + '&lang=' + window.SKOSMOS.lang)
           .then(data => {
             return data.json()
           })
@@ -141,23 +140,33 @@ const tabHierApp = Vue.createApp({
             console.log(this.hierarchy)
           })
       }
+    },
+    getListStyle () {
+      const height = document.getElementById('sidebar-tabs').clientHeight
+      const width = document.getElementById('sidebar-tabs').clientWidth
+      return {
+        height: 'calc( 100% - ' + height + 'px)',
+        width: width + 'px'
+      }
     }
   },
   template: `
     <div v-click-tab-hierarchy="handleClickHierarchyEvent">
-      <ul class="list-group sidebar-list p-0" v-if="!loading">
-        <template v-for="(c, i) in hierarchy">
-          <tab-hier
-            :concept="c"
-            :selectedConcept="selectedConcept"
-            :isTopConcept="true"
-            :isLast="i == hierarchy.length - 1 && !c.isOpen"
-            @load-children="loadChildren($event)"
-            @select-concept="selectedConcept = $event"
-          ></tab-hier>
-        </template>
-      </ul>
-      <template v-else>Loading...</template><!-- Add a spinner or equivalent -->
+      <div class="sidebar-list p-0" :style="getListStyle()">
+        <ul class="list-group" v-if="!loading">
+          <template v-for="(c, i) in hierarchy">
+            <tab-hier
+              :concept="c"
+              :selectedConcept="selectedConcept"
+              :isTopConcept="true"
+              :isLast="i == hierarchy.length - 1 && !c.isOpen"
+              @load-children="loadChildren($event)"
+              @select-concept="selectedConcept = $event"
+            ></tab-hier>
+          </template>
+        </ul>
+        <template v-else>Loading...</template><!-- Add a spinner or equivalent -->
+      </div>
     </div>
   `
 })

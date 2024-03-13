@@ -177,6 +177,7 @@ test:ta1 a skos:Concept, meta:TestClass ;
         test:ta119,
         test:ta120 ;
     skos:prefLabel "Fish"@en ;
+    skos:exactMatch <http://www.wikidata.org/entity/Q152> ;
     skos:topConceptOf test:conceptscheme .
 
 test:conceptscheme a skos:ConceptScheme ;
