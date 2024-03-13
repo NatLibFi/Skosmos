@@ -29,10 +29,12 @@ const vocabSearch = Vue.createApp({
       const delayMs = 300
 
       // when new autocomplete is fired, empty the previous result
-      this.hideDropdown()
+      this.renderedResultsList = []
 
       // cancel the timer for upcoming API call
       clearTimeout(this._timerId)
+      const element = document.getElementById('search-autocomplete-results')
+      element.classList.remove('show')
 
       // TODO: if the search term is in cache, use the cache
 
@@ -123,7 +125,6 @@ const vocabSearch = Vue.createApp({
     hideDropdown () {
       const element = document.getElementById('search-autocomplete-results')
       element.classList.remove('show')
-      this.renderedResultsList = []
     },
     gotoSearchPage () {
       if (!this.searchTerm) return
@@ -141,14 +142,25 @@ const vocabSearch = Vue.createApp({
     },
     resetSearchTermAndHideDropdown () {
       this.searchTerm = ''
+      this.renderedResultsList = []
       this.hideDropdown()
     },
+    /*
+     * Hide the autocomplete result list if the user clicks outside the list
+     */
     onClickOutside (event) {
-      const listener = document.getElementById('search-autocomplete-results')
+      const listener = document.getElementById('headerbar-search')
       // Check if the clicked element is outside your element
       if (listener && !listener.contains(event.target)) {
         this.hideDropdown()
       }
+    },
+    /*
+     * Show the existing autocomplete list if it was hidden by onClickOutside()
+     */
+    showAutoComplete () {
+      const element = document.getElementById('search-autocomplete-results')
+      element.classList.add('show')
     }
   },
   template: `
@@ -160,19 +172,19 @@ const vocabSearch = Vue.createApp({
         >
           <option class="dropdown-item" v-for="(value, key) in languageStrings" :value="key">{{ value }}</option>
         </select>
-        <span class="dropdown">
+        <span id="headerbar-search" class="dropdown">
           <input type="search"
             class="form-control"
             id="search-field"
             aria-expanded="false"
-             autocomplete="off"
+            autocomplete="off"
             data-bs-toggle=""
             aria-label="Text input with dropdown button"
             placeholder="Search..."
             v-model="searchTerm"
             @input="autoComplete()"
             @keyup.enter="gotoSearchPage()"
-            @click="">
+            @click="showAutoComplete()">
           <ul id="search-autocomplete-results" class="dropdown-menu"
             aria-labelledby="search-field">
             <li class="autocomplete-result container" v-for="result in renderedResultsList"
