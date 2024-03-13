@@ -1,5 +1,4 @@
 /* global Vue */
-/* global SKOSMOS */
 
 const vocabSearch = Vue.createApp({
   data () {

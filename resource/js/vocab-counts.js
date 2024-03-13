@@ -1,5 +1,4 @@
 /* global Vue */
-/* global SKOSMOS */
 
 const resourceCountsApp = Vue.createApp({
   data () {
@@ -10,7 +9,7 @@ const resourceCountsApp = Vue.createApp({
     }
   },
   mounted () {
-    fetch('rest/v1/' + SKOSMOS.vocab + '/vocabularyStatistics?lang=' + SKOSMOS.lang)
+    fetch('rest/v1/' + window.SKOSMOS.vocab + '/vocabularyStatistics?lang=' + window.SKOSMOS.lang)
       .then(data => {
         return data.json()
       })
