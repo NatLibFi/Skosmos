@@ -13,7 +13,7 @@ describe('Vocab search bar', () => {
     cy.get('#search-button').click();
 
     //Verify the search page url (search result page tests are elsewhere)
-    cy.url().should('include', 'search?q=Katt&clang=sv');
+    cy.url().should('include', 'q=Katt').and('include', 'clang=sv');
 
   })
 
@@ -31,8 +31,7 @@ describe('Vocab search bar', () => {
     cy.get('#search-button').click();
 
     //Verify the search page url (search result page tests are elsewhere)
-    cy.url().should('include', 'search?q=Katt');
-    cy.url().should('include', 'anylang=on');
+    cy.url().should('include', 'q=Katt').and('include', 'anylang=on');
   })
 
   it('Writing in the text field triggers the autocomplete results list', () => {
@@ -118,6 +117,18 @@ describe('Vocab search bar', () => {
     cy.get('#search-autocomplete-results').within(() => { // the first result should have text 'zikkur' appearing twice in bold
       cy.get('li').last().find('b').eq(0).should('have.text', 'zikkur')
       cy.get('li').last().find('b').eq(1).should('have.text', 'zikkur')
+    })
+  })
+
+  it('Special characters can be used in the search', () => {
+    // go to YSO vocab front page
+    cy.visit('/yso/fi/')
+
+    cy.get('#search-field').type('*tus (*');
+    cy.get('#search-autocomplete-results', { timeout: 20000 }).should('be.visible'); // the autocomplete should appear
+
+    cy.get('#search-autocomplete-results').within(() => { // the first result should have text ajoitus (historia)
+      cy.get('li').first().should('contain', 'ajoitus (historia)')
     })
   })
 })
