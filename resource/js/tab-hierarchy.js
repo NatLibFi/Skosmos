@@ -182,7 +182,7 @@ tabHierApp.directive('click-tab-hierarchy', {
 tabHierApp.component('tab-hier-wrapper', {
   props: ['hierarchy', 'selectedConcept'],
   emits: ['loadChildren', 'selectConcept'],
-  mounted() {
+  mounted () {
     // scroll automatically to selected concept after the whole hierarchy tree has been mounted
     if (this.selectedConcept) {
       const selected = document.querySelectorAll('.list-group-item .selected')[0]
@@ -199,7 +199,7 @@ tabHierApp.component('tab-hier-wrapper', {
 
       list.scrollBy({
         top: selectedTop - listTop - listHeight / 2, // scroll top of selected element to the middle of list element
-        behavior: "smooth"
+        behavior: 'smooth'
       })
     }
   },
@@ -209,7 +209,7 @@ tabHierApp.component('tab-hier-wrapper', {
     },
     selectConcept (concept) {
       this.$emit('selectConcept', concept)
-    },
+    }
   },
   template: `
     <template v-for="(c, i) in hierarchy" >
