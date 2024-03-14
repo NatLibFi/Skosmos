@@ -20,10 +20,6 @@ const vocabSearch = Vue.createApp({
     this.languageStrings = window.SKOSMOS.language_strings[window.SKOSMOS.lang] ?? window.SKOSMOS.language_strings.en
     this.msgs = window.SKOSMOS.msgs[window.SKOSMOS.lang] ?? window.SKOSMOS.msgs.en
     this.renderedResultsList = []
-    document.addEventListener('click', this.onClickOutside)
-  },
-  beforeUnmount () {
-    document.removeEventListener('click', this.onClickOutside)
   },
   methods: {
     autoComplete () {
@@ -150,16 +146,6 @@ const vocabSearch = Vue.createApp({
       this.hideAutoComplete()
     },
     /*
-     * Hide the autocomplete result list if the user clicks outside the list
-     */
-    onClickOutside (event) {
-      const listener = document.getElementById('headerbar-search')
-      // Check if the clicked element is outside your element
-      if (listener && !listener.contains(event.target)) {
-        this.hideAutoComplete()
-      }
-    },
-    /*
      * Show the existing autocomplete list if it was hidden by onClickOutside()
      */
     showAutoComplete () {
@@ -184,6 +170,7 @@ const vocabSearch = Vue.createApp({
             data-bs-toggle=""
             aria-label="Text input with dropdown button"
             placeholder="Search..."
+            v-click-outside="hideAutoComplete"
             v-model="searchTerm"
             @input="autoComplete()"
             @keyup.enter="gotoSearchPage()"
@@ -253,6 +240,22 @@ const vocabSearch = Vue.createApp({
       </div>
     </div>
   `
+})
+
+vocabSearch.directive('click-outside', {
+  beforeMount: (el, binding) => {
+    el.clickOutsideEvent = event => {
+
+      // Ensure the click was outside the element
+      if (!(el === event.target || el.contains(event.target))) {
+        binding.value(event); // Call the method provided in the directive's value
+      }
+    }
+    document.addEventListener('click', el.clickOutsideEvent);
+  },
+  unmounted: el => {
+    document.removeEventListener('click', el.clickOutsideEvent);
+  }
 })
 
 vocabSearch.mount('#search-vocab')
