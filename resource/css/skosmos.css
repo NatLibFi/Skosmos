@@ -278,7 +278,7 @@ body {
 
   #search-wrapper input {
     background-color: var(--search-bg);
-
+    border-color: var(--search-border);
     border-radius: 0;
   }
 
@@ -301,7 +301,7 @@ body {
   }
 
   #search-wrapper .autocomplete-result {
-    border: 1px solid var(--search-border);
+    border-top: 1px solid var(--search-border);
     margin: auto;
   }
 

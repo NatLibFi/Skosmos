@@ -9,7 +9,8 @@ const vocabSearch = Vue.createApp({
       searchCounter: null,
       renderedResultsList: [],
       languageStrings: null,
-      msgs: null
+      msgs: null,
+      showDropdown: false
     }
   },
   mounted () {
@@ -128,7 +129,7 @@ const vocabSearch = Vue.createApp({
     },
     hideDropdown () {
       const element = document.getElementById('search-autocomplete-results')
-      element.classList.remove('show')
+      this.showDropdown = false
     },
     gotoSearchPage () {
       if (!this.searchTerm) return
@@ -164,7 +165,7 @@ const vocabSearch = Vue.createApp({
      */
     showAutoComplete () {
       const element = document.getElementById('search-autocomplete-results')
-      element.classList.add('show')
+      this.showDropdown = true
     }
   },
   template: `
@@ -189,7 +190,7 @@ const vocabSearch = Vue.createApp({
             @input="autoComplete()"
             @keyup.enter="gotoSearchPage()"
             @click="showAutoComplete()">
-          <ul id="search-autocomplete-results" class="dropdown-menu"
+          <ul id="search-autocomplete-results" class="dropdown-menu" :class="{ 'show': showDropdown }"
             aria-labelledby="search-field">
             <li class="autocomplete-result container" v-for="result in renderedResultsList"
               :key="result.prefLabel" >
