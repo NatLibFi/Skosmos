@@ -4,13 +4,13 @@
     <div class="sidebar-buttons">
       <h2 class="visually-hidden">{{'Sidebar listing: list and traverse vocabulary contents by a criterion' | trans}}</h2>
 
+      <h3 class="visually-hidden" aria-label="Sidebar tabs">{{ view_trans_text[1] | trans }}</h3>
       <ul class="nav nav-tabs-no-style nav-justified" id="sidebar-tabs" role="tablist">
         {% for view in vocab.config.sidebarViews %}
           {% if view == 'alphabetical' %} {% set view_trans_text = ['Alpha-nav', 'List vocabulary concepts alphabetically'] %}
           {% elseif view == 'hierarchy' %} {% set view_trans_text = ['Hier-nav', 'List vocabulary concepts hierarchically'] %}
           {% elseif view == 'groups' %} {% set view_trans_text = ['Group-nav', 'List vocabulary concepts and groupings hierarchically'] %}
           {% else %} {% set view_trans_text = vocab.config.showDeprecatedChanges ? ['Changes-and-deprecations-nav', 'List vocabulary concepts by newest additions including removed'] : ['Changes-nav', 'List vocabulary concepts by newest additions'] %}{% endif %}
-          <h3 class="visually-hidden">{{ view_trans_text[1] | trans }}</h3>
           {# active_class is used to set initial active tab and disabled_class is used to disable hierarchy tab #}
           {# On vocab page active tab is set to defaultSidebarView, on concept page active tab is set to defaultConceptSidebarView #}
           {% set active_class = (request.page == 'vocab' and view == vocab.config.defaultSidebarView) or (request.page == 'page' and view == vocab.config.defaultConceptSidebarView) %}
