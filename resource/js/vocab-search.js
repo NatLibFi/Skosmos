@@ -120,11 +120,11 @@ const vocabSearch = Vue.createApp({
           lang: window.SKOSMOS.lang
         })
       }
-      const element = document.getElementById('search-autocomplete-results')
-      element.classList.add('show')
+      this.showAutoComplete()
     },
     hideAutoComplete () {
       this.showDropdown = false
+      this.$forceUpdate()
     },
     gotoSearchPage () {
       if (!this.searchTerm) return
@@ -149,7 +149,9 @@ const vocabSearch = Vue.createApp({
      * Show the existing autocomplete list if it was hidden by onClickOutside()
      */
     showAutoComplete () {
+      console.log("Show autocomplete")
       this.showDropdown = true
+      this.$forceUpdate()
     }
   },
   template: `
