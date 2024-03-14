@@ -17,6 +17,11 @@ function registerCopyToClipboardEvents () {
     copyPrefElem.addEventListener('click', () => copyToClipboard('concept-preflabel'))
   }
 
+  const copyNotationElem = document.getElementById('copy-notation')
+  if (copyNotationElem) {
+    copyNotationElem.addEventListener('click', () => copyToClipboard('concept-notation'))
+  }
+
   const copyUriElem = document.getElementById('copy-uri')
   if (copyUriElem) {
     copyUriElem.addEventListener('click', () => copyToClipboard('concept-uri'))

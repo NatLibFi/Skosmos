@@ -199,6 +199,29 @@ describe('Concept page', () => {
     // check that there are 2 breadcrumb links currently shown
     cy.get('#concept-breadcrumbs ol').find('li.show').should('have.length', 4)
   })
+  it('contains concept preflabel', () => {
+    cy.visit('/yso/en/page/p21685') // go to "music research" concept page
+
+    // check that the vocabulary title is correct
+    cy.get('#vocab-title > a').invoke('text').should('equal', 'YSO - General Finnish ontology (archaeology)')
+
+    // check the concept prefLabel
+    cy.get('#concept-heading h1').invoke('text').should('equal', 'music research')
+  })
+  it('concept notation can be copied to clipboard', () => {
+    cy.visit('/test-notation-sort/en/page/?uri=http%3A%2F%2Fwww.skosmos.skos%2Ftest%2Fta0119') // go to "Hauki" concept page
+
+    // click the copy to clipboard button next to the header
+    cy.get('#copy-notation').click()
+
+    // check that the clipboard now contains "33.90"
+    // NOTE: This test may fail when running Cypress interactively in a browser.
+    // The reason is browser security policies for accessing the clipboard.
+    // If that happens, make sure the browser window has focus and re-run the test.
+    cy.window().its('navigator.clipboard').invoke('readText').then((result) => {}).should('equal', '33.90');
+  })
+  it('concept preflabel can be copied to clipboard', () => {
+    cy.visit('/yso/en/page/p21685') // go to "music research" concept page
 
   it('contains concept type', () => {
     cy.visit('/yso/en/page/p21685') // go to "music research" concept page
