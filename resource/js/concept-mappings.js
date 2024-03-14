@@ -1,4 +1,5 @@
 /* global Vue */
+/* global fetchWithAbort */
 
 const conceptMappingsApp = Vue.createApp({
   data () {
@@ -11,12 +12,20 @@ const conceptMappingsApp = Vue.createApp({
   },
   methods: {
     loadMappings () {
-      fetch('rest/v1/' + window.SKOSMOS.vocab + '/mappings?uri=' + window.SKOSMOS.uri + '&external=true&clang=' + window.SKOSMOS.lang + '&lang=' + window.SKOSMOS.content_lang)
+      const url = 'rest/v1/' + window.SKOSMOS.vocab + '/mappings?uri=' + window.SKOSMOS.uri + '&external=true&clang=' + window.SKOSMOS.lang + '&lang=' + window.SKOSMOS.content_lang
+      fetchWithAbort(url, 'concept')
         .then(data => {
           return data.json()
         })
         .then(data => {
           this.mappings = this.group_by(data.mappings, 'typeLabel')
+        })
+        .catch(error => {
+          if (error.name === 'AbortError') {
+            console.log('Fetching of mappings aborted')
+          } else {
+            throw error
+          }
         })
     },
     // from https://stackoverflow.com/a/71505541
