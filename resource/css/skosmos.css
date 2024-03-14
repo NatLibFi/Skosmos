@@ -287,14 +287,13 @@ body {
     z-index: 4;
   }
 
-  #search-wrapper .form-control:focus {
+  #search-wrapper .form-control:focus, #search-wrapper select:focus {
     border-color: var(--search-border) !important;
-    box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0), 0 0 3px rgba(50, 50, 50, 0.6) !important;
+    box-shadow: inset 0 0 5px rgba(196, 205, 217, 1) !important;
   }
 
-  #search-wrapper select:focus {
-    border-color: var(--search-border) !important;
-    box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0), 0 0 3px rgba(50, 50, 50, 0.6) !important;
+  #search-wrapper .dropdown-menu {
+    transform: translateY(-1px);
   }
 
   #search-wrapper .autocomplete {
