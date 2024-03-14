@@ -35,7 +35,7 @@ const vocabSearch = Vue.createApp({
       // cancel the timer for upcoming API call
       clearTimeout(this._timerId)
       const element = document.getElementById('search-autocomplete-results')
-      element.classList.remove('show')
+      this.hideAutoComplete()
 
       // TODO: if the search term is in cache, use the cache
 
@@ -127,8 +127,7 @@ const vocabSearch = Vue.createApp({
       const element = document.getElementById('search-autocomplete-results')
       element.classList.add('show')
     },
-    hideDropdown () {
-      const element = document.getElementById('search-autocomplete-results')
+    hideAutoComplete () {
       this.showDropdown = false
     },
     gotoSearchPage () {
@@ -148,7 +147,7 @@ const vocabSearch = Vue.createApp({
     resetSearchTermAndHideDropdown () {
       this.searchTerm = ''
       this.renderedResultsList = []
-      this.hideDropdown()
+      this.hideAutoComplete()
     },
     /*
      * Hide the autocomplete result list if the user clicks outside the list
@@ -157,14 +156,13 @@ const vocabSearch = Vue.createApp({
       const listener = document.getElementById('headerbar-search')
       // Check if the clicked element is outside your element
       if (listener && !listener.contains(event.target)) {
-        this.hideDropdown()
+        this.hideAutoComplete()
       }
     },
     /*
      * Show the existing autocomplete list if it was hidden by onClickOutside()
      */
     showAutoComplete () {
-      const element = document.getElementById('search-autocomplete-results')
       this.showDropdown = true
     }
   },
