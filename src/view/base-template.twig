@@ -23,6 +23,13 @@
 <body{% if request.vocabid == '' and request.page != 'feedback' and request.page != 'about' and request.page != 'search' %} class="bg-light frontpage-logo"{% else %} class="bg-medium vocab-{{ request.vocabid }}"{% endif %}>
   <header>
     <a class="visually-hidden" id="skiptocontent" href="{{ request.langurl }}#maincontent">Skip to main</a>
+    {% block h1_level_header %}
+      <div class="container-fluid bg-light py-4 px-4 visually-hidden" id="headerbar">
+        <div id="skosmos-logo" class="visually-hidden">
+          <h1 class="visually-hidden">Skosmos</h1>
+        </div>
+      </div>
+    {% endblock %}
     <div class="container-fluid bg-dark d-flex my-auto py-3 px-4 text-bg-dark">
       {% if request.vocabid == '' and request.page != 'about' and request.page != 'feedback' %}
         <span class="fs-6 py-3 text-light">Yhteishaku sanastoista v</span>
