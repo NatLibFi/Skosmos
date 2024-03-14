@@ -4,7 +4,7 @@
 const conceptMappingsApp = Vue.createApp({
   data () {
     return {
-      mappings: []
+      mappings: {}
     }
   },
   provide: {
@@ -17,7 +17,7 @@ const conceptMappingsApp = Vue.createApp({
   },
   methods: {
     loadMappings () {
-      this.mappings = [] // clear mappings before starting to load new ones
+      this.mappings = {} // clear mappings before starting to load new ones
       const url = 'rest/v1/' + window.SKOSMOS.vocab + '/mappings?uri=' + window.SKOSMOS.uri + '&external=true&clang=' + window.SKOSMOS.lang + '&lang=' + window.SKOSMOS.content_lang
       fetchWithAbort(url, 'concept')
         .then(data => {
