@@ -232,7 +232,7 @@ body {
     height: 100%;
   }
 
-  #headerbar .dropdown-toggle {
+  #search-wrapper .dropdown-toggle {
     background-color: var(--search-bg);
     color: var(--headerbar-text-2);
     border: 1px solid var(--search-border);
@@ -241,51 +241,92 @@ body {
     padding-right: 0.5rem;
   }
 
-  #headerbar .dropdown-toggle:hover, #headerbar .dropdown-toggle:active {
+  #search-wrapper .dropdown-toggle:hover, #search-wrapper .dropdown-toggle:active {
     background-color: var(--search-dropdown-toggle-hover); /* What color to use? */
   }
 
-  #headerbar .dropdown-toggle.show {
+  #search-wrapper .dropdown-toggle.show {
     background-color: var(--search-dropdown-toggle-show); /* What color to use? */
   }
 
-  #headerbar .dropdown-menu {
+  #search-wrapper .dropdown-menu {
     border: 1px solid var(--search-border);
     border-radius: 0;
+    padding: 0;
+    width: 114%;
+    max-height: 20rem;
+    overflow: auto;
   }
 
-  #headerbar .dropdown-item:active {
+  #search-wrapper .dropdown-item:active {
     background-color: var(--search-dropdown-item-active);
   }
 
-  #headerbar .dropdown-item:hover {
+  #search-wrapper .dropdown-item:hover {
     background-color: var(--search-dropdown-item-hover); /* What color to use? */
   }
 
-  #headerbar .form-check-input {
+  #search-wrapper .form-check-input {
     background-color: var(--search-bg);
-    border: 1px solid var(--search-border);
+
     border-radius: 0;
   }
 
-  #headerbar .form-check-input:checked {
+  #search-wrapper .form-check-input:checked {
     background-color: var(--headerbar-text-2);
   }
 
-  #headerbar input {
+  #search-wrapper input {
     background-color: var(--search-bg);
-    border: 1px solid var(--search-border);
+    border-color: var(--search-border);
+    border-radius: 0;
+  }
+
+  #search-wrapper span.dropdown {
+    width: 25rem;
+    z-index: 4;
+  }
+
+  #search-wrapper .form-control:focus, #search-wrapper select:focus {
+    border-color: var(--search-border) !important;
+    box-shadow: inset 0 0 5px rgba(196, 205, 217, 1) !important;
+  }
+
+  #search-wrapper .dropdown-menu {
+    transform: translateY(-1px);
+  }
+
+  #search-wrapper .autocomplete {
+    position: relative;
+  }
+
+  #search-wrapper .autocomplete-result {
+    border-top: 1px solid var(--search-border);
+    margin: auto;
+  }
+
+  #search-wrapper .autocomplete-result * {
+    text-decoration: none;
+    color: var(--dark-color);
+  }
+
+  #search-wrapper .autocomplete-result span.result {
+    color: var(--vocab-link);
+  }
+
+  #search-wrapper .autocomplete-result span.d-inline {
+    white-space: nowrap;
   }
 
   /* Remove built-in x button from Internet Explorer */
-  #headerbar input[type=search]::-ms-clear { display: none; width : 0; height: 0; }
-  #headerbar input[type=search]::-ms-reveal { display: none; width : 0; height: 0; }
+  #search-wrapper input[type=search]::-ms-clear { display: none; width : 0; height: 0; }
+  #search-wrapper input[type=search]::-ms-reveal { display: none; width : 0; height: 0; }
   
   /* Remove built-in x button from Chrome */
-  #headerbar input[type="search"]::-webkit-search-decoration,
-  #headerbar input[type="search"]::-webkit-search-cancel-button,
-  #headerbar input[type="search"]::-webkit-search-results-button,
-  #headerbar input[type="search"]::-webkit-search-results-decoration { display: none; }
+  #search-wrapper input[type="search"]::-webkit-search-decoration,
+  #search-wrapper input[type="search"]::-webkit-search-cancel-button,
+  #search-wrapper input[type="search"]::-webkit-search-results-button,
+  #search-wrapper input[type="search"]::-webkit-search-results-decoration { display: none; }
 
   #search-button {
     background-color: var(--search-button-bg);

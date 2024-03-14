@@ -4,15 +4,22 @@
 const conceptMappingsApp = Vue.createApp({
   data () {
     return {
-      mappings: []
+      mappings: {}
     }
   },
   provide: {
     content_lang: window.SKOSMOS.content_lang
   },
+  computed: {
+    hasMappings () {
+      return Object.keys(this.mappings).length > 0
+    }
+  },
   methods: {
     loadMappings () {
-      fetchWithAbort('rest/v1/' + window.SKOSMOS.vocab + '/mappings?uri=' + window.SKOSMOS.uri + '&external=true&clang=' + window.SKOSMOS.lang + '&lang=' + window.SKOSMOS.content_lang)
+      this.mappings = {} // clear mappings before starting to load new ones
+      const url = 'rest/v1/' + window.SKOSMOS.vocab + '/mappings?uri=' + window.SKOSMOS.uri + '&external=true&clang=' + window.SKOSMOS.lang + '&lang=' + window.SKOSMOS.content_lang
+      fetchWithAbort(url, 'concept')
         .then(data => {
           return data.json()
         })
@@ -45,7 +52,9 @@ const conceptMappingsApp = Vue.createApp({
   },
   template: `
     <div v-load-concept-page="loadMappings">
-      <concept-mappings :mappings="mappings" v-if="mappings.length !== 0"></concept-mappings>
+      <div v-if="hasMappings" class="main-content-section p-5">
+        <concept-mappings :mappings="mappings"></concept-mappings>
+      </div>
     </div>
   `
 })

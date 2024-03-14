@@ -130,7 +130,7 @@
       </div>
     </div>
     <!-- appendix / concept mapping properties -->
-    <div id="concept-mappings" class="main-content-section p-5">
+    <div id="concept-mappings">
     </div>
 
   </div>
