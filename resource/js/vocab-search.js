@@ -30,7 +30,6 @@ const vocabSearch = Vue.createApp({
 
       // cancel the timer for upcoming API call
       clearTimeout(this._timerId)
-      const element = document.getElementById('search-autocomplete-results')
       this.hideAutoComplete()
 
       // TODO: if the search term is in cache, use the cache
@@ -149,7 +148,7 @@ const vocabSearch = Vue.createApp({
      * Show the existing autocomplete list if it was hidden by onClickOutside()
      */
     showAutoComplete () {
-      console.log("Show autocomplete")
+      console.log('Show autocomplete')
       this.showDropdown = true
       this.$forceUpdate()
     }
@@ -247,16 +246,15 @@ const vocabSearch = Vue.createApp({
 vocabSearch.directive('click-outside', {
   beforeMount: (el, binding) => {
     el.clickOutsideEvent = event => {
-
       // Ensure the click was outside the element
       if (!(el === event.target || el.contains(event.target))) {
-        binding.value(event); // Call the method provided in the directive's value
+        binding.value(event) // Call the method provided in the directive's value
       }
     }
-    document.addEventListener('click', el.clickOutsideEvent);
+    document.addEventListener('click', el.clickOutsideEvent)
   },
   unmounted: el => {
-    document.removeEventListener('click', el.clickOutsideEvent);
+    document.removeEventListener('click', el.clickOutsideEvent)
   }
 })
 
