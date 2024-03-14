@@ -38,19 +38,19 @@ window.SKOSMOS = {
                                 "en": "English",
                                 "se": "Northern Sami",
                                 "sv": "Swedish",
-                                "all": "In all languages"},},
+                                "all": "In all languages"}},
   "msgs" : { "fi": { "No results": "Ei hakutuloksia",
                      "http://www.yso.fi/onto/yso-meta/Concept": "Yleiskäsite",
                      "http://www.yso.fi/onto/yso-meta/Hierarchy": "Hierarkisoiva käsite",
-                     "skos:Concept": "Käsite",},
+                     "skos:Concept": "Käsite"},
              "sv": { "No results": "Inga sökresultat",
                      "http://www.yso.fi/onto/yso-meta/Concept": "Allmänbegrepp",
                      "http://www.yso.fi/onto/yso-meta/Hierarchy": "Hierarki",
-                     "skos:Concept": "Begrepp",},
+                     "skos:Concept": "Begrepp"},
              "en": { "No results": "No results",
                      "http://www.yso.fi/onto/yso-meta/Concept": "General concept",
                      "http://www.yso.fi/onto/yso-meta/Hierarchy": "Hierarchy",
-                     "skos:Concept": "Concept",},},
+                     "skos:Concept": "Concept"}}
 }
 </script>
 
