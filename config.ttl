@@ -69,8 +69,21 @@
     skosmos:globalPlugins () .
 
 # Skosmos vocabularies
+:ipbesglossary a skosmos:Vocabulary, void:Dataset ;
+    dc:title "IPBES thesaurus"@en ;
+    skosmos:shortName "IPBES";
+    dc:subject :cat_general ;
+    void:uriSpace "https://vocabulary.informea.org/ipbes/";
+    skosmos:language "en";
+    skosmos:defaultLanguage "en";
+    skosmos:showTopConcepts true ;
+    skosmos:fullAlphabeticalIndex true ;
+    skosmos:groupClass isothes:ConceptGroup ;
+    void:sparqlEndpoint <http://10.208.58.26:3030/skosmos/sparql> ;
+    skosmos:sparqlGraph <https://vocabulary.informea.org/ipbes/> .
+
 :ipbes a skosmos:Vocabulary, void:Dataset ;
-    dc:title "IPBES Linked Open Data"@en ;
+    dc:title "IPBES Ontology"@en ;
     skosmos:shortName "IPBES";
     dc:subject :cat_general ;
     void:uriSpace "http://ontology.ipbes.net/report/";
