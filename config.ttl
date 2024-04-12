@@ -74,7 +74,7 @@
     skosmos:shortName "IPBES";
     dc:subject :cat_general ;
     void:uriSpace "https://vocabulary.informea.org/ipbes/";
-    skosmos:language "ar", "en", "es", "fr", "ru", "zh";
+    skosmos:language "en", "es", "fr", "ru";
     skosmos:defaultLanguage "en";
     skosmos:showTopConcepts true ;`
     skosmos:fullAlphabeticalIndex true ;
