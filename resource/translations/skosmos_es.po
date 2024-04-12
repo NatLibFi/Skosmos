@@ -1,7 +1,7 @@
-# 
+# Translators:
 # Translators:
 # Karna Wegner <karna.wegner@fao.org>, 2015
-# Meron E. <m.ewketu@unesco.org>, 2020
+# Meron E. <m.ewketu@unesco.org>, 2020,2023
 # osma <osma.suominen@helsinki.fi>, 2015,2017,2020
 # Wilmer Arturo Moyano <wilmer.moyano@gmail.com>, 2015
 # Yksityis Yrittäjä <okko.vainonen@helsinki.fi>, 2021
@@ -11,8 +11,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-16 10:26+0200\n"
 "PO-Revision-Date: 2015-06-18 07:06+0000\n"
-"Last-Translator: Yksityis Yrittäjä <okko.vainonen@helsinki.fi>, 2021\n"
-"Language-Team: Spanish (http://www.transifex.com/national-library-of-finland/skosmos/language/es/)\n"
+"Last-Translator: Meron E. <m.ewketu@unesco.org>, 2020,2023\n"
+"Language-Team: Spanish (http://app.transifex.com/national-library-of-finland/skosmos/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -202,7 +202,7 @@ msgstr "Deje este campo en blanco"
 
 #: /tmp/cache/587c83c09abaa/c7/c7175f1dcd0b8bfa06a77b42c0566cc09ea4bf4805eb07a09448ad205bfcceea.php:594
 msgid "Limit search"
-msgstr "Delimte la búsqueda"
+msgstr "Delimite la búsqueda"
 
 #: /tmp/cache/587c83c09abaa/f2/f29f57cf31b29541d6f810d43d1f7a07e79cfddcf23678f04612a410c0f0607b.php:31
 msgid "Loading"

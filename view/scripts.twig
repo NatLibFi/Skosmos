@@ -1,0 +1,72 @@
+<script>
+<!-- translations needed in javascript -->
+var noResultsTranslation = "{% trans %}No results{% endtrans %}";
+var loading_text = "{% trans %}Loading more items{% endtrans %}";
+var loading_failed_text = "{% trans %}Error: Loading more items failed!{% endtrans %}";
+var loading_retry_text = "{% trans %}Retry{% endtrans %}";
+var jstree_loading = "{% trans %}Loading{% endtrans %} ...";
+var results_disp = "{% trans %}All %d results displayed{% endtrans %}";
+var all_vocabs  = "{% trans %}from all{% endtrans %}";
+var n_selected = "{% trans %}selected{% endtrans %}";
+var missing_value = "{% trans %}Value is required and can not be empty{% endtrans %}";
+var expand_paths = "{% trans %}show all # paths{% endtrans %}";
+var expand_propvals = "{% trans %}show all # values{% endtrans %}";
+var hiertrans = "{% trans "Hier-nav" %}";
+var depr_trans = "{% trans %}Deprecated concept{% endtrans %}";
+var sr_only_translations = {
+  hierarchy_listing: "{% trans "Hierarchical listing of vocabulary concepts" %}",
+  groups_listing: "{% trans "Hierarchical listing of vocabulary concepts and groupings" %}",
+};
+
+<!-- variables passed through to javascript -->
+var lang = "{{ request.lang }}";
+var content_lang = "{{ request.contentLang }}";
+var vocab = "{{ request.vocabid }}";
+{% if parameters %}
+var waypoint_results = {{ parameters.searchLimit }};
+{% endif %}
+{% if request.page == 'page' and search_results and search_results|length == 1 %}
+var uri = "{{ search_results|first.uri }}";
+var prefLabels = [{"lang": "{{ search_results|first.label.lang }}","label": "{{ search_results|first.label }}"}{% for lang in search_results|first.foreignLabels %}{% for literal in lang %}{% if literal.type == 'skos:prefLabel' %},{"lang": "{{literal.lang}}", "label": "{{literal.label}}"}{% endif %}{% endfor %}{% endfor %}];
+{% endif %}
+{% if request.vocab and request.vocab.uriSpace %}
+var uriSpace = "{{ request.vocab.uriSpace }}";
+{% else %}
+var uriSpace = null;
+{% endif %}
+var showNotation = {% if request.vocab and not request.vocab.config.showNotation %}false{% else %}true{% endif %};
+{% if request.vocab  %}
+var sortByNotation = {% if request.vocab.config.sortByNotation %}"{{ request.vocab.config.sortByNotation }}"{% else %}null{% endif %};
+var languageOrder = [{% for lang in request.vocab.config.languageOrder(request.contentLang) %}"{{ lang }}"{% if not loop.last %},{% endif %}{% endfor %}];
+var vocShortName = "{{ request.vocab.config.shortname }}";
+{% endif %}
+var explicitLangCodes = {{ explicit_langcodes ? 'true' : 'false' }};
+{% if plugin_params%}
+var pluginParameters = {{ plugin_params|raw }};
+{% endif %}
+</script>
+
+<script type="application/ld+json">
+{% if search_results and search_results|length == 1 %}
+{{ search_results|first.dumpJsonLd|raw }}
+{% else %}
+{}
+{% endif %}
+</script>
+<script src="vendor/components/jquery/jquery.min.js"></script>
+<script src="vendor/components/handlebars.js/handlebars.min.js"></script>
+<script src="vendor/vakata/jstree/dist/jstree.min.js"></script>
+<script src="vendor/twitter/typeahead.js/dist/typeahead.bundle.min.js"></script>
+<script src="vendor/davidstutz/bootstrap-multiselect/dist/js/bootstrap-multiselect.min.js"></script>
+<script src="vendor/twbs/bootstrap/dist/js/bootstrap.bundle.js"></script>
+<script src="vendor/etdsolutions/waypoints/jquery.waypoints.min.js"></script>
+<script src="vendor/newerton/jquery-mousewheel/jquery.mousewheel.min.js"></script>
+<script src="vendor/pamelafox/lscache/lscache.min.js"></script>
+<script src="resource/js/config.js"></script>
+<script src="resource/js/hierarchy.js"></script>
+<script src="resource/js/groups.js"></script>
+<script src="resource/js/scripts.js"></script>
+{% for files in request.plugins.pluginsJS %}{% for file in files %}<script src="{{ file }}"></script>{% endfor %}{% endfor %}
+{% if request.plugins.callbacks %}<script>var pluginCallbacks = [{% for function in request.plugins.callbacks %}{% if not loop.first %}, {% endif %}"{{ function }}"{% endfor %}];</script>{% endif %}
+<script src="resource/js/docready.js"></script>
+

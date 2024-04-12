@@ -1,9 +1,10 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+use \PHPUnit\Framework\TestCase;
 
 class Http304Test extends TestCase
 {
+
     /**
      * @var \Mockery\Mock|Model
      */
@@ -33,7 +34,13 @@ class Http304Test extends TestCase
      */
     public function initObjects(string $vocabularyName)
     {
-        $this->model = Mockery::mock(new Model(new GlobalConfig('/../../tests/testconfig.ttl')))->makePartial();
+        putenv("LANGUAGE=en_GB.utf8");
+        putenv("LC_ALL=en_GB.utf8");
+        setlocale(LC_ALL, 'en_GB.utf8');
+        bindtextdomain('skosmos', 'resource/translations');
+        bind_textdomain_codeset('skosmos', 'UTF-8');
+        textdomain('skosmos');
+        $this->model = Mockery::mock(new Model(new GlobalConfig('/../tests/testconfig.ttl')))->makePartial();
         $this->vocab = Mockery::mock($this->model->getVocabulary($vocabularyName))->makePartial();
         $this->controller = Mockery::mock('WebController')
             ->shouldAllowMockingProtectedMethods()
@@ -49,7 +56,7 @@ class Http304Test extends TestCase
         $mockedTemplate = Mockery::mock();
         $mockedTemplate->shouldReceive("render")->andReturn("rendered");
         $this->twig->allows([
-            "load" => $mockedTemplate
+            "loadTemplate" => $mockedTemplate
         ]);
         $this->controller->twig = $this->twig;
     }
@@ -73,15 +80,17 @@ class Http304Test extends TestCase
             ->shouldReceive("getConceptURI")
             ->andReturn("");
 
+        $concepts = [];
         $concept = Mockery::mock("Concept")->makePartial();
         $concept->allows([
             "getType" => ["skos:Concept"]
         ]);
         $concept->shouldReceive("getVocab")
             ->andReturn($this->vocab);
+        $concepts[] = $concept;
         $this->vocab
             ->shouldReceive("getConceptInfo")
-            ->andReturn($concept);
+            ->andReturn($concepts);
         $this->vocab
             ->shouldReceive("getBreadCrumbs")
             ->andReturn([
@@ -117,15 +126,17 @@ class Http304Test extends TestCase
             ->shouldReceive("getConceptURI")
             ->andReturn("");
 
+        $concepts = [];
         $concept = Mockery::mock("Concept")->makePartial();
         $concept->allows([
             "getType" => ["skos:Concept"]
         ]);
         $concept->shouldReceive("getVocab")
             ->andReturn($this->vocab);
+        $concepts[] = $concept;
         $this->vocab
             ->shouldReceive("getConceptInfo")
-            ->andReturn($concept);
+            ->andReturn($concepts);
         $this->vocab
             ->shouldReceive("getBreadCrumbs")
             ->andReturn([
@@ -171,15 +182,17 @@ class Http304Test extends TestCase
             ->shouldReceive("getConceptURI")
             ->andReturn("");
 
+        $concepts = [];
         $concept = Mockery::mock("Concept")->makePartial();
         $concept->allows([
             "getType" => ["skos:Concept"]
         ]);
         $concept->shouldReceive("getVocab")
             ->andReturn($this->vocab);
+        $concepts[] = $concept;
         $this->vocab
             ->shouldReceive("getConceptInfo")
-            ->andReturn($concept);
+            ->andReturn($concepts);
         $this->vocab
             ->shouldReceive("getBreadCrumbs")
             ->andReturn([
@@ -217,7 +230,7 @@ class Http304Test extends TestCase
         $this->assertEquals("", $content);
     }
 
-    public function tearDown(): void
+    public function tearDown() : void
     {
         parent::tearDown();
         \Mockery::close();

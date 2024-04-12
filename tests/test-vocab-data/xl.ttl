@@ -27,3 +27,13 @@ xl:d1
     rdf:value "Unit of thought"@en ;
     dct:modified "2018-04-13T10:29:03+00:00"^^xsd:dateTime ;
     dc:source <https://en.wikipedia.org/wiki/Concept> .
+
+xl:c2 a skos:Concept ;
+    skos:prefLabel "Ontology"@en, "Ontologia"@fi ;
+    skos:altLabel "Onto"@en, "Onto"@fi ;
+    skosxl:altLabel xl:l3 .
+
+xl:l3 a skosxl:Label ;
+    skosxl:literalForm "Onto"@en ;
+    dct:modified "2018-04-13T10:29:03+00:00"^^xsd:dateTime ;
+    dc:source <https://en.wikipedia.org/wiki/Ontology> .

@@ -25,8 +25,6 @@ services:
   fuseki-cache:
     hostname: fuseki-cache
     image: varnish
-    security_opt:
-      - seccomp:unconfined
     ports:
       - ${CACHE_PORT:-9031}:80
     volumes:
@@ -40,6 +38,9 @@ services:
       dockerfile: dockerfiles/Dockerfile.ubuntu
     ports:
       - ${SKOSMOS_PORT:-9090}:80
+    depends_on:
+      - fuseki
+      - fuseki-cache
     volumes:
       - type: bind
         source: ./dockerfiles/config/config-docker-compose.ttl

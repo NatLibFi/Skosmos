@@ -10,16 +10,13 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
     private $config;
     /** @var GlobalConfig */
     private $configWithDefaults;
-    /** @var GlobalConfig */
-    private $configWithBaseHref;
 
-    protected function setUp(): void
+    protected function setUp() : void
     {
-        $this->config = new GlobalConfig('/../../tests/testconfig.ttl');
+        $this->config = new GlobalConfig('/../tests/testconfig.ttl');
         $this->assertNotNull($this->config->getCache());
         $this->assertNotNull($this->config->getGraph());
-        $this->configWithDefaults = new GlobalConfig('/../../tests/testconfig-fordefaults.ttl');
-        $this->configWithBaseHref = new GlobalConfig('/../../tests/testconfig-basehref.ttl');
+        $this->configWithDefaults = new GlobalConfig('/../tests/testconfig-fordefaults.ttl');
     }
 
     // --- tests for values that are overriding default values
@@ -56,12 +53,12 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
 
     public function testGetBaseHref()
     {
-        $this->assertEquals("http://tests.localhost/Skosmos/", $this->configWithBaseHref->getBaseHref());
+        $this->assertEquals("http://tests.localhost/Skosmos/", $this->config->getBaseHref());
     }
 
     public function testGetLanguages()
     {
-        $this->assertEquals(array('en' => 'en_GB.utf8', 'fi' => 'fi_FI.utf8', 'fr' => 'fr_FR.utf8', 'sv' => 'sv_SE.utf8'), $this->config->getLanguages());
+        $this->assertEquals(array('en' => 'en_GB.utf8', 'fi' => 'fi_FI.utf8', 'fr' => 'fr_FR.utf8'), $this->config->getLanguages());
     }
 
     public function testGetSearchResultsSize()
@@ -139,14 +136,14 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
     public function testInitializeConfigWithoutGraph()
     {
         $this->expectOutputString('Error: config.ttl must have exactly one skosmos:Configuration');
-        $conf = new GlobalConfig('/../../tests/testconfig-nograph.ttl');
+        $conf = new GlobalConfig('/../tests/testconfig-nograph.ttl');
         $this->assertNotNull($conf);
     }
 
     public function testInexistentFile()
     {
         $this->expectOutputString('Error: config.ttl file is missing, please provide one.');
-        $conf = new GlobalConfig('/../../tests/testconfig-idonotexist.ttl');
+        $conf = new GlobalConfig('/../tests/testconfig-idonotexist.ttl');
         $this->assertNotNull($conf);
     }
 
@@ -177,3 +174,4 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
         $this->assertEquals("Skosmos", $this->configWithDefaults->getServiceName());
     }
 }
+

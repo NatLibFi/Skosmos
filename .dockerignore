@@ -6,7 +6,7 @@ components
 plugins/*
 composer.phar
 composer.lock
-node_modules
+tests/jena-fuseki*
 .vagrant
 .project
 .DS_Store

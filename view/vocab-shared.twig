@@ -1,0 +1,93 @@
+<div class="container">
+  <div id="vocab-info">
+    <div>
+      <h2>{% trans "Vocabulary information" %}</h2>
+      <hr />
+    </div>
+    {% set vocabInfo = vocab.info(request.contentLang) %}
+    {% if not vocabInfo %}
+    <div class="alert alert-danger" role="alert">
+        {% trans "Error: Failed to retrieve vocabulary information!" %}
+    </div>
+    {% else %}
+    <div class="vocab-info-literals">
+      <div class="table">
+        {% for key, values in vocabInfo %}
+        {% set keytrans = key %}
+        <div class="row">
+          <div class="property-label versal"><h3>{{ keytrans|trans }}</h3><div class="property-divider"></div></div>
+          <div class="property-value-column versal">
+            {% for val in values %}
+            <div class="property-value-wrapper">
+              {% if val.get('skosmos:vocab') %}
+              <a href="{{ val.uri | link_url(val.get('skosmos:vocab').value,request.lang,'page',request.contentLang) }}">{{ val.get('skosmos:label') }}</a>
+              {% elseif val.label %}
+              <a href="{{ val.uri }}">
+                {% if val.label(request.contentLang) %}{{ val.label(request.contentLang) }}
+                {% else %}{{ val.label }}
+                {% endif %}
+              </a>
+              {% elseif val matches '|^(https?://)|' %}<a href="{{ val }}">{{ val }}</a>
+              {% elseif val matches '|<\\w*\\b[^>]*>|' %}{{ val|raw|nl2br }}
+              {% else %}{{ val|nl2br }}
+              {% endif %}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endfor %}
+        <div class="row">
+          <div class="property-label versal"><h3>URI</h3></div>
+          <div class="property-value-column versal">
+            <div class="property-value-wrapper">
+              <span class="uri-input-box">{{ vocab.defaultConceptScheme }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    {% if vocab.config.showStatistics %}
+    <div>
+      <h3>{% trans "Resource counts by type" %}</h3>
+      <table class="table" id="counts">
+        <tr><th class="versal">{% trans "Type" %}</th><th class="versal">{% trans "Count" %}</th></tr>
+      </table>
+      <h3>{% trans "Term counts by language" %}</h3>
+      <table class="table" id="statistics">
+      <tr>
+        <th class="versal">{% trans "Concept language" %}</th>
+        <th class="versal">{% trans "Preferred terms" %}</th>
+        <th class="versal">{% trans "Alternate terms" %}</th>
+        <th class="versal">{% trans "Hidden terms" %}</th>
+      </tr>
+      </table>
+    </div>
+    {% endif %}
+    {% if vocab.config.dataURLs %}
+    {% apply spaceless %}
+    <div class="download-links">
+      <span class="versal">{% trans %}Download this vocabulary:{% endtrans %}</span>
+        {% if 'application/rdf+xml' in vocab.config.dataURLs|keys %}
+          <a href="rest/v1/{{ request.vocabid }}/data?format=application/rdf%2Bxml">RDF/XML</a>
+        {% endif %}
+        {% if 'text/turtle' in vocab.config.dataURLs|keys %}
+          <a href="rest/v1/{{ request.vocabid }}/data?format=text/turtle">TURTLE</a>
+        {% endif %}
+        {% if 'application/ld+json' in vocab.config.dataURLs|keys %}
+          <a href="rest/v1/{{ request.vocabid }}/data?format=application%2Fld%2Bjson">JSON-LD</a>
+        {% endif %}
+        {% if 'application/marcxml+xml' in vocab.config.dataURLs|keys %}
+            {% if vocab.config.dataURLs['application/marcxml+xml'] is iterable %}
+                {% for key, values in vocab.config.dataURLs['application/marcxml+xml'] %}
+                    <a href="rest/v1/{{ request.vocabid }}/data?format=application/marcxml%2Bxml&lang={{key}}">MARCXML/{{ key | lang_name(request.lang) }}</a>
+                {% endfor %}
+            {% else %}
+                <a href="rest/v1/{{ request.vocabid }}/data?format=application/marcxml%2Bxml">MARCXML</a>
+            {% endif %}
+        {% endif %}
+    </div>
+    {% endapply %}
+    {% endif %}
+  </div>
+</div>

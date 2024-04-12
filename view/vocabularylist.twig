@@ -1,0 +1,26 @@
+<div id="vocabulary-list">
+  <div class="logo-header">
+  {% if request.vocabList|length == 0 %}
+  <h2>{% trans "No vocabularies on the server!" %}</h2>
+  {% else %}
+    {% if category_label %}
+    <h2>{{ category_label }}</h2>
+    {% else %}
+    <h2>{% trans "Available vocabularies and ontologies" %}</h2>
+    {% endif %}
+  </div>
+  <div class="vocabularies">
+    {% for vocabClassName,vocabArray in request.vocabList %}
+    <div class="vocab-category">
+      <h3>{{ vocabClassName }}</h3>
+      <ul>
+      {% for vocab in vocabArray %}
+        <li><a class="navigation-font" href="{{ vocab.id }}/{{ request.lang }}/{% if request.contentLang != request.lang and request.contentLang != '' and request.contentLang in vocab.config.languages %}?clang={{ request.contentLang }}{% endif %}">{{ vocab.title }}</a></li>
+      {% endfor %}
+      </ul>
+    </div>
+    {% if not loop.last %}<div class="vocabulary-separator"></div>{% endif %}
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>

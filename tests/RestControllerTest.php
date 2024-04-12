@@ -1,41 +1,52 @@
 <?php
 
+require_once('model/GlobalConfig.php');
+require_once('model/Model.php');
+require_once('model/Request.php');
+require_once('controller/RestController.php');
+
 class RestControllerTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var Model
-     */
-    private $model;
-    /**
-     * @var RestController
-     */
-    private $controller;
-    protected function setUp(): void
-    {
-        $globalConfig = new GlobalConfig('/../../tests/testconfig.ttl');
-        $this->model = Mockery::mock(new Model($globalConfig));
-        $this->controller = new RestController($this->model);
-    }
+  /**
+   * @var Model
+   */
+  private $model;
+  /**
+   * @var RestController
+   */
+  private $controller;
+  protected function setUp() : void
+  {
+    putenv("LANGUAGE=en_GB.utf8");
+    putenv("LC_ALL=en_GB.utf8");
+    setlocale(LC_ALL, 'en_GB.utf8');
+    bindtextdomain('skosmos', 'resource/translations');
+    bind_textdomain_codeset('skosmos', 'UTF-8');
+    textdomain('skosmos');
 
-    protected function tearDown(): void
-    {
-        ob_clean();
-    }
+    $globalConfig = new GlobalConfig('/../tests/testconfig.ttl');
+    $this->model = Mockery::mock(new Model($globalConfig));
+    $this->controller = new RestController($this->model);
+  }
 
-    /**
-     * @covers RestController::data
-     */
-    public function testDataAsJson()
-    {
-        $request = new Request($this->model);
-        $request->setQueryParam('format', 'application/json');
-        $request->setURI('http://www.skosmos.skos/test/ta117');
-        $request->setVocab("test");
-        $this->controller->data($request);
+  protected function tearDown() : void
+  {
+    ob_clean();
+  }
 
-        $out = $this->getActualOutput();
+  /**
+   * @covers RestController::data
+   */
+  public function testDataAsJson() {
+    $request = new Request($this->model);
+    $request->setQueryParam('format', 'application/json');
+    $request->setURI('http://www.skosmos.skos/test/ta117');
+    $request->setVocab("test");
+    $this->controller->data($request);
 
-        $expected = <<<EOD
+    $out = $this->getActualOutput();
+
+    $expected = <<<EOD
 {
    "@context":{
       "skos":"http://www.w3.org/2004/02/skos/core#",
@@ -143,22 +154,21 @@ class RestControllerTest extends \PHPUnit\Framework\TestCase
 }
 EOD;
 
-        $this->assertJsonStringEqualsJsonString($expected, $out);
-    }
+    $this->assertJsonStringEqualsJsonString($expected, $out);
+  }
 
-    /**
-     * @covers RestController::search
-     */
-    public function testSearchJsonLd()
-    {
-        $request = new Request($this->model);
-        $request->setQueryParam('format', 'application/json');
-        $request->setQueryParam('query', '*bass');
-        $this->controller->search($request);
+  /**
+   * @covers RestController::search
+   */
+  public function testSearchJsonLd() {
+    $request = new Request($this->model);
+    $request->setQueryParam('format', 'application/json');
+    $request->setQueryParam('query', '*bass');
+    $this->controller->search($request);
 
-        $out = $this->getActualOutput();
+    $out = $this->getActualOutput();
 
-        $expected = <<<EOD
+    $expected = <<<EOD
 {
    "@context":{
       "skos":"http://www.w3.org/2004/02/skos/core#",
@@ -210,23 +220,22 @@ EOD;
 }
 EOD;
 
-        $this->assertJsonStringEqualsJsonString($expected, $out);
-    }
+    $this->assertJsonStringEqualsJsonString($expected, $out);
+  }
 
-    /**
-     * @covers RestController::search
-     */
-    public function testSearchJsonLdWithAdditionalFields()
-    {
-        $request = new Request($this->model);
-        $request->setQueryParam('format', 'application/json');
-        $request->setQueryParam('query', '*bass');
-        $request->setQueryParam('fields', 'broader relatedMatch');
-        $this->controller->search($request);
+  /**
+   * @covers RestController::search
+   */
+  public function testSearchJsonLdWithAdditionalFields() {
+    $request = new Request($this->model);
+    $request->setQueryParam('format', 'application/json');
+    $request->setQueryParam('query', '*bass');
+    $request->setQueryParam('fields', 'broader relatedMatch');
+    $this->controller->search($request);
 
-        $out = $this->getActualOutput();
+    $out = $this->getActualOutput();
 
-        $expected = <<<EOD
+    $expected = <<<EOD
 {
    "@context":{
       "skos":"http://www.w3.org/2004/02/skos/core#",
@@ -300,59 +309,56 @@ EOD;
 }
 EOD;
 
-        $this->assertJsonStringEqualsJsonString($expected, $out);
+    $this->assertJsonStringEqualsJsonString($expected, $out);
+  }
+
+  /**
+   * Data provider for testSearchWithZero test.
+   */
+  public function provideSearchWithZeroData(): array {
+    return [
+      ['0', true],
+      ['1', true],
+      ['-1', true],
+      ['skosmos', true],
+      ['', false],
+      [' ', false]
+    ];
+  }
+
+  /**
+   * @covers RestController::search
+   * @dataProvider provideSearchWithZeroData
+   * @param $query string the search query
+   * @param $isSuccess bool whether the request must succeed or fail
+   */
+  public function testSearchWithZero(string $query, bool $isSuccess) {
+    $request = new Request($this->model);
+    $request->setQueryParam('format', 'application/json');
+    $request->setQueryParam('query', $query);
+    $request->setQueryParam('fields', 'broader relatedMatch');
+    $this->controller->search($request);
+
+    $out = $this->getActualOutput();
+    if ($isSuccess) {
+      $this->assertStringNotContainsString("400 Bad Request", $out, "The REST search call returned an unexpected 400 bad request error!");
+    } else {
+      $this->assertStringContainsString("400 Bad Request", $out, "The REST search call DID NOT return an expected 400 bad request error!");
     }
+  }
 
-    /**
-     * Data provider for testSearchWithZero test.
-     */
-    public function provideSearchWithZeroData(): array
-    {
-        return [
-          ['0', true],
-          ['1', true],
-          ['-1', true],
-          ['skosmos', true],
-          ['', false],
-          [' ', false]
-        ];
-    }
+  /**
+   * @covers RestController::indexLetters
+   */
+  public function testIndexLettersJsonLd() {
+    $request = new Request($this->model);
+    $request->setVocab('test');
+    $request->setLang('en');
+    $this->controller->indexLetters($request);
 
-    /**
-     * @covers RestController::search
-     * @dataProvider provideSearchWithZeroData
-     * @param $query string the search query
-     * @param $isSuccess bool whether the request must succeed or fail
-     */
-    public function testSearchWithZero(string $query, bool $isSuccess)
-    {
-        $request = new Request($this->model);
-        $request->setQueryParam('format', 'application/json');
-        $request->setQueryParam('query', $query);
-        $request->setQueryParam('fields', 'broader relatedMatch');
-        $this->controller->search($request);
+    $out = $this->getActualOutput();
 
-        $out = $this->getActualOutput();
-        if ($isSuccess) {
-            $this->assertStringNotContainsString("400 Bad Request", $out, "The REST search call returned an unexpected 400 bad request error!");
-        } else {
-            $this->assertStringContainsString("400 Bad Request", $out, "The REST search call DID NOT return an expected 400 bad request error!");
-        }
-    }
-
-    /**
-     * @covers RestController::indexLetters
-     */
-    public function testIndexLettersJsonLd()
-    {
-        $request = new Request($this->model);
-        $request->setVocab('test');
-        $request->setLang('en');
-        $this->controller->indexLetters($request);
-
-        $out = $this->getActualOutput();
-
-        $expected = <<<EOD
+    $expected = <<<EOD
 {
    "@context":{
       "skos":"http://www.w3.org/2004/02/skos/core#",
@@ -378,22 +384,21 @@ EOD;
 }
 EOD;
 
-        $this->assertJsonStringEqualsJsonString($expected, $out);
-    }
+    $this->assertJsonStringEqualsJsonString($expected, $out);
+  }
 
-    /**
-     * @covers RestController::indexConcepts
-     */
-    public function testIndexConceptsJsonLd()
-    {
-        $request = new Request($this->model);
-        $request->setVocab('test');
-        $request->setLang('en');
-        $this->controller->indexConcepts("B", $request);
+  /**
+   * @covers RestController::indexConcepts
+   */
+  public function testIndexConceptsJsonLd() {
+    $request = new Request($this->model);
+    $request->setVocab('test');
+    $request->setLang('en');
+    $this->controller->indexConcepts("B", $request);
 
-        $out = $this->getActualOutput();
+    $out = $this->getActualOutput();
 
-        $expected = <<<EOD
+    $expected = <<<EOD
 {
    "@context":{
       "skos":"http://www.w3.org/2004/02/skos/core#",
@@ -428,23 +433,22 @@ EOD;
 }
 EOD;
 
-        $this->assertJsonStringEqualsJsonString($expected, $out);
-    }
+    $this->assertJsonStringEqualsJsonString($expected, $out);
+  }
 
-    /**
-     * @covers RestController::indexConcepts
-     */
-    public function testIndexConceptsJsonLdLimit()
-    {
-        $request = new Request($this->model);
-        $request->setVocab('test');
-        $request->setLang('en');
-        $request->setQueryParam('limit', '2');
-        $this->controller->indexConcepts("B", $request);
+  /**
+   * @covers RestController::indexConcepts
+   */
+  public function testIndexConceptsJsonLdLimit() {
+    $request = new Request($this->model);
+    $request->setVocab('test');
+    $request->setLang('en');
+    $request->setQueryParam('limit', '2');
+    $this->controller->indexConcepts("B", $request);
 
-        $out = $this->getActualOutput();
+    $out = $this->getActualOutput();
 
-        $expected = <<<EOD
+    $expected = <<<EOD
 {
    "@context":{
       "skos":"http://www.w3.org/2004/02/skos/core#",
@@ -473,23 +477,22 @@ EOD;
 }
 EOD;
 
-        $this->assertJsonStringEqualsJsonString($expected, $out);
-    }
+    $this->assertJsonStringEqualsJsonString($expected, $out);
+  }
 
-    /**
-     * @covers RestController::indexConcepts
-     */
-    public function testIndexConceptsJsonLdOffset()
-    {
-        $request = new Request($this->model);
-        $request->setVocab('test');
-        $request->setLang('en');
-        $request->setQueryParam('offset', '1');
-        $this->controller->indexConcepts("B", $request);
+  /**
+   * @covers RestController::indexConcepts
+   */
+  public function testIndexConceptsJsonLdOffset() {
+    $request = new Request($this->model);
+    $request->setVocab('test');
+    $request->setLang('en');
+    $request->setQueryParam('offset', '1');
+    $this->controller->indexConcepts("B", $request);
 
-        $out = $this->getActualOutput();
+    $out = $this->getActualOutput();
 
-        $expected = <<<EOD
+    $expected = <<<EOD
 {
    "@context":{
       "skos":"http://www.w3.org/2004/02/skos/core#",
@@ -518,24 +521,23 @@ EOD;
 }
 EOD;
 
-        $this->assertJsonStringEqualsJsonString($expected, $out);
-    }
+    $this->assertJsonStringEqualsJsonString($expected, $out);
+  }
 
-    /**
-     * @covers RestController::indexConcepts
-     */
-    public function testIndexConceptsJsonLdLimitOffset()
-    {
-        $request = new Request($this->model);
-        $request->setVocab('test');
-        $request->setLang('en');
-        $request->setQueryParam('limit', '1');
-        $request->setQueryParam('offset', '1');
-        $this->controller->indexConcepts("B", $request);
+  /**
+   * @covers RestController::indexConcepts
+   */
+  public function testIndexConceptsJsonLdLimitOffset() {
+    $request = new Request($this->model);
+    $request->setVocab('test');
+    $request->setLang('en');
+    $request->setQueryParam('limit', '1');
+    $request->setQueryParam('offset', '1');
+    $this->controller->indexConcepts("B", $request);
 
-        $out = $this->getActualOutput();
+    $out = $this->getActualOutput();
 
-        $expected = <<<EOD
+    $expected = <<<EOD
 {
    "@context":{
       "skos":"http://www.w3.org/2004/02/skos/core#",
@@ -558,24 +560,23 @@ EOD;
 }
 EOD;
 
-        $this->assertJsonStringEqualsJsonString($expected, $out);
-    }
+    $this->assertJsonStringEqualsJsonString($expected, $out);
+  }
 
-     /**
-     * @covers RestController::label
-     */
-    public function testLabelOnePrefOneAltLabel()
-    {
-        $request = new Request($this->model);
-        $request->setQueryParam('format', 'application/json');
-        $request->setURI('http://www.skosmos.skos/test/ta112');
-        $request->setVocab('test');
-        $request->setLang('en');
+   /**
+   * @covers RestController::label
+   */
+  public function testLabelOnePrefOneAltLabel() {
+      $request = new Request($this->model);
+      $request->setQueryParam('format', 'application/json');
+      $request->setURI('http://www.skosmos.skos/test/ta112');
+      $request->setVocab('test');
+      $request->setLang('en');
 
-        $this->controller->label($request);
-        $out = $this->getActualOutput();
+      $this->controller->label($request);
+      $out = $this->getActualOutput();
 
-        $expected = <<<EOD
+      $expected = <<<EOD
  {"@context": {
          "skos": "http://www.w3.org/2004/02/skos/core#",
          "uri": "@id",
@@ -592,23 +593,22 @@ EOD;
      ]
  }
 EOD;
-        $this->assertJsonStringEqualsJsonString($expected, $out);
-    }
+      $this->assertJsonStringEqualsJsonString($expected, $out);
+  }
 
-     /**
-     * @covers RestController::label
-     */
-    public function testLabelGlobal()
-    {
-        $request = new Request($this->model);
-        $request->setQueryParam('format', 'application/json');
-        $request->setURI('http://www.skosmos.skos/test/ta112');
-        $request->setLang('en');
+   /**
+   * @covers RestController::label
+   */
+  public function testLabelGlobal() {
+      $request = new Request($this->model);
+      $request->setQueryParam('format', 'application/json');
+      $request->setURI('http://www.skosmos.skos/test/ta112');
+      $request->setLang('en');
 
-        $this->controller->label($request);
-        $out = $this->getActualOutput();
+      $this->controller->label($request);
+      $out = $this->getActualOutput();
 
-        $expected = <<<EOD
+      $expected = <<<EOD
  {"@context": {
          "skos": "http://www.w3.org/2004/02/skos/core#",
          "uri": "@id",
@@ -625,41 +625,39 @@ EOD;
      ]
  }
 EOD;
-        $this->assertJsonStringEqualsJsonString($expected, $out);
-    }
+      $this->assertJsonStringEqualsJsonString($expected, $out);
+  }
 
-     /**
-     * @covers RestController::label
-     */
-    public function testLabelGlobalNonexistentVocab()
-    {
-        $request = new Request($this->model);
-        $request->setQueryParam('format', 'application/json');
-        $request->setURI('http://www.skosmos.skos/nonexistent/vocab');
-        $request->setLang('en');
+   /**
+   * @covers RestController::label
+   */
+  public function testLabelGlobalNonexistentVocab() {
+      $request = new Request($this->model);
+      $request->setQueryParam('format', 'application/json');
+      $request->setURI('http://www.skosmos.skos/nonexistent/vocab');
+      $request->setLang('en');
 
-        $this->controller->label($request);
-        $out = $this->getActualOutput();
+      $this->controller->label($request);
+      $out = $this->getActualOutput();
 
-        $expected = "404 Not Found : Could not find concept <http://www.skosmos.skos/nonexistent/vocab>";
-        $this->assertEquals($expected, $out);
-    }
+      $expected = "404 Not Found : Could not find concept <http://www.skosmos.skos/nonexistent/vocab>";
+      $this->assertEquals($expected, $out);
+  }
 
-    /**
-     * @covers RestController::label
-     */
-    public function testLabelOnePrefOneHiddenLabel()
-    {
-        $request = new Request($this->model);
-        $request->setQueryParam('format', 'application/json');
-        $request->setURI('http://www.skosmos.skos/test/ta112');
-        $request->setVocab('test');
-        $request->setLang('fi');
+  /**
+   * @covers RestController::label
+   */
+  public function testLabelOnePrefOneHiddenLabel() {
+      $request = new Request($this->model);
+      $request->setQueryParam('format', 'application/json');
+      $request->setURI('http://www.skosmos.skos/test/ta112');
+      $request->setVocab('test');
+      $request->setLang('fi');
 
-        $this->controller->label($request);
-        $out = $this->getActualOutput();
+      $this->controller->label($request);
+      $out = $this->getActualOutput();
 
-        $expected = <<<EOD
+      $expected = <<<EOD
  {"@context": {
          "skos": "http://www.w3.org/2004/02/skos/core#",
          "uri": "@id",
@@ -676,24 +674,23 @@ EOD;
      ]
  }
 EOD;
-        $this->assertJsonStringEqualsJsonString($expected, $out);
-    }
+      $this->assertJsonStringEqualsJsonString($expected, $out);
+  }
 
-    /**
-     * @covers RestController::label
-     */
-    public function testLabelOnePrefLabel()
-    {
-        $request = new Request($this->model);
-        $request->setQueryParam('format', 'application/json');
-        $request->setURI('http://www.skosmos.skos/test/ta111');
-        $request->setVocab('test');
-        $request->setLang('en');
+  /**
+   * @covers RestController::label
+   */
+  public function testLabelOnePrefLabel() {
+      $request = new Request($this->model);
+      $request->setQueryParam('format', 'application/json');
+      $request->setURI('http://www.skosmos.skos/test/ta111');
+      $request->setVocab('test');
+      $request->setLang('en');
 
-        $this->controller->label($request);
-        $out = $this->getActualOutput();
+      $this->controller->label($request);
+      $out = $this->getActualOutput();
 
-        $expected = <<<EOD
+      $expected = <<<EOD
  {"@context": {
          "skos": "http://www.w3.org/2004/02/skos/core#",
          "uri": "@id",
@@ -707,24 +704,23 @@ EOD;
     "prefLabel": "Tuna"
  }
 EOD;
-        $this->assertJsonStringEqualsJsonString($expected, $out);
-    }
+      $this->assertJsonStringEqualsJsonString($expected, $out);
+  }
 
-    /**
-     * @covers RestController::label
-     */
-    public function testLabelNoPrefLabel()
-    {
-        $request = new Request($this->model);
-        $request->setQueryParam('format', 'application/json');
-        $request->setURI('http://www.skosmos.skos/test/ta111');
-        $request->setVocab('test');
-        $request->setLang('sv');
+  /**
+   * @covers RestController::label
+   */
+  public function testLabelNoPrefLabel() {
+      $request = new Request($this->model);
+      $request->setQueryParam('format', 'application/json');
+      $request->setURI('http://www.skosmos.skos/test/ta111');
+      $request->setVocab('test');
+      $request->setLang('sv');
 
-        $this->controller->label($request);
-        $out = $this->getActualOutput();
+      $this->controller->label($request);
+      $out = $this->getActualOutput();
 
-        $expected = <<<EOD
+      $expected = <<<EOD
  {"@context": {
          "skos": "http://www.w3.org/2004/02/skos/core#",
          "uri": "@id",
@@ -737,44 +733,42 @@ EOD;
     "uri": "http://www.skosmos.skos/test/ta111"
  }
 EOD;
-        $this->assertJsonStringEqualsJsonString($expected, $out);
-    }
+      $this->assertJsonStringEqualsJsonString($expected, $out);
+  }
 
-    /**
-     * @covers RestController::label
-     */
-    public function testLabelNoConcept()
-    {
-        $request = new Request($this->model);
-        $request->setQueryParam('format', 'application/json');
-        $request->setURI('http://www.skosmos.skos/test/nonexistent');
-        $request->setVocab('test');
-        $request->setLang('en');
+  /**
+   * @covers RestController::label
+   */
+  public function testLabelNoConcept() {
+      $request = new Request($this->model);
+      $request->setQueryParam('format', 'application/json');
+      $request->setURI('http://www.skosmos.skos/test/nonexistent');
+      $request->setVocab('test');
+      $request->setLang('en');
 
-        $this->controller->label($request);
-        $out = $this->getActualOutput();
+      $this->controller->label($request);
+      $out = $this->getActualOutput();
 
-        $expected = "404 Not Found : Could not find concept <http://www.skosmos.skos/test/nonexistent>";
-        $this->assertEquals($expected, $out);
-    }
+      $expected = "404 Not Found : Could not find concept <http://www.skosmos.skos/test/nonexistent>";
+      $this->assertEquals($expected, $out);
+  }
 
-    /**
-     * @covers RestController::newConcepts
-     */
-    public function testNewConcepts()
-    {
-        $request = new Request($this->model);
-        $request->setQueryParam('format', 'application/json');
-        $request->setURI('http://www.skosmos.skos/changes');
-        $request->setVocab('changes');
-        $request->setLang('en');
-        $request->setContentLang('en');
-        $request->setQueryParam('offset', '0');
+  /**
+   * @covers RestController::newConcepts
+   */
+  public function testNewConcepts() {
+    $request = new Request($this->model);
+    $request->setQueryParam('format', 'application/json');
+    $request->setURI('http://www.skosmos.skos/changes');
+    $request->setVocab('changes');
+    $request->setLang('en');
+    $request->setContentLang('en');
+    $request->setQueryParam('offset', '0');
 
-        $this->controller->newConcepts($request);
-        $changeList = $this->getActualOutput();
+    $this->controller->newConcepts($request);
+    $changeList = $this->getActualOutput();
 
-        $expected = <<<EOD
+    $expected = <<<EOD
  {"@context": {
          "skos": "http://www.w3.org/2004/02/skos/core#",
          "uri": "@id",
@@ -815,27 +809,26 @@ EOD;
       ]
  }
 EOD;
-        $this->assertJsonStringEqualsJsonString($changeList, $expected);
+    $this->assertJsonStringEqualsJsonString($changeList, $expected);
 
-    }
+  }
 
-      /**
-     * @covers RestController::modifiedConcepts
-     */
-    public function testModifiedConcepts()
-    {
-        $request = new Request($this->model);
-        $request->setQueryParam('format', 'application/json');
-        $request->setURI('http://www.skosmos.skos/test');
-        $request->setVocab('test');
-        $request->setLang('en');
-        $request->setContentLang('en');
-        $request->setQueryParam('offset', '0');
+    /**
+   * @covers RestController::modifiedConcepts
+   */
+  public function testModifiedConcepts() {
+    $request = new Request($this->model);
+    $request->setQueryParam('format', 'application/json');
+    $request->setURI('http://www.skosmos.skos/test');
+    $request->setVocab('test');
+    $request->setLang('en');
+    $request->setContentLang('en');
+    $request->setQueryParam('offset', '0');
 
-        $this->controller->modifiedConcepts($request);
-        $changeList = $this->getActualOutput();
+    $this->controller->modifiedConcepts($request);
+    $changeList = $this->getActualOutput();
 
-        $expected = <<<EOD
+    $expected = <<<EOD
 {"@context": {
         "skos": "http://www.w3.org/2004/02/skos/core#",
         "uri": "@id",
@@ -848,28 +841,27 @@ EOD;
    "changeList": [ { "uri":"http://www.skosmos.skos/test/ta123", "prefLabel":"multiple broaders", "date":"2014-10-01T16:29:03+0000" } ]
 }
 EOD;
-        $this->assertJsonStringEqualsJsonString($changeList, $expected);
+    $this->assertJsonStringEqualsJsonString($changeList, $expected);
 
-    }
+ }
 
  /**
-     * @covers RestController::modifiedConcepts
-     * @covers RestController::changedConcepts
-     */
-    public function testDeprecatedChanges()
-    {
-        $request = new Request($this->model);
-        $request->setQueryParam('format', 'application/json');
-        $request->setURI('http://www.skosmos.skos/changes');
-        $request->setVocab('changes');
-        $request->setLang('en');
-        $request->setContentLang('en');
-        $request->setQueryParam('offset', '0');
+  * @covers RestController::modifiedConcepts
+  * @covers RestController::changedConcepts
+  */
+  public function testDeprecatedChanges() {
+    $request = new Request($this->model);
+    $request->setQueryParam('format', 'application/json');
+    $request->setURI('http://www.skosmos.skos/changes');
+    $request->setVocab('changes');
+    $request->setLang('en');
+    $request->setContentLang('en');
+    $request->setQueryParam('offset', '0');
 
-        $this->controller->modifiedConcepts($request);
-        $changeList = $this->getActualOutput();
+    $this->controller->modifiedConcepts($request);
+    $changeList = $this->getActualOutput();
 
-        $expected = <<<EOD
+    $expected = <<<EOD
 {"@context": {
         "skos": "http://www.w3.org/2004/02/skos/core#",
         "uri": "@id",
@@ -889,21 +881,20 @@ EOD;
 }
 EOD;
         $this->assertJsonStringEqualsJsonString($changeList, $expected);
-    }
+  }
 
-    /**
-     * @covers RestController::vocabularyStatistics
-     */
-    public function testVocabularyStatistics()
-    {
-        $request = new Request($this->model);
-        $request->setQueryParam('format', 'application/json');
-        $request->setVocab('test');
-        $request->setLang('en');
+  /**
+   * @covers RestController::vocabularyStatistics
+   */
+  public function testVocabularyStatistics() {
+    $request = new Request($this->model);
+    $request->setQueryParam('format', 'application/json');
+    $request->setVocab('test');
+    $request->setLang('en');
 
-        $this->controller->vocabularyStatistics($request);
-        $statistics = $this->getActualOutput();
-        $expected = <<<EOD
+    $this->controller->vocabularyStatistics($request);
+    $statistics = $this->getActualOutput();
+    $expected = <<<EOD
 {
   "@context": {
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
@@ -924,7 +915,7 @@ EOD;
     },
     "count": "void:entities",
     "@language": "en",
-    "@base": "http://:/rest/v1/test/"
+    "@base": "http://tests.localhost/Skosmos/rest/v1/test/"
   },
   "uri": "",
   "id": "test",
@@ -945,6 +936,6 @@ EOD;
   ]
 }
 EOD;
-        $this->assertJsonStringEqualsJsonString($statistics, $expected);
-    }
+    $this->assertJsonStringEqualsJsonString($statistics, $expected);
+  }
 }

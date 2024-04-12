@@ -1,15 +1,15 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+use \PHPUnit\Framework\TestCase;
 
 class WebControllerTest extends TestCase
 {
     private $webController;
     private $model;
 
-    protected function setUp(): void
+    protected function setUp() : void
     {
-        $globalConfig = new GlobalConfig('/../../tests/testconfig.ttl');
+        $globalConfig = new GlobalConfig('/../tests/testconfig.ttl');
         $this->model = Mockery::mock(new Model($globalConfig));
         $this->webController = new WebController($this->model);
     }
@@ -213,9 +213,7 @@ class WebControllerTest extends TestCase
      * @covers WebController::getChangeList
      * @covers WebController::formatChangeList
      */
-    public function testFormatChangeList()
-    {
-        $this->markTestSkipped('disabled since the functionality needs to be reimplemented');
+    public function testFormatChangeList() {
         $request = new Request($this->model);
         $request->setVocab('changes');
         $request->setLang('en');
@@ -225,7 +223,7 @@ class WebControllerTest extends TestCase
         $changeList = $this->webController->getChangeList($request, 'dc:created');
         $months =$this->webController->formatChangeList($changeList, 'en');
 
-        $expected = array('hurr durr' => array('uri' => 'http://www.skosmos.skos/changes/d3', 'prefLabel' => 'Hurr Durr', 'date' => DateTime::__set_state(array('date' => '2010-02-12 10:26:39.000000', 'timezone_type' => 3, 'timezone' => 'UTC')), 'datestring' => 'Feb 12, 2010', 'deprecated' => false), 'second date' => array('uri' => 'http://www.skosmos.skos/changes/d2', 'prefLabel' => 'Second date', 'date' => DateTime::__set_state(array('date' => '2010-02-12 15:26:39.000000', 'timezone_type' => 3, 'timezone' => 'UTC')), 'datestring' => 'Feb 12, 2010', 'deprecated' => false));
+        $expected = array ('hurr durr' => array ('uri' => 'http://www.skosmos.skos/changes/d3', 'prefLabel' => 'Hurr Durr', 'date' => DateTime::__set_state(array('date' => '2010-02-12 10:26:39.000000', 'timezone_type' => 3, 'timezone' => 'UTC')), 'datestring' => 'Feb 12, 2010', 'deprecated' => false), 'second date' => array ('uri' => 'http://www.skosmos.skos/changes/d2', 'prefLabel' => 'Second date', 'date' => DateTime::__set_state(array('date' => '2010-02-12 15:26:39.000000', 'timezone_type' => 3, 'timezone' => 'UTC')), 'datestring' => 'Feb 12, 2010', 'deprecated' => false));
         $this->assertEquals($expected, $months['February 2010']);
     }
 
@@ -257,7 +255,7 @@ class WebControllerTest extends TestCase
 
     public function testGuessLanguageAcceptLanguageBestMatch() {
         $request = new Request($this->model);
-        $request->setServerConstant('HTTP_ACCEPT_LANGUAGE', 'da, de;q=0.9, fi;q=0.8, fr;q=0.5');
+        $request->setServerConstant('HTTP_ACCEPT_LANGUAGE', 'sv, de;q=0.9, fi;q=0.8, fr;q=0.5');
         $guessedLanguage = $this->webController->guessLanguage($request);
         // configured/available languages are en, fi, fr
         // the best matching language for the given Accept-Language is fi

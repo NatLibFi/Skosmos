@@ -1,0 +1,17 @@
+clear
+
+echo 'writing translations: ...'
+
+for file in *.po; do
+	lang=$(echo $file | sed 's/skosmos_\(.*\)\.po/\1/')
+	if [ -n $lang ]; then
+		echo " - $lang"
+		msgfmt skosmos_$lang.po
+		mkdir -p $lang/LC_MESSAGES
+		mv -f messages.mo $lang/LC_MESSAGES/skosmos.mo
+	fi
+done
+
+echo 'translations ready ...'
+
+sudo service apache2 restart
