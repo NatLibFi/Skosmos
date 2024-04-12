@@ -74,9 +74,9 @@
     skosmos:shortName "IPBES";
     dc:subject :cat_general ;
     void:uriSpace "https://vocabulary.informea.org/ipbes/";
-    skosmos:language "en", "es", "fr", "ru";
+    skosmos:language "ar", "en", "es", "fr", "ru", "zh";
     skosmos:defaultLanguage "en";
-    skosmos:showTopConcepts true ;`
+    skosmos:showTopConcepts true ;
     skosmos:fullAlphabeticalIndex true ;
     skosmos:groupClass isothes:ConceptGroup ;
     void:sparqlEndpoint <http://10.208.58.26:3030/skosmos/sparql> ;
