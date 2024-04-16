@@ -40,7 +40,7 @@ const vocabSearch = Vue.createApp({
         <select class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown-item" aria-expanded="false"
           v-model="selectedLanguage"
           @change="changeLang()"
-          aria-label="Select the search language">
+          aria-label="Select search language">
           <option class="dropdown-item" v-for="(value, key) in languageStrings" :value="key">{{ value }}</option>
         </select>
         <input type="search" class="form-control" aria-label="Text input with dropdown button" placeholder="Search..."
