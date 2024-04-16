@@ -1,22 +1,37 @@
 /* global Vue */
+/* global fetchWithAbort */
 
 const conceptMappingsApp = Vue.createApp({
   data () {
     return {
-      mappings: []
+      mappings: {}
     }
   },
   provide: {
     content_lang: window.SKOSMOS.content_lang
   },
+  computed: {
+    hasMappings () {
+      return Object.keys(this.mappings).length > 0
+    }
+  },
   methods: {
     loadMappings () {
-      fetch('rest/v1/' + window.SKOSMOS.vocab + '/mappings?uri=' + window.SKOSMOS.uri + '&external=true&clang=' + window.SKOSMOS.lang + '&lang=' + window.SKOSMOS.content_lang)
+      this.mappings = {} // clear mappings before starting to load new ones
+      const url = 'rest/v1/' + window.SKOSMOS.vocab + '/mappings?uri=' + window.SKOSMOS.uri + '&external=true&clang=' + window.SKOSMOS.lang + '&lang=' + window.SKOSMOS.content_lang
+      fetchWithAbort(url, 'concept')
         .then(data => {
           return data.json()
         })
         .then(data => {
           this.mappings = this.group_by(data.mappings, 'typeLabel')
+        })
+        .catch(error => {
+          if (error.name === 'AbortError') {
+            console.log('Fetching of mappings aborted')
+          } else {
+            throw error
+          }
         })
     },
     // from https://stackoverflow.com/a/71505541
@@ -37,7 +52,9 @@ const conceptMappingsApp = Vue.createApp({
   },
   template: `
     <div v-load-concept-page="loadMappings">
-      <concept-mappings :mappings="mappings" v-if="mappings.length !== 0"></concept-mappings>
+      <div v-if="hasMappings" class="main-content-section p-5">
+        <concept-mappings :mappings="mappings"></concept-mappings>
+      </div>
     </div>
   `
 })

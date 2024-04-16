@@ -18,7 +18,7 @@ class LOCResource extends RemoteResource
             $fd = fopen($this->uri, 'rb', false, $context);
             $headers = stream_get_meta_data($fd)['wrapper_data'];
             foreach ($headers as $header) {
-                if (strpos($header, 'X-PrefLabel:') === 0) {
+                if (strpos(strtolower($header), 'x-preflabel:') === 0) {
                     $elems = explode(' ', $header, 2);
                     $prefLabel = $elems[1];
                     $graph->addLiteral($this->uri, 'skos:prefLabel', $prefLabel, 'en');
