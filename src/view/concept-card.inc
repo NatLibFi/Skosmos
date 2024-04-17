@@ -43,10 +43,10 @@
               class="mb-0 user-select-all">{{ concept.label }}</h1><button
                   class="btn btn-default copy-clipboard px-1" type="button" id="copy-preflabel"
                   data-bs-toggle="tooltip" data-bs-placement="button" title="{{ 'Copy to clipboard' | trans }}">
-              <i class="fa-regular fa-copy"></i>
-            </button>
+            <i class="fa-regular fa-copy"></i>
+          </button>
           {% endif %}
-          </div>
+        </div>
       </div>
 
       {% for property in concept.properties %}{% if property.getSubPropertyOf != 'skos:hiddenLabel' %}

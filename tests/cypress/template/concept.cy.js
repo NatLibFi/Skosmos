@@ -72,10 +72,10 @@ describe('Concept page', () => {
     })
     it('concept notation can be copied to clipboard / ' + pageLoadType, () => {
       if (pageLoadType == "full") {
-    cy.visit('/test-notation-sort/en/page/?uri=http%3A%2F%2Fwww.skosmos.skos%2Ftest%2Fta0115') // go to "Eeel" concept page
+        cy.visit('/test-notation-sort/en/page/?uri=http%3A%2F%2Fwww.skosmos.skos%2Ftest%2Fta0115') // go to "Eel" concept page
       } else {
         cy.visit('/test-notation-sort/en/page/?uri=http%3A%2F%2Fwww.skosmos.skos%2Ftest%2Fta0114') // go to "Buri" concept page
-        // click on the link to "burial mounds" to trigger partial page load
+        // click on the link to "Eel" to trigger partial page load
         cy.get('#tab-hierarchy').contains('a', 'Eel').click()
       }
 
