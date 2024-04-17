@@ -156,7 +156,7 @@ const vocabSearch = Vue.createApp({
   template: `
     <div class="d-flex my-auto ms-auto">
       <div class="d-flex justify-content-end input-group ms-auto" id="search-wrapper">
-        <select class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown-item" aria-expanded="false"
+        <select class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown-item"
           v-model="selectedLanguage"
           @change="changeLang()"
           aria-label="Select search language">
@@ -166,7 +166,6 @@ const vocabSearch = Vue.createApp({
           <input type="search"
             class="form-control"
             id="search-field"
-            aria-expanded="false"
             autocomplete="off"
             data-bs-toggle=""
             aria-label="Text input with dropdown button"
