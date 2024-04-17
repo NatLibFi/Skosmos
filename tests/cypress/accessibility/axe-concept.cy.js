@@ -11,6 +11,5 @@ describe('Check accessibility of the concept page', () => {
     cy.injectAxe()
   })
 
-  // When you start creating tests, remove the following comment(s).
   accessibilityTestRunner()
 })
