@@ -3,8 +3,6 @@
   {% block sidebar %}
     <div class="sidebar-buttons">
       <h2 class="visually-hidden">{{'Sidebar listing: list and traverse vocabulary contents by a criterion' | trans}}</h2>
-
-      <h3 class="visually-hidden" aria-label="Sidebar tabs">{{ view_trans_text[1] | trans }}</h3>
       <ul class="nav nav-tabs-no-style nav-justified" id="sidebar-tabs" role="tablist">
         {% for view in vocab.config.sidebarViews %}
           {% if view == 'alphabetical' %} {% set view_trans_text = ['Alpha-nav', 'List vocabulary concepts alphabetically'] %}
