@@ -260,7 +260,7 @@ tabHierApp.component('tab-hier', {
         <a :class="{ 'selected': selectedConcept === concept.uri }"
           :href="getConceptURL(concept.uri)"
           @click="handleClickConceptEvent($event, concept)"
-        >{{ concept.label }}</a>
+          aria-label="Go to the concept page">{{ concept.label }}</a>
       </span>
       <ul class="list-group px-3" v-if="concept.children.length !== 0 && concept.isOpen">
         <template v-for="(c, i) in concept.children">

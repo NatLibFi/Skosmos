@@ -145,7 +145,7 @@ tabAlphaApp.component('tab-alpha', {
             </template>
             <a :class="{ 'selected': selectedConcept === concept.uri }"
               :href="getConceptURL(concept.uri)" @click="loadConcept($event, concept.uri)"
-            >{{ concept.prefLabel }}</a>
+              aria-label="Go to the concept page">{{ concept.prefLabel }}</a>
           </li>
         </ul>
       </div>
