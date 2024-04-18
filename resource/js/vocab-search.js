@@ -21,7 +21,7 @@ const vocabSearch = Vue.createApp({
     this.languageStrings = window.SKOSMOS.language_strings[window.SKOSMOS.lang] ?? window.SKOSMOS.language_strings.en
     this.msgs = window.SKOSMOS.msgs[window.SKOSMOS.lang] ?? window.SKOSMOS.msgs.en
     this.renderedResultsList = []
-    this.showNotation = true
+    this.showNotation = SKOSMOS.showNotation
   },
   methods: {
     autoComplete () {
@@ -44,7 +44,6 @@ const vocabSearch = Vue.createApp({
     search () {
       const mySearchCounter = this.searchCounter + 1 // make sure we can identify this search later in case of several ongoing searches
       this.searchCounter = mySearchCounter
-
       let skosmosSearchUrl = 'rest/v1/' + window.SKOSMOS.vocab + '/search?'
       const skosmosSearchUrlParams = new URLSearchParams({ query: this.formatSearchTerm(), lang: window.SKOSMOS.lang, unique: true })
       skosmosSearchUrl += skosmosSearchUrlParams.toString()
