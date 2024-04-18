@@ -11,6 +11,7 @@ const tabAlphaApp = Vue.createApp({
       loadingLetters: false,
       loadingConcepts: false,
       loadingMoreConcepts: false,
+      loadingMessage: '',
       currentOffset: 0
     }
   },
@@ -25,6 +26,7 @@ const tabAlphaApp = Vue.createApp({
     if (document.querySelector('#alphabetical > a').classList.contains('active')) {
       this.loadLetters()
     }
+    this.loadingMessage = window.SKOSMOS.msgs[window.SKOSMOS.lang]['Loading more items'] ?? window.SKOSMOS.msgs.en['Loading more items']
   },
   methods: {
     handleClickAlphabeticalEvent () {
@@ -119,6 +121,7 @@ const tabAlphaApp = Vue.createApp({
         :loading-letters="loadingLetters"
         :loading-concepts="loadingConcepts"
         :loading-more-concepts="loadingMoreConcepts"
+        :loading-message="loadingMessage"
         @load-concepts="loadConcepts($event)"
         @select-concept="selectedConcept = $event"
         ref="tabAlpha"
@@ -141,7 +144,7 @@ tabAlphaApp.directive('click-tab-alphabetical', {
 })
 
 tabAlphaApp.component('tab-alpha', {
-  props: ['indexLetters', 'indexConcepts', 'selectedConcept', 'loadingLetters', 'loadingConcepts', 'loadingMoreConcepts'],
+  props: ['indexLetters', 'indexConcepts', 'selectedConcept', 'loadingLetters', 'loadingConcepts', 'loadingMoreConcepts', 'loadingMessage'],
   emits: ['loadConcepts', 'selectConcept'],
   inject: ['partialPageLoad', 'getConceptURL'],
   methods: {
@@ -165,8 +168,8 @@ tabAlphaApp.component('tab-alpha', {
   },
   template: `
     <template v-if="loadingLetters">
-      <div>
-        Loading...
+      <div class="loading-message">
+        {{ this.loadingMessage }}
       </div>
     </template>
     <template v-else>
@@ -179,9 +182,7 @@ tabAlphaApp.component('tab-alpha', {
     
     <div class="sidebar-list" :style="getListStyle()" ref="list">
       <template v-if="loadingConcepts">
-        <div>
-          Loading...
-        </div>
+        {{ this.loadingMessage }}
       </template>
       <template v-else>
         <ul class="list-group" v-if="indexConcepts.length !== 0">
@@ -195,7 +196,7 @@ tabAlphaApp.component('tab-alpha', {
             >{{ concept.prefLabel }}</a>
           </li>
           <template v-if="loadingMoreConcepts">
-            Loading...
+            {{ this.loadingMessage }}
           </template>
         </ul>
       </template>

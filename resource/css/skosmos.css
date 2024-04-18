@@ -522,6 +522,10 @@ body {
     box-shadow: none;
   }
 
+  #sidebar .loading-message {
+    padding: 2rem 1rem;
+  }
+
   .sidebar-list {
     padding: 2rem 1rem 0 1rem;
     overflow-y: scroll;
