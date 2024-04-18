@@ -169,7 +169,7 @@ tabAlphaApp.component('tab-alpha', {
   template: `
     <template v-if="loadingLetters">
       <div class="loading-message">
-        {{ this.loadingMessage }}
+        {{ this.loadingMessage }} <i class="fa-solid fa-spinner fa-spin-pulse"></i>
       </div>
     </template>
     <template v-else>
@@ -182,7 +182,9 @@ tabAlphaApp.component('tab-alpha', {
     
     <div class="sidebar-list" :style="getListStyle()" ref="list">
       <template v-if="loadingConcepts">
-        {{ this.loadingMessage }}
+        <div>
+          {{ this.loadingMessage }} <i class="fa-solid fa-spinner fa-spin-pulse"></i>
+        </div>
       </template>
       <template v-else>
         <ul class="list-group" v-if="indexConcepts.length !== 0">
@@ -196,7 +198,9 @@ tabAlphaApp.component('tab-alpha', {
             >{{ concept.prefLabel }}</a>
           </li>
           <template v-if="loadingMoreConcepts">
-            {{ this.loadingMessage }}
+            <li class="list-group-item py-1 px-2">
+              {{ this.loadingMessage }} <i class="fa-solid fa-spinner fa-spin-pulse"></i>
+            </li>
           </template>
         </ul>
       </template>
