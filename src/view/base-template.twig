@@ -14,11 +14,11 @@
 <link href="resource/fontawesome/css/fontawesome.css" rel="stylesheet">
 <link href="resource/fontawesome/css/solid.css" rel="stylesheet">
 <link href="resource/fontawesome/css/regular.css" rel="stylesheet">
-{% if ServiceCustomCss %}
-<link href="{{ ServiceCustomCss }}" media="screen, print" rel="stylesheet" type="text/css">
+{% if GlobalConfig.customCss %}
+<link href="{{ GlobalConfig.customCss }}" media="screen, print" rel="stylesheet" type="text/css">
 {% endif %}
 {% for plugin, files in request.plugins.pluginsCSS %}{% for file in files %}<link href="{{ file }}" media="screen, print" rel="stylesheet" type="text/css">{% endfor %}{% endfor %}
-<title>{{ ServiceName }}{% block title %}{% endblock %}</title>
+<title>{{ GlobalConfig.serviceName }}{% block title %}{% endblock %}</title>
 </head>
 <body{% if request.vocabid == '' and request.page != 'feedback' and request.page != 'about' and request.page != 'search' %} class="bg-light frontpage-logo"{% else %} class="bg-medium vocab-{{ request.vocabid }}"{% endif %}>
   <header>
