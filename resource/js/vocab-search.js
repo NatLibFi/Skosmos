@@ -10,7 +10,8 @@ const vocabSearch = Vue.createApp({
       renderedResultsList: [],
       languageStrings: null,
       msgs: null,
-      showDropdown: false
+      showDropdown: false,
+      showNotation: null
     }
   },
   mounted () {
@@ -20,6 +21,7 @@ const vocabSearch = Vue.createApp({
     this.languageStrings = window.SKOSMOS.language_strings[window.SKOSMOS.lang] ?? window.SKOSMOS.language_strings.en
     this.msgs = window.SKOSMOS.msgs[window.SKOSMOS.lang] ?? window.SKOSMOS.msgs.en
     this.renderedResultsList = []
+    this.showNotation = window.SKOSMOS.showNotation
   },
   methods: {
     autoComplete () {
@@ -42,9 +44,8 @@ const vocabSearch = Vue.createApp({
     search () {
       const mySearchCounter = this.searchCounter + 1 // make sure we can identify this search later in case of several ongoing searches
       this.searchCounter = mySearchCounter
-
       let skosmosSearchUrl = 'rest/v1/' + window.SKOSMOS.vocab + '/search?'
-      const skosmosSearchUrlParams = new URLSearchParams({ query: this.formatSearchTerm(), lang: window.SKOSMOS.lang })
+      const skosmosSearchUrlParams = new URLSearchParams({ query: this.formatSearchTerm(), lang: window.SKOSMOS.lang, unique: true })
       skosmosSearchUrl += skosmosSearchUrlParams.toString()
 
       fetch(skosmosSearchUrl)
@@ -59,6 +60,12 @@ const vocabSearch = Vue.createApp({
     formatSearchTerm () {
       if (this.searchTerm.includes('*')) { return this.searchTerm }
       return this.searchTerm + '*'
+    },
+    notationMatches (searchTerm, notation) {
+      if (notation && notation.toLowerCase().includes(searchTerm.toLowerCase())) {
+        return true
+      }
+      return false
     },
     renderMatchingPart (searchTerm, label) {
       if (label) {
@@ -96,9 +103,14 @@ const vocabSearch = Vue.createApp({
           result.hitType = 'alt'
           result.hit = this.renderMatchingPart(renderedSearchTerm, result.altLabel)
           result.hitPref = this.renderMatchingPart(renderedSearchTerm, result.prefLabel)
-        } else if ('prefLabel' in result) {
-          result.hitType = 'pref'
-          result.hit = this.renderMatchingPart(renderedSearchTerm, result.prefLabel)
+        } else {
+          if (this.notationMatches(renderedSearchTerm, result.notation)) {
+            result.hitType = 'notation'
+            result.hit = this.renderMatchingPart(renderedSearchTerm, result.notation)
+          } else if ('prefLabel' in result) {
+            result.hitType = 'pref'
+            result.hit = this.renderMatchingPart(renderedSearchTerm, result.prefLabel)
+          }
         }
         if ('uri' in result) { // create relative Skosmos page URL from the search result URI
           result.pageUrl = window.SKOSMOS.vocab + '/' + window.SKOSMOS.lang + '/page?'
@@ -111,6 +123,7 @@ const vocabSearch = Vue.createApp({
         }
         // use the translateType function to map translations for the type IRIs
         result.renderedType = result.type.map(this.translateType).join(', ')
+        result.showNotation = this.showNotation
       })
 
       if (this.renderedResultsList.length === 0) { // show no results message
@@ -148,7 +161,6 @@ const vocabSearch = Vue.createApp({
      * Show the existing autocomplete list if it was hidden by onClickOutside()
      */
     showAutoComplete () {
-      console.log('Show autocomplete')
       this.showDropdown = true
       this.$forceUpdate()
     }
@@ -184,6 +196,9 @@ const vocabSearch = Vue.createApp({
                   <div class="row pb-1">
                     <div class="col" v-if="result.hitType == 'hidden'">
                       <span class="result">
+                        <template v-if="result.showNotation">
+                          {{ result.notation }}&nbsp;
+                        </template>
                         <template v-if="result.hit.hasOwnProperty('match')">
                           {{ result.hit.before }}<b>{{ result.hit.match }}</b>{{ result.hit.after }}
                         </template>
@@ -194,14 +209,22 @@ const vocabSearch = Vue.createApp({
                     </div>
                     <div class="col" v-else-if="result.hitType == 'alt'">
                       <span>
-                        <template v-if="result.hit.hasOwnProperty('match')">
-                          {{ result.hit.before }}<b>{{ result.hit.match }}</b>{{ result.hit.after }}
-                        </template>
-                        <template v-else>
-                          {{ result.hit }}
-                        </template>
+                        <i>
+                          <template v-if="result.showNotation">
+                            {{ result.notation }}&nbsp;
+                          </template>
+                          <template v-if="result.hit.hasOwnProperty('match')">
+                            {{ result.hit.before }}<b>{{ result.hit.match }}</b>{{ result.hit.after }}
+                          </template>
+                          <template v-else>
+                            {{ result.hit }}
+                          </template>
+                        </i>
                       </span>
                       <span> &rarr;&nbsp;<span class="result">
+                          <template v-if="result.showNotation">
+                            {{ result.notation }}&nbsp;
+                          </template>
                           <template v-if="result.hitPref.hasOwnProperty('match')">
                             {{ result.hitPref.before }}<b>{{ result.hitPref.match }}</b>{{ result.hitPref.after }}
                           </template>
@@ -211,8 +234,24 @@ const vocabSearch = Vue.createApp({
                         </span>
                       </span>
                     </div>
+                    <div class="col" v-else-if="result.hitType == 'notation'">
+                      <span class="result">
+                        <template v-if="result.hit.hasOwnProperty('match')">
+                          {{ result.hit.before }}<b>{{ result.hit.match }}</b>{{ result.hit.after }}
+                        </template>
+                        <template v-else>
+                          {{ result.hit }}
+                        </template>
+                      </span>
+                      <span>
+                        &nbsp;{{ result.prefLabel }}
+                      </span>
+                    </div>
                     <div class="col" v-else-if="result.hitType == 'pref'">
                       <span class="result">
+                        <template v-if="result.showNotation">
+                          {{ result.notation }}&nbsp;
+                        </template>
                         <template v-if="result.hit.hasOwnProperty('match')">
                           {{ result.hit.before }}<b>{{ result.hit.match }}</b>{{ result.hit.after }}
                         </template>
