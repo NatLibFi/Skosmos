@@ -45,7 +45,8 @@ const vocabSearch = Vue.createApp({
       const mySearchCounter = this.searchCounter + 1 // make sure we can identify this search later in case of several ongoing searches
       this.searchCounter = mySearchCounter
       let skosmosSearchUrl = 'rest/v1/' + window.SKOSMOS.vocab + '/search?'
-      const skosmosSearchUrlParams = new URLSearchParams({ query: this.formatSearchTerm(), lang: window.SKOSMOS.lang, unique: true })
+      const skosmosSearchUrlParams = new URLSearchParams({ query: this.formatSearchTerm(), unique: true })
+      if (this.selectedLanguage !== 'all') skosmosSearchUrlParams.set('lang', this.selectedLanguage)
       skosmosSearchUrl += skosmosSearchUrlParams.toString()
 
       fetch(skosmosSearchUrl)
@@ -148,8 +149,10 @@ const vocabSearch = Vue.createApp({
       const searchUrl = vocabHref + 'search?' + searchUrlParams.toString()
       window.location.href = searchUrl
     },
-    changeLang () {
+    changeLang (changeEvent) {
+      this.selectedLanguage = changeEvent.target.value
       window.SKOSMOS.content_lang = this.selectedLanguage
+      this.resetSearchTermAndHideDropdown()
       // TODO: Implement (a normal) page load to change content according to the new content language
     },
     resetSearchTermAndHideDropdown () {
@@ -170,7 +173,7 @@ const vocabSearch = Vue.createApp({
       <div class="d-flex justify-content-end input-group ms-auto" id="search-wrapper">
         <select class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown-item"
           v-model="selectedLanguage"
-          @change="changeLang()"
+          @change="changeLang($event)"
           aria-label="Select search language">
           <option class="dropdown-item" v-for="(value, key) in languageStrings" :value="key">{{ value }}</option>
         </select>
