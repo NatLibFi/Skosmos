@@ -12,12 +12,12 @@
 <link href="resource/fontawesome/css/regular.css" media="screen, print" rel="stylesheet" type="text/css">
 <link href="resource/fontawesome/css/solid.css" media="screen, print" rel="stylesheet" type="text/css">
 <link href="resource/css/styles.css" media="screen, print" rel="stylesheet" type="text/css">
-{% if ServiceCustomCss %}
-<link href="{{ ServiceCustomCss }}" media="screen, print" rel="stylesheet" type="text/css">
+{% if GlobalConfig.customCss %}
+<link href="{{ GlobalConfig.customCss }}" media="screen, print" rel="stylesheet" type="text/css">
 {% endif %}
 {% for plugin, files in request.plugins.pluginsCSS %}{% for file in files %}<link href="{{ file }}" media="screen, print" rel="stylesheet" type="text/css">{% endfor %}{% endfor %}
 
-<title>{{ ServiceName }}{% block title %}{% endblock %}</title>
+<title>{{ GlobalConfig.serviceName }}{% block title %}{% endblock %}</title>
 </head>
 <body{% if request.vocabid == '' and request.page != 'feedback' and request.page != 'about' %} class="frontpage-logo"{% else %} class="vocab-{{ request.vocabid }}"{% endif %}>
   <noscript>

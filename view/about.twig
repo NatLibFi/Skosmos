@@ -12,7 +12,7 @@
 </div>
 <div class="about-extra-info">
   <div class="credits">
-    <p>{% if ServiceName != 'SERVICE_NAME' %}{{ ServiceName }}{% else %}Skosmos{% endif %} {% trans "layout designed by Hahmo" %}</p>
+    <p>{% if GlobalConfig.serviceName != 'SERVICE_NAME' %}{{ GlobalConfig.serviceName }}{% else %}Skosmos{% endif %} {% trans "layout designed by Hahmo" %}</p>
   </div>
   <div class="version">
     {% set version = request.version %}
