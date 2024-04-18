@@ -21,7 +21,7 @@ const vocabSearch = Vue.createApp({
     this.languageStrings = window.SKOSMOS.language_strings[window.SKOSMOS.lang] ?? window.SKOSMOS.language_strings.en
     this.msgs = window.SKOSMOS.msgs[window.SKOSMOS.lang] ?? window.SKOSMOS.msgs.en
     this.renderedResultsList = []
-    this.showNotation = SKOSMOS.showNotation
+    this.showNotation = window.SKOSMOS.showNotation
   },
   methods: {
     autoComplete () {
