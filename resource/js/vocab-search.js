@@ -107,7 +107,7 @@ const vocabSearch = Vue.createApp({
           if (this.notationMatches(renderedSearchTerm, result.notation)) {
             const notationMatch = this.renderMatchingPart(renderedSearchTerm, result.notation)
             result.hitType = 'notation'
-            result.hit = notationMatch
+            result.hit = this.renderMatchingPart(renderedSearchTerm, result.notation)
           } else if ('prefLabel' in result) {
             result.hitType = 'pref'
             result.hit = this.renderMatchingPart(renderedSearchTerm, result.prefLabel)
