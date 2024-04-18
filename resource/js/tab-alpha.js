@@ -64,7 +64,7 @@ const tabAlphaApp = Vue.createApp({
         .then(data => {
           this.indexConcepts = data.indexConcepts
           this.selectedLetter = letter
-          this.currentOffset += 250
+          this.currentOffset = 250
           this.loadingConcepts = false
           // Add scrolling event listener back after concepts are loaded
           this.$refs.tabAlpha.$refs.list.addEventListener('scroll', this.handleScrollEvent)
