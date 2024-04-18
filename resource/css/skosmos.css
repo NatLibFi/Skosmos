@@ -736,7 +736,7 @@ body {
     display: inline;
   }
 
-  #copy-preflabel {
+  #copy-preflabel, #copy-notation {
     color: var(--vocab-text);
     font-size: 30px;
     position: relative;

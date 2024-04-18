@@ -30,12 +30,22 @@
       <div class="row" id="concept-heading">
         <div class="col-sm-4 px-0" id="concept-property-label">{{ "skos:prefLabel" | trans }}</div>
         <div class="col-sm-8" id="concept-label">
+        {% if concept.notation %}
+          <h1 id="concept-preflabel"
+              class="mb-0">
+            <span class="notation user-select-all" id="concept-notation">{{ concept.notation }}</span> {{ concept.label }}</h1><button
+                class="btn btn-default copy-clipboard px-1" type="button" id="copy-notation"
+                data-bs-toggle="tooltip" data-bs-placement="button" title="{{ 'Copy to clipboard' | trans }}">
+              <i class="fa-regular fa-copy"></i>
+            </button>
+          {% else %}
           <h1 id="concept-preflabel"
               class="mb-0 user-select-all">{{ concept.label }}</h1><button
                   class="btn btn-default copy-clipboard px-1" type="button" id="copy-preflabel"
                   data-bs-toggle="tooltip" data-bs-placement="button" title="{{ 'Copy to clipboard' | trans }}">
             <i class="fa-regular fa-copy"></i>
           </button>
+          {% endif %}
         </div>
       </div>
 
