@@ -523,7 +523,7 @@ body {
   }
 
   .sidebar-list {
-    padding: 2rem 1rem;
+    padding: 2rem 1rem 0 1rem;
     overflow-y: scroll;
     scrollbar-color: var(--sidebar-scrollbar-thumb) var(--sidebar-scrollbar-bg);
     position: absolute;
