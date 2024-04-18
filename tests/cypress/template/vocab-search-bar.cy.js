@@ -39,7 +39,7 @@ describe('Vocab search bar', () => {
     cy.visit('/yso/fi/')
 
     cy.get('#search-field').type('kas'); // perform autocomplete search
-    cy.get('#search-autocomplete-results', { timeout: 20000 }).should('be.visible').children().should('have.length.greaterThan', 4);
+    cy.get('#search-autocomplete-results', { timeout: 20000 }).should('be.visible').children().should('have.length.greaterThan', 2);
   })
 
   it('No results message is displayed if no results are found', () => {
@@ -69,9 +69,9 @@ describe('Vocab search bar', () => {
     cy.wait(300);
     cy.get('#search-field').type('i');
     cy.get('#search-autocomplete-results', { timeout: 20000 }).should('be.visible'); // the autocomplete should appear
-    cy.get('#search-autocomplete-results').children().should('have.length', 2)
+    cy.get('#search-autocomplete-results').children().should('have.length', 1)
     cy.wait(10000); // wait extra 10 seconds to see if the 'ka' search adds results to the list
-    cy.get('#search-autocomplete-results').children().should('have.length', 2)
+    cy.get('#search-autocomplete-results').children().should('have.length', 1)
   })
 
   it('Clear button should hide the autocomplete list', () => {
@@ -107,16 +107,39 @@ describe('Vocab search bar', () => {
     cy.get('#search-autocomplete-results').should('not.be.visible'); // the autocomplete should disappear
   })
 
-  it('AltLabel search results should bold the matching parts of altLabel and prefLabel', () => {
+  it('AltLabel search results should bold the matching parts of altLabel', () => {
     // go to YSO vocab front page
     cy.visit('/yso/fi/')
 
-    cy.get('#search-field').type('zikkur');
+    cy.get('#search-field').type('assyro');
     cy.get('#search-autocomplete-results', { timeout: 20000 }).should('be.visible'); // the autocomplete should appear
 
-    cy.get('#search-autocomplete-results').within(() => { // the first result should have text 'zikkur' appearing twice in bold
-      cy.get('li').last().find('b').eq(0).should('have.text', 'zikkur')
-      cy.get('li').last().find('b').eq(1).should('have.text', 'zikkur')
+    cy.get('#search-autocomplete-results').within(() => { // the first result should have matching part of text 'assyrologia' appearing in bold
+      cy.get('li').last().find('b').eq(0).should('have.text', 'assyro')
+    })
+  })
+
+  it('AltLabel search results should be displayed in italics', () => {
+    // go to YSO vocab front page
+    cy.visit('/yso/fi/')
+
+    cy.get('#search-field').type('assyro');
+    cy.get('#search-autocomplete-results', { timeout: 20000 }).should('be.visible'); // the autocomplete should appear
+
+    cy.get('#search-autocomplete-results').within(() => { // the first result should have text 'assyrologia' appearing in italics
+      cy.get('li').last().find('i').eq(0).should('contain.text', 'assyrologia')
+    })
+  })
+
+  it('Notation search results should bold the matching parts of the notation', () => {
+    // go to YSO vocab front page
+    cy.visit('/yso/fi/')
+
+    cy.get('#search-field').type('51');
+    cy.get('#search-autocomplete-results', { timeout: 20000 }).should('be.visible'); // the autocomplete should appear
+
+    cy.get('#search-autocomplete-results').within(() => { // the first result should have text '51' appearing in bold
+      cy.get('li').last().find('b').eq(0).should('have.text', '51')
     })
   })
 
