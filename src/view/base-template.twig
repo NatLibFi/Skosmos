@@ -3,11 +3,16 @@
 <head>
 <base href="{{ BaseHref }}">
 <link rel="shortcut icon" href="favicon.ico">
+<title>{% block title %}{{ GlobalConfig.serviceName }}{% endblock %}</title>
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="format-detection" content="telephone=no">
-<meta name="generator" content="Skosmos {{ request.version }}" />
+<meta name="generator" content="Skosmos {{ request.version }}">
+<meta name="title" content="{{ block('title') }}">
+<meta property="og:title" content="{{ block('title') }}">
+<meta name="twitter:title" content="{{ block('title') }}">
+<meta name="twitter:card" content="summary">
 <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" media="screen, print" rel="stylesheet" type="text/css">
 <link href="resource/css/fonts.css" media="screen, print" rel="stylesheet" type="text/css">
 <link href="resource/css/skosmos.css" media="screen, print" rel="stylesheet" type="text/css">
@@ -18,7 +23,6 @@
 <link href="{{ GlobalConfig.customCss }}" media="screen, print" rel="stylesheet" type="text/css">
 {% endif %}
 {% for plugin, files in request.plugins.pluginsCSS %}{% for file in files %}<link href="{{ file }}" media="screen, print" rel="stylesheet" type="text/css">{% endfor %}{% endfor %}
-<title>{{ GlobalConfig.serviceName }}{% block title %}{% endblock %}</title>
 </head>
 <body{% if request.vocabid == '' and request.page != 'feedback' and request.page != 'about' and request.page != 'search' %} class="bg-light frontpage-logo"{% else %} class="bg-medium vocab-{{ request.vocabid }}"{% endif %}>
   <header>

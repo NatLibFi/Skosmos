@@ -1,6 +1,6 @@
 {% set pageType = 'about' %}
 {% extends "base-template.twig" %}
-{% block title %}: "About"{% endblock %}
+{% block title %}{{ "About" | trans}} - {{ GlobalConfig.serviceName }}{% endblock %}
 {% block content %}
 
 <div class="container">
