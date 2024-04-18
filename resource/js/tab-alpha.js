@@ -104,7 +104,7 @@ const tabAlphaApp = Vue.createApp({
         })
     },
     handleScrollEvent () {
-      listElement = this.$refs.tabAlpha.$refs.list
+      const listElement = this.$refs.tabAlpha.$refs.list
       if (listElement.scrollTop + listElement.clientHeight >= listElement.scrollHeight - 1) {
         this.loadMoreConcepts()
       }
