@@ -43,16 +43,16 @@ const tabHierApp = Vue.createApp({
           return data.json()
         })
         .then(data => {
-          console.log('top', data)
+          console.log('data', data)
 
           this.hierarchy = []
 
-          for (const c of data.topconcepts) {
+          for (const c of data.topconcepts.sort((a, b) => a.label.localeCompare(b.label, window.SKOSMOS.lang))) {
             this.hierarchy.push({ uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false })
           }
 
           this.loading = false
-          console.log(this.hierarchy)
+          console.log('hier', this.hierarchy)
         })
     },
     loadConceptHierarchy () {
@@ -62,30 +62,33 @@ const tabHierApp = Vue.createApp({
           return data.json()
         })
         .then(data => {
-          console.log('hier', data)
+          console.log('data', data)
 
           this.hierarchy = []
 
-          const bt = data.broaderTransitive
+          // transform broaderTransitive to an array and sort it
+          const bt = Object.values(data.broaderTransitive).sort((a, b) => a.prefLabel.localeCompare(b.prefLabel, window.SKOSMOS.lang))
           const parents = [] // queue of nodes in hierarchy tree with potential missing child nodes
 
           // add top concepts to hierarchy tree
-          for (const concept in bt) {
-            if (bt[concept].top) {
-              if (bt[concept].narrower) {
+          for (const concept of bt) {
+            if (concept.top) {
+              if (concept.narrower) {
                 // children of the current concept
-                const children = bt[concept].narrower.map(c => {
-                  return { uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false }
-                })
+                const children = concept.narrower
+                  .sort((a, b) => a.label.localeCompare(b.label, window.SKOSMOS.lang))
+                  .map(c => {
+                    return { uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false }
+                  })
                 // new concept node to be added to hierarchy tree
-                const conceptNode = { uri: bt[concept].uri, label: bt[concept].prefLabel, hasChildren: true, children, isOpen: true }
+                const conceptNode = { uri: concept.uri, label: concept.prefLabel, hasChildren: true, children, isOpen: true }
                 // push new concept to hierarchy tree
                 this.hierarchy.push(conceptNode)
                 // push new concept to parent queue
                 parents.push(conceptNode)
               } else {
                 // push new concept node to hierarchy tree
-                this.hierarchy.push({ uri: bt[concept].uri, label: bt[concept].prefLabel, hasChildren: bt[concept].hasChildren, children: [], isOpen: false })
+                this.hierarchy.push({ uri: concept.uri, label: concept.prefLabel, hasChildren: concept.hasChildren, children: [], isOpen: false })
               }
             }
           }
@@ -96,9 +99,9 @@ const tabHierApp = Vue.createApp({
             const concepts = []
 
             // find all concepts in broaderTransative which have current parent node as parent
-            for (const concept in bt) {
-              if (bt[concept].broader && bt[concept].broader.includes(parent.uri)) {
-                concepts.push(bt[concept])
+            for (const concept of bt) {
+              if (concept.broader && concept.broader.includes(parent.uri)) {
+                concepts.push(concept)
               }
             }
 
@@ -108,9 +111,11 @@ const tabHierApp = Vue.createApp({
                 // corresponding concept node in hierarchy tree
                 const conceptNode = parent.children.find(c => c.uri === concept.uri)
                 // children of current concept
-                const children = concept.narrower.map(c => {
-                  return { uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false }
-                })
+                const children = concept.narrower
+                  .sort((a, b) => a.label.localeCompare(b.label, window.SKOSMOS.lang))
+                  .map(c => {
+                    return { uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false }
+                  })
                 // set children of current concept as children of concept node
                 conceptNode.children = children
                 conceptNode.isOpen = children.length !== 0
@@ -122,7 +127,7 @@ const tabHierApp = Vue.createApp({
 
           this.loading = false
           this.selectedConcept = window.SKOSMOS.uri
-          console.log(this.hierarchy)
+          console.log('hier', this.hierarchy)
         })
     },
     loadChildren (concept) {
@@ -133,11 +138,11 @@ const tabHierApp = Vue.createApp({
             return data.json()
           })
           .then(data => {
-            console.log(data)
-            for (const c of data.narrower) {
+            console.log('data', data)
+            for (const c of data.narrower.sort((a, b) => a.prefLabel.localeCompare(b.prefLabel, window.SKOSMOS.lang))) {
               concept.children.push({ uri: c.uri, label: c.prefLabel, hasChildren: c.hasChildren, children: [], isOpen: false })
             }
-            console.log(this.hierarchy)
+            console.log('hier', this.hierarchy)
           })
       }
     },
