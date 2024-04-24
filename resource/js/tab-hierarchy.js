@@ -47,7 +47,7 @@ const tabHierApp = Vue.createApp({
 
           this.hierarchy = []
 
-          for (const c of data.topconcepts.sort((a, b) => a.label.localeCompare(b.label, window.SKOSMOS.content_lang))) {
+          for (const c of data.topconcepts.sort((a, b) => this.compareLabels(a, b))) {
             this.hierarchy.push({ uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false })
           }
 
@@ -67,7 +67,7 @@ const tabHierApp = Vue.createApp({
           this.hierarchy = []
 
           // transform broaderTransitive to an array and sort it
-          const bt = Object.values(data.broaderTransitive).sort((a, b) => a.prefLabel.localeCompare(b.prefLabel, window.SKOSMOS.content_lang))
+          const bt = Object.values(data.broaderTransitive).sort((a, b) => this.compareLabels(a, b))
           const parents = [] // queue of nodes in hierarchy tree with potential missing child nodes
 
           // add top concepts to hierarchy tree
@@ -76,7 +76,7 @@ const tabHierApp = Vue.createApp({
               if (concept.narrower) {
                 // children of the current concept
                 const children = concept.narrower
-                  .sort((a, b) => a.label.localeCompare(b.label, window.SKOSMOS.content_lang))
+                  .sort((a, b) => this.compareLabels(a, b))
                   .map(c => {
                     return { uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false }
                   })
@@ -112,7 +112,7 @@ const tabHierApp = Vue.createApp({
                 const conceptNode = parent.children.find(c => c.uri === concept.uri)
                 // children of current concept
                 const children = concept.narrower
-                  .sort((a, b) => a.label.localeCompare(b.label, window.SKOSMOS.content_lang))
+                  .sort((a, b) => this.compareLabels(a, b))
                   .map(c => {
                     return { uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false }
                   })
@@ -139,7 +139,7 @@ const tabHierApp = Vue.createApp({
           })
           .then(data => {
             console.log('data', data)
-            for (const c of data.narrower.sort((a, b) => a.prefLabel.localeCompare(b.prefLabel, window.SKOSMOS.content_lang))) {
+            for (const c of data.narrower.sort((a, b) => this.compareLabels(a, b))) {
               concept.children.push({ uri: c.uri, label: c.prefLabel, hasChildren: c.hasChildren, children: [], isOpen: false })
             }
             console.log('hier', this.hierarchy)
@@ -153,6 +153,13 @@ const tabHierApp = Vue.createApp({
         height: 'calc( 100% - ' + height + 'px)',
         width: width + 'px'
       }
+    },
+    compareLabels(a, b) {
+      const labelA = a["label"] ? a["label"] : a["prefLabel"]
+      const labelB = b["label"] ? b["label"] : b["prefLabel"]
+      const lang = window.SKOSMOS.content_lang ? window.SKOSMOS.content_lang : window.SKOSMOS.lang
+
+      return labelA.localeCompare(labelB, lang)
     }
   },
   template: `
