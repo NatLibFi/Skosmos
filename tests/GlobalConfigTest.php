@@ -141,6 +141,7 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('config.ttl must have exactly one skosmos:Configuration');
         $model = new Model('/../../tests/testconfig-nograph.ttl');
+        $this->assertNotNull($model);
     }
 
     public function testNonexistentFile()
@@ -148,6 +149,7 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('config.ttl file is missing, please provide one.');
         $model = new Model('/../../tests/testconfig-idonotexist.ttl');
+        $this->assertNotNull($model);
     }
 
     // --- tests for some default values
