@@ -30,7 +30,7 @@ class GlobalConfig extends BaseConfig
      */
     private $configModifiedTime = null;
 
-    public function __construct(Model $model, $config_name='../../config.ttl')
+    public function __construct(Model $model, string $config_name='../../config.ttl')
     {
         $this->cache = new Cache();
         $this->filePath = realpath(dirname(__FILE__) . "/" . $config_name);
@@ -59,7 +59,7 @@ class GlobalConfig extends BaseConfig
      * and creating the graph and resources objects. Uses a cache if available,
      * in order to avoid re-loading the complete configuration on each request.
      */
-    private function initializeConfig()
+    private function initializeConfig(): EasyRdf\Resource
     {
         // retrieve last modified time for config file (filemtime returns int|bool!)
         $configModifiedTime = filemtime($this->filePath);
