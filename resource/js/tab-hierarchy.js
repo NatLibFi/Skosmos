@@ -38,54 +38,57 @@ const tabHierApp = Vue.createApp({
     },
     loadTopConcepts () {
       this.loading = true
-      fetch('rest/v1/' + window.SKOSMOS.vocab + '/topConcepts/?lang=' + window.SKOSMOS.lang)
+      fetch('rest/v1/' + window.SKOSMOS.vocab + '/topConcepts/?lang=' + window.SKOSMOS.content_lang)
         .then(data => {
           return data.json()
         })
         .then(data => {
-          console.log('top', data)
+          console.log('data', data)
 
           this.hierarchy = []
 
-          for (const c of data.topconcepts) {
+          for (const c of data.topconcepts.sort((a, b) => this.compareLabels(a, b))) {
             this.hierarchy.push({ uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false })
           }
 
           this.loading = false
-          console.log(this.hierarchy)
+          console.log('hier', this.hierarchy)
         })
     },
     loadConceptHierarchy () {
       this.loading = true
-      fetch('rest/v1/' + window.SKOSMOS.vocab + '/hierarchy/?uri=' + window.SKOSMOS.uri + '&lang=' + window.SKOSMOS.lang)
+      fetch('rest/v1/' + window.SKOSMOS.vocab + '/hierarchy/?uri=' + window.SKOSMOS.uri + '&lang=' + window.SKOSMOS.content_lang)
         .then(data => {
           return data.json()
         })
         .then(data => {
-          console.log('hier', data)
+          console.log('data', data)
 
           this.hierarchy = []
 
-          const bt = data.broaderTransitive
+          // transform broaderTransitive to an array and sort it
+          const bt = Object.values(data.broaderTransitive).sort((a, b) => this.compareLabels(a, b))
           const parents = [] // queue of nodes in hierarchy tree with potential missing child nodes
 
           // add top concepts to hierarchy tree
-          for (const concept in bt) {
-            if (bt[concept].top) {
-              if (bt[concept].narrower) {
+          for (const concept of bt) {
+            if (concept.top) {
+              if (concept.narrower) {
                 // children of the current concept
-                const children = bt[concept].narrower.map(c => {
-                  return { uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false }
-                })
+                const children = concept.narrower
+                  .sort((a, b) => this.compareLabels(a, b))
+                  .map(c => {
+                    return { uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false }
+                  })
                 // new concept node to be added to hierarchy tree
-                const conceptNode = { uri: bt[concept].uri, label: bt[concept].prefLabel, hasChildren: true, children, isOpen: true }
+                const conceptNode = { uri: concept.uri, label: concept.prefLabel, hasChildren: true, children, isOpen: true }
                 // push new concept to hierarchy tree
                 this.hierarchy.push(conceptNode)
                 // push new concept to parent queue
                 parents.push(conceptNode)
               } else {
                 // push new concept node to hierarchy tree
-                this.hierarchy.push({ uri: bt[concept].uri, label: bt[concept].prefLabel, hasChildren: bt[concept].hasChildren, children: [], isOpen: false })
+                this.hierarchy.push({ uri: concept.uri, label: concept.prefLabel, hasChildren: concept.hasChildren, children: [], isOpen: false })
               }
             }
           }
@@ -96,9 +99,9 @@ const tabHierApp = Vue.createApp({
             const concepts = []
 
             // find all concepts in broaderTransative which have current parent node as parent
-            for (const concept in bt) {
-              if (bt[concept].broader && bt[concept].broader.includes(parent.uri)) {
-                concepts.push(bt[concept])
+            for (const concept of bt) {
+              if (concept.broader && concept.broader.includes(parent.uri)) {
+                concepts.push(concept)
               }
             }
 
@@ -108,9 +111,11 @@ const tabHierApp = Vue.createApp({
                 // corresponding concept node in hierarchy tree
                 const conceptNode = parent.children.find(c => c.uri === concept.uri)
                 // children of current concept
-                const children = concept.narrower.map(c => {
-                  return { uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false }
-                })
+                const children = concept.narrower
+                  .sort((a, b) => this.compareLabels(a, b))
+                  .map(c => {
+                    return { uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false }
+                  })
                 // set children of current concept as children of concept node
                 conceptNode.children = children
                 conceptNode.isOpen = children.length !== 0
@@ -122,22 +127,22 @@ const tabHierApp = Vue.createApp({
 
           this.loading = false
           this.selectedConcept = window.SKOSMOS.uri
-          console.log(this.hierarchy)
+          console.log('hier', this.hierarchy)
         })
     },
     loadChildren (concept) {
       // load children only if concept has children but they have not been loaded yet
       if (concept.children.length === 0 && concept.hasChildren) {
-        fetch('rest/v1/' + window.SKOSMOS.vocab + '/children?uri=' + concept.uri + '&lang=' + window.SKOSMOS.lang)
+        fetch('rest/v1/' + window.SKOSMOS.vocab + '/children?uri=' + concept.uri + '&lang=' + window.SKOSMOS.content_lang)
           .then(data => {
             return data.json()
           })
           .then(data => {
-            console.log(data)
-            for (const c of data.narrower) {
+            console.log('data', data)
+            for (const c of data.narrower.sort((a, b) => this.compareLabels(a, b))) {
               concept.children.push({ uri: c.uri, label: c.prefLabel, hasChildren: c.hasChildren, children: [], isOpen: false })
             }
-            console.log(this.hierarchy)
+            console.log('hier', this.hierarchy)
           })
       }
     },
@@ -148,6 +153,14 @@ const tabHierApp = Vue.createApp({
         height: 'calc( 100% - ' + height + 'px)',
         width: width + 'px'
       }
+    },
+    compareLabels (a, b) {
+      // Set labels as label, prefLabel or an empty string if there are no lables
+      const labelA = a.label || a.prefLabel || ''
+      const labelB = b.label || b.prefLabel || ''
+      const lang = window.SKOSMOS.content_lang ? window.SKOSMOS.content_lang : window.SKOSMOS.lang
+
+      return labelA.localeCompare(labelB, lang)
     }
   },
   template: `
@@ -185,7 +198,7 @@ tabHierApp.component('tab-hier-wrapper', {
   mounted () {
     // scroll automatically to selected concept after the whole hierarchy tree has been mounted
     if (this.selectedConcept) {
-      const selected = document.querySelectorAll('.list-group-item .selected')[0]
+      const selected = document.querySelectorAll('#hierarchy-list .list-group-item .selected')[0]
       const list = document.querySelector('#hierarchy-list')
 
       // distances to the top of the page
