@@ -155,8 +155,9 @@ const tabHierApp = Vue.createApp({
       }
     },
     compareLabels (a, b) {
-      const labelA = a.label ? a.label : a.prefLabel
-      const labelB = b.label ? b.label : b.prefLabel
+      // Set labels as label, prefLabel or an empty string if there are no lables
+      const labelA = a.label ? a.label : (a.prefLabel ? a.prefLabel : "")
+      const labelB = b.label ? b.label : (b.prefLabel ? b.prefLabel : "")
       const lang = window.SKOSMOS.content_lang ? window.SKOSMOS.content_lang : window.SKOSMOS.lang
 
       return labelA.localeCompare(labelB, lang)
