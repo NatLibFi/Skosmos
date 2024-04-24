@@ -190,7 +190,7 @@ tabHierApp.component('tab-hier-wrapper', {
   mounted () {
     // scroll automatically to selected concept after the whole hierarchy tree has been mounted
     if (this.selectedConcept) {
-      const selected = document.querySelectorAll('.list-group-item .selected')[0]
+      const selected = document.querySelectorAll('#hierarchy-list .list-group-item .selected')[0]
       const list = document.querySelector('#hierarchy-list')
 
       // distances to the top of the page
