@@ -31,7 +31,7 @@ describe('Vocab search bar', () => {
     cy.get('#search-button').click();
 
     //Verify the search page url (search result page tests are elsewhere)
-    cy.url().should('include', 'q=Katt').and('include', 'anylang=on');
+    cy.url().should('include', 'q=Katt').and('include', 'anylang=true');
   })
 
   it('Writing in the text field triggers the autocomplete results list', () => {
