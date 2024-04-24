@@ -74,7 +74,7 @@ const vocabSearch = Vue.createApp({
       const paramLang = urlParams.get('clang')
       const anyLang = urlParams.get('anylang')
       if (anyLang) {
-        document.cookie = `SKOSMOS_SEARCH_LANG=${'all'}`
+        document.cookie = `SKOSMOS_SEARCH_LANG=${'all'};path=/`
         return 'all'
       }
       if (paramLang) {
@@ -186,7 +186,7 @@ const vocabSearch = Vue.createApp({
     },
     changeLang (lang) {
       this.selectedLanguage = lang
-      document.cookie = `SKOSMOS_SEARCH_LANG=${this.selectedLanguage}`
+      document.cookie = `SKOSMOS_SEARCH_LANG=${this.selectedLanguage};path=/`
       this.resetSearchTermAndHideDropdown()
     },
     changeContentLangAndReload (lang) {

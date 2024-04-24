@@ -173,6 +173,7 @@ describe('Vocab search bar', () => {
     });
 
     it('The search language cookie is read', () => {
+      cy.visit('/'); // setting the cookie at the front page to make sure the cookies are set globally
       cy.setCookie('SKOSMOS_SEARCH_LANG', 'en');
       cy.visit('/yso/fi/');
 
