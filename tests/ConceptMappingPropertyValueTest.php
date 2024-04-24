@@ -9,7 +9,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->model = new Model(new GlobalConfig('/../../tests/testconfig.ttl'));
+        $this->model = new Model('/../../tests/testconfig.ttl');
         $this->vocab = $this->model->getVocabulary('mapping');
         $this->concept = $this->vocab->getConceptInfo('http://www.skosmos.skos/mapping/m1', 'en');
         $this->props = $this->concept->getMappingProperties();

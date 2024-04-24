@@ -30,7 +30,7 @@ class GlobalConfig extends BaseConfig
      */
     private $configModifiedTime = null;
 
-    public function __construct($config_name='../../config.ttl')
+    public function __construct(Model $model, $config_name='../../config.ttl')
     {
         $this->cache = new Cache();
         try {
@@ -38,11 +38,12 @@ class GlobalConfig extends BaseConfig
             if (!file_exists($this->filePath)) {
                 throw new Exception('config.ttl file is missing, please provide one.');
             }
-            $this->initializeConfig();
+            $resource = $this->initializeConfig();
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
             return;
         }
+        parent::__construct($model, $resource);
     }
 
     public function getCache()
@@ -87,17 +88,17 @@ class GlobalConfig extends BaseConfig
             } else { // APC not available, parse on every request
                 $this->parseConfig($this->filePath);
             }
+            $this->initializeNamespaces();
 
             $configResources = $this->graph->allOfType("skosmos:Configuration");
             if (is_null($configResources) || !is_array($configResources) || count($configResources) !== 1) {
                 throw new Exception("config.ttl must have exactly one skosmos:Configuration");
             }
-
-            $this->resource = $configResources[0];
-            $this->initializeNamespaces();
+            return $configResources[0];
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
         }
+        return null;
     }
 
     /**

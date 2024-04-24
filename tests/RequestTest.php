@@ -7,8 +7,7 @@ class RequestTest extends PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $config = new GlobalConfig('/../../tests/testconfig.ttl');
-        $this->model = new Model($config);
+        $this->model = new Model('/../../tests/testconfig.ttl');
         $this->request = new Request($this->model);
     }
 

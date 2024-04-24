@@ -13,8 +13,8 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
         putenv("LANGUAGE=en_GB.utf8");
         putenv("LC_ALL=en_GB.utf8");
         setlocale(LC_ALL, 'en_GB.utf8');
-        $this->model = new Model(new GlobalConfig('/../../tests/testconfig.ttl'));
-        $this->jenamodel = new Model(new GlobalConfig('/../../tests/jenatestconfig.ttl'));
+        $this->model = new Model('/../../tests/testconfig.ttl');
+        $this->jenamodel = new Model('/../../tests/jenatestconfig.ttl');
     }
 
     /**
@@ -422,9 +422,8 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetBreadCrumbs()
     {
-        $model = new Model(new GlobalConfig('/../../tests/testconfig.ttl'));
         $resource = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
-        $vocabstub = $this->getMockBuilder('Vocabulary')->onlyMethods(array('getConceptTransitiveBroaders'))->setConstructorArgs(array($model, $resource))->getMock();
+        $vocabstub = $this->getMockBuilder('Vocabulary')->onlyMethods(array('getConceptTransitiveBroaders'))->setConstructorArgs(array($this->model, $resource))->getMock();
         $vocabstub->method('getConceptTransitiveBroaders')->willReturn(array( 'http://www.yso.fi/onto/yso/p4762' => array( 'label' => 'objects', ), 'http://www.yso.fi/onto/yso/p1674' => array( 'label' => 'physical whole', 'direct' => array( 0 => 'http://www.yso.fi/onto/yso/p4762', ), ), 'http://www.yso.fi/onto/yso/p14606' => array( 'label' => 'layers', 'direct' => array( 0 => 'http://www.yso.fi/onto/yso/p1674', ), ), ));
         $result = $vocabstub->getBreadCrumbs('en', 'http://www.yso.fi/onto/yso/p14606');
         foreach($result['breadcrumbs'][0] as $crumb) {
@@ -439,9 +438,8 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetBreadCrumbsShortening()
     {
-        $model = new Model(new GlobalConfig('/../../tests/testconfig.ttl'));
         $resource = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
-        $vocabstub = $this->getMockBuilder('Vocabulary')->onlyMethods(array('getConceptTransitiveBroaders'))->setConstructorArgs(array($model, $resource))->getMock();
+        $vocabstub = $this->getMockBuilder('Vocabulary')->onlyMethods(array('getConceptTransitiveBroaders'))->setConstructorArgs(array($this->model, $resource))->getMock();
         $vocabstub->method('getConceptTransitiveBroaders')->willReturn(array( 'http://www.yso.fi/onto/yso/p4762' => array( 'label' => 'objects', ), 'http://www.yso.fi/onto/yso/p13871' => array( 'label' => 'thai language', 'direct' => array( 0 => 'http://www.yso.fi/onto/yso/p10834', ), ), 'http://www.yso.fi/onto/yso/p556' => array( 'label' => 'languages', 'direct' => array( 0 => 'http://www.yso.fi/onto/yso/p2881', ), ), 'http://www.yso.fi/onto/yso/p8965' => array( 'label' => 'Sino-Tibetan languages', 'direct' => array( 0 => 'http://www.yso.fi/onto/yso/p556', ), ), 'http://www.yso.fi/onto/yso/p3358' => array( 'label' => 'systems', 'direct' => array( 0 => 'http://www.yso.fi/onto/yso/p4762', ), ), 'http://www.yso.fi/onto/yso/p10834' => array( 'label' => 'Tai languages', 'direct' => array( 0 => 'http://www.yso.fi/onto/yso/p8965', ), ), 'http://www.yso.fi/onto/yso/p2881' => array( 'label' => 'cultural systems', 'direct' => array( 0 => 'http://www.yso.fi/onto/yso/p3358', ), ), ));
         $result = $vocabstub->getBreadCrumbs('en', 'http://www.yso.fi/onto/yso/p13871');
         $this->assertEquals(6, sizeof($result['breadcrumbs'][0]));
@@ -454,8 +452,7 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetBreadCrumbsCycle()
     {
-        $model = new Model(new GlobalConfig('/../../tests/testconfig.ttl'));
-        $vocab = $model->getVocabulary('cycle');
+        $vocab = $this->model->getVocabulary('cycle');
         $result = $vocab->getBreadCrumbs('en', 'http://www.skosmos.skos/cycle/ta4');
         foreach ($result['breadcrumbs'][0] as $crumb) {
             $this->assertInstanceOf('Breadcrumb', $crumb);
@@ -500,6 +497,16 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
     {
         $vocab = $this->model->getVocabulary('test');
         $this->assertEquals('Test short', $vocab->getShortName());
+    }
+
+    /**
+     * @covers Vocabulary::getShortName
+     */
+    public function testGetShortNameLang()
+    {
+        $this->model->setLocale('fi');
+        $vocab = $this->model->getVocabulary('test');
+        $this->assertEquals('Testi lyhyt', $vocab->getShortName());
     }
 
     /**

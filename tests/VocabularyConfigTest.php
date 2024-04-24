@@ -15,7 +15,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
         putenv("LANGUAGE=en_GB.utf8");
         putenv("LC_ALL=en_GB.utf8");
         setlocale(LC_ALL, 'en_GB.utf8');
-        $this->model = new Model(new GlobalConfig('/../../tests/testconfig.ttl'));
+        $this->model = new Model('/../../tests/testconfig.ttl');
         $this->assertNotNull($this->model->getVocabulary('test')->getConfig()->getPluginRegister(), "The PluginRegister of the model was not initialized!");
     }
 
@@ -460,7 +460,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     {
         $mockres = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
         $mockres->method('getUri')->will($this->returnValue('http://www.skosmos.skos/onto/test'));
-        $conf = new VocabularyConfig($mockres);
+        $conf = new VocabularyConfig($this->model, $mockres);
         $this->assertEquals('test', $conf->getId());
     }
 
