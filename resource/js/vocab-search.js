@@ -69,7 +69,7 @@ const vocabSearch = Vue.createApp({
       return false
     },
     parseSearchLang () {
-      //if content language can be found from uri params, use that and update it to SKOSMOS object and to search lang cookie
+      // if content language can be found from uri params, use that and update it to SKOSMOS object and to search lang cookie
       const urlParams = new URLSearchParams(window.location.search)
       const paramLang = urlParams.get('clang')
       const anyLang = urlParams.get('anylang')
@@ -81,7 +81,7 @@ const vocabSearch = Vue.createApp({
         this.changeLang(paramLang)
         return paramLang
       }
-      //use searchLangCookie if it can be found, otherwise pick content lang from SKOSMOS object
+      // use searchLangCookie if it can be found, otherwise pick content lang from SKOSMOS object
       const cookies = document.cookie.split('; ')
       const searchLangCookie = cookies.find(cookie =>
         cookie.startsWith('SKOSMOS_SEARCH_LANG='))
@@ -95,8 +95,12 @@ const vocabSearch = Vue.createApp({
         return window.SKOSMOS.content_lang
       }
     },
-    renderMatchingPart (searchTerm, label) {
+    renderMatchingPart (searchTerm, label, lang = null) {
       if (label) {
+        let langSpec = ''
+        if (lang && this.selectedLanguage === 'all') {
+          langSpec = ' (' + lang + ')'
+        }
         const searchTermLowerCase = searchTerm.toLowerCase()
         const labelLowerCase = label.toLowerCase()
         if (labelLowerCase.includes(searchTermLowerCase)) {
@@ -105,10 +109,10 @@ const vocabSearch = Vue.createApp({
           return {
             before: label.substring(0, startIndex),
             match: label.substring(startIndex, endIndex),
-            after: label.substring(endIndex)
+            after: label.substring(endIndex) + langSpec
           }
         }
-        return label
+        return label + langSpec
       }
       return null
     },
@@ -123,21 +127,25 @@ const vocabSearch = Vue.createApp({
     renderResults () {
       // TODO: get the results list form cache if it is implemented
       const renderedSearchTerm = this.searchTerm // save the search term in case it changes while rendering
+
       this.renderedResultsList.forEach(result => {
         if ('hiddenLabel' in result) {
           result.hitType = 'hidden'
-          result.hit = this.renderMatchingPart(renderedSearchTerm, result.prefLabel)
+          result.hit = this.renderMatchingPart(renderedSearchTerm, result.prefLabel, result.lang)
         } else if ('altLabel' in result) {
           result.hitType = 'alt'
-          result.hit = this.renderMatchingPart(renderedSearchTerm, result.altLabel)
+          result.hit = this.renderMatchingPart(renderedSearchTerm, result.altLabel, result.lang)
           result.hitPref = this.renderMatchingPart(renderedSearchTerm, result.prefLabel)
         } else {
           if (this.notationMatches(renderedSearchTerm, result.notation)) {
             result.hitType = 'notation'
-            result.hit = this.renderMatchingPart(renderedSearchTerm, result.notation)
+            result.hit = this.renderMatchingPart(renderedSearchTerm, result.notation, result.lang)
+          } else if ('matchedPrefLabel' in result) {
+            result.hitType = 'pref'
+            result.hit = this.renderMatchingPart(renderedSearchTerm, result.matchedPrefLabel, result.lang)
           } else if ('prefLabel' in result) {
             result.hitType = 'pref'
-            result.hit = this.renderMatchingPart(renderedSearchTerm, result.prefLabel)
+            result.hit = this.renderMatchingPart(renderedSearchTerm, result.prefLabel, result.lang)
           }
         }
         if ('uri' in result) { // create relative Skosmos page URL from the search result URI
