@@ -7,8 +7,12 @@ const tabAlphaApp = Vue.createApp({
       indexLetters: [],
       indexConcepts: [],
       selectedConcept: '',
+      selectedLetter: '',
       loadingLetters: false,
-      loadingConcepts: false
+      loadingConcepts: false,
+      loadingMoreConcepts: false,
+      loadingMessage: '',
+      currentOffset: 0
     }
   },
   provide () {
@@ -22,6 +26,7 @@ const tabAlphaApp = Vue.createApp({
     if (document.querySelector('#alphabetical > a').classList.contains('active')) {
       this.loadLetters()
     }
+    this.loadingMessage = window.SKOSMOS.msgs[window.SKOSMOS.lang]['Loading more items'] ?? window.SKOSMOS.msgs.en['Loading more items']
   },
   methods: {
     handleClickAlphabeticalEvent () {
@@ -35,26 +40,36 @@ const tabAlphaApp = Vue.createApp({
     },
     loadLetters () {
       this.loadingLetters = true
+      // Remove scrolling event listener while letters are loaded
+      this.$refs.tabAlpha.$refs.list.removeEventListener('scroll', this.handleScrollEvent)
       fetch('rest/v1/' + window.SKOSMOS.vocab + '/index/?lang=' + window.SKOSMOS.lang)
         .then(data => {
           return data.json()
         })
         .then(data => {
           this.indexLetters = data.indexLetters
+          this.selectedLetter = this.indexLetters[0]
           this.loadingLetters = false
           this.loadConcepts(this.indexLetters[0])
         })
     },
     loadConcepts (letter) {
       this.loadingConcepts = true
-      const url = 'rest/v1/' + window.SKOSMOS.vocab + '/index/' + letter + '?lang=' + window.SKOSMOS.lang + '&limit=50'
+      this.currentOffset = 0
+      // Remove scrolling event listener while concepts are loaded
+      this.$refs.tabAlpha.$refs.list.removeEventListener('scroll', this.handleScrollEvent)
+      const url = 'rest/v1/' + window.SKOSMOS.vocab + '/index/' + letter + '?lang=' + window.SKOSMOS.lang + '&limit=250'
       fetchWithAbort(url, 'alpha')
         .then(data => {
           return data.json()
         })
         .then(data => {
           this.indexConcepts = data.indexConcepts
+          this.selectedLetter = letter
+          this.currentOffset = 250
           this.loadingConcepts = false
+          // Add scrolling event listener back after concepts are loaded
+          this.$refs.tabAlpha.$refs.list.addEventListener('scroll', this.handleScrollEvent)
         })
         .catch(error => {
           if (error.name === 'AbortError') {
@@ -63,6 +78,38 @@ const tabAlphaApp = Vue.createApp({
             throw error
           }
         })
+    },
+    loadMoreConcepts () {
+      this.loadingMoreConcepts = true
+      // Remove scrolling event listener while new concepts are loaded
+      this.$refs.tabAlpha.$refs.list.removeEventListener('scroll', this.handleScrollEvent)
+      const url = 'rest/v1/' + window.SKOSMOS.vocab + '/index/' + this.selectedLetter + '?lang=' + window.SKOSMOS.lang + '&limit=250&offset=' + this.currentOffset
+      fetchWithAbort(url, 'alpha')
+        .then(data => {
+          return data.json()
+        })
+        .then(data => {
+          this.indexConcepts.push(...data.indexConcepts)
+          this.currentOffset += 250
+          this.loadingMoreConcepts = false
+          // Add scrolling event listener back if more concepts were loaded
+          if (data.indexConcepts.length > 0) {
+            this.$refs.tabAlpha.$refs.list.addEventListener('scroll', this.handleScrollEvent)
+          }
+        })
+        .catch(error => {
+          if (error.name === 'AbortError') {
+            console.log('Fetch aborted for letter ' + this.selectedLetter + ' and offset ' + this.currentOffset)
+          } else {
+            throw error
+          }
+        })
+    },
+    handleScrollEvent () {
+      const listElement = this.$refs.tabAlpha.$refs.list
+      if (listElement.scrollTop + listElement.clientHeight >= listElement.scrollHeight - 1) {
+        this.loadMoreConcepts()
+      }
     }
   },
   template: `
@@ -73,8 +120,11 @@ const tabAlphaApp = Vue.createApp({
         :selected-concept="selectedConcept"
         :loading-letters="loadingLetters"
         :loading-concepts="loadingConcepts"
+        :loading-more-concepts="loadingMoreConcepts"
+        :loading-message="loadingMessage"
         @load-concepts="loadConcepts($event)"
         @select-concept="selectedConcept = $event"
+        ref="tabAlpha"
       ></tab-alpha>
     </div>
   `
@@ -94,7 +144,7 @@ tabAlphaApp.directive('click-tab-alphabetical', {
 })
 
 tabAlphaApp.component('tab-alpha', {
-  props: ['indexLetters', 'indexConcepts', 'selectedConcept', 'loadingLetters', 'loadingConcepts'],
+  props: ['indexLetters', 'indexConcepts', 'selectedConcept', 'loadingLetters', 'loadingConcepts', 'loadingMoreConcepts', 'loadingMessage'],
   emits: ['loadConcepts', 'selectConcept'],
   inject: ['partialPageLoad', 'getConceptURL'],
   methods: {
@@ -118,8 +168,8 @@ tabAlphaApp.component('tab-alpha', {
   },
   template: `
     <template v-if="loadingLetters">
-      <div>
-        Loading...
+      <div class="loading-message">
+        {{ this.loadingMessage }} <i class="fa-solid fa-spinner fa-spin-pulse"></i>
       </div>
     </template>
     <template v-else>
@@ -130,13 +180,13 @@ tabAlphaApp.component('tab-alpha', {
       </ul>
     </template>
     
-    <template v-if="loadingConcepts">
-      <div>
-        Loading...
-      </div>
-    </template>
-    <template v-else>
-      <div class="sidebar-list" :style="getListStyle()">
+    <div class="sidebar-list" :style="getListStyle()" ref="list">
+      <template v-if="loadingConcepts">
+        <div>
+          {{ this.loadingMessage }} <i class="fa-solid fa-spinner fa-spin-pulse"></i>
+        </div>
+      </template>
+      <template v-else>
         <ul class="list-group" v-if="indexConcepts.length !== 0">
           <li v-for="concept in indexConcepts" class="list-group-item py-1 px-2">
             <template v-if="concept.altLabel">
@@ -147,9 +197,14 @@ tabAlphaApp.component('tab-alpha', {
               :href="getConceptURL(concept.uri)" @click="loadConcept($event, concept.uri)"
               aria-label="Go to the concept page">{{ concept.prefLabel }}</a>
           </li>
+          <template v-if="loadingMoreConcepts">
+            <li class="list-group-item py-1 px-2">
+              {{ this.loadingMessage }} <i class="fa-solid fa-spinner fa-spin-pulse"></i>
+            </li>
+          </template>
         </ul>
-      </div>
-    </template>
+      </template>
+    </div>
   `
 })
 

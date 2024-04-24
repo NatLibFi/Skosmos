@@ -42,15 +42,18 @@ window.SKOSMOS = {
   "msgs" : { "fi": { "No results": "Ei hakutuloksia",
                      "http://www.yso.fi/onto/yso-meta/Concept": "Yleiskäsite",
                      "http://www.yso.fi/onto/yso-meta/Hierarchy": "Hierarkisoiva käsite",
-                     "skos:Concept": "Käsite"},
+                     "skos:Concept": "Käsite",
+                     "Loading more items": "Ladataan sisältöä"},
              "sv": { "No results": "Inga sökresultat",
                      "http://www.yso.fi/onto/yso-meta/Concept": "Allmänbegrepp",
                      "http://www.yso.fi/onto/yso-meta/Hierarchy": "Hierarki",
-                     "skos:Concept": "Begrepp"},
+                     "skos:Concept": "Begrepp",
+                     "Loading more items": "Laddar mera resultat"},
              "en": { "No results": "No results",
                      "http://www.yso.fi/onto/yso-meta/Concept": "General concept",
                      "http://www.yso.fi/onto/yso-meta/Hierarchy": "Hierarchy",
-                     "skos:Concept": "Concept"}}
+                     "skos:Concept": "Concept",
+                     "Loading more items": "Loading more items"}}
 }
 </script>
 
