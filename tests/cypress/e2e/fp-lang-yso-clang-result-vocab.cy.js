@@ -7,8 +7,8 @@ describe('Front page -> lang -> vocab -> cLang -> search -> concept page', () =>
     // Click on the language "button" to switch UI lang to English
     cy.get('#language-en').click();
 
-    // Select "YSO - Yleinen suomalainen ontologia (arkeologia)" from the vocabulary list and go to the vocab page
-    cy.contains('.list-group-item a', 'YSO - Yleinen suomalainen ontologia (arkeologia)').click();
+    // Select "YSO - General Finnish ontology (archaeology)" from the vocabulary list and go to the vocab page
+    cy.contains('.list-group-item a', 'YSO - General Finnish ontology (archaeology)').click();
 
     // Confirm that we are on the correct page (yso)
     cy.url().should('include', '/yso/en/');
