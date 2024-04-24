@@ -13,7 +13,14 @@ try {
     return;
 }
 
-$model = new Model();
+try {
+    $model = new Model();
+} catch (Exception $e) {
+    header("HTTP/1.1 500 Internal Server Error");
+    echo "Error: " . $e->getMessage();
+    exit(1);
+}
+
 $controller = new WebController($model);
 $request = new Request($model);
 

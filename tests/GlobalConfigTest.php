@@ -138,18 +138,16 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
 
     public function testInitializeConfigWithoutGraph()
     {
-        $this->markTestSkipped("disabled because exception handling is currently broken");
-        $this->expectOutputString('Error: config.ttl must have exactly one skosmos:Configuration');
-        $conf = (new Model('/../../tests/testconfig-nograph.ttl'))->getConfig();
-        $this->assertNotNull($conf);
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('config.ttl must have exactly one skosmos:Configuration');
+        $model = new Model('/../../tests/testconfig-nograph.ttl');
     }
 
     public function testNonexistentFile()
     {
-        $this->markTestSkipped("disabled because exception handling is currently broken");
-        $this->expectOutputString('Error: config.ttl file is missing, please provide one.');
-        $conf = new GlobalConfig('/../../tests/testconfig-idonotexist.ttl');
-        $this->assertNotNull($conf);
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('config.ttl file is missing, please provide one.');
+        $model = new Model('/../../tests/testconfig-idonotexist.ttl');
     }
 
     // --- tests for some default values

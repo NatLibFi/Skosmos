@@ -24,12 +24,8 @@ class DataObject
      * @param EasyRdf\Resource $resource
      * @throws Exception
      */
-    public function __construct($model, $resource)
+    public function __construct(Model $model, EasyRdf\Resource $resource)
     {
-        if (!($model instanceof Model) || !($resource instanceof EasyRdf\Resource)) {
-            throw new InvalidArgumentException('Invalid constructor parameter given to DataObject.');
-        }
-
         $this->model = $model;
         $this->resource = $resource;
         $this->order = array();
