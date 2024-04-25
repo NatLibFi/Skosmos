@@ -1551,6 +1551,9 @@
             "$ref": "#/definitions/ConceptScheme"
           }
         },
+        "mainConceptScheme": {
+          "type": "string"
+        },
         "type": {
           "description": "Optional vocabulary classification e.g. 'http://publications.europa.eu/resource/authority/dataset-type/ONTOLOGY'",
           "type": "array",
