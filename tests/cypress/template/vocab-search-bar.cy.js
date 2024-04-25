@@ -34,6 +34,21 @@ describe('Vocab search bar', () => {
       // Verify the search page url (search result page tests are elsewhere)
       cy.url().should('include', 'q=Katt').and('include', 'anylang=true');
     })
+
+    it('search with all languages retains the previously chosen content language', () => {
+      // go to YSO vocab front page
+      cy.visit('/yso/fi/')
+
+      // Choose 'sv' for search & content language
+      cy.get('#search-wrapper select').select('sv');
+
+      // Choose 'all' for search language
+      cy.get('#search-wrapper select').select('all');
+
+      // Verify the search page url has the previously chosen language as the content language
+      cy.url().should('include', 'clang=sv');
+    })
+
   });
 
   describe('Autocomplete', () => {
