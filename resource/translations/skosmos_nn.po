@@ -1,17 +1,17 @@
-# 
+# Translators:
 # Translators:
 # Dan Michael O. Heggø <danmichaelo@gmail.com>, 2015-2017,2019-2021
-# Oddrun Pauline Ohren <oddrun.ohren@nb.no>, 2021
+# Oddrun Pauline Ohren <oddrun.ohren@nb.no>, 2021,2024
 # osma <osma.suominen@helsinki.fi>, 2017,2020
-# Yksityis Yrittäjä <okko.vainonen@helsinki.fi>, 2021
+# Okko V, 2021
 msgid ""
 msgstr ""
 "Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-16 10:26+0200\n"
 "PO-Revision-Date: 2015-06-18 07:06+0000\n"
-"Last-Translator: Yksityis Yrittäjä <okko.vainonen@helsinki.fi>, 2021\n"
-"Language-Team: Norwegian Nynorsk (http://www.transifex.com/national-library-of-finland/skosmos/language/nn/)\n"
+"Last-Translator: Oddrun Pauline Ohren <oddrun.ohren@nb.no>, 2021,2024\n"
+"Language-Team: Norwegian Nynorsk (http://app.transifex.com/national-library-of-finland/skosmos/language/nn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -117,7 +117,7 @@ msgid "Changes-nav"
 msgstr "Nye"
 
 msgid "Changes-and-deprecations-nav"
-msgstr ""
+msgstr "Nye og sletta"
 
 #: /tmp/cache/587c83c09abaa/8a/8aeec9eddcf0848575d119210eda5a849c129c96ea86195b4448536a02a47817.php:122
 msgid "Clear limitations"
@@ -688,7 +688,7 @@ msgid "skosext:partOf_help"
 msgstr "Heilskap som omgrepet er en del av."
 
 msgid "skosmos:marcSourceCode"
-msgstr ""
+msgstr "MARC-kode for kjelde"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:548
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:201
@@ -855,25 +855,25 @@ msgid ""
 msgstr "Orsak, men Skosmos fungerer ikkje ordentleg utan JavaScript. Aktiver JavaScript for å fortsetje."
 
 msgid "Deprecated concept"
-msgstr ""
+msgstr "Sletta omgrep"
 
 msgid "Error: Search failed!"
-msgstr ""
+msgstr "Feil: Søket feila!"
 
 msgid "Error: Failed to retrieve vocabulary information!"
-msgstr ""
+msgstr "Feil: Fann ikkje informasjon om vokabularet!"
 
 msgid "Error: Loading more items failed!"
-msgstr ""
+msgstr "Feil: Innlasting av innførslar feila!"
 
 msgid "Retry"
-msgstr ""
+msgstr "Prøv igjen"
 
 msgid "skos:notation"
 msgstr ""
 
 msgid "skos:notation_help"
-msgstr ""
+msgstr "Kode som unikt angjev at eit omgrep tilhøyrer eit vokabular."
 
 msgid "Information"
-msgstr ""
+msgstr "Informasjon"
