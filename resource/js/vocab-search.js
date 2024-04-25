@@ -117,7 +117,7 @@ const vocabSearch = Vue.createApp({
       return null
     },
     translateType (type) {
-      return window.SKOSMOS.msgs[window.SKOSMOS.lang][type]
+      return window.SKOSMOS.typeTranslations[type]
     },
     /*
      * renderResults is used when the search string has been indexed in the cache
