@@ -1,6 +1,6 @@
 {% set pageType = 'vocab-home' %}
 {% extends "base-template.twig" %}
-{% block title %}: {{ vocab.title(request.contentLang) }}{% endblock %}
+{% block title %}{{ vocab.title(request.contentLang) }} - {{ GlobalConfig.serviceName }}{% endblock %}
 
 
 {% block content %}

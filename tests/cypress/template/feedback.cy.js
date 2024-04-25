@@ -1,4 +1,16 @@
 describe('Feedback page', () => {
+  it('Contains title and title metadata', () => {
+    // go to the general feedback page
+    cy.visit('/en/feedback')
+
+    const expectedTitle = 'Feedback - Skosmos being tested'
+    // check that the page has a HTML title
+    cy.get('title').invoke('text').should('equal', expectedTitle)
+    // check that the page has title metadata
+    cy.get('head meta[name="title"]').should('have.attr', 'content', expectedTitle);
+    cy.get('head meta[name="twitter:title"]').should('have.attr', 'content', expectedTitle);
+    cy.get('head meta[property="og:title"]').should('have.attr', 'content', expectedTitle);
+  })
   it('Sends feedback', () => {
     // go to the general feedback page
     cy.visit('/en/feedback')
@@ -35,6 +47,18 @@ describe('Feedback page', () => {
 })
 
 describe('Vocab feedback page', () => {
+  it('Contains title and title metadata', () => {
+    // go to test vocab feedback page
+    cy.visit('/test/en/feedback')
+
+    const expectedTitle = 'Feedback - Skosmos being tested'
+    // check that the page has a HTML title
+    cy.get('title').invoke('text').should('equal', expectedTitle)
+    // check that the page has title metadata
+    cy.get('head meta[name="title"]').should('have.attr', 'content', expectedTitle);
+    cy.get('head meta[name="twitter:title"]').should('have.attr', 'content', expectedTitle);
+    cy.get('head meta[property="og:title"]').should('have.attr', 'content', expectedTitle);
+  })
   it('Displays correct vocab option', () => {
     // go to test vocab feedback page
     cy.visit('/test/en/feedback')
