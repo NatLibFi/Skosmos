@@ -187,7 +187,7 @@ const vocabSearch = Vue.createApp({
     changeLang (lang) {
       this.selectedLanguage = lang
       // Setting the cookie path to be the relative part of the baseHref if it is provided
-      const cookiePath = "/"
+      let cookiePath = '/'
       if (window.SKOSMOS.baseHref && window.SKOSMOS.baseHref.replace(window.origin, '')) {
         cookiePath = window.SKOSMOS.baseHref.replace(window.origin, '')
       }
