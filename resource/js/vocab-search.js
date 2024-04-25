@@ -74,7 +74,7 @@ const vocabSearch = Vue.createApp({
       const paramLang = urlParams.get('clang')
       const anyLang = urlParams.get('anylang')
       if (anyLang) {
-        this.setSearchLangCookie('all')
+        this.changeLang('all')
         return 'all'
       }
       if (paramLang) {
