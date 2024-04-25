@@ -13,9 +13,9 @@ describe('Sidebar', () => {
     cy.get('.tab-content').find('.active').should('have.length', 1)
   })
   it('Concepts and letters in alphabetical index are displayed in the correct language', () => {
-    // go to YSO vocab from page with UI language in English and content language in Finnish
+    // go to YSO vocab from page with UI language set to English and content language set to Finnish
     cy.visit('/yso/en/?clang=fi')
-    // check that first item in the list is in the correct language
+    // check that the first item in the list is in the correct language
     cy.get('#tab-alphabetical .sidebar-list a').first().invoke('text').should('contain', 'aarrelöydöt')
     // check that letters contain Y and not C
     cy.get('#tab-alphabetical .pagination a').invoke('text').should('contain', 'Y').should('not.contain', 'C')
