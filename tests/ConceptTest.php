@@ -13,7 +13,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->model = new Model(new GlobalConfig('/../../tests/testconfig.ttl'));
+        $this->model = new Model('/../../tests/testconfig.ttl');
         $this->vocab = $this->model->getVocabulary('test');
         $this->concept = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en');
 
@@ -365,7 +365,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
      */
     public function testGetLabelWhenNull()
     {
-        $model = new Model(new GlobalConfig('/../../tests/testconfig.ttl'));
+        $model = new Model('/../../tests/testconfig.ttl');
         $vocab = $model->getVocabulary('test');
         $concept = $vocab->getConceptInfo("http://www.skosmos.skos/test/ta120", "en");
         $this->assertEquals(null, $concept->getLabel());
@@ -390,7 +390,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
      */
     public function testGetGroupProperties()
     {
-        $model = new Model(new GlobalConfig('/../../tests/testconfig.ttl'));
+        $model = new Model('/../../tests/testconfig.ttl');
         $vocab = $model->getVocabulary('groups');
         $concept = $vocab->getConceptInfo("http://www.skosmos.skos/groups/ta111", "en");
         $arrays = $concept->getArrayProperties();
@@ -406,7 +406,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
      */
     public function testGetGroupPropertiesWithDuplicatedInformationFilteredOut()
     {
-        $model = new Model(new GlobalConfig('/../../tests/testconfig.ttl'));
+        $model = new Model('/../../tests/testconfig.ttl');
         $vocab = $model->getVocabulary('dupgroup');
         $concept = $vocab->getConceptInfo("http://www.skosmos.skos/dupgroup/c1", "en");
         $groups = $concept->getGroupProperties();
@@ -419,7 +419,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
      */
     public function testGetGroupPropertiesWithHierarchy()
     {
-        $model = new Model(new GlobalConfig('/../../tests/testconfig.ttl'));
+        $model = new Model('/../../tests/testconfig.ttl');
         $vocab = $model->getVocabulary('dupgroup');
         $concept = $vocab->getConceptInfo("http://www.skosmos.skos/dupgroup/ta111", "en");
         $groups = $concept->getGroupProperties();
@@ -437,7 +437,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
      */
     public function testGetPropertiesWithNarrowersPartOfACollection()
     {
-        $model = new Model(new GlobalConfig('/../../tests/testconfig.ttl'));
+        $model = new Model('/../../tests/testconfig.ttl');
         $vocab = $model->getVocabulary('groups');
         $concept = $vocab->getConceptInfo("http://www.skosmos.skos/groups/ta1", "en");
         $props = $concept->getProperties();

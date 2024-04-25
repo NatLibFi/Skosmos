@@ -29,19 +29,20 @@ class Model
     /**
      * Initializes the Model object
      */
-    public function __construct($config)
+    public function __construct(string $config_filename="../../config.ttl")
     {
-        $this->globalConfig = $config;
-        $this->initializeLogging();
         $this->resolver = new Resolver($this);
-
-        foreach ($this->getConfig()->getLanguages() as $langcode => $locale) {
+        $this->globalConfig = new GlobalConfig($this, $config_filename);
+        $this->translator = null;
+        foreach ($this->globalConfig->getLanguages() as $langcode => $locale) {
             if (is_null($this->translator)) {
+                // use the first configured language as default language
                 $this->translator = new Translator($langcode);
             }
             $this->translator->addLoader('po', new PoFileLoader());
             $this->translator->addResource('po', __DIR__.'/../../resource/translations/skosmos_' . $langcode . '.po', $langcode);
         }
+        $this->initializeLogging();
     }
 
     /**

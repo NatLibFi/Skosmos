@@ -8,8 +8,7 @@ require_once '../vendor/autoload.php';
 header("Access-Control-Allow-Origin: *"); // enable CORS
 
 try {
-    $config = new GlobalConfig();
-    $model = new Model($config);
+    $model = new Model();
     $controller = new EntityController($model);
     $request = new Request($model);
 

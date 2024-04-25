@@ -15,11 +15,11 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->config = new GlobalConfig('/../../tests/testconfig.ttl');
+        $this->config = (new Model('/../../tests/testconfig.ttl'))->getConfig();
         $this->assertNotNull($this->config->getCache());
         $this->assertNotNull($this->config->getGraph());
-        $this->configWithDefaults = new GlobalConfig('/../../tests/testconfig-fordefaults.ttl');
-        $this->configWithBaseHref = new GlobalConfig('/../../tests/testconfig-basehref.ttl');
+        $this->configWithDefaults = (new Model('/../../tests/testconfig-fordefaults.ttl'))->getConfig();
+        $this->configWithBaseHref = (new Model('/../../tests/testconfig-basehref.ttl'))->getConfig();
     }
 
     // --- tests for values that are overriding default values
@@ -138,16 +138,18 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
 
     public function testInitializeConfigWithoutGraph()
     {
-        $this->expectOutputString('Error: config.ttl must have exactly one skosmos:Configuration');
-        $conf = new GlobalConfig('/../../tests/testconfig-nograph.ttl');
-        $this->assertNotNull($conf);
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('config.ttl must have exactly one skosmos:Configuration');
+        $model = new Model('/../../tests/testconfig-nograph.ttl');
+        $this->assertNotNull($model);
     }
 
-    public function testInexistentFile()
+    public function testNonexistentFile()
     {
-        $this->expectOutputString('Error: config.ttl file is missing, please provide one.');
-        $conf = new GlobalConfig('/../../tests/testconfig-idonotexist.ttl');
-        $this->assertNotNull($conf);
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('config.ttl file is missing, please provide one.');
+        $model = new Model('/../../tests/testconfig-idonotexist.ttl');
+        $this->assertNotNull($model);
     }
 
     // --- tests for some default values

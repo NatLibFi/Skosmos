@@ -30,19 +30,15 @@ class GlobalConfig extends BaseConfig
      */
     private $configModifiedTime = null;
 
-    public function __construct($config_name='../../config.ttl')
+    public function __construct(Model $model, string $config_name='../../config.ttl')
     {
         $this->cache = new Cache();
-        try {
-            $this->filePath = realpath(dirname(__FILE__) . "/" . $config_name);
-            if (!file_exists($this->filePath)) {
-                throw new Exception('config.ttl file is missing, please provide one.');
-            }
-            $this->initializeConfig();
-        } catch (Exception $e) {
-            echo "Error: " . $e->getMessage();
-            return;
+        $this->filePath = realpath(dirname(__FILE__) . "/" . $config_name);
+        if (!file_exists($this->filePath)) {
+            throw new Exception('config.ttl file is missing, please provide one.');
         }
+        $resource = $this->initializeConfig();
+        parent::__construct($model, $resource);
     }
 
     public function getCache()
@@ -63,41 +59,36 @@ class GlobalConfig extends BaseConfig
      * and creating the graph and resources objects. Uses a cache if available,
      * in order to avoid re-loading the complete configuration on each request.
      */
-    private function initializeConfig()
+    private function initializeConfig(): EasyRdf\Resource
     {
-        try {
-            // retrieve last modified time for config file (filemtime returns int|bool!)
-            $configModifiedTime = filemtime($this->filePath);
-            if (!is_bool($configModifiedTime)) {
-                $this->configModifiedTime = $configModifiedTime;
-            }
-            // use APC user cache to store parsed config.ttl configuration
-            if ($this->cache->isAvailable() && !is_null($this->configModifiedTime)) {
-                // @codeCoverageIgnoreStart
-                $key = realpath($this->filePath) . ", " . $this->configModifiedTime;
-                $nskey = "namespaces of " . $key;
-                $this->graph = $this->cache->fetch($key);
-                $this->namespaces = $this->cache->fetch($nskey);
-                if ($this->graph === false || $this->namespaces === false) { // was not found in cache
-                    $this->parseConfig($this->filePath);
-                    $this->cache->store($key, $this->graph);
-                    $this->cache->store($nskey, $this->namespaces);
-                }
-            // @codeCoverageIgnoreEnd
-            } else { // APC not available, parse on every request
-                $this->parseConfig($this->filePath);
-            }
-
-            $configResources = $this->graph->allOfType("skosmos:Configuration");
-            if (is_null($configResources) || !is_array($configResources) || count($configResources) !== 1) {
-                throw new Exception("config.ttl must have exactly one skosmos:Configuration");
-            }
-
-            $this->resource = $configResources[0];
-            $this->initializeNamespaces();
-        } catch (Exception $e) {
-            echo "Error: " . $e->getMessage();
+        // retrieve last modified time for config file (filemtime returns int|bool!)
+        $configModifiedTime = filemtime($this->filePath);
+        if (!is_bool($configModifiedTime)) {
+            $this->configModifiedTime = $configModifiedTime;
         }
+        // use APC user cache to store parsed config.ttl configuration
+        if ($this->cache->isAvailable() && !is_null($this->configModifiedTime)) {
+            // @codeCoverageIgnoreStart
+            $key = realpath($this->filePath) . ", " . $this->configModifiedTime;
+            $nskey = "namespaces of " . $key;
+            $this->graph = $this->cache->fetch($key);
+            $this->namespaces = $this->cache->fetch($nskey);
+            if ($this->graph === false || $this->namespaces === false) { // was not found in cache
+                $this->parseConfig($this->filePath);
+                $this->cache->store($key, $this->graph);
+                $this->cache->store($nskey, $this->namespaces);
+            }
+        // @codeCoverageIgnoreEnd
+        } else { // APC not available, parse on every request
+            $this->parseConfig($this->filePath);
+        }
+        $this->initializeNamespaces();
+
+        $configResources = $this->graph->allOfType("skosmos:Configuration");
+        if (is_null($configResources) || !is_array($configResources) || count($configResources) !== 1) {
+            throw new Exception("config.ttl must have exactly one skosmos:Configuration");
+        }
+        return $configResources[0];
     }
 
     /**

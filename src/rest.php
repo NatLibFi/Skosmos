@@ -8,8 +8,7 @@ require_once '../vendor/autoload.php';
 header("Access-Control-Allow-Origin: *"); // enable CORS for the whole REST API
 
 try {
-    $config = new GlobalConfig();
-    $model = new Model($config);
+    $model = new Model();
     $controller = new RestController($model);
     $request = new Request($model);
     $path = $request->getServerConstant('PATH_INFO') ? $request->getServerConstant('PATH_INFO') : ''; // eg. "/search"

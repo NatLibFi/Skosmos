@@ -30,9 +30,9 @@ class VocabularyConfig extends BaseConfig
     "skos:related", "skos:historyNote", "skosmos:memberOf",
     "skosmos:memberOfArray");
 
-    public function __construct($resource, $globalPlugins=array())
+    public function __construct(Model $model, EasyRdf\Resource $resource, array $globalPlugins=array())
     {
-        $this->resource = $resource;
+        parent::__construct($model, $resource);
         $this->globalPlugins = $globalPlugins;
         $this->setPropertyLabelOverrides();
         $pluginArray = $this->getPluginArray();

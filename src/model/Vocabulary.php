@@ -12,7 +12,7 @@ class Vocabulary extends DataObject implements Modifiable
     public function __construct($model, $resource)
     {
         parent::__construct($model, $resource);
-        $this->config = new VocabularyConfig($resource, $model->getConfig()->getGlobalPlugins());
+        $this->config = new VocabularyConfig($model, $resource, $model->getConfig()->getGlobalPlugins());
     }
 
     /**

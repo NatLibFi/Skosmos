@@ -13,8 +13,14 @@ try {
     return;
 }
 
-$config = new GlobalConfig();
-$model = new Model($config);
+try {
+    $model = new Model();
+} catch (Exception $e) {
+    header("HTTP/1.1 500 Internal Server Error");
+    echo "Error: " . $e->getMessage();
+    exit(1);
+}
+
 $controller = new WebController($model);
 $request = new Request($model);
 
@@ -29,7 +35,7 @@ if (sizeof($parts) <= 2) {
     $lang = sizeof($parts) == 2 && $parts[1] !== '' ? $parts[1] : $controller->guessLanguage($request);
     header("Location: " . $lang . "/");
 } else {
-    if (array_key_exists($parts[1], $config->getLanguages())) { // global pages
+    if (array_key_exists($parts[1], $model->getConfig()->getLanguages())) { // global pages
         $request->setLang($parts[1]);
         $model->setLocale($parts[1]);
         $content_lang = $request->getQueryParam('clang');
@@ -60,7 +66,7 @@ if (sizeof($parts) <= 2) {
             $newurl = $controller->getBaseHref() . $vocab . "/" . $lang . "/";
             header("Location: " . $newurl);
         } else {
-            if (array_key_exists($parts[2], $config->getLanguages())) {
+            if (array_key_exists($parts[2], $model->getConfig()->getLanguages())) {
                 $lang = $parts[2];
                 $content_lang = $request->getQueryParam('clang') ? $request->getQueryParam('clang') : $lang;
                 $request->setContentLang($content_lang);
