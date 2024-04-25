@@ -539,7 +539,9 @@ class WebController extends Controller
         $types = array();
 
         foreach ($queriedtypes as $uri => $typedata) {
-            $types[$uri] = $typedata['label'];
+            if ($typedata['label']) {
+                $types[$uri] = $typedata['label'];
+            }
         }
         return json_encode($types, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
