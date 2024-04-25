@@ -42,7 +42,7 @@ const tabAlphaApp = Vue.createApp({
       this.loadingLetters = true
       // Remove scrolling event listener while letters are loaded
       this.$refs.tabAlpha.$refs.list.removeEventListener('scroll', this.handleScrollEvent)
-      fetch('rest/v1/' + window.SKOSMOS.vocab + '/index/?lang=' + window.SKOSMOS.lang)
+      fetch('rest/v1/' + window.SKOSMOS.vocab + '/index/?lang=' + window.SKOSMOS.content_lang)
         .then(data => {
           return data.json()
         })
@@ -58,7 +58,7 @@ const tabAlphaApp = Vue.createApp({
       this.currentOffset = 0
       // Remove scrolling event listener while concepts are loaded
       this.$refs.tabAlpha.$refs.list.removeEventListener('scroll', this.handleScrollEvent)
-      const url = 'rest/v1/' + window.SKOSMOS.vocab + '/index/' + letter + '?lang=' + window.SKOSMOS.lang + '&limit=250'
+      const url = 'rest/v1/' + window.SKOSMOS.vocab + '/index/' + letter + '?lang=' + window.SKOSMOS.content_lang + '&limit=250'
       fetchWithAbort(url, 'alpha')
         .then(data => {
           return data.json()
@@ -83,7 +83,7 @@ const tabAlphaApp = Vue.createApp({
       this.loadingMoreConcepts = true
       // Remove scrolling event listener while new concepts are loaded
       this.$refs.tabAlpha.$refs.list.removeEventListener('scroll', this.handleScrollEvent)
-      const url = 'rest/v1/' + window.SKOSMOS.vocab + '/index/' + this.selectedLetter + '?lang=' + window.SKOSMOS.lang + '&limit=250&offset=' + this.currentOffset
+      const url = 'rest/v1/' + window.SKOSMOS.vocab + '/index/' + this.selectedLetter + '?lang=' + window.SKOSMOS.content_lang + '&limit=250&offset=' + this.currentOffset
       fetchWithAbort(url, 'alpha')
         .then(data => {
           return data.json()
