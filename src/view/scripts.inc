@@ -24,6 +24,7 @@ window.SKOSMOS = {
   {%- if request.plugins.callbacks ~%}
   "pluginCallbacks": [{% for function in request.plugins.callbacks %}{% if not loop.first %}, {% endif %}"{{ function }}"{% endfor %}],
   {%- endif ~%}
+  "baseHref": "{{ BaseHref }}",
   "language_strings": { "fi": { "fi": "suomi",
                                 "en": "englanti",
                                 "se": "pohjoissaame",
