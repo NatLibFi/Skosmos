@@ -428,25 +428,29 @@ $(function() { // DOCUMENT READY
   $(document).on('click','div.group-hierarchy a',
       function(event) {
         $.ajaxQ.abortContentQueries();
+        var targetUrl = event.target.href || event.target.parentElement.href;
+        $('#hier-trigger').attr('href', targetUrl);
         var $content = $('.content').empty().append($delayedSpinner.hide());
         var loading = delaySpinner();
         // ajaxing the sidebar content
         $.ajax({
-            url : event.target.href,
+            url : targetUrl,
             req_kind: $.ajaxQ.requestKind.CONTENT,
+
             complete: function() { clearTimeout(loading); },
             success : function(data) {
+              $content.empty();
+              var response = $('.content', data).html();
+              if (window.history.pushState) { window.history.pushState({url: targetUrl}, '', targetUrl); }
               initHierarchyTooltip();
-              $('#hier-trigger').attr('href', event.target.href);
+              $content.append(response);
+              updateJsonLD(data);
               updateTitle(data);
               updateTopbarLang(data);
-              $content.empty().append($('.content', data).html());
-              $('.nav').scrollTop(0);
-              if (window.history.pushState) { window.history.pushState({}, null, event.target.href); }
-              updateTitle(data);
               ajaxConceptMapping(data);
               // take the content language buttons from the response
               $('.header-float .dropdown-menu').empty().append($('.header-float .dropdown-menu', data).html());
+              $('.nav').scrollTop(0);
             }
         });
         return false;
