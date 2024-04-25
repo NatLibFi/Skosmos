@@ -150,6 +150,7 @@ class WebController extends Controller
         $sortedVocabs = $this->model->getVocabularyList(false, true);
         $langList = $this->model->getLanguages($request->getLang());
         $listStyle = $this->listStyle();
+        $typeTranslations = $this->getConceptTypeTranslations($request);
 
         // render template
         echo $template->render(
@@ -159,7 +160,8 @@ class WebController extends Controller
                 'languages' => $this->languages,
                 'lang_list' => $langList,
                 'request' => $request,
-                'list_style' => $listStyle
+                'list_style' => $listStyle,
+                'conceptTypeTranslations' => $typeTranslations,
             )
         );
     }
@@ -190,6 +192,7 @@ class WebController extends Controller
 
         $pluginParameters = json_encode($vocab->getConfig()->getPluginParameters());
         $template = $this->twig->load('concept.twig');
+        $typeTranslations = $this->getConceptTypeTranslations($request);
 
         $crumbs = $vocab->getBreadCrumbs($request->getContentLang(), $uri);
         echo $template->render(
@@ -203,7 +206,9 @@ class WebController extends Controller
             'hidden_breadcrumbs' => $crumbs['combined'],
             'request' => $request,
             'plugin_params' => $pluginParameters,
-            'custom_labels' => $customLabels)
+            'custom_labels' => $customLabels,
+            'conceptTypeTranslations' => $typeTranslations,
+            )
         );
     }
 
@@ -341,7 +346,9 @@ class WebController extends Controller
         $lang = $request->getLang();
         $template = $this->twig->load('global-search.twig');
         $this->model->setLocale($request->getLang());
-
+        $typeTranslations = $this->getConceptTypeTranslations($request);
+        error_log('testataan');
+        error_log($typeTranslations);
         $parameters = new ConceptSearchParameters($request, $this->model->getConfig());
 
         $vocabs = $request->getQueryParam('vocabs'); # optional
@@ -398,7 +405,8 @@ class WebController extends Controller
                 'vocab_list' => $vocabList,
                 'sorted_vocabs' => $sortedVocabs,
                 'request' => $request,
-                'parameters' => $parameters
+                'parameters' => $parameters,
+                'conceptTypeTranslations' => $typeTranslations,
             )
         );
     }
@@ -412,6 +420,8 @@ class WebController extends Controller
         $this->model->setLocale($request->getLang());
         $vocab = $request->getVocab();
         $searchResults = null;
+        $typeTranslations = $this->getConceptTypeTranslations($request);
+
         try {
             $vocabTypes = $this->model->getTypes($request->getVocabid(), $request->getLang());
         } catch (Exception $e) {
@@ -472,6 +482,7 @@ class WebController extends Controller
                 'types' => $vocabTypes,
                 'explicit_langcodes' => $langcodes,
                 'request' => $request,
+                'conceptTypeTranslations' => $typeTranslations,
             )
         );
     }
@@ -496,6 +507,7 @@ class WebController extends Controller
         $pluginParameters = json_encode($vocab->getConfig()->getPluginParameters());
 
         $template = $this->twig->load('vocab-home.twig');
+        $typeTranslations = $this->getConceptTypeTranslations($request);
 
         echo $template->render(
             array(
@@ -504,11 +516,33 @@ class WebController extends Controller
                 'search_letter' => 'A',
                 'active_tab' => $defaultView,
                 'request' => $request,
-                'plugin_params' => $pluginParameters
+                'plugin_params' => $pluginParameters,
+                'conceptTypeTranslations' => $typeTranslations,
             )
         );
     }
+    /**
+    * Get the translation strings to be displayed in the autocomplete search results
+    */
+    private function getConceptTypeTranslations($request)
+    {
+        $vocid = $request->getVocab() ? $request->getVocab()->getId() : null;
+        if ($vocid === null && !$request->getLang()) {
+            return $this->returnError(400, "Bad Request", "lang parameter missing");
+        }
+        if ($this->notModified($request->getVocab())) {
+            return null;
+        }
 
+        $this->model->setLocale($request->getLang());
+        $queriedtypes = $this->model->getTypes($vocid, $request->getLang());
+        $types = array();
+
+        foreach ($queriedtypes as $uri => $typedata) {
+            $types[$uri] = $typedata['label'];
+        }
+        return json_encode($types, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    }
     /**
      * Invokes a very generic errorpage.
      */
