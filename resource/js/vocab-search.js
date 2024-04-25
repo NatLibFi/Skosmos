@@ -74,7 +74,7 @@ const vocabSearch = Vue.createApp({
       const paramLang = urlParams.get('clang')
       const anyLang = urlParams.get('anylang')
       if (anyLang) {
-        document.cookie = `SKOSMOS_SEARCH_LANG=${'all'};path=/`
+        this.setSearchLangCookie('all')
         return 'all'
       }
       if (paramLang) {
@@ -186,13 +186,7 @@ const vocabSearch = Vue.createApp({
     },
     changeLang (lang) {
       this.selectedLanguage = lang
-      // Setting the cookie path to be the relative part of the baseHref if it is provided
-      let cookiePath = '/'
-      if (window.SKOSMOS.baseHref && window.SKOSMOS.baseHref.replace(window.origin, '')) {
-        cookiePath = window.SKOSMOS.baseHref.replace(window.origin, '')
-      }
-      document.cookie = `SKOSMOS_SEARCH_LANG=${this.selectedLanguage};path=${cookiePath}`
-
+      this.setSearchLangCookie(lang)
       this.resetSearchTermAndHideDropdown()
     },
     changeContentLangAndReload (lang) {
@@ -218,6 +212,14 @@ const vocabSearch = Vue.createApp({
     showAutoComplete () {
       this.showDropdown = true
       this.$forceUpdate()
+    },
+    setSearchLangCookie (lang) {
+      // The cookie path should be relative if the baseHref is known
+      let cookiePath = '/'
+      if (window.SKOSMOS.baseHref && window.SKOSMOS.baseHref.replace(window.origin, '')) {
+        cookiePath = window.SKOSMOS.baseHref.replace(window.origin, '')
+      }
+      document.cookie = `SKOSMOS_SEARCH_LANG=${this.selectedLanguage};path=${cookiePath}`
     }
   },
   template: `
