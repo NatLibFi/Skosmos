@@ -370,7 +370,7 @@ class Vocabulary extends DataObject implements Modifiable
         $lang = $lang ? $lang : $this->getEnvLang();
         $fallback = count($this->config->getLanguageOrder($lang)) > 1 ? $this->config->getLanguageOrder($lang)[1] : $this->config->getDefaultLanguage();
         $props = $this->config->getHierarchyProperty();
-        return $this->getSparql()->queryParentList($uri, $lang, $fallback, $props);
+        return $this->getSparql()->queryParentList($uri, $lang, $fallback, $props, $this->config->getShowDeprecated());
     }
 
     /**
@@ -382,7 +382,7 @@ class Vocabulary extends DataObject implements Modifiable
         $lang = $lang ? $lang : $this->getEnvLang();
         $fallback = count($this->config->getLanguageOrder($lang)) > 1 ? $this->config->getLanguageOrder($lang)[1] : $this->config->getDefaultLanguage();
         $props = $this->config->getHierarchyProperty();
-        return $this->getSparql()->queryChildren($uri, $lang, $fallback, $props);
+        return $this->getSparql()->queryChildren($uri, $lang, $fallback, $props, $this->config->getShowDeprecated());
     }
 
     /**
@@ -405,7 +405,7 @@ class Vocabulary extends DataObject implements Modifiable
     public function getConceptTransitiveNarrowers($uri, $limit, $lang)
     {
         $lang = $lang ? $lang : $this->getEnvLang();
-        return $this->getSparql()->queryTransitiveProperty($uri, array('skos:narrower'), $lang, $limit);
+        return $this->getSparql()->queryTransitiveProperty($uri, array('skos:narrower'), $lang, $limit, $this->config->getShowDeprecated());
     }
 
     /**
@@ -430,7 +430,7 @@ class Vocabulary extends DataObject implements Modifiable
     {
         $lang = $lang ? $lang : $this->getEnvLang();
         $fallback = $this->config->getDefaultLanguage();
-        return $this->getSparql()->queryTransitiveProperty($uri, array('skos:broader'), $lang, $limit, $any, $fallback);
+        return $this->getSparql()->queryTransitiveProperty($uri, array('skos:broader'), $lang, $limit, $any, $fallback, $this->config->getShowDeprecated());
     }
 
     /**
