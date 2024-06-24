@@ -30,13 +30,26 @@ class GlobalConfig extends BaseConfig {
      */
     private $configModifiedTime = null;
 
+    const HTTP_URL_PREFIX = 'http://';
+    const HTTPS_URL_PREFIX = 'https://';
+
     public function __construct($config_name='/../config.ttl')
     {
+        // if present, use value from env instead
+        $config_name_env = getenv('SKOSMOS_CONFIG');
+        if ($config_name_env) {
+            $config_name = $config_name_env;
+        }
+
         $this->cache = new Cache();
         try {
-            $this->filePath = realpath( dirname(__FILE__) . $config_name );
-            if (!file_exists($this->filePath)) {
-                throw new Exception('config.ttl file is missing, please provide one.');
+            if (str_starts_with($config_name, self::HTTP_URL_PREFIX) || str_starts_with($config_name, self::HTTPS_URL_PREFIX)) {
+                $this->filePath = $config_name;
+            } else {
+                $this->filePath = realpath( dirname(__FILE__) . $config_name );
+                if (!file_exists($this->filePath)) {
+                    throw new Exception($config_name . ' is missing, please provide a config.ttl.');
+                }
             }
             $this->initializeConfig();
         } catch (Exception $e) {
@@ -66,10 +79,12 @@ class GlobalConfig extends BaseConfig {
     private function initializeConfig()
     {
         try {
-            // retrieve last modified time for config file (filemtime returns int|bool!)
-            $configModifiedTime = filemtime($this->filePath);
-            if (!is_bool($configModifiedTime)) {
-                $this->configModifiedTime = $configModifiedTime;
+            if (!str_starts_with($this->filePath, self::HTTP_URL_PREFIX) && !str_starts_with($this->filePath, self::HTTPS_URL_PREFIX)) {
+                // retrieve last modified time for config file (filemtime returns int|bool!)
+                $configModifiedTime = filemtime($this->filePath);
+                if (!is_bool($configModifiedTime)) {
+                    $this->configModifiedTime = $configModifiedTime;
+                }
             }
             // use APC user cache to store parsed config.ttl configuration
             if ($this->cache->isAvailable() && !is_null($this->configModifiedTime)) {
@@ -107,9 +122,18 @@ class GlobalConfig extends BaseConfig {
      */
     private function parseConfig($filename)
     {
+        if (str_starts_with($filename, self::HTTP_URL_PREFIX) || str_starts_with($filename, self::HTTPS_URL_PREFIX)) {
+            $ch = curl_init($filename);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: text/turtle'));
+            $contents = curl_exec($ch);
+            curl_close($ch);
+        } else {
+            $contents = file_get_contents($filename);
+        }
         $this->graph = new EasyRdf\Graph();
         $parser = new SkosmosTurtleParser();
-        $parser->parse($this->graph, file_get_contents($filename), 'turtle', $filename);
+        $parser->parse($this->graph, $contents, 'turtle', $filename);
         $this->namespaces = $parser->getNamespaces();
     }
 
