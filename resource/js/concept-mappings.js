@@ -52,9 +52,13 @@ const conceptMappingsApp = Vue.createApp({
   },
   template: `
     <div v-load-concept-page="loadMappings">
-      <div v-if="hasMappings" class="main-content-section p-5">
-        <concept-mappings :mappings="mappings"></concept-mappings>
-      </div>
+      <div class="main-content-section p-5">
+        <template v-if="hasMappings">
+          <concept-mappings :mappings="mappings"></concept-mappings>
+        </template>
+        <template v-else>
+          <i class="fa-solid fa-spinner fa-spin-pulse"></i>
+        </div>
     </div>
   `
 })
