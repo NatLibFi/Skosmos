@@ -28,7 +28,12 @@ const termCountsApp = Vue.createApp({
             <th class="main-table-label fw-bold">Alternate terms</th>
             <th class="main-table-label fw-bold">Hidden terms</th>
           </tr>
-          <term-counts :languages="languages"></term-counts>
+          <template v-if="languages.length">
+            <term-counts :languages="languages"></term-counts>
+          </template>
+          <template v-else >
+            <i class="fa-solid fa-spinner fa-spin-pulse"></i>
+          </template>
         </tbody>
       </table>
     
@@ -38,17 +43,12 @@ const termCountsApp = Vue.createApp({
 termCountsApp.component('term-counts', {
   props: ['languages'],
   template: `
-    <template v-if="languages.length">
-      <tr v-for="l in languages">
-        <td>{{ l.literal }}</td>
-        <td>{{ l.properties.find(a => a.property === 'skos:prefLabel').labels }}</td>
-        <td>{{ l.properties.find(a => a.property === 'skos:altLabel').labels }}</td>
-        <td>{{ l.properties.find(a => a.property === 'skos:hiddenLabel').labels }}</td>
-      </tr>
-    </template>
-    <template v-else >
-      <i class="fa-solid fa-spinner fa-spin-pulse"></i>
-    </template>
+    <tr v-for="l in languages">
+      <td>{{ l.literal }}</td>
+      <td>{{ l.properties.find(a => a.property === 'skos:prefLabel').labels }}</td>
+      <td>{{ l.properties.find(a => a.property === 'skos:altLabel').labels }}</td>
+      <td>{{ l.properties.find(a => a.property === 'skos:hiddenLabel').labels }}</td>
+    </tr>
   `
 })
 

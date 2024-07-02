@@ -174,7 +174,9 @@ const tabHierApp = Vue.createApp({
             @select-concept="selectedConcept = $event"
           ></tab-hier-wrapper>
         </ul>
-        <template v-else>Loading...</template><!-- Add a spinner or equivalent -->
+        <template v-else>
+          <i class="fa-solid fa-spinner fa-spin-pulse"></i>
+        </template>
       </div>
     </div>
   `
