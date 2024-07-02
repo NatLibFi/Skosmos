@@ -8,6 +8,11 @@ const resourceCountsApp = Vue.createApp({
       conceptGroups: {}
     }
   },
+  computed: {
+    hasCounts () {
+      return Object.keys(this.concepts).length > 0
+    }
+  },
   mounted () {
     fetch('rest/v1/' + window.SKOSMOS.vocab + '/vocabularyStatistics?lang=' + window.SKOSMOS.lang)
       .then(data => {
@@ -24,7 +29,12 @@ const resourceCountsApp = Vue.createApp({
     <table class="table" id="resource-stats">
       <tbody>
         <tr><th class="versal">Type</th><th class="versal">Count</th></tr>
-        <resource-counts :concepts="concepts" :subTypes="subTypes" :conceptGroups="conceptGroups"></resource-counts>
+        <template v-if="hasCounts">
+          <resource-counts :concepts="concepts" :subTypes="subTypes" :conceptGroups="conceptGroups" :hasCounts="hasCounts"></resource-counts>
+        </template>
+        <template v-else >
+          <i class="fa-solid fa-spinner fa-spin-pulse"></i>
+        </template>
       </tbody>
     </table>
   `
