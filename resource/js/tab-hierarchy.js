@@ -5,7 +5,8 @@ const tabHierApp = Vue.createApp({
   data () {
     return {
       hierarchy: [],
-      loading: true,
+      loadingHierarchy: true,
+      loadingChildren: [],
       selectedConcept: ''
     }
   },
@@ -37,7 +38,7 @@ const tabHierApp = Vue.createApp({
       }
     },
     loadTopConcepts () {
-      this.loading = true
+      this.loadingHierarchy = true
       fetch('rest/v1/' + window.SKOSMOS.vocab + '/topConcepts/?lang=' + window.SKOSMOS.content_lang)
         .then(data => {
           return data.json()
@@ -51,12 +52,12 @@ const tabHierApp = Vue.createApp({
             this.hierarchy.push({ uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false })
           }
 
-          this.loading = false
+          this.loadingHierarchy = false
           console.log('hier', this.hierarchy)
         })
     },
     loadConceptHierarchy () {
-      this.loading = true
+      this.loadingHierarchy = true
       fetch('rest/v1/' + window.SKOSMOS.vocab + '/hierarchy/?uri=' + window.SKOSMOS.uri + '&lang=' + window.SKOSMOS.content_lang)
         .then(data => {
           return data.json()
@@ -125,7 +126,7 @@ const tabHierApp = Vue.createApp({
             }
           }
 
-          this.loading = false
+          this.loadingHierarchy = false
           this.selectedConcept = window.SKOSMOS.uri
           console.log('hier', this.hierarchy)
         })
@@ -133,6 +134,7 @@ const tabHierApp = Vue.createApp({
     loadChildren (concept) {
       // load children only if concept has children but they have not been loaded yet
       if (concept.children.length === 0 && concept.hasChildren) {
+        this.loadingChildren.push(concept)
         fetch('rest/v1/' + window.SKOSMOS.vocab + '/children?uri=' + concept.uri + '&lang=' + window.SKOSMOS.content_lang)
           .then(data => {
             return data.json()
@@ -142,6 +144,7 @@ const tabHierApp = Vue.createApp({
             for (const c of data.narrower.sort((a, b) => this.compareLabels(a, b))) {
               concept.children.push({ uri: c.uri, label: c.prefLabel, hasChildren: c.hasChildren, children: [], isOpen: false })
             }
+            this.loadingChildren = this.loadingChildren.filter(x => x !== concept)
             console.log('hier', this.hierarchy)
           })
       }
@@ -166,10 +169,11 @@ const tabHierApp = Vue.createApp({
   template: `
     <div v-click-tab-hierarchy="handleClickHierarchyEvent">
       <div id="hierarchy-list" class="sidebar-list p-0" :style="getListStyle()">
-        <ul class="list-group" v-if="!loading">
+        <ul class="list-group" v-if="!loadingHierarchy">
           <tab-hier-wrapper
             :hierarchy="hierarchy"
             :selectedConcept="selectedConcept"
+            :loadingChildren="loadingChildren"
             @load-children="loadChildren($event)"
             @select-concept="selectedConcept = $event"
           ></tab-hier-wrapper>
@@ -195,7 +199,7 @@ tabHierApp.directive('click-tab-hierarchy', {
 })
 
 tabHierApp.component('tab-hier-wrapper', {
-  props: ['hierarchy', 'selectedConcept'],
+  props: ['hierarchy', 'selectedConcept', 'loadingChildren'],
   emits: ['loadChildren', 'selectConcept'],
   mounted () {
     // scroll automatically to selected concept after the whole hierarchy tree has been mounted
@@ -233,6 +237,7 @@ tabHierApp.component('tab-hier-wrapper', {
         :selectedConcept="selectedConcept"
         :isTopConcept="true"
         :isLast="i == hierarchy.length - 1 && !c.isOpen"
+        :loadingChildren="loadingChildren"
         @load-children="loadChildren($event)"
         @select-concept="selectConcept($event)"
       ></tab-hier>
@@ -241,7 +246,7 @@ tabHierApp.component('tab-hier-wrapper', {
 })
 
 tabHierApp.component('tab-hier', {
-  props: ['concept', 'selectedConcept', 'isTopConcept', 'isLast'],
+  props: ['concept', 'selectedConcept', 'isTopConcept', 'isLast', 'loadingChildren'],
   emits: ['loadChildren', 'selectConcept'],
   inject: ['partialPageLoad', 'getConceptURL'],
   methods: {
@@ -269,7 +274,12 @@ tabHierApp.component('tab-hier', {
         v-if="concept.hasChildren"
         @click="handleClickOpenEvent(concept)"
       >
-        <i>{{ concept.isOpen ? '&#x25E2;' : '&#x25FF;' }}</i>
+        <template v-if="loadingChildren.includes(concept)">
+          <i class="fa-solid fa-spinner fa-spin-pulse"></i>
+        </template>
+        <template v-else>
+          <i>{{ concept.isOpen ? '&#x25E2;' : '&#x25FF;' }}</i>
+        </template>
       </button>
       <span :class="{ 'last': isLast }">
         <a :class="{ 'selected': selectedConcept === concept.uri }"
@@ -284,6 +294,7 @@ tabHierApp.component('tab-hier', {
             :selectedConcept="selectedConcept"
             :isTopConcept="false"
             :isLast="i == concept.children.length - 1 && !c.isOpen"
+            :loadingChildren="loadingChildren"
             @load-children="loadChildrenRecursive($event)"
             @select-concept="selectConceptRecursive($event)"
           ></tab-hier>
