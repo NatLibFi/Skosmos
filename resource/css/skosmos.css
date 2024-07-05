@@ -588,6 +588,11 @@ body {
     border-bottom: none;
   }
 
+  /* no border for children of the last concept */
+  #tab-hierarchy .sidebar-list .list-group-item span.last + ul > li {
+    border: none;
+  }
+
   #tab-hierarchy .sidebar-list .list-group-item a.selected {
     color: var(--vocab-text) !important;
   }

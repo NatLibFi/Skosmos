@@ -230,7 +230,7 @@ tabHierApp.component('tab-hier-wrapper', {
         :concept="c"
         :selectedConcept="selectedConcept"
         :isTopConcept="true"
-        :isLast="i == hierarchy.length - 1 && !c.isOpen"
+        :isLast="i == hierarchy.length - 1"
         @load-children="loadChildren($event)"
         @select-concept="selectConcept($event)"
       ></tab-hier>
@@ -275,13 +275,13 @@ tabHierApp.component('tab-hier', {
           @click="handleClickConceptEvent($event, concept)"
           aria-label="Go to the concept page">{{ concept.label }}</a>
       </span>
-      <ul class="list-group px-3" v-if="concept.children.length !== 0 && concept.isOpen">
+      <ul class="list-group ps-3" v-if="concept.children.length !== 0 && concept.isOpen">
         <template v-for="(c, i) in concept.children">
           <tab-hier
             :concept="c"
             :selectedConcept="selectedConcept"
             :isTopConcept="false"
-            :isLast="i == concept.children.length - 1 && !c.isOpen"
+            :isLast="i == concept.children.length - 1"
             @load-children="loadChildrenRecursive($event)"
             @select-concept="selectConceptRecursive($event)"
           ></tab-hier>
