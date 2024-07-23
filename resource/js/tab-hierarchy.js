@@ -267,7 +267,8 @@ tabHierApp.component('tab-hier', {
         v-if="concept.hasChildren"
         @click="handleClickOpenEvent(concept)"
       >
-        <i>{{ concept.isOpen ? '&#x25E2;' : '&#x25FF;' }}</i>
+        <img v-if="concept.isOpen" src="resource/pics/black-lower-right-triangle.png">
+        <img v-else src="resource/pics/lower-right-triangle.png">
       </button>
       <span :class="{ 'last': isLast }">
         <a :class="{ 'selected': selectedConcept === concept.uri }"
