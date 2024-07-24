@@ -27,7 +27,7 @@ const tabAlphaApp = Vue.createApp({
     if (document.querySelector('#alphabetical > a').classList.contains('active')) {
       this.loadLetters()
     }
-    
+
     this.loadingMessage = window.SKOSMOS.msgs[window.SKOSMOS.lang]['Loading more items'] ?? window.SKOSMOS.msgs.en['Loading more items']
     this.setListStyle()
   },
