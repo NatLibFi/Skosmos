@@ -198,8 +198,7 @@ tabAlphaApp.component('tab-alpha', {
               :href="getConceptURL(concept.uri)" @click="loadConcept($event, concept.uri)"
               aria-label="Go to the concept page"
             >
-              {{ concept.prefLabel }}
-              {{ showNotation && concept.qualifier ? ' (' + concept.qualifier + ')' : '' }}
+              {{ concept.prefLabel }}{{ showNotation && concept.qualifier ? ' (' + concept.qualifier + ')' : '' }}
             </a>
           </li>
           <template v-if="loadingMoreConcepts">
