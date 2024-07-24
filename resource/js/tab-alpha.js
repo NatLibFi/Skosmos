@@ -12,7 +12,8 @@ const tabAlphaApp = Vue.createApp({
       loadingConcepts: false,
       loadingMoreConcepts: false,
       loadingMessage: '',
-      currentOffset: 0
+      currentOffset: 0,
+      listStyle: {}
     }
   },
   provide () {
@@ -26,7 +27,9 @@ const tabAlphaApp = Vue.createApp({
     if (document.querySelector('#alphabetical > a').classList.contains('active')) {
       this.loadLetters()
     }
+    
     this.loadingMessage = window.SKOSMOS.msgs[window.SKOSMOS.lang]['Loading more items'] ?? window.SKOSMOS.msgs.en['Loading more items']
+    this.setListStyle()
   },
   methods: {
     handleClickAlphabeticalEvent () {
@@ -110,10 +113,23 @@ const tabAlphaApp = Vue.createApp({
       if (listElement.scrollTop + listElement.clientHeight >= listElement.scrollHeight - 1) {
         this.loadMoreConcepts()
       }
+    },
+    setListStyle () {
+      const pagination = this.$refs.tabAlpha.$refs.pagination
+      const sidebarTabs = document.getElementById('sidebar-tabs')
+
+      // get height and width of pagination and sidebar tabs elements if they exist
+      const height = pagination && pagination.clientHeight + sidebarTabs.clientHeight
+      const width = pagination && pagination.clientWidth
+
+      this.listStyle = {
+        height: 'calc(100% - ' + height + 'px)',
+        width: width + 'px'
+      }
     }
   },
   template: `
-    <div v-click-tab-alphabetical="handleClickAlphabeticalEvent">
+    <div v-click-tab-alphabetical="handleClickAlphabeticalEvent" v-resize-window="setListStyle">
       <tab-alpha
         :index-letters="indexLetters"
         :index-concepts="indexConcepts"
@@ -122,6 +138,7 @@ const tabAlphaApp = Vue.createApp({
         :loading-concepts="loadingConcepts"
         :loading-more-concepts="loadingMoreConcepts"
         :loading-message="loadingMessage"
+        :list-style="listStyle"
         @load-concepts="loadConcepts($event)"
         @select-concept="selectedConcept = $event"
         ref="tabAlpha"
@@ -130,7 +147,7 @@ const tabAlphaApp = Vue.createApp({
   `
 })
 
-/* Custom directive used to add an event listener on clicks on an element outside of this component */
+/* Custom directive used to add an event listener on clicks on the alphabetical nav-item element */
 tabAlphaApp.directive('click-tab-alphabetical', {
   beforeMount: (el, binding) => {
     el.clickTabEvent = event => {
@@ -143,8 +160,21 @@ tabAlphaApp.directive('click-tab-alphabetical', {
   }
 })
 
+/* Custom directive used to add an event listener on resizing the window */
+tabAlphaApp.directive('resize-window', {
+  beforeMount: (el, binding) => {
+    el.resizeWindowEvent = event => {
+      binding.value() // calling the method given as the attribute value (setListStyle)
+    }
+    window.addEventListener('resize', el.resizeWindowEvent) // registering an event listener on resizing the window
+  },
+  unmounted: el => {
+    window.removeEventListener('resize', el.resizeWindowEvent)
+  }
+})
+
 tabAlphaApp.component('tab-alpha', {
-  props: ['indexLetters', 'indexConcepts', 'selectedConcept', 'loadingLetters', 'loadingConcepts', 'loadingMoreConcepts', 'loadingMessage'],
+  props: ['indexLetters', 'indexConcepts', 'selectedConcept', 'loadingLetters', 'loadingConcepts', 'loadingMoreConcepts', 'loadingMessage', 'listStyle'],
   emits: ['loadConcepts', 'selectConcept'],
   inject: ['partialPageLoad', 'getConceptURL'],
   methods: {
@@ -155,15 +185,6 @@ tabAlphaApp.component('tab-alpha', {
     loadConcept (event, uri) {
       partialPageLoad(event, getConceptURL(uri))
       this.$emit('selectConcept', uri)
-    },
-    getListStyle () {
-      // get height and width of pagination and sidebar tabs elements if they exist
-      const height = this.$refs.pagination && this.$refs.pagination.clientHeight + document.getElementById('sidebar-tabs').clientHeight
-      const width = this.$refs.pagination && this.$refs.pagination.clientWidth
-      return {
-        height: 'calc( 100% - ' + height + 'px)',
-        width: width + 'px'
-      }
     }
   },
   template: `
@@ -180,7 +201,7 @@ tabAlphaApp.component('tab-alpha', {
       </ul>
     </template>
     
-    <div class="sidebar-list" :style="getListStyle()" ref="list">
+    <div class="sidebar-list" :style="listStyle" ref="list">
       <template v-if="loadingConcepts">
         <div>
           {{ this.loadingMessage }} <i class="fa-solid fa-spinner fa-spin-pulse"></i>
