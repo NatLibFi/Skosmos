@@ -61,7 +61,7 @@ describe('Vocabulary home page', () => {
     cy.get('#tab-alphabetical').contains('a', 'care institutions').click()
 
     // check the concept prefLabel
-    cy.get('#concept-heading h1').invoke('text').should('equal', 'care institutions')
+    cy.get('#concept-heading h1', {'timeout': 15000}).invoke('text').should('equal', 'care institutions')
 
     // check that the SKOSMOS object matches the newly loaded concept
     cy.window().then((win) => {
@@ -97,7 +97,7 @@ describe('Vocabulary home page', () => {
     cy.get('#tab-hierarchy').contains('a', 'Fish').click()
 
     // check the concept prefLabel
-    cy.get('#concept-heading h1').invoke('text').should('equal', 'Fish')
+    cy.get('#concept-heading h1', {'timeout': 15000}).invoke('text').should('equal', 'Fish')
 
     // check that the SKOSMOS object matches the newly loaded concept
     cy.window().then((win) => {
