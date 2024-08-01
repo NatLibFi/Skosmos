@@ -30,7 +30,7 @@ const resourceCountsApp = Vue.createApp({
       <tbody>
         <tr><th class="versal">Type</th><th class="versal">Count</th></tr>
         <template v-if="hasCounts">
-          <resource-counts :concepts="concepts" :subTypes="subTypes" :conceptGroups="conceptGroups" :hasCounts="hasCounts"></resource-counts>
+          <resource-counts :concepts="concepts" :subTypes="subTypes" :conceptGroups="conceptGroups"></resource-counts>
         </template>
         <template v-else >
           <i class="fa-solid fa-spinner fa-spin-pulse"></i>
