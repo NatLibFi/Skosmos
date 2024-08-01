@@ -58,7 +58,8 @@ const conceptMappingsApp = Vue.createApp({
         </template>
         <template v-else>
           <i class="fa-solid fa-spinner fa-spin-pulse"></i>
-        </div>
+        </template>
+      </div>
     </div>
   `
 })
