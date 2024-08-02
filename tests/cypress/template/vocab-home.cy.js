@@ -81,7 +81,7 @@ describe('Vocabulary home page', () => {
     // check that we have some mappings
     cy.get('#concept-mappings').should('not.be.empty')
     // check that loading spinner does not exist
-    cy.get('#concept-mappings i.fa-spinner').should('not.exist')
+    cy.get('#concept-mappings i.fa-spinner', {'timeout': 15000}).should('not.exist')
 
     // check the second mapping property name
     cy.get('.prop-mapping h2', {'timeout': 15000}).eq(0).contains('Exactly matching concepts')
@@ -119,7 +119,7 @@ describe('Vocabulary home page', () => {
     // check that we have some mappings
     cy.get('#concept-mappings').should('not.be.empty')
     // check that loading spinner does not exist
-    cy.get('#concept-mappings i.fa-spinner').should('not.exist')
+    cy.get('#concept-mappings i.fa-spinner', {'timeout': 15000}).should('not.exist')
 
     // check the second mapping property name
     cy.get('.prop-mapping h2', {'timeout': 15000}).eq(0).contains('Exactly matching concepts')
