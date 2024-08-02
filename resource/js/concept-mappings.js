@@ -4,7 +4,8 @@
 const conceptMappingsApp = Vue.createApp({
   data () {
     return {
-      mappings: {}
+      mappings: {},
+      loading: false
     }
   },
   provide: {
@@ -18,6 +19,7 @@ const conceptMappingsApp = Vue.createApp({
   methods: {
     loadMappings () {
       this.mappings = {} // clear mappings before starting to load new ones
+      this.loading = true
       const url = 'rest/v1/' + window.SKOSMOS.vocab + '/mappings?uri=' + window.SKOSMOS.uri + '&external=true&clang=' + window.SKOSMOS.lang + '&lang=' + window.SKOSMOS.content_lang
       fetchWithAbort(url, 'concept')
         .then(data => {
@@ -25,6 +27,7 @@ const conceptMappingsApp = Vue.createApp({
         })
         .then(data => {
           this.mappings = this.group_by(data.mappings, 'typeLabel')
+          this.loading = false
         })
         .catch(error => {
           if (error.name === 'AbortError') {
@@ -32,6 +35,7 @@ const conceptMappingsApp = Vue.createApp({
           } else {
             throw error
           }
+          this.loading = false
         })
     },
     // from https://stackoverflow.com/a/71505541
@@ -52,9 +56,16 @@ const conceptMappingsApp = Vue.createApp({
   },
   template: `
     <div v-load-concept-page="loadMappings">
-      <div v-if="hasMappings" class="main-content-section p-5">
-        <concept-mappings :mappings="mappings"></concept-mappings>
-      </div>
+      <template v-if="loading">
+        <div class="main-content-section p-5">
+          <i class="fa-solid fa-spinner fa-spin-pulse"></i>
+        </div>
+      </template>
+      <template v-else-if="hasMappings">
+        <div class="main-content-section p-5">
+          <concept-mappings :mappings="mappings"></concept-mappings>
+        </div>
+      </template>
     </div>
   `
 })

@@ -25,7 +25,12 @@ const termCountsApp = Vue.createApp({
           <th class="main-table-label fw-bold">Alternate terms</th>
           <th class="main-table-label fw-bold">Hidden terms</th>
         </tr>
-        <term-counts :languages="languages"></term-counts>
+        <template v-if="languages.length">
+          <term-counts :languages="languages"></term-counts>
+        </template>
+        <template v-else >
+          <i class="fa-solid fa-spinner fa-spin-pulse"></i>
+        </template>
       </tbody>
     </table>
   `
