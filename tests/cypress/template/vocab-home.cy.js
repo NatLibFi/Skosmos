@@ -15,6 +15,9 @@ describe('Vocabulary home page', () => {
 
     // check that the first letter is B
     letters.first().invoke('text').should('equal', 'B')
+
+    // Check that loading spinner does not exist
+    cy.get('#tab-alphabetical .sidebar-list i.fa-spinner').should('not.exist')
   })
   it('shows alphabetical index entries', () => {
     cy.visit('/test/en') // go to the "Test ontology" home page
@@ -26,6 +29,9 @@ describe('Vocabulary home page', () => {
 
     // check that the first entry is Bass
     entries.first().invoke('text').should('equal', 'Bass')
+
+    // Check that loading spinner does not exist
+    cy.get('#tab-alphabetical .sidebar-list i.fa-spinner').should('not.exist')
   })
   it('alphabetical index letters are clickable', () => {
     cy.visit('/test/en') // go to the "Test ontology" home page
@@ -38,6 +44,9 @@ describe('Vocabulary home page', () => {
 
     // check that the first entry is Carp
     cy.get('#tab-alphabetical .sidebar-list .list-group').children().first().invoke('text').should('equal', 'Carp')
+
+    // Check that loading spinner does not exist
+    cy.get('#tab-alphabetical .sidebar-list i.fa-spinner').should('not.exist')
   })
   it('alphabetical index diacritic letters are clickable', () => {
     cy.visit('/yso/sv/') // go to the YSO home page in Swedish language
@@ -61,7 +70,7 @@ describe('Vocabulary home page', () => {
     cy.get('#tab-alphabetical').contains('a', 'care institutions').click()
 
     // check the concept prefLabel
-    cy.get('#concept-heading h1').invoke('text').should('equal', 'care institutions')
+    cy.get('#concept-heading h1', {'timeout': 15000}).invoke('text').should('equal', 'care institutions')
 
     // check that the SKOSMOS object matches the newly loaded concept
     cy.window().then((win) => {
@@ -71,6 +80,8 @@ describe('Vocabulary home page', () => {
 
     // check that we have some mappings
     cy.get('#concept-mappings').should('not.be.empty')
+    // check that loading spinner does not exist
+    cy.get('#concept-mappings i.fa-spinner').should('not.exist')
 
     // check the second mapping property name
     cy.get('.prop-mapping h2', {'timeout': 15000}).eq(0).contains('Exactly matching concepts')
@@ -97,7 +108,7 @@ describe('Vocabulary home page', () => {
     cy.get('#tab-hierarchy').contains('a', 'Fish').click()
 
     // check the concept prefLabel
-    cy.get('#concept-heading h1').invoke('text').should('equal', 'Fish')
+    cy.get('#concept-heading h1', {'timeout': 15000}).invoke('text').should('equal', 'Fish')
 
     // check that the SKOSMOS object matches the newly loaded concept
     cy.window().then((win) => {
@@ -107,6 +118,8 @@ describe('Vocabulary home page', () => {
 
     // check that we have some mappings
     cy.get('#concept-mappings').should('not.be.empty')
+    // check that loading spinner does not exist
+    cy.get('#concept-mappings i.fa-spinner').should('not.exist')
 
     // check the second mapping property name
     cy.get('.prop-mapping h2', {'timeout': 15000}).eq(0).contains('Exactly matching concepts')

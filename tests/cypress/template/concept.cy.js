@@ -99,6 +99,8 @@ describe('Concept page', () => {
 
       // check that we have some mappings
       cy.get('#concept-mappings').should('not.be.empty')
+      // check that spinner does not exist after load
+      cy.get('#concept-mappings i.fa-spinner').should('not.exist')
 
       // check the first mapping property name
       // NOTE: we need to increase the timeout as the mappings can take a long time to load
