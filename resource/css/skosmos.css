@@ -611,6 +611,12 @@ body {
     color: var(--vocab-text) !important;
   }
 
+  .hierarchy-button i {
+    position: absolute;
+    left: 11px;
+    top: 7px;
+  }
+
   .hierarchy-button img {
     transform: rotate(-45deg);
     position: absolute;
