@@ -269,7 +269,7 @@ tabHierApp.component('tab-hier', {
   },
   template: `
     <li class="list-group-item p-0" :class="{ 'top-concept': isTopConcept }">
-      <button type="button" class="hierarchy-button btn btn-primary"
+      <button type="button" class="hierarchy-button btn btn-primary" aria-label="Open"
         :class="{ 'open': concept.isOpen }"
         v-if="concept.hasChildren"
         @click="handleClickOpenEvent(concept)"
@@ -278,8 +278,8 @@ tabHierApp.component('tab-hier', {
           <i class="fa-solid fa-spinner fa-spin-pulse"></i>
         </template>
         <template v-else>
-          <img v-if="concept.isOpen" src="resource/pics/black-lower-right-triangle.png">
-          <img v-else src="resource/pics/lower-right-triangle.png">
+          <img v-if="concept.isOpen" alt="" src="resource/pics/black-lower-right-triangle.png">
+          <img v-else alt="" src="resource/pics/lower-right-triangle.png">
         </template>
       </button>
       <span :class="{ 'last': isLast }">
