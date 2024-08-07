@@ -588,6 +588,12 @@ body {
     border-bottom: none;
   }
 
+  /* no border for children of the last concept */
+  #tab-hierarchy .sidebar-list .list-group-item span.last + ul > li {
+    border: none;
+    margin-left: 1px !important; /* add a 1px margin to offset missing border */
+  }
+
   #tab-hierarchy .sidebar-list .list-group-item a.selected {
     color: var(--vocab-text) !important;
   }
@@ -606,19 +612,23 @@ body {
   }
 
   .hierarchy-button i {
+    position: absolute;
+    left: 11px;
+    top: 7px;
+  }
+
+  .hierarchy-button img {
     transform: rotate(-45deg);
     position: absolute;
-    top: 4px;
-    left: 5px;
-    width: 15px;
+    top: 9px;
+    left: 10px;
+    width: 7px;
     z-index: 1;
   }
 
-  .hierarchy-button.open i {
+  .hierarchy-button.open img {
     transform: rotate(0deg);
-    top: 1px;
-    left: 5px;
-    width: 20px;
+    left: 12px;
   }
 
   /*** sidebar serachpage ***/
