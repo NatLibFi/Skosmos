@@ -1,6 +1,6 @@
 {% set pageType = 'concept' %}
 {% extends "base-template.twig" %}
-{% block title %}: {{ vocab.shortName }}: {{ concept_label }}{% endblock %}
+{% block title %}{{ concept.label }} - {{ vocab.shortName }} - {{ GlobalConfig.serviceName }}{% endblock %}
 
 {% block content %}
   {% include "sidebar.inc" %}
