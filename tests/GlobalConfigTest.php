@@ -51,6 +51,21 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
         $this->assertEquals("Skosmos being tested", $this->config->getServiceName());
     }
 
+    public function testGetServiceNameLongEn()
+    {
+        $this->assertEquals("Skosmos being tested, long title", $this->config->getServiceNameLong('en'));
+    }
+
+    public function testGetServiceNameLongNoLanguageFallback()
+    {
+        $this->assertEquals("Skosmos-long", $this->config->getServiceNameLong('fr'));
+    }
+
+    public function testGetServiceNameLongNotSetFallback()
+    {
+        $this->assertEquals("Skosmos", $this->configWithDefaults->getServiceNameLong('en'));
+    }
+
     public function testGetBaseHref()
     {
         $this->assertEquals("http://tests.localhost/Skosmos/", $this->config->getBaseHref());

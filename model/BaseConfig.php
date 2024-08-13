@@ -55,7 +55,14 @@ abstract class BaseConfig extends DataObject
             return $literal->getValue();
         }
 
-        // not found with selected language, try any language
+        // not found with selected language, try to find one without a language tag
+        foreach ($this->getResource()->allLiterals($property) as $literal) {
+            if ($literal->getLang() === null) {
+                return $literal->getValue();
+            }
+        }
+
+        // not found with selected language or no language tag, try any language
         $literal = $this->getResource()->getLiteral($property);
         if ($literal)
           return $literal->getValue();
