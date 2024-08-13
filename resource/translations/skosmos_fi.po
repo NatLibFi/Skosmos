@@ -882,3 +882,6 @@ msgstr "Tunniste, joka yksilöi käsitteen sanaston sisällä."
 
 msgid "Information"
 msgstr "Tietoja"
+
+msgid "Error"
+msgstr "Virhe"
