@@ -1,6 +1,6 @@
 {% set pageType = 'error' %}
 {% extends "base-template.twig" %}
-{% block title %}: "Error"{% endblock %}
+{% block title %}{{ "Error"| trans }} - {{ GlobalConfig.serviceName }}{% endblock %}
 {% block content %}
 {% set pageError = request.vocabid != '' and request.page == 'page' %}
 {% if pageError %}

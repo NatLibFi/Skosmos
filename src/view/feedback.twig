@@ -1,7 +1,7 @@
 {% set pageType = 'feedback' %}
 {% extends "base-template.twig" %}
 
-{% block title %}: "Feedback"{% endblock %}
+{% block title %}{{ "Feedback"|trans }} - {{GlobalConfig.serviceName}}{% endblock %}
 {% block content %}
 
   {% if feedback_sent %}

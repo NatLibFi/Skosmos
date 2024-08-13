@@ -42,17 +42,9 @@ class WebController extends Controller
         $this->twig = new \Twig\Environment($loader, array('cache' => $tmpDir,'auto_reload' => true));
         // used for setting the base href for the relative urls
         $this->twig->addGlobal("BaseHref", $this->getBaseHref());
-        // setting the service name string from the config.ttl
-        $this->twig->addGlobal("ServiceName", $this->model->getConfig()->getServiceName());
 
-        // setting the service custom css file from the config.ttl
-        if ($this->model->getConfig()->getCustomCss() !== null) {
-            $this->twig->addGlobal("ServiceCustomCss", $this->model->getConfig()->getCustomCss());
-        }
-        // used for displaying the ui language selection as a dropdown
-        if ($this->model->getConfig()->getUiLanguageDropdown() !== null) {
-            $this->twig->addGlobal("LanguageDropdown", $this->model->getConfig()->getUiLanguageDropdown());
-        }
+        // pass the GlobalConfig object to templates so they can access configuration
+        $this->twig->addGlobal("GlobalConfig", $this->model->getConfig());
 
         // setting the list of properties to be displayed in the search results
         $this->twig->addGlobal("PreferredProperties", array('skos:prefLabel', 'skos:narrower', 'skos:broader', 'skosmos:memberOf', 'skos:altLabel', 'skos:related'));

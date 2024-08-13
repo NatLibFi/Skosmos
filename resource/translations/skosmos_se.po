@@ -878,3 +878,6 @@ msgstr "Dovddaldat, mii spesifisere doahpaga sátneráju siste. "
 
 msgid "Information"
 msgstr "Diehtu"
+
+msgid "Error"
+msgstr "Error"

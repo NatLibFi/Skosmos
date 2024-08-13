@@ -132,6 +132,17 @@ describe('Concept page', () => {
 
   // tests that only need to be executed with full page load
 
+  it('Contains title and title metadata', () => {
+    cy.visit('/yso/en/page/p1265') // go to "archaeology" concept page
+
+    const expectedTitle = 'archaeology - YSO - Skosmos being tested'
+    // check that the page has a HTML title
+    cy.get('title').invoke('text').should('equal', expectedTitle)
+    // check that the page has title metadata
+    cy.get('head meta[name="title"]').should('have.attr', 'content', expectedTitle);
+    cy.get('head meta[name="twitter:title"]').should('have.attr', 'content', expectedTitle);
+    cy.get('head meta[property="og:title"]').should('have.attr', 'content', expectedTitle);
+  })
   it("doesn't contain breadcrumbs for top concepts", () => {
     cy.visit('/yso/en/page/p4762') // go to "objects" concept page
 

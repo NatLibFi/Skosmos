@@ -890,3 +890,6 @@ msgstr "Brödsmulor"
 
 msgid "Copy to clipboard"
 msgstr "Kopiera till urklipp"
+
+msgid "Error"
+msgstr "Fel"
