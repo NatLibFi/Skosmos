@@ -554,6 +554,7 @@ body {
   #tab-hierarchy .sidebar-list .list-group-item {
     border-left: 1px dashed var(--vocab-text);
     border-radius: 0;
+    white-space: nowrap;
   }
 
   #tab-hierarchy .sidebar-list .list-group-item.top-concept {
@@ -565,6 +566,7 @@ body {
     border-left: 1px dashed var(--vocab-text);
     margin-left: 16px;
     padding-left: 14px;
+    white-space: wrap;
   }
 
   /* horizontal line before concept */
