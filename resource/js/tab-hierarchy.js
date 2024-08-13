@@ -13,7 +13,8 @@ const tabHierApp = Vue.createApp({
   provide () {
     return {
       partialPageLoad,
-      getConceptURL
+      getConceptURL,
+      showNotation: window.SKOSMOS.showNotation
     }
   },
   mounted () {
@@ -49,7 +50,7 @@ const tabHierApp = Vue.createApp({
           this.hierarchy = []
 
           for (const c of data.topconcepts.sort((a, b) => this.compareLabels(a, b))) {
-            this.hierarchy.push({ uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false })
+            this.hierarchy.push({ uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false, notation: c.notation })
           }
 
           this.loadingHierarchy = false
@@ -79,17 +80,17 @@ const tabHierApp = Vue.createApp({
                 const children = concept.narrower
                   .sort((a, b) => this.compareLabels(a, b))
                   .map(c => {
-                    return { uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false }
+                    return { uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false, notation: c.notation }
                   })
                 // new concept node to be added to hierarchy tree
-                const conceptNode = { uri: concept.uri, label: concept.prefLabel, hasChildren: true, children, isOpen: true }
+                const conceptNode = { uri: concept.uri, label: concept.prefLabel, hasChildren: true, children, isOpen: true, notation: concept.notation }
                 // push new concept to hierarchy tree
                 this.hierarchy.push(conceptNode)
                 // push new concept to parent queue
                 parents.push(conceptNode)
               } else {
                 // push new concept node to hierarchy tree
-                this.hierarchy.push({ uri: concept.uri, label: concept.prefLabel, hasChildren: concept.hasChildren, children: [], isOpen: false })
+                this.hierarchy.push({ uri: concept.uri, label: concept.prefLabel, hasChildren: concept.hasChildren, children: [], isOpen: false, notation: concept.notation })
               }
             }
           }
@@ -115,7 +116,7 @@ const tabHierApp = Vue.createApp({
                 const children = concept.narrower
                   .sort((a, b) => this.compareLabels(a, b))
                   .map(c => {
-                    return { uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false }
+                    return { uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false, notation: c.notation }
                   })
                 // set children of current concept as children of concept node
                 conceptNode.children = children
@@ -142,7 +143,7 @@ const tabHierApp = Vue.createApp({
           .then(data => {
             console.log('data', data)
             for (const c of data.narrower.sort((a, b) => this.compareLabels(a, b))) {
-              concept.children.push({ uri: c.uri, label: c.prefLabel, hasChildren: c.hasChildren, children: [], isOpen: false })
+              concept.children.push({ uri: c.uri, label: c.prefLabel, hasChildren: c.hasChildren, children: [], isOpen: false, notation: c.notation })
             }
             this.loadingChildren = this.loadingChildren.filter(x => x !== concept)
             console.log('hier', this.hierarchy)
@@ -248,7 +249,7 @@ tabHierApp.component('tab-hier-wrapper', {
 tabHierApp.component('tab-hier', {
   props: ['concept', 'selectedConcept', 'isTopConcept', 'isLast', 'loadingChildren'],
   emits: ['loadChildren', 'selectConcept'],
-  inject: ['partialPageLoad', 'getConceptURL'],
+  inject: ['partialPageLoad', 'getConceptURL', 'showNotation'],
   methods: {
     handleClickOpenEvent (concept) {
       concept.isOpen = !concept.isOpen
@@ -282,11 +283,15 @@ tabHierApp.component('tab-hier', {
           <img v-else alt="" src="resource/pics/lower-right-triangle.png">
         </template>
       </button>
-      <span :class="{ 'last': isLast }">
+      <span class="concept-label" :class="{ 'last': isLast }">
         <a :class="{ 'selected': selectedConcept === concept.uri }"
           :href="getConceptURL(concept.uri)"
           @click="handleClickConceptEvent($event, concept)"
-          aria-label="Go to the concept page">{{ concept.label }}</a>
+          aria-label="Go to the concept page"
+        >
+          <span v-if="showNotation && concept.notation" class="concept-notation">{{ concept.notation }} </span>
+          {{ concept.label }}
+        </a>
       </span>
       <ul class="list-group ps-3" v-if="concept.children.length !== 0 && concept.isOpen">
         <template v-for="(c, i) in concept.children">

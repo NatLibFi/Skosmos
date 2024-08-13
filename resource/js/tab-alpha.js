@@ -18,7 +18,8 @@ const tabAlphaApp = Vue.createApp({
   provide () {
     return {
       partialPageLoad,
-      getConceptURL
+      getConceptURL,
+      showNotation: window.SKOSMOS.showNotation
     }
   },
   mounted () {
@@ -146,7 +147,7 @@ tabAlphaApp.directive('click-tab-alphabetical', {
 tabAlphaApp.component('tab-alpha', {
   props: ['indexLetters', 'indexConcepts', 'selectedConcept', 'loadingLetters', 'loadingConcepts', 'loadingMoreConcepts', 'loadingMessage'],
   emits: ['loadConcepts', 'selectConcept'],
-  inject: ['partialPageLoad', 'getConceptURL'],
+  inject: ['partialPageLoad', 'getConceptURL', 'showNotation'],
   methods: {
     loadConcepts (event, letter) {
       event.preventDefault()
@@ -195,7 +196,10 @@ tabAlphaApp.component('tab-alpha', {
             </template>
             <a :class="{ 'selected': selectedConcept === concept.uri }"
               :href="getConceptURL(concept.uri)" @click="loadConcept($event, concept.uri)"
-              aria-label="Go to the concept page">{{ concept.prefLabel }}</a>
+              aria-label="Go to the concept page"
+            >
+              {{ concept.prefLabel }}{{ showNotation && concept.qualifier ? ' (' + concept.qualifier + ')' : '' }}
+            </a>
           </li>
           <template v-if="loadingMoreConcepts">
             <li class="list-group-item py-1 px-2">

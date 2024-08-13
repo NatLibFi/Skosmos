@@ -560,7 +560,7 @@ body {
     border: none;
   }
 
-  #tab-hierarchy .sidebar-list .list-group-item span {
+  #tab-hierarchy .sidebar-list .list-group-item .concept-label {
     display: inline-block;
     border-left: 1px dashed var(--vocab-text);
     margin-left: 16px;
@@ -568,7 +568,7 @@ body {
   }
 
   /* horizontal line before concept */
-  #tab-hierarchy .sidebar-list .list-group-item span::before {
+  #tab-hierarchy .sidebar-list .list-group-item .concept-label::before {
     content: '';
     position: absolute;
     left: 16px;
@@ -579,7 +579,7 @@ body {
   }
 
   /* hiding bottom of vertical line on last concept of list */
-  #tab-hierarchy .sidebar-list .list-group-item span.last::before {
+  #tab-hierarchy .sidebar-list .list-group-item .concept-label.last::before {
     top: auto;
     bottom: 0;
     height: calc(100% - 13px);
@@ -596,6 +596,14 @@ body {
 
   #tab-hierarchy .sidebar-list .list-group-item a.selected {
     color: var(--vocab-text) !important;
+  }
+
+  #tab-hierarchy .sidebar-list .list-group-item .concept-notation {
+    color: var(--dark-color);
+  }
+
+  #tab-hierarchy .sidebar-list .list-group-item a.selected .concept-notation {
+    font-weight: bold;
   }
 
   .hierarchy-button {
