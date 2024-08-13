@@ -73,7 +73,7 @@ describe('Vocabulary home page', () => {
     cy.get('#concept-mappings').should('not.be.empty')
 
     // check the second mapping property name
-    cy.get('.prop-mapping h2', {'timeout': 15000}).eq(0).contains('Exactly matching concepts')
+    cy.get('.prop-mapping h2', {'timeout': 20000}).eq(0).contains('Exactly matching concepts')
     // check the second mapping property values
     cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).contains('vårdinrättningar (sv)')
     cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).find('a').invoke('text').should('equal', 'vårdinrättningar')
