@@ -33,6 +33,7 @@
     skosmos:httpTimeout 2 ;
     # customize the service name
     skosmos:serviceName "Skosmos being tested" ;
+    skosmos:serviceNameLong "Skosmos being tested, long title"@en, "Skosmos-long" ;
     # customize the base element. Set this if the automatic base url detection doesn't work. For example setups behind a proxy.
     #skosmos:baseHref "http://localhost/Skosmos/" ;
     # interface languages available, and the corresponding system locales
