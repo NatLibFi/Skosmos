@@ -594,7 +594,6 @@ body {
 
   #tab-hierarchy .sidebar-list .list-group-item .concept-notation {
     color: var(--dark-color);
-    font-weight: normal;
   }
 
   #tab-hierarchy .sidebar-list .list-group-item a.selected .concept-notation {
