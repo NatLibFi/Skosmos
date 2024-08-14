@@ -4,7 +4,7 @@
  * Importing the dependencies.
  */
 use Symfony\Component\Translation\Translator;
-use Symfony\Component\Translation\Loader\PoFileLoader;
+use Symfony\Component\Translation\Loader\JsonFileLoader;
 
 /**
  * Model provides access to the data.
@@ -39,8 +39,8 @@ class Model
                 // use the first configured language as default language
                 $this->translator = new Translator($langcode);
             }
-            $this->translator->addLoader('po', new PoFileLoader());
-            $this->translator->addResource('po', __DIR__.'/../../resource/translations/skosmos.' . $langcode . '.po', $langcode);
+            $this->translator->addLoader('json', new JsonFileLoader());
+            $this->translator->addResource('json', __DIR__.'/../../resource/translations/skosmos.' . $langcode . '.json', $langcode);
         }
         $this->initializeLogging();
     }
