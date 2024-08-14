@@ -24,7 +24,7 @@ const tabHierApp = Vue.createApp({
       this.loadHierarchy()
     }
   },
-  beforeUpdate() {
+  beforeUpdate () {
     this.setListStyle()
   },
   methods: {

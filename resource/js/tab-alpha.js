@@ -31,7 +31,7 @@ const tabAlphaApp = Vue.createApp({
 
     this.loadingMessage = window.SKOSMOS.msgs[window.SKOSMOS.lang]['Loading more items'] ?? window.SKOSMOS.msgs.en['Loading more items']
   },
-  beforeUpdate() {
+  beforeUpdate () {
     this.setListStyle()
   },
   methods: {
