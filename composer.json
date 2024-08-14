@@ -19,15 +19,22 @@
     "symfony/translation": "6.4.*",
     "symfony/translation-contracts": "3.0.*",
     "symfony/twig-bundle": "6.4.*",
-    "symfony/config": "6.4.*"
+    "symfony/config": "6.4.*",
+    "symfony/runtime": "6.4.*",
+    "symfony/framework-bundle": "6.4.*"
   },
   "require-dev": {
     "phpunit/phpunit": "9.5.*",
-    "symfony/dom-crawler": "5.4.*",
+    "symfony/dom-crawler": "6.4.*",
     "mockery/mockery": "1.5.1",
     "friendsofphp/php-cs-fixer": "3.16.*"
   },
   "autoload": {
-    "classmap": ["src/controller/", "src/model/", "src/model/sparql/"]
+    "classmap": ["src/", "src/controller/", "src/model/", "src/model/sparql/"]
+  },
+  "config": {
+    "allow-plugins": {
+      "symfony/runtime": true
+    }
   }
 }
