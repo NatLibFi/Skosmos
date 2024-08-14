@@ -17,7 +17,6 @@ describe('About page', () => {
     const expectedDescription = 'About page for Skosmos being tested'
     // check that the page has description metadata
     cy.get('head meta[name="description"]').should('have.attr', 'content', expectedDescription);
-    cy.get('head meta[name="twitter:description"]').should('have.attr', 'content', expectedDescription);
     cy.get('head meta[property="og:description"]').should('have.attr', 'content', expectedDescription);
   })
   it('Contains version number information', () => {

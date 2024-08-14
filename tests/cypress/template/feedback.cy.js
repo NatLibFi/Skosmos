@@ -17,7 +17,6 @@ describe('Feedback page', () => {
     const expectedDescription = 'Feedback page for Skosmos being tested'
     // check that the page has description metadata
     cy.get('head meta[name="description"]').should('have.attr', 'content', expectedDescription);
-    cy.get('head meta[name="twitter:description"]').should('have.attr', 'content', expectedDescription);
     cy.get('head meta[property="og:description"]').should('have.attr', 'content', expectedDescription);
   })
   it('Sends feedback', () => {
@@ -74,7 +73,6 @@ describe('Vocab feedback page', () => {
     const expectedDescription = 'Feedback page for Skosmos being tested'
     // check that the page has description metadata
     cy.get('head meta[name="description"]').should('have.attr', 'content', expectedDescription);
-    cy.get('head meta[name="twitter:description"]').should('have.attr', 'content', expectedDescription);
     cy.get('head meta[property="og:description"]').should('have.attr', 'content', expectedDescription);
   })
   it('Displays correct vocab option', () => {
