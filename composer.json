@@ -22,7 +22,9 @@
     "symfony/config": "6.4.*",
     "symfony/runtime": "6.4.*",
     "symfony/framework-bundle": "6.4.*",
-    "symfony/yaml": "^6.4"
+    "symfony/yaml": "^6.4",
+    "symfony/dotenv": "6.4.*",
+    "symfony/lokalise-translation-provider": "6.4.*"
   },
   "require-dev": {
     "phpunit/phpunit": "9.5.*",
