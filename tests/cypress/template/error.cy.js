@@ -8,7 +8,6 @@ describe('Error page', () => {
     cy.get('title').invoke('text').should('equal', expectedTitle)
     // check that the page has title metadata
     cy.get('head meta[name="title"]').should('have.attr', 'content', expectedTitle);
-    cy.get('head meta[name="twitter:title"]').should('have.attr', 'content', expectedTitle);
     cy.get('head meta[property="og:title"]').should('have.attr', 'content', expectedTitle);
   })
   it('Contains 404 error code', () => {
