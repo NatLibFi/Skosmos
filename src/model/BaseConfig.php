@@ -61,12 +61,7 @@ abstract class BaseConfig extends DataObject
             }
         }
 
-        // not found with selected language or no language tag, try any language
-        $literal = $this->getResource()->getLiteral($property);
-        if ($literal) {
-            return $literal->getValue();
-        }
-
+        // not found, return the default value
         return $default;
     }
 
