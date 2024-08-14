@@ -17,7 +17,7 @@ const vocabSearch = Vue.createApp({
   mounted () {
     this.languages = window.SKOSMOS.languageOrder
     this.selectedLanguage = this.parseSearchLang()
-    this.searchCounter = 0
+    this.searchCounter = 0 // used for matching the query and the response in case there are many responses
     this.languageStrings = window.SKOSMOS.language_strings[window.SKOSMOS.lang] ?? window.SKOSMOS.language_strings.en
     this.msgs = window.SKOSMOS.msgs[window.SKOSMOS.lang] ?? window.SKOSMOS.msgs.en
     this.renderedResultsList = []
@@ -225,12 +225,27 @@ const vocabSearch = Vue.createApp({
   template: `
     <div class="d-flex my-auto ms-auto">
       <div class="d-flex justify-content-end input-group ms-auto" id="search-wrapper">
-        <select class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown-item"
-          v-model="selectedLanguage"
-          @change="changeContentLangAndReload($event.target.value)"
-          aria-label="Select search language">
-          <option class="dropdown-item" v-for="(value, key) in languageStrings" :value="key">{{ value }}</option>
-        </select>
+
+      <div class="dropdown">
+        <!-- Use interpolation to bind the text content dynamically -->
+        <a class="btn btn-outline-secondary dropdown-toggle"
+           href="#"
+           role="button"
+           data-bs-toggle="dropdown"
+           aria-expanded="false"
+           aria-label="Select search language"
+           v-if="languageStrings">
+          {{ languageStrings[selectedLanguage] }}
+        </a>
+        <ul class="dropdown-menu">
+          <li v-for="(value, key) in languageStrings" :key="key">
+            <a class="dropdown-item" :value="key" @click="changeContentLangAndReload(key)">
+              {{ value }}
+            </a>
+          </li>
+        </ul>
+      </div>
+
         <span id="headerbar-search" class="dropdown">
           <input type="search"
             class="form-control"
