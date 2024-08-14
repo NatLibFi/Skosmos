@@ -40,7 +40,7 @@ class Model
                 $this->translator = new Translator($langcode);
             }
             $this->translator->addLoader('po', new PoFileLoader());
-            $this->translator->addResource('po', __DIR__.'/../../resource/translations/skosmos_' . $langcode . '.po', $langcode);
+            $this->translator->addResource('po', __DIR__.'/../../resource/translations/skosmos.' . $langcode . '.po', $langcode);
         }
         $this->initializeLogging();
     }
