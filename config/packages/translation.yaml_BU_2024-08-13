@@ -1,0 +1,9 @@
+framework:
+    default_locale: 'en'
+    translator:
+        providers:
+            loco:
+                dsn: '%env(LOKALISE_DSN)%'
+                domains: ['messages']
+                locales: ['en', 'fr']
+        default_path: '../../resource/translations/'

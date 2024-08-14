@@ -15,17 +15,47 @@
     "ext-intl": "*",
     "ext-mbstring": "*",
     "ext-xsl": "*",
+    "symfony/framework-bundle": "^6.4",
+    "symfony/flex": "^2",
     "monolog/monolog": "1.27.*",
-    "symfony/translation": "6.0.*",
+    "symfony/translation": "^6.4",
+    "symfony/dotenv": "6.4",
     "symfony/translation-contracts": "3.0.*",
     "symfony/twig-bundle": "6.0.*",
-    "symfony/config": "6.0.*"
+    "symfony/config": "^6.1",
+    "symfony/lokalise-translation-provider": "^6.4",
+    "symfony/console": "^6.4",
+    "symfony/runtime": "6.4",
+    "symfony/yaml": "6.4"
   },
   "require-dev": {
     "phpunit/phpunit": "9.5.*",
-    "symfony/dom-crawler": "5.4.*",
+    "symfony/dom-crawler": "^6.4",
     "mockery/mockery": "1.5.1",
     "friendsofphp/php-cs-fixer": "3.16.*"
+  },
+  "config": {
+    "allow-plugins": {
+      "php-http/discovery": true,
+      "symfony/flex": true,
+      "symfony/runtime": true
+    },
+    "sort-packages": true
+  },
+  "scripts": {
+    "auto-scripts": {
+      "cache:clear": "symfony-cmd",
+      "assets:install %PUBLIC_DIR%": "symfony-cmd"
+    },
+    "post-install-cmd": [
+      "@auto-scripts"
+    ],
+    "post-update-cmd": [
+      "@auto-scripts"
+    ]
+  },
+  "conflict": {
+    "symfony/symfony": "*"
   },
   "autoload": {
     "classmap": ["src/controller/", "src/model/", "src/model/sparql/"]
