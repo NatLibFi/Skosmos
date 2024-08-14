@@ -3,7 +3,7 @@ describe('Landing page', () => {
     // go to the Skosmos front page
     cy.visit('/')
 
-    const expectedTitle = 'Skosmos being tested'
+    const expectedTitle = 'Skosmos being tested, long title'
     // check that the page has a HTML title
     cy.get('title').invoke('text').should('equal', expectedTitle)
     // check that the page has title metadata
