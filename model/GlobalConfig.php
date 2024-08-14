@@ -315,6 +315,33 @@ class GlobalConfig extends BaseConfig {
     }
 
     /**
+     * Returns the service description in the requested language.
+     * @return string the description of the service
+     */
+    public function getServiceDescription($lang)
+    {
+        return $this->getLiteral('skosmos:serviceDescription', null, $lang);
+    }
+
+    /**
+     * Returns the feedback page description in the requested language.
+     * @return string the description of the feedback page
+     */
+    public function getFeedbackDescription($lang)
+    {
+        return $this->getLiteral('skosmos:feedbackDescription', null, $lang);
+    }
+
+    /**
+     * Returns the about page description in the requested language.
+     * @return string the description of the about page
+     */
+    public function getAboutDescription($lang)
+    {
+        return $this->getLiteral('skosmos:aboutDescription', null, $lang);
+    }
+
+    /**
      * @return string
      */
     public function getCustomCss()
