@@ -7,7 +7,8 @@ const tabHierApp = Vue.createApp({
       hierarchy: [],
       loadingHierarchy: true,
       loadingChildren: [],
-      selectedConcept: ''
+      selectedConcept: '',
+      listStyle: {}
     }
   },
   provide () {
@@ -22,6 +23,8 @@ const tabHierApp = Vue.createApp({
     if (document.querySelector('#hierarchy > a').classList.contains('active')) {
       this.loadHierarchy()
     }
+
+    this.setListStyle()
   },
   methods: {
     handleClickHierarchyEvent () {
@@ -150,10 +153,10 @@ const tabHierApp = Vue.createApp({
           })
       }
     },
-    getListStyle () {
+    setListStyle () {
       const height = document.getElementById('sidebar-tabs').clientHeight
       const width = document.getElementById('sidebar-tabs').clientWidth
-      return {
+      this.listStyle = {
         height: 'calc( 100% - ' + height + 'px)',
         width: width + 'px'
       }
@@ -168,8 +171,8 @@ const tabHierApp = Vue.createApp({
     }
   },
   template: `
-    <div v-click-tab-hierarchy="handleClickHierarchyEvent">
-      <div id="hierarchy-list" class="sidebar-list p-0" :style="getListStyle()">
+    <div v-click-tab-hierarchy="handleClickHierarchyEvent" v-resize-window="setListStyle">
+      <div id="hierarchy-list" class="sidebar-list p-0" :style="listStyle">
         <ul class="list-group" v-if="!loadingHierarchy">
           <tab-hier-wrapper
             :hierarchy="hierarchy"
@@ -187,6 +190,7 @@ const tabHierApp = Vue.createApp({
   `
 })
 
+/* Custom directive used to add an event listener on clicks on the hierarchy nav-item element */
 tabHierApp.directive('click-tab-hierarchy', {
   beforeMount: (el, binding) => {
     el.clickTabEvent = event => {
@@ -196,6 +200,19 @@ tabHierApp.directive('click-tab-hierarchy', {
   },
   unmounted: el => {
     document.querySelector('#hierarchy').removeEventListener('click', el.clickTabEvent)
+  }
+})
+
+/* Custom directive used to add an event listener on resizing the window */
+tabHierApp.directive('resize-window', {
+  beforeMount: (el, binding) => {
+    el.resizeWindowEvent = event => {
+      binding.value() // calling the method given as the attribute value (setListStyle)
+    }
+    window.addEventListener('resize', el.resizeWindowEvent) // registering an event listener on resizing the window
+  },
+  unmounted: el => {
+    window.removeEventListener('resize', el.resizeWindowEvent)
   }
 })
 
