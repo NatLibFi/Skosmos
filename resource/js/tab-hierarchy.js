@@ -185,7 +185,7 @@ const tabHierApp = Vue.createApp({
       // Set language and options
       const lang = window.SKOSMOS.content_lang || window.SKOSMOS.lang
       const options = {
-        numeric: window.SKOSMOS.sortByNotation == 'natural', // Set numeric to true if sort should be natural
+        numeric: window.SKOSMOS.sortByNotation === 'natural', // Set numeric to true if sort should be natural
         sensitivity: 'variant' // Strings that differ in base letters, diacritic marks, or case compare as unequal
       }
 
