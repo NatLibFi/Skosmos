@@ -226,8 +226,7 @@ const vocabSearch = Vue.createApp({
     <div class="d-flex my-auto ms-auto">
       <div class="d-flex justify-content-end input-group ms-auto" id="search-wrapper">
 
-      <div class="dropdown">
-        <!-- Use interpolation to bind the text content dynamically -->
+      <div class="dropdown" id="language-selector">
         <a class="btn btn-outline-secondary dropdown-toggle"
            href="#"
            role="button"
@@ -237,7 +236,7 @@ const vocabSearch = Vue.createApp({
            v-if="languageStrings">
           {{ languageStrings[selectedLanguage] }}
         </a>
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu" id="language-list">
           <li v-for="(value, key) in languageStrings" :key="key">
             <a class="dropdown-item" :value="key" @click="changeContentLangAndReload(key)">
               {{ value }}
