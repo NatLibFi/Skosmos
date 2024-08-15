@@ -41,11 +41,15 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-php${{ matrix.php_version}}-skosmos3-
 
-    - name: Install Composer dependencies
-      uses: php-actions/composer@v6
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
       with:
-        php_version: ${{ matrix.php_version }}
-        php_extensions: intl xsl pcov
+        php-version: ${{ matrix.php_version }}
+        extensions: intl, xsl, pcov
+        coverage: pcov
+
+    - name: Install Composer dependencies
+      run: composer install --no-progress --prefer-dist
 
     - name: Install Node
       uses: actions/setup-node@v3
@@ -62,15 +66,7 @@ jobs:
       run: cd resource/js; npx standard *.js
 
     - name: Run PHPUnit tests
-      uses: php-actions/phpunit@v3
-      env:
-        LANGUAGE: fr
-      with:
-        version: 9.5
-        php_version: ${{ matrix.php_version }}
-        php_extensions: intl xsl pcov
-        memory_limit: 512M
-        configuration: phpunit.xml
+      run: ./vendor/bin/phpunit --configuration phpunit.xml
 
     - name: Publish code coverage to Code Climate
       uses: paambaati/codeclimate-action@v5.0.0

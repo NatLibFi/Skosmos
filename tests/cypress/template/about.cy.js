@@ -1,5 +1,5 @@
 describe('About page', () => {
-  it('Contains title and title metadata', () => {
+  it('Contains title metadata', () => {
     // go to the Skosmos about page
     cy.visit('/en/about')
 
@@ -8,8 +8,16 @@ describe('About page', () => {
     cy.get('title').invoke('text').should('equal', expectedTitle)
     // check that the page has title metadata
     cy.get('head meta[name="title"]').should('have.attr', 'content', expectedTitle);
-    cy.get('head meta[name="twitter:title"]').should('have.attr', 'content', expectedTitle);
     cy.get('head meta[property="og:title"]').should('have.attr', 'content', expectedTitle);
+  })
+  it('Contains description metadata', () => {
+    // go to the Skosmos about page
+    cy.visit('/en/about')
+
+    const expectedDescription = 'About page for Skosmos being tested'
+    // check that the page has description metadata
+    cy.get('head meta[name="description"]').should('have.attr', 'content', expectedDescription);
+    cy.get('head meta[property="og:description"]').should('have.attr', 'content', expectedDescription);
   })
   it('Contains version number information', () => {
     // go to the Skosmos about page

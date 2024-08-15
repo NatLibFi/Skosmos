@@ -23,7 +23,8 @@ const tabHierApp = Vue.createApp({
     if (document.querySelector('#hierarchy > a').classList.contains('active')) {
       this.loadHierarchy()
     }
-
+  },
+  beforeUpdate () {
     this.setListStyle()
   },
   methods: {
