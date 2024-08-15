@@ -52,7 +52,7 @@ const tabHierApp = Vue.createApp({
 
           this.hierarchy = []
 
-          for (const c of data.topconcepts.sort((a, b) => this.compareStrs(a, b))) {
+          for (const c of data.topconcepts.sort((a, b) => this.compareConcepts(a, b))) {
             this.hierarchy.push({ uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false, notation: c.notation })
           }
 
@@ -72,7 +72,7 @@ const tabHierApp = Vue.createApp({
           this.hierarchy = []
 
           // transform broaderTransitive to an array and sort it
-          const bt = Object.values(data.broaderTransitive).sort((a, b) => this.compareStrs(a, b))
+          const bt = Object.values(data.broaderTransitive).sort((a, b) => this.compareConcepts(a, b))
           const parents = [] // queue of nodes in hierarchy tree with potential missing child nodes
 
           // add top concepts to hierarchy tree
@@ -81,7 +81,7 @@ const tabHierApp = Vue.createApp({
               if (concept.narrower) {
                 // children of the current concept
                 const children = concept.narrower
-                  .sort((a, b) => this.compareStrs(a, b))
+                  .sort((a, b) => this.compareConcepts(a, b))
                   .map(c => {
                     return { uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false, notation: c.notation }
                   })
@@ -117,7 +117,7 @@ const tabHierApp = Vue.createApp({
                 const conceptNode = parent.children.find(c => c.uri === concept.uri)
                 // children of current concept
                 const children = concept.narrower
-                  .sort((a, b) => this.compareStrs(a, b))
+                  .sort((a, b) => this.compareConcepts(a, b))
                   .map(c => {
                     return { uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false, notation: c.notation }
                   })
@@ -145,7 +145,7 @@ const tabHierApp = Vue.createApp({
           })
           .then(data => {
             console.log('data', data)
-            for (const c of data.narrower.sort((a, b) => this.compareStrs(a, b))) {
+            for (const c of data.narrower.sort((a, b) => this.compareConcepts(a, b))) {
               concept.children.push({ uri: c.uri, label: c.prefLabel, hasChildren: c.hasChildren, children: [], isOpen: false, notation: c.notation })
             }
             this.loadingChildren = this.loadingChildren.filter(x => x !== concept)
@@ -161,7 +161,7 @@ const tabHierApp = Vue.createApp({
         width: width + 'px'
       }
     },
-    compareStrs (a, b) {
+    compareConcepts (a, b) {
       let strA, strB
 
       if (window.SKOSMOS.sortByNotation) {
