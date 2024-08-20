@@ -23,7 +23,8 @@
   --search-border: var(--medium-color);
   --search-button-bg: var(--dark-color);
   --search-button-text: var(--white-color);
-  --search-dropdown-toggle-hover: var(--light-color);
+  --search-dropdown-toggle-hover-text: var(--white-color);
+  --search-dropdown-toggle-hover-bg: var(--dark-color);
   --vocab-bg: var(--white-color);
   --vocab-text: var(--dark-color);
   --vocab-table-border: var(--medium-color);
@@ -232,43 +233,39 @@ body {
     height: 100%;
   }
 
-  #search-wrapper .dropdown-toggle {
+  #search-wrapper button.dropdown-toggle {
     background-color: var(--search-bg);
     color: var(--headerbar-text-2);
     border: 1px solid var(--search-border);
     border-radius: 0;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
-  #search-wrapper .dropdown-toggle:hover, #search-wrapper .dropdown-toggle:active {
-    background-color: var(--search-dropdown-toggle-hover); /* What color to use? */
+  #search-wrapper button.dropdown-toggle i {
+    padding-left: 0.25rem;
+    font-size: 0.75rem;
   }
 
-  #search-wrapper .dropdown-toggle.show {
-    background-color: var(--search-dropdown-toggle-show); /* What color to use? */
+  #search-wrapper button.btn.dropdown-toggle::after {
+    display: none !important;
   }
 
-  #search-wrapper .dropdown-menu {
+  #search-wrapper #language-list {
+    inset: -3px auto auto 0px !important;
+    background-color: var(--search-bg);
+    color: var(--headerbar-text-2);
     border: 1px solid var(--search-border);
     border-radius: 0;
-    padding: 0;
-    width: 114%;
-    max-height: 20rem;
-    overflow: auto;
   }
 
-  #search-wrapper .dropdown-item:active {
-    background-color: var(--search-dropdown-item-active);
-  }
-
-  #search-wrapper .dropdown-item:hover {
-    background-color: var(--search-dropdown-item-hover); /* What color to use? */
+  #search-wrapper #language-list li a:hover, #search-wrapper #language-list li a:active {
+  color: var(--search-dropdown-toggle-hover-text);
+    background-color: var(--search-dropdown-toggle-hover-bg);
   }
 
   #search-wrapper .form-check-input {
     background-color: var(--search-bg);
-
     border-radius: 0;
   }
 
@@ -294,6 +291,15 @@ body {
 
   #search-wrapper .dropdown-menu {
     transform: translateY(-1px);
+    background-color: var(--search-bg);
+    color: var(--headerbar-text-2);
+    border: 1px solid var(--search-border);
+    border-radius: 0;
+  }
+
+  #search-wrapper ul {
+    padding-top: 0rem;
+    padding-bottom: 0rem;
   }
 
   #search-wrapper .autocomplete {

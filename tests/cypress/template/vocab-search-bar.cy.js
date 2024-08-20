@@ -5,8 +5,9 @@ describe('Vocab search bar', () => {
       // go to YSO vocab front page
       cy.visit('/yso/fi/')
 
-      // Select an option from the dropdown
-      cy.get('#search-wrapper select').select('sv');
+      // Select a language option from the dropdown
+      cy.get('#language-selector .dropdown-toggle').click();
+      cy.get('#language-list .dropdown-item').contains('ruotsi').click();
 
       // Enter a search term
       cy.get('#search-wrapper input').type('Katt');
@@ -22,8 +23,9 @@ describe('Vocab search bar', () => {
       // go to YSO vocab front page
       cy.visit('/yso/fi/')
 
-      // Choose 'all' languages
-      cy.get('#search-wrapper select').select('all');
+      // Choose 'all' languages from the dropdown
+      cy.get('#language-selector .dropdown-toggle').click();
+      cy.get('#language-list .dropdown-item').contains('kaikilla kielillä').click();
 
       // Enter a search term
       cy.get('#search-wrapper input').type('Katt');
@@ -40,10 +42,12 @@ describe('Vocab search bar', () => {
       cy.visit('/yso/fi/')
 
       // Choose 'sv' for search & content language
-      cy.get('#search-wrapper select').select('sv');
+      cy.get('#language-selector .dropdown-toggle').click();
+      cy.get('#language-list .dropdown-item').contains('ruotsi').click();
 
       // Choose 'all' for search language
-      cy.get('#search-wrapper select').select('all');
+      cy.get('#language-selector .dropdown-toggle').click();
+      cy.get('#language-list .dropdown-item').contains('kaikilla kielillä').click();
 
       // Verify the search page url has the previously chosen language as the content language
       cy.url().should('include', 'clang=sv');
@@ -180,8 +184,9 @@ describe('Vocab search bar', () => {
     it('The search language cookie is set', () => {
       cy.visit('/yso/fi/');
 
-      // Select an option from the dropdown to set the search language
-      cy.get('#search-wrapper select').select('sv');
+      // Select a language option from the dropdown
+      cy.get('#language-selector .dropdown-toggle').click();
+      cy.get('#language-list .dropdown-item').contains('ruotsi').click();
 
       // Test that the cookie has been set correctly
       cy.getCookie('SKOSMOS_SEARCH_LANG').should('have.property', 'value', 'sv');
@@ -193,7 +198,8 @@ describe('Vocab search bar', () => {
       cy.visit('/yso/fi/');
 
       // Test that the cookie value has been read and used to initialize the language selector
-      cy.get('#search-wrapper select').should('have.value', 'en');
+      cy.get('.dropdown .dropdown-toggle').should('contain', 'englanti');
+
     });
   });
 })

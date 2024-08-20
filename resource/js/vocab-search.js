@@ -17,7 +17,7 @@ const vocabSearch = Vue.createApp({
   mounted () {
     this.languages = window.SKOSMOS.languageOrder
     this.selectedLanguage = this.parseSearchLang()
-    this.searchCounter = 0
+    this.searchCounter = 0 // used for matching the query and the response in case there are many responses
     this.languageStrings = window.SKOSMOS.language_strings[window.SKOSMOS.lang] ?? window.SKOSMOS.language_strings.en
     this.msgs = window.SKOSMOS.msgs[window.SKOSMOS.lang] ?? window.SKOSMOS.msgs.en
     this.renderedResultsList = []
@@ -225,12 +225,32 @@ const vocabSearch = Vue.createApp({
   template: `
     <div class="d-flex my-auto ms-auto">
       <div class="d-flex justify-content-end input-group ms-auto" id="search-wrapper">
-        <select class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown-item"
-          v-model="selectedLanguage"
-          @change="changeContentLangAndReload($event.target.value)"
-          aria-label="Select search language">
-          <option class="dropdown-item" v-for="(value, key) in languageStrings" :value="key">{{ value }}</option>
-        </select>
+
+      <div class="dropdown" id="language-selector">
+        <button class="btn btn-outline-secondary dropdown-toggle"
+           role="button"
+           data-bs-toggle="dropdown"
+           aria-expanded="false"
+           aria-label="Select search language"
+           v-if="languageStrings">
+          {{ languageStrings[selectedLanguage] }}
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <ul class="dropdown-menu" id="language-list" role="menu">
+          <li v-for="(value, key) in languageStrings" :key="key" role="none">
+            <a
+              class="dropdown-item"
+              :value="key"
+              @click="changeContentLangAndReload(key)"
+              @keydown.enter="changeContentLangAndReload(key)"
+              role="menuitem"
+              tabindex=0 >
+              {{ value }}
+            </a>
+          </li>
+        </ul>
+      </div>
+
         <span id="headerbar-search" class="dropdown">
           <input type="search"
             class="form-control"
@@ -317,7 +337,7 @@ const vocabSearch = Vue.createApp({
                         </template>
                       </span>
                     </div>
-                    <div class="col-auto align-self-end pe-1" v-html="result.renderedType"></div>
+                    <div class="col-auto align-self-end pr-1" v-html="result.renderedType"></div>
                   </div>
                 </a>
               </template>
