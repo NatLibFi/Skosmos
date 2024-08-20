@@ -40,7 +40,7 @@ class Model
                 $this->translator = new Translator($langcode);
             }
             $this->translator->addLoader('json', new JsonFileLoader());
-            $this->translator->addResource('json', __DIR__.'/../../resource/translations/skosmos.' . $langcode . '.json', $langcode);
+            $this->translator->addResource('json', __DIR__.'/../../resource/translations/messages.' . $langcode . '.json', $langcode);
         }
         $this->initializeLogging();
     }

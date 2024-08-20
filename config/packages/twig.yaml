@@ -1,0 +1,4 @@
+twig:
+    default_path: '%kernel.project_dir%/src/view'
+    file_name_pattern: ['*.twig', '*.inc']
+
