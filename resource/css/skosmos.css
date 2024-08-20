@@ -712,6 +712,10 @@ body {
     border: none;
   }
 
+  .property-value .property-value-notation {
+    color: var(--vocab-text);
+  }
+
   #resource-table th {
     color: var(--vocab-text);
     font-weight: bold;
