@@ -245,7 +245,7 @@ const vocabSearch = Vue.createApp({
               @click="changeContentLangAndReload(key)"
               @keydown.enter="changeContentLangAndReload(key)"
               role="menuitem"
-              tabindex=1 >
+              tabindex=0 >
               {{ value }}
             </a>
           </li>
