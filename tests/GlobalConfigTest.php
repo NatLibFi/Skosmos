@@ -46,7 +46,7 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
 
     public function testGetHttpTimeout()
     {
-        $this->assertEquals(2, $this->config->getHttpTimeout());
+        $this->assertEquals(8, $this->config->getHttpTimeout());
     }
 
     public function testGetServiceName()
