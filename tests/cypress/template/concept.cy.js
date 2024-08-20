@@ -281,6 +281,17 @@ describe('Concept page', () => {
     // check that we have the correct number of narrower concepts
     cy.get('.prop-skos_narrower .property-value').find('li').should('have.length', 8)
   })
+  it('contains notation codes for narrower/broader concepts', () => {
+    // Go to "Karppi" concept page
+    cy.visit('/testNotation/en/page/?uri=http%3A%2F%2Fwww.skosmos.skos%2Ftest%2Fta01')
+    // Check the notation code for narrower concept
+    cy.get('.prop-skos_narrower .property-value-notation').eq(0).invoke('text').should('contain', '33.01')
+
+    // Go to "Crucian carp" concept page
+    cy.visit('/testNotation/en/page/?uri=http%3A%2F%2Fwww.skosmos.skos%2Ftest%2Fta0121')
+    // Check the notation code for broader concept
+    cy.get('.prop-skos_broader .property-value-notation').eq(0).invoke('text').should('contain', '33.1')
+  })
   it('contains related concepts', () => {
     cy.visit('/yso/en/page/p21685') // go to "music research" concept page
 
