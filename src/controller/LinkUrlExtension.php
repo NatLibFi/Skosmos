@@ -7,7 +7,7 @@ class LinkUrlExtension extends AbstractExtension
 {
     private $model;
 
-    public function __construct($model)
+    public function __construct(Model $model = null)
     {
         $this->model = $model;
     }
