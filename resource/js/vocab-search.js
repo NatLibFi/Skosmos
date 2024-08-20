@@ -227,7 +227,7 @@ const vocabSearch = Vue.createApp({
       <div class="d-flex justify-content-end input-group ms-auto" id="search-wrapper">
 
       <div class="dropdown" id="language-selector">
-        <a class="btn btn-outline-secondary dropdown-toggle"
+        <button class="btn btn-outline-secondary dropdown-toggle"
            href="#"
            role="button"
            data-bs-toggle="dropdown"
@@ -235,7 +235,8 @@ const vocabSearch = Vue.createApp({
            aria-label="Select search language"
            v-if="languageStrings">
           {{ languageStrings[selectedLanguage] }}
-        </a>
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
         <ul class="dropdown-menu" id="language-list">
           <li v-for="(value, key) in languageStrings" :key="key">
             <a class="dropdown-item" :value="key" @click="changeContentLangAndReload(key)">
@@ -331,7 +332,7 @@ const vocabSearch = Vue.createApp({
                         </template>
                       </span>
                     </div>
-                    <div class="col-auto align-self-end pe-1" v-html="result.renderedType"></div>
+                    <div class="col-auto align-self-end pr-1" v-html="result.renderedType"></div>
                   </div>
                 </a>
               </template>
