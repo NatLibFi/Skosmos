@@ -53,7 +53,7 @@ const tabHierApp = Vue.createApp({
 
           this.hierarchy = []
 
-          for (const c of data.topconcepts.sort((a, b) => this.compareLabels(a, b))) {
+          for (const c of data.topconcepts.sort((a, b) => this.compareConcepts(a, b))) {
             this.hierarchy.push({ uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false, notation: c.notation })
           }
 
@@ -73,7 +73,7 @@ const tabHierApp = Vue.createApp({
           this.hierarchy = []
 
           // transform broaderTransitive to an array and sort it
-          const bt = Object.values(data.broaderTransitive).sort((a, b) => this.compareLabels(a, b))
+          const bt = Object.values(data.broaderTransitive).sort((a, b) => this.compareConcepts(a, b))
           const parents = [] // queue of nodes in hierarchy tree with potential missing child nodes
 
           // add top concepts to hierarchy tree
@@ -82,7 +82,7 @@ const tabHierApp = Vue.createApp({
               if (concept.narrower) {
                 // children of the current concept
                 const children = concept.narrower
-                  .sort((a, b) => this.compareLabels(a, b))
+                  .sort((a, b) => this.compareConcepts(a, b))
                   .map(c => {
                     return { uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false, notation: c.notation }
                   })
@@ -118,7 +118,7 @@ const tabHierApp = Vue.createApp({
                 const conceptNode = parent.children.find(c => c.uri === concept.uri)
                 // children of current concept
                 const children = concept.narrower
-                  .sort((a, b) => this.compareLabels(a, b))
+                  .sort((a, b) => this.compareConcepts(a, b))
                   .map(c => {
                     return { uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false, notation: c.notation }
                   })
@@ -146,7 +146,7 @@ const tabHierApp = Vue.createApp({
           })
           .then(data => {
             console.log('data', data)
-            for (const c of data.narrower.sort((a, b) => this.compareLabels(a, b))) {
+            for (const c of data.narrower.sort((a, b) => this.compareConcepts(a, b))) {
               concept.children.push({ uri: c.uri, label: c.prefLabel, hasChildren: c.hasChildren, children: [], isOpen: false, notation: c.notation })
             }
             this.loadingChildren = this.loadingChildren.filter(x => x !== concept)
@@ -162,13 +162,35 @@ const tabHierApp = Vue.createApp({
         width: width + 'px'
       }
     },
-    compareLabels (a, b) {
-      // Set labels as label, prefLabel or an empty string if there are no lables
-      const labelA = a.label || a.prefLabel || ''
-      const labelB = b.label || b.prefLabel || ''
-      const lang = window.SKOSMOS.content_lang ? window.SKOSMOS.content_lang : window.SKOSMOS.lang
+    compareConcepts (a, b) {
+      let strA, strB
 
-      return labelA.localeCompare(labelB, lang)
+      if (window.SKOSMOS.sortByNotation) {
+        if (a.notation && b.notation) {
+          // Set strings as notation if both have notation codes
+          strA = a.notation
+          strB = b.notation
+        } else if (a.notation && !b.notation) {
+          // Sort a before b if b has no notation
+          return -1
+        } else if (!a.notation && b.notation) {
+          // Sort b before a if a has no notation
+          return 1
+        }
+      }
+
+      // Set strings to label/prefLabel if sorting should not be based on notation or if neither concept has notations
+      strA = strA || a.label || a.prefLabel || ''
+      strB = strB || b.label || b.prefLabel || ''
+
+      // Set language and options
+      const lang = window.SKOSMOS.content_lang || window.SKOSMOS.lang
+      const options = {
+        numeric: window.SKOSMOS.sortByNotation === 'natural', // Set numeric to true if sort should be natural
+        sensitivity: 'variant' // Strings that differ in base letters, diacritic marks, or case compare as unequal
+      }
+
+      return strA.localeCompare(strB, lang, options)
     }
   },
   template: `
