@@ -237,9 +237,15 @@ const vocabSearch = Vue.createApp({
           {{ languageStrings[selectedLanguage] }}
           <i class="fa-solid fa-chevron-down"></i>
         </button>
-        <ul class="dropdown-menu" id="language-list">
-          <li v-for="(value, key) in languageStrings" :key="key">
-            <a class="dropdown-item" :value="key" @click="changeContentLangAndReload(key)">
+        <ul class="dropdown-menu" id="language-list" role="menu">
+          <li v-for="(value, key) in languageStrings" :key="key" role="none">
+            <a
+              class="dropdown-item"
+              :value="key"
+              @click="changeContentLangAndReload(key)"
+              @keydown.enter="changeContentLangAndReload(key)"
+              role="menuitem"
+              tabindex=1 >
               {{ value }}
             </a>
           </li>
