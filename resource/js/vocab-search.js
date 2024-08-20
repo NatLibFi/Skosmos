@@ -228,7 +228,6 @@ const vocabSearch = Vue.createApp({
 
       <div class="dropdown" id="language-selector">
         <button class="btn btn-outline-secondary dropdown-toggle"
-           href="#"
            role="button"
            data-bs-toggle="dropdown"
            aria-expanded="false"
