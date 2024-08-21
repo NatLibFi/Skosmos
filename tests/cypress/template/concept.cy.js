@@ -142,6 +142,14 @@ describe('Concept page', () => {
     cy.get('head meta[name="title"]').should('have.attr', 'content', expectedTitle);
     cy.get('head meta[property="og:title"]').should('have.attr', 'content', expectedTitle);
   })
+  it('Contains description metadata', () => {
+    cy.visit('/yso/en/page/p1265') // go to "archaeology" concept page
+
+    const expectedDescription = 'Concept archaeology in vocabulary YSO - General Finnish ontology (archaeology)'
+    // check that the page has description metadata
+    cy.get('head meta[name="description"]').should('have.attr', 'content', expectedDescription);
+    cy.get('head meta[property="og:description"]').should('have.attr', 'content', expectedDescription);
+  })
   it('Contains site name metadata', () => {
     cy.visit('/yso/en/page/p1265') // go to "archaeology" concept page
 

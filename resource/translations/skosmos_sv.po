@@ -893,3 +893,6 @@ msgstr "Kopiera till urklipp"
 
 msgid "Error"
 msgstr "Fel"
+
+msgid "Concept %term% in vocabulary %vocab%"
+msgstr "Begreppet %term% i vokabulären %vocab%"
