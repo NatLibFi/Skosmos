@@ -58,6 +58,9 @@
             {% if propval.uri and property.type != 'rdf:type' %} {# resources with URI #}
             <li>
               <a href="{{ propval.uri | link_url(propval.vocab, request.lang, 'page', request.contentLang) }}">
+              {%- if propval.notation -%}
+                <span class="property-value-notation">{{ propval.notation }} </span>
+              {%- endif -%}
                 {{- propval.label(request.contentLang) -}}
               </a>
             </li>
