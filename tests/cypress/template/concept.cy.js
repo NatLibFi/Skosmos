@@ -142,6 +142,30 @@ describe('Concept page', () => {
     cy.get('head meta[name="title"]').should('have.attr', 'content', expectedTitle);
     cy.get('head meta[property="og:title"]').should('have.attr', 'content', expectedTitle);
   })
+  it('Contains site name metadata', () => {
+    cy.visit('/yso/en/page/p1265') // go to "archaeology" concept page
+
+    const expectedSiteName = 'Skosmos being tested'
+    // check that the page has site name metadata
+    cy.get('head meta[property="og:site_name"]').should('have.attr', 'content', expectedSiteName);
+  })
+  it('Contains canonical URL metadata (short URL)', () => {
+    cy.visit('/yso/en/page/p1265') // go to "archaeology" concept page
+
+    const expectedUrl = Cypress.config('baseUrl') + 'yso/en/page/p1265'
+    // check that the page has canonical URL metadata
+    cy.get('link[rel="canonical"]').should('have.attr', 'href', expectedUrl);
+    cy.get('head meta[property="og:url"]').should('have.attr', 'content', expectedUrl);
+  })
+  it('Contains canonical URL metadata (long URL)', () => {
+    // go to "archaeology" concept page using long URL based on URI
+    cy.visit('/yso/en/page/?uri=http%3A%2F%2Fwww.yso.fi%2Fonto%2Fyso%2Fp1265')
+
+    const expectedUrl = Cypress.config('baseUrl') + 'yso/en/page/p1265'
+    // check that the page has canonical URL metadata
+    cy.get('link[rel="canonical"]').should('have.attr', 'href', expectedUrl);
+    cy.get('head meta[property="og:url"]').should('have.attr', 'content', expectedUrl);
+  })
   it("doesn't contain breadcrumbs for top concepts", () => {
     cy.visit('/yso/en/page/p4762') // go to "objects" concept page
 

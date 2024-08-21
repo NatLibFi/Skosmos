@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="{{ request.lang }}">
+<html dir="ltr" lang="{{ request.lang }}" prefix="og: https://ogp.me/ns#">
 <head>
 <base href="{{ BaseHref }}">
 <link rel="shortcut icon" href="favicon.ico">
@@ -15,7 +15,12 @@
 <meta name="description" content="{{ block('description') }}">
 <meta property="og:description" content="{{ block('description') }}">
 {% endif %}
-<meta name="twitter:card" content="summary">
+{% if block('url') is defined and block('url') is not empty %}
+<link rel="canonical" href="{{ block('url') }}">
+<meta property="og:url" content="{{ block('url') }}">
+{% endif %}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{ GlobalConfig.serviceName }}">
 <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" media="screen, print" rel="stylesheet" type="text/css">
 <link href="resource/css/fonts.css" media="screen, print" rel="stylesheet" type="text/css">
 <link href="resource/css/skosmos.css" media="screen, print" rel="stylesheet" type="text/css">

@@ -9,6 +9,30 @@ describe('Vocabulary home page', () => {
     cy.get('head meta[name="title"]').should('have.attr', 'content', expectedTitle);
     cy.get('head meta[property="og:title"]').should('have.attr', 'content', expectedTitle);
   })
+  it('Contains description metadata', () => {
+    cy.visit('/test/en') // go to the "Test ontology" home page
+
+    const expectedDescription = 'Description of Test ontology'
+
+    // check that the page has description metadata
+    cy.get('head meta[name="description"]').should('have.attr', 'content', expectedDescription);
+    cy.get('head meta[property="og:description"]').should('have.attr', 'content', expectedDescription);
+  })
+  it('Contains site name metadata', () => {
+    cy.visit('/test/en') // go to the "Test ontology" home page
+
+    const expectedSiteName = 'Skosmos being tested'
+    // check that the page has site name metadata
+    cy.get('head meta[property="og:site_name"]').should('have.attr', 'content', expectedSiteName);
+  })
+  it('Contains canonical URL metadata', () => {
+    cy.visit('/test/en') // go to the "Test ontology" home page
+
+    const expectedUrl = Cypress.config('baseUrl') + 'test/en/'
+    // check that the page has canonical URL metadata
+    cy.get('link[rel="canonical"]').should('have.attr', 'href', expectedUrl);
+    cy.get('head meta[property="og:url"]').should('have.attr', 'content', expectedUrl);
+  })
   it('contains vocabulary title', () => {
     cy.visit('/test/en') // go to the "Test ontology" home page
 

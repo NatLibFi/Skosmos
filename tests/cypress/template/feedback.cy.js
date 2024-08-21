@@ -19,6 +19,23 @@ describe('Feedback page', () => {
     cy.get('head meta[name="description"]').should('have.attr', 'content', expectedDescription);
     cy.get('head meta[property="og:description"]').should('have.attr', 'content', expectedDescription);
   })
+  it('Contains site name metadata', () => {
+    // go to the general feedback page
+    cy.visit('/en/feedback')
+
+    const expectedSiteName = 'Skosmos being tested'
+    // check that the page has site name metadata
+    cy.get('head meta[property="og:site_name"]').should('have.attr', 'content', expectedSiteName);
+  })
+  it('Contains canonical URL metadata', () => {
+    // go to the general feedback page
+    cy.visit('/en/feedback')
+
+    const expectedUrl = Cypress.config('baseUrl') + 'en/feedback'
+    // check that the page has canonical URL metadata
+    cy.get('link[rel="canonical"]').should('have.attr', 'href', expectedUrl);
+    cy.get('head meta[property="og:url"]').should('have.attr', 'content', expectedUrl);
+  })
   it('Sends feedback', () => {
     // go to the general feedback page
     cy.visit('/en/feedback')
@@ -74,6 +91,23 @@ describe('Vocab feedback page', () => {
     // check that the page has description metadata
     cy.get('head meta[name="description"]').should('have.attr', 'content', expectedDescription);
     cy.get('head meta[property="og:description"]').should('have.attr', 'content', expectedDescription);
+  })
+  it('Contains site name metadata', () => {
+    // go to test vocab feedback page
+    cy.visit('/test/en/feedback')
+
+    const expectedSiteName = 'Skosmos being tested'
+    // check that the page has site name metadata
+    cy.get('head meta[property="og:site_name"]').should('have.attr', 'content', expectedSiteName);
+  })
+  it('Contains canonical URL metadata', () => {
+    // go to test vocab feedback page
+    cy.visit('/test/en/feedback')
+
+    const expectedUrl = Cypress.config('baseUrl') + 'test/en/feedback'
+    // check that the page has canonical URL metadata
+    cy.get('link[rel="canonical"]').should('have.attr', 'href', expectedUrl);
+    cy.get('head meta[property="og:url"]').should('have.attr', 'content', expectedUrl);
   })
   it('Displays correct vocab option', () => {
     // go to test vocab feedback page
