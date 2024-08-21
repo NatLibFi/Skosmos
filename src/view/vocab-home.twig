@@ -2,7 +2,7 @@
 {% extends "base-template.twig" %}
 {% block title %}{{ vocab.title(request.contentLang) }} - {{ GlobalConfig.serviceName }}{% endblock %}
 {% block description %}{{ vocab.config.description(request.contentLang) }}{% endblock %}
-{% block url %}{{ BaseHref }}{{ vocab.id }}/{{ request.lang }}/{% if request.contentLang != request.lang and request.contentLang != '' and request.contentLang in vocab.config.languages %}?clang={{ request.contentLang }}{% endif %}{% endblock %}
+{% block url %}{{ BaseHref }}{{ request.langurl }}{% endblock %}
 
 
 {% block content %}

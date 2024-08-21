@@ -3,7 +3,7 @@
 
 {% block title %}{{ "Feedback"|trans }} - {{ GlobalConfig.serviceName }}{% endblock %}
 {% block description %}{{ GlobalConfig.feedbackDescription(request.lang) }}{% endblock %}
-{% block url %}{{ BaseHref }}{% if request.vocab %}{{ request.vocab.id }}/{% endif %}{{ request.lang }}/feedback{% endblock %}
+{% block url %}{{ BaseHref }}{{ request.langurl }}{% endblock %}
 
 {% block content %}
 
