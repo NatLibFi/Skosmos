@@ -706,9 +706,10 @@ class RestController extends Controller
         }
 
         $mappings = [];
+        $linkUrlExtension = new LinkUrlExtension($this->model);
         foreach ($concept->getMappingProperties() as $mappingProperty) {
             foreach ($mappingProperty->getValues() as $mappingPropertyValue) {
-                $hrefLink = $this->linkUrlFilter($mappingPropertyValue->getUri(), $mappingPropertyValue->getExVocab(), $request->getLang(), 'page', $request->getContentLang());
+                $hrefLink = $linkUrlExtension->linkUrlFilter($mappingPropertyValue->getUri(), $mappingPropertyValue->getExVocab(), $request->getLang(), 'page', $request->getContentLang());
                 $mappings[] = $mappingPropertyValue->asJskos($queryExVocabs, $request->getLang(), $hrefLink);
             }
         }
