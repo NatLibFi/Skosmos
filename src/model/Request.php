@@ -210,7 +210,7 @@ class Request
      */
     public function getLangUrl($newlang=null)
     {
-        $script_name = str_replace('/index.php', '', $this->getServerConstant('SCRIPT_NAME'));
+        $script_name = str_replace('/src/index.php', '', $this->getServerConstant('SCRIPT_NAME'));
         $langurl = substr(str_replace($script_name, '', strval($this->getServerConstant('REQUEST_URI'))), 1);
         if ($newlang !== null) {
             $langurl = preg_replace("#^(.*/)?{$this->lang}/#", "$1{$newlang}/", $langurl);
