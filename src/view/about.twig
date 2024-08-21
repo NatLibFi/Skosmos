@@ -2,6 +2,7 @@
 {% extends "base-template.twig" %}
 {% block title %}{{ "About" | trans}} - {{ GlobalConfig.serviceName }}{% endblock %}
 {% block description %}{{ GlobalConfig.aboutDescription(request.lang) }}{% endblock %}
+{% block url %}{{ BaseHref }}{{ request.lang }}/about{% endblock %}
 
 {% block content %}
 

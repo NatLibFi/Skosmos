@@ -1,6 +1,8 @@
 {% set pageType = 'vocab-search' %}
 {% extends "base-template.twig" %}
 {% block title %}'{{ term }}' - {{ vocab.shortName(request.contentLang) }} - {{ GlobalConfig.serviceName }}{% endblock %}
+{% block url %}{{ BaseHref }}{{ vocab.id }}/{{ request.lang }}/search?clang={{ request.contentLang}}&amp;q={{ term|url_encode }}{% endblock %}
+
 {% block content %}
 <main class="searchpage py-5" id="main-container" >
   <div class="container">

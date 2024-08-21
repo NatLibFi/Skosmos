@@ -27,6 +27,15 @@ describe('About page', () => {
     // check that the page has site name metadata
     cy.get('head meta[property="og:site_name"]').should('have.attr', 'content', expectedSiteName);
   })
+  it('Contains canonical URL metadata', () => {
+    // go to the Skosmos about page
+    cy.visit('/en/about')
+
+    const expectedUrl = Cypress.config('baseUrl') + 'en/about'
+    // check that the page has canonical URL metadata
+    cy.get('link[rel="canonical"]').should('have.attr', 'href', expectedUrl);
+    cy.get('head meta[property="og:url"]').should('have.attr', 'content', expectedUrl);
+  })
   it('Contains version number information', () => {
     // go to the Skosmos about page
     cy.visit('/en/about')

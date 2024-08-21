@@ -18,6 +18,15 @@ describe('Error page', () => {
     // check that the page has site name metadata
     cy.get('head meta[property="og:site_name"]').should('have.attr', 'content', expectedSiteName);
   })
+  it('Contains canonical URL metadata', () => {
+    // go to a non-existing page
+    cy.visit('/404', {failOnStatusCode: false})
+
+    const expectedUrl = Cypress.config('baseUrl') + '404/'
+    // check that the page has canonical URL metadata
+    cy.get('link[rel="canonical"]').should('have.attr', 'href', expectedUrl);
+    cy.get('head meta[property="og:url"]').should('have.attr', 'content', expectedUrl);
+  })
   it('Contains 404 error code', () => {
     // check that HTTP code is 404 when accessing a non-existing page
     cy.request({url: '/404', failOnStatusCode: false}).its('status').should('equal', 404)

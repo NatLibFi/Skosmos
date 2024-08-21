@@ -18,6 +18,14 @@ describe('Vocabulary search page', () => {
       // check that the page has site name metadata
       cy.get('head meta[property="og:site_name"]').should('have.attr', 'content', expectedSiteName);
   })
+  it('Contains canonical URL metadata', () => {
+      cy.visit(`/${vocab}/en/search?clang=en&q=${term}`)
+
+    const expectedUrl = Cypress.config('baseUrl') + `${vocab}/en/search?clang=en&q=${term}`
+    // check that the page has canonical URL metadata
+    cy.get('link[rel="canonical"]').should('have.attr', 'href', expectedUrl);
+    cy.get('head meta[property="og:url"]').should('have.attr', 'content', expectedUrl);
+  })
   it('Contains correct amount of search results ', () => {
       const count = 1;
       const searchCountTitle = `${count} results for \'${term}\'`;

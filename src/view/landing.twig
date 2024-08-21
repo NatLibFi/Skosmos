@@ -2,6 +2,7 @@
 {% extends "base-template.twig" %}
 {% block title %}{{ GlobalConfig.serviceNameLong(request.lang) }}{% endblock %}
 {% block description %}{{ GlobalConfig.serviceDescription(request.lang) }}{% endblock %}
+{% block url %}{{ BaseHref }}{{ request.lang }}/{% endblock %}
 
 {% block content %}
 <div class="col-md-7">

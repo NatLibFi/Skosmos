@@ -29,6 +29,15 @@ describe('Landing page', () => {
     // check that the page has site name metadata
     cy.get('head meta[property="og:site_name"]').should('have.attr', 'content', expectedSiteName);
   })
+  it('Contains canonical URL metadata', () => {
+    // go to the Skosmos front page
+    cy.visit('/')
+
+    const expectedUrl = Cypress.config('baseUrl') + 'en/'
+    // check that the page has canonical URL metadata
+    cy.get('link[rel="canonical"]').should('have.attr', 'href', expectedUrl);
+    cy.get('head meta[property="og:url"]').should('have.attr', 'content', expectedUrl);
+  })
   it('links to vocabulary home', () => {
     // go to the Skosmos front page
     cy.visit('/')
