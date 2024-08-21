@@ -30,7 +30,7 @@
       <div class="row" id="concept-heading">
         <div class="col-sm-4 px-0" id="concept-property-label">
         {%- if custom_labels['skos:prefLabel']['label'][request.lang] -%}
-          {{ custom_labels['skos:prefLabel']['label'][request.lang] }}
+          {{ custom_labels['skos:prefLabel']['label'][request.lang]|capitalize }}
         {%- else -%}
           {{ "skos:prefLabel" | trans }}
         {%- endif -%}
@@ -59,7 +59,7 @@
       <div class="row property prop-{{property.ID}}">
         <div class="col-sm-4 px-0 property-label"><h2>
         {%- if custom_labels[property.type]['label'][request.lang] -%}
-          {{ custom_labels[property.type]['label'][request.lang] }}
+          {{ custom_labels[property.type]['label'][request.lang]|capitalize }}
         {%- else -%}
           {{ property.label }}
         {%- endif -%}
