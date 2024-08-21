@@ -76,6 +76,7 @@
 
 :test a skosmos:Vocabulary, void:Dataset ;
 	dc:title "Test ontology"@en ;
+	dc:description "Description of Test ontology"@en ;
 	dc:subject :cat_science ;
     dc:type mdrtype:ONTOLOGY ;
 	void:dataDump <http://skosmos.skos/dump/test/> ;
