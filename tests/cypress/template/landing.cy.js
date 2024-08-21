@@ -21,6 +21,14 @@ describe('Landing page', () => {
     cy.get('head meta[name="description"]').should('have.attr', 'content', expectedDescription);
     cy.get('head meta[property="og:description"]').should('have.attr', 'content', expectedDescription);
   })
+  it('Contains site name metadata', () => {
+    // go to the Skosmos front page
+    cy.visit('/')
+
+    const expectedSiteName = 'Skosmos being tested'
+    // check that the page has site name metadata
+    cy.get('head meta[property="og:site_name"]').should('have.attr', 'content', expectedSiteName);
+  })
   it('links to vocabulary home', () => {
     // go to the Skosmos front page
     cy.visit('/')

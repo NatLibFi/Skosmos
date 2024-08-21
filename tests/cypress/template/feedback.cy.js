@@ -19,6 +19,14 @@ describe('Feedback page', () => {
     cy.get('head meta[name="description"]').should('have.attr', 'content', expectedDescription);
     cy.get('head meta[property="og:description"]').should('have.attr', 'content', expectedDescription);
   })
+  it('Contains site name metadata', () => {
+    // go to the general feedback page
+    cy.visit('/en/feedback')
+
+    const expectedSiteName = 'Skosmos being tested'
+    // check that the page has site name metadata
+    cy.get('head meta[property="og:site_name"]').should('have.attr', 'content', expectedSiteName);
+  })
   it('Sends feedback', () => {
     // go to the general feedback page
     cy.visit('/en/feedback')
@@ -74,6 +82,14 @@ describe('Vocab feedback page', () => {
     // check that the page has description metadata
     cy.get('head meta[name="description"]').should('have.attr', 'content', expectedDescription);
     cy.get('head meta[property="og:description"]').should('have.attr', 'content', expectedDescription);
+  })
+  it('Contains site name metadata', () => {
+    // go to test vocab feedback page
+    cy.visit('/test/en/feedback')
+
+    const expectedSiteName = 'Skosmos being tested'
+    // check that the page has site name metadata
+    cy.get('head meta[property="og:site_name"]').should('have.attr', 'content', expectedSiteName);
   })
   it('Displays correct vocab option', () => {
     // go to test vocab feedback page

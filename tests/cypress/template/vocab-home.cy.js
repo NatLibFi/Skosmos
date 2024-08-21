@@ -18,6 +18,13 @@ describe('Vocabulary home page', () => {
     cy.get('head meta[name="description"]').should('have.attr', 'content', expectedDescription);
     cy.get('head meta[property="og:description"]').should('have.attr', 'content', expectedDescription);
   })
+  it('Contains site name metadata', () => {
+    cy.visit('/test/en') // go to the "Test ontology" home page
+
+    const expectedSiteName = 'Skosmos being tested'
+    // check that the page has site name metadata
+    cy.get('head meta[property="og:site_name"]').should('have.attr', 'content', expectedSiteName);
+  })
   it('contains vocabulary title', () => {
     cy.visit('/test/en') // go to the "Test ontology" home page
 
