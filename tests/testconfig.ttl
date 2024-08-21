@@ -342,8 +342,7 @@
           rdfs:label "Caption"@en, "Luokka"@fi ],
         [ skosmos:property skos:notation ;
           rdfs:label "UDC number"@en, "UDC-numero"@fi, "UDC-nummer"@sv ;
-          rdfs:comment "Class Number"@en ] ;
-	skosmos:sparqlGraph <http://www.skosmos.skos/conceptPropertyLabels/> .
+          rdfs:comment "Class Number"@en ] .
 
 :cbd a skosmos:Vocabulary, void:Dataset ;
     dc11:title "A vocabulary for testing blank node processing and reification"@en ;

@@ -2,7 +2,6 @@ describe('Concept page', () => {
   const pageLoadTypes = ["full", "partial"]
 
   // tests that should be executed both with and without partial page load
-
   pageLoadTypes.forEach((pageLoadType) => {
     it('contains concept preflabel / ' + pageLoadType, () => {
       if (pageLoadType == "full") {
@@ -230,6 +229,14 @@ describe('Concept page', () => {
     cy.get('#concept-breadcrumbs ol').find('li.show').should('have.length', 4)
   })
 
+  it('overrides property labels', () => {
+    // Go to "Barracuda" concept page in vocab with property label overrides
+    cy.visit('/conceptPropertyLabels/en/page/ta0116')
+    // Check that prefLabel property label is overridden correctly
+    cy.get('#concept-property-label').invoke('text').should('equal', 'Caption')
+    // Check that notation property label is overridden correctly
+    cy.get('.prop-skos_notation .property-label h2').invoke('text').should('equal', 'UDC number')
+  })
   it('contains concept type', () => {
     cy.visit('/yso/en/page/p21685') // go to "music research" concept page
 
