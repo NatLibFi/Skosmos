@@ -9,6 +9,15 @@ describe('Vocabulary home page', () => {
     cy.get('head meta[name="title"]').should('have.attr', 'content', expectedTitle);
     cy.get('head meta[property="og:title"]').should('have.attr', 'content', expectedTitle);
   })
+  it('Contains description metadata', () => {
+    cy.visit('/test/en') // go to the "Test ontology" home page
+
+    const expectedDescription = 'Description of Test ontology'
+
+    // check that the page has description metadata
+    cy.get('head meta[name="description"]').should('have.attr', 'content', expectedDescription);
+    cy.get('head meta[property="og:description"]').should('have.attr', 'content', expectedDescription);
+  })
   it('contains vocabulary title', () => {
     cy.visit('/test/en') // go to the "Test ontology" home page
 

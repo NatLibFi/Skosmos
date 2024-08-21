@@ -361,6 +361,15 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     }
 
     /**
+     * @covers VocabularyConfig::getDescription
+     */
+    public function testGetDesctiption()
+    {
+        $vocab = $this->model->getVocabulary('test');
+        $this->assertEquals('Description of Test ontology', $vocab->getConfig()->getDescription('en'));
+    }
+
+    /**
      * @covers VocabularyConfig::getShowDeprecatedChanges
      * @covers VocabularyConfig::getBoolean
      */
