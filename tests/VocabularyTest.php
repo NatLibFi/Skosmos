@@ -225,7 +225,7 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
     {
         $vocab = $this->model->getVocabulary('test');
         $info = $vocab->getInfo();
-        $this->assertEquals(array("dc:title" => array('Test ontology'), 'dc:modified' => array('Wednesday, October 1, 2014 16:29:03'), "rdf:type" => array('http://www.w3.org/2004/02/skos/core#ConceptScheme' => 'http://www.w3.org/2004/02/skos/core#ConceptScheme'), "owl:versionInfo" => array('The latest and greatest version')), $info);
+        $this->assertEquals(array("dc:title" => array('Test ontology'), 'dc:modified' => array('Wednesday, October 1, 2014 16:29:03'), "rdf:type" => array('http://www.w3.org/2004/02/skos/core#ConceptScheme' => 'http://www.w3.org/2004/02/skos/core#ConceptScheme'), "owl:versionInfo" => array('The latest and greatest version'), "dc:description" => array('Description of Test ontology')), $info);
     }
 
     /**
