@@ -28,7 +28,13 @@
       {% endif %}
 
       <div class="row" id="concept-heading">
-        <div class="col-sm-4 px-0" id="concept-property-label">{{ "skos:prefLabel" | trans }}</div>
+        <div class="col-sm-4 px-0" id="concept-property-label">
+        {%- if custom_labels['skos:prefLabel']['label'][request.lang] -%}
+          {{ custom_labels['skos:prefLabel']['label'][request.lang] }}
+        {%- else -%}
+          {{ "skos:prefLabel" | trans }}
+        {%- endif -%}
+        </div>
         <div class="col-sm-8" id="concept-label">
         {% if concept.notation %}
           <h1 id="concept-preflabel"
@@ -51,7 +57,13 @@
 
       {% for property in concept.properties %}{% if property.getSubPropertyOf != 'skos:hiddenLabel' %}
       <div class="row property prop-{{property.ID}}">
-        <div class="col-sm-4 px-0 property-label"><h2>{{ property.label}}</h2></div>
+        <div class="col-sm-4 px-0 property-label"><h2>
+        {%- if custom_labels[property.type]['label'][request.lang] -%}
+          {{ custom_labels[property.type]['label'][request.lang] }}
+        {%- else -%}
+          {{ property.label }}
+        {%- endif -%}
+        </h2></div>
         <div class="col-sm-8 align-self-center property-value">
           <ul class="align-bottom">
           {% for propval in property.values %}
