@@ -878,3 +878,6 @@ msgstr "Diehtu"
 
 msgid "Error"
 msgstr "Error"
+
+msgid "Concept %term% in vocabulary %vocab%"
+msgstr "Doaba %term% sátnerájus %vocab%"

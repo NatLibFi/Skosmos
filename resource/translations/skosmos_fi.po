@@ -885,3 +885,6 @@ msgstr "Tietoja"
 
 msgid "Error"
 msgstr "Virhe"
+
+msgid "Concept %term% in vocabulary %vocab%"
+msgstr "Käsite %term% sanastossa %vocab%"
