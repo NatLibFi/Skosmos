@@ -165,30 +165,6 @@ body {
     padding-left: 30px;
   }
 
-  #topbar.frontpage #topbar-nav-home, #topbar.frontpage-one-vocab #topbar-nav-home {
-    background-image: var(--topbar-home-1);
-  }
-
-  #topbar.frontpage #topbar-nav-info, #topbar.frontpage-one-vocab #topbar-nav-info {
-    background-image: var(--topbar-info-1);
-  }
-
-  #topbar.frontpage #topbar-nav-feedback, #topbar.frontpage-one-vocab #topbar-nav-feedback {
-    background-image: var(--topbar-feedback-1);
-  }
-
-  #topbar.vocabpage #topbar-nav-home, #topbar.termpage #topbar-nav-home, #topbar.infopage #topbar-nav-home, #topbar.feedbackpage #topbar-nav-home {
-    background-image: var(--topbar-home-2);
-  }
-
-  #topbar.vocabpage #topbar-nav-info, #topbar.termpage #topbar-nav-info, #topbar.infopage #topbar-nav-info, #topbar.feedbackpage #topbar-nav-info {
-    background-image: var(--topbar-info-2);
-  }
-
-  #topbar.vocabpage #topbar-nav-feedback, #topbar.termpage #topbar-nav-feedback, #topbar.infopage #topbar-nav-feedback, #topbar.feedbackpage #topbar-nav-feedback {
-    background-image: var(--topbar-feedback-2);
-  }
-
   /* Headerbar
    *****************************************/
   #headerbar.frontpage, #headerbar.frontpage-one-vocab {
