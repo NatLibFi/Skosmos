@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="{{ request.lang }}">
+<html dir="ltr" lang="{{ request.lang }}" prefix="og: https://ogp.me/ns#">
 <head>
 <base href="{{ BaseHref }}">
 <link rel="shortcut icon" href="favicon.ico">
@@ -14,6 +14,7 @@
 <meta name="description" content="{{ block('description') }}">
 <meta property="og:description" content="{{ block('description') }}">
 {% endif %}
+<meta property="og:type" content="website">
 <meta property="og:site_name" content="{{ GlobalConfig.serviceName }}">
 <link href="vendor/twbs/bootstrap/dist/css/bootstrap.min.css" media="screen, print" rel="stylesheet" type="text/css">
 <link href="vendor/vakata/jstree/dist/themes/default/style.min.css" media="screen, print" rel="stylesheet" type="text/css">
