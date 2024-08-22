@@ -1,13 +1,14 @@
-# 
 # Translators:
+# Translators:
+# Uldis Bojars, 2024
 msgid ""
 msgstr ""
 "Project-Id-Version: Skosmos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-16 10:26+0200\n"
 "PO-Revision-Date: 2015-06-18 07:06+0000\n"
-"Last-Translator: Henri Ylikotila <henri.ylikotila@helsinki.fi>\n"
-"Language-Team: Latvian (http://www.transifex.com/national-library-of-finland/skosmos/language/lv/)\n"
+"Last-Translator: Uldis Bojars, 2024\n"
+"Language-Team: Latvian (http://app.transifex.com/national-library-of-finland/skosmos/language/lv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -684,7 +685,7 @@ msgid "skosext:partOf_help"
 msgstr "Kopums, no kura šis koncepts ir daļa."
 
 msgid "skosmos:marcSourceCode"
-msgstr ""
+msgstr "MARC kods"
 
 #: /tmp/cache/587c83c09abaa/3c/3c4ea3202d0add91bf2080022b707c23115e0beb434024ddb2de27749e6bbe83.php:548
 #: /tmp/cache/587c83c09abaa/4e/4e05e5051b20c875609479922a558d59b8500ae386eaf79bc460e69d8781a753.php:201
@@ -872,4 +873,4 @@ msgid "skos:notation_help"
 msgstr "Kods, kas doto konceptu unikāli identificē konceptu shēmas ietvaros."
 
 msgid "Information"
-msgstr ""
+msgstr "Informācija"
