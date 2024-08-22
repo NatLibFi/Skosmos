@@ -15,7 +15,7 @@
       <h2 class="fs-2 fw-bold py-3">{{ "Available vocabularies and ontologies" | trans }}</h2>
       {% endif %}
       {% for vocabClassName,vocabArray in request.vocabList %}
-      <div class="vocab-category border-top border-dark-top">
+      <div class="vocab-category border-top">
         <h3 class="fs-3 py-3">{{ vocabClassName }}</h3>
         <ul class="list-group">
         {% for vocab in vocabArray %}
