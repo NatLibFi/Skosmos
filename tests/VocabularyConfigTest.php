@@ -699,6 +699,8 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
           'skos:prefLabel' => array( 'label' => array( 'en' => 'Caption', 'fi' => 'Luokka' ) ),
           'skos:notation' => array( 'label' => array( 'en' => 'UDC number', 'fi' => 'UDC-numero', 'sv' => 'UDC-nummer' ),
                                     'description' => array( 'en' => 'Class Number') ),
+          'skos:exactMatch' => array( 'label' => array( 'fi' => 'vastaava luokka', 'sv' => 'motsvarande klasser', 'en' => 'exactly matching classes' ),
+                                      'description' => array( 'en' => 'exactly matching classes in another vocabulary.' ) ),
         );
         $this->assertEquals($expected, $overrides);
     }
