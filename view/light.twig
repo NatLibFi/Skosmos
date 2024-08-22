@@ -23,7 +23,7 @@
 {% endif %}
 {% for plugin, files in request.plugins.pluginsCSS %}{% for file in files %}<link href="{{ file }}" media="screen, print" rel="stylesheet" type="text/css">{% endfor %}{% endfor %}
 
-<title>{% block title %}{{ GlobalConfig.serviceName }}{% endblock %}</title>
+<title>{% block title %}{{ GlobalConfig.serviceNameLong(request.lang) }}{% endblock %}</title>
 </head>
 <body{% if request.vocabid == '' and request.page != 'feedback' and request.page != 'about' %} class="frontpage-logo"{% else %} class="vocab-{{ request.vocabid }}"{% endif %}>
   <noscript>
