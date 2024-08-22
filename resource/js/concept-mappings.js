@@ -9,7 +9,8 @@ const conceptMappingsApp = Vue.createApp({
     }
   },
   provide: {
-    content_lang: window.SKOSMOS.content_lang
+    content_lang: window.SKOSMOS.content_lang,
+    customLabels: window.SKOSMOS.customLabels
   },
   computed: {
     hasMappings () {
@@ -20,7 +21,7 @@ const conceptMappingsApp = Vue.createApp({
     loadMappings () {
       this.mappings = {} // clear mappings before starting to load new ones
       this.loading = true
-      const url = 'rest/v1/' + window.SKOSMOS.vocab + '/mappings?uri=' + window.SKOSMOS.uri + '&external=true&clang=' + window.SKOSMOS.lang + '&lang=' + window.SKOSMOS.content_lang
+      const url = 'rest/v1/' + window.SKOSMOS.vocab + '/mappings?uri=' + window.SKOSMOS.uri + '&external=true&lang=' + window.SKOSMOS.lang + '&clang=' + window.SKOSMOS.content_lang
       fetchWithAbort(url, 'concept')
         .then(data => {
           return data.json()
@@ -85,12 +86,19 @@ conceptMappingsApp.directive('load-concept-page', {
 
 conceptMappingsApp.component('concept-mappings', {
   props: ['mappings'],
-  inject: ['content_lang'],
+  inject: ['content_lang', 'customLabels'],
   template: `
-    <div class="row property prop-mapping" v-for="mapping in Object.entries(mappings)">
-      <div class="col-sm-4 px-0 property-label" :title="mapping[1][0].description"><h2>{{ mapping[0] }}</h2></div>
+    <div class="row property prop-mapping" v-for="(mapping, label) in mappings">
+      <template v-if="customLabels">
+        <div class="col-sm-4 px-0 property-label" :title="customLabels[mapping[0].type[0]][1] || mapping[0].description">
+          <h2>{{ customLabels[mapping[0].type[0]][0] }}</h2>
+        </div>
+      </template>
+      <template v-else>
+        <div class="col-sm-4 px-0 property-label" :title="mapping[0].description"><h2>{{ label }}</h2></div>
+      </template>
       <div class="col-sm-8">
-        <div class="row mb-2" v-for="m in mapping[1]">
+        <div class="row mb-2" v-for="m in mapping">
           <div class="col-sm-5 prop-mapping-label">
             <a :href="m.hrefLink">{{ m.prefLabel }}</a><span v-if="m.lang && m.lang !== this.content_lang"> ({{ m.lang }})</span>
           </div>

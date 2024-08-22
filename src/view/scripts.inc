@@ -24,6 +24,14 @@ window.SKOSMOS = {
   {%- if request.plugins.callbacks ~%}
   "pluginCallbacks": [{% for function in request.plugins.callbacks %}{% if not loop.first %}, {% endif %}"{{ function }}"{% endfor %}],
   {%- endif ~%}
+  {%- if custom_labels -%}
+  "customLabels": { 
+    {%- for k, v in custom_labels -%}
+      {%- set label = v['label'][request.lang] -%}
+      {%- set description = v['description'][request.lang] -%}
+      {%- if not loop.first -%}, {%- endif -%}"{{k}}": ["{{label[:1]|upper ~ label[1:]}}", "{{description[:1]|upper ~ description[1:]}}"]{%- endfor -%} 
+  },
+  {%- endif -%}
   "baseHref": "{{ BaseHref }}",
   "language_strings": { "fi": { "fi": "suomi",
                                 "en": "englanti",
