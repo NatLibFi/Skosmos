@@ -1,6 +1,7 @@
 {% set pageType = 'concept' %}
 {% extends "base-template.twig" %}
 {% block title %}{{ concept.label }} - {{ vocab.shortName }} - {{ GlobalConfig.serviceName }}{% endblock %}
+{% block description %}{{ "Concept %term% in vocabulary %vocab%" | trans({'%term%': concept.label, '%vocab%': vocab.title(request.contentLang)}) }}{% endblock %}
 {% block url %}{{ BaseHref }}{{ concept.uri|link_url(vocab,request.lang,'page',request.contentLang) }}{% endblock %}
 
 {% block content %}

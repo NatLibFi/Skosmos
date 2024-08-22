@@ -885,3 +885,6 @@ msgstr "Copy to clipboard"
 
 msgid "Error"
 msgstr "Error"
+
+msgid "Concept %term% in vocabulary %vocab%"
+msgstr "Concept %term% in vocabulary %vocab%"
