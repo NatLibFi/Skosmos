@@ -1,6 +1,5 @@
 {% extends "light.twig" %}
-{% block title %}: {{ vocab.title(request.contentLang) }}{% endblock %}
-
+{% block title %}{% if vocab.config.showDeprecatedChanges %}{% trans "Changes-and-deprecations-nav" %}{% else %}{% trans "Changes-nav" %}{% endif %} - {{ vocab.shortName }} - {{ GlobalConfig.serviceName }}{% endblock %}
 {% block sidebar %}
 <div class="sidebar-buttons">
   <h2 class="sr-only">{% trans "Sidebar listing: list and traverse vocabulary contents by a criterion" %}</h2>

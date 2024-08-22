@@ -3,7 +3,13 @@
 <head>
 <base href="{{ BaseHref }}">
 <link rel="shortcut icon" href="favicon.ico">
-{% include 'meta.twig' %}
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="format-detection" content="telephone=no">
+<meta name="generator" content="Skosmos {{ request.version }}">
+<meta name="title" content="{{ block('title') }}">
+<meta property="og:title" content="{{ block('title') }}">
 <link href="vendor/twbs/bootstrap/dist/css/bootstrap.min.css" media="screen, print" rel="stylesheet" type="text/css">
 <link href="vendor/vakata/jstree/dist/themes/default/style.min.css" media="screen, print" rel="stylesheet" type="text/css">
 <link href="vendor/davidstutz/bootstrap-multiselect/dist/css/bootstrap-multiselect.min.css" media="screen, print" rel="stylesheet" type="text/css">
@@ -17,7 +23,7 @@
 {% endif %}
 {% for plugin, files in request.plugins.pluginsCSS %}{% for file in files %}<link href="{{ file }}" media="screen, print" rel="stylesheet" type="text/css">{% endfor %}{% endfor %}
 
-<title>{{ GlobalConfig.serviceName }}{% block title %}{% endblock %}</title>
+<title>{% block title %}{{ GlobalConfig.serviceName }}{% endblock %}</title>
 </head>
 <body{% if request.vocabid == '' and request.page != 'feedback' and request.page != 'about' %} class="frontpage-logo"{% else %} class="vocab-{{ request.vocabid }}"{% endif %}>
   <noscript>

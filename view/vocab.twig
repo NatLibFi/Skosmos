@@ -1,6 +1,5 @@
 {% extends "light.twig" %}
-{% block title %}: {{ vocab.title(request.contentLang) }}{% endblock %}
-
+{% block title %}{{ vocab.title(request.contentLang) }} - {{ GlobalConfig.serviceName }}{% endblock %}
 {% block sidebar %}
 {% if vocab.config.showAlphabeticalIndex or vocab.config.showChangeList or vocab.config.showTopHierarchy %}
 <div class="sidebar-buttons">

@@ -1,5 +1,5 @@
 {% extends "light.twig" %}
-{% block title %}: Error page{% endblock %}
+{% block title %}{{ "Error"| trans }} - {{ GlobalConfig.serviceName }}{% endblock %}
 {% block error %}
 {% spaceless %}
 {% set pageError = request.vocabid != '' and request.page == 'page' %}
