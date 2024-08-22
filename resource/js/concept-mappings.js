@@ -9,12 +9,14 @@ const conceptMappingsApp = Vue.createApp({
     }
   },
   provide: {
-    content_lang: window.SKOSMOS.content_lang,
-    customLabels: window.SKOSMOS.customLabels
+    content_lang: window.SKOSMOS.content_lang
   },
   computed: {
     hasMappings () {
       return Object.keys(this.mappings).length > 0
+    },
+    customLabels () {
+      return window.SKOSMOS.customLabels
     }
   },
   methods: {
@@ -64,7 +66,7 @@ const conceptMappingsApp = Vue.createApp({
       </template>
       <template v-else-if="hasMappings">
         <div class="main-content-section p-5">
-          <concept-mappings :mappings="mappings"></concept-mappings>
+          <concept-mappings :mappings="mappings" :customLabels="customLabels"></concept-mappings>
         </div>
       </template>
     </div>
@@ -85,8 +87,8 @@ conceptMappingsApp.directive('load-concept-page', {
 })
 
 conceptMappingsApp.component('concept-mappings', {
-  props: ['mappings'],
-  inject: ['content_lang', 'customLabels'],
+  props: ['mappings', 'customLabels'],
+  inject: ['content_lang'],
   template: `
     <div class="row property prop-mapping" v-for="(mapping, label) in mappings">
       <template v-if="customLabels">
