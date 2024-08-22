@@ -1,6 +1,7 @@
 {% extends "light.twig" %}
 {% set concept_label = '' %}{% for concept in search_results %}{% set concept_label = concept.label %}{% endfor %}
 {% block title %}'{{ term }}' - {{ vocab.shortName(request.contentLang) }} - {{ GlobalConfig.serviceName }}{% endblock %}
+{% block url %}{{ BaseHref }}{{ request.langurl }}{% endblock %}
 {% endblock %}
 {% block content %}
 <div class="search-result-listing">

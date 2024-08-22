@@ -1,5 +1,6 @@
 {% extends "light.twig" %}
 {% block title %}{{ "Error"| trans }} - {{ GlobalConfig.serviceName }}{% endblock %}
+{% block url %}{{ BaseHref }}{{ request.langurl }}{% endblock %}
 {% block error %}
 {% spaceless %}
 {% set pageError = request.vocabid != '' and request.page == 'page' %}

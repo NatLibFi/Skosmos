@@ -2,6 +2,7 @@
 {% extends "light.twig" %}
 {% set concept_label = '' %}{% for concept in search_results %}{% set concept_label = concept.label %}{% endfor %}
 {% block title %}{{ concept_label }} - {{ vocab.shortName }} - {{ GlobalConfig.serviceName }}{% endblock %}
+{% block url %}{{ BaseHref }}{{ search_results[0].uri|link_url(vocab,request.lang,'page',request.contentLang) }}{% endblock %}
 {% block content %}
   {% include "concept-shared.twig" %}
 {% endblock %}

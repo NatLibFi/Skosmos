@@ -14,6 +14,10 @@
 <meta name="description" content="{{ block('description') }}">
 <meta property="og:description" content="{{ block('description') }}">
 {% endif %}
+{% if block('url') is defined and block('url') is not empty %}
+<link rel="canonical" href="{{ block('url') }}">
+<meta property="og:url" content="{{ block('url') }}">
+{% endif %}
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="{{ GlobalConfig.serviceName }}">
 <link href="vendor/twbs/bootstrap/dist/css/bootstrap.min.css" media="screen, print" rel="stylesheet" type="text/css">

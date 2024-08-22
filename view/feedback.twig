@@ -2,6 +2,7 @@
 
 {% block title %}{{ "Feedback"|trans }} - {{GlobalConfig.serviceName}}{% endblock %}
 {% block description %}{{ GlobalConfig.feedbackDescription(request.lang) }}{% endblock %}
+{% block url %}{{ BaseHref }}{{ request.langurl }}{% endblock %}
 {% block sidebar %}{% endblock %}
 {% block headernav %}{% endblock %}
 {% block content %}
