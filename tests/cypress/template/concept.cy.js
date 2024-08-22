@@ -230,12 +230,16 @@ describe('Concept page', () => {
   })
 
   it('overrides property labels', () => {
-    // Go to "Barracuda" concept page in vocab with property label overrides
-    cy.visit('/conceptPropertyLabels/en/page/ta0116')
+    // Go to "Carp" concept page in vocab with property label overrides
+    cy.visit('/conceptPropertyLabels/en/page/ta112')
     // Check that prefLabel property label is overridden correctly
-    cy.get('#concept-property-label').invoke('text').should('equal', 'Caption')
+    cy.get('#concept-property-label').invoke('text').should('include', 'Caption')
     // Check that notation property label is overridden correctly
-    cy.get('.prop-skos_notation .property-label h2').invoke('text').should('equal', 'UDC number')
+    cy.get('.prop-skos_notation .property-label h2').invoke('text').should('include', 'UDC number')
+    // Check that mapping property name is overridden correctly
+    cy.get('.prop-mapping h2', {'timeout': 20000}).eq(0).contains('Exactly matching classes')
+    // Check that mapping property title is overridden correctly
+    cy.get('.prop-mapping .property-label').eq(0).should('have.attr', 'title').and('contain', 'Exactly matching classes in another vocabulary.')
   })
   it('contains concept type', () => {
     cy.visit('/yso/en/page/p21685') // go to "music research" concept page

@@ -342,7 +342,10 @@
           rdfs:label "Caption"@en, "Luokka"@fi ],
         [ skosmos:property skos:notation ;
           rdfs:label "UDC number"@en, "UDC-numero"@fi, "UDC-nummer"@sv ;
-          rdfs:comment "Class Number"@en ] .
+          rdfs:comment "Class Number"@en ],
+        [ skosmos:property skos:exactMatch ;
+          rdfs:label "vastaava luokka"@fi, "motsvarande klasser"@sv, "exactly matching classes"@en ;
+          rdfs:comment "exactly matching classes in another vocabulary."@en ] .
 
 :cbd a skosmos:Vocabulary, void:Dataset ;
     dc11:title "A vocabulary for testing blank node processing and reification"@en ;
