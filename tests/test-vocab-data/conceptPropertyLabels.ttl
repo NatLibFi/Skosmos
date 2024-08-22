@@ -1,0 +1,47 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dc11: <http://purl.org/dc/elements/1.1/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix test: <http://www.skosmos.skos/conceptPropertyLabels/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix skosmos: <http://www.skosmos.skos/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix mads: <http://www.loc.gov/mads/rdf/v1#> .
+
+test:ta112 a skos:Concept ;
+    skos:notation "665" ;
+    skos:broader test:ta1 ;
+    skos:narrower test:ta121 ;
+    skos:exactMatch test:ta118 ;
+    skos:inScheme test:conceptscheme ;
+    skos:prefLabel "Carp"@en,
+        "Karppi"@fi ;
+    skos:altLabel "Golden crucian"@en;
+    skos:hiddenLabel "Karpit"@fi;
+    skos:scopeNote "Carp are oily freshwater fish"@en .
+
+test:ta118 a skos:Concept ;
+    skos:inScheme test:conceptscheme ;
+    skos:exactMatch test:ta112 ;
+    skos:prefLabel "-\"special\" character \\example\\"@en .
+
+test:ta121 a skos:Concept ;
+    skos:broader test:ta112 ;
+    skos:inScheme test:conceptscheme ;
+    skos:prefLabel "Crucian carp"@en .
+
+test:ta1 a skos:Concept ;
+    skos:inScheme test:conceptscheme ;
+    skos:narrower test:ta112 ;
+    skos:prefLabel "Fish"@en ;
+    skos:exactMatch <http://www.wikidata.org/entity/Q152> ;
+    skos:topConceptOf test:conceptscheme .
+
+test:conceptscheme a skos:ConceptScheme ;
+    rdfs:label "Test conceptscheme"@en ;
+    dct:modified "2014-10-01T16:29:03+00:00"^^xsd:dateTime ;
+    owl:versionInfo "The latest and greatest version"^^xsd:string ;
+    skos:hasTopConcept test:ta1 .
