@@ -10,6 +10,10 @@
 <meta name="generator" content="Skosmos {{ request.version }}">
 <meta name="title" content="{{ block('title') }}">
 <meta property="og:title" content="{{ block('title') }}">
+{% if block('description') is defined and block('description') is not empty %}
+<meta name="description" content="{{ block('description') }}">
+<meta property="og:description" content="{{ block('description') }}">
+{% endif %}
 <link href="vendor/twbs/bootstrap/dist/css/bootstrap.min.css" media="screen, print" rel="stylesheet" type="text/css">
 <link href="vendor/vakata/jstree/dist/themes/default/style.min.css" media="screen, print" rel="stylesheet" type="text/css">
 <link href="vendor/davidstutz/bootstrap-multiselect/dist/css/bootstrap-multiselect.min.css" media="screen, print" rel="stylesheet" type="text/css">

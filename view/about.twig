@@ -1,5 +1,6 @@
 {% extends "light.twig" %}
 {% block title %}{{ "About" | trans}} - {{ GlobalConfig.serviceName }}{% endblock %}
+{% block description %}{{ GlobalConfig.aboutDescription(request.lang) }}{% endblock %}
 {% block sidebar %}{% endblock %}
 {% block headernav %}{% endblock %}
 {% block content %}

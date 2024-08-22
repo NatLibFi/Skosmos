@@ -132,7 +132,7 @@ class WebController extends Controller
         // set language parameters for gettext
         $this->setLanguageProperties($request->getLang());
         // load template
-        $template = $this->twig->loadTemplate('light.twig');
+        $template = $this->twig->loadTemplate('landing.twig');
         // set template variables
         $categoryLabel = $this->model->getClassificationLabel($request->getLang());
         $sortedVocabs = $this->model->getVocabularyList(false, true);
