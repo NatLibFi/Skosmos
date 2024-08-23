@@ -15,10 +15,10 @@
       {{- qClang ? '&' : '?' -}}
       anylang=on
     {%- endif -%}
-    "><h1 id="service-name">{% if ServiceName is defined %}{{ ServiceName }}{% else %}Skosmos{% endif %}</h1></a>
+    "><h1 id="service-name">{% if GlobalConfig.serviceName is defined %}{{ GlobalConfig.serviceName }}{% else %}Skosmos{% endif %}</h1></a>
 </div>
 <div id="topbar-language-navigation">
-{% if LanguageDropdown %}
+{% if GlobalConfig.uiLanguageDropdown %}
 <div id="language" class="dropdown"><span class="navigation-font">|</span>
   <span class="navigation-font">{% trans "Interface language" %}:</span>
   <button type="button" class="btn btn-default dropdown-toggle navigation-font" data-bs-toggle="dropdown">{{ request.lang | lang_name(request.lang) }}<span class="caret"></span></button>

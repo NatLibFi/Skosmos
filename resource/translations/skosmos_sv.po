@@ -881,3 +881,9 @@ msgstr "Kod som unikt identifierar ett begrepp i en vokabulär."
 
 msgid "Information"
 msgstr "Information"
+
+msgid "Error"
+msgstr "Fel"
+
+msgid "Concept %term% in vocabulary %vocab%"
+msgstr "Begreppet %term% i vokabulären %vocab%"

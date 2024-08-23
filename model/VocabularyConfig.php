@@ -280,6 +280,15 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
+     * Returns the human readable vocabulary description.
+     * @return string the description of the vocabulary
+     */
+    public function getDescription($lang = null)
+    {
+        return $this->getLiteral('dc:description', false, $lang);
+    }
+
+    /**
      * Returns the sorting strategy for notation codes set in the config.ttl
      * config: either "lexical", "natural", or null if sorting by notations is 
      * disabled. A "true" value in the configuration file is interpreted as

@@ -33,6 +33,10 @@
     skosmos:httpTimeout 8 ;
     # customize the service name
     skosmos:serviceName "Skosmos being tested" ;
+    skosmos:serviceNameLong "Skosmos being tested, long title"@en, "Skosmos-long" ;
+    skosmos:serviceDescription "Description of Skosmos being tested"@en ;
+    skosmos:feedbackDescription "Feedback page for Skosmos being tested"@en ;
+    skosmos:aboutDescription "About page for Skosmos being tested"@en ;
     # customize the base element. Set this if the automatic base url detection doesn't work. For example setups behind a proxy.
     skosmos:baseHref "http://tests.localhost/Skosmos/" ;
     # interface languages available, and the corresponding system locales
@@ -72,6 +76,7 @@
 
 :test a skosmos:Vocabulary, void:Dataset ;
 	dc:title "Test ontology"@en ;
+	dc:description "Description of Test ontology"@en ;
 	dc:subject :cat_science ;
     dc:type mdrtype:ONTOLOGY ;
 	void:dataDump <http://skosmos.skos/dump/test/> ;

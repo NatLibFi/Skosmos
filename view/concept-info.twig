@@ -1,8 +1,9 @@
 
 {% extends "light.twig" %}
 {% set concept_label = '' %}{% for concept in search_results %}{% set concept_label = concept.label %}{% endfor %}
-{% block title %}: {{ vocab.shortName }}{% if search_results|length == 1 %}: {{ concept_label }}{% endif %}
-{% endblock %}
+{% block title %}{{ concept_label }} - {{ vocab.shortName }} - {{ GlobalConfig.serviceName }}{% endblock %}
+{% block description %}{% set term = concept_label %}{% set vocabObj = vocab %}{% set vocab = vocab.title(request.contentLang) %}{% trans %}Concept {{ term }} in vocabulary {{ vocab }}{% endtrans %}{% set vocab = vocabObj %}{% endblock %}
+{% block url %}{{ BaseHref }}{{ search_results[0].uri|link_url(vocab,request.lang,'page',request.contentLang) }}{% endblock %}
 {% block content %}
   {% include "concept-shared.twig" %}
 {% endblock %}

@@ -1,7 +1,7 @@
 {% extends "light.twig" %}
 
-{% block title %}: {{ vocab.shortName }}: {% trans "Group index" %}{% endblock %}
-
+{% block title %}{% trans "Group index" %} - {{ vocab.shortName }} - {{ GlobalConfig.serviceName }}{% endblock %}
+{% block url %}{{ BaseHref }}{{ request.langurl }}{% endblock %}
 {% block sidebar %}
 <div class="sidebar-buttons">
   <h2 class="sr-only">{% trans "Sidebar listing: list and traverse vocabulary contents by a criterion" %}</h2>
