@@ -22,7 +22,7 @@ Skosmos is used as a basis for the [Finto](http://finto.fi) vocabulary service.
 The latest development version is also available at 
 [dev.finto.fi](http://dev.finto.fi).
 
-Skosmos is implemented using PHP (supported versions: 7.3, 7.4 and 8.0), with 
+Skosmos is implemented using PHP (supported versions: 8.0 and 8.1), with 
 Twig templates and e.g. jQuery and jsTree used to build the web interface, and 
 EasyRdf for SPARQL and RDF data access. 
 
