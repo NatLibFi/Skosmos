@@ -34,7 +34,7 @@
     "components/jquery": "3.6.*",
     "components/handlebars.js": "v4.7.7",
     "davidstutz/bootstrap-multiselect": "v1.1.1",
-    "sweetrdf/easyrdf": "1.7.*",
+    "sweetrdf/easyrdf": "1.13.*",
     "etdsolutions/waypoints": "4.0.0",
     "symfony/polyfill-php80": "1.*",
     "symfony/polyfill-php81": "1.*",
