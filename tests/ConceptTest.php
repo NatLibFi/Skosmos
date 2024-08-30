@@ -214,8 +214,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
      */
     public function testGetPropertiesOfDeprecatedConcept()
     {
-        $results = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta111', 'en');
-        $concept = reset($results);
+        $concept = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta111', 'en');
         $props = $concept->getProperties();
         $this->assertNotContains('owl:deprecated', $props);
     }
