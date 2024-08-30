@@ -32,6 +32,7 @@ class Concept extends VocabularyDataObject implements Modifiable
         'skos:member', # this shouldn't be shown on the group page
         'dc:created', # handled separately
         'dc:modified', # handled separately
+        'owl:deprecated'
     );
 
     /** related concepts that should be shown to users in the appendix */
@@ -658,7 +659,7 @@ class Concept extends VocabularyDataObject implements Modifiable
         foreach ($ret as $prop) {
             foreach ($prop->getValues() as $value) {
                 $label = $value->getLabel();
-                $propertyValues[(method_exists($label, 'getValue')) ? $label->getValue() : $label][] = $value->getType();
+                $propertyValues[(is_object($label) && method_exists($label, 'getValue')) ? $label->getValue() : $label][] = $value->getType();
             }
         }
 
