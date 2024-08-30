@@ -209,6 +209,18 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     }
 
     /**
+     * @covers Concept::getProperties
+     * @covers Concept::removeDuplicatePropertyValues
+     */
+    public function testGetPropertiesOfDeprecatedConcept()
+    {
+        $results = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta111', 'en');
+        $concept = reset($results);
+        $props = $concept->getProperties();
+        $this->assertNotContains('owl:deprecated', $props);
+    }
+
+    /**
      * @covers Concept::getMappingProperties
      * @covers ConceptProperty::getValues
      */
