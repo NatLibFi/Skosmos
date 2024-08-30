@@ -5,7 +5,7 @@
   "license": "MIT",
   "version": "3.0-dev",
   "require": {
-    "sweetrdf/easyrdf": "1.7.*",
+    "sweetrdf/easyrdf": "1.13.*",
     "symfony/polyfill-php80": "1.*",
     "symfony/polyfill-php81": "1.*",
     "twig/twig": "3.8.*",
