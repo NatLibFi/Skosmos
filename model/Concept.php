@@ -32,7 +32,7 @@ class Concept extends VocabularyDataObject implements Modifiable
         'skos:member', # this shouldn't be shown on the group page
         'dc:created', # handled separately
         'dc:modified', # handled separately
-        'owl:deprecated'
+        'owl:deprecated', # indicated visually
     );
 
     /** related concepts that should be shown to users in the appendix */
