@@ -194,7 +194,11 @@ class Vocabulary extends DataObject implements Modifiable
         foreach ($conceptscheme->properties() as $prop) {
             foreach ($conceptscheme->allLiterals($prop, $lang) as $val) {
                 $prop = (substr($prop, 0, 5) == 'dc11:') ? str_replace('dc11:', 'dc:', $prop) : $prop;
-                $ret[$prop][$val->getValue()] = $val;
+                if ($prop === 'dc:description') {
+                    $ret[$prop] = [$val->getValue() => $val]; // override description from vocabulary config
+                } else {
+                    $ret[$prop][$val->getValue()] = $val;
+                }
             }
             if (!isset($ret[$prop]) || sizeof($ret[$prop]) == 0) { // not found with language tag
                 foreach ($conceptscheme->allLiterals($prop, null) as $val) {
@@ -202,7 +206,11 @@ class Vocabulary extends DataObject implements Modifiable
                     if ($val->getValue() instanceof DateTime) {
                         $val = Punic\Calendar::formatDate($val->getValue(), 'full', $lang) . ' ' . Punic\Calendar::format($val->getValue(), 'HH:mm:ss', $lang);
                     }
-                    $ret[$prop][] = $val;
+                    if ($prop === 'dc:description') {
+                        $ret[$prop] = [$val->getValue() => $val]; // override description from vocabulary config
+                    } else {
+                        $ret[$prop][] = $val;
+                    }
                 }
             }
             foreach ($conceptscheme->allResources($prop) as $val) {
