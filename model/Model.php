@@ -13,6 +13,8 @@ class Model
     private $vocabsByGraph = null;
     /** cache for Vocabulary objects */
     private $vocabsByUriSpace = null;
+    /** cache for Vocabulary objects */
+    private $vocabsByScheme = null;
     /** how long to store retrieved URI information in APC cache */
     const URI_FETCH_TTL = 86400; // 1 day
     private $globalConfig;
@@ -446,6 +448,29 @@ class Model
     }
 
     /**
+     * Return the vocabulary that has the given scheme.
+     *
+     * @param $graph string graph URI
+     * @return Vocabulary vocabulary for this scheme, or null if not found
+     */
+    public function getVocabularyByScheme($scheme)
+    {
+        if ($this->vocabsByScheme === null) { // initialize cache
+            $this->vocabsByScheme = array();
+            foreach ($this->getVocabularies() as $voc) {
+                $key = $voc->getDefaultConceptScheme();
+                $this->vocabsByScheme[$key] = $voc;
+            }
+        }
+
+        if (array_key_exists($scheme, $this->vocabsByScheme)) {
+            return $this->vocabsByScheme[$scheme];
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * When multiple vocabularies share same URI namespace, return the
      * vocabulary in which the URI is actually defined (has a label).
      *
@@ -584,11 +609,11 @@ class Model
      * @param string $endpoint url address of endpoint
      * @param string|null $graph uri for the target graph.
      */
-    public function getSparqlImplementation($dialect, $endpoint, $graph)
+    public function getSparqlImplementation($dialect, $endpoint, $graph, $conceptSchemes=null)
     {
         $classname = $dialect . "Sparql";
 
-        return new $classname($endpoint, $graph, $this);
+        return new $classname($endpoint, $graph, $this, $conceptSchemes);
     }
 
     /**
@@ -596,7 +621,8 @@ class Model
      */
     public function getDefaultSparql()
     {
-        return $this->getSparqlImplementation($this->getConfig()->getDefaultSparqlDialect(), $this->getConfig()->getDefaultEndpoint(), '?graph');
+        $graph = !$this->getConfig()->getDefaultGraphOnly() ? '?graph' : null;
+        return $this->getSparqlImplementation($this->getConfig()->getDefaultSparqlDialect(), $this->getConfig()->getDefaultEndpoint(), $graph);
     }
 
 }
