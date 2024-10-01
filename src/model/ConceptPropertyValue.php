@@ -58,7 +58,7 @@ class ConceptPropertyValue extends VocabularyDataObject
                 }
                 // We need to check all the labels in case one of them matches a subtag of the current language
                 if ($this->resource->allLiterals('skos:prefLabel')) {
-                    foreach($this->resource->allLiterals('skos:prefLabel') as $label) {
+                    foreach ($this->resource->allLiterals('skos:prefLabel') as $label) {
                         // the label lang code is a subtag of the UI lang eg. en-GB - create a new literal with the main language
                         if ($label !== null && strpos($label->getLang(), $fallback . '-') === 0) {
                             return EasyRdf\Literal::create($label, $fallback);
@@ -164,7 +164,7 @@ class ConceptPropertyValue extends VocabularyDataObject
     {
         $ret = array();
         $props = $this->resource->propertyUris();
-        foreach($props as $prop) {
+        foreach ($props as $prop) {
             $prop = (EasyRdf\RdfNamespace::shorten($prop) !== null) ? EasyRdf\RdfNamespace::shorten($prop) : $prop;
             $propkey = str_starts_with($prop, 'dc11:') ?
                 str_replace('dc11:', 'dc:', $prop) : $prop;

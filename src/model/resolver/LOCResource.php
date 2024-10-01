@@ -11,7 +11,7 @@ class LOCResource extends RemoteResource
         }
 
         try {
-            $opts = array('http' => array('method'=>'HEAD',
+            $opts = array('http' => array('method' => 'HEAD',
                                           'user_agent' => 'Skosmos',
                                           'timeout' => $timeout));
             $context  = stream_context_create($opts);

@@ -94,7 +94,7 @@ class JenaTextSparql extends GenericSparql
      */
     private function formatOrderBy($expression, $lang)
     {
-        if(!$this->model->getConfig()->getCollationEnabled()) {
+        if (!$this->model->getConfig()->getCollationEnabled()) {
             return $expression;
         }
         $orderby = sprintf('arq:collation(\'%2$s\', %1$s)', $expression, $lang);
@@ -134,9 +134,9 @@ class JenaTextSparql extends GenericSparql
 
         $qualifierClause = $qualifier ? "OPTIONAL { ?s <" . $qualifier->getURI() . "> ?qualifier }" : "";
 
-        $filterDeprecated="";
-        if(!$showDeprecated) {
-            $filterDeprecated="FILTER NOT EXISTS { ?s owl:deprecated true }";
+        $filterDeprecated = "";
+        if (!$showDeprecated) {
+            $filterDeprecated = "FILTER NOT EXISTS { ?s owl:deprecated true }";
         }
 
         $query = <<<EOQ

@@ -30,7 +30,7 @@ class GlobalConfig extends BaseConfig
      */
     private $configModifiedTime = null;
 
-    public function __construct(Model $model, string $config_name='../../config.ttl')
+    public function __construct(Model $model, string $config_name = '../../config.ttl')
     {
         $this->cache = new Cache();
         $this->filePath = realpath(dirname(__FILE__) . "/" . $config_name);
@@ -78,7 +78,7 @@ class GlobalConfig extends BaseConfig
                 $this->cache->store($key, $this->graph);
                 $this->cache->store($nskey, $this->namespaces);
             }
-        // @codeCoverageIgnoreEnd
+            // @codeCoverageIgnoreEnd
         } else { // APC not available, parse on every request
             $this->parseConfig($this->filePath);
         }
