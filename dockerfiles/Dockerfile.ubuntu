@@ -7,7 +7,7 @@ LABEL description="A Docker image for Skosmos with Apache httpd."
 ARG DEBIAN_FRONTEND=noninteractive
 
 # git is necessary for some composer packages e.g. davidstutz/bootstrap-multiselect
-# gettext is necessary as php-gettext was available in 18.04, but not in 20.04
+# gettext is necessary as php-gettext was available in 18.04, but not in 22.04
 RUN apt-get update && apt-get install -y \
     apache2 \
     curl \
