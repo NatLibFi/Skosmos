@@ -18,8 +18,6 @@
     "monolog/monolog": "1.27.*",
     "symfony/translation": "6.4.*",
     "symfony/translation-contracts": "3.0.*",
-    "symfony/twig-bundle": "6.4.*",
-    "symfony/config": "6.4.*",
     "symfony/runtime": "6.4.*",
     "symfony/framework-bundle": "6.4.*",
     "symfony/yaml": "^6.4",
@@ -30,6 +28,8 @@
   "require-dev": {
     "phpunit/phpunit": "9.5.*",
     "symfony/dom-crawler": "6.4.*",
+    "symfony/twig-bundle": "6.4.*",
+    "symfony/config": "6.4.*",
     "mockery/mockery": "1.5.1",
     "friendsofphp/php-cs-fixer": "3.16.*"
   },
