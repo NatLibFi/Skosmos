@@ -338,7 +338,7 @@ class Vocabulary extends DataObject implements Modifiable
      * @param string $array the uri of the concept array class, eg. isothes:ThesaurusArray
      * @param string $group the uri of the  concept group class, eg. isothes:ConceptGroup
      */
-    public function getStatistics($lang = '', $array=null, $group=null)
+    public function getStatistics($lang = '', $array = null, $group = null)
     {
         $sparql = $this->getSparql();
         // find the number of concepts
@@ -668,7 +668,7 @@ class Vocabulary extends DataObject implements Modifiable
         return $this->getSparql()->queryChangeList($prop, $clang, $offset, $limit, $showDeprecated);
     }
 
-    public function getTitle($lang=null)
+    public function getTitle($lang = null)
     {
         return $this->config->getTitle($lang);
     }

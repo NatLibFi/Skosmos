@@ -23,11 +23,13 @@
   --search-border: var(--medium-color);
   --search-button-bg: var(--dark-color);
   --search-button-text: var(--white-color);
-  --search-dropdown-toggle-hover: var(--light-color);
+  --search-dropdown-toggle-hover-text: var(--white-color);
+  --search-dropdown-toggle-hover-bg: var(--dark-color);
   --vocab-bg: var(--white-color);
   --vocab-text: var(--dark-color);
   --vocab-table-border: var(--medium-color);
   --vocab-link: var(--secondary-dark-color);
+  --vocab-box-text: var(--dark-color);
 
   /* Font definitions */
   --font-size: 14px;
@@ -149,8 +151,8 @@ body {
   #skosmos-logo-top {
     background-image: url(../pics/skosmos-NEGA-RGB.svg);
     background-repeat: no-repeat;
-    width: 140px;
-    height: 50px;
+    width: 168px;
+    height: 60px;
   }
 
   #skosmos-logo-top h2 {
@@ -162,30 +164,6 @@ body {
     background-repeat: no-repeat;
     background-size: 40%;
     padding-left: 30px;
-  }
-
-  #topbar.frontpage #topbar-nav-home, #topbar.frontpage-one-vocab #topbar-nav-home {
-    background-image: var(--topbar-home-1);
-  }
-
-  #topbar.frontpage #topbar-nav-info, #topbar.frontpage-one-vocab #topbar-nav-info {
-    background-image: var(--topbar-info-1);
-  }
-
-  #topbar.frontpage #topbar-nav-feedback, #topbar.frontpage-one-vocab #topbar-nav-feedback {
-    background-image: var(--topbar-feedback-1);
-  }
-
-  #topbar.vocabpage #topbar-nav-home, #topbar.termpage #topbar-nav-home, #topbar.infopage #topbar-nav-home, #topbar.feedbackpage #topbar-nav-home {
-    background-image: var(--topbar-home-2);
-  }
-
-  #topbar.vocabpage #topbar-nav-info, #topbar.termpage #topbar-nav-info, #topbar.infopage #topbar-nav-info, #topbar.feedbackpage #topbar-nav-info {
-    background-image: var(--topbar-info-2);
-  }
-
-  #topbar.vocabpage #topbar-nav-feedback, #topbar.termpage #topbar-nav-feedback, #topbar.infopage #topbar-nav-feedback, #topbar.feedbackpage #topbar-nav-feedback {
-    background-image: var(--topbar-feedback-2);
   }
 
   /* Headerbar
@@ -232,43 +210,39 @@ body {
     height: 100%;
   }
 
-  #search-wrapper .dropdown-toggle {
+  #search-wrapper button.dropdown-toggle {
     background-color: var(--search-bg);
     color: var(--headerbar-text-2);
     border: 1px solid var(--search-border);
     border-radius: 0;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
-  #search-wrapper .dropdown-toggle:hover, #search-wrapper .dropdown-toggle:active {
-    background-color: var(--search-dropdown-toggle-hover); /* What color to use? */
+  #search-wrapper button.dropdown-toggle i {
+    padding-left: 0.25rem;
+    font-size: 0.75rem;
   }
 
-  #search-wrapper .dropdown-toggle.show {
-    background-color: var(--search-dropdown-toggle-show); /* What color to use? */
+  #search-wrapper button.btn.dropdown-toggle::after {
+    display: none !important;
   }
 
-  #search-wrapper .dropdown-menu {
+  #search-wrapper #language-list {
+    inset: -3px auto auto 0px !important;
+    background-color: var(--search-bg);
+    color: var(--headerbar-text-2);
     border: 1px solid var(--search-border);
     border-radius: 0;
-    padding: 0;
-    width: 114%;
-    max-height: 20rem;
-    overflow: auto;
   }
 
-  #search-wrapper .dropdown-item:active {
-    background-color: var(--search-dropdown-item-active);
-  }
-
-  #search-wrapper .dropdown-item:hover {
-    background-color: var(--search-dropdown-item-hover); /* What color to use? */
+  #search-wrapper #language-list li a:hover, #search-wrapper #language-list li a:active {
+  color: var(--search-dropdown-toggle-hover-text);
+    background-color: var(--search-dropdown-toggle-hover-bg);
   }
 
   #search-wrapper .form-check-input {
     background-color: var(--search-bg);
-
     border-radius: 0;
   }
 
@@ -294,6 +268,15 @@ body {
 
   #search-wrapper .dropdown-menu {
     transform: translateY(-1px);
+    background-color: var(--search-bg);
+    color: var(--headerbar-text-2);
+    border: 1px solid var(--search-border);
+    border-radius: 0;
+  }
+
+  #search-wrapper ul {
+    padding-top: 0rem;
+    padding-bottom: 0rem;
   }
 
   #search-wrapper .autocomplete {
@@ -387,8 +370,20 @@ body {
   }
 
   /*** Main container frontpage ***/
-  #main-container.frontpage #vocab-box, #vocab-box .list-group-item {
-    background-color: var(--vocab-box-bg);
+
+  #vocabulary-list h2, #welcome-box h2, #vocab-info h2 {
+    font-family: var(--font-family-heading) !important;
+  }
+  header > h2 > a {
+    font-family: var(--font-family-heading) !important;
+    color: var(--dark-color)
+  }
+  #vocabulary-list .list-group-item {
+    background-color: var(--medium-color) !important;
+  }
+  #vocabulary-list .border-top {
+    border-top: 2px var(--dark-color) solid !important;
+    color: var(--secondary-dark-color);
   }
 
   .vocab-category {
@@ -396,11 +391,15 @@ body {
     color: var(--vocab-box-text);
   }
 
+  .vocab-category h3 {
+    color: var(--vocab-box-text);
+  }
+
   .vocab-category a {
     /** color: var(--secondary-medium-color) solid; **/
-    color: var(--vocab-box-link);
+    color: var(--vocab-link);
     font-weight: bold;
-    text-decoration: underline var(--vocab-box-link) solid;
+    text-decoration: underline ;
     text-decoration-thickness: 1px;
   }
 
@@ -712,6 +711,10 @@ body {
     border: none;
   }
 
+  .property-value .property-value-notation {
+    color: var(--vocab-text);
+  }
+
   #resource-table th {
     color: var(--vocab-text);
     font-weight: bold;
@@ -933,37 +936,16 @@ body {
     font-weight: 700;
   }
 
-  /* Footer
-   *****************************************/
-  #footer p {
-    max-width: 75%;
-  }
-
   @media (min-width: 1200px) {
     .container {
       max-width: 1460px !important;
     }
   }
 
-  #vocabulary-list h2, #welcome-box h2, #vocab-info h2 {
-    font-family: var(--font-family-heading) !important;
-  }
-  header > h2 > a {
-    font-family: var(--font-family-heading) !important;
-    color: var(--dark-color)
-  }
-  #vocabulary-list .list-group-item {
-    background-color: var(--medium-color) !important;
-  }
-  #vocabulary-list .border-top {
-    border-top: 2px var(--dark-color) solid !important;
-    color: var(--secondary-dark-color);
-    text-decoration: underline var(--secondary-medium-color) solid;
-  }
   #alphabetical-menu > .list-group > .list-group-item {
     border: none !important;
   }
-  
+
   tr > td {
     color: var(--dark-color);
   }

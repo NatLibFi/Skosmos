@@ -29,7 +29,7 @@ class Model
     /**
      * Initializes the Model object
      */
-    public function __construct(string $config_filename="../../config.ttl")
+    public function __construct(string $config_filename = "../../config.ttl")
     {
         $this->resolver = new Resolver($this);
         $this->globalConfig = new GlobalConfig($this, $config_filename);
@@ -274,11 +274,11 @@ class Model
         }
 
         $vocabs = $params->getVocabs();
-        $showDeprecated=false;
+        $showDeprecated = false;
         if (sizeof($vocabs) === 1) { // search within vocabulary
             $voc = $vocabs[0];
             $sparql = $voc->getSparql();
-            $showDeprecated=$voc->getConfig()->getShowDeprecated();
+            $showDeprecated = $voc->getConfig()->getShowDeprecated();
         } else { // multi-vocabulary or global search
             $voc = null;
             $sparql = $this->getDefaultSparql();
@@ -439,7 +439,7 @@ class Model
     public function getVocabularyCategories()
     {
         $cats = $this->globalConfig->getGraph()->allOfType('skos:Concept');
-        if(empty($cats)) {
+        if (empty($cats)) {
             return array(new VocabularyCategory($this, null));
         }
 
@@ -520,9 +520,9 @@ class Model
         }
 
         // if there are multiple vocabularies and one is the preferred vocabulary, return it
-        if($preferredVocabId != null) {
+        if ($preferredVocabId != null) {
             foreach ($vocabs as $vocab) {
-                if($vocab->getId() == $preferredVocabId) {
+                if ($vocab->getId() == $preferredVocabId) {
                     try {
                         // double check that a label exists in the preferred vocabulary
                         if ($vocab->getConceptLabel($uri, null) !== null) {
@@ -628,7 +628,7 @@ class Model
                 $resource = $this->resolver->resolve($uri, $this->getConfig()->getHttpTimeout());
                 $this->globalConfig->getCache()->store($key, $resource, self::URI_FETCH_TTL);
             }
-        // @codeCoverageIgnoreEnd
+            // @codeCoverageIgnoreEnd
         } else { // APC not available, parse on every request
             $resource = $this->resolver->resolve($uri, $this->getConfig()->getHttpTimeout());
         }

@@ -341,7 +341,7 @@ class WebController extends Controller
         $vocids = ($vocabs !== null && $vocabs !== '') ? explode(' ', $vocabs) : null;
         $vocabObjects = array();
         if ($vocids) {
-            foreach($vocids as $vocid) {
+            foreach ($vocids as $vocid) {
                 try {
                     $vocabObjects[] = $this->model->getVocabulary($vocid);
                 } catch (ValueError $e) {
@@ -381,7 +381,7 @@ class WebController extends Controller
                 'search_count' => $counts,
                 'languages' => $this->languages,
                 'search_results' => $searchResults,
-                'rest' => $parameters->getOffset()>0,
+                'rest' => $parameters->getOffset() > 0,
                 'global_search' => true,
                 'search_failed' => $errored,
                 'term' => $request->getQueryParamRaw('q'),
@@ -453,7 +453,7 @@ class WebController extends Controller
                 'vocab' => $vocab,
                 'search_results' => $searchResults,
                 'search_count' => $counts,
-                'rest' => $parameters->getOffset()>0,
+                'rest' => $parameters->getOffset() > 0,
                 'limit_parent' => $parameters->getParentLimit(),
                 'limit_type' =>  $request->getQueryParam('type') ? explode('+', $request->getQueryParam('type')) : null,
                 'limit_group' => $parameters->getGroupLimit(),

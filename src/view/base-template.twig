@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="{{ request.lang }}">
+<html dir="ltr" lang="{{ request.lang }}" prefix="og: https://ogp.me/ns#">
 <head>
 <base href="{{ BaseHref }}">
 <link rel="shortcut icon" href="favicon.ico">
@@ -15,7 +15,12 @@
 <meta name="description" content="{{ block('description') }}">
 <meta property="og:description" content="{{ block('description') }}">
 {% endif %}
-<meta name="twitter:card" content="summary">
+{% if block('url') is defined and block('url') is not empty %}
+<link rel="canonical" href="{{ block('url') }}">
+<meta property="og:url" content="{{ block('url') }}">
+{% endif %}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{ GlobalConfig.serviceName }}">
 <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" media="screen, print" rel="stylesheet" type="text/css">
 <link href="resource/css/fonts.css" media="screen, print" rel="stylesheet" type="text/css">
 <link href="resource/css/skosmos.css" media="screen, print" rel="stylesheet" type="text/css">
@@ -27,7 +32,7 @@
 {% endif %}
 {% for plugin, files in request.plugins.pluginsCSS %}{% for file in files %}<link href="{{ file }}" media="screen, print" rel="stylesheet" type="text/css">{% endfor %}{% endfor %}
 </head>
-<body{% if request.vocabid == '' and request.page != 'feedback' and request.page != 'about' and request.page != 'search' %} class="bg-light frontpage-logo"{% else %} class="bg-medium vocab-{{ request.vocabid }}"{% endif %}>
+<body class="{% if pageType =='landing' %}bg-white frontpage-logo{% else %}{% if pageType == 'concept' or pageType == 'vocab-home' %}bg-medium vocab-{{ request.vocabid }}{% else %}bg-light{% endif %}{% endif %}">
   <header>
     <a class="visually-hidden" id="skiptocontent" href="{{ request.langurl }}#maincontent">Skip to main</a>
     <div class="container-fluid bg-dark d-flex my-auto py-3 px-4 text-bg-dark">
@@ -41,17 +46,17 @@
       <ul class="nav nav-pills ms-auto my-auto text-light gx-3 py-3" id="topbar-nav">
         <li class="nav-item">
           <a href="{{ request.lang }}/{% if request.contentLang and request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}" id="navi1" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none" >
-                   {{ "Vocabularies" | trans }}
+                   <i class="fa-solid fa-house"></i>&nbsp;{{ "Vocabularies" | trans }}
           </a>
         </li>
         <li class="nav-item">
           <a href="{{ request.lang }}/about{% if request.contentLang and request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}" id="navi2" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none">
-                   {{ "About" | trans }}
+                   <i class="fa-solid fa-circle-info"></i>&nbsp;{{ "About" | trans }}
           </a>
         </li>
         <li class="nav-item">
           <a href="{% if request.vocabid and vocab.title%}{{ request.vocabid }}/{% endif %}{{ request.lang }}/feedback{% if request.contentLang and request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}" id="navi3" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none">
-                   {{ "Feedback" | trans }}
+                   <i class="fa-solid fa-comment"></i>&nbsp;{{ "Feedback" | trans }}
           </a>
         </li>
         {% if languages|length > 1 %}
@@ -65,8 +70,9 @@
         {% endif %}
       </ul>
     </div>
-    <div class="container-fluid bg-light py-4 px-4" id="headerbar">
-      {% if request.vocabid == '' %}
+    {% if pageType == 'landing' or pageType == 'vocab-home' or pageType == 'concept' %}
+    <div class="container-fluid bg-white py-4 px-4" id="headerbar">
+      {% if pageType == 'landing' %}
         <div id="skosmos-logo">
           <h1 class="visually-hidden">Skosmos</h1>
         </div>
@@ -85,8 +91,9 @@
       </div>
       {% endif %}
     </div>
+    {% endif %}
   </header>
-  <main id="main-container" class="{% if request.vocabid == '' or global_search %} frontpage{% elseif concept_uri != '' %} termpage{% elseif request.vocab != '' %} vocabpage{% if list_style %} {{ list_style }}{% endif %}{% endif %}">
+  <main id="main-container" class="{% if request.vocabid == '' or global_search %} frontpage{% elseif concept_uri != '' %} termpage{% elseif request.vocab != '' %} vocabpage{% if list_style %} {{ list_style }}{% endif %}{% endif %} py-5">
     <div class="container">
       <noscript>
         <strong>We're sorry but Skosmos doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
@@ -97,18 +104,20 @@
       </div>
     </div>
   </main>
-  <footer class="container bg-light pb-5">
-    <div class="row py-5">
-      <div class="col-md-7 pe-5">
-        <p class="fs-5">
-                  Skosmos is a web-based tool providing services for accessing controlled vocabularies,
-                  which are used by indexers describing documents and searchers looking
-                  for suitable keywords. Vocabularies are accessed via SPARQL endpoints containing SKOS vocabularies.
-        </p>
-      </div>
-      <div class="col-md-5 ps-5">
-        <span class="fs-5 fw-bold">{{ "Contact us!" | trans }}</span>
-        <p class="fs-5">Yhteystiedot?<p>
+  <footer class="bg-white pb-5 mt-5">
+    <div class="container py-5">
+      <div class="row">
+        <div class="col-md-7 pe-5">
+          <p class="fs-5">
+                    Skosmos is a web-based tool providing services for accessing controlled vocabularies,
+                    which are used by indexers describing documents and searchers looking
+                    for suitable keywords. Vocabularies are accessed via SPARQL endpoints containing SKOS vocabularies.
+          </p>
+        </div>
+        <div class="col-md-5 px-3">
+          <span class="fs-5 fw-bold">{{ "Contact us!" | trans }}</span>
+          <p class="fs-5">Yhteystiedot?<p>
+        </div>
       </div>
     </div>
   </footer>

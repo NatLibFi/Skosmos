@@ -19,7 +19,7 @@ class Cache
     /**
      * Wraps apc_store() and apcu_store()
      */
-    public function store($key, $value, $ttl=3600)
+    public function store($key, $value, $ttl = 3600)
     {
         if (function_exists('apcu_store')) {
             return apcu_store($key, $value, $ttl);

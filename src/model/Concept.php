@@ -32,6 +32,7 @@ class Concept extends VocabularyDataObject implements Modifiable
         'skos:member', # this shouldn't be shown on the group page
         'dc:created', # handled separately
         'dc:modified', # handled separately
+        'owl:deprecated', # indicated visually
     );
 
     /** related concepts that should be shown to users in the appendix */
@@ -143,7 +144,7 @@ class Concept extends VocabularyDataObject implements Modifiable
                 return $this->resource->label($fallback);
             }
             // We need to check all the labels in case one of them matches a subtag of the current language
-            foreach($this->resource->allLiterals('skos:prefLabel') as $label) {
+            foreach ($this->resource->allLiterals('skos:prefLabel') as $label) {
                 // the label lang code is a subtag of the UI lang eg. en-GB - create a new literal with the main language
                 if ($label !== null && strpos($label->getLang(), $fallback . '-') === 0) {
                     return EasyRdf\Literal::create($label, $fallback);
@@ -173,7 +174,7 @@ class Concept extends VocabularyDataObject implements Modifiable
     public function getXlLabel()
     {
         $labels = $this->resource->allResources('skosxl:prefLabel');
-        foreach($labels as $labres) {
+        foreach ($labels as $labres) {
             $label = $labres->getLiteral('skosxl:literalForm');
             if ($label !== null && $label->getLang() == $this->clang) {
                 return new LabelSkosXL($this->model, $labres);
@@ -305,7 +306,7 @@ class Concept extends VocabularyDataObject implements Modifiable
      * @param string[] $seen Processed resources so far
      * @param string[] $props (optional) limit to these property URIs
      */
-    private function addExternalTriplesToGraph($res, &$seen, $props=null)
+    private function addExternalTriplesToGraph($res, &$seen, $props = null)
     {
         if (array_key_exists($res->getUri(), $seen) && $seen[$res->getUri()] === 0) {
             return;
@@ -530,15 +531,15 @@ class Concept extends VocabularyDataObject implements Modifiable
                 // if not found in current vocabulary, look up in the default graph to be able
                 // to read an ontology loaded in a separate graph
                 // note that this imply that the property has an rdf:type declared for the query to work
-                if(!$is_well_known && !$proplabel) {
+                if (!$is_well_known && !$proplabel) {
                     $envLangLabels = $this->model->getDefaultSparql()->queryLabel($longUri, $this->getLang());
 
                     $defaultPropLabel = $this->model->getDefaultSparql()->queryLabel($longUri, '');
 
-                    if($envLangLabels) {
+                    if ($envLangLabels) {
                         $proplabel = $envLangLabels[$this->getLang()];
                     } else {
-                        if($defaultPropLabel) {
+                        if ($defaultPropLabel) {
                             $proplabel = $defaultPropLabel[''];
                         }
                     }
@@ -551,7 +552,7 @@ class Concept extends VocabularyDataObject implements Modifiable
                 }
 
                 // also look up superprops in the default graph if not found in current vocabulary
-                if(!$is_well_known && (!$superprops || empty($superprops))) {
+                if (!$is_well_known && (!$superprops || empty($superprops))) {
                     $superprops = $this->model->getDefaultSparql()->querySuperProperties($longUri);
                 }
 
@@ -569,7 +570,7 @@ class Concept extends VocabularyDataObject implements Modifiable
                 }
 
                 // searching for subproperties of literals too
-                if($superprops) {
+                if ($superprops) {
                     foreach ($superprops as $subi) {
                         $suburi = EasyRdf\RdfNamespace::shorten($subi) ? EasyRdf\RdfNamespace::shorten($subi) : $subi;
                         $duplicates[$suburi] = $prop;
@@ -658,7 +659,7 @@ class Concept extends VocabularyDataObject implements Modifiable
         foreach ($ret as $prop) {
             foreach ($prop->getValues() as $value) {
                 $label = $value->getLabel();
-                $propertyValues[(method_exists($label, 'getValue')) ? $label->getValue() : $label][] = $value->getType();
+                $propertyValues[(is_object($label) && method_exists($label, 'getValue')) ? $label->getValue() : $label][] = $value->getType();
             }
         }
 
@@ -826,7 +827,7 @@ class Concept extends VocabularyDataObject implements Modifiable
                     $groups[$collLabel] = array($group);
 
                     $res = $collection;
-                    while($super = $this->graph->resourcesMatching('skos:member', $res)) {
+                    while ($super = $this->graph->resourcesMatching('skos:member', $res)) {
                         foreach ($super as $res) {
                             $superprop = new ConceptPropertyValue($this->model, $this->vocab, $res, 'skosmos:memberOfSuper', $this->clang);
                             array_unshift($groups[$collLabel], $superprop);
@@ -936,7 +937,7 @@ class Concept extends VocabularyDataObject implements Modifiable
             'skos' => EasyRdf\RdfNamespace::get("skos"),
             'isothes' => EasyRdf\RdfNamespace::get("isothes"),
             'rdfs' => EasyRdf\RdfNamespace::get("rdfs"),
-            'owl' =>EasyRdf\RdfNamespace::get("owl"),
+            'owl' => EasyRdf\RdfNamespace::get("owl"),
             'dct' => EasyRdf\RdfNamespace::get("dcterms"),
             'dc11' => EasyRdf\RdfNamespace::get("dc11"),
             'uri' => '@id',

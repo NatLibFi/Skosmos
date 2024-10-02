@@ -11,7 +11,7 @@ class LabelSkosXL extends DataObject
     {
         $label = null;
         $labels = $this->resource->allResources('skosxl:prefLabel');
-        foreach($labels as $labres) {
+        foreach ($labels as $labres) {
             $label = $labres->getLiteral('skosxl:literalForm');
             if ($label->getLang() == $this->clang) {
                 return $label;
@@ -24,7 +24,7 @@ class LabelSkosXL extends DataObject
     {
         $ret = array();
         $props = $this->resource->properties();
-        foreach($props as $prop) {
+        foreach ($props as $prop) {
             if ($prop !== 'rdf:type' && $prop !== 'skosxl:literalForm') {
                 // make sure to use the correct gettext keys for DC namespace
                 $propkey = str_starts_with($prop, 'dc11:') ?

@@ -30,7 +30,7 @@ class VocabularyConfig extends BaseConfig
     "skos:related", "skos:historyNote", "skosmos:memberOf",
     "skosmos:memberOfArray");
 
-    public function __construct(Model $model, EasyRdf\Resource $resource, array $globalPlugins=array())
+    public function __construct(Model $model, EasyRdf\Resource $resource, array $globalPlugins = array())
     {
         parent::__construct($model, $resource);
         $this->globalPlugins = $globalPlugins;
@@ -269,6 +269,15 @@ class VocabularyConfig extends BaseConfig
     public function getTitle($lang = null)
     {
         return $this->getLiteral('dc:title', false, $lang);
+    }
+
+    /**
+     * Returns the human readable vocabulary description.
+     * @return string the description of the vocabulary
+     */
+    public function getDescription($lang = null)
+    {
+        return $this->getLiteral('dc:description', false, $lang);
     }
 
     /**

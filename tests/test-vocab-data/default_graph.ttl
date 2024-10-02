@@ -1,0 +1,7 @@
+@prefix owl:  <http://www.w3.org/2002/07/owl#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+# these triples are not part of any specific test vocabulary
+# but they should be accessible through the Fuseki default graph
+
+owl:deprecated a owl:DatatypeProperty; rdfs:label "deprecated" .

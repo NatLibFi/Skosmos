@@ -2,7 +2,6 @@ describe('Concept page', () => {
   const pageLoadTypes = ["full", "partial"]
 
   // tests that should be executed both with and without partial page load
-
   pageLoadTypes.forEach((pageLoadType) => {
     it('contains concept preflabel / ' + pageLoadType, () => {
       if (pageLoadType == "full") {
@@ -142,6 +141,38 @@ describe('Concept page', () => {
     cy.get('head meta[name="title"]').should('have.attr', 'content', expectedTitle);
     cy.get('head meta[property="og:title"]').should('have.attr', 'content', expectedTitle);
   })
+  it('Contains description metadata', () => {
+    cy.visit('/yso/en/page/p1265') // go to "archaeology" concept page
+
+    const expectedDescription = 'Concept archaeology in vocabulary YSO - General Finnish ontology (archaeology)'
+    // check that the page has description metadata
+    cy.get('head meta[name="description"]').should('have.attr', 'content', expectedDescription);
+    cy.get('head meta[property="og:description"]').should('have.attr', 'content', expectedDescription);
+  })
+  it('Contains site name metadata', () => {
+    cy.visit('/yso/en/page/p1265') // go to "archaeology" concept page
+
+    const expectedSiteName = 'Skosmos being tested'
+    // check that the page has site name metadata
+    cy.get('head meta[property="og:site_name"]').should('have.attr', 'content', expectedSiteName);
+  })
+  it('Contains canonical URL metadata (short URL)', () => {
+    cy.visit('/yso/en/page/p1265') // go to "archaeology" concept page
+
+    const expectedUrl = Cypress.config('baseUrl') + 'yso/en/page/p1265'
+    // check that the page has canonical URL metadata
+    cy.get('link[rel="canonical"]').should('have.attr', 'href', expectedUrl);
+    cy.get('head meta[property="og:url"]').should('have.attr', 'content', expectedUrl);
+  })
+  it('Contains canonical URL metadata (long URL)', () => {
+    // go to "archaeology" concept page using long URL based on URI
+    cy.visit('/yso/en/page/?uri=http%3A%2F%2Fwww.yso.fi%2Fonto%2Fyso%2Fp1265')
+
+    const expectedUrl = Cypress.config('baseUrl') + 'yso/en/page/p1265'
+    // check that the page has canonical URL metadata
+    cy.get('link[rel="canonical"]').should('have.attr', 'href', expectedUrl);
+    cy.get('head meta[property="og:url"]').should('have.attr', 'content', expectedUrl);
+  })
   it("doesn't contain breadcrumbs for top concepts", () => {
     cy.visit('/yso/en/page/p4762') // go to "objects" concept page
 
@@ -230,6 +261,18 @@ describe('Concept page', () => {
     cy.get('#concept-breadcrumbs ol').find('li.show').should('have.length', 4)
   })
 
+  it('overrides property labels', () => {
+    // Go to "Carp" concept page in vocab with property label overrides
+    cy.visit('/conceptPropertyLabels/en/page/ta112')
+    // Check that prefLabel property label is overridden correctly
+    cy.get('#concept-property-label').invoke('text').should('include', 'Caption')
+    // Check that notation property label is overridden correctly
+    cy.get('.prop-skos_notation .property-label h2').invoke('text').should('include', 'UDC number')
+    // Check that mapping property name is overridden correctly
+    cy.get('.prop-mapping h2', {'timeout': 20000}).eq(0).contains('Exactly matching classes')
+    // Check that mapping property title is overridden correctly
+    cy.get('.prop-mapping .property-label').eq(0).should('have.attr', 'title').and('contain', 'Exactly matching classes in another vocabulary.')
+  })
   it('contains concept type', () => {
     cy.visit('/yso/en/page/p21685') // go to "music research" concept page
 
@@ -280,6 +323,17 @@ describe('Concept page', () => {
 
     // check that we have the correct number of narrower concepts
     cy.get('.prop-skos_narrower .property-value').find('li').should('have.length', 8)
+  })
+  it('contains notation codes for narrower/broader concepts', () => {
+    // Go to "Karppi" concept page
+    cy.visit('/testNotation/en/page/?uri=http%3A%2F%2Fwww.skosmos.skos%2Ftest%2Fta01')
+    // Check the notation code for narrower concept
+    cy.get('.prop-skos_narrower .property-value-notation').eq(0).invoke('text').should('contain', '33.01')
+
+    // Go to "Crucian carp" concept page
+    cy.visit('/testNotation/en/page/?uri=http%3A%2F%2Fwww.skosmos.skos%2Ftest%2Fta0121')
+    // Check the notation code for broader concept
+    cy.get('.prop-skos_broader .property-value-notation').eq(0).invoke('text').should('contain', '33.1')
   })
   it('contains related concepts', () => {
     cy.visit('/yso/en/page/p21685') // go to "music research" concept page

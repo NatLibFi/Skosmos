@@ -15,7 +15,7 @@ class EntityController extends Controller
     {
         $baseurl = $this->getBaseHref();
         $vocid = $vocab->getId();
-        $query = http_build_query(array('uri'=>$uri, 'format'=>$targetFormat));
+        $query = http_build_query(array('uri' => $uri, 'format' => $targetFormat));
         $url = $baseurl . "rest/v1/$vocid/data?$query";
         $this->redirect303($url);
     }
@@ -35,7 +35,7 @@ class EntityController extends Controller
                 $url = $baseurl . "$vocid/page/$localname";
             } else {
                 // must use full URI
-                $query = http_build_query(array('uri'=>$uri));
+                $query = http_build_query(array('uri' => $uri));
                 $url = $baseurl . "$vocid/page/?" . $query;
             }
         }
