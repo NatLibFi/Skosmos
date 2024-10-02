@@ -16,8 +16,8 @@
       <h2 class="fs-2 fw-bold py-3">{{ "Available vocabularies and ontologies" | trans }}</h2>
       {% endif %}
       {% for vocabClassName,vocabArray in request.vocabList %}
-      <div class="vocab-category border-top border-dark-top">
-        <h3 class="fs-3 py-3">{{ vocabClassName }}</h3>
+      <div class="vocab-category border-top pb-5">
+        <h3 class="fs-3 pt-2">{{ vocabClassName }}</h3>
         <ul class="list-group">
         {% for vocab in vocabArray %}
           <li class="list-group-item border-0 ps-0"><a class="fs-4 fw-bold" href="{{ vocab.id }}/{{ request.lang }}/{% if request.contentLang != request.lang and request.contentLang != '' and request.contentLang in vocab.config.languages %}?clang={{ request.contentLang }}{% endif %}">{{ vocab.title }}</a></li>

@@ -29,6 +29,7 @@
   --vocab-text: var(--dark-color);
   --vocab-table-border: var(--medium-color);
   --vocab-link: var(--secondary-dark-color);
+  --vocab-box-text: var(--dark-color);
 
   /* Font definitions */
   --font-size: 14px;
@@ -369,8 +370,20 @@ body {
   }
 
   /*** Main container frontpage ***/
-  #main-container.frontpage #vocab-box, #vocab-box .list-group-item {
-    background-color: var(--vocab-box-bg);
+
+  #vocabulary-list h2, #welcome-box h2, #vocab-info h2 {
+    font-family: var(--font-family-heading) !important;
+  }
+  header > h2 > a {
+    font-family: var(--font-family-heading) !important;
+    color: var(--dark-color)
+  }
+  #vocabulary-list .list-group-item {
+    background-color: var(--medium-color) !important;
+  }
+  #vocabulary-list .border-top {
+    border-top: 2px var(--dark-color) solid !important;
+    color: var(--secondary-dark-color);
   }
 
   .vocab-category {
@@ -378,11 +391,15 @@ body {
     color: var(--vocab-box-text);
   }
 
+  .vocab-category h3 {
+    color: var(--vocab-box-text);
+  }
+
   .vocab-category a {
     /** color: var(--secondary-medium-color) solid; **/
-    color: var(--vocab-box-link);
+    color: var(--vocab-link);
     font-weight: bold;
-    text-decoration: underline var(--vocab-box-link) solid;
+    text-decoration: underline ;
     text-decoration-thickness: 1px;
   }
 
@@ -925,25 +942,10 @@ body {
     }
   }
 
-  #vocabulary-list h2, #welcome-box h2, #vocab-info h2 {
-    font-family: var(--font-family-heading) !important;
-  }
-  header > h2 > a {
-    font-family: var(--font-family-heading) !important;
-    color: var(--dark-color)
-  }
-  #vocabulary-list .list-group-item {
-    background-color: var(--medium-color) !important;
-  }
-  #vocabulary-list .border-top {
-    border-top: 2px var(--dark-color) solid !important;
-    color: var(--secondary-dark-color);
-    text-decoration: underline var(--secondary-medium-color) solid;
-  }
   #alphabetical-menu > .list-group > .list-group-item {
     border: none !important;
   }
-  
+
   tr > td {
     color: var(--dark-color);
   }
