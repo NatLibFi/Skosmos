@@ -5,6 +5,6 @@
 {% block url %}{{ BaseHref }}{{ concept.uri|link_url(vocab,request.lang,'page',request.contentLang) }}{% endblock %}
 
 {% block content %}
-  {% include "sidebar.inc" %}
-  {% include "concept-card.inc" %}
+  {% include "sidebar.inc.twig" %}
+  {% include "concept-card.inc.twig" %}
 {% endblock %}

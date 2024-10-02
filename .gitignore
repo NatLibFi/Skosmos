@@ -19,3 +19,4 @@ tests/cypress/videos/
 tests/cypress/screenshots/
 /.idea
 *.swp
+var/

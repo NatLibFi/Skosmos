@@ -1,0 +1,11 @@
+framework:
+    default_locale: en
+    translator:
+        default_path: '%kernel.project_dir%/resource/translations'
+        fallbacks:
+            - en
+        providers:
+            lokalise:
+                dsn: '%env(LOKALISE_DSN)%'
+                locales: ['ar', 'da', 'de', 'en', 'es', 'fa', 'fi', 'fr', 'fy', 'it', 'lv', 'nb', 'nl', 'nn', 'pl', 'pt_BR', 'pt', 'ru', 'se', 'sv', 'zh']
+                domains: ['messages']

@@ -5,7 +5,7 @@
 {% block content %}
 {% set pageError = request.vocabid != '' and request.page == 'page' %}
 {% if pageError %}
-{% include "sidebar.inc" %}
+{% include "sidebar.inc.twig" %}
 {% endif %}
 <div class="container{% if pageError %} col-md-8" id="main-content{% endif %}">
   <div class="alert py-5 px-5">
