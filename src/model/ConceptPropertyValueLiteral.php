@@ -101,7 +101,7 @@ class ConceptPropertyValueLiteral extends VocabularyDataObject
     {
         $graph = $this->resource->getGraph();
         $labelResources = $graph->resourcesMatching('skosxl:literalForm', $this->literal);
-        foreach($labelResources as $labres) {
+        foreach ($labelResources as $labres) {
             return new LabelSkosXL($this->model, $labres);
         }
         return null;

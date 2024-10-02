@@ -30,7 +30,7 @@ class ConceptProperty
      * @param string $super URI of superproperty
      * @param boolean $sort_by_notation whether to sort the property values by their notation code
      */
-    public function __construct($model, $prop, $label, $tooltip=null, $super=null, $sort_by_notation=false)
+    public function __construct($model, $prop, $label, $tooltip = null, $super = null, $sort_by_notation = false)
     {
         $this->model = $model;
         $this->prop = $prop;

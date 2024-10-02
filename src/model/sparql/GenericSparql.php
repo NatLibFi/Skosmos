@@ -92,7 +92,7 @@ class GenericSparql
         $starttime = microtime(true);
         $result = $this->client->query($query);
         $elapsed = intval(round((microtime(true) - $starttime) * 1000));
-        if(method_exists($result, 'numRows')) {
+        if (method_exists($result, 'numRows')) {
             $numRows = $result->numRows();
             $logger->info("[qid $queryId] result: $numRows rows returned in $elapsed ms");
         } else { // graph result
@@ -108,7 +108,7 @@ class GenericSparql
      * @param Vocabulary[]|null $vocabs
      * @return string
      */
-    protected function generateFromClause($vocabs=null)
+    protected function generateFromClause($vocabs = null)
     {
         $clause = '';
         if (!$vocabs) {
@@ -718,9 +718,9 @@ EOQ;
                 $conceptscheme['title'] = $row->title->getValue();
             }
             // add dct:subject and their labels in the result
-            if(isset($row->domain) && isset($row->domainLabel)) {
-                $conceptscheme['subject']['uri']=$row->domain->getURI();
-                $conceptscheme['subject']['prefLabel']=$row->domainLabel->getValue();
+            if (isset($row->domain) && isset($row->domainLabel)) {
+                $conceptscheme['subject']['uri'] = $row->domain->getURI();
+                $conceptscheme['subject']['prefLabel'] = $row->domainLabel->getValue();
             }
 
             $ret[$row->cs->getURI()] = $conceptscheme;
@@ -1048,15 +1048,15 @@ EOQ;
         $schemecond = '';
         if (!empty($schemes)) {
             $conditions = array();
-            foreach($schemes as $scheme) {
+            foreach ($schemes as $scheme) {
                 $conditions[] = "{?s skos:inScheme <$scheme>}";
             }
             $schemecond = '{'.implode(" UNION ", $conditions).'}';
         }
-        $filterDeprecated="";
+        $filterDeprecated = "";
         //show or hide deprecated concepts
-        if(!$showDeprecated) {
-            $filterDeprecated="FILTER NOT EXISTS { ?s owl:deprecated true }";
+        if (!$showDeprecated) {
+            $filterDeprecated = "FILTER NOT EXISTS { ?s owl:deprecated true }";
         }
         // extra conditions for parent and group, if specified
         $parentcond = ($params->getParentLimit()) ? "?s skos:broader+ <" . $params->getParentLimit() . "> ." : "";
@@ -1147,7 +1147,7 @@ EOQ;
             $hit['type'][] = $this->shortenUri($typeuri);
         }
 
-        if(!empty($fields)) {
+        if (!empty($fields)) {
             foreach ($fields as $prop) {
                 $propname = $prop . 's';
                 if (isset($row->$propname)) {
@@ -1300,9 +1300,9 @@ EOQ;
         $filtercondLabel = $conditions['filterpref'];
         $filtercondALabel = $conditions['filteralt'];
         $qualifierClause = $qualifier ? "OPTIONAL { ?s <" . $qualifier->getURI() . "> ?qualifier }" : "";
-        $filterDeprecated="";
-        if(!$showDeprecated) {
-            $filterDeprecated="FILTER NOT EXISTS { ?s owl:deprecated true }";
+        $filterDeprecated = "";
+        if (!$showDeprecated) {
+            $filterDeprecated = "FILTER NOT EXISTS { ?s owl:deprecated true }";
         }
         $query = <<<EOQ
 SELECT DISTINCT ?s ?label ?alabel ?qualifier
@@ -2071,7 +2071,7 @@ EOQ;
                 $ret[$uri]['exact'] = $row->exact->getUri();
             }
             if (isset($row->tops)) {
-                $topConceptsList=explode(" ", $row->tops->getValue());
+                $topConceptsList = explode(" ", $row->tops->getValue());
                 // sort to guarantee an alphabetical ordering of the URI
                 sort($topConceptsList);
                 $ret[$uri]['tops'] = $topConceptsList;
@@ -2232,9 +2232,9 @@ EOQ;
     private function generateConceptGroupContentsQuery($groupClass, $group, $lang, $showDeprecated = false)
     {
         $fcl = $this->generateFromClause();
-        $filterDeprecated="";
-        if(!$showDeprecated) {
-            $filterDeprecated="  FILTER NOT EXISTS { ?conc owl:deprecated true }";
+        $filterDeprecated = "";
+        if (!$showDeprecated) {
+            $filterDeprecated = "  FILTER NOT EXISTS { ?conc owl:deprecated true }";
         }
         $query = <<<EOQ
 SELECT ?conc ?super ?label ?members ?type ?notation $fcl
@@ -2321,7 +2321,7 @@ EOQ;
      * @param boolean $showDeprecated whether to include deprecated concepts in the change list
      * @return string sparql query
      */
-    private function generateChangeListQuery($prop, $lang, $offset, $limit=200, $showDeprecated=false)
+    private function generateChangeListQuery($prop, $lang, $offset, $limit = 200, $showDeprecated = false)
     {
         $fcl = $this->generateFromClause();
         $offset = ($offset) ? 'OFFSET ' . $offset : '';
@@ -2415,7 +2415,7 @@ EOQ;
      * @param boolean $showDeprecated whether to include deprecated concepts in the change list
      * @return array Result array
      */
-    public function queryChangeList($prop, $lang, $offset, $limit, $showDeprecated=false)
+    public function queryChangeList($prop, $lang, $offset, $limit, $showDeprecated = false)
     {
         $query = $this->generateChangeListQuery($prop, $lang, $offset, $limit, $showDeprecated);
 

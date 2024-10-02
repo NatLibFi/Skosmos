@@ -208,7 +208,7 @@ class Request
      * @param string $newlang new UI language to set
      * @return string the relative url of the page
      */
-    public function getLangUrl($newlang=null)
+    public function getLangUrl($newlang = null)
     {
         $script_name = str_replace('/src/index.php', '', $this->getServerConstant('SCRIPT_NAME'));
         $langurl = substr(str_replace($script_name, '', strval($this->getServerConstant('REQUEST_URI'))), 1);

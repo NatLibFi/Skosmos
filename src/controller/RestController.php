@@ -53,7 +53,7 @@ class RestController extends Controller
     }
 
 
-/** Global REST methods **/
+    /** Global REST methods **/
 
     /**
      * Returns all the vocabularies available on the server in a json object.
@@ -105,7 +105,7 @@ class RestController extends Controller
         // convert to vocids array to support multi-vocabulary search
         $vocids = ($vocabs !== null && $vocabs !== '') ? explode(' ', $vocabs) : array();
         $vocabObjects = array();
-        foreach($vocids as $vocid) {
+        foreach ($vocids as $vocid) {
             $vocabObjects[] = $this->model->getVocabulary($vocid);
         }
         $parameters->setVocabularies($vocabObjects);
@@ -195,7 +195,7 @@ class RestController extends Controller
         $this->returnJson($ret);
     }
 
-/** Vocabulary-specific methods **/
+    /** Vocabulary-specific methods **/
 
     /**
      * Loads the vocabulary metadata. And wraps the result in a json-ld object.
@@ -985,7 +985,7 @@ class RestController extends Controller
             $topconcepts = $request->getVocab()->getTopConcepts(array_keys($schemes), $request->getLang());
             foreach ($topconcepts as $top) {
                 if (!isset($results[$top['uri']])) {
-                    $results[$top['uri']] = array('uri' => $top['uri'], 'top'=>$top['topConceptOf'], 'tops'=>array($top['topConceptOf']), 'prefLabel' => $top['label'], 'hasChildren' => $top['hasChildren']);
+                    $results[$top['uri']] = array('uri' => $top['uri'], 'top' => $top['topConceptOf'], 'tops' => array($top['topConceptOf']), 'prefLabel' => $top['label'], 'hasChildren' => $top['hasChildren']);
                     if (isset($top['notation'])) {
                         $results[$top['uri']]['notation'] = $top['notation'];
                     }
@@ -1148,7 +1148,7 @@ class RestController extends Controller
         $changeList = $request->getVocab()->getChangeList($prop, $request->getLang(), $offset, $limit);
 
         $simpleChangeList = array();
-        foreach($changeList as $conceptInfo) {
+        foreach ($changeList as $conceptInfo) {
             if (array_key_exists('date', $conceptInfo)) {
                 $concept = array(
                     'uri' => $conceptInfo['uri'],
