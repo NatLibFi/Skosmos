@@ -189,7 +189,7 @@
 :test-551-A a skosmos:Vocabulary, void:Dataset ;
     dc:title "Vocab with 551 concepts starting with A"@fi ;
     dc:subject :cat_general ;
-    void:uriSpace "http://www.skosmos.skos/test-550-A/";
+    void:uriSpace "http://www.skosmos.skos/test-551-A/";
     skosmos:language "fi" ;
     skosmos:defaultLanguage "fi";
     skosmos:showChangeList "true" ;
