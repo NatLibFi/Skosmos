@@ -1,0 +1,8 @@
+@prefix skosmos: <http://purl.org/net/skosmos#> .
+@prefix : <http://base/#> .
+
+:config a skosmos:Configuration ;
+ 
+    # include configuration from from URL
+    skosmos:includeConfig <http://localhost:13030/skosmos-test/data?graph=http://skosmos.config/> .
+

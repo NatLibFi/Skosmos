@@ -33,5 +33,7 @@ for fn in ../test-vocab-data/*.ttl; do
     $(./bin/s-put http://localhost:13030/skosmos-test/data "http://www.skosmos.skos/$name/" "$fn")
 done
 
+$(./bin/s-put http://localhost:13030/skosmos-test/data "http://skosmos.config/" "../testconfig-included.ttl")
+
 cd ..
 
