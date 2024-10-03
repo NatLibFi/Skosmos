@@ -7,7 +7,7 @@
 @prefix schema: <http://schema.org/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix test: <http://www.skosmos.skos/test/> .
+@prefix test: <http://www.skosmos.skos/test-551-A/> .
 
 test:p1099910001 a skos:Concept ;
     skos:inScheme test:modifiedVocab ;
