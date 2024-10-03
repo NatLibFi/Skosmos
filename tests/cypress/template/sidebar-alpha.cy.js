@@ -69,7 +69,7 @@ describe('Alphabetical index', () => {
   })
   it('Loads concepts on scroll', () => {
     // Go to YSO vocab home page
-    cy.visit('/modified-vocab/fi/')
+    cy.visit('/test-551-A/fi/')
     // Scroll to the bottom of sidebar list
     cy.get('#tab-alphabetical').find('.sidebar-list').scrollTo('bottom')
     // Check that new concepts have been loaded
