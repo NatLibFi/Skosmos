@@ -53,6 +53,23 @@ describe('Vocab search bar', () => {
       cy.url().should('include', 'clang=sv');
     })
 
+    it('available search languages are the ones described in the vocabulary config', () => {
+      cy.visit('/yso/en/') // go to the YSO home page in English language
+
+      // check that the vocabulary languages can be found in the search bar language dropdown menu
+      cy.window().then((win) => {
+        cy.get('#language-list .dropdown-item').then($elements => {
+          const actualLanguages = $elements.map((index, el) => Cypress.$(el).attr('value')).get();
+
+          // The expected languages should be those found in vocabulary configuration with an additional 'all' language
+          const expectedLanguages = [...win.SKOSMOS.languages, 'all'];
+
+          // The two language lists should be of equal length and all of the expected languages can be found
+          expect(expectedLanguages).to.have.lengthOf(actualLanguages.length);
+          expectedLanguages.forEach(lang => { expect(actualLanguages).to.include(lang); });
+        })
+      })
+    })
   });
 
   describe('Autocomplete', () => {
