@@ -37,6 +37,12 @@ describe('Alphabetical index', () => {
     // Check that the first item in the list is in the correct language
     cy.get('#tab-alphabetical').find('.sidebar-list li').first().invoke('text').should('contain', 'aarrelöydöt')
   })
+  it('Shows altLabels', () => {
+    // Go to YSO vocab home page
+    cy.visit('/yso/fi/')
+    // Check that notation codes are displayed
+    cy.get('#tab-alphabetical').find('.sidebar-list li').eq(2).invoke('text').should('contain', 'aDNA').should('contain', 'muinais-DNA')
+  })
   it('Shows notation codes', () => {
     // Go to vocab home page in a vocab with notation codes in alphabetical index
     cy.visit('/test-notation-sort/en/')
