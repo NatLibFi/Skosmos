@@ -1,32 +1,10 @@
-async function loadLocaleMessages() {
-  const lang = 'fi'; // Myöhemmin käytetään globaalia muuttujaa
-  const messages = {};
+import { createI18nInstance } from './translation-service.js';
 
-  const response = await fetch(`http://localhost/skosmos/resource/translations/messages.${lang}.json`);
-  const data = await response.json();
-  console.log(data);
-  messages[lang] = data;
-
-  return messages;
-}
-
-async function createI18nInstance() {
-  const messages = await loadLocaleMessages();
-
-  const i18n = VueI18n.createI18n({
-    locale: window.SKOSMOS.lang || 'en', // oletus
-    fallbackLocale: 'en', // fallback
-    messages,
-  });
-
-  return i18n;
-}
-
-(async function() {
-  const i18n = await createI18nInstance();
+(async function () {
+  const i18n = await createI18nInstance(window.SKOSMOS.lang || 'fi', 'vocab-counts');
 
   const resourceCountsApp = Vue.createApp({
-    data() {
+    data () {
       return {
         concepts: {},
         subTypes: {},
@@ -34,11 +12,11 @@ async function createI18nInstance() {
       };
     },
     computed: {
-      hasCounts() {
+      hasCounts () {
         return Object.keys(this.concepts).length > 0;
       }
     },
-    mounted() {
+    mounted () {
       fetch('rest/v1/' + window.SKOSMOS.vocab + '/vocabularyStatistics?lang=' + window.SKOSMOS.lang)
         .then(data => data.json())
         .then(data => {
@@ -46,7 +24,7 @@ async function createI18nInstance() {
           this.subTypes = data.subTypes;
           this.conceptGroups = data.conceptGroups;
         });
-    },
+      },
     template: `
       <h3 class="fw-bold py-3">{{ $t('Resource counts by type') }}</h3>
       <table class="table" id="resource-stats">
@@ -55,7 +33,7 @@ async function createI18nInstance() {
         <template v-if="hasCounts">
           <resource-counts :concepts="concepts" :subTypes="subTypes" :conceptGroups="conceptGroups"></resource-counts>
         </template>
-        <template v-else>
+        <template v-else >
           <i class="fa-solid fa-spinner fa-spin-pulse"></i>
         </template>
         </tbody>
@@ -70,7 +48,7 @@ async function createI18nInstance() {
         <td>{{ concepts.label }}</td>
         <td>{{ concepts.count }}</td>
       </tr>
-      <tr v-for="st in subTypes">
+      <tr v-for="st in subTypes" :key="st.label">
         <td>* {{ st.label }}</td>
         <td>{{ st.count }}</td>
       </tr>
