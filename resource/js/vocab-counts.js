@@ -1,55 +1,51 @@
-async function loadLocaleMessages () {
-  const locales = ['en', 'fi']
-  const messages = {}
+async function loadLocaleMessages() {
+  const lang = 'fi'; // Myöhemmin käytetään globaalia muuttujaa
+  const messages = {};
 
-  for (const locale of locales) {
-    const response = await fetch(`http://localhost/skosmos/resource/translations/messages.${locale}.json`)
-    const data = await response.json()
-    console.log(data)
-    messages[locale] = data
-  }
+  const response = await fetch(`http://localhost/skosmos/resource/translations/messages.${lang}.json`);
+  const data = await response.json();
+  console.log(data);
+  messages[lang] = data;
 
-  return messages
+  return messages;
 }
 
-async function createI18nInstance () {
-  const messages = await loadLocaleMessages()
+async function createI18nInstance() {
+  const messages = await loadLocaleMessages();
 
   const i18n = VueI18n.createI18n({
-    locale: window.SKOSMOS.lang || 'en', // oletuskieli
-    fallbackLocale: 'en', // Fallback
-    messages
-  })
+    locale: window.SKOSMOS.lang || 'en', // oletus
+    fallbackLocale: 'en', // fallback
+    messages,
+  });
 
-  return i18n
+  return i18n;
 }
 
-(async function () {
-  const i18n = await createI18nInstance()
+(async function() {
+  const i18n = await createI18nInstance();
 
   const resourceCountsApp = Vue.createApp({
-    data () {
+    data() {
       return {
         concepts: {},
         subTypes: {},
         conceptGroups: {}
-      }
+      };
     },
     computed: {
-      hasCounts () {
-        return Object.keys(this.concepts).length > 0
+      hasCounts() {
+        return Object.keys(this.concepts).length > 0;
       }
     },
-    mounted () {
+    mounted() {
       fetch('rest/v1/' + window.SKOSMOS.vocab + '/vocabularyStatistics?lang=' + window.SKOSMOS.lang)
+        .then(data => data.json())
         .then(data => {
-          return data.json()
-        })
-        .then(data => {
-          this.concepts = data.concepts
-          this.subTypes = data.subTypes
-          this.conceptGroups = data.conceptGroups
-        })
+          this.concepts = data.concepts;
+          this.subTypes = data.subTypes;
+          this.conceptGroups = data.conceptGroups;
+        });
     },
     template: `
       <h3 class="fw-bold py-3">{{ $t('Resource counts by type') }}</h3>
@@ -65,7 +61,7 @@ async function createI18nInstance () {
         </tbody>
       </table>
     `
-  })
+  });
 
   resourceCountsApp.component('resource-counts', {
     props: ['concepts', 'subTypes', 'conceptGroups'],
@@ -74,7 +70,7 @@ async function createI18nInstance () {
         <td>{{ concepts.label }}</td>
         <td>{{ concepts.count }}</td>
       </tr>
-      <tr v-for="st in subTypes" :key="st.label">
+      <tr v-for="st in subTypes">
         <td>* {{ st.label }}</td>
         <td>{{ st.count }}</td>
       </tr>
@@ -87,8 +83,8 @@ async function createI18nInstance () {
         <td>{{ conceptGroups.count }}</td>
       </tr>
     `
-  })
+  });
 
-  resourceCountsApp.use(i18n)
-  resourceCountsApp.mount('#resource-counts')
-})()
+  resourceCountsApp.use(i18n);
+  resourceCountsApp.mount('#resource-counts');
+})();
