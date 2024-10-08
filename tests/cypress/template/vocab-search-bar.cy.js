@@ -61,8 +61,7 @@ describe('Vocab search bar', () => {
         cy.get('#language-list .dropdown-item').then($elements => {
           const actualLanguages = $elements.map((index, el) => Cypress.$(el).attr('value')).get();
 
-          // The expected languages should be those found in vocabulary configuration with an additional 'all' language
-          const expectedLanguages = [...win.SKOSMOS.languages, 'all'];
+          const expectedLanguages = ['fi', 'sv', 'se', 'en', 'all'];
 
           // The two language lists should be of equal length and all of the expected languages can be found
           expect(expectedLanguages).to.have.lengthOf(actualLanguages.length);
