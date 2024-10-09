@@ -10,14 +10,14 @@
     "symfony/polyfill-php81": "1.*",
     "twig/twig": "3.8.*",
     "willdurand/negotiation": "3.1.*",
-    "punic/punic": "3.5.1",
+    "punic/punic": "3.8.*",
     "ml/json-ld": "1.*",
     "ext-intl": "*",
     "ext-mbstring": "*",
     "ext-xsl": "*",
     "monolog/monolog": "1.27.*",
     "symfony/translation": "6.4.*",
-    "symfony/translation-contracts": "3.0.*",
+    "symfony/translation-contracts": "3.5.*",
     "symfony/twig-bundle": "6.4.*"
   },
   "require-dev": {
@@ -30,7 +30,7 @@
     "symfony/dotenv": "6.4.*",
     "symfony/lokalise-translation-provider": "6.4.*",
     "symfony/console": "6.4.*",
-    "mockery/mockery": "1.5.1",
+    "mockery/mockery": "1.6.*",
     "friendsofphp/php-cs-fixer": "3.64.*"
   },
   "autoload": {
