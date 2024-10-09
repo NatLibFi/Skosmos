@@ -45,14 +45,13 @@ describe('Vocabulary search page', () => {
       cy.get('div.search-result > ul > li > span > i.property-hover.fa-solid.fa-arrows-to-circle')
 
       //Check that there is correct amount of different properties for the search result
-      cy.get('div.search-result > ul > li').should('have.length', 4)
+      cy.get('div.search-result > ul > li').should('have.length', 3)
 
       //Check the order of search result properties
       cy.get('div.search-result > ul').within(() => {
         cy.get('li').eq(0).invoke('text').should('contain', 'Fish')
-        cy.get('li').eq(1).invoke('text').should('contain', 'Black sea bass')
-        cy.get('li').eq(2).invoke('text').should('contain', 'Test class')
-        cy.get('li').eq(3).invoke('text').should('contain', 'http://www.skosmos.skos/test/ta116')
+        cy.get('li').eq(1).invoke('text').should('contain', 'Test class')
+        cy.get('li').eq(2).invoke('text').should('contain', 'http://www.skosmos.skos/test/ta116')
       })
 
   })
