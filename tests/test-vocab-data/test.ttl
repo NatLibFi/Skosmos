@@ -73,6 +73,10 @@ test:ta112 a skos:Concept, meta:TestClass ;
     	"Finnish"@fi,
     	"Without lang tag" .
 
+test:ta113 a skos:Concept, meta:TestClass ;
+    skos:broader test:ta1 ;
+    skos:inScheme test:conceptscheme .
+
 test:ta114 a skos:Concept, meta:TestClass ;
     skos:broader test:ta1 ;
     dct:modified "1986-21-00"^^xsd:date ; # date invalid on purpose
@@ -89,7 +93,8 @@ test:ta115 a skos:Concept, meta:TestClass ;
 test:ta116 a skos:Concept, meta:TestClass ;
     skos:broader test:ta1 ;
     skos:inScheme test:conceptscheme ;
-    skos:prefLabel "Bass"@en .
+    skos:prefLabel "Bass"@en ;
+    skos:narrower test:ta122.
 
 test:ta117 a skos:Concept, meta:TestClass ;
     skos:broader test:ta1 ;
@@ -105,7 +110,8 @@ test:ta118 a skos:Concept, meta:TestClass ;
 test:ta119 a skos:Concept, meta:TestClass ;
     skos:broader test:ta1 ;
     skos:inScheme test:conceptscheme ;
-    skos:prefLabel "Hauki"@fi .
+    skos:prefLabel "Hauki"@fi ;
+    skos:narrower test:ta123 .
 
 test:ta120 a skos:Concept, meta:TestClass ;
     skos:broader test:ta1 ;
