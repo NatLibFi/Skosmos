@@ -1,17 +1,30 @@
-/* global Vue */
+// - Samat syyt uudelle rakenteelle suunnilleen kuin miten selitetty vocab-counts.js:n kohdalla
+// - Muutettu toteutusta myös siltä osin, että hyödynnetään computedia, jossa käännökset voidaan hakea valmiiksi
+//
 
-import { createI18nInstance } from './translation-service.js';
-
-(async function () {
-
-  try {
-    const i18n = await createI18nInstance(window.SKOSMOS.lang || 'fi', 'term-counts');
-
+function startTermCountsApp() {
     const termCountsApp = Vue.createApp({
       data() {
         return {
           languages: []
         };
+      },
+      computed: {
+        termCountsTitle() {
+          return $t('Term counts by language');
+        },
+        conceptLanguageLabel() {
+          return $t('Concept language');
+        },
+        preferredTermsLabel() {
+          return $t('Preferred terms');
+        },
+        alternateTermsLabel() {
+          return $t('Alternate terms');
+        },
+        hiddenTermsLabel() {
+          return $t('Hidden terms');
+        }
       },
       mounted () {
         fetch('rest/v1/' + window.SKOSMOS.vocab + '/labelStatistics?lang=' + window.SKOSMOS.lang)
@@ -23,26 +36,26 @@ import { createI18nInstance } from './translation-service.js';
           })
       },
       template: `
-        <h3 class="fw-bold py-3">{{ $t('Term counts by language') }}</h3>
+        <h3 class="fw-bold py-3">{{ termCountsTitle }}</h3>
         <table class="table" id="term-stats">
           <tbody>
             <tr>
-              <th class="main-table-label fw-bold">{{ $t('Concept language') }}</th>
-              <th class="main-table-label fw-bold">{{ $t('Preferred terms') }}</th>
-              <th class="main-table-label fw-bold">{{ $t('Alternate terms') }}</th>
-              <th class="main-table-label fw-bold">{{ $t('Hidden terms') }}</th>
+              <th class="main-table-label fw-bold">{{ conceptLanguageLabel }}</th>
+              <th class="main-table-label fw-bold">{{ preferredTermsLabel }}</th>
+              <th class="main-table-label fw-bold">{{ alternateTermsLabel }}</th>
+              <th class="main-table-label fw-bold">{{ hiddenTermsLabel }}</th>
             </tr>
             <template v-if="languages.length">
               <term-counts :languages="languages"></term-counts>
             </template>
-            <template v-else >
+            <template v-else>
               <i class="fa-solid fa-spinner fa-spin-pulse"></i>
             </template>
           </tbody>
         </table>
       `
     });
-
+  
     termCountsApp.component('term-counts', {
       props: ['languages'],
       template: `
@@ -54,11 +67,21 @@ import { createI18nInstance } from './translation-service.js';
         </tr>
       `
     });
-
-    termCountsApp.use(i18n);
+  
     termCountsApp.mount('#term-counts');
-
-  } catch (error) {
-    console.error("Ongelma alustuksessa", error); 
   }
-})();
+  
+  // Tarkistetaan, että $t on valmis, joten myös käännökset ovat valmiita
+  function waitForTermTranslationService() {
+    if (typeof $t !== 'undefined') {
+      startTermCountsApp(); // $t on valmis, joten Vue-appia voidaan kutsua
+    } else {
+      setTimeout(waitForTermTranslationService, 50);
+    }
+  }
+  
+  // Odotellaan $t:tä
+  waitForTermTranslationService();
+  
+
+//   Toimiva

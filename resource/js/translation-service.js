@@ -1,24 +1,31 @@
-export async function loadLocaleMessages(locale) {
-    const messages = {};
-    try {
-      const response = await fetch(`http://localhost/skosmos/resource/translations/messages.${locale}.json`);
-      const data = await response.json();
-      console.log(`Haettiin data: ${locale}:`, data);
-      messages[locale] = data;
-    } catch (error) {
-      console.error('käännösten lataamisessa tapahtui virhe:', error);
+(async function() {
+    async function loadLocaleMessages(locale) {
+      const messages = {};
+      try {
+        const response = await fetch(`http://localhost/skosmos/resource/translations/messages.${locale}.json`);
+        const data = await response.json();
+        console.log(`Käännökset kielelle "${locale}":`, data);
+        messages[locale] = data;
+      } catch (error) {
+        console.error('Latausvirhe:', error);
+      }
+      return messages;
     }
-    return messages;
-}
+  
+    async function initializeTranslations(locale = 'en') {
+      const messages = await loadLocaleMessages(locale);
+      translations = messages[locale] || {};
+      console.log("Käännökset:", translations);
+  
+      $t = function(key) {
+        const translation = translations[key] || key; // Paras kuitenkin kait tulostaa avain, jos käännöstä ei löydy
+        console.log(`Käännnettävänä nyt: "${key}"`, translation);
+        return translation; 
+      };
+    }
+  
+    await initializeTranslations(window.SKOSMOS.lang || 'fi');
+    console.log("Alustus ok ja $t-functio tarjoutuu käyttöön");
+  })();
 
-export async function createI18nInstance(locale = 'en', componentName = 'Unknown Component') {
-    const messages = await loadLocaleMessages(locale);
-    const i18n = VueI18n.createI18n({
-      locale: locale,
-      fallbackLocale: 'en', // fallback-kieli
-      messages
-    });
-
-    console.log('Luotiin i18n:', i18n);
-    return i18n;
-}
+//   Toimiva
