@@ -79,8 +79,8 @@ class WebController extends Controller
     public function guessLanguage($request, $vocid = null)
     {
         // 1. select language based on SKOSMOS_LANGUAGE cookie
-        $languageCookie = $request->getCookie('SKOSMOS_LANGUAGE');
-        if ($languageCookie) {
+        $languageCookie = $request->getCookie('SKOSMOS_SEARCH_LANG');
+        if ($languageCookie && $languageCookie != 'all') {
             return $languageCookie;
         }
 
