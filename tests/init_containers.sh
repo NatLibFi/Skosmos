@@ -17,6 +17,6 @@ done
 for fn in ../tests/test-vocab-data/*.ttl; do
     name=$(basename "${fn}" .ttl)
     echo "Loading test vocabulary $name"
-    curl -I -X PUT -H Content-Type:text/turtle -T "$fn" -G http://localhost:9030/skosmos/data --data-urlencode graph="http://www.skosmos.skos/$name/"
+    curl -X PUT -H "Content-Type: text/turtle" -T "$fn" "http://localhost:9030/skosmos/data?graph=http://www.skosmos.skos/$name/"
     echo
 done
