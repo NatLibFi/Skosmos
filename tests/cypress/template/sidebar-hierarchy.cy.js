@@ -1,15 +1,15 @@
 describe('Hierarchy', () => {
   it('Loads top concepts', () => {
     // Go to test vocab home page
-    cy.visit('/test/en/')
+    cy.visit('/test-hierarchy/en/')
     // Check that hierarchy tab is available and click it open
     cy.get('#hierarchy').should('not.have.class', 'disabled').click()
     // Check that hierarchy includes correct top concept
-    cy.get('#hierarchy-list li').should('have.length', 1).first().invoke('text').should('contain', 'Fish')
+    cy.get('#hierarchy-list li').should('have.length', 1).first().invoke('text').should('contain', 'Birds')
   })
   it('Loads children and hides them on button click', () => {
     // Go to test vocab home page
-    cy.visit('/test/en/')
+    cy.visit('/test-hierarchy/en/')
     // Click hierarchy tab open
     cy.get('#hierarchy').click()
     // Click hierarchy open button of top concept
@@ -23,7 +23,7 @@ describe('Hierarchy', () => {
   })
   it('Loads children on concept click', () => {
     // Go to test vocab home page
-    cy.visit('/test/en/')
+    cy.visit('/test-hierarchy/en/')
     // Click hierarchy tab open
     cy.get('#hierarchy').click()
     // Click first top concept link
@@ -35,7 +35,7 @@ describe('Hierarchy', () => {
   })
   it('Shows no button for concepts with no children', () => {
     // Go to test vocab home page
-    cy.visit('/test/en/')
+    cy.visit('/test-hierarchy/en/')
     // Click hierarchy tab open
     cy.get('#hierarchy').click()
     // Click hierarchy open button of top concept
@@ -44,34 +44,36 @@ describe('Hierarchy', () => {
     cy.get('#hierarchy-list li').eq(1).find('button').should('not.exist')
   })
   it('Loads hierarchy on concept page', () => {
-    // Go to "Bass" concept page
-    cy.visit('/test/en/page/ta116')
+    // Go to "Cuckoo" concept page
+    cy.visit('/test-hierarchy/en/page/ta116')
     // Check that hierarchy tab is active
     cy.get('#hierarchy a').should('have.class', 'active')
-    // Check that selected element is "Bass"
-    cy.get('#hierarchy-list .selected').should('have.length', 1).invoke('text').should('contain', 'Bass')
-    // Check that "Bass" has 1 child "Black sea bass"
-    cy.get('#hierarchy-list li:has(.selected)').last().find('ul').should('have.length', 1).invoke('text').should('contain', 'Black sea bass')
+    // Check that selected element is "Cuckoo"
+    cy.get('#hierarchy-list .selected').should('have.length', 1).invoke('text').should('contain', 'Cuckoo')
+    // Check that "Cuckoo" has 1 child "European cuckoo"
+    cy.get('#hierarchy-list li:has(.selected)').last().find('ul').should('have.length', 1).invoke('text').should('contain', 'European cuckoo')
     // Check that hierarchy includes correct top concept
-    cy.get('#hierarchy-list li').first().invoke('text').should('contain', 'Fish')
+    cy.get('#hierarchy-list li').first().invoke('text').should('contain', 'Birds')
     // Check that other concepts are loaded
     cy.get('#hierarchy-list li ul').first().children().should('have.length', 9)
   })
   it('Loads hierarchy after opening concept page', () => {
     // Go to test vocab home page
-    cy.visit('/test/en/')
-    // Click on "Bass" in alphabetical index
-    cy.get('#tab-alphabetical .sidebar-list li a').first().click()
+    cy.visit('/test-hierarchy/en/')
+    // Change letter to C in alphabetical view
+    cy.get("#tab-alphabetical .pagination").contains('a', 'C').click()
+    // Click on "Cuckoo" in alphabetical index
+    cy.get('#tab-alphabetical .sidebar-list li a').last().click()
     // Check that new concept page has been loaded
-    cy.get('#concept-heading h1', {'timeout': 15000}).invoke('text').should('equal', 'Bass')
+    cy.get('#concept-heading h1', {'timeout': 15000}).invoke('text').should('equal', 'Cuckoo')
     // Click hierarchy tab open
     cy.get('#hierarchy').click()
-    // Check that selected element is "Bass"
-    cy.get('#hierarchy-list .selected').should('have.length', 1).invoke('text').should('contain', 'Bass')
-    // Check that "Bass" has 1 child "Black sea bass"
-    cy.get('#hierarchy-list li:has(.selected)').last().find('ul').should('have.length', 1).invoke('text').should('contain', 'Black sea bass')
+    // Check that selected element is "Cuckoo"
+    cy.get('#hierarchy-list .selected').should('have.length', 1).invoke('text').should('contain', 'Cuckoo')
+    // Check that "Cuckoo" has 1 child "European cuckoo"
+    cy.get('#hierarchy-list li:has(.selected)').last().find('ul').should('have.length', 1).invoke('text').should('contain', 'European cuckoo')
     // Check that hierarchy includes correct top concept
-    cy.get('#hierarchy-list li a').first().invoke('text').should('contain', 'Fish')
+    cy.get('#hierarchy-list li a').first().invoke('text').should('contain', 'Birds')
     // Check that other concepts are loaded
     cy.get('#hierarchy-list li ul').first().children().should('have.length', 9)
   })
