@@ -14,14 +14,13 @@
     return messages
   }
 
-  async function initializeTranslations (locale = 'en') {
+  async function initializeTranslations (locale) {
     const messages = await loadLocaleMessages(locale)
     const translations = messages[locale] || {}
     $t = function (key) {
-      const translation = translations[key] || key // Paras kuitenkin kait tulostaa avain, jos käännöstä ei löydy
-      return translation
+      return translations[key] || key
     }
   }
 
-  await initializeTranslations(window.SKOSMOS.lang || 'fi')
+  await initializeTranslations(window.SKOSMOS.lang || 'en')
 })()
