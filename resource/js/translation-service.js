@@ -2,7 +2,7 @@
     async function loadLocaleMessages(locale) {
       const messages = {};
       try {
-        const response = await fetch(`http://localhost/skosmos/resource/translations/messages.${locale}.json`);
+        const response = await fetch(`resource/translations/messages.${locale}.json`);
         const data = await response.json();
         messages[locale] = data;
       } catch (error) {
