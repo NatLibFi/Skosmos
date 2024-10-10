@@ -13,8 +13,7 @@
   },
   "dependencies": {
     "bootstrap": "^5.2.3",
-    "vue": "^3.2.47",
-    "vue-i18n": "^9.14.0"
+    "vue": "^3.2.47"
   },
   "devDependencies": {
     "axe-core": "^4.7.1",
