@@ -61,8 +61,8 @@ class ConceptPropertyValueLiteralTest extends PHPUnit\Framework\TestCase
      */
     public function testGetLabelThatIsABrokenDate()
     {
-        set_error_handler(function ($code, $message, $file, $line) {
-            throw new \PHPUnit\Framework\Error($message);
+        set_error_handler(function ($code, $message) {
+            throw new \PHPUnit\Framework\Error($message,$code);
         });
 
         try {

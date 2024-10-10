@@ -164,8 +164,8 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
      */
     public function testGetDefaultLanguageWhenNotSet()
     {
-        set_error_handler(function ($code, $message, $file, $line) {
-            throw new \PHPUnit\Framework\Error($message);
+        set_error_handler(function ($code, $message) {
+            throw new \PHPUnit\Framework\Error($message, $code);
         });
         try {
             $vocab = $this->model->getVocabulary('testdiff');
@@ -217,8 +217,8 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
      */
     public function testGetDataURLsNotGuessable()
     {
-        set_error_handler(function ($code, $message, $file, $line) {
-            throw new \PHPUnit\Framework\Error($message);
+        set_error_handler(function ($code, $message) {
+            throw new \PHPUnit\Framework\Error($message, $code);
         });
 
         try {
@@ -259,8 +259,8 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
      */
     public function testGetDataURLsMarcNotDefined()
     {
-        set_error_handler(function ($code, $message, $file, $line) {
-            throw new \PHPUnit\Framework\Error($message);
+        set_error_handler(function ($code, $message) {
+            throw new \PHPUnit\Framework\Error($message, $code);
         });
 
         try {
@@ -686,8 +686,8 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
      */
     public function testGetPropertyOrderUnknown()
     {
-        set_error_handler(function ($code, $message, $file, $line) {
-            throw new \PHPUnit\Framework\Error($message);
+        set_error_handler(function ($code, $message) {
+            throw new \PHPUnit\Framework\Error($message, $code);
         });
 
         try {
