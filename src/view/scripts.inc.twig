@@ -1,6 +1,29 @@
 <!-- Skosmos variables passed from the backend to the frontend code-->
 <!-- NB: Do not add comments inside the JS object as it would break JSON parsing -->
 <script id="skosmos-global-vars">
+{% set mockup_translations = {
+    "fi": {
+        "fi": "suomi",
+        "en": "englanti",
+        "se": "pohjoissaame",
+        "sv": "ruotsi",
+        "all": "kaikilla kielillä"
+    },
+    "sv": {
+        "fi": "finska",
+        "en": "engelska",
+        "se": "nordsamiska",
+        "sv": "svenska",
+        "all": "på alla språk"
+    },
+    "en": {
+        "fi": "Finnish",
+        "en": "English",
+        "se": "Northern Sami",
+        "sv": "Swedish",
+        "all": "In all languages"
+    }
+} %}
 window.SKOSMOS = {
   "content_lang": "{{ request.contentLang }}",
   "explicitLangCodes": {{ explicit_langcodes ? "true" : "false" }},
@@ -33,21 +56,8 @@ window.SKOSMOS = {
   },
   {%- endif -%}
   "baseHref": "{{ BaseHref }}",
-  "language_strings": { "fi": { "fi": "suomi",
-                                "en": "englanti",
-                                "se": "pohjoissaame",
-                                "sv": "ruotsi",
-                                "all": "kaikilla kielillä"},
-                        "sv": { "fi": "finska",
-                                "en": "engelska",
-                                "se": "nordsamiska",
-                                "sv": "svenska",
-                                "all": "på alla språk"},
-                        "en": { "fi": "Finnish",
-                                "en": "English",
-                                "se": "Northern Sami",
-                                "sv": "Swedish",
-                                "all": "In all languages"}},
+  "language_strings": { {% for lang in request.vocab.config.languages %}"{{ lang }}": "{{ mockup_translations[request.lang][lang] }}", {% endfor -%}
+                      "all": "{{ mockup_translations[request.lang].all }}" },
   "msgs" : { "fi": { "No results": "Ei hakutuloksia",
                      "http://www.yso.fi/onto/yso-meta/Concept": "Yleiskäsite",
                      "http://www.yso.fi/onto/yso-meta/Hierarchy": "Hierarkisoiva käsite",

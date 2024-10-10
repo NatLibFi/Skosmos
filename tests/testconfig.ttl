@@ -104,6 +104,7 @@
 	skosmos:defaultLanguage "en";
     skosmos:feedbackRecipient "developer@vocabulary.org";
     skosmos:sortByNotation "true";
+    skosmos:alphabeticalListQualifier skos:notation ;
 	skosmos:language "en";
 	skosmos:sparqlGraph <http://www.skosmos.skos/test-notation-sort/> .
 
@@ -185,6 +186,18 @@
     dc:format "application/marcxml+xml" ;
     dc:language "sv" .
 
+:test-551-A a skosmos:Vocabulary, void:Dataset ;
+    dc:title "Vocab with 551 concepts starting with A"@fi ;
+    dc:subject :cat_general ;
+    void:uriSpace "http://www.skosmos.skos/test-551-A/";
+    skosmos:language "fi" ;
+    skosmos:defaultLanguage "fi";
+    skosmos:showChangeList "true" ;
+    skosmos:showDeprecatedChanges "true" ;
+    skosmos:useModifiedDate "true" ;
+    skosmos:sparqlGraph <http://www.skosmos.skos/test-551-A/> ;
+    skosmos:mainConceptScheme <http://www.skosmos.skos/test/modifiedVocab> .
+
 :multiple-schemes a skosmos:Vocabulary, void:Dataset ;
 	skos:prefLabel "Mutiple Schemes vocabulary"@en ;
 	dc:title "Mutiple Schemes vocabulary"@en ;
@@ -237,6 +250,24 @@
 	skosmos:language "en";
 	skosmos:defaultLanguage "en";
 	skosmos:sparqlGraph <http://www.skosmos.skos/test-concept-schemes/> .
+
+:test-hierarchy a skosmos:Vocabulary, void:Dataset ;
+	dc:title "Test hierarchy"@en ;
+	dc:subject :cat_science ;
+    dc:type mdrtype:ONTOLOGY ;
+	void:dataDump <http://skosmos.skos/dump/test-hierarchy/> ;
+	void:uriSpace "http://www.skosmos.skos/test-hierarchy/";
+	skosmos:arrayClass isothes:ThesaurusArray ;
+	skosmos:defaultLanguage "en";
+    skosmos:feedbackRecipient "developer@vocabulary.org";
+	skosmos:groupClass skos:Collection;
+	skosmos:marcSourceCode "ysa/fi"@fi, "allärs/sv"@sv;
+	skosmos:language "en";
+	skosmos:showTopConcepts "true";
+	skosmos:shortName "Test short",
+                    "Testi lyhyt"@fi;
+	skosmos:hasMultiLingualProperty <http://www.skosmos.skos/multiLingOn>;
+	skosmos:sparqlGraph <http://www.skosmos.skos/test-hierarchy/> .
 
 :showDeprecated a skosmos:Vocabulary, void:Dataset ;
 	dc11:title "Show deprecated test vocabulary"@en ;

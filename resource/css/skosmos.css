@@ -677,7 +677,7 @@ body {
   }
 
   /*****  Main content vocabpage & termpage *****/
-  #main-content h2 {
+  #main-content h1 {
     font-size: 2.5rem;
   }
 
@@ -704,6 +704,7 @@ body {
     font-weight: bold;
     font-size: 20px !important;
     margin-bottom: 0;
+    display: inline;
   }
 
   .property-value {
@@ -946,21 +947,7 @@ body {
     border: none !important;
   }
 
-  tr > td {
-    color: var(--dark-color);
-  }
-  tr > td > div > a {
-    color: var(--secondary-dark-color);
-    text-decoration: none !important;
-    font-weight: 700 !important;
-  }
   .vocab-statistics > h3 {
     font-size: 20px !important;
-  }
-  td.align-middle {
-    font-size: 16px;
-  }
-  table.vocab-info-literals > tbody > tr {
-    border-top: 1px solid var(--medium-color);
   }
 
