@@ -17,8 +17,6 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
         setlocale(LC_ALL, 'en_GB.utf8');
         $this->model = new Model('/../../tests/testconfig.ttl');
         $this->assertNotNull($this->model->getVocabulary('test')->getConfig()->getPluginRegister(), "The PluginRegister of the model was not initialized!");
-
-
     }
 
     /**
