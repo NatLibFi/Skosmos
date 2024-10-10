@@ -1,7 +1,3 @@
-// - Samat syyt uudelle rakenteelle suunnilleen kuin miten selitetty vocab-counts.js:n kohdalla
-// - Muutettu toteutusta myös siltä osin, että hyödynnetään computedia, jossa käännökset voidaan hakea valmiiksi
-//
-
 function startTermCountsApp() {
     const termCountsApp = Vue.createApp({
       data() {
@@ -71,17 +67,13 @@ function startTermCountsApp() {
     termCountsApp.mount('#term-counts');
   }
   
-  // Tarkistetaan, että $t on valmis, joten myös käännökset ovat valmiita
   function waitForTermTranslationService() {
     if (typeof $t !== 'undefined') {
-      startTermCountsApp(); // $t on valmis, joten Vue-appia voidaan kutsua
+      startTermCountsApp();
     } else {
       setTimeout(waitForTermTranslationService, 50);
     }
   }
   
-  // Odotellaan $t:tä
   waitForTermTranslationService();
   
-
-//   Toimiva
