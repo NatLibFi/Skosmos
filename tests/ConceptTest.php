@@ -312,10 +312,22 @@ class ConceptTest extends PHPUnit\Framework\TestCase
      */
     public function testGetTimestampInvalidWarning()
     {
-        $this->expectError();
-        $vocab = $this->model->getVocabulary('test');
-        $concept = $vocab->getConceptInfo("http://www.skosmos.skos/test/ta114", "en");
-        $props = $concept->getDate(); # this should throw a E_USER_WARNING exception
+        set_error_handler(function ($code, $message) {
+            throw new \PHPUnit\Framework\Error($message, $code);
+        });
+
+        try {
+            $vocab = $this->model->getVocabulary('test');
+
+            $this->expectException(\PHPUnit\Framework\Error::class);
+            $this->expectExceptionMessage("Failed to parse time string (1986-21-00) at position 6 (1): Unexpected character");
+
+            $concept = $vocab->getConceptInfo("http://www.skosmos.skos/test/ta114", "en");
+            $concept->getDate(); # this should throw an ErrorException
+
+        } finally {
+            restore_error_handler();
+        }
     }
 
     /**
