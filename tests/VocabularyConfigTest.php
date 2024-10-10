@@ -166,12 +166,12 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
      */
     public function testGetDefaultLanguageWhenNotSet()
     {
-        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
-            throw new \ErrorException($errstr, $errno, 0, $errfile, $errline);
+        set_error_handler(function ($code, $message, $file, $line) {
+            throw new \PHPUnit\Framework\Error($message);
         });
         try {
             $vocab = $this->model->getVocabulary('testdiff');
-            $this->expectException(\ErrorException::class);
+            $this->expectException(\PHPUnit\Framework\Error::class);
             $this->expectExceptionMessage("Default language for vocabulary 'testdiff' unknown, choosing 'en'.");
             $lang = $vocab->getConfig()->getDefaultLanguage();
         } finally {
@@ -219,13 +219,13 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
      */
     public function testGetDataURLsNotGuessable()
     {
-        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
-            throw new \ErrorException($errstr, $errno, 0, $errfile, $errline);
+        set_error_handler(function ($code, $message, $file, $line) {
+            throw new \PHPUnit\Framework\Error($message);
         });
 
         try {
             $vocab = $this->model->getVocabulary('test');
-            $this->expectException(\ErrorException::class);
+            $this->expectException(\PHPUnit\Framework\Error::class);
             $this->expectExceptionMessage("Could not guess format for <http://skosmos.skos/dump/test/>.");
 
             $url = $vocab->getConfig()->getDataURLs();
@@ -261,14 +261,14 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
      */
     public function testGetDataURLsMarcNotDefined()
     {
-        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
-            throw new \ErrorException($errstr, $errno, 0, $errfile, $errline);
+        set_error_handler(function ($code, $message, $file, $line) {
+            throw new \PHPUnit\Framework\Error($message);
         });
 
         try {
             $vocab = $this->model->getVocabulary('marc-undefined');
 
-            $this->expectException(\ErrorException::class);
+            $this->expectException(\PHPUnit\Framework\Error::class);
             $this->expectExceptionMessage("Could not guess format for <http://skosmos.skos/dump/test/marc-undefined.mrcx>.");
 
             $url = $vocab->getConfig()->getDataURLs();
@@ -688,13 +688,13 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
      */
     public function testGetPropertyOrderUnknown()
     {
-        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
-            throw new \ErrorException($errstr, $errno, 0, $errfile, $errline);
+        set_error_handler(function ($code, $message, $file, $line) {
+            throw new \PHPUnit\Framework\Error($message);
         });
 
         try {
             $vocab = $this->model->getVocabulary('testUnknownPropertyOrder');
-            $this->expectException(\ErrorException::class);
+            $this->expectException(\PHPUnit\Framework\Error::class);
             $this->expectExceptionMessage("Property order for vocabulary 'testUnknownPropertyOrder' unknown, using default order");
 
             $params = $vocab->getConfig()->getPropertyOrder();
