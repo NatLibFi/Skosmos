@@ -1,3 +1,6 @@
+/* global $t:writable */
+/* exported $t */
+
 (async function () {
   async function loadLocaleMessages (locale) {
     const messages = {}
@@ -13,7 +16,7 @@
 
   async function initializeTranslations (locale = 'en') {
     const messages = await loadLocaleMessages(locale)
-    translations = messages[locale] || {}
+    const translations = messages[locale] || {}
     $t = function (key) {
       const translation = translations[key] || key // Paras kuitenkin kait tulostaa avain, jos käännöstä ei löydy
       return translation

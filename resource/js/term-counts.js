@@ -1,3 +1,5 @@
+/* global Vue, $t */
+
 function startTermCountsApp () {
   const termCountsApp = Vue.createApp({
     data () {
