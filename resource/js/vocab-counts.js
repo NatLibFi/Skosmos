@@ -1,39 +1,39 @@
-function startResourceCountsApp() {
-    const resourceCountsApp = Vue.createApp({
-      data() {
-        return {
-          concepts: {},
-          subTypes: {},
-          conceptGroups: {}
-        };
+function startResourceCountsApp () {
+  const resourceCountsApp = Vue.createApp({
+    data () {
+      return {
+        concepts: {},
+        subTypes: {},
+        conceptGroups: {}
+      }
+    },
+    computed: {
+      hasCounts () {
+        return Object.keys(this.concepts).length > 0
       },
-      computed: {
-        hasCounts() {
-          return Object.keys(this.concepts).length > 0;
-        },
-        resourceCountsTitle() {
-          return $t('Resource counts by type');
-        },
-        typeLabel() {
-          return $t('Type');
-        },
-        countLabel() {
-          return $t('Count');
-        },
-        deprecatedConceptLabel() {
-          return $t('Deprecated concept');
-        }
+      resourceCountsTitle () {
+        return $t('Resource counts by type')
       },
-      mounted() {
-        fetch('rest/v1/' + window.SKOSMOS.vocab + '/vocabularyStatistics?lang=' + window.SKOSMOS.lang)
-          .then(response => response.json())
-          .then(data => {
-            this.concepts = data.concepts;
-            this.subTypes = data.subTypes;
-            this.conceptGroups = data.conceptGroups;
-          });
+      typeLabel () {
+        return $t('Type')
       },
-      template: `
+      countLabel () {
+        return $t('Count')
+      },
+      deprecatedConceptLabel () {
+        return $t('Deprecated concept')
+      }
+    },
+    mounted () {
+      fetch('rest/v1/' + window.SKOSMOS.vocab + '/vocabularyStatistics?lang=' + window.SKOSMOS.lang)
+        .then(response => response.json())
+        .then(data => {
+          this.concepts = data.concepts
+          this.subTypes = data.subTypes
+          this.conceptGroups = data.conceptGroups
+        })
+    },
+    template: `
         <h3 class="fw-bold py-3">{{ resourceCountsTitle }}</h3>
         <table class="table" id="resource-stats">
           <tbody>
@@ -47,11 +47,11 @@ function startResourceCountsApp() {
           </tbody>
         </table>
       `
-    });
-  
-    resourceCountsApp.component('resource-counts', {
-      props: ['concepts', 'subTypes', 'conceptGroups', 'deprecatedConceptLabel'],
-      template: `
+  })
+
+  resourceCountsApp.component('resource-counts', {
+    props: ['concepts', 'subTypes', 'conceptGroups', 'deprecatedConceptLabel'],
+    template: `
         <tr>
           <td>{{ concepts.label }}</td>
           <td>{{ concepts.count }}</td>
@@ -69,18 +69,17 @@ function startResourceCountsApp() {
           <td>{{ conceptGroups.count }}</td>
         </tr>
       `
-    });
-  
-    resourceCountsApp.mount('#resource-counts');
+  })
+
+  resourceCountsApp.mount('#resource-counts')
+}
+
+function waitForTranslationService () {
+  if (typeof $t !== 'undefined') {
+    startResourceCountsApp()
+  } else {
+    setTimeout(waitForTranslationService, 50)
   }
-  
-  function waitForTranslationService() {
-    if (typeof $t !== 'undefined') {
-      startResourceCountsApp();
-    } else {
-      setTimeout(waitForTranslationService, 50);
-    }
-  }
-  
-  waitForTranslationService();
-  
+}
+
+waitForTranslationService()
