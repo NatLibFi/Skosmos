@@ -137,7 +137,7 @@ class Vocabulary extends DataObject implements Modifiable
      */
     public function getLocalName($uri)
     {
-        return str_replace($this->getUriSpace(), "", $uri);
+        return ($uri !== null) ? str_replace($this->getUriSpace(), "", $uri) : '';
     }
 
     /**
