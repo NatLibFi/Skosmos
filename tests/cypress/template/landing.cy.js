@@ -46,6 +46,6 @@ describe('Landing page', () => {
     // check that we are still within the Skosmos URL space
     cy.url().should('include', Cypress.config().baseUrl)
     // check that we are on the vocab home page
-    cy.get('#vocab-info')
+    cy.get('.vocabpage')
   })
 })
