@@ -17,6 +17,8 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
         setlocale(LC_ALL, 'en_GB.utf8');
         $this->model = new Model('/../../tests/testconfig.ttl');
         $this->assertNotNull($this->model->getVocabulary('test')->getConfig()->getPluginRegister(), "The PluginRegister of the model was not initialized!");
+
+
     }
 
     /**
@@ -164,10 +166,17 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
      */
     public function testGetDefaultLanguageWhenNotSet()
     {
-        $vocab = $this->model->getVocabulary('testdiff');
-        $this->expectError();
-        $this->expectErrorMessage("Default language for vocabulary 'testdiff' unknown, choosing 'en'.");
-        $lang = $vocab->getConfig()->getDefaultLanguage();
+        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+            throw new \ErrorException($errstr, $errno, 0, $errfile, $errline);
+        });
+        try {
+            $vocab = $this->model->getVocabulary('testdiff');
+            $this->expectException(\ErrorException::class);
+            $this->expectExceptionMessage("Default language for vocabulary 'testdiff' unknown, choosing 'en'.");
+            $lang = $vocab->getConfig()->getDefaultLanguage();
+        } finally {
+            restore_error_handler();
+        }
     }
 
     /**
@@ -210,10 +219,19 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
      */
     public function testGetDataURLsNotGuessable()
     {
-        $vocab = $this->model->getVocabulary('test');
-        $this->expectWarning();
-        $this->expectWarningMessage("Could not guess format for <http://skosmos.skos/dump/test/>.");
-        $url = $vocab->getConfig()->getDataURLs();
+        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+            throw new \ErrorException($errstr, $errno, 0, $errfile, $errline);
+        });
+
+        try {
+            $vocab = $this->model->getVocabulary('test');
+            $this->expectException(\ErrorException::class);
+            $this->expectExceptionMessage("Could not guess format for <http://skosmos.skos/dump/test/>.");
+
+            $url = $vocab->getConfig()->getDataURLs();
+        } finally {
+            restore_error_handler();
+        }
     }
 
     /**
@@ -243,11 +261,21 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
      */
     public function testGetDataURLsMarcNotDefined()
     {
-        $vocab = $this->model->getVocabulary('marc-undefined');
-        $this->expectWarning();
-        $this->expectWarningMessage("Could not guess format for <http://skosmos.skos/dump/test/marc-undefined.mrcx>.");
-        $url = $vocab->getConfig()->getDataURLs();
-        $this->assertEquals(array(), $url);
+        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+            throw new \ErrorException($errstr, $errno, 0, $errfile, $errline);
+        });
+
+        try {
+            $vocab = $this->model->getVocabulary('marc-undefined');
+
+            $this->expectException(\ErrorException::class);
+            $this->expectExceptionMessage("Could not guess format for <http://skosmos.skos/dump/test/marc-undefined.mrcx>.");
+
+            $url = $vocab->getConfig()->getDataURLs();
+            $this->assertEquals(array(), $url);
+        } finally {
+            restore_error_handler();
+        }
     }
 
     /**
@@ -660,11 +688,20 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
      */
     public function testGetPropertyOrderUnknown()
     {
-        $vocab = $this->model->getVocabulary('testUnknownPropertyOrder');
-        $this->expectWarning();
-        $this->expectWarningMessage("Property order for vocabulary 'testUnknownPropertyOrder' unknown, using default order");
-        $params = $vocab->getConfig()->getPropertyOrder();
-        $this->assertEquals(VocabularyConfig::DEFAULT_PROPERTY_ORDER, $params);
+        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+            throw new \ErrorException($errstr, $errno, 0, $errfile, $errline);
+        });
+
+        try {
+            $vocab = $this->model->getVocabulary('testUnknownPropertyOrder');
+            $this->expectException(\ErrorException::class);
+            $this->expectExceptionMessage("Property order for vocabulary 'testUnknownPropertyOrder' unknown, using default order");
+
+            $params = $vocab->getConfig()->getPropertyOrder();
+            $this->assertEquals(VocabularyConfig::DEFAULT_PROPERTY_ORDER, $params);
+        } finally {
+            restore_error_handler();
+        }
     }
 
     /**
