@@ -1,0 +1,68 @@
+PREFIX :<http://www.ontotext.com/connectors/lucene#>
+PREFIX inst:<http://www.ontotext.com/connectors/lucene/instance#>
+INSERT DATA {
+    inst:skosmos :createConnector '''
+{
+  "fields": [
+    {
+      "fieldName": "prefLabel",
+      "propertyChain": [
+        "http://www.w3.org/2004/02/skos/core#prefLabel"
+      ],
+      "indexed": true,
+      "stored": false,
+      "analyzed": true,
+      "multivalued": false,
+      "ignoreInvalidValues": false,
+      "facet": false
+    },
+    {
+      "fieldName": "altLabel",
+      "propertyChain": [
+        "http://www.w3.org/2004/02/skos/core#altLabel"
+      ],
+      "indexed": true,
+      "stored": false,
+      "analyzed": true,
+      "multivalued": true,
+      "ignoreInvalidValues": false,
+      "facet": false
+    },
+    {
+      "fieldName": "hiddenLabel",
+      "propertyChain": [
+        "http://www.w3.org/2004/02/skos/core#hiddenLabel"
+      ],
+      "indexed": true,
+      "stored": false,
+      "analyzed": true,
+      "multivalued": true,
+      "ignoreInvalidValues": false,
+      "facet": false
+    },
+    {
+      "fieldName": "notation",
+      "propertyChain": [
+        "http://www.w3.org/2004/02/skos/core#notation"
+      ],
+      "indexed": true,
+      "stored": false,
+      "analyzed": true,
+      "multivalued": true,
+      "ignoreInvalidValues": false,
+      "facet": false
+    }
+  ],
+  "languages": [],
+  "types": [
+    "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "readonly": false,
+  "detectFields": false,
+  "importGraph": false,
+  "skipInitialIndexing": false,
+  "boostProperties": [],
+  "stripMarkup": false
+}
+''' .
+}
