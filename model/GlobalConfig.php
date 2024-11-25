@@ -78,7 +78,9 @@ class GlobalConfig extends BaseConfig {
                 $nskey = "namespaces of " . $key;
                 $this->graph = $this->cache->fetch($key);
                 $this->namespaces = $this->cache->fetch($nskey);
-                if ($this->graph === false || $this->namespaces === false) { // was not found in cache
+                if ($this->graph && $this->namespaces) { // found in cache
+                    $this->resource = $this->configResource($this->graph, "cache");
+                } else {
                     $this->parseConfig($this->filePath);
                     $this->cache->store($key, $this->graph);
                     $this->cache->store($nskey, $this->namespaces);
@@ -88,16 +90,65 @@ class GlobalConfig extends BaseConfig {
                 $this->parseConfig($this->filePath);
             }
 
-            $configResources = $this->graph->allOfType("skosmos:Configuration");
-            if (is_null($configResources) || !is_array($configResources) || count($configResources) !== 1) {
-                throw new Exception("config.ttl must have exactly one skosmos:Configuration");
-            }
-
-            $this->resource = $configResources[0];
             $this->initializeNamespaces();
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
         }      
+    }
+
+    /**
+     * Ensure there is exactely one skosmos:Configuration and return it.
+     */
+    private function configResource($graph, $source) {
+        $configResources = $graph->allOfType("skosmos:Configuration");
+        if (is_null($configResources) || !is_array($configResources) || count($configResources) !== 1) {
+            throw new Exception("$source must have exactly one skosmos:Configuration");
+        }
+        return $configResources[0];
+    }
+
+    /**
+     * Retrieves, parses and includes configuration in existing configuration.
+     * @param \EasyRdf\Resource URL or file of configuration in Turtle syntax.
+     */
+    private function includeConfig($location) {
+        $location = $location->getUri();
+
+        if (str_starts_with($location, "http://") || str_starts_with($location, "https://")) {
+            $ch = curl_init($location);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: text/turtle'));
+            $turtle = curl_exec($ch);
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            if ($httpCode != 200 && $httpCode != 303) {
+                throw new Exception("Failed to include configuration from $location");
+            }
+            curl_close($ch);
+        } else {
+            if (file_exists($location)) {
+                $turtle = file_get_contents($location);
+            } else {
+                throw new Exception("Included config file $location does not exist!");
+            }
+        }
+
+        $parser = new SkosmosTurtleParser();
+        try {
+            $graph = $parser->parseGraph($turtle, $location);
+        } catch (Exception $e) {
+            throw new Exception("Failed to parse $location: " . $e->getMessage());
+        }
+
+        // Add triples from included configuration, adjust :config resource
+        $configResource = $this->configResource($graph, $location);
+        foreach($graph->resources() as $resource) {
+            $subject = $resource == $configResource ? $this->resource : $resource;
+            foreach($graph->properties($resource) as $property) {
+                foreach($resource->all($property) as $value) {
+                    $this->graph->add($subject, $property, $value);
+                }
+            }
+        }
     }
 
     /**
@@ -107,10 +158,16 @@ class GlobalConfig extends BaseConfig {
      */
     private function parseConfig($filename)
     {
-        $this->graph = new EasyRdf\Graph();
         $parser = new SkosmosTurtleParser();
-        $parser->parse($this->graph, file_get_contents($filename), 'turtle', $filename);
+        $this->graph = $parser->parseGraph(file_get_contents($filename), $filename);
         $this->namespaces = $parser->getNamespaces();
+
+        $this->resource = $this->configResource($this->graph, $filename);
+
+        $includes = $this->graph->allResources($this->resource, "skosmos:includeConfig");
+        foreach($includes as $location) {
+            $this->includeConfig($location);
+        }
     }
 
     /**
