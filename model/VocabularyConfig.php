@@ -39,6 +39,54 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
+     * Get the resources if skosmos:parameters is used
+     * @return EasyRdf\Resource objects as an array
+     */
+    public function getParameters(EasyRdf\Resource $res) : array {
+        return $res->allResources('skosmos:parameters');
+    }
+
+    /**
+     * Get a literal value if skosmos:usePlugin is set
+     * @return \EasyRdf\Literal value as a string
+     */
+    public function getUsePluginAsLiteral($plugin) : string {
+        return (string) $plugin->getLiteral('skosmos:usePlugin')->getValue();
+    }
+
+    /**
+     * Get an array of literal values if skosmos:usePlugin is set
+     * @return array of literal values
+     */
+    public function getUsePluginAsArray(EasyRdf\Resource $res) {
+        return $res->allLiterals('skosmos:usePlugin');
+    }
+
+    /**
+     * Get an array of resources if skosmos:useParamPlugin is set
+     * @return array of resources
+     */
+    public function getUseParamPluginArray() : array {
+        return array_values(array_unique($this->resource->allResources('skosmos:useParamPlugin')));
+    }
+
+    /**
+     * Get a resource if skosmos:vocabularyPlugins is set
+     * @return EasyRdf\Resource object
+     */
+    public function getVocabularyPlugins() {
+        return $this->resource->getResource('skosmos:vocabularyPlugins');
+    }
+
+    /**
+     * Get a resouce if skosmos:vocabularyPlugins is set
+     * @return array of resources
+     */
+    public function getVocabularyPluginsArray() {
+        return $this->resource->all('skosmos:vocabularyPlugins');
+    }
+
+    /**
      * Get an ordered array of plugin names with order configured in skosmos:vocabularyPlugins
      * @return array of plugin names
      */
@@ -46,9 +94,9 @@ class VocabularyConfig extends BaseConfig
     {
         $this->setParameterizedPlugins();
         $pluginArray = array();
-        $vocabularyPlugins = $this->resource->getResource('skosmos:vocabularyPlugins');
+        $vocabularyPlugins = $this->getVocabularyPlugins();
         if (!$vocabularyPlugins instanceof EasyRdf\Collection) {
-            $vocabularyPlugins = $this->resource->all('skosmos:vocabularyPlugins');
+            $vocabularyPlugins = $this->getVocabularyPlugins();
         }
         if ($vocabularyPlugins) {
             foreach ($vocabularyPlugins as $plugin) {
@@ -56,19 +104,19 @@ class VocabularyConfig extends BaseConfig
                     $pluginArray[] = $plugin->getValue();
                 }
                 else {
-                    $pluginArray[] = $plugin->getLiteral('skosmos:usePlugin')->getValue();
+                    $pluginArray[] = $plugin->getLiteral($this->getUsePluginAsLiteral());
                 }
             }
         }
         $pluginArray = array_merge($pluginArray, $this->globalPlugins);
 
-        $paramPlugins = $this->resource->allResources('skosmos:useParamPlugin');
+        $paramPlugins = $this->getUseParamPluginArray();
         if ($paramPlugins) {
             foreach ($paramPlugins as $plugin) {
-                $pluginArray[] = $plugin->getLiteral('skosmos:usePlugin')->getValue();
+                $pluginArray[] = $this->getUsePluginAsLiteral($plugin);
             }
         }
-        $plugins = $this->resource->allLiterals('skosmos:usePlugin');
+        $plugins = $this->getUsePluginAsArray($this->resource);
         if ($plugins) {
             foreach ($plugins as $pluginlit) {
                 $pluginArray[] = $pluginlit->getValue();
@@ -84,10 +132,9 @@ class VocabularyConfig extends BaseConfig
     private function setParameterizedPlugins() : void
     {
         $this->pluginParameters = array();
-
-        $vocabularyPlugins = $this->resource->getResource('skosmos:vocabularyPlugins');
+        $vocabularyPlugins = $this->getVocabularyPlugins();
         if (!$vocabularyPlugins instanceof EasyRdf\Collection) {
-            $vocabularyPlugins = $this->resource->all('skosmos:vocabularyPlugins');
+            $vocabularyPlugins = $this->getVocabularyPluginsArray();
         }
         if ($vocabularyPlugins) {
             foreach ($vocabularyPlugins as $plugin) {
@@ -96,7 +143,7 @@ class VocabularyConfig extends BaseConfig
                 }
             }
         }
-        $pluginResources = $this->resource->allResources('skosmos:useParamPlugin');
+        $pluginResources = $this->getUseParamPluginArray();
         if ($pluginResources) {
             foreach ($pluginResources as $pluginResource) {
                 $this->setPluginParameters($pluginResource);
@@ -111,10 +158,10 @@ class VocabularyConfig extends BaseConfig
      */
     private function setPluginParameters(Easyrdf\Resource $pluginResource) : void
     {
-        $pluginName = $pluginResource->getLiteral('skosmos:usePlugin')->getValue();
+        $pluginName = $this->getUsePluginAsLiteral($pluginResource);
         $this->pluginParameters[$pluginName] = array();
 
-        $pluginParams = $pluginResource->allResources('skosmos:parameters');
+        $pluginParams = $this->getParameters($pluginResource);
         foreach ($pluginParams as $parameter) {
 
             $paramLiterals = $parameter->allLiterals('schema:value');
