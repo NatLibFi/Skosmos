@@ -16,9 +16,9 @@
     "vue": "^3.5.x"
   },
   "devDependencies": {
-    "axe-core": "^4.7.x",
-    "cypress": "^13.6.x",
-    "cypress-axe": "^1.4.x",
+    "axe-core": "^4.10.x",
+    "cypress": "^13.16.x",
+    "cypress-axe": "^1.5.x",
     "standard": "^17.0.x"
   }
 }
