@@ -19,6 +19,6 @@
     "axe-core": "^4.10.x",
     "cypress": "^13.16.x",
     "cypress-axe": "^1.5.x",
-    "standard": "^17.0.x"
+    "standard": "^17.1.x"
   }
 }
