@@ -38,7 +38,8 @@
   },
   "config": {
     "allow-plugins": {
-      "symfony/runtime": true
+      "symfony/runtime": true,
+      "robloach/component-installer": true
     }
   }
 }

@@ -16,3 +16,7 @@ services:
     LinkUrlExtension:
         class: 'LinkUrlExtension'
         public: true
+    
+    Translation\Extractor\JsTranslationExtractor:
+        tags:
+            - { name: 'translation.extractor', alias: 'js_translation_extractor' }
