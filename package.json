@@ -12,8 +12,8 @@
     "test-accessibility-cli-vocab-search": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility/axe-vocab-search.cy.js'"
   },
   "dependencies": {
-    "bootstrap": "^5.2.x",
-    "vue": "^3.2.x"
+    "bootstrap": "^5.3.x",
+    "vue": "^3.5.x"
   },
   "devDependencies": {
     "axe-core": "^4.7.x",
