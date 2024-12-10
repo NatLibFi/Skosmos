@@ -30,6 +30,9 @@
   --vocab-table-border: var(--medium-color);
   --vocab-link: var(--secondary-dark-color);
   --vocab-box-text: var(--dark-color);
+  --tooltip-fg-color: var(--light-color);
+  --tooltip-bg-color: var(--dark-color);
+  --tooltip-border-color: var(--secondary-medium-color);
 
   /* Font definitions */
   --font-size: 14px;
@@ -951,3 +954,76 @@ body {
     font-size: 20px !important;
   }
 
+/* Tooltips */
+
+.tooltip-html {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.tooltip-html button {
+  line-height: 1.0;
+}
+
+.tooltip-html button:focus {
+  border: 1px solid var(--vocab-text);
+  border-radius: 0;
+}
+
+.tooltip-html:hover .tooltip-html-content, .tooltip-html:focus-within .tooltip-html-content {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tooltip-html-content {
+  box-sizing: border-box;
+  position: absolute;
+  top: 20px;
+  left: 0;
+  display: block;
+  cursor: text;
+  width: 400px;
+  color: var(--tooltip-fg-color);
+  background-color: var(--tooltip-bg-color);
+  border: 3px solid var(--tooltip-border-color);
+  z-index: 9001;
+  visibility: hidden;
+  opacity: 0;
+  padding: 0.25rem 0.5rem;
+}
+
+/* The triangle that appears near the element that triggered it. */
+.tooltip-html-content:after {
+  position: absolute;
+  content: '';
+  width: 10px;
+  height: 10px;
+  transform: rotate(45deg);
+  top: -7px;
+  left: 0;
+  margin-left: 2px;
+  color: var(--tooltip-fg-color);
+  border-top: 6px solid var(--tooltip-border-color);
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 6px solid var(--tooltip-border-color);
+  z-index: 9002;
+}
+
+/* Definition lists used in tooltips. */
+
+dl.tooltip-html-content dt {
+  display: block;
+  float: left;
+  font-weight: bold;
+  margin-right: 0.4em;
+}
+
+dl.tooltip-html-content dt::after {
+  content: ":";
+}
+
+dl.tooltip-html-content dd {
+  display: block;
+}

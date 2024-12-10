@@ -96,14 +96,25 @@
             <div class="col-sm-5">
               <ul>
                 {% for value in labels.prefLabel|default([])|merge(labels.altLabel|default([])) %}
-                {% if value.type == "skos:prefLabel" and value.lang in request.vocab.config.languages %}
                 <li>
-                  <a href="{{ concept.uri|link_url(request.vocabid,request.lang, 'page', value.lang) }}"
-                     hreflang="{{ value.lang }}">{{ value.label }}</a>
-                </li>
-                {% else %}
-                <li class="altlabel">{{ value.label }}</li>
+                {% if value.hasXlProperties %}
+                <div class="tooltip-html">
+                  <button class="btn p-0 m-0"><i class="fa-solid fa-circle-info"></i></button>
+                  <dl class="tooltip-html-content">
+                    {% for key, val in value.xlLabel.properties %}
+                    <dt>{{ key|trans }}</dt>
+                    <dd>{{ val }}</dd>
+                    {% endfor %}
+                  </dl>
+		</div>
                 {% endif %}
+                {% if value.type == "skos:prefLabel" and value.lang in request.vocab.config.languages %}
+                <a href="{{ concept.uri|link_url(request.vocabid,request.lang, 'page', value.lang) }}"
+                   hreflang="{{ value.lang }}">{{ value.label }}</a>
+                {% else %}
+                <span class="altlabel">{{ value.label }}</span>
+                {% endif %}
+                </li>
                 {% endfor %}
               </ul>
             </div>
