@@ -7,41 +7,60 @@ use Symfony\Component\Translation\MessageCatalogue;
 
 class JsTranslationExtractor implements ExtractorInterface
 {
+
+    private string $directory;
+
+    public function __construct(string $directory)
+    {
+        $this->directory = $directory;
+        echo "Constructor directory: {$this->directory}" . PHP_EOL;
+    
+        if (!is_dir($this->directory)) {
+            echo "Directory does not exist: {$this->directory}" . PHP_EOL;
+        }
+    }
+    
+
     private string $prefix = '';
 
     public function setPrefix(string $prefix): void
     {
-        // Allow setting a prefix only if it is provided
         $this->prefix = $prefix ?: '';
     }
 
     public function extract($directory, MessageCatalogue $catalogue): void
     {
-        // Ensure the provided directory exists and is a directory
+        $directory = $this->directory;
+    
+        echo "Using directory: $directory" . PHP_EOL;
+    
         if (!is_dir($directory)) {
-            echo "Skipping non-directory: $directory" . PHP_EOL;
+            echo "Invalid directory: $directory" . PHP_EOL;
             return;
         }
-
+    
         $iterator = new \RecursiveIteratorIterator(
             new \RecursiveDirectoryIterator($directory)
         );
-
+    
         foreach ($iterator as $file) {
             if ($file->getExtension() !== 'js') {
                 continue;
             }
-
-            echo "Processing file: " . $file->getPathname() . PHP_EOL; // Debugging output
-
+    
+            echo "Processing file: " . $file->getPathname() . PHP_EOL;
+    
             $content = file_get_contents($file->getPathname());
-
+    
             preg_match_all('/\$t\([\'"]([^\'"]+)[\'"]\)/', $content, $matches);
-
+    
             foreach ($matches[1] as $key) {
-                echo "Found key: " . $key . PHP_EOL; // Debugging output
+                echo "Found key: " . $key . PHP_EOL;
                 $catalogue->set($this->prefix . $key, $key);
             }
         }
     }
+    
 }
+
+
