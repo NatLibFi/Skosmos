@@ -63,7 +63,7 @@
         {% for langcode, langdata in languages %}
         {% if request.lang != langcode %}
         <li class="nav-item language">
-          <a class="fs-6 text-light ms-3 text-decoration-none" id="language-{{ langcode}}" href="{{ request.langurl(langcode) }}"> {{ langdata.name }}</a>
+          <a class="fs-6 text-light ms-3 text-decoration-none" id="language-{{ langcode }}" href="{{ request.langurl(langcode) }}"> {{ langdata.name }}</a>
         </li>
         {% endif %}
         {% endfor %}
