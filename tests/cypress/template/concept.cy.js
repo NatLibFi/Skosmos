@@ -399,6 +399,18 @@ describe('Concept page', () => {
     // check that we have the correct number of languages
     cy.get('#concept-other-languages').find('.row').should('have.length', 3)
   })
+  it('contains SKOS XL information for terms in other languages', () => {
+    cy.visit('/yso/en/page/p4625') // go to "Bronze Age" concept page
+
+    // the tooltip should originally be invisible
+    cy.get('#concept-other-languages').find('.row').eq(1).find('.tooltip-html-content').should('not.be.visible')
+
+    // click the button to trigger the tooltip
+    cy.get('#concept-other-languages').find('.row').eq(1).find('.tooltip-html button').click()
+
+    // the tooltip should now be visible
+    cy.get('#concept-other-languages').find('.row').eq(1).find('.tooltip-html-content').should('be.visible')
+  })
   it('contains created & modified times (English)', () => {
     cy.visit('/yso/en/page/p21685') // go to "music research" concept page (English)
 
