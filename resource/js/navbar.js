@@ -6,13 +6,13 @@ function setLangCookie (lang) {
   }
   const path = '; path=' + cookiePath
 
-  var date = new Date()
-  const msPerDay = 24*60*60*1000
+  const date = new Date()
+  const msPerDay = 24 * 60 * 60 * 1000
   const days = 365
-  date.setTime(date.getTime() + days*msPerDay)
+  date.setTime(date.getTime() + days * msPerDay)
   const expires = '; expires=' + date.toGMTString()
 
-  const langValue = 'SKOSMOS_LANGUAGE='+lang
+  const langValue = 'SKOSMOS_LANGUAGE=' + lang
 
   document.cookie = langValue + expires + path + '; SameSite=Lax'
 }
