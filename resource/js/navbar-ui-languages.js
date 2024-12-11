@@ -5,13 +5,11 @@ function setLangCookie(lang) {
     cookiePath = window.SKOSMOS.baseHref.replace(window.origin, '')
   }
   document.cookie = `SKOSMOS_LANGUAGE=${lang};path=${cookiePath}`
-  console.log('KEKSI asetettu parametrille ' + lang)
 }
 function addLanguageEventListeners() {
   const languageLinks = document.querySelectorAll('.nav-item.language a');
   languageLinks.forEach(function(link) {
     link.addEventListener('click', function(event) {
-      event.preventDefault()
       const langValue = this.getAttribute('id').substring(9) //strip the 'language-' part of the id
       setLangCookie(langValue)
     })
