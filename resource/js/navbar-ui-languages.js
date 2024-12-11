@@ -12,10 +12,10 @@ function addLanguageEventListeners() {
   languageLinks.forEach(function(link) {
     link.addEventListener('click', function(event) {
       event.preventDefault()
-      setLangCookie(this.getAttribute('href'))
+      const langValue = this.getAttribute('id').substring(9) //strip the 'language-' part of the id
+      setLangCookie(langValue)
     })
   })
 }
-
 // register the language link event listeners
 document.addEventListener('DOMContentLoaded', addLanguageEventListeners)
