@@ -8,5 +8,8 @@ describe('Navbar languages', () => {
     cy.getCookie('SKOSMOS_LANGUAGE').should('have.property', 'value', 'fi')
 
     cy.url().should('include', '/fi/')
+
+    cy.visit('/')
+    cy.url().should('include', '/fi/')
   })
 })
