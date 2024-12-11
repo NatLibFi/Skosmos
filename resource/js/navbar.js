@@ -4,7 +4,17 @@ function setLangCookie (lang) {
   if (window.SKOSMOS.baseHref && window.SKOSMOS.baseHref.replace(window.origin, '')) {
     cookiePath = window.SKOSMOS.baseHref.replace(window.origin, '')
   }
-  document.cookie = `SKOSMOS_LANGUAGE=${lang};path=${cookiePath}`
+  const path = '; path=' + cookiePath
+
+  var date = new Date()
+  const msPerDay = 24*60*60*1000
+  const days = 365
+  date.setTime(date.getTime() + days*msPerDay)
+  const expires = '; expires=' + date.toGMTString()
+
+  const langValue = 'SKOSMOS_LANGUAGE='+lang
+
+  document.cookie = langValue + expires + path + '; SameSite=Lax'
 }
 function addLanguageEventListeners () {
   const languageLinks = document.querySelectorAll('.nav-item.language a')
