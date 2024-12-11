@@ -9,7 +9,7 @@ function startTermCountsApp () {
     },
     computed: {
       termCountsTitle () {
-        return $t('Term counts by language JS 9')
+        return $t('Term counts by language (On JS - test case C)')
       },
       conceptLanguageLabel () {
         return $t('Concept language')

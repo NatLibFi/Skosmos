@@ -1,6 +1,6 @@
 {% set pageType = 'about' %}
 {% extends "base-template.twig" %}
-{% block title %}{{ "About Y" | trans}} - {{ GlobalConfig.serviceName }}{% endblock %}
+{% block title %}{{ "About (test case A)" | trans}} - {{ GlobalConfig.serviceName }}{% endblock %}
 {% block description %}{{ GlobalConfig.aboutDescription(request.lang) }}{% endblock %}
 {% block url %}{{ BaseHref }}{{ request.langurl }}{% endblock %}
 
@@ -9,7 +9,7 @@
 <div class="container">
   <div class="mx-5">
     <div class="px-3 pb-3 bg-light">
-      <h1 class="fs-3 mb-5">{{"About 5" | trans }}</h1>
+      <h1 class="fs-3 mb-5">{{"About (test case B)" | trans }}</h1>
       <p class="fs-6">
       {% include 'about-info.inc.twig' %}
       </p>

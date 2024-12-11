@@ -26,19 +26,3 @@ services:
             $directory: '%kernel.project_dir%/resource/js'
         tags:
             - { name: 'translation.extractor', alias: 'js_translation_extractor' }
-    
-    # Symfony\Bundle\FrameworkBundle\Command\TranslationUpdateCommand:
-    #     arguments:
-    #         $writer: '@translation.writer'
-    #         $reader: '@translation.reader'
-    #         $extractor: '@translation.extractor'
-    #         #$extractor: 'js_translation_extractor'
-    #         $defaultLocale: 'en'
-    #         $defaultTransPath: '%kernel.project_dir%/resource/translations' 
-    #         $defaultViewsPath: '%kernel.project_dir%/src/view'
-    #         $transPaths: [] 
-    #         # $codePaths: '%your_custom_code_paths%'
-    #         $codePaths: 
-    #             - '%kernel.project_dir%/src'
-    #             - '%kernel.project_dir%/resource/js'
-    #         $enabledLocales: ['ar', 'da', 'de', 'en', 'es', 'fa', 'fi', 'fr', 'fy', 'it', 'lv', 'nb', 'nl', 'nn', 'pl', 'pt_BR', 'pt', 'ru', 'se', 'sv', 'zh'] 
