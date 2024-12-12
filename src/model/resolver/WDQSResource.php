@@ -11,7 +11,7 @@ class WDQSResource extends RemoteResource
             EasyRdf\Format::unregister('json');
             // change the timeout setting for external requests
             $httpclient = EasyRdf\Http::getDefaultHttpClient();
-            $httpclient->setConfig(array('timeout' => $timeout));
+            $httpclient->setConfig(array('timeout' => $timeout, 'useragent' => 'Skosmos'));
             $httpclient->setHeaders('Accept', 'text/turtle');
             EasyRdf\Http::setDefaultHttpClient($httpclient);
 
