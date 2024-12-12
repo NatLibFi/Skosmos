@@ -37,10 +37,12 @@
         </div>
         <div class="col-sm-8" id="concept-label">
         {% if concept.hasXlLabel %}
-          {{ include('xl-label.inc.twig', {xlLabel: concept.xlLabel}) }}
+          {% set descriptionId = 'concept-preflabel-xl' %}
+          {{ include('xl-label.inc.twig', {xlLabel: concept.xlLabel, xlDescriptionId: descriptionId}) }}
         {% endif %}
         {% if concept.notation %}
           <h1 id="concept-preflabel"
+              {% if descriptionId %}aria-describedby="{{ descriptionId }}"{% endif %}
               class="mb-0">
             <span class="notation user-select-all" id="concept-notation">{{ concept.notation }}</span> {{ concept.label }}</h1><button
                 class="btn btn-default copy-clipboard px-1" type="button" id="copy-notation"
@@ -49,6 +51,7 @@
             </button>
           {% else %}
           <h1 id="concept-preflabel"
+              {% if descriptionId %}aria-describedby="{{ descriptionId }}"{% endif %}
               class="mb-0 user-select-all">{{ concept.label }}</h1><button
                   class="btn btn-default copy-clipboard px-1" type="button" id="copy-preflabel"
                   data-bs-toggle="tooltip" data-bs-placement="button" title="{{ 'Copy to clipboard' | trans }}">
@@ -84,9 +87,12 @@
             <li>
               {%- apply spaceless %}
               {% if propval.hasXlProperties %}
-                {{ include('xl-label.inc.twig', {xlLabel: propval.xlLabel}) }}
+                {% set descriptionId = "concept-property-xl-#{loop.parent.loop.index}-#{loop.index}" %}
+                {{ include('xl-label.inc.twig', {xlLabel: propval.xlLabel, xlDescriptionId: descriptionId}) }}
+              {% else %}
+                {% set descriptionId = '' %}
               {% endif %}
-              {% if propval.containsHtml %}{{ propval.label|raw }}{% else %}{{ propval.label }}{% endif %}
+              <span{% if descriptionId %} aria-describedby="{{ descriptionId }}"{% endif %}>{% if propval.containsHtml %}{{ propval.label|raw }}{% else %}{{ propval.label }}{% endif %}</span>
               {% endapply -%}
             </li>
             {% endif %}
@@ -108,13 +114,17 @@
                 {% for value in labels.prefLabel|default([])|merge(labels.altLabel|default([])) %}
                 <li>
                 {% if value.hasXlProperties %}
-                  {{ include('xl-label.inc.twig', {xlLabel: value.xlLabel}) }}
+                  {% set descriptionId = "concept-property-xl-#{loop.parent.loop.index}-#{loop.index}" %}
+                  {{ include('xl-label.inc.twig', {xlLabel: value.xlLabel, xlDescriptionId: descriptionId}) }}
+                {% else %}
+                  {% set descriptionId = '' %}
                 {% endif %}
                 {% if value.type == "skos:prefLabel" and value.lang in request.vocab.config.languages %}
-                <a href="{{ concept.uri|link_url(request.vocabid,request.lang, 'page', value.lang) }}"
+                <a {% if descriptionId %}aria-describedby="{{ descriptionId }}"{% endif %}
+                   href="{{ concept.uri|link_url(request.vocabid,request.lang, 'page', value.lang) }}"
                    hreflang="{{ value.lang }}">{{ value.label }}</a>
                 {% else %}
-                <span class="altlabel">{{ value.label }}</span>
+                <span class="altlabel"{% if descriptionId %} aria-describedby="{{ descriptionId }}"{% endif %}>{{ value.label }}</span>
                 {% endif %}
                 </li>
                 {% endfor %}
