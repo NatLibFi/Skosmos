@@ -1,6 +1,6 @@
-function setLangCookie(lang) {
+function setLangCookie (lang) {
   // The cookie path should be relative if the baseHref is known
-  let cookiePath = window.SKOSMOS.baseHref?.replace(window.origin, '') || '/'
+  const cookiePath = window.SKOSMOS.baseHref?.replace(window.origin, '') || '/'
   const date = new Date()
   date.setTime(date.getTime() + 365 * 24 * 60 * 60 * 1000) // 365 days from now
   document.cookie = `SKOSMOS_LANGUAGE=${lang}; expires=${date.toGMTString()}; path=${cookiePath}; SameSite=Lax`
