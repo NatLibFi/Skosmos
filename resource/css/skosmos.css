@@ -962,6 +962,10 @@ body {
   cursor: pointer;
 }
 
+#concept-label .tooltip-html {
+  bottom: 4px;
+}
+
 .tooltip-html button {
   line-height: 1.0;
 }

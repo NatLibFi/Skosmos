@@ -36,6 +36,9 @@
         {%- endif -%}
         </div>
         <div class="col-sm-8" id="concept-label">
+        {% if concept.hasXlLabel %}
+          {{ include('xl-label.inc.twig', {xlLabel: concept.xlLabel}) }}
+        {% endif %}
         {% if concept.notation %}
           <h1 id="concept-preflabel"
               class="mb-0">
