@@ -141,6 +141,18 @@ describe('Concept page', () => {
     // Check that mapping property title is overridden correctly
     cy.get('.prop-mapping .property-label').eq(0).should('have.attr', 'title').and('contain', 'Exactly matching classes in another vocabulary.')
   })
+  it('contains SKOS XL information for concept prefLabel', () => {
+    cy.visit('/yso/en/page/p4625?clang=se') // go to "bronsaáigi" concept page ('Bronze Age' in Northern Sami)
+
+    // the tooltip should originally be invisible
+    cy.get('#concept-label .tooltip-html-content').should('not.be.visible')
+
+    // click the button to trigger the tooltip
+    cy.get('#concept-label .tooltip-html button').click()
+
+    // the tooltip should now be visible
+    cy.get('#concept-label .tooltip-html-content').should('be.visible')
+  })
   it('contains concept type', () => {
     cy.visit('/yso/en/page/p21685') // go to "music research" concept page
 
