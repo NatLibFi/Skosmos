@@ -21,7 +21,6 @@ class JsTranslationExtractor implements ExtractorInterface
 
     public function extract($directory, MessageCatalogue $catalogue): void
     {
-        echo "Using directory: $this->directory" . PHP_EOL;
         if (!is_dir($this->directory)) {
             echo "Invalid directory: $this->directory" . PHP_EOL;
             return;
@@ -33,11 +32,9 @@ class JsTranslationExtractor implements ExtractorInterface
             if ($file->getExtension() !== 'js') {
                 continue;
             }
-            echo "Processing file: " . $file->getPathname() . PHP_EOL;
             $content = file_get_contents($file->getPathname());
             preg_match_all('/\$t\([\'"]([^\'"]+)[\'"]\)/', $content, $matches);
             foreach ($matches[1] as $key) {
-                echo "Found key: " . $key . PHP_EOL;
                 $catalogue->set($this->prefix . $key, $key);
             }
         }
