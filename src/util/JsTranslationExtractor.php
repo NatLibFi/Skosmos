@@ -1,6 +1,6 @@
 <?php
 
-namespace Translation\Extractor;
+namespace Util;
 
 use Symfony\Component\Translation\Extractor\ExtractorInterface;
 use Symfony\Component\Translation\MessageCatalogue;
