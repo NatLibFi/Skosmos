@@ -247,6 +247,12 @@ describe('Concept page', () => {
 
     // the tooltip should now be visible
     cy.get('.prop-skos_altLabel .tooltip-html-content').should('be.visible')
+
+    // lose the focus on the button to hide the tooltip
+    cy.get('.prop-skos_altLabel .tooltip-html button').blur()
+
+    // the tooltip should now be invisible again
+    cy.get('.prop-skos_altLabel .tooltip-html-content').should('not.be.visible')
   })
   it('contains scope notes, with HTML links', () => {
     cy.visit('/yso/fi/page/p39138') // go to "ukonvaajat" concept page (in Finnish)
