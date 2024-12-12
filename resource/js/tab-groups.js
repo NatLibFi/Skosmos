@@ -25,7 +25,7 @@ const tabGroupsApp = Vue.createApp({
     }
   },
   beforeUpdate () {
-
+    this.setListStyle()
   },
   methods: {
     handleClickGroupsEvent () {
@@ -47,7 +47,7 @@ const tabGroupsApp = Vue.createApp({
 
           const groups = data.groups
           const result = []
-        
+
           // Map groups by uri with group properties for easy lookup
           const uriMap = new Map()
           for (const group of groups) {
@@ -64,17 +64,16 @@ const tabGroupsApp = Vue.createApp({
                 }
               }
             }
-        
+
             // Add top level groups to result list
             if (!groups.some(other => other.childGroups?.includes(group.uri))) {
               result.push(uriMap.get(group.uri))
             }
           }
-          
-          return {result, uriMap}
-        })
-        .then(({result, uriMap}) => {
 
+          return { result, uriMap }
+        })
+        .then(({ result, uriMap }) => {
           // Check that we are on a group page
           if (uriMap.has(window.SKOSMOS.uri)) {
             this.selectedGroup = window.SKOSMOS.uri
@@ -91,7 +90,7 @@ const tabGroupsApp = Vue.createApp({
                   const members = data.members
                     .filter(m => !uriMap.has(m.uri))
                     .map(m => {
-                      return {...m, childGroups: [], isOpen: false, isGroup: false }
+                      return { ...m, childGroups: [], isOpen: false, isGroup: false }
                     })
 
                   // Set isOpen to true for the selected group and its parents and add child members to selected group
@@ -99,7 +98,7 @@ const tabGroupsApp = Vue.createApp({
 
                   this.groups = result
                   this.loadingGroups = false
-                  console.log("groups", this.groups)
+                  console.log('groups', this.groups)
                 })
             } else {
               // If selected concept has no members, set isOpen for it and its parents
@@ -107,13 +106,13 @@ const tabGroupsApp = Vue.createApp({
 
               this.groups = result
               this.loadingGroups = false
-              console.log("groups", this.groups)
-            } 
+              console.log('groups', this.groups)
+            }
           } else {
             // If we are on vocab home page, simply set groups to previous result
             this.groups = result
             this.loadingGroups = false
-            console.log("groups", this.groups)
+            console.log('groups', this.groups)
           }
         })
     },
@@ -130,7 +129,7 @@ const tabGroupsApp = Vue.createApp({
         for (const child of node.childGroups) {
           // Recursively call findAndSet for all children
           if (findAndSet(child)) {
-            // If selected group was found in children, set this group to open and return true 
+            // If selected group was found in children, set this group to open and return true
             node.isOpen = true
             return true
           }
@@ -139,7 +138,7 @@ const tabGroupsApp = Vue.createApp({
         // If selected group was not found, return false
         return false
       }
-  
+
       for (const root of tree) {
         findAndSet(root)
       }
@@ -148,7 +147,7 @@ const tabGroupsApp = Vue.createApp({
       // TODO: set list style when mounting component and resizing window
     },
     loadChildren (group) {
-      // Load child groups only if group has children and they have not been loaded yet
+      // Load children only if group has children and they have not been loaded yet
       if (group.childGroups.length === 0 && group.hasMembers) {
         this.loadingChildren.push(group)
         fetch('rest/v1/' + window.SKOSMOS.vocab + '/groupMembers/?lang=' + window.SKOSMOS.content_lang + '&uri=' + group.uri)
@@ -158,7 +157,7 @@ const tabGroupsApp = Vue.createApp({
           .then(data => {
             console.log('data', data)
             for (const m of data.members) {
-              group.childGroups.push({...m, childGroups: [], isOpen: false, isGroup: false})
+              group.childGroups.push({ ...m, childGroups: [], isOpen: false, isGroup: false })
             }
             this.loadingChildren = this.loadingChildren.filter(x => x !== group)
             console.log('groups', this.groups)
