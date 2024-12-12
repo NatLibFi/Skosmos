@@ -7,7 +7,7 @@ const tabGroupsApp = Vue.createApp({
       groups: [],
       selectedGroup: '',
       loadingGroups: true,
-      loadingChildGroups: [],
+      loadingChildren: [],
       listStyle: {}
     }
   },
@@ -81,7 +81,7 @@ const tabGroupsApp = Vue.createApp({
 
             // Only load members if selected group has members
             if (uriMap.get(this.selectedGroup).hasMembers) {
-              fetch('rest/v1/' + window.SKOSMOS.vocab + '/groupMembers/?lang=' + window.SKOSMOS.content_lang + '&uri=' + window.SKOSMOS.uri)
+              fetch('rest/v1/' + window.SKOSMOS.vocab + '/groupMembers/?lang=' + window.SKOSMOS.content_lang + '&uri=' + this.selectedGroup)
                 .then(data => {
                   return data.json()
                 })
@@ -147,8 +147,23 @@ const tabGroupsApp = Vue.createApp({
     setListStyle () {
       // TODO: set list style when mounting component and resizing window
     },
-    loadChildGroups () {
-
+    loadChildren (group) {
+      // Load child groups only if group has children and they have not been loaded yet
+      if (group.childGroups.length === 0 && group.hasMembers) {
+        this.loadingChildren.push(group)
+        fetch('rest/v1/' + window.SKOSMOS.vocab + '/groupMembers/?lang=' + window.SKOSMOS.content_lang + '&uri=' + group.uri)
+          .then(data => {
+            return data.json()
+          })
+          .then(data => {
+            console.log('data', data)
+            for (const m of data.members) {
+              group.childGroups.push({...m, childGroups: [], isOpen: false, isGroup: false})
+            }
+            this.loadingChildren = this.loadingChildren.filter(x => x !== group)
+            console.log('groups', this.groups)
+          })
+      }
     }
   },
   template: `
@@ -158,8 +173,8 @@ const tabGroupsApp = Vue.createApp({
           <tab-groups-wrapper
             :groups="groups"
             :selectedGroup="selectedGroup"
-            :loadingChildGroups="loadingChildGroups"
-            @load-child-groups="loadChildGroups($event)"
+            :loadingChildren="loadingChildren"
+            @load-children="loadChildren($event)"
             @select-group="selectedGroup = $event"
           ></tab-groups-wrapper>
         </ul>
@@ -196,13 +211,13 @@ tabGroupsApp.directive('resize-window', {
 })
 
 tabGroupsApp.component('tab-groups-wrapper', {
-  props: ['groups', 'selectedGroup', 'loadingChildGroups'],
-  emits: ['loadChildGroups', 'selectGroup'],
+  props: ['groups', 'selectedGroup', 'loadingChildren'],
+  emits: ['loadChildren', 'selectGroup'],
   mounted () {
   },
   methods: {
-    loadChildGroups (group) {
-      this.$emit('loadChildGroups', group)
+    loadChildren (group) {
+      this.$emit('loadChildren', group)
     },
     selectGroup (group) {
       this.$emit('selectGroup', group)
@@ -215,8 +230,8 @@ tabGroupsApp.component('tab-groups-wrapper', {
         :selectedGroup="selectedGroup"
         :isTopGroup="true"
         :isLast="i == groups.length - 1"
-        :loadingChildGroups="loadingChildGroups"
-        @load-child-groups="loadChildGroups($event)"
+        :loadingChildren="loadingChildren"
+        @load-children="loadChildren($event)"
         @select-group="selectGroup($event)"
       ></tab-groups>
     </template>
@@ -224,22 +239,22 @@ tabGroupsApp.component('tab-groups-wrapper', {
 })
 
 tabGroupsApp.component('tab-groups', {
-  props: ['group', 'selectedGroup', 'isTopGroup', 'isLast', 'loadingChildGroups'],
-  emits: ['loadChildGroups', 'selectGroup'],
+  props: ['group', 'selectedGroup', 'isTopGroup', 'isLast', 'loadingChildren'],
+  emits: ['loadChildren', 'selectGroup'],
   inject: ['partialPageLoad', 'getConceptURL', 'showNotation'],
   methods: {
     handleClickOpenEvent (group) {
       group.isOpen = !group.isOpen
-      this.$emit('loadChildGroups', group)
+      this.$emit('loadChildren', group)
     },
     handleClickGroupEvent (event, group) {
       group.isOpen = true
-      this.$emit('loadChildGroups', group)
+      this.$emit('loadChildren', group)
       this.$emit('selectGroup', group.uri)
       this.partialPageLoad(event, this.getConceptURL(group.uri))
     },
-    loadChildGroupsRecursive (group) {
-      this.$emit('loadChildGroups', group)
+    loadChildrenRecursive (group) {
+      this.$emit('loadChildren', group)
     },
     selectGroupRecursive (group) {
       this.$emit('selectGroup', group)
@@ -252,7 +267,7 @@ tabGroupsApp.component('tab-groups', {
         v-if="group.hasMembers"
         @click="handleClickOpenEvent(group)"
       >
-        <template v-if="loadingChildGroups.includes(group)">
+        <template v-if="loadingChildren.includes(group)">
           <i class="fa-solid fa-spinner fa-spin-pulse"></i>
         </template>
         <template v-else>
@@ -277,8 +292,8 @@ tabGroupsApp.component('tab-groups', {
             :selectedGroup="selectedGroup"
             :isTopGroup="false"
             :isLast="i == group.childGroups.length - 1"
-            :loadingChildGroups="loadingChildGroups"
-            @load-child-groups="loadChildGroupsRecursive($event)"
+            :loadingChildren="loadingChildren"
+            @load-children="loadChildrenRecursive($event)"
             @select-group="selectGroupRecursive($event)"
           ></tab-groups>
         </template>
