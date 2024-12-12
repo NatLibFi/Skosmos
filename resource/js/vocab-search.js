@@ -204,7 +204,7 @@ const vocabSearch = Vue.createApp({
     showAutoComplete () {
       this.showDropdown = true
       this.$forceUpdate()
-    },
+    }
   },
   template: `
     <div class="d-flex my-auto ms-auto">
