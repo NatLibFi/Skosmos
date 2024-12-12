@@ -34,7 +34,7 @@
     "friendsofphp/php-cs-fixer": "3.64.*"
   },
   "autoload": {
-    "classmap": ["src/", "src/controller/", "src/model/", "src/model/sparql/"]
+    "classmap": ["src/", "src/controller/", "src/model/", "src/util", "src/model/sparql/"]
   },
   "config": {
     "allow-plugins": {

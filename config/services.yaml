@@ -16,3 +16,9 @@ services:
     LinkUrlExtension:
         class: 'LinkUrlExtension'
         public: true
+
+    Util\JsTranslationExtractor:
+        arguments:
+            $directory: '%kernel.project_dir%/resource/js'
+        tags:
+            - { name: 'translation.extractor', alias: 'js_translation_extractor' }
