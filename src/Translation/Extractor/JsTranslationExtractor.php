@@ -21,14 +21,13 @@ class JsTranslationExtractor implements ExtractorInterface
 
     public function extract($directory, MessageCatalogue $catalogue): void
     {
-        $directory = $this->directory;
-        echo "Using directory: $directory" . PHP_EOL;
-        if (!is_dir($directory)) {
-            echo "Invalid directory: $directory" . PHP_EOL;
+        echo "Using directory: $this->directory" . PHP_EOL;
+        if (!is_dir($this->directory)) {
+            echo "Invalid directory: $this->directory" . PHP_EOL;
             return;
         }
         $iterator = new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator($directory)
+            new \RecursiveDirectoryIterator($this->directory)
         );
         foreach ($iterator as $file) {
             if ($file->getExtension() !== 'js') {
