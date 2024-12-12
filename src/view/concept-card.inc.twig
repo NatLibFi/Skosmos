@@ -82,10 +82,12 @@
             </li>
             {% else %} {# literals, e.g. altLabels #}
             <li>
+              {%- apply spaceless %}
               {% if propval.hasXlProperties %}
                 {{ include('xl-label.inc.twig', {xlLabel: propval.xlLabel}) }}
               {% endif %}
               {% if propval.containsHtml %}{{ propval.label|raw }}{% else %}{{ propval.label }}{% endif %}
+              {% endapply -%}
             </li>
             {% endif %}
           {% endfor %}
