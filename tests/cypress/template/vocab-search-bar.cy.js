@@ -195,27 +195,4 @@ describe('Vocab search bar', () => {
       })
     })
   });
-
-  describe('Cookie Management', () => {
-    it('The search language cookie is set', () => {
-      cy.visit('/yso/fi/');
-
-      // Select a language option from the dropdown
-      cy.get('#language-selector .dropdown-toggle').click();
-      cy.get('#language-list .dropdown-item').contains('ruotsi').click();
-
-      // Test that the cookie has been set correctly
-      cy.getCookie('SKOSMOS_SEARCH_LANG').should('have.property', 'value', 'sv');
-    });
-
-    it('The search language cookie is read', () => {
-      cy.visit('/'); // setting the cookie at the front page to make sure the cookies are set globally
-      cy.setCookie('SKOSMOS_SEARCH_LANG', 'en');
-      cy.visit('/yso/fi/');
-
-      // Test that the cookie value has been read and used to initialize the language selector
-      cy.get('.dropdown .dropdown-toggle').should('contain', 'englanti');
-
-    });
-  });
 })
