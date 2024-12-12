@@ -549,18 +549,21 @@ body {
     font-weight: bold !important;
   }
 
-  /*** sidebar hierarchy tab ***/
-  #tab-hierarchy .sidebar-list .list-group-item {
+  /*** sidebar hierarchy and groups tabs ***/
+  #tab-hierarchy .sidebar-list .list-group-item,
+  #tab-groups .sidebar-list .list-group-item {
     border-left: 1px dashed var(--vocab-text);
     border-radius: 0;
     white-space: nowrap;
   }
 
-  #tab-hierarchy .sidebar-list .list-group-item.top-concept {
+  #tab-hierarchy .sidebar-list .list-group-item.top-concept,
+  #tab-groups .sidebar-list .list-group-item.top-concept {
     border: none;
   }
 
-  #tab-hierarchy .sidebar-list .list-group-item .concept-label {
+  #tab-hierarchy .sidebar-list .list-group-item .concept-label,
+  #tab-groups .sidebar-list .list-group-item .concept-label {
     display: inline-block;
     border-left: 1px dashed var(--vocab-text);
     margin-left: 16px;
@@ -569,7 +572,8 @@ body {
   }
 
   /* horizontal line before concept */
-  #tab-hierarchy .sidebar-list .list-group-item .concept-label::before {
+  #tab-hierarchy .sidebar-list .list-group-item .concept-label::before,
+  #tab-groups .sidebar-list .list-group-item .concept-label::before {
     content: '';
     position: absolute;
     left: 16px;
@@ -580,7 +584,8 @@ body {
   }
 
   /* hiding bottom of vertical line on last concept of list */
-  #tab-hierarchy .sidebar-list .list-group-item .concept-label.last::before {
+  #tab-hierarchy .sidebar-list .list-group-item .concept-label.last::before,
+  #tab-groups .sidebar-list .list-group-item .concept-label.last::before {
     top: auto;
     bottom: 0;
     height: calc(100% - 13px);
@@ -590,20 +595,24 @@ body {
   }
 
   /* no border for children of the last concept */
-  #tab-hierarchy .sidebar-list .list-group-item span.last + ul > li {
+  #tab-hierarchy .sidebar-list .list-group-item span.last + ul > li,
+  #tab-groups .sidebar-list .list-group-item span.last + ul > li  {
     border: none;
     margin-left: 1px !important; /* add a 1px margin to offset missing border */
   }
 
-  #tab-hierarchy .sidebar-list .list-group-item a.selected {
+  #tab-hierarchy .sidebar-list .list-group-item a.selected,
+  #tab-groups .sidebar-list .list-group-item a.selected {
     color: var(--vocab-text) !important;
   }
 
-  #tab-hierarchy .sidebar-list .list-group-item .concept-notation {
+  #tab-hierarchy .sidebar-list .list-group-item .concept-notation,
+  #tab-groups .sidebar-list .list-group-item .concept-notation {
     color: var(--dark-color);
   }
 
-  #tab-hierarchy .sidebar-list .list-group-item a.selected .concept-notation {
+  #tab-hierarchy .sidebar-list .list-group-item a.selected .concept-notation,
+  #tab-groups .sidebar-list .list-group-item a.selected .concept-notation {
     font-weight: bold;
   }
 
