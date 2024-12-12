@@ -75,34 +75,42 @@ const tabGroupsApp = Vue.createApp({
         })
         .then(({result, uriMap}) => {
 
-          // Check which page we are on
-          if (window.SKOSMOS.uri) {
-            // If we are on concept/group page, set open nodes and load group members
+          // Check that we are on a group page
+          if (uriMap.has(window.SKOSMOS.uri)) {
             this.selectedGroup = window.SKOSMOS.uri
 
-            fetch('rest/v1/' + window.SKOSMOS.vocab + '/groupMembers/?lang=' + window.SKOSMOS.content_lang + '&uri=' + window.SKOSMOS.uri)
-              .then(data => {
-                return data.json()
-              })
-              .then(data => {
-                console.log('members data', data)
-                // Filter out existing groups from members list and add the correct properties
-                const members = data.members
-                  .filter(m => !uriMap.has(m.uri))
-                  .map(m => {
-                    return {...m, childGroups: [], isOpen: false, isGroup: false }
-                  })
-                console.log(members)
+            // Only load members if selected group has members
+            if (uriMap.get(this.selectedGroup).hasMembers) {
+              fetch('rest/v1/' + window.SKOSMOS.vocab + '/groupMembers/?lang=' + window.SKOSMOS.content_lang + '&uri=' + window.SKOSMOS.uri)
+                .then(data => {
+                  return data.json()
+                })
+                .then(data => {
+                  console.log('members data', data)
+                  // Filter out existing groups from members list and add the correct properties
+                  const members = data.members
+                    .filter(m => !uriMap.has(m.uri))
+                    .map(m => {
+                      return {...m, childGroups: [], isOpen: false, isGroup: false }
+                    })
 
-                // Set isOpen to true for the selected group and its parents and add child members to selected group
-                this.setIsOpenAndAddMembers(result, this.selectedGroup, members)
+                  // Set isOpen to true for the selected group and its parents and add child members to selected group
+                  this.setIsOpenAndAddMembers(result, this.selectedGroup, members)
 
-                this.groups = result
-                this.loadingGroups = false
-                console.log("groups", this.groups)
-              })
+                  this.groups = result
+                  this.loadingGroups = false
+                  console.log("groups", this.groups)
+                })
+            } else {
+              // If selected concept has no members, set isOpen for it and its parents
+              this.setIsOpenAndAddMembers(result, this.selectedGroup, [])
+
+              this.groups = result
+              this.loadingGroups = false
+              console.log("groups", this.groups)
+            } 
           } else {
-            // If we are on vocab home page, simply set groups
+            // If we are on vocab home page, simply set groups to previous result
             this.groups = result
             this.loadingGroups = false
             console.log("groups", this.groups)
