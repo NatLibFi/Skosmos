@@ -214,5 +214,7 @@
     "Information": "Information",
     "Breadcrumbs": "Breadcrumbs",
     "Copy to clipboard": "Copy to clipboard",
-    "Error": "Error"
+    "Error": "Error",
+    "Download this concept": "Download this concept",
+    "Concept %term% in vocabulary %vocab%": "Concept %term% in vocabulary %vocab%"
 }

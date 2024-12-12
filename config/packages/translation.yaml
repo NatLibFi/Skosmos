@@ -2,8 +2,6 @@ framework:
     default_locale: en
     translator:
         default_path: '%kernel.project_dir%/resource/translations'
-        paths:
-            - '%kernel.project_dir%/resource/js'    # JavaScript files
         fallbacks:
             - en
         providers:

@@ -7,15 +7,9 @@ use Symfony\Component\Translation\MessageCatalogue;
 
 class JsTranslationExtractor implements ExtractorInterface
 {
-    private string $directory;
-
     public function __construct(string $directory)
     {
         $this->directory = $directory;
-        echo "Constructor directory: {$this->directory}" . PHP_EOL;
-        if (!is_dir($this->directory)) {
-            echo "Directory does not exist: {$this->directory}" . PHP_EOL;
-        }
     }
 
     private string $prefix = '';
