@@ -236,6 +236,18 @@ describe('Concept page', () => {
     // check the altLabel value
     cy.get('.prop-skos_altLabel .property-value li').invoke('text').should('equal', 'musicology (research activity)')
   })
+  it('contains SKOS XL information for altLabel', () => {
+    cy.visit('/xl/en/page/c1') // go to "Concept" concept page in 'xl' test vocabulary
+
+    // the tooltip should originally be invisible
+    cy.get('.prop-skos_altLabel .tooltip-html-content').should('not.be.visible')
+
+    // focus on the button to trigger the tooltip
+    cy.get('.prop-skos_altLabel .tooltip-html button').focus()
+
+    // the tooltip should now be visible
+    cy.get('.prop-skos_altLabel .tooltip-html-content').should('be.visible')
+  })
   it('contains scope notes, with HTML links', () => {
     cy.visit('/yso/fi/page/p39138') // go to "ukonvaajat" concept page (in Finnish)
 
