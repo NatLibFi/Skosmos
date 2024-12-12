@@ -968,10 +968,12 @@ body {
 
 .tooltip-html button {
   line-height: 1.0;
+  padding: 3px;
+  margin: -3px;
 }
 
 .tooltip-html button:focus {
-  border: 1px solid var(--vocab-text);
+  border: 2px solid var(--vocab-text);
   border-radius: 0;
 }
 
