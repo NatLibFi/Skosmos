@@ -478,13 +478,7 @@ class WebController extends Controller
         $vocab = $request->getVocab();
 
         $defaultView = $vocab->getConfig()->getDefaultSidebarView();
-        // load template
-        if ($defaultView === 'groups') {
-            $this->invokeGroupIndex($request, true);
-            return;
-        } elseif ($defaultView === 'new') {
-            $this->invokeChangeList($request);
-        }
+
         $pluginParameters = json_encode($vocab->getConfig()->getPluginParameters());
 
         $template = $this->twig->load('vocab-home.twig');
