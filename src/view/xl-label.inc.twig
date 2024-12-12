@@ -1,5 +1,5 @@
 <div class="tooltip-html">
-  <button class="btn p-0 m-0"><i class="fa-solid fa-circle-info"></i></button>
+  <button class="btn p-0 m-0" aria-label="{{ 'More information about this term'|trans }}" aria-controls="{{ xlDescriptionId }}"><i class="fa-solid fa-circle-info"></i></button>
   <dl class="tooltip-html-content" id="{{ xlDescriptionId }}">
     {% for key, val in xlLabel.properties %}
     <dt>{{ key|trans }}</dt>
