@@ -98,15 +98,7 @@
                 {% for value in labels.prefLabel|default([])|merge(labels.altLabel|default([])) %}
                 <li>
                 {% if value.hasXlProperties %}
-                <div class="tooltip-html">
-                  <button class="btn p-0 m-0"><i class="fa-solid fa-circle-info"></i></button>
-                  <dl class="tooltip-html-content">
-                    {% for key, val in value.xlLabel.properties %}
-                    <dt>{{ key|trans }}</dt>
-                    <dd>{{ val }}</dd>
-                    {% endfor %}
-                  </dl>
-		</div>
+                  {{ include('xl-label.inc.twig', {xlLabel: value.xlLabel}) }}
                 {% endif %}
                 {% if value.type == "skos:prefLabel" and value.lang in request.vocab.config.languages %}
                 <a href="{{ concept.uri|link_url(request.vocabid,request.lang, 'page', value.lang) }}"
