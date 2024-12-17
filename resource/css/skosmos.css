@@ -975,6 +975,7 @@ body {
 .tooltip-html button:focus {
   border: 2px solid var(--vocab-text);
   border-radius: 0;
+  margin: -4px;
 }
 
 .tooltip-html:hover .tooltip-html-content, .tooltip-html:focus-within .tooltip-html-content {
