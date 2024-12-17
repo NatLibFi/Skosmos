@@ -101,7 +101,7 @@ const tabGroupsApp = Vue.createApp({
                   console.log('groups', this.groups)
                 })
             } else {
-              // If selected concept has no members, set isOpen for it and its parents
+              // If selected group has no members, set isOpen for the group and its parents
               this.setIsOpenAndAddMembers(result, this.selectedGroup, [])
 
               this.groups = result
@@ -109,7 +109,7 @@ const tabGroupsApp = Vue.createApp({
               console.log('groups', this.groups)
             }
           } else {
-            // If we are on vocab home page, simply set groups to previous result
+            // If we are on vocab home page, simply set groups to result
             this.groups = result
             this.loadingGroups = false
             console.log('groups', this.groups)
