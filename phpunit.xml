@@ -1,14 +1,9 @@
 <?xml version="1.0"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" colors="true" bootstrap="tests/bootstrap.php" processIsolation="true" convertDeprecationsToExceptions="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-  <coverage processUncoveredFiles="true">
-    <include>
-      <directory suffix=".php">src/controller</directory>
-      <directory suffix=".php">src/model</directory>
-      <directory suffix=".php">src/model/sparql</directory>
-    </include>
-    <exclude>
-      <directory>vendor</directory>
-    </exclude>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" colors="true" bootstrap="tests/bootstrap.php" processIsolation="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd" cacheDirectory=".phpunit.cache">
+  <php>
+    <ini name="date.timezone" value="UTC"/>
+  </php>
+  <coverage>
     <report>
       <clover outputFile="build/logs/clover.xml"/>
       <html outputDirectory="./report" lowUpperBound="35" highLowerBound="70"/>
@@ -20,4 +15,14 @@
       <directory suffix=".php">tests</directory>
     </testsuite>
   </testsuites>
+  <source>
+    <include>
+      <directory suffix=".php">src/controller</directory>
+      <directory suffix=".php">src/model</directory>
+      <directory suffix=".php">src/model/sparql</directory>
+    </include>
+    <exclude>
+      <directory>vendor</directory>
+    </exclude>
+  </source>
 </phpunit>

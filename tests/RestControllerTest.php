@@ -26,13 +26,15 @@ class RestControllerTest extends \PHPUnit\Framework\TestCase
      */
     public function testDataAsJson()
     {
+        ob_start();
+
         $request = new Request($this->model);
         $request->setQueryParam('format', 'application/json');
         $request->setURI('http://www.skosmos.skos/test/ta117');
         $request->setVocab("test");
         $this->controller->data($request);
 
-        $out = $this->getActualOutput();
+        $out = ob_get_clean();
 
         $expected = <<<EOD
 {
@@ -150,12 +152,14 @@ EOD;
      */
     public function testSearchJsonLd()
     {
+        ob_start();
+
         $request = new Request($this->model);
         $request->setQueryParam('format', 'application/json');
         $request->setQueryParam('query', '*bass');
         $this->controller->search($request);
 
-        $out = $this->getActualOutput();
+        $out = ob_get_clean();
 
         $expected = <<<EOD
 {
@@ -217,13 +221,15 @@ EOD;
      */
     public function testSearchJsonLdWithAdditionalFields()
     {
+        ob_start();
+
         $request = new Request($this->model);
         $request->setQueryParam('format', 'application/json');
         $request->setQueryParam('query', '*bass');
         $request->setQueryParam('fields', 'broader relatedMatch');
         $this->controller->search($request);
 
-        $out = $this->getActualOutput();
+        $out = ob_get_clean();
 
         $expected = <<<EOD
 {
@@ -305,7 +311,7 @@ EOD;
     /**
      * Data provider for testSearchWithZero test.
      */
-    public function provideSearchWithZeroData(): array
+    public static function provideSearchWithZeroData(): array
     {
         return [
           ['0', true],
@@ -325,13 +331,16 @@ EOD;
      */
     public function testSearchWithZero(string $query, bool $isSuccess)
     {
+        ob_start();
+
         $request = new Request($this->model);
         $request->setQueryParam('format', 'application/json');
         $request->setQueryParam('query', $query);
         $request->setQueryParam('fields', 'broader relatedMatch');
         $this->controller->search($request);
 
-        $out = $this->getActualOutput();
+        $out = ob_get_clean();
+
         if ($isSuccess) {
             $this->assertStringNotContainsString("400 Bad Request", $out, "The REST search call returned an unexpected 400 bad request error!");
         } else {
@@ -344,12 +353,14 @@ EOD;
      */
     public function testIndexLettersJsonLd()
     {
+        ob_start();
+
         $request = new Request($this->model);
         $request->setVocab('test');
         $request->setLang('en');
         $this->controller->indexLetters($request);
 
-        $out = $this->getActualOutput();
+        $out = ob_get_clean();
 
         $expected = <<<EOD
 {
@@ -385,12 +396,14 @@ EOD;
      */
     public function testIndexConceptsJsonLd()
     {
+        ob_start();
+
         $request = new Request($this->model);
         $request->setVocab('test');
         $request->setLang('en');
         $this->controller->indexConcepts("B", $request);
 
-        $out = $this->getActualOutput();
+        $out = ob_get_clean();
 
         $expected = <<<EOD
 {
@@ -435,13 +448,15 @@ EOD;
      */
     public function testIndexConceptsJsonLdLimit()
     {
+        ob_start();
+
         $request = new Request($this->model);
         $request->setVocab('test');
         $request->setLang('en');
         $request->setQueryParam('limit', '2');
         $this->controller->indexConcepts("B", $request);
 
-        $out = $this->getActualOutput();
+        $out = ob_get_clean();
 
         $expected = <<<EOD
 {
@@ -480,13 +495,15 @@ EOD;
      */
     public function testIndexConceptsJsonLdOffset()
     {
+        ob_start();
+
         $request = new Request($this->model);
         $request->setVocab('test');
         $request->setLang('en');
         $request->setQueryParam('offset', '1');
         $this->controller->indexConcepts("B", $request);
 
-        $out = $this->getActualOutput();
+        $out = ob_get_clean();
 
         $expected = <<<EOD
 {
@@ -525,6 +542,8 @@ EOD;
      */
     public function testIndexConceptsJsonLdLimitOffset()
     {
+        ob_start();
+
         $request = new Request($this->model);
         $request->setVocab('test');
         $request->setLang('en');
@@ -532,7 +551,7 @@ EOD;
         $request->setQueryParam('offset', '1');
         $this->controller->indexConcepts("B", $request);
 
-        $out = $this->getActualOutput();
+        $out = ob_get_clean();
 
         $expected = <<<EOD
 {
@@ -565,6 +584,8 @@ EOD;
      */
     public function testLabelOnePrefOneAltLabel()
     {
+        ob_start();
+
         $request = new Request($this->model);
         $request->setQueryParam('format', 'application/json');
         $request->setURI('http://www.skosmos.skos/test/ta112');
@@ -572,7 +593,7 @@ EOD;
         $request->setLang('en');
 
         $this->controller->label($request);
-        $out = $this->getActualOutput();
+        $out = ob_get_clean();
 
         $expected = <<<EOD
  {"@context": {
@@ -599,13 +620,15 @@ EOD;
      */
     public function testLabelGlobal()
     {
+        ob_start();
+
         $request = new Request($this->model);
         $request->setQueryParam('format', 'application/json');
         $request->setURI('http://www.skosmos.skos/test/ta112');
         $request->setLang('en');
 
         $this->controller->label($request);
-        $out = $this->getActualOutput();
+        $out = ob_get_clean();
 
         $expected = <<<EOD
  {"@context": {
@@ -632,13 +655,15 @@ EOD;
      */
     public function testLabelGlobalNonexistentVocab()
     {
+        ob_start();
+
         $request = new Request($this->model);
         $request->setQueryParam('format', 'application/json');
         $request->setURI('http://www.skosmos.skos/nonexistent/vocab');
         $request->setLang('en');
 
         $this->controller->label($request);
-        $out = $this->getActualOutput();
+        $out = ob_get_clean();
 
         $expected = "404 Not Found : Could not find concept <http://www.skosmos.skos/nonexistent/vocab>";
         $this->assertEquals($expected, $out);
@@ -649,6 +674,8 @@ EOD;
      */
     public function testLabelOnePrefOneHiddenLabel()
     {
+        ob_start();
+
         $request = new Request($this->model);
         $request->setQueryParam('format', 'application/json');
         $request->setURI('http://www.skosmos.skos/test/ta112');
@@ -656,7 +683,7 @@ EOD;
         $request->setLang('fi');
 
         $this->controller->label($request);
-        $out = $this->getActualOutput();
+        $out = ob_get_clean();
 
         $expected = <<<EOD
  {"@context": {
@@ -683,6 +710,8 @@ EOD;
      */
     public function testLabelOnePrefLabel()
     {
+        ob_start();
+
         $request = new Request($this->model);
         $request->setQueryParam('format', 'application/json');
         $request->setURI('http://www.skosmos.skos/test/ta111');
@@ -690,7 +719,7 @@ EOD;
         $request->setLang('en');
 
         $this->controller->label($request);
-        $out = $this->getActualOutput();
+        $out = ob_get_clean();
 
         $expected = <<<EOD
  {"@context": {
@@ -714,6 +743,8 @@ EOD;
      */
     public function testLabelNoPrefLabel()
     {
+        ob_start();
+
         $request = new Request($this->model);
         $request->setQueryParam('format', 'application/json');
         $request->setURI('http://www.skosmos.skos/test/ta111');
@@ -721,7 +752,7 @@ EOD;
         $request->setLang('sv');
 
         $this->controller->label($request);
-        $out = $this->getActualOutput();
+        $out = ob_get_clean();
 
         $expected = <<<EOD
  {"@context": {
@@ -744,6 +775,8 @@ EOD;
      */
     public function testLabelNoConcept()
     {
+        ob_start();
+
         $request = new Request($this->model);
         $request->setQueryParam('format', 'application/json');
         $request->setURI('http://www.skosmos.skos/test/nonexistent');
@@ -751,7 +784,7 @@ EOD;
         $request->setLang('en');
 
         $this->controller->label($request);
-        $out = $this->getActualOutput();
+        $out = ob_get_clean();
 
         $expected = "404 Not Found : Could not find concept <http://www.skosmos.skos/test/nonexistent>";
         $this->assertEquals($expected, $out);
@@ -762,6 +795,8 @@ EOD;
      */
     public function testNewConcepts()
     {
+        ob_start();
+
         $request = new Request($this->model);
         $request->setQueryParam('format', 'application/json');
         $request->setURI('http://www.skosmos.skos/changes');
@@ -771,7 +806,7 @@ EOD;
         $request->setQueryParam('offset', '0');
 
         $this->controller->newConcepts($request);
-        $changeList = $this->getActualOutput();
+        $changeList = ob_get_clean();
 
         $expected = <<<EOD
  {"@context": {
@@ -823,6 +858,8 @@ EOD;
      */
     public function testModifiedConcepts()
     {
+        ob_start();
+
         $request = new Request($this->model);
         $request->setQueryParam('format', 'application/json');
         $request->setURI('http://www.skosmos.skos/test');
@@ -832,7 +869,7 @@ EOD;
         $request->setQueryParam('offset', '0');
 
         $this->controller->modifiedConcepts($request);
-        $changeList = $this->getActualOutput();
+        $changeList = ob_get_clean();
 
         $expected = <<<EOD
 {"@context": {
@@ -857,6 +894,8 @@ EOD;
      */
     public function testDeprecatedChanges()
     {
+        ob_start();
+
         $request = new Request($this->model);
         $request->setQueryParam('format', 'application/json');
         $request->setURI('http://www.skosmos.skos/changes');
@@ -866,7 +905,7 @@ EOD;
         $request->setQueryParam('offset', '0');
 
         $this->controller->modifiedConcepts($request);
-        $changeList = $this->getActualOutput();
+        $changeList = ob_get_clean();
 
         $expected = <<<EOD
 {"@context": {
@@ -895,13 +934,16 @@ EOD;
      */
     public function testVocabularyStatistics()
     {
+        ob_start();
+
         $request = new Request($this->model);
         $request->setQueryParam('format', 'application/json');
         $request->setVocab('test');
         $request->setLang('en');
 
         $this->controller->vocabularyStatistics($request);
-        $statistics = $this->getActualOutput();
+        $statistics = ob_get_clean();
+
         $expected = <<<EOD
 {
   "@context": {
