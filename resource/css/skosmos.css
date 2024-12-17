@@ -568,6 +568,7 @@ body {
     border-left: 1px dashed var(--vocab-text);
     margin-left: 16px;
     padding-left: 14px;
+    padding-right: 14px;
     white-space: wrap;
   }
 
