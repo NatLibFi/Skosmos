@@ -36,8 +36,13 @@
         {%- endif -%}
         </div>
         <div class="col-sm-8" id="concept-label">
+        {% if concept.hasXlLabel %}
+          {% set descriptionId = 'concept-preflabel-xl' %}
+          {{ include('xl-label.inc.twig', {xlLabel: concept.xlLabel, xlDescriptionId: descriptionId}) }}
+        {% endif %}
         {% if concept.notation %}
           <h1 id="concept-preflabel"
+              {% if descriptionId %}aria-describedby="{{ descriptionId }}"{% endif %}
               class="mb-0">
             <span class="notation user-select-all" id="concept-notation">{{ concept.notation }}</span> {{ concept.label }}</h1><button
                 class="btn btn-default copy-clipboard px-1" type="button" id="copy-notation"
@@ -46,6 +51,7 @@
             </button>
           {% else %}
           <h1 id="concept-preflabel"
+              {% if descriptionId %}aria-describedby="{{ descriptionId }}"{% endif %}
               class="mb-0 user-select-all">{{ concept.label }}</h1><button
                   class="btn btn-default copy-clipboard px-1" type="button" id="copy-preflabel"
                   data-bs-toggle="tooltip" data-bs-placement="button" title="{{ 'Copy to clipboard' | trans }}">
@@ -78,7 +84,17 @@
               </a>
             </li>
             {% else %} {# literals, e.g. altLabels #}
-            <li>{% if propval.containsHtml %}{{ propval.label|raw }}{% else %}{{ propval.label }}{% endif %}</li>
+            <li>
+              {%- apply spaceless %}
+              {% if propval.hasXlProperties %}
+                {% set descriptionId = "concept-property-xl-#{loop.parent.loop.index}-#{loop.index}" %}
+                {{ include('xl-label.inc.twig', {xlLabel: propval.xlLabel, xlDescriptionId: descriptionId}) }}
+              {% else %}
+                {% set descriptionId = '' %}
+              {% endif %}
+              <span{% if descriptionId %} aria-describedby="{{ descriptionId }}"{% endif %}>{% if propval.containsHtml %}{{ propval.label|raw }}{% else %}{{ propval.label }}{% endif %}</span>
+              {% endapply -%}
+            </li>
             {% endif %}
           {% endfor %}
           </ul>
@@ -96,14 +112,21 @@
             <div class="col-sm-5">
               <ul>
                 {% for value in labels.prefLabel|default([])|merge(labels.altLabel|default([])) %}
-                {% if value.type == "skos:prefLabel" and value.lang in request.vocab.config.languages %}
                 <li>
-                  <a href="{{ concept.uri|link_url(request.vocabid,request.lang, 'page', value.lang) }}"
-                     hreflang="{{ value.lang }}">{{ value.label }}</a>
-                </li>
+                {% if value.hasXlProperties %}
+                  {% set descriptionId = "concept-property-xl-#{loop.parent.loop.index}-#{loop.index}" %}
+                  {{ include('xl-label.inc.twig', {xlLabel: value.xlLabel, xlDescriptionId: descriptionId}) }}
                 {% else %}
-                <li class="altlabel">{{ value.label }}</li>
+                  {% set descriptionId = '' %}
                 {% endif %}
+                {% if value.type == "skos:prefLabel" and value.lang in request.vocab.config.languages %}
+                <a {% if descriptionId %}aria-describedby="{{ descriptionId }}"{% endif %}
+                   href="{{ concept.uri|link_url(request.vocabid,request.lang, 'page', value.lang) }}"
+                   hreflang="{{ value.lang }}">{{ value.label }}</a>
+                {% else %}
+                <span class="altlabel"{% if descriptionId %} aria-describedby="{{ descriptionId }}"{% endif %}>{{ value.label }}</span>
+                {% endif %}
+                </li>
                 {% endfor %}
               </ul>
             </div>
@@ -133,7 +156,7 @@
               <a class="me-3" href="rest/v1/{{ vocab.id }}/data?uri={{ concept.uri|url_encode }}&amp;format=application/rdf%2Bxml">RDF/XML</a>
             </li>
             <li>
-              <a class="me-3"href="rest/v1/{{ vocab.id }}/data?uri={{ concept.uri|url_encode }}&amp;format=text/turtle">TURTLE</a>
+              <a class="me-3" href="rest/v1/{{ vocab.id }}/data?uri={{ concept.uri|url_encode }}&amp;format=text/turtle">TURTLE</a>
             </li>
             <li>
               <a href="rest/v1/{{ vocab.id }}/data?uri={{ concept.uri|url_encode }}&amp;format=application/ld%2Bjson">JSON-LD</a>
