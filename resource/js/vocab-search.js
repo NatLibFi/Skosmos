@@ -143,6 +143,9 @@ const vocabSearch = Vue.createApp({
         if ('uri' in result) { // create relative Skosmos page URL from the search result URI
           result.pageUrl = window.SKOSMOS.vocab + '/' + window.SKOSMOS.lang + '/page?'
           const urlParams = new URLSearchParams({ uri: result.uri })
+          if (this.selectedLanguage !== window.SKOSMOS.lang) { // add content language parameter
+            urlParams.append('clang', this.selectedLanguage)
+          }
           result.pageUrl += urlParams.toString()
         }
         // render search result renderedTypes
