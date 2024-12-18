@@ -11,3 +11,7 @@ if (!$endpoint) {
 
 require_once(__DIR__ . '/../vendor/autoload.php');
 require_once(__DIR__ . '/../src/model/Model.php');
+
+class UserWarning extends \Exception {
+    // custom exception class to capture E_USER_WARNING in PHPUnit tests
+}
