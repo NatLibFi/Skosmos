@@ -156,6 +156,24 @@ describe('Vocab search bar', () => {
       cy.get('#main-container').click({ force: true }); // using force true to click on elements not considered actionable
       cy.get('#search-autocomplete-results').should('not.be.visible'); // the autocomplete should disappear
     })
+    it('Search language parameter is passed to the autocomplete result links', () => {
+      cy.visit('/yso/sv/')
+
+      // Choose 'fi' for search & content language
+      cy.get('#language-selector .dropdown-toggle').click();
+      cy.get('#language-list .dropdown-item').contains('finska').click();
+
+      // Searchg for 'kissa'
+      cy.get('#search-field').type('aarre');
+      cy.get('#search-autocomplete-results', { timeout: 20000 }).should('be.visible'); // the autocomplete should appear
+
+      // Click the first search result
+      cy.get('#search-autocomplete-results li:first-child a').click();
+
+      // The language parameters should persist on the concept page
+      cy.url().should('include', '/sv/');
+      cy.url().should('include', 'clang=fi');
+    })
   });
 
   describe('Search Result Rendering', () => {
@@ -194,28 +212,5 @@ describe('Vocab search bar', () => {
         cy.get('li').last().find('b').eq(0).should('have.text', '51')
       })
     })
-  });
-
-  describe('Cookie Management', () => {
-    it('The search language cookie is set', () => {
-      cy.visit('/yso/fi/');
-
-      // Select a language option from the dropdown
-      cy.get('#language-selector .dropdown-toggle').click();
-      cy.get('#language-list .dropdown-item').contains('ruotsi').click();
-
-      // Test that the cookie has been set correctly
-      cy.getCookie('SKOSMOS_SEARCH_LANG').should('have.property', 'value', 'sv');
-    });
-
-    it('The search language cookie is read', () => {
-      cy.visit('/'); // setting the cookie at the front page to make sure the cookies are set globally
-      cy.setCookie('SKOSMOS_SEARCH_LANG', 'en');
-      cy.visit('/yso/fi/');
-
-      // Test that the cookie value has been read and used to initialize the language selector
-      cy.get('.dropdown .dropdown-toggle').should('contain', 'englanti');
-
-    });
   });
 })

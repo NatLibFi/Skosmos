@@ -69,7 +69,7 @@ const vocabSearch = Vue.createApp({
       return false
     },
     parseSearchLang () {
-      // if content language can be found from uri params, use that and update it to SKOSMOS object and to search lang cookie
+      // if content language can be found from uri params, use that and update it to SKOSMOS object
       const urlParams = new URLSearchParams(window.location.search)
       const paramLang = urlParams.get('clang')
       const anyLang = urlParams.get('anylang')
@@ -81,19 +81,11 @@ const vocabSearch = Vue.createApp({
         this.changeLang(paramLang)
         return paramLang
       }
-      // use searchLangCookie if it can be found, otherwise pick content lang from SKOSMOS object
-      const cookies = document.cookie.split('; ')
-      const searchLangCookie = cookies.find(cookie =>
-        cookie.startsWith('SKOSMOS_SEARCH_LANG='))
-      if (searchLangCookie) {
-        const selectedLanguage = searchLangCookie.split('=')[1]
-        if (selectedLanguage !== 'all') {
-          window.SKOSMOS.content_lang = selectedLanguage
-        }
-        return selectedLanguage
-      } else {
+      // otherwise pick content lang from SKOSMOS object (it should always exist)
+      if (window.SKOSMOS.content_lang) {
         return window.SKOSMOS.content_lang
       }
+      return null
     },
     renderMatchingPart (searchTerm, label, lang = null) {
       if (label) {
@@ -151,6 +143,9 @@ const vocabSearch = Vue.createApp({
         if ('uri' in result) { // create relative Skosmos page URL from the search result URI
           result.pageUrl = window.SKOSMOS.vocab + '/' + window.SKOSMOS.lang + '/page?'
           const urlParams = new URLSearchParams({ uri: result.uri })
+          if (this.selectedLanguage !== window.SKOSMOS.lang) { // add content language parameter
+            urlParams.append('clang', this.selectedLanguage)
+          }
           result.pageUrl += urlParams.toString()
         }
         // render search result renderedTypes
@@ -184,19 +179,19 @@ const vocabSearch = Vue.createApp({
       const searchUrl = vocabHref + 'search?' + searchUrlParams.toString()
       window.location.href = searchUrl
     },
-    changeLang (lang) {
-      this.selectedLanguage = lang
-      this.setSearchLangCookie(lang)
+    changeLang (clang) {
+      this.selectedLanguage = clang
+      window.SKOSMOS.content_lang = clang
       this.resetSearchTermAndHideDropdown()
     },
-    changeContentLangAndReload (lang) {
-      this.changeLang(lang)
+    changeContentLangAndReload (clang) {
+      this.changeLang(clang)
       const params = new URLSearchParams(window.location.search)
-      if (lang === 'all') {
+      if (clang === 'all') {
         params.set('anylang', 'true')
       } else {
         params.delete('anylang')
-        params.set('clang', lang)
+        params.set('clang', clang)
       }
       this.$forceUpdate()
       window.location.search = params.toString()
@@ -212,14 +207,6 @@ const vocabSearch = Vue.createApp({
     showAutoComplete () {
       this.showDropdown = true
       this.$forceUpdate()
-    },
-    setSearchLangCookie (lang) {
-      // The cookie path should be relative if the baseHref is known
-      let cookiePath = '/'
-      if (window.SKOSMOS.baseHref && window.SKOSMOS.baseHref.replace(window.origin, '')) {
-        cookiePath = window.SKOSMOS.baseHref.replace(window.origin, '')
-      }
-      document.cookie = `SKOSMOS_SEARCH_LANG=${this.selectedLanguage};path=${cookiePath}`
     }
   },
   template: `
