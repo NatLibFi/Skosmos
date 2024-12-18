@@ -11,8 +11,7 @@ const vocabSearch = Vue.createApp({
       languageStrings: null,
       msgs: null,
       showDropdown: false,
-      showNotation: null,
-      searchResultStyle: null
+      showNotation: null
     }
   },
   mounted () {
@@ -62,14 +61,6 @@ const vocabSearch = Vue.createApp({
     formatSearchTerm () {
       if (this.searchTerm.includes('*')) { return this.searchTerm }
       return this.searchTerm + '*'
-    },
-    formatSearchResultStyle () {
-      const maxResults = window.SKOSMOS.searchResultSize
-      if (maxResults) {
-        return this.renderedResultsList.length > maxResults
-          ? `max-height: ${maxResults * 1.8}rem` // rough length based on searchResultSize variable
-          : 'max-height: none'
-      }
     },
     notationMatches (searchTerm, notation) {
       if (notation && notation.toLowerCase().includes(searchTerm.toLowerCase())) {
@@ -177,7 +168,6 @@ const vocabSearch = Vue.createApp({
           lang: window.SKOSMOS.lang
         })
       }
-      this.searchResultStyle = this.formatSearchResultStyle()
       this.showAutoComplete()
     },
     hideAutoComplete () {
@@ -275,9 +265,8 @@ const vocabSearch = Vue.createApp({
             @keyup.enter="gotoSearchPage()"
             @click="showAutoComplete()">
           <ul id="search-autocomplete-results"
-              class="dropdown-menu overflow-auto w-100"
+              class="dropdown-menu w-100"
               :class="{ 'show': showDropdown }"
-              :style="searchResultStyle"
               aria-labelledby="search-field">
             <li class="autocomplete-result container" v-for="result in renderedResultsList"
               :key="result.prefLabel" >
