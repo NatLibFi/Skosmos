@@ -620,6 +620,19 @@ body {
     font-weight: bold;
   }
 
+  #tab-groups .sidebar-list .list-group-item .concept-label i {
+    color: var(--dark-color);
+    font-size: 14px;
+  }
+
+  #tab-groups .sidebar-list .list-group-item a.child-concept {
+    font-weight: normal !important;
+  }
+
+  #tab-groups .sidebar-list .list-group-item a.child-concept.selected {
+    font-weight: bold !important;
+  }
+
   .hierarchy-button {
     background-color: transparent;
     color: var(--vocab-text);
@@ -637,13 +650,15 @@ body {
     position: absolute;
     left: 11px;
     top: 7px;
+    z-index: 1;
+    font-size: 12px;
   }
 
   .hierarchy-button img {
     transform: rotate(-45deg);
     position: absolute;
     top: 9px;
-    left: 10px;
+    left: 11px;
     width: 7px;
     z-index: 1;
   }

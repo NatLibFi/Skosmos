@@ -275,7 +275,8 @@ tabGroupsApp.component('tab-groups', {
         </template>
       </button>
       <span class="concept-label" :class="{ 'last': isLast }">
-        <a :class="{ 'selected': selectedGroup === group.uri }"
+        <i v-if="group.isGroup" class="property-hover fa-solid fa-layer-group"></i>
+        <a :class="{ 'selected': selectedGroup === group.uri, 'child-concept': !group.isGroup }"
           :href="getConceptURL(group.uri)"
           @click="handleClickGroupEvent($event, group)"
           aria-label="Go to the concept page"
