@@ -81,8 +81,8 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
         $mocksource = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
         $mockres = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
         $labelmap = array(
-          array('en', 'english'),
-          array(null, 'default')
+          array('en', [], 'english'),
+          array(null, [], 'default')
         );
         $mockres->method('label')->will($this->returnValueMap($labelmap));
         $mockres->method('getUri')->will($this->returnValue('http://thisdoesntexistatalland.sefsf/2j2h4/'));
