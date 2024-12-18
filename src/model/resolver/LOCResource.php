@@ -16,6 +16,9 @@ class LOCResource extends RemoteResource
                                           'timeout' => $timeout));
             $context  = stream_context_create($opts);
             $fd = fopen($this->uri, 'rb', false, $context);
+            if ($fd === false) {
+                return null;
+            }
             $headers = stream_get_meta_data($fd)['wrapper_data'];
             foreach ($headers as $header) {
                 if (strpos(strtolower($header), 'x-preflabel:') === 0) {

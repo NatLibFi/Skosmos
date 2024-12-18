@@ -61,22 +61,22 @@ class ConceptPropertyValueLiteralTest extends PHPUnit\Framework\TestCase
      */
     public function testGetLabelThatIsABrokenDate()
     {
-        set_error_handler(function ($code, $message) {
-            throw new \PHPUnit\Framework\Error($message,$code);
-        });
+        set_error_handler(
+            static function ( $errno, $errstr ) {
+                restore_error_handler();
+                throw new UserWarning( $errstr, $errno );
+            },
+            E_ALL
+        );
 
-        try {
-            $vocab = $this->model->getVocabulary('dates');
+        $vocab = $this->model->getVocabulary('dates');
 
-            $this->expectException(\PHPUnit\Framework\Error::class);
-            $this->expectExceptionMessage("Failed to parse time string (1986-21-00) at position 6 (1): Unexpected character");
+        $this->expectException(UserWarning::class);
+        $this->expectExceptionMessage("Failed to parse time string (1986-21-00) at position 6 (1): Unexpected character");
 
-            $concept = $vocab->getConceptInfo("http://www.skosmos.skos/date/d2", "en");
-            $props = $concept->getProperties();
-            $propvals = $props['http://www.skosmos.skos/date/ownDate']->getValues();
-        } finally {
-            restore_error_handler();
-        }
+        $concept = $vocab->getConceptInfo("http://www.skosmos.skos/date/d2", "en");
+        $props = $concept->getProperties();
+        $propvals = $props['http://www.skosmos.skos/date/ownDate']->getValues();
     }
 
     /**

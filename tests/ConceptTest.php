@@ -227,7 +227,8 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     {
         $vocab = $this->model->getVocabulary('duplicates');
         $concept = $vocab->getConceptInfo("http://www.skosmos.skos/dup/d3", "en");
-        $props = $concept->getMappingProperties();
+        // suppress fsockopen PHP warnings caused by trying to resolve www.skosmos.skos
+        @$props = $concept->getMappingProperties();
         $values = $props['skos:closeMatch']->getValues();
         $this->assertCount(2, $values);
     }
@@ -312,22 +313,21 @@ class ConceptTest extends PHPUnit\Framework\TestCase
      */
     public function testGetTimestampInvalidWarning()
     {
-        set_error_handler(function ($code, $message) {
-            throw new \PHPUnit\Framework\Error($message, $code);
-        });
+        set_error_handler(
+            static function ( $errno, $errstr ) {
+                restore_error_handler();
+                throw new UserWarning( $errstr, $errno );
+            },
+            E_ALL
+        );
 
-        try {
-            $vocab = $this->model->getVocabulary('test');
+        $vocab = $this->model->getVocabulary('test');
 
-            $this->expectException(\PHPUnit\Framework\Error::class);
-            $this->expectExceptionMessage("Failed to parse time string (1986-21-00) at position 6 (1): Unexpected character");
+        $this->expectException(UserWarning::class);
+        $this->expectExceptionMessage("Failed to parse time string (1986-21-00) at position 6 (1): Unexpected character");
 
-            $concept = $vocab->getConceptInfo("http://www.skosmos.skos/test/ta114", "en");
-            $concept->getDate(); # this should throw an ErrorException
-
-        } finally {
-            restore_error_handler();
-        }
+        $concept = $vocab->getConceptInfo("http://www.skosmos.skos/test/ta114", "en");
+        $concept->getDate(); # this should throw an ErrorException
     }
 
     /**
@@ -612,7 +612,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
      * Data provider for testGetModifiedDate test method.
      * @return array
      */
-    public function modifiedDateDataProvider()
+    public static function modifiedDateDataProvider()
     {
         return [
           ["cat", "2018-12-13T06:28:14", "+00:00"],  # set #0

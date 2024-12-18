@@ -20,67 +20,67 @@ class WebControllerTest extends TestCase
      * methods that perform the action are abstracted away, this data provider works for both.
      * @return array
      */
-    public function gitAndConfigModifiedDateDataProvider()
+    public static function gitAndConfigModifiedDateDataProvider()
     {
         return [
             # cache disabled
             [
                 false, # cache enabled
                 null, # cached value
-                $this->datetime('01-Feb-2009') # modified date time
+                self::datetime('01-Feb-2009') # modified date time
             ], # set #0
             # cache enabled, but nothing fetched
             [
                 true, # cache enabled
                 null, # cached value
-                $this->datetime('01-Feb-2009') # modified date time
+                self::datetime('01-Feb-2009') # modified date time
             ], # set #1
             # cache enabled, cached value returned
             [
                 true, # cache enabled
-                $this->datetime('01-Feb-2009'), # cached value
+                self::datetime('01-Feb-2009'), # cached value
                 null # modified date time
             ], # set #2
         ];
     }
 
-    public function modifiedDateDataProvider()
+    public static function modifiedDateDataProvider()
     {
         return [
             # concept has the most recent date time
             [
-                $this->datetime('01-Feb-2011'), # concept
-                $this->datetime('01-Feb-2002'), # git
-                $this->datetime('01-Feb-2003'), # config
-                $this->datetime('01-Feb-2011')  # returned
+                self::datetime('01-Feb-2011'), # concept
+                self::datetime('01-Feb-2002'), # git
+                self::datetime('01-Feb-2003'), # config
+                self::datetime('01-Feb-2011')  # returned
             ], # set #0
             # concept has the most recent date time
             [
-                $this->datetime('01-Feb-2011'), # concept
+                self::datetime('01-Feb-2011'), # concept
                 null, # git
-                $this->datetime('01-Feb-2003'), # config
-                $this->datetime('01-Feb-2011')  # returned
+                self::datetime('01-Feb-2003'), # config
+                self::datetime('01-Feb-2011')  # returned
             ], # set #1
             # concept has the most recent date time
             [
-                $this->datetime('01-Feb-2011'), # concept
+                self::datetime('01-Feb-2011'), # concept
                 null, # git
                 null, # config
-                $this->datetime('01-Feb-2011')  # returned
+                self::datetime('01-Feb-2011')  # returned
             ], # set #2
             # git has the most recent date time
             [
-                $this->datetime('01-Feb-2001'), # concept
-                $this->datetime('01-Feb-2012'), # git
-                $this->datetime('01-Feb-2003'), # config
-                $this->datetime('01-Feb-2012')  # returned
+                self::datetime('01-Feb-2001'), # concept
+                self::datetime('01-Feb-2012'), # git
+                self::datetime('01-Feb-2003'), # config
+                self::datetime('01-Feb-2012')  # returned
             ], # set #3
             # config has the most recent date time
             [
-                $this->datetime('01-Feb-2001'), # concept
-                $this->datetime('01-Feb-2002'), # git
-                $this->datetime('01-Feb-2013'), # config
-                $this->datetime('01-Feb-2013')  # returned
+                self::datetime('01-Feb-2001'), # concept
+                self::datetime('01-Feb-2002'), # git
+                self::datetime('01-Feb-2013'), # config
+                self::datetime('01-Feb-2013')  # returned
             ], # set #4
             # no date time found
             [
@@ -97,7 +97,7 @@ class WebControllerTest extends TestCase
      * @param string $string
      * @return bool|DateTime
      */
-    private function datetime(string $string)
+    private static function datetime(string $string)
     {
         return DateTime::createFromFormat("j-M-Y", $string);
     }
