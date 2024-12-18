@@ -227,7 +227,8 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     {
         $vocab = $this->model->getVocabulary('duplicates');
         $concept = $vocab->getConceptInfo("http://www.skosmos.skos/dup/d3", "en");
-        $props = $concept->getMappingProperties();
+        // suppress fsockopen PHP warnings caused by trying to resolve www.skosmos.skos
+        @$props = $concept->getMappingProperties();
         $values = $props['skos:closeMatch']->getValues();
         $this->assertCount(2, $values);
     }
