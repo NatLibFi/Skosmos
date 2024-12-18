@@ -57,22 +57,7 @@ window.SKOSMOS = {
   {%- endif -%}
   "baseHref": "{{ BaseHref }}",
   "language_strings": { {% for lang in request.vocab.config.languages %}"{{ lang }}": "{{ mockup_translations[request.lang][lang] }}", {% endfor -%}
-                      "all": "{{ mockup_translations[request.lang].all }}" },
-  "msgs" : { "fi": { "No results": "Ei hakutuloksia",
-                     "http://www.yso.fi/onto/yso-meta/Concept": "Yleiskäsite",
-                     "http://www.yso.fi/onto/yso-meta/Hierarchy": "Hierarkisoiva käsite",
-                     "skos:Concept": "Käsite",
-                     "Loading more items": "Ladataan sisältöä"},
-             "sv": { "No results": "Inga sökresultat",
-                     "http://www.yso.fi/onto/yso-meta/Concept": "Allmänbegrepp",
-                     "http://www.yso.fi/onto/yso-meta/Hierarchy": "Hierarki",
-                     "skos:Concept": "Begrepp",
-                     "Loading more items": "Laddar mera resultat"},
-             "en": { "No results": "No results",
-                     "http://www.yso.fi/onto/yso-meta/Concept": "General concept",
-                     "http://www.yso.fi/onto/yso-meta/Hierarchy": "Hierarchy",
-                     "skos:Concept": "Concept",
-                     "Loading more items": "Loading more items"}}
+  "all": "{{ mockup_translations[request.lang].all }}" }
 }
 </script>
 
