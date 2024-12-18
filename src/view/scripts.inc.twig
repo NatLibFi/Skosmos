@@ -47,10 +47,7 @@ window.SKOSMOS = {
   {%- if request.plugins.callbacks ~%}
   "pluginCallbacks": [{% for function in request.plugins.callbacks %}{% if not loop.first %}, {% endif %}"{{ function }}"{% endfor %}],
   {%- endif ~%}
-  {%- if GlobalConfig.searchResultsSize ~%}
-  "searchResultSize": {{ GlobalConfig.searchResultsSize }},
-  {%- endif ~%}
-  {% if custom_labels -%}
+  {%- if custom_labels -%}
   "customLabels": { 
     {%- for k, v in custom_labels -%}
       {%- set label = v['label'][request.lang] -%}
