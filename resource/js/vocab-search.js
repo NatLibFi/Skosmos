@@ -172,11 +172,9 @@ const vocabSearch = Vue.createApp({
     gotoSearchPage () {
       if (!this.searchTerm) return
 
-      const currentVocab = window.SKOSMOS.vocab + '/' + window.SKOSMOS.lang + '/'
-      const vocabHref = window.location.href.substring(0, window.location.href.lastIndexOf(window.SKOSMOS.vocab)) + currentVocab
       const searchUrlParams = new URLSearchParams({ clang: window.SKOSMOS.content_lang, q: this.searchTerm })
       if (this.selectedLanguage === 'all') searchUrlParams.set('anylang', 'true')
-      const searchUrl = vocabHref + 'search?' + searchUrlParams.toString()
+      const searchUrl = window.SKOSMOS.vocab + '/' + window.SKOSMOS.lang + '/search?' + searchUrlParams.toString()
       window.location.href = searchUrl
     },
     changeLang (clang) {
