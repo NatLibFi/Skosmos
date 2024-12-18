@@ -18,7 +18,7 @@ function startVocabSearchApp () {
     computed: {
       searchPlaceholder () {
         return $t('Search...')
-      }
+      },
     },
     mounted () {
       this.languages = window.SKOSMOS.languageOrder
@@ -30,6 +30,9 @@ function startVocabSearchApp () {
       this.showNotation = window.SKOSMOS.showNotation
     },
     methods: {
+      translateTypes(type) {
+        return $t(type)
+      },
       autoComplete () {
         const delayMs = 300
 
@@ -122,8 +125,8 @@ function startVocabSearchApp () {
         }
         return null
       },
-      translateType (type) {
-        return window.SKOSMOS.msgs[window.SKOSMOS.lang][type]
+      translateType(type) {
+        return this.translateTypes(type);
       },
       /*
       * renderResults is used when the search string has been indexed in the cache
