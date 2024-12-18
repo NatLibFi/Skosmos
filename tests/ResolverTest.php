@@ -19,7 +19,8 @@ class ResolverTest extends PHPUnit\Framework\TestCase
     public function testResolveLOCZeroTimeout()
     {
         $uri = "http://id.loc.gov/authorities/subjects/sh85016673"; // LCSH: Breakwaters
-        $resource = $this->resolver->resolve($uri, 0);
+        // use @ to suppress the timeout warning
+        @$resource = $this->resolver->resolve($uri, 0);
         $this->assertNull($resource);
     }
 
@@ -32,7 +33,8 @@ class ResolverTest extends PHPUnit\Framework\TestCase
     public function testResolveWDQSZeroTimeout()
     {
         $uri = "http://www.wikidata.org/entity/Q42"; // Wikidata: Douglas Adams
-        $resource = $this->resolver->resolve($uri, 0);
+        // use @ to suppress the timeout warning
+        @$resource = $this->resolver->resolve($uri, 0);
         $this->assertNull($resource);
     }
 
@@ -45,7 +47,8 @@ class ResolverTest extends PHPUnit\Framework\TestCase
     public function testResolveLDZeroTimeout()
     {
         $uri = "http://paikkatiedot.fi/so/1000772/10048472"; // PNR: Ahlainen
-        $resource = $this->resolver->resolve($uri, 0);
+        // use @ to suppress the timeout warning
+        @$resource = $this->resolver->resolve($uri, 0);
         $this->assertNull($resource);
     }
 
