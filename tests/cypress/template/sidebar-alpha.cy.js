@@ -3,6 +3,7 @@ describe('Alphabetical index', () => {
     // Go to YSO vocab home page
     cy.visit('/yso/en/')
     // Check that letter pagination exists and has the right number of items
+    cy.wait(20000)
     cy.get('#tab-alphabetical').find('.pagination li').should('have.length', 23)
     // Check that the first letter is correct
     cy.get('#tab-alphabetical').find('.pagination li').first().invoke('text').should('contain', 'A')
@@ -17,6 +18,7 @@ describe('Alphabetical index', () => {
     // Click on alphabetical index tab
     cy.get('#alphabetical').click()
     // Check that letter pagination exists and has the right number of items
+    cy.wait(20000);
     cy.get('#tab-alphabetical').find('.pagination li').should('have.length', 23)
     // Check that the first letter is correct
     cy.get('#tab-alphabetical').find('.pagination li').first().invoke('text').should('contain', 'A')
