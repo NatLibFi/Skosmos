@@ -1,4 +1,4 @@
-/* global Vue */
+/* global Vue, $t */
 /* global partialPageLoad, getConceptURL, fetchWithAbort */
 
 function startAlphaApp () {

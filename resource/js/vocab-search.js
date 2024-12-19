@@ -1,4 +1,4 @@
-/* global Vue */
+/* global Vue, $t */
 
 function startVocabSearchApp () {
   const vocabSearch = Vue.createApp({
@@ -20,7 +20,7 @@ function startVocabSearchApp () {
       },
       noResults () {
         return $t('No results')
-      },
+      }
     },
     mounted () {
       this.languages = window.SKOSMOS.languageOrder
@@ -31,7 +31,7 @@ function startVocabSearchApp () {
       this.showNotation = window.SKOSMOS.showNotation
     },
     methods: {
-      translateTypes(type) {
+      translateTypes (type) {
         return $t(type)
       },
       autoComplete () {
@@ -91,7 +91,7 @@ function startVocabSearchApp () {
           this.changeLang(paramLang)
           return paramLang
         }
-      // otherwise pick content lang from SKOSMOS object (it should always exist)
+        // otherwise pick content lang from SKOSMOS object (it should always exist)
         if (window.SKOSMOS.content_lang) {
           return window.SKOSMOS.content_lang
         }
@@ -118,8 +118,8 @@ function startVocabSearchApp () {
         }
         return null
       },
-      translateType(type) {
-        return this.translateTypes(type);
+      translateType (type) {
+        return this.translateTypes(type)
       },
       /*
       * renderResults is used when the search string has been indexed in the cache
@@ -166,7 +166,7 @@ function startVocabSearchApp () {
           result.renderedType = result.type.map(this.translateType).join(', ')
           result.showNotation = this.showNotation
         })
-  
+
         if (this.renderedResultsList.length === 0) { // show no results message
           this.renderedResultsList.push({
             prefLabel: this.noResults,
@@ -181,7 +181,7 @@ function startVocabSearchApp () {
       },
       gotoSearchPage () {
         if (!this.searchTerm) return
-  
+
         const currentVocab = window.SKOSMOS.vocab + '/' + window.SKOSMOS.lang + '/'
         const vocabHref = window.location.href.substring(0, window.location.href.lastIndexOf(window.SKOSMOS.vocab)) + currentVocab
         const searchUrlParams = new URLSearchParams({ clang: window.SKOSMOS.content_lang, q: this.searchTerm })
@@ -217,7 +217,7 @@ function startVocabSearchApp () {
       showAutoComplete () {
         this.showDropdown = true
         this.$forceUpdate()
-      },
+      }
     },
     template: `
       <div class="d-flex my-auto ms-auto">
