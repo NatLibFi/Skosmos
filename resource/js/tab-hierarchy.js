@@ -156,9 +156,9 @@ const tabHierApp = Vue.createApp({
     },
     setListStyle () {
       const height = document.getElementById('sidebar-tabs').clientHeight
-      const width = document.getElementById('sidebar-tabs').clientWidth
+      const width = document.getElementById('sidebar-tabs').clientWidth - 1
       this.listStyle = {
-        height: 'calc( 100% - ' + height + 'px)',
+        height: 'calc( 100% - ' + height + 'px )',
         width: width + 'px'
       }
     },
