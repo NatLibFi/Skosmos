@@ -91,19 +91,11 @@ function startVocabSearchApp () {
           this.changeLang(paramLang)
           return paramLang
         }
-        // use searchLangCookie if it can be found, otherwise pick content lang from SKOSMOS object
-        const cookies = document.cookie.split('; ')
-        const searchLangCookie = cookies.find(cookie =>
-          cookie.startsWith('SKOSMOS_SEARCH_LANG='))
-        if (searchLangCookie) {
-          const selectedLanguage = searchLangCookie.split('=')[1]
-          if (selectedLanguage !== 'all') {
-            window.SKOSMOS.content_lang = selectedLanguage
-          }
-          return selectedLanguage
-        } else {
+      // otherwise pick content lang from SKOSMOS object (it should always exist)
+        if (window.SKOSMOS.content_lang) {
           return window.SKOSMOS.content_lang
         }
+        return null
       },
       renderMatchingPart (searchTerm, label, lang = null) {
         if (label) {
@@ -161,6 +153,9 @@ function startVocabSearchApp () {
           if ('uri' in result) { // create relative Skosmos page URL from the search result URI
             result.pageUrl = window.SKOSMOS.vocab + '/' + window.SKOSMOS.lang + '/page?'
             const urlParams = new URLSearchParams({ uri: result.uri })
+            if (this.selectedLanguage !== window.SKOSMOS.lang) { // add content language parameter
+              urlParams.append('clang', this.selectedLanguage)
+            }
             result.pageUrl += urlParams.toString()
           }
           // render search result renderedTypes
@@ -171,7 +166,7 @@ function startVocabSearchApp () {
           result.renderedType = result.type.map(this.translateType).join(', ')
           result.showNotation = this.showNotation
         })
-
+  
         if (this.renderedResultsList.length === 0) { // show no results message
           this.renderedResultsList.push({
             prefLabel: this.noResults,
@@ -186,7 +181,7 @@ function startVocabSearchApp () {
       },
       gotoSearchPage () {
         if (!this.searchTerm) return
-
+  
         const currentVocab = window.SKOSMOS.vocab + '/' + window.SKOSMOS.lang + '/'
         const vocabHref = window.location.href.substring(0, window.location.href.lastIndexOf(window.SKOSMOS.vocab)) + currentVocab
         const searchUrlParams = new URLSearchParams({ clang: window.SKOSMOS.content_lang, q: this.searchTerm })
@@ -194,19 +189,19 @@ function startVocabSearchApp () {
         const searchUrl = vocabHref + 'search?' + searchUrlParams.toString()
         window.location.href = searchUrl
       },
-      changeLang (lang) {
-        this.selectedLanguage = lang
-        this.setSearchLangCookie(lang)
+      changeLang (clang) {
+        this.selectedLanguage = clang
+        window.SKOSMOS.content_lang = clang
         this.resetSearchTermAndHideDropdown()
       },
-      changeContentLangAndReload (lang) {
-        this.changeLang(lang)
+      changeContentLangAndReload (clang) {
+        this.changeLang(clang)
         const params = new URLSearchParams(window.location.search)
-        if (lang === 'all') {
+        if (clang === 'all') {
           params.set('anylang', 'true')
         } else {
           params.delete('anylang')
-          params.set('clang', lang)
+          params.set('clang', clang)
         }
         this.$forceUpdate()
         window.location.search = params.toString()
@@ -223,14 +218,6 @@ function startVocabSearchApp () {
         this.showDropdown = true
         this.$forceUpdate()
       },
-      setSearchLangCookie (lang) {
-        // The cookie path should be relative if the baseHref is known
-        let cookiePath = '/'
-        if (window.SKOSMOS.baseHref && window.SKOSMOS.baseHref.replace(window.origin, '')) {
-          cookiePath = window.SKOSMOS.baseHref.replace(window.origin, '')
-        }
-        document.cookie = `SKOSMOS_SEARCH_LANG=${this.selectedLanguage};path=${cookiePath}`
-      }
     },
     template: `
       <div class="d-flex my-auto ms-auto">
