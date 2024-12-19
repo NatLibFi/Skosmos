@@ -20,6 +20,7 @@
   --sidebar-scrollbar-bg: var(--light-color);
   --sidebar-scrollbar-thumb: var(--secondary-medium-color);
   --search-bg: var(--white-color);
+  --search-dropdown-bg: var(--light-color);
   --search-border: var(--medium-color);
   --search-button-bg: var(--dark-color);
   --search-button-text: var(--white-color);
@@ -271,7 +272,7 @@ body {
 
   #search-wrapper .dropdown-menu {
     transform: translateY(-1px);
-    background-color: var(--search-bg);
+    background-color: var(--search-dropdown-bg);
     color: var(--headerbar-text-2);
     border: 1px solid var(--search-border);
     border-radius: 0;
@@ -280,6 +281,8 @@ body {
   #search-wrapper ul {
     padding-top: 0rem;
     padding-bottom: 0rem;
+    max-height: 50vh;
+    overflow-y: auto;
   }
 
   #search-wrapper .autocomplete {
