@@ -605,6 +605,7 @@ body {
     margin-left: 1px !important; /* add a 1px margin to offset missing border */
   }
 
+  #tab-alphabetical .sidebar-list .list-group-item a.selected,
   #tab-hierarchy .sidebar-list .list-group-item a.selected,
   #tab-groups .sidebar-list .list-group-item a.selected {
     color: var(--vocab-text) !important;
