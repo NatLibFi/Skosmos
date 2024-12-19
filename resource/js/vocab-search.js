@@ -275,7 +275,7 @@ const vocabSearch = Vue.createApp({
                   <div class="row pb-1">
                     <div class="col" v-if="result.hitType == 'hidden'">
                       <span class="result">
-                        <template v-if="result.showNotation">
+                        <template v-if="result.showNotation && result.notation">
                           {{ result.notation }}&nbsp;
                         </template>
                         <template v-if="result.hit.hasOwnProperty('match')">
@@ -289,7 +289,7 @@ const vocabSearch = Vue.createApp({
                     <div class="col" v-else-if="result.hitType == 'alt'">
                       <span>
                         <i>
-                          <template v-if="result.showNotation">
+                          <template v-if="result.showNotation && result.notation">
                             {{ result.notation }}&nbsp;
                           </template>
                           <template v-if="result.hit.hasOwnProperty('match')">
@@ -301,7 +301,7 @@ const vocabSearch = Vue.createApp({
                         </i>
                       </span>
                       <span> &rarr;&nbsp;<span class="result">
-                          <template v-if="result.showNotation">
+                          <template v-if="result.showNotation && result.notation">
                             {{ result.notation }}&nbsp;
                           </template>
                           <template v-if="result.hitPref.hasOwnProperty('match')">
@@ -323,12 +323,12 @@ const vocabSearch = Vue.createApp({
                         </template>
                       </span>
                       <span>
-                        &nbsp;{{ result.prefLabel }}
+                        {{ result.prefLabel }}
                       </span>
                     </div>
                     <div class="col" v-else-if="result.hitType == 'pref'">
                       <span class="result">
-                        <template v-if="result.showNotation">
+                        <template v-if="result.showNotation && result.notation">
                           {{ result.notation }}&nbsp;
                         </template>
                         <template v-if="result.hit.hasOwnProperty('match')">
