@@ -233,6 +233,7 @@
 	void:uriSpace "http://www.skosmos.skos/onto/groups/";
 	skosmos:arrayClass isothes:ThesaurusArray ;
     skosmos:groupClass skos:Collection ;
+    skosmos:defaultConceptSidebarView "groups" ;
 	skosmos:language "fi", "en";
 	skosmos:defaultLanguage "fi";
 	skosmos:indexShowClass meta:TestClass, meta:TestClass2;
