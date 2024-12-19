@@ -625,14 +625,6 @@ body {
     font-size: 14px;
   }
 
-  #tab-groups .sidebar-list .list-group-item a.child-concept {
-    font-weight: normal !important;
-  }
-
-  #tab-groups .sidebar-list .list-group-item a.child-concept.selected {
-    font-weight: bold !important;
-  }
-
   .hierarchy-button {
     background-color: transparent;
     color: var(--vocab-text);
