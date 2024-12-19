@@ -205,7 +205,6 @@ body {
   }
 
   #search-wrapper {
-    display: flex;
     color: var(--headerbar-text-2);
     float: right;
     height: 3.5em;
