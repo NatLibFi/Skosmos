@@ -10,7 +10,6 @@ function startVocabSearchApp () {
         searchCounter: null,
         renderedResultsList: [],
         languageStrings: null,
-        msgs: null,
         showDropdown: false,
         showNotation: null
       }
@@ -18,6 +17,9 @@ function startVocabSearchApp () {
     computed: {
       searchPlaceholder () {
         return $t('Search...')
+      },
+      noResults () {
+        return $t('No results')
       },
     },
     mounted () {
@@ -172,7 +174,7 @@ function startVocabSearchApp () {
 
         if (this.renderedResultsList.length === 0) { // show no results message
           this.renderedResultsList.push({
-            prefLabel: this.msgs['No results'],
+            prefLabel: this.noResults,
             lang: window.SKOSMOS.lang
           })
         }
