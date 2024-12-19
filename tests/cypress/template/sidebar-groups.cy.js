@@ -1,4 +1,4 @@
-describe('Alphabetical index', () => {
+describe('Groups tab', () => {
   it('Loads groups on vocab page', () => {
     // Go to test vocab home page
     cy.visit('/groups/en/')
