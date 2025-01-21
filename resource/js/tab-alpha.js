@@ -242,12 +242,12 @@ function startAlphaApp () {
   tabAlphaApp.mount('#tab-alphabetical')
 }
 
-function waitForTranslationService () {
+const waitForTranslationServiceTabAlpha = () => {
   if (typeof $t !== 'undefined') {
     startAlphaApp()
   } else {
-    setTimeout(waitForTranslationService, 50)
+    setTimeout(waitForTranslationServiceTabAlpha, 50)
   }
 }
 
-waitForTranslationService()
+waitForTranslationServiceTabAlpha()

@@ -370,12 +370,12 @@ function startVocabSearchApp () {
   vocabSearch.mount('#search-vocab')
 }
 
-function waitForTranslationService () {
+const waitForTranslationServiceVocabSearch = () => {
   if (typeof $t !== 'undefined') {
     startVocabSearchApp()
   } else {
-    setTimeout(waitForTranslationService, 50)
+    setTimeout(waitForTranslationServiceVocabSearch, 50)
   }
 }
 
-waitForTranslationService()
+waitForTranslationServiceVocabSearch()
