@@ -17,6 +17,11 @@ function startAlphaApp () {
         listStyle: {}
       }
     },
+    computed: {
+      loadingMoreItemsMessage() {
+        return $t('Loading more items');
+      }
+    },
     provide () {
       return {
         partialPageLoad,
@@ -30,15 +35,12 @@ function startAlphaApp () {
         this.loadLetters()
       }
 
-      this.loadingMessage = this.loadingMoreItemsMessage() // window.SKOSMOS.msgs[window.SKOSMOS.lang]['Loading more items'] ?? window.SKOSMOS.msgs.en['Loading more items']
+      this.loadingMessage = this.loadingMoreItemsMessage // window.SKOSMOS.msgs[window.SKOSMOS.lang]['Loading more items'] ?? window.SKOSMOS.msgs.en['Loading more items']
     },
     beforeUpdate () {
       this.setListStyle()
     },
     methods: {
-      loadingMoreItemsMessage () {
-        return $t('Loading more items')
-      },
       handleClickAlphabeticalEvent () {
         // only load index the first time the page is opened or if selected concept has changed
         if (this.indexLetters.length === 0 || this.selectedConcept !== window.SKOSMOS.uri) {
