@@ -31,9 +31,6 @@ function startVocabSearchApp () {
       this.showNotation = window.SKOSMOS.showNotation
     },
     methods: {
-      translateTypes (type) {
-        return $t(type)
-      },
       autoComplete () {
         const delayMs = 300
 
@@ -119,7 +116,7 @@ function startVocabSearchApp () {
         return null
       },
       translateType (type) {
-        return this.translateTypes(type)
+        return $t(type)
       },
       /*
       * renderResults is used when the search string has been indexed in the cache
