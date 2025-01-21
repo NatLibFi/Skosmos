@@ -12,7 +12,6 @@ function startAlphaApp () {
         loadingLetters: false,
         loadingConcepts: false,
         loadingMoreConcepts: false,
-        loadingMessage: '',
         currentOffset: 0,
         listStyle: {}
       }
