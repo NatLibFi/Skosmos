@@ -126,10 +126,10 @@ function startAlphaApp () {
 
         // get height and width of pagination and sidebar tabs elements if they exist
         const height = pagination && pagination.clientHeight + sidebarTabs.clientHeight
-        const width = pagination && pagination.clientWidth
+        const width = pagination && pagination.clientWidth - 1
 
         this.listStyle = {
-          height: 'calc(100% - ' + height + 'px)',
+          height: 'calc(100% - ' + height + 'px )',
           width: width + 'px'
         }
       }

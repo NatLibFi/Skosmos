@@ -179,11 +179,9 @@ function startVocabSearchApp () {
       gotoSearchPage () {
         if (!this.searchTerm) return
 
-        const currentVocab = window.SKOSMOS.vocab + '/' + window.SKOSMOS.lang + '/'
-        const vocabHref = window.location.href.substring(0, window.location.href.lastIndexOf(window.SKOSMOS.vocab)) + currentVocab
         const searchUrlParams = new URLSearchParams({ clang: window.SKOSMOS.content_lang, q: this.searchTerm })
         if (this.selectedLanguage === 'all') searchUrlParams.set('anylang', 'true')
-        const searchUrl = vocabHref + 'search?' + searchUrlParams.toString()
+        const searchUrl = window.SKOSMOS.vocab + '/' + window.SKOSMOS.lang + '/search?' + searchUrlParams.toString()
         window.location.href = searchUrl
       },
       changeLang (clang) {
@@ -258,8 +256,10 @@ function startVocabSearchApp () {
               @input="autoComplete()"
               @keyup.enter="gotoSearchPage()"
               @click="showAutoComplete()">
-            <ul id="search-autocomplete-results" class="dropdown-menu" :class="{ 'show': showDropdown }"
-              aria-labelledby="search-field">
+            <ul id="search-autocomplete-results"
+                class="dropdown-menu"
+                :class="{ 'show': showDropdown }"
+                aria-labelledby="search-field">
               <li class="autocomplete-result container" v-for="result in renderedResultsList"
                 :key="result.prefLabel" >
                 <template v-if="result.pageUrl">
@@ -267,7 +267,7 @@ function startVocabSearchApp () {
                     <div class="row pb-1">
                       <div class="col" v-if="result.hitType == 'hidden'">
                         <span class="result">
-                          <template v-if="result.showNotation">
+                          <template v-if="result.showNotation && result.notation">
                             {{ result.notation }}&nbsp;
                           </template>
                           <template v-if="result.hit.hasOwnProperty('match')">
@@ -281,7 +281,7 @@ function startVocabSearchApp () {
                       <div class="col" v-else-if="result.hitType == 'alt'">
                         <span>
                           <i>
-                            <template v-if="result.showNotation">
+                            <template v-if="result.showNotation && result.notation">
                               {{ result.notation }}&nbsp;
                             </template>
                             <template v-if="result.hit.hasOwnProperty('match')">
@@ -293,7 +293,7 @@ function startVocabSearchApp () {
                           </i>
                         </span>
                         <span> &rarr;&nbsp;<span class="result">
-                            <template v-if="result.showNotation">
+                          <template v-if="result.showNotation && result.notation">
                               {{ result.notation }}&nbsp;
                             </template>
                             <template v-if="result.hitPref.hasOwnProperty('match')">
@@ -315,12 +315,12 @@ function startVocabSearchApp () {
                           </template>
                         </span>
                         <span>
-                          &nbsp;{{ result.prefLabel }}
+                          {{ result.prefLabel }}
                         </span>
                       </div>
                       <div class="col" v-else-if="result.hitType == 'pref'">
                         <span class="result">
-                          <template v-if="result.showNotation">
+                          <template v-if="result.showNotation && result.notation">
                             {{ result.notation }}&nbsp;
                           </template>
                           <template v-if="result.hit.hasOwnProperty('match')">
