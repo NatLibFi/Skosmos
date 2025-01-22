@@ -20,6 +20,7 @@
   --sidebar-scrollbar-bg: var(--light-color);
   --sidebar-scrollbar-thumb: var(--secondary-medium-color);
   --search-bg: var(--white-color);
+  --search-dropdown-bg: var(--light-color);
   --search-border: var(--medium-color);
   --search-button-bg: var(--dark-color);
   --search-button-text: var(--white-color);
@@ -271,7 +272,7 @@ body {
 
   #search-wrapper .dropdown-menu {
     transform: translateY(-1px);
-    background-color: var(--search-bg);
+    background-color: var(--search-dropdown-bg);
     color: var(--headerbar-text-2);
     border: 1px solid var(--search-border);
     border-radius: 0;
@@ -280,6 +281,8 @@ body {
   #search-wrapper ul {
     padding-top: 0rem;
     padding-bottom: 0rem;
+    max-height: 50vh;
+    overflow-y: auto;
   }
 
   #search-wrapper .autocomplete {
@@ -605,6 +608,7 @@ body {
     margin-left: 1px !important; /* add a 1px margin to offset missing border */
   }
 
+  #tab-alphabetical .sidebar-list .list-group-item a.selected,
   #tab-hierarchy .sidebar-list .list-group-item a.selected,
   #tab-groups .sidebar-list .list-group-item a.selected {
     color: var(--vocab-text) !important;
@@ -618,6 +622,11 @@ body {
   #tab-hierarchy .sidebar-list .list-group-item a.selected .concept-notation,
   #tab-groups .sidebar-list .list-group-item a.selected .concept-notation {
     font-weight: bold;
+  }
+
+  #tab-groups .sidebar-list .list-group-item .concept-label i {
+    color: var(--dark-color);
+    font-size: 14px;
   }
 
   .hierarchy-button {
@@ -637,13 +646,15 @@ body {
     position: absolute;
     left: 11px;
     top: 7px;
+    z-index: 1;
+    font-size: 12px;
   }
 
   .hierarchy-button img {
     transform: rotate(-45deg);
     position: absolute;
     top: 9px;
-    left: 10px;
+    left: 11px;
     width: 7px;
     z-index: 1;
   }

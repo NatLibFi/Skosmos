@@ -144,7 +144,12 @@ const tabGroupsApp = Vue.createApp({
       }
     },
     setListStyle () {
-      // TODO: set list style when mounting component and resizing window
+      const height = document.getElementById('sidebar-tabs').clientHeight
+      const width = document.getElementById('sidebar-tabs').clientWidth - 1
+      this.listStyle = {
+        height: 'calc( 100% - ' + height + 'px )',
+        width: width + 'px'
+      }
     },
     loadChildren (group) {
       // Load children only if group has children and they have not been loaded yet
@@ -275,6 +280,7 @@ tabGroupsApp.component('tab-groups', {
         </template>
       </button>
       <span class="concept-label" :class="{ 'last': isLast }">
+        <i v-if="group.isGroup" class="property-hover fa-solid fa-layer-group"></i>
         <a :class="{ 'selected': selectedGroup === group.uri }"
           :href="getConceptURL(group.uri)"
           @click="handleClickGroupEvent($event, group)"

@@ -212,5 +212,20 @@ describe('Vocab search bar', () => {
         cy.get('li').last().find('b').eq(0).should('have.text', '51')
       })
     })
+      it('Long autocomplete result list should have a scroll bar', () => {
+        // go to YSO vocab front page
+        cy.visit('/yso/fi/')
+
+        // resize the window to smaller size
+        cy.viewport(1200, 600)
+
+        // type a search term and wait for the autocomplete to appear
+        cy.get('#search-field').type('mu')
+        cy.get('#search-autocomplete-results').should('be.visible')
+
+        // the result list should have a CSS-based scroll
+        cy.get('#search-autocomplete-results').should('have.css', 'overflow-y', 'auto')
+        cy.get('#search-autocomplete-results').should('have.css', 'max-height', '300px')
+      });
   });
 })
