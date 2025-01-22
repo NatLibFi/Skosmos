@@ -17,8 +17,8 @@ function startAlphaApp () {
       }
     },
     computed: {
-      loadingMessage() {
-        return $t('Loading more items');
+      loadingMessage () {
+        return $t('Loading more items')
       }
     },
     provide () {
