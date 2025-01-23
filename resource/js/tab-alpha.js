@@ -22,7 +22,7 @@ function startAlphaApp () {
       },
       toConceptPageAriaMessage () {
         return $t('Go to the concept page')
-      },
+      }
     },
     provide () {
       return {
