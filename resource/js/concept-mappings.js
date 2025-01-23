@@ -60,12 +60,12 @@ const conceptMappingsApp = Vue.createApp({
   template: `
     <div v-load-concept-page="loadMappings">
       <template v-if="loading">
-        <div class="main-content-section p-5">
+        <div class="main-content-section px-5 py-4">
           <i class="fa-solid fa-spinner fa-spin-pulse"></i>
         </div>
       </template>
       <template v-else-if="hasMappings">
-        <div class="main-content-section p-5">
+        <div class="main-content-section px-5 py-4">
           <concept-mappings :mappings="mappings" :customLabels="customLabels"></concept-mappings>
         </div>
       </template>
@@ -92,19 +92,19 @@ conceptMappingsApp.component('concept-mappings', {
   template: `
     <div class="row property prop-mapping" v-for="(mapping, label) in mappings">
       <template v-if="customLabels">
-        <div class="col-sm-4 px-0 property-label" :title="customLabels[mapping[0].type[0]][1] || mapping[0].description">
+        <div class="col-lg-4 ps-0 property-label" :title="customLabels[mapping[0].type[0]][1] || mapping[0].description">
           <h2>{{ customLabels[mapping[0].type[0]][0] }}</h2>
         </div>
       </template>
       <template v-else>
-        <div class="col-sm-4 px-0 property-label" :title="mapping[0].description"><h2>{{ label }}</h2></div>
+        <div class="col-lg-4 ps-0 property-label" :title="mapping[0].description"><h2>{{ label }}</h2></div>
       </template>
-      <div class="col-sm-8">
+      <div class="col-lg-8 gx-0 gx-lg-4">
         <div class="row mb-2" v-for="m in mapping">
-          <div class="col-sm-5 prop-mapping-label">
+          <div class="col-5 prop-mapping-label">
             <a :href="m.hrefLink">{{ m.prefLabel }}</a><span v-if="m.lang && m.lang !== this.content_lang"> ({{ m.lang }})</span>
           </div>
-          <div class="col-sm-7 prop-mapping-vocab">{{ m.vocabName }}</div>
+          <div class="col-7 prop-mapping-vocab">{{ m.vocabName }}</div>
         </div>
       </div>
     </div>
