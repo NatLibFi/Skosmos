@@ -76,12 +76,12 @@ function startResourceCountsApp () {
   resourceCountsApp.mount('#resource-counts')
 }
 
-function waitForTranslationService () {
+const waitForTranslationServiceVocabCounts = () => {
   if (typeof $t !== 'undefined') {
     startResourceCountsApp()
   } else {
-    setTimeout(waitForTranslationService, 50)
+    setTimeout(waitForTranslationServiceVocabCounts, 50)
   }
 }
 
-waitForTranslationService()
+waitForTranslationServiceVocabCounts()
