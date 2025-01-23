@@ -14,7 +14,7 @@ function truncateSearchResults () {
       link.style.right = '0'
       link.style.padding = '0'
       link.textContent = '... (' + countResultValues(result) + ')'
-      const backgroundColor = getComputedStyle(result).backgroundColor
+      const backgroundColor = window.getComputedStyle(result).backgroundColor
       link.style.backgroundColor = backgroundColor
       link.onclick = () => showAllResults(result)
       result.appendChild(link)
