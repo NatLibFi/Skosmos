@@ -124,7 +124,7 @@ describe('Alphabetical index', () => {
     cy.visit('/yso/en/')
     cy.get('li.list-group-item.py-1.px-2 > a').should('have.attr', 'aria-label', 'Go to the concept page')
     cy.visit('/yso/sv/')
-    cy.get('li.list-group-item.py-1.px-2 > a').should('have.attr', 'aria-label', 'Go till begrepp sidan')
+    cy.get('li.list-group-item.py-1.px-2 > a').should('have.attr', 'aria-label', 'Gå till begreppsidan')
     cy.visit('/yso/fi/')
     cy.get('li.list-group-item.py-1.px-2 > a').should('have.attr', 'aria-label', 'Mene käsitesivulle')
   })
