@@ -119,4 +119,13 @@ describe('Alphabetical index', () => {
     // check that the second mapping property has the right number of entries
     cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').should('have.length', 3)
   })
+  // Check the correctness of Aria-labels (Sami language will be implemented later)"
+  it('Aria tags are correct for each language', () => {
+    cy.visit('/yso/en/')
+    cy.get('li.list-group-item.py-1.px-2 > a').should('have.attr', 'aria-label', 'Go to the concept page')
+    cy.visit('/yso/sv/')
+    cy.get('li.list-group-item.py-1.px-2 > a').should('have.attr', 'aria-label', 'Go till begrepp sidan')
+    cy.visit('/yso/fi/')
+    cy.get('li.list-group-item.py-1.px-2 > a').should('have.attr', 'aria-label', 'Mene käsitesivulle')
+  })
 })
