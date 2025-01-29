@@ -876,6 +876,11 @@ body {
   .search-result .list-group-item {
     color: var(--vocab-text);
     border: none;
+    cursor: default;
+  }
+
+  .search-result .list-group-item a {
+    cursor: pointer;
   }
 
   .uri-icon {
