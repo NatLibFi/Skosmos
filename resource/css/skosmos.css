@@ -347,11 +347,16 @@ body {
 
   #main-container {
     font-size: 16px;
+    padding-top: 2.75rem;
   }
 
   #main-container h1 {
     font-family: var(--font-family-heading);
     font-weight: bold;
+  }
+
+  #main-container-row {
+    --bs-gutter-x: 2.25rem;
   }
 
   /***** Main container frontpage & frontpage one vocab *****/
