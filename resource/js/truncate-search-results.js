@@ -15,9 +15,18 @@ function truncateSearchResults () {
         link.style.position = 'absolute'
         link.style.right = '0'
         link.style.padding = '0'
+        link.style.paddingLeft = '1.5em'
         link.textContent = renderShowAllText(result)
         const backgroundColor = window.getComputedStyle(result).backgroundColor
-        link.style.backgroundColor = backgroundColor
+        const cssString = `background:
+                             linear-gradient(
+                               90deg, transparent,
+                               ${backgroundColor},
+                               ${backgroundColor});`
+
+        // Apply a left-side fade to the link element
+        link.style.cssText += cssString;
+        //link.style.backgroundColor = backgroundColor
         link.onclick = () => showAllResults(result)
         result.appendChild(link)
       }
