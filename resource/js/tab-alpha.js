@@ -19,6 +19,9 @@ function startAlphaApp () {
     computed: {
       loadingMessage () {
         return $t('Loading more items')
+      },
+      toConceptPageAriaMessage () {
+        return $t('Go to the concept page')
       }
     },
     provide () {
@@ -145,6 +148,7 @@ function startAlphaApp () {
           :loading-more-concepts="loadingMoreConcepts"
           :loading-message="loadingMessage"
           :list-style="listStyle"
+          :to-concept-page-aria-message="toConceptPageAriaMessage"
           @load-concepts="loadConcepts($event)"
           @select-concept="selectedConcept = $event"
           ref="tabAlpha"
@@ -180,7 +184,7 @@ function startAlphaApp () {
   })
 
   tabAlphaApp.component('tab-alpha', {
-    props: ['indexLetters', 'indexConcepts', 'selectedConcept', 'loadingLetters', 'loadingConcepts', 'loadingMoreConcepts', 'loadingMessage', 'listStyle'],
+    props: ['indexLetters', 'indexConcepts', 'selectedConcept', 'loadingLetters', 'loadingConcepts', 'loadingMoreConcepts', 'loadingMessage', 'listStyle', 'toConceptPageAriaMessage'],
     emits: ['loadConcepts', 'selectConcept'],
     inject: ['partialPageLoad', 'getConceptURL', 'showNotation'],
     methods: {
@@ -222,7 +226,7 @@ function startAlphaApp () {
               </template>
               <a :class="{ 'selected': selectedConcept === concept.uri }"
                 :href="getConceptURL(concept.uri)" @click="loadConcept($event, concept.uri)"
-                aria-label="Go to the concept page"
+                :aria-label="toConceptPageAriaMessage"
               >
                 {{ concept.prefLabel }}{{ showNotation && concept.qualifier ? ' (' + concept.qualifier + ')' : '' }}
               </a>
