@@ -8,31 +8,43 @@ function truncateSearchResults () {
 
     if (actualWidth > containerWidth) {
       result.style.overflow = 'hidden'
-
-      const link = document.createElement('a')
-      link.style.position = 'absolute'
-      link.style.right = '0'
-      link.style.padding = '0'
-      link.textContent = '... (' + countResultValues(result) + ')'
-      const backgroundColor = window.getComputedStyle(result).backgroundColor
-      link.style.backgroundColor = backgroundColor
-      link.onclick = () => showAllResults(result)
-      result.appendChild(link)
+      // if the element does not have a show all -link, add one
+      const lastElement = result.lastElementChild
+      if (!lastElement || lastElement.tagName != 'A') {
+        const link = document.createElement('A')
+        link.style.position = 'absolute'
+        link.style.right = '0'
+        link.style.padding = '0'
+        link.textContent = renderShowAllText(result)
+        const backgroundColor = window.getComputedStyle(result).backgroundColor
+        link.style.backgroundColor = backgroundColor
+        link.onclick = () => showAllResults(result)
+        result.appendChild(link)
+      }
+    } else {
+      removeShowAll(result)
     }
   })
 }
+function removeShowAll(element) {
+  const lastElement = element.lastElementChild
+      if (lastElement && lastElement.tagName === 'A') {
+        element.removeChild(lastElement)
+      }
+}
 
-function showAllResults (result) {
-  result.style.whiteSpace = 'normal'
-  result.style.overflow = 'visible'
-  const link = result.querySelector('a')
+function showAllResults (element) {
+  element.style.whiteSpace = 'normal'
+  element.style.overflow = 'visible'
+  const link = element.querySelector('A')
   if (link) {
-    result.removeChild(link)
+    element.removeChild(link)
   }
 }
 
-function countResultValues (result) {
-  return 5 // Placeholder
+function renderShowAllText (element) {
+  const textArr = element.textContent.split(',')
+  return "... (" + textArr.length + ")"
 }
 
 // Event listeners when page is initially loaded, and when the window is resized
