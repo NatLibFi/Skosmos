@@ -93,12 +93,12 @@
     </div>
     {% endif %}
   </header>
-  <main id="main-container" class="{% if request.vocabid == '' or global_search %} frontpage{% elseif concept_uri != '' %} termpage{% elseif request.vocab != '' %} vocabpage{% if list_style %} {{ list_style }}{% endif %}{% endif %} py-5">
+  <main id="main-container" class="{% if request.vocabid == '' or global_search %} frontpage{% elseif concept_uri != '' %} termpage{% elseif request.vocab != '' %} vocabpage{% if list_style %} {{ list_style }}{% endif %}{% endif %}">
     <div class="container">
       <noscript>
         <strong>We're sorry but Skosmos doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
       </noscript>
-      <div class="row" tabindex="-1">
+      <div id="main-container-row" class="row" tabindex="-1">
       {% block content %}
       {% endblock %}
       </div>

@@ -347,11 +347,16 @@ body {
 
   #main-container {
     font-size: 16px;
+    padding-top: 2.75rem;
   }
 
   #main-container h1 {
     font-family: var(--font-family-heading);
     font-weight: bold;
+  }
+
+  #main-container-row {
+    --bs-gutter-x: 2.25rem;
   }
 
   /***** Main container frontpage & frontpage one vocab *****/
@@ -723,11 +728,18 @@ body {
   .main-content-section {
     background-color: var(--vocab-bg);
     margin-bottom: .2rem;
+    padding-left: 3.5rem;
+    padding-right: 3.5rem;
   }
 
-  #concept-heading {
+  #concept-heading, #vocab-heading {
     margin-top: 2rem;
     padding-bottom: 2.5rem;
+  }
+
+  #vocab-heading, .vocab-statistics, #vocab-download-links {
+    margin-left: -.75rem;
+    margin-right: -.75rem;
   }
 
   .property {

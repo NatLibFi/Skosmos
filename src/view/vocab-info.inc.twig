@@ -1,6 +1,6 @@
 <div class="col-md-8" id="main-content">
-  <div class="main-content-section px-5 py-4">
-    <h1 class="pt-3 pb-5">{{ "Vocabulary information" | trans }}</h1>
+  <div class="main-content-section py-4">
+    <h1 id="vocab-heading">{{ "Vocabulary information" | trans }}</h1>
 
     {% set vocabInfo = vocab.info(request.contentLang) %}
     {% if not vocabInfo %}
@@ -10,9 +10,9 @@
     {% else %}
 
     {% for key, values in vocabInfo %}
-    <div class="row property g-0">
-      <div class="col-sm-4 px-0 property-label"><h2>{{ key | trans }}</h2></div>
-      <div class="col-sm-8 align-self-center property-value">
+    <div class="row property">
+      <div class="col-lg-4 ps-0 property-label"><h2>{{ key | trans }}</h2></div>
+      <div class="col-lg-8 gx-0 gx-lg-4 align-self-center property-value">
         <ul class="align-bottom">
           {% for val in values %}
           <li>
@@ -45,7 +45,7 @@
     {% endif %}
 
     {% if vocab.config.dataURLs %}
-    <div class="row g-0 py-3">
+    <div class="row py-3" id="vocab-download-links">
       <div class="col-sm-12 px-0 property-label" id="download-links">
         <h2><i class="fa-solid fa-download"></i> {{ "Download this vocabulary:" | trans }}</h2>
         <ul class="d-inline">
