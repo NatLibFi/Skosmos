@@ -11,13 +11,12 @@ function truncateSearchResults () {
       // if the element does not have a show all -link, add one
       const lastElement = result.lastElementChild
       if (!lastElement || lastElement.tagName !== 'A') {
-        const link = document.createElement('A');
-        link.textContent = renderShowAllText(result);
-        link.setAttribute("class", "p-0 ps-4 search-result-hide")
-        const backgroundColor = window.getComputedStyle(result).backgroundColor;
+        const link = document.createElement('A')
+        link.textContent = renderShowAllText(result)
+        link.setAttribute('class', 'p-0 ps-4 search-result-hide')
 
-        link.onclick = () => showAllResults(result);
-        result.appendChild(link);
+        link.onclick = () => showAllResults(result)
+        result.appendChild(link)
       }
     } else {
       removeShowAll(result)
