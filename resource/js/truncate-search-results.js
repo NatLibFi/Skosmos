@@ -10,7 +10,7 @@ function truncateSearchResults () {
       result.style.overflow = 'hidden'
       // if the element does not have a show all -link, add one
       const lastElement = result.lastElementChild
-      if (!lastElement || lastElement.tagName != 'A') {
+      if (!lastElement || lastElement.tagName !== 'A') {
         const link = document.createElement('A')
         link.style.position = 'absolute'
         link.style.right = '0'
@@ -26,11 +26,11 @@ function truncateSearchResults () {
     }
   })
 }
-function removeShowAll(element) {
+function removeShowAll (element) {
   const lastElement = element.lastElementChild
-      if (lastElement && lastElement.tagName === 'A') {
-        element.removeChild(lastElement)
-      }
+  if (lastElement && lastElement.tagName === 'A') {
+    element.removeChild(lastElement)
+  }
 }
 
 function showAllResults (element) {
@@ -44,7 +44,7 @@ function showAllResults (element) {
 
 function renderShowAllText (element) {
   const textArr = element.textContent.split(',')
-  return "... (" + textArr.length + ")"
+  return '... (' + textArr.length + ')'
 }
 
 // Event listeners when page is initially loaded, and when the window is resized
