@@ -91,13 +91,12 @@ body {
     margin: 0 5px;
   }
 
-  #main-container.searchpage .fa-arrow-right, #main-container.searchpage-multi-vocab .fa-arrow-right {
+  #main-container.searchpage  .fa-arrow-right {
     color: var(--vocab-text);
     font-size: 12px;
   }
 
-  #main-container.searchpage .list-group .fa-solid, #main-container.searchpage .list-group .fa-regular,
-  #main-container.searchpage-multi-vocab .list-group .fa-solid, #main-container.searchpage-multi-vocab .list-group .fa-regular {
+  #main-container.searchpage .list-group .fa-solid, #main-container.searchpage  .list-group .fa-regular {
     color: var(--vocab-text);
     font-size: 16px;
     width: 20px;
@@ -459,21 +458,18 @@ body {
     background-color: var(--info-box-one-bg);
   }
 
-  /***** Main container vocabpage & termpage & searchpage & searchpage multi vocab *****/
-  #main-container.vocabpage, #main-container.termpage, #main-container.searchpage, #main-container.searchpage-multi-vocab {
+  /***** Main container vocabpage & termpage & searchpage *****/
+  #main-container.vocabpage, #main-container.termpage, #main-container.searchpage  {
     background-color: var(--main-bg-2);
   }
 
-  #main-container.vocabpage a, #main-container.termpage a, #main-container.searchpage a, #main-container.searchpage-multi-vocab a {
+  #main-container.vocabpage a, #main-container.termpage a, #main-container.searchpage a {
     color: var(--vocab-link);
     text-decoration: none;
     font-weight: bold;
   }
 
   /*** Sidebar termpage & vocabpage ***/
-  #sidebar {
-    background-color: var(--vocab-bg);
-  }
 
   #main-container.vocabpage #sidebar-col, #main-container.termpage #sidebar-col {
     background-color: var(--vocab-bg);

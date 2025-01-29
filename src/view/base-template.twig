@@ -93,7 +93,7 @@
     </div>
     {% endif %}
   </header>
-  <main id="main-container" class="{% if request.vocabid == '' or global_search %} frontpage{% elseif concept_uri != '' %} termpage{% elseif request.vocab != '' %} vocabpage{% if list_style %} {{ list_style }}{% endif %}{% endif %}">
+  <main id="main-container" class="{{pageType}}{% if list_style %} {{ list_style }}{% endif %}">
     <div class="container">
       <noscript>
         <strong>We're sorry but Skosmos doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
