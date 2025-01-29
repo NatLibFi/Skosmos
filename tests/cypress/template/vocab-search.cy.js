@@ -55,4 +55,16 @@ describe('Vocabulary search page', () => {
       })
 
   })
+  it('Long result lines are truncated', () => {
+      cy.visit(`/yso/en/search?clang=en&q=euro`)
+      const foreignLabels = cy.get('ul.list-group li').eq(2)
+      const more = foreignLabels.find('a')
+
+      // The foreign labels element should end in anchor tag
+      more.should('have.text', '... (3)')
+
+      // When the said anchor tag is clicked, it disappears
+      more.click()
+      more.should('not.exist')
+  })
 })
