@@ -345,8 +345,8 @@ body {
   }
 
   #main-container {
-    font-size: 16px;
     padding-top: 2.75rem;
+    font-size: 1rem;
   }
 
   #main-container h1 {
