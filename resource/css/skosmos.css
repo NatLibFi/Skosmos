@@ -717,11 +717,18 @@ body {
   .main-content-section {
     background-color: var(--vocab-bg);
     margin-bottom: .2rem;
+    padding-left: 3.5rem;
+    padding-right: 3.5rem;
   }
 
   #concept-heading, #vocab-heading {
     margin-top: 2rem;
     padding-bottom: 2.5rem;
+  }
+
+  #vocab-heading, .vocab-statistics, #vocab-download-links {
+    margin-left: -.75rem;
+    margin-right: -.75rem;
   }
 
   .property {

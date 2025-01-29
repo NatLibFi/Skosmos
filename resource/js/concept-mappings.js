@@ -60,12 +60,12 @@ const conceptMappingsApp = Vue.createApp({
   template: `
     <div v-load-concept-page="loadMappings">
       <template v-if="loading">
-        <div class="main-content-section px-5 py-4">
+        <div class="main-content-section py-4">
           <i class="fa-solid fa-spinner fa-spin-pulse"></i>
         </div>
       </template>
       <template v-else-if="hasMappings">
-        <div class="main-content-section px-5 py-4">
+        <div class="main-content-section py-4">
           <concept-mappings :mappings="mappings" :customLabels="customLabels"></concept-mappings>
         </div>
       </template>
