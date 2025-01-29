@@ -325,6 +325,15 @@
 	skosmos:showDeprecatedChanges true ;
 	skosmos:sparqlGraph <http://www.skosmos.skos/changes/> .
 
+:changesDefaultView a skosmos:Vocabulary, void:Dataset ;
+	dc11:title "A vocabulary for testing the change list creation with changes as default view"@en ;
+	dc:subject :cat_general ;
+	void:uriSpace "http://www.skosmos.skos/changes/";
+	skosmos:language "en";
+	skosmos:showDeprecatedChanges true ;
+    skosmos:defaultSidebarView "changes" ;
+	skosmos:sparqlGraph <http://www.skosmos.skos/changes/> .
+
 :prefix a skosmos:Vocabulary, void:Dataset ;
 	dc11:title "A vocabulary for testing custom prefixes"@en ;
 	dc:subject :cat_general ;
