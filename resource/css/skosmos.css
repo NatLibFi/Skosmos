@@ -883,6 +883,16 @@ body {
     cursor: pointer;
   }
 
+  .search-result-hide {
+    position: absolute;
+    right: 0;
+    background: linear-gradient(
+                  90deg,
+                  transparent,
+                  var(--vocab-bg),
+                  var(--vocab-bg));
+  }
+
   .uri-icon {
     display: inline-block;
     width: 20px;

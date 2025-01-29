@@ -11,30 +11,20 @@ function truncateSearchResults () {
       // if the element does not have a show all -link, add one
       const lastElement = result.lastElementChild
       if (!lastElement || lastElement.tagName !== 'A') {
-        const link = document.createElement('A')
-        link.style.position = 'absolute'
-        link.style.right = '0'
-        link.style.padding = '0'
-        link.style.paddingLeft = '1.5em'
-        link.textContent = renderShowAllText(result)
-        const backgroundColor = window.getComputedStyle(result).backgroundColor
-        const cssString = `background:
-                             linear-gradient(
-                               90deg, transparent,
-                               ${backgroundColor},
-                               ${backgroundColor});`
+        const link = document.createElement('A');
+        link.textContent = renderShowAllText(result);
+        link.setAttribute("class", "p-0 ps-4 search-result-hide")
+        const backgroundColor = window.getComputedStyle(result).backgroundColor;
 
-        // Apply a left-side fade to the link element
-        link.style.cssText += cssString;
-        //link.style.backgroundColor = backgroundColor
-        link.onclick = () => showAllResults(result)
-        result.appendChild(link)
+        link.onclick = () => showAllResults(result);
+        result.appendChild(link);
       }
     } else {
       removeShowAll(result)
     }
   })
 }
+
 function removeShowAll (element) {
   const lastElement = element.lastElementChild
   if (lastElement && lastElement.tagName === 'A') {
