@@ -341,6 +341,10 @@ body {
 
   /* Main container
    *****************************************/
+  .container {
+    max-width: 1460px !important;
+  }
+
   #main-container {
     font-size: 16px;
   }
@@ -712,7 +716,7 @@ body {
 
   #concept-heading {
     margin-top: 2rem;
-    padding-bottom: 4rem;
+    padding-bottom: 2.5rem;
   }
 
   .property {
@@ -959,12 +963,6 @@ body {
     color: var(--vocab-link);
     text-decoration: underline var(--secondary-medium-color) solid;
     font-weight: 700;
-  }
-
-  @media (min-width: 1200px) {
-    .container {
-      max-width: 1460px !important;
-    }
   }
 
   #alphabetical-menu > .list-group > .list-group-item {
