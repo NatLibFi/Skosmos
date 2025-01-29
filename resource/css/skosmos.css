@@ -465,11 +465,11 @@ body {
     font-weight: bold;
   }
 
+  /*** Sidebar termpage & vocabpage ***/
   #sidebar {
     background-color: var(--vocab-bg);
   }
 
-  /*** Sidebar termpage & vocabpage ***/
   #main-container.vocabpage #sidebar-col, #main-container.termpage #sidebar-col {
     background-color: var(--vocab-bg);
     background-clip: content-box, padding-box;
@@ -559,6 +559,23 @@ body {
     font-weight: bold !important;
   }
 
+  .sidebar-list a.selected {
+    color: var(--vocab-text) !important;
+  }
+
+  /*** sidebar changes tab ***/
+  #tab-changes .sidebar-list h2 {
+    color: var(--vocab-text);
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+  }
+
+  /* All headings except first */
+  #tab-changes .sidebar-list li + li h2 {
+    margin-top: 1.5rem !important;
+  }
+
   /*** sidebar hierarchy and groups tabs ***/
   #tab-hierarchy .sidebar-list .list-group-item,
   #tab-groups .sidebar-list .list-group-item {
@@ -610,12 +627,6 @@ body {
   #tab-groups .sidebar-list .list-group-item span.last + ul > li  {
     border: none;
     margin-left: 1px !important; /* add a 1px margin to offset missing border */
-  }
-
-  #tab-alphabetical .sidebar-list .list-group-item a.selected,
-  #tab-hierarchy .sidebar-list .list-group-item a.selected,
-  #tab-groups .sidebar-list .list-group-item a.selected {
-    color: var(--vocab-text) !important;
   }
 
   #tab-hierarchy .sidebar-list .list-group-item .concept-notation,
