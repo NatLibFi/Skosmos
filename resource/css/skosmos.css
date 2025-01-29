@@ -719,7 +719,7 @@ body {
     margin-bottom: .2rem;
   }
 
-  #concept-heading {
+  #concept-heading, #vocab-heading {
     margin-top: 2rem;
     padding-bottom: 2.5rem;
   }
