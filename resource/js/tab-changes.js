@@ -54,7 +54,14 @@ function startChangesApp () {
             const changesByDate = new Map()
             for (const concept of data.changeList) {
               const date = new Date(concept.date)
-              const key = date.toLocaleString(window.SKOSMOS.lang, { month: 'long', year: 'numeric' })
+              let key = date.toLocaleString(window.SKOSMOS.lang, { month: 'long', year: 'numeric' })
+
+              // Reverse Northern Sami word order (year month -> month year)
+              if (window.SKOSMOS.lang === 'se') {
+                key = key.split(' ').reverse().join(' ')
+              }
+              // Capitalize month name
+              key = key.charAt(0).toUpperCase() + key.slice(1)
 
               if (!changesByDate.get(key)) {
                 changesByDate.set(key, [])
