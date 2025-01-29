@@ -1,7 +1,6 @@
-<div class="col-md-8" id="main-content">
+<div class="col-md-8 ps-3" id="main-content">
   <div class="main-content-section py-4">
     <h1 id="vocab-heading">{{ "Vocabulary information" | trans }}</h1>
-
     {% set vocabInfo = vocab.info(request.contentLang) %}
     {% if not vocabInfo %}
     <div class="alert alert-danger" role="alert">
