@@ -282,7 +282,7 @@ body {
     padding-top: 0rem;
     padding-bottom: 0rem;
     max-height: 50vh;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
   /* Setting scrollbar style separately in Firefox */
