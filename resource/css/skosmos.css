@@ -912,13 +912,46 @@ body {
 
   .search-result-term a {
     font-family: var(--font-family-heading);
-    font-size: 1.5rem;
     text-decoration: none;
   }
 
   .search-result .list-group-item {
     color: var(--vocab-text);
     border: none;
+    cursor: default;
+  }
+
+  .search-result .list-group-item a {
+    cursor: pointer;
+  }
+
+  .search-result-hide {
+    position: absolute;
+    right: 0;
+    background: linear-gradient(
+                  90deg,
+                  transparent,
+                  var(--vocab-bg) 35%,
+                  var(--vocab-bg) 0%);
+  }
+
+  .search-result-list {
+    display: block;
+    white-space: nowrap;
+    position: relative;
+  }
+
+  .search-result-hidden {
+    display: block;
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .search-result-showall {
+    display: block;
+    white-space: normal;
+    overflow: visibile;
   }
 
   .uri-icon {
