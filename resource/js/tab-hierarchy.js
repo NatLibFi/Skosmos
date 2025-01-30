@@ -23,7 +23,6 @@ function startHierarchyApp () {
         partialPageLoad,
         getConceptURL,
         showNotation: window.SKOSMOS.showNotation,
-        openAriaMessage: Vue.computed(() => $t('Open'))
       }
     },
     mounted () {
@@ -246,7 +245,7 @@ function startHierarchyApp () {
   })
   
   tabHierApp.component('tab-hier-wrapper', {
-    props: ['hierarchy', 'selectedConcept', 'loadingChildren'],
+    props: ['hierarchy', 'selectedConcept', 'loadingChildren', 'openAriaMessage'],
     emits: ['loadChildren', 'selectConcept'],
     mounted () {
       // scroll automatically to selected concept after the whole hierarchy tree has been mounted
@@ -294,18 +293,9 @@ function startHierarchyApp () {
   })
   
   tabHierApp.component('tab-hier', {
-    props: ['concept', 'selectedConcept', 'isTopConcept', 'isLast', 'loadingChildren'],
+    props: ['concept', 'selectedConcept', 'isTopConcept', 'isLast', 'loadingChildren', 'openAriaMessage'],
     emits: ['loadChildren', 'selectConcept'],
-    inject: ['partialPageLoad', 'getConceptURL', 'showNotation', 'openAriaMessage'],
-    // Tämä on turhake, kun käytetään provideria ja injectiä, mutta on vielä osa testausta
-    // computed: {
-    //   resolvedOpenAriaMessage() {
-    //     return this.openAriaMessage?.value ?? this.openAriaMessage
-    //   }
-    //   // openAriaMessage () {
-    //   //   return $t('Open')
-    //   // }
-    // },
+    inject: ['partialPageLoad', 'getConceptURL', 'showNotation'],
     methods: {
       handleClickOpenEvent (concept) {
         concept.isOpen = !concept.isOpen
@@ -354,6 +344,7 @@ function startHierarchyApp () {
             <tab-hier
               :concept="c"
               :selectedConcept="selectedConcept"
+              :openAriaMessage="openAriaMessage"
               :isTopConcept="false"
               :isLast="i == concept.children.length - 1"
               :loadingChildren="loadingChildren"
