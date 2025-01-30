@@ -884,7 +884,6 @@ body {
 
   .search-result-hide {
     position: absolute;
-    #padding-left: 2rem;
     right: 0;
     background: linear-gradient(
                   90deg,
