@@ -257,7 +257,7 @@ function startVocabSearchApp () {
               @keyup.enter="gotoSearchPage()"
               @click="showAutoComplete()">
             <ul id="search-autocomplete-results"
-                class="dropdown-menu"
+                class="dropdown-menu w-100"
                 :class="{ 'show': showDropdown }"
                 aria-labelledby="search-field">
               <li class="autocomplete-result container" v-for="result in renderedResultsList"
