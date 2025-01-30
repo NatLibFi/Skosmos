@@ -115,21 +115,21 @@ body {
 
   /* Topbar
    *****************************************/
-  #topbar.frontpage, #topbar.frontpage-one-vocab {
+  #topbar.landing, #topbar.landing-one-vocab {
     background-color: var(--topbar-bg-1);
     color: var(--topbar-text-1);
   }
 
-  #topbar.vocabpage, #topbar.termpage, #topbar.infopage, #topbar.feedbackpage {
+  #topbar.vocab-home, #topbar.concept, #topbar.about, #topbar.feedback {
     background-color: var(--topbar-bg-2);
     color: var(--topbar-text-2);
   }
 
-  #topbar.frontpage a, #topbar.frontpage-one-vocab a {
+  #topbar.landing a, #topbar.landing-one-vocab a {
     color: var(--topbar-text-1) !important;
   }
 
-  #topbar.vocabpage a, #topbar.termpage a, #topbar.infopage a, #topbar.feedbackpage a {
+  #topbar.vocab-home a, #topbar.concept a, #topbar.about a, #topbar.feedback a {
     color: var(--topbar-text-2) !important;
   }
 
@@ -171,11 +171,11 @@ body {
 
   /* Headerbar
    *****************************************/
-  #headerbar.frontpage, #headerbar.frontpage-one-vocab {
+  #headerbar.landing, #headerbar.landing-one-vocab {
     color: var(--headerbar-text-1);
   }
 
-  #headerbar.vocabpage, #headerbar.termpage {
+  #headerbar.vocab-home, #headerbar.concept {
     background-color: var(--headerbar-vocab-bg);
   }
 
@@ -359,16 +359,16 @@ body {
   }
 
   /***** Main container langing page & landing page one vocab *****/
-  #background.frontpage, #background.frontpage-one-vocab {
+  #background.landing, #background.landing-one-vocab {
     background-color: var(--main-bg-1);
-    background-image: var(--frontpage-stripes-1);
+    background-image: var(--landing-stripes-1);
     background-repeat: no-repeat;
     background-size: 650px;
     background-position: calc(100% + 41px) -55px;
   }
 
   #main-container.landing, #main-container.landing-one-vocab {
-    background-image: var(--frontpage-stripes-2);
+    background-image: var(--landing-stripes-2);
     background-repeat: no-repeat;
     background-size: 650px;
     background-position: -41px calc(100% + 55px);
@@ -383,7 +383,7 @@ body {
     text-decoration: none;
   }
 
-  /*** Main container frontpage ***/
+  /*** Main container landing page ***/
 
   #vocabulary-list h2, #welcome-box h2, #vocab-info h2 {
     font-family: var(--font-family-heading) !important;
@@ -434,7 +434,7 @@ body {
     justify-content: center;
   }
 
-  /*** Main container frontpage one vocab ***/
+  /*** Main container landing page one vocab ***/
   #main-container.landing-one-vocab #vocab-box {
     background-color: var(--vocab-box-one-bg);
     height: 100%;
@@ -458,7 +458,7 @@ body {
     background-color: var(--info-box-one-bg);
   }
 
-  /***** Main container vocabpage & termpage & searchpage *****/
+  /***** Main container vocab-home & concept & vocab-search pages *****/
   #main-container.vocab-home, #main-container.concept, #main-container.vocab-search  {
     background-color: var(--main-bg-2);
   }
@@ -469,7 +469,7 @@ body {
     font-weight: bold;
   }
 
-  /*** Sidebar termpage & vocabpage ***/
+  /*** Sidebar concept & vocab-home pages ***/
 
   #main-container.vocab-home #sidebar-col, #main-container.concept #sidebar-col {
     background-color: var(--vocab-bg);
@@ -680,7 +680,7 @@ body {
     left: 12px;
   }
 
-  /*** sidebar serachpage ***/
+  /*** sidebar vocab-search ***/
   #main-container.vocab-search #sidebar {
     background-color: var(--sidebar-search-bg);
     color: var(--sidebar-search-text);
@@ -716,7 +716,7 @@ body {
     right: 10px;
   }
 
-  /*****  Main content vocabpage & termpage *****/
+  /*****  Main content vocab-home & concept pages *****/
   #main-content h1 {
     font-size: 2.5rem;
   }
@@ -778,7 +778,7 @@ body {
     width: 40%;
   }
 
-  /*** Main content termpage ***/
+  /*** Main content concept page ***/
   nav#concept-breadcrumbs ol {
     list-style: none;
     padding-left: 0;
@@ -854,7 +854,7 @@ body {
     font-size: 0.85rem;
   }
 
-  /***** Main content searchpage & searchpage multi vocab *****/
+  /***** Main content vocab-search & global-search pages *****/
   #search-results {
     background-color: var(--vocab-bg);
   }
@@ -890,37 +890,37 @@ body {
     font-style: italic;  
   }
 
-  /***** Main container infopage & feedbackpage *****/
-  #main-container.infopage, #main-container.feedbackpage {
+  /***** Main container about & feedback pages *****/
+  #main-container.about, #main-container.feedback {
     background-color: var(--main-bg-3);
-    color: var(--infopage-text);
+    color: var(--about-text);
     padding: 4rem 0;
   }
 
-  #main-container.infopage .container, #main-container.feedbackpage .container {
+  #main-container.about .container, #main-container.feedback .container {
     padding: 0 12rem;
   }
 
-  /*** Main container infopage ***/
-  #main-container.infopage {
-    background-image: var(--infopage-stripes);
+  /*** Main container about page ***/
+  #main-container.about {
+    background-image: var(--about-stripes);
     background-repeat: no-repeat;
     background-size: 650px;
     background-position: calc(100% + 41px) calc(100% + 55px);
   }
 
-  #main-container.infopage a {
-    color: var(--infopage-link);
+  #main-container.about a {
+    color: var(--about-link);
     text-decoration: underline;
     font-weight: bold;
   }
 
-  /*** Main container feedbackpage ***/
-  #main-container.feedbackpage {
-    background-image: var(--feedbackpage-stripes);
+  /*** Main container feedback page ***/
+  #main-container.feedback {
+    background-image: var(--feedback-stripes);
     background-repeat: no-repeat;
     background-size: 650px;
-    background-position: var(--feedbackpage-stripes-pos);
+    background-position: var(--feedback-stripes-pos);
   }
 
   #feedback-form {
