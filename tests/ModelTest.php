@@ -599,8 +599,8 @@ test:ta125
     {
         $mockres = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
         $labelmap = array(
-          array('en', null),
-          array(null, 'test value')
+          array('en', [], null),
+          array(null, [], 'test value')
         );
         $mockres->method('label')->will($this->returnValueMap($labelmap));
         $this->assertEquals('test value', $this->model->getResourceLabel($mockres, 'en'));
@@ -613,8 +613,8 @@ test:ta125
     {
         $mockres = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
         $labelmap = array(
-          array('en', 'test value'),
-          array('fi', 'testiarvo')
+          array('en', [], 'test value'),
+          array('fi', [], 'testiarvo')
         );
         $mockres->method('label')->will($this->returnValueMap($labelmap));
         $this->assertEquals('test value', $this->model->getResourceLabel($mockres, 'en'));
