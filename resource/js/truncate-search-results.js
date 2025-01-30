@@ -1,13 +1,12 @@
 function truncateSearchResults () {
   const results = document.querySelectorAll('.search-result .list-group .list-group-item')
   results.forEach((result) => {
-    result.style.whiteSpace = 'nowrap'
-    result.style.position = 'relative'
+    result.setAttribute( 'class', 'search-result-list' )
     const containerWidth = result.offsetWidth
     const actualWidth = result.scrollWidth
 
     if (actualWidth > containerWidth) {
-      result.style.overflow = 'hidden'
+      result.setAttribute( 'class', 'search-result-hidden' )
       // if the element does not have a show all -link, add one
       const lastElement = result.lastElementChild
       if (!lastElement || lastElement.tagName !== 'A') {
@@ -32,8 +31,7 @@ function removeShowAll (element) {
 }
 
 function showAllResults (element) {
-  element.style.whiteSpace = 'normal'
-  element.style.overflow = 'visible'
+  element.setAttribute( 'class', 'search-result-showall' )
   const link = element.querySelector('A')
   if (link) {
     element.removeChild(link)

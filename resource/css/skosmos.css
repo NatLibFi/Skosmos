@@ -869,7 +869,6 @@ body {
 
   .search-result-term a {
     font-family: var(--font-family-heading);
-    font-size: 1.5rem;
     text-decoration: none;
   }
 
@@ -885,12 +884,32 @@ body {
 
   .search-result-hide {
     position: absolute;
+    #padding-left: 2rem;
     right: 0;
     background: linear-gradient(
                   90deg,
                   transparent,
-                  var(--vocab-bg),
-                  var(--vocab-bg));
+                  var(--vocab-bg) 35%,
+                  var(--vocab-bg) 0%);
+  }
+
+  .search-result-list {
+    display: block;
+    white-space: nowrap;
+    position: relative;
+  }
+
+  .search-result-hidden {
+    display: block;
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .search-result-showall {
+    display: block;
+    white-space: normal;
+    overflow: visibile;
   }
 
   .uri-icon {
