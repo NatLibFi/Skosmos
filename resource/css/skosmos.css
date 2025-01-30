@@ -73,11 +73,11 @@ body {
 
 /* Font awesome
  *****************************************/
-  #main-container.frontpage #info-box .fa-arrow-right {
+  #main-container.landing #info-box .fa-arrow-right {
     color: var(--info-box-arrow);
   }
 
-  #main-container.frontpage-one-vocab #info-box .fa-arrow-right {
+  #main-container.landing-one-vocab #info-box .fa-arrow-right {
     color: var(--info-box-one-arrow);
   }
 
@@ -85,19 +85,18 @@ body {
     color: var(--vocab-box-one-arrow);
   }
 
-  #main-container.vocabpage .fa-arrow-right, #main-container.termpage .fa-arrow-right {
+  #main-container.vocab-home .fa-arrow-right, #main-container.concept .fa-arrow-right {
     color: var(--vocab-text);
     font-size: 12px;
     margin: 0 5px;
   }
 
-  #main-container.searchpage .fa-arrow-right, #main-container.searchpage-multi-vocab .fa-arrow-right {
+  #main-container.vocab-search  .fa-arrow-right {
     color: var(--vocab-text);
     font-size: 12px;
   }
 
-  #main-container.searchpage .list-group .fa-solid, #main-container.searchpage .list-group .fa-regular,
-  #main-container.searchpage-multi-vocab .list-group .fa-solid, #main-container.searchpage-multi-vocab .list-group .fa-regular {
+  #main-container.vocab-search .list-group .fa-solid, #main-container.vocab-search  .list-group .fa-regular {
     color: var(--vocab-text);
     font-size: 16px;
     width: 20px;
@@ -116,21 +115,21 @@ body {
 
   /* Topbar
    *****************************************/
-  #topbar.frontpage, #topbar.frontpage-one-vocab {
+  #topbar.landing, #topbar.landing-one-vocab {
     background-color: var(--topbar-bg-1);
     color: var(--topbar-text-1);
   }
 
-  #topbar.vocabpage, #topbar.termpage, #topbar.infopage, #topbar.feedbackpage {
+  #topbar.vocab-home, #topbar.concept, #topbar.about, #topbar.feedback {
     background-color: var(--topbar-bg-2);
     color: var(--topbar-text-2);
   }
 
-  #topbar.frontpage a, #topbar.frontpage-one-vocab a {
+  #topbar.landing a, #topbar.landing-one-vocab a {
     color: var(--topbar-text-1) !important;
   }
 
-  #topbar.vocabpage a, #topbar.termpage a, #topbar.infopage a, #topbar.feedbackpage a {
+  #topbar.vocab-home a, #topbar.concept a, #topbar.about a, #topbar.feedback a {
     color: var(--topbar-text-2) !important;
   }
 
@@ -172,11 +171,11 @@ body {
 
   /* Headerbar
    *****************************************/
-  #headerbar.frontpage, #headerbar.frontpage-one-vocab {
+  #headerbar.landing, #headerbar.landing-one-vocab {
     color: var(--headerbar-text-1);
   }
 
-  #headerbar.vocabpage, #headerbar.termpage {
+  #headerbar.vocab-home, #headerbar.concept {
     background-color: var(--headerbar-vocab-bg);
   }
 
@@ -346,8 +345,8 @@ body {
   }
 
   #main-container {
-    font-size: 16px;
     padding-top: 2.75rem;
+    font-size: 1rem;
   }
 
   #main-container h1 {
@@ -359,17 +358,17 @@ body {
     --bs-gutter-x: 2.25rem;
   }
 
-  /***** Main container frontpage & frontpage one vocab *****/
-  #background.frontpage, #background.frontpage-one-vocab {
+  /***** Main container langing page & landing page one vocab *****/
+  #background.landing, #background.landing-one-vocab {
     background-color: var(--main-bg-1);
-    background-image: var(--frontpage-stripes-1);
+    background-image: var(--landing-stripes-1);
     background-repeat: no-repeat;
     background-size: 650px;
     background-position: calc(100% + 41px) -55px;
   }
 
-  #main-container.frontpage, #main-container.frontpage-one-vocab {
-    background-image: var(--frontpage-stripes-2);
+  #main-container.landing, #main-container.landing-one-vocab {
+    background-image: var(--landing-stripes-2);
     background-repeat: no-repeat;
     background-size: 650px;
     background-position: -41px calc(100% + 55px);
@@ -384,7 +383,7 @@ body {
     text-decoration: none;
   }
 
-  /*** Main container frontpage ***/
+  /*** Main container landing page ***/
 
   #vocabulary-list h2, #welcome-box h2, #vocab-info h2 {
     font-family: var(--font-family-heading) !important;
@@ -418,16 +417,16 @@ body {
     text-decoration-thickness: 1px;
   }
 
-  #main-container.frontpage #vocab-box h2 {
+  #main-container.landing #vocab-box h2 {
     color: var(--vocab-box-header);
   }
 
-  #main-container.frontpage #welcome-box {
+  #main-container.landing #welcome-box {
     background-color: var(--welcome-box-bg);
     color: var(--welcome-box-text);
   }
 
-  #main-container.frontpage #info-box {
+  #main-container.landing #info-box {
     background-color: var(--info-box-bg);
     height: 100%;
     display: flex;
@@ -435,8 +434,8 @@ body {
     justify-content: center;
   }
 
-  /*** Main container frontpage one vocab ***/
-  #main-container.frontpage-one-vocab #vocab-box {
+  /*** Main container landing page one vocab ***/
+  #main-container.landing-one-vocab #vocab-box {
     background-color: var(--vocab-box-one-bg);
     height: 100%;
     display: flex;
@@ -444,52 +443,49 @@ body {
     justify-content: center;
   }
 
-  #main-container.frontpage-one-vocab #vocab-box a {
+  #main-container.landing-one-vocab #vocab-box a {
     color: var(--vocab-box-one-text);
     text-decoration: underline;
     text-decoration-thickness: 1px;
   }
 
-  #main-container.frontpage-one-vocab #welcome-box {
+  #main-container.landing-one-vocab #welcome-box {
     background-color: var(--welcome-box-one-bg);
     color: var(--welcome-box-one-text);
   }
 
-  #main-container.frontpage-one-vocab #info-box {
+  #main-container.landing-one-vocab #info-box {
     background-color: var(--info-box-one-bg);
   }
 
-  /***** Main container vocabpage & termpage & searchpage & searchpage multi vocab *****/
-  #main-container.vocabpage, #main-container.termpage, #main-container.searchpage, #main-container.searchpage-multi-vocab {
+  /***** Main container vocab-home & concept & vocab-search pages *****/
+  #main-container.vocab-home, #main-container.concept, #main-container.vocab-search  {
     background-color: var(--main-bg-2);
   }
 
-  #main-container.vocabpage a, #main-container.termpage a, #main-container.searchpage a, #main-container.searchpage-multi-vocab a {
+  #main-container.vocab-home a, #main-container.concept a, #main-container.vocab-search a {
     color: var(--vocab-link);
     text-decoration: none;
     font-weight: bold;
   }
 
-  /*** Sidebar termpage & vocabpage ***/
-  #sidebar {
-    background-color: var(--vocab-bg);
-  }
+  /*** Sidebar concept & vocab-home pages ***/
 
-  #main-container.vocabpage #sidebar-col, #main-container.termpage #sidebar-col {
+  #main-container.vocab-home #sidebar-col, #main-container.concept #sidebar-col {
     background-color: var(--vocab-bg);
     background-clip: content-box, padding-box;
     min-height: 1000px;
   }
 
-  #main-container.vocabpage #sidebar, #main-container.termpage #sidebar {
+  #main-container.vocab-home #sidebar, #main-container.concept #sidebar {
     background-color: var(--vocab-bg);
   }
 
-  #main-container.vocabpage #sidebar .nav, #main-container.termpage #sidebar .nav {
+  #main-container.vocab-home #sidebar .nav, #main-container.concept #sidebar .nav {
     background-color: var(--sidebar-tab-inactive-bg);
   }
 
-  #main-container.vocabpage #sidebar .nav-link, #main-container.termpage #sidebar .nav-link {
+  #main-container.vocab-home #sidebar .nav-link, #main-container.concept #sidebar .nav-link {
     color: var(--sidebar-tab-inactive-text) !important;
     height: 100%;
     display: flex;
@@ -498,20 +494,20 @@ body {
     transition: none;
   }
 
-  #main-container.vocabpage #sidebar .nav .active, #main-container.termpage #sidebar .nav .active {
+  #main-container.vocab-home #sidebar .nav .active, #main-container.concept #sidebar .nav .active {
     background-color: var(--sidebar-tab-active-bg);
     color: var(--sidebar-tab-active-text) !important;
   }
 
-  #main-container.vocabpage #sidebar .pagination, #main-container.termpage #sidebar .pagination {
+  #main-container.vocab-home #sidebar .pagination, #main-container.concept #sidebar .pagination {
     background-color: var(--sidebar-tab-active-bg);
     padding: 1rem;
     margin: 0;
     flex-wrap: wrap;
   }
 
-  #main-container.vocabpage #sidebar .page-item, #main-container.vocabpage #sidebar .page-link,
-  #main-container.termpage #sidebar .page-item, #main-container.termpage #sidebar .page-link {
+  #main-container.vocab-home #sidebar .page-item, #main-container.vocab-home #sidebar .page-link,
+  #main-container.concept #sidebar .page-item, #main-container.concept #sidebar .page-link {
     background-color: var(--sidebar-tab-active-bg);
     color: var(--sidebar-tab-active-text) !important;
     font-weight: normal !important;
@@ -522,15 +518,15 @@ body {
     width: 35px;
   }
 
-  #main-container.vocabpage #sidebar .page-link, #main-container.termpage #sidebar .page-link {
+  #main-container.vocab-home #sidebar .page-link, #main-container.concept #sidebar .page-link {
     display: flex;
     align-content: center;
     text-align: center;
   }
 
   /* what to do with these */
-  #main-container.vocabpage #sidebar .page-link:hover, #main-container.vocabpage #sidebar .page-link:active, #main-container.vocabpage #sidebar .page-link:focus,
-  #main-container.termpage #sidebar .page-link:hover, #main-container.termpage #sidebar .page-link:active, #main-container.termpage #sidebar .page-link:focus {
+  #main-container.vocab-home #sidebar .page-link:hover, #main-container.vocab-home #sidebar .page-link:active, #main-container.vocab-home #sidebar .page-link:focus,
+  #main-container.concept #sidebar .page-link:hover, #main-container.concept #sidebar .page-link:active, #main-container.concept #sidebar .page-link:focus {
     background-color: var(--sidebar-tab-active-bg);
     color: var(--sidebar-tab-active-text);
     box-shadow: none;
@@ -684,8 +680,8 @@ body {
     left: 12px;
   }
 
-  /*** sidebar serachpage ***/
-  #main-container.searchpage #sidebar {
+  /*** sidebar vocab-search ***/
+  #main-container.vocab-search #sidebar {
     background-color: var(--sidebar-search-bg);
     color: var(--sidebar-search-text);
     height: 1000px; /* change */
@@ -720,7 +716,7 @@ body {
     right: 10px;
   }
 
-  /*****  Main content vocabpage & termpage *****/
+  /*****  Main content vocab-home & concept pages *****/
   #main-content h1 {
     font-size: 2.5rem;
   }
@@ -782,7 +778,7 @@ body {
     width: 40%;
   }
 
-  /*** Main content termpage ***/
+  /*** Main content concept page ***/
   nav#concept-breadcrumbs ol {
     list-style: none;
     padding-left: 0;
@@ -858,7 +854,7 @@ body {
     font-size: 0.85rem;
   }
 
-  /***** Main content searchpage & searchpage multi vocab *****/
+  /***** Main content vocab-search & global-search pages *****/
   #search-results {
     background-color: var(--vocab-bg);
   }
@@ -894,37 +890,37 @@ body {
     font-style: italic;  
   }
 
-  /***** Main container infopage & feedbackpage *****/
-  #main-container.infopage, #main-container.feedbackpage {
+  /***** Main container about & feedback pages *****/
+  #main-container.about, #main-container.feedback {
     background-color: var(--main-bg-3);
-    color: var(--infopage-text);
+    color: var(--about-text);
     padding: 4rem 0;
   }
 
-  #main-container.infopage .container, #main-container.feedbackpage .container {
+  #main-container.about .container, #main-container.feedback .container {
     padding: 0 12rem;
   }
 
-  /*** Main container infopage ***/
-  #main-container.infopage {
-    background-image: var(--infopage-stripes);
+  /*** Main container about page ***/
+  #main-container.about {
+    background-image: var(--about-stripes);
     background-repeat: no-repeat;
     background-size: 650px;
     background-position: calc(100% + 41px) calc(100% + 55px);
   }
 
-  #main-container.infopage a {
-    color: var(--infopage-link);
+  #main-container.about a {
+    color: var(--about-link);
     text-decoration: underline;
     font-weight: bold;
   }
 
-  /*** Main container feedbackpage ***/
-  #main-container.feedbackpage {
-    background-image: var(--feedbackpage-stripes);
+  /*** Main container feedback page ***/
+  #main-container.feedback {
+    background-image: var(--feedback-stripes);
     background-repeat: no-repeat;
     background-size: 650px;
-    background-position: var(--feedbackpage-stripes-pos);
+    background-position: var(--feedback-stripes-pos);
   }
 
   #feedback-form {
