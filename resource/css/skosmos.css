@@ -292,6 +292,7 @@ body {
     }
   } 
 
+  /* Setting scrollbar style for Webkit based browsers (Chrome, Safari, Edge, etc) */
   #search-wrapper ul::-webkit-scrollbar {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -575,6 +576,7 @@ body {
     }
   } 
 
+  /* Setting scrollbar style for Webkit based browsers (Chrome, Safari, Edge, etc) */
   .sidebar-list::-webkit-scrollbar {
     -webkit-appearance: none;
     -moz-appearance: none;
