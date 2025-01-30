@@ -2,7 +2,6 @@
 /* global partialPageLoad, getConceptURL */
 
 function startHierarchyApp () {
-
   const tabHierApp = Vue.createApp({
     data () {
       return {
@@ -22,7 +21,7 @@ function startHierarchyApp () {
       return {
         partialPageLoad,
         getConceptURL,
-        showNotation: window.SKOSMOS.showNotation,
+        showNotation: window.SKOSMOS.showNotation
       }
     },
     mounted () {
@@ -54,13 +53,13 @@ function startHierarchyApp () {
           })
           .then(data => {
             console.log('data', data)
-  
+
             this.hierarchy = []
-  
+
             for (const c of data.topconcepts.sort((a, b) => this.compareConcepts(a, b))) {
               this.hierarchy.push({ uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false, notation: c.notation })
             }
-  
+
             this.loadingHierarchy = false
             console.log('hier', this.hierarchy)
           })
@@ -73,13 +72,13 @@ function startHierarchyApp () {
           })
           .then(data => {
             console.log('data', data)
-  
+
             this.hierarchy = []
-  
+
             // transform broaderTransitive to an array and sort it
             const bt = Object.values(data.broaderTransitive).sort((a, b) => this.compareConcepts(a, b))
             const parents = [] // queue of nodes in hierarchy tree with potential missing child nodes
-  
+
             // add top concepts to hierarchy tree
             for (const concept of bt) {
               if (concept.top) {
@@ -102,19 +101,19 @@ function startHierarchyApp () {
                 }
               }
             }
-  
+
             // add other concepts to hierarhy tree
             while (parents.length !== 0) {
               const parent = parents.shift() // parent node with potential missing child nodes
               const concepts = []
-  
+
               // find all concepts in broaderTransative which have current parent node as parent
               for (const concept of bt) {
                 if (concept.broader && concept.broader.includes(parent.uri)) {
                   concepts.push(concept)
                 }
               }
-  
+
               // for all found concepts, add their children to hierarchy
               for (const concept of concepts) {
                 if (concept.narrower) {
@@ -134,7 +133,7 @@ function startHierarchyApp () {
                 }
               }
             }
-  
+
             this.loadingHierarchy = false
             this.selectedConcept = window.SKOSMOS.uri
             console.log('hier', this.hierarchy)
@@ -168,7 +167,7 @@ function startHierarchyApp () {
       },
       compareConcepts (a, b) {
         let strA, strB
-  
+
         if (window.SKOSMOS.sortByNotation) {
           if (a.notation && b.notation) {
             // Set strings as notation if both have notation codes
@@ -182,18 +181,18 @@ function startHierarchyApp () {
             return 1
           }
         }
-  
+
         // Set strings to label/prefLabel if sorting should not be based on notation or if neither concept has notations
         strA = strA || a.label || a.prefLabel || ''
         strB = strB || b.label || b.prefLabel || ''
-  
+
         // Set language and options
         const lang = window.SKOSMOS.content_lang || window.SKOSMOS.lang
         const options = {
           numeric: window.SKOSMOS.sortByNotation === 'natural', // Set numeric to true if sort should be natural
           sensitivity: 'variant' // Strings that differ in base letters, diacritic marks, or case compare as unequal
         }
-  
+
         return strA.localeCompare(strB, lang, options)
       }
     },
@@ -217,7 +216,7 @@ function startHierarchyApp () {
       </div>
     `
   })
-  
+
   /* Custom directive used to add an event listener on clicks on the hierarchy nav-item element */
   tabHierApp.directive('click-tab-hierarchy', {
     beforeMount: (el, binding) => {
@@ -230,7 +229,7 @@ function startHierarchyApp () {
       document.querySelector('#hierarchy').removeEventListener('click', el.clickTabEvent)
     }
   })
-  
+
   /* Custom directive used to add an event listener on resizing the window */
   tabHierApp.directive('resize-window', {
     beforeMount: (el, binding) => {
@@ -243,7 +242,7 @@ function startHierarchyApp () {
       window.removeEventListener('resize', el.resizeWindowEvent)
     }
   })
-  
+
   tabHierApp.component('tab-hier-wrapper', {
     props: ['hierarchy', 'selectedConcept', 'loadingChildren', 'openAriaMessage'],
     emits: ['loadChildren', 'selectConcept'],
@@ -252,16 +251,16 @@ function startHierarchyApp () {
       if (this.selectedConcept) {
         const selected = document.querySelectorAll('#hierarchy-list .list-group-item .selected')[0]
         const list = document.querySelector('#hierarchy-list')
-  
+
         // distances to the top of the page
         const selectedTop = selected.getBoundingClientRect().top
         const listTop = list.getBoundingClientRect().top
-  
+
         // height of the visible portion of the list element
         const listHeight = list.getBoundingClientRect().bottom < window.innerHeight
           ? list.getBoundingClientRect().height
           : window.innerHeight - listTop
-  
+
         list.scrollBy({
           top: selectedTop - listTop - listHeight / 2, // scroll top of selected element to the middle of list element
           behavior: 'smooth'
@@ -291,7 +290,7 @@ function startHierarchyApp () {
       </template>
     `
   })
-  
+
   tabHierApp.component('tab-hier', {
     props: ['concept', 'selectedConcept', 'isTopConcept', 'isLast', 'loadingChildren', 'openAriaMessage'],
     emits: ['loadChildren', 'selectConcept'],
@@ -356,7 +355,7 @@ function startHierarchyApp () {
       </li>
     `
   })
-  
+
   tabHierApp.mount('#tab-hierarchy')
 }
 
