@@ -282,7 +282,34 @@ body {
     padding-top: 0rem;
     padding-bottom: 0rem;
     max-height: 50vh;
-    overflow-y: auto;
+    overflow-y: scroll;
+  }
+
+  /* Setting scrollbar style separately in Firefox */
+  @-moz-document url-prefix() {
+    #search-wrapper ul {
+      scrollbar-color: var(--sidebar-scrollbar-thumb) var(--search-dropdown-bg);
+    }
+  } 
+
+  #search-wrapper ul::-webkit-scrollbar {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+
+  #search-wrapper ul::-webkit-scrollbar:vertical {
+      width: 15px;
+  }
+
+  #search-wrapper ul::-webkit-scrollbar-thumb {
+      border-radius: 0px;
+      border: 1px solid var(--sidebar-scrollbar-thumb);
+      background-color: var(--sidebar-scrollbar-thumb);
+  }
+
+  #search-wrapper ul::-webkit-scrollbar-track { 
+      background-color: var(--search-dropdown-bg); 
+      border-radius: 0px; 
   }
 
   #search-wrapper .autocomplete {
@@ -538,16 +565,34 @@ body {
   .sidebar-list {
     padding: 2rem 1rem 0 1rem;
     overflow-y: scroll;
-    scrollbar-color: var(--sidebar-scrollbar-thumb) var(--sidebar-scrollbar-bg);
     position: absolute;
   }
 
+  /* Setting scrollbar style separately in Firefox */
+  @-moz-document url-prefix() {
+    .sidebar-list {
+      scrollbar-color: var(--sidebar-scrollbar-thumb) var(--search-dropdown-bg);
+    }
+  } 
+
   .sidebar-list::-webkit-scrollbar {
-    background: var(--sidebar-scrollbar-bg);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+
+  .sidebar-list::-webkit-scrollbar:vertical {
+      width: 15px;
   }
 
   .sidebar-list::-webkit-scrollbar-thumb {
-    background: var(--sidebar-scrollbar-thumb);
+      border-radius: 0px;
+      border: 1px solid var(--sidebar-scrollbar-thumb);
+      background-color: var(--sidebar-scrollbar-thumb);
+  }
+
+  .sidebar-list::-webkit-scrollbar-track { 
+      background-color: var(--sidebar-scrollbar-bg);
+      border-radius: 0px; 
   }
 
   .sidebar-list .list-group-item {
