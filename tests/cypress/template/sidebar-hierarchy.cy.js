@@ -118,12 +118,14 @@ describe('Hierarchy', () => {
     cy.visit('/test-hierarchy/fi/')
     cy.get('#hierarchy').should('not.have.class', 'disabled').click()
     cy.get('#hierarchy-list').find('ul.list-group button').should('have.attr', 'aria-label', 'avaa');
+    cy.get('.concept-label a').first().should('have.attr', 'aria-label', 'Mene käsitesivulle')
     cy.visit('/test-hierarchy/en/')
     cy.get('#hierarchy').should('not.have.class', 'disabled').click()
     cy.get('#hierarchy-list').find('ul.list-group button').should('have.attr', 'aria-label', 'Open');
+    cy.get('.concept-label a').first().should('have.attr', 'aria-label', 'Go to the concept page')
     cy.visit('/test-hierarchy/sv/')
     cy.get('#hierarchy').should('not.have.class', 'disabled').click()
     cy.get('#hierarchy-list').find('ul.list-group button').should('have.attr', 'aria-label', 'öppna');
+    cy.get('.concept-label a').first().should('have.attr', 'aria-label', 'Gå till begreppssidan')
   })
-
 })

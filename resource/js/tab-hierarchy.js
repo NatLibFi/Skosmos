@@ -15,6 +15,9 @@ function startHierarchyApp () {
     computed: {
       openAriaMessage () {
         return $t('Open')
+      },
+      goToTheConceptPageAriaMessage () {
+        return $t('Go to the concept page')
       }
     },
     provide () {
@@ -205,6 +208,7 @@ function startHierarchyApp () {
               :selectedConcept="selectedConcept"
               :loadingChildren="loadingChildren"
               :openAriaMessage="openAriaMessage"
+              :goToTheConceptPageAriaMessage="goToTheConceptPageAriaMessage"
               @load-children="loadChildren($event)"
               @select-concept="selectedConcept = $event"
             ></tab-hier-wrapper>
@@ -244,7 +248,7 @@ function startHierarchyApp () {
   })
 
   tabHierApp.component('tab-hier-wrapper', {
-    props: ['hierarchy', 'selectedConcept', 'loadingChildren', 'openAriaMessage'],
+    props: ['hierarchy', 'selectedConcept', 'loadingChildren', 'openAriaMessage', 'goToTheConceptPageAriaMessage'],
     emits: ['loadChildren', 'selectConcept'],
     mounted () {
       // scroll automatically to selected concept after the whole hierarchy tree has been mounted
@@ -284,6 +288,7 @@ function startHierarchyApp () {
           :isLast="i == hierarchy.length - 1"
           :loadingChildren="loadingChildren"
           :openAriaMessage="openAriaMessage"
+          :goToTheConceptPageAriaMessage="goToTheConceptPageAriaMessage"
           @load-children="loadChildren($event)"
           @select-concept="selectConcept($event)"
         ></tab-hier>
@@ -292,7 +297,7 @@ function startHierarchyApp () {
   })
 
   tabHierApp.component('tab-hier', {
-    props: ['concept', 'selectedConcept', 'isTopConcept', 'isLast', 'loadingChildren', 'openAriaMessage'],
+    props: ['concept', 'selectedConcept', 'isTopConcept', 'isLast', 'loadingChildren', 'openAriaMessage', 'goToTheConceptPageAriaMessage'],
     emits: ['loadChildren', 'selectConcept'],
     inject: ['partialPageLoad', 'getConceptURL', 'showNotation'],
     methods: {
@@ -332,7 +337,7 @@ function startHierarchyApp () {
           <a :class="{ 'selected': selectedConcept === concept.uri }"
             :href="getConceptURL(concept.uri)"
             @click="handleClickConceptEvent($event, concept)"
-            aria-label="Go to the concept page"
+            :aria-label="goToTheConceptPageAriaMessage"
           >
             <span v-if="showNotation && concept.notation" class="concept-notation">{{ concept.notation }} </span>
             {{ concept.label }}
@@ -344,6 +349,7 @@ function startHierarchyApp () {
               :concept="c"
               :selectedConcept="selectedConcept"
               :openAriaMessage="openAriaMessage"
+              :goToTheConceptPageAriaMessage="goToTheConceptPageAriaMessage"
               :isTopConcept="false"
               :isLast="i == concept.children.length - 1"
               :loadingChildren="loadingChildren"
