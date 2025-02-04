@@ -115,6 +115,7 @@
     "limited to parent": "parent",
     "limited to scheme": "limited to scheme",
     "limited to type": "type",
+    "Open": "Open",
     "owl:sameAs": "Equivalent concepts",
     "owl:versionInfo": "Version",
     "rdf:type": "Type",
