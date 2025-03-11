@@ -40,6 +40,20 @@ describe('New and removed view', () => {
     // Check that concepts are in the correct language
     cy.get('#tab-changes').find('.sidebar-list li a').eq(0).invoke('text').should('contain', 'irtolöydöt')
   })
+  it('Loads concepts on scroll', () => {
+    // Go to YSO vocab home page
+    cy.visit('/yso/en/')
+    // click on changes tab
+    cy.get('#changes').click()
+    // Scroll to the bottom of sidebar list
+    cy.get('#tab-changes').find('.sidebar-list').scrollTo('bottom')
+    // Check that loading spinner exists
+    cy.get('#tab-changes .sidebar-list i.fa-spinner')
+    // Check that new concepts have been loaded
+    cy.get('#tab-changes').find('.sidebar-list li').should('have.length.gt', 200, {'timeout': 20000})
+    // Check that loading spinner does not exist
+    cy.get('#tab-changes .sidebar-list i.fa-spinner').should('not.exist')
+  })
   it('Performs partial page load when clicking on concept', () => {
     // go to the YSO home page in English language
     cy.visit('/yso/en/')
