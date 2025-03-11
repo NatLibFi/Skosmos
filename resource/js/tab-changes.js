@@ -8,6 +8,7 @@ function startChangesApp () {
         changedConcepts: new Map(),
         selectedConcept: '',
         loadingConcepts: false,
+        loadingMoreConcepts: false,
         currentOffset: 0,
         listStyle: {}
       }
@@ -78,6 +79,7 @@ function startChangesApp () {
           })
       },
       loadMoreChanges () {
+        this.loadingMoreConcepts = true
         // Remove scrolling event listener while new changes are loaded
         this.$refs.tabChanges.$refs.list.removeEventListener('scroll', this.handleScrollEvent)
         fetch('rest/v1/' + window.SKOSMOS.vocab + '/new?lang=' + window.SKOSMOS.content_lang + '&limit=200&offset=' + this.currentOffset)
@@ -102,6 +104,7 @@ function startChangesApp () {
             }
 
             this.currentOffset += 200
+            this.loadingMoreConcepts = false
             // Add scrolling event listener back if more changes were loaded
             if (data.changeList.length > 0) {
               this.$refs.tabChanges.$refs.list.addEventListener('scroll', this.handleScrollEvent)
@@ -130,6 +133,7 @@ function startChangesApp () {
           :changed-concepts="changedConcepts"
           :selected-concept="selectedConcept"
           :loading-concepts="loadingConcepts"
+          :loading-more-concepts="loadingMoreConcepts"
           :loading-message="loadingMessage"
           :list-style="listStyle"
           @select-concept="selectedConcept = $event"
@@ -153,7 +157,7 @@ function startChangesApp () {
   })
 
   tabChangesApp.component('tab-changes', {
-    props: ['changedConcepts', 'selectedConcept', 'loadingConcepts', 'loadingMessage', 'listStyle'],
+    props: ['changedConcepts', 'selectedConcept', 'loadingConcepts', 'loadingMoreConcepts', 'loadingMessage', 'listStyle'],
     inject: ['partialPageLoad', 'getConceptURL'],
     emits: ['selectConcept'],
     methods: {
@@ -202,6 +206,11 @@ function startChangesApp () {
                     {{ concept.prefLabel }}
                   </a>
                 </template>
+              </li>
+            </template>
+            <template v-if="loadingMoreConcepts">
+              <li class="list-group-item py-1 px-2">
+                {{ this.loadingMessage }} <i class="fa-solid fa-spinner fa-spin-pulse"></i>
               </li>
             </template>
           </ul>
