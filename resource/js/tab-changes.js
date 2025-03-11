@@ -8,6 +8,7 @@ function startChangesApp () {
         changedConcepts: new Map(),
         selectedConcept: '',
         loadingConcepts: false,
+        currentOffset: 0,
         listStyle: {}
       }
     },
@@ -42,6 +43,9 @@ function startChangesApp () {
       },
       loadChanges () {
         this.loadingConcepts = true
+        this.currentOffset = 0
+        // Remove scrolling event listener while changes are loaded
+        this.$refs.tabChanges.$refs.list.removeEventListener('scroll', this.handleScrollEvent)
         fetch('rest/v1/' + window.SKOSMOS.vocab + '/new?lang=' + window.SKOSMOS.content_lang + '&limit=200')
           .then(data => {
             return data.json()
@@ -67,8 +71,49 @@ function startChangesApp () {
 
             this.changedConcepts = changesByDate
             this.loadingConcepts = false
+            this.currentOffset = 200
+            // Add scrolling event listener back after changes are loaded
+            this.$refs.tabChanges.$refs.list.addEventListener('scroll', this.handleScrollEvent)
             console.log('changes', this.changedConcepts)
           })
+      },
+      loadMoreChanges () {
+        // Remove scrolling event listener while new changes are loaded
+        this.$refs.tabChanges.$refs.list.removeEventListener('scroll', this.handleScrollEvent)
+        fetch('rest/v1/' + window.SKOSMOS.vocab + '/new?lang=' + window.SKOSMOS.content_lang + '&limit=200&offset=' + this.currentOffset)
+          .then(data => {
+            return data.json()
+          })
+          .then(data => {
+            console.log('data', data)
+
+            // Group concepts by month and year
+            for (const concept of data.changeList) {
+              const date = new Date(concept.date)
+              let key = date.toLocaleString(window.SKOSMOS.lang, { month: 'long', year: 'numeric' })
+              // Capitalize month name
+              key = key.charAt(0).toUpperCase() + key.slice(1)
+
+              if (!this.changedConcepts.get(key)) {
+                this.changedConcepts.set(key, [])
+              }
+
+              this.changedConcepts.get(key).push(concept)
+            }
+
+            this.currentOffset += 200
+            // Add scrolling event listener back if more changes were loaded
+            if (data.changeList.length > 0) {
+              this.$refs.tabChanges.$refs.list.addEventListener('scroll', this.handleScrollEvent)
+            }
+            console.log('changes', this.changedConcepts)
+          })
+      },
+      handleScrollEvent () {
+        const listElement = this.$refs.tabChanges.$refs.list
+        if (listElement.scrollTop + listElement.clientHeight >= listElement.scrollHeight - 1) {
+          this.loadMoreChanges()
+        }
       },
       setListStyle () {
         const height = document.getElementById('sidebar-tabs').clientHeight
@@ -88,6 +133,7 @@ function startChangesApp () {
           :loading-message="loadingMessage"
           :list-style="listStyle"
           @select-concept="selectedConcept = $event"
+          ref="tabChanges"
         ></tab-changes>
       </div>
     `
@@ -117,7 +163,7 @@ function startChangesApp () {
       }
     },
     template: `
-      <div class="sidebar-list pt-3" :style="listStyle">
+      <div class="sidebar-list pt-3" :style="listStyle" ref="list">
         <template v-if="loadingConcepts">
           <div>
             {{ loadingMessage }} <i class="fa-solid fa-spinner fa-spin-pulse"></i>
