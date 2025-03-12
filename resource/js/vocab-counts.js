@@ -1,4 +1,4 @@
-/* global Vue, $t */
+/* global Vue, $t, onTranslationReady */
 
 function startResourceCountsApp () {
   const resourceCountsApp = Vue.createApp({
@@ -76,12 +76,4 @@ function startResourceCountsApp () {
   resourceCountsApp.mount('#resource-counts')
 }
 
-const waitForTranslationServiceVocabCounts = () => {
-  if (typeof $t !== 'undefined') {
-    startResourceCountsApp()
-  } else {
-    setTimeout(waitForTranslationServiceVocabCounts, 50)
-  }
-}
-
-waitForTranslationServiceVocabCounts()
+onTranslationReady(startResourceCountsApp)

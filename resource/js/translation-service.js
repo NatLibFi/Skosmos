@@ -1,7 +1,9 @@
-/* global $t:writable */
-/* exported $t */
+/* global $t:writable, onTranslationReady:writable */
+/* exported $t, onTranslationReady */
 
 (async function () {
+  const translationCallbacks = []
+
   async function loadLocaleMessages (locale) {
     const messages = {}
     try {
@@ -20,6 +22,11 @@
     $t = function (key) {
       return translations[key] || key
     }
+    translationCallbacks.forEach(callback => callback())
+  }
+
+  onTranslationReady = function (callback) {
+    translationCallbacks.push(callback)
   }
 
   await initializeTranslations(window.SKOSMOS.lang || 'en')
