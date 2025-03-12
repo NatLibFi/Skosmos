@@ -33,6 +33,9 @@ function startHierarchyApp () {
         this.loadHierarchy()
       }
     },
+    beforeUpdate () {
+      this.setListStyle()
+    },
     methods: {
       handleClickHierarchyEvent () {
         // only load hierarchy if hierarchy tab is available
