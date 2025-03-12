@@ -1,5 +1,3 @@
-const { Button } = require("bootstrap")
-
 describe('Hierarchy', () => {
   it('Loads top concepts', () => {
     // Go to test vocab home page
@@ -117,7 +115,7 @@ describe('Hierarchy', () => {
   it('Aria tags are correct for each language', () => {
     cy.visit('/test-hierarchy/fi/')
     cy.get('#hierarchy').should('not.have.class', 'disabled').click()
-    cy.get('#hierarchy-list').find('ul.list-group button').should('have.attr', 'aria-label', 'avaa');
+    cy.get('#hierarchy-list').find('ul.list-group button').should('have.attr', 'aria-label', 'Avaa');
     cy.get('.concept-label a').first().should('have.attr', 'aria-label', 'Mene käsitesivulle')
     cy.visit('/test-hierarchy/en/')
     cy.get('#hierarchy').should('not.have.class', 'disabled').click()
@@ -125,7 +123,7 @@ describe('Hierarchy', () => {
     cy.get('.concept-label a').first().should('have.attr', 'aria-label', 'Go to the concept page')
     cy.visit('/test-hierarchy/sv/')
     cy.get('#hierarchy').should('not.have.class', 'disabled').click()
-    cy.get('#hierarchy-list').find('ul.list-group button').should('have.attr', 'aria-label', 'öppna');
+    cy.get('#hierarchy-list').find('ul.list-group button').should('have.attr', 'aria-label', 'Öppna');
     cy.get('.concept-label a').first().should('have.attr', 'aria-label', 'Gå till begreppssidan')
   })
 })
