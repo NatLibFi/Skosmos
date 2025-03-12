@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Get the directory containing this script
+SCRIPT_DIR=$(dirname "$0")
+
+# Build the base command to pull translations from Lokalise into the message files
+CMD="${SCRIPT_DIR}/console translation:pull lokalise --domains messages --format json"
+
+# Add language parameter if provided (this will restrict the pull to a single language)
+if [ $# -eq 1 ]; then
+    CMD+=" --locales $1"
+fi
+
+# Execute the command
+$CMD

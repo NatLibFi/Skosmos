@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Get the directory containing this script
+SCRIPT_DIR=$(dirname "$0")
+
+# Run the Symfony console command to push current English language messages to Lokalise
+${SCRIPT_DIR}/console translation:push lokalise --domains messages --locales en --force
