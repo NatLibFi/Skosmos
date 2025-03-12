@@ -111,4 +111,19 @@ describe('Hierarchy', () => {
     cy.get('#hierarchy-list .list-group-item').eq(1).find('.concept-notation').invoke('text').should('equal', '33.1')
     cy.get('#hierarchy-list .list-group-item').eq(2).find('.concept-notation').invoke('text').should('equal', '33.01')
   })
+  // Check the correctness of Aria-labels (Sami language will be implemented later)
+  it('Aria tags are correct for each language', () => {
+    cy.visit('/test-hierarchy/fi/')
+    cy.get('#hierarchy').should('not.have.class', 'disabled').click()
+    cy.get('#hierarchy-list').find('ul.list-group button').should('have.attr', 'aria-label', 'Avaa');
+    cy.get('.concept-label a').first().should('have.attr', 'aria-label', 'Mene käsitesivulle')
+    cy.visit('/test-hierarchy/en/')
+    cy.get('#hierarchy').should('not.have.class', 'disabled').click()
+    cy.get('#hierarchy-list').find('ul.list-group button').should('have.attr', 'aria-label', 'Open');
+    cy.get('.concept-label a').first().should('have.attr', 'aria-label', 'Go to the concept page')
+    cy.visit('/test-hierarchy/sv/')
+    cy.get('#hierarchy').should('not.have.class', 'disabled').click()
+    cy.get('#hierarchy-list').find('ul.list-group button').should('have.attr', 'aria-label', 'Öppna');
+    cy.get('.concept-label a').first().should('have.attr', 'aria-label', 'Gå till begreppssidan')
+  })
 })
