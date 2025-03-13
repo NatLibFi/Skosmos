@@ -624,6 +624,10 @@ body {
     margin-top: 1.5rem !important;
   }
 
+  #tab-changes .sidebar-list s {
+    text-decoration: 1px var(--vocab-text) line-through;
+  }
+
   /*** sidebar hierarchy and groups tabs ***/
   #tab-hierarchy .sidebar-list .list-group-item,
   #tab-groups .sidebar-list .list-group-item {
