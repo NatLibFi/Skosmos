@@ -250,9 +250,9 @@ describe('Vocab search bar', () => {
       // go to YSO vocab front page in Finnish
       cy.visit('/yso/fi/')
       // Check that language selector has correct Aria label
-      cy.get('#language-selector button').should('have.attr', 'aria-label', 'Select search language')
+      cy.get('#language-selector button').should('have.attr', 'aria-label', 'Valitse hakukieli')
       // Check that search field has correct Aria label
-      cy.get('#search-field').should('have.attr', 'aria-label', 'Text input with dropdown button')
+      cy.get('#search-field').should('have.attr', 'aria-label', 'Tekstinsyöttö pudotusvalikolla')
       // Check that search field has correct Aria label
       cy.get('#search-button').should('have.attr', 'aria-label', 'Hae')
       // Check that search field has correct placeholder
@@ -266,9 +266,9 @@ describe('Vocab search bar', () => {
       // go to YSO vocab front page in Swedish
       cy.visit('/yso/sv/')
       // Check that language selector has correct Aria label
-      cy.get('#language-selector button').should('have.attr', 'aria-label', 'Select search language')
+      cy.get('#language-selector button').should('have.attr', 'aria-label', 'Välj sökspråk')
       // Check that search field has correct Aria label
-      cy.get('#search-field').should('have.attr', 'aria-label', 'Text input with dropdown button')
+      cy.get('#search-field').should('have.attr', 'aria-label', 'Textinmatning med rullgardinsmeny')
       // Check that search field has correct Aria label
       cy.get('#search-button').should('have.attr', 'aria-label', 'Sök')
       // Check that search field has correct placeholder
