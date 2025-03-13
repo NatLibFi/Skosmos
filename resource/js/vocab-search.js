@@ -20,6 +20,15 @@ function startVocabSearchApp () {
       },
       noResults () {
         return $t('No results')
+      },
+      selectSearchLanguageAriaMessage () {
+        return $t('Select search language')
+      },
+      textInputWithDropdownButtonAriaMessage () {
+        return $t('Text input with dropdown button')
+      },
+      searchAriaMessage () {
+        return $t('Search')
       }
     },
     mounted () {
@@ -223,7 +232,7 @@ function startVocabSearchApp () {
             role="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
-            aria-label="Select search language"
+            :aria-label="selectSearchLanguageAriaMessage"
             v-if="languageStrings">
             {{ languageStrings[selectedLanguage] }}
             <i class="fa-solid fa-chevron-down"></i>
@@ -249,7 +258,7 @@ function startVocabSearchApp () {
               id="search-field"
               autocomplete="off"
               data-bs-toggle=""
-              aria-label="Text input with dropdown button"
+              :aria-label="textInputWithDropdownButtonAriaMessage"
               :placeholder="searchPlaceholder"
               v-click-outside="hideAutoComplete"
               v-model="searchTerm"
@@ -344,7 +353,7 @@ function startVocabSearchApp () {
           <button id="clear-button" class="btn btn-danger" type="clear" v-if="searchTerm" @click="resetSearchTermAndHideDropdown()">
             <i class="fa-solid fa-xmark"></i>
           </button>
-          <button id="search-button" class="btn btn-outline-secondary" aria-label="Search" @click="gotoSearchPage()">
+          <button id="search-button" class="btn btn-outline-secondary" :aria-label="searchAriaMessage" @click="gotoSearchPage()">
             <i class="fa-solid fa-magnifying-glass"></i>
           </button>
         </div>

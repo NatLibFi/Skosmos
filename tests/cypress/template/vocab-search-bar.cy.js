@@ -212,20 +212,73 @@ describe('Vocab search bar', () => {
         cy.get('li').last().find('b').eq(0).should('have.text', '51')
       })
     })
-      it('Long autocomplete result list should have a scroll bar', () => {
-        // go to YSO vocab front page
-        cy.visit('/yso/fi/')
+    it('Long autocomplete result list should have a scroll bar', () => {
+      // go to YSO vocab front page
+      cy.visit('/yso/fi/')
 
-        // resize the window to smaller size
-        cy.viewport(1200, 600)
+      // resize the window to smaller size
+      cy.viewport(1200, 600)
 
-        // type a search term and wait for the autocomplete to appear
-        cy.get('#search-field').type('mu')
-        cy.get('#search-autocomplete-results').should('be.visible')
+      // type a search term and wait for the autocomplete to appear
+      cy.get('#search-field').type('mu')
+      cy.get('#search-autocomplete-results').should('be.visible')
 
-        // the result list should have a CSS-based scroll
-        cy.get('#search-autocomplete-results').should('have.css', 'overflow-y', 'auto')
-        cy.get('#search-autocomplete-results').should('have.css', 'max-height', '300px')
-      });
+      // the result list should have a CSS-based scroll
+      cy.get('#search-autocomplete-results').should('have.css', 'overflow-y', 'auto')
+      cy.get('#search-autocomplete-results').should('have.css', 'max-height', '300px')
+    })
   });
+
+  describe('Translations', () => {
+    it('Has correct translations', () => {
+      // go to YSO vocab front page in English
+      cy.visit('/yso/en/')
+      // Check that language selector has correct Aria label
+      cy.get('#language-selector button').should('have.attr', 'aria-label', 'Select search language')
+      // Check that search field has correct Aria label
+      cy.get('#search-field').should('have.attr', 'aria-label', 'Text input with dropdown button')
+      // Check that search field has correct Aria label
+      cy.get('#search-button').should('have.attr', 'aria-label', 'Search')
+      // Check that search field has correct placeholder
+      cy.get('#search-field').should('have.attr', 'placeholder', 'Search...')
+      // Check that search results have correct message when no results were found
+      cy.get('#search-field').type('No results')
+      cy.get('#search-autocomplete-results').within(() => {
+        cy.get('li').eq(0).invoke('text').should('contain', 'No results') // the single result should display a no results message
+      })
+
+      // go to YSO vocab front page in Finnish
+      cy.visit('/yso/fi/')
+      // Check that language selector has correct Aria label
+      cy.get('#language-selector button').should('have.attr', 'aria-label', 'Valitse hakukieli')
+      // Check that search field has correct Aria label
+      cy.get('#search-field').should('have.attr', 'aria-label', 'Tekstinsyöttö pudotusvalikolla')
+      // Check that search field has correct Aria label
+      cy.get('#search-button').should('have.attr', 'aria-label', 'Hae')
+      // Check that search field has correct placeholder
+      cy.get('#search-field').should('have.attr', 'placeholder', 'Hae...')
+      // Check that search results have correct message when no results were found
+      cy.get('#search-field').type('No results')
+      cy.get('#search-autocomplete-results').within(() => {
+        cy.get('li').eq(0).invoke('text').should('contain', 'Ei tuloksia') // the single result should display a no results message
+      })
+
+      // go to YSO vocab front page in Swedish
+      cy.visit('/yso/sv/')
+      // Check that language selector has correct Aria label
+      cy.get('#language-selector button').should('have.attr', 'aria-label', 'Välj sökspråk')
+      // Check that search field has correct Aria label
+      cy.get('#search-field').should('have.attr', 'aria-label', 'Textinmatning med rullgardinsmeny')
+      // Check that search field has correct Aria label
+      cy.get('#search-button').should('have.attr', 'aria-label', 'Sök')
+      // Check that search field has correct placeholder
+      cy.get('#search-field').should('have.attr', 'placeholder', 'Sök...')
+      // Check that search results have correct message when no results were found
+      cy.get('#search-field').type('No results')
+      cy.get('#search-autocomplete-results').within(() => {
+        cy.get('li').eq(0).invoke('text').should('contain', 'Inga sökresultat') // the single result should display a no results message
+      })
+
+    })
+  })
 })
