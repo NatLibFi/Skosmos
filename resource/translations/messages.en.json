@@ -220,5 +220,7 @@
     "Go to the concept page": "Go to the concept page",
     "Download this concept": "Download this concept",
     "Concept %term% in vocabulary %vocab%": "Concept %term% in vocabulary %vocab%",
-    "More information about this term": "More information about this term"
+    "More information about this term": "More information about this term",
+    "Select search language": "Select search language",
+    "Text input with dropdown button": "Text input with dropdown button"
 }
