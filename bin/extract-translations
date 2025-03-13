@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Get the directory containing this script
+SCRIPT_DIR=$(dirname "$0")
+
+# Run the Symfony console command to extract messages from code and save them into the English message file
+${SCRIPT_DIR}/console translation:extract --force en --format json --prefix ""
