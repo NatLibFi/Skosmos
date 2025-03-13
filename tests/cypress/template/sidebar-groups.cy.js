@@ -3,7 +3,7 @@ describe('Groups tab', () => {
     // Go to test vocab home page
     cy.visit('/groups/en/')
     // Check that groups tab is available and click it open
-    cy.get('#groups').should('not.have.class', 'disabled').click({force: true})
+    cy.get('#groups').should('not.have.class', 'disabled').click()
     // Check that groups includes correct top groups
     cy.get('#groups-list li').should('have.length', 3).invoke('text')
       .should('contain', 'Fish')
@@ -35,7 +35,7 @@ describe('Groups tab', () => {
     // Go to test vocab home page
     cy.visit('/groups/en/')
     // Click groups tab open
-    cy.get('#groups').should('not.have.class', 'disabled').click({force: true})
+    cy.get('#groups').should('not.have.class', 'disabled').click()
     // Click open button of second group
     cy.get('#groups-list li button').eq(1).click({force: true})
     // Check that child "Carp" is loaded in
@@ -49,12 +49,41 @@ describe('Groups tab', () => {
     // Go to test vocab home page
     cy.visit('/groups/en/')
     // Click groups tab open
-    cy.get('#groups').should('not.have.class', 'disabled').click({force: true})
+    cy.get('#groups').should('not.have.class', 'disabled').click()
     // Click second group
-    cy.get('#groups-list li a').eq(1).click({force: true})
+    cy.get('#groups-list li a').eq(1).click()
     // Check that children are loaded in
     cy.get('#groups-list li ul', {'timeout': 15000}).first().children().should('have.length', 1)
     // Check that child is correct
     cy.get('#groups-list li ul').invoke('text').should('include', 'Carp')
+  })
+  it('Has correct translations', () => {
+    // Go to test vocab home page in English
+    cy.visit('/yso/en/')
+    // Click on groups tab
+    cy.get('#groups').click()
+    // Check that hierarchy button has correct Aria label
+    cy.get('#groups-list').find('ul.list-group button').should('have.attr', 'aria-label', 'Open')
+    // Check that concepts have correct Aria labels
+    cy.get('.concept-label a').first().should('have.attr', 'aria-label', 'Go to the concept page')
+
+    // Go to test vocab home page in Finnish
+    cy.visit('/yso/fi/')
+    // Click on groups tab
+    cy.get('#groups').click()
+    // Check that hierarchy button has correct Aria label
+    cy.get('#groups-list').find('ul.list-group button').should('have.attr', 'aria-label', 'Avaa')
+    // Check that concepts have correct Aria labels
+    cy.get('.concept-label a').first().should('have.attr', 'aria-label', 'Mene käsitesivulle')
+
+    // Go to test vocab home page in Swedish
+    cy.visit('/yso/sv/')
+    // Click on groups tab
+    cy.get('#groups').click()
+    // Check that hierarchy button has correct Aria label
+    cy.get('#groups-list').find('ul.list-group button').should('have.attr', 'aria-label', 'Öppna')
+    // Check that concepts have correct Aria labels
+    cy.get('.concept-label a').first().should('have.attr', 'aria-label', 'Gå till begreppssidan')
+
   })
 })
