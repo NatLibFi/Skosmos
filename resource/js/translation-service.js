@@ -26,7 +26,13 @@
   }
 
   onTranslationReady = function (callback) {
-    translationCallbacks.push(callback)
+    if (typeof $t !== 'undefined') {
+      // translation service is ready, call callback immediately
+      callback()
+    } else {
+      // translation service not yet ready, add callback to queue
+      translationCallbacks.push(callback)
+    }
   }
 
   await initializeTranslations(window.SKOSMOS.lang || 'en')
