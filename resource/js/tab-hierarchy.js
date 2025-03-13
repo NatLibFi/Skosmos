@@ -1,4 +1,4 @@
-/* global Vue, $t */
+/* global Vue, $t, onTranslationReady */
 /* global partialPageLoad, getConceptURL */
 
 function startHierarchyApp () {
@@ -368,12 +368,4 @@ function startHierarchyApp () {
   tabHierApp.mount('#tab-hierarchy')
 }
 
-const waitForTranslationServiceTabHierarchy = () => {
-  if (typeof $t !== 'undefined') {
-    startHierarchyApp()
-  } else {
-    setTimeout(waitForTranslationServiceTabHierarchy, 50)
-  }
-}
-
-waitForTranslationServiceTabHierarchy()
+onTranslationReady(startHierarchyApp)

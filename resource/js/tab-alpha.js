@@ -1,4 +1,4 @@
-/* global Vue, $t */
+/* global Vue, $t, onTranslationReady */
 /* global partialPageLoad, getConceptURL, fetchWithAbort */
 
 function startAlphaApp () {
@@ -245,12 +245,4 @@ function startAlphaApp () {
   tabAlphaApp.mount('#tab-alphabetical')
 }
 
-const waitForTranslationServiceTabAlpha = () => {
-  if (typeof $t !== 'undefined') {
-    startAlphaApp()
-  } else {
-    setTimeout(waitForTranslationServiceTabAlpha, 50)
-  }
-}
-
-waitForTranslationServiceTabAlpha()
+onTranslationReady(startAlphaApp)

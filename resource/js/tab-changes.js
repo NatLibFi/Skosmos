@@ -1,4 +1,4 @@
-/* global Vue, $t */
+/* global Vue, $t, onTranslationReady */
 /* global partialPageLoad, getConceptURL */
 
 function startChangesApp () {
@@ -222,12 +222,4 @@ function startChangesApp () {
   tabChangesApp.mount('#tab-changes')
 }
 
-const waitForTranslationServiceTabChanges = () => {
-  if (typeof $t !== 'undefined') {
-    startChangesApp()
-  } else {
-    setTimeout(waitForTranslationServiceTabChanges, 50)
-  }
-}
-
-waitForTranslationServiceTabChanges()
+onTranslationReady(startChangesApp)

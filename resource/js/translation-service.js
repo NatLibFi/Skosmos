@@ -1,7 +1,9 @@
-/* global $t:writable */
-/* exported $t */
+/* global $t:writable, onTranslationReady:writable */
+/* exported $t, onTranslationReady */
 
 (async function () {
+  const translationCallbacks = []
+
   async function loadLocaleMessages (locale) {
     const messages = {}
     try {
@@ -19,6 +21,17 @@
     const translations = messages[locale] || {}
     $t = function (key) {
       return translations[key] || key
+    }
+    translationCallbacks.forEach(callback => callback())
+  }
+
+  onTranslationReady = function (callback) {
+    if (typeof $t !== 'undefined') {
+      // translation service is ready, call callback immediately
+      callback()
+    } else {
+      // translation service not yet ready, add callback to queue
+      translationCallbacks.push(callback)
     }
   }
 

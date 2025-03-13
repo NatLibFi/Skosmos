@@ -1,4 +1,4 @@
-/* global Vue, $t */
+/* global Vue, $t, onTranslationReady */
 
 function startTermCountsApp () {
   const termCountsApp = Vue.createApp({
@@ -69,12 +69,4 @@ function startTermCountsApp () {
   termCountsApp.mount('#term-counts')
 }
 
-function waitForTermTranslationService () {
-  if (typeof $t !== 'undefined') {
-    startTermCountsApp()
-  } else {
-    setTimeout(waitForTermTranslationService, 50)
-  }
-}
-
-waitForTermTranslationService()
+onTranslationReady(startTermCountsApp)

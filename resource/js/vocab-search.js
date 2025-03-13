@@ -1,4 +1,4 @@
-/* global Vue, $t */
+/* global Vue, $t, onTranslationReady */
 
 function startVocabSearchApp () {
   const vocabSearch = Vue.createApp({
@@ -379,12 +379,4 @@ function startVocabSearchApp () {
   vocabSearch.mount('#search-vocab')
 }
 
-const waitForTranslationServiceVocabSearch = () => {
-  if (typeof $t !== 'undefined') {
-    startVocabSearchApp()
-  } else {
-    setTimeout(waitForTranslationServiceVocabSearch, 50)
-  }
-}
-
-waitForTranslationServiceVocabSearch()
+onTranslationReady(startVocabSearchApp)
