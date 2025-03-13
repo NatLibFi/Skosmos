@@ -1,7 +1,7 @@
 /* global Vue, $t, onTranslationReady */
 /* global partialPageLoad, getConceptURL */
 
-function startHierarchyApp () {
+function startGroupsApp () {
   const tabGroupsApp = Vue.createApp({
     data () {
       return {
@@ -326,4 +326,4 @@ function startHierarchyApp () {
   tabGroupsApp.mount('#tab-groups')
 }
 
-onTranslationReady(startHierarchyApp)
+onTranslationReady(startGroupsApp)
