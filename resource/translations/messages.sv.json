@@ -1,4 +1,6 @@
 {
+    "Select search language": "V\u00e4lj s\u00f6kspr\u00e5k",
+    "Text input with dropdown button": "Textinmatning med rullgardinsmeny",
     "Open": "\u00d6ppna",
     "%search_count% results for '%term%'": "%search_count% s\u00f6kresultat f\u00f6r '%term%'",
     "404 Error: The page %requested_page% cannot be found.": "Fel 404: Sidan %requested_page% finns inte.",

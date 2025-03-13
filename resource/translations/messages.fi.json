@@ -1,4 +1,6 @@
 {
+    "Select search language": "Valitse hakukieli",
+    "Text input with dropdown button": "Tekstinsy\u00f6tt\u00f6 pudotusvalikolla",
     "Open": "Avaa",
     "%search_count% results for '%term%'": "%search_count% tulosta haulle '%term%'",
     "404 Error: The page %requested_page% cannot be found.": "Virhe 404: Sivua %requested_page% ei l\u00f6ydy.",
