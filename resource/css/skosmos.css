@@ -7,6 +7,7 @@
   --light-color: #f2f5f7;
   --alert-color: #a0270a;
   --white-color: #ffffff;
+  --header-bar-text: var(--white-color);
   --feedback-form-bg: var(--white-color);
   --feedback-form-text: var(--dark-color);
   --feedback-form-input: var(--light-color);
@@ -39,6 +40,12 @@
   --font-size: 1em; /* same as the browser default font size, often 16px */
   --font-family: 'Public Sans', sans-serif;
   --font-family-heading: 'EB Garamond', serif;
+}
+
+@font-face {
+  font-family: 'Font Awesome 5 Solid';
+  font-style: normal;
+  src: url('../fontawesome/webfonts/fa-solid-900.ttf') format('truetype');
 }
 
 body {
@@ -162,7 +169,7 @@ body {
   /* Headerbar
    *****************************************/
   #headerbar.landing, #headerbar.landing-one-vocab {
-    color: var(--dark-color);
+    color: var(--headerbar-text);
   }
 
   #headerbar.vocab-home, #headerbar.concept {
@@ -190,6 +197,33 @@ body {
   #vocab-title a {
     color: var(--vocab-text);
     font-family: var(--font-family-heading);
+  }
+
+  #global-search-toggle {
+    background-color: var(--headerbar-vocab-bg);
+    border-style: none;
+  }
+
+  #global-search-toggle.collapsed::after {
+    background-image: none;
+    transform: none;
+    padding-left: 0.5rem;
+
+    content: "\f078"; /* fa-chevron-down */
+    color: var(--header-bar-text);
+    font-family: "Font Awesome 5 Solid";
+    display: inline-block;
+  }
+
+  #global-search-toggle::after {
+    background-image: none;
+    transform: none;
+    padding-left: 0.5rem;
+
+    content: "\f077"; /* fa-chevron-up */
+    color: var(--header-bar-text);
+    font-family: "Font Awesome 5 Solid";
+    display: inline-block;
   }
 
   #search-multi-vocab-title {
