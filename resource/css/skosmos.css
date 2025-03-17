@@ -202,6 +202,7 @@ body {
   #global-search-toggle {
     background-color: var(--headerbar-vocab-bg);
     border-style: none;
+    white-space: nowrap;
   }
 
   #global-search-toggle.collapsed::after {
@@ -226,9 +227,29 @@ body {
     display: inline-block;
   }
 
-  #search-multi-vocab-title {
-    color: var(--vocab-text);
+  #global-search-text {
+    min-width: 400px;
+    overflow: auto;
+  }
+
+  #global-search-text h2 {
     font-family: var(--font-family-heading);
+    font-weight: bold;
+    font-size: 2rem;
+    padding: 1rem;
+  }
+
+  #global-search-bar {
+    flex: 0 0 700px;
+    max-width: 700px;
+  }
+
+  #global-search-bar div {
+    display: inline-block;
+  }
+
+  #global-search-bar .dropdown {
+    display: inline-block;
   }
 
   #search-wrapper {

@@ -74,8 +74,14 @@
         {% endif %}
       </ul>
     </div>
-    <div class="collapse row" id="global-search-bar">
-      <span>Search bar placeholder</span>
+    <div class="collapse container" id="global-search-bar">
+      <div class="row">
+        <div class="col" id="global-search-text">
+          <h2>Yhteishaku sanastoista</h2>
+        </div>
+      </div>
+      <div class="col-auto" id=global-search-wrapper>
+      </div>
     </div>
     {% if pageType in ['landing', 'vocab-home', 'concept', 'vocab-search'] %}
     <div class="container-fluid bg-white py-4" id="headerbar">
