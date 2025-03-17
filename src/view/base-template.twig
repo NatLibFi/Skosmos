@@ -37,8 +37,8 @@
     <a class="visually-hidden" id="skiptocontent" href="{{ request.langurl }}#maincontent">Skip to main</a>
     <div class="container-fluid bg-dark d-flex my-auto py-3 px-4 text-bg-dark">
       {% if request.vocabid == '' and request.page != 'about' and request.page != 'feedback' %}
-        <div class="accordion">
-          <button class="fs-6 py-3 text-light accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#extraNavItems" aria-expanded="false" aria-controls="extraNavItems">
+        <div>
+          <button class="fs-6 py-3 text-light collapsed" id="global-search-toggle" data-bs-toggle="collapse" data-bs-target="#global-search-bar" aria-expanded="false" aria-controls="global-search-bar">
               Yhteishaku sanastoista
           </button>
         </div>
@@ -74,7 +74,7 @@
         {% endif %}
       </ul>
     </div>
-    <div class="collapse row" id="extraNavItems">
+    <div class="collapse row" id="global-search-bar">
       <span>Search bar placeholder</span>
     </div>
     {% if pageType in ['landing', 'vocab-home', 'concept', 'vocab-search'] %}
