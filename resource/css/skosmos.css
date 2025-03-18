@@ -239,23 +239,15 @@ body {
     padding: 1rem;
   }
 
-  #global-search-bar {
-    flex: 0 0 700px;
-    max-width: 700px;
-  }
-
-  #global-search-bar div {
-    display: inline-block;
-  }
-
-  #global-search-bar .dropdown {
+  #global-search-bar .dropdown, #global-search-bar .form-group {
     display: inline-block;
   }
 
   #search-wrapper {
-    color: var(--vocab-text);
     float: right;
-    height: 3.5em;
+    display: flex;
+    align-items: stretch;
+    flex-wrap: nowrap;
 }
 
   #search-wrapper select, #search-wrapper input, #search-wrapper button {
