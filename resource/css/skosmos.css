@@ -362,7 +362,7 @@ body {
   }
 
   #main-container {
-    padding-top: 2.75rem;
+    padding-top: 2.4rem;
   }
 
   #main-container h1 {
@@ -371,7 +371,11 @@ body {
   }
 
   #main-container-row {
-    --bs-gutter-x: 2.25rem;
+    --bs-gutter-x: 2rem;
+  }
+
+  .mb-custom {
+    margin-bottom: 2rem;
   }
 
   /***** Main container landing page & landing page one vocab *****/
@@ -448,9 +452,6 @@ body {
 
   #main-container.landing #info-box {
     background-color: var(--info-box-bg);
-    height: 100%;
-    display: flex;
-    flex-direction: column;
     justify-content: center;
   }
 
