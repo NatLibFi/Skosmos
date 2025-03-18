@@ -13,7 +13,7 @@
       {% if category_label %}
       <h2 class="fs-3 fw-bold py-3">{{ category_label }}</h2>
       {% else %}
-      <h2 class="fs-3 fw-bold py-3">{{ "Available vocabularies and ontologies" | trans }}</h2>
+      <h2 class="fs-3 fw-bold py-3">{{ "Vocabularies" | trans }}</h2>
       {% endif %}
       {% for vocabClassName,vocabArray in request.vocabList %}
       <div class="vocab-category border-top pb-4">
