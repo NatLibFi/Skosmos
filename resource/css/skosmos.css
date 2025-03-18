@@ -161,7 +161,7 @@ body {
   /* Headerbar
    *****************************************/
   #headerbar.landing, #headerbar.landing-one-vocab {
-    color: var(--headerbar-text-1);
+    color: var(--dark-color);
   }
 
   #headerbar.vocab-home, #headerbar.concept {
@@ -178,13 +178,13 @@ body {
   }
 
   #vocab-title a {
-    color: var(--headerbar-text-2);
+    color: var(--vocab-text);
     font-family: var(--font-family-heading);
     text-decoration: none;
   }
 
   #search-multi-vocab-title {
-    color: var(--headerbar-text-2);
+    color: var(--vocab-text);
     font-family: var(--font-family-heading);
   }
 
@@ -193,7 +193,7 @@ body {
   }
 
   #search-wrapper {
-    color: var(--headerbar-text-2);
+    color: var(--vocab-text);
     float: right;
     height: 3.5em;
 }
@@ -204,7 +204,7 @@ body {
 
   #search-wrapper button.dropdown-toggle {
     background-color: var(--search-bg);
-    color: var(--headerbar-text-2);
+    color: var(--vocab-text);
     border: 1px solid var(--search-border);
     border-radius: 0;
     padding-left: 1rem;
@@ -223,7 +223,7 @@ body {
   #search-wrapper #language-list {
     inset: -3px auto auto 0px !important;
     background-color: var(--search-bg);
-    color: var(--headerbar-text-2);
+    color: var(--vocab-text);
     border: 1px solid var(--search-border);
     border-radius: 0;
   }
@@ -239,7 +239,7 @@ body {
   }
 
   #search-wrapper .form-check-input:checked {
-    background-color: var(--headerbar-text-2);
+    background-color: var(--vocab-text);
   }
 
   #search-wrapper input {
@@ -261,7 +261,7 @@ body {
   #search-wrapper .dropdown-menu {
     transform: translateY(-1px);
     background-color: var(--search-dropdown-bg);
-    color: var(--headerbar-text-2);
+    color: var(--vocab-text);
     border: 1px solid var(--search-border);
     border-radius: 0;
   }
@@ -366,6 +366,7 @@ body {
   }
 
   #main-container h1 {
+    color: var(--dark-color);
     font-family: var(--font-family-heading);
     font-weight: bold;
   }
@@ -783,6 +784,7 @@ body {
   }
 
   .property {
+    color: var(--vocab-text);
     border-top: 1px solid var(--vocab-table-border);
     padding: .5rem 0;
   }
@@ -792,8 +794,9 @@ body {
   }
 
   .property-label h2 {
+    color: var(--dark-color);
     font-weight: bold;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     margin-bottom: 0;
     display: inline;
   }
@@ -842,11 +845,12 @@ body {
   }
 
   nav#concept-breadcrumbs .breadcrumb-current {
-    color: black;
+    color: var(--dark-color);
     font-weight: normal;
   }
 
   #concept-property-label {
+    color: var(--dark-color);
     align-self: start;
     padding-top: 1.25rem;
   }
