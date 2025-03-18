@@ -277,7 +277,7 @@ function startGlobalSearchApp () {
             </li>
           </ul>
         </div>
-
+        <div class="input-group">
           <span id="headerbar-search" class="dropdown">
             <input type="search"
               class="form-control"
@@ -382,6 +382,7 @@ function startGlobalSearchApp () {
           <button id="search-button" class="btn btn-outline-secondary" :aria-label="searchAriaMessage" @click="gotoSearchPage()">
             <i class="fa-solid fa-magnifying-glass"></i>
           </button>
+        </div>
         </div>
     `
   })
