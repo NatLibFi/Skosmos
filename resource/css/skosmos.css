@@ -374,7 +374,7 @@ body {
     --bs-gutter-x: 2.25rem;
   }
 
-  /***** Main container langing page & landing page one vocab *****/
+  /***** Main container landing page & landing page one vocab *****/
   #background.landing, #background.landing-one-vocab {
     background-color: var(--main-bg-1);
     background-image: var(--landing-stripes-1);
@@ -404,6 +404,9 @@ body {
   #vocabulary-list h2, #welcome-box h2, #vocab-info h2 {
     font-family: var(--font-family-heading) !important;
   }
+  #vocabulary-list h2 {
+    color: var(--dark-color);
+  }
   header > h2 > a {
     font-family: var(--font-family-heading) !important;
     color: var(--dark-color)
@@ -426,11 +429,12 @@ body {
   }
 
   .vocab-category a {
-    /** color: var(--secondary-medium-color) solid; **/
     color: var(--vocab-link);
     font-weight: bold;
-    text-decoration: underline ;
+    text-decoration: underline;
     text-decoration-thickness: 1px;
+    text-decoration-color: var(--secondary-medium-color);
+    text-underline-offset: 0.3rem;
   }
 
   #main-container.landing #vocab-box h2 {
