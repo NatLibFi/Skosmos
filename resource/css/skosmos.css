@@ -40,12 +40,12 @@
   --font-family: 'Public Sans', sans-serif;
   --font-family-heading: 'EB Garamond', serif;
 
-  color: var(--dark-color);
   font-family: var(--font-family);
   font-size: var(--font-size);
 }
 
 body {
+  color: var(--dark-color);
 }
 
 .bg-dark {
