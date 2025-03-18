@@ -199,7 +199,13 @@ function startHierarchyApp () {
           sensitivity: 'variant' // Strings that differ in base letters, diacritic marks, or case compare as unequal
         }
 
-        return strA.localeCompare(strB, lang, options)
+        const result = strA.localeCompare(strB, lang, options)
+        if (result !== 0) {
+          return result
+        } else {
+          // fall back to non-numeric sort to ensure a consistent order
+          return strA.localeCompare(strB, lang, { sensitivity: 'variant' })
+        }
       }
     },
     template: `
