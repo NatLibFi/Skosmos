@@ -6,14 +6,14 @@
 
 {% block content %}
 <div class="col-lg-7 mb-custom mb-lg-0">
-  <div class="px-4 py-4 bg-medium" id="vocabulary-list">
+  <div class="px-3 py-4 bg-medium" id="vocabulary-list">
     {% if request.vocabList|length == 0 %}
     <h2 class="fs-3 fw-bold">{{ "No vocabularies on the server!" | trans }}</h2>
     {% else %}
       {% if category_label %}
-      <h2 class="fs-3 fw-bold py-3">{{ category_label }}</h2>
+      <h2 class="fs-3 fw-bold pb-3">{{ category_label }}</h2>
       {% else %}
-      <h2 class="fs-3 fw-bold py-3">{{ "Vocabularies" | trans }}</h2>
+      <h2 class="fs-3 fw-bold pb-3">{{ "Vocabularies" | trans }}</h2>
       {% endif %}
       {% for vocabClassName,vocabArray in request.vocabList %}
       <div class="vocab-category border-top pb-4">
@@ -29,8 +29,8 @@
   </div>
 </div>
 <div class="col-lg-5 d-flex flex-column">
-      <div class="bg-dark px-5 py-5 mb-custom text-light" id="welcome-box">
-        <h2 class="fw-bold fs-3">Welcome to the Skosmos browser demo</h2>
+      <div class="bg-dark px-4 py-4 mb-custom text-light" id="welcome-box">
+        <h2 class="fw-bold fs-3 my-3">Welcome to the Skosmos browser demo</h2>
         <p class="fs-5">
         Skosmos is a web-based tool providing services for accessing controlled vocabularies, 
         which are used by indexers describing documents and searchers looking

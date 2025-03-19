@@ -170,10 +170,10 @@ body {
   #skosmos-logo {
     background-image: url(../pics/skosmos-RGB.svg);
     background-repeat: no-repeat;
-    background-position: -20px -20px;
-    width: 400px;
-    height: 110px;
-    background-size: 400px;
+    background-position: -8px -15px;
+    width: 300px;
+    height: 80px;
+    background-size: 300px;
   }
 
   #vocab-title {
@@ -394,6 +394,7 @@ body {
     background-repeat: no-repeat;
     background-size: 650px;
     background-position: -41px calc(100% + 55px);
+    padding-top: 0;
   }
 
   #vocab-box, #welcome-box, #info-box {
