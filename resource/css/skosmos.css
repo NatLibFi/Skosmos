@@ -177,10 +177,13 @@ body {
     background-size: 400px;
   }
 
+  #vocab-title {
+    font-size: 2.5rem;
+  }
+
   #vocab-title a {
     color: var(--vocab-text);
     font-family: var(--font-family-heading);
-    text-decoration: none;
   }
 
   #search-multi-vocab-title {
