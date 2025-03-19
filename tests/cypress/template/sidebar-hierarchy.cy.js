@@ -100,16 +100,16 @@ describe('Hierarchy', () => {
   it('Sorts concepts based on notation codes in lexical order', () => {
     // Go to "Tuna" concept page in a vocab with lexical sorting
     cy.visit('/test-notation-sort/en/page/?uri=http%3A%2F%2Fwww.skosmos.skos%2Ftest%2Fta0111')
-    // First and second concepts in hierarchy should be sorted by notation codes in lexical order
-    cy.get('#hierarchy-list .list-group-item').eq(1).find('.concept-notation').invoke('text').should('equal', '33.01')
-    cy.get('#hierarchy-list .list-group-item').eq(2).find('.concept-notation').invoke('text').should('equal', '33.02')
+    // 4th and 5th concepts in hierarchy should be sorted by notation codes in lexical order (33.10 < 33.2)
+    cy.get('#hierarchy-list .list-group-item').eq(4).find('.concept-notation').invoke('text').should('equal', '33.10')
+    cy.get('#hierarchy-list .list-group-item').eq(5).find('.concept-notation').invoke('text').should('equal', '33.2')
   })
   it('Sorts concepts based on notation codes in natural order', () => {
     // Go to "Tuna" concept page in a vocab with natural sorting
     cy.visit('/testNotation/en/page/?uri=http%3A%2F%2Fwww.skosmos.skos%2Ftest%2Fta0111')
-    // First and second concepts in hierarchy should be sorted by notation codes in natural order
-    cy.get('#hierarchy-list .list-group-item').eq(1).find('.concept-notation').invoke('text').should('equal', '33.01')
-    cy.get('#hierarchy-list .list-group-item').eq(2).find('.concept-notation').invoke('text').should('equal', '33.1')
+    // 5th and 6th concepts in hierarchy should be sorted by notation codes in natural order (33.9 < 33.10)
+    cy.get('#hierarchy-list .list-group-item').eq(5).find('.concept-notation').invoke('text').should('equal', '33.9')
+    cy.get('#hierarchy-list .list-group-item').eq(6).find('.concept-notation').invoke('text').should('equal', '33.10')
   })
   // Check the correctness of Aria-labels (Sami language will be implemented later)
   it('Aria tags are correct for each language', () => {
