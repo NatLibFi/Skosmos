@@ -7,7 +7,7 @@ services:
       context: ./dockerfiles/jena-fuseki2-docker
       dockerfile: Dockerfile
       args:
-        JENA_VERSION: 4.8.0
+        JENA_VERSION: 5.3.0
     command: --config=/fuseki/skosmos.ttl
     environment:
       - JAVA_OPTIONS=-Xmx2g -Xms1g
