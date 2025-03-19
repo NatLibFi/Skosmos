@@ -39,13 +39,12 @@
   --font-size: 1em; /* same as the browser default font size, often 16px */
   --font-family: 'Public Sans', sans-serif;
   --font-family-heading: 'EB Garamond', serif;
-
-  font-family: var(--font-family);
-  font-size: var(--font-size);
 }
 
 body {
   color: var(--dark-color);
+  font-family: var(--font-family);
+  font-size: var(--font-size);
 }
 
 .bg-dark {
