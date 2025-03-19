@@ -87,4 +87,27 @@ describe('New and removed view', () => {
     // check that mappings have the right number of properties
     cy.get('.prop-mapping h2').should('have.length', 2)
   })
+  it('Has correct translations', () => {
+    // go to YSO vocab front page in English
+    cy.visit('/yso/en/')
+    // Click on changes tab
+    cy.get('#changes').click()
+    // Check that concepts have correct Aria labels
+    cy.get('#tab-changes').find('.sidebar-list li a').eq(0).should('have.attr', 'aria-label', 'Go to the concept page')
+
+    // go to YSO vocab front page in Finnish
+    cy.visit('/yso/fi/')
+    // Click on changes tab
+    cy.get('#changes').click()
+    // Check that concepts have correct Aria labels
+    cy.get('#tab-changes').find('.sidebar-list li a').eq(0).should('have.attr', 'aria-label', 'Mene käsitesivulle')
+
+    // go to YSO vocab front page in Swedish
+    cy.visit('/yso/sv/')
+    // Click on changes tab
+    cy.get('#changes').click()
+    // Check that concepts have correct Aria labels
+    cy.get('#tab-changes').find('.sidebar-list li a').eq(0).should('have.attr', 'aria-label', 'Gå till begreppssidan')
+
+  })  
 })

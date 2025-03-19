@@ -16,6 +16,9 @@ function startChangesApp () {
     computed: {
       loadingMessage () {
         return $t('Loading more items')
+      },
+      toConceptPageAriaMessage () {
+        return $t('Go to the concept page')
       }
     },
     provide () {
@@ -135,6 +138,7 @@ function startChangesApp () {
           :loading-concepts="loadingConcepts"
           :loading-more-concepts="loadingMoreConcepts"
           :loading-message="loadingMessage"
+          :to-concept-page-aria-message="toConceptPageAriaMessage"
           :list-style="listStyle"
           @select-concept="selectedConcept = $event"
           ref="tabChanges"
@@ -157,7 +161,7 @@ function startChangesApp () {
   })
 
   tabChangesApp.component('tab-changes', {
-    props: ['changedConcepts', 'selectedConcept', 'loadingConcepts', 'loadingMoreConcepts', 'loadingMessage', 'listStyle'],
+    props: ['changedConcepts', 'selectedConcept', 'loadingConcepts', 'loadingMoreConcepts', 'loadingMessage', 'toConceptPageAriaMessage', 'listStyle'],
     inject: ['partialPageLoad', 'getConceptURL'],
     emits: ['selectConcept'],
     methods: {
@@ -184,7 +188,7 @@ function startChangesApp () {
                   <a :class="{ 'selected': selectedConcept === concept.uri }"
                     :href="getConceptURL(concept.uri)"
                     @click="loadConcept($event, concept.uri)"
-                    aria-label="go to the concept page"
+                    :aria-label="toConceptPageAriaMessage"
                   >
                     <s>{{ concept.prefLabel }}</s>
                   </a>
@@ -192,7 +196,7 @@ function startChangesApp () {
                   <a :class="{ 'selected': selectedConcept === concept.replacedBy }"
                     :href="getConceptURL(concept.replacedBy)"
                     @click="loadConcept($event, concept.replacedBy)"
-                    aria-label="go to the concept page"
+                    :aria-label="toConceptPageAriaMessage"
                   >
                     {{ concept.replacingLabel }}
                   </a>
@@ -201,7 +205,7 @@ function startChangesApp () {
                   <a :class="{ 'selected': selectedConcept === concept.uri }"
                     :href="getConceptURL(concept.uri)"
                     @click="loadConcept($event, concept.uri)"
-                    aria-label="go to the concept page"
+                    :aria-label="toConceptPageAriaMessage"
                   >
                     {{ concept.prefLabel }}
                   </a>
