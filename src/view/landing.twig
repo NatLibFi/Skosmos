@@ -5,7 +5,7 @@
 {% block url %}{{ BaseHref }}{{ request.langurl }}{% endblock %}
 
 {% block content %}
-<div class="col-lg-7 mb-custom mb-lg-0">
+<div class="col-lg-7 mb-gutterwidth mb-lg-0">
   <div class="px-3 py-4 bg-medium" id="vocabulary-list">
     {% if request.vocabList|length == 0 %}
     <h2 class="fs-3 fw-bold">{{ "No vocabularies on the server!" | trans }}</h2>
@@ -29,7 +29,7 @@
   </div>
 </div>
 <div class="col-lg-5 d-flex flex-column">
-      <div class="bg-dark px-4 py-4 mb-custom text-light" id="welcome-box">
+      <div class="bg-dark px-4 py-4 mb-gutterwidth text-light" id="welcome-box">
         <h2 class="fw-bold fs-3 my-3">Welcome to the Skosmos browser demo</h2>
         <p class="fs-5">
         Skosmos is a web-based tool providing services for accessing controlled vocabularies, 

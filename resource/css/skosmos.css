@@ -376,8 +376,8 @@ body {
     --bs-gutter-x: 2rem;
   }
 
-  .mb-custom {
-    margin-bottom: 2rem;
+  .mb-gutterwidth {
+    margin-bottom: var(--bs-gutter-x);
   }
 
   /***** Main container landing page & landing page one vocab *****/
