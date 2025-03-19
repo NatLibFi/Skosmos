@@ -369,7 +369,6 @@ body {
   }
 
   #main-container h1 {
-    color: var(--dark-color);
     font-family: var(--font-family-heading);
     font-weight: bold;
   }
@@ -411,9 +410,6 @@ body {
 
   #vocabulary-list h2, #welcome-box h2, #vocab-info h2 {
     font-family: var(--font-family-heading) !important;
-  }
-  #vocabulary-list h2 {
-    color: var(--dark-color);
   }
   header > h2 > a {
     font-family: var(--font-family-heading) !important;
@@ -787,7 +783,6 @@ body {
   }
 
   .property {
-    color: var(--vocab-text);
     border-top: 1px solid var(--vocab-table-border);
     padding: .5rem 0;
   }
@@ -797,7 +792,6 @@ body {
   }
 
   .property-label h2 {
-    color: var(--dark-color);
     font-weight: bold;
     font-size: 1.2rem;
     margin-bottom: 0;
@@ -853,7 +847,6 @@ body {
   }
 
   #concept-property-label {
-    color: var(--dark-color);
     align-self: start;
     padding-top: 1.25rem;
   }
