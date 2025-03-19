@@ -62,15 +62,15 @@ body {
 /* Font awesome
  *****************************************/
   #main-container.landing #info-box .fa-arrow-right {
-    color: var(--info-box-arrow);
+    color: var(--secondary-dark-color);
   }
 
   #main-container.landing-one-vocab #info-box .fa-arrow-right {
-    color: var(--info-box-one-arrow);
+    color: var(--secondary-dark-color);
   }
 
   #vocab-box .fa-arrow-right {
-    color: var(--vocab-box-one-arrow);
+    color: var(--secondary-dark-color);
   }
 
   #main-container.vocab-home .fa-arrow-right, #main-container.concept .fa-arrow-right {
