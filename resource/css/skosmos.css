@@ -79,12 +79,12 @@ body {
     margin: 0 5px;
   }
 
-  #main-container.searchpage .fa-arrow-right, #main-container.global-search .fa-arrow-right {
+  #main-container.vocab-search .fa-arrow-right, #main-container.global-search .fa-arrow-right {
     color: var(--vocab-text);
     font-size: .85rem;
   }
 
-  #main-container.searchpage .list-group .fa-solid, #main-container.searchpage .list-group .fa-regular,
+  #main-container.vocab-search .list-group .fa-solid, #main-container.vocab-search .list-group .fa-regular,
   #main-container.global-search .list-group .fa-solid, #main-container.global-search .list-group .fa-regular {
     color: var(--vocab-text);
     font-size: 1.15rem;

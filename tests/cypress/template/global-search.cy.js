@@ -3,7 +3,7 @@ describe('Global search page', () => {
   it('Contains title and title metadata', () => {
       cy.visit(`/en/search?clang=en&q=${term}`)
 
-      const expectedTitle = "'bass' - Search results - Skosmos being tested"
+      const expectedTitle = "'bass' - Skosmos being tested"
       // check that the page has a HTML title
       cy.get('title').invoke('text').should('equal', expectedTitle)
       // check that the page has title metadata

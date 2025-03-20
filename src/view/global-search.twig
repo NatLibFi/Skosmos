@@ -1,6 +1,6 @@
 {% set pageType = 'global-search' %}
 {% extends "base-template.twig" %}
-{% block title %}'{{ term }}' - {{ "Search results" | trans }} - {{ GlobalConfig.serviceName }}{% endblock %}
+{% block title %}'{{ term }}' - {{ GlobalConfig.serviceName }}{% endblock %}
 {% block url %}{{ BaseHref }}{{ request.langurl }}{% endblock %}
 
 {% block content %}
