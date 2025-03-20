@@ -36,7 +36,7 @@
   --tooltip-border-color: var(--secondary-medium-color);
 
   /* Font definitions */
-  --font-size: 14px;
+  --font-size: 1em; /* same as the browser default font size, often 16px */
   --font-family: 'Public Sans', sans-serif;
   --font-family-heading: 'EB Garamond', serif;
 }
@@ -45,18 +45,6 @@ body {
   color: var(--dark-color);
   font-family: var(--font-family);
   font-size: var(--font-size);
-}
-
-.fs-1 {
-  font-size: 4.25em !important;
-}
-
-.fs-2 {
-  font-size: 3.25em !important;
-}
-
-.fs-3 {
-  font-size: 2.75em !important;
 }
 
 .bg-dark {
@@ -74,38 +62,38 @@ body {
 /* Font awesome
  *****************************************/
   #main-container.landing #info-box .fa-arrow-right {
-    color: var(--info-box-arrow);
+    color: var(--secondary-dark-color);
   }
 
   #main-container.landing-one-vocab #info-box .fa-arrow-right {
-    color: var(--info-box-one-arrow);
+    color: var(--secondary-dark-color);
   }
 
   #vocab-box .fa-arrow-right {
-    color: var(--vocab-box-one-arrow);
+    color: var(--secondary-dark-color);
   }
 
   #main-container.vocab-home .fa-arrow-right, #main-container.concept .fa-arrow-right {
     color: var(--vocab-text);
-    font-size: 12px;
+    font-size: .75rem;
     margin: 0 5px;
   }
 
   #main-container.vocab-search  .fa-arrow-right {
     color: var(--vocab-text);
-    font-size: 12px;
+    font-size: .85rem;
   }
 
   #main-container.vocab-search .list-group .fa-solid, #main-container.vocab-search  .list-group .fa-regular {
     color: var(--vocab-text);
-    font-size: 16px;
+    font-size: 1.15rem;
     width: 20px;
     text-align: center;
   }
 
   .fa-magnifying-glass {
     color: var(--search-button-text);
-    font-size: 22px;
+    font-size: 1.6rem;
     margin: calc((38px - 22px) / 2 ) 0; /* (button height - font height) / 2 */
   }
 
@@ -172,7 +160,7 @@ body {
   /* Headerbar
    *****************************************/
   #headerbar.landing, #headerbar.landing-one-vocab {
-    color: var(--headerbar-text-1);
+    color: var(--dark-color);
   }
 
   #headerbar.vocab-home, #headerbar.concept {
@@ -182,20 +170,23 @@ body {
   #skosmos-logo {
     background-image: url(../pics/skosmos-RGB.svg);
     background-repeat: no-repeat;
-    background-position: -20px -20px;
-    width: 400px;
-    height: 110px;
-    background-size: 400px;
+    background-position: -8px -15px;
+    width: 300px;
+    height: 80px;
+    background-size: 300px;
+  }
+
+  #vocab-title {
+    font-size: 2.5rem;
   }
 
   #vocab-title a {
-    color: var(--headerbar-text-2);
+    color: var(--vocab-text);
     font-family: var(--font-family-heading);
-    text-decoration: none;
   }
 
   #search-multi-vocab-title {
-    color: var(--headerbar-text-2);
+    color: var(--vocab-text);
     font-family: var(--font-family-heading);
   }
 
@@ -204,7 +195,7 @@ body {
   }
 
   #search-wrapper {
-    color: var(--headerbar-text-2);
+    color: var(--vocab-text);
     float: right;
     height: 3.5em;
 }
@@ -215,7 +206,7 @@ body {
 
   #search-wrapper button.dropdown-toggle {
     background-color: var(--search-bg);
-    color: var(--headerbar-text-2);
+    color: var(--vocab-text);
     border: 1px solid var(--search-border);
     border-radius: 0;
     padding-left: 1rem;
@@ -234,7 +225,7 @@ body {
   #search-wrapper #language-list {
     inset: -3px auto auto 0px !important;
     background-color: var(--search-bg);
-    color: var(--headerbar-text-2);
+    color: var(--vocab-text);
     border: 1px solid var(--search-border);
     border-radius: 0;
   }
@@ -250,7 +241,7 @@ body {
   }
 
   #search-wrapper .form-check-input:checked {
-    background-color: var(--headerbar-text-2);
+    background-color: var(--vocab-text);
   }
 
   #search-wrapper input {
@@ -272,7 +263,7 @@ body {
   #search-wrapper .dropdown-menu {
     transform: translateY(-1px);
     background-color: var(--search-dropdown-bg);
-    color: var(--headerbar-text-2);
+    color: var(--vocab-text);
     border: 1px solid var(--search-border);
     border-radius: 0;
   }
@@ -362,7 +353,7 @@ body {
     height: 40px;
     width: 40px;
     padding: 0;
-    font-size: 20px;
+    font-size: 1.4rem;
     z-index: 5;
   }
 
@@ -373,8 +364,7 @@ body {
   }
 
   #main-container {
-    padding-top: 2.75rem;
-    font-size: 1rem;
+    padding-top: 2.4rem;
   }
 
   #main-container h1 {
@@ -383,10 +373,14 @@ body {
   }
 
   #main-container-row {
-    --bs-gutter-x: 2.25rem;
+    --bs-gutter-x: 2rem;
   }
 
-  /***** Main container langing page & landing page one vocab *****/
+  .mb-gutterwidth {
+    margin-bottom: var(--bs-gutter-x);
+  }
+
+  /***** Main container landing page & landing page one vocab *****/
   #background.landing, #background.landing-one-vocab {
     background-color: var(--main-bg-1);
     background-image: var(--landing-stripes-1);
@@ -400,6 +394,7 @@ body {
     background-repeat: no-repeat;
     background-size: 650px;
     background-position: -41px calc(100% + 55px);
+    padding-top: 0;
   }
 
   #vocab-box, #welcome-box, #info-box {
@@ -438,11 +433,12 @@ body {
   }
 
   .vocab-category a {
-    /** color: var(--secondary-medium-color) solid; **/
     color: var(--vocab-link);
     font-weight: bold;
-    text-decoration: underline ;
+    text-decoration: underline;
     text-decoration-thickness: 1px;
+    text-decoration-color: var(--secondary-medium-color);
+    text-underline-offset: 0.3rem;
   }
 
   #main-container.landing #vocab-box h2 {
@@ -456,9 +452,6 @@ body {
 
   #main-container.landing #info-box {
     background-color: var(--info-box-bg);
-    height: 100%;
-    display: flex;
-    flex-direction: column;
     justify-content: center;
   }
 
@@ -614,7 +607,7 @@ body {
   /*** sidebar changes tab ***/
   #tab-changes .sidebar-list h2 {
     color: var(--vocab-text);
-    font-size: 20px;
+    font-size: 1.4rem;
     font-weight: bold;
     margin: 0;
   }
@@ -693,7 +686,7 @@ body {
 
   #tab-groups .sidebar-list .list-group-item .concept-label i {
     color: var(--dark-color);
-    font-size: 14px;
+    font-size: 1rem;
   }
 
   .hierarchy-button {
@@ -701,7 +694,7 @@ body {
     color: var(--vocab-text);
     border: none;
     padding: 0;
-    font-size: 10px;
+    font-size: 0.7rem;
   }
 
   .hierarchy-button:hover, .hierarchy-button:active {
@@ -714,7 +707,7 @@ body {
     left: 11px;
     top: 7px;
     z-index: 1;
-    font-size: 12px;
+    font-size: .85rem;
   }
 
   .hierarchy-button img {
@@ -761,7 +754,7 @@ body {
   .select-wrapper::after { /* Also used in feedback form */
     color: var(--vocab-text);
     content: '﹀';
-    font-size: 20px;
+    font-size: 1.4rem;
     position: absolute;
     top: 10px;
     right: 10px;
@@ -800,7 +793,7 @@ body {
 
   .property-label h2 {
     font-weight: bold;
-    font-size: 20px !important;
+    font-size: 1.2rem;
     margin-bottom: 0;
     display: inline;
   }
@@ -849,7 +842,7 @@ body {
   }
 
   nav#concept-breadcrumbs .breadcrumb-current {
-    color: black;
+    color: var(--dark-color);
     font-weight: normal;
   }
 
@@ -864,7 +857,7 @@ body {
 
   #copy-preflabel, #copy-notation {
     color: var(--vocab-text);
-    font-size: 30px;
+    font-size: 2.1rem;
     position: relative;
     bottom: 10px;
     left: 5px;
@@ -1062,7 +1055,7 @@ body {
  /* About page
    *****************************************/
   #about-content a {
-    font-size: 1.0em;
+    font-size: 1.0rem;
     color: var(--vocab-link);
     text-decoration: underline var(--secondary-medium-color) solid;
     font-weight: 700;
@@ -1073,7 +1066,7 @@ body {
   }
 
   .vocab-statistics > h3 {
-    font-size: 20px !important;
+    font-size: 1.4rem;
   }
 
 /* Tooltips */

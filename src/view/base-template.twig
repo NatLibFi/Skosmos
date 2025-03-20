@@ -80,9 +80,9 @@
       <div class="row">
         <div class="col-7">
           {% if pageType == 'vocab-home' %}
-            <h1 class="fs-2 fw-bold text-decoration-none" id="vocab-title"><a class="text-decoration-none" href="{% if request.vocabid != '' %}{{ request.vocabid  }}/{% endif %}{{ request.lang }}/{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{{ request.vocab.title(request.contentLang) }}</a></h1>
+            <h1 class="fw-bold" id="vocab-title"><a class="text-decoration-none" href="{% if request.vocabid != '' %}{{ request.vocabid  }}/{% endif %}{{ request.lang }}/{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{{ request.vocab.title(request.contentLang) }}</a></h1>
           {% else%}
-            <h2 class="fs-2 fw-bold text-decoration-none" id="vocab-title"><a class="text-decoration-none" href="{% if request.vocabid != '' %}{{ request.vocabid  }}/{% endif %}{{ request.lang }}/{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{{ request.vocab.title(request.contentLang) }}</a></h2>
+            <h2 class="fw-bold" id="vocab-title"><a class="text-decoration-none" href="{% if request.vocabid != '' %}{{ request.vocabid  }}/{% endif %}{{ request.lang }}/{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{{ request.vocab.title(request.contentLang) }}</a></h2>
           {% endif %}
         </div>
         <div class="col-5">
@@ -107,16 +107,17 @@
   <footer class="bg-white pb-5 mt-5">
     <div class="container py-5">
       <div class="row">
-        <div class="col-md-7 pe-5">
-          <p class="fs-5">
+        <div class="col-md-5 pe-5">
+          <p class="fs-6">
                     Skosmos is a web-based tool providing services for accessing controlled vocabularies,
                     which are used by indexers describing documents and searchers looking
                     for suitable keywords. Vocabularies are accessed via SPARQL endpoints containing SKOS vocabularies.
           </p>
         </div>
+        <div class="col-md-2"></div>
         <div class="col-md-5 px-3">
-          <span class="fs-5 fw-bold">{{ "Contact us!" | trans }}</span>
-          <p class="fs-5">Yhteystiedot?<p>
+          <span class="fs-6 fw-bold">{{ "Contact us!" | trans }}</span>
+          <p class="fs-6">Yhteystiedot?<p>
         </div>
       </div>
     </div>
