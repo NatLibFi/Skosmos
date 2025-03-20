@@ -59,11 +59,12 @@
   {%~ if foreignLabels ~%}
   <li class="list-group-item px-0 py-1">
     <span class="skosmos-tooltip" data-title="foreign prefLabel help"><i class="property-hover fa-solid fa-globe"></i>&nbsp;</span>
-    {%-  for langstring, labels in foreignLabels  ~%}
-      {%~ for label in labels.prefLabel|default([])|merge(labels.altLabel|default([])) ~%}
-    <span class="{% if label.type == 'skos:prefLabel' %}prefLabel{% elseif label.type == 'skos:altLabel' %}altLabel{% endif %} proplabel">{{ label }}</span>{%~ if label.lang %} ({{ label.lang }}){% endif ~%}{%- if not loop.last %}, {%- endif -%}
+    {%-  for langstring, labels in foreignLabels -%}
+      {%- for label in labels.prefLabel|default([])|merge(labels.altLabel|default([])) -%}
+    <span class="{% if label.type == 'skos:prefLabel' %}prefLabel{% elseif label.type == 'skos:altLabel' %}altLabel{% endif %} proplabel">{{ label }}</span>
+        {%- if label.lang %} ({{ label.lang }}){% endif %}{% if not loop.last %}, {% endif -%}
       {%~ endfor ~%}
-      {%- if not loop.last -%}, {%- endif -%}
+      {%- if not loop.last %}, {% endif -%}
     {%~ endfor ~%}
   </li>
 {% endif ~%}
@@ -75,23 +76,24 @@
       {%~ if property.type in concept.vocab.config.additionalSearchProperties ~%}
       <li class="list-group-item px-0 py-1">
         <span class="skosmos-tooltip" data-title="{{ property.type }}">
-          <i class="property-hover fa-solid fa-globe"></i>&nbsp;
-        </span>
-          {%- for propval in property.values -%}{# loop through ConceptMappingPropertyValue objects #}{%- if propval.exVocab -%}<span class="redirected-vocab-id prefLabel">{{ propval.exVocab.shortName }}: </span>{%- endif -%}{{ propval.label(request.contentLang) }}
-            {%- if propval.label(request.contentLang).lang != request.contentLang -%} ({{ propval.label(request.contentLang).lang }}){%- endif -%}{%- if not loop.last -%}, {%- endif -%}
+          <i class="property-hover fa-solid fa-globe"></i>&nbsp;</span>
+          {%- for propval in property.values %}
+            {#- loop through ConceptMappingPropertyValue objects -#}
+            {%- if propval.exVocab -%}<span class="redirected-vocab-id prefLabel">{{ propval.exVocab.shortName }}: </span>{% endif %}{{ propval.label(request.contentLang) }}
+            {%- if propval.label(request.contentLang).lang != request.contentLang ~%} ({{ propval.label(request.contentLang).lang }}){%- endif -%}{%- if not loop.last %}, {% endif -%}
           {% endfor %}
       </li>
       {%~ endif ~%}
     {%~ endfor ~%}
   {%~ endif ~%}
 {%~ endif -%}
-{%- for property in conceptProperties ~%}{# loop through ConceptProperty objects #}{%- if property.type == 'rdf:type' ~%}
+{%- for property in conceptProperties ~%}
+  {#- loop through ConceptProperty objects -#}
+  {%- if property.type == 'rdf:type' ~%}
   <li class="list-group-item px-0 py-1">
     <span class="skosmos-tooltip" data-title="concept_types">
-      <i class="property-hover fa-solid fa-arrows-to-circle"></i>&nbsp;
-    </span>
-    {%- for propval in property.values %}{{ propval.label | trans }}{%- if not loop.last -%}, {%- endif -%}{% endfor %}
-
+      <i class="property-hover fa-solid fa-arrows-to-circle"></i>&nbsp;</span>
+    {%- for propval in property.values %}{{ propval.label | trans }}{% if not loop.last %}, {% endif %}{% endfor -%}
   </li>
   {%~ endif -%}
 {%~ endfor -%}
