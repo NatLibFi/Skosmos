@@ -384,7 +384,7 @@ class WebController extends Controller
                 'rest' => $parameters->getOffset() > 0,
                 'global_search' => true,
                 'search_failed' => $errored,
-                'term' => $request->getQueryParamRaw('q'),
+                'term' => $request->getQueryParamRaw('query'),
                 'lang_list' => $langList,
                 'vocabs' => str_replace(' ', '+', $vocabs),
                 'vocab_list' => $vocabList,
