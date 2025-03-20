@@ -27,7 +27,7 @@ describe('Global search page', () => {
   })
   it('Contains correct amount of search results ', () => {
       const count = 1;
-      const searchCountTitle = `${count} results for \'${term}\'`;
+      const searchCountTitle = `${count} results for '${term}'`;
       cy.visit(`/en/search?clang=en&q=${term}`)
 
       //Check that the search count is correct
