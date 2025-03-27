@@ -106,19 +106,9 @@
     skosmos:showTopConcepts true ;
     skosmos:fullAlphabeticalIndex true ;
     skosmos:groupClass isothes:ConceptGroup ;
-    void:sparqlEndpoint <http://10.208.58.26:3030/skosmos/sparql> ;
+    void:sparqlEndpoint <http://localhost:3030/skosmos/sparql> ;
     skosmos:sparqlGraph <http://skos.um.es/unescothes/> .
  
-:stw a skosmos:Vocabulary, void:Dataset ;
-    dc:title "STW Thesaurus for Economics"@en ;
-    skosmos:shortName "STW";
-    dc:subject :cat_general ;
-    void:uriSpace "http://zbw.eu/stw/";
-    skosmos:language "en", "de";
-    skosmos:defaultLanguage "de";
-    void:sparqlEndpoint <http://10.208.58.26:3030/skosmos/sparql> ;
-    skosmos:sparqlGraph <http://zbw.eu/stw/> .
-
 :ysa a skosmos:Vocabulary, void:Dataset ;
     dc:title "YSA - Yleinen suomalainen asiasanasto"@fi,
         "YSA - Allmän tesaurus på finska"@sv,
