@@ -6,8 +6,34 @@
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/NatLibFi/Skosmos.svg)](http://isitmaintained.com/project/NatLibFi/Skosmos "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/NatLibFi/Skosmos.svg)](http://isitmaintained.com/project/NatLibFi/Skosmos "Percentage of issues still open")
 
-# Skosmos
+# Introduction
+This project is aimed at making reports that have been converted to Linked Open Data based on the [IPBES ontology](https://github.com/IPBES-Data/IPBES_Ontology) accessible and searchable from a central server. The reports have been converted by the IPBES data management task force.
 
+The project has 2 functions
+1. Vocabulary: The project allows navigating and visualising the vocabularies used in the production of IPBES assessment reports and other IPBES products using Simple Knowledge Organization System (SKOS). SKOS is a W3C recommendation designed for representation of thesauri, classification schemes, taxonomies, subject-heading systems, or any other type of structured controlled vocabulary. 
+2. Representation of IPBES assessment reports in Linked Open Data: The project applies the SKOS vocabularies to represent IPBES assessment reports that have been converted in linked open data with their structure of chapters, references, authors, knowledge gaps and background messages and other features described in the IPBES ontology.
+
+
+# Installation
+Instructions on how to set up a similar server can be found on [Set up instructions](https://github.com/NatLibFi/Skosmos/wiki/InstallTutorial). You will need to Ccnfigure cache to improve performance. Instructions on how to improve cache can be found on the same set up page.
+
+# Loading data using the Fuseki web interface
+For Vocabularies: Go to the Fuseki web interface (http://localhost:3030/#/), click on "datasets" tab at the top and click on "add data", enter "Dataset graph name" as http://ontology.ipbes.net/ipbes/, click on "select files", browse your computer to upload .ttl file "sample.ttl" and click on "upload now".
+For Linked Open Data: Go to the Fuseki web interface (http://localhost:3030/#/), click on "manage" tab at the top and click on "new dataset", enter "Dataset name" as 3 letter assessment abbreviation in small letters e.g. "ias", check Dataset type as "Persistent (TDB2) – dataset will persist across Fuseki restarts", click "create dataset". Once dataset is created you can upload .ttl file by clicking on "add data" then browse your computer to upload .ttl file and click on "upload now".
+
+# Deleting data using the Fuseki web interface
+Go to the Fuseki web interface (http://localhost:3030/#/), click on "manage" tab at the top and select "remove". You may need to restart apache for changes to be applied
+
+# View Data
+Vocabularies can be viewed on http://localhost/Skosmos and clicking on specific Categories that have been made available after configuring config.ttl
+Linked Open Data can be viewed on files uploaded under www e.g. http://localhost/Skosmos/www/ias.php
+
+# Housekeeping
+Upload all datasets to _dataset
+1. vocabularies: short descriptive name in small letters e.g. glossary.ttl, ontology.ttl, ipbes.ttl
+2. Linked open data: name them using 3 letter assessment abbreviation in small letters e.g. ias.ttl 
+
+# Skosmos
 Skosmos is a web-based tool providing services for accessing controlled
 vocabularies, which are used by indexers describing documents and searchers
 looking for suitable keywords. Vocabularies are accessed via SPARQL

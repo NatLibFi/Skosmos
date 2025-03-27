@@ -18,7 +18,7 @@
 :config a skosmos:Configuration ;
     # SPARQL endpoint
     # a local Fuseki server is usually on localhost:3030
-    skosmos:sparqlEndpoint <http://10.208.58.26:3030/ds/sparql> ;
+    skosmos:sparqlEndpoint <http://localhost:3030/ds/sparql> ;
     # use the dev.finto.fi endpoint where the example vocabularies reside
     # skosmos:sparqlEndpoint <http://api.dev.finto.fi/sparql> ;
     # sparql-query extension, or "Generic" for plain SPARQL 1.1
@@ -32,7 +32,7 @@
     # customize the service name
     skosmos:serviceName "Skosmos" ;
     # customize the base element. Set this if the automatic base url detection doesn't work. For example setups behind a proxy.
-    skosmos:baseHref "http://10.208.58.26/Skosmos/" ;
+    skosmos:baseHref "http://localhost/Skosmos/" ;
     # interface languages available, and the corresponding system locales
     skosmos:languages (
 	
