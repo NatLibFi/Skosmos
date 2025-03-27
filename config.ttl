@@ -84,7 +84,7 @@
 
 :ipbes a skosmos:Vocabulary, void:Dataset ;
     dc:title "IPBES Ontology"@en ;
-    skosmos:shortName "IPBES";
+    skosmos:shortName "IPBES ontology";
     dc:subject :cat_general ;
     void:uriSpace "http://ontology.ipbes.net/report/";
     skosmos:language "en";
@@ -94,6 +94,7 @@
     skosmos:groupClass isothes:ConceptGroup ;
     void:sparqlEndpoint <http://10.208.58.26:3030/skosmos/sparql> ;
     skosmos:sparqlGraph <http://ontology.ipbes.net/report/> .
+
 
 :unesco a skosmos:Vocabulary, void:Dataset ;
     dc:title "UNESCO Thesaurus"@en ;
