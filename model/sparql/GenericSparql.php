@@ -2278,15 +2278,16 @@ EOQ;
      * @param int $offset offset of results to retrieve; 0 for beginning of list
      * @param int $limit maximum number of results to return
      * @param boolean $showDeprecated whether to include deprecated concepts in the change list
+     * @param int $cutoffYears amount of years to consider past current date
      * @return string sparql query
      */
-    private function generateChangeListQuery($prop, $lang, $offset, $limit=200, $showDeprecated=false) {
+    private function generateChangeListQuery($prop, $lang, $offset, $limit=200, $showDeprecated=false, $cutoffYears=1) {
         $fcl = $this->generateFromClause();
         $offset = ($offset) ? 'OFFSET ' . $offset : '';
 
         // only consider concepts changed within 1 year from today
         $date = new DateTime();
-        $date->modify('-1 year');
+        $date->modify("-$cutoffYears year");
         $cutoffDate = $date->format('Y-m-d');
 
         //Additional clauses when deprecated concepts need to be included in the results
@@ -2382,10 +2383,11 @@ EOQ;
      * @param int $offset offset of results to retrieve; 0 for beginning of list
      * @param int $limit maximum number of results to return
      * @param boolean $showDeprecated whether to include deprecated concepts in the change list
+     * @param int $cutoffYears amount of years to consider past current date
      * @return array Result array
      */
-    public function queryChangeList($prop, $lang, $offset, $limit, $showDeprecated=false) {
-        $query = $this->generateChangeListQuery($prop, $lang, $offset, $limit, $showDeprecated);
+    public function queryChangeList($prop, $lang, $offset, $limit, $showDeprecated=false, $cutoffYears=1) {
+        $query = $this->generateChangeListQuery($prop, $lang, $offset, $limit, $showDeprecated, $cutoffYears);
 
         $result = $this->query($query);
         return $this->transformChangeListResults($result);
