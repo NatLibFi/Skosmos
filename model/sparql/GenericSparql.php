@@ -2284,6 +2284,11 @@ EOQ;
         $fcl = $this->generateFromClause();
         $offset = ($offset) ? 'OFFSET ' . $offset : '';
 
+        // only consider concepts changed within 1 year from today
+        $date = new DateTime();
+        $date->modify('-1 year');
+        $cutoffDate = $date->format('Y-m-d');
+
         //Additional clauses when deprecated concepts need to be included in the results
         $deprecatedOptions = '';
         $deprecatedVars = '';
@@ -2291,16 +2296,17 @@ EOQ;
             $deprecatedVars = '?replacedBy ?deprecated ?replacingLabel';
             $deprecatedOptions = <<<EOQ
 UNION {
-    ?concept owl:deprecated True; dc:modified ?date2 .
-    BIND(True as ?deprecated)
-    BIND(COALESCE(?date2, ?date) AS ?date)
+  ?concept owl:deprecated True;
+           dc:modified ?date .
+  FILTER (?date >= "$cutoffDate"^^xsd:date)
+  BIND(True as ?deprecated)
+  OPTIONAL {
+    ?concept dc:isReplacedBy ?replacedBy .
     OPTIONAL {
-        ?concept dc:isReplacedBy ?replacedBy .
-        OPTIONAL {
-            ?replacedBy skos:prefLabel ?replacingLabel .
-            FILTER (langMatches(lang(?replacingLabel), '$lang'))
-        }
+      ?replacedBy skos:prefLabel ?replacingLabel .
+      FILTER (langMatches(lang(?replacingLabel), 'fi'))
     }
+  }
 }
 EOQ;
         }
@@ -2308,14 +2314,20 @@ EOQ;
         $query = <<<EOQ
 SELECT ?concept ?date ?label $deprecatedVars $fcl
 WHERE {
-    ?concept a skos:Concept ;
-    skos:prefLabel ?label .
-    FILTER (langMatches(lang(?label), '$lang'))
-    {
-        ?concept $prop ?date .
-        MINUS { ?concept owl:deprecated True . }
+  {
+    SELECT * WHERE {
+      {
+        ?concept dc:created ?date .
+        FILTER (?date >= "$cutoffDate"^^xsd:date)
+        FILTER NOT EXISTS {
+          ?concept owl:deprecated True .
+        }
+      } $deprecatedOptions
     }
-    $deprecatedOptions
+  }
+  ?concept a skos:Concept .
+  ?concept skos:prefLabel ?label .
+  FILTER (langMatches(lang(?label), 'fi'))
 }
 ORDER BY DESC(YEAR(?date)) DESC(MONTH(?date)) LCASE(?label) DESC(?concept)
 LIMIT $limit $offset
