@@ -610,10 +610,10 @@ class VocabularyConfig extends BaseConfig
     public function getId()
     {
         $uriparts = explode("#", $this->resource->getURI());
-        if (count($uriparts) != 1)
+        if (count($uriparts) > 1)
         // hash namespace
         {
-            return $uriparts[1];
+            return $uriparts[count($uriparts) - 1];
         }
 
         // slash namespace
