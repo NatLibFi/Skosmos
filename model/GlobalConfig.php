@@ -403,4 +403,12 @@ class GlobalConfig extends BaseConfig {
     {
         return $this->getBoolean('skosmos:sparqlCollationEnabled', FALSE);
     }
+
+    /**
+     * @return boolean
+     */
+    public function getDefaultGraphOnly()
+    {
+        return $this->getBoolean('skosmos:defaultGraphOnly', FALSE);
+    }
 }
