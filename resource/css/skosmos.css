@@ -79,15 +79,16 @@ body {
     margin: 0 5px;
   }
 
-  #main-container.vocab-search  .fa-arrow-right {
+  #main-container.vocab-search .fa-arrow-right, #main-container.global-search .fa-arrow-right {
     color: var(--vocab-text);
     font-size: .85rem;
   }
 
-  #main-container.vocab-search .list-group .fa-solid, #main-container.vocab-search  .list-group .fa-regular {
+  #main-container.vocab-search .list-group .fa-solid, #main-container.vocab-search .list-group .fa-regular,
+  #main-container.global-search .list-group .fa-solid, #main-container.global-search .list-group .fa-regular {
     color: var(--vocab-text);
     font-size: 1.15rem;
-    width: 20px;
+    width: 1.5rem;
     text-align: center;
   }
 
@@ -188,10 +189,6 @@ body {
   #search-multi-vocab-title {
     color: var(--vocab-text);
     font-family: var(--font-family-heading);
-  }
-
-  #search-multi-vocab {
-    width: 800px;
   }
 
   #search-wrapper {
@@ -480,11 +477,11 @@ body {
   }
 
   /***** Main container vocab-home & concept & vocab-search pages *****/
-  #main-container.vocab-home, #main-container.concept, #main-container.vocab-search  {
+  #main-container.vocab-home, #main-container.concept, #main-container.vocab-search,  #main-container.global-search  {
     background-color: var(--main-bg-2);
   }
 
-  #main-container.vocab-home a, #main-container.concept a, #main-container.vocab-search a {
+  #main-container.vocab-home a, #main-container.concept a, #main-container.vocab-search a, #main-container.global-search a {
     color: var(--vocab-link);
     text-decoration: none;
     font-weight: bold;
@@ -910,6 +907,8 @@ body {
   .search-result-term a {
     font-family: var(--font-family-heading);
     text-decoration: none;
+    font-size: 1.5rem;
+
   }
 
   .search-result .list-group-item {
