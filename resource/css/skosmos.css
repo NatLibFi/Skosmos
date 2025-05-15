@@ -356,7 +356,7 @@ body {
 
   /* Main container
    *****************************************/
-  .container {
+  .vocab-home .container, .concept .container, .vocab-search .container {
     max-width: 1460px !important;
   }
 
