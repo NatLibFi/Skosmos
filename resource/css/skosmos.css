@@ -968,6 +968,10 @@ body {
     font-style: italic;  
   }
 
+  .search-result-term a {
+    font-size: 1.5rem;
+  }
+
   /***** Main container about & feedback pages *****/
   #main-container.about, #main-container.feedback {
     background-color: var(--main-bg-3);
