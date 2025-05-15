@@ -907,6 +907,8 @@ body {
   .search-result-term a {
     font-family: var(--font-family-heading);
     text-decoration: none;
+    font-size: 1.5rem;
+
   }
 
   .search-result .list-group-item {
@@ -962,10 +964,6 @@ body {
   
   .altLabel.proplabel {
     font-style: italic;  
-  }
-
-  .search-result-term a {
-    font-size: 1.5rem;
   }
 
   /***** Main container about & feedback pages *****/
