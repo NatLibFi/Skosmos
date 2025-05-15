@@ -88,7 +88,7 @@ body {
   #main-container.global-search .list-group .fa-solid, #main-container.global-search .list-group .fa-regular {
     color: var(--vocab-text);
     font-size: 1.15rem;
-    width: 20px;
+    width: 1.5rem;
     text-align: center;
   }
 
@@ -191,8 +191,8 @@ body {
     font-family: var(--font-family-heading);
   }
 
-  #search-multi-vocab {
-    width: 800px;
+  #global-search-wrapper {
+    max-width: 1200px;
   }
 
   #search-wrapper {
