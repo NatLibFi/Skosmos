@@ -648,7 +648,7 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     {
         $vocab = $this->model->getVocabulary('paramPluginOrderTest');
         $plugins = $vocab->getConfig()->getPluginArray();
-        $this->assertEquals(["plugin2", "Bravo", "plugin1", "alpha", "charlie", "test-plugin-vue", "test-plugin-vanilla-js", "imaginaryPlugin", "plugin3"], $plugins);
+        $this->assertEquals(["plugin2", "Bravo", "plugin1", "alpha", "charlie", "imaginaryPlugin", "plugin3"], $plugins);
     }
 
     /**

@@ -176,7 +176,7 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
 
     public function testGetGlobalPlugins()
     {
-        $this->assertEquals(["alpha", "Bravo", "charlie", "test-plugin-vue", "test-plugin-vanilla-js"], $this->config->getGlobalPlugins());
+        $this->assertEquals(["alpha", "Bravo", "charlie"], $this->config->getGlobalPlugins());
     }
 
     // --- tests for the exception paths

@@ -16,7 +16,7 @@ VANILLA_JS_PLUGIN = {
 
 document.addEventListener('DOMContentLoaded', function() {
   window.vanillaJSCallback = function(params) {
-    if (params.page == 'landing') {
+    if (params.page == 'vocab-home') {
       VANILLA_JS_PLUGIN.render()
     }
   }

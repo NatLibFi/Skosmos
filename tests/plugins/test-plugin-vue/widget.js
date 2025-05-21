@@ -21,7 +21,7 @@ VUE_PLUGIN = {
 
 document.addEventListener('DOMContentLoaded', function() {
   window.vueCallback = function(params) {
-    if (params.page == 'landing') {
+    if (params.page == 'vocab-home') {
       VUE_PLUGIN.render()
     }
   }
