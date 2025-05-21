@@ -1,5 +1,5 @@
 const makeCallbacks = () => {
-  const newPage = window.SKOSMOS.page || 'page'
+  const newPage = window.SKOSMOS.pageType
   const newUri = window.SKOSMOS.uri
   const newPrefs = window.SKOSMOS.prefLabels
   const ldJsonScript = document.querySelector('script[type="application/ld+json"]')

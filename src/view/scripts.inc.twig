@@ -29,7 +29,7 @@ window.SKOSMOS = {
   "explicitLangCodes": {{ explicit_langcodes ? "true" : "false" }},
   "lang": "{{ request.lang }}",
   "vocab": "{{ request.vocabid }}",
-  "page": "{{ request.page }}",
+  "pageType": "{{ pageType }}",
   "waypoint_results": {{ parameters ? parameters.searchLimit : "null" }},
   {%- if request.page == "page" and concept %}
   "prefLabels": [{"lang": "{{ concept.label.lang }}","label": "{{ concept.label }}"}{% for lang in concept.foreignLabels %}{% for literal in lang %}{% if literal.type == "skos:prefLabel" %},{"lang": "{{literal.lang}}", "label": "{{literal.label}}"}{% endif %}{% endfor %}{% endfor %}],
