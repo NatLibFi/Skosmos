@@ -256,12 +256,16 @@ body {
   }
 
   #search-wrapper button.dropdown-toggle {
-    background-color: var(--search-bg);
     color: var(--vocab-text);
     border: 1px solid var(--search-border);
     border-radius: 0;
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+
+
+  #search-wrapper button.dropdown-toggle:hover, #search-wrapper button.dropdown-toggle.show {
+    background-color: var(--medium-color);
   }
 
   #search-wrapper button.dropdown-toggle i {
@@ -275,20 +279,16 @@ body {
 
   #search-wrapper #language-list, #search-wrapper #vocab-list {
     inset: -2px auto auto 0px !important;
-    background-color: var(--search-bg);
+    background-color: var(--search-dropdown-bg);
     color: var(--vocab-text);
     border: 0;
+    width: max-content;
+    list-style: none;
   }
 
   #search-wrapper #language-list li a:hover, #search-wrapper #language-list li a:active {
   color: var(--search-dropdown-toggle-hover-text);
     background-color: var(--search-dropdown-toggle-hover-bg);
-  }
-
-  #search-wrapper #vocab-list {
-    width: max-content;
-    background-color: white;
-    list-style: none;
   }
 
   #search-wrapper .form-check-input {
