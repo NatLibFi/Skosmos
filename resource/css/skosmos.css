@@ -286,6 +286,12 @@ body {
     background-color: var(--search-dropdown-toggle-hover-bg);
   }
 
+  #search-wrapper #vocab-list {
+    width: max-content;
+    background-color: white;
+    list-style: none;
+  }
+
   #search-wrapper .form-check-input {
     background-color: var(--search-bg);
     border-radius: 0;
