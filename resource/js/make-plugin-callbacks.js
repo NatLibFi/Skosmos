@@ -18,10 +18,12 @@ const makeCallbacks = () => {
   }
 }
 
+// Make callbacks on page load
 document.addEventListener('DOMContentLoaded', () => {
   makeCallbacks()
 })
 
+// Make callbacks on partial page load
 document.addEventListener('loadConceptPage', () => {
   makeCallbacks()
 })
