@@ -71,7 +71,7 @@
     # default time a user must wait before submitting a form
     skosmos:uiHoneypotTime 2 ;
     # plugins to activate for the whole installation (including all vocabularies)
-    skosmos:globalPlugins ("alpha" "Bravo" "charlie") .
+    skosmos:globalPlugins ("alpha" "Bravo" "charlie" "test-plugin-vue" "test-plugin-vanilla-js") .
 
 # Skosmos vocabularies
 
