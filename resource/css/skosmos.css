@@ -273,12 +273,11 @@ body {
     display: none !important;
   }
 
-  #search-wrapper #language-list {
-    inset: -3px auto auto 0px !important;
+  #search-wrapper #language-list, #search-wrapper #vocab-list {
+    inset: -2px auto auto 0px !important;
     background-color: var(--search-bg);
     color: var(--vocab-text);
-    border: 1px solid var(--search-border);
-    border-radius: 0;
+    border: 0;
   }
 
   #search-wrapper #language-list li a:hover, #search-wrapper #language-list li a:active {
