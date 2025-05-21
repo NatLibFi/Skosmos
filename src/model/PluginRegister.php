@@ -21,11 +21,11 @@ class PluginRegister
     protected function getPlugins()
     {
         $plugins = array();
-        $pluginconfs = glob('plugins/*/plugin.json');
+        $pluginconfs = glob('../plugins/*/plugin.json');
         foreach ($pluginconfs as $path) {
             $folder = explode('/', $path);
             if (file_exists($path)) {
-                $plugins[$folder[1]] = json_decode(file_get_contents($path), true);
+                $plugins[$folder[2]] = json_decode(file_get_contents($path), true);
             }
         }
         return $plugins;
@@ -141,7 +141,8 @@ class PluginRegister
         $templateStrings = array();
         $plugins = $this->getPluginsTemplates($names);
         foreach ($plugins as $folder => $templates) {
-            foreach ($templates as $path) {
+            foreach ($templates as $relativePath) {
+                $path = '../' . $relativePath;
                 if (file_exists($path)) {
                     $filename = explode('/', $path);
                     $filename = $filename[sizeof($filename) - 1];
