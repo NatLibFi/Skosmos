@@ -145,6 +145,7 @@ body {
     background-repeat: no-repeat;
     width: 168px;
     height: 60px;
+    display: inline-block;
   }
 
   #skosmos-logo-top h2 {
@@ -166,6 +167,11 @@ body {
 
   #headerbar.vocab-home, #headerbar.concept {
     background-color: var(--headerbar-vocab-bg);
+  }
+
+  header .container-fluid .row {
+    max-width: 1460px;
+    margin: 0 auto;
   }
 
   #skosmos-logo {
