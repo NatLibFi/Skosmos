@@ -3,12 +3,12 @@ const makeCallbacks = () => {
   const newUri = window.SKOSMOS.uri
   const newPrefs = window.SKOSMOS.prefLabels
   const ldJsonScript = document.querySelector('script[type="application/ld+json"]')
-  const embeddedJsonLd  = ldJsonScript ? JSON.parse(ldJsonScript.innerHTML) : {}
+  const embeddedJsonLd = ldJsonScript ? JSON.parse(ldJsonScript.innerHTML) : {}
 
-  const params = {'uri': newUri, 'prefLabels': newPrefs, 'page': newPage, 'json-ld': embeddedJsonLd}
+  const params = { uri: newUri, prefLabels: newPrefs, page: newPage, jsonLd: embeddedJsonLd }
 
   if (window.pluginCallbacks) {
-    for (let i in window.pluginCallbacks) {
+    for (const i in window.pluginCallbacks) {
       const fname = window.pluginCallbacks[i]
       const callback = window[fname]
       if (typeof callback === 'function') {
