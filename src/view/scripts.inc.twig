@@ -57,8 +57,9 @@ window.SKOSMOS = {
   },
   {%- endif -%}
   "baseHref": "{{ BaseHref }}",
-  "language_strings": { {% for lang in request.vocab.config.languages %}"{{ lang }}": "{{ mockup_translations[request.lang][lang] }}", {% endfor -%}
-  "all": "{{ mockup_translations[request.lang].all }}" }
+  "language_strings": { {%- if request.vocab ~%} {% for lang in request.vocab.config.languages %}"{{ lang }}": "{{ mockup_translations[request.lang][lang] }}", {% endfor -%}
+                        {% else %}{% for key, value in GlobalConfig.languages %}"{{ key }}": "{{ mockup_translations[request.lang][key] }}", {% endfor -%}{% endif %}
+                        "all": "{{ mockup_translations[request.lang].all }}" }
 }
 </script>
 
