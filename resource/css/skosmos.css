@@ -236,18 +236,19 @@ body {
     font-family: var(--font-family-heading);
     font-weight: bold;
     font-size: 2rem;
-    padding: 1rem;
   }
 
-  #global-search-bar .dropdown, #global-search-bar .form-group {
+  #global-search-bar .dropdown {
     display: inline-block;
   }
+
+
 
   #search-wrapper {
     float: right;
     display: flex;
     align-items: stretch;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
 }
 
   #search-wrapper select, #search-wrapper input, #search-wrapper button {
@@ -391,6 +392,14 @@ body {
     border-radius: 0;
     padding: 0;
     width: 3.5em;
+  }
+
+  #search-form {
+    width: auto;
+  }
+
+  #search-form span, #search-form button {
+    flex-wrap: nowrap;
   }
 
   #clear-button {

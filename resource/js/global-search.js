@@ -277,7 +277,7 @@ function startGlobalSearchApp () {
             </li>
           </ul>
         </div>
-        <div class="input-group">
+        <div class="input-group" id="search-form">
           <span id="headerbar-search" class="dropdown">
             <input type="search"
               class="form-control"
