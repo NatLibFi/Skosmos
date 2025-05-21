@@ -35,64 +35,71 @@
 <body class="{% if pageType =='landing' %}bg-white frontpage-logo{% else %}{% if pageType == 'concept' or pageType == 'vocab-home' %}bg-medium vocab-{{ request.vocabid }}{% else %}bg-light{% endif %}{% endif %}">
   <header>
     <a class="visually-hidden" id="skiptocontent" href="{{ request.langurl }}#maincontent">Skip to main</a>
-    <div class="container-fluid bg-dark d-flex my-auto py-3 px-4 text-bg-dark">
-      {% if request.vocabid == '' and request.page != 'about' and request.page != 'feedback' %}
-        <span class="fs-6 py-3 text-light">Yhteishaku sanastoista v</span>
-      {% else %}
-        <a id="skosmos-logo-top" href="{{ request.lang }}/{% if request.contentLang and request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}">
-          <h2 class="visually-hidden">Skosmos</h2>
-        </a>
-      {% endif %}
-      <ul class="nav nav-pills ms-auto my-auto text-light gx-3 py-3" id="topbar-nav">
-        <li class="nav-item">
-          <a href="{{ request.lang }}/{% if request.contentLang and request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}" id="navi1" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none" >
-                   <i class="fa-solid fa-house"></i>&nbsp;{{ "Vocabularies" | trans }}
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ request.lang }}/about{% if request.contentLang and request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}" id="navi2" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none">
-                   <i class="fa-solid fa-circle-info"></i>&nbsp;{{ "About" | trans }}
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{% if request.vocabid and vocab.title%}{{ request.vocabid }}/{% endif %}{{ request.lang }}/feedback{% if request.contentLang and request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}" id="navi3" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none">
-                   <i class="fa-solid fa-comment"></i>&nbsp;{{ "Feedback" | trans }}
-          </a>
-        </li>
-        {% if languages|length > 1 %}
-        {% for langcode, langdata in languages %}
-        {% if request.lang != langcode %}
-        <li class="nav-item language">
-          <a class="fs-6 text-light ms-3 text-decoration-none" id="language-{{ langcode }}" href="{{ request.langurl(langcode) }}"> {{ langdata.name }}</a>
-        </li>
-        {% endif %}
-        {% endfor %}
-        {% endif %}
-      </ul>
+    <div class="container-fluid bg-dark text-bg-dark">
+      <div class="row">
+        <div class="col-md-5">
+          {% if request.vocabid == '' and request.page != 'about' and request.page != 'feedback' %}
+            <span class="fs-6 py-3 text-light">Yhteishaku sanastoista v</span>
+          {% else %}
+            <a id="skosmos-logo-top" href="{{ request.lang }}/{% if request.contentLang and request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}">
+              <h2 class="visually-hidden">Skosmos</h2>
+            </a>
+          {% endif %}
+            </div>
+            <div class="col-md-7 text-end px-4">
+          <ul class="list-inline nav nav-pills d-flex justify-content-end ms-auto my-auto text-light gx-3 py-3" id="topbar-nav">
+            <li class="list-inline-item nav-item">
+              <a href="{{ request.lang }}/{% if request.contentLang and request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}" id="navi1" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none" >
+                       <i class="fa-solid fa-house"></i>&nbsp;{{ "Vocabularies" | trans }}
+              </a>
+            </li>
+            <li class="list-inline-item nav-item">
+              <a href="{{ request.lang }}/about{% if request.contentLang and request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}" id="navi2" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none">
+                       <i class="fa-solid fa-circle-info"></i>&nbsp;{{ "About" | trans }}
+              </a>
+            </li>
+            <li class="list-inline-item nav-item">
+              <a href="{% if request.vocabid and vocab.title%}{{ request.vocabid }}/{% endif %}{{ request.lang }}/feedback{% if request.contentLang and request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}{% if request.queryParam('anylang') == 'on' %}{% if request.contentLang == request.lang %}?{% else %}&{% endif %}anylang=on{% endif %}" id="navi3" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none">
+                       <i class="fa-solid fa-comment"></i>&nbsp;{{ "Feedback" | trans }}
+              </a>
+            </li>
+            {% if languages|length > 1 %}
+            {% for langcode, langdata in languages %}
+            {% if request.lang != langcode %}
+            <li class="list-inline-item nav-item language">
+              <a class="fs-6 text-light ms-3 text-decoration-none" id="language-{{ langcode }}" href="{{ request.langurl(langcode) }}"> {{ langdata.name }}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+          </ul>
+        </div>
+      </div>
     </div>
     {% if pageType == 'landing' or pageType == 'vocab-home' or pageType == 'concept' %}
-    <div id="headerbar-top-slot"></div>
-    <div class="container-fluid bg-white py-4 px-4" id="headerbar">
-      {% if pageType == 'landing' %}
-        <div id="skosmos-logo">
+    <div class="container-fluid bg-white py-4" id="headerbar">
+      <div id="headerbar-top-slot" class="row"></div>
+      <div class="row">
+        {% if pageType == 'landing' %}
+        <div class="col px-4" id="skosmos-logo">
           <h1 class="visually-hidden">Skosmos</h1>
         </div>
-      {% else %}
-      <div class="row">
-        <div class="col-7">
+        {% else %}
+        <div class="col-7 px-3">
           {% if pageType == 'vocab-home' %}
             <h1 class="fw-bold" id="vocab-title"><a class="text-decoration-none" href="{% if request.vocabid != '' %}{{ request.vocabid  }}/{% endif %}{{ request.lang }}/{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{{ request.vocab.title(request.contentLang) }}</a></h1>
-          {% else%}
+          {% else %}
             <h2 class="fw-bold" id="vocab-title"><a class="text-decoration-none" href="{% if request.vocabid != '' %}{{ request.vocabid  }}/{% endif %}{{ request.lang }}/{% if request.contentLang != request.lang %}?clang={{ request.contentLang }}{% endif %}">{{ request.vocab.title(request.contentLang) }}</a></h2>
           {% endif %}
         </div>
         <div class="col-5">
           <div id="search-vocab"></div>
         </div>
+        {% endif %}
       </div>
-      {% endif %}
+      <div id="headerbar-bottom-slot" class="row"></div>
     </div>
-    <div id="headerbar-bottom-slot"></div>
+    
     {% endif %}
   </header>
   <main id="main-container" class="{{pageType}}{% if list_style %} {{ list_style }}{% endif %}">
