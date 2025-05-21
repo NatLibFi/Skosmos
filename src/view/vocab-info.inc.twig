@@ -1,77 +1,81 @@
-<div class="col-md-8" id="main-content">
-  <div class="main-content-section py-4">
-    <h1 id="vocab-heading">{{ "Vocabulary information" | trans }}</h1>
-    {% set vocabInfo = vocab.info(request.contentLang) %}
-    {% if not vocabInfo %}
-    <div class="alert alert-danger" role="alert">
-        {{ "Error: Failed to retrieve vocabulary information!" | trans }}
-    </div>
-    {% else %}
+<div class="col-md-8">
+  <div id="main-content-top-slot"></div>
+  <div id="main-content">
+    <div class="main-content-section py-4">
+      <h1 id="vocab-heading">{{ "Vocabulary information" | trans }}</h1>
+      {% set vocabInfo = vocab.info(request.contentLang) %}
+      {% if not vocabInfo %}
+      <div class="alert alert-danger" role="alert">
+          {{ "Error: Failed to retrieve vocabulary information!" | trans }}
+      </div>
+      {% else %}
 
-    {% for key, values in vocabInfo %}
-    <div class="row property">
-      <div class="col-lg-4 ps-0 property-label"><h2>{{ key | trans }}</h2></div>
-      <div class="col-lg-8 gx-0 gx-lg-4 align-self-center property-value">
-        <ul class="align-bottom">
-          {% for val in values %}
-          <li>
-            {% if val.get('skosmos:vocab') %}
-            <a href="{{ val.uri | link_url(val.get('skosmos:vocab').value,request.lang,'page',request.contentLang) }}">{{ val.get('skosmos:label') }}</a>
-            {% elseif val.label %}
-            <a href="{{ val.uri }}">
-              {% if val.label(request.contentLang) %}{{ val.label(request.contentLang) }}
-              {% else %}{{ val.label }}
+      {% for key, values in vocabInfo %}
+      <div class="row property">
+        <div class="col-lg-4 ps-0 property-label"><h2>{{ key | trans }}</h2></div>
+        <div class="col-lg-8 gx-0 gx-lg-4 align-self-center property-value">
+          <ul class="align-bottom">
+            {% for val in values %}
+            <li>
+              {% if val.get('skosmos:vocab') %}
+              <a href="{{ val.uri | link_url(val.get('skosmos:vocab').value,request.lang,'page',request.contentLang) }}">{{ val.get('skosmos:label') }}</a>
+              {% elseif val.label %}
+              <a href="{{ val.uri }}">
+                {% if val.label(request.contentLang) %}{{ val.label(request.contentLang) }}
+                {% else %}{{ val.label }}
+                {% endif %}
+              </a>
+              {% elseif val matches '|^(https?://)|' %}<a href="{{ val }}">{{ val }}</a>
+              {% elseif val matches '|<\\w*\\b[^>]*>|' %}{{ val|raw|nl2br }}
+              {% else %}{{ val|nl2br }}
               {% endif %}
-            </a>
-            {% elseif val matches '|^(https?://)|' %}<a href="{{ val }}">{{ val }}</a>
-            {% elseif val matches '|<\\w*\\b[^>]*>|' %}{{ val|raw|nl2br }}
-            {% else %}{{ val|nl2br }}
-            {% endif %}
-          </li>
-          {% endfor %}
-        </ul>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
       </div>
-    </div>
-    {% endfor %}
+      {% endfor %}
 
-    {% endif %}
+      {% endif %}
 
-    {% if vocab.config.showStatistics %}
-    <div class="vocab-statistics">
-      <div id="resource-counts"></div>
-      <div id="term-counts"></div>
-    </div>
-    {% endif %}
-
-    {% if vocab.config.dataURLs %}
-    <div class="row py-3" id="vocab-download-links">
-      <div class="col-sm-12 px-0 property-label" id="download-links">
-        <h2><i class="fa-solid fa-download"></i> {{ "Download this vocabulary:" | trans }}</h2>
-        <ul class="d-inline">
-        {% if 'application/rdf+xml' in vocab.config.dataURLs|keys %}
-          <li><a class="me-3" href="rest/v1/{{ request.vocabid }}/data?format=application/rdf%2Bxml">RDF/XML</a></li>
-        {% endif %}
-        {% if 'text/turtle' in vocab.config.dataURLs|keys %}
-          <li><a class="me-3" href="rest/v1/{{ request.vocabid }}/data?format=text/turtle">TURTLE</a></li>
-        {% endif %}
-        {% if 'application/ld+json' in vocab.config.dataURLs|keys %}
-          <li><a class="me-3" href="rest/v1/{{ request.vocabid }}/data?format=application%2Fld%2Bjson">JSON-LD</a></li>
-        {% endif %}
-        {% if 'application/marcxml+xml' in vocab.config.dataURLs|keys %}
-            {% if vocab.config.dataURLs['application/marcxml+xml'] is iterable %}
-                {% for key, values in vocab.config.dataURLs['application/marcxml+xml'] %}
-                    <li><a class="me-3" href="rest/v1/{{ request.vocabid }}/data?format=application/marcxml%2Bxml&lang={{key}}">MARCXML/{{ key | lang_name(request.lang) }}</a></li>
-                {% endfor %}
-            {% else %}
-                <li><a href="rest/v1/{{ request.vocabid }}/data?format=application/marcxml%2Bxml">MARCXML</a></li>
-            {% endif %}
-        {% endif %}
-        </ul>
+      {% if vocab.config.showStatistics %}
+      <div class="vocab-statistics">
+        <div id="resource-counts"></div>
+        <div id="term-counts"></div>
       </div>
+      {% endif %}
+
+      {% if vocab.config.dataURLs %}
+      <div class="row py-3" id="vocab-download-links">
+        <div class="col-sm-12 px-0 property-label" id="download-links">
+          <h2><i class="fa-solid fa-download"></i> {{ "Download this vocabulary:" | trans }}</h2>
+          <ul class="d-inline">
+          {% if 'application/rdf+xml' in vocab.config.dataURLs|keys %}
+            <li><a class="me-3" href="rest/v1/{{ request.vocabid }}/data?format=application/rdf%2Bxml">RDF/XML</a></li>
+          {% endif %}
+          {% if 'text/turtle' in vocab.config.dataURLs|keys %}
+            <li><a class="me-3" href="rest/v1/{{ request.vocabid }}/data?format=text/turtle">TURTLE</a></li>
+          {% endif %}
+          {% if 'application/ld+json' in vocab.config.dataURLs|keys %}
+            <li><a class="me-3" href="rest/v1/{{ request.vocabid }}/data?format=application%2Fld%2Bjson">JSON-LD</a></li>
+          {% endif %}
+          {% if 'application/marcxml+xml' in vocab.config.dataURLs|keys %}
+              {% if vocab.config.dataURLs['application/marcxml+xml'] is iterable %}
+                  {% for key, values in vocab.config.dataURLs['application/marcxml+xml'] %}
+                      <li><a class="me-3" href="rest/v1/{{ request.vocabid }}/data?format=application/marcxml%2Bxml&lang={{key}}">MARCXML/{{ key | lang_name(request.lang) }}</a></li>
+                  {% endfor %}
+              {% else %}
+                  <li><a href="rest/v1/{{ request.vocabid }}/data?format=application/marcxml%2Bxml">MARCXML</a></li>
+              {% endif %}
+          {% endif %}
+          </ul>
+        </div>
+      </div>
+      {% endif %}
     </div>
-    {% endif %}
+    <!-- appendix / concept mapping properties -->
+    <div id="concept-mappings">
+    </div>
   </div>
-  <!-- appendix / concept mapping properties -->
-  <div id="concept-mappings">
-  </div>
+  <div id="main-content-bottom-slot"></div>
 </div>
