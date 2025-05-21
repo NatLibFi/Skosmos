@@ -36,8 +36,8 @@ function startGlobalSearchApp () {
       this.languages = window.SKOSMOS.languageOrder
       this.selectedLanguage = this.parseSearchLang()
       this.searchCounter = 0 // used for matching the query and the response in case there are many responses
-      this.languageStrings = ["Suomi", "Ruotsi", "Englanti"]
-      this.vocabStrings = ["YSO", "YKL", "KOKO"]
+      this.languageStrings = window.SKOSMOS.language_strings
+      this.vocabStrings = window.SKOSMOS.vocab_list
       this.renderedResultsList = []
       this.showNotation = true
     },
@@ -239,16 +239,14 @@ function startGlobalSearchApp () {
             <i class="fa-solid fa-chevron-down"></i>
           </button>
           <ul class="dropdown-menu" id="vocab-list" role="menu">
-            <li v-for="(value, key) in vocabStrings" :key="key" role="none">
-              <a
-                class="dropdown-item"
+            <li v-for="(value, key) in vocabStrings" :key="key" role="none" class="px-3 py-1">
+              <input
+                type="checkbox"
+                :id="key"
                 :value="key"
-                @click="changeContentLangAndReload(key)"
-                @keydown.enter="changeContentLangAndReload(key)"
-                role="menuitem"
-                tabindex=0 >
-                {{ value }}
-              </a>
+                v-model="selectedValues"
+                @change="handleLanguageCheckboxChange">
+              <label class="ms-1" :for="key">{{ value }}</label>
             </li>
           </ul>
         </div>
