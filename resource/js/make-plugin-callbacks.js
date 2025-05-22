@@ -7,9 +7,10 @@ const makeCallbacks = () => {
 
   const params = { uri: newUri, prefLabels: newPrefs, pageType: newPage, jsonLd: embeddedJsonLd }
 
-  if (window.pluginCallbacks) {
-    for (const i in window.pluginCallbacks) {
-      const fname = window.pluginCallbacks[i]
+  if (window.SKOSMOS.pluginCallbacks) {
+
+    for (const i in window.SKOSMOS.pluginCallbacks) {
+      const fname = window.SKOSMOS.pluginCallbacks[i]
       const callback = window[fname]
       if (typeof callback === 'function') {
         callback(params)
