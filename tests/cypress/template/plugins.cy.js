@@ -41,7 +41,7 @@ describe('Plugins', () => {
   })
   it('Vanilla JS plugin is removed on partial page load', () => {
     // go to the testPlugin vocab page
-    cy.visit('/testPlugin')
+    cy.visit('/testPlugin/en')
     // check that plugin is loaded in the correct place 
     cy.get('#headerbar-bottom-slot').find('#vanilla-js-plugin')
     // click on concept link
@@ -51,12 +51,12 @@ describe('Plugins', () => {
   })
   it('Vue plugin is changed on partial page load', () => {
     // go to the testPlugin vocab page
-    cy.visit('/testPlugin/en/page/qb1')
-    // check that plugin is loaded in the correct place and has the correct text
-    cy.get('#headerbar-bottom-slot').find('#vue-plugin').should('contain', 'Current concept: http://www.skosmos.skos/test/qb1')
+    cy.visit('/testPlugin/en')
+    // check that plugin does not exist
+    cy.get('#headerbar-bottom-slot').find('#vue-plugin').should('not.exist')
     // click on concept link
-    cy.get('#tab-alphabetical .sidebar-list a').eq(1).click()
+    cy.get('#tab-alphabetical .sidebar-list a').eq(0).click()
     // check that plugin has the correct text after partial page load
-    cy.get('#headerbar-bottom-slot').find('#vue-plugin').should('contain', 'Current concept: http://www.skosmos.skos/test/qn1')
+    cy.get('#headerbar-bottom-slot').find('#vue-plugin').should('contain', 'Current concept: http://www.skosmos.skos/test/qb1')
   })
 })
