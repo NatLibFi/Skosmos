@@ -1,6 +1,4 @@
-var VANILLA_JS_PLUGIN = VANILLA_JS_PLUGIN || {}
-
-VANILLA_JS_PLUGIN = {
+const VANILLA_JS_PLUGIN = {
   vocab: window.SKOSMOS.vocab,
   template: function () {
     return `<p id="vanilla-js-plugin-message">Current vocab: ${ this.vocab }</p>`

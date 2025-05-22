@@ -1,6 +1,4 @@
-var VUE_PLUGIN = VUE_PLUGIN || {}
-
-VUE_PLUGIN = {
+const VUE_PLUGIN = {
   vueApp: null,
   createVueApp: function() {
     return Vue.createApp({
