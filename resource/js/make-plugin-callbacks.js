@@ -2,7 +2,7 @@ const makeCallbacks = () => {
   const newPage = window.SKOSMOS.pageType
   const newUri = window.SKOSMOS.uri
   const newPrefs = window.SKOSMOS.prefLabels
-  const ldJsonScript = document.querySelector('script[type="application/ld+json"]')
+  const ldJsonScript = document.getElementById('json-ld-data')
   const embeddedJsonLd = ldJsonScript ? JSON.parse(ldJsonScript.innerHTML) : {}
 
   const params = { uri: newUri, prefLabels: newPrefs, pageType: newPage, jsonLd: embeddedJsonLd }
