@@ -6,10 +6,10 @@ VUE_PLUGIN = {
     return Vue.createApp({
       data() {
         return {
-          message: 'Vue plugin'
+          uri: window.SKOSMOS.uri
         }
       },
-      template: `<p id="vue-plugin-message">{{ message }}</p>`
+      template: `<p id="vue-plugin-message">Current concept: {{ uri }}</p>`
     })
   },
   render: function() {
@@ -33,16 +33,22 @@ VUE_PLUGIN = {
     this.vueApp.mount('#vue-plugin')
   },
   remove: function() {
+    // Unmount and remove old Vue app if it exists
     if (this.vueApp) {
       this.vueApp.unmount()
       this.vueApp = null
+    }
+    // Remove old mount point element if it exists
+    const mountPoint = document.getElementById('vue-plugin')
+    if (mountPoint) {
+      mountPoint.remove()
     }
   }
 }
 
 document.addEventListener('DOMContentLoaded', function() {
   window.vueCallback = function(params) {
-    if (params.pageType == 'vocab-home') {
+    if (params.pageType == 'concept') {
       VUE_PLUGIN.render()
     } else {
       VUE_PLUGIN.remove()

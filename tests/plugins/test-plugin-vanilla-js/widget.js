@@ -1,9 +1,9 @@
 var VANILLA_JS_PLUGIN = VANILLA_JS_PLUGIN || {}
 
 VANILLA_JS_PLUGIN = {
-  message: 'Vanilla JS plugin',
+  vocab: window.SKOSMOS.vocab,
   template: function () {
-    return `<p id="vanilla-js-plugin-message">${ this.message }</p>`
+    return `<p id="vanilla-js-plugin-message">Current vocab: ${ this.vocab }</p>`
   },
   render: function() {
     // Check if the plugin already exists
