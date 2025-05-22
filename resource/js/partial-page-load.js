@@ -45,8 +45,8 @@ const updateTitle = (conceptHTML) => {
 }
 
 const updateJsonLD = (conceptHTML) => {
-  const JsonLD = document.querySelector('script[type="application/ld+json"]')
-  const newJsonLD = conceptHTML.querySelector('script[type="application/ld+json"]')
+  const JsonLD = document.querySelector('#json-ld-data')
+  const newJsonLD = conceptHTML.querySelector('#json-ld-data')
   if (JsonLD) {
     JsonLD.innerHTML = '{}'
     if (newJsonLD) {

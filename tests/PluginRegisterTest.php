@@ -22,22 +22,18 @@ class PluginRegisterTest extends PHPUnit\Framework\TestCase
                                                                ->getMock();
         $this->stubplugs = array('imaginary-plugin' => array( 'js' => array( 0 => 'imaginaryPlugin.js', ),
                                                      'css' => array( 0 => 'stylesheet.css', ),
-                                                     'templates' => array( 0 => 'template.html', ),
                                                      'callback' => array( 0 => 'imaginaryPlugin')
                             ),
                             'test-plugin1' => array( 'js' => array( 0 => 'plugin1.js', 1 => 'second.min.js'),
                                                      'css' => array( 0 => 'stylesheet.css', ),
-                                                     'templates' => array( 0 => 'template.html', ),
                                                      'callback' => array( 0 => 'callplugin1')
                             ),
                             'test-plugin2' => array( 'js' => array( 0 => 'plugin2.js', ),
                                                      'css' => array( 0 => 'stylesheet.css', ),
-                                                     'templates' => array( 0 => 'template.html', ),
                                                      'callback' => array( 0 => 'callplugin2')
                             ),
                             'test-plugin3' => array( 'js' => array( 0 => 'plugin3.js', ),
                                                      'css' => array( 0 => 'stylesheet.css', ),
-                                                     'templates' => array( 0 => 'template.html', ),
                                                      'callback' => array( 0 => 'callplugin3')
                             ),
                             'only-css' => array( 'css' => array( 0 => 'super.css')),
@@ -159,24 +155,6 @@ class PluginRegisterTest extends PHPUnit\Framework\TestCase
             array('plugins/test-plugin1/callplugin1'),
             $this->mockpr->getPluginCallbacks()['test-plugin1']
         );
-    }
-
-    /**
-     * @covers PluginRegister::getPluginsTemplates
-     */
-    public function testGetPluginsTemplates()
-    {
-        $plugins = new PluginRegister();
-        $this->assertEquals(array(), $plugins->getPluginsTemplates());
-    }
-
-    /**
-     * @covers PluginRegister::getTemplates
-     */
-    public function testGetTemplates()
-    {
-        $plugins = new PluginRegister();
-        $this->assertEquals(array(), $plugins->getTemplates());
     }
 
     /**

@@ -78,6 +78,7 @@
     </div>
     {% if pageType == 'landing' or pageType == 'vocab-home' or pageType == 'concept' %}
     <div class="container-fluid bg-white py-4" id="headerbar">
+      <div id="headerbar-top-slot" class="row"></div>
       <div class="row">
         {% if pageType == 'landing' %}
         <div class="col px-4" id="skosmos-logo">
@@ -96,7 +97,9 @@
         </div>
         {% endif %}
       </div>
+      <div id="headerbar-bottom-slot" class="row"></div>
     </div>
+    
     {% endif %}
   </header>
   <main id="main-container" class="{{pageType}}{% if list_style %} {{ list_style }}{% endif %}">

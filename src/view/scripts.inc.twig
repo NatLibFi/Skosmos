@@ -29,6 +29,7 @@ window.SKOSMOS = {
   "explicitLangCodes": {{ explicit_langcodes ? "true" : "false" }},
   "lang": "{{ request.lang }}",
   "vocab": "{{ request.vocabid }}",
+  "pageType": "{{ pageType }}",
   "waypoint_results": {{ parameters ? parameters.searchLimit : "null" }},
   {%- if request.page == "page" and concept %}
   "prefLabels": [{"lang": "{{ concept.label.lang }}","label": "{{ concept.label }}"}{% for lang in concept.foreignLabels %}{% for literal in lang %}{% if literal.type == "skos:prefLabel" %},{"lang": "{{literal.lang}}", "label": "{{literal.label}}"}{% endif %}{% endfor %}{% endfor %}],
@@ -62,7 +63,7 @@ window.SKOSMOS = {
 </script>
 
 <!-- Search result data -->
-<script type="application/ld+json">
+<script type="application/ld+json" id="json-ld-data">
   {%- if concept -%}
     {{ concept.dumpJsonLd|raw }}
   {%- else -%}
@@ -70,16 +71,16 @@ window.SKOSMOS = {
   {%- endif -%}
 </script>
 
-<!-- Plugin JS sources -->
-{% for files in request.plugins.pluginsJS %}
-  {% for file in files %}<script src="{{ file }}"></script>{% endfor %}
-{% endfor %}
-
 <!-- Bootstrap -->
 <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
 
 <!-- Vue.js -->
 <script src="node_modules/vue/dist/vue.global.js"></script>
+
+<!-- Plugin JS sources -->
+{% for files in request.plugins.pluginsJS %}
+  {% for file in files %}<script src="{{ file }}"></script>{% endfor %}
+{% endfor %}
 
 <!-- Helper methods shared by Vue.js components -->
 <script src="resource/js/partial-page-load.js"></script>
@@ -100,3 +101,4 @@ window.SKOSMOS = {
 <script src="resource/js/copy-to-clipboard.js"></script>
 <script src="resource/js/navbar.js"></script>
 <script src="resource/js/truncate-search-results.js"></script>
+<script src="resource/js/make-plugin-callbacks.js"></script>

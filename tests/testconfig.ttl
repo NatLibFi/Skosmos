@@ -438,6 +438,14 @@
     skosmos:sparqlGraph <http://www.skosmos.skos/test-notation-sort/>;
     skosmos:mainConceptScheme test:notationMainConceptScheme .
 
+:testPlugin a skosmos:Vocabulary, void:Dataset ;
+    dc:title "Test plugin"@en ;
+    void:dataDump <http://skosmos.skos/dump/test/> ;
+    void:uriSpace "http://www.skosmos.skos/test/" ;
+    skosmos:vocabularyPlugins ( "test-plugin-vue" "test-plugin-vanilla-js" ) ;
+    skosmos:usePlugin "test-plugin-vue" ;
+    skosmos:usePlugin "test-plugin-vanilla-js" .
+
 :paramPluginTest a skosmos:Vocabulary, void:Dataset ;
 	dc:title "Test plugin order"@en ;
 	void:dataDump <http://skosmos.skos/dump/test/> ;

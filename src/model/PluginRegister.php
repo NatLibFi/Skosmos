@@ -21,11 +21,11 @@ class PluginRegister
     protected function getPlugins()
     {
         $plugins = array();
-        $pluginconfs = glob('plugins/*/plugin.json');
+        $pluginconfs = glob('../plugins/*/plugin.json');
         foreach ($pluginconfs as $path) {
             $folder = explode('/', $path);
             if (file_exists($path)) {
-                $plugins[$folder[1]] = json_decode(file_get_contents($path), true);
+                $plugins[$folder[2]] = json_decode(file_get_contents($path), true);
             }
         }
         return $plugins;
@@ -45,7 +45,7 @@ class PluginRegister
     /**
      * Returns the plugin configurations found from plugin folders
      * inside the plugins folder filtered by filetype.
-     * @param string $type filetype e.g. 'css', 'js' or 'template'
+     * @param string $type filetype e.g. 'css' or 'js'
      * @param boolean $raw interpret $type values as raw text instead of files
      * @return array
      */
@@ -74,7 +74,7 @@ class PluginRegister
     /**
      * Returns the plugin configurations found from plugin folders
      * inside the plugins folder filtered by plugin name (the folder name).
-     * @param string $type filetype e.g. 'css', 'js' or 'template'
+     * @param string $type filetype e.g. 'css' or 'js'
      * @param array $names the plugin name strings (foldernames) in an array
      * @return array
      */
@@ -115,42 +115,6 @@ class PluginRegister
             return $this->filterPluginsByName('css', $names);
         }
         return $this->filterPluginsByName('css', $this->requestedPlugins);
-    }
-
-    /**
-     * Returns an array of template filepaths
-     * @param array $names the plugin name strings (foldernames) in an array
-     * @return array
-     */
-    public function getPluginsTemplates($names = null)
-    {
-        if ($names) {
-            $names = array_merge($this->requestedPlugins, $names);
-            return $this->filterPluginsByName('templates', $names);
-        }
-        return $this->filterPluginsByName('templates', $this->requestedPlugins);
-    }
-
-    /**
-     * Returns an array of template files contents as strings
-     * @param array $names the plugin name strings (foldernames) in an array
-     * @return array
-     */
-    public function getTemplates($names = null)
-    {
-        $templateStrings = array();
-        $plugins = $this->getPluginsTemplates($names);
-        foreach ($plugins as $folder => $templates) {
-            foreach ($templates as $path) {
-                if (file_exists($path)) {
-                    $filename = explode('/', $path);
-                    $filename = $filename[sizeof($filename) - 1];
-                    $id = $folder . '-' . substr($filename, 0, (strrpos($filename, ".")));
-                    $templateStrings[$id] = file_get_contents($path);
-                }
-            }
-        }
-        return $templateStrings;
     }
 
     /**

@@ -1,175 +1,179 @@
-<div class="col-md-8" id="main-content">
+<div class="col-md-8">
+  <div id="main-content-top-slot"></div>
+  <div id="main-content">
 
-    <div class="main-content-section py-4">
+      <div class="main-content-section py-4">
 
-      {% if visible_breadcrumbs and visible_breadcrumbs[0]|length > 1 %}
-      <nav class="row" id="concept-breadcrumbs" aria-label='{{ "Breadcrumbs" | trans }}'>
-        {% for path in visible_breadcrumbs %}
-        {% set path_idx = loop.index0 %}
-        <ol>
-          {% for crumb in path %}
-            {% if crumb.hiddenLabel %}
-              <li class="breadcrumb-toggle"><a href=".breadcrumb-collapse" data-bs-target=".breadcrumb-collapse" data-bs-toggle="collapse" role="button" aria-expanded="false">...</a></li>
-              {% for hiddenCrumb in hidden_breadcrumbs[path_idx] %}
-              <li class="breadcrumb collapse multi-collapse breadcrumb-collapse"><a href="{{ hiddenCrumb.uri|link_url(vocab,request.lang,'page',request.contentLang) }}">{{ hiddenCrumb.hiddenLabel }}</a></li>
-              {% endfor %}
-            {% else %}
-              <li class="breadcrumb"><a
-                  {% if loop.last %}aria-current="page" class="breadcrumb-current"
-                  {% else %}href="{{ crumb.uri|link_url(vocab,request.lang,'page',request.contentLang) }}"
-                  {% endif %}
-                  >{{ crumb.prefLabel }}</a></li>
-            {% endif %}
+        {% if visible_breadcrumbs and visible_breadcrumbs[0]|length > 1 %}
+        <nav class="row" id="concept-breadcrumbs" aria-label='{{ "Breadcrumbs" | trans }}'>
+          {% for path in visible_breadcrumbs %}
+          {% set path_idx = loop.index0 %}
+          <ol>
+            {% for crumb in path %}
+              {% if crumb.hiddenLabel %}
+                <li class="breadcrumb-toggle"><a href=".breadcrumb-collapse" data-bs-target=".breadcrumb-collapse" data-bs-toggle="collapse" role="button" aria-expanded="false">...</a></li>
+                {% for hiddenCrumb in hidden_breadcrumbs[path_idx] %}
+                <li class="breadcrumb collapse multi-collapse breadcrumb-collapse"><a href="{{ hiddenCrumb.uri|link_url(vocab,request.lang,'page',request.contentLang) }}">{{ hiddenCrumb.hiddenLabel }}</a></li>
+                {% endfor %}
+              {% else %}
+                <li class="breadcrumb"><a
+                    {% if loop.last %}aria-current="page" class="breadcrumb-current"
+                    {% else %}href="{{ crumb.uri|link_url(vocab,request.lang,'page',request.contentLang) }}"
+                    {% endif %}
+                    >{{ crumb.prefLabel }}</a></li>
+              {% endif %}
+            {% endfor %}
+          </ol>
           {% endfor %}
-        </ol>
-        {% endfor %}
-      </nav>
-      {% endif %}
-
-      <div class="row" id="concept-heading">
-        <div class="col-lg-4 ps-0" id="concept-property-label">
-        {%- set label = custom_labels['skos:prefLabel']['label'][request.lang] -%}
-        {%- if label -%}
-          {{ label[:1]|upper ~ label[1:] }} {# Capitalizing labels #}
-        {%- else -%}
-          {{ "skos:prefLabel" | trans }}
-        {%- endif -%}
-        </div>
-        <div class="col-lg-8 gx-0 gx-lg-4" id="concept-label">
-        {% if concept.hasXlLabel %}
-          {% set descriptionId = 'concept-preflabel-xl' %}
-          {{ include('xl-label.inc.twig', {xlLabel: concept.xlLabel, xlDescriptionId: descriptionId}) }}
+        </nav>
         {% endif %}
-        {% if concept.notation %}
-          <h1 id="concept-preflabel"
-              {% if descriptionId %}aria-describedby="{{ descriptionId }}"{% endif %}
-              class="mb-0">
-            <span class="notation user-select-all" id="concept-notation">{{ concept.notation }}</span> {{ concept.label }}</h1><button
-                class="btn btn-default copy-clipboard px-1" type="button" id="copy-notation"
-                data-bs-toggle="tooltip" data-bs-placement="button" title="{{ 'Copy to clipboard' | trans }}">
+
+        <div class="row" id="concept-heading">
+          <div class="col-lg-4 ps-0" id="concept-property-label">
+          {%- set label = custom_labels['skos:prefLabel']['label'][request.lang] -%}
+          {%- if label -%}
+            {{ label[:1]|upper ~ label[1:] }} {# Capitalizing labels #}
+          {%- else -%}
+            {{ "skos:prefLabel" | trans }}
+          {%- endif -%}
+          </div>
+          <div class="col-lg-8 gx-0 gx-lg-4" id="concept-label">
+          {% if concept.hasXlLabel %}
+            {% set descriptionId = 'concept-preflabel-xl' %}
+            {{ include('xl-label.inc.twig', {xlLabel: concept.xlLabel, xlDescriptionId: descriptionId}) }}
+          {% endif %}
+          {% if concept.notation %}
+            <h1 id="concept-preflabel"
+                {% if descriptionId %}aria-describedby="{{ descriptionId }}"{% endif %}
+                class="mb-0">
+              <span class="notation user-select-all" id="concept-notation">{{ concept.notation }}</span> {{ concept.label }}</h1><button
+                  class="btn btn-default copy-clipboard px-1" type="button" id="copy-notation"
+                  data-bs-toggle="tooltip" data-bs-placement="button" title="{{ 'Copy to clipboard' | trans }}">
+                <i class="fa-regular fa-copy"></i>
+              </button>
+            {% else %}
+            <h1 id="concept-preflabel"
+                {% if descriptionId %}aria-describedby="{{ descriptionId }}"{% endif %}
+                class="mb-0 user-select-all">{{ concept.label }}</h1><button
+                    class="btn btn-default copy-clipboard px-1" type="button" id="copy-preflabel"
+                    data-bs-toggle="tooltip" data-bs-placement="button" title="{{ 'Copy to clipboard' | trans }}">
               <i class="fa-regular fa-copy"></i>
             </button>
-          {% else %}
-          <h1 id="concept-preflabel"
-              {% if descriptionId %}aria-describedby="{{ descriptionId }}"{% endif %}
-              class="mb-0 user-select-all">{{ concept.label }}</h1><button
-                  class="btn btn-default copy-clipboard px-1" type="button" id="copy-preflabel"
-                  data-bs-toggle="tooltip" data-bs-placement="button" title="{{ 'Copy to clipboard' | trans }}">
-            <i class="fa-regular fa-copy"></i>
-          </button>
-          {% endif %}
-        </div>
-      </div>
-
-      {% for property in concept.properties %}{% if property.getSubPropertyOf != 'skos:hiddenLabel' %}
-      <div class="row property prop-{{property.ID}}">
-        <div class="col-lg-4 ps-0 property-label"><h2>
-        {%- set label = custom_labels[property.type]['label'][request.lang] -%}
-        {%- if label -%}
-          {{ label[:1]|upper ~ label[1:] }} {# Capitalizing labels #}
-        {%- else -%}
-          {{ property.label }}
-        {%- endif -%}
-        </h2></div>
-        <div class="col-lg-8 gx-0 gx-lg-4 align-self-center property-value">
-          <ul class="align-bottom">
-          {% for propval in property.values %}
-            {% if propval.uri and property.type != 'rdf:type' %} {# resources with URI #}
-            <li>
-              <a href="{{ propval.uri | link_url(propval.vocab, request.lang, 'page', request.contentLang) }}">
-              {%- if propval.notation -%}
-                <span class="property-value-notation">{{ propval.notation }} </span>
-              {%- endif -%}
-                {{- propval.label(request.contentLang) -}}
-              </a>
-            </li>
-            {% else %} {# literals, e.g. altLabels #}
-            <li>
-              {%- apply spaceless %}
-              {% if propval.hasXlProperties %}
-                {% set descriptionId = "concept-property-xl-#{loop.parent.loop.index}-#{loop.index}" %}
-                {{ include('xl-label.inc.twig', {xlLabel: propval.xlLabel, xlDescriptionId: descriptionId}) }}
-              {% else %}
-                {% set descriptionId = '' %}
-              {% endif %}
-              <span{% if descriptionId %} aria-describedby="{{ descriptionId }}"{% endif %}>{% if propval.containsHtml %}{{ propval.label|raw }}{% else %}{{ propval.label }}{% endif %}</span>
-              {% endapply -%}
-            </li>
             {% endif %}
-          {% endfor %}
-          </ul>
+          </div>
         </div>
-      </div>
-      {% endif %}{% endfor %}
-      {% set foreignLabels = concept.foreignLabels %}
-      {% if foreignLabels %}
-      <div class="row property prop-foreignlabels">
-        <div class="col-lg-4 ps-0 property-label"><h2>{{ 'foreign prefLabels'|trans }}</h2></div>
-        <div class="col-lg-8 gx-0 gx-lg-4" id="concept-other-languages">
-          {% for language,labels in foreignLabels %}
-          <div class="row mb-2">
-            <div class="col-7 order-last"><h3>{{ language }}</h3></div>
-            <div class="col-5">
-              <ul>
-                {% for value in labels.prefLabel|default([])|merge(labels.altLabel|default([])) %}
-                <li>
-                {% if value.hasXlProperties %}
+
+        {% for property in concept.properties %}{% if property.getSubPropertyOf != 'skos:hiddenLabel' %}
+        <div class="row property prop-{{property.ID}}">
+          <div class="col-lg-4 ps-0 property-label"><h2>
+          {%- set label = custom_labels[property.type]['label'][request.lang] -%}
+          {%- if label -%}
+            {{ label[:1]|upper ~ label[1:] }} {# Capitalizing labels #}
+          {%- else -%}
+            {{ property.label }}
+          {%- endif -%}
+          </h2></div>
+          <div class="col-lg-8 gx-0 gx-lg-4 align-self-center property-value">
+            <ul class="align-bottom">
+            {% for propval in property.values %}
+              {% if propval.uri and property.type != 'rdf:type' %} {# resources with URI #}
+              <li>
+                <a href="{{ propval.uri | link_url(propval.vocab, request.lang, 'page', request.contentLang) }}">
+                {%- if propval.notation -%}
+                  <span class="property-value-notation">{{ propval.notation }} </span>
+                {%- endif -%}
+                  {{- propval.label(request.contentLang) -}}
+                </a>
+              </li>
+              {% else %} {# literals, e.g. altLabels #}
+              <li>
+                {%- apply spaceless %}
+                {% if propval.hasXlProperties %}
                   {% set descriptionId = "concept-property-xl-#{loop.parent.loop.index}-#{loop.index}" %}
-                  {{ include('xl-label.inc.twig', {xlLabel: value.xlLabel, xlDescriptionId: descriptionId}) }}
+                  {{ include('xl-label.inc.twig', {xlLabel: propval.xlLabel, xlDescriptionId: descriptionId}) }}
                 {% else %}
                   {% set descriptionId = '' %}
                 {% endif %}
-                {% if value.type == "skos:prefLabel" and value.lang in request.vocab.config.languages %}
-                <a {% if descriptionId %}aria-describedby="{{ descriptionId }}"{% endif %}
-                   href="{{ concept.uri|link_url(request.vocabid,request.lang, 'page', value.lang) }}"
-                   hreflang="{{ value.lang }}">{{ value.label }}</a>
-                {% else %}
-                <span class="altlabel"{% if descriptionId %} aria-describedby="{{ descriptionId }}"{% endif %}>{{ value.label }}</span>
-                {% endif %}
-                </li>
-                {% endfor %}
-              </ul>
-            </div>
+                <span{% if descriptionId %} aria-describedby="{{ descriptionId }}"{% endif %}>{% if propval.containsHtml %}{{ propval.label|raw }}{% else %}{{ propval.label }}{% endif %}</span>
+                {% endapply -%}
+              </li>
+              {% endif %}
+            {% endfor %}
+            </ul>
           </div>
-          {% endfor %}
+        </div>
+        {% endif %}{% endfor %}
+        {% set foreignLabels = concept.foreignLabels %}
+        {% if foreignLabels %}
+        <div class="row property prop-foreignlabels">
+          <div class="col-lg-4 ps-0 property-label"><h2>{{ 'foreign prefLabels'|trans }}</h2></div>
+          <div class="col-lg-8 gx-0 gx-lg-4" id="concept-other-languages">
+            {% for language,labels in foreignLabels %}
+            <div class="row mb-2">
+              <div class="col-7 order-last"><h3>{{ language }}</h3></div>
+              <div class="col-5">
+                <ul>
+                  {% for value in labels.prefLabel|default([])|merge(labels.altLabel|default([])) %}
+                  <li>
+                  {% if value.hasXlProperties %}
+                    {% set descriptionId = "concept-property-xl-#{loop.parent.loop.index}-#{loop.index}" %}
+                    {{ include('xl-label.inc.twig', {xlLabel: value.xlLabel, xlDescriptionId: descriptionId}) }}
+                  {% else %}
+                    {% set descriptionId = '' %}
+                  {% endif %}
+                  {% if value.type == "skos:prefLabel" and value.lang in request.vocab.config.languages %}
+                  <a {% if descriptionId %}aria-describedby="{{ descriptionId }}"{% endif %}
+                    href="{{ concept.uri|link_url(request.vocabid,request.lang, 'page', value.lang) }}"
+                    hreflang="{{ value.lang }}">{{ value.label }}</a>
+                  {% else %}
+                  <span class="altlabel"{% if descriptionId %} aria-describedby="{{ descriptionId }}"{% endif %}>{{ value.label }}</span>
+                  {% endif %}
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+        <div class="row property prop-uri">
+          <div class="col-lg-4 ps-0 property-label"><h2>URI</h2></div>
+          <div class="col-lg-8 gx-0 gx-lg-4">
+            <span id="concept-uri"
+                  class="user-select-all">{{ concept.uri }}</span><button
+                    class="btn btn-default copy-clipboard px-1" type="button" id="copy-uri"
+                    data-bs-toggle="tooltip" data-bs-placement="button" title="{{ 'Copy to clipboard' | trans }}">
+              <i class="fa-regular fa-copy"></i>
+            </button>
+          </div>
+        </div>
+        <div class="row property prop-download">
+          <div class="col-lg-4 ps-0 property-label">
+            <h2><i class="fa-solid fa-download"></i> {{ "Download this concept" | trans }}</h2>
+          </div>
+          <div class="col-lg-8 gx-0 gx-lg-4" id="download-links">
+            <ul>
+              <li>
+                <a class="me-3" href="rest/v1/{{ vocab.id }}/data?uri={{ concept.uri|url_encode }}&amp;format=application/rdf%2Bxml">RDF/XML</a>
+              </li>
+              <li>
+                <a class="me-3" href="rest/v1/{{ vocab.id }}/data?uri={{ concept.uri|url_encode }}&amp;format=text/turtle">TURTLE</a>
+              </li>
+              <li>
+                <a href="rest/v1/{{ vocab.id }}/data?uri={{ concept.uri|url_encode }}&amp;format=application/ld%2Bjson">JSON-LD</a>
+              </li>
+            </ul>
+            {% if concept.date %}
+            <div id="date-info">{{ concept.date }}</div>
+            {% endif %}
+          </div>
         </div>
       </div>
-      {% endif %}
-      <div class="row property prop-uri">
-        <div class="col-lg-4 ps-0 property-label"><h2>URI</h2></div>
-        <div class="col-lg-8 gx-0 gx-lg-4">
-          <span id="concept-uri"
-                class="user-select-all">{{ concept.uri }}</span><button
-                  class="btn btn-default copy-clipboard px-1" type="button" id="copy-uri"
-                  data-bs-toggle="tooltip" data-bs-placement="button" title="{{ 'Copy to clipboard' | trans }}">
-            <i class="fa-regular fa-copy"></i>
-          </button>
-        </div>
+      <!-- appendix / concept mapping properties -->
+      <div id="concept-mappings">
       </div>
-      <div class="row property prop-download">
-        <div class="col-lg-4 ps-0 property-label">
-          <h2><i class="fa-solid fa-download"></i> {{ "Download this concept" | trans }}</h2>
-        </div>
-        <div class="col-lg-8 gx-0 gx-lg-4" id="download-links">
-          <ul>
-            <li>
-              <a class="me-3" href="rest/v1/{{ vocab.id }}/data?uri={{ concept.uri|url_encode }}&amp;format=application/rdf%2Bxml">RDF/XML</a>
-            </li>
-            <li>
-              <a class="me-3" href="rest/v1/{{ vocab.id }}/data?uri={{ concept.uri|url_encode }}&amp;format=text/turtle">TURTLE</a>
-            </li>
-            <li>
-              <a href="rest/v1/{{ vocab.id }}/data?uri={{ concept.uri|url_encode }}&amp;format=application/ld%2Bjson">JSON-LD</a>
-            </li>
-          </ul>
-          {% if concept.date %}
-          <div id="date-info">{{ concept.date }}</div>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-    <!-- appendix / concept mapping properties -->
-    <div id="concept-mappings">
-    </div>
 
+  </div>
+  <div id="main-content-bottom-slot"></div>
 </div>
