@@ -32,7 +32,7 @@ VANILLA_JS_PLUGIN = {
 
 document.addEventListener('DOMContentLoaded', function() {
   window.vanillaJSCallback = function(params) {
-    if (params.page == 'vocab-home') {
+    if (params.pageType == 'vocab-home') {
       VANILLA_JS_PLUGIN.render()
     } else {
       VANILLA_JS_PLUGIN.remove()

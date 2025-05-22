@@ -5,7 +5,7 @@ const makeCallbacks = () => {
   const ldJsonScript = document.querySelector('script[type="application/ld+json"]')
   const embeddedJsonLd = ldJsonScript ? JSON.parse(ldJsonScript.innerHTML) : {}
 
-  const params = { uri: newUri, prefLabels: newPrefs, page: newPage, jsonLd: embeddedJsonLd }
+  const params = { uri: newUri, prefLabels: newPrefs, pageType: newPage, jsonLd: embeddedJsonLd }
 
   if (window.pluginCallbacks) {
     for (const i in window.pluginCallbacks) {
