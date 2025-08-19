@@ -105,7 +105,7 @@ jobs:
     needs: [ build-test, cypress-test ]
     runs-on: ubuntu-22.04
     timeout-minutes: 15
-    if: github.event_name == 'push' && github.ref == 'refs/heads/issue1763-only-for-testing-purposes-and-delete-after-merge'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/issue1763-pre-built-docker-images-for-public-use'
     steps:
       - name: Check out repo
         uses: actions/checkout@v4
