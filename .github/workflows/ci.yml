@@ -132,3 +132,17 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Debug event context
+        run: |
+          echo "event_name=${{ github.event_name }}"
+          echo "ref=${{ github.ref }}"
+          echo "ref_name=${{ github.ref_name }}"
+
+      - name: Show computed tags
+        run: |
+          echo "Tags:"
+          echo "${{ steps.meta.outputs.tags }}"
+          echo "Labels:"
+          echo "${{ steps.meta.outputs.labels }}"
+ 
