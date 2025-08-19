@@ -99,3 +99,36 @@ jobs:
 
     - name: Run Cypress tests
       run: npx cypress run
+
+  publish-docker-latest:
+    name: publish latest Docker image
+    needs: [ build-test, cypress-test ]
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    if: github.event_name == 'push' && github.ref == 'refs/heads/issue1763-only-for-testing-purposes-and-delete-after-merge'
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Login to Quay.io
+        uses: docker/login-action@184bdaa0721073962dff0199f1fb9940f07167d1  # v3.5.0
+        with:
+          registry: quay.io
+          username: ${{ secrets.YHTEENTOIMIVUUSPALVELUT_QUAY_IO_USERNAME }}
+          password: ${{ secrets.YHTEENTOIMIVUUSPALVELUT_QUAY_IO_PASSWORD }}
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@c1e51972afc2121e065aed6d45c65596fe445f3f  # v5.8.0
+        with:
+          images: quay.io/natlibfi/skosmos
+          tags: |
+            type=raw,value=ci-test
+            type=raw,value=ci-test-${{ github.sha }}
+
+      - name: Build and push to Quay.io
+        uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83  # v6.18.0
+        with:
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
