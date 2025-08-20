@@ -6,6 +6,7 @@ function startGlobalSearchApp () {
       return {
         languages: [],
         selectedLanguage: null,
+        selectedVocabs: [],
         searchTerm: null,
         searchCounter: null,
         renderedResultsList: [],
@@ -17,21 +18,38 @@ function startGlobalSearchApp () {
     },
     computed: {
       searchPlaceholder () {
-        return $t('3. Kirjoita hakutermi')
+        return $t('3. Kirjoita hakutermi') // käännä käyttöliittymäkielelle
       },
       noResults () {
-        return $t('No results')
+        return $t('No results') // käännä käyttöliittymäkielelle
       },
       selectSearchLanguageAriaMessage () {
-        return $t('Select search language')
+        return $t('Select search language') // käännä käyttöliittymäkielelle
       },
       textInputWithDropdownButtonAriaMessage () {
-        return $t('Text input with dropdown button')
+        return $t('Text input with dropdown button') // käännä käyttöliittymäkielelle
       },
       searchAriaMessage () {
-        return $t('Search')
+        return $t('Search') // käännä käyttöliittymäkielelle
+      },
+      getSelectedVocabs () {
+        return this.selectedVocabs.map(key => ({ key, value: this.vocabStrings[key]}) )
+      },
+      searchLanguage () {
+
+        return this.selectedLanguage
       }
     },
+/*    watch: {
+      selectedVocabs (newVal, oldVal) {
+        console.log('selectedVocabs muuttui:', newVal)
+      },
+      searchLanguage: {
+        handler(newVal, oldVal) {
+          console.log("Kieltä on kysytty " + newVal + " (oli " + oldVal + ")")
+        }
+      }
+    },*/
     mounted () {
       this.languages = window.SKOSMOS.languageOrder
       this.selectedLanguage = this.parseSearchLang()
@@ -64,8 +82,15 @@ function startGlobalSearchApp () {
         this.searchCounter = mySearchCounter
         let skosmosSearchUrl = 'rest/v1/search?'
         const skosmosSearchUrlParams = new URLSearchParams({ query: this.formatSearchTerm(), unique: true })
-        if (this.selectedLanguage !== 'all') skosmosSearchUrlParams.set('lang', this.selectedLanguage)
+        if (this.searchLanguage !== 'all') {
+          skosmosSearchUrlParams.set('lang', this.searchLanguage)
+        } else {
+          skosmosSearchUrlParams.set('anylang', 'on')
+        }
+        skosmosSearchUrlParams.set('vocabs', this.formatVocabParam())
         skosmosSearchUrl += skosmosSearchUrlParams.toString()
+
+        console.log(skosmosSearchUrl)
 
         fetch(skosmosSearchUrl)
           .then(data => data.json())
@@ -75,6 +100,10 @@ function startGlobalSearchApp () {
               this.renderResults() // render after the fetch has finished
             }
           })
+      },
+      formatVocabParam () {
+        var vocabs = this.getSelectedVocabs
+        return vocabs.map(voc => voc.key).join('+')
       },
       formatSearchTerm () {
         if (this.searchTerm.includes('*')) { return this.searchTerm }
@@ -199,18 +228,6 @@ function startGlobalSearchApp () {
         window.SKOSMOS.content_lang = clang
         this.resetSearchTermAndHideDropdown()
       },
-      changeContentLangAndReload (clang) {
-        this.changeLang(clang)
-        const params = new URLSearchParams(window.location.search)
-        if (clang === 'all') {
-          params.set('anylang', 'true')
-        } else {
-          params.delete('anylang')
-          params.set('clang', clang)
-        }
-        this.$forceUpdate()
-        window.location.search = params.toString()
-      },
       resetSearchTermAndHideDropdown () {
         this.searchTerm = ''
         this.renderedResultsList = []
@@ -225,9 +242,7 @@ function startGlobalSearchApp () {
       }
     },
     template: `
-        <div id="search-wrapper">
-
-
+      <div id="search-wrapper">
         <div class="dropdown" id="vocab-selector">
           <button class="btn btn-outline-secondary dropdown-toggle"
             role="button"
@@ -239,14 +254,15 @@ function startGlobalSearchApp () {
             <i class="fa-solid fa-chevron-down"></i>
           </button>
           <ul class="dropdown-menu" id="vocab-list" role="menu">
-            <li v-for="(value, key) in vocabStrings" :key="key" role="none" class="px-3 py-1">
-              <input
-                type="checkbox"
-                :id="key"
-                :value="key"
-                v-model="selectedValues"
-                @change="handleLanguageCheckboxChange">
-              <label class="ms-1" :for="key">{{ value }}</label>
+            <li v-for="(value, key) in vocabStrings" :key="key">
+              <label>
+                <input
+                  type="checkbox"
+                  :value="key"
+                  v-model="selectedVocabs"
+                  @click.stop />
+                {{ value }}
+              </label>
             </li>
           </ul>
         </div>
@@ -263,15 +279,14 @@ function startGlobalSearchApp () {
           </button>
           <ul class="dropdown-menu" id="language-list" role="menu">
             <li v-for="(value, key) in languageStrings" :key="key" role="none">
-              <a
-                class="dropdown-item"
-                :value="key"
-                @click="changeContentLangAndReload(key)"
-                @keydown.enter="changeContentLangAndReload(key)"
-                role="menuitem"
-                tabindex=0 >
+              <label class="dropdown-item">
+                <input
+                  type="radio"
+                  class="d-none"
+                  :value="key"
+                  v-model="selectedLanguage">
                 {{ value }}
-              </a>
+              </label>
             </li>
           </ul>
         </div>
@@ -381,7 +396,7 @@ function startGlobalSearchApp () {
             <i class="fa-solid fa-magnifying-glass"></i>
           </button>
         </div>
-        </div>
+      </div>
     `
   })
 
