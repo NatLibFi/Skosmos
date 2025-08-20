@@ -458,9 +458,10 @@ class Concept extends VocabularyDataObject implements Modifiable
 
     /**
      * Iterates over all the properties of the concept and returns those in an array.
+     * @param string[]|null $allowedProperties List of properties to include, or null to include all.
      * @return array
      */
-    public function getProperties()
+    public function getProperties($allowedProperties = null)
     {
         $properties = array();
         $narrowersByUri = array();
@@ -509,6 +510,9 @@ class Concept extends VocabularyDataObject implements Modifiable
             } else {
                 // EasyRdf requires full URIs to be in angle brackets
                 $sprop = "<$prop>";
+            }
+            if ($allowedProperties !== null && !in_array($prop, $allowedProperties)) {
+                continue;
             }
 
             if (!in_array($prop, $this->deleted) || ($this->isGroup() === false && $prop === 'skos:member')) {
