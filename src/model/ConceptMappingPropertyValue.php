@@ -44,7 +44,7 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
         return $this->type;
     }
 
-    public function getLabel($lang = '', $queryExVocabs = true)
+    public function getLabel($lang = '', $queryExVocabs = true, $checkExternal = true)
     {
         if (isset($this->labelcache[$lang])) {
             return $this->labelcache[$lang];

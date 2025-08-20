@@ -110,7 +110,7 @@ class ConceptProperty
 
     public function addValue($value)
     {
-        $this->values[ltrim($value->getNotation() . ' ') . $value->getLabel() . rtrim(' ' . $value->getUri())] = $value;
+        $this->values[ltrim($value->getNotation() . ' ') . $value->getLabel(checkExternal: false) . rtrim(' ' . $value->getUri())] = $value;
         $this->is_sorted = false;
     }
 
