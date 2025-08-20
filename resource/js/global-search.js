@@ -40,16 +40,6 @@ function startGlobalSearchApp () {
         return this.selectedLanguage
       }
     },
-/*    watch: {
-      selectedVocabs (newVal, oldVal) {
-        console.log('selectedVocabs muuttui:', newVal)
-      },
-      searchLanguage: {
-        handler(newVal, oldVal) {
-          console.log("Kieltä on kysytty " + newVal + " (oli " + oldVal + ")")
-        }
-      }
-    },*/
     mounted () {
       this.languages = window.SKOSMOS.languageOrder
       this.selectedLanguage = this.parseSearchLang()
@@ -83,7 +73,6 @@ function startGlobalSearchApp () {
         let skosmosSearchUrl = window.SKOSMOS.baseHref + 'rest/v1/search?'
         const skosmosSearchUrlParams = this.formatSearchUrlParams()
         skosmosSearchUrl += skosmosSearchUrlParams.toString()
-        console.log(skosmosSearchUrl)
 
         fetch(skosmosSearchUrl)
           .then(data => data.json())
@@ -97,11 +86,12 @@ function startGlobalSearchApp () {
       formatSearchUrlParams () {
         var params = new URLSearchParams({ query: this.formatSearchTerm(), unique: true })
         if (this.searchLanguage !== 'all') {
-          params.set('lang', this.searchLanguage)
+          params.set('clang', this.searchLanguage)
         } else {
           params.set('anylang', 'on')
         }
         params.set('vocab', this.formatVocabParam())
+
         return params
       },
       formatVocabParam () {
@@ -224,6 +214,7 @@ function startGlobalSearchApp () {
 
         const searchUrlParams = this.formatSearchUrlParams()
         const searchUrl = window.SKOSMOS.baseHref + window.SKOSMOS.lang + '/search?' + searchUrlParams.toString()
+
         window.location.href = searchUrl
       },
       changeLang (clang) {
