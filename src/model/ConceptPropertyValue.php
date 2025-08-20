@@ -21,7 +21,7 @@ class ConceptPropertyValue extends VocabularyDataObject
         $this->type = $prop;
         $this->clang = $clang;
         // check if the resource is external to the current vocabulary
-        $this->external = ($this->getLabel('', 'null') === null);
+        $this->external = ($this->getLabel('', 'null', false) === null);
         if ($this->external) {
             // if we find the resource in another vocabulary, use it instead
             $exvocab = $this->getExVocab();
@@ -46,7 +46,7 @@ class ConceptPropertyValue extends VocabularyDataObject
         return strtolower($this->getLabel());
     }
 
-    public function getLabel($lang = '', $fallbackToUri = 'uri')
+    public function getLabel($lang = '', $fallbackToUri = 'uri', $checkExternal = true)
     {
         if ($this->clang) {
             $lang = $this->clang;
@@ -81,9 +81,11 @@ class ConceptPropertyValue extends VocabularyDataObject
         }
 
         // see if we can find a label in another vocabulary known by the skosmos instance
-        $label = $this->getExternalLabel($this->vocab, $this->getUri(), $lang);
-        if ($label) {
-            return $label;
+        if ($checkExternal) {
+            $label = $this->getExternalLabel($this->vocab, $this->getUri(), $lang);
+            if ($label) {
+                return $label;
+            }
         }
 
         if ($fallbackToUri == 'uri') {
