@@ -129,6 +129,8 @@ jobs:
       - name: Build and push to Quay.io
         uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83  # v6.18.0
         with:
+          context: .
+          file: ./dockerfiles/jena-fuseki2-docker/Dockerfile # later: ./dockerfiles/Dockerfile.ubuntu
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -145,4 +147,3 @@ jobs:
           echo "${{ steps.meta.outputs.tags }}"
           echo "Labels:"
           echo "${{ steps.meta.outputs.labels }}"
- 
