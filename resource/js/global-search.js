@@ -33,10 +33,9 @@ function startGlobalSearchApp () {
         return $t('Search') // käännä käyttöliittymäkielelle
       },
       getSelectedVocabs () {
-        return this.selectedVocabs.map(key => ({ key, value: this.vocabStrings[key]}) )
+        return this.selectedVocabs.map(key => ({ key, value: this.vocabStrings[key] }))
       },
       searchLanguage () {
-
         return this.selectedLanguage
       }
     },
@@ -84,7 +83,7 @@ function startGlobalSearchApp () {
           })
       },
       formatSearchUrlParams () {
-        var params = new URLSearchParams({ query: this.formatSearchTerm(), unique: true })
+        const params = new URLSearchParams({ query: this.formatSearchTerm(), unique: true })
         if (this.searchLanguage !== 'all') {
           params.set('clang', this.searchLanguage)
         } else {
@@ -95,7 +94,7 @@ function startGlobalSearchApp () {
         return params
       },
       formatVocabParam () {
-        var vocabs = this.getSelectedVocabs
+        const vocabs = this.getSelectedVocabs
         return vocabs.map(voc => voc.key).join(' ')
       },
       formatSearchTerm () {
@@ -182,7 +181,7 @@ function startGlobalSearchApp () {
           }
           if ('uri' in result) { // create relative Skosmos page URL from the search result URI
             result.pageUrl = result.uri
-            var urlParams = this.formatSearchUrlParams()
+            const urlParams = this.formatSearchUrlParams()
             if (this.selectedLanguage !== window.SKOSMOS.lang) { // add content language parameter
               urlParams.append('clang', this.selectedLanguage)
             }
