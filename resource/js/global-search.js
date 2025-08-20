@@ -80,16 +80,9 @@ function startGlobalSearchApp () {
       search () {
         const mySearchCounter = this.searchCounter + 1 // make sure we can identify this search later in case of several ongoing searches
         this.searchCounter = mySearchCounter
-        let skosmosSearchUrl = 'rest/v1/search?'
-        const skosmosSearchUrlParams = new URLSearchParams({ query: this.formatSearchTerm(), unique: true })
-        if (this.searchLanguage !== 'all') {
-          skosmosSearchUrlParams.set('lang', this.searchLanguage)
-        } else {
-          skosmosSearchUrlParams.set('anylang', 'on')
-        }
-        skosmosSearchUrlParams.set('vocabs', this.formatVocabParam())
+        let skosmosSearchUrl = window.SKOSMOS.baseHref + 'rest/v1/search?'
+        const skosmosSearchUrlParams = this.formatSearchUrlParams()
         skosmosSearchUrl += skosmosSearchUrlParams.toString()
-
         console.log(skosmosSearchUrl)
 
         fetch(skosmosSearchUrl)
@@ -100,6 +93,16 @@ function startGlobalSearchApp () {
               this.renderResults() // render after the fetch has finished
             }
           })
+      },
+      formatSearchUrlParams () {
+        var params = new URLSearchParams({ query: this.formatSearchTerm(), unique: true })
+        if (this.searchLanguage !== 'all') {
+          params.set('lang', this.searchLanguage)
+        } else {
+          params.set('anylang', 'on')
+        }
+        params.set('vocab', this.formatVocabParam())
+        return params
       },
       formatVocabParam () {
         var vocabs = this.getSelectedVocabs
@@ -189,6 +192,7 @@ function startGlobalSearchApp () {
           }
           if ('uri' in result) { // create relative Skosmos page URL from the search result URI
             result.pageUrl = result.uri
+            var urlParams = this.formatSearchUrlParams()
             if (this.selectedLanguage !== window.SKOSMOS.lang) { // add content language parameter
               urlParams.append('clang', this.selectedLanguage)
             }
@@ -218,9 +222,8 @@ function startGlobalSearchApp () {
       gotoSearchPage () {
         if (!this.searchTerm) return
 
-        const searchUrlParams = new URLSearchParams({ clang: window.SKOSMOS.content_lang, q: this.searchTerm })
-        if (this.selectedLanguage === 'all') searchUrlParams.set('anylang', 'true')
-        const searchUrl = window.SKOSMOS.vocab + '/' + window.SKOSMOS.lang + '/search?' + searchUrlParams.toString()
+        const searchUrlParams = this.formatSearchUrlParams()
+        const searchUrl = window.SKOSMOS.baseHref + window.SKOSMOS.lang + '/search?' + searchUrlParams.toString()
         window.location.href = searchUrl
       },
       changeLang (clang) {
