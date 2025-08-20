@@ -96,7 +96,7 @@ function startGlobalSearchApp () {
       },
       formatVocabParam () {
         var vocabs = this.getSelectedVocabs
-        return vocabs.map(voc => voc.key).join('+')
+        return vocabs.map(voc => voc.key).join(' ')
       },
       formatSearchTerm () {
         if (this.searchTerm.includes('*')) { return this.searchTerm }
