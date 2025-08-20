@@ -43,7 +43,7 @@ class ConceptPropertyValue extends VocabularyDataObject
 
     public function getSortKey()
     {
-        return strtolower($this->getLabel(checkExternal: false));
+        return strtolower($this->getLabel());
     }
 
     public function getLabel($lang = '', $fallbackToUri = 'uri', $checkExternal = true)
