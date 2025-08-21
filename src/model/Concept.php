@@ -394,9 +394,10 @@ class Concept extends VocabularyDataObject implements Modifiable
     }
 
     /**
+     * @param string[]|null $allowedProperties List of properties to include, or null to include all.
      * @return ConceptProperty[]
      */
-    public function getMappingProperties(array $whitelist = null)
+    public function getMappingProperties(array $allowedProperties = null)
     {
         $ret = array();
 
@@ -404,8 +405,8 @@ class Concept extends VocabularyDataObject implements Modifiable
             $prop = $this->shortenOrKeep($longUri);
             // EasyRdf requires full URIs to be in angle brackets
             $sprop = ($prop == $longUri) ? "<$longUri>" : $prop;
-            if ($whitelist && !in_array($prop, $whitelist)) {
-                // whitelist in use and this is not a whitelisted property, skipping
+            if ($allowedProperties && !in_array($prop, $allowedProperties)) {
+                // allowedProperties in use and this is not an allowed property, skipping
                 continue;
             }
 
