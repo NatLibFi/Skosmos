@@ -242,8 +242,6 @@ body {
     display: inline-block;
   }
 
-
-
   #search-wrapper {
     float: right;
     display: flex;
@@ -269,7 +267,7 @@ body {
   }
 
   #search-wrapper button.dropdown-toggle i {
-    padding-left: 0.25rem;
+    padding-left: 0.5rem;
     font-size: 0.75rem;
   }
 
@@ -319,6 +317,7 @@ body {
   #search-wrapper .dropdown-menu {
     transform: translateY(-1px);
     background-color: var(--search-dropdown-bg);
+    --bs-dropdown-link-active-bg: var(--search-button-bg);
     color: var(--vocab-text);
     border: 1px solid var(--search-border);
     border-radius: 0;
