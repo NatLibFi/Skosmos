@@ -456,6 +456,11 @@ class Concept extends VocabularyDataObject implements Modifiable
         return $this->arbitrarySort($ret);
     }
 
+    private function shortenOrKeep($uri)
+    {
+        return EasyRdf\RdfNamespace::shorten($uri) ?? $uri;
+    }
+
     /**
      * Iterates over all the properties of the concept and returns those in an array.
      * @param string[]|null $allowedProperties List of properties to include, or null to include all.
@@ -501,16 +506,12 @@ class Concept extends VocabularyDataObject implements Modifiable
             }
         }
 
-        foreach ($longUris as &$prop) {
+        foreach ($longUris as &$longUri) {
             // storing full URI without brackets in a separate variable
-            $longUri = $prop;
-            if (EasyRdf\RdfNamespace::shorten($prop) !== null) {
-                // shortening property labels if possible
-                $prop = $sprop = EasyRdf\RdfNamespace::shorten($prop);
-            } else {
-                // EasyRdf requires full URIs to be in angle brackets
-                $sprop = "<$prop>";
-            }
+            $prop = $this->shortenOrKeep($longUri);
+            // EasyRdf requires full URIs to be in angle brackets
+            $sprop = ($prop == $longUri) ? "<$longUri>" : $prop;
+
             if ($allowedProperties !== null && !in_array($prop, $allowedProperties)) {
                 continue;
             }
