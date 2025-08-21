@@ -400,8 +400,7 @@ class Concept extends VocabularyDataObject implements Modifiable
     {
         $ret = array();
 
-        $longUris = $this->resource->propertyUris();
-        foreach ($longUris as &$longUri) {
+        foreach ($this->resource->propertyUris() as &$longUri) {
             $prop = $this->shortenOrKeep($longUri);
             // EasyRdf requires full URIs to be in angle brackets
             $sprop = ($prop == $longUri) ? "<$longUri>" : $prop;
@@ -506,7 +505,6 @@ class Concept extends VocabularyDataObject implements Modifiable
     public function getProperties($allowedProperties = null)
     {
         $properties = array();
-        $longUris = $this->resource->propertyUris();
         $duplicates = array();
         $propertiesWithValues = array();
 
@@ -518,7 +516,7 @@ class Concept extends VocabularyDataObject implements Modifiable
             $properties['skos:narrower'] = $membersArray;
         }
 
-        foreach ($longUris as &$longUri) {
+        foreach ($this->resource->propertyUris() as &$longUri) {
             // storing full URI without brackets in a separate variable
             $prop = $this->shortenOrKeep($longUri);
             // EasyRdf requires full URIs to be in angle brackets
