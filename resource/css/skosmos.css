@@ -212,7 +212,7 @@ body {
 
     content: "\f078"; /* fa-chevron-down */
     color: var(--header-bar-text);
-    font-family: "Font Awesome 5 Solid";
+    font-family: "Font Awesome 5 Solid", sans-serif;
     display: inline-block;
   }
 
@@ -223,7 +223,7 @@ body {
 
     content: "\f077"; /* fa-chevron-up */
     color: var(--header-bar-text);
-    font-family: "Font Awesome 5 Solid";
+    font-family: "Font Awesome 5 Solid", sans-serif;
     display: inline-block;
   }
 
