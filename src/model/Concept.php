@@ -420,10 +420,10 @@ class Concept extends VocabularyDataObject implements Modifiable
                 }
 
                 // Iterating through every resource and adding these to the data object.
-                foreach ($this->resource->allResources($sprop) as $val) {
+                foreach ($this->resource->allResources($sprop) as $resourceValue) {
                     if (isset($ret[$prop])) {
                         // checking if the target vocabulary can be found at the skosmos endpoint
-                        $exuri = $val->getUri();
+                        $exuri = $resourceValue->getUri();
                         // if multiple vocabularies are found, the following method will return in priority the current vocabulary of the concept
                         $exvoc = $this->model->guessVocabularyFromURI($exuri, $this->vocab->getId());
                         // if not querying the uri itself
@@ -442,7 +442,7 @@ class Concept extends VocabularyDataObject implements Modifiable
                                 continue;
                             }
                         }
-                        $ret[$prop]->addValue(new ConceptMappingPropertyValue($this->model, $this->vocab, $val, $this->resource, $prop, $this->clang));
+                        $ret[$prop]->addValue(new ConceptMappingPropertyValue($this->model, $this->vocab, $resourceValue, $this->resource, $prop, $this->clang));
                     }
                 }
             }
@@ -470,7 +470,7 @@ class Concept extends VocabularyDataObject implements Modifiable
         $membersArray = array();
         $longUris = $this->resource->propertyUris();
         $duplicates = array();
-        $ret = array();
+        $propertiesWithValues = array();
 
         // looking for collections and linking those with their narrower concepts
         if ($this->vocab->getConfig()->getArrayClassURI() !== null) {
@@ -514,13 +514,13 @@ class Concept extends VocabularyDataObject implements Modifiable
 
             if (!in_array($prop, $this->deleted) || ($this->isGroup() === false && $prop === 'skos:member')) {
                 // retrieve property label and super properties from the current vocabulary first
-                $propres = new EasyRdf\Resource($prop, $this->graph);
-                $proplabel = $propres->label($this->getLang()) ? $propres->label($this->getLang()) : $propres->label();
+                $propertyResource = new EasyRdf\Resource($prop, $this->graph);
+                $proplabel = $propertyResource->label($this->getLang()) ? $propertyResource->label($this->getLang()) : $propertyResource->label();
 
-                $prophelp = $propres->getLiteral('rdfs:comment|skos:definition', $this->getLang());
+                $prophelp = $propertyResource->getLiteral('rdfs:comment|skos:definition', $this->getLang());
                 if ($prophelp === null) {
                     // try again without language restriction
-                    $prophelp = $propres->getLiteral('rdfs:comment|skos:definition');
+                    $prophelp = $propertyResource->getLiteral('rdfs:comment|skos:definition');
                 }
 
                 // check if the property is one of the well-known properties for which we have a translation
@@ -548,8 +548,8 @@ class Concept extends VocabularyDataObject implements Modifiable
 
                 // look for superproperties in the current graph
                 $superprops = array();
-                foreach ($this->graph->allResources($prop, 'rdfs:subPropertyOf') as $subi) {
-                    $superprops[] = $subi->getUri();
+                foreach ($this->graph->allResources($prop, 'rdfs:subPropertyOf') as $superProperty) {
+                    $superprops[] = $superProperty->getUri();
                 }
 
                 // also look up superprops in the default graph if not found in current vocabulary
@@ -564,34 +564,34 @@ class Concept extends VocabularyDataObject implements Modifiable
 
                 if ($propobj->getLabel() !== null) {
                     // only display properties for which we have a label
-                    $ret[$prop] = $propobj;
+                    $propertiesWithValues[$prop] = $propobj;
                 }
 
                 // searching for subproperties of literals too
                 if ($superprops) {
-                    foreach ($superprops as $subi) {
-                        $duplicates[$this->shortenOrKeep($subi)] = $prop;
+                    foreach ($superprops as $superProperty) {
+                        $duplicates[$this->shortenOrKeep($superProperty)] = $prop;
                     }
                 }
 
                 // Iterating through every literal and adding these to the data object.
-                foreach ($this->resource->allLiterals($sprop) as $val) {
-                    $literal = new ConceptPropertyValueLiteral($this->model, $this->vocab, $this->resource, $val, $prop);
+                foreach ($this->resource->allLiterals($sprop) as $literalValue) {
+                    $literal = new ConceptPropertyValueLiteral($this->model, $this->vocab, $this->resource, $literalValue, $prop);
                     // only add literals when they match the content/hit language or have no language defined OR when they are literals of a multilingual property
-                    if (isset($ret[$prop]) && ($literal->getLang() === $this->clang || $literal->getLang() === null) || $this->vocab->getConfig()->hasMultiLingualProperty($prop)) {
-                        $ret[$prop]->addValue($literal);
+                    if (isset($propertiesWithValues[$prop]) && ($literal->getLang() === $this->clang || $literal->getLang() === null) || $this->vocab->getConfig()->hasMultiLingualProperty($prop)) {
+                        $propertiesWithValues[$prop]->addValue($literal);
                     }
                 }
 
                 // Iterating through every resource and adding these to the data object.
-                foreach ($this->resource->allResources($sprop) as $val) {
+                foreach ($this->resource->allResources($sprop) as $resourceValue) {
                     // skipping narrower concepts which are already shown in a collection
-                    if ($sprop === 'skos:narrower' && array_key_exists($val->getUri(), $inCollection)) {
+                    if ($sprop === 'skos:narrower' && array_key_exists($resourceValue->getUri(), $inCollection)) {
                         continue;
                     }
 
                     // hiding rdf:type property if it's just skos:Concept
-                    if ($sprop === 'rdf:type' && $val->shorten() === 'skos:Concept') {
+                    if ($sprop === 'rdf:type' && $resourceValue->shorten() === 'skos:Concept') {
                         continue;
                     }
 
@@ -600,10 +600,10 @@ class Concept extends VocabularyDataObject implements Modifiable
                         continue;
                     }
 
-                    if (isset($ret[$prop])) {
+                    if (isset($propertiesWithValues[$prop])) {
                         // create a ConceptPropertyValue first, assuming the resource exists in current vocabulary
-                        $value = new ConceptPropertyValue($this->model, $this->vocab, $val, $prop, $this->clang);
-                        $ret[$prop]->addValue($value);
+                        $value = new ConceptPropertyValue($this->model, $this->vocab, $resourceValue, $prop, $this->clang);
+                        $propertiesWithValues[$prop]->addValue($value);
                     }
 
                 }
@@ -612,7 +612,7 @@ class Concept extends VocabularyDataObject implements Modifiable
         // adding narrowers part of a collection
         foreach ($properties as $prop => $values) {
             foreach ($values as $value) {
-                $ret[$prop]->addValue($value);
+                $propertiesWithValues[$prop]->addValue($value);
             }
         }
 
@@ -622,7 +622,7 @@ class Concept extends VocabularyDataObject implements Modifiable
                 $groupPropObj->addValue($propVal);
             }
         }
-        $ret['skosmos:memberOf'] = $groupPropObj;
+        $propertiesWithValues['skosmos:memberOf'] = $groupPropObj;
 
         $arrayPropObj = new ConceptProperty($this->model, 'skosmos:memberOfArray', null);
         foreach ($this->getArrayProperties() as $propVals) {
@@ -630,30 +630,30 @@ class Concept extends VocabularyDataObject implements Modifiable
                 $arrayPropObj->addValue($propVal);
             }
         }
-        $ret['skosmos:memberOfArray'] = $arrayPropObj;
+        $propertiesWithValues['skosmos:memberOfArray'] = $arrayPropObj;
 
-        foreach ($ret as $key => $prop) {
+        foreach ($propertiesWithValues as $key => $prop) {
             if (sizeof($prop->getValues()) === 0) {
-                unset($ret[$key]);
+                unset($propertiesWithValues[$key]);
             }
         }
 
-        $ret = $this->removeDuplicatePropertyValues($ret, $duplicates);
+        $propertiesWithValues = $this->removeDuplicatePropertyValues($propertiesWithValues, $duplicates);
         // sorting the properties to the order preferred in the Skosmos concept page.
-        return $this->arbitrarySort($ret);
+        return $this->arbitrarySort($propertiesWithValues);
     }
 
     /**
      * Removes properties that have duplicate values.
-     * @param array $ret the array of properties generated by getProperties
+     * @param array $propertiesWithValues the array of properties generated by getProperties
      * @param array $duplicates array of properties found are a subProperty of a another property
      * @return array of ConceptProperties
      */
-    public function removeDuplicatePropertyValues($ret, $duplicates)
+    public function removeDuplicatePropertyValues($propertiesWithValues, $duplicates)
     {
         $propertyValues = array();
 
-        foreach ($ret as $prop) {
+        foreach ($propertiesWithValues as $prop) {
             foreach ($prop->getValues() as $value) {
                 $label = $value->getLabel(checkExternal: false);
                 $propertyValues[(is_object($label) && method_exists($label, 'getValue')) ? $label->getValue() : $label][] = $value->getType();
@@ -666,7 +666,7 @@ class Concept extends VocabularyDataObject implements Modifiable
                 foreach ($propnames as $property) {
                     // if there is a more accurate property delete the more generic one.
                     if (isset($duplicates[$property])) {
-                        unset($ret[$property]);
+                        unset($propertiesWithValues[$property]);
                     }
                 }
 
@@ -674,9 +674,9 @@ class Concept extends VocabularyDataObject implements Modifiable
         }
         // handled separately: remove duplicate skos:prefLabel value (#854)
         if (isset($duplicates["skos:prefLabel"])) {
-            unset($ret[$duplicates["skos:prefLabel"]]);
+            unset($propertiesWithValues[$duplicates["skos:prefLabel"]]);
         }
-        return $ret;
+        return $propertiesWithValues;
     }
 
     /**
