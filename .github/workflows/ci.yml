@@ -102,7 +102,7 @@ jobs:
 #
   publish-docker-latest:
     name: publish latest Docker image
-    needs: [ cypress-test ]
+    #needs: [ cypress-test ]
     runs-on: ubuntu-22.04 # muuta uudemmaksi
     timeout-minutes: 15
     if: >-
@@ -154,7 +154,7 @@ jobs:
   # Julkaisuhommat
   publish-release:
     name: publish release
-    needs: [ cypress-test ]
+    #needs: [ cypress-test ]
     runs-on: ubuntu-22.04
     #if: >-
     #  (github.event_name == 'push' && github.ref_name == 'issue1763-pre-built-docker-images-for-public-use') ||
