@@ -154,7 +154,7 @@ jobs:
   # Julkaisuhommat
   publish-release:
     name: publish release
-    needs: [ build-test, cypress-test ]
+    needs: [ cypress-test ]
     runs-on: ubuntu-22.04
     #if: >-
     #  (github.event_name == 'push' && github.ref_name == 'issue1763-pre-built-docker-images-for-public-use') ||
