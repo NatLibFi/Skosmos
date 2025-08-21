@@ -102,7 +102,7 @@ jobs:
 
   publish-docker-latest:
     name: publish latest Docker image
-    needs: [ build-test, cypress-test ]
+    needs: [ cypress-test ]
     runs-on: ubuntu-22.04 # muuta uudemmaksi
     timeout-minutes: 15
     if: >-
