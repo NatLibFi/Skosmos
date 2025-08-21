@@ -17,26 +17,35 @@ function startGlobalSearchApp () {
       }
     },
     computed: {
+      vocabSelectorPlaceholder () {
+        return $t('1. Valitse sanasto')
+      },
+      langSelectorPlaceholder () {
+        return $t('2. Valitse kieli')
+      },
       searchPlaceholder () {
-        return $t('3. Kirjoita hakutermi') // käännä käyttöliittymäkielelle
+        return $t('3. Kirjoita hakutermi')
       },
       noResults () {
-        return $t('No results') // käännä käyttöliittymäkielelle
+        return $t('No results')
       },
       selectSearchLanguageAriaMessage () {
-        return $t('Select search language') // käännä käyttöliittymäkielelle
+        return $t('Select search language')
       },
       textInputWithDropdownButtonAriaMessage () {
-        return $t('Text input with dropdown button') // käännä käyttöliittymäkielelle
+        return $t('Text input with dropdown button')
       },
       searchAriaMessage () {
-        return $t('Search') // käännä käyttöliittymäkielelle
+        return $t('Search')
       },
       getSelectedVocabs () {
         return this.selectedVocabs.map(key => ({ key, value: this.vocabStrings[key] }))
       },
       searchLanguage () {
         return this.selectedLanguage
+      },
+      selectedVocabsString () {
+        return this.getSelectedVocabs.map(voc => voc.value).join(' ')
       }
     },
     mounted () {
@@ -237,13 +246,14 @@ function startGlobalSearchApp () {
     template: `
       <div id="search-wrapper">
         <div class="dropdown" id="vocab-selector">
-          <button class="btn btn-outline-secondary dropdown-toggle"
+          <button class="btn btn-outline-secondary dropdown-toggle vocab-dropdown-btn"
             role="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
             :aria-label="selectSearchLanguageAriaMessage"
             v-if="languageStrings">
-            1. Valitse sanasto
+            <span v-if="selectedVocabsString">{{ selectedVocabsString }}</span>
+            <span v-else>{{ vocabSelectorPlaceholder }}</span>
             <i class="fa-solid fa-chevron-down"></i>
           </button>
           <ul class="dropdown-menu" id="vocab-list" role="menu">
@@ -267,7 +277,10 @@ function startGlobalSearchApp () {
             aria-expanded="false"
             :aria-label="selectSearchLanguageAriaMessage"
             v-if="languageStrings">
-            2. Valitse kieli
+              <span v-if="selectedLanguage && languageStrings[selectedLanguage]">
+                {{ languageStrings[selectedLanguage] }}
+              </span>
+              <span v-else>{{ langSelectorPlaceholder }}</span>
             <i class="fa-solid fa-chevron-down"></i>
           </button>
           <ul class="dropdown-menu" id="language-list" role="menu">
