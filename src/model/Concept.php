@@ -117,7 +117,7 @@ class Concept extends VocabularyDataObject implements Modifiable
     {
         $groupClass = $this->getVocab()->getConfig()->getGroupClassURI();
         if ($groupClass) {
-            $groupClass = EasyRdf\RdfNamespace::shorten($groupClass) !== null ? EasyRdf\RdfNamespace::shorten($groupClass) : $groupClass;
+            $groupClass = $this->shortenOrKeep($groupClass);
             return in_array($groupClass, $this->getType());
         }
         return false;
@@ -401,14 +401,10 @@ class Concept extends VocabularyDataObject implements Modifiable
         $ret = array();
 
         $longUris = $this->resource->propertyUris();
-        foreach ($longUris as &$prop) {
-            if (EasyRdf\RdfNamespace::shorten($prop) !== null) {
-                // shortening property labels if possible
-                $prop = $sprop = EasyRdf\RdfNamespace::shorten($prop);
-            } else {
-                // EasyRdf requires full URIs to be in angle brackets
-                $sprop = "<$prop>";
-            }
+        foreach ($longUris as &$longUri) {
+            $prop = $this->shortenOrKeep($longUri);
+            // EasyRdf requires full URIs to be in angle brackets
+            $sprop = ($prop == $longUri) ? "<$longUri>" : $prop;
             if ($whitelist && !in_array($prop, $whitelist)) {
                 // whitelist in use and this is not a whitelisted property, skipping
                 continue;
@@ -562,10 +558,7 @@ class Concept extends VocabularyDataObject implements Modifiable
                 }
 
                 // we're reading only one super property, even if there are multiple ones
-                $superprop = ($superprops) ? $superprops[0] : null;
-                if ($superprop) {
-                    $superprop = EasyRdf\RdfNamespace::shorten($superprop) ? EasyRdf\RdfNamespace::shorten($superprop) : $superprop;
-                }
+                $superprop = ($superprops) ? $this->shortenOrKeep($superprops[0]) : null;
                 $sort_by_notation = $this->vocab->getConfig()->getSortByNotation();
                 $propobj = new ConceptProperty($this->model, $prop, $proplabel, $prophelp, $superprop, $sort_by_notation);
 
@@ -577,8 +570,7 @@ class Concept extends VocabularyDataObject implements Modifiable
                 // searching for subproperties of literals too
                 if ($superprops) {
                     foreach ($superprops as $subi) {
-                        $suburi = EasyRdf\RdfNamespace::shorten($subi) ? EasyRdf\RdfNamespace::shorten($subi) : $subi;
-                        $duplicates[$suburi] = $prop;
+                        $duplicates[$this->shortenOrKeep($subi)] = $prop;
                     }
                 }
 
