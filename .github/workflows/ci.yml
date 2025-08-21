@@ -11,100 +11,100 @@ on:
     - cron: '0 6 * * MON'
 
 jobs:
-#  build-test:
-#    runs-on: ubuntu-latest
-#    permissions:
-#      packages: write
-#    timeout-minutes: 10
-#    continue-on-error: ${{ matrix.experimental }}
-#    strategy:
-#      fail-fast: false
-#      matrix:
-#        php_version: ["8.1", "8.2", "8.3"]
-#        experimental: [false]
-#
-#    steps:
-#    - name: Check out repository code
-#      uses: actions/checkout@v3
-#      with:
-#        fetch-depth: 0
-#
-#    - name: Start up containers
-#      run: cd tests; ./init_containers.sh
-#
-#    - name: Cache Composer dependencies
-#      uses: actions/cache@v3
-#      with:
-#        path: |
-#          /tmp/composer-cache
-#          vendor
-#          components
-#        key: ${{ runner.os }}-php${{ matrix.php_version}}-skosmos3-${{ hashFiles('**/composer.json') }}
-#        restore-keys: |
-#          ${{ runner.os }}-php${{ matrix.php_version}}-skosmos3-
-#
-#    - name: Set up PHP
-#      uses: shivammathur/setup-php@v2
-#      with:
-#        php-version: ${{ matrix.php_version }}
-#        extensions: intl, xsl, pcov
-#        coverage: pcov
-#
-#    - name: Install Composer dependencies
-#      run: composer install --no-progress --prefer-dist
-#
-#    - name: Install Node
-#      uses: actions/setup-node@v3
-#      with:
-#        node-version: 16.x
-#
-#    - name: Install JavaScript dependencies
-#      run: npm install
-#
-#    - name: Check PHP code style
-#      run: ./vendor/bin/php-cs-fixer fix src --diff --dry-run
-#
-#    - name: Check JavaScript code style
-#      run: cd resource/js; npx standard *.js
-#
-#    - name: Run PHPUnit tests
-#      run: ./vendor/bin/phpunit --configuration phpunit.xml
-#
-#    - name: Publish code coverage to Code Climate
-#      uses: paambaati/codeclimate-action@v5.0.0
-#      env:
-#        CC_TEST_REPORTER_ID: fb98170a5c7ea9cc2bbab19ff26268335e6a11a4f8267ca935e5e8ff4624886c
-#      with:
-#        prefix: /app
-#
-#    - name: Publish code coverage to Codecov
-#      uses: codecov/codecov-action@v3
-#
-#  cypress-test:
-#    runs-on: ubuntu-latest
-#    steps:
-#    - name: Check out repository code
-#      uses: actions/checkout@v3
-#      with:
-#        fetch-depth: 0
-#
-#    - name: Start up containers
-#      run: cd tests; ./init_containers.sh
-#
-#    - name: Install Node
-#      uses: actions/setup-node@v3
-#      with:
-#        node-version: 16.x
-#
-#    - name: Install JavaScript dependencies
-#      run: npm install
-#
-#    - name: Run Cypress tests
-#      run: npx cypress run
-#
+  build-test:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    timeout-minutes: 10
+    continue-on-error: ${{ matrix.experimental }}
+    strategy:
+      fail-fast: false
+      matrix:
+        php_version: ["8.1", "8.2", "8.3"]
+        experimental: [false]
+
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Start up containers
+      run: cd tests; ./init_containers.sh
+
+    - name: Cache Composer dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          /tmp/composer-cache
+          vendor
+          components
+        key: ${{ runner.os }}-php${{ matrix.php_version}}-skosmos3-${{ hashFiles('**/composer.json') }}
+        restore-keys: |
+          ${{ runner.os }}-php${{ matrix.php_version}}-skosmos3-
+
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php_version }}
+        extensions: intl, xsl, pcov
+        coverage: pcov
+
+    - name: Install Composer dependencies
+      run: composer install --no-progress --prefer-dist
+
+    - name: Install Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+
+    - name: Install JavaScript dependencies
+      run: npm install
+
+    - name: Check PHP code style
+      run: ./vendor/bin/php-cs-fixer fix src --diff --dry-run
+
+    - name: Check JavaScript code style
+      run: cd resource/js; npx standard *.js
+
+    - name: Run PHPUnit tests
+      run: ./vendor/bin/phpunit --configuration phpunit.xml
+
+    - name: Publish code coverage to Code Climate
+      uses: paambaati/codeclimate-action@v5.0.0
+      env:
+        CC_TEST_REPORTER_ID: fb98170a5c7ea9cc2bbab19ff26268335e6a11a4f8267ca935e5e8ff4624886c
+      with:
+        prefix: /app
+
+    - name: Publish code coverage to Codecov
+      uses: codecov/codecov-action@v3
+
+  cypress-test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Start up containers
+      run: cd tests; ./init_containers.sh
+
+    - name: Install Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+
+    - name: Install JavaScript dependencies
+      run: npm install
+
+    - name: Run Cypress tests
+      run: npx cypress run
+
   publish-docker-latest:
     name: publish latest Docker image
-    #needs: [ cypress-test ]
+    needs: [ build-test, cypress-test ]
     runs-on: ubuntu-22.04 # muuta uudemmaksi
     timeout-minutes: 15
     if: >-
@@ -156,7 +156,7 @@ jobs:
   # Julkaisuhommat
   publish-release:
     name: publish release
-    #needs: [ cypress-test ]
+    needs: [ build-test, cypress-test ]
     runs-on: ubuntu-22.04
     #if: >-
     #  (github.event_name == 'push' && github.ref_name == 'issue1763-pre-built-docker-images-for-public-use') ||
