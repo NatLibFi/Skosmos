@@ -905,6 +905,12 @@ body {
   #search-results {
     background-color: var(--vocab-bg);
   }
+
+  #search-results h1 {
+    font-size: 1.3rem;
+    font-family: var(--font-family);
+  }
+
   .search-result {
     border-top: 1px solid var(--vocab-table-border);
     margin-top: 2.5rem;
