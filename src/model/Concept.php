@@ -457,6 +457,47 @@ class Concept extends VocabularyDataObject implements Modifiable
         return EasyRdf\RdfNamespace::shorten($uri) ?? $uri;
     }
 
+    private function getCollectionMembersInUse(): array
+    {
+        $inCollection = [];
+        $membersArray = [];
+
+        $arrayClassUri = $this->vocab->getConfig()->getArrayClassURI();
+        if ($arrayClassUri === null) {
+            return ['inCollection' => $inCollection, 'membersArray' => $membersArray];
+        }
+
+        $collections = $this->graph->allOfType($arrayClassUri);
+        if (count($collections) === 0) {
+            return ['inCollection' => $inCollection, 'membersArray' => $membersArray];
+        }
+
+        // Index narrowers by URI
+        $narrowersByUri = [];
+        foreach ($this->resource->allResources('skos:narrower') as $narrower) {
+            $narrowersByUri[$narrower->getUri()] = $narrower;
+        }
+
+        foreach ($collections as $coll) {
+            $currCollMembers = $this->getCollectionMembers($coll, $narrowersByUri);
+
+            foreach ($currCollMembers as $collection) {
+                if ($collection->getSubMembers()) {
+                    foreach ($collection->getSubMembers() as $member) {
+                        $inCollection[$member->getUri()] = true;
+                    }
+                }
+            }
+
+            if (isset($collection) && $collection->getSubMembers()) {
+                $membersArray = array_merge($membersArray, $currCollMembers);
+            }
+        }
+
+        return ['inCollection' => $inCollection, 'membersArray' => $membersArray];
+    }
+
+
     /**
      * Iterates over all the properties of the concept and returns those in an array.
      * @param string[]|null $allowedProperties List of properties to include, or null to include all.
@@ -465,41 +506,16 @@ class Concept extends VocabularyDataObject implements Modifiable
     public function getProperties($allowedProperties = null)
     {
         $properties = array();
-        $narrowersByUri = array();
-        $inCollection = array();
-        $membersArray = array();
         $longUris = $this->resource->propertyUris();
         $duplicates = array();
         $propertiesWithValues = array();
 
-        // looking for collections and linking those with their narrower concepts
-        if ($this->vocab->getConfig()->getArrayClassURI() !== null) {
-            $collections = $this->graph->allOfType($this->vocab->getConfig()->getArrayClassURI());
-            if (sizeof($collections) > 0) {
-                // indexing the narrowers once to avoid iterating all of them with every collection
-                foreach ($this->resource->allResources('skos:narrower') as $narrower) {
-                    $narrowersByUri[$narrower->getUri()] = $narrower;
-                }
+        $collectionData = $this->getCollectionMembersInUse();
+        $inCollection = $collectionData['inCollection'];
+        $membersArray = $collectionData['membersArray'];
 
-                foreach ($collections as $coll) {
-                    $currCollMembers = $this->getCollectionMembers($coll, $narrowersByUri);
-                    foreach ($currCollMembers as $collection) {
-                        if ($collection->getSubMembers()) {
-                            $submembers = $collection->getSubMembers();
-                            foreach ($submembers as $member) {
-                                $inCollection[$member->getUri()] = true;
-                            }
-
-                        }
-                    }
-
-                    if (isset($collection) && $collection->getSubMembers()) {
-                        $membersArray = array_merge($currCollMembers, $membersArray);
-                    }
-
-                }
-                $properties['skos:narrower'] = $membersArray;
-            }
+        if (!empty($membersArray)) {
+            $properties['skos:narrower'] = $membersArray;
         }
 
         foreach ($longUris as &$longUri) {
