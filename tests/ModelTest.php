@@ -31,9 +31,9 @@ class ModelTest extends PHPUnit\Framework\TestCase
         $this->assertNotNull($model->getConfig());
     }
 
-//    /**
+// /*     *//**
 //     * @covers Model::getVersion
-//     */
+//     *//*
 //    public function testGetVersion()
 //    {
 //        $version = $this->model->getVersion();
@@ -46,7 +46,7 @@ class ModelTest extends PHPUnit\Framework\TestCase
 //            "Composer version '$version' doesn't match git tag '$git_tag'.\n" .
 //      "Please run 'composer update' to update the Composer version."
 //        );
-//    }
+//    } */
 
     /**
      * @covers Model::getVocabularyList
