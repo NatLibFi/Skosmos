@@ -128,8 +128,8 @@ jobs:
         with:
           images: quay.io/natlibfi/skosmos
           tags: | # voisi tyottaa latestin lisäksi myös release-tagatyt eli versionumeroidut. Muista semanttisen versionnin hommat
-            type=raw,value=ci-test
-            type=raw,value=ci-test-${{ github.sha }}
+            type=raw,value=ci-latesttest
+            type=raw,value=ci-latesttest-${{ github.sha }}
 
       - name: Build and push to Quay.io
         uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83  # v6.18.0
