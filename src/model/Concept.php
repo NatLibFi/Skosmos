@@ -670,7 +670,7 @@ class Concept extends VocabularyDataObject implements Modifiable
 
         foreach ($propertiesWithValues as $prop) {
             foreach ($prop->getValues() as $value) {
-                $label = $value->getLabel(checkExternal: false);
+                $label = $value->getLabel(allowExternal: false);
                 $propertyValues[(is_object($label) && method_exists($label, 'getValue')) ? $label->getValue() : $label][] = $value->getType();
             }
         }

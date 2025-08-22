@@ -44,14 +44,15 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
         return $this->type;
     }
 
-    public function getLabel($lang = '', $queryExVocabs = true, $checkExternal = true)
+    public function getLabel($lang = '', $allowExternal = true)
     {
-        if (isset($this->labelcache[$lang])) {
-            return $this->labelcache[$lang];
+        $key = $lang . "/" . ($allowExternal ? "true" : "false");
+        if (isset($this->labelcache[$key])) {
+            return $this->labelcache[$key];
         }
 
-        $label = $this->queryLabel($lang);
-        $this->labelcache[$lang] = $label;
+        $label = $this->queryLabel($lang, $allowExternal);
+        $this->labelcache[$key] = $label;
         return $label;
     }
 
@@ -60,7 +61,7 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
         return strtolower($this->getVocabName() . ": " . $this->getLabel());
     }
 
-    private function queryLabel($lang = '', $queryExVocabs = true)
+    private function queryLabel($lang = '', $allowExternal = true)
     {
         if ($this->clang) {
             $lang = $this->clang;
@@ -73,7 +74,7 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
         }
 
         // if multiple vocabularies are found, the following method will return in priority the current vocabulary of the mapping
-        $exvocab = $queryExVocabs ? $this->model->guessVocabularyFromURI($this->resource->getUri(), $this->vocab->getId()) : null;
+        $exvocab = $allowExternal ? $this->model->guessVocabularyFromURI($this->resource->getUri(), $this->vocab->getId()) : null;
 
         // if the resource is from another vocabulary known by the skosmos instance
         if ($exvocab) {
@@ -169,9 +170,9 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
      * Return the mapping as a JSKOS-compatible array.
      * @return array
      */
-    public function asJskos($queryExVocabs = true, $lang = null, $hrefLink = null)
+    public function asJskos($allowExternal = true, $lang = null, $hrefLink = null)
     {
-        $propertyLabel = $this->getLabel($lang, $queryExVocabs);
+        $propertyLabel = $this->getLabel($lang);
         $propertyLang = $lang;
         if (!is_string($propertyLabel)) {
             $propertyLang = $propertyLabel->getLang();
@@ -230,7 +231,7 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
             $ret['to']['memberSet'][0]['notation'] = (string) $notation;
         }
 
-        $label = $this->getLabel($lang, $queryExVocabs);
+        $label = $this->getLabel($lang, $allowExternal);
         if (isset($label)) {
             if (is_string($label)) {
                 list($labelLang, $labelValue) = ['', $label];

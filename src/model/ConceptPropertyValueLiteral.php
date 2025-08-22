@@ -61,7 +61,7 @@ class ConceptPropertyValueLiteral extends VocabularyDataObject
         return preg_match("/\/[a-z]*>/i", $this->getLabel()) != 0;
     }
 
-    public function getLabel($checkExternal = false)
+    public function getLabel($allowExternal = false)
     {
         // if the property is a date object converting it to a human readable representation.
         if ($this->literal instanceof EasyRdf\Literal\Date) {
