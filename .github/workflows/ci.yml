@@ -20,97 +20,98 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php_version: ["8.1", "8.2", "8.3"]
-        experimental: [false]
+        php_version: [ "8.1", "8.2", "8.3" ]
+        experimental: [ false ]
 
     steps:
-    - name: Check out repository code
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-    - name: Start up containers
-      run: cd tests; ./init_containers.sh
+      - name: Start up containers
+        run: cd tests; ./init_containers.sh
 
-    - name: Cache Composer dependencies
-      uses: actions/cache@v3
-      with:
-        path: |
-          /tmp/composer-cache
-          vendor
-          components
-        key: ${{ runner.os }}-php${{ matrix.php_version}}-skosmos3-${{ hashFiles('**/composer.json') }}
-        restore-keys: |
-          ${{ runner.os }}-php${{ matrix.php_version}}-skosmos3-
+      - name: Cache Composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            /tmp/composer-cache
+            vendor
+            components
+          key: ${{ runner.os }}-php${{ matrix.php_version}}-skosmos3-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-php${{ matrix.php_version}}-skosmos3-
 
-    - name: Set up PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: ${{ matrix.php_version }}
-        extensions: intl, xsl, pcov
-        coverage: pcov
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php_version }}
+          extensions: intl, xsl, pcov
+          coverage: pcov
 
-    - name: Install Composer dependencies
-      run: composer install --no-progress --prefer-dist
+      - name: Install Composer dependencies
+        run: composer install --no-progress --prefer-dist
 
-    - name: Install Node
-      uses: actions/setup-node@v3
-      with:
-        node-version: 20.x
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
 
-    - name: Install JavaScript dependencies
-      run: npm install
+      - name: Install JavaScript dependencies
+        run: npm install
 
-    - name: Check PHP code style
-      run: ./vendor/bin/php-cs-fixer fix src --diff --dry-run
+      - name: Check PHP code style
+        run: ./vendor/bin/php-cs-fixer fix src --diff --dry-run
 
-    - name: Check JavaScript code style
-      run: cd resource/js; npx standard *.js
+      - name: Check JavaScript code style
+        run: cd resource/js; npx standard *.js
 
-    - name: Run PHPUnit tests
-      run: ./vendor/bin/phpunit --configuration phpunit.xml
+      - name: Run PHPUnit tests
+        run: ./vendor/bin/phpunit --configuration phpunit.xml
 
-    - name: Publish code coverage to Code Climate
-      uses: paambaati/codeclimate-action@v5.0.0
-      env:
-        CC_TEST_REPORTER_ID: fb98170a5c7ea9cc2bbab19ff26268335e6a11a4f8267ca935e5e8ff4624886c
-      with:
-        prefix: /app
+      - name: Publish code coverage to Code Climate
+        uses: paambaati/codeclimate-action@v5.0.0
+        env:
+          CC_TEST_REPORTER_ID: fb98170a5c7ea9cc2bbab19ff26268335e6a11a4f8267ca935e5e8ff4624886c
+        with:
+          prefix: /app
 
-    - name: Publish code coverage to Codecov
-      uses: codecov/codecov-action@v3
+      - name: Publish code coverage to Codecov
+        uses: codecov/codecov-action@v3
 
   cypress-test:
     runs-on: ubuntu-latest
+
     steps:
-    - name: Check out repository code
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-    - name: Start up containers
-      run: cd tests; ./init_containers.sh
+      - name: Start up containers
+        run: cd tests; ./init_containers.sh
 
-    - name: Install Node
-      uses: actions/setup-node@v3
-      with:
-        node-version: 20.x
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
 
-    - name: Install JavaScript dependencies
-      run: npm install
+      - name: Install JavaScript dependencies
+        run: npm install
 
-    - name: Run Cypress tests
-      run: npx cypress run
+      - name: Run Cypress tests
+        run: npx cypress run
 
   publish-docker-latest:
     name: publish latest Docker image
     needs: [ build-test, cypress-test ]
-    runs-on: ubuntu-24.04 # muuta uudemmaksi
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     if: >-
       (github.event_name == 'push' && github.ref_name == 'issue1763-pre-built-docker-images-for-public-use') ||
       (github.event_name == 'pull_request' && github.head_ref == 'issue1763-pre-built-docker-images-for-public-use')
-    # if: github.event_name == 'push' && github.ref_name == 'issue1763-pre-built-docker-images-for-public-use' # Ref pois? Ei muissa brancheissä
+
     steps:
       - name: Check out repo
         uses: actions/checkout@v4
@@ -127,15 +128,15 @@ jobs:
         uses: docker/metadata-action@c1e51972afc2121e065aed6d45c65596fe445f3f  # v5.8.0
         with:
           images: quay.io/natlibfi/skosmos
-          tags: | # voisi tyottaa latestin lisäksi myös release-tagatyt eli versionumeroidut. Muista semanttisen versionnin hommat
+          tags: |
             type=raw,value=ci-latesttest
             type=raw,value=ci-latesttest-${{ github.sha }}
 
       - name: Build and push to Quay.io
         uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83  # v6.18.0
         with:
-          context: . # ./dockerfiles/jena-fuseki2-docker
-          file: dockerfiles/Dockerfile.ubuntu # ./dockerfiles/jena-fuseki2-docker/Dockerfile # later: ./dockerfiles/Dockerfile.ubuntu
+          context: .
+          file: dockerfiles/Dockerfile.ubuntu
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -153,15 +154,12 @@ jobs:
           echo "Labels:"
           echo "${{ steps.meta.outputs.labels }}"
 
-  # Julkaisuhommat
   publish-release:
     name: publish release
     needs: [ build-test, cypress-test ]
     runs-on: ubuntu-24.04
-    #if: >-
-    #  (github.event_name == 'push' && github.ref_name == 'issue1763-pre-built-docker-images-for-public-use') ||
-    #  (github.event_name == 'pull_request' && github.head_ref == 'issue1763-pre-built-docker-images-for-public-use')
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+
     steps:
       - name: Check out repo
         uses: actions/checkout@v4
@@ -187,8 +185,8 @@ jobs:
       - name: Build and push to Quay.io
         uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83  # v6.18.0
         with:
-          context: . # ./dockerfiles/jena-fuseki2-docker
-          file: dockerfiles/Dockerfile.ubuntu # ./dockerfiles/jena-fuseki2-docker/Dockerfile # later: ./dockerfiles/Dockerfile.ubuntu
+          context: .
+          file: dockerfiles/Dockerfile.ubuntu
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
