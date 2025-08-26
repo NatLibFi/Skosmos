@@ -376,7 +376,7 @@ class GlobalConfig extends BaseConfig
      */
     public function getHoneypotEnabled()
     {
-        return $this->getBoolean('skosmos:uiHoneypotEnabled', true);
+        return $this->getBoolean('skosmos:feedbackHoneypotEnabled', true);
     }
 
     /**
@@ -384,7 +384,7 @@ class GlobalConfig extends BaseConfig
      */
     public function getHoneypotTime()
     {
-        return $this->getLiteral('skosmos:uiHoneypotTime', 5);
+        return $this->getLiteral('skosmos:feedbackHoneypotTime', 5);
     }
 
     /**

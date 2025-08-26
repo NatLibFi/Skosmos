@@ -58,9 +58,9 @@
     # whether to display the ui language selection as a dropdown (useful for cases where there are more than 3 languages) 
     skosmos:uiLanguageDropdown false ;
     # whether to enable the spam honey pot or not, enabled by default
-    skosmos:uiHoneypotEnabled true ;
+    skosmos:feedbackHoneypotEnabled true ;
     # default time a user must wait before submitting a form
-    skosmos:uiHoneypotTime 5 .
+    skosmos:feedbackHoneypotTime 5 .
 
 # Skosmos vocabularies
 
