@@ -113,6 +113,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
         $mapping = new ConceptMappingPropertyValue($this->model, $this->vocab, $mockres, $mocksource, 'skos:exactMatch');
         $this->assertEquals('english lit', $mapping->getLabel('en'));
         $this->assertEquals('default lit', $mapping->getLabel());
+        $this->assertEquals('default lit', $mapping->getLabel()); // from labelcache
     }
 
     /**
