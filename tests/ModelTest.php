@@ -31,22 +31,22 @@ class ModelTest extends PHPUnit\Framework\TestCase
         $this->assertNotNull($model->getConfig());
     }
 
-//    /**
-//     * @covers Model::getVersion
-//     */
-//    public function testGetVersion()
-//    {
-//        $version = $this->model->getVersion();
-//        // make sure that the returned version (which comes from composer.json)
-//        // matches the version from git tags
-//        $git_tag = rtrim(shell_exec('git describe --tags --always'));
-//        $this->assertStringStartsWith(
-//            "v" . $version,
-//            $git_tag,
-//            "Composer version '$version' doesn't match git tag '$git_tag'.\n" .
-//      "Please run 'composer update' to update the Composer version."
-//        );
-//    }
+   /**
+    * @covers Model::getVersion
+    */
+   public function testGetVersion()
+   {
+       $version = $this->model->getVersion();
+       // make sure that the returned version (which comes from composer.json)
+       // matches the version from git tags
+       $git_tag = rtrim(shell_exec('git describe --tags --always'));
+       $this->assertStringStartsWith(
+           "v" . $version,
+           $git_tag,
+           "Composer version '$version' doesn't match git tag '$git_tag'.\n" .
+     "Please run 'composer update' to update the Composer version."
+       );
+   }
 
     /**
      * @covers Model::getVocabularyList
