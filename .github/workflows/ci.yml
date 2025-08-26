@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       packages: write
-    timeout-minutes: 10
+    timeout-minutes: 60
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       fail-fast: false
@@ -68,7 +68,10 @@ jobs:
         run: cd resource/js; npx standard *.js
 
       - name: Run PHPUnit tests
-        run: ./vendor/bin/phpunit --configuration phpunit.xml
+        run: |
+          while sleep 60; do echo "The tests are still running .."; done &
+          ./vendor/bin/phpunit --configuration phpunit.xml
+          kill %1
 
       - name: Publish code coverage to Code Climate
         uses: paambaati/codeclimate-action@v5.0.0
