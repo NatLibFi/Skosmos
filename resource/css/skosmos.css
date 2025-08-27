@@ -299,23 +299,12 @@ body {
   }
 
   #search-wrapper .vocab-dropdown-btn span::after {
-    content: "";
     position: absolute;
     top: 0;
     right: 0;
     width: 3rem;
     height: 100%;
-    pointer-events: none;
-    background: linear-gradient(to right, transparent, var(--white-color) 70%);
     z-index: 1;
-  }
-
-  #search-wrapper .vocab-dropdown-btn:hover span::after {
-    background: linear-gradient(to right, transparent, var(--medium-color) 70%);
-  }
-
-  #search-wrapper button.dropdown-toggle.show span::after {
-    background: linear-gradient(to right, transparent, var(--medium-color) 70%);
   }
 
   #search-wrapper .chevron {
