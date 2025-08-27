@@ -449,7 +449,7 @@ class Vocabulary extends DataObject implements Modifiable
      * @param string $clang content language
      * @return Concept
      */
-    public function getConceptInfo(string $uri, string $clang): Concept
+    public function getConceptInfo(string $uri, string $clang): ?Concept
     {
         $sparql = $this->getSparql();
         $conceptInfo = null;
@@ -459,6 +459,9 @@ class Vocabulary extends DataObject implements Modifiable
             if ($this->model->getConfig()->getLogCaughtExceptions()) {
                 error_log('Caught exception: ' . $e->getMessage());
             }
+        }
+        if (!$conceptInfo) {
+            return null;
         }
         return $conceptInfo[0];
     }

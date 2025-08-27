@@ -35,7 +35,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
     public function testGetSortKey()
     {
         $propvals = $this->props['skos:exactMatch']->getValues();
-        $this->assertEquals('test ontology: eel', $propvals['Eel http://www.skosmos.skos/test/ta115']->getSortKey());
+        $this->assertEquals('test ontology: eel', $propvals['test:ta115 http://www.skosmos.skos/test/ta115']->getSortKey());
     }
 
     /**
@@ -46,7 +46,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
     public function testGetLabelFromExternalVocabulary()
     {
         $propvals = $this->props['skos:exactMatch']->getValues();
-        $this->assertEquals('Eel', $propvals['Eel http://www.skosmos.skos/test/ta115']->getLabel()->getValue());
+        $this->assertEquals('Eel', $propvals['test:ta115 http://www.skosmos.skos/test/ta115']->getLabel()->getValue());
     }
 
     /**
@@ -113,6 +113,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
         $mapping = new ConceptMappingPropertyValue($this->model, $this->vocab, $mockres, $mocksource, 'skos:exactMatch');
         $this->assertEquals('english lit', $mapping->getLabel('en'));
         $this->assertEquals('default lit', $mapping->getLabel());
+        $this->assertEquals('default lit', $mapping->getLabel()); // from labelcache
     }
 
     /**
@@ -139,8 +140,8 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
     public function testGetExVocab()
     {
         $propvals = $this->props['skos:exactMatch']->getValues();
-        $this->assertInstanceOf('Vocabulary', $propvals['Eel http://www.skosmos.skos/test/ta115']->getExVocab());
-        $this->assertEquals('test', $propvals['Eel http://www.skosmos.skos/test/ta115']->getExVocab()->getId());
+        $this->assertInstanceOf('Vocabulary', $propvals['test:ta115 http://www.skosmos.skos/test/ta115']->getExVocab());
+        $this->assertEquals('test', $propvals['test:ta115 http://www.skosmos.skos/test/ta115']->getExVocab()->getId());
     }
 
     /**
@@ -149,7 +150,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
     public function testGetVocabNameWithExternalVocabulary()
     {
         $propvals = $this->props['skos:exactMatch']->getValues();
-        $this->assertEquals('Test ontology', $propvals['Eel http://www.skosmos.skos/test/ta115']->getVocabName());
+        $this->assertEquals('Test ontology', $propvals['test:ta115 http://www.skosmos.skos/test/ta115']->getVocabName());
     }
 
     /**
@@ -158,7 +159,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
     public function testGetUri()
     {
         $propvals = $this->props['skos:exactMatch']->getValues();
-        $this->assertEquals('http://www.skosmos.skos/test/ta115', $propvals['Eel http://www.skosmos.skos/test/ta115']->getUri());
+        $this->assertEquals('http://www.skosmos.skos/test/ta115', $propvals['test:ta115 http://www.skosmos.skos/test/ta115']->getUri());
     }
 
     /**
@@ -167,7 +168,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
     public function testGetVocab()
     {
         $propvals = $this->props['skos:exactMatch']->getValues();
-        $this->assertEquals($this->vocab, $propvals['Eel http://www.skosmos.skos/test/ta115']->getVocab());
+        $this->assertEquals($this->vocab, $propvals['test:ta115 http://www.skosmos.skos/test/ta115']->getVocab());
     }
 
     /**
@@ -176,7 +177,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
     public function testGetType()
     {
         $propvals = $this->props['skos:exactMatch']->getValues();
-        $this->assertEquals('skos:exactMatch', $propvals['Eel http://www.skosmos.skos/test/ta115']->getType());
+        $this->assertEquals('skos:exactMatch', $propvals['test:ta115 http://www.skosmos.skos/test/ta115']->getType());
     }
 
     /**
@@ -185,7 +186,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
     public function testToString()
     {
         $propvals = $this->props['skos:exactMatch']->getValues();
-        $this->assertEquals('Eel', $propvals['Eel http://www.skosmos.skos/test/ta115']->__toString());
+        $this->assertEquals('Eel', $propvals['test:ta115 http://www.skosmos.skos/test/ta115']->__toString());
     }
 
     /**
@@ -226,7 +227,7 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
           'lang' => 'en',
           'vocabName' => 'Test ontology',
           'typeLabel' => 'Exactly matching concepts',
-        ], $propvals['Eel http://www.skosmos.skos/test/ta115']->asJskos());
+        ], $propvals['test:ta115 http://www.skosmos.skos/test/ta115']->asJskos());
     }
 
 }

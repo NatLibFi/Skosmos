@@ -26,9 +26,10 @@
   {% endif -%}
   </div>
   <ul class="list-group">
-  {% set conceptProperties = concept.properties %}
+  {% set allowedProperties = PreferredProperties|merge(concept.vocab.config.additionalSearchProperties)|merge(concept.vocab.config.hierarchyProperty)|merge(['rdf:type']) %}
+  {% set conceptProperties = concept.getProperties(allowedProperties) %}
   {%~ for property in conceptProperties ~%} {# loop through ConceptProperty objects #}
-    {%~ if property.type in PreferredProperties or property.type in concept.vocab.config.additionalSearchProperties  or property.type in concept.vocab.config.hierarchyProperty ~%}
+    {%~ if property.type != 'rdf:type' ~%}
     <li class="list-group-item px-0 py-1">
       <span class="skosmos-tooltip" data-title="{{ property.description }}">
   {%- if property.type == 'skos:broader' -%}<i class="property-hover fa-solid fa-arrow-turn-up fa-rotate-270"></i>
