@@ -5,6 +5,11 @@
  */
 class GenericSparql {
     /**
+     * SPARQL endpoint URL
+     * @property string $endpoint
+     */
+    protected $endpoint;
+    /**
      * A SPARQL Client eg. an EasyRDF instance.
      * @property EasyRdf\Sparql\Client $client
      */
@@ -32,13 +37,23 @@ class GenericSparql {
     private $qnamecache = array();
 
     /**
+     * Cache used to avoid duplicate SPARQL queries. The cache must be
+     * static so that all GenericSparql instances have access to the
+     * same shared cache.
+     * @property array $querycache
+     */
+    private static $querycache = array();
+
+    /**
      * Requires the following three parameters.
      * @param string $endpoint SPARQL endpoint address.
      * @param string|null $graph Which graph to query: Either an URI, the special value "?graph"
      *                           to use the default graph, or NULL to not use a GRAPH clause.
      * @param object $model a Model instance.
      */
-    public function __construct($endpoint, $graph, $model) {
+    public function __construct($endpoint, $graph, $model)
+    {
+        $this->endpoint = $endpoint;
         $this->graph = $graph;
         $this->model = $model;
 
@@ -85,7 +100,8 @@ class GenericSparql {
      * @param string $query SPARQL query to perform
      * @return \EasyRdf\Sparql\Result|\EasyRdf\Graph query result
      */
-    protected function query($query) {
+    protected function doQuery($query)
+    {
         $queryId = sprintf("%05d", rand(0, 99999));
         $logger = $this->model->getLogger();
         $logger->info("[qid $queryId] SPARQL query:\n" . $this->generateQueryPrefixes($query) . "\n$query\n");
@@ -100,6 +116,21 @@ class GenericSparql {
             $logger->info("[qid $queryId] result: $numTriples triples returned in $elapsed ms");
         }
         return $result;
+    }
+
+
+    /**
+     * Execute the SPARQL query, if not found in query cache.
+     * @param string $query SPARQL query to perform
+     * @return \EasyRdf\Sparql\Result|\EasyRdf\Graph query result
+     */
+    protected function query($query)
+    {
+        $key = $this->endpoint . " " . $query;
+        if (!array_key_exists($key, self::$querycache)) {
+            self::$querycache[$key] = $this->doQuery($query);
+        }
+        return self::$querycache[$key];
     }
 
 
