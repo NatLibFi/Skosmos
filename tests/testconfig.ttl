@@ -134,7 +134,6 @@
     skosmos:marcSourceCode "yso/fin"@fi, "yso/swe"@sv, "yso/eng"@en;
     skosmos:language "fi", "sv", "se", "en";
     skosmos:showTopConcepts "true";
-    skosmos:showChangeList "true" ;
     skosmos:showDeprecatedChanges "true" ;
     skosmos:showPropertyInSearch skos:note ;
     skosmos:useModifiedDate "true";
@@ -192,7 +191,6 @@
     void:uriSpace "http://www.skosmos.skos/test-551-A/";
     skosmos:language "fi" ;
     skosmos:defaultLanguage "fi";
-    skosmos:showChangeList "true" ;
     skosmos:showDeprecatedChanges "true" ;
     skosmos:useModifiedDate "true" ;
     skosmos:sparqlGraph <http://www.skosmos.skos/test-551-A/> ;
