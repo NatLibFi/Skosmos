@@ -262,7 +262,7 @@ body {
     border: 1px solid var(--search-border);
     border-radius: 0;
     padding-left: 1rem;
-    padding-right: 1rem;
+    padding-right: 1.5rem;
   }
 
 
@@ -287,10 +287,50 @@ body {
     width: max-content;
     list-style: none;
   }
-
-  #search-wrapper #vocab-list li {
+  #search-wrapper #vocab-list {
+   padding-top: 0.25rem;
    padding-left: 0.5rem;
    padding-right: 0.5rem;
+  }
+
+  #search-wrapper .vocab-dropdown-btn {
+    width: 15rem;
+    position: relative;
+    padding-right: 2rem;
+  }
+
+  #search-wrapper .vocab-dropdown-btn span {
+    display: block;
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  #search-wrapper .vocab-dropdown-btn span::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 3rem;
+    height: 100%;
+    pointer-events: none;
+    background: linear-gradient(to right, transparent, var(--search-dropdown-bg) 70%);
+    z-index: 1;
+  }
+
+  #search-wrapper .vocab-dropdown-btn:hover span::after {
+    background: linear-gradient(to right, transparent, var(--medium-color) 70%);
+  }
+
+  #search-wrapper button.dropdown-toggle.show span::after {
+    background: linear-gradient(to right, transparent, var(--medium-color) 70%);
+  }
+
+  #search-wrapper .chevron {
+    position: absolute;
+    right: 0.5rem;
+    top: 33%;
+    display: block;
+    z-index: 2;
   }
 
   #search-wrapper .vocab-select {
