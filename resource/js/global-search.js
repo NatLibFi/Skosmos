@@ -255,7 +255,7 @@ function startGlobalSearchApp () {
             v-if="languageStrings">
             <span v-if="selectedVocabsString">{{ selectedVocabsString }}</span>
             <span v-else>{{ vocabSelectorPlaceholder }}</span>
-            <i class="fa-solid fa-chevron-down"></i>
+            <i class="chevron fa-solid fa-chevron-down"></i>
           </button>
           <ul class="dropdown-menu" id="vocab-list" role="menu">
             <li v-for="(value, key) in vocabStrings" :key="key">
@@ -283,7 +283,7 @@ function startGlobalSearchApp () {
                 {{ languageStrings[selectedLanguage] }}
               </span>
               <span v-else>{{ langSelectorPlaceholder }}</span>
-            <i class="fa-solid fa-chevron-down"></i>
+            <i class="chevron fa-solid fa-chevron-down"></i>
           </button>
           <ul class="dropdown-menu" id="language-list" role="menu">
             <li v-for="(value, key) in languageStrings" :key="key" role="none">
