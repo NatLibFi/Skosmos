@@ -227,7 +227,6 @@ function startGlobalSearchApp () {
       },
       changeLang (clang) {
         this.selectedLanguage = clang
-        window.SKOSMOS.content_lang = clang
         this.resetSearchTermAndHideDropdown()
       },
       resetSearchTermAndHideDropdown () {
