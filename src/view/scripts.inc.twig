@@ -30,13 +30,11 @@ window.SKOSMOS = {
   "lang": "{{ request.lang }}",
   "vocab": "{{ request.vocabid }}",
   "pageType": "{{ pageType }}",
-  "vocab_list": {
-  {% for key, vocabs in request.vocabList %}
-    {% for key2, value in vocabs %}
-      "{{ value.resource.localname }}": "{{ value.config.shortname }}",
-    {% endfor %}
-  {% endfor %} },
-  "vocab_id": [ {% for vocab in request.vocabid %} "{{ vocab }}", {% endfor %}],
+  "vocab_list": { {% for key, vocabs in request.vocabList %}{% for key2, value in vocabs %}"{{ value.resource.localname }}": "{{ value.config.shortname }}"{% if not loop.last %}, {% endif %}
+{% endfor %}{% if not loop.last %}, {% endif %}
+{% endfor %}  },
+  "vocab_id": [ {% for vocab in request.vocabid %} "{{ vocab }}"{% if not loop.last %},
+  {% endif %}{% endfor %}],
   "waypoint_results": {{ parameters ? parameters.searchLimit : "null" }},
   {%- if request.page == "page" and concept %}
   "prefLabels": [{"lang": "{{ concept.label.lang }}","label": "{{ concept.label }}"}{% for lang in concept.foreignLabels %}{% for literal in lang %}{% if literal.type == "skos:prefLabel" %},{"lang": "{{literal.lang}}", "label": "{{literal.label}}"}{% endif %}{% endfor %}{% endfor %}],
