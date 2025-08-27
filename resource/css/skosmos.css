@@ -45,12 +45,6 @@
   --font-family-heading: 'EB Garamond', serif;
 }
 
-@font-face {
-  font-family: 'Font Awesome 5 Solid';
-  font-style: normal;
-  src: url('../fontawesome/webfonts/fa-solid-900.ttf') format('truetype');
-}
-
 body {
   color: var(--dark-color);
   font-family: var(--font-family);
@@ -216,7 +210,7 @@ body {
 
     content: "\f078"; /* fa-chevron-down */
     color: var(--header-bar-text);
-    font-family: "Font Awesome 5 Solid", sans-serif;
+    font: var(--fa-font-solid);
     display: inline-block;
   }
 
@@ -227,7 +221,7 @@ body {
 
     content: "\f077"; /* fa-chevron-up */
     color: var(--header-bar-text);
-    font-family: "Font Awesome 5 Solid", sans-serif;
+    font: var(--fa-font-solid);
     display: inline-block;
   }
 
@@ -264,7 +258,6 @@ body {
     padding-left: 1rem;
     padding-right: 1.5rem;
   }
-
 
   #search-wrapper button.dropdown-toggle:hover, #search-wrapper button.dropdown-toggle.show {
     background-color: var(--medium-color);
@@ -313,7 +306,7 @@ body {
     width: 3rem;
     height: 100%;
     pointer-events: none;
-    background: linear-gradient(to right, transparent, var(--search-dropdown-bg) 70%);
+    background: linear-gradient(to right, transparent, var(--white-color) 70%);
     z-index: 1;
   }
 
@@ -427,7 +420,6 @@ body {
   #search-wrapper .dropdown-menu {
     transform: translateY(-1px);
     background-color: var(--search-dropdown-bg);
-    --bs-dropdown-link-active-bg: var(--search-button-bg);
     color: var(--vocab-text);
     border: 1px solid var(--search-border);
     border-radius: 0;
@@ -438,6 +430,24 @@ body {
     padding-bottom: 0rem;
     max-height: 50vh;
     overflow-y: auto;
+  }
+
+  #search-wrapper #language-list li {
+    tab-index: 0;
+  }
+
+  #search-wrapper #language-list li:hover label {
+    background-color: var(--medium-color);
+  }
+
+  #search-wrapper #language-list li:active label {
+    background-color: var(--medium-color);
+  }
+
+  #search-wrapper #language-list li:has(input:checked) label {
+    background-color: var(--search-button-bg);
+    color: var(--white-color);
+    font-weight: bold;
   }
 
   /* Setting scrollbar style separately in Firefox */
