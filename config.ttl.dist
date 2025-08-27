@@ -20,7 +20,7 @@
     # a local Fuseki server is usually on localhost:3030
     #skosmos:sparqlEndpoint <http://localhost:3030/ds/sparql> ;
     # use the dev.finto.fi endpoint where the example vocabularies reside
-    skosmos:sparqlEndpoint <http://api.dev.finto.fi/sparql> ;
+    skosmos:sparqlEndpoint <https://api.dev.finto.fi/sparql> ;
     # sparql-query extension, or "Generic" for plain SPARQL 1.1
     # set to "JenaText" instead if you use Fuseki with jena-text index
     skosmos:sparqlDialect "Generic" ;
@@ -81,8 +81,8 @@
     skosmos:language "fi";
     skosmos:shortName "YSA";
     skosmos:feedbackRecipient "vesa-posti@helsinki.fi" ;
-    void:dataDump <http://api.finto.fi/download/ysa/ysa-skos.ttl> ;
-    void:sparqlEndpoint <http://api.dev.finto.fi/sparql> ;
+    void:dataDump <https://api.finto.fi/download/ysa/ysa-skos.ttl> ;
+    void:sparqlEndpoint <https://api.dev.finto.fi/sparql> ;
     skosmos:sparqlGraph <http://www.yso.fi/onto/ysa/>
 .
 
@@ -102,8 +102,8 @@
                     "ALLFO"@sv;
     skosmos:groupClass isothes:ConceptGroup ;
     skosmos:arrayClass isothes:ThesaurusArray ;
-    void:dataDump <http://api.finto.fi/download/yso/yso-skos.ttl> ;
-    void:sparqlEndpoint <http://api.dev.finto.fi/sparql> ;
+    void:dataDump <https://api.finto.fi/download/yso/yso-skos.ttl> ;
+    void:sparqlEndpoint <https://api.dev.finto.fi/sparql> ;
     skosmos:sparqlGraph <http://www.yso.fi/onto/yso/> ;
     skosmos:mainConceptScheme <http://www.yso.fi/onto/yso/>
 .
