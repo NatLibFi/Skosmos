@@ -25,6 +25,9 @@
   --search-border: var(--medium-color);
   --search-button-bg: var(--dark-color);
   --search-button-text: var(--white-color);
+  --search-vocab-selector-bg: var(--medium-color);
+  --search-vocab-selector-selected-bg: var(--dark-color);
+  --search-vocab-selector-check: var(--white-color);
   --search-dropdown-toggle-hover-text: var(--white-color);
   --search-dropdown-toggle-hover-bg: var(--dark-color);
   --vocab-bg: var(--white-color);
@@ -200,6 +203,7 @@ body {
   }
 
   #global-search-toggle {
+    transition: none;
     background-color: var(--headerbar-vocab-bg);
     border-style: none;
     white-space: nowrap;
@@ -284,8 +288,74 @@ body {
     list-style: none;
   }
 
+  #search-wrapper #vocab-list li {
+   padding-left: 0.5rem;
+   padding-right: 0.5rem;
+  }
+
+  #search-wrapper .vocab-select {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 0.25rem;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  /* Custom checkbox */
+
+  #search-wrapper .vocab-select input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  #search-wrapper .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 1.5rem;
+    width: 1.5rem;
+    background-color: var(--search-vocab-selector-bg);
+  }
+
+  #search-wrapper .vocab-select:hover input ~ .checkmark {
+    background-color: var(--search-vocab-selector-selected-bg);
+  }
+
+  #search-wrapper .vocab-select input:checked ~ .checkmark {
+    background-color: var(--search-vocab-selector-selected-bg);
+  }
+
+  #search-wrapper .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+
+  #search-wrapper .vocab-select input:checked ~ .checkmark:after {
+    display: block;
+  }
+
+  #search-wrapper .vocab-select .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+
   #search-wrapper #language-list li a:hover, #search-wrapper #language-list li a:active {
-  color: var(--search-dropdown-toggle-hover-text);
+    color: var(--search-dropdown-toggle-hover-text);
     background-color: var(--search-dropdown-toggle-hover-bg);
   }
 

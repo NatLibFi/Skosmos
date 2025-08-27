@@ -249,6 +249,7 @@ function startGlobalSearchApp () {
           <button class="btn btn-outline-secondary dropdown-toggle vocab-dropdown-btn"
             role="button"
             data-bs-toggle="dropdown"
+            data-bs-auto-close="outside"
             aria-expanded="false"
             :aria-label="selectSearchLanguageAriaMessage"
             v-if="languageStrings">
@@ -258,12 +259,13 @@ function startGlobalSearchApp () {
           </button>
           <ul class="dropdown-menu" id="vocab-list" role="menu">
             <li v-for="(value, key) in vocabStrings" :key="key">
-              <label>
+              <label class="vocab-select">
                 <input
                   type="checkbox"
                   :value="key"
                   v-model="selectedVocabs"
-                  @click.stop />
+                  @click.stop>
+                  <span class="checkmark"></span>
                 {{ value }}
               </label>
             </li>
