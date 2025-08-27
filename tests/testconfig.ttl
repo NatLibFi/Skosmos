@@ -213,7 +213,6 @@
 	void:uriSpace "http://www.skosmos.skos/onto/testdiff#";
 	skosmos:language "fi", "en";
 	skosmos:sparqlDialect "JenaText";
-	skosmos:fullAlphabeticalIndex "true";
 	skosmos:explicitLanguageTags "true";
 	skosmos:defaultSidebarView "groups";
 	skosmos:defaultConceptSidebarView "groups";
