@@ -4,6 +4,8 @@ on:
   push:
     tags:
       - '**'
+    branches:
+      - '**'
   pull_request:
   workflow_dispatch:
   schedule:
@@ -68,10 +70,7 @@ jobs:
         run: cd resource/js; npx standard *.js
 
       - name: Run PHPUnit tests
-        run: |
-          while sleep 60; do echo "The tests are still running .."; done &
-          ./vendor/bin/phpunit --configuration phpunit.xml
-          kill %1
+        run: ./vendor/bin/phpunit --configuration phpunit.xml
 
       - name: Publish code coverage to Code Climate
         uses: paambaati/codeclimate-action@v5.0.0
@@ -111,9 +110,7 @@ jobs:
     needs: [ build-test, cypress-test ]
     runs-on: ubuntu-24.04
     timeout-minutes: 15
-    if: >-
-      (github.event_name == 'push' && github.ref_name == 'issue1763-pre-built-docker-images-for-public-use') ||
-      (github.event_name == 'pull_request' && github.head_ref == 'issue1763-pre-built-docker-images-for-public-use')
+    if: github.event_name == 'push' && github.ref_name == 'issue1763-pre-built-docker-images-for-public-use'
 
     steps:
       - name: Check out repo
@@ -144,24 +141,11 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Debug event context
-        run: |
-          echo "event_name=${{ github.event_name }}"
-          echo "ref=${{ github.ref }}"
-          echo "ref_name=${{ github.ref_name }}"
-
-      - name: Show computed tags
-        run: |
-          echo "Tags:"
-          echo "${{ steps.meta.outputs.tags }}"
-          echo "Labels:"
-          echo "${{ steps.meta.outputs.labels }}"
-
   publish-release:
     name: publish release
     needs: [ build-test, cypress-test ]
     runs-on: ubuntu-24.04
-    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') && !contains(github.ref_name, 'dev')
 
     steps:
       - name: Check out repo
@@ -193,16 +177,3 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
-      - name: Debug event context
-        run: |
-          echo "event_name=${{ github.event_name }}"
-          echo "ref=${{ github.ref }}"
-          echo "ref_name=${{ github.ref_name }}"
-
-      - name: Show computed tags
-        run: |
-          echo "Tags:"
-          echo "${{ steps.meta.outputs.tags }}"
-          echo "Labels:"
-          echo "${{ steps.meta.outputs.labels }}"
