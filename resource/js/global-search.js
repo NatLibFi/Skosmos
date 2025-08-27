@@ -286,7 +286,7 @@ function startGlobalSearchApp () {
             <i class="chevron fa-solid fa-chevron-down"></i>
           </button>
           <ul class="dropdown-menu" id="language-list" role="menu">
-            <li v-for="(value, key) in languageStrings" :key="key" role="none">
+            <li v-for="(value, key) in languageStrings" :key="key" role="none" tabindex=0>
               <label class="dropdown-item">
                 <input
                   type="radio"
