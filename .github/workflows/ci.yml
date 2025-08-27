@@ -110,7 +110,7 @@ jobs:
     needs: [ build-test, cypress-test ]
     runs-on: ubuntu-24.04
     timeout-minutes: 15
-    if: github.event_name == 'push' && github.ref_name == 'issue1763-pre-built-docker-images-for-public-use'
+    if: github.event_name == 'push' && github.ref_name == 'main'
 
     steps:
       - name: Check out repo
@@ -129,8 +129,7 @@ jobs:
         with:
           images: quay.io/natlibfi/skosmos
           tags: |
-            type=raw,value=ci-latesttest
-            type=raw,value=ci-latesttest-${{ github.sha }}
+            type=raw,value=latest
 
       - name: Build and push to Quay.io
         uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83  # v6.18.0
