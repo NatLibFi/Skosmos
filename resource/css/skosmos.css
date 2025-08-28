@@ -339,11 +339,12 @@ body {
 
   #search-wrapper .checkmark {
     position: absolute;
+    border: 1px solid var(--dark-color);
     top: 0;
     left: 0;
     height: 1.5rem;
     width: 1.5rem;
-    background-color: var(--search-vocab-selector-bg);
+    background-color: var(--white-color);
   }
 
   #search-wrapper .vocab-select:hover input ~ .checkmark {
