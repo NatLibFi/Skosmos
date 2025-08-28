@@ -509,7 +509,7 @@ body {
     background-color: var(--sidebar-tab-inactive-bg);
   }
 
-  #sidebar .nav-item:first-of-type .nav-link {
+  #sidebar #alphabetical .nav-link {
     white-space: nowrap;
   }
 
