@@ -3,9 +3,9 @@
   {% block sidebar %}
     <div class="sidebar-buttons">
       <h2 class="visually-hidden">{{'Sidebar listing: list and traverse vocabulary contents by a criterion' | trans}}</h2>
-      <ul class="nav nav-tabs-no-style nav-justified" id="sidebar-tabs" role="tablist">
+      <ul class="nav nav-tabs-no-style nav-justified{% if vocab.config.sidebarViews | length == 4 and vocab.config.showDeprecatedChanges %} wide{% endif %}" id="sidebar-tabs" role="tablist">
         {% for view in vocab.config.sidebarViews %}
-          {% if view == 'alphabetical' %} {% set view_trans_text = 'Alpha-nav' %}
+          {% if view == 'alphabetical' %} {% set view_trans_text = (vocab.config.sidebarViews | length == 4) ? 'A-Z' : 'Alpha-nav' %}
           {% elseif view == 'hierarchy' %} {% set view_trans_text = 'Hier-nav' %}
           {% elseif view == 'groups' %} {% set view_trans_text = 'Group-nav' %}
           {% else %} {% set view_trans_text = vocab.config.showDeprecatedChanges ? 'Changes-and-deprecations-nav' : 'Changes-nav' %}{% endif %}
