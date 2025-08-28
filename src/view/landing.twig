@@ -20,7 +20,7 @@
         <h3 class="fs-4 pt-2">{{ vocabClassName }}</h3>
         <ul class="list-group">
         {% for vocab in vocabArray %}
-          <li class="list-group-item ps-0 py-1"><a class="fs-5 fw-bold" href="{{ vocab.id }}/{{ request.lang }}/{% if request.contentLang != request.lang and request.contentLang != '' and request.contentLang in vocab.config.languages %}?clang={{ request.contentLang }}{% endif %}">{{ vocab.title }}</a></li>
+          <li class="list-group-item ps-0 py-1"><a class="fs-5 fw-bold" href="{{ '' | global_url(request.lang, request.contentLang, vocab.id, request.queryParam('anylang') == 'on')}}">{{ vocab.title }}</a></li>
         {% endfor %}
         </ul>
       </div>
