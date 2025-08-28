@@ -41,9 +41,6 @@ function startGlobalSearchApp () {
       getSelectedVocabs () {
         return this.selectedVocabs.map(key => ({ key, value: this.vocabStrings[key] }))
       },
-      searchLanguage () {
-        return this.selectedLanguage
-      },
       selectedVocabsString () {
         return this.getSelectedVocabs.map(voc => voc.value).join(' ')
       }
@@ -51,11 +48,8 @@ function startGlobalSearchApp () {
     mounted () {
       this.languages = window.SKOSMOS.languageOrder
       this.selectedLanguage = this.parseSearchLang()
-      this.searchCounter = 0 // used for matching the query and the response in case there are many responses
       this.languageStrings = window.SKOSMOS.language_strings
       this.vocabStrings = window.SKOSMOS.vocab_list
-      this.renderedResultsList = []
-      this.showNotation = true
     },
     methods: {
       autoComplete () {
@@ -93,8 +87,8 @@ function startGlobalSearchApp () {
       },
       formatSearchUrlParams () {
         const params = new URLSearchParams({ query: this.formatSearchTerm(), unique: true })
-        if (this.searchLanguage !== 'all') {
-          params.set('clang', this.searchLanguage)
+        if (this.selectedLanguage !== 'all') {
+          params.set('clang', this.selectedLanguage)
         } else {
           params.set('anylang', 'on')
         }
