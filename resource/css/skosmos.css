@@ -632,15 +632,16 @@ body {
     #sidebar-tabs.wide .nav-item:last-of-type .nav-link {
       justify-content: start !important;
       white-space: nowrap;
+      position: relative;
     }
 
     #sidebar-tabs.wide .nav-item:last-of-type .nav-link::after {
       content: "";
       position: absolute;
       top: 0;
-      right: 1rem;
+      right: 0;
       width: 1rem;
-      height: 40px;
+      height: 100%;
       pointer-events: none;
       background: linear-gradient(to right, transparent, var(--sidebar-tab-inactive-bg));
     }
