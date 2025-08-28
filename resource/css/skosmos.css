@@ -298,15 +298,6 @@ body {
     z-index: 0;
   }
 
-  #search-wrapper .vocab-dropdown-btn span::after {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 3rem;
-    height: 100%;
-    z-index: 1;
-  }
-
   #search-wrapper .chevron {
     position: absolute;
     right: 0.5rem;
