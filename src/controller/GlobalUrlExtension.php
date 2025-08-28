@@ -3,17 +3,17 @@
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
-class VocabUrlExtension extends AbstractExtension
+class GlobalUrlExtension extends AbstractExtension
 {
     public function getFilters()
     {
         return [
-            new TwigFilter('vocab_url', [$this, 'vocabUrlFilter']),
+            new TwigFilter('global_url', [$this, 'globalUrlFilter']),
         ];
     }
 
     /**
-     * Creates Skosmos vocabulary links for top-level pages
+     * Creates Skosmos links for top-level pages
      * @param string $page 'home', 'about', or 'feedback'
      * @param string $lang language code (e.g., 'en', 'fi')
      * @param string $contentLang content language code (e.g., 'en', 'fi')
@@ -21,7 +21,7 @@ class VocabUrlExtension extends AbstractExtension
      * @param bool $anylang whether anylang parameter is active
      * @return string containing the Skosmos link
      */
-    public function vocabUrlFilter($page, $lang, $contentLang = null, $vocabid = null, $anylang = false)
+    public function globalUrlFilter($page, $lang, $contentLang = null, $vocabid = null, $anylang = false)
     {
         $url = '';
 

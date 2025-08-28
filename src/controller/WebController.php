@@ -50,7 +50,7 @@ class WebController extends Controller
         $this->twig->addGlobal("PreferredProperties", array('skos:prefLabel', 'skos:narrower', 'skos:broader', 'skosmos:memberOf', 'skos:altLabel', 'skos:related'));
 
         // register a Twig filter for generating URLs for global pages (landing, about, feedback, vocab-home..)
-        $this->twig->addExtension(new VocabUrlExtension());
+        $this->twig->addExtension(new GlobalUrlExtension());
 
         // register a Twig filter for generating URLs for vocabulary resources (concepts and groups)
         $this->twig->addExtension(new LinkUrlExtension($model));
