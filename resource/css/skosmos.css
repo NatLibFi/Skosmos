@@ -509,6 +509,10 @@ body {
     background-color: var(--sidebar-tab-inactive-bg);
   }
 
+  #sidebar #alphabetical .nav-link {
+    white-space: nowrap;
+  }
+
   #main-container.vocab-home #sidebar .nav-link, #main-container.concept #sidebar .nav-link {
     color: var(--sidebar-tab-inactive-text) !important;
     height: 100%;
@@ -605,6 +609,51 @@ body {
 
   .sidebar-list a.selected {
     color: var(--vocab-text) !important;
+  }
+
+  /* In smaller screen sizes, the last sidebar tab overflows to the right */
+  @media only screen and (min-width: 768px) and (max-width: 1070px) {
+    #sidebar-tabs.wide {
+      flex-wrap: nowrap;
+    }
+
+    #sidebar-tabs.wide #alphabetical {
+      max-width: 40px;
+    }
+
+    #sidebar-tabs.wide .nav-link {
+      padding: 0.5rem 0.25rem;
+    }
+
+    #sidebar-tabs.wide .nav-item:last-of-type {
+      overflow: hidden;
+    }
+
+    #sidebar-tabs.wide .nav-item:last-of-type .nav-link {
+      justify-content: start !important;
+      white-space: nowrap;
+    }
+
+    #sidebar-tabs.wide .nav-item:last-of-type .nav-link::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 1rem;
+      width: 1rem;
+      height: 40px;
+      pointer-events: none;
+      background: linear-gradient(to right, transparent, var(--sidebar-tab-inactive-bg));
+    }
+
+    #sidebar-tabs.wide .nav-item:last-of-type .nav-link.active::after {
+      background: linear-gradient(to right, transparent, var(--sidebar-tab-active-bg));
+    }
+  }
+
+  @media only screen and (max-width: 900px) {
+    #sidebar .nav-link {
+      padding: 0.5rem 0.1rem !important;
+    }
   }
 
   /*** sidebar changes tab ***/
