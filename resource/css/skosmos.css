@@ -520,7 +520,6 @@ body {
     align-items: center;
     justify-content: center;
     transition: none;
-    padding: 0.5rem;
   }
 
   #main-container.vocab-home #sidebar .nav .active, #main-container.concept #sidebar .nav .active {
@@ -614,7 +613,7 @@ body {
 
   /* In smaller screen sizes, the last sidebar tab overflows to the right */
   @media only screen and (min-width: 768px) and (max-width: 1070px) {
-    #sidebar-tabs.wide .nav {
+    #sidebar-tabs.wide {
       flex-wrap: nowrap;
     }
 
@@ -654,13 +653,6 @@ body {
   @media only screen and (max-width: 900px) {
     #sidebar .nav-link {
       padding: 0.5rem 0.1rem !important;
-    }
-  }
-
-
-  @media only screen and (max-width: 820px) {
-    #sidebar .nav-link {
-      padding: 0.5rem 1px !important;
     }
   }
 

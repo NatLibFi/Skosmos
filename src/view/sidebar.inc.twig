@@ -3,9 +3,9 @@
   {% block sidebar %}
     <div class="sidebar-buttons">
       <h2 class="visually-hidden">{{'Sidebar listing: list and traverse vocabulary contents by a criterion' | trans}}</h2>
-      <ul class="nav nav-tabs-no-style nav-justified{% if vocab.config.sidebarViews | length == 4 and vocab.config.showDeprecatedChanges %} wide{% endif %}" id="sidebar-tabs" role="tablist">
+      <ul class="nav nav-tabs-no-style nav-justified{% if vocab.config.sidebarViews | length >= 4 and vocab.config.showDeprecatedChanges %} wide{% endif %}" id="sidebar-tabs" role="tablist">
         {% for view in vocab.config.sidebarViews %}
-          {% if view == 'alphabetical' %} {% set view_trans_text = (vocab.config.sidebarViews | length == 4) ? 'A-Z' : 'Alpha-nav' %}
+          {% if view == 'alphabetical' %} {% set view_trans_text = (vocab.config.sidebarViews | length >= 4) ? 'A-Z' : 'Alpha-nav' %}
           {% elseif view == 'hierarchy' %} {% set view_trans_text = 'Hier-nav' %}
           {% elseif view == 'groups' %} {% set view_trans_text = 'Group-nav' %}
           {% else %} {% set view_trans_text = vocab.config.showDeprecatedChanges ? 'Changes-and-deprecations-nav' : 'Changes-nav' %}{% endif %}
@@ -15,7 +15,7 @@
           {# Hierarchy tab is disabled on vocab page if showTopConcepts is set to false #}
           {% set disabled_class = request.page == 'vocab' and view == 'hierarchy' and not (vocab.config.showTopConcepts) %}
           <li id="{{ view }}" class="nav-item">
-            <a class="nav-link{% if active_class %} active{% elseif disabled_class %} disabled{% endif %}"
+            <a class="nav-link p-2{% if active_class %} active{% elseif disabled_class %} disabled{% endif %}"
               {% if disabled_class %}data-title="{{ 'hierarchy-disabled-help' | trans }}"{% endif %} 
               role="tab" data-bs-toggle="tab" href="#tab-{{ view }}" aria-controls="tab-{{ view }}">
               {{ view_trans_text | trans }}
