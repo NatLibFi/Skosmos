@@ -647,13 +647,6 @@ body {
     }
 
     #sidebar-tabs.wide .nav-item:last-of-type .nav-link.active::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      right: 1rem;
-      width: 1rem;
-      height: 40px;
-      pointer-events: none;
       background: linear-gradient(to right, transparent, var(--sidebar-tab-active-bg));
     }
   }
