@@ -1219,7 +1219,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     $voc = $this->model->getVocabulary('changes');
     $graph = $voc->getGraph();
     $sparql = new GenericSparql($this->endpoint, $graph, $this->model);
-    $actual = $sparql->queryChangeList('dc:modified', 'en', 0, 10, false);
+    $actual = $sparql->queryChangeList('dc:modified', 'en', 0, 10, false, 100);
 
     $order = array();
     foreach($actual as $concept) {
@@ -1239,7 +1239,7 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
     $voc = $this->model->getVocabulary('changes');
     $graph = $voc->getGraph();
     $sparql = new GenericSparql($this->endpoint, $graph, $this->model);
-    $actual = $sparql->queryChangeList('dc:created', 'en', 0, 10, true);
+    $actual = $sparql->queryChangeList('dc:created', 'en', 0, 10, true, 100);
     $order = array();
     foreach($actual as $concept) {
         array_push($order, $concept['prefLabel']);
