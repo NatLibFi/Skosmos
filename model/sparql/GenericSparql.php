@@ -140,10 +140,10 @@ class GenericSparql {
      * @return string
      */
     protected function generateFromClause($vocabs=null) {
-        $clause = '';
         if (!$vocabs) {
             return $this->graph !== '?graph' && $this->graph !== NULL ? "FROM <$this->graph>" : '';
         }
+        $clause = '';
         $graphs = $this->getVocabGraphs($vocabs);
         foreach ($graphs as $graph) {
             $clause .= "FROM NAMED <$graph> ";
@@ -571,36 +571,40 @@ EOQ;
     /**
      * Generates the sparql query for queryTypes
      * @param string $lang
+     * @param string $vocid
      * @return string sparql query
      */
-    private function generateQueryTypesQuery($lang) {
-        $fcl = $this->generateFromClause();
+    private function generateQueryTypesQuery($lang, string $vocid = null): string {
+        $vocabs = isset($vocid) ? [$vocid] : $this->model->getVocabularies();
+        $fcl = $this->generateFromClause($vocabs);
         $query = <<<EOQ
 SELECT DISTINCT ?type ?label ?superclass $fcl
 WHERE {
-  {
-    { BIND( skos:Concept as ?type ) }
-    UNION
-    { BIND( skos:Collection as ?type ) }
-    UNION
-    { BIND( isothes:ConceptGroup as ?type ) }
-    UNION
-    { BIND( isothes:ThesaurusArray as ?type ) }
-    UNION
-    { ?type rdfs:subClassOf/rdfs:subClassOf* skos:Concept . }
-    UNION
-    { ?type rdfs:subClassOf/rdfs:subClassOf* skos:Collection . }
-  }
-  OPTIONAL {
-    ?type rdfs:label ?label .
-    FILTER(langMatches(lang(?label), '$lang'))
-  }
-  OPTIONAL {
-    ?type rdfs:subClassOf ?superclass .
-  }
-  FILTER EXISTS {
-    ?s a ?type .
-    ?s skos:prefLabel ?prefLabel .
+  GRAPH ?g {
+    {
+      { BIND( skos:Concept as ?type ) }
+      UNION
+      { BIND( skos:Collection as ?type ) }
+      UNION
+      { BIND( isothes:ConceptGroup as ?type ) }
+      UNION
+      { BIND( isothes:ThesaurusArray as ?type ) }
+      UNION
+      { ?type rdfs:subClassOf/rdfs:subClassOf* skos:Concept . }
+      UNION
+      { ?type rdfs:subClassOf/rdfs:subClassOf* skos:Collection . }
+    }
+    OPTIONAL {
+      ?type rdfs:label ?label .
+      FILTER(langMatches(lang(?label), '$lang'))
+    }
+    OPTIONAL {
+      ?type rdfs:subClassOf ?superclass .
+    }
+    FILTER EXISTS {
+      ?s a ?type .
+      ?s skos:prefLabel ?prefLabel .
+    }
   }
 }
 EOQ;
@@ -612,7 +616,7 @@ EOQ;
      * @param EasyRdf\Sparql\Result $result
      * @return array Array with URIs (string) as key and array of (label, superclassURI) as value
      */
-    private function transformQueryTypesResults($result) {
+    private function transformQueryTypesResults(\EasyRdf\Sparql\Result $result): array {
         $ret = array();
         foreach ($result as $row) {
             $type = array();
@@ -632,10 +636,11 @@ EOQ;
     /**
      * Retrieve information about types from the endpoint
      * @param string $lang
+     * @param string $vocid
      * @return array Array with URIs (string) as key and array of (label, superclassURI) as value
      */
-    public function queryTypes($lang) {
-        $query = $this->generateQueryTypesQuery($lang);
+    public function queryTypes($lang, string $vocid = null): array {
+        $query = $this->generateQueryTypesQuery($lang, $vocid);
         $result = $this->query($query);
         return $this->transformQueryTypesResults($result);
     }
