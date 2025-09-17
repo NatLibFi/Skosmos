@@ -6,8 +6,7 @@
     <div class="alert alert-danger">
       <p class="deprecated-alert">{% trans %}deprecated{% endtrans %}</p>
     </div>
-    {% endif %}
-    {% if concept.label.lang != request.contentLang %}
+    {% elseif concept.label.lang != request.contentLang %}
     <div class="alert alert-lang">
       <p class="language-alert">{% trans %}There is no term for this concept in this language{% endtrans %}</p>
     </div>
