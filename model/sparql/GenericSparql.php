@@ -1739,11 +1739,12 @@ EOQ;
      * @param boolean $anylang if you want a label even when it isn't available in the language you requested.
      * @return string sparql query
      */
-    private function generateTransitivePropertyQuery($uri, $props, $lang, $limit, $anylang) {
+    private function generateTransitivePropertyQuery($uri, $props, $lang, $limit, $anylang, $showDeprecated) {
         $uri = is_array($uri) ? $uri[0] : $uri;
         $fcl = $this->generateFromClause();
         $propertyClause = implode('|', $props);
         $otherlang = $anylang ? "OPTIONAL { ?object skos:prefLabel ?label }" : "";
+        $childDeprClause = !$showDeprecated ? "FILTER NOT EXISTS { ?object owl:deprecated true }" : "";
         // need to do a SPARQL subquery because LIMIT needs to be applied /after/
         // the direct relationships have been collapsed into one string
         $query = <<<EOQ
@@ -1754,6 +1755,7 @@ WHERE {
     <$uri> a skos:Concept .
     OPTIONAL {
       <$uri> $propertyClause* ?object .
+      $childDeprClause
       OPTIONAL {
         ?object $propertyClause ?dir .
       }
@@ -1835,8 +1837,8 @@ EOQ;
      * @param boolean $anylang if you want a label even when it isn't available in the language you requested.
      * @return array array of property values (key: URI, val: label), or null if concept doesn't exist
      */
-    public function queryTransitiveProperty($uri, $props, $lang, $limit, $anylang = false, $fallbacklang = '') {
-        $query = $this->generateTransitivePropertyQuery($uri, $props, $lang, $limit, $anylang);
+    public function queryTransitiveProperty($uri, $props, $lang, $limit, $anylang = false, $fallbacklang = '', $showDeprecated=false) {
+        $query = $this->generateTransitivePropertyQuery($uri, $props, $lang, $limit, $anylang, $showDeprecated);
         $result = $this->query($query);
         return $this->transformTransitivePropertyResults($result, $lang, $fallbacklang);
     }
@@ -1848,15 +1850,18 @@ EOQ;
      * @param string $fallback
      * @return string sparql query
      */
-    private function generateChildQuery($uri, $lang, $fallback, $props) {
+    private function generateChildQuery($uri, $lang, $fallback, $props, $showDeprecated=false) {
         $uri = is_array($uri) ? $uri[0] : $uri;
         $fcl = $this->generateFromClause();
         $propertyClause = implode('|', $props);
+        $childDeprClause = !$showDeprecated ? "FILTER NOT EXISTS { ?child  owl:deprecated true }" : "";
+        $gchildDeprClause = !$showDeprecated ? "FILTER NOT EXISTS { ?a  owl:deprecated true }" : "";
         $query = <<<EOQ
 SELECT ?child ?label ?child ?grandchildren ?notation $fcl WHERE {
   <$uri> a skos:Concept .
   OPTIONAL {
     ?child $propertyClause <$uri> .
+    $childDeprClause
     OPTIONAL {
       ?child skos:prefLabel ?label .
       FILTER (langMatches(lang(?label), "$lang"))
@@ -1871,7 +1876,7 @@ SELECT ?child ?label ?child ?grandchildren ?notation $fcl WHERE {
     OPTIONAL {
       ?child skos:notation ?notation .
     }
-    BIND ( EXISTS { ?a $propertyClause ?child . } AS ?grandchildren )
+    BIND ( EXISTS { ?a $propertyClause ?child . $gchildDeprClause } AS ?grandchildren )
   }
 }
 EOQ;
@@ -1929,8 +1934,8 @@ EOQ;
      * @param string $fallback
      * @return array array of arrays describing each child concept, or null if concept doesn't exist
      */
-    public function queryChildren($uri, $lang, $fallback, $props) {
-        $query = $this->generateChildQuery($uri, $lang, $fallback, $props);
+    public function queryChildren($uri, $lang, $fallback, $props, $showDeprecated = false) {
+        $query = $this->generateChildQuery($uri, $lang, $fallback, $props, $showDeprecated);
         $result = $this->query($query);
         return $this->transformNarrowerResults($result, $lang);
     }
@@ -1999,6 +2004,8 @@ EOQ;
     private function generateParentListQuery($uri, $lang, $fallback, $props) {
         $fcl = $this->generateFromClause();
         $propertyClause = implode('|', $props);
+        $childDeprClause = !$showDeprecated ? "FILTER NOT EXISTS { ?children  owl:deprecated true }" : "";
+        $gchildDeprClause = !$showDeprecated ? "FILTER NOT EXISTS { ?a  owl:deprecated true }" : "";
         $query = <<<EOQ
 SELECT ?broad ?parent ?children ?grandchildren
 (SAMPLE(?lab) as ?label) (SAMPLE(?childlab) as ?childlabel) (GROUP_CONCAT(?topcs; separator=" ") as ?tops) 
@@ -2020,7 +2027,7 @@ WHERE {
     }
     OPTIONAL { ?broad skos:notation ?nota . }
     OPTIONAL { ?broad $propertyClause ?parent . }
-    OPTIONAL { ?broad skos:narrower ?children .
+    OPTIONAL { ?broad skos:narrower ?children . $childDeprClause
       OPTIONAL {
         ?children skos:prefLabel ?childlab .
         FILTER (langMatches(lang(?childlab), "$lang"))
@@ -2036,7 +2043,7 @@ WHERE {
         ?children skos:notation ?childnota .
       }
     }
-    BIND ( EXISTS { ?children skos:narrower ?a . } AS ?grandchildren )
+    BIND ( EXISTS { ?children skos:narrower ?a . $gchildDeprClause } AS ?grandchildren )
     OPTIONAL { ?broad skos:topConceptOf ?topcs . }
   }
 }
