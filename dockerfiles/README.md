@@ -128,7 +128,7 @@ to use `localhost:9030` instead.
     # load STW vocabulary data
     curl -L -o stw.ttl.zip http://zbw.eu/stw/version/latest/download/stw.ttl.zip
     unzip stw.ttl.zip
-    curl -X POST -H "Content-Type: text/turtle" -T stw.ttl "http://localhost:9030/skosmos/data?graph=http%3A%2F%2Fzbw.eu%2Fstw%2F"
+    curl -X POST -H "Content-Type: text/turtle" -T stw.ttl "http://localhost:9030/skosmos/data?graph=http://zbw.eu/stw/"
     # load UNESCO vocabulary data
     curl -L -o unescothes.ttl http://skos.um.es/unescothes/unescothes.ttl
     curl -X POST -H "Content-Type: text/turtle" -T unescothes.ttl "http://localhost:9030/skosmos/data?graph=http%3A%2F%2Fskos.um.es%2Funescothes%2F"
