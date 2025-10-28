@@ -37,7 +37,7 @@ class WebController extends Controller
         }
 
         // specify where to look for templates and cache
-        $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../view');
+        $loader = new \Twig\Loader\FilesystemLoader([__DIR__ . '/../view', __DIR__ . '/../../slots']);
         // initialize Twig environment
         $this->twig = new \Twig\Environment($loader, array('cache' => $tmpDir,'auto_reload' => true));
         // used for setting the base href for the relative urls
@@ -70,6 +70,19 @@ class WebController extends Controller
             $this->honeypot->disable();
         }
         $this->twig->addGlobal('honeypot', $this->honeypot);
+
+        // populate the customizable content slots
+        $slotSubDirs = glob('../slots/*', GLOB_ONLYDIR);
+        $slots = [];
+
+        foreach ($slotSubDirs as $slotDir) {
+            $slotName = basename($slotDir);
+            $files = glob($slotDir . '/*.twig');
+            // Strip the "../slots" prefix, it's not needed.
+            // The "slots" directory is registered to the Twig FilesystemLoader.
+            $slots[$slotName] = preg_filter('|../slots/|', '', $files);
+        }
+        $this->twig->addGlobal('slots', $slots);
     }
 
     /**

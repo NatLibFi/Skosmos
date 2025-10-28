@@ -5,6 +5,12 @@
 {% block url %}{{ BaseHref }}{{ request.langurl }}{% endblock %}
 
 {% block content %}
+<div id="landing-top-slot">
+  {% for template in slots['landing-top'] %}
+  {{ include(template) }}
+  {% endfor %}
+</div>
+
 <div class="col-lg-7 mb-gutterwidth mb-lg-0">
   <div class="px-3 py-4 bg-medium" id="vocabulary-list">
     {% if request.vocabList|length == 0 %}
@@ -27,21 +33,23 @@
       {% endfor %}
     {% endif %}
   </div>
+  <div id="landing-start-slot">
+    {% for template in slots['landing-start'] %}
+    {{ include(template) }}
+    {% endfor %}
+  </div>
 </div>
 <div class="col-lg-5 d-flex flex-column">
-      <div class="bg-dark px-4 py-4 mb-gutterwidth text-light" id="welcome-box">
-        <h2 class="fw-bold fs-3 my-3">Welcome to the Skosmos browser demo</h2>
-        <p class="fs-5">
-        Skosmos is a web-based tool providing services for accessing controlled vocabularies, 
-        which are used by indexers describing documents and searchers looking
-        for suitable keywords. Vocabularies are accessed via SPARQL endpoints containing SKOS vocabularies.
-        </p>
-        <p class="fs-5">Skosmos is being developed at the National Library of Finland.</p>
-      </div>
-
-      <div class="bg-medium px-5 py-5 flex-grow-1 d-flex align-items-center" id="info-box">
-        <a class="fs-5 text-dark text-decoration-none" href="https://github.com/NatLibFi/Skosmos">Skosmos is open source and on GitHub <i class="fa-solid fa-arrow-right ps-2"></i></a>
-      </div>
+  <div id="landing-end-slot">
+    {% for template in slots['landing-end'] %}
+    {{ include(template) }}
+    {% endfor %}
+  </div>
 </div>
+
+<div id="landing-bottom-slot"></div>
+  {% for template in slots['landing-bottom'] %}
+  {{ include(template) }}
+  {% endfor %}
 {% endblock %}
 
