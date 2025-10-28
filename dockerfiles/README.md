@@ -131,7 +131,7 @@ to use `localhost:9030` instead.
     curl -X POST -H "Content-Type: text/turtle" -T stw.ttl "http://localhost:9030/skosmos/data?graph=http://zbw.eu/stw/"
     # load UNESCO vocabulary data
     curl -L -o unescothes.ttl http://skos.um.es/unescothes/unescothes.ttl
-    curl -X POST -H "Content-Type: text/turtle" -T unescothes.ttl "http://localhost:9030/skosmos/data?graph=http%3A%2F%2Fskos.um.es%2Funescothes%2F"
+    curl -X POST -H "Content-Type: text/turtle" -T unescothes.ttl "http://localhost:9030/skosmos/data?graph=http://skos.um.es/unescothes/"
 
 After you execute these commands successfully, you should be able to use all the
 features of Skosmos, such as browsing vocabularies and concepts.
