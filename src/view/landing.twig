@@ -9,7 +9,7 @@
   {{ include('custom-templates.inc.twig', {slotName: 'landing-top'}) }}
 </div>
 
-<div class="col-lg-7 mb-gutterwidth mb-lg-0">
+<div class="col-lg-7 mb-gutterwidth mb-lg-0" id="landing-start-slot">
   <div class="px-3 py-4 bg-medium" id="vocabulary-list">
     {% if request.vocabList|length == 0 %}
     <h2 class="fs-3 fw-bold">{{ "No vocabularies on the server!" | trans }}</h2>
@@ -31,17 +31,14 @@
       {% endfor %}
     {% endif %}
   </div>
-  <div id="landing-start-slot">
-    {{ include('custom-templates.inc.twig', {slotName: 'landing-start'}) }}
-  </div>
+  {{ include('custom-templates.inc.twig', {slotName: 'landing-start'}) }}
 </div>
-<div class="col-lg-5 d-flex flex-column">
-  <div id="landing-end-slot">
+<div class="col-lg-5 d-flex flex-column" id="landing-end-slot">
   {{ include('custom-templates.inc.twig', {slotName: 'landing-end'}) }}
-  </div>
 </div>
 
-<div id="landing-bottom-slot"></div>
+<div id="landing-bottom-slot">
   {{ include('custom-templates.inc.twig', {slotName: 'landing-bottom'}) }}
+</div>
 {% endblock %}
 
