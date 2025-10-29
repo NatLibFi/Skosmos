@@ -108,12 +108,12 @@ function startHierarchyApp () {
               }
             }
 
-            // add other concepts to hierarhy tree
+            // add other concepts to hierarchy tree
             while (parents.length !== 0) {
               const parent = parents.shift() // parent node with potential missing child nodes
               const concepts = []
 
-              // find all concepts in broaderTransative which have current parent node as parent
+              // find all concepts in broaderTransitive which have current parent node as parent
               for (const concept of bt) {
                 if (concept.broader && concept.broader.includes(parent.uri)) {
                   concepts.push(concept)
