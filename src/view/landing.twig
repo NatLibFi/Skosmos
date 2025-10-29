@@ -6,7 +6,7 @@
 
 {% block content %}
 <div id="landing-top-slot">
-  {% for template in slots['landing-top'] %}
+  {% for template in customTemplates['landing-top'] %}
   {{ include(template) }}
   {% endfor %}
 </div>
@@ -34,21 +34,21 @@
     {% endif %}
   </div>
   <div id="landing-start-slot">
-    {% for template in slots['landing-start'] %}
+    {% for template in customTemplates['landing-start'] %}
     {{ include(template) }}
     {% endfor %}
   </div>
 </div>
 <div class="col-lg-5 d-flex flex-column">
   <div id="landing-end-slot">
-    {% for template in slots['landing-end'] %}
+    {% for template in customTemplates['landing-end'] %}
     {{ include(template) }}
     {% endfor %}
   </div>
 </div>
 
 <div id="landing-bottom-slot"></div>
-  {% for template in slots['landing-bottom'] %}
+  {% for template in customTemplates['landing-bottom'] %}
   {{ include(template) }}
   {% endfor %}
 {% endblock %}

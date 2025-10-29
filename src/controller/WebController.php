@@ -72,17 +72,17 @@ class WebController extends Controller
         $this->twig->addGlobal('honeypot', $this->honeypot);
 
         // populate the customizable content slots
-        $slotSubDirs = glob('../custom-templates/*', GLOB_ONLYDIR);
-        $slots = [];
+        $customTemplateSubDirs = glob('../custom-templates/*', GLOB_ONLYDIR);
+        $customTemplates = [];
 
-        foreach ($slotSubDirs as $slotDir) {
+        foreach ($customTemplateSubDirs as $slotDir) {
             $slotName = basename($slotDir);
             $files = glob($slotDir . '/*.twig');
             // Strip the "../custom-templates" prefix, it's not needed.
             // The "custom-templates" directory is registered to the Twig FilesystemLoader.
-            $slots[$slotName] = preg_filter('|../custom-templates/|', '', $files);
+            $customTemplates[$slotName] = preg_filter('|../custom-templates/|', '', $files);
         }
-        $this->twig->addGlobal('slots', $slots);
+        $this->twig->addGlobal('customTemplates', $customTemplates);
     }
 
     /**
