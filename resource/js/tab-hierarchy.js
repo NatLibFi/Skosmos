@@ -87,7 +87,7 @@ function startHierarchyApp () {
 
             // add top concepts to hierarchy tree
             for (const concept of bt) {
-              if (concept.top) {
+              if (concept.top || !concept.broader) {
                 if (concept.narrower) {
                   // children of the current concept
                   const children = concept.narrower
