@@ -61,14 +61,6 @@ body {
 
 /* Font awesome
  *****************************************/
-  #main-container.landing #info-box .fa-arrow-right {
-    color: var(--secondary-dark-color);
-  }
-
-  #main-container.landing-one-vocab #info-box .fa-arrow-right {
-    color: var(--secondary-dark-color);
-  }
-
   #vocab-box .fa-arrow-right {
     color: var(--secondary-dark-color);
   }
@@ -375,6 +367,10 @@ body {
     font-weight: bold;
   }
 
+  #main-container h2 {
+    font-family: var(--font-family-heading);
+  }
+
   #main-container-row {
     --bs-gutter-x: 2rem;
   }
@@ -400,20 +396,12 @@ body {
     padding-top: 0;
   }
 
-  #vocab-box, #welcome-box, #info-box {
+  #vocab-box {
     padding: 2.5rem 2rem;
-  }
-
-  #info-box a {
-    color: var(--info-box-text);
-    text-decoration: none;
   }
 
   /*** Main container landing page ***/
 
-  #vocabulary-list h2, #welcome-box h2, #vocab-info h2 {
-    font-family: var(--font-family-heading) !important;
-  }
   header > h2 > a {
     font-family: var(--font-family-heading) !important;
     color: var(--dark-color)
@@ -448,16 +436,6 @@ body {
     color: var(--vocab-box-header);
   }
 
-  #main-container.landing #welcome-box {
-    background-color: var(--welcome-box-bg);
-    color: var(--welcome-box-text);
-  }
-
-  #main-container.landing #info-box {
-    background-color: var(--info-box-bg);
-    justify-content: center;
-  }
-
   /*** Main container landing page one vocab ***/
   #main-container.landing-one-vocab #vocab-box {
     background-color: var(--vocab-box-one-bg);
@@ -471,15 +449,6 @@ body {
     color: var(--vocab-box-one-text);
     text-decoration: underline;
     text-decoration-thickness: 1px;
-  }
-
-  #main-container.landing-one-vocab #welcome-box {
-    background-color: var(--welcome-box-one-bg);
-    color: var(--welcome-box-one-text);
-  }
-
-  #main-container.landing-one-vocab #info-box {
-    background-color: var(--info-box-one-bg);
   }
 
   /***** Main container vocab-home & concept & vocab-search pages *****/
@@ -844,7 +813,8 @@ body {
     border-top: none;
   }
 
-  .property-label h2 {
+  #main-container .property-label h2 {
+    font-family: var(--font-family);
     font-weight: bold;
     font-size: 1.2rem;
     margin-bottom: 0;
@@ -1111,15 +1081,6 @@ body {
     background-color: var(--alert-color);
     color: var(--white-color);
     border-radius: 0;
-  }
-
- /* About page
-   *****************************************/
-  #about-content a {
-    font-size: 1.0rem;
-    color: var(--vocab-link);
-    text-decoration: underline var(--secondary-medium-color) solid;
-    font-weight: 700;
   }
 
   #alphabetical-menu > .list-group > .list-group-item {
