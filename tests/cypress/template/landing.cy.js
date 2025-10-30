@@ -48,4 +48,10 @@ describe('Landing page', () => {
     // check that we are on the vocab home page
     cy.get('.vocab-home')
   })
+  it('contains custom template placeholder text', () => {
+    // go to the Skosmos front page
+    cy.visit('/')
+    // check that the landing-end slot contains placeholder text
+    cy.get('#landing-end-slot').find('.slot-placeholder').invoke('text').should('include', 'To customize what is shown here')
+  })
 })
