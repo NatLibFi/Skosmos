@@ -87,7 +87,10 @@ const partialPageLoad = (event, pageUri) => {
       if (window.history.pushState) { window.history.pushState({ url: pageUri }, '', pageUri) }
 
       // removing disabled class from hierarchy tab
-      if (document.querySelector('#hierarchy > a')) { document.querySelector('#hierarchy > a').classList.remove('disabled') }
+      if (document.querySelector('#hierarchy > a')) {
+        document.querySelector('#hierarchy').classList.remove('disabled')
+        document.querySelector('#hierarchy > a').classList.remove('disabled')
+      }
 
       // concept page HTML
       const conceptHTML = document.createElement('div')
