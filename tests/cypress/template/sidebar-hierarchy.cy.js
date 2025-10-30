@@ -77,6 +77,30 @@ describe('Hierarchy', () => {
     // Check that other concepts are loaded
     cy.get('#hierarchy-list li ul').first().children().should('have.length', 9)
   })
+  it('Loads hierarchy after opening concept page in vocab without top concepts', () => {
+    // Go to test vocab home page
+    cy.visit('/test-hierarchy-without-top-concepts/en/')
+    // Check that hierarchy tab is disabled
+    cy.get('#hierarchy .nav-link').should('have.class', 'disabled')
+    // Change letter to C in alphabetical view
+    cy.get("#tab-alphabetical .pagination").contains('a', 'C').click()
+    // Click on "Cuckoo" in alphabetical index
+    cy.get('#tab-alphabetical .sidebar-list li a').last().click()
+    // Check that new concept page has been loaded
+    cy.get('#concept-heading h1', {'timeout': 15000}).invoke('text').should('equal', 'Cuckoo')
+    // Check that hierarchy tab is not disabled
+    cy.get('#hierarchy .nav-link').should('not.have.class', 'disabled')
+    // Click hierarchy tab open
+    cy.get('#hierarchy').click()
+    // Check that selected element is "Cuckoo"
+    cy.get('#hierarchy-list .selected').should('have.length', 1).invoke('text').should('contain', 'Cuckoo')
+    // Check that "Cuckoo" has 1 child "European cuckoo"
+    cy.get('#hierarchy-list li:has(.selected)').last().find('ul').should('have.length', 1).invoke('text').should('contain', 'European cuckoo')
+    // Check that hierarchy includes correct top concept
+    cy.get('#hierarchy-list li a').first().invoke('text').should('contain', 'Birds')
+    // Check that other concepts are loaded
+    cy.get('#hierarchy-list li ul').first().children().should('have.length', 9)
+  })
   it('Scrolls to selected concept on load', () => {
     // Go to "ages (periods of time)" YSO concept page
     cy.visit('/yso/en/page/p4623')
