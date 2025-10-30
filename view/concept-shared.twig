@@ -6,8 +6,7 @@
     <div class="alert alert-danger">
       <p class="deprecated-alert">{% trans %}deprecated{% endtrans %}</p>
     </div>
-    {% endif %}
-    {% if concept.label.lang != request.contentLang %}
+    {% elseif concept.label.lang != request.contentLang %}
     <div class="alert alert-lang">
       <p class="language-alert">{% trans %}There is no term for this concept in this language{% endtrans %}</p>
     </div>
@@ -39,6 +38,7 @@
         {% endfor %}
         </div>
       {% endif %}
+      {% if concept.label %}
       {% spaceless %}
       <div class="row{% if concept.type == 'skosext:DeprecatedConcept' %} deprecated{% endif %} property prop-preflabel">
         <div class="property-label property-label-pref">
@@ -91,6 +91,7 @@
         <div class="col-md-12"><div class="preflabel-spacer"></div></div>
       </div>
       {% endspaceless %}
+      {% endif %}
 
       {% for property in concept.properties %} {# loop through ConceptProperty objects #}
         {% if property.getSubPropertyOf != 'skos:hiddenLabel' %}
