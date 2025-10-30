@@ -14,9 +14,8 @@
           {% set active_class = (request.page == 'vocab' and view == vocab.config.defaultSidebarView) or (request.page == 'page' and view == vocab.config.defaultConceptSidebarView) %}
           {# Hierarchy tab is disabled on vocab page if showTopConcepts is set to false #}
           {% set disabled_class = request.page == 'vocab' and view == 'hierarchy' and not (vocab.config.showTopConcepts) %}
-          <li id="{{ view }}" class="nav-item">
-            <a class="nav-link p-2{% if active_class %} active{% elseif disabled_class %} disabled{% endif %}"
-              {% if disabled_class %}data-title="{{ 'hierarchy-disabled-help' | trans }}"{% endif %} 
+          <li id="{{ view }}" class="nav-item{% if disabled_class %} disabled{% endif %}" {% if disabled_class %}data-title="{{ 'hierarchy-disabled-help' | trans }}"{% endif %}>
+            <a class="nav-link p-2{% if active_class %} active{% elseif disabled_class %} disabled{% endif %}" 
               role="tab" data-bs-toggle="tab" href="#tab-{{ view }}" aria-controls="tab-{{ view }}">
               {{ view_trans_text | trans }}
             </a>
