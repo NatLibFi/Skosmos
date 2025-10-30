@@ -215,6 +215,17 @@ describe('Concept page', () => {
     // Check the notation code for broader concept
     cy.get('.prop-skos_broader .property-value-notation').eq(0).invoke('text').should('contain', '33.1')
   })
+  it('contains submembers narrower concepts', () => {
+    // Go to "Grouped fish" concept page
+    cy.visit('groups/en/page/?uri=http%3A%2F%2Fwww.skosmos.skos%2Fgroups%2Fta1')
+    // Check the submembers of "Freshwater fish"
+    cy.get('.prop-skos_narrower .property-value-submembers').eq(0).find('li').should('have.length', 1)
+    cy.get('.prop-skos_narrower .property-value-submembers li').eq(0).invoke('text').should('contain', 'Carp')
+    // Check the submembers of "Saltwater fish"
+    cy.get('.prop-skos_narrower .property-value-submembers').eq(1).find('li').should('have.length', 2)
+    cy.get('.prop-skos_narrower .property-value-submembers').eq(1).find('li').eq(0).invoke('text').should('contain', 'Flatfish')
+    cy.get('.prop-skos_narrower .property-value-submembers').eq(1).find('li').eq(1).invoke('text').should('contain', 'Tuna')
+  })
   it('contains related concepts', () => {
     cy.visit('/yso/en/page/p21685') // go to "music research" concept page
 
