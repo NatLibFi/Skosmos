@@ -71,18 +71,32 @@ class WebController extends Controller
         }
         $this->twig->addGlobal('honeypot', $this->honeypot);
 
-        // populate the customizable content slots
-        $customTemplateSubDirs = glob('../custom-templates/*', GLOB_ONLYDIR);
+        // populate the customizable content slots from custom templates
+        $customTemplates = $this->findCustomTemplates("../custom-templates");
+        $this->twig->addGlobal('customTemplates', $customTemplates);
+    }
+
+    /**
+     * Find any custom templates from the given directory and return them as an array.
+     * @param string $dir path of custom templates directory
+     * @return array array of custom template filenames, keyed by slot
+     */
+    public function findCustomTemplates($dir)
+    {
+        $customTemplateSubDirs = glob($dir . '/*', GLOB_ONLYDIR);
         $customTemplates = [];
 
         foreach ($customTemplateSubDirs as $slotDir) {
             $slotName = basename($slotDir);
             $files = glob($slotDir . '/*.twig');
-            // Strip the "../custom-templates" prefix, it's not needed.
+            // Strip the directory part to make the file paths relative to the directory.
             // The "custom-templates" directory is registered to the Twig FilesystemLoader.
-            $customTemplates[$slotName] = preg_filter('|../custom-templates/|', '', $files);
+            $customTemplates[$slotName] = array_map(function ($file) use ($dir) {
+                return str_replace($dir . '/', '', $file);
+            }, $files);
         }
-        $this->twig->addGlobal('customTemplates', $customTemplates);
+
+        return $customTemplates;
     }
 
     /**
