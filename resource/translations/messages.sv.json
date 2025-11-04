@@ -1,4 +1,6 @@
 {
+    "Adding an empty twig file will remove this message.": "Du kan ta bort detta meddelande genom att l\u00e4gga till en tom twig-fil.",
+    "To customize what is shown here, add one or more .twig template files under the %slotPath% directory.": "Anpassa inneh\u00e5llet som visas h\u00e4r genom att l\u00e4gga till .twig-mallfiler i mappen %slotPath%.",
     "Select search language": "V\u00e4lj s\u00f6kspr\u00e5k",
     "Text input with dropdown button": "Textinmatning med rullgardinsmeny",
     "Open": "\u00d6ppna",
