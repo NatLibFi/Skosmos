@@ -271,4 +271,10 @@ class WebControllerTest extends TestCase
         $this->assertContains('about/0-testing.twig', $result['about'], 'Expected template "about/0-testing.twig" not found.');
     }
 
+    public function testFindCustomTemplatesDirectoryNotFound() {
+        $dir = __DIR__ . '/custom-templates.not_found';
+        $result = $this->webController->findCustomTemplates($dir);
+        $this->assertEmpty($result);
+    }
+
 }
