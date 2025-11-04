@@ -62,8 +62,6 @@ function startGlobalSearchApp () {
         clearTimeout(this._timerId)
         this.hideAutoComplete()
 
-        // TODO: if the search term is in cache, use the cache
-
         // delay call, but don't execute if the search term is not at least two characters
         if (this.searchTerm.length > 1) {
           this._timerId = setTimeout(() => { this.search() }, delayMs)
@@ -87,10 +85,10 @@ function startGlobalSearchApp () {
       },
       formatSearchUrlParams () {
         const params = new URLSearchParams({ query: this.formatSearchTerm(), unique: true })
-        if (this.selectedLanguage !== 'all') {
-          params.set('clang', this.selectedLanguage)
-        } else {
+        if (this.selectedLanguage === 'all') {
           params.set('anylang', 'on')
+        } else {
+          params.set('clang', this.selectedLanguage)
         }
         params.set('vocab', this.formatVocabParam())
 
@@ -105,10 +103,7 @@ function startGlobalSearchApp () {
         return this.searchTerm + '*'
       },
       notationMatches (searchTerm, notation) {
-        if (notation && notation.toLowerCase().includes(searchTerm.toLowerCase())) {
-          return true
-        }
-        return false
+        return notation?.toLowerCase()?.includes(searchTerm.toLowerCase()) === true
       },
       parseSearchLang () {
         // if content language can be found from uri params, use that and update it to SKOSMOS object and to search lang cookie
@@ -146,7 +141,9 @@ function startGlobalSearchApp () {
               after: label.substring(endIndex) + langSpec
             }
           }
-          return label + langSpec
+          return {
+            plaintext: label + langSpec
+          }
         }
         return null
       },
@@ -156,10 +153,8 @@ function startGlobalSearchApp () {
       /*
       * renderResults is used when the search string has been indexed in the cache
       * it also shows the autocomplete results list
-      * TODO: Showing labels in other languages, extra concept information and such goes here
       */
       renderResults () {
-        // TODO: get the results list form cache if it is implemented
         const renderedSearchTerm = this.searchTerm // save the search term in case it changes while rendering
 
         this.renderedResultsList.forEach(result => {
@@ -319,11 +314,11 @@ function startGlobalSearchApp () {
                           <template v-if="result.showNotation && result.notation">
                             {{ result.notation }}&nbsp;
                           </template>
-                          <template v-if="result.hit.hasOwnProperty('match')">
+                          <template v-if="result.hit.match">
                             {{ result.hit.before }}<b>{{ result.hit.match }}</b>{{ result.hit.after }}
                           </template>
                           <template v-else>
-                            {{ result.hit }}
+                            {{ result.hit.plaintext }}
                           </template>
                         </span>
                       </div>
