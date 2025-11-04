@@ -1,5 +1,5 @@
 {% for template in customTemplates[slotName] %}
-{{ include(template) }}
+{{- include(template) -}}
 {% else %}
 {% if showPlaceholder %}
   <div class="slot-placeholder">
