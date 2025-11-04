@@ -74,6 +74,7 @@
         {% endif %}
       </ul>
     </div>
+    {% if request.vocabid == '' and request.page != 'about' and request.page != 'feedback' %}
     <div class="collapse container-fluid mt-2 pe-0 py-3" id="global-search-bar">
       <div class="row d-flex align-items-top">
         <div class="col" id="global-search-text">
@@ -83,6 +84,7 @@
         </div>
       </div>
     </div>
+    {% endif %}
     {% if pageType in ['landing', 'vocab-home', 'concept', 'vocab-search'] %}
     <div class="container-fluid bg-white py-4" id="headerbar">
       <div id="headerbar-top-slot" class="row"></div>
