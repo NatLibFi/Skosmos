@@ -413,10 +413,6 @@ body {
     overflow-y: auto;
   }
 
-  #search-wrapper #language-list li {
-    tab-index: 0;
-  }
-
   #search-wrapper #language-list li:hover label {
     background-color: var(--medium-color);
   }
