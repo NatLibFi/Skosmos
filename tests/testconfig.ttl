@@ -205,6 +205,7 @@
 	skosmos:marcSourceCode "ysa/gen";
 	skosmos:language "en";
 	skosmos:showTopConcepts "true";
+    skosmos:conceptSchemesInHierarchy "true";
 	skosmos:sparqlGraph <http://www.skosmos.skos/multiple-schemes/> .
 
 :testdiff a skosmos:Vocabulary, void:Dataset ;

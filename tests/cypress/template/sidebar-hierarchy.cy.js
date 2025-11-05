@@ -101,6 +101,38 @@ describe('Hierarchy', () => {
     // Check that other concepts are loaded
     cy.get('#hierarchy-list li ul').first().children().should('have.length', 9)
   })
+  it('Loads hierarchy in vocab with multiple schemes', () => {
+    // Go to test vocab home page
+    cy.visit('/multiple-schemes/en/')
+    // Check that hierarchy tab is available and click it open
+    cy.get('#hierarchy').should('not.have.class', 'disabled').click()
+    // Check that hierarchy includes correct top concept
+    cy.get('#hierarchy-list li').should('have.length', 3).first().invoke('text').should('contain', 'Concept Scheme 1')
+    // Click hierarchy open button of first concept scheme
+    cy.get('#hierarchy-list li button').first().click({force: true})
+    // Check that children are loaded in
+    cy.get('#hierarchy-list li ul').first().children().should('have.length', 1)
+    cy.get('#hierarchy-list li ul').first().children().first().invoke('text').should('contain', 'concept 1')
+    
+    // Go back to alphabetical index and open a "concept 1" page
+    cy.get('#alphabetical').click()
+    cy.get('#tab-alphabetical .sidebar-list li a').first().click()
+    // Check that new concept page has been loaded
+    cy.get('#concept-heading h1', {'timeout': 15000}).invoke('text').should('equal', 'concept 1')
+    // Click hierarchy tab open again
+    cy.get('#hierarchy').click()
+    // Check that "concept 1" is selected
+    cy.get('#hierarchy-list .selected').invoke('text').should('contain', 'concept 1')
+    
+    // Go to test "Concept Scheme 1" concept page
+    cy.visit('/multiple-schemes/en/page/cs1')
+    // Check that "Concept Scheme 1" is selected
+    cy.get('#hierarchy-list .selected').invoke('text').should('contain', 'Concept Scheme 1')
+    // Check that children are loaded in
+    cy.get('#hierarchy-list li:has(.selected) ul').first().children().should('have.length', 1)
+    cy.get('#hierarchy-list li:has(.selected) ul').first().children().first().invoke('text').should('contain', 'concept 1')
+
+  })
   it('Scrolls to selected concept on load', () => {
     // Go to "ages (periods of time)" YSO concept page
     cy.visit('/yso/en/page/p4623')
