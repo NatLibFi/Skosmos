@@ -101,7 +101,7 @@ function startHierarchyApp () {
           const data = await res.json()
 
           for (const s of data.conceptschemes.sort((a, b) => this.compareConcepts(a, b))) {
-            const schemeNode = { uri: s.uri, label: s.title || s.label, hasChildren: true, children: [], isOpen: scheme.uri === window.SKOSMOS.uri, notation: undefined, isScheme: true }
+            const schemeNode = { uri: s.uri, label: s.title || s.label, hasChildren: true, children: [], isOpen: s.uri === window.SKOSMOS.uri, notation: undefined, isScheme: true }
             this.hierarchy.push(schemeNode)
           }
         }
@@ -145,7 +145,7 @@ function startHierarchyApp () {
                   // if concept schemes are shown in hierarchy, push new concept to the children of the correct concept scheme
                   const scheme = this.hierarchy.find(s => s.uri === concept.top)
                   scheme.children.push(conceptNode)
-                  
+
                   if (concept.uri === window.SKOSMOS.uri) {
                     scheme.isOpen = true
                   }
@@ -228,7 +228,6 @@ function startHierarchyApp () {
         this.loadingHierarchy = false
         this.selectedConcept = window.SKOSMOS.uri
         console.log('hier', this.hierarchy)
-
       },
       loadChildren (concept) {
         // load children only if concept has children but they have not been loaded yet
