@@ -1,0 +1,11 @@
+{% for template in customTemplates[slotName] %}
+{{- include(template) -}}
+{% else %}
+{% if showPlaceholder %}
+  <div class="slot-placeholder">
+  {% set slotPath = '<code>custom-templates/' ~ slotName ~ '/</code>' %}
+  {{ "To customize what is shown here, add one or more .twig template files under the %slotPath% directory."|trans({'%slotPath%': slotPath})|raw }}
+  {{ "Adding an empty twig file will remove this message." | trans }}
+  </div>
+{% endif %}
+{% endfor %}

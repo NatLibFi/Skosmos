@@ -37,7 +37,7 @@ class WebController extends Controller
         }
 
         // specify where to look for templates and cache
-        $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../view');
+        $loader = new \Twig\Loader\FilesystemLoader([__DIR__ . '/../../custom-templates', __DIR__ . '/../view']);
         // initialize Twig environment
         $this->twig = new \Twig\Environment($loader, array('cache' => $tmpDir,'auto_reload' => true));
         // used for setting the base href for the relative urls
@@ -70,6 +70,33 @@ class WebController extends Controller
             $this->honeypot->disable();
         }
         $this->twig->addGlobal('honeypot', $this->honeypot);
+
+        // populate the customizable content slots from custom templates
+        $customTemplates = $this->findCustomTemplates("../custom-templates");
+        $this->twig->addGlobal('customTemplates', $customTemplates);
+    }
+
+    /**
+     * Find any custom templates from the given directory and return them as an array.
+     * @param string $dir path of custom templates directory
+     * @return array array of custom template filenames, keyed by slot
+     */
+    public function findCustomTemplates($dir)
+    {
+        $customTemplateSubDirs = glob($dir . '/*', GLOB_ONLYDIR);
+        $customTemplates = [];
+
+        foreach ($customTemplateSubDirs as $slotDir) {
+            $slotName = basename($slotDir);
+            $files = glob($slotDir . '/*.twig');
+            // Strip the directory part to make the file paths relative to the directory.
+            // The "custom-templates" directory is registered to the Twig FilesystemLoader.
+            $customTemplates[$slotName] = array_map(function ($file) use ($dir) {
+                return str_replace($dir . '/', '', $file);
+            }, $files);
+        }
+
+        return $customTemplates;
     }
 
     /**

@@ -216,5 +216,7 @@
     "Download this concept": "Download this concept",
     "Concept %term% in vocabulary %vocab%": "Concept %term% in vocabulary %vocab%",
     "More information about this term": "More information about this term",
-    "Text input with dropdown button": "Text input with dropdown button"
+    "Text input with dropdown button": "Text input with dropdown button",
+    "To customize what is shown here, add one or more .twig template files under the %slotPath% directory.": "To customize what is shown here, add one or more .twig template files under the %slotPath% directory.",
+    "Adding an empty twig file will remove this message.": "Adding an empty twig file will remove this message."
 }

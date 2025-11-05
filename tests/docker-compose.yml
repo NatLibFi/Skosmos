@@ -18,5 +18,8 @@ services:
       - type: bind
         source: plugins
         target: /var/www/html/plugins
+      - type: bind
+        source: custom-templates
+        target: /var/www/html/custom-templates
     environment:
       SKOSMOS_SPARQL_ENDPOINT: http://fuseki-cache:80/skosmos/sparql

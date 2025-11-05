@@ -36,6 +36,12 @@ describe('About page', () => {
     cy.get('link[rel="canonical"]').should('have.attr', 'href', expectedUrl);
     cy.get('head meta[property="og:url"]').should('have.attr', 'content', expectedUrl);
   })
+  it('Contains custom template content', () => {
+    // go to the Skosmos about page
+    cy.visit('/en/about')
+    // check that the about slot contains content from custom-templates/about/0-testing.twig
+    cy.get('#about-slot').invoke('text').should('include', 'This is a Skosmos instance for automated tests')
+  })
   it('Contains version number information', () => {
     // go to the Skosmos about page
     cy.visit('/en/about')

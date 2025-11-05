@@ -263,4 +263,18 @@ class WebControllerTest extends TestCase
         $this->assertEquals($guessedLanguage, 'fi');
     }
 
+    public function testFindCustomTemplates() {
+        $dir = __DIR__ . '/custom-templates';
+        $result = $this->webController->findCustomTemplates($dir);
+
+        $this->assertArrayHasKey('about', $result, 'Slot "about" should be present in the result.');
+        $this->assertContains('about/0-testing.twig', $result['about'], 'Expected template "about/0-testing.twig" not found.');
+    }
+
+    public function testFindCustomTemplatesDirectoryNotFound() {
+        $dir = __DIR__ . '/custom-templates.not_found';
+        $result = $this->webController->findCustomTemplates($dir);
+        $this->assertEmpty($result);
+    }
+
 }
