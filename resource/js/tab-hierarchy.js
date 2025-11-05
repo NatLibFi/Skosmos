@@ -28,7 +28,7 @@ function startHierarchyApp () {
       }
     },
     mounted () {
-      // load hierarchy if hierarchy tab is active when the page is first opened (otherwise only load hierachy when the tab is clicked)
+      // load hierarchy if hierarchy tab is active when the page is first opened (otherwise only load hierarchy when the tab is clicked)
       if (document.querySelector('#hierarchy > a').classList.contains('active')) {
         this.loadHierarchy()
       }
@@ -53,114 +53,216 @@ function startHierarchyApp () {
       },
       loadTopConcepts () {
         this.loadingHierarchy = true
-        fetch('rest/v1/' + window.SKOSMOS.vocab + '/topConcepts/?lang=' + window.SKOSMOS.content_lang)
-          .then(data => {
-            return data.json()
-          })
-          .then(data => {
-            console.log('data', data)
-
-            this.hierarchy = []
-
-            for (const c of data.topconcepts.sort((a, b) => this.compareConcepts(a, b))) {
-              this.hierarchy.push({ uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false, notation: c.notation })
-            }
-
-            this.loadingHierarchy = false
-            console.log('hier', this.hierarchy)
-          })
-      },
-      loadConceptHierarchy () {
-        this.loadingHierarchy = true
-        fetch('rest/v1/' + window.SKOSMOS.vocab + '/hierarchy/?uri=' + window.SKOSMOS.uri + '&lang=' + window.SKOSMOS.content_lang)
-          .then(data => {
-            return data.json()
-          })
-          .then(data => {
-            console.log('data', data)
-
-            this.hierarchy = []
-
-            // transform broaderTransitive to an array and sort it
-            const bt = Object.values(data.broaderTransitive).sort((a, b) => this.compareConcepts(a, b))
-            const parents = [] // queue of nodes in hierarchy tree with potential missing child nodes
-
-            // add top concepts to hierarchy tree
-            for (const concept of bt) {
-              if (concept.top || !concept.broader) {
-                if (concept.narrower) {
-                  // children of the current concept
-                  const children = concept.narrower
-                    .sort((a, b) => this.compareConcepts(a, b))
-                    .map(c => {
-                      return { uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false, notation: c.notation }
-                    })
-                  // new concept node to be added to hierarchy tree
-                  const conceptNode = { uri: concept.uri, label: concept.prefLabel, hasChildren: true, children, isOpen: true, notation: concept.notation }
-                  // push new concept to hierarchy tree
-                  this.hierarchy.push(conceptNode)
-                  // push new concept to parent queue
-                  parents.push(conceptNode)
-                } else {
-                  // push new concept node to hierarchy tree
-                  this.hierarchy.push({ uri: concept.uri, label: concept.prefLabel, hasChildren: concept.hasChildren, children: [], isOpen: false, notation: concept.notation })
-                }
-              }
-            }
-
-            // add other concepts to hierarchy tree
-            while (parents.length !== 0) {
-              const parent = parents.shift() // parent node with potential missing child nodes
-              const concepts = []
-
-              // find all concepts in broaderTransitive which have current parent node as parent
-              for (const concept of bt) {
-                if (concept.broader && concept.broader.includes(parent.uri)) {
-                  concepts.push(concept)
-                }
-              }
-
-              // for all found concepts, add their children to hierarchy
-              for (const concept of concepts) {
-                if (concept.narrower) {
-                  // corresponding concept node in hierarchy tree
-                  const conceptNode = parent.children.find(c => c.uri === concept.uri)
-                  // children of current concept
-                  const children = concept.narrower
-                    .sort((a, b) => this.compareConcepts(a, b))
-                    .map(c => {
-                      return { uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false, notation: c.notation }
-                    })
-                  // set children of current concept as children of concept node
-                  conceptNode.children = children
-                  conceptNode.isOpen = children.length !== 0
-                  // push concept node to parent queue
-                  parents.push(conceptNode)
-                }
-              }
-            }
-
-            this.loadingHierarchy = false
-            this.selectedConcept = window.SKOSMOS.uri
-            console.log('hier', this.hierarchy)
-          })
-      },
-      loadChildren (concept) {
-        // load children only if concept has children but they have not been loaded yet
-        if (concept.children.length === 0 && concept.hasChildren) {
-          this.loadingChildren.push(concept)
-          fetch('rest/v1/' + window.SKOSMOS.vocab + '/children?uri=' + concept.uri + '&lang=' + window.SKOSMOS.content_lang)
+        if (window.SKOSMOS.showConceptSchemesInHierarchy) {
+          // if concept schemes are shown in hierarchy, fetch them from API and set them as top concepts in hierarchy
+          fetch('rest/v1/' + window.SKOSMOS.vocab + '/?lang=' + window.SKOSMOS.content_lang)
             .then(data => {
               return data.json()
             })
             .then(data => {
               console.log('data', data)
-              for (const c of data.narrower.sort((a, b) => this.compareConcepts(a, b))) {
-                concept.children.push({ uri: c.uri, label: c.prefLabel, hasChildren: c.hasChildren, children: [], isOpen: false, notation: c.notation })
+
+              this.hierarchy = []
+
+              for (const c of data.conceptschemes.sort((a, b) => this.compareConcepts(a, b))) {
+                this.hierarchy.push({ uri: c.uri, label: c.title || c.label, hasChildren: true, children: [], isOpen: false, notation: undefined, isScheme: true })
               }
-              this.loadingChildren = this.loadingChildren.filter(x => x !== concept)
+
+              this.loadingHierarchy = false
               console.log('hier', this.hierarchy)
             })
+        } else {
+          // otherwise, fetch top concepts
+          fetch('rest/v1/' + window.SKOSMOS.vocab + '/topConcepts/?lang=' + window.SKOSMOS.content_lang)
+            .then(data => {
+              return data.json()
+            })
+            .then(data => {
+              console.log('data', data)
+
+              this.hierarchy = []
+
+              for (const c of data.topconcepts.sort((a, b) => this.compareConcepts(a, b))) {
+                this.hierarchy.push({ uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false, notation: c.notation, isScheme: false })
+              }
+
+              this.loadingHierarchy = false
+              console.log('hier', this.hierarchy)
+            })
+        }
+      },
+      async loadConceptHierarchy () {
+        this.loadingHierarchy = true
+        this.hierarchy = []
+
+        // if concept schemes are shown in hierarchy, add them to the root of the hierarchy tree
+        if (window.SKOSMOS.showConceptSchemesInHierarchy) {
+          const res = await fetch('rest/v1/' + window.SKOSMOS.vocab + '/?lang=' + window.SKOSMOS.content_lang)
+          const data = await res.json()
+
+          for (const s of data.conceptschemes.sort((a, b) => this.compareConcepts(a, b))) {
+            const schemeNode = { uri: s.uri, label: s.title || s.label, hasChildren: true, children: [], isOpen: scheme.uri === window.SKOSMOS.uri, notation: undefined, isScheme: true }
+            this.hierarchy.push(schemeNode)
+          }
+        }
+
+        if (this.hierarchy.find(s => s.uri === window.SKOSMOS.uri)) {
+          // if selected concept is a concept scheme, fetch its top concepts
+          const res = await fetch('rest/v1/' + window.SKOSMOS.vocab + '/topConcepts?scheme=' + window.SKOSMOS.uri + '&lang=' + window.SKOSMOS.content_lang)
+          const data = await res.json()
+
+          // find selected scheme in hierarchy
+          const scheme = this.hierarchy.find(s => s.uri === window.SKOSMOS.uri)
+          // add top concepts to hierarchy as the scheme's children
+          scheme.children = data.topconcepts
+            .sort((a, b) => this.compareConcepts(a, b))
+            .map(c => {
+              return { uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false, notation: c.notation, isScheme: false }
+            })
+        } else {
+          // otherwise, fetch hierarchy tree for selected concept
+          const res = await fetch('rest/v1/' + window.SKOSMOS.vocab + '/hierarchy/?uri=' + window.SKOSMOS.uri + '&lang=' + window.SKOSMOS.content_lang)
+          const data = await res.json()
+
+          // transform broaderTransitive to an array and sort it
+          const bt = Object.values(data.broaderTransitive).sort((a, b) => this.compareConcepts(a, b))
+          const parents = [] // queue of nodes in hierarchy tree with potential missing child nodes
+
+          // add top concepts to hierarchy tree
+          for (const concept of bt) {
+            if (concept.top || !concept.broader) {
+              if (concept.narrower) {
+                // children of the current concept
+                const children = concept.narrower
+                  .sort((a, b) => this.compareConcepts(a, b))
+                  .map(c => {
+                    return { uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false, notation: c.notation, isScheme: false }
+                  })
+                // new concept node to be added to hierarchy tree
+                const conceptNode = { uri: concept.uri, label: concept.prefLabel, hasChildren: true, children, isOpen: true, notation: concept.notation, isScheme: false }
+
+                if (window.SKOSMOS.showConceptSchemesInHierarchy) {
+                  // if concept schemes are shown in hierarchy, push new concept to the children of the correct concept scheme
+                  const scheme = this.hierarchy.find(s => s.uri === concept.top)
+                  scheme.children.push(conceptNode)
+                  
+                  if (concept.uri === window.SKOSMOS.uri) {
+                    scheme.isOpen = true
+                  }
+                } else {
+                  // otherwise push new concept to the root of the hierarchy tree
+                  this.hierarchy.push(conceptNode)
+                }
+                // push new concept to parent queue
+                parents.push(conceptNode)
+              } else {
+                const conceptNode = { uri: concept.uri, label: concept.prefLabel, hasChildren: concept.hasChildren, children: [], isOpen: false, notation: concept.notation, isScheme: false }
+                if (window.SKOSMOS.showConceptSchemesInHierarchy) {
+                  // if concept schemes are shown in hierarchy, push new concept to the children of the correct concept scheme
+                  const scheme = this.hierarchy.find(x => x.uri === concept.top)
+                  scheme.children.push(conceptNode)
+
+                  if (concept.uri === window.SKOSMOS.uri) {
+                    scheme.isOpen = true
+                  }
+                } else {
+                  // otherwise push new concept to the root of the hierarchy tree
+                  this.hierarchy.push(conceptNode)
+                }
+              }
+            }
+          }
+
+          // add other concepts to hierarchy tree
+          while (parents.length !== 0) {
+            const parent = parents.shift() // parent node with potential missing child nodes
+            const concepts = []
+
+            // find all concepts in broaderTransitive which have current parent node as parent
+            for (const concept of bt) {
+              if (concept.broader && concept.broader.includes(parent.uri)) {
+                concepts.push(concept)
+              }
+            }
+
+            // for all found concepts, add their children to hierarchy
+            for (const concept of concepts) {
+              if (concept.narrower) {
+                // corresponding concept node in hierarchy tree
+                const conceptNode = parent.children.find(c => c.uri === concept.uri)
+                // children of current concept
+                const children = concept.narrower
+                  .sort((a, b) => this.compareConcepts(a, b))
+                  .map(c => {
+                    return { uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false, notation: c.notation, isScheme: false }
+                  })
+                // set children of current concept as children of concept node
+                conceptNode.children = children
+                conceptNode.isOpen = children.length !== 0
+                // push concept node to parent queue
+                parents.push(conceptNode)
+              }
+            }
+          }
+
+          // if concept schemes are in shown hierarchy, open the concept scheme that contains selected concept
+          if (window.SKOSMOS.showConceptSchemesInHierarchy) {
+            const containsConcept = (node) => {
+              if (node.uri === window.SKOSMOS.uri) return true
+              if (!node.children) return false
+
+              for (const child of node.children) {
+                if (containsConcept(child, window.SKOSMOS.uri)) return true
+              }
+              return false
+            }
+
+            for (const scheme of this.hierarchy) {
+              if (containsConcept(scheme)) {
+                scheme.isOpen = true
+              }
+            }
+          }
+        }
+
+        this.loadingHierarchy = false
+        this.selectedConcept = window.SKOSMOS.uri
+        console.log('hier', this.hierarchy)
+
+      },
+      loadChildren (concept) {
+        // load children only if concept has children but they have not been loaded yet
+        if (concept.children.length === 0 && concept.hasChildren) {
+          this.loadingChildren.push(concept)
+          if (window.SKOSMOS.showConceptSchemesInHierarchy && concept.isScheme) {
+            // if the concept is a concept scheme, fetch topconcepts as children
+            fetch('rest/v1/' + window.SKOSMOS.vocab + '/topConcepts?scheme=' + concept.uri + '&lang=' + window.SKOSMOS.content_lang)
+              .then(data => {
+                return data.json()
+              })
+              .then(data => {
+                console.log('data', data)
+                for (const c of data.topconcepts.sort((a, b) => this.compareConcepts(a, b))) {
+                  concept.children.push({ uri: c.uri, label: c.label, hasChildren: c.hasChildren, children: [], isOpen: false, notation: c.notation, isScheme: false })
+                }
+                this.loadingChildren = this.loadingChildren.filter(x => x !== concept)
+                console.log('hier', this.hierarchy)
+              })
+          } else {
+            // otherwise, fetch children on concept
+            fetch('rest/v1/' + window.SKOSMOS.vocab + '/children?uri=' + concept.uri + '&lang=' + window.SKOSMOS.content_lang)
+              .then(data => {
+                return data.json()
+              })
+              .then(data => {
+                console.log('data', data)
+                for (const c of data.narrower.sort((a, b) => this.compareConcepts(a, b))) {
+                  concept.children.push({ uri: c.uri, label: c.prefLabel, hasChildren: c.hasChildren, children: [], isOpen: false, notation: c.notation, isScheme: false })
+                }
+                this.loadingChildren = this.loadingChildren.filter(x => x !== concept)
+                console.log('hier', this.hierarchy)
+              })
+          }
         }
       },
       setListStyle () {
@@ -189,8 +291,8 @@ function startHierarchyApp () {
         }
 
         // Set strings to label/prefLabel if sorting should not be based on notation or if neither concept has notations
-        strA = strA || a.label || a.prefLabel || ''
-        strB = strB || b.label || b.prefLabel || ''
+        strA = strA || a.label || a.prefLabel || a.title || ''
+        strB = strB || b.label || b.prefLabel || b.title || ''
 
         // Set language and options
         const lang = window.SKOSMOS.content_lang || window.SKOSMOS.lang
