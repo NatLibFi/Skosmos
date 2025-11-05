@@ -883,6 +883,14 @@ body {
     margin-left: 1rem;
   }
 
+  .property-value .property-value-hidden {
+    display: none;
+  }
+
+  .property-value .property-value-expand .property-value-hidden {
+    display: list-item;
+  }
+
   #resource-table th {
     color: var(--vocab-text);
     font-weight: bold;
