@@ -669,12 +669,11 @@ hr {
   }
 }
 
-@media (max-width: 1259.99px) {
-  .right-box {
+/* @media (max-width: 1259.99px) {
+  .right-box { /* HUOM
     top: 395px !important;
   }
-
-}
+} */
 
 @media (min-width: 1260px) {
   .welcome-box {
@@ -750,5 +749,6 @@ hr {
 #vocabulary-list {
   box-sizing: content-box !important;
 } */
+
 
 
