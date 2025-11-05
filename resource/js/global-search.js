@@ -52,17 +52,17 @@ function startGlobalSearchApp () {
       this.vocabStrings = window.SKOSMOS.vocab_list
     },
     watch: {
-      selectedLanguage(newLang) {
-        if (!newLang) return;
-        const url = new URL(window.location.href);
-        if (newLang == 'all') {
+      selectedLanguage (newLang) {
+        if (!newLang) return
+        const url = new URL(window.location.href)
+        if (newLang === 'all') {
           url.searchParams.set('anylang', 'on')
         } else {
           url.searchParams.set('clang', newLang)
           url.searchParams.set('lang', newLang)
           url.searchParams.delete('anylang')
         }
-        history.replaceState({}, '', url.toString());
+        window.history.replaceState({}, '', url.toString())
       }
     },
     methods: {
