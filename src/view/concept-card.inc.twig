@@ -84,6 +84,15 @@
                 {%- endif -%}
                   {{- propval.label(request.contentLang) -}}
                 </a>
+                {% if propval.submembers %}
+                <ul class="property-value-submembers">
+                {% for submember in propval.submembers %}
+                  <li><a href="{{ submember.uri | link_url(propval.vocab, request.lang, 'page', request.contentLang) }}">
+                  {{ submember.label(request.contentLang) }}
+                  </a></li>
+                {% endfor %}
+                </ul>
+                {% endif %}
               </li>
               {% else %} {# literals, e.g. altLabels #}
               <li>
