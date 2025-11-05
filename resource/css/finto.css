@@ -1,0 +1,754 @@
+/* Customizations for Mastodon feed based on Emfed */
+
+.right-box .toot {
+  padding: 0 0 1rem 0;
+  margin-bottom: 0.5rem;
+}
+.right-box .toot .permalink {
+  float: none;
+  font-size: smaller;
+  color: #666;
+}
+.right-box .toot .avatar {
+  width: 32px;
+  height: 32px;
+}
+.right-box .toot .username {
+  display: none;
+}
+.right-box .toot .body {
+  margin-top: 0;
+}
+.right-box .toot .body p {
+  font-size: 14px;
+}
+.right-box .toot .attachment {
+  aspect-ratio: auto;
+  border-radius: 0;
+}
+
+.right-box .mastodon-follow {
+  font-size: smaller;
+}
+
+/* Other rules */
+
+html, body {
+  background-color: #83CFC8 !important;
+}
+
+:root {
+  --scrollbarWidth: 14px;
+  --scrollbarBg: #c7e7e5;
+  --scrollbarThumb: #61c5b8;
+
+}
+
+/* Font definitions
+ *****************************************/
+
+#vocab-info h2, .prefLabel, .versal-pref, .versal-pref a {
+  color: #62729f !important;
+}
+
+.jstree-node > .jstree-clicked {
+  color: #474b4f !important;
+}
+
+.alert-replaced > a {
+  color: #fff !important;
+  text-decoration: underline !important;
+}
+
+.topbar a.navigation-font, .topbar span.navigation-font {
+  color: #394554 !important;
+}
+
+p {
+  color: #474b4f;
+}
+
+.versal {
+  color: #474b4f;
+}
+
+.tooltip-html-content .versal {
+  color: white;
+}
+
+.concept-spinner {
+	background:url("../pics/finto-alt.gif") no-repeat transparent;
+    background-position: center 130px;
+    color: #fff;
+}
+
+.spinner { 
+	display:inline-block;
+	width: 20px;
+	height: 20px;
+	margin-left: 5px;
+  vertical-align: middle;
+	background:url("../pics/finto-loading.gif") no-repeat transparent;
+}
+  
+.headerbar-coloured {
+  background-color: #75889f;
+}
+
+.header-left > h1 {
+  background-color: #75889f;
+}
+
+.header-left > h1 > a {
+  color: #fff !important;
+}
+
+.pagination {
+  background-color: #EAF6F4;
+  border-bottom: 1px solid #C7E7E5 !important;
+}
+
+.topbar a.navigation-font:hover, .topbar span.navigation-font:hover {
+  color: #0078d4 !important;
+  text-decoration: none !important;
+}
+
+.tt-suggestion.tt-cursor, .ui-menu-item > .ui-state-focus {
+  background-color: #EDF4F3 !important;
+}
+
+.tt-suggestion, .ui-menu-item {
+  border-bottom: 1px solid #AFCECC !important
+}
+
+.tt-dropdown-menu, .ui-autocomplete {
+  border: 1px solid #AFCECC !important
+}
+
+.headerbar .multiselect {
+  background-color: #75889F !important;
+}
+
+#topbar-language-navigation::before {
+  margin-top: 20px;
+}
+
+#topbar-language-navigation {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+#navigation, #language {
+  margin-bottom: 0px;
+}
+
+#language .navigation-font {
+  margin-left: 8px;
+}
+
+#navigation .navigation-font {
+  margin: auto 12px;
+}
+
+#navi1, #navi2, #navi3, #navi4 {
+  padding-left: 26px;
+  padding-top: 6px;
+  background-position: left center;
+  background-repeat: no-repeat;
+}
+
+#navi1 {
+  margin-left: 0 !important;
+  background-position-y: initial;
+}
+
+#navi4 {
+  margin-left: 6px !important;
+}
+
+.service-fi h1, .service-sv h1, .service-en h1, .service-se h1, #service-name {
+  text-indent: -100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.service-fi, .service-sv, .service-en, .service-se {
+  display: inline-block;
+  background-repeat: no-repeat;
+  height: 50px;
+}
+
+.service-fi {
+  background-image: url('../pics/tunnus-fi.gif');
+  width: 505px;
+}
+
+.service-sv {
+  background-image: url('../pics/tunnus-sv.gif');
+  width: 455px;
+}
+
+.service-en {
+  background-image: url('../pics/tunnus-en.gif');
+  width: 465px;
+}
+
+.service-se {
+  background-image: url('../pics/tunnus-se.png');
+  width: 253px;
+}
+
+#navi1 { background-image: url('../pics/vocabularies.png'); }
+#navi2 { background-image: url('../pics/about.png'); }
+#navi3 { background-image: url('../pics/feedback.png'); }
+#navi4 { background-image: url('../pics/help.png'); }
+
+#navi4 > span {
+  border-bottom: 2px dotted #394554;
+  margin: 0 !important;
+}
+
+#navi4:hover > span {
+  border-bottom: 2px dotted #0078d4 !important;
+  color: #0078d4 !important; 
+}
+
+#navi1:hover { background-image: url('../pics/vocabularies-mouseover.png'); }
+#navi2:hover { background-image: url('../pics/about-mouseover.png'); }
+#navi3:hover { background-image: url('../pics/feedback-mouseover.png'); }
+#navi4:hover { 
+  background-image: url('../pics/help-mouseover.png'); 
+  color: #0078d4 !important; 
+}
+
+.headerbar {
+  margin-bottom: 19px;
+}
+
+#lang-dropdown-toggle, .headerbar .multiselect {
+  background-color: #394554;
+  border: medium none;
+  border-radius: 0 !important;
+  color: #FFFFFF;
+  height: 40px;
+  padding-left: 6px !important;
+  padding-right: 6px !important;
+}
+
+.navbar-form > div > div > .dropdown-menu > li > a:hover, .multiselect-container > li.active > a, .multiselect-container > li > a:hover, .multiselect-container > li.active > a:hover, .multiselect-container > li > a:focus {
+  background-color: #75889F !important;
+  color: #fff !important;
+}
+
+.search-options .mCSB_container > li:hover > a, .search-options .mCSB_container > li:focus > a {
+  text-decoration: none !important;
+}
+
+.search-options .mCSB_container > li:hover, .search-options .mCSB_container > li:focus {
+  background-color: #EDF4F3 !important;
+}
+
+#sidebar .multiselect > span, #sidebar .multiselect > span > b.caret {
+  color: #474b4f !important;
+  border-top-color: #474b4f !important;
+}
+
+#vocab-info hr {
+  margin-bottom: 10px !important;	
+}
+
+/* front page stuff 
+ ***************************/
+.logo-header {
+  background-image: url('../pics/vocabularies.gif');
+  width: 85px;
+  height: 85px;
+  margin-bottom: 10px;
+}
+
+#service-logo {
+  background-image: url('../pics/finto.png');
+  width: 240px;
+  height: 315px;
+}
+
+.frontpage-logo .main-container.frontpage::before {
+  content: " ";
+  position: absolute;
+  width: 240px;
+  height: 315px;
+  background-image: url('../pics/finto.png');
+  background-repeat: no-repeat;
+  top: -245px;
+  left: -30px;
+}
+
+.vocabularies {
+  margin-top: 0 !important;
+}
+
+#vocabulary-list {
+  border-bottom: 10px solid #83CFC8;
+}
+
+#vocabulary-list > div > h2 {
+  margin-top: 0 !important;
+  margin-bottom: 0px;
+  padding-left: 100px;
+  line-height: 20px;
+  width: 15px;
+}
+
+.frontpage-spacing {
+  margin-bottom: 95px;
+}
+
+.frontpage-spacing .header-float {
+  margin-bottom: 110px;
+}
+
+.vocabulary-separator {
+  border-bottom: 2px solid #3bc2bd !important;
+}
+
+.welcome-box {
+  background-color: #ffffff;
+  min-height: 370px;
+}
+
+#finto10-img {
+  width: 100%;
+}
+
+/* dark border tops
+ ***************************/
+#vocabulary-list, #limit, .credits, .concept-info, .feedback-box, .welcome-box, .container, .search-result-listing, .nav-tabs > li.active, .right-box {
+  border-top: 2px solid #394554;
+}
+
+/* feedback page
+ ***************************/
+.feedback-logo {
+  background-image: url('../pics/about.gif'); 
+  background-repeat: no-repeat;
+  position: absolute;
+  min-width: 84px;
+  display: block;
+  left: 200px !important;
+  border-bottom: 2px solid #394554;
+  padding-top: 80px;
+}
+
+.feedback-box input, .feedback-box select, .feedback-box textarea, #feedback-vocid {
+  color: #00748f !important;
+  background-color: #eaf6f4;
+}
+
+.feedback-box {
+  width: 600px;
+}
+
+#send-feedback {
+  background-color: #394554;
+}
+
+#send-feedback:hover {
+  background-color: #0078d4 !important;
+}
+
+/* about page
+ ***************************/
+.about-logo {
+  background-image: url('../pics/about.gif'); 
+  background-repeat: no-repeat;
+  position: absolute;
+  min-width: 84px;
+  display: block;
+  left: 200px !important;
+  border-bottom: 2px solid #394554;
+  padding-top: 80px;
+}
+
+#about {
+  background-color: #ffffff;
+  width: 600px;
+}
+
+.credits {
+  background-color: #83CFC8 !important;
+}
+
+.kk-logo-fi-sv {
+    background-image: url(../pics/KK_logo_fin_swe.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-top: 16px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 97px;
+    height: 70px;
+}
+
+.kk-logo-en {
+    background-image: url(../pics/KK_logo_eng.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-top: 16px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 97px;
+    height: 70px;
+}
+
+.kk-logo-se {
+    background-image: url(../pics/KK_logo_fin_se.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-top: 16px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 97px;
+    height: 70px;
+}
+
+/* sidebar styles
+ ***************************/
+.sidebar-grey {
+  background-color: #eaf6f4;
+}
+
+#sidebar hr {
+  border: 1px solid #3bc2bd !important;
+}
+
+hr {
+  border: 1px solid transparent !important;
+  background: url('../pics/stripe.png') !important;
+}
+
+#alphabetical-menu {
+  background-color: #eaf6f4;
+}
+
+#limit p {
+  background-color: #EAF6F4;
+}
+
+#groups a {
+  background-color: #a9dcd7;
+}
+
+#alpha a {
+  background-color: #CDEAE6;
+}
+
+.search-count:first-child {
+  font-weight: 600 !important;
+  margin: -7px 0 0 0 !important;
+  padding-left: 55px;
+  height: 42px;
+  background: url('../pics/search.gif') no-repeat;
+}
+
+.search-count:first-child p {
+  padding-top: 12px;
+}
+
+.search-options > .btn-default {
+  background-color: #CDEAE6;
+}
+
+.search-limited:first-child p {
+  /*padding-top: 2px;*/
+}
+
+#hierarchy-disabled > * {
+  background-color: #A3CEC8 !important;
+}
+
+/*
+.search-result-listing .search-result:hover {
+  border: 1px solid #C3E6E1 !important;
+}
+*/
+
+.alphabetical-search-results li {
+    font-size: 14px;
+    line-height: 15px;
+    list-style-type: none;
+}
+
+#changes > a {
+  background-color: #A0D6CF;
+}
+
+/* scrollbars
+ ****************************/
+
+@-moz-document url-prefix() {
+  .sidebar-grey {
+    overflow-y: scroll;
+    scrollbar-width: auto;
+  }
+}
+
+.sidebar-grey, .tt-menu, .multiselect-container {
+  --scroll-bar-width: auto;
+  scrollbar-color: var(--scrollbarThumb) var(--scrollbarBg);
+}
+
+.sidebar-grey::-webkit-scrollbar, .tt-menu::-webkit-scrollbar, .multiselect-container::-webkit-scrollbar {
+  width: var(--scrollbarWidth);
+}
+
+.sidebar-grey::-webkit-scrollbar-track, .tt-menu::-webkit-scrollbar-track, .multiselect-container::-webkit-scrollbar-track {
+  background: var(--scrollbarBg);
+}
+
+.sidebar-grey::-webkit-scrollbar-thumb, .tt-menu::-webkit-scrollbar-thumb, .multiselect-container::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbarThumb);
+  min-height: 40px;
+  -webkit-box-shadow: inset 0 0 0 #b9c1c6
+}
+
+/* concept
+ ****************************/
+
+.concept-appendix {
+  background-color: #d4edeb !important;
+}
+
+.property-divider {
+  border-top: 2px solid #3bc2bd !important;
+}
+
+.property-divider hr {
+  border-bottom: 2px solid #3bc2bd !important;
+}
+
+.nav-tabs {
+  background-color: #a9dcd7;
+}
+
+.nav-tabs > li > a {
+  background-color: #bbe3de;
+}
+
+.nav-tabs #hier-trigger {
+  background-color: #bbe3de;
+}
+
+.nav-tabs > li > a:hover {
+  background-color: #ffffff !important;
+}
+
+.nav-tabs > li > a.active {
+  background-color: #eaf6f4 !important;
+  height: 38px;
+}
+
+.yso-concept {
+  color: #474b4f !important;
+}
+
+@media (max-width: 620px) {
+  #navi1, #navi2, #navi3, #navi4 {
+    background-image: none !important;
+    padding-left: 0 !important;
+  }
+
+  .topbar.frontpage #navigation > a, .topbar.frontpage #language > a, .topbar.frontpage #navi4 > span {
+    font-weight: 500;
+  }
+
+}
+
+@media (max-width: 700px) {
+  /* Counter styles.css declaration */
+  .frontpage #navigation > a, .frontpage #language > a, .frontpage #navi4 > span {
+    font-weight: 400;
+  }
+}
+
+@media (max-width: 710px) {
+  .topbar-white #navi1, .topbar-white #navi2, .topbar-white #navi3, .topbar-white #navi4 {
+    background-image: none !important;
+    padding-left: 0 !important;
+  }
+
+  .topbar-white #navigation > a, .topbar-white #language > a, .topbar-white #navi4 > span {
+    font-weight: 500;
+  }
+
+}
+
+@media (max-width: 799.99px) {
+  .frontpage #service-logo {
+    margin-top: -90px;
+    background-image: url('../pics/finto-mobile.png');
+    width: 333px;
+    height: 210px !important;
+    margin-left: auto;
+    margin-bottom: 14px;
+  }
+
+  .frontpage-logo .frontpage #topbar-language-navigation {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .frontpage #navi1 {
+    margin-left: 0 !important;
+  }
+
+  .frontpage #language > span {
+    margin-right: 6px;
+  }
+  .frontpage #language > a {
+    margin-left: 4px !important;
+  }
+
+  .headerbar.frontpage-spacing {
+    margin-bottom: 70px;
+  }
+
+  .frontpage-spacing .header-float {
+    margin-bottom: 0;
+  }
+
+
+}
+
+@media (min-width: 800px) {
+
+  #service-logo {
+    display: none !important;
+  }
+
+  .global-content {
+    margin-left: 150px;
+  }
+
+  /* .welcome-box, .right-box {
+    margin-left: 150px !important;
+  } */
+
+.welcome-box,
+.right-box,
+#maincontent,
+#vocabulary-list {
+  box-sizing: content-box !important;
+}
+
+
+  #vocabulary-list {
+    width: calc(100% - 374px) !important;
+  }
+}
+
+@media (min-width: 800px) and (max-width: 1270px) {
+  body.frontpage-logo {
+    background-image: url('../pics/finto.png');
+    background-repeat: no-repeat;
+  }
+}
+
+@media (max-width: 1150px) {
+  .service-fi, .service-sv, .service-en {
+    width: 120px !important;
+  }
+}
+
+@media (max-width: 1168px) {
+  #navigation {
+    padding-right: 10px;
+  }
+
+  #navigation > a, #navigation > span {
+    margin: 0 1px 0 5px !important;
+  }
+}
+
+@media (max-width: 1259.99px) {
+  .right-box {
+    top: 395px !important;
+  }
+
+}
+
+@media (min-width: 1260px) {
+  .welcome-box {
+    margin-left: 140px !important;
+    padding-bottom: 0px;
+  }
+
+  #vocabulary-list {
+    width: 580px !important;
+  }
+
+  .nav-tabs > li > a.active {
+    height: 43px;
+  }
+
+  .nav-tabs > li > a  {
+    height: 43px;
+  }
+
+  .alphabetical-search-results li, li, .versal, .versal-bold, p, .search-result > .prefLabel, .search-result > .notation, .property-values > .prefLabel, td > a {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 1270px) {
+  .frontpage-logo .main-container.frontpage::before {
+    display: none !important;
+  }
+}
+
+@media (min-width: 1500px) {
+  #vocabulary-list {
+    margin-left: 16px !important;
+  }
+}
+
+/* Disable prefLabel copy to clipboard button for classifications */
+/* Due to HTML element structure, we first need to hide both buttons,
+   then bring back the URI copy button
+
+.vocab-udcs button.copy-clipboard { display: none; }
+.vocab-udcs .property-value-wrapper button.copy-clipboard { display: inline; }
+
+.vocab-ykl button.copy-clipboard { display: none; }
+.vocab-ykl .property-value-wrapper button.copy-clipboard { display: inline; }
+
+.vocab-hklj button.copy-clipboard { display: none; }
+.vocab-hklj .property-value-wrapper button.copy-clipboard { display: inline; }
+*/
+
+/* KANTO / finaf specific styles */
+
+.vocab-finaf .prop-rdaa_P50025 span, .vocab-finaf .prop-rdaa_P50103 span {
+  /* variant names should be shown in italic */
+  font-style: italic;
+}
+
+.vocab-finaf .isni-digit-block:not(:nth-last-of-type(1))::after {
+  content: " ";
+}
+
+.vocab-finaf .orcid {
+  padding-right: 22px;
+  margin-right: 6px;
+  background-image: url(../pics/orcid_16x16.png);
+  background-position: center right;
+  background-repeat: no-repeat;
+}
+
+.welcome-box,
+.right-box,
+#maincontent,
+#vocabulary-list {
+  box-sizing: content-box !important;
+}
+
+
