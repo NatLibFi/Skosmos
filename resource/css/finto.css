@@ -629,12 +629,12 @@ hr {
     margin-left: 150px;
   }
 
-.welcome-box,
+/* .welcome-box,
 .right-box,
 #maincontent,
 #vocabulary-list {
   box-sizing: content-box !important;
-}
+} */
 
 
   #vocabulary-list {
