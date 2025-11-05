@@ -51,6 +51,20 @@ function startGlobalSearchApp () {
       this.languageStrings = window.SKOSMOS.language_strings
       this.vocabStrings = window.SKOSMOS.vocab_list
     },
+    watch: {
+      selectedLanguage(newLang) {
+        if (!newLang) return;
+        const url = new URL(window.location.href);
+        if (newLang == 'all') {
+          url.searchParams.set('anylang', 'on')
+        } else {
+          url.searchParams.set('clang', newLang)
+          url.searchParams.set('lang', newLang)
+          url.searchParams.delete('anylang')
+        }
+        history.replaceState({}, '', url.toString());
+      }
+    },
     methods: {
       autoComplete () {
         const delayMs = 300
@@ -89,6 +103,7 @@ function startGlobalSearchApp () {
           params.set('anylang', 'on')
         } else {
           params.set('clang', this.selectedLanguage)
+          params.set('lang', this.selectedLanguage)
         }
         params.set('vocab', this.formatVocabParam())
 
@@ -99,8 +114,7 @@ function startGlobalSearchApp () {
         return vocabs.map(voc => voc.key).join(' ')
       },
       formatSearchTerm () {
-        if (this.searchTerm.includes('*')) { return this.searchTerm }
-        return this.searchTerm + '*'
+        return this.searchTerm.includes('*') ? this.searchTerm : `${this.searchTerm}*`
       },
       notationMatches (searchTerm, notation) {
         return notation?.toLowerCase()?.includes(searchTerm.toLowerCase()) === true
