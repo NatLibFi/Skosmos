@@ -87,6 +87,24 @@ describe('Concept page, full vs. partial page loads', () => {
       // If that happens, make sure the browser window has focus and re-run the test.
       cy.window().its('navigator.clipboard').invoke('readText').then((result) => {}).should('equal', '33.2');
     })
+    it('narrower concepts: long lists are truncated / ' + pageLoadType, () => {
+      // Go to "periods of time" concept page which has 21 narrower concepts
+      if (pageLoadType == "full") {
+        cy.visit('yso/en/page/p4035') // go directly to "periods of time"
+      } else {
+        cy.visit('yso/en/page/p15238') // go to "events and action"
+        // click on the link to "periods of time" to trigger partial page load
+        cy.get('#tab-hierarchy').contains('a', 'periods of time').click()
+      }
+      // Check the number of narrower concepts shown: should be 15 + link to show all = 16
+      cy.get('.prop-skos_narrower .property-value ul').eq(0).find('li').not('.property-value-hidden').should('have.length', 16)
+      // Check that the last item is the show link with the correct number of items
+      cy.get('.prop-skos_narrower .property-value ul').eq(0).find('li').eq(-1).invoke('text').should('contain', 'show all 21 values')
+      // Click on the "show all" link
+      cy.get('.prop-skos_narrower .property-value ul').eq(0).find('li').eq(-1).find('a').eq('0').click()
+      // Check that the property-value-expand class has been added, revealing the hidden items
+      cy.get('.prop-skos_narrower .property-value ul').eq(0).should('have.class', 'property-value-expand')
+    })
     it('contains mappings / ' + pageLoadType, () => {
       if (pageLoadType == "full") {
         cy.visit('/yso/en/page/p14174') // go to "labyrinths" concept page

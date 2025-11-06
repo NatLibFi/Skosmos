@@ -226,18 +226,6 @@ describe('Concept page', () => {
     cy.get('.prop-skos_narrower .property-value-submembers').eq(1).find('li').eq(0).invoke('text').should('contain', 'Flatfish')
     cy.get('.prop-skos_narrower .property-value-submembers').eq(1).find('li').eq(1).invoke('text').should('contain', 'Tuna')
   })
-  it('contains narrower concepts: long lists are truncated', () => {
-    // Go to "periods of time" concept page which has 21 narrower concepts
-    cy.visit('yso/en/page/p4035')
-    // Check the number of narrower concepts shown: should be 15 + link to show all = 16
-    cy.get('.prop-skos_narrower .property-value ul').eq(0).find('li').not('.property-value-hidden').should('have.length', 16)
-    // Check that the last item is the show link with the correct number of items
-    cy.get('.prop-skos_narrower .property-value ul').eq(0).find('li').eq(-1).invoke('text').should('contain', 'show all 21 values')
-    // Click on the "show all" link
-    cy.get('.prop-skos_narrower .property-value ul').eq(0).find('li').eq(-1).find('a').eq('0').click()
-    // Check that the property-value-expand class has been added, revealing the hidden items
-    cy.get('.prop-skos_narrower .property-value ul').eq(0).should('have.class', 'property-value-expand')
-  })
   it('contains related concepts', () => {
     cy.visit('/yso/en/page/p21685') // go to "music research" concept page
 
