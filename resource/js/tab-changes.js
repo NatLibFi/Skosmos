@@ -131,7 +131,7 @@ function startChangesApp () {
       }
     },
     template: `
-      <div v-click-tab-changes="handleClickChangesEvent">
+      <div v-click-tab-changes="handleClickChangesEvent" v-resize-window="setListStyle">
         <tab-changes
           :changed-concepts="changedConcepts"
           :selected-concept="selectedConcept"
@@ -157,6 +157,19 @@ function startChangesApp () {
     },
     unmounted: el => {
       document.querySelector('#changes').removeEventListener('click', el.clickTabEvent)
+    }
+  })
+
+  /* Custom directive used to add an event listener on resizing the window */
+  tabChangesApp.directive('resize-window', {
+    beforeMount: (el, binding) => {
+      el.resizeWindowEvent = event => {
+        binding.value() // calling the method given as the attribute value (setListStyle)
+      }
+      window.addEventListener('resize', el.resizeWindowEvent) // registering an event listener on resizing the window
+    },
+    unmounted: el => {
+      window.removeEventListener('resize', el.resizeWindowEvent)
     }
   })
 
