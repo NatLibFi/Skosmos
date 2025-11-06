@@ -39,6 +39,7 @@ window.SKOSMOS = {
   "languageOrder": [{% for lang in request.vocab.config.languageOrder(request.contentLang) %}"{{ lang }}"{% if not loop.last %}, {% endif %}{% endfor %}],
   "showNotation": {{ request.vocab.config.showNotation ? "true" : "false" }},
   "sortByNotation": {% if request.vocab.config.sortByNotation %}"{{ request.vocab.config.sortByNotation }}"{% else %}null{% endif ~%},
+  "showConceptSchemesInHierarchy": {{ request.vocab.config.showConceptSchemesInHierarchy ? "true" : "false" }},
   "uriSpace": {% if request.vocab.uriSpace %}"{{ request.vocab.uriSpace }}"{% else %}null{% endif ~%},
   "vocShortName": "{{ request.vocab.config.shortname }}",
   {%- endif %}

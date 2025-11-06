@@ -4,7 +4,7 @@ const getConceptURL = (uri) => {
   let clangSeparator = '?'
   let page = ''
 
-  if (uri.indexOf(window.SKOSMOS.uriSpace) !== -1) {
+  if (uri.indexOf(window.SKOSMOS.uriSpace) !== -1 && uri !== window.SKOSMOS.uriSpace) {
     page = uri.substr(window.SKOSMOS.uriSpace.length)
 
     if (/[^a-zA-Z0-9-_.~]/.test(page) || page.indexOf('/') > -1) {
