@@ -42,7 +42,7 @@ function startGlobalSearchApp () {
         return this.selectedVocabs.map(key => ({ key, value: this.vocabStrings[key] }))
       },
       selectedVocabsString () {
-        return this.getSelectedVocabs.map(voc => voc.value).join(' ')
+        return this.getSelectedVocabs.map(voc => voc.value).join(', ')
       }
     },
     mounted () {
