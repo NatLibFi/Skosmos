@@ -139,9 +139,8 @@ function startGlobalSearchApp () {
         return null
       },
       updateSearchLang () {
-        lang = this.getSearchLang ()
-        if (lang)
-          this.changeLang(lang)
+        const lang = this.getSearchLang()
+        if (lang) { this.changeLang(lang) }
         return lang
       },
       renderMatchingPart (searchTerm, label, lang = null) {
