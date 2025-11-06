@@ -39,7 +39,7 @@
       {% if request.vocabid == '' and request.page != 'about' and request.page != 'feedback' %}
         <div>
           <button class="fs-6 py-3 text-light collapsed" id="global-search-toggle" data-bs-toggle="collapse" data-bs-target="#global-search-bar" aria-expanded="false" aria-controls="global-search-bar">
-              Yhteishaku sanastoista
+              {{ "Global search"|trans }}
           </button>
         </div>
       {% else %}
@@ -78,7 +78,7 @@
     <div class="collapse container-fluid mt-2 pe-0 py-3" id="global-search-bar">
       <div class="row d-flex align-items-top">
         <div class="col" id="global-search-text">
-          <h2>Yhteishaku sanastoista</h2>
+          <h2>{{ "Global search"|trans }}</h2>
         </div>
         <div class="col-auto" id=global-search-wrapper>
         </div>
