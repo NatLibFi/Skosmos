@@ -277,12 +277,12 @@ function startHierarchyApp () {
         }
       },
       createConceptNode (concept, isOpen = false, children = []) {
-        return { 
+        return {
           uri: concept.uri,
           label: concept.label || concept.prefLabel,
           hasChildren: concept.hasChildren,
-          children: children,
-          isOpen: isOpen,
+          children,
+          isOpen,
           notation: concept.notation,
           isScheme: false
         }
