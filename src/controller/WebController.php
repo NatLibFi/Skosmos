@@ -339,7 +339,7 @@ class WebController extends Controller
 
         $parameters = new ConceptSearchParameters($request, $this->model->getConfig());
 
-        $vocabs = $request->getQueryParam('vocab'); # optional
+        $vocabs = $request->getQueryParam('vocabs'); # optional
         // convert to vocids array to support multi-vocabulary search
         $vocids = ($vocabs !== null && $vocabs !== '') ? explode(' ', $vocabs) : null;
         $vocabObjects = array();
@@ -387,7 +387,7 @@ class WebController extends Controller
                 'rest' => $parameters->getOffset() > 0,
                 'global_search' => true,
                 'search_failed' => $errored,
-                'term' => $request->getQueryParamRaw('query'),
+                'term' => $request->getQueryParamRaw('q'),
                 'lang_list' => $langList,
                 'vocabs' => isset($vocabs) ? str_replace(' ', '+', $vocabs) : null,
                 'vocab_list' => $vocabList,
