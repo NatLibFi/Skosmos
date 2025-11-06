@@ -30,6 +30,11 @@ window.SKOSMOS = {
   "lang": "{{ request.lang }}",
   "vocab": "{{ request.vocabid }}",
   "pageType": "{{ pageType }}",
+  "vocab_list": { {% for key, vocabs in request.vocabList %}{% for key2, value in vocabs %}"{{ value.resource.localname }}": "{{ value.config.shortname }}"{% if not loop.last %}, {% endif %}
+{% endfor %}{% if not loop.last %}, {% endif %}
+{% endfor %}  },
+  "vocab_id": [ {% for vocab in request.vocabid %} "{{ vocab }}"{% if not loop.last %},
+  {% endif %}{% endfor %}],
   "waypoint_results": {{ parameters ? parameters.searchLimit : "null" }},
   {%- if request.page == "page" and concept %}
   "prefLabels": [{"lang": "{{ concept.label.lang }}","label": "{{ concept.label }}"}{% for lang in concept.foreignLabels %}{% for literal in lang %}{% if literal.type == "skos:prefLabel" %},{"lang": "{{literal.lang}}", "label": "{{literal.label}}"}{% endif %}{% endfor %}{% endfor %}],
@@ -58,8 +63,9 @@ window.SKOSMOS = {
   },
   {%- endif -%}
   "baseHref": "{{ BaseHref }}",
-  "language_strings": { {% for lang in request.vocab.config.languages %}"{{ lang }}": "{{ mockup_translations[request.lang][lang] }}", {% endfor -%}
-  "all": "{{ mockup_translations[request.lang].all }}" }
+  "language_strings": { {%- if request.vocab ~%} {% for lang in request.vocab.config.languages %}"{{ lang }}": "{{ mockup_translations[request.lang][lang] }}", {% endfor -%}
+                        {% else %}{% for key, value in GlobalConfig.languages %}"{{ key }}": "{{ mockup_translations[request.lang][key] }}", {% endfor -%}{% endif %}
+                        "all": "{{ mockup_translations[request.lang].all }}" }
 }
 </script>
 
@@ -97,6 +103,7 @@ window.SKOSMOS = {
 <script src="resource/js/tab-groups.js"></script>
 <script src="resource/js/tab-changes.js"></script>
 <script src="resource/js/vocab-search.js"></script>
+<script src="resource/js/global-search.js"></script>
 
 <!-- Other (non-Vue) JS functionality -->
 <script src="resource/js/copy-to-clipboard.js"></script>

@@ -7,6 +7,8 @@
   --light-color: #f2f5f7;
   --alert-color: #a0270a;
   --white-color: #ffffff;
+  --header-bar-text: var(--white-color);
+  --headerbar-vocab-bg: var(--dark-color);
   --feedback-form-bg: var(--white-color);
   --feedback-form-text: var(--dark-color);
   --feedback-form-input: var(--light-color);
@@ -24,6 +26,9 @@
   --search-border: var(--medium-color);
   --search-button-bg: var(--dark-color);
   --search-button-text: var(--white-color);
+  --search-vocab-selector-bg: var(--medium-color);
+  --search-vocab-selector-selected-bg: var(--dark-color);
+  --search-vocab-selector-check: var(--white-color);
   --search-dropdown-toggle-hover-text: var(--white-color);
   --search-dropdown-toggle-hover-bg: var(--dark-color);
   --vocab-bg: var(--white-color);
@@ -154,7 +159,7 @@ body {
   /* Headerbar
    *****************************************/
   #headerbar.landing, #headerbar.landing-one-vocab {
-    color: var(--dark-color);
+    color: var(--header-bar-text);
   }
 
   #headerbar.vocab-home, #headerbar.concept {
@@ -184,15 +189,55 @@ body {
     font-family: var(--font-family-heading);
   }
 
-  #search-multi-vocab-title {
-    color: var(--vocab-text);
+  #global-search-toggle {
+    transition: none;
+    background-color: var(--headerbar-vocab-bg);
+    border-style: none;
+    white-space: nowrap;
+  }
+
+  #global-search-toggle.collapsed::after {
+    background-image: none;
+    transform: none;
+    padding-left: 0.5rem;
+
+    content: "\f078"; /* fa-chevron-down */
+    color: var(--header-bar-text);
+    font: var(--fa-font-solid);
+    display: inline-block;
+  }
+
+  #global-search-toggle::after {
+    background-image: none;
+    transform: none;
+    padding-left: 0.5rem;
+
+    content: "\f077"; /* fa-chevron-up */
+    color: var(--header-bar-text);
+    font: var(--fa-font-solid);
+    display: inline-block;
+  }
+
+  #global-search-text {
+    min-width: 400px;
+    overflow: auto;
+  }
+
+  #global-search-text h2 {
     font-family: var(--font-family-heading);
+    font-weight: bold;
+    font-size: 2rem;
+  }
+
+  #global-search-bar .dropdown {
+    display: inline-block;
   }
 
   #search-wrapper {
-    color: var(--vocab-text);
     float: right;
-    height: 3.5em;
+    display: flex;
+    align-items: stretch;
+    flex-wrap: wrap;
 }
 
   #search-wrapper select, #search-wrapper input, #search-wrapper button {
@@ -200,16 +245,19 @@ body {
   }
 
   #search-wrapper button.dropdown-toggle {
-    background-color: var(--search-bg);
     color: var(--vocab-text);
     border: 1px solid var(--search-border);
     border-radius: 0;
     padding-left: 1rem;
-    padding-right: 1rem;
+    padding-right: 1.5rem;
+  }
+
+  #search-wrapper button.dropdown-toggle:hover, #search-wrapper button.dropdown-toggle.show {
+    background-color: var(--medium-color);
   }
 
   #search-wrapper button.dropdown-toggle i {
-    padding-left: 0.25rem;
+    padding-left: 0.5rem;
     font-size: 0.75rem;
   }
 
@@ -217,16 +265,104 @@ body {
     display: none !important;
   }
 
-  #search-wrapper #language-list {
-    inset: -3px auto auto 0px !important;
-    background-color: var(--search-bg);
+  #search-wrapper #language-list, #search-wrapper #vocab-list {
+    inset: -2px auto auto 0px !important;
+    background-color: var(--search-dropdown-bg);
     color: var(--vocab-text);
-    border: 1px solid var(--search-border);
-    border-radius: 0;
+    border: 0;
+    width: max-content;
+    list-style: none;
+  }
+  #search-wrapper #vocab-list {
+   padding-top: 0.25rem;
+   padding-left: 0.5rem;
+   padding-right: 0.5rem;
+  }
+
+  #search-wrapper .vocab-dropdown-btn {
+    width: 15rem;
+    position: relative;
+    padding-right: 2rem;
+  }
+
+  #search-wrapper .vocab-dropdown-btn span {
+    display: block;
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  #search-wrapper .chevron {
+    position: absolute;
+    right: 0.5rem;
+    top: 33%;
+    display: block;
+    z-index: 2;
+  }
+
+  #search-wrapper .vocab-select {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 0.25rem;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  /* Custom checkbox */
+
+  #search-wrapper .vocab-select input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  #search-wrapper .checkmark {
+    position: absolute;
+    border: 1px solid var(--dark-color);
+    top: 0;
+    left: 0;
+    height: 1.5rem;
+    width: 1.5rem;
+    background-color: var(--white-color);
+  }
+
+  #search-wrapper .vocab-select:hover input ~ .checkmark {
+    background-color: var(--search-vocab-selector-selected-bg);
+  }
+
+  #search-wrapper .vocab-select input:checked ~ .checkmark {
+    background-color: var(--search-vocab-selector-selected-bg);
+  }
+
+  #search-wrapper .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+
+  #search-wrapper .vocab-select input:checked ~ .checkmark:after {
+    display: block;
+  }
+
+  #search-wrapper .vocab-select .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
   }
 
   #search-wrapper #language-list li a:hover, #search-wrapper #language-list li a:active {
-  color: var(--search-dropdown-toggle-hover-text);
+    color: var(--search-dropdown-toggle-hover-text);
     background-color: var(--search-dropdown-toggle-hover-bg);
   }
 
@@ -268,6 +404,20 @@ body {
     padding-bottom: 0rem;
     max-height: 50vh;
     overflow-y: auto;
+  }
+
+  #search-wrapper #language-list li:hover label {
+    background-color: var(--medium-color);
+  }
+
+  #search-wrapper #language-list li:active label {
+    background-color: var(--medium-color);
+  }
+
+  #search-wrapper #language-list li:has(input:checked) label {
+    background-color: var(--search-button-bg);
+    color: var(--white-color);
+    font-weight: bold;
   }
 
   /* Setting scrollbar style separately in Firefox */
@@ -336,6 +486,14 @@ body {
     border-radius: 0;
     padding: 0;
     width: 3.5em;
+  }
+
+  #search-form {
+    width: auto;
+  }
+
+  #search-form span, #search-form button {
+    flex-wrap: nowrap;
   }
 
   #clear-button {

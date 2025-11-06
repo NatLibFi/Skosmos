@@ -36,47 +36,56 @@
 <body class="{% if pageType =='landing' %}bg-white frontpage-logo{% else %}{% if pageType == 'concept' or pageType == 'vocab-home' %}bg-medium vocab-{{ request.vocabid }}{% else %}bg-light{% endif %}{% endif %}">
   <header>
     <a class="visually-hidden" id="skiptocontent" href="{{ request.langurl }}#maincontent">Skip to main</a>
-    <div class="container-fluid bg-dark text-bg-dark">
-      <div class="row">
-        <div class="col-md-5">
-          {% if request.vocabid == '' and request.page != 'about' and request.page != 'feedback' %}
-            <span class="fs-6 py-3 text-light">Yhteishaku sanastoista v</span>
-          {% else %}
-            <a id="skosmos-logo-top" href="{{ 'home' | global_url(request.lang, request.contentLang, null, request.queryParam('anylang') == 'on') }}">
-              <h2 class="visually-hidden">Skosmos</h2>
-            </a>
-          {% endif %}
-            </div>
-            <div class="col-md-7 text-end px-4">
-          <ul class="list-inline nav nav-pills d-flex justify-content-end ms-auto my-auto text-light gx-3 py-3" id="topbar-nav">
-            <li class="list-inline-item nav-item">
-              <a href="{{ 'home' | global_url(request.lang, request.contentLang, null, request.queryParam('anylang') == 'on') }}" id="navi1" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none">
-                       <i class="fa-solid fa-house"></i>&nbsp;{{ "Vocabularies" | trans }}
-              </a>
-            </li>
-            <li class="list-inline-item nav-item">
-              <a href="{{ 'about' | global_url(request.lang, request.contentLang, null, request.queryParam('anylang') == 'on') }}" id="navi2" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none">
-                       <i class="fa-solid fa-circle-info"></i>&nbsp;{{ "About" | trans }}
-              </a>
-            </li>
-            <li class="list-inline-item nav-item">
-              <a href="{{ 'feedback' | global_url(request.lang, request.contentLang, request.vocabid, request.queryParam('anylang') == 'on') }}" id="navi3" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none">
-                       <i class="fa-solid fa-comment"></i>&nbsp;{{ "Feedback" | trans }}
-              </a>
-            </li>
-            {% if languages|length > 1 %}
-            {% for langcode, langdata in languages %}
-            {% if request.lang != langcode %}
-            <li class="list-inline-item nav-item language">
-              <a class="fs-6 text-light ms-3 text-decoration-none" id="language-{{ langcode }}" href="{{ request.langurl(langcode) }}"> {{ langdata.name }}</a>
-            </li>
-            {% endif %}
-            {% endfor %}
-            {% endif %}
-          </ul>
+    <div class="container-fluid bg-dark d-flex my-auto py-3 px-4 text-bg-dark">
+      {% if request.vocabid == '' and request.page != 'about' and request.page != 'feedback' %}
+        <div>
+          <button class="fs-6 py-3 text-light collapsed" id="global-search-toggle" data-bs-toggle="collapse" data-bs-target="#global-search-bar" aria-expanded="false" aria-controls="global-search-bar">
+              {{ "Global search"|trans }}
+          </button>
+        </div>
+      {% else %}
+        <a id="skosmos-logo-top" href="{{ 'home' | global_url(request.lang, request.contentLang, null, request.queryParam('anylang') == 'on') }}">
+          <h2 class="visually-hidden">Skosmos</h2>
+        </a>
+      {% endif %}
+      <ul class="nav nav-pills ms-auto my-auto text-light gx-3 py-3" id="topbar-nav">
+        <li class="nav-item">
+          <a href="{{ 'home' | global_url(request.lang, request.contentLang, null, request.queryParam('anylang') == 'on') }}" id="navi1" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none">
+                   <i class="fa-solid fa-house"></i>&nbsp;{{ "Vocabularies" | trans }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ 'about' | global_url(request.lang, request.contentLang, null, request.queryParam('anylang') == 'on') }}" id="navi2" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none">
+                   <i class="fa-solid fa-circle-info"></i>&nbsp;{{ "About" | trans }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ 'feedback' | global_url(request.lang, request.contentLang, request.vocabid, request.queryParam('anylang') == 'on') }}" id="navi3" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none">
+                   <i class="fa-solid fa-comment"></i>&nbsp;{{ "Feedback" | trans }}
+          </a>
+        </li>
+        {% if languages|length > 1 %}
+        {% for langcode, langdata in languages %}
+        {% if request.lang != langcode %}
+        <li class="nav-item language">
+          <a class="fs-6 text-light ms-3 text-decoration-none" id="language-{{ langcode }}" href="{{ request.langurl(langcode) }}"> {{ langdata.name }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+      </ul>
+    </div>
+    {% if request.vocabid == '' and request.page != 'about' and request.page != 'feedback' %}
+    <div class="collapse container-fluid mt-2 pe-0 py-3" id="global-search-bar">
+      <div class="row d-flex align-items-top">
+        <div class="col" id="global-search-text">
+          <h2>{{ "Global search"|trans }}</h2>
+        </div>
+        <div class="col-auto" id=global-search-wrapper>
         </div>
       </div>
     </div>
+    {% endif %}
     {% if pageType in ['landing', 'vocab-home', 'concept', 'vocab-search'] %}
     <div class="container-fluid bg-white py-4" id="headerbar">
       <div id="headerbar-top-slot" class="row"></div>

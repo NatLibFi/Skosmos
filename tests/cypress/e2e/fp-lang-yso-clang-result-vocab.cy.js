@@ -14,11 +14,11 @@ describe('Front page -> lang -> vocab -> cLang -> search -> concept page', () =>
     cy.url().should('include', '/yso/en/');
 
     // Open the language drop-down and select "fi" for the search language
-    cy.get('.btn.btn-outline-secondary.dropdown-toggle').click();
+    cy.get('#language-selector button').click();
     cy.contains('#language-list li a', 'Finnish').click();
 
     // Write a search term "arkeologia" and press enter
-    cy.get('.form-control').type('arkeolog').type('{enter}');
+    cy.get('#search-field').type('arkeolog').type('{enter}');
 
     // Check that the search result page contains 5 results
     cy.get('.search-result').should('have.length', 5);
