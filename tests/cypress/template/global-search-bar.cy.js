@@ -10,7 +10,7 @@ describe('Global search bar', () => {
 
   it('dropdown menu header text is updated according to the selected vocabularies', () => {
 
-    cy.get('#vocab-selector .vocab-dropdown-btn').should('contain.text', '1. Valitse sanasto')
+    cy.get('#vocab-selector .vocab-dropdown-btn').should('contain.text', '1. Choose vocabulary')
 
 
     cy.get('#vocab-list li').eq(0).find('input[type="checkbox"]').check({ force: true })
@@ -28,12 +28,12 @@ describe('Global search bar', () => {
   it('dropdown menu header text returns to original hint if no vocabularies are selected', () => {
     cy.get('#vocab-list li').eq(1).find('input[type="checkbox"]').check({ force: true })
     cy.get('#vocab-list li').eq(1).find('input[type="checkbox"]').uncheck({ force: true })
-    cy.get('#vocab-selector .vocab-dropdown-btn').should('contain.text', '1. Valitse sanasto')
+    cy.get('#vocab-selector .vocab-dropdown-btn').should('contain.text', '1. Choose vocabulary')
   })
 
   it('changing the search language changes the language selector dropdown header text', () => {
 
-    cy.get('#language-selector .dropdown-toggle').should('contain.text', '2. Valitse kieli')
+    cy.get('#language-selector .dropdown-toggle').should('contain.text', '2. Choose language')
 
     cy.get('#language-list li').contains('englanti').find('input[type="radio"]').check({ force: true })
     cy.get('#language-selector .dropdown-toggle').should('contain.text', 'englanti')
@@ -44,7 +44,7 @@ describe('Global search bar', () => {
 
   it('selecting "all languages" does not change content language', () => {
 
-    cy.get('#language-selector .dropdown-toggle').should('contain.text', '2. Valitse kieli')
+    cy.get('#language-selector .dropdown-toggle').should('contain.text', '2. Choose language')
     cy.get('#language-list li').contains('englanti').find('input[type="radio"]').check({ force: true })
     cy.url().should('include', 'clang=en')
 

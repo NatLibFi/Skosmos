@@ -18,13 +18,13 @@ function startGlobalSearchApp () {
     },
     computed: {
       vocabSelectorPlaceholder () {
-        return $t('1. Valitse sanasto')
+        return $t('1. Choose vocabulary')
       },
       langSelectorPlaceholder () {
-        return $t('2. Valitse kieli')
+        return $t('2. Choose language')
       },
       searchPlaceholder () {
-        return $t('3. Kirjoita hakutermi')
+        return $t('3. Enter search term')
       },
       noResults () {
         return $t('No results')
