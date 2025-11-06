@@ -8,6 +8,7 @@
   --alert-color: #a0270a;
   --white-color: #ffffff;
   --header-bar-text: var(--white-color);
+  --headerbar-vocab-bg: var(--dark-color);
   --feedback-form-bg: var(--white-color);
   --feedback-form-text: var(--dark-color);
   --feedback-form-input: var(--light-color);
@@ -166,7 +167,7 @@ body {
   /* Headerbar
    *****************************************/
   #headerbar.landing, #headerbar.landing-one-vocab {
-    color: var(--headerbar-text);
+    color: var(--header-bar-text);
   }
 
   #headerbar.vocab-home, #headerbar.concept {
