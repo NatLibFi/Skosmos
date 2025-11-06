@@ -276,7 +276,7 @@ function startHierarchyApp () {
           }
         }
       },
-      createConceptNode (concept, isOpen=false, children=[]) {
+      createConceptNode (concept, isOpen = false, children = []) {
         return { 
           uri: concept.uri,
           label: concept.label || concept.prefLabel,
