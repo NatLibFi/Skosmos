@@ -47,7 +47,7 @@ function startGlobalSearchApp () {
     },
     mounted () {
       this.languages = window.SKOSMOS.languageOrder
-      this.selectedLanguage = this.parseSearchLang()
+      this.selectedLanguage = this.updateSearchLang()
       this.languageStrings = window.SKOSMOS.language_strings
       this.vocabStrings = window.SKOSMOS.vocab_list
     },
@@ -59,7 +59,6 @@ function startGlobalSearchApp () {
           url.searchParams.set('anylang', 'on')
         } else {
           url.searchParams.set('clang', newLang)
-          url.searchParams.set('lang', newLang)
           url.searchParams.delete('anylang')
         }
         window.history.replaceState({}, '', url.toString())
@@ -85,8 +84,8 @@ function startGlobalSearchApp () {
         const mySearchCounter = this.searchCounter + 1 // make sure we can identify this search later in case of several ongoing searches
         this.searchCounter = mySearchCounter
         let skosmosSearchUrl = window.SKOSMOS.baseHref + 'rest/v1/search?'
-        const skosmosSearchUrlParams = this.formatSearchUrlParams()
-        skosmosSearchUrl += skosmosSearchUrlParams.toString()
+        const skosmosSearchApiParams = this.formatSearchApiParams()
+        skosmosSearchUrl += skosmosSearchApiParams.toString()
 
         fetch(skosmosSearchUrl)
           .then(data => data.json())
@@ -98,13 +97,20 @@ function startGlobalSearchApp () {
           })
       },
       formatSearchUrlParams () {
-        const params = new URLSearchParams({ query: this.formatSearchTerm(), unique: true })
+        const params = new URLSearchParams({ q: this.searchTerm })
         if (this.selectedLanguage === 'all') {
           params.set('anylang', 'on')
         } else {
           params.set('clang', this.selectedLanguage)
-          params.set('lang', this.selectedLanguage)
         }
+        params.set('vocabs', this.formatVocabParam())
+
+        return params
+      },
+      formatSearchApiParams () {
+        const apiSearchTerm = this.searchTerm.includes('*') ? this.searchTerm : `${this.searchTerm}*`
+        const params = new URLSearchParams({ query: apiSearchTerm, unique: true })
+        params.set('lang', this.getSearchLang())
         params.set('vocab', this.formatVocabParam())
 
         return params
@@ -113,23 +119,17 @@ function startGlobalSearchApp () {
         const vocabs = this.getSelectedVocabs
         return vocabs.map(voc => voc.key).join(' ')
       },
-      formatSearchTerm () {
-        return this.searchTerm.includes('*') ? this.searchTerm : `${this.searchTerm}*`
-      },
       notationMatches (searchTerm, notation) {
         return notation?.toLowerCase()?.includes(searchTerm.toLowerCase()) === true
       },
-      parseSearchLang () {
-        // if content language can be found from uri params, use that and update it to SKOSMOS object and to search lang cookie
+      getSearchLang () {
         const urlParams = new URLSearchParams(window.location.search)
         const paramLang = urlParams.get('clang')
         const anyLang = urlParams.get('anylang')
         if (anyLang) {
-          this.changeLang('all')
           return 'all'
         }
         if (paramLang) {
-          this.changeLang(paramLang)
           return paramLang
         }
         // otherwise pick content lang from SKOSMOS object (it should always exist)
@@ -137,6 +137,12 @@ function startGlobalSearchApp () {
           return window.SKOSMOS.content_lang
         }
         return null
+      },
+      updateSearchLang () {
+        lang = this.getSearchLang ()
+        if (lang)
+          this.changeLang(lang)
+        return lang
       },
       renderMatchingPart (searchTerm, label, lang = null) {
         if (label) {
