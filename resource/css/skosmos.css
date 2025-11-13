@@ -35,7 +35,7 @@
   --vocab-text: var(--dark-color);
   --vocab-table-border: var(--medium-color);
   --vocab-link: var(--secondary-dark-color);
-  --vocab-box-text: var(--dark-color);
+  --vocab-category-text: var(--dark-color);
   --tooltip-fg-color: var(--light-color);
   --tooltip-bg-color: var(--dark-color);
   --tooltip-border-color: var(--secondary-medium-color);
@@ -66,10 +66,6 @@ body {
 
 /* Font awesome
  *****************************************/
-  #vocab-box .fa-arrow-right {
-    color: var(--secondary-dark-color);
-  }
-
   #main-container.vocab-home .fa-arrow-right, #main-container.concept .fa-arrow-right {
     color: var(--vocab-text);
     font-size: .75rem;
@@ -92,7 +88,7 @@ body {
   .fa-magnifying-glass {
     color: var(--search-button-text);
     font-size: 1.6rem;
-    margin: calc((38px - 22px) / 2 ) 0; /* (button height - font height) / 2 */
+    margin: calc((38px - 22px) / 2 ) 0; /* (button height - font height) / 2 */ /* check */
   }
 
   .fa-download {
@@ -101,42 +97,6 @@ body {
 
   /* Topbar
    *****************************************/
-  #topbar.landing, #topbar.landing-one-vocab {
-    background-color: var(--topbar-bg-1);
-    color: var(--topbar-text-1);
-  }
-
-  #topbar.vocab-home, #topbar.concept, #topbar.about, #topbar.feedback {
-    background-color: var(--topbar-bg-2);
-    color: var(--topbar-text-2);
-  }
-
-  #topbar.landing a, #topbar.landing-one-vocab a {
-    color: var(--topbar-text-1) !important;
-  }
-
-  #topbar.vocab-home a, #topbar.concept a, #topbar.about a, #topbar.feedback a {
-    color: var(--topbar-text-2) !important;
-  }
-
-  #topbar h3 {
-    display: inline;
-    font-weight: bold;
-  }
-
-  #multi-search-toggle {
-    background-color: var(--topbar-bg-1);
-    color: var(--topbar-text-1);
-    border: none;
-  }
-
-  #multi-search-toggle::after {
-    content: '﹀';
-    position: absolute;
-    top: 30px;
-    left: 205px;
-  }
-
   #skosmos-logo-top {
     background-image: url(../pics/skosmos-NEGA-RGB.svg);
     background-repeat: no-repeat;
@@ -147,13 +107,6 @@ body {
 
   #skosmos-logo-top h2 {
     text-indent: -100%;
-  }
-
-  .topbar-nav-link {
-    background-position: left center;
-    background-repeat: no-repeat;
-    background-size: 40%;
-    padding-left: 30px;
   }
 
   /* Headerbar
@@ -238,7 +191,7 @@ body {
     display: flex;
     align-items: stretch;
     flex-wrap: wrap;
-}
+  }
 
   #search-wrapper select, #search-wrapper input, #search-wrapper button {
     height: 100%;
@@ -273,6 +226,7 @@ body {
     width: max-content;
     list-style: none;
   }
+
   #search-wrapper #vocab-list {
    padding-top: 0.25rem;
    padding-left: 0.5rem;
@@ -538,7 +492,7 @@ body {
   }
 
   /***** Main container landing page & landing page one vocab *****/
-  #background.landing, #background.landing-one-vocab {
+  #background.landing, #background.landing-one-vocab { /* unused */
     background-color: var(--main-bg-1);
     background-image: var(--landing-stripes-1);
     background-repeat: no-repeat;
@@ -552,10 +506,6 @@ body {
     background-size: 650px;
     background-position: -41px calc(100% + 55px);
     padding-top: 0;
-  }
-
-  #vocab-box {
-    padding: 2.5rem 2rem;
   }
 
   /*** Main container landing page ***/
@@ -573,12 +523,12 @@ body {
   }
 
   .vocab-category {
-    border-top: 1px solid var(--vocab-box-text);
-    color: var(--vocab-box-text);
+    border-top: 1px solid var(--vocab-category-text);
+    color: var(--vocab-category-text);
   }
 
   .vocab-category h3 {
-    color: var(--vocab-box-text);
+    color: var(--vocab-category-text);
   }
 
   .vocab-category a {
@@ -590,31 +540,13 @@ body {
     text-underline-offset: 0.3rem;
   }
 
-  #main-container.landing #vocab-box h2 {
-    color: var(--vocab-box-header);
-  }
-
   /*** Main container landing page one vocab ***/
-  #main-container.landing-one-vocab #vocab-box {
-    background-color: var(--vocab-box-one-bg);
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  #main-container.landing-one-vocab #vocab-box a {
-    color: var(--vocab-box-one-text);
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-  }
-
   /***** Main container vocab-home & concept & vocab-search pages *****/
-  #main-container.vocab-home, #main-container.concept, #main-container.vocab-search,  #main-container.global-search  {
+  #main-container.vocab-home, #main-container.concept, #main-container.vocab-search,  #main-container.global-search  { /* check */
     background-color: var(--main-bg-2);
   }
 
-  #main-container.vocab-home a, #main-container.concept a, #main-container.vocab-search a, #main-container.global-search a {
+  #main-container.vocab-home a, #main-container.concept a, #main-container.vocab-search a, #main-container.global-search a { /* check */
     color: var(--vocab-link);
     text-decoration: none;
     font-weight: bold;
@@ -953,42 +885,6 @@ body {
     left: 12px;
   }
 
-  /*** sidebar vocab-search ***/
-  #main-container.vocab-search #sidebar {
-    background-color: var(--sidebar-search-bg);
-    color: var(--sidebar-search-text);
-    height: 1000px; /* change */
-  }
-
-  #search-options input, #search-options select {
-    border: none;
-    border-radius: 0;
-  }
-
-  #search-options button {
-    background-color: var(--sidebar-search-button-bg); /* Which bg color to use? */
-    color: var(--sidebar-search-button-text);
-    border: none;
-    border-radius: 0;
-  }
-
-  #search-options select {
-    background-image: none;
-  }
-
-  .select-wrapper { /* Also used in feedback form */
-    position: relative;
-  }
-
-  .select-wrapper::after { /* Also used in feedback form */
-    color: var(--vocab-text);
-    content: '﹀';
-    font-size: 1.4rem;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-  }
-
   /*****  Main content vocab-home & concept pages *****/
   #main-content h1 {
     font-size: 2.5rem;
@@ -1047,6 +943,10 @@ body {
 
   .property-value .property-value-expand .property-value-hidden {
     display: list-item;
+  }
+
+  .vocab-statistics > h3 {
+    font-size: 1.4rem;
   }
 
   #resource-table th {
@@ -1162,13 +1062,13 @@ body {
 
   }
 
-  .search-result .list-group-item {
+  .search-result .list-group-item { /* bug in truncate-search-results.js (.list-group-item class is overwritten) */
     color: var(--vocab-text);
     border: none;
     cursor: default;
   }
 
-  .search-result .list-group-item a {
+  .search-result .list-group-item a { /* bug in truncate-search-results.js (.list-group-item class is overwritten) */
     cursor: pointer;
   }
 
@@ -1182,7 +1082,7 @@ body {
                   var(--vocab-bg) 0%);
   }
 
-  .search-result-list {
+  .search-result-list { /* bug in truncate-search-results.js (.list-group-item class is overwritten) */
     display: block;
     white-space: nowrap;
     position: relative;
@@ -1198,7 +1098,7 @@ body {
   .search-result-showall {
     display: block;
     white-space: normal;
-    overflow: visibile;
+    overflow: visible;
   }
 
   .uri-icon {
@@ -1294,6 +1194,19 @@ body {
     color: var(--feedback-form-text);
   }
 
+  .select-wrapper {
+    position: relative;
+  }
+
+  .select-wrapper::after {
+    color: var(--vocab-text);
+    content: '﹀';
+    font-size: 1.4rem;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+
   /* Error page
    *****************************************/
   .alert {
@@ -1302,15 +1215,7 @@ body {
     border-radius: 0;
   }
 
-  #alphabetical-menu > .list-group > .list-group-item {
-    border: none !important;
-  }
-
-  .vocab-statistics > h3 {
-    font-size: 1.4rem;
-  }
-
-/* Tooltips */
+/* Tooltips */  /* move (?) */
 
 .tooltip-html {
   position: relative;
