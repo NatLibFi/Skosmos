@@ -31,6 +31,7 @@
   --search-vocab-selector-check: var(--white-color);
   --search-dropdown-toggle-hover-text: var(--white-color);
   --search-dropdown-toggle-hover-bg: var(--dark-color);
+  --global-search-dropdown-toggle-hover-bg: var(--medium-color);
   --vocab-bg: var(--white-color);
   --vocab-text: var(--dark-color);
   --vocab-table-border: var(--medium-color);
@@ -52,6 +53,9 @@ body {
   font-size: var(--font-size);
 }
 
+/* Utilities
+====================================== */
+
 .bg-dark {
   background-color: var(--dark-color) !important;
 }
@@ -65,25 +69,7 @@ body {
 }
 
 /* Font awesome
- *****************************************/
-  #main-container.vocab-home .fa-arrow-right, #main-container.concept .fa-arrow-right {
-    color: var(--vocab-text);
-    font-size: .75rem;
-    margin: 0 5px;
-  }
-
-  #main-container.vocab-search .fa-arrow-right, #main-container.global-search .fa-arrow-right {
-    color: var(--vocab-text);
-    font-size: .85rem;
-  }
-
-  #main-container.vocab-search .list-group .fa-solid, #main-container.vocab-search .list-group .fa-regular,
-  #main-container.global-search .list-group .fa-solid, #main-container.global-search .list-group .fa-regular {
-    color: var(--vocab-text);
-    font-size: 1.15rem;
-    width: 1.5rem;
-    text-align: center;
-  }
+====================================== */
 
   .fa-magnifying-glass {
     color: var(--search-button-text);
@@ -95,8 +81,34 @@ body {
     color: var(--vocab-text);
   }
 
+  #main-container.vocab-home .fa-arrow-right, #main-container.concept .fa-arrow-right { /* unused */ /* remove? */
+    color: var(--vocab-text);
+    font-size: .75rem;
+    margin: 0 5px;
+  }
+
+  #search-results .list-group .fa-solid, #search-results .list-group .fa-regular {
+    color: var(--vocab-text);
+    font-size: 1.15rem;
+    width: 1.5rem;
+    text-align: center;
+  }
+
+  #search-results .fa-arrow-right {
+    color: var(--vocab-text);
+    font-size: .85rem;
+  }
+
+  /* Header
+  ====================================== */
+
+  header .container-fluid .row {
+    max-width: 1460px;
+    margin: 0 auto;
+  }
+
   /* Topbar
-   *****************************************/
+  -------------------------------------- */
   #skosmos-logo-top {
     background-image: url(../pics/skosmos-NEGA-RGB.svg);
     background-repeat: no-repeat;
@@ -109,19 +121,42 @@ body {
     text-indent: -100%;
   }
 
+  #global-search-toggle {
+    transition: none;
+    background-color: var(--headerbar-vocab-bg);
+    border-style: none;
+    white-space: nowrap;
+  }
+
+  #global-search-toggle.collapsed::after {
+    background-image: none;
+    transform: none;
+    padding-left: 0.5rem;
+    content: "\f078"; /* fa-chevron-down */
+    color: var(--header-bar-text);
+    font: var(--fa-font-solid);
+    display: inline-block;
+  }
+
+  #global-search-toggle::after {
+    background-image: none;
+    transform: none;
+    padding-left: 0.5rem;
+    content: "\f077"; /* fa-chevron-up */
+    color: var(--header-bar-text);
+    font: var(--fa-font-solid);
+    display: inline-block;
+  }
+
   /* Headerbar
-   *****************************************/
-  #headerbar.landing, #headerbar.landing-one-vocab {
+  -------------------------------------- */
+
+  #headerbar.landing { /* unused */ /* remove? */
     color: var(--header-bar-text);
   }
 
-  #headerbar.vocab-home, #headerbar.concept {
+  #headerbar.vocab-home, #headerbar.concept { /* unused */ /* remove? */
     background-color: var(--headerbar-vocab-bg);
-  }
-
-  header .container-fluid .row {
-    max-width: 1460px;
-    margin: 0 auto;
   }
 
   #skosmos-logo {
@@ -142,34 +177,150 @@ body {
     font-family: var(--font-family-heading);
   }
 
-  #global-search-toggle {
-    transition: none;
-    background-color: var(--headerbar-vocab-bg);
-    border-style: none;
-    white-space: nowrap;
+  /* --- Search bar --- */
+
+  #search-wrapper {
+    float: right;
+    display: flex;
+    align-items: stretch;
+    flex-wrap: wrap;
   }
 
-  #global-search-toggle.collapsed::after {
-    background-image: none;
-    transform: none;
+  #search-wrapper input, #search-wrapper button {
+    height: 100%;
+  }
+
+  #language-list, #vocab-list {
+    inset: -2px auto auto 0px !important;
+    background-color: var(--search-dropdown-bg);
+    color: var(--vocab-text);
+    border: 0;
+    width: max-content;
+    list-style: none;
+  }
+
+  /* Dropdowns */
+
+  #search-wrapper ul {
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+    max-height: 50vh;
+    overflow-y: auto;
+  }
+
+  #search-wrapper .dropdown-menu {
+    transform: translateY(-1px);
+    background-color: var(--search-dropdown-bg);
+    color: var(--vocab-text);
+    border: 1px solid var(--search-border);
+    border-radius: 0;
+  }
+
+  #search-wrapper .dropdown-toggle {
+    color: var(--vocab-text);
+    border: 1px solid var(--search-border);
+    border-radius: 0;
+    padding-left: 1rem;
+    padding-right: 1.5rem;
+  }
+
+  #search-wrapper .dropdown-toggle:hover, #search-wrapper .dropdown-toggle.show {
+    background-color: var(--medium-color);
+  }
+
+  #search-wrapper .dropdown-toggle::after {
+    display: none !important;
+  }
+
+  #search-wrapper .dropdown-toggle i {
     padding-left: 0.5rem;
-
-    content: "\f078"; /* fa-chevron-down */
-    color: var(--header-bar-text);
-    font: var(--fa-font-solid);
-    display: inline-block;
+    font-size: 0.75rem;
   }
 
-  #global-search-toggle::after {
-    background-image: none;
-    transform: none;
-    padding-left: 0.5rem;
-
-    content: "\f077"; /* fa-chevron-up */
-    color: var(--header-bar-text);
-    font: var(--fa-font-solid);
-    display: inline-block;
+  #search-wrapper .chevron {
+    position: absolute;
+    right: 0.5rem;
+    top: 33%;
+    display: block;
+    z-index: 2;
   }
+
+  /* Language selector  */
+
+  #language-list li:hover a, #language-list li:active a {
+    color: var(--search-dropdown-toggle-hover-text);
+    background-color: var(--search-dropdown-toggle-hover-bg);
+  }
+
+  #language-list li:hover label, #language-list li:active label {
+    background-color: var(--global-search-dropdown-toggle-hover-bg);
+  }
+
+  #language-list li:has(input:checked) label {
+    background-color: var(--search-button-bg);
+    color: var(--white-color);
+    font-weight: bold;
+  }
+
+  /* Search field */
+
+  #headerbar-search {
+    width: 25rem;
+    z-index: 4;
+  }
+
+  #search-field {
+    background-color: var(--search-bg);
+    border-color: var(--search-border);
+    border-radius: 0;
+  }
+
+  #search-field:focus {
+    border-color: var(--search-border) !important;
+    box-shadow: inset 0 0 5px rgba(196, 205, 217, 1) !important;
+  }
+
+  #clear-button {
+    position: absolute;
+    color: var(--vocab-text);
+    background: none;
+    border: none;
+    top: 0;
+    right: 50px;
+    height: 40px;
+    width: 40px;
+    padding: 0;
+    font-size: 1.4rem;
+    z-index: 5;
+  }
+
+  #search-wrapper .autocomplete {
+    position: relative;
+  }
+
+  #search-wrapper .autocomplete-result {
+    border-top: 1px solid var(--search-border);
+    margin: auto;
+  }
+
+  #search-wrapper .autocomplete-result * {
+    text-decoration: none;
+    color: var(--dark-color);
+  }
+
+  #search-wrapper .autocomplete-result .result {
+    color: var(--vocab-link);
+  }
+
+  #search-button {
+    background-color: var(--search-button-bg);
+    border: 1px solid var(--search-border);
+    border-radius: 0;
+    padding: 0;
+    width: 3.5em;
+  }
+
+  /* --- Global search bar --- */
 
   #global-search-text {
     min-width: 400px;
@@ -186,48 +337,9 @@ body {
     display: inline-block;
   }
 
-  #search-wrapper {
-    float: right;
-    display: flex;
-    align-items: stretch;
-    flex-wrap: wrap;
-  }
+  /* Vocabulary selector */
 
-  #search-wrapper select, #search-wrapper input, #search-wrapper button {
-    height: 100%;
-  }
-
-  #search-wrapper button.dropdown-toggle {
-    color: var(--vocab-text);
-    border: 1px solid var(--search-border);
-    border-radius: 0;
-    padding-left: 1rem;
-    padding-right: 1.5rem;
-  }
-
-  #search-wrapper button.dropdown-toggle:hover, #search-wrapper button.dropdown-toggle.show {
-    background-color: var(--medium-color);
-  }
-
-  #search-wrapper button.dropdown-toggle i {
-    padding-left: 0.5rem;
-    font-size: 0.75rem;
-  }
-
-  #search-wrapper button.btn.dropdown-toggle::after {
-    display: none !important;
-  }
-
-  #search-wrapper #language-list, #search-wrapper #vocab-list {
-    inset: -2px auto auto 0px !important;
-    background-color: var(--search-dropdown-bg);
-    color: var(--vocab-text);
-    border: 0;
-    width: max-content;
-    list-style: none;
-  }
-
-  #search-wrapper #vocab-list {
+  #vocab-list {
    padding-top: 0.25rem;
    padding-left: 0.5rem;
    padding-right: 0.5rem;
@@ -236,21 +348,13 @@ body {
   #search-wrapper .vocab-dropdown-btn {
     width: 15rem;
     position: relative;
-    padding-right: 2rem;
+    padding-right: 2rem; /* overwritten in original (remove?) */
   }
 
   #search-wrapper .vocab-dropdown-btn span {
     display: block;
     overflow: hidden;
     z-index: 0;
-  }
-
-  #search-wrapper .chevron {
-    position: absolute;
-    right: 0.5rem;
-    top: 33%;
-    display: block;
-    z-index: 2;
   }
 
   #search-wrapper .vocab-select {
@@ -285,25 +389,7 @@ body {
     background-color: var(--white-color);
   }
 
-  #search-wrapper .vocab-select:hover input ~ .checkmark {
-    background-color: var(--search-vocab-selector-selected-bg);
-  }
-
-  #search-wrapper .vocab-select input:checked ~ .checkmark {
-    background-color: var(--search-vocab-selector-selected-bg);
-  }
-
-  #search-wrapper .checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-  }
-
-  #search-wrapper .vocab-select input:checked ~ .checkmark:after {
-    display: block;
-  }
-
-  #search-wrapper .vocab-select .checkmark:after {
+  #search-wrapper .checkmark::after {
     left: 9px;
     top: 5px;
     width: 5px;
@@ -313,66 +399,34 @@ body {
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
+    content: "";
+    position: absolute;
+    display: none;
   }
 
-  #search-wrapper #language-list li a:hover, #search-wrapper #language-list li a:active {
-    color: var(--search-dropdown-toggle-hover-text);
-    background-color: var(--search-dropdown-toggle-hover-bg);
+  #search-wrapper .vocab-select:hover input ~ .checkmark {
+    background-color: var(--search-vocab-selector-selected-bg);
   }
 
-  #search-wrapper .form-check-input {
-    background-color: var(--search-bg);
-    border-radius: 0;
+  #search-wrapper .vocab-select input:checked ~ .checkmark {
+    background-color: var(--search-vocab-selector-selected-bg);
   }
 
-  #search-wrapper .form-check-input:checked {
-    background-color: var(--vocab-text);
+  #search-wrapper .vocab-select input:checked ~ .checkmark::after {
+    display: block;
   }
 
-  #search-wrapper input {
-    background-color: var(--search-bg);
-    border-color: var(--search-border);
-    border-radius: 0;
+  /* Search field */
+
+  #search-form {
+    width: auto;
   }
 
-  #search-wrapper span.dropdown {
-    width: 25rem;
-    z-index: 4;
+  #search-form span, #search-form button {
+    flex-wrap: nowrap;
   }
 
-  #search-wrapper .form-control:focus, #search-wrapper select:focus {
-    border-color: var(--search-border) !important;
-    box-shadow: inset 0 0 5px rgba(196, 205, 217, 1) !important;
-  }
-
-  #search-wrapper .dropdown-menu {
-    transform: translateY(-1px);
-    background-color: var(--search-dropdown-bg);
-    color: var(--vocab-text);
-    border: 1px solid var(--search-border);
-    border-radius: 0;
-  }
-
-  #search-wrapper ul {
-    padding-top: 0rem;
-    padding-bottom: 0rem;
-    max-height: 50vh;
-    overflow-y: auto;
-  }
-
-  #search-wrapper #language-list li:hover label {
-    background-color: var(--medium-color);
-  }
-
-  #search-wrapper #language-list li:active label {
-    background-color: var(--medium-color);
-  }
-
-  #search-wrapper #language-list li:has(input:checked) label {
-    background-color: var(--search-button-bg);
-    color: var(--white-color);
-    font-weight: bold;
-  }
+  /* --- Browser specific rules --- */
 
   /* Setting scrollbar style separately in Firefox */
   @-moz-document url-prefix() {
@@ -402,28 +456,6 @@ body {
       border-radius: 0px; 
   }
 
-  #search-wrapper .autocomplete {
-    position: relative;
-  }
-
-  #search-wrapper .autocomplete-result {
-    border-top: 1px solid var(--search-border);
-    margin: auto;
-  }
-
-  #search-wrapper .autocomplete-result * {
-    text-decoration: none;
-    color: var(--dark-color);
-  }
-
-  #search-wrapper .autocomplete-result span.result {
-    color: var(--vocab-link);
-  }
-
-  #search-wrapper .autocomplete-result span.d-inline {
-    white-space: nowrap;
-  }
-
   /* Remove built-in x button from Internet Explorer */
   #search-wrapper input[type=search]::-ms-clear { display: none; width : 0; height: 0; }
   #search-wrapper input[type=search]::-ms-reveal { display: none; width : 0; height: 0; }
@@ -434,38 +466,9 @@ body {
   #search-wrapper input[type="search"]::-webkit-search-results-button,
   #search-wrapper input[type="search"]::-webkit-search-results-decoration { display: none; }
 
-  #search-button {
-    background-color: var(--search-button-bg);
-    border: 1px solid var(--search-border);
-    border-radius: 0;
-    padding: 0;
-    width: 3.5em;
-  }
-
-  #search-form {
-    width: auto;
-  }
-
-  #search-form span, #search-form button {
-    flex-wrap: nowrap;
-  }
-
-  #clear-button {
-    position: absolute;
-    color: var(--vocab-text);
-    background: none;
-    border: none;
-    top: 0;
-    right: 50px;
-    height: 40px;
-    width: 40px;
-    padding: 0;
-    font-size: 1.4rem;
-    z-index: 5;
-  }
-
   /* Main container
-   *****************************************/
+  ====================================== */
+
   .vocab-home .container, .concept .container, .vocab-search .container {
     max-width: 1460px !important;
   }
@@ -492,7 +495,7 @@ body {
   }
 
   /***** Main container landing page & landing page one vocab *****/
-  #background.landing, #background.landing-one-vocab { /* unused */
+  #background.landing { /* unused */
     background-color: var(--main-bg-1);
     background-image: var(--landing-stripes-1);
     background-repeat: no-repeat;
@@ -500,7 +503,7 @@ body {
     background-position: calc(100% + 41px) -55px;
   }
 
-  #main-container.landing, #main-container.landing-one-vocab {
+  #main-container.landing {
     background-image: var(--landing-stripes-2);
     background-repeat: no-repeat;
     background-size: 650px;
@@ -885,6 +888,13 @@ body {
     left: 12px;
   }
 
+  /*** sidebar vocab-search ***/
+  #main-container.vocab-search #sidebar {
+    background-color: var(--sidebar-search-bg);
+    color: var(--sidebar-search-text);
+    height: 1000px; /* change */
+  }
+
   /*****  Main content vocab-home & concept pages *****/
   #main-content h1 {
     font-size: 2.5rem;
@@ -965,25 +975,25 @@ body {
   }
 
   /*** Main content concept page ***/
-  nav#concept-breadcrumbs ol {
+  nav#concept-breadcrumbs ol { /* change selector */
     list-style: none;
     padding-left: 0;
     margin-bottom: 0.5rem;
   }
 
-  nav#concept-breadcrumbs li, nav#concept-breadcrumbs li.collapse.show {
+  nav#concept-breadcrumbs li, nav#concept-breadcrumbs li.collapse.show { /* change selector */
     display: inline;
   }
 
-  nav#concept-breadcrumbs li.collapse, nav#concept-breadcrumbs li:has(a[aria-expanded="true"]) {
+  nav#concept-breadcrumbs li.collapse, nav#concept-breadcrumbs li:has(a[aria-expanded="true"]) { /* change selector */
     display: none;
   }
 
-  nav#concept-breadcrumbs li.breadcrumb + li::before {
+  nav#concept-breadcrumbs li.breadcrumb + li::before { /* change selector */
     content: "> ";
   }
 
-  nav#concept-breadcrumbs .breadcrumb-current {
+  nav#concept-breadcrumbs .breadcrumb-current { /* change selector */
     color: var(--dark-color);
     font-weight: normal;
   }
@@ -1208,7 +1218,7 @@ body {
   }
 
   /* Error page
-   *****************************************/
+  ====================================== */
   .alert {
     background-color: var(--alert-color);
     color: var(--white-color);
