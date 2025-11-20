@@ -107,6 +107,11 @@ header .container-fluid .row {
   margin: 0 auto;
 }
 
+header > h2 > a { /* unused (remove?) */
+  font-family: var(--font-family-heading) !important;
+  color: var(--dark-color)
+}
+
 /* Topbar
 -------------------------------------- */
 #skosmos-logo-top {
@@ -229,7 +234,7 @@ header .container-fluid .row {
 }
 
 #search-wrapper .dropdown-toggle::after {
-  display: none !important;
+  display: none;
 }
 
 #search-wrapper .dropdown-toggle i {
@@ -276,8 +281,8 @@ header .container-fluid .row {
 }
 
 #search-field:focus {
-  border-color: var(--search-border) !important;
-  box-shadow: inset 0 0 5px rgba(196, 205, 217, 1) !important;
+  border-color: var(--search-border);
+  box-shadow: inset 0 0 5px rgba(196, 205, 217, 1);
 }
 
 #clear-button {
@@ -470,20 +475,26 @@ header .container-fluid .row {
 ====================================== */
 
 .vocab-home .container, .concept .container, .vocab-search .container {
-  max-width: 1460px !important;
+  max-width: 1460px;
+}
+
+.vocab-home, .concept, .vocab-search, .global-search {
+  background-color: var(--main-bg-2); /* missing var*/
+}
+
+.vocab-home a, .concept a, .vocab-search a, .global-search a {
+  color: var(--vocab-link);
+  text-decoration: none;
+  font-weight: bold;
 }
 
 #main-container {
   padding-top: 2.4rem;
 }
 
-#main-container h1 {
+#main-container h1, #main-container h2  {
   font-family: var(--font-family-heading);
   font-weight: bold;
-}
-
-#main-container h2 {
-  font-family: var(--font-family-heading);
 }
 
 #main-container-row {
@@ -491,16 +502,18 @@ header .container-fluid .row {
 }
 
 .mb-gutterwidth {
-  margin-bottom: var(--bs-gutter-x);
+  margin-bottom: var(--bs-gutter-x); /* overwritten (remove?)*/
 }
 
-/***** Main container landing page & landing page one vocab *****/
+/* Landing page 
+-------------------------------------- */
+
 #background.landing { /* unused */
   background-color: var(--main-bg-1);
   background-image: var(--landing-stripes-1);
   background-repeat: no-repeat;
   background-size: 650px;
-  background-position: calc(100% + 41px) -55px;
+  background-position: calc(100% + 41px) - 55px;
 }
 
 #main-container.landing {
@@ -511,30 +524,24 @@ header .container-fluid .row {
   padding-top: 0;
 }
 
-/*** Main container landing page ***/
+#vocabulary-list .vocab-category {
+  color: var(--vocab-category-text);
+}
 
-header > h2 > a {
-  font-family: var(--font-family-heading) !important;
-  color: var(--dark-color)
-}
-#vocabulary-list .list-group-item {
-  background-color: var(--medium-color) !important;
-}
-#vocabulary-list .border-top {
+#vocabulary-list .vocab-category.border-top {
   border-top: 2px var(--dark-color) solid !important;
   color: var(--secondary-dark-color);
 }
 
-.vocab-category {
-  border-top: 1px solid var(--vocab-category-text);
+#vocabulary-list .vocab-category h3 {
   color: var(--vocab-category-text);
 }
 
-.vocab-category h3 {
-  color: var(--vocab-category-text);
+#vocabulary-list .list-group-item {
+  background-color: var(--medium-color);
 }
 
-.vocab-category a {
+#vocabulary-list .list-group-item a {
   color: var(--vocab-link);
   font-weight: bold;
   text-decoration: underline;
@@ -543,40 +550,28 @@ header > h2 > a {
   text-underline-offset: 0.3rem;
 }
 
-/*** Main container landing page one vocab ***/
-/***** Main container vocab-home & concept & vocab-search pages *****/
-#main-container.vocab-home, #main-container.concept, #main-container.vocab-search,  #main-container.global-search  { /* check */
-  background-color: var(--main-bg-2);
-}
+/* Sidebar vocab and concept pages
+-------------------------------------- */
 
-#main-container.vocab-home a, #main-container.concept a, #main-container.vocab-search a, #main-container.global-search a { /* check */
-  color: var(--vocab-link);
-  text-decoration: none;
-  font-weight: bold;
-}
-
-/*** Sidebar concept & vocab-home pages ***/
-
-#main-container.vocab-home #sidebar-col, #main-container.concept #sidebar-col {
+.vocab-home #sidebar-col, .concept #sidebar-col {
   background-color: var(--vocab-bg);
   background-clip: content-box, padding-box;
   min-height: 1000px;
 }
 
-#main-container.vocab-home #sidebar, #main-container.concept #sidebar {
+.vocab-home #sidebar, .concept #sidebar {
   background-color: var(--vocab-bg);
 }
 
-#main-container.vocab-home #sidebar .nav, #main-container.concept #sidebar .nav {
+/* Sidebar tabs */
+
+#sidebar-tabs {
+  position: relative;
   background-color: var(--sidebar-tab-inactive-bg);
 }
 
-#sidebar #alphabetical .nav-link {
-  white-space: nowrap;
-}
-
-#main-container.vocab-home #sidebar .nav-link, #main-container.concept #sidebar .nav-link {
-  color: var(--sidebar-tab-inactive-text) !important;
+#sidebar .nav-link {
+  color: var(--sidebar-tab-inactive-text);
   height: 100%;
   display: flex;
   align-items: center;
@@ -584,142 +579,13 @@ header > h2 > a {
   transition: none;
 }
 
-#main-container.vocab-home #sidebar-tabs, #main-container.concept #sidebar-tabs {
-  position: relative;
-}
-
-#main-container.vocab-home #sidebar .nav-link.disabled, #main-container.concept #sidebar .nav-link.disabled {
-  opacity: 0.65;
-}
-
-#main-container.vocab-home #sidebar .nav-item.disabled::before, #main-container.concept #sidebar .nav-item.disabled::before {
-  position: absolute;
-  content: ' ';
-  background-color: var(--tooltip-border-color);
-  border: 3px solid var(--tooltip-border-color);
-  width: 15px;
-  height: 15px;
-  z-index: 500;
-  opacity: 0;
-  pointer-events: none;
-  transform: translate(-50%, 0) rotate(45deg);
-  bottom: -20px;
-}
-
-#main-container.vocab-home #sidebar .nav-item.disabled:hover::before, #main-container.concept #sidebar .nav-item.disabled:hover::before {
-  opacity: 1;
-}
-
-#main-container.vocab-home #sidebar .nav-item.disabled::after, #main-container.concept #sidebar .nav-item.disabled::after {
-  content: attr(data-title);
-  white-space: pre-line;
-  max-width: 400px;
-  width: max-content;
-  display: inline-block;
-  color: var(--white-color);
-  background-color: var(--tooltip-bg-color);
-  border: 3px solid var(--tooltip-border-color);
-  position: absolute;
-  z-index: 9002;
-  opacity: 0;
-  transform: translate(calc(-50% - 10px), 0);
-  pointer-events: none;
-  margin: 12px 0 0 9px;
-  padding: 0.25rem 0.5rem;
-  font-size: 0.95em;
-}
-
-#main-container.vocab-home #sidebar .nav-item.disabled:hover::after, #main-container.concept #sidebar .nav-item.disabled:hover::after {
-  opacity: 1;
-}
-
-#main-container.vocab-home #sidebar .nav .active, #main-container.concept #sidebar .nav .active {
-  background-color: var(--sidebar-tab-active-bg);
-  color: var(--sidebar-tab-active-text) !important;
-}
-
-#main-container.vocab-home #sidebar .pagination, #main-container.concept #sidebar .pagination {
-  background-color: var(--sidebar-tab-active-bg);
-  padding: 1rem;
-  margin: 0;
-  flex-wrap: wrap;
-}
-
-#main-container.vocab-home #sidebar .page-item, #main-container.vocab-home #sidebar .page-link,
-#main-container.concept #sidebar .page-item, #main-container.concept #sidebar .page-link {
-  background-color: var(--sidebar-tab-active-bg);
-  color: var(--sidebar-tab-active-text) !important;
-  font-weight: normal !important;
-  border: none;
-  border-radius: 0 !important;
-  margin: 0 !important;
-  transition: none;
-  width: 35px;
-}
-
-#main-container.vocab-home #sidebar .page-link, #main-container.concept #sidebar .page-link {
-  display: flex;
-  align-content: center;
-  text-align: center;
-}
-
-/* what to do with these */
-#main-container.vocab-home #sidebar .page-link:hover, #main-container.vocab-home #sidebar .page-link:active, #main-container.vocab-home #sidebar .page-link:focus,
-#main-container.concept #sidebar .page-link:hover, #main-container.concept #sidebar .page-link:active, #main-container.concept #sidebar .page-link:focus {
+#sidebar .nav-link.active {
   background-color: var(--sidebar-tab-active-bg);
   color: var(--sidebar-tab-active-text);
-  box-shadow: none;
 }
 
-#sidebar .loading-message {
-  padding: 2rem 1rem;
-}
-
-.sidebar-list {
-  padding: 2rem 1rem 0 1rem;
-  overflow-y: scroll;
-  position: absolute;
-}
-
-/* Setting scrollbar style separately in Firefox */
-@-moz-document url-prefix() {
-  .sidebar-list {
-    scrollbar-color: var(--sidebar-scrollbar-thumb) var(--search-dropdown-bg);
-  }
-} 
-
-/* Setting scrollbar style for Webkit based browsers (Chrome, Safari, Edge, etc) */
-.sidebar-list::-webkit-scrollbar {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
-
-.sidebar-list::-webkit-scrollbar:vertical {
-    width: 15px;
-}
-
-.sidebar-list::-webkit-scrollbar-thumb {
-    border-radius: 0px;
-    border: 1px solid var(--sidebar-scrollbar-thumb);
-    background-color: var(--sidebar-scrollbar-thumb);
-}
-
-.sidebar-list::-webkit-scrollbar-track { 
-    background-color: var(--sidebar-scrollbar-bg);
-    border-radius: 0px; 
-}
-
-.sidebar-list .list-group-item {
-  border: none;
-  border-radius: none;
-}
-
-.sidebar-list a {
-  font-weight: bold !important;
-}
-
-.sidebar-list a.selected {
-  color: var(--vocab-text) !important;
+#sidebar .nav-link.disabled {
+  opacity: 0.65;
 }
 
 /* In smaller screen sizes, the last sidebar tab overflows to the right */
@@ -741,7 +607,7 @@ header > h2 > a {
   }
 
   #sidebar-tabs.wide .nav-item:last-of-type .nav-link {
-    justify-content: start !important;
+    justify-content: start;
     white-space: nowrap;
     position: relative;
   }
@@ -768,38 +634,122 @@ header > h2 > a {
   }
 }
 
-/*** sidebar changes tab ***/
-#tab-changes .sidebar-list h2 {
+/* Sidebar tooltip */
+
+#sidebar .nav-item.disabled::before {
+  position: absolute;
+  content: ' ';
+  background-color: var(--tooltip-border-color);
+  border: 3px solid var(--tooltip-border-color);
+  width: 15px;
+  height: 15px;
+  z-index: 500;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 0) rotate(45deg);
+  bottom: -20px;
+}
+
+#sidebar .nav-item.disabled:hover::before {
+  opacity: 1;
+}
+
+#sidebar .nav-item.disabled::after {
+  content: attr(data-title);
+  white-space: pre-line;
+  max-width: 400px;
+  width: max-content;
+  display: inline-block;
+  color: var(--white-color);
+  background-color: var(--tooltip-bg-color);
+  border: 3px solid var(--tooltip-border-color);
+  position: absolute;
+  z-index: 9002;
+  opacity: 0;
+  transform: translate(calc(-50% - 10px), 0);
+  pointer-events: none;
+  margin: 12px 0 0 9px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.95em;
+}
+
+#sidebar .nav-item.disabled:hover::after {
+  opacity: 1;
+}
+
+/* --- Sidebar concept list --- */
+
+#sidebar .sidebar-list {
+  padding: 2rem 1rem 0 1rem;
+  overflow-y: scroll;
+  position: absolute;
+}
+
+#sidebar .list-group-item {
+  border: none;
+  border-radius: none;
+}
+
+#sidebar .sidebar-list a.selected {
   color: var(--vocab-text);
-  font-size: 1.4rem;
-  font-weight: bold;
+}
+
+/* --- Sidebar alphabetical tab --- */
+
+#alphabetical .nav-link {
+  white-space: nowrap;
+}
+
+#sidebar .pagination {
+  background-color: var(--sidebar-tab-active-bg);
+  padding: 1rem;
   margin: 0;
+  flex-wrap: wrap;
 }
 
-/* All headings except first */
-#tab-changes .sidebar-list li + li h2 {
-  margin-top: 1.5rem !important;
+#sidebar .page-item, #sidebar .page-link {
+  background-color: var(--sidebar-tab-active-bg);
+  color: var(--sidebar-tab-active-text);
+  font-weight: normal;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  transition: none;
+  width: 35px; /* check */
 }
 
-#tab-changes .sidebar-list s {
-  text-decoration: 1px var(--vocab-text) line-through;
+#sidebar .page-link {
+  display: flex;
+  align-content: center;
+  text-align: center;
 }
 
-/*** sidebar hierarchy and groups tabs ***/
-#tab-hierarchy .sidebar-list .list-group-item,
-#tab-groups .sidebar-list .list-group-item {
+/* what to do with these? */
+#sidebar .page-link:hover, #sidebar .page-link:active, #sidebar .page-link:focus {
+  background-color: var(--sidebar-tab-active-bg);
+  color: var(--sidebar-tab-active-text);
+  box-shadow: none;
+}
+
+#sidebar .loading-message {
+  padding: 2rem 1rem;
+}
+
+/* --- Sidebar hierarchy and groups tabs --- */
+
+#tab-hierarchy .list-group-item,
+#tab-groups .list-group-item {
   border-left: 1px dashed var(--vocab-text);
   border-radius: 0;
   white-space: nowrap;
 }
 
-#tab-hierarchy .sidebar-list .list-group-item.top-concept,
-#tab-groups .sidebar-list .list-group-item.top-concept {
+#tab-hierarchy .list-group-item.top-concept,
+#tab-groups .list-group-item.top-concept {
   border: none;
 }
 
-#tab-hierarchy .sidebar-list .list-group-item .concept-label,
-#tab-groups .sidebar-list .list-group-item .concept-label {
+#sidebar .concept-label {
   display: inline-block;
   border-left: 1px dashed var(--vocab-text);
   margin-left: 16px;
@@ -809,8 +759,7 @@ header > h2 > a {
 }
 
 /* horizontal line before concept */
-#tab-hierarchy .sidebar-list .list-group-item .concept-label::before,
-#tab-groups .sidebar-list .list-group-item .concept-label::before {
+#sidebar .concept-label::before {
   content: '';
   position: absolute;
   left: 16px;
@@ -821,8 +770,7 @@ header > h2 > a {
 }
 
 /* hiding bottom of vertical line on last concept of list */
-#tab-hierarchy .sidebar-list .list-group-item .concept-label.last::before,
-#tab-groups .sidebar-list .list-group-item .concept-label.last::before {
+#sidebar .concept-label.last::before {
   top: auto;
   bottom: 0;
   height: calc(100% - 13px);
@@ -832,28 +780,21 @@ header > h2 > a {
 }
 
 /* no border for children of the last concept */
-#tab-hierarchy .sidebar-list .list-group-item span.last + ul > li,
-#tab-groups .sidebar-list .list-group-item span.last + ul > li  {
+#sidebar .concept-label.last + ul > li  {
   border: none;
-  margin-left: 1px !important; /* add a 1px margin to offset missing border */
+  margin-left: 1px; /* add a 1px margin to offset missing border */
 }
 
-#tab-hierarchy .sidebar-list .list-group-item .concept-notation,
-#tab-groups .sidebar-list .list-group-item .concept-notation {
-  color: var(--dark-color);
-}
-
-#tab-hierarchy .sidebar-list .list-group-item a.selected .concept-notation,
-#tab-groups .sidebar-list .list-group-item a.selected .concept-notation {
-  font-weight: bold;
-}
-
-#tab-groups .sidebar-list .list-group-item .concept-label i {
+#tab-groups .concept-label i {
   color: var(--dark-color);
   font-size: 1rem;
 }
 
-.hierarchy-button {
+#sidebar .concept-notation {
+  color: var(--dark-color);
+}
+
+#sidebar .hierarchy-button {
   background-color: transparent;
   color: var(--vocab-text);
   border: none;
@@ -861,12 +802,12 @@ header > h2 > a {
   font-size: 0.7rem;
 }
 
-.hierarchy-button:hover, .hierarchy-button:active {
-  background-color: transparent !important;
-  color: var(--vocab-text) !important;
+#sidebar .hierarchy-button:hover, #sidebar .hierarchy-button:active {
+  background-color: transparent;
+  color: var(--vocab-text);
 }
 
-.hierarchy-button i {
+#sidebar .hierarchy-button i {
   position: absolute;
   left: 11px;
   top: 7px;
@@ -874,7 +815,7 @@ header > h2 > a {
   font-size: .85rem;
 }
 
-.hierarchy-button img {
+#sidebar .hierarchy-button img {
   transform: rotate(-45deg);
   position: absolute;
   top: 9px;
@@ -883,19 +824,69 @@ header > h2 > a {
   z-index: 1;
 }
 
-.hierarchy-button.open img {
+#sidebar .hierarchy-button.open img {
   transform: rotate(0deg);
   left: 12px;
 }
 
-/*** sidebar vocab-search ***/
-#main-container.vocab-search #sidebar {
+/* --- Sidebar changes tab --- */
+
+#tab-changes h2 {
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+/* All headings except first */
+#tab-changes li + li h2 {
+  margin-top: 1.5rem;
+}
+
+#tab-changes s {
+  text-decoration: 1px var(--vocab-text) line-through;
+}
+
+/* --- Browser specific rules --- */
+
+/* Setting scrollbar style separately in Firefox */
+@-moz-document url-prefix() {
+  #sidebar .sidebar-list {
+    scrollbar-color: var(--sidebar-scrollbar-thumb) var(--search-dropdown-bg);
+  }
+} 
+
+/* Setting scrollbar style for Webkit based browsers (Chrome, Safari, Edge, etc) */
+#sidebar .sidebar-list::-webkit-scrollbar {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+#sidebar .sidebar-list::-webkit-scrollbar:vertical {
+    width: 15px;
+}
+
+#sidebar .sidebar-list::-webkit-scrollbar-thumb {
+    border-radius: 0px;
+    border: 1px solid var(--sidebar-scrollbar-thumb);
+    background-color: var(--sidebar-scrollbar-thumb);
+}
+
+#sidebar .sidebar-list::-webkit-scrollbar-track { 
+    background-color: var(--sidebar-scrollbar-bg);
+    border-radius: 0px; 
+}
+
+/* Sidebar vocab-search
+-------------------------------------- */
+
+.vocab-search #sidebar {
   background-color: var(--sidebar-search-bg);
   color: var(--sidebar-search-text);
   height: 1000px; /* change */
 }
 
-/*****  Main content vocab-home & concept pages *****/
+/*  Vocab-home & concept pages
+-------------------------------------- */
+
 #main-content h1 {
   font-size: 2.5rem;
 }
@@ -974,7 +965,8 @@ header > h2 > a {
   width: 40%;
 }
 
-/*** Main content concept page ***/
+/* --- Main content concept page --- */
+
 nav#concept-breadcrumbs ol { /* change selector */
   list-style: none;
   padding-left: 0;
@@ -1050,7 +1042,9 @@ nav#concept-breadcrumbs .breadcrumb-current { /* change selector */
   font-size: 0.85rem;
 }
 
-/***** Main content vocab-search & global-search pages *****/
+/* Vocab-search & global-search pages
+-------------------------------------- */
+
 #search-results {
   background-color: var(--vocab-bg);
 }
@@ -1127,7 +1121,9 @@ nav#concept-breadcrumbs .breadcrumb-current { /* change selector */
   font-style: italic;  
 }
 
-/***** Main container about & feedback pages *****/
+/* About & feedback pages
+-------------------------------------- */
+
 #main-container.about, #main-container.feedback {
   background-color: var(--main-bg-3);
   color: var(--about-text);
@@ -1138,7 +1134,7 @@ nav#concept-breadcrumbs .breadcrumb-current { /* change selector */
   padding: 0 12rem;
 }
 
-/*** Main container about page ***/
+/* --- About page --- */
 #main-container.about {
   background-image: var(--about-stripes);
   background-repeat: no-repeat;
@@ -1152,7 +1148,7 @@ nav#concept-breadcrumbs .breadcrumb-current { /* change selector */
   font-weight: bold;
 }
 
-/*** Main container feedback page ***/
+/* --- Feedback page -- */
 #main-container.feedback {
   background-image: var(--feedback-stripes);
   background-repeat: no-repeat;
@@ -1218,7 +1214,7 @@ nav#concept-breadcrumbs .breadcrumb-current { /* change selector */
 }
 
 /* Error page
-====================================== */
+-------------------------------------- */
 .alert {
   background-color: var(--alert-color);
   color: var(--white-color);
