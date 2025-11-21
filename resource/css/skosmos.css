@@ -81,7 +81,7 @@ body {
   color: var(--vocab-text);
 }
 
-#main-container.vocab-home .fa-arrow-right, #main-container.concept .fa-arrow-right, #main-container.error .fa-arrow-right {
+.vocab-home .fa-arrow-right, .concept .fa-arrow-right, .error .fa-arrow-right {
   color: var(--vocab-text);
   font-size: .75rem;
   margin: 0 5px;
@@ -115,7 +115,7 @@ header > h2 > a { /* unused (remove?) */
 /* Topbar
 -------------------------------------- */
 #skosmos-logo-top {
-  background-image: url(../pics/skosmos-NEGA-RGB.svg);
+  background-image: url("../pics/skosmos-NEGA-RGB.svg");
   background-repeat: no-repeat;
   width: 168px;
   height: 60px;
@@ -165,7 +165,7 @@ header > h2 > a { /* unused (remove?) */
 }
 
 #skosmos-logo {
-  background-image: url(../pics/skosmos-RGB.svg);
+  background-image: url("../pics/skosmos-RGB.svg");
   background-repeat: no-repeat;
   background-position: -8px -15px;
   width: 300px;
@@ -196,7 +196,7 @@ header > h2 > a { /* unused (remove?) */
 }
 
 #language-list, #vocab-list {
-  inset: -2px auto auto 0px !important;
+  inset: -2px auto auto 0 !important;
   background-color: var(--search-dropdown-bg);
   color: var(--vocab-text);
   border: 0;
@@ -219,6 +219,7 @@ header > h2 > a { /* unused (remove?) */
   color: var(--vocab-text);
   border: 1px solid var(--search-border);
   border-radius: 0;
+  overflow-x: hidden;
 }
 
 #search-wrapper .dropdown-toggle {
@@ -451,19 +452,19 @@ header > h2 > a { /* unused (remove?) */
 }
 
 #search-wrapper ul::-webkit-scrollbar-thumb {
-    border-radius: 0px;
+    border-radius: 0;
     border: 1px solid var(--sidebar-scrollbar-thumb);
     background-color: var(--sidebar-scrollbar-thumb);
 }
 
 #search-wrapper ul::-webkit-scrollbar-track { 
     background-color: var(--search-dropdown-bg); 
-    border-radius: 0px; 
+    border-radius: 0;
 }
 
 /* Remove built-in x button from Internet Explorer */
-#search-wrapper input[type=search]::-ms-clear { display: none; width : 0; height: 0; }
-#search-wrapper input[type=search]::-ms-reveal { display: none; width : 0; height: 0; }
+#search-wrapper input[type="search"]::-ms-clear { display: none; width : 0; height: 0; }
+#search-wrapper input[type="search"]::-ms-reveal { display: none; width : 0; height: 0; }
 
 /* Remove built-in x button from Chrome */
 #search-wrapper input[type="search"]::-webkit-search-decoration,
@@ -502,7 +503,7 @@ header > h2 > a { /* unused (remove?) */
 }
 
 .mb-gutterwidth {
-  margin-bottom: var(--bs-gutter-x); /* overwritten (remove?)*/
+  margin-bottom: var(--bs-gutter-x); /* overwritten (remove?) */
 }
 
 /* Landing page 
@@ -513,7 +514,7 @@ header > h2 > a { /* unused (remove?) */
   background-image: var(--landing-stripes-1);
   background-repeat: no-repeat;
   background-size: 650px;
-  background-position: calc(100% + 41px) - 55px;
+  background-position: calc(100% + 41px) -55px;
 }
 
 #main-container.landing {
@@ -681,14 +682,14 @@ header > h2 > a { /* unused (remove?) */
 /* --- Sidebar concept list --- */
 
 #sidebar .sidebar-list {
-  padding: 2rem 1rem 0 1rem;
+  padding: 2rem 1rem 0;
   overflow-y: scroll;
   position: absolute;
 }
 
 #sidebar .list-group-item {
   border: none;
-  border-radius: none;
+  border-radius: 0;
 }
 
 #sidebar .sidebar-list a.selected {
@@ -866,14 +867,14 @@ header > h2 > a { /* unused (remove?) */
 }
 
 #sidebar .sidebar-list::-webkit-scrollbar-thumb {
-    border-radius: 0px;
+    border-radius: 0;
     border: 1px solid var(--sidebar-scrollbar-thumb);
     background-color: var(--sidebar-scrollbar-thumb);
 }
 
 #sidebar .sidebar-list::-webkit-scrollbar-track { 
     background-color: var(--sidebar-scrollbar-bg);
-    border-radius: 0px; 
+    border-radius: 0; 
 }
 
 /* Sidebar vocab-search
@@ -1097,7 +1098,7 @@ header > h2 > a { /* unused (remove?) */
 }
 
 /* The triangle that appears near the element that triggered it. */
-.tooltip-html-content:after {
+.tooltip-html-content::after {
   position: absolute;
   content: '';
   width: 10px;
