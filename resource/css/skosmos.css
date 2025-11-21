@@ -81,7 +81,7 @@ body {
   color: var(--vocab-text);
 }
 
-#main-container.vocab-home .fa-arrow-right, #main-container.concept .fa-arrow-right { /* unused */ /* remove? */
+#main-container.vocab-home .fa-arrow-right, #main-container.concept .fa-arrow-right, #main-container.error .fa-arrow-right {
   color: var(--vocab-text);
   font-size: .75rem;
   margin: 0 5px;
@@ -474,15 +474,15 @@ header > h2 > a { /* unused (remove?) */
 /* Main container
 ====================================== */
 
-.vocab-home .container, .concept .container, .vocab-search .container {
+.vocab-home .container, .concept .container, .vocab-search .container, .error .container {
   max-width: 1460px;
 }
 
 .vocab-home, .concept, .vocab-search, .global-search {
-  background-color: var(--main-bg-2); /* missing var*/
+  background-color: var(--main-bg-2); /* missing var */
 }
 
-.vocab-home a, .concept a, .vocab-search a, .global-search a {
+.vocab-home a, .concept a, .vocab-search a, .global-search a, .error a {
   color: var(--vocab-link);
   text-decoration: none;
   font-weight: bold;
@@ -509,7 +509,7 @@ header > h2 > a { /* unused (remove?) */
 -------------------------------------- */
 
 #background.landing { /* unused */
-  background-color: var(--main-bg-1);
+  background-color: var(--main-bg-1); /* missing var */
   background-image: var(--landing-stripes-1);
   background-repeat: no-repeat;
   background-size: 650px;
@@ -539,6 +539,7 @@ header > h2 > a { /* unused (remove?) */
 
 #vocabulary-list .list-group-item {
   background-color: var(--medium-color);
+  border: none;
 }
 
 #vocabulary-list .list-group-item a {
@@ -553,13 +554,13 @@ header > h2 > a { /* unused (remove?) */
 /* Sidebar vocab and concept pages
 -------------------------------------- */
 
-.vocab-home #sidebar-col, .concept #sidebar-col {
+.vocab-home #sidebar-col, .concept #sidebar-col, .error #sidebar-col {
   background-color: var(--vocab-bg);
   background-clip: content-box, padding-box;
   min-height: 1000px;
 }
 
-.vocab-home #sidebar, .concept #sidebar {
+.vocab-home #sidebar, .concept #sidebar, .error #sidebar-col {
   background-color: var(--vocab-bg);
 }
 
@@ -913,15 +914,20 @@ header > h2 > a { /* unused (remove?) */
   padding: .5rem 0;
 }
 
+.property ul, .property li {
+  list-style-type: none;
+  margin-left: 0;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
 .property.prop-mapping {
   border-top: none;
 }
 
 #main-container .property-label h2 {
   font-family: var(--font-family);
-  font-weight: bold;
   font-size: 1.2rem;
-  margin-bottom: 0;
   display: inline;
 }
 
@@ -930,74 +936,64 @@ header > h2 > a { /* unused (remove?) */
   border: none;
 }
 
-.property-value .property-value-notation {
-  color: var(--vocab-text);
-}
+/* --- Vocab statistics --- */
 
-.property-value .property-value-submembers {
-  margin-left: 1rem;
-}
-
-.property-value .property-value-hidden {
-  display: none;
-}
-
-.property-value .property-value-expand .property-value-hidden {
-  display: list-item;
-}
-
-.vocab-statistics > h3 {
+.vocab-statistics > h3 { /* unused (remove?) */
   font-size: 1.4rem;
 }
 
-#resource-table th {
+#resource-table th { /* unused (remove?) */
   color: var(--vocab-text);
   font-weight: bold;
   border-bottom: 1px solid var(--vocab-text);
 }
 
-#resource-table td {
+#resource-table td { /* unused (remove?) */
   color: var(--vocab-text);
   border: none;
 }
 
-.resource-table-label {
+.resource-table-label { /* unused (remove?) */
   width: 40%;
 }
 
-/* --- Main content concept page --- */
-
-nav#concept-breadcrumbs ol { /* change selector */
-  list-style: none;
-  padding-left: 0;
-  margin-bottom: 0.5rem;
-}
-
-nav#concept-breadcrumbs li, nav#concept-breadcrumbs li.collapse.show { /* change selector */
-  display: inline;
-}
-
-nav#concept-breadcrumbs li.collapse, nav#concept-breadcrumbs li:has(a[aria-expanded="true"]) { /* change selector */
-  display: none;
-}
-
-nav#concept-breadcrumbs li.breadcrumb + li::before { /* change selector */
-  content: "> ";
-}
-
-nav#concept-breadcrumbs .breadcrumb-current { /* change selector */
-  color: var(--dark-color);
-  font-weight: normal;
-}
+/* --- Concept page --- */
 
 #concept-property-label {
   align-self: start;
   padding-top: 1.25rem;
 }
 
-#concept-label h1 {
+#concept-preflabel {
   display: inline;
 }
+
+/* breadcrumbs */
+
+#concept-breadcrumbs ol {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0.5rem;
+}
+
+#concept-breadcrumbs li, #concept-breadcrumbs li.collapse.show {
+  display: inline;
+}
+
+#concept-breadcrumbs li.collapse, #concept-breadcrumbs li:has(a[aria-expanded="true"]) {
+  display: none;
+}
+
+#concept-breadcrumbs li.breadcrumb + li::before {
+  content: "> ";
+}
+
+#concept-breadcrumbs .breadcrumb-current {
+  color: var(--dark-color);
+  font-weight: normal;
+}
+
+/* Copy buttons */
 
 #copy-preflabel, #copy-notation {
   color: var(--vocab-text);
@@ -1018,11 +1014,22 @@ nav#concept-breadcrumbs .breadcrumb-current { /* change selector */
   border-radius: 3px;
 }
 
-.property ul, .property li {
-  list-style-type: none;
-  margin-left: 0;
-  padding-left: 0;
-  margin-bottom: 0;
+/* Properties */
+
+.property-value .property-value-notation {
+  color: var(--vocab-text);
+}
+
+.property-value .property-value-submembers {
+  margin-left: 1rem;
+}
+
+.property-value .property-value-hidden {
+  display: none;
+}
+
+.property-value .property-value-expand .property-value-hidden {
+  display: list-item;
 }
 
 .prop-skos_altLabel .property-value li, .altlabel {
@@ -1040,6 +1047,87 @@ nav#concept-breadcrumbs .breadcrumb-current { /* change selector */
 
 #date-info {
   font-size: 0.85rem;
+}
+
+/* Tooltips */
+
+.tooltip-html {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+#concept-label .tooltip-html {
+  bottom: 4px;
+}
+
+.tooltip-html button {
+  line-height: 1.0;
+  padding: 3px;
+  margin: -3px;
+  color: var(--tooltip-bg-color);
+}
+
+.tooltip-html button:focus {
+  border: 2px solid var(--vocab-text);
+  border-radius: 0;
+  margin: -4px;
+}
+
+.tooltip-html:hover .tooltip-html-content, .tooltip-html:focus-within .tooltip-html-content {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tooltip-html-content {
+  box-sizing: border-box;
+  position: absolute;
+  top: 20px;
+  left: -2px;
+  display: block;
+  cursor: text;
+  width: 400px;
+  color: var(--tooltip-fg-color);
+  background-color: var(--tooltip-bg-color);
+  border: 3px solid var(--tooltip-border-color);
+  z-index: 9001;
+  visibility: hidden;
+  opacity: 0;
+  padding: 0.25rem 0.5rem;
+}
+
+/* The triangle that appears near the element that triggered it. */
+.tooltip-html-content:after {
+  position: absolute;
+  content: '';
+  width: 10px;
+  height: 10px;
+  transform: rotate(45deg);
+  top: -7px;
+  left: 0;
+  margin-left: 2px;
+  color: var(--tooltip-fg-color);
+  border-top: 6px solid var(--tooltip-border-color);
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 6px solid var(--tooltip-border-color);
+  z-index: 9002;
+}
+
+/* Definition lists used in tooltips. */
+.tooltip-html-content dt {
+  display: block;
+  float: left;
+  font-weight: bold;
+  margin-right: 0.4em;
+}
+
+.tooltip-html-content dt::after {
+  content: ":";
+}
+
+.tooltip-html-content dd {
+  display: block;
 }
 
 /* Vocab-search & global-search pages
@@ -1072,8 +1160,14 @@ nav#concept-breadcrumbs .breadcrumb-current { /* change selector */
   cursor: default;
 }
 
-.search-result .list-group-item a { /* bug in truncate-search-results.js (.list-group-item class is overwritten) */
+.search-result .list-group-item a { /* unused (remove?) */ /* bug in truncate-search-results.js (.list-group-item class is overwritten) */
   cursor: pointer;
+}
+
+.search-result-list { /* bug in truncate-search-results.js (.list-group-item class is overwritten) */
+  display: block;
+  white-space: nowrap;
+  position: relative;
 }
 
 .search-result-hide {
@@ -1084,12 +1178,6 @@ nav#concept-breadcrumbs .breadcrumb-current { /* change selector */
                 transparent,
                 var(--vocab-bg) 35%,
                 var(--vocab-bg) 0%);
-}
-
-.search-result-list { /* bug in truncate-search-results.js (.list-group-item class is overwritten) */
-  display: block;
-  white-space: nowrap;
-  position: relative;
 }
 
 .search-result-hidden {
@@ -1124,32 +1212,33 @@ nav#concept-breadcrumbs .breadcrumb-current { /* change selector */
 /* About & feedback pages
 -------------------------------------- */
 
-#main-container.about, #main-container.feedback {
-  background-color: var(--main-bg-3);
-  color: var(--about-text);
+.about, .feedback {
+  background-color: var(--main-bg-3); /* missing var */
   padding: 4rem 0;
 }
 
-#main-container.about .container, #main-container.feedback .container {
-  padding: 0 12rem;
+.about .container, .feedback .container {
+  padding: 0 8rem;
 }
 
 /* --- About page --- */
-#main-container.about {
+
+.about { /* unused */
   background-image: var(--about-stripes);
   background-repeat: no-repeat;
   background-size: 650px;
   background-position: calc(100% + 41px) calc(100% + 55px);
 }
 
-#main-container.about a {
+.about a { /* unused (remove?) */
   color: var(--about-link);
   text-decoration: underline;
   font-weight: bold;
 }
 
 /* --- Feedback page -- */
-#main-container.feedback {
+
+.feedback { /* unused */
   background-image: var(--feedback-stripes);
   background-repeat: no-repeat;
   background-size: 650px;
@@ -1166,13 +1255,30 @@ nav#concept-breadcrumbs .breadcrumb-current { /* change selector */
   font-weight: bold;
 }
 
-#feedback-form input, #feedback-form select, #feedback-form textarea {
+#feedback-form select, #feedback-form input, #feedback-form textarea {
   background-color: var(--feedback-form-input);
   border: none;
   border-radius: 0;
 }
 
-#feedback-form input::placeholder {
+#feedback-form .select-wrapper {
+  position: relative;
+}
+
+#feedback-form .select-wrapper::after {
+  color: var(--vocab-text);
+  content: '﹀';
+  font-size: 1.4rem;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+#feedback-form select {
+  background-image: none;
+}
+
+#feedback-form select:valid, #feedback-form select:valid:focus, #feedback-form input::placeholder {
   color: var(--feedback-form-text);
 }
 
@@ -1188,116 +1294,10 @@ nav#concept-breadcrumbs .breadcrumb-current { /* change selector */
   float: right;
 }
 
-#feedback-form select {
-  background-image: none;
-}
-
-#feedback-form select:valid {
-  color: var(--feedback-form-text);
-}
-
-#feedback-form select:valid:focus {
-  color: var(--feedback-form-text);
-}
-
-.select-wrapper {
-  position: relative;
-}
-
-.select-wrapper::after {
-  color: var(--vocab-text);
-  content: '﹀';
-  font-size: 1.4rem;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-
 /* Error page
 -------------------------------------- */
 .alert {
   background-color: var(--alert-color);
   color: var(--white-color);
   border-radius: 0;
-}
-
-/* Tooltips */  /* move (?) */
-
-.tooltip-html {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-}
-
-#concept-label .tooltip-html {
-  bottom: 4px;
-}
-
-.tooltip-html button {
-  line-height: 1.0;
-  padding: 3px;
-  margin: -3px;
-}
-
-.tooltip-html button:focus {
-  border: 2px solid var(--vocab-text);
-  border-radius: 0;
-  margin: -4px;
-}
-
-.tooltip-html:hover .tooltip-html-content, .tooltip-html:focus-within .tooltip-html-content {
-  visibility: visible;
-  opacity: 1;
-}
-
-.tooltip-html-content {
-  box-sizing: border-box;
-  position: absolute;
-  top: 20px;
-  left: 0;
-  display: block;
-  cursor: text;
-  width: 400px;
-  color: var(--tooltip-fg-color);
-  background-color: var(--tooltip-bg-color);
-  border: 3px solid var(--tooltip-border-color);
-  z-index: 9001;
-  visibility: hidden;
-  opacity: 0;
-  padding: 0.25rem 0.5rem;
-}
-
-/* The triangle that appears near the element that triggered it. */
-.tooltip-html-content:after {
-  position: absolute;
-  content: '';
-  width: 10px;
-  height: 10px;
-  transform: rotate(45deg);
-  top: -7px;
-  left: 0;
-  margin-left: 2px;
-  color: var(--tooltip-fg-color);
-  border-top: 6px solid var(--tooltip-border-color);
-  border-right: 6px solid transparent;
-  border-bottom: 6px solid transparent;
-  border-left: 6px solid var(--tooltip-border-color);
-  z-index: 9002;
-}
-
-/* Definition lists used in tooltips. */
-
-dl.tooltip-html-content dt {
-  display: block;
-  float: left;
-  font-weight: bold;
-  margin-right: 0.4em;
-}
-
-dl.tooltip-html-content dt::after {
-  content: ":";
-}
-
-dl.tooltip-html-content dd {
-  display: block;
 }

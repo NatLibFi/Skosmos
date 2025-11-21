@@ -7,18 +7,16 @@
 {% block content %}
 
 <div class="container">
-  <div class="mx-5">
-    <div class="px-3 pb-3 bg-light">
-      <h1 class="fs-3 mb-5">{{"About" | trans }}</h1>
-      <div id="about-slot">
-      {{ include('custom-templates.inc.twig', {slotName: 'about', showPlaceholder: true}) }}
-      </div>
+  <div class="pb-3 bg-light">
+    <h1 class="mb-5">{{"About" | trans }}</h1>
+    <div id="about-slot">
+    {{ include('custom-templates.inc.twig', {slotName: 'about', showPlaceholder: true}) }}
     </div>
+  </div>
 
-    <div id="version">
-      {% set version = request.version %}
-      <p>{% trans %}Skosmos version %version%{% endtrans %}</p>
-    </div>
+  <div id="version">
+    {% set version = request.version %}
+    <p>{% trans %}Skosmos version %version%{% endtrans %}</p>
   </div>
 </div>
 {% endblock %}
