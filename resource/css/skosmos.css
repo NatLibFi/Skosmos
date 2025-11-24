@@ -26,7 +26,6 @@
   --search-border: var(--medium-color);
   --search-button-bg: var(--dark-color);
   --search-button-text: var(--white-color);
-  --search-vocab-selector-bg: var(--medium-color);
   --search-vocab-selector-selected-bg: var(--dark-color);
   --search-vocab-selector-check: var(--white-color);
   --search-dropdown-toggle-hover-text: var(--white-color);
@@ -199,7 +198,7 @@ header > h2 > a { /* unused (remove?) */
   inset: -2px auto auto 0 !important;
   background-color: var(--search-dropdown-bg);
   color: var(--vocab-text);
-  border: 0;
+  border: 0 !important;
   width: max-content;
   list-style: none;
 }
@@ -219,7 +218,7 @@ header > h2 > a { /* unused (remove?) */
   color: var(--vocab-text);
   border: 1px solid var(--search-border);
   border-radius: 0;
-  overflow-x: hidden;
+  overflow-x: hidden; /* prevent horizontal scrollbar in chrome */
 }
 
 #search-wrapper .dropdown-toggle {
@@ -345,7 +344,7 @@ header > h2 > a { /* unused (remove?) */
 
 /* Vocabulary selector */
 
-#vocab-list {
+#search-wrapper #vocab-list {
   padding-top: 0.25rem;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -387,12 +386,12 @@ header > h2 > a { /* unused (remove?) */
 
 #search-wrapper .checkmark {
   position: absolute;
-  border: 1px solid var(--dark-color);
+  border: 1px solid var(--search-vocab-selector-selected-bg);
   top: 0;
   left: 0;
   height: 1.5rem;
   width: 1.5rem;
-  background-color: var(--white-color);
+  background-color: var(--search-vocab-selector-check);
 }
 
 #search-wrapper .checkmark::after {
@@ -400,7 +399,7 @@ header > h2 > a { /* unused (remove?) */
   top: 5px;
   width: 5px;
   height: 10px;
-  border: solid white;
+  border: solid var(--search-vocab-selector-check);
   border-width: 0 3px 3px 0;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
