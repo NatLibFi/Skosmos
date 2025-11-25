@@ -26,16 +26,17 @@
   --search-border: var(--medium-color);
   --search-button-bg: var(--dark-color);
   --search-button-text: var(--white-color);
+  --search-dropdown-toggle-hover-bg: var(--medium-color);
   --search-vocab-selector-selected-bg: var(--dark-color);
   --search-vocab-selector-check: var(--white-color);
-  --search-dropdown-toggle-hover-text: var(--white-color);
-  --search-dropdown-toggle-hover-bg: var(--dark-color);
-  --global-search-dropdown-toggle-hover-bg: var(--medium-color);
+  --vocab-search-language-selector-hover-text: var(--white-color);
+  --vocab-search-language-selector-hover-bg: var(--dark-color);
   --vocab-bg: var(--white-color);
   --vocab-text: var(--dark-color);
   --vocab-table-border: var(--medium-color);
   --vocab-link: var(--secondary-dark-color);
   --vocab-category-text: var(--dark-color);
+  --vocab-category-bg: var(--medium-color);
   --tooltip-fg-color: var(--light-color);
   --tooltip-bg-color: var(--dark-color);
   --tooltip-border-color: var(--secondary-medium-color);
@@ -230,7 +231,7 @@ header > h2 > a { /* unused (remove?) */
 }
 
 #search-wrapper .dropdown-toggle:hover, #search-wrapper .dropdown-toggle.show {
-  background-color: var(--medium-color);
+  background-color: var(--search-dropdown-toggle-hover-bg);
 }
 
 #search-wrapper .dropdown-toggle::after {
@@ -253,12 +254,12 @@ header > h2 > a { /* unused (remove?) */
 /* Language selector  */
 
 #language-list li:hover a, #language-list li:active a {
-  color: var(--search-dropdown-toggle-hover-text);
-  background-color: var(--search-dropdown-toggle-hover-bg);
+  color: var(--vocab-search-language-selector-hover-text);
+  background-color: var(--vocab-search-language-selector-hover-bg);
 }
 
 #language-list li:hover label, #language-list li:active label {
-  background-color: var(--global-search-dropdown-toggle-hover-bg);
+  background-color: var(--search-dropdown-toggle-hover-bg);
 }
 
 #language-list li:has(input:checked) label {
@@ -529,8 +530,7 @@ header > h2 > a { /* unused (remove?) */
 }
 
 #vocabulary-list .vocab-category.border-top {
-  border-top: 2px var(--dark-color) solid !important;
-  color: var(--secondary-dark-color);
+  border-top: 2px var(--vocab-category-text) solid !important;
 }
 
 #vocabulary-list .vocab-category h3 {
@@ -538,7 +538,7 @@ header > h2 > a { /* unused (remove?) */
 }
 
 #vocabulary-list .list-group-item {
-  background-color: var(--medium-color);
+  background-color: var(--vocab-category-bg);
   border: none;
 }
 
@@ -787,20 +787,17 @@ header > h2 > a { /* unused (remove?) */
 }
 
 #tab-groups .concept-label i {
-  color: var(--dark-color);
+  color: var(--vocab-text);
   font-size: 1rem;
 }
 
 #sidebar .concept-notation {
-  color: var(--dark-color);
+  color: var(--vocab-text);
 }
 
 #sidebar .hierarchy-button {
-  background-color: transparent;
-  color: var(--vocab-text);
   border: none;
   padding: 0;
-  font-size: 0.7rem;
 }
 
 #sidebar .hierarchy-button:hover, #sidebar .hierarchy-button:active {
@@ -989,7 +986,7 @@ header > h2 > a { /* unused (remove?) */
 }
 
 #concept-breadcrumbs .breadcrumb-current {
-  color: var(--dark-color);
+  color: var(--vocab-text);
   font-weight: normal;
 }
 
@@ -1202,7 +1199,7 @@ header > h2 > a { /* unused (remove?) */
 
 .prefLabel.proplabel {
   font-weight: bold;
-  color: var(--secondary-dark-color);
+  color: var(--vocab-link);
 }
 
 .altLabel.proplabel {
