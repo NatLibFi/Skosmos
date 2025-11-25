@@ -33,7 +33,7 @@
 {% for plugin, files in request.plugins.pluginsCSS %}{% for file in files %}<link href="{{ file }}" media="screen, print" rel="stylesheet" type="text/css">{% endfor %}{% endfor %}
 {{ include('custom-templates.inc.twig', {slotName: 'html-head'}) -}}
 </head>
-<body class="{% if pageType =='landing' %}bg-white frontpage-logo{% else %}{% if pageType == 'concept' or pageType == 'vocab-home' %}bg-medium vocab-{{ request.vocabid }}{% else %}bg-light{% endif %}{% endif %}">
+<body class="{% if pageType =='landing' %}bg-white frontpage-logo{% else %}{% if pageType == 'concept' or pageType == 'vocab-home' or (request.vocabid != '' and request.page == 'page') %}bg-medium vocab-{{ request.vocabid }}{% else %}bg-light{% endif %}{% endif %}">
   <header>
     <a class="visually-hidden" id="skiptocontent" href="{{ request.langurl }}#maincontent">Skip to main</a>
     <div class="container-fluid bg-dark d-flex my-auto py-3 px-4 text-bg-dark">

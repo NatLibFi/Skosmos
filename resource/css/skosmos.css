@@ -26,16 +26,17 @@
   --search-border: var(--medium-color);
   --search-button-bg: var(--dark-color);
   --search-button-text: var(--white-color);
-  --search-vocab-selector-bg: var(--medium-color);
+  --search-dropdown-toggle-hover-bg: var(--medium-color);
   --search-vocab-selector-selected-bg: var(--dark-color);
   --search-vocab-selector-check: var(--white-color);
-  --search-dropdown-toggle-hover-text: var(--white-color);
-  --search-dropdown-toggle-hover-bg: var(--dark-color);
+  --vocab-search-language-selector-hover-text: var(--white-color);
+  --vocab-search-language-selector-hover-bg: var(--dark-color);
   --vocab-bg: var(--white-color);
   --vocab-text: var(--dark-color);
   --vocab-table-border: var(--medium-color);
   --vocab-link: var(--secondary-dark-color);
-  --vocab-box-text: var(--dark-color);
+  --vocab-category-text: var(--dark-color);
+  --vocab-category-bg: var(--medium-color);
   --tooltip-fg-color: var(--light-color);
   --tooltip-bg-color: var(--dark-color);
   --tooltip-border-color: var(--secondary-medium-color);
@@ -52,6 +53,9 @@ body {
   font-size: var(--font-size);
 }
 
+/* Utilities
+====================================== */
+
 .bg-dark {
   background-color: var(--dark-color) !important;
 }
@@ -65,1250 +69,966 @@ body {
 }
 
 /* Font awesome
- *****************************************/
-  #vocab-box .fa-arrow-right {
-    color: var(--secondary-dark-color);
-  }
+====================================== */
 
-  #main-container.vocab-home .fa-arrow-right, #main-container.concept .fa-arrow-right {
-    color: var(--vocab-text);
-    font-size: .75rem;
-    margin: 0 5px;
-  }
-
-  #main-container.vocab-search .fa-arrow-right, #main-container.global-search .fa-arrow-right {
-    color: var(--vocab-text);
-    font-size: .85rem;
-  }
-
-  #main-container.vocab-search .list-group .fa-solid, #main-container.vocab-search .list-group .fa-regular,
-  #main-container.global-search .list-group .fa-solid, #main-container.global-search .list-group .fa-regular {
-    color: var(--vocab-text);
-    font-size: 1.15rem;
-    width: 1.5rem;
-    text-align: center;
-  }
-
-  .fa-magnifying-glass {
-    color: var(--search-button-text);
-    font-size: 1.6rem;
-    margin: calc((38px - 22px) / 2 ) 0; /* (button height - font height) / 2 */
-  }
-
-  .fa-download {
-    color: var(--vocab-text);
-  }
-
-  /* Topbar
-   *****************************************/
-  #topbar.landing, #topbar.landing-one-vocab {
-    background-color: var(--topbar-bg-1);
-    color: var(--topbar-text-1);
-  }
-
-  #topbar.vocab-home, #topbar.concept, #topbar.about, #topbar.feedback {
-    background-color: var(--topbar-bg-2);
-    color: var(--topbar-text-2);
-  }
-
-  #topbar.landing a, #topbar.landing-one-vocab a {
-    color: var(--topbar-text-1) !important;
-  }
-
-  #topbar.vocab-home a, #topbar.concept a, #topbar.about a, #topbar.feedback a {
-    color: var(--topbar-text-2) !important;
-  }
-
-  #topbar h3 {
-    display: inline;
-    font-weight: bold;
-  }
-
-  #multi-search-toggle {
-    background-color: var(--topbar-bg-1);
-    color: var(--topbar-text-1);
-    border: none;
-  }
-
-  #multi-search-toggle::after {
-    content: '﹀';
-    position: absolute;
-    top: 30px;
-    left: 205px;
-  }
-
-  #skosmos-logo-top {
-    background-image: url(../pics/skosmos-NEGA-RGB.svg);
-    background-repeat: no-repeat;
-    width: 168px;
-    height: 60px;
-    display: inline-block;
-  }
-
-  #skosmos-logo-top h2 {
-    text-indent: -100%;
-  }
-
-  .topbar-nav-link {
-    background-position: left center;
-    background-repeat: no-repeat;
-    background-size: 40%;
-    padding-left: 30px;
-  }
-
-  /* Headerbar
-   *****************************************/
-  #headerbar.landing, #headerbar.landing-one-vocab {
-    color: var(--header-bar-text);
-  }
-
-  #headerbar.vocab-home, #headerbar.concept {
-    background-color: var(--headerbar-vocab-bg);
-  }
-
-  header .container-fluid .row {
-    max-width: 1460px;
-    margin: 0 auto;
-  }
-
-  #skosmos-logo {
-    background-image: url(../pics/skosmos-RGB.svg);
-    background-repeat: no-repeat;
-    background-position: -8px -15px;
-    width: 300px;
-    height: 80px;
-    background-size: 300px;
-  }
-
-  #vocab-title {
-    font-size: 2.5rem;
-  }
-
-  #vocab-title a {
-    color: var(--vocab-text);
-    font-family: var(--font-family-heading);
-  }
-
-  #global-search-toggle {
-    transition: none;
-    background-color: var(--headerbar-vocab-bg);
-    border-style: none;
-    white-space: nowrap;
-  }
-
-  #global-search-toggle.collapsed::after {
-    background-image: none;
-    transform: none;
-    padding-left: 0.5rem;
-
-    content: "\f078"; /* fa-chevron-down */
-    color: var(--header-bar-text);
-    font: var(--fa-font-solid);
-    display: inline-block;
-  }
-
-  #global-search-toggle::after {
-    background-image: none;
-    transform: none;
-    padding-left: 0.5rem;
-
-    content: "\f077"; /* fa-chevron-up */
-    color: var(--header-bar-text);
-    font: var(--fa-font-solid);
-    display: inline-block;
-  }
-
-  #global-search-text {
-    min-width: 400px;
-    overflow: auto;
-  }
-
-  #global-search-text h2 {
-    font-family: var(--font-family-heading);
-    font-weight: bold;
-    font-size: 2rem;
-  }
-
-  #global-search-bar .dropdown {
-    display: inline-block;
-  }
-
-  #search-wrapper {
-    float: right;
-    display: flex;
-    align-items: stretch;
-    flex-wrap: wrap;
+.fa-magnifying-glass {
+  color: var(--search-button-text);
+  font-size: 1.6rem;
+  margin: calc((38px - 22px) / 2 ) 0; /* (button height - font height) / 2 */
 }
 
-  #search-wrapper select, #search-wrapper input, #search-wrapper button {
-    height: 100%;
-  }
+.fa-download {
+  color: var(--vocab-text);
+}
 
-  #search-wrapper button.dropdown-toggle {
-    color: var(--vocab-text);
-    border: 1px solid var(--search-border);
-    border-radius: 0;
-    padding-left: 1rem;
-    padding-right: 1.5rem;
-  }
+.vocab-home .fa-arrow-right, .concept .fa-arrow-right, .error .fa-arrow-right {
+  color: var(--vocab-text);
+  font-size: .75rem;
+  margin: 0 5px;
+}
 
-  #search-wrapper button.dropdown-toggle:hover, #search-wrapper button.dropdown-toggle.show {
-    background-color: var(--medium-color);
-  }
+#search-results .list-group .fa-solid, #search-results .list-group .fa-regular {
+  color: var(--vocab-text);
+  font-size: 1.15rem;
+  width: 1.5rem;
+  text-align: center;
+}
 
-  #search-wrapper button.dropdown-toggle i {
-    padding-left: 0.5rem;
-    font-size: 0.75rem;
-  }
+#search-results .fa-arrow-right {
+  color: var(--vocab-text);
+  font-size: .85rem;
+}
 
-  #search-wrapper button.btn.dropdown-toggle::after {
-    display: none !important;
-  }
+/* Header
+====================================== */
 
-  #search-wrapper #language-list, #search-wrapper #vocab-list {
-    inset: -2px auto auto 0px !important;
-    background-color: var(--search-dropdown-bg);
-    color: var(--vocab-text);
-    border: 0;
-    width: max-content;
-    list-style: none;
-  }
-  #search-wrapper #vocab-list {
-   padding-top: 0.25rem;
-   padding-left: 0.5rem;
-   padding-right: 0.5rem;
-  }
+header .container-fluid .row {
+  max-width: 1460px;
+  margin: 0 auto;
+}
 
-  #search-wrapper .vocab-dropdown-btn {
-    width: 15rem;
-    position: relative;
-    padding-right: 2rem;
-  }
+/* Topbar
+-------------------------------------- */
+#skosmos-logo-top {
+  background-image: url("../pics/skosmos-NEGA-RGB.svg");
+  background-repeat: no-repeat;
+  width: 168px;
+  height: 60px;
+  display: inline-block;
+}
 
-  #search-wrapper .vocab-dropdown-btn span {
-    display: block;
-    overflow: hidden;
-    z-index: 0;
-  }
+#skosmos-logo-top h2 {
+  text-indent: -100%;
+}
 
-  #search-wrapper .chevron {
-    position: absolute;
-    right: 0.5rem;
-    top: 33%;
-    display: block;
-    z-index: 2;
-  }
+#global-search-toggle {
+  transition: none;
+  background-color: var(--headerbar-vocab-bg);
+  border-style: none;
+  white-space: nowrap;
+}
 
-  #search-wrapper .vocab-select {
-    display: block;
-    position: relative;
-    padding-left: 35px;
-    margin-bottom: 0.25rem;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
+#global-search-toggle.collapsed::after {
+  background-image: none;
+  transform: none;
+  padding-left: 0.5rem;
+  content: "\f078"; /* fa-chevron-down */
+  color: var(--header-bar-text);
+  font: var(--fa-font-solid);
+  display: inline-block;
+}
 
-  /* Custom checkbox */
+#global-search-toggle::after {
+  background-image: none;
+  transform: none;
+  padding-left: 0.5rem;
+  content: "\f077"; /* fa-chevron-up */
+  color: var(--header-bar-text);
+  font: var(--fa-font-solid);
+  display: inline-block;
+}
 
-  #search-wrapper .vocab-select input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-  }
+/* Headerbar
+-------------------------------------- */
 
-  #search-wrapper .checkmark {
-    position: absolute;
-    border: 1px solid var(--dark-color);
-    top: 0;
-    left: 0;
-    height: 1.5rem;
-    width: 1.5rem;
-    background-color: var(--white-color);
-  }
+#skosmos-logo {
+  background-image: url("../pics/skosmos-RGB.svg");
+  background-repeat: no-repeat;
+  background-position: -8px -15px;
+  width: 300px;
+  height: 80px;
+  background-size: 300px;
+}
 
-  #search-wrapper .vocab-select:hover input ~ .checkmark {
-    background-color: var(--search-vocab-selector-selected-bg);
-  }
+#vocab-title {
+  font-size: 2.5rem;
+}
 
-  #search-wrapper .vocab-select input:checked ~ .checkmark {
-    background-color: var(--search-vocab-selector-selected-bg);
-  }
+#vocab-title a {
+  color: var(--vocab-text);
+  font-family: var(--font-family-heading);
+}
 
-  #search-wrapper .checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-  }
+/* --- Search bar --- */
 
-  #search-wrapper .vocab-select input:checked ~ .checkmark:after {
-    display: block;
-  }
+#search-wrapper {
+  float: right;
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
 
-  #search-wrapper .vocab-select .checkmark:after {
-    left: 9px;
-    top: 5px;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
-  }
+#search-wrapper input, #search-wrapper button {
+  height: 100%;
+}
 
-  #search-wrapper #language-list li a:hover, #search-wrapper #language-list li a:active {
-    color: var(--search-dropdown-toggle-hover-text);
-    background-color: var(--search-dropdown-toggle-hover-bg);
-  }
+#language-list, #vocab-list {
+  inset: -2px auto auto 0 !important;
+  background-color: var(--search-dropdown-bg);
+  color: var(--vocab-text);
+  border: 0 !important;
+  width: max-content;
+  list-style: none;
+}
 
-  #search-wrapper .form-check-input {
-    background-color: var(--search-bg);
-    border-radius: 0;
-  }
+/* Dropdowns */
 
-  #search-wrapper .form-check-input:checked {
-    background-color: var(--vocab-text);
-  }
+#search-wrapper ul {
+  padding-top: 0rem;
+  padding-bottom: 0rem;
+  max-height: 50vh;
+  overflow-y: auto;
+}
 
-  #search-wrapper input {
-    background-color: var(--search-bg);
-    border-color: var(--search-border);
-    border-radius: 0;
-  }
+#search-wrapper .dropdown-menu {
+  transform: translateY(-1px);
+  background-color: var(--search-dropdown-bg);
+  color: var(--vocab-text);
+  border: 1px solid var(--search-border);
+  border-radius: 0;
+  overflow-x: hidden; /* prevent horizontal scrollbar in chrome */
+}
 
-  #search-wrapper span.dropdown {
-    width: 25rem;
-    z-index: 4;
-  }
+#search-wrapper .dropdown-toggle {
+  color: var(--vocab-text);
+  border: 1px solid var(--search-border);
+  border-radius: 0;
+  padding-left: 1rem;
+  padding-right: 1.5rem;
+}
 
-  #search-wrapper .form-control:focus, #search-wrapper select:focus {
-    border-color: var(--search-border) !important;
-    box-shadow: inset 0 0 5px rgba(196, 205, 217, 1) !important;
-  }
+#search-wrapper .dropdown-toggle:hover, #search-wrapper .dropdown-toggle.show {
+  background-color: var(--search-dropdown-toggle-hover-bg);
+}
 
-  #search-wrapper .dropdown-menu {
-    transform: translateY(-1px);
-    background-color: var(--search-dropdown-bg);
-    color: var(--vocab-text);
-    border: 1px solid var(--search-border);
-    border-radius: 0;
-  }
+#search-wrapper .dropdown-toggle::after {
+  display: none;
+}
 
+#search-wrapper .dropdown-toggle i {
+  padding-left: 0.5rem;
+  font-size: 0.75rem;
+}
+
+#search-wrapper .chevron {
+  position: absolute;
+  right: 0.5rem;
+  top: 33%;
+  display: block;
+  z-index: 2;
+}
+
+/* Language selector  */
+
+#language-list li:hover a, #language-list li:active a {
+  color: var(--vocab-search-language-selector-hover-text);
+  background-color: var(--vocab-search-language-selector-hover-bg);
+}
+
+#language-list li:hover label, #language-list li:active label {
+  background-color: var(--search-dropdown-toggle-hover-bg);
+}
+
+#language-list li:has(input:checked) label {
+  background-color: var(--search-button-bg);
+  color: var(--white-color);
+  font-weight: bold;
+}
+
+/* Search field */
+
+#headerbar-search {
+  width: 25rem;
+  z-index: 4;
+}
+
+#search-field {
+  background-color: var(--search-bg);
+  border-color: var(--search-border);
+  border-radius: 0;
+}
+
+#search-field:focus {
+  border-color: var(--search-border);
+  box-shadow: inset 0 0 5px rgba(196, 205, 217, 1);
+}
+
+#clear-button {
+  position: absolute;
+  color: var(--vocab-text);
+  background: none;
+  border: none;
+  top: 0;
+  right: 50px;
+  height: 40px;
+  width: 40px;
+  padding: 0;
+  font-size: 1.4rem;
+  z-index: 5;
+}
+
+#search-wrapper .autocomplete {
+  position: relative;
+}
+
+#search-wrapper .autocomplete-result {
+  border-top: 1px solid var(--search-border);
+  margin: auto;
+}
+
+#search-wrapper .autocomplete-result * {
+  text-decoration: none;
+  color: var(--dark-color);
+}
+
+#search-wrapper .autocomplete-result .result {
+  color: var(--vocab-link);
+}
+
+#search-button {
+  background-color: var(--search-button-bg);
+  border: 1px solid var(--search-border);
+  border-radius: 0;
+  padding: 0;
+  width: 3.5em;
+}
+
+/* --- Global search bar --- */
+
+#global-search-text {
+  min-width: 400px;
+  overflow: auto;
+}
+
+#global-search-text h2 {
+  font-family: var(--font-family-heading);
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+#global-search-bar .dropdown {
+  display: inline-block;
+}
+
+/* Vocabulary selector */
+
+#search-wrapper #vocab-list {
+  padding-top: 0.25rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+#search-wrapper .vocab-dropdown-btn {
+  width: 15rem;
+  position: relative;
+}
+
+#search-wrapper .vocab-dropdown-btn span {
+  display: block;
+  overflow: hidden;
+  z-index: 0;
+}
+
+#search-wrapper .vocab-select {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 0.25rem;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Custom checkbox */
+
+#search-wrapper .vocab-select input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+#search-wrapper .checkmark {
+  position: absolute;
+  border: 1px solid var(--search-vocab-selector-selected-bg);
+  top: 0;
+  left: 0;
+  height: 1.5rem;
+  width: 1.5rem;
+  background-color: var(--search-vocab-selector-check);
+}
+
+#search-wrapper .checkmark::after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid var(--search-vocab-selector-check);
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+#search-wrapper .vocab-select:hover input ~ .checkmark {
+  background-color: var(--search-vocab-selector-selected-bg);
+}
+
+#search-wrapper .vocab-select input:checked ~ .checkmark {
+  background-color: var(--search-vocab-selector-selected-bg);
+}
+
+#search-wrapper .vocab-select input:checked ~ .checkmark::after {
+  display: block;
+}
+
+/* Search field */
+
+#search-form {
+  width: auto;
+}
+
+#search-form span, #search-form button {
+  flex-wrap: nowrap;
+}
+
+/* --- Browser specific rules --- */
+
+/* Setting scrollbar style separately in Firefox */
+@-moz-document url-prefix() {
   #search-wrapper ul {
-    padding-top: 0rem;
-    padding-bottom: 0rem;
-    max-height: 50vh;
-    overflow-y: auto;
+    scrollbar-color: var(--sidebar-scrollbar-thumb) var(--search-dropdown-bg);
   }
+} 
 
-  #search-wrapper #language-list li:hover label {
-    background-color: var(--medium-color);
-  }
+/* Setting scrollbar style for Webkit based browsers (Chrome, Safari, Edge, etc) */
+#search-wrapper ul::-webkit-scrollbar {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
 
-  #search-wrapper #language-list li:active label {
-    background-color: var(--medium-color);
-  }
+#search-wrapper ul::-webkit-scrollbar:vertical {
+    width: 15px;
+}
 
-  #search-wrapper #language-list li:has(input:checked) label {
-    background-color: var(--search-button-bg);
-    color: var(--white-color);
-    font-weight: bold;
-  }
-
-  /* Setting scrollbar style separately in Firefox */
-  @-moz-document url-prefix() {
-    #search-wrapper ul {
-      scrollbar-color: var(--sidebar-scrollbar-thumb) var(--search-dropdown-bg);
-    }
-  } 
-
-  /* Setting scrollbar style for Webkit based browsers (Chrome, Safari, Edge, etc) */
-  #search-wrapper ul::-webkit-scrollbar {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-  }
-
-  #search-wrapper ul::-webkit-scrollbar:vertical {
-      width: 15px;
-  }
-
-  #search-wrapper ul::-webkit-scrollbar-thumb {
-      border-radius: 0px;
-      border: 1px solid var(--sidebar-scrollbar-thumb);
-      background-color: var(--sidebar-scrollbar-thumb);
-  }
-
-  #search-wrapper ul::-webkit-scrollbar-track { 
-      background-color: var(--search-dropdown-bg); 
-      border-radius: 0px; 
-  }
-
-  #search-wrapper .autocomplete {
-    position: relative;
-  }
-
-  #search-wrapper .autocomplete-result {
-    border-top: 1px solid var(--search-border);
-    margin: auto;
-  }
-
-  #search-wrapper .autocomplete-result * {
-    text-decoration: none;
-    color: var(--dark-color);
-  }
-
-  #search-wrapper .autocomplete-result span.result {
-    color: var(--vocab-link);
-  }
-
-  #search-wrapper .autocomplete-result span.d-inline {
-    white-space: nowrap;
-  }
-
-  /* Remove built-in x button from Internet Explorer */
-  #search-wrapper input[type=search]::-ms-clear { display: none; width : 0; height: 0; }
-  #search-wrapper input[type=search]::-ms-reveal { display: none; width : 0; height: 0; }
-  
-  /* Remove built-in x button from Chrome */
-  #search-wrapper input[type="search"]::-webkit-search-decoration,
-  #search-wrapper input[type="search"]::-webkit-search-cancel-button,
-  #search-wrapper input[type="search"]::-webkit-search-results-button,
-  #search-wrapper input[type="search"]::-webkit-search-results-decoration { display: none; }
-
-  #search-button {
-    background-color: var(--search-button-bg);
-    border: 1px solid var(--search-border);
+#search-wrapper ul::-webkit-scrollbar-thumb {
     border-radius: 0;
-    padding: 0;
-    width: 3.5em;
-  }
+    border: 1px solid var(--sidebar-scrollbar-thumb);
+    background-color: var(--sidebar-scrollbar-thumb);
+}
 
-  #search-form {
-    width: auto;
-  }
+#search-wrapper ul::-webkit-scrollbar-track { 
+    background-color: var(--search-dropdown-bg); 
+    border-radius: 0;
+}
 
-  #search-form span, #search-form button {
+/* Remove built-in x button from Internet Explorer */
+#search-wrapper input[type="search"]::-ms-clear { display: none; width : 0; height: 0; }
+#search-wrapper input[type="search"]::-ms-reveal { display: none; width : 0; height: 0; }
+
+/* Remove built-in x button from Chrome */
+#search-wrapper input[type="search"]::-webkit-search-decoration,
+#search-wrapper input[type="search"]::-webkit-search-cancel-button,
+#search-wrapper input[type="search"]::-webkit-search-results-button,
+#search-wrapper input[type="search"]::-webkit-search-results-decoration { display: none; }
+
+/* Main container
+====================================== */
+
+.vocab-home .container, .concept .container, .vocab-search .container, .error .container {
+  max-width: 1460px;
+}
+
+.vocab-home, .concept, .vocab-search, .global-search {
+  background-color: var(--main-bg-2); /* missing var */
+}
+
+.vocab-home a, .concept a, .vocab-search a, .global-search a, .error a {
+  color: var(--vocab-link);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#main-container {
+  padding-top: 2.4rem;
+}
+
+#main-container h1, #main-container h2  {
+  font-family: var(--font-family-heading);
+  font-weight: bold;
+}
+
+#main-container-row {
+  --bs-gutter-x: 2rem;
+}
+
+/* Landing page 
+-------------------------------------- */
+
+#background.landing { /* unused */
+  background-color: var(--main-bg-1); /* missing var */
+  background-image: var(--landing-stripes-1);
+  background-repeat: no-repeat;
+  background-size: 650px;
+  background-position: calc(100% + 41px) -55px;
+}
+
+#main-container.landing {
+  background-image: var(--landing-stripes-2);
+  background-repeat: no-repeat;
+  background-size: 650px;
+  background-position: -41px calc(100% + 55px);
+  padding-top: 0;
+}
+
+#vocabulary-list .vocab-category {
+  color: var(--vocab-category-text);
+}
+
+#vocabulary-list .vocab-category.border-top {
+  border-top: 2px var(--vocab-category-text) solid !important;
+}
+
+#vocabulary-list .vocab-category h3 {
+  color: var(--vocab-category-text);
+}
+
+#vocabulary-list .list-group-item {
+  background-color: var(--vocab-category-bg);
+  border: none;
+}
+
+#vocabulary-list .list-group-item a {
+  color: var(--vocab-link);
+  font-weight: bold;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--secondary-medium-color);
+  text-underline-offset: 0.3rem;
+}
+
+/* Sidebar vocab and concept pages
+-------------------------------------- */
+
+.vocab-home #sidebar-col, .concept #sidebar-col, .error #sidebar-col {
+  background-color: var(--vocab-bg);
+  background-clip: content-box, padding-box;
+  min-height: 1000px;
+}
+
+.vocab-home #sidebar, .concept #sidebar, .error #sidebar-col {
+  background-color: var(--vocab-bg);
+}
+
+/* Sidebar tabs */
+
+#sidebar-tabs {
+  position: relative;
+  background-color: var(--sidebar-tab-inactive-bg);
+}
+
+#sidebar .nav-link {
+  color: var(--sidebar-tab-inactive-text);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: none;
+}
+
+#sidebar .nav-link.active {
+  background-color: var(--sidebar-tab-active-bg);
+  color: var(--sidebar-tab-active-text);
+}
+
+#sidebar .nav-link.disabled {
+  opacity: 0.65;
+}
+
+/* In smaller screen sizes, the last sidebar tab overflows to the right */
+@media only screen and (min-width: 768px) and (max-width: 1070px) {
+  #sidebar-tabs.wide {
     flex-wrap: nowrap;
   }
 
-  #clear-button {
-    position: absolute;
-    color: var(--vocab-text);
-    background: none;
-    border: none;
-    top: 0;
-    right: 50px;
-    height: 40px;
-    width: 40px;
-    padding: 0;
-    font-size: 1.4rem;
-    z-index: 5;
+  #sidebar-tabs.wide #alphabetical {
+    max-width: 40px;
   }
 
-  /* Main container
-   *****************************************/
-  .vocab-home .container, .concept .container, .vocab-search .container {
-    max-width: 1460px !important;
+  #sidebar-tabs.wide .nav-link {
+    padding: 0.5rem 0.25rem;
   }
 
-  #main-container {
-    padding-top: 2.4rem;
-  }
-
-  #main-container h1 {
-    font-family: var(--font-family-heading);
-    font-weight: bold;
-  }
-
-  #main-container h2 {
-    font-family: var(--font-family-heading);
-  }
-
-  #main-container-row {
-    --bs-gutter-x: 2rem;
-  }
-
-  .mb-gutterwidth {
-    margin-bottom: var(--bs-gutter-x);
-  }
-
-  /***** Main container landing page & landing page one vocab *****/
-  #background.landing, #background.landing-one-vocab {
-    background-color: var(--main-bg-1);
-    background-image: var(--landing-stripes-1);
-    background-repeat: no-repeat;
-    background-size: 650px;
-    background-position: calc(100% + 41px) -55px;
-  }
-
-  #main-container.landing, #main-container.landing-one-vocab {
-    background-image: var(--landing-stripes-2);
-    background-repeat: no-repeat;
-    background-size: 650px;
-    background-position: -41px calc(100% + 55px);
-    padding-top: 0;
-  }
-
-  #vocab-box {
-    padding: 2.5rem 2rem;
-  }
-
-  /*** Main container landing page ***/
-
-  header > h2 > a {
-    font-family: var(--font-family-heading) !important;
-    color: var(--dark-color)
-  }
-  #vocabulary-list .list-group-item {
-    background-color: var(--medium-color) !important;
-  }
-  #vocabulary-list .border-top {
-    border-top: 2px var(--dark-color) solid !important;
-    color: var(--secondary-dark-color);
-  }
-
-  .vocab-category {
-    border-top: 1px solid var(--vocab-box-text);
-    color: var(--vocab-box-text);
-  }
-
-  .vocab-category h3 {
-    color: var(--vocab-box-text);
-  }
-
-  .vocab-category a {
-    color: var(--vocab-link);
-    font-weight: bold;
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-decoration-color: var(--secondary-medium-color);
-    text-underline-offset: 0.3rem;
-  }
-
-  #main-container.landing #vocab-box h2 {
-    color: var(--vocab-box-header);
-  }
-
-  /*** Main container landing page one vocab ***/
-  #main-container.landing-one-vocab #vocab-box {
-    background-color: var(--vocab-box-one-bg);
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  #main-container.landing-one-vocab #vocab-box a {
-    color: var(--vocab-box-one-text);
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-  }
-
-  /***** Main container vocab-home & concept & vocab-search pages *****/
-  #main-container.vocab-home, #main-container.concept, #main-container.vocab-search,  #main-container.global-search  {
-    background-color: var(--main-bg-2);
-  }
-
-  #main-container.vocab-home a, #main-container.concept a, #main-container.vocab-search a, #main-container.global-search a {
-    color: var(--vocab-link);
-    text-decoration: none;
-    font-weight: bold;
-  }
-
-  /*** Sidebar concept & vocab-home pages ***/
-
-  #main-container.vocab-home #sidebar-col, #main-container.concept #sidebar-col {
-    background-color: var(--vocab-bg);
-    background-clip: content-box, padding-box;
-    min-height: 1000px;
-  }
-
-  #main-container.vocab-home #sidebar, #main-container.concept #sidebar {
-    background-color: var(--vocab-bg);
-  }
-
-  #main-container.vocab-home #sidebar .nav, #main-container.concept #sidebar .nav {
-    background-color: var(--sidebar-tab-inactive-bg);
-  }
-
-  #sidebar #alphabetical .nav-link {
-    white-space: nowrap;
-  }
-
-  #main-container.vocab-home #sidebar .nav-link, #main-container.concept #sidebar .nav-link {
-    color: var(--sidebar-tab-inactive-text) !important;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: none;
-  }
-
-  #main-container.vocab-home #sidebar-tabs, #main-container.concept #sidebar-tabs {
-    position: relative;
-  }
-
-  #main-container.vocab-home #sidebar .nav-link.disabled, #main-container.concept #sidebar .nav-link.disabled {
-    opacity: 0.65;
-  }
-
-  #main-container.vocab-home #sidebar .nav-item.disabled::before, #main-container.concept #sidebar .nav-item.disabled::before {
-    position: absolute;
-    content: ' ';
-    background-color: var(--tooltip-border-color);
-    border: 3px solid var(--tooltip-border-color);
-    width: 15px;
-    height: 15px;
-    z-index: 500;
-    opacity: 0;
-    pointer-events: none;
-    transform: translate(-50%, 0) rotate(45deg);
-    bottom: -20px;
-  }
-
-  #main-container.vocab-home #sidebar .nav-item.disabled:hover::before, #main-container.concept #sidebar .nav-item.disabled:hover::before {
-    opacity: 1;
-  }
-
-  #main-container.vocab-home #sidebar .nav-item.disabled::after, #main-container.concept #sidebar .nav-item.disabled::after {
-    content: attr(data-title);
-    white-space: pre-line;
-    max-width: 400px;
-    width: max-content;
-    display: inline-block;
-    color: var(--white-color);
-    background-color: var(--tooltip-bg-color);
-    border: 3px solid var(--tooltip-border-color);
-    position: absolute;
-    z-index: 9002;
-    opacity: 0;
-    transform: translate(calc(-50% - 10px), 0);
-    pointer-events: none;
-    margin: 12px 0 0 9px;
-    padding: 0.25rem 0.5rem;
-    font-size: 0.95em;
-  }
-
-  #main-container.vocab-home #sidebar .nav-item.disabled:hover::after, #main-container.concept #sidebar .nav-item.disabled:hover::after {
-    opacity: 1;
-  }
-
-  #main-container.vocab-home #sidebar .nav .active, #main-container.concept #sidebar .nav .active {
-    background-color: var(--sidebar-tab-active-bg);
-    color: var(--sidebar-tab-active-text) !important;
-  }
-
-  #main-container.vocab-home #sidebar .pagination, #main-container.concept #sidebar .pagination {
-    background-color: var(--sidebar-tab-active-bg);
-    padding: 1rem;
-    margin: 0;
-    flex-wrap: wrap;
-  }
-
-  #main-container.vocab-home #sidebar .page-item, #main-container.vocab-home #sidebar .page-link,
-  #main-container.concept #sidebar .page-item, #main-container.concept #sidebar .page-link {
-    background-color: var(--sidebar-tab-active-bg);
-    color: var(--sidebar-tab-active-text) !important;
-    font-weight: normal !important;
-    border: none;
-    border-radius: 0 !important;
-    margin: 0 !important;
-    transition: none;
-    width: 35px;
-  }
-
-  #main-container.vocab-home #sidebar .page-link, #main-container.concept #sidebar .page-link {
-    display: flex;
-    align-content: center;
-    text-align: center;
-  }
-
-  /* what to do with these */
-  #main-container.vocab-home #sidebar .page-link:hover, #main-container.vocab-home #sidebar .page-link:active, #main-container.vocab-home #sidebar .page-link:focus,
-  #main-container.concept #sidebar .page-link:hover, #main-container.concept #sidebar .page-link:active, #main-container.concept #sidebar .page-link:focus {
-    background-color: var(--sidebar-tab-active-bg);
-    color: var(--sidebar-tab-active-text);
-    box-shadow: none;
-  }
-
-  #sidebar .loading-message {
-    padding: 2rem 1rem;
-  }
-
-  .sidebar-list {
-    padding: 2rem 1rem 0 1rem;
-    overflow-y: scroll;
-    position: absolute;
-  }
-
-  /* Setting scrollbar style separately in Firefox */
-  @-moz-document url-prefix() {
-    .sidebar-list {
-      scrollbar-color: var(--sidebar-scrollbar-thumb) var(--search-dropdown-bg);
-    }
-  } 
-
-  /* Setting scrollbar style for Webkit based browsers (Chrome, Safari, Edge, etc) */
-  .sidebar-list::-webkit-scrollbar {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-  }
-
-  .sidebar-list::-webkit-scrollbar:vertical {
-      width: 15px;
-  }
-
-  .sidebar-list::-webkit-scrollbar-thumb {
-      border-radius: 0px;
-      border: 1px solid var(--sidebar-scrollbar-thumb);
-      background-color: var(--sidebar-scrollbar-thumb);
-  }
-
-  .sidebar-list::-webkit-scrollbar-track { 
-      background-color: var(--sidebar-scrollbar-bg);
-      border-radius: 0px; 
-  }
-
-  .sidebar-list .list-group-item {
-    border: none;
-    border-radius: none;
-  }
-
-  .sidebar-list a {
-    font-weight: bold !important;
-  }
-
-  .sidebar-list a.selected {
-    color: var(--vocab-text) !important;
-  }
-
-  /* In smaller screen sizes, the last sidebar tab overflows to the right */
-  @media only screen and (min-width: 768px) and (max-width: 1070px) {
-    #sidebar-tabs.wide {
-      flex-wrap: nowrap;
-    }
-
-    #sidebar-tabs.wide #alphabetical {
-      max-width: 40px;
-    }
-
-    #sidebar-tabs.wide .nav-link {
-      padding: 0.5rem 0.25rem;
-    }
-
-    #sidebar-tabs.wide .nav-item:last-of-type {
-      overflow: hidden;
-    }
-
-    #sidebar-tabs.wide .nav-item:last-of-type .nav-link {
-      justify-content: start !important;
-      white-space: nowrap;
-      position: relative;
-    }
-
-    #sidebar-tabs.wide .nav-item:last-of-type .nav-link::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 1rem;
-      height: 100%;
-      pointer-events: none;
-      background: linear-gradient(to right, transparent, var(--sidebar-tab-inactive-bg));
-    }
-
-    #sidebar-tabs.wide .nav-item:last-of-type .nav-link.active::after {
-      background: linear-gradient(to right, transparent, var(--sidebar-tab-active-bg));
-    }
-  }
-
-  @media only screen and (max-width: 900px) {
-    #sidebar .nav-link {
-      padding: 0.5rem 0.1rem !important;
-    }
-  }
-
-  /*** sidebar changes tab ***/
-  #tab-changes .sidebar-list h2 {
-    color: var(--vocab-text);
-    font-size: 1.4rem;
-    font-weight: bold;
-    margin: 0;
-  }
-
-  /* All headings except first */
-  #tab-changes .sidebar-list li + li h2 {
-    margin-top: 1.5rem !important;
-  }
-
-  #tab-changes .sidebar-list s {
-    text-decoration: 1px var(--vocab-text) line-through;
-  }
-
-  /*** sidebar hierarchy and groups tabs ***/
-  #tab-hierarchy .sidebar-list .list-group-item,
-  #tab-groups .sidebar-list .list-group-item {
-    border-left: 1px dashed var(--vocab-text);
-    border-radius: 0;
-    white-space: nowrap;
-  }
-
-  #tab-hierarchy .sidebar-list .list-group-item.top-concept,
-  #tab-groups .sidebar-list .list-group-item.top-concept {
-    border: none;
-  }
-
-  #tab-hierarchy .sidebar-list .list-group-item .concept-label,
-  #tab-groups .sidebar-list .list-group-item .concept-label {
-    display: inline-block;
-    border-left: 1px dashed var(--vocab-text);
-    margin-left: 16px;
-    padding-left: 14px;
-    padding-right: 14px;
-    white-space: wrap;
-  }
-
-  /* horizontal line before concept */
-  #tab-hierarchy .sidebar-list .list-group-item .concept-label::before,
-  #tab-groups .sidebar-list .list-group-item .concept-label::before {
-    content: '';
-    position: absolute;
-    left: 16px;
-    top: 0;
-    width: 10px;
-    height: 13px;
-    border-bottom: 1px dashed var(--vocab-text);
-  }
-
-  /* hiding bottom of vertical line on last concept of list */
-  #tab-hierarchy .sidebar-list .list-group-item .concept-label.last::before,
-  #tab-groups .sidebar-list .list-group-item .concept-label.last::before {
-    top: auto;
-    bottom: 0;
-    height: calc(100% - 13px);
-    border-left: 1px solid var(--vocab-bg);
-    border-top: 1px dashed var(--vocab-text);
-    border-bottom: none;
-  }
-
-  /* no border for children of the last concept */
-  #tab-hierarchy .sidebar-list .list-group-item span.last + ul > li,
-  #tab-groups .sidebar-list .list-group-item span.last + ul > li  {
-    border: none;
-    margin-left: 1px !important; /* add a 1px margin to offset missing border */
-  }
-
-  #tab-hierarchy .sidebar-list .list-group-item .concept-notation,
-  #tab-groups .sidebar-list .list-group-item .concept-notation {
-    color: var(--dark-color);
-  }
-
-  #tab-hierarchy .sidebar-list .list-group-item a.selected .concept-notation,
-  #tab-groups .sidebar-list .list-group-item a.selected .concept-notation {
-    font-weight: bold;
-  }
-
-  #tab-groups .sidebar-list .list-group-item .concept-label i {
-    color: var(--dark-color);
-    font-size: 1rem;
-  }
-
-  .hierarchy-button {
-    background-color: transparent;
-    color: var(--vocab-text);
-    border: none;
-    padding: 0;
-    font-size: 0.7rem;
-  }
-
-  .hierarchy-button:hover, .hierarchy-button:active {
-    background-color: transparent !important;
-    color: var(--vocab-text) !important;
-  }
-
-  .hierarchy-button i {
-    position: absolute;
-    left: 11px;
-    top: 7px;
-    z-index: 1;
-    font-size: .85rem;
-  }
-
-  .hierarchy-button img {
-    transform: rotate(-45deg);
-    position: absolute;
-    top: 9px;
-    left: 11px;
-    width: 7px;
-    z-index: 1;
-  }
-
-  .hierarchy-button.open img {
-    transform: rotate(0deg);
-    left: 12px;
-  }
-
-  /*** sidebar vocab-search ***/
-  #main-container.vocab-search #sidebar {
-    background-color: var(--sidebar-search-bg);
-    color: var(--sidebar-search-text);
-    height: 1000px; /* change */
-  }
-
-  #search-options input, #search-options select {
-    border: none;
-    border-radius: 0;
-  }
-
-  #search-options button {
-    background-color: var(--sidebar-search-button-bg); /* Which bg color to use? */
-    color: var(--sidebar-search-button-text);
-    border: none;
-    border-radius: 0;
-  }
-
-  #search-options select {
-    background-image: none;
-  }
-
-  .select-wrapper { /* Also used in feedback form */
-    position: relative;
-  }
-
-  .select-wrapper::after { /* Also used in feedback form */
-    color: var(--vocab-text);
-    content: '﹀';
-    font-size: 1.4rem;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-  }
-
-  /*****  Main content vocab-home & concept pages *****/
-  #main-content h1 {
-    font-size: 2.5rem;
-  }
-
-  .main-content-section {
-    background-color: var(--vocab-bg);
-    margin-bottom: .2rem;
-    padding-left: 3.5rem;
-    padding-right: 3.5rem;
-  }
-
-  #concept-heading, #vocab-heading {
-    margin-top: 2rem;
-    padding-bottom: 2.5rem;
-  }
-
-  #vocab-heading, .vocab-statistics, #vocab-download-links {
-    margin-left: -.75rem;
-    margin-right: -.75rem;
-  }
-
-  .property {
-    border-top: 1px solid var(--vocab-table-border);
-    padding: .5rem 0;
-  }
-
-  .property.prop-mapping {
-    border-top: none;
-  }
-
-  #main-container .property-label h2 {
-    font-family: var(--font-family);
-    font-weight: bold;
-    font-size: 1.2rem;
-    margin-bottom: 0;
-    display: inline;
-  }
-
-  .property-value {
-    color: var(--vocab-text);
-    border: none;
-  }
-
-  .property-value .property-value-notation {
-    color: var(--vocab-text);
-  }
-
-  .property-value .property-value-submembers {
-    margin-left: 1rem;
-  }
-
-  .property-value .property-value-hidden {
-    display: none;
-  }
-
-  .property-value .property-value-expand .property-value-hidden {
-    display: list-item;
-  }
-
-  #resource-table th {
-    color: var(--vocab-text);
-    font-weight: bold;
-    border-bottom: 1px solid var(--vocab-text);
-  }
-
-  #resource-table td {
-    color: var(--vocab-text);
-    border: none;
-  }
-
-  .resource-table-label {
-    width: 40%;
-  }
-
-  /*** Main content concept page ***/
-  nav#concept-breadcrumbs ol {
-    list-style: none;
-    padding-left: 0;
-    margin-bottom: 0.5rem;
-  }
-
-  nav#concept-breadcrumbs li, nav#concept-breadcrumbs li.collapse.show {
-    display: inline;
-  }
-
-  nav#concept-breadcrumbs li.collapse, nav#concept-breadcrumbs li:has(a[aria-expanded="true"]) {
-    display: none;
-  }
-
-  nav#concept-breadcrumbs li.breadcrumb + li::before {
-    content: "> ";
-  }
-
-  nav#concept-breadcrumbs .breadcrumb-current {
-    color: var(--dark-color);
-    font-weight: normal;
-  }
-
-  #concept-property-label {
-    align-self: start;
-    padding-top: 1.25rem;
-  }
-
-  #concept-label h1 {
-    display: inline;
-  }
-
-  #copy-preflabel, #copy-notation {
-    color: var(--vocab-text);
-    font-size: 2.1rem;
-    position: relative;
-    bottom: 10px;
-    left: 5px;
-  }
-
-  #copy-uri {
-    color: var(--vocab-text);
-    position: relative;
-    bottom: 4px;
-  }
-
-  .copy-clipboard:focus {
-    border: 1px solid var(--vocab-text);
-    border-radius: 3px;
-  }
-
-  .property ul, .property li {
-    list-style-type: none;
-    margin-left: 0;
-    padding-left: 0;
-    margin-bottom: 0;
-  }
-
-  .prop-skos_altLabel .property-value li, .altlabel {
-    font-style: italic;
-  }
-
-  .prop-foreignlabels h3 {
-    font-size: 1rem;
-    margin-bottom: 0;
-  }
-
-  #download-links li {
-    display: inline-block;
-  }
-
-  #date-info {
-    font-size: 0.85rem;
-  }
-
-  /***** Main content vocab-search & global-search pages *****/
-  #search-results {
-    background-color: var(--vocab-bg);
-  }
-
-  #search-results h1 {
-    font-size: 1.1rem;
-    font-family: var(--font-family);
-  }
-
-  .search-result {
-    border-top: 1px solid var(--vocab-table-border);
-    margin-top: 2.5rem;
-  }
-
-  .search-result-term a {
-    font-family: var(--font-family-heading);
-    text-decoration: none;
-    font-size: 1.5rem;
-
-  }
-
-  .search-result .list-group-item {
-    color: var(--vocab-text);
-    border: none;
-    cursor: default;
-  }
-
-  .search-result .list-group-item a {
-    cursor: pointer;
-  }
-
-  .search-result-hide {
-    position: absolute;
-    right: 0;
-    background: linear-gradient(
-                  90deg,
-                  transparent,
-                  var(--vocab-bg) 35%,
-                  var(--vocab-bg) 0%);
-  }
-
-  .search-result-list {
-    display: block;
-    white-space: nowrap;
-    position: relative;
-  }
-
-  .search-result-hidden {
-    display: block;
-    white-space: nowrap;
-    position: relative;
+  #sidebar-tabs.wide .nav-item:last-of-type {
     overflow: hidden;
   }
 
-  .search-result-showall {
-    display: block;
-    white-space: normal;
-    overflow: visibile;
+  #sidebar-tabs.wide .nav-item:last-of-type .nav-link {
+    justify-content: start;
+    white-space: nowrap;
+    position: relative;
   }
 
-  .uri-icon {
-    display: inline-block;
-    width: 20px;
-    font-size: 0.75rem;
-    text-align: center;
-  }
-  
-  .prefLabel.proplabel {
-    font-weight: bold;
-    color: var(--secondary-dark-color);
-  }
-  
-  .altLabel.proplabel {
-    font-style: italic;  
+  #sidebar-tabs.wide .nav-item:last-of-type .nav-link::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1rem;
+    height: 100%;
+    pointer-events: none;
+    background: linear-gradient(to right, transparent, var(--sidebar-tab-inactive-bg));
   }
 
-  /***** Main container about & feedback pages *****/
-  #main-container.about, #main-container.feedback {
-    background-color: var(--main-bg-3);
-    color: var(--about-text);
-    padding: 4rem 0;
+  #sidebar-tabs.wide .nav-item:last-of-type .nav-link.active::after {
+    background: linear-gradient(to right, transparent, var(--sidebar-tab-active-bg));
   }
+}
 
-  #main-container.about .container, #main-container.feedback .container {
-    padding: 0 12rem;
+@media only screen and (max-width: 900px) {
+  #sidebar .nav-link {
+    padding: 0.5rem 0.1rem !important;
   }
+}
 
-  /*** Main container about page ***/
-  #main-container.about {
-    background-image: var(--about-stripes);
-    background-repeat: no-repeat;
-    background-size: 650px;
-    background-position: calc(100% + 41px) calc(100% + 55px);
+/* Sidebar tooltip */
+
+#sidebar .nav-item.disabled::before {
+  position: absolute;
+  content: ' ';
+  background-color: var(--tooltip-border-color);
+  border: 3px solid var(--tooltip-border-color);
+  width: 15px;
+  height: 15px;
+  z-index: 500;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 0) rotate(45deg);
+  bottom: -20px;
+}
+
+#sidebar .nav-item.disabled:hover::before {
+  opacity: 1;
+}
+
+#sidebar .nav-item.disabled::after {
+  content: attr(data-title);
+  white-space: pre-line;
+  max-width: 400px;
+  width: max-content;
+  display: inline-block;
+  color: var(--white-color);
+  background-color: var(--tooltip-bg-color);
+  border: 3px solid var(--tooltip-border-color);
+  position: absolute;
+  z-index: 9002;
+  opacity: 0;
+  transform: translate(calc(-50% - 10px), 0);
+  pointer-events: none;
+  margin: 12px 0 0 9px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.95em;
+}
+
+#sidebar .nav-item.disabled:hover::after {
+  opacity: 1;
+}
+
+/* --- Sidebar concept list --- */
+
+#sidebar .sidebar-list {
+  padding: 2rem 1rem 0;
+  overflow-y: scroll;
+  position: absolute;
+}
+
+#sidebar .list-group-item {
+  border: none;
+  border-radius: 0;
+}
+
+#sidebar .sidebar-list a.selected {
+  color: var(--vocab-text);
+}
+
+/* --- Sidebar alphabetical tab --- */
+
+#alphabetical .nav-link {
+  white-space: nowrap;
+}
+
+#sidebar .pagination {
+  background-color: var(--sidebar-tab-active-bg);
+  padding: 1rem;
+  margin: 0;
+  flex-wrap: wrap;
+}
+
+#sidebar .page-item, #sidebar .page-link {
+  background-color: var(--sidebar-tab-active-bg);
+  color: var(--sidebar-tab-active-text);
+  font-weight: normal;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  transition: none;
+  width: 35px;
+}
+
+#sidebar .page-link {
+  display: flex;
+  align-content: center;
+  text-align: center;
+}
+
+/* what to do with these? */
+#sidebar .page-link:hover, #sidebar .page-link:active, #sidebar .page-link:focus {
+  background-color: var(--sidebar-tab-active-bg);
+  color: var(--sidebar-tab-active-text);
+  box-shadow: none;
+}
+
+#sidebar .loading-message {
+  padding: 2rem 1rem;
+}
+
+/* --- Sidebar hierarchy and groups tabs --- */
+
+#tab-hierarchy .list-group-item,
+#tab-groups .list-group-item {
+  border-left: 1px dashed var(--vocab-text);
+  border-radius: 0;
+  white-space: nowrap;
+}
+
+#tab-hierarchy .list-group-item.top-concept,
+#tab-groups .list-group-item.top-concept {
+  border: none;
+}
+
+#sidebar .concept-label {
+  display: inline-block;
+  border-left: 1px dashed var(--vocab-text);
+  margin-left: 16px;
+  padding-left: 14px;
+  padding-right: 14px;
+  white-space: wrap;
+}
+
+/* horizontal line before concept */
+#sidebar .concept-label::before {
+  content: '';
+  position: absolute;
+  left: 16px;
+  top: 0;
+  width: 10px;
+  height: 13px;
+  border-bottom: 1px dashed var(--vocab-text);
+}
+
+/* hiding bottom of vertical line on last concept of list */
+#sidebar .concept-label.last::before {
+  top: auto;
+  bottom: 0;
+  height: calc(100% - 13px);
+  border-left: 1px solid var(--vocab-bg);
+  border-top: 1px dashed var(--vocab-text);
+  border-bottom: none;
+}
+
+/* no border for children of the last concept */
+#sidebar .concept-label.last + ul > li  {
+  border: none;
+  margin-left: 1px; /* add a 1px margin to offset missing border */
+}
+
+#tab-groups .concept-label i {
+  color: var(--vocab-text);
+  font-size: 1rem;
+}
+
+#sidebar .concept-notation {
+  color: var(--vocab-text);
+}
+
+#sidebar .hierarchy-button {
+  border: none;
+  padding: 0;
+}
+
+#sidebar .hierarchy-button:hover, #sidebar .hierarchy-button:active {
+  background-color: transparent;
+  color: var(--vocab-text);
+}
+
+#sidebar .hierarchy-button i {
+  position: absolute;
+  left: 11px;
+  top: 7px;
+  z-index: 1;
+  font-size: .85rem;
+}
+
+#sidebar .hierarchy-button img {
+  transform: rotate(-45deg);
+  position: absolute;
+  top: 9px;
+  left: 11px;
+  width: 7px;
+  z-index: 1;
+}
+
+#sidebar .hierarchy-button.open img {
+  transform: rotate(0deg);
+  left: 12px;
+}
+
+/* --- Sidebar changes tab --- */
+
+#tab-changes h2 {
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+/* All headings except first */
+#tab-changes li + li h2 {
+  margin-top: 1.5rem;
+}
+
+#tab-changes s {
+  text-decoration: 1px var(--vocab-text) line-through;
+}
+
+/* --- Browser specific rules --- */
+
+/* Setting scrollbar style separately in Firefox */
+@-moz-document url-prefix() {
+  #sidebar .sidebar-list {
+    scrollbar-color: var(--sidebar-scrollbar-thumb) var(--search-dropdown-bg);
   }
+} 
 
-  #main-container.about a {
-    color: var(--about-link);
-    text-decoration: underline;
-    font-weight: bold;
-  }
+/* Setting scrollbar style for Webkit based browsers (Chrome, Safari, Edge, etc) */
+#sidebar .sidebar-list::-webkit-scrollbar {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
 
-  /*** Main container feedback page ***/
-  #main-container.feedback {
-    background-image: var(--feedback-stripes);
-    background-repeat: no-repeat;
-    background-size: 650px;
-    background-position: var(--feedback-stripes-pos);
-  }
+#sidebar .sidebar-list::-webkit-scrollbar:vertical {
+    width: 15px;
+}
 
-  #feedback-form {
-    background-color: var(--feedback-form-bg);
-    color: var(--feedback-form-text);
-    padding: 2.5rem 2rem 5rem;
-  }
-
-  #feedback-form label {
-    font-weight: bold;
-  }
-
-  #feedback-form input, #feedback-form select, #feedback-form textarea {
-    background-color: var(--feedback-form-input);
-    border: none;
+#sidebar .sidebar-list::-webkit-scrollbar-thumb {
     border-radius: 0;
-  }
+    border: 1px solid var(--sidebar-scrollbar-thumb);
+    background-color: var(--sidebar-scrollbar-thumb);
+}
 
-  #feedback-form input::placeholder {
-    color: var(--feedback-form-text);
-  }
+#sidebar .sidebar-list::-webkit-scrollbar-track { 
+    background-color: var(--sidebar-scrollbar-bg);
+    border-radius: 0; 
+}
 
-  #feedback-form textarea {
-    margin-bottom: 4rem;
-  }
+/* Sidebar vocab-search
+-------------------------------------- */
 
-  #feedback-form button {
-    background-color: var(--feedback-form-button-bg);
-    border: none;
-    border-radius: 0;
-    font-weight: bold;
-    float: right;
-  }
+.vocab-search #sidebar {
+  background-color: var(--sidebar-search-bg);
+  color: var(--sidebar-search-text);
+  height: 1000px; /* change */
+}
 
-  #feedback-form select {
-    background-image: none;
-  }
+/*  Vocab-home & concept pages
+-------------------------------------- */
 
-  #feedback-form select:valid {
-    color: var(--feedback-form-text);
-  }
+#main-content h1 {
+  font-size: 2.5rem;
+}
 
-  #feedback-form select:valid:focus {
-    color: var(--feedback-form-text);
-  }
+.main-content-section {
+  background-color: var(--vocab-bg);
+  margin-bottom: .2rem;
+  padding-left: 3.5rem;
+  padding-right: 3.5rem;
+}
 
-  /* Error page
-   *****************************************/
-  .alert {
-    background-color: var(--alert-color);
-    color: var(--white-color);
-    border-radius: 0;
-  }
+#concept-heading, #vocab-heading {
+  margin-top: 2rem;
+  padding-bottom: 2.5rem;
+}
 
-  #alphabetical-menu > .list-group > .list-group-item {
-    border: none !important;
-  }
+#vocab-heading, .vocab-statistics, #vocab-download-links {
+  margin-left: -.75rem;
+  margin-right: -.75rem;
+}
 
-  .vocab-statistics > h3 {
-    font-size: 1.4rem;
-  }
+.property {
+  border-top: 1px solid var(--vocab-table-border);
+  padding: .5rem 0;
+}
+
+.property ul, .property li {
+  list-style-type: none;
+  margin-left: 0;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+.property.prop-mapping {
+  border-top: none;
+}
+
+#main-container .property-label h2 {
+  font-family: var(--font-family);
+  font-size: 1.2rem;
+  display: inline;
+}
+
+.property-value {
+  color: var(--vocab-text);
+  border: none;
+}
+
+/* --- Vocab statistics --- */
+
+.vocab-statistics > h3 { /* incorrect selector */
+  font-size: 1.4rem;
+}
+
+#resource-table th { /* incorrect selector */
+  color: var(--vocab-text);
+  font-weight: bold;
+  border-bottom: 1px solid var(--vocab-text);
+}
+
+#resource-table td { /* incorrect selector */
+  color: var(--vocab-text);
+  border: none;
+}
+
+.resource-table-label { /* incorrect selector */
+  width: 40%;
+}
+
+/* --- Concept page --- */
+
+#concept-property-label {
+  align-self: start;
+  padding-top: 1.25rem;
+}
+
+#concept-preflabel {
+  display: inline;
+}
+
+/* breadcrumbs */
+
+#concept-breadcrumbs ol {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0.5rem;
+}
+
+#concept-breadcrumbs li, #concept-breadcrumbs li.collapse.show {
+  display: inline;
+}
+
+#concept-breadcrumbs li.collapse, #concept-breadcrumbs li:has(a[aria-expanded="true"]) {
+  display: none;
+}
+
+#concept-breadcrumbs li.breadcrumb + li::before {
+  content: "> ";
+}
+
+#concept-breadcrumbs .breadcrumb-current {
+  color: var(--vocab-text);
+  font-weight: normal;
+}
+
+/* Copy buttons */
+
+#copy-preflabel, #copy-notation {
+  color: var(--vocab-text);
+  font-size: 2.1rem;
+  position: relative;
+  bottom: 10px;
+  left: 5px;
+}
+
+#copy-uri {
+  color: var(--vocab-text);
+  position: relative;
+  bottom: 4px;
+}
+
+.copy-clipboard:focus {
+  border: 1px solid var(--vocab-text);
+  border-radius: 3px;
+}
+
+/* Properties */
+
+.property-value .property-value-notation {
+  color: var(--vocab-text);
+}
+
+.property-value .property-value-submembers {
+  margin-left: 1rem;
+}
+
+.property-value .property-value-hidden {
+  display: none;
+}
+
+.property-value .property-value-expand .property-value-hidden {
+  display: list-item;
+}
+
+.prop-skos_altLabel .property-value li, .altlabel {
+  font-style: italic;
+}
+
+.prop-foreignlabels h3 {
+  font-size: 1rem;
+  margin-bottom: 0;
+}
+
+#download-links li {
+  display: inline-block;
+}
+
+#date-info {
+  font-size: 0.85rem;
+}
 
 /* Tooltips */
 
@@ -1326,6 +1046,7 @@ body {
   line-height: 1.0;
   padding: 3px;
   margin: -3px;
+  color: var(--tooltip-bg-color);
 }
 
 .tooltip-html button:focus {
@@ -1343,7 +1064,7 @@ body {
   box-sizing: border-box;
   position: absolute;
   top: 20px;
-  left: 0;
+  left: -2px;
   display: block;
   cursor: text;
   width: 400px;
@@ -1357,7 +1078,7 @@ body {
 }
 
 /* The triangle that appears near the element that triggered it. */
-.tooltip-html-content:after {
+.tooltip-html-content::after {
   position: absolute;
   content: '';
   width: 10px;
@@ -1375,18 +1096,183 @@ body {
 }
 
 /* Definition lists used in tooltips. */
-
-dl.tooltip-html-content dt {
+.tooltip-html-content dt {
   display: block;
   float: left;
   font-weight: bold;
   margin-right: 0.4em;
 }
 
-dl.tooltip-html-content dt::after {
+.tooltip-html-content dt::after {
   content: ":";
 }
 
-dl.tooltip-html-content dd {
+.tooltip-html-content dd {
   display: block;
+}
+
+/* Vocab-search & global-search pages
+-------------------------------------- */
+
+#search-results {
+  background-color: var(--vocab-bg);
+}
+
+#search-results h1 {
+  font-size: 1.1rem;
+  font-family: var(--font-family);
+}
+
+.search-result {
+  border-top: 1px solid var(--vocab-table-border);
+  margin-top: 2.5rem;
+}
+
+.search-result-term a {
+  font-family: var(--font-family-heading);
+  text-decoration: none;
+  font-size: 1.5rem;
+
+}
+
+.search-result .list-group-item { /* bug in truncate-search-results.js (.list-group-item class is overwritten) */
+  color: var(--vocab-text);
+  border: none;
+  cursor: default;
+}
+
+.search-result .list-group-item a { /* unused (remove?) */ /* bug in truncate-search-results.js (.list-group-item class is overwritten) */
+  cursor: pointer;
+}
+
+.search-result-list { /* bug in truncate-search-results.js (.list-group-item class is overwritten) */
+  display: block;
+  white-space: nowrap;
+  position: relative;
+}
+
+.search-result-hide {
+  position: absolute;
+  right: 0;
+  background: linear-gradient(
+                90deg,
+                transparent,
+                var(--vocab-bg) 35%,
+                var(--vocab-bg) 0%);
+}
+
+.search-result-hidden {
+  display: block;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+
+.search-result-showall {
+  display: block;
+  white-space: normal;
+  overflow: visible;
+}
+
+.uri-icon {
+  display: inline-block;
+  width: 20px;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.prefLabel.proplabel {
+  font-weight: bold;
+  color: var(--vocab-link);
+}
+
+.altLabel.proplabel {
+  font-style: italic;  
+}
+
+/* About & feedback pages
+-------------------------------------- */
+
+.about, .feedback {
+  background-color: var(--main-bg-3); /* missing var */
+  padding: 4rem 0;
+}
+
+.about .container, .feedback .container {
+  padding: 0 8rem;
+}
+
+/* --- About page --- */
+
+.about { /* unused */
+  background-image: var(--about-stripes);
+  background-repeat: no-repeat;
+  background-size: 650px;
+  background-position: calc(100% + 41px) calc(100% + 55px);
+}
+
+/* --- Feedback page -- */
+
+.feedback { /* unused */
+  background-image: var(--feedback-stripes);
+  background-repeat: no-repeat;
+  background-size: 650px;
+  background-position: var(--feedback-stripes-pos);
+}
+
+#feedback-form {
+  background-color: var(--feedback-form-bg);
+  color: var(--feedback-form-text);
+  padding: 2.5rem 2rem 5rem;
+}
+
+#feedback-form label {
+  font-weight: bold;
+}
+
+#feedback-form select, #feedback-form input, #feedback-form textarea {
+  background-color: var(--feedback-form-input);
+  border: none;
+  border-radius: 0;
+}
+
+#feedback-form .select-wrapper {
+  position: relative;
+}
+
+#feedback-form .select-wrapper::after {
+  color: var(--vocab-text);
+  content: '﹀';
+  font-size: 1.4rem;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+#feedback-form select {
+  background-image: none;
+}
+
+#feedback-form select:valid, #feedback-form select:valid:focus, #feedback-form input::placeholder {
+  color: var(--feedback-form-text);
+}
+
+#feedback-form textarea {
+  margin-bottom: 4rem;
+}
+
+#feedback-form button {
+  background-color: var(--feedback-form-button-bg);
+  border: none;
+  border-radius: 0;
+  font-weight: bold;
+  float: right;
+}
+
+/* Error page
+-------------------------------------- */
+.alert {
+  background-color: var(--alert-color);
+  color: var(--white-color);
+  border-radius: 0;
 }
