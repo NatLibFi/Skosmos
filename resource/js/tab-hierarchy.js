@@ -198,7 +198,7 @@ function startHierarchyApp () {
             .map(c => this.createConceptNode(c))
 
           // new concept node to be added to hierarchy tree
-          const conceptNode = this.createConceptNode({ ...concept , hasChildren: true}, true, children)
+          const conceptNode = this.createConceptNode({ ...concept, hasChildren: true }, true, children)
 
           if (window.SKOSMOS.showConceptSchemesInHierarchy) {
             // if concept schemes are shown in hierarchy, push new concept to the children of the correct concept scheme
