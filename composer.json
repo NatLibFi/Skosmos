@@ -31,7 +31,7 @@
     "symfony/lokalise-translation-provider": "6.4.*",
     "symfony/console": "6.4.*",
     "mockery/mockery": "1.6.*",
-    "friendsofphp/php-cs-fixer": "3.64.*"
+    "friendsofphp/php-cs-fixer": "3.90.*"
   },
   "autoload": {
     "classmap": ["src/", "src/controller/", "src/model/", "src/util", "src/model/sparql/"]
