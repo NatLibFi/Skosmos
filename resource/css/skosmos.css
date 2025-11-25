@@ -431,6 +431,7 @@ header .container-fluid .row {
 #search-wrapper ul::-webkit-scrollbar {
   -webkit-appearance: none;
   -moz-appearance: none;
+  appearance: none;
 }
 
 #search-wrapper ul::-webkit-scrollbar:vertical {
@@ -838,6 +839,7 @@ header .container-fluid .row {
 #sidebar .sidebar-list::-webkit-scrollbar {
   -webkit-appearance: none;
   -moz-appearance: none;
+  appearance: none;
 }
 
 #sidebar .sidebar-list::-webkit-scrollbar:vertical {
