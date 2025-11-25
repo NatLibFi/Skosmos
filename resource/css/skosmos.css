@@ -74,7 +74,7 @@ body {
 .fa-magnifying-glass {
   color: var(--search-button-text);
   font-size: 1.6rem;
-  margin: calc((38px - 22px) / 2 ) 0; /* (button height - font height) / 2 */ /* check */
+  margin: calc((38px - 22px) / 2 ) 0; /* (button height - font height) / 2 */
 }
 
 .fa-download {
@@ -341,7 +341,6 @@ header .container-fluid .row {
 #search-wrapper .vocab-dropdown-btn {
   width: 15rem;
   position: relative;
-  padding-right: 2rem; /* overwritten in original (remove?) */
 }
 
 #search-wrapper .vocab-dropdown-btn span {
@@ -487,10 +486,6 @@ header .container-fluid .row {
 
 #main-container-row {
   --bs-gutter-x: 2rem;
-}
-
-.mb-gutterwidth {
-  margin-bottom: var(--bs-gutter-x); /* overwritten (remove?) */
 }
 
 /* Landing page 
@@ -703,7 +698,7 @@ header .container-fluid .row {
   border-radius: 0;
   margin: 0;
   transition: none;
-  width: 35px; /* check */
+  width: 35px;
 }
 
 #sidebar .page-link {
@@ -922,22 +917,22 @@ header .container-fluid .row {
 
 /* --- Vocab statistics --- */
 
-.vocab-statistics > h3 { /* unused (remove?) */
+.vocab-statistics > h3 { /* incorrect selector */
   font-size: 1.4rem;
 }
 
-#resource-table th { /* unused (remove?) */
+#resource-table th { /* incorrect selector */
   color: var(--vocab-text);
   font-weight: bold;
   border-bottom: 1px solid var(--vocab-text);
 }
 
-#resource-table td { /* unused (remove?) */
+#resource-table td { /* incorrect selector */
   color: var(--vocab-text);
   border: none;
 }
 
-.resource-table-label { /* unused (remove?) */
+.resource-table-label { /* incorrect selector */
   width: 40%;
 }
 
