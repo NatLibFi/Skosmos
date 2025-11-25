@@ -131,7 +131,7 @@ function startHierarchyApp () {
                 console.log('hier', this.hierarchy)
               })
           } else {
-            // otherwise, fetch children on concept
+            // otherwise, fetch children of concept
             fetch('rest/v1/' + window.SKOSMOS.vocab + '/children?uri=' + concept.uri + '&lang=' + window.SKOSMOS.content_lang)
               .then(data => {
                 return data.json()
@@ -191,13 +191,14 @@ function startHierarchyApp () {
         }
       },
       addTopConceptsToHierarchy (concept, parents) {
-        // children of the current concept
         if (concept.narrower) {
+          // children of the current concept
           const children = concept.narrower
             .sort((a, b) => this.compareConcepts(a, b))
             .map(c => this.createConceptNode(c))
+
           // new concept node to be added to hierarchy tree
-          const conceptNode = this.createConceptNode(concept, true, children)
+          const conceptNode = this.createConceptNode({ ...concept, hasChildren: true }, true, children)
 
           if (window.SKOSMOS.showConceptSchemesInHierarchy) {
             // if concept schemes are shown in hierarchy, push new concept to the children of the correct concept scheme
