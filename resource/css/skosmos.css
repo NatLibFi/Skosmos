@@ -107,11 +107,6 @@ header .container-fluid .row {
   margin: 0 auto;
 }
 
-header > h2 > a { /* unused (remove?) */
-  font-family: var(--font-family-heading) !important;
-  color: var(--dark-color)
-}
-
 /* Topbar
 -------------------------------------- */
 #skosmos-logo-top {
@@ -155,14 +150,6 @@ header > h2 > a { /* unused (remove?) */
 
 /* Headerbar
 -------------------------------------- */
-
-#headerbar.landing { /* unused */ /* remove? */
-  color: var(--header-bar-text);
-}
-
-#headerbar.vocab-home, #headerbar.concept { /* unused */ /* remove? */
-  background-color: var(--headerbar-vocab-bg);
-}
 
 #skosmos-logo {
   background-image: url("../pics/skosmos-RGB.svg");
@@ -1225,12 +1212,6 @@ header > h2 > a { /* unused (remove?) */
   background-repeat: no-repeat;
   background-size: 650px;
   background-position: calc(100% + 41px) calc(100% + 55px);
-}
-
-.about a { /* unused (remove?) */
-  color: var(--about-link);
-  text-decoration: underline;
-  font-weight: bold;
 }
 
 /* --- Feedback page -- */
