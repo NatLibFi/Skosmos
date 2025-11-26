@@ -29,7 +29,7 @@ const conceptMappingsApp = Vue.createApp({
         lang: window.SKOSMOS.lang,
         clang: window.SKOSMOS.content_lang
       })
-      const url = `rest/v1/${window.SKOSMOS.vocab}/mappings?${params.toString()}`
+      const url = `rest/v1/${window.SKOSMOS.vocab}/mappings?${params}`
 
       fetchWithAbort(url, 'concept')
         .then(data => {
