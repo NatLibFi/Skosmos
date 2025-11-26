@@ -157,7 +157,11 @@ function startHierarchyApp () {
         }
       },
       async loadTopConceptsForConceptScheme () {
-        const res = await fetch('rest/v1/' + window.SKOSMOS.vocab + '/topConcepts?scheme=' + window.SKOSMOS.uri + '&lang=' + window.SKOSMOS.content_lang)
+        const params = new URLSearchParams({
+          scheme: window.SKOSMOS.uri,
+          lang: window.SKOSMOS.content_lang
+        })
+        const res = await fetch(`rest/v1/${window.SKOSMOS.vocab}/topConcepts?${params}`)
         const data = await res.json()
 
         // find selected scheme in hierarchy
@@ -168,7 +172,11 @@ function startHierarchyApp () {
           .map(c => this.createConceptNode(c))
       },
       async loadHierarchyForConcept () {
-        const res = await fetch('rest/v1/' + window.SKOSMOS.vocab + '/hierarchy/?uri=' + window.SKOSMOS.uri + '&lang=' + window.SKOSMOS.content_lang)
+        const params = new URLSearchParams({
+          uri: window.SKOSMOS.uri,
+          lang: window.SKOSMOS.content_lang
+        })
+        const res = await fetch(`rest/v1/${window.SKOSMOS.vocab}/hierarchy/?${params}`)
         const data = await res.json()
 
         // transform broaderTransitive to an array and sort it
