@@ -54,7 +54,8 @@ function startAlphaApp () {
         this.loadingLetters = true
         // Remove scrolling event listener while letters are loaded
         this.$refs.tabAlpha.$refs.list.removeEventListener('scroll', this.handleScrollEvent)
-        fetch('rest/v1/' + window.SKOSMOS.vocab + '/index/?lang=' + window.SKOSMOS.content_lang)
+        const params = new URLSearchParams({ lang: window.SKOSMOS.content_lang })
+        fetch(`rest/v1/${window.SKOSMOS.vocab}/index/?${params}`)
           .then(data => {
             return data.json()
           })
@@ -70,7 +71,11 @@ function startAlphaApp () {
         this.currentOffset = 0
         // Remove scrolling event listener while concepts are loaded
         this.$refs.tabAlpha.$refs.list.removeEventListener('scroll', this.handleScrollEvent)
-        const url = 'rest/v1/' + window.SKOSMOS.vocab + '/index/' + letter + '?lang=' + window.SKOSMOS.content_lang + '&limit=250'
+        const params = new URLSearchParams({
+          lang: window.SKOSMOS.content_lang,
+          limit: '250'
+        })
+        const url = `rest/v1/${window.SKOSMOS.vocab}/index/${letter}?${params}`
         fetchWithAbort(url, 'alpha')
           .then(data => {
             return data.json()
@@ -95,7 +100,12 @@ function startAlphaApp () {
         this.loadingMoreConcepts = true
         // Remove scrolling event listener while new concepts are loaded
         this.$refs.tabAlpha.$refs.list.removeEventListener('scroll', this.handleScrollEvent)
-        const url = 'rest/v1/' + window.SKOSMOS.vocab + '/index/' + this.selectedLetter + '?lang=' + window.SKOSMOS.content_lang + '&limit=250&offset=' + this.currentOffset
+        const params = new URLSearchParams({
+          lang: window.SKOSMOS.content_lang,
+          limit: '250',
+          offset: this.currentOffset
+        })
+        const url = `rest/v1/${window.SKOSMOS.vocab}/index/${this.selectedLetter}?${params}`
         fetchWithAbort(url, 'alpha')
           .then(data => {
             return data.json()

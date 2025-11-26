@@ -55,7 +55,8 @@ function startHierarchyApp () {
         this.loadingHierarchy = true
         if (window.SKOSMOS.showConceptSchemesInHierarchy) {
           // if concept schemes are shown in hierarchy, fetch them from API and set them as top concepts in hierarchy
-          fetch('rest/v1/' + window.SKOSMOS.vocab + '/?lang=' + window.SKOSMOS.content_lang)
+          const params = new URLSearchParams({ lang: window.SKOSMOS.content_lang })
+          fetch(`rest/v1/${window.SKOSMOS.vocab}/?${params}`)
             .then(data => {
               return data.json()
             })
@@ -73,7 +74,8 @@ function startHierarchyApp () {
             })
         } else {
           // otherwise, fetch top concepts
-          fetch('rest/v1/' + window.SKOSMOS.vocab + '/topConcepts/?lang=' + window.SKOSMOS.content_lang)
+          const params = new URLSearchParams({ lang: window.SKOSMOS.content_lang })
+          fetch(`rest/v1/${window.SKOSMOS.vocab}/topConcepts/?${params}`)
             .then(data => {
               return data.json()
             })
@@ -118,7 +120,11 @@ function startHierarchyApp () {
           this.loadingChildren.push(concept)
           if (window.SKOSMOS.showConceptSchemesInHierarchy && concept.isScheme) {
             // if the concept is a concept scheme, fetch topconcepts as children
-            fetch('rest/v1/' + window.SKOSMOS.vocab + '/topConcepts?scheme=' + concept.uri + '&lang=' + window.SKOSMOS.content_lang)
+            const params = new URLSearchParams({
+              scheme: concept.uri,
+              lang: window.SKOSMOS.content_lang
+            })
+            fetch(`rest/v1/${window.SKOSMOS.vocab}/topConcepts?${params}`)
               .then(data => {
                 return data.json()
               })
@@ -132,7 +138,11 @@ function startHierarchyApp () {
               })
           } else {
             // otherwise, fetch children of concept
-            fetch('rest/v1/' + window.SKOSMOS.vocab + '/children?uri=' + concept.uri + '&lang=' + window.SKOSMOS.content_lang)
+            const params = new URLSearchParams({
+              uri: concept.uri,
+              lang: window.SKOSMOS.content_lang
+            })
+            fetch(`rest/v1/${window.SKOSMOS.vocab}/children?${params}`)
               .then(data => {
                 return data.json()
               })
@@ -148,7 +158,8 @@ function startHierarchyApp () {
         }
       },
       async loadConceptSchemes () {
-        const res = await fetch('rest/v1/' + window.SKOSMOS.vocab + '/?lang=' + window.SKOSMOS.content_lang)
+        const params = new URLSearchParams({ lang: window.SKOSMOS.content_lang })
+        const res = await fetch(`rest/v1/${window.SKOSMOS.vocab}/?${params}`)
         const data = await res.json()
 
         for (const s of data.conceptschemes.sort((a, b) => this.compareConcepts(a, b))) {

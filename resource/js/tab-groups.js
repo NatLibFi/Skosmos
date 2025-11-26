@@ -45,7 +45,8 @@ function startGroupsApp () {
       },
       loadGroups () {
         this.loadingGroups = true
-        fetch('rest/v1/' + window.SKOSMOS.vocab + '/groups/?lang=' + window.SKOSMOS.content_lang)
+        const params = new URLSearchParams({ lang: window.SKOSMOS.content_lang })
+        fetch(`rest/v1/${window.SKOSMOS.vocab}/groups/?${params}`)
           .then(data => {
             return data.json()
           })
@@ -89,7 +90,11 @@ function startGroupsApp () {
 
               // Only load members if selected group has members
               if (uriMap.get(this.selectedGroup).hasMembers) {
-                fetch('rest/v1/' + window.SKOSMOS.vocab + '/groupMembers/?lang=' + window.SKOSMOS.content_lang + '&uri=' + this.selectedGroup)
+                const params = new URLSearchParams({
+                  lang: window.SKOSMOS.content_lang,
+                  uri: this.selectedGroup
+                })
+                fetch(`rest/v1/${window.SKOSMOS.vocab}/groupMembers/?${params}`)
                   .then(data => {
                     return data.json()
                   })
@@ -164,7 +169,11 @@ function startGroupsApp () {
         // Load children only if group has children and they have not been loaded yet
         if (group.childGroups.length === 0 && group.hasMembers) {
           this.loadingChildren.push(group)
-          fetch('rest/v1/' + window.SKOSMOS.vocab + '/groupMembers/?lang=' + window.SKOSMOS.content_lang + '&uri=' + group.uri)
+          const params = new URLSearchParams({
+            lang: window.SKOSMOS.content_lang,
+            uri: group.uri
+          })
+          fetch(`rest/v1/${window.SKOSMOS.vocab}/groupMembers/?${params}`)
             .then(data => {
               return data.json()
             })
