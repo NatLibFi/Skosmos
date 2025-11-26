@@ -1,4 +1,5 @@
 {
+    "Download this concept": "Herunterladen des Begriffs",
     "%search_count% results for '%term%'": "%search_count% Ergebnisse f\u00fcr '%term%'",
     "404 Error: The page %requested_page% cannot be found.": "Fehler 404: Die angeforderte Seite %requested_page% wurde nicht gefunden.",
     "A-Z": "A-Z",
@@ -24,7 +25,6 @@
     "Content language": "Sprache der Inhalte",
     "Count": "Anzahl",
     "Deprecated concept": "Veralteter Begriff",
-    "Download this concept in SKOS format:": "Herunterladen des Begriffs im SKOS-Format:",
     "Download this vocabulary as SKOS\/RDF:": "Herunterladen dieses Vokabulars in SKOS\/RDF:",
     "Download this vocabulary:": "Dieses Vokabular herunterladen:",
     "E-mail:": "E-Mail:",

@@ -1,4 +1,5 @@
 {
+    "Download this concept": "Lataa t\u00e4m\u00e4 k\u00e4site",
     "Adding an empty twig file will remove this message.": "Voit poistaa t\u00e4m\u00e4n viestin lis\u00e4\u00e4m\u00e4ll\u00e4 hakemistoon tyhj\u00e4 twig-tiedosto.",
     "To customize what is shown here, add one or more .twig template files under the %slotPath% directory.": "Voit n\u00e4ytt\u00e4\u00e4 t\u00e4ss\u00e4 haluamaasi sis\u00e4lt\u00f6\u00e4 lis\u00e4\u00e4m\u00e4ll\u00e4 .twig-tiedostoja hakemistoon %slotPath%.",
     "Select search language": "Valitse hakukieli",
@@ -32,7 +33,6 @@
     "Copy to clipboard": "Kopioi leikep\u00f6yd\u00e4lle",
     "Count": "Lukum\u00e4\u00e4r\u00e4",
     "Deprecated concept": "K\u00e4yt\u00f6st\u00e4 poistettu k\u00e4site",
-    "Download this concept in SKOS format:": "Lataa t\u00e4m\u00e4 k\u00e4site:",
     "Download this vocabulary as SKOS\/RDF:": "Lataa t\u00e4m\u00e4 sanasto SKOS\/RDF-muodossa:",
     "Download this vocabulary:": "Lataa t\u00e4m\u00e4 sanasto:",
     "E-mail": "S\u00e4hk\u00f6postiosoite",

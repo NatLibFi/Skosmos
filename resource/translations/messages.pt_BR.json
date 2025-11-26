@@ -1,4 +1,5 @@
 {
+    "Download this concept": "Baixar este conceito",
     "%search_count% results for '%term%'": "%search_count% resultados para '%term%'",
     "404 Error: The page %requested_page% cannot be found.": "Erro 404: A p\u00e1gina %requested_page% n\u00e3o foi encontrada.",
     "A-Z": "A-Z",
@@ -23,7 +24,6 @@
     "Content language": "Idioma do conte\u00fado",
     "Count": "Quantidade",
     "Deprecated concept": "Conceito obsoleto",
-    "Download this concept in SKOS format:": "Baixar este conceito:",
     "Download this vocabulary as SKOS\/RDF:": "Baixar este vocabul\u00e1rio como SKOS\/RDF:",
     "Download this vocabulary:": "Baixar este vocabul\u00e1rio:",
     "E-mail:": "E-mail:",

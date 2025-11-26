@@ -1,4 +1,5 @@
 {
+    "Download this concept": "Download",
     "%search_count% results for '%term%'": "%search_count% resultater ved s\u00f8gning p\u00e5 '%term%'",
     "404 Error: The page %requested_page% cannot be found.": "404 fejl: Siden %requested_page% blev ikke fundet.",
     "A-Z": "A-\u00c5",
@@ -19,7 +20,6 @@
     "Content and search language": "S\u00f8gesprog",
     "Content language": "S\u00f8gesprog",
     "Count": "Antal",
-    "Download this concept in SKOS format:": "Download i SKOS-format:",
     "Download this vocabulary as SKOS\/RDF:": "Download i SKOS-format:",
     "E-mail:": "E-mail:",
     "Enter search term": "Indtast term",
