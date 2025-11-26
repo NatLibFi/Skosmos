@@ -7,8 +7,6 @@ class WDQSResource extends RemoteResource
     public function resolve(int $timeout): ?EasyRdf\Resource
     {
         try {
-            // unregister the legacy "json" format as it causes problems with CONSTRUCT requests
-            EasyRdf\Format::unregister('json');
             // change the timeout setting for external requests
             $httpclient = EasyRdf\Http::getDefaultHttpClient();
             $httpclient->setConfig(array('timeout' => $timeout, 'useragent' => 'Skosmos'));
