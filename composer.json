@@ -6,8 +6,6 @@
   "version": "3.0-dev",
   "require": {
     "sweetrdf/easyrdf": "~1.18.2",
-    "symfony/polyfill-php80": "1.*",
-    "symfony/polyfill-php81": "1.*",
     "twig/twig": "3.22.*",
     "willdurand/negotiation": "3.1.*",
     "punic/punic": "3.8.*",
