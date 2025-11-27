@@ -14,14 +14,14 @@ describe('Global search bar', () => {
 
 
     cy.get('#vocab-list li').eq(0).find('input[type="checkbox"]').check({ force: true })
-    cy.get('#vocab-selector .vocab-dropdown-btn').should('contain.text', 'testUnknownPropertyOrder')
+    cy.get('#vocab-selector .vocab-dropdown-btn').should('contain.text', 'altlabel')
 
     cy.get('#vocab-list li').eq(1).find('input[type="checkbox"]').check({ force: true })
-    cy.get('#vocab-selector .vocab-dropdown-btn').should('contain.text', 'testUnknownPropertyOrder')
+    cy.get('#vocab-selector .vocab-dropdown-btn').should('contain.text', 'altlabel')
     cy.get('#vocab-selector .vocab-dropdown-btn').should('contain.text', 'YSO')
 
     cy.get('#vocab-list li').eq(0).find('input[type="checkbox"]').uncheck({ force: true })
-    cy.get('#vocab-selector .vocab-dropdown-btn').should('not.contain.text', 'testUnknownPropertyOrder')
+    cy.get('#vocab-selector .vocab-dropdown-btn').should('not.contain.text', 'altlabel')
     cy.get('#vocab-selector .vocab-dropdown-btn').should('contain.text', 'YSO')
   })
 

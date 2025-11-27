@@ -1,0 +1,63 @@
+@prefix altlabel: <http://www.skosmos.skos/altlabel/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+altlabel:c1 a skos:Concept ;
+    skos:inScheme altlabel:conceptscheme ;
+    skos:prefLabel "Home"@en ;
+    skos:altLabel "House"@en ;
+    skos:altLabel "Apartment"@en ;
+    skos:altLabel "Dwelling"@en ;
+    skos:altLabel "Hearth"@en ;
+    skos:altLabel "Haven"@en ;
+    skos:altLabel "Family"@en ;
+    skos:altLabel "Roots"@en ;
+    skos:altLabel "Abode"@en ;
+    skos:altLabel "Nest"@en ;
+    skos:altLabel "Residence"@en ;
+    skos:altLabel "Place"@en ;
+    skos:altLabel "Pad"@en ;
+    skos:altLabel "Crib"@en ;
+    skos:altLabel "Sanctuary"@en ;
+    skos:altLabel "Safe Place"@en ;
+    skos:altLabel "Comfort Zone"@en ;
+    skos:altLabel "Base"@en ;
+    skos:altLabel "Home Base"@en ;
+    skos:altLabel "Retreat"@en ;
+    skos:altLabel "Digs"@en ;
+    skos:altLabel "Shelter"@en ;
+    skos:altLabel "Locale"@en ;
+    skos:altLabel "Domicile"@en ;
+    skos:altLabel "Habitat"@en ;
+    skos:altLabel "Domain"@en ;
+    skos:prefLabel "Koti"@fi ;
+    skos:altLabel "Asunto"@fi ;
+    skos:altLabel "Talo"@fi ;
+    skos:altLabel "Lepo"@fi ;
+    skos:altLabel "Turva"@fi ;
+    skos:altLabel "Syli"@fi ;
+    skos:altLabel "Läheisyys"@fi ;
+    skos:altLabel "Perhe"@fi ;
+    skos:altLabel "Juuret"@fi ;
+    skos:altLabel "Paikka"@fi ;
+    skos:altLabel "Pesä"@fi ;
+    skos:altLabel "Kodikas"@fi ;
+    skos:altLabel "Oma"@fi ;
+    skos:altLabel "Suoja"@fi ;
+    skos:altLabel "Kotona"@fi ;
+    skos:altLabel "Maja"@fi ;
+    skos:altLabel "Pysyvyys"@fi ;
+    skos:altLabel "Sydän"@fi ;
+    skos:altLabel "Lämmönlähde"@fi ;
+    skos:altLabel "Viihtyisyys"@fi ;
+    skos:altLabel "Halaus"@fi ;
+    skos:altLabel "Välittäminen"@fi ;
+    skos:altLabel "Lähimmäinen"@fi ;
+    skos:altLabel "Yhteisö"@fi ;
+    skos:altLabel "Huvimaja"@fi ;
+    skos:altLabel "Oleskelupaikka"@fi ;
+    skos:topConceptOf altlabel:conceptscheme .
+
+altlabel:conceptscheme a skos:ConceptScheme ;
+    rdfs:label "Test conceptscheme"@en ;
+    skos:hasTopConcept altlabel:c1 .

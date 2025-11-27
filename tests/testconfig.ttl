@@ -538,6 +538,13 @@
 	skosmos:language "en";
 	skosmos:sparqlGraph <http://www.skosmos.skos/testOrder/> .
 
+:altlabel a skosmos:Vocabulary, void:Dataset ;
+	dc:title "Alternate labels"@en ;
+	dc:subject :cat_science ;
+	void:uriSpace "http://www.skosmos.skos/altlabel/";
+	skosmos:language "en", "fi";
+	skosmos:sparqlGraph <http://www.skosmos.skos/altlabel/> .
+
 <http://skosmos.skos/dump/test/groups> dc:format "application/rdf+xml" .
 
 :cat_science a skos:Concept ;
