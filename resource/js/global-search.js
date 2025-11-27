@@ -430,7 +430,9 @@ function startGlobalSearchApp () {
     }
   })
 
-  globalSearch.mount('#global-search-wrapper')
+  if (document.getElementById('global-search-wrapper')) {
+    globalSearch.mount('#global-search-wrapper')
+  }
 }
 
 onTranslationReady(startGlobalSearchApp)

@@ -55,8 +55,6 @@ function startChangesApp () {
             return data.json()
           })
           .then(data => {
-            console.log('data', data)
-
             // Group concepts by month and year
             // Using a map instead of an object because maps maintain original insertion order
             const changesByDate = new Map()
@@ -78,7 +76,6 @@ function startChangesApp () {
             this.currentOffset = 200
             // Add scrolling event listener back after changes are loaded
             this.$refs.tabChanges.$refs.list.addEventListener('scroll', this.handleScrollEvent)
-            console.log('changes', this.changedConcepts)
           })
       },
       loadMoreChanges () {
@@ -90,8 +87,6 @@ function startChangesApp () {
             return data.json()
           })
           .then(data => {
-            console.log('data', data)
-
             // Group concepts by month and year
             for (const concept of data.changeList) {
               const date = new Date(concept.date)
@@ -112,7 +107,6 @@ function startChangesApp () {
             if (data.changeList.length > 0) {
               this.$refs.tabChanges.$refs.list.addEventListener('scroll', this.handleScrollEvent)
             }
-            console.log('changes', this.changedConcepts)
           })
       },
       handleScrollEvent () {
@@ -236,7 +230,9 @@ function startChangesApp () {
     `
   })
 
-  tabChangesApp.mount('#tab-changes')
+  if (document.getElementById('tab-changes')) {
+    tabChangesApp.mount('#tab-changes')
+  }
 }
 
 onTranslationReady(startChangesApp)

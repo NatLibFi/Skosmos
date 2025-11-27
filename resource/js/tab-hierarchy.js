@@ -60,8 +60,6 @@ function startHierarchyApp () {
               return data.json()
             })
             .then(data => {
-              console.log('data', data)
-
               this.hierarchy = []
 
               for (const c of data.conceptschemes.sort((a, b) => this.compareConcepts(a, b))) {
@@ -69,7 +67,6 @@ function startHierarchyApp () {
               }
 
               this.loadingHierarchy = false
-              console.log('hier', this.hierarchy)
             })
         } else {
           // otherwise, fetch top concepts
@@ -78,8 +75,6 @@ function startHierarchyApp () {
               return data.json()
             })
             .then(data => {
-              console.log('data', data)
-
               this.hierarchy = []
 
               for (const c of data.topconcepts.sort((a, b) => this.compareConcepts(a, b))) {
@@ -87,7 +82,6 @@ function startHierarchyApp () {
               }
 
               this.loadingHierarchy = false
-              console.log('hier', this.hierarchy)
             })
         }
       },
@@ -110,7 +104,6 @@ function startHierarchyApp () {
 
         this.loadingHierarchy = false
         this.selectedConcept = window.SKOSMOS.uri
-        console.log('hier', this.hierarchy)
       },
       loadChildren (concept) {
         // load children only if concept has children but they have not been loaded yet
@@ -123,12 +116,10 @@ function startHierarchyApp () {
                 return data.json()
               })
               .then(data => {
-                console.log('data', data)
                 for (const c of data.topconcepts.sort((a, b) => this.compareConcepts(a, b))) {
                   concept.children.push(this.createConceptNode(c))
                 }
                 this.loadingChildren = this.loadingChildren.filter(x => x !== concept)
-                console.log('hier', this.hierarchy)
               })
           } else {
             // otherwise, fetch children of concept
@@ -137,12 +128,10 @@ function startHierarchyApp () {
                 return data.json()
               })
               .then(data => {
-                console.log('data', data)
                 for (const c of data.narrower.sort((a, b) => this.compareConcepts(a, b))) {
                   concept.children.push(this.createConceptNode(c))
                 }
                 this.loadingChildren = this.loadingChildren.filter(x => x !== concept)
-                console.log('hier', this.hierarchy)
               })
           }
         }
@@ -496,7 +485,9 @@ function startHierarchyApp () {
     `
   })
 
-  tabHierApp.mount('#tab-hierarchy')
+  if (document.getElementById('tab-hierarchy')) {
+    tabHierApp.mount('#tab-hierarchy')
+  }
 }
 
 onTranslationReady(startHierarchyApp)
