@@ -164,6 +164,11 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
         $this->assertEquals(true, $this->config->getUiLanguageDropdown());
     }
 
+    public function testGetUiDevMode()
+    {
+        $this->assertEquals(true, $this->config->getUiDevMode());
+    }
+
     public function testGetHoneypotEnabled()
     {
         $this->assertEquals(false, $this->config->getHoneypotEnabled());
