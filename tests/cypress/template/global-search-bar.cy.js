@@ -45,10 +45,10 @@ describe('Global search bar', () => {
   it('selecting "all languages" does not change content language', () => {
 
     cy.get('#language-selector .dropdown-toggle').should('contain.text', '2. Choose language')
-    cy.get('#language-list li label').find('[type="radio"][value="en"]').check({ force: true })
+    cy.get('#language-list li label').find('input[type="radio"][value="en"]').check({ force: true })
     cy.url().should('include', 'clang=en')
 
-    cy.get('#language-list li label').find('[type="radio"][value="all"]').check({ force: true })
+    cy.get('#language-list li label').find('input[type="radio"][value="all"]').check({ force: true })
     cy.url().should('include', 'clang=en')
   })
 
