@@ -170,8 +170,9 @@ class WebController extends Controller
         // set template variables
         $categoryLabel = $this->model->getClassificationLabel($request->getLang());
         $sortedVocabs = $this->model->getVocabularyList(false, true);
-        $langList = $this->model->getLanguages($request->getLang());
+        $searchLangList = $this->model->getLanguages($request->getLang());
         $listStyle = $this->listStyle();
+        //$languageLabels = $this->getLanguageLabels($request->getLang());
 
         // render template
         echo $template->render(
@@ -179,7 +180,7 @@ class WebController extends Controller
                 'sorted_vocabs' => $sortedVocabs,
                 'category_label' => $categoryLabel,
                 'languages' => $this->languages,
-                'lang_list' => $langList,
+                'search_lang_list' => $searchLangList,
                 'request' => $request,
                 'list_style' => $listStyle
             )
@@ -513,10 +514,13 @@ class WebController extends Controller
 
         $template = $this->twig->load('vocab-home.twig');
 
+        $vocabSearchLangList = $vocab->getConfig()->getLanguages();
+
         echo $template->render(
             array(
                 'languages' => $this->languages,
                 'vocab' => $vocab,
+                'search_lang_list' => $vocabSearchLangList,
                 'search_letter' => 'A',
                 'active_tab' => $defaultView,
                 'request' => $request,
