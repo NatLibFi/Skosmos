@@ -35,10 +35,10 @@ describe('Global search bar', () => {
 
     cy.get('#language-selector .dropdown-toggle').should('contain.text', '2. Choose language')
 
-    cy.get('#language-list li').contains('englanti').find('input[type="radio"]').check({ force: true })
+    cy.get('#language-list li').find('input[type="radio"][value="en"]').check({ force: true })
     cy.get('#language-selector .dropdown-toggle').should('contain.text', 'englanti')
 
-    cy.get('#language-list li').contains('ruotsi').find('input[type="radio"]').check({ force: true })
+    cy.get('#language-list li').find('input[type="radio"][value="sv"]').check({ force: true })
     cy.get('#language-selector .dropdown-toggle').should('contain.text', 'ruotsi')
   })
 
