@@ -63,7 +63,7 @@ window.SKOSMOS = {
   },
   {%- endif -%}
   "baseHref": "{{ BaseHref }}",
-  "langStrings": { {% for key, value in lang_list %}"{{ value }}": "{{ key }}"{% if not loop.last %}, {% endif %}{% endfor %} },
+  "searchLangStrings": { {% for key, value in search_lang_list %}"{{ value }}": "{{ key }}"{% if not loop.last %}, {% endif %}{% endfor %} },
   "language_strings": { {%- if request.vocab ~%} {% for lang in request.vocab.config.languages %}"{{ lang }}": "{{ mockup_translations[request.lang][lang] }}", {% endfor -%}
                         {% else %}{% for key, value in GlobalConfig.languages %}"{{ key }}": "{{ mockup_translations[request.lang][key] }}", {% endfor -%}{% endif %}
                         "all": "{{ mockup_translations[request.lang].all }}" }

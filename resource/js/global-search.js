@@ -100,7 +100,7 @@ function startGlobalSearchApp () {
           })
       },
       formatLangStrings () {
-        const langStrings = window.SKOSMOS.langStrings
+        const langStrings = window.SKOSMOS.searchLangStrings
         const allLanguegesEntry = { all: this.allLanguages }
         const formattedList = { ...allLanguegesEntry, ...langStrings }
 
