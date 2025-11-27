@@ -25,7 +25,8 @@ function startTermCountsApp () {
       }
     },
     mounted () {
-      fetch('rest/v1/' + window.SKOSMOS.vocab + '/labelStatistics?lang=' + window.SKOSMOS.lang)
+      const params = new URLSearchParams({ lang: window.SKOSMOS.lang })
+      fetch(`rest/v1/${window.SKOSMOS.vocab}/labelStatistics?${params}`)
         .then(data => {
           return data.json()
         })

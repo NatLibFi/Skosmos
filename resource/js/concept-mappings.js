@@ -23,7 +23,14 @@ const conceptMappingsApp = Vue.createApp({
     loadMappings () {
       this.mappings = {} // clear mappings before starting to load new ones
       this.loading = true
-      const url = 'rest/v1/' + window.SKOSMOS.vocab + '/mappings?uri=' + window.SKOSMOS.uri + '&external=true&lang=' + window.SKOSMOS.lang + '&clang=' + window.SKOSMOS.content_lang
+      const params = new URLSearchParams({
+        uri: window.SKOSMOS.uri,
+        external: 'true',
+        lang: window.SKOSMOS.lang,
+        clang: window.SKOSMOS.content_lang
+      })
+      const url = `rest/v1/${window.SKOSMOS.vocab}/mappings?${params}`
+
       fetchWithAbort(url, 'concept')
         .then(data => {
           return data.json()

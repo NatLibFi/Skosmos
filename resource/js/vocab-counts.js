@@ -27,7 +27,8 @@ function startResourceCountsApp () {
       }
     },
     mounted () {
-      fetch('rest/v1/' + window.SKOSMOS.vocab + '/vocabularyStatistics?lang=' + window.SKOSMOS.lang)
+      const params = new URLSearchParams({ lang: window.SKOSMOS.lang })
+      fetch(`rest/v1/${window.SKOSMOS.vocab}/vocabularyStatistics?${params}`)
         .then(response => response.json())
         .then(data => {
           this.concepts = data.concepts

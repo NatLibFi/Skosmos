@@ -50,7 +50,11 @@ function startChangesApp () {
         this.currentOffset = 0
         // Remove scrolling event listener while changes are loaded
         this.$refs.tabChanges.$refs.list.removeEventListener('scroll', this.handleScrollEvent)
-        fetch('rest/v1/' + window.SKOSMOS.vocab + '/new?lang=' + window.SKOSMOS.content_lang + '&limit=200')
+        const params = new URLSearchParams({
+          lang: window.SKOSMOS.content_lang,
+          limit: '200'
+        })
+        fetch(`rest/v1/${window.SKOSMOS.vocab}/new?${params}`)
           .then(data => {
             return data.json()
           })
@@ -82,7 +86,12 @@ function startChangesApp () {
         this.loadingMoreConcepts = true
         // Remove scrolling event listener while new changes are loaded
         this.$refs.tabChanges.$refs.list.removeEventListener('scroll', this.handleScrollEvent)
-        fetch('rest/v1/' + window.SKOSMOS.vocab + '/new?lang=' + window.SKOSMOS.content_lang + '&limit=200&offset=' + this.currentOffset)
+        const params = new URLSearchParams({
+          lang: window.SKOSMOS.content_lang,
+          limit: '200',
+          offset: this.currentOffset
+        })
+        fetch(`rest/v1/${window.SKOSMOS.vocab}/new?${params}`)
           .then(data => {
             return data.json()
           })
