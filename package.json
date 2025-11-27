@@ -13,12 +13,12 @@
   },
   "dependencies": {
     "bootstrap": "^5.3.*",
-    "vue": "^3.5.*"
+    "vue": "^3.5.25"
   },
   "devDependencies": {
-    "axe-core": "^4.10.*",
-    "cypress": "^13.16.*",
-    "cypress-axe": "^1.5.*",
+    "axe-core": "^4.11.*",
+    "cypress": "^15.7.*",
+    "cypress-axe": "^1.7.*",
     "standard": "^17.1.*"
   }
 }
