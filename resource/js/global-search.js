@@ -26,6 +26,9 @@ function startGlobalSearchApp () {
       searchPlaceholder () {
         return $t('3. Enter search term')
       },
+      allLanguages () {
+        return $t('All languages')
+      },
       noResults () {
         return $t('No results')
       },
@@ -48,7 +51,7 @@ function startGlobalSearchApp () {
     mounted () {
       this.languages = window.SKOSMOS.languageOrder
       this.selectedLanguage = this.updateSearchLang()
-      this.languageStrings = window.SKOSMOS.language_strings
+      this.languageStrings = this.formatLangStrings()
       this.vocabStrings = window.SKOSMOS.vocab_list
     },
     watch: {
@@ -95,6 +98,13 @@ function startGlobalSearchApp () {
               this.renderResults() // render after the fetch has finished
             }
           })
+      },
+      formatLangStrings () {
+        const langStrings = window.SKOSMOS.langStrings
+        const allLanguegesEntry = { all: this.allLanguages }
+        const formattedList = { ...allLanguegesEntry, ...langStrings }
+        return formattedList
+
       },
       formatSearchUrlParams () {
         const params = new URLSearchParams({ q: this.searchTerm })
