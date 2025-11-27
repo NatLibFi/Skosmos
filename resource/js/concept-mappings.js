@@ -33,9 +33,7 @@ const conceptMappingsApp = Vue.createApp({
           this.loading = false
         })
         .catch(error => {
-          if (error.name === 'AbortError') {
-            console.log('Fetching of mappings aborted')
-          } else {
+          if (error.name !== 'AbortError') {
             throw error
           }
           this.loading = false
@@ -111,4 +109,6 @@ conceptMappingsApp.component('concept-mappings', {
   `
 })
 
-conceptMappingsApp.mount('#concept-mappings')
+if (document.getElementById('concept-mappings')) {
+  conceptMappingsApp.mount('#concept-mappings')
+}

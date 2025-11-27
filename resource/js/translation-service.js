@@ -11,7 +11,7 @@
       const data = await response.json()
       messages[locale] = data
     } catch (error) {
-      console.error('Loading error:', error)
+      console.error('Failed to load translations:', error)
     }
     return messages
   }

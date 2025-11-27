@@ -84,9 +84,7 @@ function startAlphaApp () {
             this.$refs.tabAlpha.$refs.list.addEventListener('scroll', this.handleScrollEvent)
           })
           .catch(error => {
-            if (error.name === 'AbortError') {
-              console.log('Fetch aborted for letter ' + letter)
-            } else {
+            if (error.name !== 'AbortError') {
               throw error
             }
           })
@@ -110,9 +108,7 @@ function startAlphaApp () {
             }
           })
           .catch(error => {
-            if (error.name === 'AbortError') {
-              console.log('Fetch aborted for letter ' + this.selectedLetter + ' and offset ' + this.currentOffset)
-            } else {
+            if (error.name !== 'AbortError') {
               throw error
             }
           })
@@ -242,7 +238,9 @@ function startAlphaApp () {
     `
   })
 
-  tabAlphaApp.mount('#tab-alphabetical')
+  if (document.getElementById('tab-alphabetical')) {
+    tabAlphaApp.mount('#tab-alphabetical')
+  }
 }
 
 onTranslationReady(startAlphaApp)

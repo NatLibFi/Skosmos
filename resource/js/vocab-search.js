@@ -376,7 +376,9 @@ function startVocabSearchApp () {
     }
   })
 
-  vocabSearch.mount('#search-vocab')
+  if (document.getElementById('search-vocab')) {
+    vocabSearch.mount('#search-vocab')
+  }
 }
 
 onTranslationReady(startVocabSearchApp)

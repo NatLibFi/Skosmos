@@ -349,6 +349,14 @@ class GlobalConfig extends BaseConfig
     }
 
     /**
+     * @return boolean
+     */
+    public function getUiDevMode()
+    {
+        return $this->getBoolean('skosmos:uiDevMode', false);
+    }
+
+    /**
      * @return string
      */
     public function getBaseHref()

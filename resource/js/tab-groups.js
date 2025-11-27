@@ -50,8 +50,6 @@ function startGroupsApp () {
             return data.json()
           })
           .then(data => {
-            console.log('groups data', data)
-
             this.groups = []
 
             const groups = data.groups
@@ -94,7 +92,6 @@ function startGroupsApp () {
                     return data.json()
                   })
                   .then(data => {
-                    console.log('members data', data)
                     // Filter out existing groups from members list and add the correct properties
                     const members = data.members
                       .filter(m => !uriMap.has(m.uri))
@@ -107,7 +104,6 @@ function startGroupsApp () {
 
                     this.groups = result
                     this.loadingGroups = false
-                    console.log('groups', this.groups)
                   })
               } else {
                 // If selected group has no members, set isOpen for the group and its parents
@@ -115,13 +111,11 @@ function startGroupsApp () {
 
                 this.groups = result
                 this.loadingGroups = false
-                console.log('groups', this.groups)
               }
             } else {
               // If we are on vocab home page, simply set groups to result
               this.groups = result
               this.loadingGroups = false
-              console.log('groups', this.groups)
             }
           })
       },
@@ -169,12 +163,10 @@ function startGroupsApp () {
               return data.json()
             })
             .then(data => {
-              console.log('data', data)
               for (const m of data.members) {
                 group.childGroups.push({ ...m, childGroups: [], isOpen: false, isGroup: false })
               }
               this.loadingChildren = this.loadingChildren.filter(x => x !== group)
-              console.log('groups', this.groups)
             })
         }
       }
@@ -323,7 +315,9 @@ function startGroupsApp () {
     `
   })
 
-  tabGroupsApp.mount('#tab-groups')
+  if (document.getElementById('tab-groups')) {
+    tabGroupsApp.mount('#tab-groups')
+  }
 }
 
 onTranslationReady(startGroupsApp)

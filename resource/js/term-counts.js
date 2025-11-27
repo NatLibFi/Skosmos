@@ -66,7 +66,9 @@ function startTermCountsApp () {
       `
   })
 
-  termCountsApp.mount('#term-counts')
+  if (document.getElementById('term-counts')) {
+    termCountsApp.mount('#term-counts')
+  }
 }
 
 onTranslationReady(startTermCountsApp)

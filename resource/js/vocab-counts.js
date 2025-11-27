@@ -73,7 +73,9 @@ function startResourceCountsApp () {
       `
   })
 
-  resourceCountsApp.mount('#resource-counts')
+  if (document.getElementById('resource-counts')) {
+    resourceCountsApp.mount('#resource-counts')
+  }
 }
 
 onTranslationReady(startResourceCountsApp)

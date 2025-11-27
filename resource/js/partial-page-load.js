@@ -106,9 +106,7 @@ const partialPageLoad = (event, pageUri) => {
       document.dispatchEvent(event)
     })
     .catch(error => {
-      if (error.name === 'AbortError') {
-        console.log('Fetch aborted for ' + pageUri)
-      } else {
+      if (error.name !== 'AbortError') {
         throw error
       }
     })
