@@ -1,4 +1,5 @@
 {
+    "Download this concept": "T\u00e9l\u00e9charger ce concept",
     "%search_count% results for '%term%'": "%search_count% r\u00e9sultat(s) pour '%term%'",
     "404 Error: The page %requested_page% cannot be found.": "Erreur 404 : La page %requested_page% n'existe pas.",
     "A-Z": "A-Z",
@@ -19,7 +20,6 @@
     "Content and search language": "Langue du contenu et de la recherche",
     "Content language": "Langue des donn\u00e9es",
     "Count": "Nombre",
-    "Download this concept in SKOS format:": "T\u00e9l\u00e9charger ce concept :",
     "Download this vocabulary as SKOS\/RDF:": "T\u00e9l\u00e9charger ce vocabulaire en SKOS\/RDF :",
     "E-mail:": "E-mail",
     "Enter search term": "Entrez votre terme de recherche",

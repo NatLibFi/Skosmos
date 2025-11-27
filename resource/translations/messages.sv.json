@@ -1,4 +1,5 @@
 {
+    "Download this concept": "Ladda ned detta begrepp",
     "Adding an empty twig file will remove this message.": "Du kan ta bort detta meddelande genom att l\u00e4gga till en tom twig-fil.",
     "To customize what is shown here, add one or more .twig template files under the %slotPath% directory.": "Anpassa inneh\u00e5llet som visas h\u00e4r genom att l\u00e4gga till .twig-mallfiler i mappen %slotPath%.",
     "Select search language": "V\u00e4lj s\u00f6kspr\u00e5k",
@@ -32,7 +33,6 @@
     "Copy to clipboard": "Kopiera till urklipp",
     "Count": "Antal",
     "Deprecated concept": "Raderat begrepp",
-    "Download this concept in SKOS format:": "Ladda ned detta begrepp:",
     "Download this vocabulary as SKOS\/RDF:": "Ladda ned denna vokabul\u00e4r i SKOS\/RDF-format:",
     "Download this vocabulary:": "Ladda ned denna vokabul\u00e4r:",
     "E-mail": "E-postadress",

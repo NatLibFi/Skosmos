@@ -1,4 +1,5 @@
 {
+    "Download this concept": "Last ned dette begrepet",
     "%search_count% results for '%term%'": "%search_count% treff for '%term%'",
     "404 Error: The page %requested_page% cannot be found.": "404 Feil: Siden %requested_page% finnes ikke.",
     "A-Z": "A-\u00c5",
@@ -22,7 +23,6 @@
     "Content and search language": "Innholds- og s\u00f8kespr\u00e5k",
     "Content language": "Innholdsspr\u00e5k",
     "Count": "Antall",
-    "Download this concept in SKOS format:": "Last ned dette begrepet:",
     "Download this vocabulary as SKOS\/RDF:": "Last ned vokabularet som SKOS\/RDF:",
     "Download this vocabulary:": "Last ned dette vokabularet:",
     "E-mail:": "E-postadresse:",

@@ -1,4 +1,5 @@
 {
+    "Download this concept": "Pobierz to poj\u0119cie",
     "%search_count% results for '%term%'": "%search_count% wynik\u00f3w dla '%term%'",
     "404 Error: The page %requested_page% cannot be found.": "B\u0142\u0105d 404: Strona %requested_page% nieodnaleziona.",
     "A-Z": "A-Z",
@@ -19,7 +20,6 @@
     "Content and search language": "J\u0119zyk zawarto\u015bci i szukania",
     "Content language": "J\u0119zyk zawarto\u015bci",
     "Count": "Ilo\u015b\u0107",
-    "Download this concept in SKOS format:": "Pobierz to poj\u0119cie:",
     "Download this vocabulary as SKOS\/RDF:": "Pobierz te s\u0142ownictwo jako SKOS\/RDF:",
     "E-mail:": "E-mail:",
     "Enter search term": "Wpisz szukany termin",

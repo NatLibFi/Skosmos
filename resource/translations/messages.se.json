@@ -1,4 +1,5 @@
 {
+    "Download this concept": "Lu\u0111e d\u00e1n doahpaga",
     "%search_count% results for '%term%'": "%search_count% bohtosa ohcui '%term%'",
     "404 Error: The page %requested_page% cannot be found.": "404 Error: Siidu %requested_page% ii g\u00e1vdnon.",
     "A-Z": "A-\u017d",
@@ -25,7 +26,6 @@
     "Content language": "Sisdoalu giella",
     "Count": "Lohkomearri",
     "Deprecated concept": "Hilgojuvvon doaba",
-    "Download this concept in SKOS format:": "Lu\u0111e d\u00e1n doahpaga:",
     "Download this vocabulary as SKOS\/RDF:": "Lu\u0111e d\u00e1n s\u00e1tner\u00e1ju h\u00e1mis SKOS\/RDF:",
     "Download this vocabulary:": "Lu\u0111e d\u00e1n s\u00e1tner\u00e1ju: ",
     "E-mail": "E-poasta",

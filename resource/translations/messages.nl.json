@@ -1,4 +1,5 @@
 {
+    "Download this concept": "Download dit concept",
     "%search_count% results for '%term%'": "%search_count% resultaten voor \u2018%term%\u2019",
     "404 Error: The page %requested_page% cannot be found.": "404 Error: De pagina %requested_page% kan niet worden gevonden.",
     "A-Z": "A-Z",
@@ -23,7 +24,6 @@
     "Content language": "Content-taal",
     "Count": "Aantal",
     "Deprecated concept": "Vervallen concept",
-    "Download this concept in SKOS format:": "Download dit concept:",
     "Download this vocabulary as SKOS\/RDF:": "Download deze woordenlijst als SKOS\/RDF",
     "Download this vocabulary:": "Download deze woordenlijst:",
     "E-mail:": "E-mail:",

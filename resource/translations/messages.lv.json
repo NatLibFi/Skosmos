@@ -1,4 +1,5 @@
 {
+    "Download this concept": "Lejupl\u0101d\u0113jiet \u0161o konceptu",
     "%search_count% results for '%term%'": "%search_count% rezult\u0101ti '%term%'",
     "404 Error: The page %requested_page% cannot be found.": "404 k\u013c\u016bda: Piepras\u012bt\u0101 lapa %requested_page% netika atrasta.",
     "A-Z": "A-Z",
@@ -24,7 +25,6 @@
     "Content language": "Satura valoda",
     "Count": "Skaits",
     "Deprecated concept": "Novecojis koncepts",
-    "Download this concept in SKOS format:": "Lejupl\u0101d\u0113jiet \u0161o konceptu SKOS form\u0101:",
     "Download this vocabulary as SKOS\/RDF:": "Lejupl\u0101d\u0113t \u0161o v\u0101rdn\u012bca k\u0101 SKOS\/RDF:",
     "Download this vocabulary:": "Lejupl\u0101d\u0113t \u0161o v\u0101rdn\u012bcu:",
     "E-mail:": "E-pasts:",
