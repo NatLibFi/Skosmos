@@ -210,6 +210,7 @@ class WebController extends Controller
             return;
         }
         $customLabels = $vocab->getConfig()->getPropertyLabelOverrides();
+        $vocabSearchLangList = $vocab->getConfig()->getLanguages();
 
         $pluginParameters = json_encode($vocab->getConfig()->getPluginParameters());
         $template = $this->twig->load('concept.twig');
@@ -221,6 +222,7 @@ class WebController extends Controller
             'vocab' => $vocab,
             'concept_uri' => $uri,
             'languages' => $this->languages,
+            'search_lang_list' => $vocabSearchLangList,
             'explicit_langcodes' => $langcodes,
             'visible_breadcrumbs' => $crumbs['breadcrumbs'],
             'hidden_breadcrumbs' => $crumbs['combined'],
@@ -406,11 +408,13 @@ class WebController extends Controller
         $vocabList = $this->model->getVocabularyList();
         $sortedVocabs = $this->model->getVocabularyList(false, true);
         $langList = $this->model->getLanguages($lang);
+        $searchLangList = $this->model->getLanguages($request->getLang());
 
         echo $template->render(
             array(
                 'search_count' => $counts,
                 'languages' => $this->languages,
+                'search_lang_list' => $searchLangList,
                 'search_results' => $searchResults,
                 'rest' => $parameters->getOffset() > 0,
                 'global_search' => true,
@@ -435,6 +439,8 @@ class WebController extends Controller
         $this->model->setLocale($request->getLang());
         $vocab = $request->getVocab();
         $searchResults = null;
+        $vocabSearchLangList = $vocab->getConfig()->getLanguages();
+
         try {
             $vocabTypes = $this->model->getTypes($request->getVocabid(), $request->getLang());
         } catch (Exception $e) {
@@ -448,6 +454,7 @@ class WebController extends Controller
                     'languages' => $this->languages,
                     'vocab' => $vocab,
                     'request' => $request,
+                    'search_lang_list' => $vocabSearchLangList,
                     'search_results' => $searchResults
                 )
             );
