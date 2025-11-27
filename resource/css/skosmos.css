@@ -1005,11 +1005,12 @@ header .container-fluid .row {
   margin-left: 1rem;
 }
 
-.property-value .property-value-hidden {
+.property-value .property-value-hidden, #concept-other-languages .property-value-hidden {
   display: none;
 }
 
-.property-value .property-value-expand .property-value-hidden {
+.property-value .property-value-expand .property-value-hidden,
+#concept-other-languages .property-value-expand .property-value-hidden {
   display: list-item;
 }
 
