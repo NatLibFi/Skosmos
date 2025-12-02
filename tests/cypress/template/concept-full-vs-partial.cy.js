@@ -171,6 +171,30 @@ describe('Concept page, full vs. partial page loads', () => {
       // check that the second mapping property has the right number of entries
       cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').should('have.length', 3)
     })
+    it('contains mappings for hash namespace / ' + pageLoadType, () => {
+      if (pageLoadType == "full") {
+        cy.visit('/hash/en/page/c1') // go to "hash mark" concept page
+      } else {
+        cy.visit('/hash/en/page/c2') // go to "hypertext" concept page
+        // click on the link to "hash mark" to trigger partial page load
+        cy.get('#tab-hierarchy').contains('a', 'hash mark').click()
+      }
+
+      // check that we have some mappings
+      cy.get('#concept-mappings').should('not.be.empty')
+      // check that spinner does not exist after load
+      cy.get('#concept-mappings i.fa-spinner', {'timeout': 15000}).should('not.exist')
+
+      // check the first mapping property name
+      cy.get('.prop-mapping h2').eq(0).contains('Exactly matching concepts')
+      // check the first mapping property values
+      cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).contains('number sign')
+      cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).find('a').invoke('text').should('equal', 'number sign')
+      cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).find('a').should('have.attr', 'href', 'http://www.wikidata.org/entity/Q175743')
+      cy.get('.prop-mapping').eq(0).find('.prop-mapping-vocab').eq(0).contains('www.wikidata.org')
+      // check that the second mapping property has the right number of entries
+      cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').should('have.length', 1)
+    })
 
   });
 })

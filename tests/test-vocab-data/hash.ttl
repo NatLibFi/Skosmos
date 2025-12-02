@@ -1,0 +1,21 @@
+@prefix hash: <http://www.skosmos.skos/hash#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+hash:c1 a skos:Concept ;
+    skos:inScheme hash:conceptscheme ;
+    skos:prefLabel "hash mark"@en ;
+    skos:altLabel "#"@en, "hash symbol"@en, "number symbol" ;
+    skos:exactMatch <http://www.wikidata.org/entity/Q175743> ;
+    skos:topConceptOf hash:conceptscheme .
+
+hash:c2 a skos:Concept ;
+    skos:inScheme hash:conceptscheme ;
+    skos:prefLabel "hypertext"@en ;
+    skos:exactMatch <http://www.wikidata.org/entity/Q1440450> ;
+    skos:topConceptOf hash:conceptscheme .
+
+hash:conceptscheme a skos:ConceptScheme ;
+    rdfs:label "Hash URI conceptscheme"@en ;
+    skos:hasTopConcept hash:c1, hash:c2 .
+
