@@ -4,23 +4,21 @@ describe('Global search bar', () => {
     cy.get('#search-wrapper').should('exist')
   })
 
-  it('vocab-list has two vocabularies', () => {
-    cy.get('#vocab-list li').should('have.length', 2)
+  it('vocab-list has 13 vocabularies', () => {
+    cy.get('#vocab-list li').should('have.length', 13)
   })
 
   it('dropdown menu header text is updated according to the selected vocabularies', () => {
-
     cy.get('#vocab-selector .vocab-dropdown-btn').should('contain.text', '1. Choose vocabulary')
-
-
-    cy.get('#vocab-list li').eq(0).find('input[type="checkbox"]').check({ force: true })
+    // select "altlabel"
+    cy.get('#vocab-list').contains('label', 'altlabel').find('input[type="checkbox"]').check({ force: true })
     cy.get('#vocab-selector .vocab-dropdown-btn').should('contain.text', 'altlabel')
-
-    cy.get('#vocab-list li').eq(1).find('input[type="checkbox"]').check({ force: true })
+    // select "YSO"
+    cy.get('#vocab-list').contains('label', 'YSO').find('input[type="checkbox"]').check({ force: true })
     cy.get('#vocab-selector .vocab-dropdown-btn').should('contain.text', 'altlabel')
     cy.get('#vocab-selector .vocab-dropdown-btn').should('contain.text', 'YSO')
-
-    cy.get('#vocab-list li').eq(0).find('input[type="checkbox"]').uncheck({ force: true })
+    // unselect "altlabel"
+    cy.get('#vocab-list').contains('label', 'altlabel').find('input[type="checkbox"]').uncheck({ force: true })
     cy.get('#vocab-selector .vocab-dropdown-btn').should('not.contain.text', 'altlabel')
     cy.get('#vocab-selector .vocab-dropdown-btn').should('contain.text', 'YSO')
   })
@@ -56,7 +54,8 @@ describe('Global search bar', () => {
     it('Dropdown search results are displayed for the selected vocabulary and search language', () => {
 
     cy.get('#global-search-toggle').click()
-    cy.get('#vocab-list li').eq(1).find('input[type="checkbox"]').check({ force: true })
+    // select "YSO"
+    cy.get('#vocab-list').contains('label', 'YSO').find('input[type="checkbox"]').check({ force: true })
     cy.get('#language-list li').contains('suomi').find('input[type="radio"]').check({ force: true })
 
     cy.get('#search-field').type('arkeolog'); // even if the search yields no results, there shoulde a single line in the result list

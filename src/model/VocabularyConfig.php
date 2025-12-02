@@ -230,7 +230,16 @@ class VocabularyConfig extends BaseConfig
      */
     public function getTitle($lang = null)
     {
-        return $this->getLiteral('dc:title', false, $lang);
+        $title = $this->getLiteral('dc:title', null, $lang);
+        if ($title === null) {
+            // not found using given language or without language tag
+            // try any language
+            $literal = $this->resource->getLiteral('dc:title');
+            if ($literal) {
+                $title = $literal->getValue();
+            }
+        }
+        return $title;
     }
 
     /**
