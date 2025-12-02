@@ -4,7 +4,6 @@ function startVocabSearchApp () {
   const vocabSearch = Vue.createApp({
     data () {
       return {
-        languages: [],
         selectedLanguage: null,
         searchTerm: null,
         searchCounter: null,
@@ -35,7 +34,6 @@ function startVocabSearchApp () {
       }
     },
     mounted () {
-      this.languages = window.SKOSMOS.languageOrder
       this.selectedLanguage = this.parseSearchLang()
       this.searchCounter = 0 // used for matching the query and the response in case there are many responses
       this.languageStrings = this.formatLangStrings()
