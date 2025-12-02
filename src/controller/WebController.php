@@ -169,7 +169,7 @@ class WebController extends Controller
         $vocabContentLangList = array_flip($vocab->getConfig()->getLanguages());
         $languageOrder = $vocab->getConfig()->getLanguageOrder(null);
 
-        if(is_null($languageOrder)) {
+        if (is_null($languageOrder)) {
             return $vocabContentLangList;
         }
 
