@@ -159,6 +159,35 @@ class WebController extends Controller
     }
 
     /**
+    * Renders the list of supported languages from vocabulary config in order.
+    * The ordering is done according to the language order parameter in vocabulary config if such exists
+    * @param Vocabulary $vocab the vocabulary object
+    * @return array with language codes as keys and language labels as values
+    */
+    private function parseVocabularyLanguageOrder($vocab)
+    {
+        $vocabContentLangList = array_flip($vocab->getConfig()->getLanguages());
+        $languageOrder = $vocab->getConfig()->getLanguageOrder(null);
+
+        if(is_null($languageOrder)) {
+            return $vocabContentLangList;
+        }
+
+        $tmpList = [];
+
+        foreach ($languageOrder as $vocLang) {
+            if (isset($vocabContentLangList[$vocLang])) {
+                $tmpList[$vocLang] = $vocabContentLangList[$vocLang];
+                unset($vocabContentLangList[$vocLang]);
+            }
+        }
+        $sortedContentLangList = $tmpList + $vocabContentLangList;
+
+        return $sortedContentLangList;
+    }
+
+
+    /**
      * Loads and renders the landing page view.
      * @param Request $request
      */
@@ -170,7 +199,7 @@ class WebController extends Controller
         // set template variables
         $categoryLabel = $this->model->getClassificationLabel($request->getLang());
         $sortedVocabs = $this->model->getVocabularyList(false, true);
-        $contentLangList = $this->model->getLanguages($request->getLang());
+        $contentLangList = array_flip($this->model->getLanguages($request->getLang()));
         $listStyle = $this->listStyle();
 
         // render template
@@ -209,7 +238,7 @@ class WebController extends Controller
             return;
         }
         $customLabels = $vocab->getConfig()->getPropertyLabelOverrides();
-        $vocabContentLangList = $vocab->getConfig()->getLanguages();
+        $sortedContentLangList = $this->parseVocabularyLanguageOrder($vocab);
 
         $pluginParameters = json_encode($vocab->getConfig()->getPluginParameters());
         $template = $this->twig->load('concept.twig');
@@ -221,7 +250,7 @@ class WebController extends Controller
             'vocab' => $vocab,
             'concept_uri' => $uri,
             'languages' => $this->languages,
-            'content_lang_list' => $vocabContentLangList,
+            'content_lang_list' => $sortedContentLangList,
             'explicit_langcodes' => $langcodes,
             'visible_breadcrumbs' => $crumbs['breadcrumbs'],
             'hidden_breadcrumbs' => $crumbs['combined'],
@@ -407,7 +436,7 @@ class WebController extends Controller
         $vocabList = $this->model->getVocabularyList();
         $sortedVocabs = $this->model->getVocabularyList(false, true);
         $langList = $this->model->getLanguages($lang);
-        $contentLangList = $this->model->getLanguages($request->getLang());
+        $contentLangList = array_flip($this->model->getLanguages($request->getLang()));
 
         echo $template->render(
             array(
@@ -438,7 +467,7 @@ class WebController extends Controller
         $this->model->setLocale($request->getLang());
         $vocab = $request->getVocab();
         $searchResults = null;
-        $vocabContentLangList = $vocab->getConfig()->getLanguages();
+        $sortedContentLangList = $this->parseVocabularyLanguageOrder($vocab);
 
         try {
             $vocabTypes = $this->model->getTypes($request->getVocabid(), $request->getLang());
@@ -453,7 +482,7 @@ class WebController extends Controller
                     'languages' => $this->languages,
                     'vocab' => $vocab,
                     'request' => $request,
-                    'content_lang_list' => $vocabContentLangList,
+                    'content_lang_list' => $sortedContentLangList,
                     'search_results' => $searchResults
                 )
             );
@@ -484,9 +513,11 @@ class WebController extends Controller
             );
             return;
         }
+
         echo $template->render(
             array(
                 'languages' => $this->languages,
+                'content_lang_list' => $sortedContentLangList,
                 'vocab' => $vocab,
                 'search_results' => $searchResults,
                 'search_count' => $counts,
@@ -520,13 +551,13 @@ class WebController extends Controller
 
         $template = $this->twig->load('vocab-home.twig');
 
-        $vocabContentLangList = $vocab->getConfig()->getLanguages();
+        $sortedContentLangList = $this->parseVocabularyLanguageOrder($vocab);
 
         echo $template->render(
             array(
                 'languages' => $this->languages,
                 'vocab' => $vocab,
-                'content_lang_list' => $vocabContentLangList,
+                'content_lang_list' => $sortedContentLangList,
                 'search_letter' => 'A',
                 'active_tab' => $defaultView,
                 'request' => $request,
