@@ -40,7 +40,7 @@ window.SKOSMOS = {
   },
   {%- endif -%}
   "baseHref": "{{ BaseHref }}",
-  "searchLangStrings": { {% for key, value in search_lang_list %}"{{ value }}": "{{ key }}"{% if not loop.last %}, {% endif %}{% endfor %} }
+  "contentLangStrings": { {% for key, value in content_lang_list %}"{{ value }}": "{{ key }}"{% if not loop.last %}, {% endif %}{% endfor %} }
 }
 </script>
 
