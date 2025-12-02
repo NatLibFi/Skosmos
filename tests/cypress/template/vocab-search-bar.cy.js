@@ -45,12 +45,22 @@ describe('Vocab search bar', () => {
       cy.get('#language-selector .dropdown-toggle').click();
       cy.get('#language-list .dropdown-item').contains('ruotsi').click();
 
+      //SKOSMOS object should have Swedish as the content language
+      cy.window().then((win) => {
+        expect(win.SKOSMOS.content_lang).to.equal('sv');
+      })
+
       // Choose 'all' for search language
       cy.get('#language-selector .dropdown-toggle').click();
       cy.get('#language-list .dropdown-item').get('a[value="all"]').click();
 
       // Verify the search page url has the previously chosen language as the content language
       cy.url().should('include', 'clang=sv');
+
+      //SKOSMOS object should have Swedish as the content language
+      cy.window().then((win) => {
+        expect(win.SKOSMOS.content_lang).to.equal('sv');
+      })
     })
 
     it('available search languages are the ones described in the vocabulary config', () => {
@@ -61,7 +71,7 @@ describe('Vocab search bar', () => {
         cy.get('#language-list .dropdown-item').then($elements => {
           const actualLanguages = $elements.map((index, el) => Cypress.$(el).attr('value')).get();
 
-          const expectedLanguages = ['all', 'fi', 'sv', 'se', 'en'];
+          const expectedLanguages = ['fi', 'sv', 'se', 'en', 'all'];
 
           // The two language lists should be of equal length and all of the expected languages can be found
           expect(expectedLanguages).to.have.lengthOf(actualLanguages.length);
