@@ -205,7 +205,9 @@ function startVocabSearchApp () {
       },
       changeLang (clang) {
         this.selectedLanguage = clang
-        window.SKOSMOS.content_lang = clang
+        if (clang !== 'all') {
+          window.SKOSMOS.content_lang = clang
+        }
         this.resetSearchTermAndHideDropdown()
       },
       changeContentLangAndReload (clang) {
