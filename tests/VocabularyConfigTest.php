@@ -388,6 +388,15 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     }
 
     /**
+     * @covers VocabularyConfig::getTitle
+     */
+    public function testGetTitleLanguageFallback()
+    {
+        $vocab = $this->model->getVocabulary('test');
+        $this->assertEquals('Test ontology', $vocab->getConfig()->getTitle('fi'));
+    }
+
+    /**
      * @covers VocabularyConfig::getDescription
      */
     public function testGetDesctiption()
