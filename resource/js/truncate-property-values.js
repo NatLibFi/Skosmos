@@ -2,7 +2,7 @@
 
 function truncatePropertyValues () {
   const maxValues = 15 // hide extras if there are more values than this
-  const propVals = document.querySelectorAll('.property-value > ul')
+  const propVals = document.querySelectorAll('.property-value > ul, #concept-other-languages ul')
   propVals.forEach((propVal) => { // one ul within div.property-value
     const listItems = propVal.children // the li's inside the ul
 
