@@ -32,6 +32,8 @@ function startGroupsApp () {
       if (document.querySelector('#groups > a').classList.contains('active')) {
         this.loadGroups()
       }
+
+      this.setListStyle()
     },
     beforeUpdate () {
       this.setListStyle()
@@ -153,7 +155,7 @@ function startGroupsApp () {
       },
       setListStyle () {
         const height = document.getElementById('sidebar-tabs').clientHeight
-        const width = document.getElementById('sidebar-tabs').clientWidth - 1
+        const width = document.getElementById('sidebar-tabs').getBoundingClientRect().width
         this.listStyle = {
           height: 'calc( 100% - ' + height + 'px )',
           width: width + 'px'

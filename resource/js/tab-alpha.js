@@ -133,12 +133,11 @@ function startAlphaApp () {
         const pagination = this.$refs.tabAlpha.$refs.pagination
         const sidebarTabs = document.getElementById('sidebar-tabs')
 
-        // get height and width of pagination and sidebar tabs elements if they exist
-        const height = pagination && pagination.clientHeight + sidebarTabs.clientHeight
-        const width = pagination && pagination.clientWidth - 1
+        const height = pagination ? pagination.clientHeight + sidebarTabs.clientHeight : sidebarTabs.clientHeight
+        const width = sidebarTabs.getBoundingClientRect().width
 
         this.listStyle = {
-          height: 'calc(100% - ' + height + 'px )',
+          height: 'calc( 100% - ' + height + 'px )',
           width: width + 'px'
         }
       }
@@ -204,12 +203,7 @@ function startAlphaApp () {
       }
     },
     template: `
-      <template v-if="loadingLetters">
-        <div class="loading-message">
-          {{ this.loadingMessage }} <i class="fa-solid fa-spinner fa-spin-pulse"></i>
-        </div>
-      </template>
-      <template v-else>
+      <template v-if="!loadingLetters">
         <ul class="pagination" v-if="indexLetters.length !== 0" ref="pagination">
           <li v-for="letter in indexLetters" class="page-item">
             <a class="page-link" href="#" @click="loadConcepts($event, letter)">{{ letter }}</a>
@@ -218,7 +212,7 @@ function startAlphaApp () {
       </template>
       
       <div class="sidebar-list" :style="listStyle" ref="list">
-        <template v-if="loadingConcepts">
+        <template v-if="loadingConcepts || loadingLetters">
           <div>
             {{ this.loadingMessage }} <i class="fa-solid fa-spinner fa-spin-pulse"></i>
           </div>
