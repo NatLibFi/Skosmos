@@ -164,7 +164,7 @@ class WebController extends Controller
     * @param Vocabulary $vocab the vocabulary object
     * @return array with language codes as keys and language labels as values
     */
-    private function parseVocabularyLanguageOrder($vocab)
+    public function parseVocabularyLanguageOrder($vocab)
     {
         $vocabContentLanguages = array_flip($vocab->getConfig()->getLanguages());
         $languageOrder = $vocab->getConfig()->getLanguageOrder();

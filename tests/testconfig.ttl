@@ -381,6 +381,15 @@
 	skosmos:sparqlGraph <http://www.skosmos.skos/subtag/> ;
 	skosmos:sparqlDialect "JenaText" .
 
+:multilang a skosmos:Vocabulary, void:Dataset ;
+	dc11:title "A vocabulary for testing multiple languages"@en ;
+	dc:subject :cat_general ;
+	void:uriSpace "http://www.skosmos.skos/multilang/";
+	skosmos:language "en", "sv", "de", "fi";
+    skosmos:fallbackLanguages ( "fi" "en" "sv" "de" ) ;
+	skosmos:sparqlGraph <http://www.skosmos.skos/multilang/> ;
+	skosmos:sparqlDialect "JenaText" .
+
 :collation a skosmos:Vocabulary, void:Dataset ;
     dc11:title "A vocabulary for test SPARQL with collation"@en ;
     dc:subject :cat_general ;

@@ -277,4 +277,13 @@ class WebControllerTest extends TestCase
         $this->assertEmpty($result);
     }
 
+    public function testParseVocabularyLanguageOrder() {
+        $request = new Request($this->model);
+        $vocab = $this->model->getVocabulary('multilang');
+
+        $languageOrder = $this->webController->parseVocabularyLanguageOrder($vocab);
+        $expected = array( 'en' => 'anglais', 'fi' => 'finnois', 'sv' => 'suédois', 'de' => 'allemand' );
+        $this->assertEquals($expected, $languageOrder);
+    }
+
 }
