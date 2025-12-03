@@ -32,6 +32,8 @@ function startHierarchyApp () {
       if (document.querySelector('#hierarchy > a').classList.contains('active')) {
         this.loadHierarchy()
       }
+
+      this.setListStyle()
     },
     beforeUpdate () {
       this.setListStyle()
@@ -298,7 +300,7 @@ function startHierarchyApp () {
       },
       setListStyle () {
         const height = document.getElementById('sidebar-tabs').clientHeight
-        const width = document.getElementById('sidebar-tabs').clientWidth - 1
+        const width = document.getElementById('sidebar-tabs').getBoundingClientRect().width
         this.listStyle = {
           height: 'calc( 100% - ' + height + 'px )',
           width: width + 'px'

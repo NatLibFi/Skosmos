@@ -715,10 +715,6 @@ header .container-fluid .row {
   box-shadow: none;
 }
 
-#sidebar .loading-message {
-  padding: 2rem 1rem;
-}
-
 /* --- Sidebar hierarchy and groups tabs --- */
 
 #tab-hierarchy .list-group-item,

@@ -126,7 +126,7 @@ function startChangesApp () {
       },
       setListStyle () {
         const height = document.getElementById('sidebar-tabs').clientHeight
-        const width = document.getElementById('sidebar-tabs').clientWidth - 1
+        const width = document.getElementById('sidebar-tabs').getBoundingClientRect().width
         this.listStyle = {
           height: 'calc( 100% - ' + height + 'px )',
           width: width + 'px'
