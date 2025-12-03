@@ -509,7 +509,7 @@ class WebController extends Controller
         echo $template->render(
             array(
                 'languages' => $this->languages,
-                'content_lang_list' => $sortedContentLangList,
+                'content_languages' => $this->parseVocabularyLanguageOrder($vocab),
                 'vocab' => $vocab,
                 'search_results' => $searchResults,
                 'search_count' => $counts,
