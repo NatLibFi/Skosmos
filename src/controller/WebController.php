@@ -167,7 +167,7 @@ class WebController extends Controller
     private function parseVocabularyLanguageOrder($vocab)
     {
         $vocabContentLanguages = array_flip($vocab->getConfig()->getLanguages());
-        $languageOrder = $vocab->getConfig()->getLanguageOrder(null);
+        $languageOrder = $vocab->getConfig()->getLanguageOrder();
 
         $tmpList = [];
 
