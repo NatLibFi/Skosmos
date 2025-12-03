@@ -77,11 +77,12 @@
     </div>
     {% if request.vocabid == '' and request.page != 'about' and request.page != 'feedback' %}
     <div class="collapse container-fluid mt-2 pe-0 py-3" id="global-search-bar">
-      <div class="row d-flex align-items-top">
-        <div class="col" id="global-search-text">
-          <h2>{{ "Global search"|trans }}</h2>
-        </div>
-        <div class="col-auto" id="global-search-wrapper">
+      <div class="row">
+        <div class="d-flex flex-column flex-xl-row align-items-start align-items-xl-center my-auto">
+          <div id="global-search-text">
+            <h2>{{ "Global search"|trans }}</h2>
+          </div>
+          <div class="ms-0 ms-xl-auto pt-3 pt-xl-0" id="global-search-wrapper"></div>
         </div>
       </div>
     </div>
@@ -90,18 +91,22 @@
     <div class="container-fluid bg-white py-4" id="headerbar">
       <div id="headerbar-top-slot" class="row"></div>
       <div class="row">
-        {% if pageType == 'landing' %}
-        <div class="col px-4" id="skosmos-logo">
-          <h1 class="visually-hidden">Skosmos</h1>
+        <div class="d-flex flex-column flex-xl-row align-items-start align-items-xl-center my-auto{% if pageType == 'landing' %} p-0{% endif %}">
+          {% if pageType == 'landing' %}
+          <div id="skosmos-logo">
+            <h1 class="visually-hidden">Skosmos</h1>
+          </div>
+          {% else %}
+          <h2 class="fw-bold" id="vocab-title">
+            <a class="text-decoration-none" href="{{ 'home' | global_url(request.lang, request.contentLang, request.vocabid, request.queryParam('anylang') == 'on') }}">
+              {{ request.vocab.title(request.contentLang) }}
+            </a>
+          </h2>
+          <div class="ms-0 ms-xl-auto pt-3 pt-xl-0">
+            <div id="search-vocab"></div>
+          </div>
+          {% endif %}
         </div>
-        {% else %}
-        <div class="col-7 px-3">
-        <h2 class="fw-bold" id="vocab-title"><a class="text-decoration-none" href="{{ 'home' | global_url(request.lang, request.contentLang, request.vocabid, request.queryParam('anylang') == 'on') }}">{{ request.vocab.title(request.contentLang) }}</a></h2>
-        </div>
-        <div class="col-5">
-          <div id="search-vocab"></div>
-        </div>
-        {% endif %}
       </div>
       <div id="headerbar-bottom-slot" class="row"></div>
     </div>
