@@ -17,7 +17,7 @@ function startVocabSearchApp () {
       searchPlaceholder () {
         return $t('Search...')
       },
-      allLanguages () {
+      anyLanguages () {
         return $t('Any language')
       },
       noResults () {
@@ -77,10 +77,8 @@ function startVocabSearchApp () {
       },
       formatLangStrings () {
         const langStrings = window.SKOSMOS.contentLangStrings
-        const allLanguegesEntry = { all: this.allLanguages }
-        const formattedList = { ...langStrings, ...allLanguegesEntry }
-
-        return formattedList
+        const anyLanguagesEntry = { all: this.anyLanguages }
+        return{ ...langStrings, ...anyLanguagesEntry }
       },
       formatSearchTerm () {
         if (this.searchTerm.includes('*')) { return this.searchTerm }

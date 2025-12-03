@@ -26,7 +26,7 @@ function startGlobalSearchApp () {
       searchPlaceholder () {
         return $t('3. Enter search term')
       },
-      allLanguages () {
+      anyLanguages () {
         return $t('Any language')
       },
       noResults () {
@@ -101,10 +101,8 @@ function startGlobalSearchApp () {
       },
       formatLangStrings () {
         const langStrings = window.SKOSMOS.contentLangStrings
-        const allLanguegesEntry = { all: this.allLanguages }
-        const formattedList = { ...langStrings, ...allLanguegesEntry }
-
-        return formattedList
+        const anyLanguagesEntry = { all: this.anyLanguages }
+        return { ...langStrings, ...anyLanguegesEntry }
       },
       formatSearchUrlParams () {
         const params = new URLSearchParams({ q: this.searchTerm })
