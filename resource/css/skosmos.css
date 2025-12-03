@@ -171,13 +171,6 @@ header .container-fluid .row {
 
 /* --- Search bar --- */
 
-#search-wrapper {
-  float: right;
-  display: flex;
-  align-items: stretch;
-  flex-wrap: wrap;
-}
-
 #search-wrapper input, #search-wrapper button {
   height: 100%;
 }
@@ -310,13 +303,12 @@ header .container-fluid .row {
   border: 1px solid var(--search-border);
   border-radius: 0;
   padding: 0;
-  width: 3.5em;
+  width: 44px;
 }
 
 /* --- Global search bar --- */
 
 #global-search-text {
-  min-width: 400px;
   overflow: auto;
 }
 
@@ -328,6 +320,12 @@ header .container-fluid .row {
 
 #global-search-bar .dropdown {
   display: inline-block;
+}
+
+@media (max-width: 992px) { /* lg breakpoint */
+  #global-search-wrapper #headerbar-search {
+    width: 15rem;
+  }
 }
 
 /* Vocabulary selector */

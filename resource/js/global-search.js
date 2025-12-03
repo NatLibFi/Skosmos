@@ -251,7 +251,7 @@ function startGlobalSearchApp () {
       }
     },
     template: `
-      <div id="search-wrapper">
+      <div id="search-wrapper" class="input-group ps-xl-2 flex-nowrap">
         <div class="dropdown" id="vocab-selector">
           <button class="btn btn-outline-secondary dropdown-toggle vocab-dropdown-btn"
             role="button"
@@ -305,7 +305,7 @@ function startGlobalSearchApp () {
             </li>
           </ul>
         </div>
-        <div class="input-group" id="search-form">
+        <div class="input-group flex-nowrap" id="search-form">
           <span id="headerbar-search" class="dropdown">
             <input type="search"
               class="form-control"

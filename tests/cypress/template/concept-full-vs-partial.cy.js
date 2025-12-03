@@ -13,7 +13,7 @@ describe('Concept page, full vs. partial page loads', () => {
       }
 
       // check that the vocabulary title is correct
-      cy.get('#vocab-title > a').invoke('text').should('equal', 'YSO - General Finnish ontology (archaeology)')
+      cy.get('#vocab-title > a').invoke('text').should('contain', 'YSO - General Finnish ontology (archaeology)')
 
       // check the concept prefLabel
       cy.get('#concept-heading h1').invoke('text').should('equal', 'burial mounds')

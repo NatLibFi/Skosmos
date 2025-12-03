@@ -224,139 +224,137 @@ function startVocabSearchApp () {
       }
     },
     template: `
-      <div class="d-flex my-auto ms-auto">
-        <div class="d-flex justify-content-end input-group ms-auto" id="search-wrapper">
+      <div class="input-group ps-xl-2 flex-nowrap" id="search-wrapper">
 
-        <div class="dropdown" id="language-selector">
-          <button class="btn btn-outline-secondary dropdown-toggle"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-            :aria-label="selectSearchLanguageAriaMessage"
-            v-if="languageStrings">
-            {{ languageStrings[selectedLanguage] }}
-            <i class="fa-solid fa-chevron-down"></i>
-          </button>
-          <ul class="dropdown-menu" id="language-list" role="menu">
-            <li v-for="(value, key) in languageStrings" :key="key" role="none">
-              <a
-                class="dropdown-item"
-                :value="key"
-                @click="changeContentLangAndReload(key)"
-                @keydown.enter="changeContentLangAndReload(key)"
-                role="menuitem"
-                tabindex=0 >
-                {{ value }}
-              </a>
+      <div class="dropdown" id="language-selector">
+        <button class="btn btn-outline-secondary dropdown-toggle"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          :aria-label="selectSearchLanguageAriaMessage"
+          v-if="languageStrings">
+          {{ languageStrings[selectedLanguage] }}
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <ul class="dropdown-menu" id="language-list" role="menu">
+          <li v-for="(value, key) in languageStrings" :key="key" role="none">
+            <a
+              class="dropdown-item"
+              :value="key"
+              @click="changeContentLangAndReload(key)"
+              @keydown.enter="changeContentLangAndReload(key)"
+              role="menuitem"
+              tabindex=0 >
+              {{ value }}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+        <span id="headerbar-search" class="dropdown">
+          <input type="search"
+            class="form-control"
+            id="search-field"
+            autocomplete="off"
+            data-bs-toggle=""
+            :aria-label="textInputWithDropdownButtonAriaMessage"
+            :placeholder="searchPlaceholder"
+            v-click-outside="hideAutoComplete"
+            v-model="searchTerm"
+            @input="autoComplete()"
+            @keyup.enter="gotoSearchPage()"
+            @click="showAutoComplete()">
+          <ul id="search-autocomplete-results"
+              class="dropdown-menu w-100"
+              :class="{ 'show': showDropdown }"
+              aria-labelledby="search-field">
+            <li class="autocomplete-result container" v-for="result in renderedResultsList"
+              :key="result.prefLabel" >
+              <template v-if="result.pageUrl">
+                <a :href=result.pageUrl>
+                  <div class="row pb-1">
+                    <div class="col" v-if="result.hitType == 'hidden'">
+                      <span class="result">
+                        <template v-if="result.showNotation && result.notation">
+                          {{ result.notation }}&nbsp;
+                        </template>
+                        <template v-if="result.hit.hasOwnProperty('match')">
+                          {{ result.hit.before }}<b>{{ result.hit.match }}</b>{{ result.hit.after }}
+                        </template>
+                        <template v-else>
+                          {{ result.hit }}
+                        </template>
+                      </span>
+                    </div>
+                    <div class="col" v-else-if="result.hitType == 'alt'">
+                      <span>
+                        <i>
+                          <template v-if="result.showNotation && result.notation">
+                            {{ result.notation }}&nbsp;
+                          </template>
+                          <template v-if="result.hit.hasOwnProperty('match')">
+                            {{ result.hit.before }}<b>{{ result.hit.match }}</b>{{ result.hit.after }}
+                          </template>
+                          <template v-else>
+                            {{ result.hit }}
+                          </template>
+                        </i>
+                      </span>
+                      <span> &rarr;&nbsp;<span class="result">
+                        <template v-if="result.showNotation && result.notation">
+                            {{ result.notation }}&nbsp;
+                          </template>
+                          <template v-if="result.hitPref.hasOwnProperty('match')">
+                            {{ result.hitPref.before }}<b>{{ result.hitPref.match }}</b>{{ result.hitPref.after }}
+                          </template>
+                          <template v-else>
+                            {{ result.hitPref }}
+                          </template>
+                        </span>
+                      </span>
+                    </div>
+                    <div class="col" v-else-if="result.hitType == 'notation'">
+                      <span class="result">
+                        <template v-if="result.hit.hasOwnProperty('match')">
+                          {{ result.hit.before }}<b>{{ result.hit.match }}</b>{{ result.hit.after }}
+                        </template>
+                        <template v-else>
+                          {{ result.hit }}
+                        </template>
+                      </span>
+                      <span>
+                        {{ result.prefLabel }}
+                      </span>
+                    </div>
+                    <div class="col" v-else-if="result.hitType == 'pref'">
+                      <span class="result">
+                        <template v-if="result.showNotation && result.notation">
+                          {{ result.notation }}&nbsp;
+                        </template>
+                        <template v-if="result.hit.hasOwnProperty('match')">
+                          {{ result.hit.before }}<b>{{ result.hit.match }}</b>{{ result.hit.after }}
+                        </template>
+                        <template v-else>
+                          {{ result.hit }}
+                        </template>
+                      </span>
+                    </div>
+                    <div class="col-auto align-self-end pr-1" v-html="result.renderedType"></div>
+                  </div>
+                </a>
+              </template>
+              <template v-else>
+                {{ result.prefLabel }}
+              </template>
             </li>
           </ul>
-        </div>
-
-          <span id="headerbar-search" class="dropdown">
-            <input type="search"
-              class="form-control"
-              id="search-field"
-              autocomplete="off"
-              data-bs-toggle=""
-              :aria-label="textInputWithDropdownButtonAriaMessage"
-              :placeholder="searchPlaceholder"
-              v-click-outside="hideAutoComplete"
-              v-model="searchTerm"
-              @input="autoComplete()"
-              @keyup.enter="gotoSearchPage()"
-              @click="showAutoComplete()">
-            <ul id="search-autocomplete-results"
-                class="dropdown-menu w-100"
-                :class="{ 'show': showDropdown }"
-                aria-labelledby="search-field">
-              <li class="autocomplete-result container" v-for="result in renderedResultsList"
-                :key="result.prefLabel" >
-                <template v-if="result.pageUrl">
-                  <a :href=result.pageUrl>
-                    <div class="row pb-1">
-                      <div class="col" v-if="result.hitType == 'hidden'">
-                        <span class="result">
-                          <template v-if="result.showNotation && result.notation">
-                            {{ result.notation }}&nbsp;
-                          </template>
-                          <template v-if="result.hit.hasOwnProperty('match')">
-                            {{ result.hit.before }}<b>{{ result.hit.match }}</b>{{ result.hit.after }}
-                          </template>
-                          <template v-else>
-                            {{ result.hit }}
-                          </template>
-                        </span>
-                      </div>
-                      <div class="col" v-else-if="result.hitType == 'alt'">
-                        <span>
-                          <i>
-                            <template v-if="result.showNotation && result.notation">
-                              {{ result.notation }}&nbsp;
-                            </template>
-                            <template v-if="result.hit.hasOwnProperty('match')">
-                              {{ result.hit.before }}<b>{{ result.hit.match }}</b>{{ result.hit.after }}
-                            </template>
-                            <template v-else>
-                              {{ result.hit }}
-                            </template>
-                          </i>
-                        </span>
-                        <span> &rarr;&nbsp;<span class="result">
-                          <template v-if="result.showNotation && result.notation">
-                              {{ result.notation }}&nbsp;
-                            </template>
-                            <template v-if="result.hitPref.hasOwnProperty('match')">
-                              {{ result.hitPref.before }}<b>{{ result.hitPref.match }}</b>{{ result.hitPref.after }}
-                            </template>
-                            <template v-else>
-                              {{ result.hitPref }}
-                            </template>
-                          </span>
-                        </span>
-                      </div>
-                      <div class="col" v-else-if="result.hitType == 'notation'">
-                        <span class="result">
-                          <template v-if="result.hit.hasOwnProperty('match')">
-                            {{ result.hit.before }}<b>{{ result.hit.match }}</b>{{ result.hit.after }}
-                          </template>
-                          <template v-else>
-                            {{ result.hit }}
-                          </template>
-                        </span>
-                        <span>
-                          {{ result.prefLabel }}
-                        </span>
-                      </div>
-                      <div class="col" v-else-if="result.hitType == 'pref'">
-                        <span class="result">
-                          <template v-if="result.showNotation && result.notation">
-                            {{ result.notation }}&nbsp;
-                          </template>
-                          <template v-if="result.hit.hasOwnProperty('match')">
-                            {{ result.hit.before }}<b>{{ result.hit.match }}</b>{{ result.hit.after }}
-                          </template>
-                          <template v-else>
-                            {{ result.hit }}
-                          </template>
-                        </span>
-                      </div>
-                      <div class="col-auto align-self-end pr-1" v-html="result.renderedType"></div>
-                    </div>
-                  </a>
-                </template>
-                <template v-else>
-                  {{ result.prefLabel }}
-                </template>
-              </li>
-            </ul>
-          </span>
-          <button id="clear-button" class="btn btn-danger" type="clear" v-if="searchTerm" @click="resetSearchTermAndHideDropdown()">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-          <button id="search-button" class="btn btn-outline-secondary" :aria-label="searchAriaMessage" @click="gotoSearchPage()">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </button>
-        </div>
+        </span>
+        <button id="clear-button" class="btn btn-danger" type="clear" v-if="searchTerm" @click="resetSearchTermAndHideDropdown()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <button id="search-button" class="btn btn-outline-secondary" :aria-label="searchAriaMessage" @click="gotoSearchPage()">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
       </div>
     `
   })
