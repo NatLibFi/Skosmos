@@ -78,7 +78,7 @@ function startVocabSearchApp () {
       formatLangStrings () {
         const langStrings = window.SKOSMOS.contentLangStrings
         const anyLanguagesEntry = { all: this.anyLanguages }
-        return{ ...langStrings, ...anyLanguagesEntry }
+        return { ...langStrings, ...anyLanguagesEntry }
       },
       formatSearchTerm () {
         if (this.searchTerm.includes('*')) { return this.searchTerm }
