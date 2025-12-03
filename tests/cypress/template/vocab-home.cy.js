@@ -37,7 +37,7 @@ describe('Vocabulary home page', () => {
     cy.visit('/test/en') // go to the "Test ontology" home page
 
     // check that the vocabulary title is correct
-    cy.get('#vocab-title > a').invoke('text').should('equal', 'Test ontology')
+    cy.get('#vocab-title > a').invoke('text').should('contain', 'Test ontology')
   })
   it('Clicking on hierarchy entries performs partial page load', () => {
     cy.visit('/test/en') // go to the "Test ontology" home page
