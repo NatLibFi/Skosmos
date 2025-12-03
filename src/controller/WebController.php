@@ -196,6 +196,8 @@ class WebController extends Controller
         $contentLanguages = array_flip($this->model->getLanguages($request->getLang()));
         $listStyle = $this->listStyle();
 
+        $vocabTypes = $this->model->getTypes(null, $request->getLang());
+
         // render template
         echo $template->render(
             array(
@@ -204,6 +206,7 @@ class WebController extends Controller
                 'languages' => $this->languages,
                 'content_languages' => $contentLanguages,
                 'request' => $request,
+                'types' => $vocabTypes,
                 'list_style' => $listStyle
             )
         );
@@ -237,6 +240,9 @@ class WebController extends Controller
         $template = $this->twig->load('concept.twig');
 
         $crumbs = $vocab->getBreadCrumbs($request->getContentLang(), $uri);
+
+        $vocabTypes = $this->model->getTypes($request->getVocabid(), $request->getLang());
+
         echo $template->render(
             array(
             'concept' => $concept,
@@ -248,6 +254,7 @@ class WebController extends Controller
             'visible_breadcrumbs' => $crumbs['breadcrumbs'],
             'hidden_breadcrumbs' => $crumbs['combined'],
             'request' => $request,
+            'types' => $vocabTypes,
             'plugin_params' => $pluginParameters,
             'custom_labels' => $customLabels)
         );
@@ -419,6 +426,7 @@ class WebController extends Controller
             $countAndResults = $this->model->searchConceptsAndInfo($parameters);
             $counts = $countAndResults['count'];
             $searchResults = $countAndResults['results'];
+            $vocabTypes = $this->model->getTypes(null, $request->getLang());
         } catch (Exception $e) {
             $errored = true;
             header("HTTP/1.0 500 Internal Server Error");
@@ -446,6 +454,7 @@ class WebController extends Controller
                 'vocab_list' => $vocabList,
                 'sorted_vocabs' => $sortedVocabs,
                 'request' => $request,
+                'types' => $vocabTypes,
                 'parameters' => $parameters
             )
         );
@@ -541,6 +550,8 @@ class WebController extends Controller
 
         $template = $this->twig->load('vocab-home.twig');
 
+        $vocabTypes = $this->model->getTypes($request->getVocabid(), $request->getLang());
+
         echo $template->render(
             array(
                 'languages' => $this->languages,
@@ -549,6 +560,7 @@ class WebController extends Controller
                 'search_letter' => 'A',
                 'active_tab' => $defaultView,
                 'request' => $request,
+                'types' => $vocabTypes,
                 'plugin_params' => $pluginParameters
             )
         );
