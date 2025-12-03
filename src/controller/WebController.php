@@ -460,7 +460,6 @@ class WebController extends Controller
         $this->model->setLocale($request->getLang());
         $vocab = $request->getVocab();
         $searchResults = null;
-
         try {
             $vocabTypes = $this->model->getTypes($request->getVocabid(), $request->getLang());
         } catch (Exception $e) {
@@ -505,7 +504,6 @@ class WebController extends Controller
             );
             return;
         }
-
         echo $template->render(
             array(
                 'languages' => $this->languages,
