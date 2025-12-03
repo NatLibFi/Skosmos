@@ -102,7 +102,7 @@ function startGlobalSearchApp () {
       formatLangStrings () {
         const langStrings = window.SKOSMOS.contentLangStrings
         const anyLanguageEntry = { all: this.anyLanguages }
-        return { ...langStrings, ...anyLanguegeEntry }
+        return { ...langStrings, ...anyLanguageEntry }
       },
       formatSearchUrlParams () {
         const params = new URLSearchParams({ q: this.searchTerm })
