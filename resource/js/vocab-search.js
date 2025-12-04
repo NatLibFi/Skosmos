@@ -130,8 +130,9 @@ function startVocabSearchApp () {
         }
         return null
       },
-      translateType (type) {
-        return $t(type)
+      renderType (typeUri) {
+        const label = window.SKOSMOS.type[typeUri]
+        return (label) || typeUri
       },
       /*
       * renderResults is used when the search string has been indexed in the cache
@@ -174,8 +175,9 @@ function startVocabSearchApp () {
           if (result.type.length > 1) { // remove the type for SKOS concepts if the result has more than one type
             result.type.splice(result.type.indexOf('skos:Concept'), 1)
           }
-          // use the translateType function to map translations for the type IRIs
-          result.renderedType = result.type.map(this.translateType).join(', ')
+          // use the renderType function to map translations for the type IRIs
+          console.log(result.type)
+          result.renderedType = result.type.map(uri => window.SKOSMOS.types[uri]).join(', ')
           result.showNotation = this.showNotation
         })
 
