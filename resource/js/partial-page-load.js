@@ -23,6 +23,13 @@ const fetchWithAbort = (function () {
   }
 })()
 
+const updateTopbarNav = (conceptHTML) => {
+  // update topbar navigation with language links
+  const conceptTopbarNav = conceptHTML.querySelector('#topbar-nav')
+  const topbarNav = document.querySelector('#topbar-nav')
+  topbarNav.innerHTML = conceptTopbarNav.innerHTML
+}
+
 const updateMainContent = (conceptHTML) => {
   // concept card
   const conceptMainContent = conceptHTML.querySelectorAll('#main-content > :not(#concept-mappings)') // all elements from concept card except concept mappings
@@ -96,6 +103,7 @@ const partialPageLoad = (event, pageUri) => {
       const conceptHTML = document.createElement('div')
       conceptHTML.innerHTML = data.trim()
 
+      updateTopbarNav(conceptHTML)
       updateMainContent(conceptHTML)
       updateTitle(conceptHTML)
       updateJsonLD(conceptHTML)
