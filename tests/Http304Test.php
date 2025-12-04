@@ -69,6 +69,9 @@ class Http304Test extends TestCase
         $this->request
             ->shouldReceive("getURI")
             ->andReturn("");
+        $this->request
+            ->shouldReceive("getVocabid")
+            ->andReturn($this->vocab->getId());
         $this->vocab
             ->shouldReceive("getConceptURI")
             ->andReturn("");
@@ -113,6 +116,9 @@ class Http304Test extends TestCase
         $this->request
             ->shouldReceive("getURI")
             ->andReturn("");
+        $this->request
+            ->shouldReceive("getVocabid")
+            ->andReturn($this->vocab->getId());
         $this->vocab
             ->shouldReceive("getConceptURI")
             ->andReturn("");
