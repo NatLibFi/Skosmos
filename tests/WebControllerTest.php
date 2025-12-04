@@ -282,8 +282,8 @@ class WebControllerTest extends TestCase
         $vocab = $this->model->getVocabulary('multilang');
 
         $languageOrder = $this->webController->parseVocabularyLanguageOrder($vocab);
-        $expected = array( 'en' => 'anglais', 'fi' => 'finnois', 'sv' => 'suédois', 'de' => 'allemand' );
-        $this->assertEquals($expected, $languageOrder);
+        $expected = array( 'fi' => 'finnois', 'en' => 'anglais', 'sv' => 'suédois', 'de' => 'allemand' );
+        $this->assertSame($expected, $languageOrder);
     }
 
 }
