@@ -851,15 +851,6 @@ header .container-fluid .row {
     border-radius: 0; 
 }
 
-/* Sidebar vocab-search
--------------------------------------- */
-
-.vocab-search #sidebar {
-  background-color: var(--sidebar-search-bg);
-  color: var(--sidebar-search-text);
-  height: 1000px; /* change */
-}
-
 /*  Vocab-home & concept pages
 -------------------------------------- */
 
