@@ -107,4 +107,29 @@ describe('Global search bar', () => {
       cy.get('#main-container').click({ force: true }); // using force true to click on elements not considered actionable
       cy.get('#search-autocomplete-results').should('not.be.visible'); // the autocomplete should disappear
     })
+    it('Autocomplete search result list contains concept types', () => {
+      // go to test vocab
+      cy.visit('/en/')
+
+      // open search bar
+      cy.get('#global-search-toggle').click()
+
+      // select a vocabulary
+      cy.contains('#vocab-list li label.vocab-select', 'test-notation-sort').parents('li').find('input[type="checkbox"]').check({ force: true });
+
+      // Choose English from the language dropdown
+      cy.get('#language-selector .dropdown-toggle').click();
+      cy.get('#language-list .dropdown-item').contains('English').click();
+
+      // Enter a search term
+      cy.get('#search-field').type('Barra');
+
+      // Autocomplete should appear
+      cy.get('#search-autocomplete-results', { timeout: 20000 }).should('be.visible');
+
+      // Verify the dropdown should have the concept type literal
+      cy.get('#search-autocomplete-results').within(() => {
+        cy.get('li').first().should('contain', 'Test class')
+      })
+    })
 })
