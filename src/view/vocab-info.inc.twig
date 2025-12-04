@@ -37,15 +37,23 @@
       {% endfor %}
 
       {% endif %}
+    </div>
 
-      {% if vocab.config.showStatistics %}
+    {% if vocab.config.showStatistics %}
+    <div class="main-content-section py-4">
       <div class="vocab-statistics">
         <div id="resource-counts"></div>
+      </div>
+    </div>
+    <div class="main-content-section py-4">
+      <div class="vocab-statistics">
         <div id="term-counts"></div>
       </div>
-      {% endif %}
+    </div>
+    {% endif %}
 
-      {% if vocab.config.dataURLs %}
+    {% if vocab.config.dataURLs %}
+    <div class="main-content-section py-4">
       <div class="row py-3" id="vocab-download-links">
         <div class="col-sm-12 px-0 property-label" id="download-links">
           <h2><i class="fa-solid fa-download"></i> {{ "Download this vocabulary:" | trans }}</h2>
@@ -71,8 +79,9 @@
           </ul>
         </div>
       </div>
-      {% endif %}
     </div>
+    {% endif %}
+
     <!-- appendix / concept mapping properties -->
     <div id="concept-mappings">
     </div>

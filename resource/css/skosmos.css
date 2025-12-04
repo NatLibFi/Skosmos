@@ -904,23 +904,26 @@ header .container-fluid .row {
 
 /* --- Vocab statistics --- */
 
-.vocab-statistics > h3 { /* incorrect selector */
-  font-size: 1.4rem;
+.vocab-statistics h3 {
+  font-size: 1.2rem;
 }
 
-#resource-table th { /* incorrect selector */
+.vocab-statistics .table {
+  table-layout: fixed;
+}
+
+.vocab-statistics th, .vocab-statistics td {
   color: var(--vocab-text);
+  padding: 0.25rem;
+}
+
+.vocab-statistics th {
   font-weight: bold;
   border-bottom: 1px solid var(--vocab-text);
 }
 
-#resource-table td { /* incorrect selector */
-  color: var(--vocab-text);
+.vocab-statistics td {
   border: none;
-}
-
-.resource-table-label { /* incorrect selector */
-  width: 40%;
 }
 
 /* --- Concept page --- */

@@ -40,7 +40,10 @@ function startResourceCountsApp () {
         <h3 class="fw-bold py-3">{{ resourceCountsTitle }}</h3>
         <table class="table" id="resource-stats">
           <tbody>
-            <tr><th class="versal">{{ typeLabel }}</th><th class="versal">{{ countLabel }}</th></tr>
+            <tr>
+              <th>{{ typeLabel }}</th>
+              <th>{{ countLabel }}</th>
+            </tr>
             <template v-if="hasCounts">
               <resource-counts :concepts :subTypes :conceptGroups :deprecatedConceptLabel></resource-counts>
             </template>
@@ -60,11 +63,11 @@ function startResourceCountsApp () {
           <td>{{ concepts.count }}</td>
         </tr>
         <tr v-for="st in subTypes" :key="st.label">
-          <td>{{ st.label }}</td>
+          <td class="ps-4">&#x2022; {{ st.label }}</td>
           <td>{{ st.count }}</td>
         </tr>
         <tr>
-          <td>{{ deprecatedConceptLabel }}</td>
+          <td class="ps-4">&#x2022; {{ deprecatedConceptLabel }}</td>
           <td>{{ concepts.deprecatedCount }}</td>
         </tr>
         <tr v-if="conceptGroups">

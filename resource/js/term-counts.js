@@ -39,10 +39,10 @@ function startTermCountsApp () {
         <table class="table" id="term-stats">
           <tbody>
             <tr>
-              <th class="main-table-label fw-bold">{{ conceptLanguageLabel }}</th>
-              <th class="main-table-label fw-bold">{{ preferredTermsLabel }}</th>
-              <th class="main-table-label fw-bold">{{ alternateTermsLabel }}</th>
-              <th class="main-table-label fw-bold">{{ hiddenTermsLabel }}</th>
+              <th>{{ conceptLanguageLabel }}</th>
+              <th>{{ preferredTermsLabel }}</th>
+              <th>{{ alternateTermsLabel }}</th>
+              <th>{{ hiddenTermsLabel }}</th>
             </tr>
             <template v-if="languages.length">
               <term-counts :languages="languages"></term-counts>
