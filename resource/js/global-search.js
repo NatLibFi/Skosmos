@@ -207,11 +207,12 @@ function startGlobalSearchApp () {
               result.hit = this.renderMatchingPart(renderedSearchTerm, result.prefLabel, result.lang)
             }
           }
+
           if ('uri' in result) { // create relative Skosmos page URL from the search result URI
-            result.pageUrl = result.uri
-            const urlParams = this.formatSearchUrlParams()
-            if (this.selectedLanguage !== window.SKOSMOS.lang) { // add content language parameter
-              urlParams.append('clang', this.selectedLanguage)
+            result.pageUrl = window.SKOSMOS.baseHref + result.vocab + '/' + window.SKOSMOS.lang + '/page/?'
+            const urlParams = new URLSearchParams({ uri: result.uri })
+            if (this.selectedLanguage) {
+              urlParams.set('clang', this.selectedLanguage)
             }
             result.pageUrl += urlParams.toString()
           }
