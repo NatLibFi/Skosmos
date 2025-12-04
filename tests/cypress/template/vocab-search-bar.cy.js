@@ -25,7 +25,7 @@ describe('Vocab search bar', () => {
 
       // Choose 'all' languages from the dropdown
       cy.get('#language-selector .dropdown-toggle').click();
-      cy.get('#language-list .dropdown-item').contains('kaikilla kielillä').click();
+      cy.get('#language-list .dropdown-item').get('a[value="all"]').click();
 
       // Enter a search term
       cy.get('#search-wrapper input').type('Katt');
@@ -45,12 +45,22 @@ describe('Vocab search bar', () => {
       cy.get('#language-selector .dropdown-toggle').click();
       cy.get('#language-list .dropdown-item').contains('ruotsi').click();
 
+      //SKOSMOS object should have Swedish as the content language
+      cy.window().then((win) => {
+        expect(win.SKOSMOS.content_lang).to.equal('sv');
+      })
+
       // Choose 'all' for search language
       cy.get('#language-selector .dropdown-toggle').click();
-      cy.get('#language-list .dropdown-item').contains('kaikilla kielillä').click();
+      cy.get('#language-list .dropdown-item').get('a[value="all"]').click();
 
       // Verify the search page url has the previously chosen language as the content language
       cy.url().should('include', 'clang=sv');
+
+      //SKOSMOS object should have Swedish as the content language
+      cy.window().then((win) => {
+        expect(win.SKOSMOS.content_lang).to.equal('sv');
+      })
     })
 
     it('available search languages are the ones described in the vocabulary config', () => {

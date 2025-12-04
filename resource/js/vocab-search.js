@@ -4,7 +4,6 @@ function startVocabSearchApp () {
   const vocabSearch = Vue.createApp({
     data () {
       return {
-        languages: [],
         selectedLanguage: null,
         searchTerm: null,
         searchCounter: null,
@@ -17,6 +16,9 @@ function startVocabSearchApp () {
     computed: {
       searchPlaceholder () {
         return $t('Search...')
+      },
+      anyLanguages () {
+        return $t('Any language')
       },
       noResults () {
         return $t('No results')
@@ -32,10 +34,9 @@ function startVocabSearchApp () {
       }
     },
     mounted () {
-      this.languages = window.SKOSMOS.languageOrder
       this.selectedLanguage = this.parseSearchLang()
       this.searchCounter = 0 // used for matching the query and the response in case there are many responses
-      this.languageStrings = window.SKOSMOS.language_strings
+      this.languageStrings = this.formatLanguages()
       this.renderedResultsList = []
       this.showNotation = window.SKOSMOS.showNotation
     },
@@ -73,6 +74,11 @@ function startVocabSearchApp () {
               this.renderResults() // render after the fetch has finished
             }
           })
+      },
+      formatLanguages () {
+        const languages = window.SKOSMOS.contentLanguages
+        const anyLanguagesEntry = { all: this.anyLanguages }
+        return { ...languages, ...anyLanguagesEntry }
       },
       formatSearchTerm () {
         if (this.searchTerm.includes('*')) { return this.searchTerm }
@@ -195,7 +201,9 @@ function startVocabSearchApp () {
       },
       changeLang (clang) {
         this.selectedLanguage = clang
-        window.SKOSMOS.content_lang = clang
+        if (clang !== 'all') {
+          window.SKOSMOS.content_lang = clang
+        }
         this.resetSearchTermAndHideDropdown()
       },
       changeContentLangAndReload (clang) {

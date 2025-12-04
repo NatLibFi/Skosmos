@@ -695,17 +695,17 @@ class VocabularyConfig extends BaseConfig
     /**
      * Returns an array of fallback languages that is ordered by priority and
      * defined in the vocabulary configuration as a collection.
-     * Additionally, the chosen content language is inserted with the highest priority
+     * Additionally, if the chosen content language is given, is inserted with the highest priority
      * and the vocab default language is inserted with the lowest priority.
      * @param string $clang
      * @return array of language code strings
      */
-    public function getLanguageOrder($clang)
+    public function getLanguageOrder($clang = null)
     {
         if (array_key_exists($clang, $this->languageOrderCache)) {
             return $this->languageOrderCache[$clang];
         }
-        $ret = array($clang);
+        $ret = ($clang !== null) ? array($clang) : array();
         $fallbacks = !empty($this->resource->get('skosmos:fallbackLanguages')) ? $this->resource->get('skosmos:fallbackLanguages') : array();
         foreach ($fallbacks as $lang) {
             if (!in_array($lang, $ret)) {

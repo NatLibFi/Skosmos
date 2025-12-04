@@ -1,29 +1,6 @@
 <!-- Skosmos variables passed from the backend to the frontend code-->
 <!-- NB: Do not add comments inside the JS object as it would break JSON parsing -->
 <script id="skosmos-global-vars">
-{% set mockup_translations = {
-    "fi": {
-        "fi": "suomi",
-        "en": "englanti",
-        "se": "pohjoissaame",
-        "sv": "ruotsi",
-        "all": "kaikilla kielillä"
-    },
-    "sv": {
-        "fi": "finska",
-        "en": "engelska",
-        "se": "nordsamiska",
-        "sv": "svenska",
-        "all": "på alla språk"
-    },
-    "en": {
-        "fi": "Finnish",
-        "en": "English",
-        "se": "Northern Sami",
-        "sv": "Swedish",
-        "all": "In all languages"
-    }
-} %}
 window.SKOSMOS = {
   "content_lang": "{{ request.contentLang }}",
   "explicitLangCodes": {{ explicit_langcodes ? "true" : "false" }},
@@ -41,7 +18,6 @@ window.SKOSMOS = {
   "uri": "{{ concept.uri }}",
   {% endif %}
   {%- if request.vocab ~%}
-  "languageOrder": [{% for lang in request.vocab.config.languageOrder(request.contentLang) %}"{{ lang }}"{% if not loop.last %}, {% endif %}{% endfor %}],
   "showNotation": {{ request.vocab.config.showNotation ? "true" : "false" }},
   "sortByNotation": {% if request.vocab.config.sortByNotation %}"{{ request.vocab.config.sortByNotation }}"{% else %}null{% endif ~%},
   "showConceptSchemesInHierarchy": {{ request.vocab.config.showConceptSchemesInHierarchy ? "true" : "false" }},
@@ -63,9 +39,7 @@ window.SKOSMOS = {
   },
   {%- endif -%}
   "baseHref": "{{ BaseHref }}",
-  "language_strings": { {%- if request.vocab ~%} {% for lang in request.vocab.config.languages %}"{{ lang }}": "{{ mockup_translations[request.lang][lang] }}", {% endfor -%}
-                        {% else %}{% for key, value in GlobalConfig.languages %}"{{ key }}": "{{ mockup_translations[request.lang][key] }}", {% endfor -%}{% endif %}
-                        "all": "{{ mockup_translations[request.lang].all }}" }
+  "contentLanguages": { {% for code, name in content_languages %}"{{ code }}": "{{ name }}"{% if not loop.last %}, {% endif %}{% endfor %} }
 }
 </script>
 
