@@ -36,7 +36,7 @@ function startVocabSearchApp () {
     mounted () {
       this.selectedLanguage = this.parseSearchLang()
       this.searchCounter = 0 // used for matching the query and the response in case there are many responses
-      this.languageStrings = this.formatLangStrings()
+      this.languageStrings = this.formatLanguages()
       this.renderedResultsList = []
       this.showNotation = window.SKOSMOS.showNotation
     },
@@ -75,10 +75,10 @@ function startVocabSearchApp () {
             }
           })
       },
-      formatLangStrings () {
-        const langStrings = window.SKOSMOS.contentLangStrings
+      formatLanguages () {
+        const languages = window.SKOSMOS.contentLanguages
         const anyLanguagesEntry = { all: this.anyLanguages }
-        return { ...langStrings, ...anyLanguagesEntry }
+        return { ...languages, ...anyLanguagesEntry }
       },
       formatSearchTerm () {
         if (this.searchTerm.includes('*')) { return this.searchTerm }

@@ -51,7 +51,7 @@ function startGlobalSearchApp () {
     mounted () {
       this.languages = window.SKOSMOS.languageOrder
       this.selectedLanguage = this.updateSearchLang()
-      this.languageStrings = this.formatLangStrings()
+      this.languageStrings = this.formatLanguages()
       this.vocabStrings = window.SKOSMOS.vocab_list
     },
     watch: {
@@ -99,10 +99,10 @@ function startGlobalSearchApp () {
             }
           })
       },
-      formatLangStrings () {
-        const langStrings = window.SKOSMOS.contentLangStrings
+      formatLanguages () {
+        const languages = window.SKOSMOS.contentLanguages
         const anyLanguageEntry = { all: this.anyLanguage }
-        return { ...langStrings, ...anyLanguageEntry }
+        return { ...languages, ...anyLanguageEntry }
       },
       formatSearchUrlParams () {
         const params = new URLSearchParams({ q: this.searchTerm })
