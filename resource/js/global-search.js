@@ -108,8 +108,9 @@ function startGlobalSearchApp () {
         if (this.selectedLanguage === 'all') {
           params.set('anylang', 'on')
         } else {
-          if (this.selectedLanguage)
+          if (this.selectedLanguage) {
             params.set('clang', this.selectedLanguage)
+          }
         }
         params.set('vocabs', this.formatVocabParam())
 
