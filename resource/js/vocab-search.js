@@ -131,7 +131,7 @@ function startVocabSearchApp () {
         return null
       },
       renderType (typeUri) {
-        const label = window.SKOSMOS.type[typeUri]
+        const label = window.SKOSMOS.types[typeUri]
         return (label) || typeUri
       },
       /*
@@ -176,8 +176,7 @@ function startVocabSearchApp () {
             result.type.splice(result.type.indexOf('skos:Concept'), 1)
           }
           // use the renderType function to map translations for the type IRIs
-          console.log(result.type)
-          result.renderedType = result.type.map(uri => window.SKOSMOS.types[uri]).join(', ')
+          result.renderedType = result.type.map(uri => this.renderType(uri)).join(', ')
           result.showNotation = this.showNotation
         })
 
