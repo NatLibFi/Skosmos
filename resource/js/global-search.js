@@ -140,9 +140,12 @@ function startGlobalSearchApp () {
         if (paramLang) {
           return paramLang
         }
-        // otherwise pick content lang from SKOSMOS object (it should always exist)
+        // otherwise pick content lang from SKOSMOS object
         if (window.SKOSMOS.content_lang) {
           return window.SKOSMOS.content_lang
+        } else {
+          // otherwise pick lang from SKOSMOS object (it should always exist)
+          return window.SKOSMOS.lang
         }
         return null
       },
