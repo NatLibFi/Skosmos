@@ -174,8 +174,9 @@ function startGlobalSearchApp () {
         }
         return null
       },
-      translateType (type) {
-        return $t(type)
+      renderType (typeUri) {
+        const label = window.SKOSMOS.types[typeUri]
+        return (label) || typeUri
       },
       /*
       * renderResults is used when the search string has been indexed in the cache
@@ -216,8 +217,8 @@ function startGlobalSearchApp () {
           if (result.type.length > 1) { // remove the type for SKOS concepts if the result has more than one type
             result.type.splice(result.type.indexOf('skos:Concept'), 1)
           }
-          // use the translateType function to map translations for the type IRIs
-          result.renderedType = result.type.map(this.translateType).join(', ')
+          // use the renderType function to map translations for the type IRIs
+          result.renderedType = result.type.map(uri => this.renderType(uri)).join(', ')
           result.showNotation = this.showNotation
         })
 
@@ -359,7 +360,7 @@ function startGlobalSearchApp () {
                               {{ result.hit.before }}<b>{{ result.hit.match }}</b>{{ result.hit.after }}
                             </template>
                             <template v-else>
-                              {{ result.hit }}
+                              {{ result.hit.plaintext }}
                             </template>
                           </i>
                         </span>
@@ -371,7 +372,7 @@ function startGlobalSearchApp () {
                               {{ result.hitPref.before }}<b>{{ result.hitPref.match }}</b>{{ result.hitPref.after }}
                             </template>
                             <template v-else>
-                              {{ result.hitPref }}
+                              {{ result.hitPref.plaintext }}
                             </template>
                           </span>
                         </span>
@@ -382,7 +383,7 @@ function startGlobalSearchApp () {
                             {{ result.hit.before }}<b>{{ result.hit.match }}</b>{{ result.hit.after }}
                           </template>
                           <template v-else>
-                            {{ result.hit }}
+                            {{ result.hit.plaintext }}
                           </template>
                         </span>
                         <span>
@@ -398,7 +399,7 @@ function startGlobalSearchApp () {
                             {{ result.hit.before }}<b>{{ result.hit.match }}</b>{{ result.hit.after }}
                           </template>
                           <template v-else>
-                            {{ result.hit }}
+                            {{ result.hit.plaintext }}
                           </template>
                         </span>
                       </div>

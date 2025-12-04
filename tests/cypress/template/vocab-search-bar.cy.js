@@ -184,6 +184,25 @@ describe('Vocab search bar', () => {
       cy.url().should('include', '/sv/');
       cy.url().should('include', 'clang=fi');
     })
+    it('Autocomplete search result list contains concept types', () => {
+      // go to test vocab
+      cy.visit('/test/en/')
+
+      // Choose English from the language dropdown
+      cy.get('#language-selector .dropdown-toggle').click();
+      cy.get('#language-list .dropdown-item').contains('English').click();
+
+      // Enter a search term
+      cy.get('#search-wrapper input').type('Bass');
+
+      // Autocomplete should appear
+      cy.get('#search-autocomplete-results', { timeout: 20000 }).should('be.visible');
+
+      // Verify the dropdown should have the concept type literal
+      cy.get('#search-autocomplete-results').within(() => {
+        cy.get('li').first().should('contain', 'Test class')
+      })
+    })
   });
 
   describe('Search Result Rendering', () => {
