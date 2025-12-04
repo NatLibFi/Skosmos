@@ -1,4 +1,5 @@
 {
+    "Any language": "Qualquer l\u00edngua",
     "Download this concept": "Descarregar este conceito",
     "%search_count% results for '%term%'": "%search_count% resultados para '%term%'",
     "404 Error: The page %requested_page% cannot be found.": "404 Erro: A p\u00e1gina %requested_page% n\u00e3o foi encontrada",
@@ -69,7 +70,6 @@
     "Search": "Pesquisar",
     "Search from selected vocabularies": "Procure nos vocabul\u00e1rios selecionados",
     "Search from vocabulary": "Pesquisar no vocabul\u00e1rio",
-    "Search language: any": "Qualquer l\u00edngua",
     "Search options": "Op\u00e7\u00f5es de pesquisa",
     "Search options tab": "Op\u00e7\u00f5es de pesquisa",
     "Search results": "Resultados da pesquisa",

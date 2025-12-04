@@ -1,4 +1,5 @@
 {
+    "Any language": "Suche in allen Sprachen",
     "Download this concept": "Herunterladen des Begriffs",
     "%search_count% results for '%term%'": "%search_count% Ergebnisse f\u00fcr '%term%'",
     "404 Error: The page %requested_page% cannot be found.": "Fehler 404: Die angeforderte Seite %requested_page% wurde nicht gefunden.",
@@ -69,7 +70,6 @@
     "Search": "Suche",
     "Search from selected vocabularies": "In ausgew\u00e4hlten Vokabularen suchen",
     "Search from vocabulary": "Suche im Vokabular",
-    "Search language: any": "Suche in allen Sprachen",
     "Search options": "Suchoptionen",
     "Search options tab": "Reiter f\u00fcr Suchoptionen",
     "Search results": "Suchergebnisse",

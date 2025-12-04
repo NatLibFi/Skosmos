@@ -1,4 +1,5 @@
 {
+    "Any language": "Dowolny j\u0119zyk",
     "Download this concept": "Pobierz to poj\u0119cie",
     "%search_count% results for '%term%'": "%search_count% wynik\u00f3w dla '%term%'",
     "404 Error: The page %requested_page% cannot be found.": "B\u0142\u0105d 404: Strona %requested_page% nieodnaleziona.",
@@ -48,7 +49,6 @@
     "Resource counts by type": "Liczba zasob\u00f3w wed\u0142ug typ\u00f3w",
     "Search": "Szukaj",
     "Search from vocabulary": "Wyszukaj ze s\u0142ownictwa",
-    "Search language: any": "Dowolny j\u0119zyk",
     "Search options": "Wyszukaj opcje",
     "Send feedback": "Wy\u015blij opini\u0119",
     "Skosmos version %version%": "Skosmos wersja %version%",
