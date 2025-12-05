@@ -1,4 +1,5 @@
 {
+    "Any language": "Jebkura valoda",
     "Download this concept": "Lejupl\u0101d\u0113jiet \u0161o konceptu",
     "%search_count% results for '%term%'": "%search_count% rezult\u0101ti '%term%'",
     "404 Error: The page %requested_page% cannot be found.": "404 k\u013c\u016bda: Piepras\u012bt\u0101 lapa %requested_page% netika atrasta.",
@@ -68,7 +69,6 @@
     "Search": "Mekl\u0113t",
     "Search from selected vocabularies": "Mekl\u0113t atz\u012bm\u0113taj\u0101s v\u0101rdn\u012bc\u0101s",
     "Search from vocabulary": "Mekl\u0113t v\u0101rdn\u012bc\u0101",
-    "Search language: any": "Jebkura valoda",
     "Search options": "Mekl\u0113\u0161anas iestat\u012bjumi",
     "Search options tab": "Mekl\u0113\u0161anas nosac\u012bjumu sada\u013ca",
     "Search results": "Mekl\u0113\u0161anas rezult\u0101ti",

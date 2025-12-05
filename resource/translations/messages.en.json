@@ -44,8 +44,8 @@
     "Not to a specific vocabulary": "Not to a specific vocabulary",
     "Search": "Search",
     "Search...": "Search...",
+    "Search across vocabularies": "Search across vocabularies",
     "Search from vocabulary": "Search from vocabulary",
-    "Search language: any": "Any language",
     "Search options": "Search options",
     "Send feedback": "Send feedback",
     "show all # paths": "show all # paths",
@@ -218,5 +218,10 @@
     "More information about this term": "More information about this term",
     "Text input with dropdown button": "Text input with dropdown button",
     "To customize what is shown here, add one or more .twig template files under the %slotPath% directory.": "To customize what is shown here, add one or more .twig template files under the %slotPath% directory.",
-    "Adding an empty twig file will remove this message.": "Adding an empty twig file will remove this message."
+    "Adding an empty twig file will remove this message.": "Adding an empty twig file will remove this message.",
+    "Any language": "Any language",
+    "Select search language": "Select search language",
+    "1. Choose vocabulary": "1. Choose vocabulary",
+    "2. Choose language": "2. Choose language",
+    "3. Enter search term": "3. Enter search term"
 }

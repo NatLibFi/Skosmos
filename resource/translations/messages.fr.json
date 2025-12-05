@@ -1,4 +1,5 @@
 {
+    "Any language": "Toutes les langues",
     "Download this concept": "T\u00e9l\u00e9charger ce concept",
     "%search_count% results for '%term%'": "%search_count% r\u00e9sultat(s) pour '%term%'",
     "404 Error: The page %requested_page% cannot be found.": "Erreur 404 : La page %requested_page% n'existe pas.",
@@ -48,7 +49,6 @@
     "Resource counts by type": "Nombre d'entr\u00e9es par type",
     "Search": "Chercher",
     "Search from vocabulary": "Choisissez le vocabulaire dans lequel chercher",
-    "Search language: any": "Toutes les langues",
     "Search options": "Options de recherche",
     "Send feedback": "Envoyer un commentaire",
     "Skosmos version %version%": "Skosmos version %version%",

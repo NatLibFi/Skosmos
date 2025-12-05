@@ -1,4 +1,9 @@
 {
+    "Search across vocabularies": "Sams\u00f6kning i flera vokabul\u00e4rer",
+    "1. Choose vocabulary": "1. V\u00e4lj vokabul\u00e4r",
+    "2. Choose language": "2. V\u00e4lj spr\u00e5k",
+    "3. Enter search term": "3. Ange s\u00f6kterm",
+    "Any language": "p\u00e5 alla spr\u00e5k",
     "Download this concept": "Ladda ned detta begrepp",
     "Adding an empty twig file will remove this message.": "Du kan ta bort detta meddelande genom att l\u00e4gga till en tom twig-fil.",
     "To customize what is shown here, add one or more .twig template files under the %slotPath% directory.": "Anpassa inneh\u00e5llet som visas h\u00e4r genom att l\u00e4gga till .twig-mallfiler i mappen %slotPath%.",
@@ -80,7 +85,6 @@
     "Search": "S\u00f6k",
     "Search from selected vocabularies": "S\u00f6k i utvalda vokabul\u00e4rer",
     "Search from vocabulary": "S\u00f6k i vokabul\u00e4r",
-    "Search language: any": "p\u00e5 alla spr\u00e5k",
     "Search options": "S\u00f6kalternativ",
     "Search options tab": "Flik f\u00f6r s\u00f6kval",
     "Search results": "S\u00f6kresultat",

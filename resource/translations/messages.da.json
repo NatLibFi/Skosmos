@@ -1,4 +1,5 @@
 {
+    "Any language": "Ethvert sprog",
     "Download this concept": "Download",
     "%search_count% results for '%term%'": "%search_count% resultater ved s\u00f8gning p\u00e5 '%term%'",
     "404 Error: The page %requested_page% cannot be found.": "404 fejl: Siden %requested_page% blev ikke fundet.",
@@ -48,7 +49,6 @@
     "Resource counts by type": "Antal ressourcer fordelt p\u00e5 type",
     "Search": "S\u00f8g",
     "Search from vocabulary": "S\u00f8g i begrebssystem",
-    "Search language: any": "Ethvert sprog",
     "Search options": "S\u00f8gemuligheder",
     "Send feedback": "Send feedback",
     "Skosmos version %version%": "Skosmos version %version%",

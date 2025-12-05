@@ -40,7 +40,7 @@
       {% if request.vocabid == '' and request.page != 'about' and request.page != 'feedback' %}
         <div>
           <button class="fs-6 py-3 text-light collapsed" id="global-search-toggle" data-bs-toggle="collapse" data-bs-target="#global-search-bar" aria-expanded="false" aria-controls="global-search-bar">
-              {{ "Global search"|trans }}
+              {{ "Search across vocabularies"|trans }}
           </button>
         </div>
       {% else %}
@@ -80,7 +80,7 @@
       <div class="row">
         <div class="d-flex flex-column flex-xl-row align-items-start align-items-xl-center my-auto">
           <div id="global-search-text">
-            <h2>{{ "Global search"|trans }}</h2>
+            <h2>{{ "Search across vocabularies"|trans }}</h2>
           </div>
           <div class="ms-0 ms-xl-auto pt-3 pt-xl-0" id="global-search-wrapper"></div>
         </div>

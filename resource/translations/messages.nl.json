@@ -1,4 +1,5 @@
 {
+    "Any language": "Elke taal",
     "Download this concept": "Download dit concept",
     "%search_count% results for '%term%'": "%search_count% resultaten voor \u2018%term%\u2019",
     "404 Error: The page %requested_page% cannot be found.": "404 Error: De pagina %requested_page% kan niet worden gevonden.",
@@ -63,7 +64,6 @@
     "Search": "Zoek",
     "Search from selected vocabularies": "Zoek in geselecteerde woordenlijsten",
     "Search from vocabulary": "Zoek in woordenlijst",
-    "Search language: any": "Elke taal",
     "Search options": "Zoekopties",
     "Search options tab": "Tab voor zoekopties",
     "Search results": "Zoekresultaten",

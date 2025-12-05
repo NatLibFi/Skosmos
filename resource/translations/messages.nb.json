@@ -1,4 +1,5 @@
 {
+    "Any language": "p\u00e5 alle spr\u00e5k",
     "Download this concept": "Last ned dette begrepet",
     "%search_count% results for '%term%'": "%search_count% treff for '%term%'",
     "404 Error: The page %requested_page% cannot be found.": "404 Feil: Siden %requested_page% finnes ikke.",
@@ -62,7 +63,6 @@
     "Search": "S\u00f8k",
     "Search from selected vocabularies": "S\u00f8k i valgte vokabularer",
     "Search from vocabulary": "S\u00f8k fra vokabular",
-    "Search language: any": "p\u00e5 alle spr\u00e5k",
     "Search options": "S\u00f8kevalg",
     "Search options tab": "Fane for s\u00f8kevalg",
     "Search results": "S\u00f8keresultater",
