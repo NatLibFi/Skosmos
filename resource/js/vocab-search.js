@@ -51,8 +51,6 @@ function startVocabSearchApp () {
         clearTimeout(this._timerId)
         this.hideAutoComplete()
 
-        // TODO: if the search term is in cache, use the cache
-
         // delay call, but don't execute if the search term is not at least two characters
         if (this.searchTerm.length > 1) {
           this._timerId = setTimeout(() => { this.search() }, delayMs)
@@ -137,10 +135,8 @@ function startVocabSearchApp () {
       /*
       * renderResults is used when the search string has been indexed in the cache
       * it also shows the autocomplete results list
-      * TODO: Showing labels in other languages, extra concept information and such goes here
       */
       renderResults () {
-        // TODO: get the results list form cache if it is implemented
         const renderedSearchTerm = this.searchTerm // save the search term in case it changes while rendering
 
         this.renderedResultsList.forEach(result => {
