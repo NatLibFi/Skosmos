@@ -50,7 +50,7 @@ function startGlobalSearchApp () {
     },
     mounted () {
       this.languages = window.SKOSMOS.languageOrder
-      this.selectedLanguage = this.updateSearchLang()
+      this.selectedLanguage = this.getSearchLang()
       this.languageStrings = this.formatLanguages()
       this.vocabStrings = window.SKOSMOS.vocab_list
     },
@@ -89,7 +89,6 @@ function startGlobalSearchApp () {
         let skosmosSearchUrl = window.SKOSMOS.baseHref + 'rest/v1/search?'
         const skosmosSearchApiParams = this.formatSearchApiParams()
         skosmosSearchUrl += skosmosSearchApiParams.toString()
-
         fetch(skosmosSearchUrl)
           .then(data => data.json())
           .then(data => {
@@ -109,7 +108,9 @@ function startGlobalSearchApp () {
         if (this.selectedLanguage === 'all') {
           params.set('anylang', 'on')
         } else {
-          params.set('clang', this.selectedLanguage)
+          if (this.selectedLanguage) {
+            params.set('clang', this.selectedLanguage)
+          }
         }
         params.set('vocabs', this.formatVocabParam())
 
@@ -118,7 +119,8 @@ function startGlobalSearchApp () {
       formatSearchApiParams () {
         const apiSearchTerm = this.searchTerm.includes('*') ? this.searchTerm : `${this.searchTerm}*`
         const params = new URLSearchParams({ query: apiSearchTerm, unique: true })
-        params.set('lang', this.getSearchLang())
+        const searchLang = this.getSearchLang() || window.SKOSMOS.lang
+        params.set('lang', searchLang)
         params.set('vocab', this.formatVocabParam())
 
         return params
@@ -140,16 +142,11 @@ function startGlobalSearchApp () {
         if (paramLang) {
           return paramLang
         }
-        // otherwise pick content lang from SKOSMOS object (it should always exist)
+        // otherwise pick content lang from SKOSMOS object
         if (window.SKOSMOS.content_lang) {
           return window.SKOSMOS.content_lang
         }
         return null
-      },
-      updateSearchLang () {
-        const lang = this.getSearchLang()
-        if (lang) { this.changeLang(lang) }
-        return lang
       },
       renderMatchingPart (searchTerm, label, lang = null) {
         if (label) {
@@ -205,11 +202,12 @@ function startGlobalSearchApp () {
               result.hit = this.renderMatchingPart(renderedSearchTerm, result.prefLabel, result.lang)
             }
           }
+
           if ('uri' in result) { // create relative Skosmos page URL from the search result URI
-            result.pageUrl = result.uri
-            const urlParams = this.formatSearchUrlParams()
-            if (this.selectedLanguage !== window.SKOSMOS.lang) { // add content language parameter
-              urlParams.append('clang', this.selectedLanguage)
+            result.pageUrl = window.SKOSMOS.baseHref + result.vocab + '/' + window.SKOSMOS.lang + '/page/?'
+            const urlParams = new URLSearchParams({ uri: result.uri })
+            if (this.selectedLanguage) {
+              urlParams.set('clang', this.selectedLanguage)
             }
             result.pageUrl += urlParams.toString()
           }
