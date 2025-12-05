@@ -148,11 +148,6 @@ function startGlobalSearchApp () {
         }
         return null
       },
-      updateSearchLang () {
-        const lang = this.getSearchLang()
-        if (lang) { this.changeLang(lang) }
-        return lang
-      },
       renderMatchingPart (searchTerm, label, lang = null) {
         if (label) {
           let langSpec = ''
