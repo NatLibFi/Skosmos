@@ -1141,7 +1141,7 @@ WHERE {
  }
  $filterGraph
 }
-GROUP BY ?s ?match ?label ?plabel ?alabel ?hlabel ?notation ?distLabels ?graph
+GROUP BY ?s ?match ?label ?plabel ?alabel ?hlabel ?notation ?graph
 ORDER BY LCASE(STR(?match)) LANG(?match) LCASE(STR(?distLabels)) $orderextra
 EOQ;
         return $query;
