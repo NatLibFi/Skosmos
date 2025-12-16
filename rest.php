@@ -4,7 +4,9 @@
  * Includes the side wide settings.
  */
 require_once 'vendor/autoload.php';
-
+// Must be handled with Autoload later on ..
+require_once 'controller/SkosmosExceptions.php';
+//require_once __DIR__ . '/controller/SkosmosExceptions.php';
 header("Access-Control-Allow-Origin: *"); // enable CORS for the whole REST API
 
 try {
@@ -106,7 +108,11 @@ try {
             echo ("404 Not Found");
         }
     }
-} catch (Exception $e) {
+//} catch (Exception $e) {
+//    header("HTTP/1.0 500 Internal Server Error");
+//    echo('ERROR: ' . $e->getMessage());
+//}
+}catch(Exception $e) {
     header("HTTP/1.0 500 Internal Server Error");
-    echo('ERROR: ' . $e->getMessage());
+    echo(TimeoutException::throwExceptionMessage());
 }
