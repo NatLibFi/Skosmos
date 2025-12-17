@@ -19,7 +19,8 @@ var sr_only_translations = {
 };
 
 <!-- variables passed through to javascript -->
-var lang = "{{ request.lang }}";
+// We replace underscores by dash so the locale complies with BCP-47 used by ECMAScript.
+var lang = "{{ request.lang }}".replace("_", "-");
 var content_lang = "{{ request.contentLang }}";
 var vocab = "{{ request.vocabid }}";
 {% if parameters %}
