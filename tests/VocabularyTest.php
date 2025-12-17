@@ -26,6 +26,15 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
   }
 
   /**
+   * @covers Vocabulary::getId
+   */
+  public function testGetMultiHashId() {
+    $vocab = $this->model->getVocabulary('multiHashVocabId');
+    $id = $vocab->getId();
+    $this->assertEquals('multiHashVocabId', $id);
+  }
+
+  /**
    * @covers Vocabulary::getTitle
    */
   public function testGetTitle() {
