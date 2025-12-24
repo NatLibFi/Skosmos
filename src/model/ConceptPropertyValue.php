@@ -13,6 +13,10 @@ class ConceptPropertyValue extends VocabularyDataObject
     private $clang;
     /** whether the property value is external w.r.t. to the subject resource */
     private $external;
+    /** ordered list items if this value is an RDF list */
+    private $listItems;
+    /** whether the RDF list was truncated due to max limit */
+    private $listTruncated;
 
     public function __construct($model, $vocab, $resource, $prop, $clang = '')
     {
@@ -20,6 +24,8 @@ class ConceptPropertyValue extends VocabularyDataObject
         $this->submembers = array();
         $this->type = $prop;
         $this->clang = $clang;
+        $this->listItems = null;
+        $this->listTruncated = false;
         // check if the resource is external to the current vocabulary
         $this->external = ($this->getLabel('', 'null', false) === null);
         if ($this->external) {
@@ -29,6 +35,8 @@ class ConceptPropertyValue extends VocabularyDataObject
                 $this->vocab = $exvocab;
             }
         }
+        // check if this resource is an RDF list and parse it
+        $this->parseRdfList();
     }
 
     public function __toString()
@@ -180,6 +188,57 @@ class ConceptPropertyValue extends VocabularyDataObject
             }
         }
         return $ret;
+    }
+
+    /**
+     * Check if this resource represents an RDF list (has rdf:first property)
+     * and parse the list items in order
+     */
+    private function parseRdfList()
+    {
+        // Check if this resource has rdf:first (indicating it's a list node)
+        if ($this->resource->getResource('rdf:first') === null) {
+            return; // Not an RDF list
+        }
+
+        $this->listItems = array();
+        $currentNode = $this->resource;
+        $maxIterations = $this->model->getConfig()->getMaxRdfListItems();
+        $iteration = 0;
+        
+        while ($currentNode !== null && !($maxIterations > 0 && $iteration >= $maxIterations)) {
+            $item = $currentNode->getResource('rdf:first');
+            if ($item !== null) {
+                $listItemValue = new ConceptPropertyValue($this->model, $this->vocab, $item, $this->type, $this->clang);
+                $this->listItems[] = $listItemValue;
+            }
+            $iteration++;
+            
+            $restNode = $currentNode->getResource('rdf:rest');
+            $isEndOfList = $restNode === null || $restNode->getUri() === 'http://www.w3.org/1999/02/22-rdf-syntax-ns#nil';
+            
+            $this->listTruncated = !$isEndOfList;
+            if ($isEndOfList) {
+                $currentNode = null;
+            } else {
+                $currentNode = $restNode;
+            }
+        }
+    }
+
+    public function isRdfList()
+    {
+        return $this->listItems !== null && count($this->listItems) > 0;
+    }
+
+    public function getRdfListItems()
+    {
+        return $this->listItems;
+    }
+
+    public function isRdfListTruncated()
+    {
+        return $this->listTruncated;
     }
 
 }
