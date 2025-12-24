@@ -403,4 +403,11 @@ class GlobalConfig extends BaseConfig {
     {
         return $this->getBoolean('skosmos:sparqlCollationEnabled', FALSE);
     }
+
+	/**
+	 * @return string|null
+	 */
+	public function getAuthenticationProvider() {
+		return $this->getLiteral('skosmos:authenticationProvider', false);
+	}
 }
