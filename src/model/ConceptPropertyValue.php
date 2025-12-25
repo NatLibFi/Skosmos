@@ -205,7 +205,7 @@ class ConceptPropertyValue extends VocabularyDataObject
         $currentNode = $this->resource;
         $maxIterations = $this->model->getConfig()->getMaxRdfListItems();
         $iteration = 0;
-        
+
         while ($currentNode !== null && !($maxIterations > 0 && $iteration >= $maxIterations)) {
             $item = $currentNode->getResource('rdf:first');
             if ($item !== null) {
@@ -213,10 +213,10 @@ class ConceptPropertyValue extends VocabularyDataObject
                 $this->listItems[] = $listItemValue;
             }
             $iteration++;
-            
+
             $restNode = $currentNode->getResource('rdf:rest');
             $isEndOfList = $restNode === null || $restNode->getUri() === 'http://www.w3.org/1999/02/22-rdf-syntax-ns#nil';
-            
+
             $this->listTruncated = !$isEndOfList;
             if ($isEndOfList) {
                 $currentNode = null;
