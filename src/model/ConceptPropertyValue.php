@@ -203,10 +203,10 @@ class ConceptPropertyValue extends VocabularyDataObject
 
         $this->listItems = array();
         $currentNode = $this->resource;
-        $maxIterations = $this->model->getConfig()->getMaxRdfListItems();
+        $itemsLimit = $this->model->getConfig()->getRdfListItemsLimit();
         $iteration = 0;
 
-        while ($currentNode !== null && !($maxIterations > 0 && $iteration >= $maxIterations)) {
+        while ($currentNode !== null && !($itemsLimit > 0 && $iteration >= $itemsLimit)) {
             $item = $currentNode->getResource('rdf:first');
             if ($item !== null) {
                 $listItemValue = new ConceptPropertyValue($this->model, $this->vocab, $item, $this->type, $this->clang);

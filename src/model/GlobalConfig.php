@@ -203,9 +203,9 @@ class GlobalConfig extends BaseConfig
      * A value of 0 means no limit (use with caution).
      * @return integer
      */
-    public function getMaxRdfListItems()
+    public function getRdfListItemsLimit()
     {
-        return $this->getLiteral('skosmos:maxRdfListItems', 1000);
+        return $this->getLiteral('skosmos:rdfListItemsLimit', 1000);
     }
 
     /**
