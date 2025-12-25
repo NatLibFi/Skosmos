@@ -57,6 +57,8 @@
     skosmos:searchResultsSize 20 ;
     # how many items (maximum) to retrieve in transitive property queries
     skosmos:transitiveLimit 1000 ;
+    # how many items (maximum) to retrieve in rdf lists
+    skosmos:rdfListItemsLimit 1000 ;
     # whether or not to log caught exceptions
     skosmos:logCaughtExceptions false ;
     # set to TRUE to enable logging into browser console
