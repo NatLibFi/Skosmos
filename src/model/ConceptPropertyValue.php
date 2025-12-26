@@ -217,12 +217,16 @@ class ConceptPropertyValue extends VocabularyDataObject
             $restNode = $currentNode->getResource('rdf:rest');
             $isEndOfList = $restNode === null || $restNode->getUri() === 'http://www.w3.org/1999/02/22-rdf-syntax-ns#nil';
 
-            $this->listTruncated = !$isEndOfList;
             if ($isEndOfList) {
+                $this->listTruncated = false;
                 $currentNode = null;
             } else {
                 $currentNode = $restNode;
             }
+        }
+
+        if ($currentNode !== null && $itemsLimit > 0 && $iteration >= $itemsLimit) {
+            $this->listTruncated = true;
         }
     }
 
