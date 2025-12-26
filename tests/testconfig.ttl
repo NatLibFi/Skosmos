@@ -48,6 +48,8 @@
     skosmos:searchResultsSize 5 ;
     # how many items (maximum) to retrieve in transitive property queries
     skosmos:transitiveLimit 100 ;
+    # how many items (maximum) to retrieve in rdf lists
+    skosmos:rdfListItemsLimit 10 ;
     # whether or not to log caught exceptions
     skosmos:logCaughtExceptions true ;
     # set to TRUE to enable logging into browser console
@@ -560,6 +562,14 @@
 	void:uriSpace "http://www.skosmos.skos/altlabel/";
 	skosmos:language "en", "fi";
 	skosmos:sparqlGraph <http://www.skosmos.skos/altlabel/> .
+
+:test-rdf-list a skosmos:Vocabulary, void:Dataset ;
+	dc:title "Test RDF list ontology"@en ;
+	dc:subject :cat_science ;
+	void:uriSpace "http://www.skosmos.skos/test-rdf-list/" ;
+	skosmos:defaultLanguage "en" ;
+	skosmos:language "en" ;
+	skosmos:sparqlGraph <http://www.skosmos.skos/test-rdf-list/> .
 
 <http://skosmos.skos/dump/test/groups> dc:format "application/rdf+xml" .
 
