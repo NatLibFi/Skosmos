@@ -204,4 +204,148 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
         $this->assertArrayHasKey('Last modified', $reified_vals);
         $this->assertEquals('4/13/18', $reified_vals['Last modified']->getLabel());
     }
+
+    /**
+     * @covers ConceptPropertyValue::isRdfList
+     * @covers ConceptPropertyValue::getRdfListItems
+     */
+    public function testRdfListOrdered()
+    {
+        $vocab = $this->model->getVocabulary('test-rdf-list');
+        $concept = $vocab->getConceptInfo('http://www.skosmos.skos/test-rdf-list/sdlc-ordered', 'en');
+        $props = $concept->getProperties();
+
+        $propKey = 'http://www.skosmos.skos/hasRelatedConcept';
+        $this->assertArrayHasKey($propKey, $props);
+        $values = $props[$propKey]->getValues();
+
+        // Should have exactly one value (the RDF list)
+        $this->assertCount(1, $values);
+
+        // getValues() returns associative array, get first value
+        $listValue = reset($values);
+        $this->assertNotNull($listValue, 'List value should not be null');
+        $this->assertTrue($listValue->isRdfList());
+
+        $listItems = $listValue->getRdfListItems();
+        $this->assertCount(6, $listItems);
+
+        // Check the order is preserved (SDLC phases)
+        $expectedOrder = ['Requirements Gathering', 'System Design', 'Implementation', 
+                         'Testing', 'Deployment', 'Maintenance'];
+        foreach ($listItems as $index => $item) {
+            $this->assertEquals($expectedOrder[$index], $item->getLabel()->getValue());
+        }
+    }
+
+    /**
+     * @covers ConceptPropertyValue::isRdfList
+     */
+    public function testRdfListUnordered()
+    {
+        $vocab = $this->model->getVocabulary('test-rdf-list');
+        $concept = $vocab->getConceptInfo('http://www.skosmos.skos/test-rdf-list/languages-unordered', 'en');
+        $props = $concept->getProperties();
+        
+        $propKey = 'http://www.skosmos.skos/hasRelatedConcept';
+        $this->assertArrayHasKey($propKey, $props);
+        $values = $props[$propKey]->getValues();
+        
+        // Should have 12 individual values (not a list)
+        $this->assertCount(12, $values);
+        
+        // None of the values should be RDF lists
+        foreach ($values as $value) {
+            $this->assertFalse($value->isRdfList());
+        }
+    }
+
+    /**
+     * @covers ConceptPropertyValue::isRdfList
+     * @covers ConceptPropertyValue::getRdfListItems
+     */
+    public function testRdfListMixed()
+    {
+        $vocab = $this->model->getVocabulary('test-rdf-list');
+        $concept = $vocab->getConceptInfo('http://www.skosmos.skos/test-rdf-list/mixed', 'en');
+        $props = $concept->getProperties();
+        
+        $propKey = 'http://www.skosmos.skos/hasRelatedConcept';
+        $this->assertArrayHasKey($propKey, $props);
+        $values = $props[$propKey]->getValues();
+        
+        // Should have 4 values: 3 individual items + 1 RDF list (containing 6 items)
+        $this->assertCount(4, $values);
+        
+        $listCount = 0;
+        $regularCount = 0;
+        
+        foreach ($values as $value) {
+            if ($value->isRdfList()) {
+                $listCount++;
+                $listItems = $value->getRdfListItems();
+                $this->assertCount(6, $listItems);
+                // Verify the list contains SDLC phases
+                $this->assertEquals('Requirements Gathering', $listItems[0]->getLabel()->getValue());
+                $this->assertEquals('System Design', $listItems[1]->getLabel()->getValue());
+                $this->assertEquals('Maintenance', $listItems[5]->getLabel()->getValue());
+            } else {
+                $regularCount++;
+            }
+        }
+        
+        $this->assertEquals(1, $listCount);
+        $this->assertEquals(3, $regularCount);
+    }
+
+    /**
+     * @covers ConceptPropertyValue::isRdfListTruncated
+     */
+    public function testRdfListNotTruncated()
+    {
+        $vocab = $this->model->getVocabulary('test-rdf-list');
+        $concept = $vocab->getConceptInfo('http://www.skosmos.skos/test-rdf-list/sdlc-ordered', 'en');
+        $props = $concept->getProperties();
+        
+        $propKey = 'http://www.skosmos.skos/hasRelatedConcept';
+        $values = $props[$propKey]->getValues();
+        $listValue = reset($values);
+        
+        $this->assertNotNull($listValue, 'List value should not be null');
+        $this->assertTrue($listValue->isRdfList());
+        $this->assertFalse($listValue->isRdfListTruncated());
+    }
+
+    /**
+     * @covers ConceptPropertyValue::isRdfListTruncated
+     * @covers ConceptPropertyValue::getRdfListItems
+     */
+    public function testRdfListTruncated()
+    {
+        $vocab = $this->model->getVocabulary('test-rdf-list');
+        $concept = $vocab->getConceptInfo('http://www.skosmos.skos/test-rdf-list/languages-ordered', 'en');
+        $props = $concept->getProperties();
+        
+        $propKey = 'http://www.skosmos.skos/hasRelatedConcept';
+        $this->assertArrayHasKey($propKey, $props);
+        $values = $props[$propKey]->getValues();
+        
+        $this->assertCount(1, $values);
+        $listValue = reset($values);
+        
+        $this->assertNotNull($listValue, 'List value should not be null');
+        $this->assertTrue($listValue->isRdfList());
+        
+        // List should be truncated at 10 items (config limit)
+        $listItems = $listValue->getRdfListItems();
+        $this->assertCount(10, $listItems);
+        
+        // Should be marked as truncated since original has 12 items
+        $this->assertTrue($listValue->isRdfListTruncated());
+        
+        // Verify first and last items of truncated list
+        // Order: Python, Java, JavaScript, C#, Ruby, PHP, Go, Rust, TypeScript, Swift (truncated at 10)
+        $this->assertEquals('Python', $listItems[0]->getLabel()->getValue());
+        $this->assertEquals('Swift', $listItems[9]->getLabel()->getValue());
+    }
 }
