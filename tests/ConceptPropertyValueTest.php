@@ -214,9 +214,18 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
         $propKey = 'http://www.skosmos.skos/hasRelatedConcept';
         $this->assertArrayHasKey($propKey, $props);
         $values = $props[$propKey]->getValues();
-
         $this->assertCount($count, $values);
         return $values;
+    }
+
+    private function getAssertedConceptRdfListPropertyFirstValue($uri, $count)
+    {
+        $values = $this->getAssertedConceptRdfListPropertyValues($uri, $count);
+        
+        $firstValue = reset($values);
+        $this->assertNotNull($firstValue, 'List value should not be null');
+        $this->assertTrue($firstValue->isRdfList());
+        return $firstValue;
     }
 
     /**
@@ -226,18 +235,13 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
     public function testRdfListOrdered()
     {
         // Should have exactly one value (the RDF list)
-        $values = $this->getAssertedConceptRdfListPropertyValues('http://www.skosmos.skos/test-rdf-list/sdlc-ordered', 1);
-
-        // getValues() returns associative array, get first value
-        $listValue = reset($values);
-        $this->assertNotNull($listValue, 'List value should not be null');
-        $this->assertTrue($listValue->isRdfList());
+        $listValue = $this->getAssertedConceptRdfListPropertyFirstValue('http://www.skosmos.skos/test-rdf-list/sdlc-ordered', 1);
 
         $listItems = $listValue->getRdfListItems();
         $this->assertCount(6, $listItems);
 
         // Check the order is preserved (SDLC phases)
-        $expectedOrder = ['Requirements Gathering', 'System Design', 'Implementation', 
+        $expectedOrder = ['Requirements Gathering', 'System Design', 'Implementation',
                          'Testing', 'Deployment', 'Maintenance'];
         foreach ($listItems as $index => $item) {
             $this->assertEquals($expectedOrder[$index], $item->getLabel()->getValue());
@@ -294,12 +298,8 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
     public function testRdfListNotTruncated()
     {
         // Should have exactly one value (the RDF list, not truncated)
-        $values = $this->getAssertedConceptRdfListPropertyValues('http://www.skosmos.skos/test-rdf-list/sdlc-ordered', 1);
+        $listValue = $this->getAssertedConceptRdfListPropertyFirstValue('http://www.skosmos.skos/test-rdf-list/sdlc-ordered', 1);
 
-        $listValue = reset($values);
-        
-        $this->assertNotNull($listValue, 'List value should not be null');
-        $this->assertTrue($listValue->isRdfList());
         $this->assertFalse($listValue->isRdfListTruncated());
     }
 
@@ -310,12 +310,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
     public function testRdfListTruncated()
     {
         // Should have exactly one value (the RDF list, truncated at 10 items (config limit))
-        $values = $this->getAssertedConceptRdfListPropertyValues('http://www.skosmos.skos/test-rdf-list/languages-ordered', 1);
-
-        $listValue = reset($values);
-
-        $this->assertNotNull($listValue, 'List value should not be null');
-        $this->assertTrue($listValue->isRdfList());
+        $listValue = $this->getAssertedConceptRdfListPropertyFirstValue('http://www.skosmos.skos/test-rdf-list/languages-ordered', 1);
 
         $listItems = $listValue->getRdfListItems();
         $this->assertCount(10, $listItems);
