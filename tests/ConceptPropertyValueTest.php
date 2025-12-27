@@ -205,22 +205,28 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
         $this->assertEquals('4/13/18', $reified_vals['Last modified']->getLabel());
     }
 
-    /**
-     * @covers ConceptPropertyValue::isRdfList
-     * @covers ConceptPropertyValue::getRdfListItems
-     */
-    public function testRdfListOrdered()
+    private function getAssertedConceptRdfListPropertyValues($uri, $count)
     {
         $vocab = $this->model->getVocabulary('test-rdf-list');
-        $concept = $vocab->getConceptInfo('http://www.skosmos.skos/test-rdf-list/sdlc-ordered', 'en');
+        $concept = $vocab->getConceptInfo($uri, 'en');
         $props = $concept->getProperties();
 
         $propKey = 'http://www.skosmos.skos/hasRelatedConcept';
         $this->assertArrayHasKey($propKey, $props);
         $values = $props[$propKey]->getValues();
 
+        $this->assertCount($count, $values);
+        return $values;
+    }
+
+    /**
+     * @covers ConceptPropertyValue::isRdfList
+     * @covers ConceptPropertyValue::getRdfListItems
+     */
+    public function testRdfListOrdered()
+    {
         // Should have exactly one value (the RDF list)
-        $this->assertCount(1, $values);
+        $values = $this->getAssertedConceptRdfListPropertyValues('http://www.skosmos.skos/test-rdf-list/sdlc-ordered', 1);
 
         // getValues() returns associative array, get first value
         $listValue = reset($values);
@@ -243,16 +249,8 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
      */
     public function testRdfListUnordered()
     {
-        $vocab = $this->model->getVocabulary('test-rdf-list');
-        $concept = $vocab->getConceptInfo('http://www.skosmos.skos/test-rdf-list/languages-unordered', 'en');
-        $props = $concept->getProperties();
-        
-        $propKey = 'http://www.skosmos.skos/hasRelatedConcept';
-        $this->assertArrayHasKey($propKey, $props);
-        $values = $props[$propKey]->getValues();
-        
         // Should have 12 individual values (not a list)
-        $this->assertCount(12, $values);
+        $values = $this->getAssertedConceptRdfListPropertyValues('http://www.skosmos.skos/test-rdf-list/languages-unordered', 12);
         
         // None of the values should be RDF lists
         foreach ($values as $value) {
@@ -266,16 +264,8 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
      */
     public function testRdfListMixed()
     {
-        $vocab = $this->model->getVocabulary('test-rdf-list');
-        $concept = $vocab->getConceptInfo('http://www.skosmos.skos/test-rdf-list/mixed', 'en');
-        $props = $concept->getProperties();
-        
-        $propKey = 'http://www.skosmos.skos/hasRelatedConcept';
-        $this->assertArrayHasKey($propKey, $props);
-        $values = $props[$propKey]->getValues();
-        
         // Should have 4 values: 3 individual items + 1 RDF list (containing 6 items)
-        $this->assertCount(4, $values);
+        $values = $this->getAssertedConceptRdfListPropertyValues('http://www.skosmos.skos/test-rdf-list/mixed', 4);
         
         $listCount = 0;
         $regularCount = 0;
@@ -303,12 +293,9 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
      */
     public function testRdfListNotTruncated()
     {
-        $vocab = $this->model->getVocabulary('test-rdf-list');
-        $concept = $vocab->getConceptInfo('http://www.skosmos.skos/test-rdf-list/sdlc-ordered', 'en');
-        $props = $concept->getProperties();
-        
-        $propKey = 'http://www.skosmos.skos/hasRelatedConcept';
-        $values = $props[$propKey]->getValues();
+        // Should have exactly one value (the RDF list, not truncated)
+        $values = $this->getAssertedConceptRdfListPropertyValues('http://www.skosmos.skos/test-rdf-list/sdlc-ordered', 1);
+
         $listValue = reset($values);
         
         $this->assertNotNull($listValue, 'List value should not be null');
@@ -322,24 +309,17 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
      */
     public function testRdfListTruncated()
     {
-        $vocab = $this->model->getVocabulary('test-rdf-list');
-        $concept = $vocab->getConceptInfo('http://www.skosmos.skos/test-rdf-list/languages-ordered', 'en');
-        $props = $concept->getProperties();
-        
-        $propKey = 'http://www.skosmos.skos/hasRelatedConcept';
-        $this->assertArrayHasKey($propKey, $props);
-        $values = $props[$propKey]->getValues();
-        
-        $this->assertCount(1, $values);
+        // Should have exactly one value (the RDF list, truncated at 10 items (config limit))
+        $values = $this->getAssertedConceptRdfListPropertyValues('http://www.skosmos.skos/test-rdf-list/languages-ordered', 1);
+
         $listValue = reset($values);
-        
+
         $this->assertNotNull($listValue, 'List value should not be null');
         $this->assertTrue($listValue->isRdfList());
-        
-        // List should be truncated at 10 items (config limit)
+
         $listItems = $listValue->getRdfListItems();
         $this->assertCount(10, $listItems);
-        
+
         // Should be marked as truncated since original has 12 items
         $this->assertTrue($listValue->isRdfListTruncated());
         
