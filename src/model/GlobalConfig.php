@@ -30,21 +30,24 @@ class GlobalConfig extends BaseConfig
      */
     private $configModifiedTime = null;
 
-    public function __construct(Model $model, ?string $config_name = null)
-    {
+    private static function configFilePath(?string $config_name = null) {
         if (!isset($config_name)) {
             if (getenv('SKOSMOS_CONFIG_NAME')) {
-                if (str_starts_with('/', getenv('SKOSMOS_CONFIG_NAME'))) {
-                    $config_name = getenv('SKOSMOS_CONFIG_NAME');
-                } else {
-                    $config_name = '../../' . getenv('SKOSMOS_CONFIG_NAME');
+                if (str_starts_with(getenv('SKOSMOS_CONFIG_NAME'), '/')) {
+                    return getenv('SKOSMOS_CONFIG_NAME');
                 }
+                $config_name = '../../' . getenv('SKOSMOS_CONFIG_NAME');
             } else {
                 $config_name = '../../config.ttl';
             }
         }
+        return realpath(dirname(__FILE__) . "/" . $config_name);
+    }
+
+    public function __construct(Model $model, ?string $config_name = null)
+    {
         $this->cache = new Cache();
-        $this->filePath = realpath(dirname(__FILE__) . "/" . $config_name);
+        $this->filePath = GlobalConfig::configFilePath($config_name);
         if (!file_exists($this->filePath)) {
             throw new Exception('Config file ' . $this->filePath . ' is missing, please provide one.');
         }
