@@ -361,7 +361,12 @@ class GlobalConfig extends BaseConfig
      */
     public function getBaseHref()
     {
-        return $this->getLiteral('skosmos:baseHref', null);
+        $baseHref = $this->getLiteral('skosmos:baseHref', null);
+        if ($baseHref) {
+            return $baseHref;
+        } elseif (getenv('SKOSMOS_BASE_HREF')) {
+            return getenv('SKOSMOS_BASE_HREF');
+        }
     }
 
     /**

@@ -101,7 +101,7 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
 
     public function testGetBaseHref()
     {
-        $this->assertEquals("http://tests.localhost/Skosmos/", $this->configWithBaseHref->getBaseHref());
+        $this->assertEquals(getenv('SKOSMOS_BASE_HREF'), $this->configWithBaseHref->getBaseHref());
     }
 
     public function testGetLanguages()
