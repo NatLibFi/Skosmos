@@ -63,16 +63,17 @@ class GlobalConfig extends BaseConfig
      */
     public static function getConfigFilePath(?string $config_name = null)
     {
+        $path = '/../../config.ttl';
         if (isset($config_name)) {
-            return GlobalConfig::getCheckedConfigFileRealPath($config_name);
+            $path = $config_name;
+        } else if (getenv('SKOSMOS_CONFIG_NAME')) {
+            if (str_starts_with(getenv('SKOSMOS_CONFIG_NAME'), '/')) {
+                $path = getenv('SKOSMOS_CONFIG_NAME');
+            } else {
+                $path = dirname(__FILE__) . '/../../' . getenv('SKOSMOS_CONFIG_NAME');
+            }
         }
-        if (!getenv('SKOSMOS_CONFIG_NAME')) {
-            return GlobalConfig::getCheckedConfigFileRealPath(dirname(__FILE__) . '/../../config.ttl');
-        }
-        if (str_starts_with(getenv('SKOSMOS_CONFIG_NAME'), '/')) {
-            return GlobalConfig::getCheckedConfigFileRealPath(getenv('SKOSMOS_CONFIG_NAME'));
-        }
-        return GlobalConfig::getCheckedConfigFileRealPath(dirname(__FILE__) . '/../../' . getenv('SKOSMOS_CONFIG_NAME'));
+        return GlobalConfig::getCheckedConfigFileRealPath($path);
     }
 
     public function __construct(Model $model, ?string $config_name = null)
