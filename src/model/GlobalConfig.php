@@ -30,27 +30,53 @@ class GlobalConfig extends BaseConfig
      */
     private $configModifiedTime = null;
 
-    private static function configFilePath(?string $config_name = null) {
-        if (!isset($config_name)) {
-            if (getenv('SKOSMOS_CONFIG_NAME')) {
-                if (str_starts_with(getenv('SKOSMOS_CONFIG_NAME'), '/')) {
-                    return getenv('SKOSMOS_CONFIG_NAME');
-                }
-                $config_name = '../../' . getenv('SKOSMOS_CONFIG_NAME');
-            } else {
-                $config_name = '../../config.ttl';
-            }
+    private static function getCheckedConfigFileRealPath(string $path): string
+    {
+        if (str_starts_with($path, '/')) {
+            $realpath = realpath($path);
+        } else {
+            $realpath = realpath(dirname(__FILE__) . "/" . $path);
         }
-        return realpath(dirname(__FILE__) . "/" . $config_name);
+        if (!$realpath) throw new Exception('Config file ' . $path . ' is missing, please provide one.');
+        return $realpath;
+    }
+
+
+    /**
+     * Gets the configuration file path.
+     *
+     * Returns the full path to the configuration file. If a config name is provided,
+     * it will be used to construct the path. Otherwise, fallback path will be used.
+     * 
+     * First fallback is the `SKOSMOS_CONFIG_NAME` environment variable,
+     * which accepts two formats:
+     * - Absolute path: A full path to the configuration file (e.g., /etc/skosmos/config.ttl)
+     * - Relative path: A path relative to the application root (e.g., config/config.ttl)
+     *
+     * Second fallback is "config.ttl" path in the root directory.
+     * 
+     * @param string|null $config_name Optional configuration file name
+     * @return string The full path to the configuration file. Throws errors on failure,
+     * e.g. if the file does not exist.
+     */
+    private static function getConfigFilePath(?string $config_name = null)
+    {
+        if (isset($config_name)) {
+            return GlobalConfig::getCheckedConfigFileRealPath($config_name);
+        }
+        if (!getenv('SKOSMOS_CONFIG_NAME')) {
+            return GlobalConfig::getCheckedConfigFileRealPath(dirname(__FILE__) . '/../../config.ttl');
+        }
+        if (str_starts_with(getenv('SKOSMOS_CONFIG_NAME'), '/')) {
+            return GlobalConfig::getCheckedConfigFileRealPath(getenv('SKOSMOS_CONFIG_NAME'));
+        }
+        return GlobalConfig::getCheckedConfigFileRealPath(dirname(__FILE__) . '/../../' . getenv('SKOSMOS_CONFIG_NAME'));
     }
 
     public function __construct(Model $model, ?string $config_name = null)
     {
         $this->cache = new Cache();
-        $this->filePath = GlobalConfig::configFilePath($config_name);
-        if (!file_exists($this->filePath)) {
-            throw new Exception('Config file ' . $this->filePath . ' is missing, please provide one.');
-        }
+        $this->filePath = GlobalConfig::getConfigFilePath($config_name);
         $resource = $this->initializeConfig();
         parent::__construct($model, $resource);
     }
