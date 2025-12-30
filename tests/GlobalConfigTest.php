@@ -9,6 +9,8 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
     /** @var GlobalConfig */
     private $config;
     /** @var GlobalConfig */
+    private $configFromEnv;
+    /** @var GlobalConfig */
     private $configWithDefaults;
     /** @var GlobalConfig */
     private $configWithBaseHref;
@@ -16,6 +18,7 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         $this->config = (new Model('/../../tests/testconfig.ttl'))->getConfig();
+        $this->configFromEnv = (new Model())->getConfig();
         $this->assertNotNull($this->config->getCache());
         $this->assertNotNull($this->config->getGraph());
         $this->configWithDefaults = (new Model('/../../tests/testconfig-fordefaults.ttl'))->getConfig();
@@ -227,5 +230,12 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
     public function testGetDefaultServiceName()
     {
         $this->assertEquals("Skosmos", $this->configWithDefaults->getServiceName());
+    }
+    
+    // --- tests from env config path
+    
+    public function testsGetServiceNameFromEnvConfig()
+    {
+        $this->assertEquals("Skosmos being tested from env", $this->configFromEnv->getServiceName());
     }
 }
