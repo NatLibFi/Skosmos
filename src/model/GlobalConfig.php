@@ -61,7 +61,7 @@ class GlobalConfig extends BaseConfig
      * @return string The full path to the configuration file. Throws errors on failure,
      * e.g. if the file does not exist.
      */
-    private static function getConfigFilePath(?string $config_name = null)
+    public static function getConfigFilePath(?string $config_name = null)
     {
         if (isset($config_name)) {
             return GlobalConfig::getCheckedConfigFileRealPath($config_name);

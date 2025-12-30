@@ -234,8 +234,12 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
     
     // --- tests from env config path
     
-    public function testsGetServiceNameFromEnvConfig()
+    public function testsGetDefaultConfigPath()
     {
-        $this->assertEquals("Skosmos being tested from env", $this->configFromEnv->getServiceName());
+        if (str_starts_with(getenv('SKOSMOS_CONFIG_NAME'), '/')) {
+            $this->assertEquals(getenv('SKOSMOS_CONFIG_NAME'), GlobalConfig::getConfigFilePath());
+        } else {
+            $this->assertStringStartsWith(str_replace(getenv('SKOSMOS_CONFIG_NAME'), '../', '/'), GlobalConfig::getConfigFilePath());
+        }
     }
 }
