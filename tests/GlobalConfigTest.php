@@ -17,7 +17,7 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->config = (new Model('../../tests/testconfig.ttl'))->getConfig();
+        $this->config = (new Model())->getConfig();
         $this->configFromEnv = (new Model())->getConfig();
         $this->assertNotNull($this->config->getCache());
         $this->assertNotNull($this->config->getGraph());

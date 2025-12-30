@@ -9,7 +9,7 @@ class WebControllerTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->model = Mockery::mock(new Model('../../tests/testconfig.ttl'));
+        $this->model = Mockery::mock(new Model());
         $this->webController = new WebController($this->model);
     }
 

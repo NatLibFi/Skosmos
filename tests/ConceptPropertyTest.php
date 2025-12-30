@@ -6,7 +6,7 @@ class ConceptPropertyTest extends PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->model = new Model('../../tests/testconfig.ttl');
+        $this->model = new Model();
     }
 
     /**

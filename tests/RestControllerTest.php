@@ -12,7 +12,7 @@ class RestControllerTest extends \PHPUnit\Framework\TestCase
     private $controller;
     protected function setUp(): void
     {
-        $this->model = Mockery::mock(new Model('../../tests/testconfig.ttl'));
+        $this->model = Mockery::mock(new Model());
         $this->controller = new RestController($this->model);
     }
 
@@ -966,7 +966,7 @@ EOD;
     },
     "count": "void:entities",
     "@language": "en",
-    "@base": "{$SKOSMOS_BASE_HREF}rest/v1/test/"
+    "@base": "{$skosmosBaseHref}rest/v1/test/"
   },
   "uri": "",
   "id": "test",

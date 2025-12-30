@@ -8,7 +8,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->model = new Model('../../tests/testconfig.ttl');
+        $this->model = new Model();
         $this->vocab = $this->model->getVocabulary('test');
         $this->concept = $this->vocab->getConceptInfo('http://www.skosmos.skos/test/ta112', 'en');
     }

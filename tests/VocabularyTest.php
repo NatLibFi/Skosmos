@@ -13,7 +13,7 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
         putenv("LANGUAGE=en_GB.utf8");
         putenv("LC_ALL=en_GB.utf8");
         setlocale(LC_ALL, 'en_GB.utf8');
-        $this->model = new Model('../../tests/testconfig.ttl');
+        $this->model = new Model();
         $this->jenamodel = new Model('../../tests/jenatestconfig.ttl');
     }
 
