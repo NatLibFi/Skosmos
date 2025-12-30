@@ -934,6 +934,7 @@ EOD;
      */
     public function testVocabularyStatistics()
     {
+        $SKOSMOS_BASE_HREF = getenv('SKOSMOS_BASE_HREF');
         ob_start();
 
         $request = new Request($this->model);
@@ -965,7 +966,7 @@ EOD;
     },
     "count": "void:entities",
     "@language": "en",
-    "@base": "http://:/rest/v1/test/"
+    "@base": "${SKOSMOS_BASE_HREF}/rest/v1/test/"
   },
   "uri": "",
   "id": "test",
