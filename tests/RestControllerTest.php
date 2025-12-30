@@ -966,7 +966,7 @@ EOD;
     },
     "count": "void:entities",
     "@language": "en",
-    "@base": "${SKOSMOS_BASE_HREF}/rest/v1/test/"
+    "@base": "{$SKOSMOS_BASE_HREF}rest/v1/test/"
   },
   "uri": "",
   "id": "test",
