@@ -200,7 +200,7 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
     public function testNonexistentFile()
     {
         $this->expectException(Exception::class);
-        $this->expectExceptionMessage('Config file ../../tests/testconfig-idonotexist.ttl is missing, please provide one.');
+        $this->expectExceptionMessage("Config file '../../tests/testconfig-idonotexist.ttl' is missing, please provide one.");
         $model = new Model('../../tests/testconfig-idonotexist.ttl');
         $this->assertNotNull($model);
     }

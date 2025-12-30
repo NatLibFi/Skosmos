@@ -12,6 +12,15 @@ EasyRdf\RdfNamespace::set('mads', 'http://www.loc.gov/mads/rdf/v1#');
 EasyRdf\RdfNamespace::set('wd', 'http://www.wikidata.org/entity/');
 EasyRdf\RdfNamespace::set('wdt', 'http://www.wikidata.org/prop/direct/');
 
+class ConfigFileNotFoundException extends Exception
+{
+    public function __construct(string $path, int $code = 0, ?Throwable $previous = null)
+    {
+        $message = "Config file '$path' is missing, please provide one.";
+        parent::__construct($message, $code, $previous);
+    }
+}
+
 /**
  * GlobalConfig provides access to the Skosmos configuration in config.ttl.
  */
@@ -38,11 +47,10 @@ class GlobalConfig extends BaseConfig
             $realpath = realpath(dirname(__FILE__) . "/" . $path);
         }
         if (!$realpath) {
-            throw new Exception('Config file ' . $path . ' is missing, please provide one.');
+            throw new ConfigFileNotFoundException($path);
         }
         return $realpath;
     }
-
 
     /**
      * Gets the configuration file path.
