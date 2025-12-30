@@ -71,7 +71,7 @@ class GlobalConfig extends BaseConfig
      */
     public static function getConfigFilePath(?string $config_name = null)
     {
-        $path = '/../../config.ttl';
+        $path = '../../config.ttl';
         if (isset($config_name)) {
             $path = $config_name;
         } elseif (getenv('SKOSMOS_CONFIG_NAME')) {
