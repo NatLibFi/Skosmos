@@ -37,7 +37,9 @@ class GlobalConfig extends BaseConfig
         } else {
             $realpath = realpath(dirname(__FILE__) . "/" . $path);
         }
-        if (!$realpath) throw new Exception('Config file ' . $path . ' is missing, please provide one.');
+        if (!$realpath) {
+            throw new Exception('Config file ' . $path . ' is missing, please provide one.');
+        }
         return $realpath;
     }
 
@@ -47,14 +49,14 @@ class GlobalConfig extends BaseConfig
      *
      * Returns the full path to the configuration file. If a config name is provided,
      * it will be used to construct the path. Otherwise, fallback path will be used.
-     * 
+     *
      * First fallback is the `SKOSMOS_CONFIG_NAME` environment variable,
      * which accepts two formats:
      * - Absolute path: A full path to the configuration file (e.g., /etc/skosmos/config.ttl)
      * - Relative path: A path relative to the application root (e.g., config/config.ttl)
      *
      * Second fallback is "config.ttl" path in the root directory.
-     * 
+     *
      * @param string|null $config_name Optional configuration file name
      * @return string The full path to the configuration file. Throws errors on failure,
      * e.g. if the file does not exist.
