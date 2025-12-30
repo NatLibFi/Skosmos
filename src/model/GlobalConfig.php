@@ -46,7 +46,7 @@ class GlobalConfig extends BaseConfig
         $this->cache = new Cache();
         $this->filePath = realpath(dirname(__FILE__) . "/" . $config_name);
         if (!file_exists($this->filePath)) {
-            throw new Exception('config.ttl file is missing, please provide one.');
+            throw new Exception('Config file ' . $this->filePath . ' is missing, please provide one.');
         }
         $resource = $this->initializeConfig();
         parent::__construct($model, $resource);
