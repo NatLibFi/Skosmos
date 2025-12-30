@@ -33,7 +33,7 @@ class Http304Test extends TestCase
      */
     public function initObjects(string $vocabularyName)
     {
-        $this->model = Mockery::mock(new Model('/../../tests/testconfig.ttl'))->makePartial();
+        $this->model = Mockery::mock(new Model('../../tests/testconfig.ttl'))->makePartial();
         $this->vocab = Mockery::mock($this->model->getVocabulary($vocabularyName))->makePartial();
         $this->controller = Mockery::mock('WebController')
             ->shouldAllowMockingProtectedMethods()

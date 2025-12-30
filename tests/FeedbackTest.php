@@ -10,7 +10,7 @@ class FeedbackTest extends PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->model = new Model('/../../tests/testconfig-fordefaults.ttl');
+        $this->model = new Model('../../tests/testconfig-fordefaults.ttl');
         $this->request = \Mockery::mock('Request', array($this->model))->makePartial();
         $this->request->setLang('en');
         $this->controller = \Mockery::mock('WebController[sendFeedback]', array($this->model))->makePartial();

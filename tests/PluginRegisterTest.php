@@ -44,7 +44,7 @@ class PluginRegisterTest extends PHPUnit\Framework\TestCase
                             'global-plugin-charlie' => array('js' => array('charlie.js'),
                                                       'callback' => array( 0 => 'charlie')));
         $this->mockpr->method('getPlugins')->will($this->returnValue($this->stubplugs));
-        $this->model = new Model('/../../tests/testconfig.ttl');
+        $this->model = new Model('../../tests/testconfig.ttl');
         $this->vocab = $this->model->getVocabulary('test');
     }
 

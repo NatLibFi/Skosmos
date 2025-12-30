@@ -12,7 +12,7 @@ class RestControllerTest extends \PHPUnit\Framework\TestCase
     private $controller;
     protected function setUp(): void
     {
-        $this->model = Mockery::mock(new Model('/../../tests/testconfig.ttl'));
+        $this->model = Mockery::mock(new Model('../../tests/testconfig.ttl'));
         $this->controller = new RestController($this->model);
     }
 

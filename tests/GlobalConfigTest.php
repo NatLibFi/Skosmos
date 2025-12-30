@@ -17,12 +17,12 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->config = (new Model('/../../tests/testconfig.ttl'))->getConfig();
+        $this->config = (new Model('../../tests/testconfig.ttl'))->getConfig();
         $this->configFromEnv = (new Model())->getConfig();
         $this->assertNotNull($this->config->getCache());
         $this->assertNotNull($this->config->getGraph());
-        $this->configWithDefaults = (new Model('/../../tests/testconfig-fordefaults.ttl'))->getConfig();
-        $this->configWithBaseHref = (new Model('/../../tests/testconfig-basehref.ttl'))->getConfig();
+        $this->configWithDefaults = (new Model('../../tests/testconfig-fordefaults.ttl'))->getConfig();
+        $this->configWithBaseHref = (new Model('../../tests/testconfig-basehref.ttl'))->getConfig();
     }
 
     // --- tests for values that are overriding default values
@@ -193,15 +193,15 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
     {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('config.ttl must have exactly one skosmos:Configuration');
-        $model = new Model('/../../tests/testconfig-nograph.ttl');
+        $model = new Model('../../tests/testconfig-nograph.ttl');
         $this->assertNotNull($model);
     }
 
     public function testNonexistentFile()
     {
         $this->expectException(Exception::class);
-        $this->expectExceptionMessage('config.ttl file is missing, please provide one.');
-        $model = new Model('/../../tests/testconfig-idonotexist.ttl');
+        $this->expectExceptionMessage('Config file ../../tests/testconfig-idonotexist.ttl is missing, please provide one.');
+        $model = new Model('../../tests/testconfig-idonotexist.ttl');
         $this->assertNotNull($model);
     }
 
