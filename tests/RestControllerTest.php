@@ -934,7 +934,7 @@ EOD;
      */
     public function testVocabularyStatistics()
     {
-        $SKOSMOS_BASE_HREF = getenv('SKOSMOS_BASE_HREF');
+        $skosmosBaseHref = getenv('SKOSMOS_BASE_HREF');
         ob_start();
 
         $request = new Request($this->model);
