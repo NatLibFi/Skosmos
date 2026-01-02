@@ -2,6 +2,7 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" colors="true" bootstrap="tests/bootstrap.php" processIsolation="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd" cacheDirectory=".phpunit.cache">
   <php>
     <ini name="date.timezone" value="UTC"/>
+    <env name="SKOSMOS_CONFIG_NAME" value="tests/testconfig.ttl"/>
   </php>
   <coverage>
     <report>
