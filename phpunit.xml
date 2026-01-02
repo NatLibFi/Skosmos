@@ -3,6 +3,7 @@
   <php>
     <ini name="date.timezone" value="UTC"/>
     <env name="SKOSMOS_CONFIG_NAME" value="tests/testconfig.ttl"/>
+    <env name="SKOSMOS_BASE_HREF" value="http://tests.localhost/Skosmos/"/>
   </php>
   <coverage>
     <report>
