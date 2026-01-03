@@ -20,3 +20,4 @@ services:
         target: /var/www/html/custom-templates
     environment:
       SKOSMOS_SPARQL_ENDPOINT: http://fuseki-cache:80/skosmos/sparql
+      SKOSMOS_CONFIG_NAME: tests/testconfig.ttl
