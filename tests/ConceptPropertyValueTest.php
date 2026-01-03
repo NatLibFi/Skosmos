@@ -211,7 +211,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
         $concept = $vocab->getConceptInfo($uri, 'en');
         $props = $concept->getProperties();
 
-        $propKey = 'http://www.skosmos.skos/hasRelatedConcept';
+        $propKey = 'http://www.skosmos.skos/hasRelatedConcept'; // NOSONAR - RDF URI, not a web request
         $this->assertArrayHasKey($propKey, $props);
         $values = $props[$propKey]->getValues();
         $this->assertCount($count, $values);
@@ -235,7 +235,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
     public function testRdfListOrdered()
     {
         // Should have exactly one value (the RDF list)
-        $listValue = $this->getAssertedConceptRdfListPropertyFirstValue('http://www.skosmos.skos/test-rdf-list/sdlc-ordered', 1);
+        $listValue = $this->getAssertedConceptRdfListPropertyFirstValue('http://www.skosmos.skos/test-rdf-list/sdlc-ordered', 1); // NOSONAR - RDF URI, not a web request
 
         $listItems = $listValue->getRdfListItems();
         $this->assertCount(6, $listItems);
@@ -254,7 +254,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
     public function testRdfListUnordered()
     {
         // Should have 12 individual values (not a list)
-        $values = $this->getAssertedConceptRdfListPropertyValues('http://www.skosmos.skos/test-rdf-list/languages-unordered', 12);
+        $values = $this->getAssertedConceptRdfListPropertyValues('http://www.skosmos.skos/test-rdf-list/languages-unordered', 12); // NOSONAR - RDF URI, not a web request
         
         // None of the values should be RDF lists
         foreach ($values as $value) {
@@ -269,7 +269,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
     public function testRdfListMixed()
     {
         // Should have 4 values: 3 individual items + 1 RDF list (containing 6 items)
-        $values = $this->getAssertedConceptRdfListPropertyValues('http://www.skosmos.skos/test-rdf-list/mixed', 4);
+        $values = $this->getAssertedConceptRdfListPropertyValues('http://www.skosmos.skos/test-rdf-list/mixed', 4); // NOSONAR - RDF URI, not a web request
         
         $listCount = 0;
         $regularCount = 0;
@@ -298,7 +298,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
     public function testRdfListNotTruncated()
     {
         // Should have exactly one value (the RDF list, not truncated)
-        $listValue = $this->getAssertedConceptRdfListPropertyFirstValue('http://www.skosmos.skos/test-rdf-list/sdlc-ordered', 1);
+        $listValue = $this->getAssertedConceptRdfListPropertyFirstValue('http://www.skosmos.skos/test-rdf-list/sdlc-ordered', 1); // NOSONAR - RDF URI, not a web request
 
         $this->assertFalse($listValue->isRdfListTruncated());
     }
@@ -310,7 +310,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
     public function testRdfListTruncated()
     {
         // Should have exactly one value (the RDF list, truncated at 10 items (config limit))
-        $listValue = $this->getAssertedConceptRdfListPropertyFirstValue('http://www.skosmos.skos/test-rdf-list/languages-ordered', 1);
+        $listValue = $this->getAssertedConceptRdfListPropertyFirstValue('http://www.skosmos.skos/test-rdf-list/languages-ordered', 1); // NOSONAR - RDF URI, not a web request
 
         $listItems = $listValue->getRdfListItems();
         $this->assertCount(10, $listItems);
