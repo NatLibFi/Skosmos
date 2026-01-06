@@ -124,10 +124,10 @@ class Model
      * Return all types (RDFS/OWL classes) present in the specified vocabulary or all vocabularies.
      * @return array Array with URIs (string) as key and array of (label, superclassURI) as value
      */
-    public function getTypes($vocid = null, $lang = null)
+    public function getTypes(string $vocid = null, string $lang = null): array
     {
         $sparql = (isset($vocid)) ? $this->getVocabulary($vocid)->getSparql() : $this->getDefaultSparql();
-        $result = $sparql->queryTypes($lang);
+        $result = $sparql->queryTypes($lang, $vocid);
 
         foreach ($result as $uri => $values) {
             if (empty($values)) {
