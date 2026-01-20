@@ -1,4 +1,4 @@
-/* exported getUrlParams, getHrefForUri, readCookie, createCookie, debounce, updateContent, updateJsonLD, updateTopbarLang, updateTitle, updateSidebar, setLangCookie, clearResultsAndAddSpinner, loadLimitations, loadPage, hideCrumbs, hidePropertyValues, shortenProperties, countAndSetOffset, combineStatistics, loadLimitedResults, naturalCompare, makeCallbacks, escapeHtml, makeSelection, copyToClickboard, renderPropertyMappingValues, renderPropertyMappings, loadMappingProperties */
+/* exported getUrlParams, getHrefForUri, readCookie, createCookie, debounce, updateContent, updateJsonLD, updateTopbarLang, updateTitle, updateSidebar, setLangCookie, clearResultsAndAddSpinner, loadLimitations, loadPage, hideCrumbs, hidePropertyValues, shortenProperties, countAndSetOffset, combineStatistics, loadLimitedResults, naturalCompare, makeCallbacks, escapeHtml, makeSelection, copyToClickboard, renderPropertyMappingValues, renderPropertyMappings, loadMappingProperties, getLabel, pickLabel, nodeLabelSortKey, hierarchySort */
 
 /* 
  * Creates a cookie value and stores it for the user. Takes the given
@@ -351,6 +351,72 @@ function naturalCompare(a, b) {
   }
 
   return negVsPos(ax.length - bx.length);
+}
+
+function getLabel(object) {
+  var labelProp = 'prefLabel';
+  if (!object.prefLabel) {
+    labelProp = 'label';
+  }
+  if (window.showNotation && object.notation) {
+    return '<span class="tree-notation">' + object.notation + '</span> <span class="tree-label">' + escapeHtml(object[labelProp]) + '</span>';
+  }
+  return '<span class="tree-label">' + escapeHtml(object[labelProp]) + '</span>';
+}
+
+function pickLabel(entity) {
+  var label = '';
+  if (entity.prefLabel)
+    label = entity.prefLabel;
+  else if (entity.label)
+    label = entity.label;
+  else if (entity.title)
+    label = entity.title;
+  return label;
+}
+
+/*
+ * Return a sort key suitable for sorting hierarchy nodes mainly by label.
+ * Nodes with domain class will be sorted first, followed by non-domain nodes.
+ */
+function nodeLabelSortKey(node) {
+  // make sure the tree nodes with class 'domain' are sorted before the others
+  // domain will be "0" if the node has a domain class, else "1"
+  var domain = (node.original.a_attr['class'] == 'domain') ? "0" : "1";
+  var label = node.original.label.toLowerCase();
+
+  return domain + " " + label;
+}
+
+function hierarchySort(a,b) {
+  var aNode = this.get_node(a);
+  var bNode = this.get_node(b);
+
+  // sort on notation if requested, and notations exist
+  if (window.sortByNotation) {
+      var aNotation = aNode.original.notation;
+      var bNotation = bNode.original.notation;
+
+      if (aNotation) {
+          if (bNotation) {
+              if (window.sortByNotation == "lexical") {
+                  if (aNotation < bNotation) {
+                      return -1;
+                  }
+                  else if (aNotation > bNotation) {
+                      return 1;
+                  }
+              } else { // natural
+                  return naturalCompare(aNotation, bNotation);
+              }
+          }
+          else return -1;
+      }
+      else if (bNotation) return 1;
+      // NOTE: if no notations found, fall back on label comparison below
+  }
+  // no sorting on notation requested, or notations don't exist
+  return naturalCompare(nodeLabelSortKey(aNode), nodeLabelSortKey(bNode));
 }
 
 function makeCallbacks(data, pageType) {
