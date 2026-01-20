@@ -32,3 +32,9 @@ collation:val1 a skos:Concept ;
 
 collation:val2 a skos:Concept ;
     skos:prefLabel "töyhtöhyyppä"@fi .
+
+collation:val3 a skos:Concept ;
+    skos:prefLabel "aakkoset"@fi .
+
+collation:val4 a skos:Concept ;
+    skos:prefLabel "ääkköset"@fi .
