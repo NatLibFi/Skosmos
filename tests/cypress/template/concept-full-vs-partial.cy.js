@@ -133,33 +133,55 @@ describe('Concept page, full vs. partial page loads', () => {
       cy.get('#concept-other-languages ul').eq(0).should('have.class', 'property-value-expand')
     })
     it('contains mappings / ' + pageLoadType, () => {
+      cy.task('log', `[MAPPING TEST] Starting with ${pageLoadType} page load`)
       if (pageLoadType == "full") {
+        cy.task('log', '[MAPPING TEST] Full page load: /yso/en/page/p14174 (labyrinths)')
         cy.visit('/yso/en/page/p14174') // go to "labyrinths" concept page
       } else {
+        cy.task('log', '[MAPPING TEST] Partial page load: visiting p5714 then clicking labyrinths')
         cy.visit('/yso/en/page/p5714') // go to "prehistoric graves" concept page
         // click on the link to "labyrinths" to trigger partial page load
         cy.get('#tab-hierarchy').contains('a', 'labyrinths').click()
+        cy.task('log', '[MAPPING TEST] Clicked labyrinths link')
       }
 
       // check that we have some mappings
+      cy.task('log', '[MAPPING TEST] Checking #concept-mappings exists')
       cy.get('#concept-mappings').should('not.be.empty')
       // check that spinner does not exist after load
+      cy.task('log', '[MAPPING TEST] Waiting for spinner to disappear (timeout: 15s)')
       cy.get('#concept-mappings i.fa-spinner', {'timeout': 15000}).should('not.exist')
+      cy.task('log', '[MAPPING TEST] Spinner gone - mappings loaded')
 
       // check the first mapping property name
       // NOTE: we need to increase the timeout as the mappings can take a long time to load
-      cy.get('.prop-mapping h2', {'timeout': 20000}).eq(0).contains('Closely matching concepts')
+      cy.task('log', '[MAPPING TEST] Checking first mapping property header (timeout: 20s)')
+      cy.get('.prop-mapping h2', {'timeout': 20000}).eq(0).invoke('text').then((text) => {
+        cy.task('log', `[MAPPING TEST] First mapping header: "${text}"`)
+      }).should('contain', 'Closely matching concepts')
       // check the first mapping property values
-      cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).contains('Labyrinths')
-      cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).find('a').should('have.attr', 'href', 'http://id.loc.gov/authorities/subjects/sh85073793')
-      cy.get('.prop-mapping').eq(0).find('.prop-mapping-vocab').eq(0).contains('Library of Congress Subject Headings')
+      cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).invoke('text').then((text) => {
+        cy.task('log', `[MAPPING TEST] First mapping label: "${text}"`)
+      }).should('contain', 'Labyrinths')
+      cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).find('a').should('have.attr', 'href').then((href) => {
+        cy.task('log', `[MAPPING TEST] First mapping href: ${href}`)
+      }).and('equal', 'http://id.loc.gov/authorities/subjects/sh85073793')
+      cy.get('.prop-mapping').eq(0).find('.prop-mapping-vocab').eq(0).invoke('text').then((text) => {
+        cy.task('log', `[MAPPING TEST] First mapping vocab: "${text}"`)
+      }).should('contain', 'Library of Congress Subject Headings')
       // check that the first mapping property has the right number of entries
-      cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').should('have.length', 1)
+      cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').should('have.length', 1).then(($els) => {
+        cy.task('log', `[MAPPING TEST] First mapping property count: ${$els.length}`)
+      })
 
       // check the second mapping property name
-      cy.get('.prop-mapping h2').eq(1).contains('Exactly matching concepts')
+      cy.get('.prop-mapping h2').eq(1).invoke('text').then((text) => {
+        cy.task('log', `[MAPPING TEST] Second mapping header: "${text}"`)
+      }).should('contain', 'Exactly matching concepts')
       // check the second mapping property values
-      cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(0).contains('labyrinter (sv)')
+      cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(0).invoke('text').then((text) => {
+        cy.task('log', `[MAPPING TEST] Second mapping first label: "${text}"`)
+      }).should('contain', 'labyrinter (sv)')
       cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(0).find('a').invoke('text').should('equal', 'labyrinter')
       cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(0).find('a').should('have.attr', 'href', 'http://www.yso.fi/onto/allars/Y21700')
       cy.get('.prop-mapping').eq(1).find('.prop-mapping-vocab').eq(0).contains('Allärs - General thesaurus in Swedish')
@@ -169,31 +191,48 @@ describe('Concept page, full vs. partial page loads', () => {
       cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(2).find('a').should('have.attr', 'href', 'http://www.yso.fi/onto/ysa/Y108389')
       cy.get('.prop-mapping').eq(1).find('.prop-mapping-vocab').eq(2).contains('YSA - Yleinen suomalainen asiasanasto')
       // check that the second mapping property has the right number of entries
-      cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').should('have.length', 3)
+      cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').should('have.length', 3).then(($els) => {
+        cy.task('log', `[MAPPING TEST] Second mapping property count: ${$els.length}`)
+        cy.task('log', '[MAPPING TEST] Test completed successfully')
+      })
     })
     it('contains mappings for hash namespace / ' + pageLoadType, () => {
+      cy.task('log', `[HASH MAPPING TEST] Starting with ${pageLoadType} page load`)
       if (pageLoadType == "full") {
+        cy.task('log', '[HASH MAPPING TEST] Full page load: /hash/en/page/c1 (hash mark)')
         cy.visit('/hash/en/page/c1') // go to "hash mark" concept page
       } else {
+        cy.task('log', '[HASH MAPPING TEST] Partial page load: visiting c2 then clicking hash mark')
         cy.visit('/hash/en/page/c2') // go to "hypertext" concept page
         // click on the link to "hash mark" to trigger partial page load
         cy.get('#tab-hierarchy').contains('a', 'hash mark').click()
+        cy.task('log', '[HASH MAPPING TEST] Clicked hash mark link')
       }
 
       // check that we have some mappings
+      cy.task('log', '[HASH MAPPING TEST] Checking #concept-mappings exists')
       cy.get('#concept-mappings').should('not.be.empty')
       // check that spinner does not exist after load
+      cy.task('log', '[HASH MAPPING TEST] Waiting for spinner to disappear (timeout: 15s)')
       cy.get('#concept-mappings i.fa-spinner', {'timeout': 15000}).should('not.exist')
+      cy.task('log', '[HASH MAPPING TEST] Spinner gone - mappings loaded')
 
       // check the first mapping property name
-      cy.get('.prop-mapping h2').eq(0).contains('Exactly matching concepts')
+      cy.get('.prop-mapping h2').eq(0).invoke('text').then((text) => {
+        cy.task('log', `[HASH MAPPING TEST] First mapping header: "${text}"`)
+      }).should('contain', 'Exactly matching concepts')
       // check the first mapping property values
-      cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).contains('number sign')
+      cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).invoke('text').then((text) => {
+        cy.task('log', `[HASH MAPPING TEST] First mapping label: "${text}"`)
+      }).should('contain', 'number sign')
       cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).find('a').invoke('text').should('equal', 'number sign')
       cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).find('a').should('have.attr', 'href', 'http://www.wikidata.org/entity/Q175743')
       cy.get('.prop-mapping').eq(0).find('.prop-mapping-vocab').eq(0).contains('www.wikidata.org')
       // check that the second mapping property has the right number of entries
-      cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').should('have.length', 1)
+      cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').should('have.length', 1).then(($els) => {
+        cy.task('log', `[HASH MAPPING TEST] Mapping property count: ${$els.length}`)
+        cy.task('log', '[HASH MAPPING TEST] Test completed successfully')
+      })
     })
 
   });
