@@ -595,14 +595,15 @@ class WebController extends Controller
      * @param string $prop the name of the property eg. 'dc:modified'.
      * @param int $offset starting index offset
      * @param int $limit maximum number of concepts to return
+     * @param int $cutoffYears amount of years to consider past current date
      * @return Array list of concepts
      */
-    public function getChangeList($request, $prop, $offset=0, $limit=200)
+    public function getChangeList($request, $prop, $offset=0, $limit=200, $cutoffYears=1)
     {
         // set language parameters for gettext
         $this->setLanguageProperties($request->getLang());
 
-        return $request->getVocab()->getChangeList($prop, $request->getContentLang(), $offset, $limit);
+        return $request->getVocab()->getChangeList($prop, $request->getContentLang(), $offset, $limit, $cutoffYears);
     }
 
     /**
