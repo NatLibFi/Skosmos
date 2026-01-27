@@ -27,10 +27,10 @@ class ResolverTest extends PHPUnit\Framework\TestCase
     /**
      * @covers Resolver::resolve
      * @covers RemoteResource::__construct
-     * @covers WDQSResource::resolve
+     * @covers WikidataResource::resolve
      * @uses Resolver
      */
-    public function testResolveWDQSZeroTimeout()
+    public function testResolveWikidataZeroTimeout()
     {
         $uri = "http://www.wikidata.org/entity/Q42"; // Wikidata: Douglas Adams
         // use @ to suppress the timeout warning

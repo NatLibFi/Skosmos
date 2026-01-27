@@ -1,8 +1,9 @@
 <?php
 
-class WDQSResource extends RemoteResource
+class WikidataResource extends RemoteResource
 {
-    public const WDQS_ENDPOINT = "https://query.wikidata.org/sparql";
+    // use the QLever Wikidata endpoint as it is much faster than WDQS
+    public const WIKIDATA_ENDPOINT = "https://qlever.dev/api/wikidata";
 
     public function resolve(int $timeout): ?EasyRdf\Resource
     {
@@ -10,7 +11,6 @@ class WDQSResource extends RemoteResource
             // change the timeout setting for external requests
             $httpclient = EasyRdf\Http::getDefaultHttpClient();
             $httpclient->setConfig(array('timeout' => $timeout, 'useragent' => 'Skosmos'));
-            $httpclient->setHeaders('Accept', 'text/turtle');
             EasyRdf\Http::setDefaultHttpClient($httpclient);
 
             $uri = $this->uri;
@@ -39,7 +39,7 @@ WHERE
 }
 EOQ;
 
-            $client = new EasyRdf\Sparql\Client(self::WDQS_ENDPOINT);
+            $client = new EasyRdf\Sparql\Client(self::WIKIDATA_ENDPOINT);
             $graph = $client->query($query);
             return $graph->resource($this->uri);
         } catch (Exception $e) {
