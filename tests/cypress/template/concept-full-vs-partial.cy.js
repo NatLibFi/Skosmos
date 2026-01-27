@@ -78,7 +78,8 @@ describe('Concept page, full vs. partial page loads', () => {
         cy.get('#tab-hierarchy').contains('a', 'Eel').click()
         // Wait for partial page load to complete
         cy.get('#concept-heading h1', {timeout: 10000}).should('contain', 'Eel')
-        cy.wait(500) // stabilization wait
+        // Wait for copy button to be ready
+        cy.get('#copy-notation').should('be.visible')
       }
 
       // click the copy to clipboard button next to the URI
@@ -149,10 +150,6 @@ describe('Concept page, full vs. partial page loads', () => {
       // check that spinner does not exist after load
       // NOTE: we need to increase the timeout as the mappings can take a long time to load
       cy.get('#concept-mappings i.fa-spinner', {'timeout': 15000}).should('not.exist')
-      
-      // Wait to ensure mappings don't start reloading after initial check
-      cy.wait(1000)
-      cy.get('#concept-mappings i.fa-spinner').should('not.exist')
 
       // check the first mapping property name
       cy.get('.prop-mapping h2', {'timeout': 20000}).eq(0).invoke('text').should('contain', 'Closely matching concepts')
