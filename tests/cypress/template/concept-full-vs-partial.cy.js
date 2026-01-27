@@ -199,8 +199,8 @@ describe('Concept page, full vs. partial page loads', () => {
       // check the first mapping property name
       cy.get('.prop-mapping h2').eq(0).invoke('text').should('contain', 'Exactly matching concepts')
       
-      // Wait for mapping labels to actually exist before checking them
-      cy.get('.prop-mapping .prop-mapping-label', {'timeout': 20000}).should('exist')
+      // Wait for mapping labels to load with actual text (not just entity IDs)
+      cy.get('.prop-mapping .prop-mapping-label', {'timeout': 20000}).first().should('contain', 'number sign')
       
       // check the first mapping property values
       cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).invoke('text').should('contain', 'number sign')
