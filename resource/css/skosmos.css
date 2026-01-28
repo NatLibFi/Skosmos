@@ -1,6 +1,6 @@
 :root {
   --dark-color: #0d284e;
-  --secondary-dark-color: #1b709d ;
+  --medium-color: #1b709d ;
   --secondary-medium-color: #b8c9db;
   --light-color: #dfe5ed;
   --secondary-light-color: #f2f5f7;
@@ -35,7 +35,7 @@
   --vocab-search-language-dropdown-hover-text: var(--white-color);
   --global-search-vocab-selector-selected-bg: var(--dark-color);
   --global-search-vocab-selector-check: var(--white-color);
-  --search-autocomplete-result-link: var(--secondary-dark-color);
+  --search-autocomplete-result-link: var(--medium-color);
 
   --main-bg-1: var(--white-color); /*landing*/
   --main-bg-2: var(--light-color); /*vocab, concept, search, error*/
@@ -44,7 +44,7 @@
   --landing-vocabulary-list-bg: var(--light-color);
   --landing-vocabulary-list-text: var(--dark-color);
   --landing-vocabulary-list-heading: var(--dark-color);
-  --landing-vocabulary-list-link: var(--secondary-dark-color);
+  --landing-vocabulary-list-link: var(--medium-color);
   --landing-vocabulary-list-link-underline: var(--secondary-medium-color);
 
   --sidebar-tab-inactive-bg: var(--secondary-light-color);
@@ -55,7 +55,7 @@
   --sidebar-scrollbar-track: var(--secondary-light-color);
   --sidebar-bg: var(--white-color);
   --sidebar-text: var(--dark-color);
-  --sidebar-link: var(--secondary-dark-color);
+  --sidebar-link: var(--medium-color);
   --sidebar-selected: var(--dark-color);
   --sidebar-alphabetical-entry-term: var(--dark-color);
   --sidebar-hierarchy-line: var(--dark-color);
@@ -63,11 +63,11 @@
 
   --main-content-bg: var(--white-color);
   --main-content-text: var(--dark-color);
-  --main-content-link: var(--secondary-dark-color);
+  --main-content-link: var(--medium-color);
   --main-content-border: var(--light-color);
 
   --about-text: var(--dark-color);
-  --about-link: var(--secondary-dark-color);
+  --about-link: var(--medium-color);
 
   --feedback-bg: var(--white-color);
   --feedback-text: var(--dark-color);
