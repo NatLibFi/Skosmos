@@ -1,19 +1,19 @@
 :root {
   --dark-color: #0d284e;
   --secondary-dark-color: #1b709d ;
-  --medium-color: #dfe5ed;
   --secondary-medium-color: #b8c9db;
-  --light-color: #f2f5f7;
+  --light-color: #dfe5ed;
+  --secondary-light-color: #f2f5f7;
   --alert-color: #a0270a;
   --white-color: #ffffff;
 
   --body-text: var(--dark-color);
 
   --scrollbar-thumb: var(--secondary-medium-color);
-  --scrollbar-track: var(--light-color);
+  --scrollbar-track: var(--secondary-light-color);
 
   --tooltip-bg: var(--dark-color);
-  --tooltip-text: var(--light-color);
+  --tooltip-text: var(--secondary-light-color);
   --tooltip-border: var(--secondary-medium-color);
 
   --topbar-bg-1: var(--dark-color); /*landing*/
@@ -26,11 +26,11 @@
   --headerbar-text: var(--dark-color);
 
   --search-field-bg: var(--white-color);
-  --search-dropdown-bg: var(--light-color);
-  --search-border: var(--medium-color);
+  --search-dropdown-bg: var(--secondary-light-color);
+  --search-border: var(--light-color);
   --search-button-bg: var(--dark-color);
   --search-button-text: var(--white-color);
-  --search-hover-bg: var(--medium-color);
+  --search-hover-bg: var(--light-color);
   --vocab-search-language-dropdown-hover-bg: var(--dark-color);
   --vocab-search-language-dropdown-hover-text: var(--white-color);
   --global-search-vocab-selector-selected-bg: var(--dark-color);
@@ -38,21 +38,21 @@
   --search-autocomplete-result-link: var(--secondary-dark-color);
 
   --main-bg-1: var(--white-color); /*landing*/
-  --main-bg-2: var(--medium-color); /*vocab, concept, search, error*/
-  --main-bg-3: var(--light-color); /*about, feedback*/
+  --main-bg-2: var(--light-color); /*vocab, concept, search, error*/
+  --main-bg-3: var(--secondary-light-color); /*about, feedback*/
 
-  --landing-vocabulary-list-bg: var(--medium-color);
+  --landing-vocabulary-list-bg: var(--light-color);
   --landing-vocabulary-list-text: var(--dark-color);
   --landing-vocabulary-list-heading: var(--dark-color);
   --landing-vocabulary-list-link: var(--secondary-dark-color);
   --landing-vocabulary-list-link-underline: var(--secondary-medium-color);
 
-  --sidebar-tab-inactive-bg: var(--light-color);
+  --sidebar-tab-inactive-bg: var(--secondary-light-color);
   --sidebar-tab-inactive-text: var(--dark-color);
   --sidebar-tab-active-bg: var(--dark-color);
   --sidebar-tab-active-text: var(--white-color);
   --sidebar-scrollbar-thumb: var(--secondary-medium-color);
-  --sidebar-scrollbar-track: var(--light-color);
+  --sidebar-scrollbar-track: var(--secondary-light-color);
   --sidebar-bg: var(--white-color);
   --sidebar-text: var(--dark-color);
   --sidebar-link: var(--secondary-dark-color);
@@ -64,14 +64,14 @@
   --main-content-bg: var(--white-color);
   --main-content-text: var(--dark-color);
   --main-content-link: var(--secondary-dark-color);
-  --main-content-border: var(--medium-color);
+  --main-content-border: var(--light-color);
 
   --about-text: var(--dark-color);
   --about-link: var(--secondary-dark-color);
 
   --feedback-bg: var(--white-color);
   --feedback-text: var(--dark-color);
-  --feedback-field-bg: var(--light-color);
+  --feedback-field-bg: var(--secondary-light-color);
   --feedback-submit-bg: var(--dark-color);
 
   --footer-bg: var(--white-color);
