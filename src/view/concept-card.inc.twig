@@ -94,6 +94,7 @@
                 </ul>
                 {% endif %}
               </li>
+              {% elseif property.type == 'rdf:type' %}<li>{{ propval.label|trans }}</li>
               {% else %} {# literals, e.g. altLabels #}
               <li>
                 {%- apply spaceless %}

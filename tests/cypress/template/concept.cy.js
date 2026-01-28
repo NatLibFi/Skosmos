@@ -154,7 +154,17 @@ describe('Concept page', () => {
     // the tooltip should now be visible
     cy.get('#concept-label .tooltip-html-content').should('be.visible')
   })
-  it('contains concept type', () => {
+  it('contains concept type (skos:Collection and iso-thes)', () => {
+    cy.visit('/groups/en/page/fish') // go to "Fish" ConceptGroup page
+
+    // check the property name
+    cy.get('.prop-rdf_type .property-label').invoke('text').should('equal', 'Type')
+
+    // check the concept type
+    cy.get('.prop-rdf_type .property-value li').invoke('text').should('contain', 'Collection')
+    cy.get('.prop-rdf_type .property-value li').invoke('text').should('contain', 'Array of sibling concepts')
+  })
+  it('contains concept type (vocabulary-specific type)', () => {
     cy.visit('/yso/en/page/p21685') // go to "music research" concept page
 
     // check the property name
