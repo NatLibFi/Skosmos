@@ -7,8 +7,9 @@ class WDQSResource extends RemoteResource
     public function resolve(int $timeout): ?EasyRdf\Resource
     {
         try {
-            // change the timeout setting for external requests
-            $httpclient = EasyRdf\Http::getDefaultHttpClient();
+            // Use HTTP/2 client for Wikidata WDQS (blocks HTTP/1.1 since Jan 2026)
+            // See: https://wikitech.wikimedia.org/wiki/Robot_policy
+            $httpclient = new EasyRdf\Http\Http2Client();
             $httpclient->setConfig(array('timeout' => $timeout, 'useragent' => 'Skosmos'));
             $httpclient->setHeaders('Accept', 'text/turtle');
             EasyRdf\Http::setDefaultHttpClient($httpclient);
