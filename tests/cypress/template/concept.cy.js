@@ -137,7 +137,8 @@ describe('Concept page', () => {
     // Check that notation property label is overridden correctly
     cy.get('.prop-skos_notation .property-label h2').invoke('text').should('include', 'UDC number')
     // Check that mapping property name is overridden correctly
-    cy.get('.prop-mapping h2', {'timeout': 20000}).eq(0).contains('Exactly matching classes')
+    // NOTE: we need to increase the timeout as the mappings can take a long time to load
+    cy.get('.prop-mapping h2', {'timeout': 20000}).eq(0).invoke('text').should('contain', 'Exactly matching classes')
     // Check that mapping property title is overridden correctly
     cy.get('.prop-mapping .property-label').eq(0).should('have.attr', 'title').and('contain', 'Exactly matching classes in another vocabulary.')
   })

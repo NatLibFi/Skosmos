@@ -30,7 +30,7 @@
     skosmos:sparqlCollationEnabled true ;
     # HTTP client configuration
     skosmos:sparqlTimeout 10 ;
-    skosmos:httpTimeout 8 ;
+    skosmos:httpTimeout 20 ;
     # customize the service name
     skosmos:serviceName "Skosmos being tested" ;
     skosmos:serviceNameLong "Skosmos being tested, long title"@en, "Skosmos-long" ;

@@ -76,6 +76,10 @@ describe('Concept page, full vs. partial page loads', () => {
         cy.visit('/test-notation-sort/en/page/?uri=http%3A%2F%2Fwww.skosmos.skos%2Ftest%2Fta0114') // go to "Buri" concept page
         // click on the link to "Eel" to trigger partial page load
         cy.get('#tab-hierarchy').contains('a', 'Eel').click()
+        // Wait for partial page load to complete
+        cy.get('#concept-heading h1', {timeout: 10000}).should('contain', 'Eel')
+        // Wait for copy button to be ready
+        cy.get('#copy-notation').should('be.visible')
       }
 
       // click the copy to clipboard button next to the URI
@@ -144,22 +148,26 @@ describe('Concept page, full vs. partial page loads', () => {
       // check that we have some mappings
       cy.get('#concept-mappings').should('not.be.empty')
       // check that spinner does not exist after load
+      // NOTE: we need to increase the timeout as the mappings can take a long time to load
       cy.get('#concept-mappings i.fa-spinner', {'timeout': 15000}).should('not.exist')
 
       // check the first mapping property name
-      // NOTE: we need to increase the timeout as the mappings can take a long time to load
-      cy.get('.prop-mapping h2', {'timeout': 20000}).eq(0).contains('Closely matching concepts')
+      cy.get('.prop-mapping h2', {'timeout': 20000}).eq(0).invoke('text').should('contain', 'Closely matching concepts')
+      
+      // Wait for mapping labels to actually exist before checking them
+      cy.get('.prop-mapping .prop-mapping-label', {'timeout': 20000}).should('exist')
+      
       // check the first mapping property values
-      cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).contains('Labyrinths')
+      cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).invoke('text').should('contain', 'Labyrinths')
       cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).find('a').should('have.attr', 'href', 'http://id.loc.gov/authorities/subjects/sh85073793')
-      cy.get('.prop-mapping').eq(0).find('.prop-mapping-vocab').eq(0).contains('Library of Congress Subject Headings')
+      cy.get('.prop-mapping').eq(0).find('.prop-mapping-vocab').eq(0).invoke('text').should('contain', 'Library of Congress Subject Headings')
       // check that the first mapping property has the right number of entries
       cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').should('have.length', 1)
 
       // check the second mapping property name
-      cy.get('.prop-mapping h2').eq(1).contains('Exactly matching concepts')
+      cy.get('.prop-mapping h2').eq(1).invoke('text').should('contain', 'Exactly matching concepts')
       // check the second mapping property values
-      cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(0).contains('labyrinter (sv)')
+      cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(0).invoke('text').should('contain', 'labyrinter (sv)')
       cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(0).find('a').invoke('text').should('equal', 'labyrinter')
       cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(0).find('a').should('have.attr', 'href', 'http://www.yso.fi/onto/allars/Y21700')
       cy.get('.prop-mapping').eq(1).find('.prop-mapping-vocab').eq(0).contains('Allärs - General thesaurus in Swedish')
@@ -171,6 +179,7 @@ describe('Concept page, full vs. partial page loads', () => {
       // check that the second mapping property has the right number of entries
       cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').should('have.length', 3)
     })
+
     it('contains mappings for hash namespace / ' + pageLoadType, () => {
       if (pageLoadType == "full") {
         cy.visit('/hash/en/page/c1') // go to "hash mark" concept page
@@ -178,17 +187,26 @@ describe('Concept page, full vs. partial page loads', () => {
         cy.visit('/hash/en/page/c2') // go to "hypertext" concept page
         // click on the link to "hash mark" to trigger partial page load
         cy.get('#tab-hierarchy').contains('a', 'hash mark').click()
+        // Wait for partial page load to complete by checking the concept heading updated
+        cy.get('#concept-heading h1', {timeout: 10000}).should('contain', 'hash mark')
       }
 
       // check that we have some mappings
       cy.get('#concept-mappings').should('not.be.empty')
       // check that spinner does not exist after load
+      // NOTE: we need to increase the timeout as the mappings can take a long time to load
       cy.get('#concept-mappings i.fa-spinner', {'timeout': 15000}).should('not.exist')
 
       // check the first mapping property name
-      cy.get('.prop-mapping h2').eq(0).contains('Exactly matching concepts')
+      cy.get('.prop-mapping h2').eq(0).invoke('text').should('contain', 'Exactly matching concepts')
+      
+      // Check if mapping labels exist at all
+      cy.get('.prop-mapping .prop-mapping-label', {'timeout': 20000}).should('exist').then(($labels) => {
+        const text = $labels.first().text()
+        expect(text).to.contain('number sign')
+      })
+      
       // check the first mapping property values
-      cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).contains('number sign')
       cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).find('a').invoke('text').should('equal', 'number sign')
       cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).find('a').should('have.attr', 'href', 'http://www.wikidata.org/entity/Q175743')
       cy.get('.prop-mapping').eq(0).find('.prop-mapping-vocab').eq(0).contains('www.wikidata.org')
