@@ -28,7 +28,7 @@ class Resolver
         if (preg_match('|http://id.loc.gov/[^/]+/[^/]+/.+|', $uri)) {
             $res = new LOCResource($this->model, $uri);
         } elseif ($this->startsWith('http://www.wikidata.org/entity/', $uri)) {
-            $res = new WDQSResource($this->model, $uri);
+            $res = new WikidataResource($this->model, $uri);
         } else {
             $res = new LinkedDataResource($this->model, $uri);
         }
