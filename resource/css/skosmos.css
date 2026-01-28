@@ -956,6 +956,10 @@ header .container-fluid .row {
   padding-bottom: 2.5rem;
 }
 
+h1#vocab-heading {
+  font-size: 2.5rem;
+}
+
 #vocab-heading, .vocab-statistics, #vocab-download-links {
   margin-left: -.75rem;
   margin-right: -.75rem;
