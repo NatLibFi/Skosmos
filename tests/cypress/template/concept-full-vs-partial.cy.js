@@ -200,21 +200,13 @@ describe('Concept page, full vs. partial page loads', () => {
       // check the first mapping property name
       cy.get('.prop-mapping h2').eq(0).invoke('text').should('contain', 'Exactly matching concepts')
       
-      // Debug: Log the entire mappings section HTML to see what's actually rendered
-      cy.get('#concept-mappings').then(($mappings) => {
-        cy.log(`Mappings HTML: ${$mappings.html().substring(0, 500)}`)
-      })
-      
       // Check if mapping labels exist at all
       cy.get('.prop-mapping .prop-mapping-label', {'timeout': 20000}).should('exist').then(($labels) => {
-        cy.log(`Found ${$labels.length} mapping label(s)`)
         const text = $labels.first().text()
-        cy.log(`First mapping label text: "${text}"`)
         expect(text).to.contain('number sign')
       })
       
       // check the first mapping property values
-      cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).invoke('text').should('contain', 'number sign')
       cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).find('a').invoke('text').should('equal', 'number sign')
       cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).find('a').should('have.attr', 'href', 'http://www.wikidata.org/entity/Q175743')
       cy.get('.prop-mapping').eq(0).find('.prop-mapping-vocab').eq(0).contains('www.wikidata.org')
