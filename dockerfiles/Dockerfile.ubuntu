@@ -1,8 +1,17 @@
-# Stage 0: Install composer packages
-FROM composer:latest AS composer
+# Stage 0a: Install composer packages (production)
+FROM composer:latest AS composer-prod
 WORKDIR /app
 COPY . /app/
 RUN composer install --no-dev \
+      --ignore-platform-req=ext-intl \
+      --ignore-platform-req=ext-xsl \
+      --ignore-platform-req=php
+
+# Stage 0b: Install composer packages (development with dev dependencies)
+FROM composer:latest AS composer-dev
+WORKDIR /app
+COPY . /app/
+RUN composer install \
       --ignore-platform-req=ext-intl \
       --ignore-platform-req=ext-xsl \
       --ignore-platform-req=php
@@ -17,7 +26,7 @@ COPY package.json ./
 RUN npm install --omit=dev --ignore-scripts
 
 # Stage 2: runtime image
-FROM ubuntu:24.04
+FROM ubuntu:24.04 AS runtime
 
 LABEL maintainer="National Library of Finland"
 LABEL version="0.1"
@@ -84,10 +93,34 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
 WORKDIR /var/www/html
 RUN rm index.html
 
-# vendors (from composer stage)
-COPY --chown=www-data:www-data --from=composer /app/vendor /var/www/html/vendor
+EXPOSE 80
 
-# sources (only those needed)
+CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+
+FROM runtime AS development
+
+RUN apt-get update && apt-get install -y \
+    git \
+ && rm -rf /var/lib/apt/lists/*
+
+# vendors with dev dependencies
+COPY --chown=www-data:www-data --from=composer-dev /app/vendor /var/www/html/vendor
+
+# all source files including tests
+COPY --chown=www-data:www-data . /var/www/html/
+
+# install Node modules
+COPY --chown=www-data:www-data --from=npm-installer /usr/src/app/node_modules /var/www/html/node_modules
+
+# Configure Skosmos
+COPY dockerfiles/config/config-docker.ttl /var/www/html/config.ttl
+
+FROM runtime AS production
+
+# vendors (production only, from composer-prod stage)
+COPY --chown=www-data:www-data --from=composer-prod /app/vendor /var/www/html/vendor
+
+# sources (only production files)
 COPY --chown=www-data:www-data bin /var/www/html/bin
 COPY --chown=www-data:www-data config /var/www/html/config
 COPY --chown=www-data:www-data custom-templates /var/www/html/custom-templates
@@ -104,11 +137,4 @@ COPY --chown=www-data:www-data swagger.json /var/www/html
 # install Node modules (from npm-installer stage)
 COPY --chown=www-data:www-data --from=npm-installer /usr/src/app/node_modules /var/www/html/node_modules
 
-# Configure Skosmos
-COPY dockerfiles/config/config-docker.ttl /var/www/html/config.ttl
-
 HEALTHCHECK --interval=5s --timeout=3s --retries=3 CMD curl -f http://localhost || exit 1
-
-EXPOSE 80
-
-CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
