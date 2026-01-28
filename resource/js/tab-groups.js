@@ -297,8 +297,7 @@ function startGroupsApp () {
           </template>
         </button>
         <span class="concept-label" :class="{ 'last': isLast }">
-          <i v-if="group.isGroup" class="property-hover fa-solid fa-layer-group"></i>
-          <a :class="{ 'selected': selectedGroup === group.uri }"
+          <a :class="{ 'selected': selectedGroup === group.uri, 'group': group.isGroup }"
             :href="getConceptURL(group.uri)"
             @click="handleClickGroupEvent($event, group)"
             :aria-label="goToTheConceptPageAriaMessage"
