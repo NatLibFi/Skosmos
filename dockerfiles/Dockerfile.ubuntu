@@ -1,5 +1,14 @@
-# Stage 0: install Node dependencies
-FROM node:18-alpine AS npm-installer
+# Stage 0: Install composer packages
+FROM composer:latest AS composer
+WORKDIR /app
+COPY . /app/
+RUN composer install --no-dev \
+      --ignore-platform-req=ext-intl \
+      --ignore-platform-req=ext-xsl \
+      --ignore-platform-req=php
+
+# Stage 1: install Node dependencies
+FROM node:24-alpine AS npm-installer
 
 WORKDIR /usr/src/app
 COPY package.json ./
@@ -7,7 +16,7 @@ COPY package.json ./
 # install node.js dependencies e.g. Vue (but not the development dependencies)
 RUN npm install --omit=dev --ignore-scripts
 
-# Stage 1: runtime image
+# Stage 2: runtime image
 FROM ubuntu:24.04
 
 LABEL maintainer="National Library of Finland"
@@ -19,7 +28,6 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y \
     apache2 \
     curl \
-    git \
     libapache2-mod-php8.3 \
     locales \
     php8.3 \
@@ -76,17 +84,25 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
 WORKDIR /var/www/html
 RUN rm index.html
 
-# composer and packages layer
-RUN curl -sS https://getcomposer.org/installer | php
-COPY composer.json /var/www/html
-RUN php composer.phar install --no-dev --no-autoloader
+# vendors (from composer stage)
+COPY --chown=www-data:www-data --from=composer /app/vendor /var/www/html/vendor
 
-# skosmos layer
-COPY . /var/www/html
-RUN php composer.phar install --no-dev
+# sources (only those needed)
+COPY --chown=www-data:www-data bin /var/www/html/bin
+COPY --chown=www-data:www-data config /var/www/html/config
+COPY --chown=www-data:www-data custom-templates /var/www/html/custom-templates
+COPY --chown=www-data:www-data plugins /var/www/html/plugins
+COPY --chown=www-data:www-data resource /var/www/html/resource
+COPY --chown=www-data:www-data src /var/www/html/src
+COPY --chown=www-data:www-data .env /var/www/html
+COPY --chown=www-data:www-data .htaccess /var/www/html
+COPY --chown=www-data:www-data composer.json /var/www/html
+COPY --chown=www-data:www-data config.ttl.dist /var/www/html
+COPY --chown=www-data:www-data favicon.ico /var/www/html
+COPY --chown=www-data:www-data swagger.json /var/www/html
 
 # install Node modules (from npm-installer stage)
-COPY --from=npm-installer /usr/src/app/node_modules /var/www/html/node_modules
+COPY --chown=www-data:www-data --from=npm-installer /usr/src/app/node_modules /var/www/html/node_modules
 
 # Configure Skosmos
 COPY dockerfiles/config/config-docker.ttl /var/www/html/config.ttl
