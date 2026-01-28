@@ -941,7 +941,7 @@ header .container-fluid .row {
 -------------------------------------- */
 
 #main-content h1 {
-  font-size: 2.5rem;
+  font-size: 1.7rem;
 }
 
 .main-content-section {
@@ -1016,7 +1016,7 @@ header .container-fluid .row {
 
 #concept-property-label {
   align-self: start;
-  padding-top: 1.1rem;
+  padding-top: 0.4rem;
   font-weight: bold;
   font-size: 1.2rem;
 }
@@ -1054,10 +1054,10 @@ header .container-fluid .row {
 
 #copy-preflabel, #copy-notation {
   color: var(--main-content-text);
-  font-size: 2.1rem;
+  font-size: 1.4rem;
   position: relative;
-  bottom: 10px;
-  left: 5px;
+  bottom: 6px;
+  left: 3px;
 }
 
 #copy-uri {
