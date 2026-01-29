@@ -17,9 +17,10 @@ function handleScrollEvent () {
 
     // Construct search URL depending on page type
     const params = new URLSearchParams(window.location.search)
-    const searchURL = window.SKOSMOS.pageType === 'vocab-search'
-                      ? `${window.SKOSMOS.vocab}/${window.SKOSMOS.lang}/search?clang=${window.SKOSMOS.content_lang}&q=${params.get('q')}&offset=${searchResultOffset}`
-                      : `${window.SKOSMOS.lang}/search?clang=${window.SKOSMOS.content_lang}&q=${params.get('q')}&vocabs=${params.get('vocabs')}&offset=${searchResultOffset}`
+    const searchURL = 
+      window.SKOSMOS.pageType === 'vocab-search'
+      ? `${window.SKOSMOS.vocab}/${window.SKOSMOS.lang}/search?clang=${window.SKOSMOS.content_lang}&q=${params.get('q')}&offset=${searchResultOffset}`
+      : `${window.SKOSMOS.lang}/search?clang=${window.SKOSMOS.content_lang}&q=${params.get('q')}&vocabs=${params.get('vocabs')}&offset=${searchResultOffset}`
     fetch(searchURL)
       .then(data => {
         return data.text()
@@ -44,7 +45,7 @@ function handleScrollEvent () {
         // If all results have been loaded, display message
         if (searchResultOffset >= window.SKOSMOS.search_count) {
           const newLastResult = document.querySelector('.search-result:last-of-type')
-          
+
           const translatedMessage = $t('All %d results displayed').replace('%d', window.SKOSMOS.search_count)
           newLastResult.innerHTML += `<p id="search-count">${translatedMessage}</p>`
         }
