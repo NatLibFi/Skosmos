@@ -253,7 +253,6 @@ function startGlobalSearchApp () {
         this.showDropdown = !this.showDropdown
       },
       dropdownKeyNav (event, dropdownEl, activeEl) {
-        if (!dropdownEl) return
         const vocabSelector = document.querySelector('#vocab-selector')
         const btn = document.querySelector('#vocab-selector .dropdown-toggle')
         const menu = document.querySelector('#vocab-selector .dropdown-menu')
@@ -296,7 +295,6 @@ function startGlobalSearchApp () {
         }
       },
       listKeyNav (event, list, activeEl) {
-        if (!list) return
         const items = list.querySelectorAll('li')
         if (!items.length) return
         switch (event.key) {
