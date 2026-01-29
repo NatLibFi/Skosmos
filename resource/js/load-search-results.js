@@ -12,15 +12,19 @@ function handleScrollEvent () {
     document.removeEventListener('scroll', handleScrollEvent)
 
     // Add a spinner to end of result list
-    const lastResult = document.querySelector('.search-result:last-of-type')
-    lastResult.innerHTML += `<p id="search-loading-spinner">${$t('Loading more items')} <i class="fa-solid fa-spinner fa-spin-pulse"></i></p>`
+    const spinner = Object.assign(document.createElement('p'), {
+      id: 'search-loading-spinner',
+      innerHTML: `${$t('Loading more items')} <i class="fa-solid fa-spinner fa-spin-pulse"></i>`
+    })
+    searchResultList.append(spinner)
 
     // Construct search URL depending on page type
     const params = new URLSearchParams(window.location.search)
+    params.set('offset', searchResultOffset)
     const searchURL =
       window.SKOSMOS.pageType === 'vocab-search'
-        ? `${window.SKOSMOS.vocab}/${window.SKOSMOS.lang}/search?clang=${window.SKOSMOS.content_lang}&q=${params.get('q')}&offset=${searchResultOffset}`
-        : `${window.SKOSMOS.lang}/search?clang=${window.SKOSMOS.content_lang}&q=${params.get('q')}&vocabs=${params.get('vocabs')}&offset=${searchResultOffset}`
+        ? `${window.SKOSMOS.vocab}/${window.SKOSMOS.lang}/search?${params.toString()}`
+        : `${window.SKOSMOS.lang}/search?${params.toString()}`
     fetch(searchURL)
       .then(data => {
         return data.text()
@@ -36,7 +40,7 @@ function handleScrollEvent () {
         }
 
         // Remove spinner and increment offset
-        lastResult.removeChild(document.getElementById('search-loading-spinner'))
+        searchResultList.removeChild(spinner)
         searchResultOffset += window.SKOSMOS.search_results_size
 
         // Re-enable event listener after results have been loaded
@@ -44,10 +48,11 @@ function handleScrollEvent () {
 
         // If all results have been loaded, display message
         if (searchResultOffset >= window.SKOSMOS.search_count) {
-          const newLastResult = document.querySelector('.search-result:last-of-type')
-
-          const translatedMessage = $t('All %d results displayed').replace('%d', window.SKOSMOS.search_count)
-          newLastResult.innerHTML += `<p id="search-count">${translatedMessage}</p>`
+          const message = Object.assign(document.createElement('p'), {
+            id: 'search-count',
+            textContent: $t('All %d results displayed').replace('%d', window.SKOSMOS.search_count)
+          })
+          searchResultList.append(message)
         }
       })
   }
