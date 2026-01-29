@@ -74,6 +74,9 @@
   --feedback-field-bg: var(--secondary-light-color);
   --feedback-submit-bg: var(--dark-color);
 
+  --alert-bg: var(--alert-color);
+  --alert-text: var(--white-color);
+
   --footer-bg: var(--white-color);
   --footer-text: var(--dark-color);
 
@@ -1359,8 +1362,8 @@ h1#vocab-heading {
 /* Error page
 -------------------------------------- */
 .alert {
-  background-color: var(--alert-color);
-  color: var(--white-color);
+  background-color: var(--alert-bg);
+  color: var(--alert-text);
   border-radius: 0;
 }
 
