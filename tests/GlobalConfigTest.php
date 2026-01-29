@@ -9,8 +9,6 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
     /** @var GlobalConfig */
     private $config;
     /** @var GlobalConfig */
-    private $configFromEnv;
-    /** @var GlobalConfig */
     private $configWithDefaults;
     /** @var GlobalConfig */
     private $configWithBaseHref;
@@ -18,7 +16,6 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         $this->config = (new Model())->getConfig();
-        $this->configFromEnv = (new Model())->getConfig();
         $this->assertNotNull($this->config->getCache());
         $this->assertNotNull($this->config->getGraph());
         $this->configWithDefaults = (new Model('../../tests/testconfig-fordefaults.ttl'))->getConfig();
