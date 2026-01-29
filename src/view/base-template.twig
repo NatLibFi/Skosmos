@@ -33,13 +33,13 @@
 {% for plugin, files in request.plugins.pluginsCSS %}{% for file in files %}<link href="{{ file }}" media="screen, print" rel="stylesheet" type="text/css">{% endfor %}{% endfor %}
 {{ include('custom-templates.inc.twig', {slotName: 'html-head'}) -}}
 </head>
-<body class="{% if pageType =='landing' %}bg-white frontpage-logo{% else %}{% if pageType == 'concept' or pageType == 'vocab-home' or (request.vocabid != '' and request.page == 'page') %}bg-medium vocab-{{ request.vocabid }}{% else %}bg-light{% endif %}{% endif %}">
+<body class="{% if pageType =='landing' %}frontpage-logo{% else %}{% if pageType == 'concept' or pageType == 'vocab-home' or (request.vocabid != '' and request.page == 'page') %}vocab-{{ request.vocabid }}{% endif %}{% endif %}">
   <header>
     <a class="visually-hidden" id="skiptocontent" href="{{ request.langurl }}#maincontent">Skip to main</a>
-    <div class="container-fluid bg-dark d-flex my-auto py-3 px-4 text-bg-dark">
+    <div id="topbar" class="container-fluid d-flex my-auto py-3 px-4">
       {% if request.vocabid == '' and request.page != 'about' and request.page != 'feedback' %}
         <div>
-          <button class="fs-6 py-3 text-light collapsed" id="global-search-toggle" data-bs-toggle="collapse" data-bs-target="#global-search-bar" aria-expanded="false" aria-controls="global-search-bar">
+          <button class="fs-6 py-3 collapsed" id="global-search-toggle" data-bs-toggle="collapse" data-bs-target="#global-search-bar" aria-expanded="false" aria-controls="global-search-bar">
               {{ "Search across vocabularies"|trans }}
           </button>
         </div>
@@ -48,19 +48,19 @@
           <h2 class="visually-hidden">Skosmos</h2>
         </a>
       {% endif %}
-      <ul class="nav nav-pills ms-auto my-auto text-light gx-3 py-3" id="topbar-nav">
+      <ul class="nav nav-pills ms-auto my-auto gx-3 py-3" id="topbar-nav">
         <li class="nav-item">
-          <a href="{{ 'home' | global_url(request.lang, request.contentLang, null, request.queryParam('anylang') == 'on') }}" id="navi1" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none">
+          <a href="{{ 'home' | global_url(request.lang, request.contentLang, null, request.queryParam('anylang') == 'on') }}" id="navi1" class="fs-6 topbar-nav-link ms-3 text-decoration-none">
                    <i class="fa-solid fa-house"></i>&nbsp;{{ "Vocabularies" | trans }}
           </a>
         </li>
         <li class="nav-item">
-          <a href="{{ 'about' | global_url(request.lang, request.contentLang, null, request.queryParam('anylang') == 'on') }}" id="navi2" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none">
+          <a href="{{ 'about' | global_url(request.lang, request.contentLang, null, request.queryParam('anylang') == 'on') }}" id="navi2" class="fs-6 topbar-nav-link ms-3 text-decoration-none">
                    <i class="fa-solid fa-circle-info"></i>&nbsp;{{ "About" | trans }}
           </a>
         </li>
         <li class="nav-item">
-          <a href="{{ 'feedback' | global_url(request.lang, request.contentLang, request.vocabid, request.queryParam('anylang') == 'on') }}" id="navi3" class="fs-6 text-light topbar-nav-link ms-3 text-decoration-none">
+          <a href="{{ 'feedback' | global_url(request.lang, request.contentLang, request.vocabid, request.queryParam('anylang') == 'on') }}" id="navi3" class="fs-6 topbar-nav-link ms-3 text-decoration-none">
                    <i class="fa-solid fa-comment"></i>&nbsp;{{ "Feedback" | trans }}
           </a>
         </li>
@@ -68,7 +68,7 @@
         {% for langcode, langdata in languages %}
         {% if request.lang != langcode %}
         <li class="nav-item language">
-          <a class="fs-6 text-light ms-3 text-decoration-none" id="language-{{ langcode }}" href="{{ request.langurl(langcode) }}"> {{ langdata.name }}</a>
+          <a class="fs-6 ms-3 text-decoration-none" id="language-{{ langcode }}" href="{{ request.langurl(langcode) }}"> {{ langdata.name }}</a>
         </li>
         {% endif %}
         {% endfor %}
@@ -88,7 +88,7 @@
     </div>
     {% endif %}
     {% if pageType in ['landing', 'vocab-home', 'concept', 'vocab-search'] %}
-    <div class="container-fluid bg-white py-4" id="headerbar">
+    <div class="container-fluid py-4" id="headerbar">
       <div id="headerbar-top-slot" class="row"></div>
       <div class="row">
         <div class="d-flex flex-column flex-xl-row align-items-start align-items-xl-center my-auto{% if pageType == 'landing' %} p-0{% endif %}">
@@ -113,7 +113,7 @@
     
     {% endif %}
   </header>
-  <main id="main-container" class="{{pageType}}{% if list_style %} {{ list_style }}{% endif %}">
+  <main id="main-container" class="pb-5 {{pageType}}{% if list_style %} {{ list_style }}{% endif %}">
     <div class="container">
       <noscript>
         <strong>We're sorry but Skosmos doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
@@ -124,7 +124,7 @@
       </div>
     </div>
   </main>
-  <footer class="bg-white pb-5 mt-5">
+  <footer class="py-5">
   {{ include('custom-templates.inc.twig', {slotName: 'footer'}) }}
   </footer>
   {% include "scripts.inc.twig" %}
