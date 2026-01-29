@@ -870,22 +870,23 @@ header .container-fluid .row {
   left: 10px;
   top: 5px;
   z-index: 1;
+  color: var(--sidebar-text);
   font-size: .85rem;
 }
 
 #sidebar .hierarchy-button img {
   transform: rotate(-45deg);
   position: absolute;
-  top: 8.5px;
-  left: 10px;
-  width: 8px;
+  top: 2.5px;
+  left: 3.5px;
+  width: 20px;
   z-index: 1;
 }
 
 #sidebar .hierarchy-button.open img {
   transform: rotate(0deg);
-  left: 11px;
-  top: 8px;
+  left: 5px;
+  top: 2px;
 }
 
 /* --- Sidebar changes tab --- */

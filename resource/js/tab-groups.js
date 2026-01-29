@@ -292,8 +292,8 @@ function startGroupsApp () {
             <i class="fa-solid fa-spinner fa-spin-pulse"></i>
           </template>
           <template v-else>
-            <img v-if="group.isOpen" alt="" src="resource/pics/black-lower-right-triangle.png">
-            <img v-else alt="" src="resource/pics/lower-right-triangle.png">
+            <img v-if="group.isOpen" alt="" src="resource/pics/black-lower-right-triangle.svg">
+            <img v-else alt="" src="resource/pics/lower-right-triangle.svg">
           </template>
         </button>
         <span class="concept-label" :class="{ 'last': isLast }">
