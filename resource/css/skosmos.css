@@ -592,7 +592,6 @@ header .container-fluid .row {
 
 #vocabulary-list .list-group-item a {
   color: var(--landing-vocabulary-list-link);
-  font-weight: bold;
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-decoration-color: var(--landing-vocabulary-list-link-underline);
