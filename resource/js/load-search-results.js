@@ -17,10 +17,10 @@ function handleScrollEvent () {
 
     // Construct search URL depending on page type
     const params = new URLSearchParams(window.location.search)
-    const searchURL = 
+    const searchURL =
       window.SKOSMOS.pageType === 'vocab-search'
-      ? `${window.SKOSMOS.vocab}/${window.SKOSMOS.lang}/search?clang=${window.SKOSMOS.content_lang}&q=${params.get('q')}&offset=${searchResultOffset}`
-      : `${window.SKOSMOS.lang}/search?clang=${window.SKOSMOS.content_lang}&q=${params.get('q')}&vocabs=${params.get('vocabs')}&offset=${searchResultOffset}`
+        ? `${window.SKOSMOS.vocab}/${window.SKOSMOS.lang}/search?clang=${window.SKOSMOS.content_lang}&q=${params.get('q')}&offset=${searchResultOffset}`
+        : `${window.SKOSMOS.lang}/search?clang=${window.SKOSMOS.content_lang}&q=${params.get('q')}&vocabs=${params.get('vocabs')}&offset=${searchResultOffset}`
     fetch(searchURL)
       .then(data => {
         return data.text()
