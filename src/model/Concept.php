@@ -134,6 +134,19 @@ class Concept extends VocabularyDataObject implements Modifiable
     }
 
     /**
+     * Returns an array of dct:isReplacedBy values
+     * @return ConceptPropertyValue[]
+     */
+    public function getIsReplacedBy()
+    {
+        $values = [];
+        foreach ($this->resource->allResources('dc:isReplacedBy') as $res) {
+            $values[] = new ConceptPropertyValue($this->model, $this->vocab, $res, 'dc:isReplacedBy', $this->clang);
+        }
+        return $values;
+    }
+
+    /**
      * Returns a label for the concept in the content language or if not possible in any language.
      * @return string
      */

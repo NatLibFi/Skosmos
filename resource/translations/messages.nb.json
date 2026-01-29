@@ -1,4 +1,5 @@
 {
+    "This concept has been deprecated.": "Begrepet er tatt ut av bruk.",
     "Any language": "p\u00e5 alle spr\u00e5k",
     "Download this concept": "Last ned dette begrepet",
     "%search_count% results for '%term%'": "%search_count% treff for '%term%'",
@@ -117,7 +118,6 @@
     "dc:temporal": "Kronologisk dekning",
     "dc:title": "Navn",
     "dc:type": "Type",
-    "deprecated": "Begrepet er tatt ut av bruk.",
     "feedback_enter_name_email": "Fyll inn navn og e-postadresse hvis du \u00f8nsker svar, men du har ogs\u00e5 mulighet til \u00e5 sende inn tilbakemelding anonymt. Velger du et bestemt vokabular, blir tilbakemeldingen din sendt direkte til ansvarlig for vokabularet.",
     "foaf:homepage": "Hjemmeside",
     "foaf:page": "Side",

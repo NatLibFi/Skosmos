@@ -88,7 +88,6 @@
     "dc:temporal": "Temporal coverage",
     "dc:title": "Title",
     "dc:type": "Type",
-    "deprecated": "This concept has been deprecated.",
     "foaf:homepage": "Homepage",
     "foaf:page": "Page",
     "foreign prefLabel help": "Terms for the concept in other languages.",
@@ -223,5 +222,6 @@
     "Select search language": "Select search language",
     "1. Choose vocabulary": "1. Choose vocabulary",
     "2. Choose language": "2. Choose language",
-    "3. Enter search term": "3. Enter search term"
+    "3. Enter search term": "3. Enter search term",
+    "This concept has been deprecated.": "This concept has been deprecated."
 }

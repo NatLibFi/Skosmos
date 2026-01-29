@@ -1,5 +1,6 @@
 :root {
   --dark-color: #0d284e;
+  --muted-color: #6C778A;
   --medium-color: #1b709d ;
   --secondary-medium-color: #b8c9db;
   --light-color: #dfe5ed;
@@ -63,6 +64,7 @@
 
   --main-content-bg: var(--white-color);
   --main-content-text: var(--dark-color);
+  --main-content-disabled: var(--muted-color);
   --main-content-link: var(--medium-color);
   --main-content-border: var(--light-color);
 
@@ -1021,6 +1023,34 @@ h1#vocab-heading {
 }
 
 /* --- Concept page --- */
+
+#concept-deprecated-alert {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
+#concept-deprecated-alert i {
+  font-size: 1.4rem;
+}
+
+#concept-deprecated-alert .list-inline-item:not(:last-child)::after {
+  content: ", ";
+}
+
+#concept-deprecated-alert a {
+  color: var(--alert-text);
+  text-decoration: underline;
+}
+
+.concept-deprecated #concept-breadcrumbs .breadcrumb-current,
+.concept-deprecated h1,
+.concept-deprecated #copy-preflabel,
+.concept-deprecated .property-value,
+.concept-deprecated #concept-other-languages .altlabel,
+.concept-deprecated .concept-other-languages-language,
+.concept-deprecated #copy-uri{
+  color: var(--main-content-disabled);
+}
 
 #concept-property-label {
   align-self: start;

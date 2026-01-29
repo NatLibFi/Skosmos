@@ -46,10 +46,34 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     /**
      * @covers Concept::getDeprecated
      */
+    public function testGetConceptDeprecated()
+    {
+        $vocab = $this->model->getVocabulary('changes');
+        $concept = $vocab->getConceptInfo("http://www.skosmos.skos/changes/d4", "en");
+        $deprecated = $concept->getDeprecated();
+        $this->assertEquals(true, $deprecated);
+    }
+
+    /**
+     * @covers Concept::getDeprecated
+     */
     public function testGetConceptNotDeprecated()
     {
         $deprecated = $this->concept->getDeprecated();
         $this->assertEquals(false, $deprecated);
+    }
+
+    /**
+     * @covers Concept::getIsReplacedBy
+     */
+    public function testGetConceptIsReplacedBy()
+    {
+        $vocab = $this->model->getVocabulary('changes');
+        $concept = $vocab->getConceptInfo("http://www.skosmos.skos/changes/d4", "en");
+        $replacedBy = $concept->getIsReplacedBy();
+        $this->assertCount(1, $replacedBy);
+        $this->assertEquals("http://www.skosmos.skos/changes/d3", $replacedBy[0]->getUri());
+        $this->assertEquals("Hurr Durr", $replacedBy[0]->getLabel());
     }
 
     /**

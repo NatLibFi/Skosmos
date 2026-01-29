@@ -42,9 +42,11 @@ const updateMainContent = (conceptHTML) => {
   }
 
   // inserting concept card into vocab info
+  const fragment = document.createDocumentFragment()
   for (const elem of conceptMainContent) {
-    mainContent.prepend(elem)
+    fragment.appendChild(elem)
   }
+  mainContent.prepend(fragment)
 }
 
 const updateTitle = (conceptHTML) => {
