@@ -152,7 +152,7 @@ RUN npx cypress install
 FROM runtime AS production
 
 # vendors (production only, from composer-prod stage)
-COPY --chown=www-data:www-data --from=composer-prod /app/vendor /var/www/html/vendor
+COPY --from=composer-prod /app/vendor /var/www/html/vendor
 
 # sources (only production files)
 COPY bin /var/www/html/bin
@@ -169,6 +169,6 @@ COPY favicon.ico /var/www/html
 COPY swagger.json /var/www/html
 
 # install Node modules (from npm-installer stage)
-COPY --chown=www-data:www-data --from=npm-installer /usr/src/app/node_modules /var/www/html/node_modules
+COPY --from=npm-installer /usr/src/app/node_modules /var/www/html/node_modules
 
 HEALTHCHECK --interval=5s --timeout=3s --retries=3 CMD curl -f http://localhost || exit 1
