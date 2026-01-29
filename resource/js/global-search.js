@@ -1,4 +1,4 @@
-/* global Vue, $t, onTranslationReady */
+/* global Vue, bootstrap, $t, onTranslationReady */
 
 function startGlobalSearchApp () {
   const globalSearch = Vue.createApp({
@@ -249,53 +249,57 @@ function startGlobalSearchApp () {
         this.renderedResultsList = []
         this.hideAutoComplete()
       },
-      toggleLanguageDropdown() {
+      toggleLanguageDropdown () {
         this.showDropdown = !this.showDropdown
       },
-      dropdownKeyNav(event, dropdownEl, activeEl) {
-        if (!dropdownEl)  return
+      dropdownKeyNav (event, dropdownEl, activeEl) {
+        if (!dropdownEl) return
         const vocabSelector = document.querySelector('#vocab-selector')
-        const btn = document.querySelector('#vocab-selector .dropdown-toggle');
+        const btn = document.querySelector('#vocab-selector .dropdown-toggle')
         const menu = document.querySelector('#vocab-selector .dropdown-menu')
-        const dropdown = bootstrap.Dropdown.getInstance(btn);
-        switch(event.key) {
-          case 'ArrowUp':
+        const dropdown = bootstrap.Dropdown.getInstance(btn)
+        switch (event.key) {
+          case 'ArrowUp': {
             event.preventDefault()
-            if (menu.classList.contains('show'))
-            dropdown.hide()
+            if (menu.classList.contains('show')) { dropdown.hide() }
             break
-          case 'ArrowDown':
+          }
+          case 'ArrowDown': {
             event.preventDefault()
-            dropdown.show();
+            dropdown.show()
             const list = document.querySelector('#vocab-list')
             const first = list.firstElementChild
             if (first) first.focus()
             break
-          case 'ArrowLeft':
+          }
+          case 'ArrowLeft': {
             const previousEl = vocabSelector.previousSibling
             if (previousEl) {
               const button = previousEl.querySelector('button')
               if (button) button.focus()
             }
             break
-          case 'ArrowRight':
+          }
+          case 'ArrowRight': {
             const nextEl = vocabSelector.nextSibling
             if (nextEl) {
               const button = nextEl.querySelector('button')
               if (button) button.focus()
             }
             break
-          case 'Enter':
+          }
+          case 'Enter': {
             event.preventDefault()
             dropdown.toggle()
             break
+          }
         }
       },
-      listKeyNav(event, list, activeEl) {
+      listKeyNav (event, list, activeEl) {
         if (!list) return
         const items = list.querySelectorAll('li')
         if (!items.length) return
-        switch(event.key) {
+        switch (event.key) {
           case 'ArrowUp':
             event.preventDefault()
             this.moveSelection(list, -1)
@@ -310,23 +314,23 @@ function startGlobalSearchApp () {
             break
         }
       },
-      moveSelection(targetList, delta) {
+      moveSelection (targetList, delta) {
         if (!targetList) return
         const items = targetList.querySelectorAll('li')
         const current = document.activeElement
 
         if (!items.length) return
 
-        switch(delta) {
+        switch (delta) {
           case 1:
             current.nextElementSibling.focus()
             break
           case -1:
             if (current === targetList.firstElementChild) {
-              const btn = document.querySelector('#vocab-selector .dropdown-toggle');
-              const dropdown = bootstrap.Dropdown.getInstance(btn);
+              const btn = document.querySelector('#vocab-selector .dropdown-toggle')
+              const dropdown = bootstrap.Dropdown.getInstance(btn)
               btn.focus()
-              dropdown.hide();
+              dropdown.hide()
               break
             }
             current.previousElementSibling.focus()
@@ -531,32 +535,32 @@ function startGlobalSearchApp () {
     }
   })
 
-globalSearch.directive('key-nav', {
-  beforeMount: (el, binding) => {
-    const handler = event => {
-      const { key } = event
-      // Keep default Bootstrap behavior on these keys:
-      if (key === 'Tab' || key === 'Escape' || key === ' ') return
+  globalSearch.directive('key-nav', {
+    beforeMount: (el, binding) => {
+      const handler = event => {
+        const { key } = event
+        // Keep default Bootstrap behavior on these keys:
+        if (key === 'Tab' || key === 'Escape' || key === ' ') return
 
-      const handledKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter']
-      if (!handledKeys.includes(key)) return
+        const handledKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter']
+        if (!handledKeys.includes(key)) return
 
-      if (!el.contains(document.activeElement)) return
+        if (!el.contains(document.activeElement)) return
 
-      event.preventDefault()
+        event.preventDefault()
 
-      if (typeof binding.value === 'function') {
-        binding.value(event, el, document.activeElement)
+        if (typeof binding.value === 'function') {
+          binding.value(event, el, document.activeElement)
+        }
       }
+      el.__keynavHandler__ = handler
+      el.addEventListener('keyup', handler)
+    },
+    unmounted: el => {
+      el.removeEventListener('keyup', el.__keynavHandler__)
+      delete el.__keynavHandler__
     }
-    el.__keynavHandler__ = handler
-    el.addEventListener('keyup', handler)
-  },
-  unmounted: el => {
-    el.removeEventListener('keyup', el.__keynavHandler__)
-    delete el.__keynavHandler__
-  }
-})
+  })
 
   if (document.getElementById('global-search-wrapper')) {
     globalSearch.mount('#global-search-wrapper')
