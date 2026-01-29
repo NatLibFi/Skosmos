@@ -135,16 +135,16 @@ RUN apt-get update && apt-get install -y \
  && rm -rf /var/lib/apt/lists/*
 
 # vendors with dev dependencies
-COPY --chown=www-data:www-data --from=composer-dev /app/vendor /var/www/html/vendor
+COPY --from=composer-dev /app/vendor /var/www/html/vendor
 
 # all source files including tests
-COPY --chown=www-data:www-data . /var/www/html/
+COPY . /var/www/html/
 
 # install Node modules with dev dependencies
-COPY --chown=www-data:www-data --from=npm-dev /usr/src/app/node_modules /var/www/html/node_modules
+COPY --from=npm-dev /usr/src/app/node_modules /var/www/html/node_modules
 
 # Configure Skosmos
-COPY --chown=www-data:www-data dockerfiles/config/config-docker.ttl /var/www/html/config.ttl
+COPY dockerfiles/config/config-docker.ttl /var/www/html/config.ttl
 
 # install cypress
 RUN npx cypress install
@@ -155,18 +155,18 @@ FROM runtime AS production
 COPY --chown=www-data:www-data --from=composer-prod /app/vendor /var/www/html/vendor
 
 # sources (only production files)
-COPY --chown=www-data:www-data bin /var/www/html/bin
-COPY --chown=www-data:www-data config /var/www/html/config
-COPY --chown=www-data:www-data custom-templates /var/www/html/custom-templates
-COPY --chown=www-data:www-data plugins /var/www/html/plugins
-COPY --chown=www-data:www-data resource /var/www/html/resource
-COPY --chown=www-data:www-data src /var/www/html/src
-COPY --chown=www-data:www-data .env /var/www/html
-COPY --chown=www-data:www-data .htaccess /var/www/html
-COPY --chown=www-data:www-data composer.json /var/www/html
-COPY --chown=www-data:www-data config.ttl.dist /var/www/html
-COPY --chown=www-data:www-data favicon.ico /var/www/html
-COPY --chown=www-data:www-data swagger.json /var/www/html
+COPY bin /var/www/html/bin
+COPY config /var/www/html/config
+COPY custom-templates /var/www/html/custom-templates
+COPY plugins /var/www/html/plugins
+COPY resource /var/www/html/resource
+COPY src /var/www/html/src
+COPY .env /var/www/html
+COPY .htaccess /var/www/html
+COPY composer.json /var/www/html
+COPY config.ttl.dist /var/www/html
+COPY favicon.ico /var/www/html
+COPY swagger.json /var/www/html
 
 # install Node modules (from npm-installer stage)
 COPY --chown=www-data:www-data --from=npm-installer /usr/src/app/node_modules /var/www/html/node_modules
