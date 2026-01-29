@@ -49,6 +49,17 @@ class ModelTest extends PHPUnit\Framework\TestCase
     }
 
     /**
+     * @covers Model::getUserAgent
+     */
+    public function testGetUserAgent()
+    {
+        $userAgent = $this->model->getUserAgent();
+        $version = $this->model->getVersion();
+        $expected = "Skosmos/$version (https://skosmos.org/)";
+        $this->assertEquals($userAgent, $expected);
+    }
+
+    /**
      * @covers Model::getVocabularyList
      */
     public function testGetVocabularyList()

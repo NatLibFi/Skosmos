@@ -155,7 +155,7 @@ class GenericSparql
         // configure the HTTP client used by EasyRdf\Sparql\Client
         $httpclient = EasyRdf\Http::getDefaultHttpClient();
         $httpclient->setConfig(array('timeout' => $this->model->getConfig()->getSparqlTimeout(),
-                                     'useragent' => 'Skosmos'));
+                                     'useragent' => $this->model->getUserAgent()));
 
         // if special cache control (typically no-cache) was requested by the
         // client, set the same type of cache control headers also in subsequent

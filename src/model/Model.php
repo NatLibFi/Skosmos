@@ -104,6 +104,17 @@ class Model
     }
 
     /**
+     * Return a User-Agent header for this Skosmos installation, including the
+     * name of the software (Skosmos), the version number and URL.
+     * @return string userAgent
+     */
+    public function getUserAgent(): string
+    {
+        $version = $this->getVersion();
+        return "Skosmos/$version (https://skosmos.org/)";
+    }
+
+    /**
      * Return all the vocabularies available.
      * @param boolean $categories whether you want everything included in a subarray of
      * a category.

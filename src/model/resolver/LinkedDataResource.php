@@ -7,7 +7,7 @@ class LinkedDataResource extends RemoteResource
         try {
             // change the timeout setting for external requests
             $httpclient = EasyRdf\Http::getDefaultHttpClient();
-            $httpclient->setConfig(array('timeout' => $timeout, 'useragent' => 'Skosmos'));
+            $httpclient->setConfig(array('timeout' => $timeout, 'useragent' => $this->model->getUserAgent()));
             EasyRdf\Http::setDefaultHttpClient($httpclient);
 
             $graph = EasyRdf\Graph::newAndLoad(EasyRdf\Utils::removeFragmentFromUri($this->uri));
