@@ -66,4 +66,15 @@ describe('Vocabulary search page', () => {
       more.click()
       more.should('not.exist')
   })
+  it('More results are loaded on scroll', () => {
+    cy.visit(`/yso/en/search?clang=en&q=g`)
+    // Check that there are 5 search results
+    cy.get('#search-results').find('.search-result').should('have.length', 5)
+    // Scroll to bottom of page
+    cy.scrollTo('bottom')
+    // Check that there are 9 search results
+    cy.get('#search-results').find('.search-result').should('have.length', 9, {'timeout': 20000})
+    // Check that all results message is displayed
+    cy.get('#search-count').invoke('text').should('contain', 'All 9 results displayed')
+  })
 })
