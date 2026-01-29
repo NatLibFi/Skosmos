@@ -56,7 +56,7 @@ class ModelTest extends PHPUnit\Framework\TestCase
         $userAgent = $this->model->getUserAgent();
         $version = $this->model->getVersion();
         $expected = "Skosmos/$version (https://skosmos.org/)";
-        $this->assertEquals($userAgent, $expected);
+        $this->assertEquals($expected, $userAgent);
     }
 
     /**
