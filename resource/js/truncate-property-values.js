@@ -4,11 +4,12 @@ function truncatePropertyValues () {
   const maxValues = 15 // hide extras if there are more values than this
   const propVals = document.querySelectorAll('.property-value > ul, #concept-other-languages ul')
   propVals.forEach((propVal) => { // one ul within div.property-value
-    const listItems = propVal.children // the li's inside the ul
+    const listItems = propVal.querySelectorAll('li:not(:has(ul, ol))') // the li's inside the ul and inside sub ul/ol
 
     if (propVal.querySelector('a.property-value-show') === null && listItems.length > maxValues) {
       // hide the items after the first maxValues
       for (let i = maxValues; i < listItems.length; ++i) {
+        console.log(listItems[i])
         listItems[i].classList.add('property-value-hidden')
       }
       // add a link for showing all items

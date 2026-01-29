@@ -1006,7 +1006,7 @@ header .container-fluid .row {
   list-style-type: decimal;
 }
 
-.property-value li:has(.rdf-list):not(:last-child) {
+.property-value li:has(.rdf-list):not(:last-child):not(:has(li.property-value-hidden)) {
   border-bottom: 1px solid var(--vocab-table-border);
   padding-bottom: 0.5rem;
   margin-bottom: 0.5rem;
