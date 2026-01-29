@@ -13,7 +13,7 @@ function handleScrollEvent () {
 
     // Add a spinner to end of result list
     const spinner = document.createElement('p')
-    spinner.id = 'search-loading-spinner',
+    spinner.id = 'search-loading-spinner'
     spinner.innerHTML = `${$t('Loading more items')} <i class="fa-solid fa-spinner fa-spin-pulse"></i>`
     searchResultList.append(spinner)
 
@@ -48,7 +48,7 @@ function handleScrollEvent () {
         // If all results have been loaded, display message
         if (searchResultOffset >= window.SKOSMOS.search_count) {
           const message = document.createElement('p')
-          message.id = 'search-count',
+          message.id = 'search-count'
           message.textContent = $t('All %d results displayed').replace('%d', window.SKOSMOS.search_count)
           searchResultList.append(message)
         }
