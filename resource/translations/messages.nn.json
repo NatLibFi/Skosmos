@@ -118,7 +118,6 @@
     "dc:temporal": "Kronologisk dekning",
     "dc:title": "Tittel",
     "dc:type": "Type",
-    "deprecated": "Omgrepet er tatt ut av bruk.",
     "feedback_enter_name_email": "Fyll inn namn og e-postadresse om du vil ha svar, men du kan \u00f2g sende inn tilbakemelding anonymt. Om du vel eit bestemt vokabular, blir tilbakemeldinga sendt direkte til ansvarleg for vokabularet.",
     "foaf:homepage": "Heimeside",
     "foaf:page": "Side",

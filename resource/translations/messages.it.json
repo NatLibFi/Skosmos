@@ -93,7 +93,6 @@
     "dc:subject": "Soggetto",
     "dc:title": "Titolo",
     "dc:type": "Tipo",
-    "deprecated": "Questo concetto \u00e8 stato dismesso.",
     "foaf:homepage": "Pagina principale",
     "foaf:page": "Pagina",
     "foreign prefLabel help": "Termini per il concetto in altre lingue",
