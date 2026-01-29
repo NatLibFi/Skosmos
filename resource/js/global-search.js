@@ -249,6 +249,90 @@ function startGlobalSearchApp () {
         this.renderedResultsList = []
         this.hideAutoComplete()
       },
+      toggleLanguageDropdown() {
+        this.showDropdown = !this.showDropdown
+      },
+      dropdownKeyNav(event, dropdownEl, activeEl) {
+        if (!dropdownEl)  return
+        const vocabSelector = document.querySelector('#vocab-selector')
+        const btn = document.querySelector('#vocab-selector .dropdown-toggle');
+        const menu = document.querySelector('#vocab-selector .dropdown-menu')
+        const dropdown = bootstrap.Dropdown.getInstance(btn);
+        switch(event.key) {
+          case 'ArrowUp':
+            event.preventDefault()
+            if (menu.classList.contains('show'))
+            dropdown.hide()
+            break
+          case 'ArrowDown':
+            event.preventDefault()
+            dropdown.show();
+            const list = document.querySelector('#vocab-list')
+            const first = list.firstElementChild
+            if (first) first.focus()
+            break
+          case 'ArrowLeft':
+            const previousEl = vocabSelector.previousSibling
+            if (previousEl) {
+              const button = previousEl.querySelector('button')
+              if (button) button.focus()
+            }
+            break
+          case 'ArrowRight':
+            const nextEl = vocabSelector.nextSibling
+            if (nextEl) {
+              const button = nextEl.querySelector('button')
+              if (button) button.focus()
+            }
+            break
+          case 'Enter':
+            event.preventDefault()
+            dropdown.toggle()
+            break
+        }
+      },
+      listKeyNav(event, list, activeEl) {
+        if (!list) return
+        const items = list.querySelectorAll('li')
+        if (!items.length) return
+        switch(event.key) {
+          case 'ArrowUp':
+            event.preventDefault()
+            this.moveSelection(list, -1)
+            break
+          case 'ArrowDown':
+            event.preventDefault()
+            this.moveSelection(list, 1)
+            break
+          case 'Enter':
+            event.preventDefault()
+            document.activeElement.querySelector('input').click()
+            break
+        }
+      },
+      moveSelection(targetList, delta) {
+        if (!targetList) return
+        const items = targetList.querySelectorAll('li')
+        const current = document.activeElement
+
+        if (!items.length) return
+
+        switch(delta) {
+          case 1:
+            current.nextElementSibling.focus()
+            break
+          case -1:
+            if (current === targetList.firstElementChild) {
+              const btn = document.querySelector('#vocab-selector .dropdown-toggle');
+              const dropdown = bootstrap.Dropdown.getInstance(btn);
+              btn.focus()
+              dropdown.hide();
+              break
+            }
+            current.previousElementSibling.focus()
+            break
+        }
+      },
       /*
       * Show the existing autocomplete list if it was hidden by onClickOutside()
       */
@@ -266,18 +350,27 @@ function startGlobalSearchApp () {
             data-bs-auto-close="outside"
             aria-expanded="false"
             :aria-label="selectSearchLanguageAriaMessage"
-            v-if="languageStrings">
+            v-if="languageStrings"
+            v-key-nav="dropdownKeyNav"
+          >
             <span v-if="selectedVocabsString">{{ selectedVocabsString }}</span>
             <span v-else>{{ vocabSelectorPlaceholder }}</span>
             <i class="chevron fa-solid fa-chevron-down"></i>
           </button>
-          <ul class="dropdown-menu" id="vocab-list" role="menu">
-            <li v-for="(value, key) in vocabStrings" :key="key">
+          <ul
+            class="dropdown-menu"
+            id="vocab-list"
+            role="menu"
+            ref="vocabList"
+            v-key-nav="listKeyNav"
+          >
+            <li v-for="(value, key) in vocabStrings" :key="key" tabindex=0>
               <label class="vocab-select">
                 <input
                   type="checkbox"
                   :value="key"
                   v-model="selectedVocabs"
+                  tabindex=-1
                   @click.stop>
                   <span class="checkmark"></span>
                 {{ value }}
@@ -292,6 +385,7 @@ function startGlobalSearchApp () {
             data-bs-toggle="dropdown"
             aria-expanded="false"
             :aria-label="selectSearchLanguageAriaMessage"
+            @click="toggleLanguageDropdown"
             v-if="languageStrings">
               <span v-if="selectedLanguage && languageStrings[selectedLanguage]">
                 {{ languageStrings[selectedLanguage] }}
@@ -436,6 +530,33 @@ function startGlobalSearchApp () {
       document.removeEventListener('click', el.clickOutsideEvent)
     }
   })
+
+globalSearch.directive('key-nav', {
+  beforeMount: (el, binding) => {
+    const handler = event => {
+      const { key } = event
+      // Keep default Bootstrap behavior on these keys:
+      if (key === 'Tab' || key === 'Escape' || key === ' ') return
+
+      const handledKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter']
+      if (!handledKeys.includes(key)) return
+
+      if (!el.contains(document.activeElement)) return
+
+      event.preventDefault()
+
+      if (typeof binding.value === 'function') {
+        binding.value(event, el, document.activeElement)
+      }
+    }
+    el.__keynavHandler__ = handler
+    el.addEventListener('keyup', handler)
+  },
+  unmounted: el => {
+    el.removeEventListener('keyup', el.__keynavHandler__)
+    delete el.__keynavHandler__
+  }
+})
 
   if (document.getElementById('global-search-wrapper')) {
     globalSearch.mount('#global-search-wrapper')
