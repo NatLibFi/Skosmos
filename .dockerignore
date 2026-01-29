@@ -19,7 +19,6 @@ ansible
 .jshintrc
 .sonarcloud.properties
 ansible.cfg
-cypress.config.js
 docker-compose.yml
 Vagrantfile
 *.md
