@@ -10,7 +10,7 @@ class ModelTest extends PHPUnit\Framework\TestCase
         putenv("LANGUAGE=en_GB.utf8");
         putenv("LC_ALL=en_GB.utf8");
         setlocale(LC_ALL, 'en_GB.utf8');
-        $this->model = new Model('/../../tests/testconfig.ttl');
+        $this->model = new Model();
         $this->params = $this->getMockBuilder('ConceptSearchParameters')->disableOriginalConstructor()->getMock();
         $this->params->method('getVocabIds')->will($this->returnValue(array('test')));
         $this->params->method('getVocabs')->will($this->returnValue(array($this->model->getVocabulary('test'))));
@@ -26,7 +26,7 @@ class ModelTest extends PHPUnit\Framework\TestCase
      */
     public function testConstructor()
     {
-        $model = new Model('/../../tests/testconfig.ttl');
+        $model = new Model();
         $this->assertNotNull($model);
         $this->assertNotNull($model->getConfig());
     }
@@ -129,7 +129,7 @@ class ModelTest extends PHPUnit\Framework\TestCase
     public function testGetVocabularyByInvalidGraphUri()
     {
         $this->expectException(ValueError::class);
-        $this->expectExceptionMessage("no vocabulary found for graph http://no/address and endpoint http://localhost:9030/skosmos/sparql");
+        $this->expectExceptionMessage("no vocabulary found for graph http://no/address and endpoint " . getenv('SKOSMOS_SPARQL_ENDPOINT'));
         $vocab = $this->model->getVocabularyByGraph('http://no/address');
         $this->assertInstanceOf('Vocabulary', $vocab);
     }

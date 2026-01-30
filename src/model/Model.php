@@ -29,7 +29,7 @@ class Model
     /**
      * Initializes the Model object
      */
-    public function __construct(string $config_filename = "../../config.ttl")
+    public function __construct(?string $config_filename = null)
     {
         $this->resolver = new Resolver($this);
         $this->globalConfig = new GlobalConfig($this, $config_filename);

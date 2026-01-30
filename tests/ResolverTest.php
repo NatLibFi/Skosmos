@@ -6,7 +6,7 @@ class ResolverTest extends PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $model = new Model('/../../tests/testconfig.ttl');
+        $model = new Model();
         $this->resolver = new Resolver($model);
     }
 

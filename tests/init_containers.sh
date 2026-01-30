@@ -20,3 +20,7 @@ for fn in ../tests/test-vocab-data/*.ttl; do
     curl -X PUT -H "Content-Type: text/turtle" --data-binary "@$fn" "http://localhost:9030/skosmos/data?graph=http://www.skosmos.skos/$name/"
     echo
 done
+
+# Restarting fuseki-cache to avoid issue with backend connection
+# due to varnish-cache starts before fuseki is fully ready
+docker compose restart fuseki-cache || { echo "Failed to restart fuseki-cache"; exit 1; }
