@@ -249,6 +249,17 @@ class GlobalConfig extends BaseConfig
     }
 
     /**
+     * Returns the maximum number of items to parse in RDF lists if defined
+     * in the configuration or the default value of 1000.
+     * A value of 0 means no limit (use with caution).
+     * @return integer
+     */
+    public function getRdfListItemsLimit()
+    {
+        return $this->getLiteral('skosmos:rdfListItemsLimit', 1000);
+    }
+
+    /**
      * Returns the maximum number of items to load at a time if defined
      * in the configuration or the default value of 20.
      * @return integer

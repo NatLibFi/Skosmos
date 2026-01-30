@@ -204,4 +204,123 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
         $this->assertArrayHasKey('Last modified', $reified_vals);
         $this->assertEquals('4/13/18', $reified_vals['Last modified']->getLabel());
     }
+
+    private function getAssertedConceptRdfListPropertyValues($uri, $count)
+    {
+        $vocab = $this->model->getVocabulary('test-rdf-list');
+        $concept = $vocab->getConceptInfo($uri, 'en');
+        $props = $concept->getProperties();
+
+        $propKey = 'http://www.skosmos.skos/hasRelatedConcept'; // NOSONAR - RDF URI, not a web request
+        $this->assertArrayHasKey($propKey, $props);
+        $values = $props[$propKey]->getValues();
+        $this->assertCount($count, $values);
+        return $values;
+    }
+
+    private function getAssertedConceptRdfListPropertyFirstValue($uri, $count)
+    {
+        $values = $this->getAssertedConceptRdfListPropertyValues($uri, $count);
+        
+        $firstValue = reset($values);
+        $this->assertNotNull($firstValue, 'List value should not be null');
+        $this->assertTrue($firstValue->isRdfList());
+        return $firstValue;
+    }
+
+    /**
+     * @covers ConceptPropertyValue::isRdfList
+     * @covers ConceptPropertyValue::getRdfListItems
+     */
+    public function testRdfListOrdered()
+    {
+        // Should have exactly one value (the RDF list)
+        $listValue = $this->getAssertedConceptRdfListPropertyFirstValue('http://www.skosmos.skos/test-rdf-list/sdlc-ordered', 1); // NOSONAR - RDF URI, not a web request
+
+        $listItems = $listValue->getRdfListItems();
+        $this->assertCount(6, $listItems);
+
+        // Check the order is preserved (SDLC phases)
+        $expectedOrder = ['Requirements Gathering', 'System Design', 'Implementation',
+                         'Testing', 'Deployment', 'Maintenance'];
+        foreach ($listItems as $index => $item) {
+            $this->assertEquals($expectedOrder[$index], $item->getLabel()->getValue());
+        }
+    }
+
+    /**
+     * @covers ConceptPropertyValue::isRdfList
+     */
+    public function testRdfListUnordered()
+    {
+        // Should have 12 individual values (not a list)
+        $values = $this->getAssertedConceptRdfListPropertyValues('http://www.skosmos.skos/test-rdf-list/languages-unordered', 12); // NOSONAR - RDF URI, not a web request
+        
+        // None of the values should be RDF lists
+        foreach ($values as $value) {
+            $this->assertFalse($value->isRdfList());
+        }
+    }
+
+    /**
+     * @covers ConceptPropertyValue::isRdfList
+     * @covers ConceptPropertyValue::getRdfListItems
+     */
+    public function testRdfListMixed()
+    {
+        // Should have 4 values: 3 individual items + 1 RDF list (containing 6 items)
+        $values = $this->getAssertedConceptRdfListPropertyValues('http://www.skosmos.skos/test-rdf-list/mixed', 4); // NOSONAR - RDF URI, not a web request
+        
+        $listCount = 0;
+        $regularCount = 0;
+        
+        foreach ($values as $value) {
+            if ($value->isRdfList()) {
+                $listCount++;
+                $listItems = $value->getRdfListItems();
+                $this->assertCount(6, $listItems);
+                // Verify the list contains SDLC phases
+                $this->assertEquals('Requirements Gathering', $listItems[0]->getLabel()->getValue());
+                $this->assertEquals('System Design', $listItems[1]->getLabel()->getValue());
+                $this->assertEquals('Maintenance', $listItems[5]->getLabel()->getValue());
+            } else {
+                $regularCount++;
+            }
+        }
+        
+        $this->assertEquals(1, $listCount);
+        $this->assertEquals(3, $regularCount);
+    }
+
+    /**
+     * @covers ConceptPropertyValue::isRdfListTruncated
+     */
+    public function testRdfListNotTruncated()
+    {
+        // Should have exactly one value (the RDF list, not truncated)
+        $listValue = $this->getAssertedConceptRdfListPropertyFirstValue('http://www.skosmos.skos/test-rdf-list/sdlc-ordered', 1); // NOSONAR - RDF URI, not a web request
+
+        $this->assertFalse($listValue->isRdfListTruncated());
+    }
+
+    /**
+     * @covers ConceptPropertyValue::isRdfListTruncated
+     * @covers ConceptPropertyValue::getRdfListItems
+     */
+    public function testRdfListTruncated()
+    {
+        // Should have exactly one value (the RDF list, truncated at 10 items (config limit))
+        $listValue = $this->getAssertedConceptRdfListPropertyFirstValue('http://www.skosmos.skos/test-rdf-list/languages-ordered', 1); // NOSONAR - RDF URI, not a web request
+
+        $listItems = $listValue->getRdfListItems();
+        $this->assertCount(10, $listItems);
+
+        // Should be marked as truncated since original has 12 items
+        $this->assertTrue($listValue->isRdfListTruncated());
+        
+        // Verify first and last items of truncated list
+        // Order: Python, Java, JavaScript, C#, Ruby, PHP, Go, Rust, TypeScript, Swift (truncated at 10)
+        $this->assertEquals('Python', $listItems[0]->getLabel()->getValue());
+        $this->assertEquals('Swift', $listItems[9]->getLabel()->getValue());
+    }
 }

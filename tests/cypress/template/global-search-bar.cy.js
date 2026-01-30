@@ -4,8 +4,8 @@ describe('Global search bar', () => {
     cy.get('#search-wrapper').should('exist')
   })
 
-  it('vocab-list has 13 vocabularies', () => {
-    cy.get('#vocab-list li').should('have.length', 13)
+  it('vocab-list has 14 vocabularies', () => {
+    cy.get('#vocab-list li').should('have.length', 14)
   })
 
   it('dropdown menu header text is updated according to the selected vocabularies', () => {
