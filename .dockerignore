@@ -12,3 +12,13 @@ node_modules
 .DS_Store
 .phpunit.result.cache
 .git
+ansible
+.codeclimate.yml
+.github
+.gitignore
+.jshintrc
+.sonarcloud.properties
+ansible.cfg
+docker-compose.yml
+Vagrantfile
+*.md
