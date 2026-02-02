@@ -1238,6 +1238,17 @@ h1#vocab-heading {
   font-family: var(--font-family);
 }
 
+#search-loading-spinner, #search-count {
+  margin-top: 2.5rem;
+  margin-bottom: 0;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--main-content-border);
+}
+
+#search-count {
+  font-weight: bold;
+}
+
 .search-result {
   border-top: 1px solid var(--main-content-border);
   margin-top: 2.5rem;
