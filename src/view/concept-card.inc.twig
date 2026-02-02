@@ -2,7 +2,7 @@
   <div id="main-content-top-slot"></div>
   <div id="main-content">
       {% if concept.deprecated %}
-      <div class="main-content-section py-5 alert alert-danger" id="concept-deprecated-alert">
+      <div class="main-content-section py-5 alert" id="concept-deprecated-alert">
         <i class="fa-solid fa-triangle-exclamation"></i>
         {{ "This concept has been deprecated." | trans }}
         {% set replacedByValues = concept.isReplacedBy %}
