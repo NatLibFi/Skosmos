@@ -1,9 +1,23 @@
 <div class="col-md-8">
   <div id="main-content-top-slot"></div>
   <div id="main-content">
+      {% if concept.deprecated %}
+      <div class="main-content-section py-5 alert" id="concept-deprecated-alert">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        {{ "This concept has been deprecated." | trans }}
+        {% set replacedByValues = concept.isReplacedBy %}
+        {% if replacedByValues %}
+          {{ "dc:isReplacedBy" | trans }}:
+          <ul class="list-inline d-inline">
+          {% for val in replacedByValues %}
+            <li class="list-inline-item me-0"><a href="{{ val.uri | link_url(val.vocab, request.lang, 'page', request.contentLang) }}">{{ val.label }}</a></li>
+          {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+      {% endif %}
 
-      <div class="main-content-section py-4">
-
+      <div class="main-content-section py-4{% if concept.deprecated %} concept-deprecated{% endif %}">
         {% if visible_breadcrumbs and visible_breadcrumbs[0]|length > 1 %}
         <nav class="row" id="concept-breadcrumbs" aria-label='{{ "Breadcrumbs" | trans }}'>
           {% for path in visible_breadcrumbs %}
@@ -120,7 +134,7 @@
           <div class="col-lg-8 gx-0 gx-lg-4" id="concept-other-languages">
             {% for language,labels in foreignLabels %}
             <div class="row mb-2">
-              <div class="col-7 order-last"><h3>{{ language }}</h3></div>
+              <div class="col-7 order-last concept-other-languages-language"><h3>{{ language }}</h3></div>
               <div class="col-5">
                 <ul>
                   {% for value in labels.prefLabel|default([])|merge(labels.altLabel|default([])) %}
@@ -149,7 +163,7 @@
         {% endif %}
         <div class="row property prop-uri">
           <div class="col-lg-4 ps-0 property-label"><h2>URI</h2></div>
-          <div class="col-lg-8 gx-0 gx-lg-4">
+          <div class="col-lg-8 gx-0 gx-lg-4 property-value">
             <span id="concept-uri"
                   class="user-select-all">{{ concept.uri }}</span><button
                     class="btn btn-default copy-clipboard px-1" type="button" id="copy-uri"

@@ -41,6 +41,14 @@ describe('Concept page', () => {
     cy.get('link[rel="canonical"]').should('have.attr', 'href', expectedUrl);
     cy.get('head meta[property="og:url"]').should('have.attr', 'content', expectedUrl);
   })
+  it("shows alert for deprecated concepts", () => {
+    cy.visit('/changes/en/page/d4')
+    cy.get("#concept-deprecated-alert").should('exist')
+    cy.get("#concept-deprecated-alert ul").find('li').should('have.length', 1)
+    cy.get("#concept-deprecated-alert ul li a").first().invoke('text').should('equal', 'Hurr Durr')
+    cy.get("#concept-deprecated-alert ul li a").first().should('have.attr', 'href', "changes/en/page/d3");
+    cy.get("#main-content .main-content-section.concept-deprecated").should('exist')
+  })
   it("doesn't contain breadcrumbs for top concepts", () => {
     cy.visit('/yso/en/page/p4762') // go to "objects" concept page
 

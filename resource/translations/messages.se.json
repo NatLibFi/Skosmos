@@ -1,4 +1,5 @@
 {
+    "This concept has been deprecated.": "D\u00e1t doaba ii leat geavahusas.",
     "Any language": "Buot gielat",
     "Download this concept": "Lu\u0111e d\u00e1n doahpaga",
     "%search_count% results for '%term%'": "%search_count% bohtosa ohcui '%term%'",
@@ -128,7 +129,6 @@
     "dc:temporal": "\u00c1igg\u00e1la\u0161 gok\u010du",
     "dc:title": "Namma",
     "dc:type": "Tiipa",
-    "deprecated": "D\u00e1t doaba ii leat geavahusas. ",
     "feedback_enter_name_email": "\u010c\u00e1le ie\u017eat nama ja e-poasta\u010dujuhusa, nu mii v\u00e1stidit dutnje persovnnala\u010d\u010dat. S\u00e1ht\u00e1t guo\u0111\u0111it maidd\u00e1i anonyma m\u00e1hcahaga. FUOM! Dihto s\u00e1tner\u00e1ju guoski m\u00e1hcahat s\u00e1ddejuvvo njuolga s\u00e1tner\u00e1ju baj\u00e1sdoall\u00e1i.",
     "foaf:homepage": "Ruoktosiidu",
     "foaf:page": "Siidu",
