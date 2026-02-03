@@ -1020,6 +1020,7 @@ header .container-fluid .row {
 
 .property-value li.rdf-list-truncated {
   list-style: "… ";
+  font-size: 0.85rem;
 }
 
 .prop-skos_altLabel .property-value li, .altlabel {
