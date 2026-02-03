@@ -8,15 +8,18 @@ function truncatePropertyValues () {
 
     if (propVal.querySelector('a.property-value-show') === null && listItems.length > maxValues) {
       // hide the items after the first maxValues
+      let truncatedListItems = [];
       for (let i = maxValues; i < listItems.length; ++i) {
-        console.log(listItems[i])
         listItems[i].classList.add('property-value-hidden')
+        if (listItems[i].classList.contains('rdf-list-truncated')) {
+          truncatedListItems.push(listItems[i])
+        }
       }
       // add a link for showing all items
       const showItem = document.createElement('li')
       const showLink = document.createElement('a')
       showLink.href = '#'
-      showLink.textContent = '[' + $t('show all # values').replace('#', listItems.length) + ']'
+      showLink.textContent = '[' + $t('show all # values').replace('#', listItems.length - truncatedListItems.length) + ']'
       showLink.classList.add('property-value-show')
 
       showLink.addEventListener('click', function (event) {
