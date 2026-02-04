@@ -1,45 +1,86 @@
 :root {
-  /* Color definitions */
   --dark-color: #0d284e;
-  --secondary-dark-color: #1b709d ;
-  --medium-color: #dfe5ed;
+  --muted-color: #6C778A;
+  --medium-color: #1b709d ;
   --secondary-medium-color: #b8c9db;
-  --light-color: #f2f5f7;
+  --light-color: #dfe5ed;
+  --secondary-light-color: #f2f5f7;
   --alert-color: #a0270a;
   --white-color: #ffffff;
-  --header-bar-text: var(--white-color);
-  --headerbar-vocab-bg: var(--dark-color);
-  --feedback-form-bg: var(--white-color);
-  --feedback-form-text: var(--dark-color);
-  --feedback-form-input: var(--light-color);
-  --feedback-form-button-bg: var(--dark-color);
-  --sidebar-search-bg: var(--dark-color);
-  --sidebar-search-text: var(--white-color);
-  --sidebar-tab-inactive-bg: var(--light-color);
+
+  --body-text: var(--dark-color);
+
+  --scrollbar-thumb: var(--secondary-medium-color);
+  --scrollbar-track: var(--secondary-light-color);
+
+  --tooltip-bg: var(--dark-color);
+  --tooltip-text: var(--secondary-light-color);
+  --tooltip-border: var(--secondary-medium-color);
+
+  --topbar-bg-1: var(--dark-color); /*landing*/
+  --topbar-bg-2: var(--dark-color);
+  --topbar-text-1: var(--white-color); /*landing*/
+  --topbar-text-2: var(--white-color);
+
+  --headerbar-bg-1: var(--white-color); /*landing*/
+  --headerbar-bg-2: var(--white-color);
+  --headerbar-text: var(--dark-color);
+
+  --search-field-bg: var(--white-color);
+  --search-dropdown-bg: var(--secondary-light-color);
+  --search-border: var(--light-color);
+  --search-button-bg: var(--dark-color);
+  --search-button-text: var(--white-color);
+  --search-hover-bg: var(--light-color);
+  --vocab-search-language-dropdown-hover-bg: var(--dark-color);
+  --vocab-search-language-dropdown-hover-text: var(--white-color);
+  --global-search-vocab-selector-selected-bg: var(--dark-color);
+  --global-search-vocab-selector-check: var(--white-color);
+  --search-autocomplete-result-link: var(--medium-color);
+
+  --main-bg-1: var(--white-color); /*landing*/
+  --main-bg-2: var(--light-color); /*vocab, concept, search, error*/
+  --main-bg-3: var(--secondary-light-color); /*about, feedback*/
+
+  --landing-vocabulary-list-bg: var(--light-color);
+  --landing-vocabulary-list-text: var(--dark-color);
+  --landing-vocabulary-list-heading: var(--dark-color);
+  --landing-vocabulary-list-link: var(--medium-color);
+  --landing-vocabulary-list-link-underline: var(--secondary-medium-color);
+
+  --sidebar-tab-inactive-bg: var(--secondary-light-color);
   --sidebar-tab-inactive-text: var(--dark-color);
   --sidebar-tab-active-bg: var(--dark-color);
   --sidebar-tab-active-text: var(--white-color);
-  --sidebar-scrollbar-bg: var(--light-color);
   --sidebar-scrollbar-thumb: var(--secondary-medium-color);
-  --search-bg: var(--white-color);
-  --search-dropdown-bg: var(--light-color);
-  --search-border: var(--medium-color);
-  --search-button-bg: var(--dark-color);
-  --search-button-text: var(--white-color);
-  --search-dropdown-toggle-hover-bg: var(--medium-color);
-  --search-vocab-selector-selected-bg: var(--dark-color);
-  --search-vocab-selector-check: var(--white-color);
-  --vocab-search-language-selector-hover-text: var(--white-color);
-  --vocab-search-language-selector-hover-bg: var(--dark-color);
-  --vocab-bg: var(--white-color);
-  --vocab-text: var(--dark-color);
-  --vocab-table-border: var(--medium-color);
-  --vocab-link: var(--secondary-dark-color);
-  --vocab-category-text: var(--dark-color);
-  --vocab-category-bg: var(--medium-color);
-  --tooltip-fg-color: var(--light-color);
-  --tooltip-bg-color: var(--dark-color);
-  --tooltip-border-color: var(--secondary-medium-color);
+  --sidebar-scrollbar-track: var(--secondary-light-color);
+  --sidebar-bg: var(--white-color);
+  --sidebar-text: var(--dark-color);
+  --sidebar-link: var(--medium-color);
+  --sidebar-selected: var(--dark-color);
+  --sidebar-alphabetical-entry-term: var(--dark-color);
+  --sidebar-hierarchy-line: var(--dark-color);
+  --sidebar-notation: var(--dark-color);
+
+  --main-content-bg: var(--white-color);
+  --main-content-text: var(--dark-color);
+  --main-content-disabled: var(--muted-color);
+  --main-content-link: var(--medium-color);
+  --main-content-border: var(--light-color);
+
+  --about-text: var(--dark-color);
+  --about-link: var(--medium-color);
+
+  --feedback-bg: var(--white-color);
+  --feedback-text: var(--dark-color);
+  --feedback-field-bg: var(--secondary-light-color);
+  --feedback-submit-bg: var(--dark-color);
+
+  --alert-bg: var(--alert-color);
+  --alert-text: var(--white-color);
+
+  --footer-bg: var(--white-color);
+  --footer-text: var(--dark-color);
 
   /* Font definitions */
   --font-size: 1em; /* same as the browser default font size, often 16px */
@@ -48,24 +89,9 @@
 }
 
 body {
-  color: var(--dark-color);
+  color: var(--body-text);
   font-family: var(--font-family);
   font-size: var(--font-size);
-}
-
-/* Utilities
-====================================== */
-
-.bg-dark {
-  background-color: var(--dark-color) !important;
-}
-
-.bg-medium {
-  background-color: var(--medium-color) !important;
-}
-
-.bg-light {
-  background-color: var(--light-color) !important;
 }
 
 /* Font awesome
@@ -78,24 +104,24 @@ body {
 }
 
 .fa-download {
-  color: var(--vocab-text);
+  color: var(--main-content-text);
 }
 
 .vocab-home .fa-arrow-right, .concept .fa-arrow-right, .error .fa-arrow-right {
-  color: var(--vocab-text);
+  color: var(--sidebar-alphabetical-entry-term);
   font-size: .75rem;
   margin: 0 5px;
 }
 
 #search-results .list-group .fa-solid, #search-results .list-group .fa-regular {
-  color: var(--vocab-text);
+  color: var(--main-content-text);
   font-size: 1.15rem;
   width: 1.5rem;
   text-align: center;
 }
 
 #search-results .fa-arrow-right {
-  color: var(--vocab-text);
+  color: var(--main-content-text);
   font-size: .85rem;
 }
 
@@ -109,6 +135,25 @@ header .container-fluid .row {
 
 /* Topbar
 -------------------------------------- */
+
+.frontpage-logo #topbar {
+  color: var(--topbar-text-1);
+  background-color: var(--topbar-bg-1);
+}
+
+#topbar {
+  color: var(--topbar-text-2);
+  background-color: var(--topbar-bg-2);
+}
+
+.frontpage-logo #topbar-nav .nav-item a {
+  color: var(--topbar-text-1);
+}
+
+#topbar-nav .nav-item a {
+  color: var(--topbar-text-2);
+}
+
 #skosmos-logo-top {
   background-image: url("../pics/skosmos-NEGA-RGB.svg");
   background-repeat: no-repeat;
@@ -123,7 +168,8 @@ header .container-fluid .row {
 
 #global-search-toggle {
   transition: none;
-  background-color: var(--headerbar-vocab-bg);
+  color: var(--topbar-text-1);
+  background-color: var(--topbar-bg-1);
   border-style: none;
   white-space: nowrap;
 }
@@ -133,7 +179,7 @@ header .container-fluid .row {
   transform: none;
   padding-left: 0.5rem;
   content: "\f078"; /* fa-chevron-down */
-  color: var(--header-bar-text);
+  color: var(--topbar-text-1);
   font: var(--fa-font-solid);
   display: inline-block;
 }
@@ -143,13 +189,23 @@ header .container-fluid .row {
   transform: none;
   padding-left: 0.5rem;
   content: "\f077"; /* fa-chevron-up */
-  color: var(--header-bar-text);
+  color: var(--topbar-text-1);
   font: var(--fa-font-solid);
   display: inline-block;
 }
 
 /* Headerbar
 -------------------------------------- */
+
+.frontpage-logo #headerbar {
+  color: var(--headerbar-text-1);
+  background-color: var(--headerbar-bg-1);
+}
+
+#headerbar {
+  color: var(--headerbar-text-2);
+  background-color: var(--headerbar-bg-2);
+}
 
 #skosmos-logo {
   background-image: url("../pics/skosmos-RGB.svg");
@@ -165,7 +221,7 @@ header .container-fluid .row {
 }
 
 #vocab-title a {
-  color: var(--vocab-text);
+  color: var(--headerbar-text);
   font-family: var(--font-family-heading);
 }
 
@@ -175,16 +231,16 @@ header .container-fluid .row {
   height: 100%;
 }
 
+/* Dropdowns */
+
 #language-list, #vocab-list {
   inset: -2px auto auto 0 !important;
   background-color: var(--search-dropdown-bg);
-  color: var(--vocab-text);
+  color: var(--headerbar-text);
   border: 0 !important;
   width: max-content;
   list-style: none;
 }
-
-/* Dropdowns */
 
 #search-wrapper ul {
   padding-top: 0rem;
@@ -196,14 +252,19 @@ header .container-fluid .row {
 #search-wrapper .dropdown-menu {
   transform: translateY(-1px);
   background-color: var(--search-dropdown-bg);
-  color: var(--vocab-text);
+  color: var(--headerbar-text);
   border: 1px solid var(--search-border);
   border-radius: 0;
   overflow-x: hidden; /* prevent horizontal scrollbar in chrome */
 }
 
+#search-wrapper .dropdown-menu label, #search-wrapper .dropdown-menu a {
+  color: var(--headerbar-text);
+}
+
 #search-wrapper .dropdown-toggle {
-  color: var(--vocab-text);
+  color: var(--headerbar-text);
+  background-color: var(--search-field-bg);
   border: 1px solid var(--search-border);
   border-radius: 0;
   padding-left: 1rem;
@@ -211,7 +272,7 @@ header .container-fluid .row {
 }
 
 #search-wrapper .dropdown-toggle:hover, #search-wrapper .dropdown-toggle.show {
-  background-color: var(--search-dropdown-toggle-hover-bg);
+  background-color: var(--search-hover-bg);
 }
 
 #search-wrapper .dropdown-toggle::after {
@@ -234,17 +295,17 @@ header .container-fluid .row {
 /* Language selector  */
 
 #language-list li:hover a, #language-list li:active a {
-  color: var(--vocab-search-language-selector-hover-text);
-  background-color: var(--vocab-search-language-selector-hover-bg);
+  color: var(--vocab-search-language-dropdown-hover-text);
+  background-color: var(--vocab-search-language-dropdown-hover-bg);
 }
 
 #language-list li:hover label, #language-list li:active label {
-  background-color: var(--search-dropdown-toggle-hover-bg);
+  background-color: var(--search-hover-bg);
 }
 
 #language-list li:has(input:checked) label {
   background-color: var(--search-button-bg);
-  color: var(--white-color);
+  color: var(--search-button-text);
   font-weight: bold;
 }
 
@@ -256,7 +317,7 @@ header .container-fluid .row {
 }
 
 #search-field {
-  background-color: var(--search-bg);
+  background-color: var(--search-field-bg);
   border-color: var(--search-border);
   border-radius: 0;
 }
@@ -268,7 +329,7 @@ header .container-fluid .row {
 
 #clear-button {
   position: absolute;
-  color: var(--vocab-text);
+  color: var(--headerbar-text);
   background: none;
   border: none;
   top: 0;
@@ -291,11 +352,11 @@ header .container-fluid .row {
 
 #search-wrapper .autocomplete-result * {
   text-decoration: none;
-  color: var(--dark-color);
+  color: var(--headerbar-text);
 }
 
 #search-wrapper .autocomplete-result .result {
-  color: var(--vocab-link);
+  color: var(--search-autocomplete-result-link);
 }
 
 #search-button {
@@ -371,12 +432,12 @@ header .container-fluid .row {
 
 #search-wrapper .checkmark {
   position: absolute;
-  border: 1px solid var(--search-vocab-selector-selected-bg);
+  border: 1px solid var(--global-search-vocab-selector-selected-bg);
   top: 0;
   left: 0;
   height: 1.5rem;
   width: 1.5rem;
-  background-color: var(--search-vocab-selector-check);
+  background-color: var(--global-search-vocab-selector-check);
 }
 
 #search-wrapper .checkmark::after {
@@ -384,7 +445,7 @@ header .container-fluid .row {
   top: 5px;
   width: 5px;
   height: 10px;
-  border: solid var(--search-vocab-selector-check);
+  border: solid var(--global-search-vocab-selector-check);
   border-width: 0 3px 3px 0;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
@@ -395,11 +456,11 @@ header .container-fluid .row {
 }
 
 #search-wrapper .vocab-select:hover input ~ .checkmark {
-  background-color: var(--search-vocab-selector-selected-bg);
+  background-color: var(--global-search-vocab-selector-selected-bg);
 }
 
 #search-wrapper .vocab-select input:checked ~ .checkmark {
-  background-color: var(--search-vocab-selector-selected-bg);
+  background-color: var(--global-search-vocab-selector-selected-bg);
 }
 
 #search-wrapper .vocab-select input:checked ~ .checkmark::after {
@@ -421,7 +482,7 @@ header .container-fluid .row {
 /* Setting scrollbar style separately in Firefox */
 @-moz-document url-prefix() {
   #search-wrapper ul {
-    scrollbar-color: var(--sidebar-scrollbar-thumb) var(--search-dropdown-bg);
+    scrollbar-color: var(--scrollbar-thumb) var(--search-dropdown-bg);
   }
 } 
 
@@ -438,8 +499,8 @@ header .container-fluid .row {
 
 #search-wrapper ul::-webkit-scrollbar-thumb {
     border-radius: 0;
-    border: 1px solid var(--sidebar-scrollbar-thumb);
-    background-color: var(--sidebar-scrollbar-thumb);
+    border: 1px solid var(--scrollbar-thumb);
+    background-color: var(--scrollbar-thumb);
 }
 
 #search-wrapper ul::-webkit-scrollbar-track { 
@@ -464,12 +525,12 @@ header .container-fluid .row {
   max-width: 1460px;
 }
 
-.vocab-home, .concept, .vocab-search, .global-search {
-  background-color: var(--main-bg-2); /* missing var */
+.vocab-home, .concept, .vocab-search, .global-search, .error {
+  background-color: var(--main-bg-2);
 }
 
 .vocab-home a, .concept a, .vocab-search a, .global-search a, .error a {
-  color: var(--vocab-link);
+  color: var(--main-content-link);
   text-decoration: none;
   font-weight: bold;
 }
@@ -491,7 +552,7 @@ header .container-fluid .row {
 -------------------------------------- */
 
 #background.landing { /* unused */
-  background-color: var(--main-bg-1); /* missing var */
+  background-color: var(--main-bg-1);
   background-image: var(--landing-stripes-1);
   background-repeat: no-repeat;
   background-size: 650px;
@@ -506,29 +567,37 @@ header .container-fluid .row {
   padding-top: 0;
 }
 
+#vocabulary-list {
+  background-color: var(--landing-vocabulary-list-bg);
+}
+
+#vocabulary-list h2 {
+  color: var(--landing-vocabulary-list-heading);
+}
+
 #vocabulary-list .vocab-category {
-  color: var(--vocab-category-text);
+  color: var(--landing-vocabulary-list-text);
 }
 
 #vocabulary-list .vocab-category.border-top {
-  border-top: 2px var(--vocab-category-text) solid !important;
+  border-top: 2px var(--landing-vocabulary-list-text) solid !important;
 }
 
 #vocabulary-list .vocab-category h3 {
-  color: var(--vocab-category-text);
+  color: var(--landing-vocabulary-list-text);
 }
 
 #vocabulary-list .list-group-item {
-  background-color: var(--vocab-category-bg);
+  background-color: var(--landing-vocabulary-list-bg);
   border: none;
 }
 
 #vocabulary-list .list-group-item a {
-  color: var(--vocab-link);
+  color: var(--landing-vocabulary-list-link);
   font-weight: bold;
   text-decoration: underline;
   text-decoration-thickness: 1px;
-  text-decoration-color: var(--secondary-medium-color);
+  text-decoration-color: var(--landing-vocabulary-list-link-underline);
   text-underline-offset: 0.3rem;
 }
 
@@ -536,13 +605,13 @@ header .container-fluid .row {
 -------------------------------------- */
 
 .vocab-home #sidebar-col, .concept #sidebar-col, .error #sidebar-col {
-  background-color: var(--vocab-bg);
+  background-color: var(--sidebar-bg);
   background-clip: content-box, padding-box;
   min-height: 1000px;
 }
 
 .vocab-home #sidebar, .concept #sidebar, .error #sidebar-col {
-  background-color: var(--vocab-bg);
+  background-color: var(--sidebar-bg);
 }
 
 /* Sidebar tabs */
@@ -621,8 +690,8 @@ header .container-fluid .row {
 #sidebar .nav-item.disabled::before {
   position: absolute;
   content: ' ';
-  background-color: var(--tooltip-border-color);
-  border: 3px solid var(--tooltip-border-color);
+  background-color: var(--tooltip-border);
+  border: 3px solid var(--tooltip-border);
   width: 15px;
   height: 15px;
   z-index: 500;
@@ -642,9 +711,9 @@ header .container-fluid .row {
   max-width: 400px;
   width: max-content;
   display: inline-block;
-  color: var(--white-color);
-  background-color: var(--tooltip-bg-color);
-  border: 3px solid var(--tooltip-border-color);
+  color: var(--tooltip-text);
+  background-color: var(--tooltip-bg);
+  border: 3px solid var(--tooltip-border);
   position: absolute;
   z-index: 9002;
   opacity: 0;
@@ -662,6 +731,7 @@ header .container-fluid .row {
 /* --- Sidebar concept list --- */
 
 #sidebar .sidebar-list {
+  color: var(--sidebar-text);
   padding: 2rem 1rem 0;
   overflow-y: scroll;
   position: absolute;
@@ -670,10 +740,17 @@ header .container-fluid .row {
 #sidebar .list-group-item {
   border: none;
   border-radius: 0;
+  background-color: var(--sidebar-bg);
+}
+
+#sidebar .sidebar-list a {
+  color: var(--sidebar-link);
+  font-weight: normal;
 }
 
 #sidebar .sidebar-list a.selected {
-  color: var(--vocab-text);
+  color: var(--sidebar-selected);
+  font-weight: bold;
 }
 
 /* --- Sidebar alphabetical tab --- */
@@ -713,11 +790,19 @@ header .container-fluid .row {
   box-shadow: none;
 }
 
+#sidebar .page-item:last-child .page-link {
+  width: 50px;
+}
+
+#sidebar .list-group-item span {
+  color: var(--sidebar-alphabetical-entry-term);
+}
+
 /* --- Sidebar hierarchy and groups tabs --- */
 
 #tab-hierarchy .list-group-item,
 #tab-groups .list-group-item {
-  border-left: 1px dashed var(--vocab-text);
+  border-left: 1px dashed var(--sidebar-text);
   border-radius: 0;
   white-space: nowrap;
 }
@@ -729,7 +814,7 @@ header .container-fluid .row {
 
 #sidebar .concept-label {
   display: inline-block;
-  border-left: 1px dashed var(--vocab-text);
+  border-left: 1px dashed var(--sidebar-text);
   margin-left: 16px;
   padding-left: 14px;
   padding-right: 14px;
@@ -744,7 +829,7 @@ header .container-fluid .row {
   top: 0;
   width: 10px;
   height: 13px;
-  border-bottom: 1px dashed var(--vocab-text);
+  border-bottom: 1px dashed var(--sidebar-text);
 }
 
 /* hiding bottom of vertical line on last concept of list */
@@ -752,8 +837,8 @@ header .container-fluid .row {
   top: auto;
   bottom: 0;
   height: calc(100% - 13px);
-  border-left: 1px solid var(--vocab-bg);
-  border-top: 1px dashed var(--vocab-text);
+  border-left: 1px solid var(--sidebar-bg);
+  border-top: 1px dashed var(--sidebar-text);
   border-bottom: none;
 }
 
@@ -763,13 +848,13 @@ header .container-fluid .row {
   margin-left: 1px; /* add a 1px margin to offset missing border */
 }
 
-#tab-groups .concept-label i {
-  color: var(--vocab-text);
-  font-size: 1rem;
+#tab-groups a.group {
+  font-weight: bold;
 }
 
 #sidebar .concept-notation {
-  color: var(--vocab-text);
+  color: var(--sidebar-notation) !important;
+  font-weight: bold;
 }
 
 #sidebar .hierarchy-button {
@@ -779,34 +864,37 @@ header .container-fluid .row {
 
 #sidebar .hierarchy-button:hover, #sidebar .hierarchy-button:active {
   background-color: transparent;
-  color: var(--vocab-text);
+  color: var(--sidebar-text);
 }
 
 #sidebar .hierarchy-button i {
   position: absolute;
-  left: 11px;
-  top: 7px;
+  left: 10px;
+  top: 5px;
   z-index: 1;
+  color: var(--sidebar-text);
   font-size: .85rem;
 }
 
 #sidebar .hierarchy-button img {
   transform: rotate(-45deg);
   position: absolute;
-  top: 9px;
-  left: 11px;
-  width: 7px;
+  top: 2.5px;
+  left: 3.5px;
+  width: 20px;
   z-index: 1;
 }
 
 #sidebar .hierarchy-button.open img {
   transform: rotate(0deg);
-  left: 12px;
+  left: 5px;
+  top: 2px;
 }
 
 /* --- Sidebar changes tab --- */
 
 #tab-changes h2 {
+  color: var(--sidebar-text);
   font-size: 1.4rem;
   margin: 0;
 }
@@ -817,7 +905,11 @@ header .container-fluid .row {
 }
 
 #tab-changes s {
-  text-decoration: 1px var(--vocab-text) line-through;
+  text-decoration: 1px var(--sidebar-text) line-through;
+}
+
+#tab-changes .selected s {
+  text-decoration: 1px var(--sidebar-selected) line-through;
 }
 
 /* --- Browser specific rules --- */
@@ -825,7 +917,7 @@ header .container-fluid .row {
 /* Setting scrollbar style separately in Firefox */
 @-moz-document url-prefix() {
   #sidebar .sidebar-list {
-    scrollbar-color: var(--sidebar-scrollbar-thumb) var(--search-dropdown-bg);
+    scrollbar-color: var(--sidebar-scrollbar-thumb) var(--sidebar-scrollbar-track);
   }
 } 
 
@@ -847,7 +939,7 @@ header .container-fluid .row {
 }
 
 #sidebar .sidebar-list::-webkit-scrollbar-track { 
-    background-color: var(--sidebar-scrollbar-bg);
+    background-color: var(--sidebar-scrollbar-track);
     border-radius: 0; 
 }
 
@@ -855,11 +947,11 @@ header .container-fluid .row {
 -------------------------------------- */
 
 #main-content h1 {
-  font-size: 2.5rem;
+  font-size: 1.7rem;
 }
 
 .main-content-section {
-  background-color: var(--vocab-bg);
+  background-color: var(--main-content-bg);
   margin-bottom: .2rem;
   padding-left: 3.5rem;
   padding-right: 3.5rem;
@@ -870,13 +962,17 @@ header .container-fluid .row {
   padding-bottom: 2.5rem;
 }
 
+h1#vocab-heading {
+  font-size: 2.5rem;
+}
+
 #vocab-heading, .vocab-statistics, #vocab-download-links {
   margin-left: -.75rem;
   margin-right: -.75rem;
 }
 
 .property {
-  border-top: 1px solid var(--vocab-table-border);
+  border-top: 1px solid var(--main-content-border);
   padding: .5rem 0;
 }
 
@@ -898,7 +994,7 @@ header .container-fluid .row {
 }
 
 .property-value {
-  color: var(--vocab-text);
+  color: var(--main-content-text);
   border: none;
 }
 
@@ -913,13 +1009,13 @@ header .container-fluid .row {
 }
 
 .vocab-statistics th, .vocab-statistics td {
-  color: var(--vocab-text);
+  color: var(--main-content-text);
   padding: 0.25rem;
 }
 
 .vocab-statistics th {
   font-weight: bold;
-  border-bottom: 1px solid var(--vocab-text);
+  border-bottom: 1px solid var(--main-content-text);
 }
 
 .vocab-statistics td {
@@ -928,9 +1024,39 @@ header .container-fluid .row {
 
 /* --- Concept page --- */
 
+#concept-deprecated-alert {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
+#concept-deprecated-alert i {
+  font-size: 1.4rem;
+}
+
+#concept-deprecated-alert .list-inline-item:not(:last-child)::after {
+  content: ", ";
+}
+
+#concept-deprecated-alert a {
+  color: var(--alert-text);
+  text-decoration: underline;
+}
+
+.concept-deprecated #concept-breadcrumbs .breadcrumb-current,
+.concept-deprecated h1,
+.concept-deprecated #copy-preflabel,
+.concept-deprecated .property-value,
+.concept-deprecated #concept-other-languages .altlabel,
+.concept-deprecated .concept-other-languages-language,
+.concept-deprecated #copy-uri{
+  color: var(--main-content-disabled);
+}
+
 #concept-property-label {
   align-self: start;
-  padding-top: 1.25rem;
+  padding-top: 0.4rem;
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
 #concept-preflabel {
@@ -958,35 +1084,35 @@ header .container-fluid .row {
 }
 
 #concept-breadcrumbs .breadcrumb-current {
-  color: var(--vocab-text);
+  color: var(--main-content-text);
   font-weight: normal;
 }
 
 /* Copy buttons */
 
 #copy-preflabel, #copy-notation {
-  color: var(--vocab-text);
-  font-size: 2.1rem;
+  color: var(--main-content-text);
+  font-size: 1.4rem;
   position: relative;
-  bottom: 10px;
-  left: 5px;
+  bottom: 6px;
+  left: 3px;
 }
 
 #copy-uri {
-  color: var(--vocab-text);
+  color: var(--main-content-text);
   position: relative;
   bottom: 4px;
 }
 
 .copy-clipboard:focus {
-  border: 1px solid var(--vocab-text);
+  border: 1px solid var(--main-content-text);
   border-radius: 3px;
 }
 
 /* Properties */
 
 .property-value .property-value-notation {
-  color: var(--vocab-text);
+  color: var(--main-content-text);
 }
 
 .property-value .property-value-submembers {
@@ -1056,11 +1182,11 @@ header .container-fluid .row {
   line-height: 1.0;
   padding: 3px;
   margin: -3px;
-  color: var(--tooltip-bg-color);
+  color: var(--tooltip-bg);
 }
 
 .tooltip-html button:focus {
-  border: 2px solid var(--vocab-text);
+  border: 2px solid var(--main-content-text);
   border-radius: 0;
   margin: -4px;
 }
@@ -1078,9 +1204,9 @@ header .container-fluid .row {
   display: block;
   cursor: text;
   width: 400px;
-  color: var(--tooltip-fg-color);
-  background-color: var(--tooltip-bg-color);
-  border: 3px solid var(--tooltip-border-color);
+  color: var(--tooltip-text);
+  background-color: var(--tooltip-bg);
+  border: 3px solid var(--tooltip-border);
   z-index: 9001;
   visibility: hidden;
   opacity: 0;
@@ -1097,11 +1223,11 @@ header .container-fluid .row {
   top: -7px;
   left: 0;
   margin-left: 2px;
-  color: var(--tooltip-fg-color);
-  border-top: 6px solid var(--tooltip-border-color);
+  color: var(--tooltip-text);
+  border-top: 6px solid var(--tooltip-border);
   border-right: 6px solid transparent;
   border-bottom: 6px solid transparent;
-  border-left: 6px solid var(--tooltip-border-color);
+  border-left: 6px solid var(--tooltip-border);
   z-index: 9002;
 }
 
@@ -1125,7 +1251,7 @@ header .container-fluid .row {
 -------------------------------------- */
 
 #search-results {
-  background-color: var(--vocab-bg);
+  background-color: var(--main-content-bg);
 }
 
 #search-results h1 {
@@ -1133,8 +1259,19 @@ header .container-fluid .row {
   font-family: var(--font-family);
 }
 
+#search-loading-spinner, #search-count {
+  margin-top: 2.5rem;
+  margin-bottom: 0;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--main-content-border);
+}
+
+#search-count {
+  font-weight: bold;
+}
+
 .search-result {
-  border-top: 1px solid var(--vocab-table-border);
+  border-top: 1px solid var(--main-content-border);
   margin-top: 2.5rem;
 }
 
@@ -1146,7 +1283,7 @@ header .container-fluid .row {
 }
 
 .search-result .list-group-item { /* bug in truncate-search-results.js (.list-group-item class is overwritten) */
-  color: var(--vocab-text);
+  color: var(--main-content-text);
   border: none;
   cursor: default;
 }
@@ -1167,8 +1304,8 @@ header .container-fluid .row {
   background: linear-gradient(
                 90deg,
                 transparent,
-                var(--vocab-bg) 35%,
-                var(--vocab-bg) 0%);
+                var(--main-content-bg) 35%,
+                var(--main-content-bg) 0%);
 }
 
 .search-result-hidden {
@@ -1193,7 +1330,7 @@ header .container-fluid .row {
 
 .prefLabel.proplabel {
   font-weight: bold;
-  color: var(--vocab-link);
+  color: var(--main-content-link);
 }
 
 .altLabel.proplabel {
@@ -1204,7 +1341,7 @@ header .container-fluid .row {
 -------------------------------------- */
 
 .about, .feedback {
-  background-color: var(--main-bg-3); /* missing var */
+  background-color: var(--main-bg-3);
   padding: 4rem 0;
 }
 
@@ -1214,11 +1351,17 @@ header .container-fluid .row {
 
 /* --- About page --- */
 
-.about { /* unused */
-  background-image: var(--about-stripes);
+.about {
+  color: var(--about-text);
+  background-image: var(--about-stripes); /* unused */
   background-repeat: no-repeat;
   background-size: 650px;
   background-position: calc(100% + 41px) calc(100% + 55px);
+}
+
+.about a {
+  color: var(--about-link);
+  font-weight: bold;
 }
 
 /* --- Feedback page -- */
@@ -1231,8 +1374,8 @@ header .container-fluid .row {
 }
 
 #feedback-form {
-  background-color: var(--feedback-form-bg);
-  color: var(--feedback-form-text);
+  color: var(--feedback-text);
+  background-color: var(--feedback-bg);
   padding: 2.5rem 2rem 5rem;
 }
 
@@ -1241,7 +1384,7 @@ header .container-fluid .row {
 }
 
 #feedback-form select, #feedback-form input, #feedback-form textarea {
-  background-color: var(--feedback-form-input);
+  background-color: var(--feedback-field-bg);
   border: none;
   border-radius: 0;
 }
@@ -1251,7 +1394,7 @@ header .container-fluid .row {
 }
 
 #feedback-form .select-wrapper::after {
-  color: var(--vocab-text);
+  color: var(--feedback-text);
   content: '﹀';
   font-size: 1.4rem;
   position: absolute;
@@ -1264,7 +1407,7 @@ header .container-fluid .row {
 }
 
 #feedback-form select:valid, #feedback-form select:valid:focus, #feedback-form input::placeholder {
-  color: var(--feedback-form-text);
+  color: var(--feedback-text);
 }
 
 #feedback-form textarea {
@@ -1272,7 +1415,7 @@ header .container-fluid .row {
 }
 
 #feedback-form button {
-  background-color: var(--feedback-form-button-bg);
+  background-color: var(--feedback-submit-bg);
   border: none;
   border-radius: 0;
   font-weight: bold;
@@ -1282,7 +1425,15 @@ header .container-fluid .row {
 /* Error page
 -------------------------------------- */
 .alert {
-  background-color: var(--alert-color);
-  color: var(--white-color);
+  background-color: var(--alert-bg);
+  color: var(--alert-text);
   border-radius: 0;
+}
+
+/* Footer
+====================================== */
+
+footer {
+  background-color: var(--footer-bg);
+  color: var(--footer-text);
 }

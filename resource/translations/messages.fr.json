@@ -1,4 +1,5 @@
 {
+    "This concept has been deprecated.": "Ce concept a \u00e9t\u00e9 d\u00e9pr\u00e9ci\u00e9.",
     "Any language": "Toutes les langues",
     "Download this concept": "T\u00e9l\u00e9charger ce concept",
     "%search_count% results for '%term%'": "%search_count% r\u00e9sultat(s) pour '%term%'",
@@ -94,7 +95,6 @@
     "dc:temporal": "Couverture temporelle",
     "dc:title": "Titre",
     "dc:type": "Type",
-    "deprecated": "Ce concept a \u00e9t\u00e9 d\u00e9pr\u00e9ci\u00e9.",
     "foaf:homepage": "Accueil",
     "foaf:page": "Page",
     "foreign prefLabel help": "Termes du concept dans d'autres langues.",

@@ -10,7 +10,7 @@ class ModelTest extends PHPUnit\Framework\TestCase
         putenv("LANGUAGE=en_GB.utf8");
         putenv("LC_ALL=en_GB.utf8");
         setlocale(LC_ALL, 'en_GB.utf8');
-        $this->model = new Model('/../../tests/testconfig.ttl');
+        $this->model = new Model();
         $this->params = $this->getMockBuilder('ConceptSearchParameters')->disableOriginalConstructor()->getMock();
         $this->params->method('getVocabIds')->will($this->returnValue(array('test')));
         $this->params->method('getVocabs')->will($this->returnValue(array($this->model->getVocabulary('test'))));
@@ -26,7 +26,7 @@ class ModelTest extends PHPUnit\Framework\TestCase
      */
     public function testConstructor()
     {
-        $model = new Model('/../../tests/testconfig.ttl');
+        $model = new Model();
         $this->assertNotNull($model);
         $this->assertNotNull($model->getConfig());
     }
@@ -46,6 +46,17 @@ class ModelTest extends PHPUnit\Framework\TestCase
             "Composer version '$version' doesn't match git tag '$git_tag'.\n" .
       "Please run 'composer update' to update the Composer version."
         );
+    }
+
+    /**
+     * @covers Model::getUserAgent
+     */
+    public function testGetUserAgent()
+    {
+        $userAgent = $this->model->getUserAgent();
+        $version = $this->model->getVersion();
+        $expected = "Skosmos/$version (https://skosmos.org/)";
+        $this->assertEquals($expected, $userAgent);
     }
 
     /**

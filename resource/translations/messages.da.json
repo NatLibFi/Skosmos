@@ -1,4 +1,5 @@
 {
+    "This concept has been deprecated.": "Denne ressource frar\u00e5des og b\u00f8r ikke anvendes.",
     "Any language": "Ethvert sprog",
     "Download this concept": "Download",
     "%search_count% results for '%term%'": "%search_count% resultater ved s\u00f8gning p\u00e5 '%term%'",
@@ -95,7 +96,6 @@
     "dc:temporal": "D\u00e6kningsperiode",
     "dc:title": "Titel",
     "dc:type": "Type",
-    "deprecated": "Denne ressource frar\u00e5des og b\u00f8r ikke anvendes.",
     "feedback_enter_name_email": "Angiv venligt dit navn og e-mailadresse hvis du \u00f8nske at modtage en svar direkte. Du kan ogs\u00e5 indsende dit feedback anonymt. NB: Feedback vedr\u00f8rende et specifikt begrebssystem sendes direkte til dets administrator.",
     "foaf:homepage": "Hjemmeside",
     "foaf:page": "Side",

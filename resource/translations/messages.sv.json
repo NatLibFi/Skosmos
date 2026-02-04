@@ -1,4 +1,5 @@
 {
+    "This concept has been deprecated.": "Begreppet har tagits ur bruk.",
     "Search across vocabularies": "Sams\u00f6kning i flera vokabul\u00e4rer",
     "1. Choose vocabulary": "1. V\u00e4lj vokabul\u00e4r",
     "2. Choose language": "2. V\u00e4lj spr\u00e5k",
@@ -141,7 +142,6 @@
     "dc:temporal": "Kronologisk t\u00e4ckning",
     "dc:title": "Namn",
     "dc:type": "Typ",
-    "deprecated": "Begreppet har tagits ur bruk.",
     "feedback_enter_name_email": "Ange ditt namn och din e-postadress s\u00e5 svarar vi dig personligen. Om du vill kan du ocks\u00e5 ge respons anonymt. OBS! Respons som g\u00e4ller en viss vokabul\u00e4r styrs direkt till vokabul\u00e4rens uppr\u00e4tth\u00e5llare.",
     "foaf:homepage": "Hemsida",
     "foaf:page": "Sida",

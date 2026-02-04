@@ -12,6 +12,15 @@ EasyRdf\RdfNamespace::set('mads', 'http://www.loc.gov/mads/rdf/v1#');
 EasyRdf\RdfNamespace::set('wd', 'http://www.wikidata.org/entity/');
 EasyRdf\RdfNamespace::set('wdt', 'http://www.wikidata.org/prop/direct/');
 
+class ConfigFileNotFoundException extends Exception
+{
+    public function __construct(string $path, int $code = 0, ?Throwable $previous = null)
+    {
+        $message = "Config file '$path' is missing, please provide one.";
+        parent::__construct($message, $code, $previous);
+    }
+}
+
 /**
  * GlobalConfig provides access to the Skosmos configuration in config.ttl.
  */
@@ -30,13 +39,55 @@ class GlobalConfig extends BaseConfig
      */
     private $configModifiedTime = null;
 
-    public function __construct(Model $model, string $config_name = '../../config.ttl')
+    private static function getCheckedConfigFileRealPath(string $path): string
+    {
+        if (str_starts_with($path, '/')) {
+            $realpath = realpath($path);
+        } else {
+            $realpath = realpath(dirname(__FILE__) . "/" . $path);
+        }
+        if (!$realpath) {
+            throw new ConfigFileNotFoundException($path);
+        }
+        return $realpath;
+    }
+
+    /**
+     * Gets the configuration file path.
+     *
+     * Returns the full path to the configuration file. If a config name is provided,
+     * it will be used to construct the path. Otherwise, fallback path will be used.
+     *
+     * First fallback is the `SKOSMOS_CONFIG_NAME` environment variable,
+     * which accepts two formats:
+     * - Absolute path: A full path to the configuration file (e.g., /etc/skosmos/config.ttl)
+     * - Relative path: A path relative to the application root (e.g., config/config.ttl)
+     *
+     * Second fallback is "config.ttl" path in the root directory.
+     *
+     * @param string|null $config_name Optional configuration file name
+     * @return string The full path to the configuration file. Throws errors on failure,
+     * e.g. if the file does not exist.
+     */
+    public static function getConfigFilePath(?string $config_name = null)
+    {
+        $path = '../../config.ttl';
+        if (isset($config_name)) {
+            $path = $config_name;
+        } elseif (getenv('SKOSMOS_CONFIG_NAME')) {
+            if (str_starts_with(getenv('SKOSMOS_CONFIG_NAME'), '/')) {
+                $path = getenv('SKOSMOS_CONFIG_NAME');
+            } else {
+                $path = dirname(__FILE__) . '/../../' . getenv('SKOSMOS_CONFIG_NAME');
+            }
+        }
+        return GlobalConfig::getCheckedConfigFileRealPath($path);
+    }
+
+    public function __construct(Model $model, ?string $config_name = null)
     {
         $this->cache = new Cache();
-        $this->filePath = realpath(dirname(__FILE__) . "/" . $config_name);
-        if (!file_exists($this->filePath)) {
-            throw new Exception('config.ttl file is missing, please provide one.');
-        }
+        $this->filePath = GlobalConfig::getConfigFilePath($config_name);
         $resource = $this->initializeConfig();
         parent::__construct($model, $resource);
     }
@@ -372,7 +423,12 @@ class GlobalConfig extends BaseConfig
      */
     public function getBaseHref()
     {
-        return $this->getLiteral('skosmos:baseHref', null);
+        $baseHref = $this->getLiteral('skosmos:baseHref', null);
+        if ($baseHref) {
+            return $baseHref;
+        } elseif (getenv('SKOSMOS_BASE_HREF')) {
+            return getenv('SKOSMOS_BASE_HREF');
+        }
     }
 
     /**
