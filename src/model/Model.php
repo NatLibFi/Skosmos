@@ -29,7 +29,7 @@ class Model
     /**
      * Initializes the Model object
      */
-    public function __construct(string $config_filename = "../../config.ttl")
+    public function __construct(?string $config_filename = null)
     {
         $this->resolver = new Resolver($this);
         $this->globalConfig = new GlobalConfig($this, $config_filename);
@@ -101,6 +101,17 @@ class Model
         }
 
         return $ver;
+    }
+
+    /**
+     * Return a User-Agent header for this Skosmos installation, including the
+     * name of the software (Skosmos), the version number and URL.
+     * @return string userAgent
+     */
+    public function getUserAgent(): string
+    {
+        $version = $this->getVersion();
+        return "Skosmos/$version (https://skosmos.org/)";
     }
 
     /**

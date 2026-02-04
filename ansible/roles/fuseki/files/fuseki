@@ -1,5 +1,0 @@
-export FUSEKI_HOME=/opt/fuseki
-export FUSEKI_BASE=/etc/fuseki
-
-FUSEKI_USER=fuseki
-JAVA_OPTIONS="-Xmx2048M"

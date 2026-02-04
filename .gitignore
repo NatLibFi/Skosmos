@@ -21,3 +21,4 @@ tests/cypress/screenshots/
 *.swp
 var/
 .env.local
+tests/docker-compose.override.yml

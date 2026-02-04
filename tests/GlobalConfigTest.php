@@ -15,11 +15,11 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->config = (new Model('/../../tests/testconfig.ttl'))->getConfig();
+        $this->config = (new Model())->getConfig();
         $this->assertNotNull($this->config->getCache());
         $this->assertNotNull($this->config->getGraph());
-        $this->configWithDefaults = (new Model('/../../tests/testconfig-fordefaults.ttl'))->getConfig();
-        $this->configWithBaseHref = (new Model('/../../tests/testconfig-basehref.ttl'))->getConfig();
+        $this->configWithDefaults = (new Model('../../tests/testconfig-fordefaults.ttl'))->getConfig();
+        $this->configWithBaseHref = (new Model('../../tests/testconfig-basehref.ttl'))->getConfig();
     }
 
     // --- tests for values that are overriding default values
@@ -46,7 +46,7 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
 
     public function testGetHttpTimeout()
     {
-        $this->assertEquals(8, $this->config->getHttpTimeout());
+        $this->assertEquals(20, $this->config->getHttpTimeout());
     }
 
     public function testGetServiceName()
@@ -101,7 +101,7 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
 
     public function testGetBaseHref()
     {
-        $this->assertEquals("http://tests.localhost/Skosmos/", $this->configWithBaseHref->getBaseHref());
+        $this->assertEquals(getenv('SKOSMOS_BASE_HREF'), $this->configWithBaseHref->getBaseHref());
     }
 
     public function testGetLanguages()
@@ -190,15 +190,15 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
     {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('config.ttl must have exactly one skosmos:Configuration');
-        $model = new Model('/../../tests/testconfig-nograph.ttl');
+        $model = new Model('../../tests/testconfig-nograph.ttl');
         $this->assertNotNull($model);
     }
 
     public function testNonexistentFile()
     {
         $this->expectException(Exception::class);
-        $this->expectExceptionMessage('config.ttl file is missing, please provide one.');
-        $model = new Model('/../../tests/testconfig-idonotexist.ttl');
+        $this->expectExceptionMessage("Config file '../../tests/testconfig-idonotexist.ttl' is missing, please provide one.");
+        $model = new Model('../../tests/testconfig-idonotexist.ttl');
         $this->assertNotNull($model);
     }
 
@@ -227,5 +227,16 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
     public function testGetDefaultServiceName()
     {
         $this->assertEquals("Skosmos", $this->configWithDefaults->getServiceName());
+    }
+    
+    // --- tests from env config path
+    
+    public function testsGetDefaultConfigPath()
+    {
+        if (str_starts_with(getenv('SKOSMOS_CONFIG_NAME'), '/')) {
+            $this->assertEquals(getenv('SKOSMOS_CONFIG_NAME'), GlobalConfig::getConfigFilePath());
+        } else {
+            $this->assertStringStartsWith(str_replace(getenv('SKOSMOS_CONFIG_NAME'), '../', '/'), GlobalConfig::getConfigFilePath());
+        }
     }
 }

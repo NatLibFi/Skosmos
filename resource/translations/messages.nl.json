@@ -1,4 +1,5 @@
 {
+    "This concept has been deprecated.": "Dit concept is verouderd.",
     "Any language": "Elke taal",
     "Download this concept": "Download dit concept",
     "%search_count% results for '%term%'": "%search_count% resultaten voor \u2018%term%\u2019",
@@ -118,7 +119,6 @@
     "dc:temporal": "Temporele dekking",
     "dc:title": "Titel",
     "dc:type": "Type",
-    "deprecated": "Dit concept is verouderd.",
     "feedback_enter_name_email": "Voer uw naam en e-mailadres in als u een direct antwoord wilt ontvangen. U hebt ook de mogelijkheid om uw feedback anoniem in te dienen. NB: Feedback over een specifieke woordenlijst wordt doorgestuurd naar de beheerder ervan.",
     "foaf:homepage": "Startpagina",
     "foaf:page": "Pagina",

@@ -30,7 +30,7 @@
     skosmos:sparqlCollationEnabled true ;
     # HTTP client configuration
     skosmos:sparqlTimeout 10 ;
-    skosmos:httpTimeout 8 ;
+    skosmos:httpTimeout 20 ;
     # customize the service name
     skosmos:serviceName "Skosmos being tested" ;
     skosmos:serviceNameLong "Skosmos being tested, long title"@en, "Skosmos-long" ;
@@ -230,7 +230,7 @@
 	dc:subject :cat_general ;
 	void:dataDump <http://skosmos.skos/dump/test/groups.ttl>,
 		<http://skosmos.skos/dump/test/groups> ;
-	void:uriSpace "http://www.skosmos.skos/onto/groups/";
+	void:uriSpace "http://www.skosmos.skos/groups/";
 	skosmos:arrayClass isothes:ThesaurusArray ;
     skosmos:groupClass skos:Collection ;
     skosmos:defaultConceptSidebarView "groups" ;
