@@ -8,7 +8,7 @@ function truncatePropertyValues () {
 
     if (propVal.querySelector('a.property-value-show') === null && listItems.length > maxValues) {
       // hide the items after the first maxValues
-      let truncatedListItems = [];
+      const truncatedListItems = []
       for (let i = maxValues; i < listItems.length; ++i) {
         listItems[i].classList.add('property-value-hidden')
         if (listItems[i].classList.contains('rdf-list-truncated')) {
