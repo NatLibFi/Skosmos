@@ -253,8 +253,8 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
      */
     public function testRdfListUnordered()
     {
-        // Should have 12 individual values (not a list)
-        $values = $this->getAssertedConceptRdfListPropertyValues('http://www.skosmos.skos/test-rdf-list/languages-unordered', 12); // NOSONAR - RDF URI, not a web request
+        // Should have 17 individual values (not a list)
+        $values = $this->getAssertedConceptRdfListPropertyValues('http://www.skosmos.skos/test-rdf-list/languages-unordered', 17); // NOSONAR - RDF URI, not a web request
         
         // None of the values should be RDF lists
         foreach ($values as $value) {
@@ -268,8 +268,8 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
      */
     public function testRdfListMixed()
     {
-        // Should have 4 values: 3 individual items + 1 RDF list (containing 6 items)
-        $values = $this->getAssertedConceptRdfListPropertyValues('http://www.skosmos.skos/test-rdf-list/mixed', 4); // NOSONAR - RDF URI, not a web request
+        // Should have 5 values: 4 individual items + 1 RDF list (containing 6 items)
+        $values = $this->getAssertedConceptRdfListPropertyValues('http://www.skosmos.skos/test-rdf-list/mixed', 5); // NOSONAR - RDF URI, not a web request
         
         $listCount = 0;
         $regularCount = 0;
@@ -289,7 +289,7 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
         }
         
         $this->assertEquals(1, $listCount);
-        $this->assertEquals(3, $regularCount);
+        $this->assertEquals(4, $regularCount);
     }
 
     /**
