@@ -2,6 +2,9 @@ Options +FollowSymlinks -MultiViews -Indexes
 
 RewriteEngine on
 
+# Prevent access to files starting with a period
+RewriteRule ^\..* - [F,L]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^entity$ src/entity.php [L]
 
