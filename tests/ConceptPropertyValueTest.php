@@ -309,18 +309,18 @@ class ConceptPropertyValueTest extends PHPUnit\Framework\TestCase
      */
     public function testRdfListTruncated()
     {
-        // Should have exactly one value (the RDF list, truncated at 10 items (config limit))
+        // Should have exactly one value (the RDF list, truncated at 16 items (config limit))
         $listValue = $this->getAssertedConceptRdfListPropertyFirstValue('http://www.skosmos.skos/test-rdf-list/languages-ordered', 1); // NOSONAR - RDF URI, not a web request
 
         $listItems = $listValue->getRdfListItems();
-        $this->assertCount(10, $listItems);
+        $this->assertCount(16, $listItems);
 
-        // Should be marked as truncated since original has 12 items
+        // Should be marked as truncated since original has 17 items
         $this->assertTrue($listValue->isRdfListTruncated());
         
         // Verify first and last items of truncated list
-        // Order: Python, Java, JavaScript, C#, Ruby, PHP, Go, Rust, TypeScript, Swift (truncated at 10)
+        // Order: Python, Java, JavaScript, C, C#, ADA, Ruby, PHP, C++, Go, Rust, Obsective-C, TypeScript, Swift, R, Kotlin (truncated at 16)
         $this->assertEquals('Python', $listItems[0]->getLabel()->getValue());
-        $this->assertEquals('Swift', $listItems[9]->getLabel()->getValue());
+        $this->assertEquals('Go', $listItems[9]->getLabel()->getValue());
     }
 }
