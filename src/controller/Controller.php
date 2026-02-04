@@ -176,7 +176,7 @@ class Controller
     protected function executeGitModifiedDateCommand($gitCommand)
     {
         $commitDate = null;
-        $commandOutput = @exec($gitCommand);
+        $commandOutput = @exec($gitCommand . ' 2>/dev/null');
         if ($commandOutput) {
             $commitDate = new \DateTime(trim($commandOutput));
             $commitDate->setTimezone(new \DateTimeZone('UTC'));
