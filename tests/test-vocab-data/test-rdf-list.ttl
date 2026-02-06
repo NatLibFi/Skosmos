@@ -1,0 +1,283 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dc11: <http://purl.org/dc/elements/1.1/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix test: <http://www.skosmos.skos/test-rdf-list/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix skosmos: <http://www.skosmos.skos/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+skosmos:hasRelatedConcept a rdf:Property ;
+    rdfs:label "Has related concept"@en ;
+    rdfs:comment "A property for testing RDF lists with related concepts" .
+
+# Steps in a Software Development Lifecycle
+test:requirements a skos:Concept ;
+    skos:inScheme test:conceptscheme ;
+    skos:broader test:sdlc-ordered,
+        test:mixed ;
+    skos:prefLabel "Requirements Gathering"@en .
+test:design a skos:Concept ;
+    skos:inScheme test:conceptscheme ;
+    skos:broader test:sdlc-ordered,
+        test:mixed ;
+    skos:prefLabel "System Design"@en .
+test:implementation a skos:Concept ;
+    skos:inScheme test:conceptscheme ;
+    skos:broader test:sdlc-ordered,
+        test:mixed ;
+    skos:prefLabel "Implementation"@en .
+test:testing a skos:Concept ;
+    skos:inScheme test:conceptscheme ;
+    skos:broader test:sdlc-ordered,
+        test:mixed ;
+    skos:prefLabel "Testing"@en .
+test:deployment a skos:Concept ;
+    skos:inScheme test:conceptscheme ;
+    skos:broader test:sdlc-ordered,
+        test:mixed ;
+    skos:prefLabel "Deployment"@en .
+test:maintenance a skos:Concept ;
+    skos:inScheme test:conceptscheme ;
+    skos:broader test:sdlc-ordered,
+        test:mixed ;
+    skos:prefLabel "Maintenance"@en .
+
+# Programming Languages
+test:python a skos:Concept ;
+    skos:inScheme test:conceptscheme ;
+    skos:broader test:languages-unordered,
+        test:languages-ordered,
+        test:mixed ;
+    skos:prefLabel "Python"@en .
+test:java a skos:Concept ;
+    skos:inScheme test:conceptscheme ;
+    skos:broader test:languages-unordered,
+        test:languages-ordered,
+        test:mixed ;
+    skos:prefLabel "Java"@en .
+test:javascript a skos:Concept ;
+    skos:inScheme test:conceptscheme ;
+    skos:broader test:languages-unordered,
+        test:languages-ordered,
+        test:mixed ;
+    skos:prefLabel "JavaScript"@en .
+test:c a skos:Concept ;
+    skos:inScheme test:conceptscheme ;
+    skos:broader test:languages-unordered,
+        test:languages-ordered ;
+    skos:prefLabel "C"@en .
+test:cpp a skos:Concept ;
+    skos:inScheme test:conceptscheme ;
+    skos:broader test:languages-unordered,
+        test:languages-ordered ;
+    skos:prefLabel "C++"@en .
+test:csharp a skos:Concept ;
+    skos:inScheme test:conceptscheme ;
+    skos:broader test:languages-unordered,
+        test:languages-ordered ;
+    skos:prefLabel "C#"@en .
+test:ruby a skos:Concept ;
+    skos:inScheme test:conceptscheme ;
+    skos:broader test:languages-unordered,
+        test:languages-ordered ;
+    skos:prefLabel "Ruby"@en .
+test:php a skos:Concept ;
+    skos:inScheme test:conceptscheme ;
+    skos:broader test:languages-unordered,
+        test:languages-ordered ;
+    skos:prefLabel "PHP"@en .
+test:go a skos:Concept ;
+    skos:inScheme test:conceptscheme ;
+    skos:broader test:languages-unordered,
+        test:languages-ordered ;
+    skos:prefLabel "Go"@en .
+test:rust a skos:Concept ;
+    skos:inScheme test:conceptscheme ;
+    skos:broader test:languages-unordered,
+        test:languages-ordered ;
+    skos:prefLabel "Rust"@en .
+test:objectivec a skos:Concept ;
+    skos:inScheme test:conceptscheme ;
+    skos:broader test:languages-unordered,
+        test:languages-ordered ;
+    skos:prefLabel "Obsective-C"@en .
+test:ada a skos:Concept ;
+    skos:inScheme test:conceptscheme ;
+    skos:broader test:languages-unordered,
+        test:languages-ordered ;
+    skos:prefLabel "ADA"@en .
+test:r a skos:Concept ;
+    skos:inScheme test:conceptscheme ;
+    skos:broader test:languages-unordered,
+        test:languages-ordered ;
+    skos:prefLabel "R"@en .
+test:typescript a skos:Concept ;
+    skos:inScheme test:conceptscheme ;
+    skos:broader test:languages-unordered,
+        test:languages-ordered ;
+    skos:prefLabel "TypeScript"@en .
+test:swift a skos:Concept ;
+    skos:inScheme test:conceptscheme ;
+    skos:broader test:languages-unordered,
+        test:languages-ordered ;
+    skos:prefLabel "Swift"@en .
+test:kotlin a skos:Concept ;
+    skos:inScheme test:conceptscheme ;
+    skos:broader test:languages-unordered,
+        test:languages-ordered ;
+    skos:prefLabel "Kotlin"@en .
+test:scala a skos:Concept ;
+    skos:inScheme test:conceptscheme ;
+    skos:broader test:languages-unordered,
+        test:languages-ordered ;
+    skos:prefLabel "Scala"@en .
+
+# Test concept with ordered SDLC phases (6 items - below limit of 10)
+test:sdlc-ordered a skos:Concept ;
+    skos:inScheme test:conceptscheme ;
+    skosmos:hasRelatedConcept (
+        test:requirements
+        test:design
+        test:implementation
+        test:testing
+        test:deployment
+        test:maintenance
+    ) ;
+    skos:narrower test:requirements,
+        test:design,
+        test:implementation,
+        test:testing,
+        test:deployment,
+        test:maintenance ;
+    skos:prefLabel "Software Lifecycle (Ordered)"@en ;
+    skos:definition "A concept demonstrating ordered RDF list below truncation limit"@en ;
+    skos:topConceptOf test:conceptscheme .
+
+# Test concept with unordered programming languages (12 items - above limit of 10)
+test:languages-unordered a skos:Concept ;
+    skos:inScheme test:conceptscheme ;
+    skosmos:hasRelatedConcept 
+        test:python,
+        test:java,
+        test:javascript,
+        test:c,
+        test:csharp,
+        test:ada,
+        test:ruby,
+        test:php,
+        test:cpp,
+        test:go,
+        test:rust,
+        test:objectivec,
+        test:typescript,
+        test:swift,
+        test:r,
+        test:kotlin,
+        test:scala ;
+    skos:narrower test:python,
+        test:java,
+        test:javascript,
+        test:c,
+        test:csharp,
+        test:ada,
+        test:ruby,
+        test:php,
+        test:cpp,
+        test:go,
+        test:rust,
+        test:objectivec,
+        test:typescript,
+        test:swift,
+        test:r,
+        test:kotlin,
+        test:scala ;
+    skos:prefLabel "Programming Languages (Unordered)"@en ;
+    skos:definition "A concept demonstrating unordered property values above truncation limit"@en ;
+    skos:topConceptOf test:conceptscheme .
+
+# Test concept with ordered programming languages (12 items - above limit of 10, TRUNCATED)
+test:languages-ordered a skos:Concept ;
+    skos:inScheme test:conceptscheme ;
+    skosmos:hasRelatedConcept (
+        test:python
+        test:java
+        test:javascript
+        test:c
+        test:csharp
+        test:ada
+        test:ruby
+        test:php
+        test:cpp
+        test:go
+        test:rust
+        test:objectivec
+        test:typescript
+        test:swift
+        test:r
+        test:kotlin
+        test:scala
+    ) ;
+    skos:narrower test:python,
+        test:java,
+        test:javascript,
+        test:c,
+        test:csharp,
+        test:ada,
+        test:ruby,
+        test:php,
+        test:cpp,
+        test:go,
+        test:rust,
+        test:objectivec,
+        test:typescript,
+        test:swift,
+        test:r,
+        test:kotlin,
+        test:scala;
+    skos:prefLabel "Programming Languages (Ordered, Truncated)"@en ;
+    skos:definition "A concept demonstrating ordered RDF list exceeding truncation limit"@en ;
+    skos:topConceptOf test:conceptscheme .
+
+# Test concept with mixed: some unordered + one ordered list
+test:mixed a skos:Concept ;
+    skos:inScheme test:conceptscheme ;
+    skosmos:hasRelatedConcept 
+        test:python,
+        test:java,
+        test:javascript,
+        (
+            test:requirements
+            test:design
+            test:implementation
+            test:testing
+            test:deployment
+            test:maintenance
+        ),
+        test:kotlin ;
+    skos:narrower test:python,
+        test:java,
+        test:javascript,
+        test:requirements,
+        test:design,
+        test:implementation,
+        test:testing,
+        test:deployment,
+        test:maintenance,
+        test:kotlin;
+    skos:prefLabel "Mixed (Unordered + Ordered)"@en ;
+    skos:definition "A concept with both regular values and an ordered RDF list"@en ;
+    skos:topConceptOf test:conceptscheme .
+
+test:conceptscheme a skos:ConceptScheme ;
+    rdfs:label "RDF List Test Vocabulary"@en ;
+    dct:modified "2025-12-25T10:00:00+00:00"^^xsd:dateTime ;
+    owl:versionInfo "Test vocabulary for RDF list functionality"^^xsd:string ;
+    skos:hasTopConcept 
+        test:sdlc-ordered,
+        test:languages-unordered,
+        test:languages-ordered,
+        test:mixed .
+

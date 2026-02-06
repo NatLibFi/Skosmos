@@ -1128,6 +1128,27 @@ h1#vocab-heading {
   display: list-item;
 }
 
+.property-value .rdf-list li {
+  list-style-type: decimal;
+}
+
+.property-value li:has(.rdf-list):not(:last-child):not(:has(li.property-value-hidden)) {
+  border-bottom: 1px solid var(--vocab-table-border);
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.property-value li:has(+ li .rdf-list) {
+  border-bottom: 1px solid var(--vocab-table-border);
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.property-value li.rdf-list-truncated {
+  list-style: "… ";
+  font-size: 0.85rem;
+}
+
 .prop-skos_altLabel .property-value li, .altlabel {
   font-style: italic;
 }
