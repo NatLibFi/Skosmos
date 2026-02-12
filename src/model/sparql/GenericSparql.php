@@ -1128,6 +1128,7 @@ EOQ;
   BIND(IF((SUBSTR(STRBEFORE(?hit, '@'),1) != ?pri), STRLANG(STRAFTER(?hit, '@'), SUBSTR(STRBEFORE(?hit, '@'),2)), STRAFTER(?hit, '@')) AS ?match)
   BIND(IF((?pri = "1" || ?pri = "2") && ?match != ?label, ?match, ?unbound) as ?plabel)
   BIND(IF((?pri = "3" || ?pri = "4"), ?match, ?unbound) as ?alabel)
+  BIND(IF((?pri = "5" || ?pri = "6"), ?match, ?unbound) as ?nlabel)
   BIND(IF((?pri = "7" || ?pri = "8"), ?match, ?unbound) as ?hlabel)
 EOQ;
         $innerquery = $this->generateConceptSearchQueryInner($params->getSearchTerm(), $params->getLang(), $params->getSearchLang(), $props, $unique, $filterGraph);
@@ -1135,7 +1136,7 @@ EOQ;
             $labelpriority = '';
         }
         $query = <<<EOQ
-SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph ?notation (GROUP_CONCAT(DISTINCT STR(?type);separator=' ') as ?types) $extravars 
+SELECT DISTINCT ?s ?label ?plabel ?alabel ?nlabel ?hlabel ?graph ?notation (GROUP_CONCAT(DISTINCT STR(?type);separator=' ') as ?types) $extravars
 $fcl
 WHERE {
  $gcl {
@@ -1152,7 +1153,7 @@ WHERE {
  }
  $filterGraph
 }
-GROUP BY ?s ?match ?label ?plabel ?alabel ?hlabel ?notation ?graph
+GROUP BY ?s ?match ?label ?plabel ?alabel ?nlabel ?hlabel ?notation ?graph
 ORDER BY LCASE(STR(?match)) LANG(?match) $orderextra
 EOQ;
         return $query;
@@ -1234,6 +1235,8 @@ EOQ;
         } elseif (isset($row->alabel)) {
             $hit['altLabel'] = $row->alabel->getValue();
             $hit['lang'] = $row->alabel->getLang();
+        } elseif (isset($row->nlabel)) {
+            $hit['matchedNotation'] = $row->nlabel->getValue();
         } elseif (isset($row->hlabel)) {
             $hit['hiddenLabel'] = $row->hlabel->getValue();
             $hit['lang'] = $row->hlabel->getLang();
