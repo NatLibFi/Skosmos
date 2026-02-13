@@ -60,7 +60,8 @@ function startVocabSearchApp () {
         const mySearchCounter = this.searchCounter + 1 // make sure we can identify this search later in case of several ongoing searches
         this.searchCounter = mySearchCounter
         let skosmosSearchUrl = 'rest/v1/' + window.SKOSMOS.vocab + '/search?'
-        const skosmosSearchUrlParams = new URLSearchParams({ query: this.formatSearchTerm(), unique: true })
+        const unique = this.selectedLanguage !== 'all'
+        const skosmosSearchUrlParams = new URLSearchParams({ query: this.formatSearchTerm(), unique: unique })
         if (this.selectedLanguage !== 'all') skosmosSearchUrlParams.set('lang', this.selectedLanguage)
         skosmosSearchUrl += skosmosSearchUrlParams.toString()
 
