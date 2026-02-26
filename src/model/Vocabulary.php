@@ -199,7 +199,8 @@ class Vocabulary extends DataObject implements Modifiable
                 foreach ($conceptscheme->allLiterals($prop, null) as $val) {
                     $prop = (substr($prop, 0, 5) == 'dc11:') ? str_replace('dc11:', 'dc:', $prop) : $prop;
                     if ($val->getValue() instanceof DateTime) {
-                        $val = Punic\Calendar::formatDate($val->getValue(), 'full', $lang) . ' ' . Punic\Calendar::format($val->getValue(), 'HH:mm:ss', $lang);
+                        $dateTimeHelper = $this->model->getDateTimeHelper();
+                        $val = $dateTimeHelper->formatDateTime($val->getValue(), $lang);
                     }
                     $ret[$prop][] = $val;
                 }

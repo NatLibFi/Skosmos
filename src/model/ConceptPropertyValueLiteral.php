@@ -67,7 +67,8 @@ class ConceptPropertyValueLiteral extends VocabularyDataObject
         if ($this->literal instanceof EasyRdf\Literal\Date) {
             try {
                 $val = $this->literal->getValue();
-                return Punic\Calendar::formatDate($val, 'short');
+                $dateTimeHelper = $this->model->getDateTimeHelper();
+                return $dateTimeHelper->formatDate($val, 'short');
             } catch (Exception $e) {
                 trigger_error($e->getMessage(), E_USER_WARNING);
                 return (string) $this->literal;

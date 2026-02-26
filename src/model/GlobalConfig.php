@@ -239,6 +239,23 @@ class GlobalConfig extends BaseConfig
     }
 
     /**
+     * Returns the timezone for date formatting defined in the configuration.
+     * If not set, checks SKOSMOS_TIMEZONE environment variable, defaulting to 'UTC'.
+     * @return string timezone identifier (e.g., 'Europe/Paris', 'UTC')
+     */
+    public function getTimezone()
+    {
+        $timezone = $this->getLiteral('skosmos:timezone', null);
+        if ($timezone) {
+            return $timezone;
+        } elseif (getenv('SKOSMOS_TIMEZONE')) {
+            return getenv('SKOSMOS_TIMEZONE');
+        } else {
+            return 'UTC';
+        }
+    }
+
+    /**
      * Returns the maximum number of items to return in transitive queries if defined
      * in the configuration or the default value of 1000.
      * @return integer

@@ -751,22 +751,25 @@ class Concept extends VocabularyDataObject implements Modifiable
         $created = '';
         try {
             // finding the created properties
-            if ($this->resource->get('dc:created')) {
-                $created = $this->resource->get('dc:created')->getValue();
+            $createdResource = $this->resource->get('dc:created');
+            if ($createdResource && $createdResource instanceof \EasyRdf\Literal\Date) {
+                $created = $createdResource->getValue();
             }
 
             $modified = $this->getModifiedDate();
 
+            $dateTimeHelper = $this->model->getDateTimeHelper();
+
             // making a human readable string from the timestamps
             if ($created != '') {
-                $ret = $this->model->getText('skosmos:created') . ' ' . (Punic\Calendar::formatDate($created, 'short', $this->getLang()));
+                $ret = $this->model->getText('skosmos:created') . ' ' . $dateTimeHelper->formatDate($created, 'short', $this->getLang());
             }
 
             if ($modified != '') {
                 if ($created != '') {
-                    $ret .= ', ' . $this->model->getText('skosmos:modified') . ' ' . (Punic\Calendar::formatDate($modified, 'short', $this->getLang()));
+                    $ret .= ', ' . $this->model->getText('skosmos:modified') . ' ' . $dateTimeHelper->formatDate($modified, 'short', $this->getLang());
                 } else {
-                    $ret .= ' ' . ucfirst($this->model->getText('skosmos:modified')) . ' ' . (Punic\Calendar::formatDate($modified, 'short', $this->getLang()));
+                    $ret .= ' ' . ucfirst($this->model->getText('skosmos:modified')) . ' ' . $dateTimeHelper->formatDate($modified, 'short', $this->getLang());
                 }
 
             }
@@ -778,7 +781,7 @@ class Concept extends VocabularyDataObject implements Modifiable
                 $ret = $this->model->getText('skosmos:modified') . ' ' . $modified;
             }
             if ($this->resource->get('dc:created')) {
-                $created .= (string) $this->resource->get('dc:created');
+                $created = (string) $this->resource->get('dc:created');
                 $ret .= ' ' . $this->model->getText('skosmos:created') . ' ' . $created;
             }
         }
