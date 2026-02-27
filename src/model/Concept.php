@@ -766,13 +766,12 @@ class Concept extends VocabularyDataObject implements Modifiable
             }
 
             if ($modified != '') {
-                if ($created != '') {
-                    $ret .= ', ' . $this->model->getText('skosmos:modified') . ' ' . $dateTimeHelper->formatDate($modified, 'short', $this->getLang());
-                } else {
-                    $ret .= ' ' . ucfirst($this->model->getText('skosmos:modified')) . ' ' . $dateTimeHelper->formatDate($modified, 'short', $this->getLang());
+                if ($ret != '') {
+                    $ret .= ', ';
                 }
-
+                $ret .= $this->model->getText('skosmos:modified') . ' ' . $dateTimeHelper->formatDate($modified, 'short', $this->getLang());
             }
+            $ret = ucfirst($ret);
         } catch (Exception $e) {
             trigger_error($e->getMessage(), E_USER_WARNING);
             $ret = '';

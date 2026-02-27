@@ -88,7 +88,7 @@ class Model
     private function initializeDateTimeHelper()
     {
         $timezone = $this->getConfig()->getTimezone();
-        $this->dateTimeHelper = new DateTimeHelper($timezone);
+        $this->dateTimeHelper = new DateTimeHelper($timezone, $this->getConfig());
     }
 
     /**

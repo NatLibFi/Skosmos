@@ -200,7 +200,8 @@ class Vocabulary extends DataObject implements Modifiable
                     $prop = (substr($prop, 0, 5) == 'dc11:') ? str_replace('dc11:', 'dc:', $prop) : $prop;
                     if ($val->getValue() instanceof DateTime) {
                         $dateTimeHelper = $this->model->getDateTimeHelper();
-                        $val = $dateTimeHelper->formatDateTime($val->getValue(), $lang);
+                        // Use interface language for date formatting, not content language
+                        $val = ucfirst($dateTimeHelper->formatDateTime($val->getValue(), $this->getLang()));
                     }
                     $ret[$prop][] = $val;
                 }
