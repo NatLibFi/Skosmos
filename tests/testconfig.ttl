@@ -31,6 +31,8 @@
     # HTTP client configuration
     skosmos:sparqlTimeout 10 ;
     skosmos:httpTimeout 20 ;
+    # timezone for date formatting (defaults to UTC)
+    skosmos:timezone "UTC" ;
     # customize the service name
     skosmos:serviceName "Skosmos being tested" ;
     skosmos:serviceNameLong "Skosmos being tested, long title"@en, "Skosmos-long" ;

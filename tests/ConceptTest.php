@@ -370,6 +370,75 @@ class ConceptTest extends PHPUnit\Framework\TestCase
     }
 
     /**
+     * @covers Concept::getDate
+     * Test that dates without time component (midnight 00:00:00) don't display time
+     */
+    public function testGetDateWithoutTimeComponent()
+    {
+        $vocab = $this->model->getVocabulary('dates');
+        $concept = $vocab->getConceptInfo("http://www.skosmos.skos/date/d3", "en");
+        $date = $concept->getDate();
+        // Should show date but not time for midnight dates
+        $this->assertStringContainsString('15/05/2020', $date); // Created date
+        $this->assertStringContainsString('30/11/2022', $date); // Modified date
+        // Should NOT contain time indicators like ":"
+        $this->assertStringNotContainsString('00:00', $date);
+    }
+
+    /**
+     * @covers Concept::getDate
+     * Test that dates with time component (non-midnight) display time
+     */
+    public function testGetDateWithTimeComponent()
+    {
+        $vocab = $this->model->getVocabulary('dates');
+        $concept = $vocab->getConceptInfo("http://www.skosmos.skos/date/d4", "en");
+        $date = $concept->getDate();
+        // Should show both date and time for non-midnight dates
+        $this->assertStringContainsString('10/03/2021', $date); // Created date
+        $this->assertStringContainsString('13:30', $date); // Created time in UTC (14:30+01:00 = 13:30 UTC)
+        $this->assertStringContainsString('20/07/2023', $date); // Modified date
+        $this->assertStringContainsString('14:15', $date); // Modified time in UTC (09:15-05:00 = 14:15 UTC)
+    }
+
+    /**
+     * @covers Concept::getDate
+     * Test that dates are converted to UTC timezone in tests
+     */
+    public function testGetDateTimezoneConversion()
+    {
+        $vocab = $this->model->getVocabulary('dates');
+        $concept = $vocab->getConceptInfo("http://www.skosmos.skos/date/d5", "en");
+        $date = $concept->getDate();
+        // Initial time: 18:45:00+01:00 (Paris) -> should convert to 17:45:00 UTC
+        $this->assertStringContainsString('17:45', $date);
+        // Modified time: 22:30:00+01:00 (Paris) -> should convert to 21:30:00 UTC
+        $this->assertStringContainsString('21:30', $date);
+    }
+
+    /**
+     * @covers Concept::getDate
+     * Test that dates are displayed in the correct interface language
+     */
+    public function testGetDateInterfaceLanguage()
+    {
+        // Test with English interface
+        $vocab = $this->model->getVocabulary('dates');
+        $concept = $vocab->getConceptInfo("http://www.skosmos.skos/date/d4", "en");
+        $date = $concept->getDate();
+        // Check format is English-style (MM/DD/YY)
+        $this->assertMatchesRegularExpression('/\d{2}\/\d{2}\/\d{2}/', $date);
+        $this->assertStringContainsString('Created', $date);
+        $this->assertStringContainsString('modified', $date);
+
+        // Test with French interface
+        $concept_fr = $vocab->getConceptInfo("http://www.skosmos.skos/date/d4", "fr");
+        $date_fr = $concept_fr->getDate();
+        // French dates use DD/MM/YY format
+        $this->assertMatchesRegularExpression('/\d{2}\/\d{2}\/\d{4}/', $date_fr);
+    }
+
+    /**
      * @covers Concept::getProperties
      */
     public function testGetPropertiesTypes()
