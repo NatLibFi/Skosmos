@@ -68,7 +68,7 @@ class ConceptPropertyValueLiteral extends VocabularyDataObject
             try {
                 $val = $this->literal->getValue();
                 $dateTimeHelper = $this->model->getDateTimeHelper();
-                return $dateTimeHelper->formatDate($val, 'short');
+                return $dateTimeHelper->formatDate($val, 'short', $this->getLang());
             } catch (Exception $e) {
                 trigger_error($e->getMessage(), E_USER_WARNING);
                 return (string) $this->literal;

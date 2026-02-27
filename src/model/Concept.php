@@ -762,14 +762,14 @@ class Concept extends VocabularyDataObject implements Modifiable
 
             // making a human readable string from the timestamps
             if ($created != '') {
-                $ret = $this->model->getText('skosmos:created') . ' ' . $dateTimeHelper->formatDate($created, 'short', $this->getLang());
+                $ret = $this->model->getText('skosmos:created') . ' ' . $dateTimeHelper->formatDateWithOptionalTime($created, 'short', $this->getLang());
             }
 
             if ($modified != '') {
                 if ($ret != '') {
                     $ret .= ', ';
                 }
-                $ret .= $this->model->getText('skosmos:modified') . ' ' . $dateTimeHelper->formatDate($modified, 'short', $this->getLang());
+                $ret .= $this->model->getText('skosmos:modified') . ' ' . $dateTimeHelper->formatDateWithOptionalTime($modified, 'short', $this->getLang());
             }
             $ret = ucfirst($ret);
         } catch (Exception $e) {

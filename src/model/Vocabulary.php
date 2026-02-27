@@ -201,7 +201,7 @@ class Vocabulary extends DataObject implements Modifiable
                     if ($val->getValue() instanceof DateTime) {
                         $dateTimeHelper = $this->model->getDateTimeHelper();
                         // Use interface language for date formatting, not content language
-                        $val = ucfirst($dateTimeHelper->formatDateTime($val->getValue(), $this->getLang()));
+                        $val = ucfirst($dateTimeHelper->formatDateTime($val->getValue(), 'full', $this->getLang()));
                     }
                     $ret[$prop][] = $val;
                 }
