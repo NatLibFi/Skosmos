@@ -315,7 +315,7 @@ class ConceptTest extends PHPUnit\Framework\TestCase
         $vocab = $this->model->getVocabulary('test');
         $concept = $vocab->getConceptInfo("http://www.skosmos.skos/test/ta123", "en");
         $date = $concept->getDate();
-        $this->assertStringContainsString('10/1/14', $date);
+        $this->assertStringContainsString('01/10/2014, 16:29', $date);
     }
 
     /**
@@ -326,8 +326,8 @@ class ConceptTest extends PHPUnit\Framework\TestCase
         $vocab = $this->model->getVocabulary('dates');
         $concept = $vocab->getConceptInfo("http://www.skosmos.skos/date/d1", "en");
         $date = $concept->getDate();
-        $this->assertStringContainsString('1/3/00', $date);
-        $this->assertStringContainsString('6/6/12', $date);
+        $this->assertStringContainsString('03/01/2000, 09:46', $date);
+        $this->assertStringContainsString('06/06/2012, 09:46', $date);
     }
 
     /**
