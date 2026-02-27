@@ -33,7 +33,7 @@ class DateTimeHelper
             trigger_error("Invalid timezone '{$timezone}', falling back to UTC: " . $e->getMessage(), E_USER_WARNING);
             $this->timezone = new DateTimeZone('UTC');
         }
-        
+
         $this->config = $config;
     }
 
@@ -62,7 +62,7 @@ class DateTimeHelper
 
     /**
      * Convert a language code to a Punic-compatible locale
-     * 
+     *
      * @param string $lang Language code (e.g., 'en', 'fr', 'de')
      * @return string Locale string (e.g., 'en_GB', 'fr_FR') with encoding stripped
      */
@@ -71,21 +71,21 @@ class DateTimeHelper
         if ($this->config === null) {
             return $lang; // Fallback if no config available
         }
-        
+
         $languages = $this->config->getLanguages();
-        
+
         if (!isset($languages[$lang])) {
             return $lang; // Fallback to language code if not found
         }
-        
+
         $locale = $languages[$lang];
-        
+
         // Extract just the xx_XX part, removing encoding like .utf8
         // Examples: "en_GB.utf8" -> "en_GB", "fr_FR.UTF-8" -> "fr_FR"
         if (preg_match('/^([a-z]{2}_[A-Z]{2})/', $locale, $matches)) {
             return $matches[1];
         }
-        
+
         return $lang; // Fallback to language code
     }
 
@@ -157,7 +157,7 @@ class DateTimeHelper
     {
         $converted = $this->convertToTimezone($dateTime);
         $locale = $this->languageToLocale($lang);
-        
+
         if ($this->hasTimeComponent($dateTime)) {
             // Format with date and short time
             return \Punic\Calendar::formatDateTime($converted, $format, $locale);
