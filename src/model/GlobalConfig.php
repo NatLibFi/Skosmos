@@ -251,7 +251,7 @@ class GlobalConfig extends BaseConfig
         } elseif (getenv('SKOSMOS_TIMEZONE')) {
             return getenv('SKOSMOS_TIMEZONE');
         } else {
-            return 'UTC';
+            return date_default_timezone_get();
         }
     }
 
