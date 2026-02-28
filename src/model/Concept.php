@@ -774,13 +774,16 @@ class Concept extends VocabularyDataObject implements Modifiable
         } catch (Exception $e) {
             trigger_error($e->getMessage(), E_USER_WARNING);
             $ret = '';
-            if ($this->resource->get('dc:modified')) {
-                $modified = (string) $this->resource->get('dc:modified');
-                $ret = $this->model->getText('skosmos:modified') . ' ' . $modified;
-            }
             if ($this->resource->get('dc:created')) {
                 $created = (string) $this->resource->get('dc:created');
-                $ret .= ' ' . $this->model->getText('skosmos:created') . ' ' . $created;
+                $ret .= ucfirst($this->model->getText('skosmos:created') . ' ' . $created);
+            }
+            if ($this->resource->get('dc:modified')) {
+                if ($ret != '') {
+                    $ret .= "\n";
+                }
+                $modified = (string) $this->resource->get('dc:modified');
+                $ret = ucfirst($this->model->getText('skosmos:modified') . ' ' . $modified);
             }
         }
         return $ret;
