@@ -1,6 +1,5 @@
 [![CI tests](https://github.com/NatLibFi/Skosmos/actions/workflows/ci.yml/badge.svg)](https://github.com/NatLibFi/Skosmos/actions/workflows/ci.yml)
-[![Test Coverage](https://codeclimate.com/github/NatLibFi/Skosmos/badges/coverage.svg)](https://codeclimate.com/github/NatLibFi/Skosmos/coverage)
-[![Code Climate](https://codeclimate.com/github/NatLibFi/Skosmos/badges/gpa.svg)](https://codeclimate.com/github/NatLibFi/Skosmos)
+[![Maintainability](https://qlty.sh/gh/NatLibFi/projects/Skosmos/maintainability.svg)](https://qlty.sh/gh/NatLibFi/projects/Skosmos)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/NatLibFi/Skosmos/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/NatLibFi/Skosmos/?branch=main)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=NatLibFi_Skosmos&metric=alert_status)](https://sonarcloud.io/dashboard?id=NatLibFi_Skosmos)
 [![Lokalise](https://img.shields.io/badge/Translations-Lokalise-blue)](https://app.lokalise.com/project/8890111966276e3b27f4e6.81990707/)
