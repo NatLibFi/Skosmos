@@ -493,11 +493,11 @@ header .container-fluid .row {
 /* --- Browser specific rules --- */
 
 /* Setting scrollbar style separately in Firefox */
-@-moz-document url-prefix() {
+@supports (-moz-appearance: none) {
   #search-wrapper ul {
     scrollbar-color: var(--scrollbar-thumb) var(--search-dropdown-bg);
   }
-} 
+}
 
 /* Setting scrollbar style for Webkit based browsers (Chrome, Safari, Edge, etc) */
 #search-wrapper ul::-webkit-scrollbar {
@@ -928,11 +928,11 @@ header .container-fluid .row {
 /* --- Browser specific rules --- */
 
 /* Setting scrollbar style separately in Firefox */
-@-moz-document url-prefix() {
+@supports (-moz-appearance: none) {
   #sidebar .sidebar-list {
     scrollbar-color: var(--sidebar-scrollbar-thumb) var(--sidebar-scrollbar-track);
   }
-} 
+}
 
 /* Setting scrollbar style for Webkit based browsers (Chrome, Safari, Edge, etc) */
 #sidebar .sidebar-list::-webkit-scrollbar {
