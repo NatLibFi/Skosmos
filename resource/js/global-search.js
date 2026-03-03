@@ -53,6 +53,19 @@ function startGlobalSearchApp () {
       this.selectedLanguage = this.getSearchLang()
       this.languageStrings = this.formatLanguages()
       this.vocabStrings = window.SKOSMOS.vocab_list
+
+      this.$nextTick(() => {
+        const btn = this.$refs.vocabToggle
+        if (!btn) return
+        btn.addEventListener('shown.bs.dropdown', this.onVocabDropdownShown)
+        btn.addEventListener('hidden.bs.dropdown', this.onVocabDropdownHidden)
+      })
+    },
+    beforeUnmount () {
+      const btn = this.$refs.vocabToggle
+      if (!btn) return
+      btn.removeEventListener('shown.bs.dropdown', this.onVocabDropdownShown)
+      btn.removeEventListener('hidden.bs.dropdown', this.onVocabDropdownHidden)
     },
     watch: {
       selectedLanguage (newLang) {
@@ -255,12 +268,58 @@ function startGlobalSearchApp () {
       showAutoComplete () {
         this.showDropdown = true
         this.$forceUpdate()
+      },
+      onVocabDropdownShown () {
+        this.$nextTick(() => {
+          const first = document.querySelector('#vocab-list .vocab-checkbox')
+          first?.focus()
+        })
+      },
+      onVocabDropdownHidden () {
+        this.$nextTick(() => {
+          this.$refs.vocabToggle?.focus()
+        })
+      },
+      onVocabMenuKeydown (e) {
+        const items = Array.from(document.querySelectorAll('#vocab-list .vocab-checkbox'))
+        if (!items.length) return
+
+        const currentIndex = items.indexOf(document.activeElement)
+
+        const focusAt = (newIndex) => {
+          const i = (newIndex + items.length) % items.length
+          items[i].focus()
+        }
+
+        switch (e.key) {
+          case 'ArrowDown':
+            e.preventDefault()
+            focusAt(currentIndex < 0 ? 0 : currentIndex + 1)
+            break
+          case 'ArrowUp':
+            e.preventDefault()
+            focusAt(currentIndex < 0 ? items.length - 1 : currentIndex - 1)
+            break
+          case 'Home':
+            e.preventDefault()
+            focusAt(0)
+            break
+          case 'End':
+            e.preventDefault()
+            focusAt(items.length - 1)
+            break
+          case 'Escape':
+            e.preventDefault()
+            // close dropdown and restore focus
+            this.$refs.vocabToggle?.click()
+            break
+        }
       }
     },
     template: `
       <div id="search-wrapper" class="input-group ps-xl-2 flex-nowrap">
         <div class="dropdown" id="vocab-selector">
-          <button class="btn btn-outline-secondary dropdown-toggle vocab-dropdown-btn"
+          <button ref="vocabToggle" class="btn btn-outline-secondary dropdown-toggle vocab-dropdown-btn"
             role="button"
             data-bs-toggle="dropdown"
             data-bs-auto-close="outside"
@@ -271,10 +330,11 @@ function startGlobalSearchApp () {
             <span v-else>{{ vocabSelectorPlaceholder }}</span>
             <i class="chevron fa-solid fa-chevron-down"></i>
           </button>
-          <ul class="dropdown-menu" id="vocab-list" role="menu">
-            <li v-for="(value, key) in vocabStrings" :key="key">
-              <label class="vocab-select">
+          <ul class="dropdown-menu" id="vocab-list" role="menu" @keydown="onVocabMenuKeydown">
+            <li v-for="(value, key) in vocabStrings" :key="key" role="none">
+              <label class="dropdown-item vocab-select">
                 <input
+                  class="vocab-checkbox"
                   type="checkbox"
                   :value="key"
                   v-model="selectedVocabs"
