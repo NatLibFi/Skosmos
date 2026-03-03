@@ -15,7 +15,7 @@ window.SKOSMOS = {
   "waypoint_results": {{ parameters ? parameters.searchLimit : "null" }},
   "search_count": {{ search_count ? search_count : "null" }},
   "search_results_size": {{ GlobalConfig.searchResultsSize }},
-  {%- if request.page == "page" and concept %}
+  {% if request.page == "page" and concept -%}
   "prefLabels": [{"lang": "{{ concept.label.lang }}", "label": "{{ concept.label }}"}{% for data in concept.foreignLabels %}{% for literal in data.prefLabel %}, {"lang": "{{ literal.lang }}", "label": "{{ literal.label }}"}{% endfor %}{% endfor %}],
   "uri": "{{ concept.uri }}",
   {% endif %}
