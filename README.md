@@ -1,4 +1,5 @@
 [![CI tests](https://github.com/NatLibFi/Skosmos/actions/workflows/ci.yml/badge.svg)](https://github.com/NatLibFi/Skosmos/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/NatLibFi/Skosmos/graph/badge.svg?token=Ld6mH4LLEB)](https://codecov.io/gh/NatLibFi/Skosmos)
 [![Maintainability](https://qlty.sh/gh/NatLibFi/projects/Skosmos/maintainability.svg)](https://qlty.sh/gh/NatLibFi/projects/Skosmos)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/NatLibFi/Skosmos/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/NatLibFi/Skosmos/?branch=main)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=NatLibFi_Skosmos&metric=alert_status)](https://sonarcloud.io/dashboard?id=NatLibFi_Skosmos)
