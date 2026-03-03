@@ -426,8 +426,21 @@ header .container-fluid .row {
   position: absolute;
   opacity: 0;
   cursor: pointer;
-  height: 0;
-  width: 0;
+  height: 1.5rem;
+  width: 1.5rem;
+  top: 0;
+  left: 0;
+}
+
+/* Show a visible focus ring when the (visually hidden) checkbox is focused */
+#search-wrapper #vocab-list .vocab-select:focus-within {
+  outline: 2px solid var(--dark-color);
+  outline-offset: 2px;
+}
+
+/* Optional: highlight the custom checkbox square when focused */
+#search-wrapper #vocab-list .vocab-select input:focus-visible ~ .checkmark {
+  box-shadow: 0 0 0 3px rgba(13, 40, 78, 0.35);
 }
 
 #search-wrapper .checkmark {
