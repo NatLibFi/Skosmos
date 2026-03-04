@@ -742,34 +742,42 @@ class Concept extends VocabularyDataObject implements Modifiable
     }
 
     /**
+     * @param string $name Resource property
+     * @return string|null The resource date formated as string or null
+     */
+    private function getFormatedDateResource($name)
+    {
+        $resource = $this->resource->get($name);
+        if ($resource instanceof \EasyRdf\Literal\Date) {
+            $resourceDate = $resource->getValue();
+            $dateTimeHelper = $this->model->getDateTimeHelper();
+            if ($resource instanceof \EasyRdf\Literal\DateTime) {
+                return $dateTimeHelper->formatDateTime($resourceDate, 'short', $this->getLang());
+            }
+            return $dateTimeHelper->formatDate($resourceDate, 'short', $this->getLang());
+        }
+        return null;
+    }
+
+    /**
      * Gets the creation date and modification date if available.
      * @return String containing the date information in a human readable format.
      */
     public function getDate()
     {
         $ret = '';
-        $created = '';
         try {
-            // finding the created properties
-            $createdResource = $this->resource->get('dc:created');
-            if ($createdResource && $createdResource instanceof \EasyRdf\Literal\Date) {
-                $created = $createdResource->getValue();
+            $created = $this->getFormatedDateResource('dc:created');
+            if (!is_null($created)) {
+                $ret = $this->model->getText('skosmos:created') . ' ' . $created;
             }
 
-            $modified = $this->getModifiedDate();
-
-            $dateTimeHelper = $this->model->getDateTimeHelper();
-
-            // making a human readable string from the timestamps
-            if ($created != '') {
-                $ret = $this->model->getText('skosmos:created') . ' ' . $dateTimeHelper->formatDateWithOptionalTime($created, 'short', $this->getLang());
-            }
-
-            if ($modified != '') {
+            $modified = $this->getFormatedDateResource('dc:modified');
+            if (!is_null($modified)) {
                 if ($ret != '') {
                     $ret .= ", ";
                 }
-                $ret .= $this->model->getText('skosmos:modified') . ' ' . $dateTimeHelper->formatDateWithOptionalTime($modified, 'short', $this->getLang());
+                $ret .= $this->model->getText('skosmos:modified') . ' ' . $modified;
             }
             $ret = ucfirst($ret);
         } catch (Exception $e) {

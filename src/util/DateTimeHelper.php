@@ -133,37 +133,4 @@ class DateTimeHelper
         $locale = $this->languageToLocale($lang);
         return \Punic\Calendar::formatDatetime($converted, $format, $locale);
     }
-
-    /**
-     * Check if a DateTime has a time component (not midnight)
-     *
-     * @param DateTime $dateTime The datetime to check
-     * @return bool True if time is not 00:00:00
-     */
-    public function hasTimeComponent(DateTime $dateTime): bool
-    {
-        return $dateTime->format('H:i:s') !== '00:00:00';
-    }
-
-    /**
-     * Format a date with optional short time if present
-     *
-     * @param DateTime $dateTime The datetime to format
-     * @param string $format The format string (e.g., 'short', 'full')
-     * @param string|null $lang The language code for formatting (e.g., 'en', 'fr')
-     * @return string The formatted date string with time if present
-     */
-    public function formatDateWithOptionalTime(DateTime $dateTime, string $format = 'short', ?string $lang = null): string
-    {
-        $converted = $this->convertToTimezone($dateTime);
-        $locale = $this->languageToLocale($lang);
-
-        if ($this->hasTimeComponent($dateTime)) {
-            // Format with date and short time
-            return \Punic\Calendar::formatDateTime($converted, $format, $locale);
-        } else {
-            // Format only date
-            return \Punic\Calendar::formatDate($converted, $format, $locale);
-        }
-    }
 }
