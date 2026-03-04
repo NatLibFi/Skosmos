@@ -342,17 +342,17 @@ describe('Concept page', () => {
   it('contains created & modified times (English)', () => {
     cy.visit('/yso/en/page/p21685') // go to "music research" concept page (English)
 
-    cy.get('#date-info').invoke('text').should('equal', 'Created 25/10/2007\nLast modified 08/02/2023')
+    cy.get('#date-info').invoke('text').should('equal', 'Created 25/10/2007, last modified 08/02/2023')
   })
   it('contains created & modified times (Finnish)', () => {
     cy.visit('/yso/fi/page/p21685') // go to "musiikintutkimus" concept page (Finnish)
 
-    cy.get('#date-info').invoke('text').should('equal', 'Luotu 25.10.2007\nViimeksi muokattu 8.2.2023')
+    cy.get('#date-info').invoke('text').should('equal', 'Luotu 25.10.2007, viimeksi muokattu 8.2.2023')
   })
   it('date format remains in English interface when switching content language', () => {
     cy.visit('/yso/en/page/p2557')
 
-    const expectedDateInfo = 'Created 01/11/1986\nLast modified 08/02/2023'
+    const expectedDateInfo = 'Created 01/11/1986, last modified 08/02/2023'
 
     // Check that date format is in English
     cy.get('#date-info').invoke('text').should('equal', expectedDateInfo)
@@ -374,7 +374,7 @@ describe('Concept page', () => {
     // Visit the page with Finnish interface
     cy.visit('/yso/fi/page/p2557')
 
-    const expectedDateInfo = 'Luotu 1.11.1986\nViimeksi muokattu 8.2.2023'
+    const expectedDateInfo = 'Luotu 1.11.1986, viimeksi muokattu 8.2.2023'
 
     // Check that date format is in Finnish
     cy.get('#date-info').invoke('text').should('equal', expectedDateInfo)
