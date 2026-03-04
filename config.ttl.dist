@@ -29,8 +29,6 @@
     # HTTP client configuration
     skosmos:sparqlTimeout 20 ;
     skosmos:httpTimeout 5 ;
-    # timezone for date/time formatting (default: UTC). Can also be set via SKOSMOS_TIMEZONE environment variable.
-    # skosmos:timezone "Europe/Paris" ;
     # customize the service name
     skosmos:serviceName "Skosmos" ;
     # customize the base element. Set this if the automatic base url detection doesn't work. For example setups behind a proxy.

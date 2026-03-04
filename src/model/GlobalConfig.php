@@ -239,20 +239,16 @@ class GlobalConfig extends BaseConfig
     }
 
     /**
-     * Returns the timezone for date formatting defined in the configuration.
-     * If not set, checks SKOSMOS_TIMEZONE environment variable, defaulting to 'UTC'.
+     * Returns the timezone for date formatting defined in checks
+     * SKOSMOS_TIMEZONE environment variable, defaulting to default php timezone.
      * @return string timezone identifier (e.g., 'Europe/Paris', 'UTC')
      */
     public function getTimezone()
     {
-        $timezone = $this->getLiteral('skosmos:timezone', null);
-        if ($timezone) {
-            return $timezone;
-        } elseif (getenv('SKOSMOS_TIMEZONE')) {
+        if (getenv('SKOSMOS_TIMEZONE')) {
             return getenv('SKOSMOS_TIMEZONE');
-        } else {
-            return date_default_timezone_get();
         }
+        return date_default_timezone_get();
     }
 
     /**
