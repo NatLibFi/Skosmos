@@ -105,21 +105,6 @@ class DateTimeHelper
     }
 
     /**
-     * Format a date and time with timezone conversion using Punic
-     *
-     * @param DateTime $dateTime The datetime to format
-     * @param string $format The format string (e.g., 'short', 'full')
-     * @param string|null $lang The language code for formatting (e.g., 'en', 'fr')
-     * @return string The formatted time string
-     */
-    public function formatTime(DateTime $dateTime, string $format = 'short', ?string $lang = null): string
-    {
-        $converted = $this->convertToTimezone($dateTime);
-        $locale = $lang ? $this->languageToLocale($lang) : null;
-        return \Punic\Calendar::format($converted, $format, $locale);
-    }
-
-    /**
      * Format a date and time with full details and timezone conversion
      *
      * @param DateTime $dateTime The datetime to format
