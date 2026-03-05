@@ -44,8 +44,8 @@
           </button>
         </div>
       {% else %}
-        <a id="skosmos-logo-top" href="{{ 'home' | global_url(request.lang, request.contentLang, null, request.queryParam('anylang') == 'on') }}">
-          <h2 class="visually-hidden">Skosmos</h2>
+        <a id="skosmos-logo-top" class="service-{{ request.lang }}" href="{{ 'home' | global_url(request.lang, request.contentLang, null, request.queryParam('anylang') == 'on') }}">
+          <h2 id="service-name" class="visually-hidden">{% if GlobalConfig.serviceName is defined %}{{ GlobalConfig.serviceName }}{% else %}Skosmos{% endif %}</h2>
         </a>
       {% endif %}
       <ul class="nav nav-pills ms-auto my-auto gx-3 py-3" id="topbar-nav">
@@ -64,6 +64,7 @@
                    <i class="fa-solid fa-comment"></i>&nbsp;{{ "Feedback" | trans }}
           </a>
         </li>
+        {{ include('custom-templates.inc.twig', {slotName: 'topbar'}) }}
         {% if languages|length > 1 %}
         {% for langcode, langdata in languages %}
         {% if request.lang != langcode %}

@@ -194,6 +194,22 @@ header .container-fluid .row {
   display: inline-block;
 }
 
+/* Adding a border between last nav link and first language */
+#topbar-nav .language {
+  margin-left: 1rem;
+  border-left: 1px solid var(--topbar-text-2);
+}
+
+.frontpage-logo #topbar-nav .language {
+  margin-left: 1rem;
+  border-left: 1px solid var(--topbar-text-1);
+}
+
+#topbar-nav .language ~ .language {
+  margin-left: 0;
+  border-left: none;
+}
+
 /* Headerbar
 -------------------------------------- */
 
