@@ -95,7 +95,7 @@
           {%- if label -%}
             {{ label[:1]|upper ~ label[1:] }} {# Capitalizing labels #}
           {%- else -%}
-            {{ property.label }}
+            {{ property.label[:1]|upper ~ property.label[1:] }}
           {%- endif -%}
           </h2></div>
           <div class="col-lg-8 gx-0 gx-lg-4 align-self-center property-value">
