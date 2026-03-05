@@ -136,7 +136,12 @@ describe('Concept page', () => {
     // check that there are 2 breadcrumb links currently shown
     cy.get('#concept-breadcrumbs ol').find('li.show').should('have.length', 4)
   })
-
+  it('capitalizes property labels', () => {
+    // Go to "Test concept" concept page in prefix vocab which uses a custom property
+    cy.visit('/prefix/en/page/p1')
+    // Check that "my property" property label is capitalized correctly
+    cy.get('.prop-my_property .property-label h2').invoke('text').should('include', 'My property')
+  })
   it('overrides property labels', () => {
     // Go to "Carp" concept page in vocab with property label overrides
     cy.visit('/conceptPropertyLabels/en/page/ta112')
