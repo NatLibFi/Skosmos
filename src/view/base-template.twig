@@ -64,9 +64,9 @@
                    <i class="fa-solid fa-comment"></i>&nbsp;{{ "Feedback" | trans }}
           </a>
         </li>
-        <li class="nav-item" id="topbar-slot">
+        <div id="topbar-slot">
           {{ include('custom-templates.inc.twig', {slotName: 'topbar'}) }}
-        </li>
+        </div>
         {% if languages|length > 1 %}
         {% for langcode, langdata in languages %}
         {% if request.lang != langcode %}
