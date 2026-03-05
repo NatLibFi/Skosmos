@@ -67,6 +67,7 @@
         <div id="topbar-slot">
           {{ include('custom-templates.inc.twig', {slotName: 'topbar'}) }}
         </div>
+        <li class="nav-item ms-3 ">|</li>
         {% if languages|length > 1 %}
         {% for langcode, langdata in languages %}
         {% if request.lang != langcode %}
