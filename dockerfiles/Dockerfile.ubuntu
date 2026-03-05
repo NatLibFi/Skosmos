@@ -1,5 +1,26 @@
-# Stage 0: install Node dependencies
-FROM node:18-alpine AS npm-installer
+ARG NODE_VERSION=24
+
+# Stage 0a: Install composer packages (production)
+FROM composer:latest AS composer-prod
+WORKDIR /app
+COPY . /app/
+RUN composer install --no-dev \
+      --ignore-platform-req=ext-intl \
+      --ignore-platform-req=ext-xsl \
+      --ignore-platform-req=php
+
+# Stage 0b: Install composer packages (development with dev dependencies)
+FROM composer:latest AS composer-dev
+WORKDIR /app
+COPY . /app/
+RUN composer install \
+      --ignore-platform-req=ext-intl \
+      --ignore-platform-req=ext-xsl \
+      --ignore-platform-req=php
+
+# Stage 1a: install Node dependencies (production)
+ARG NODE_VERSION
+FROM node:${NODE_VERSION}-alpine AS npm-installer
 
 WORKDIR /usr/src/app
 COPY package.json ./
@@ -7,8 +28,18 @@ COPY package.json ./
 # install node.js dependencies e.g. Vue (but not the development dependencies)
 RUN npm install --omit=dev --ignore-scripts
 
-# Stage 1: runtime image
-FROM ubuntu:24.04
+# Stage 1b: install Node dependencies (development with dev dependencies)
+ARG NODE_VERSION
+FROM node:${NODE_VERSION}-alpine AS npm-dev
+
+WORKDIR /usr/src/app
+COPY package.json ./
+
+# install all node.js dependencies including dev
+RUN npm install --ignore-scripts
+
+# Stage 2: runtime image
+FROM ubuntu:24.04 AS runtime
 
 LABEL maintainer="National Library of Finland"
 LABEL version="0.1"
@@ -19,7 +50,6 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y \
     apache2 \
     curl \
-    git \
     libapache2-mod-php8.3 \
     locales \
     php8.3 \
@@ -76,23 +106,69 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
 WORKDIR /var/www/html
 RUN rm index.html
 
-# composer and packages layer
-RUN curl -sS https://getcomposer.org/installer | php
-COPY composer.json /var/www/html
-RUN php composer.phar install --no-dev --no-autoloader
+EXPOSE 80
 
-# skosmos layer
-COPY . /var/www/html
-RUN php composer.phar install --no-dev
+CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
 
-# install Node modules (from npm-installer stage)
-COPY --from=npm-installer /usr/src/app/node_modules /var/www/html/node_modules
+FROM runtime AS development
+
+# Install Node.js matching the version used in npm stages
+ARG NODE_VERSION
+RUN apt-get update && apt-get install -y \
+    ca-certificates \
+    curl \
+    gnupg \
+ && mkdir -p /etc/apt/keyrings \
+ && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
+ && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_${NODE_VERSION}.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list \
+ && apt-get update \
+ && apt-get install -y nodejs \
+        libgtk-3-0t64 \
+        libgbm-dev \
+        libnotify-dev \
+        libnss3 \
+        libxss1 \
+        libasound2t64 \
+        libxtst6 \
+        xauth \
+        xvfb \
+ && rm -rf /var/lib/apt/lists/*
+
+# vendors with dev dependencies
+COPY --from=composer-dev /app/vendor /var/www/html/vendor
+
+# all source files including tests
+COPY . /var/www/html/
+
+# install Node modules with dev dependencies
+COPY --from=npm-dev /usr/src/app/node_modules /var/www/html/node_modules
 
 # Configure Skosmos
 COPY dockerfiles/config/config-docker.ttl /var/www/html/config.ttl
 
+# install cypress
+RUN npx cypress install
+
+FROM runtime AS production
+
+# vendors (production only, from composer-prod stage)
+COPY --from=composer-prod /app/vendor /var/www/html/vendor
+
+# sources (only production files)
+COPY bin /var/www/html/bin
+COPY config /var/www/html/config
+COPY custom-templates /var/www/html/custom-templates
+COPY plugins /var/www/html/plugins
+COPY resource /var/www/html/resource
+COPY src /var/www/html/src
+COPY .env /var/www/html
+COPY .htaccess /var/www/html
+COPY composer.json /var/www/html
+COPY config.ttl.dist /var/www/html
+COPY favicon.ico /var/www/html
+COPY swagger.json /var/www/html
+
+# install Node modules (from npm-installer stage)
+COPY --from=npm-installer /usr/src/app/node_modules /var/www/html/node_modules
+
 HEALTHCHECK --interval=5s --timeout=3s --retries=3 CMD curl -f http://localhost || exit 1
-
-EXPOSE 80
-
-CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
