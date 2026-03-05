@@ -745,7 +745,7 @@ class Concept extends VocabularyDataObject implements Modifiable
      * @param string $name Resource property
      * @return string|null The resource date formated as string or null
      */
-    private function getFormatedDateResource($name)
+    private function getFormattedDateResource($name)
     {
         $resource = $this->resource->get($name);
         if ($resource instanceof \EasyRdf\Literal\Date) {
@@ -767,12 +767,12 @@ class Concept extends VocabularyDataObject implements Modifiable
     {
         $ret = '';
         try {
-            $created = $this->getFormatedDateResource('dc:created');
+            $created = $this->getFormattedDateResource('dc:created');
             if (!is_null($created)) {
                 $ret = $this->model->getText('skosmos:created') . ' ' . $created;
             }
 
-            $modified = $this->getFormatedDateResource('dc:modified');
+            $modified = $this->getFormattedDateResource('dc:modified');
             if (!is_null($modified)) {
                 if ($ret != '') {
                     $ret .= ", ";
