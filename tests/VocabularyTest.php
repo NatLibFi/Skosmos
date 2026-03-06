@@ -225,7 +225,7 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
     {
         $vocab = $this->model->getVocabulary('test');
         $info = $vocab->getInfo();
-        $this->assertEquals(array("dc:title" => array('Test ontology'), 'dc:modified' => array('Wednesday, October 1, 2014 16:29:03'), "rdf:type" => array('http://www.w3.org/2004/02/skos/core#ConceptScheme' => 'http://www.w3.org/2004/02/skos/core#ConceptScheme'), "owl:versionInfo" => array('The latest and greatest version'), "dc:description" => array('Description of Test ontology')), $info);
+        $this->assertEquals(array("dc:title" => array('Test ontology'), 'dc:modified' => array('Wednesday, 1 October 2014, 16:29:03 Coordinated Universal Time'), "rdf:type" => array('http://www.w3.org/2004/02/skos/core#ConceptScheme' => 'http://www.w3.org/2004/02/skos/core#ConceptScheme'), "owl:versionInfo" => array('The latest and greatest version'), "dc:description" => array('Description of Test ontology')), $info);
     }
 
     /**
@@ -258,6 +258,54 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
         $vocab = $this->model->getVocabulary('testdiff');
         $info = $vocab->getInfo();
         $this->assertEquals(array("dc11:title" => array('Test ontology 2')), $info);
+    }
+
+    /**
+     * @covers Vocabulary::getInfo
+     * Test that vocabulary dates are displayed in the interface language
+     */
+    public function testGetInfoDateInInterfaceLanguage()
+    {
+        // Test with English interface
+        $this->model->setLocale('en');
+        $vocab = $this->model->getVocabulary('test-hierarchy');
+        $info = $vocab->getInfo();
+        
+        // The date should be formatted according to British English locale
+        $this->assertArrayHasKey('dc:modified', $info);
+        $modifiedDate = $info['dc:modified'][0];
+        
+        // Should contain English month/weekday names and time
+        // 2014-10-01T16:29:03+02:00 converted to UTC is 2014-10-01T14:29:03+00:00
+        $this->assertStringContainsString('2014', $modifiedDate);
+        $this->assertStringContainsString('October', $modifiedDate);
+        
+        // Test with French interface
+        $this->model->setLocale('fr');
+        $vocab_fr = $this->model->getVocabulary('test-hierarchy');
+        $info_fr = $vocab_fr->getInfo();
+        $modifiedDate_fr = $info_fr['dc:modified'][0];
+        
+        // Should contain French month/weekday names
+        $this->assertStringContainsString('2014', $modifiedDate_fr);
+        $this->assertStringContainsString('octobre', $modifiedDate_fr);
+    }
+
+    /**
+     * @covers Vocabulary::getInfo
+     * Test that vocabulary dates are converted to UTC timezone
+     */
+    public function testGetInfoDateTimezoneConversion()
+    {
+        $this->model->setLocale('en');
+        $vocab = $this->model->getVocabulary('test-hierarchy');
+        $info = $vocab->getInfo();
+        
+        // Original date: 2014-10-01T16:29:03 (UTC+2)
+        // Should be converted to: 2014-10-01T14:29:03 UTC
+        $modifiedDate = $info['dc:modified'][0];
+        $this->assertStringContainsString('14:29', $modifiedDate);
+        $this->assertStringContainsString('Coordinated Universal Time', $modifiedDate);
     }
 
     /**
@@ -609,7 +657,7 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Vocabulary::getModifiedDate
+     * @covers Vocabulary::getModifiedDate without date
      */
     public function testGetModifiedDateNoConceptScheme()
     {
@@ -617,6 +665,21 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
         $this->assertNull(
             $vocab->getModifiedDate()
         );
+    }
+
+    /**
+     * @covers Vocabulary::getModifiedDate
+     */
+    public function testGetModifiedDateConceptScheme()
+    {
+        $vocab = $this->model->getVocabulary('test-hierarchy');
+        $modifiedDate = $vocab->getModifiedDate();
+        // The dates vocabulary now has a ConceptScheme with a modified date
+        $this->assertInstanceOf(DateTime::class, $modifiedDate);
+        // Returns the date in the original timezone (+00:00)
+        // 2014-10-01T16:29:03+02:00
+        $this->assertEquals('2014-10-01 16:29:03', $modifiedDate->format('Y-m-d H:i:s'));
+        $this->assertEquals('+02:00', $modifiedDate->format('P'));
     }
 
     /**

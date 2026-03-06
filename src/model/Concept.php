@@ -742,44 +742,57 @@ class Concept extends VocabularyDataObject implements Modifiable
     }
 
     /**
+     * @param string $name Resource property
+     * @return string|null The resource date formated as string or null
+     */
+    private function getFormattedDateResource($name)
+    {
+        $resource = $this->resource->get($name);
+        if ($resource instanceof \EasyRdf\Literal\Date) {
+            $resourceDate = $resource->getValue();
+            $dateTimeHelper = $this->model->getDateTimeHelper();
+            if ($resource instanceof \EasyRdf\Literal\DateTime) {
+                return $dateTimeHelper->formatDateTime($resourceDate, 'short', $this->getLang());
+            }
+            return $dateTimeHelper->formatDate($resourceDate, 'short', $this->getLang());
+        }
+        return null;
+    }
+
+    /**
      * Gets the creation date and modification date if available.
      * @return String containing the date information in a human readable format.
      */
     public function getDate()
     {
         $ret = '';
-        $created = '';
         try {
-            // finding the created properties
-            if ($this->resource->get('dc:created')) {
-                $created = $this->resource->get('dc:created')->getValue();
+            $created = $this->getFormattedDateResource('dc:created');
+            if (!is_null($created)) {
+                $ret = $this->model->getText('skosmos:created') . ' ' . $created;
             }
 
-            $modified = $this->getModifiedDate();
-
-            // making a human readable string from the timestamps
-            if ($created != '') {
-                $ret = $this->model->getText('skosmos:created') . ' ' . (Punic\Calendar::formatDate($created, 'short', $this->getLang()));
-            }
-
-            if ($modified != '') {
-                if ($created != '') {
-                    $ret .= ', ' . $this->model->getText('skosmos:modified') . ' ' . (Punic\Calendar::formatDate($modified, 'short', $this->getLang()));
-                } else {
-                    $ret .= ' ' . ucfirst($this->model->getText('skosmos:modified')) . ' ' . (Punic\Calendar::formatDate($modified, 'short', $this->getLang()));
+            $modified = $this->getFormattedDateResource('dc:modified');
+            if (!is_null($modified)) {
+                if ($ret != '') {
+                    $ret .= ", ";
                 }
-
+                $ret .= $this->model->getText('skosmos:modified') . ' ' . $modified;
             }
+            $ret = ucfirst($ret);
         } catch (Exception $e) {
             trigger_error($e->getMessage(), E_USER_WARNING);
             $ret = '';
-            if ($this->resource->get('dc:modified')) {
-                $modified = (string) $this->resource->get('dc:modified');
-                $ret = $this->model->getText('skosmos:modified') . ' ' . $modified;
-            }
             if ($this->resource->get('dc:created')) {
-                $created .= (string) $this->resource->get('dc:created');
-                $ret .= ' ' . $this->model->getText('skosmos:created') . ' ' . $created;
+                $created = (string) $this->resource->get('dc:created');
+                $ret .= ucfirst($this->model->getText('skosmos:created') . ' ' . $created);
+            }
+            if ($this->resource->get('dc:modified')) {
+                if ($ret != '') {
+                    $ret .= "\n";
+                }
+                $modified = (string) $this->resource->get('dc:modified');
+                $ret = ucfirst($this->model->getText('skosmos:modified') . ' ' . $modified);
             }
         }
         return $ret;
