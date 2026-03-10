@@ -20,32 +20,65 @@ class JenaTextSparql extends GenericSparql
 
     /*
      * Characters that need to be quoted for the Lucene query parser.
-     * See http://lucene.apache.org/core/4_10_1/queryparser/org/apache/lucene/queryparser/classic/package-summary.html#Escaping_Special_Characters
+     * See https://lucene.apache.org/core/9_12_1/queryparser/org/apache/lucene/queryparser/classic/package-summary.html#Escaping_Special_Characters
+     * Note: space is NOT included here because it must act as a word separator,
+     * not be escaped into a literal character. Escaping space breaks multi-word
+     * queries when using word-level analyzers such as StandardAnalyzer.
+     * Note: * is not included because we want wildcard expansion.
      */
-    public const LUCENE_ESCAPE_CHARS = ' +-&|!(){}[]^"~?:\\/'; /* note: don't include * because we want wildcard expansion
+    public const LUCENE_ESCAPE_CHARS = '+-&|!(){}[]^"~?:\\/';
+
+    /**
+     * Escape a single word for the Lucene query parser.
+     *
+     * @param string $word a single search word (no spaces)
+     * @return string the word with Lucene special characters escaped
+     */
+    private function escapeLuceneWord($word)
+    {
+        $lucenemap = array();
+        foreach (str_split(self::LUCENE_ESCAPE_CHARS) as $char) {
+            $lucenemap[$char] = '\\' . $char;
+        }
+        return strtr($word, $lucenemap);
+    }
 
     /**
      * Make a jena-text query condition that narrows the amount of search
-     * results in term searches
+     * results in term searches.
+     *
+     * Multi-word terms are split into individual required Lucene terms
+     * using the '+' operator, e.g. "Siamese cat*" becomes "+Siamese +cat*".
+     * This works correctly with word-level analyzers (StandardAnalyzer).
      *
      * @param string $term search term
      * @param string $property property to search (e.g. 'skos:prefLabel'), or '' for default
      * @param string $langClause jena-text clause to limit search by language code
      * @return string SPARQL text search clause
      */
-
     private function createTextQueryCondition($term, $property = '', $langClause = '')
     {
-        // construct the lucene search term for jena-text
-
-        // 1. Ensure characters with special meaning in Lucene are escaped
-        $lucenemap = array();
-        foreach (str_split(self::LUCENE_ESCAPE_CHARS) as $char) {
-            $lucenemap[$char] = '\\' . $char; // escape with a backslash
+        // Split on whitespace into individual words
+        $words = preg_split('/\s+/', trim($term), -1, PREG_SPLIT_NO_EMPTY);
+        if (empty($words)) {
+            $words = array('*');
         }
-        $term = strtr($term, $lucenemap);
 
-        // 2. Ensure proper SPARQL quoting
+        // Build Lucene query: each word is required (+), wildcards are preserved
+        $parts = array();
+        foreach ($words as $word) {
+            // Separate trailing wildcard(s) from the word before escaping
+            $suffix = '';
+            if (preg_match('/^(.*?)(\*+)$/', $word, $m)) {
+                $word = $m[1];
+                $suffix = $m[2];
+            }
+            $escaped = $this->escapeLuceneWord($word);
+            $parts[] = '+' . $escaped . $suffix;
+        }
+        $term = implode(' ', $parts);
+
+        // Ensure proper SPARQL quoting
         $term = str_replace('\\', '\\\\', $term); // escape backslashes
         $term = str_replace("'", "\\'", $term); // escape single quotes
 
