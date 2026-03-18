@@ -25,6 +25,8 @@ class Model
     private $logger;
     private $resolver;
     private $translator;
+    /** cache for Collator instances by locale */
+    private $collatorCache = array();
 
     /**
      * Initializes the Model object
@@ -229,6 +231,64 @@ class Model
     public function getText($text)
     {
         return $this->translator->trans($text);
+    }
+
+    /**
+     * Compare two strings using a request-aware collation locale.
+     * Priority: content language (clang), UI language (lang), default language.
+     */
+    public function compareStringsByLanguage($a, $b, $contentLang = null, $uiLang = null, $defaultLang = null)
+    {
+        foreach ($this->resolveCollationLocales($contentLang, $uiLang, $defaultLang) as $locale) {
+            $collator = $this->getCollator($locale);
+            if ($collator !== null) {
+                $result = $collator->compare((string)$a, (string)$b);
+                if (is_int($result) && $result !== 0) {
+                    return $result;
+                }
+            }
+        }
+
+        // Deterministic fallback that does not depend on process locale.
+        return strcmp((string)$a, (string)$b);
+    }
+
+    private function resolveCollationLocales($contentLang, $uiLang, $defaultLang)
+    {
+        $languages = $this->getConfig()->getLanguages(); // lang code => locale
+        $candidates = array($contentLang, $uiLang, $defaultLang);
+        $locales = array();
+
+        foreach ($candidates as $code) {
+            if (!is_string($code) || $code === '') {
+                continue;
+            }
+
+            if (isset($languages[$code]) && is_string($languages[$code]) && $languages[$code] !== '') {
+                $locales[] = $languages[$code];
+            }
+
+            // Fallback candidate: try language code as locale too.
+            $locales[] = str_replace('-', '_', $code);
+        }
+
+        return array_values(array_unique($locales));
+    }
+
+    private function getCollator($locale)
+    {
+        if (!class_exists('Collator')) {
+            return null;
+        }
+
+        $key = ($locale && $locale !== '') ? $locale : 'root';
+        if (array_key_exists($key, $this->collatorCache)) {
+            return $this->collatorCache[$key];
+        }
+
+        $collator = collator_create($key);
+        $this->collatorCache[$key] = ($collator instanceof Collator) ? $collator : null;
+        return $this->collatorCache[$key];
     }
 
     /**

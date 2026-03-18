@@ -143,6 +143,16 @@ class ConceptProperty
             } else {
                 uasort($this->values, function ($a, $b) {
                     // assume that sort keys are unique
+                    if ($this->prop === 'skos:narrower') {
+                        $context = $a->getCollationContext();
+                        return $this->model->compareStringsByLanguage(
+                            $a->getSortKey(),
+                            $b->getSortKey(),
+                            $context['contentLang'],
+                            $context['uiLang'],
+                            $context['defaultLang']
+                        );
+                    }
                     return strcoll($a->getSortKey(), $b->getSortKey());
                 });
             }

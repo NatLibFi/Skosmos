@@ -54,6 +54,18 @@ class ConceptPropertyValue extends VocabularyDataObject
         return strtolower($this->getLabel());
     }
 
+    /**
+     * Collation context for backend sorting.
+     */
+    public function getCollationContext()
+    {
+        return array(
+            'contentLang' => $this->clang ?: null,
+            'uiLang' => $this->getLang() ?: null,
+            'defaultLang' => $this->vocab->getConfig()->getDefaultLanguage()
+        );
+    }
+
     public function getLabel($lang = '', $fallbackToUri = 'uri', $allowExternal = true)
     {
         if ($this->clang) {
@@ -147,7 +159,16 @@ class ConceptPropertyValue extends VocabularyDataObject
     private function sortSubMembers()
     {
         if (!empty($this->submembers)) {
-            ksort($this->submembers);
+            $context = $this->getCollationContext();
+            uasort($this->submembers, function ($a, $b) use ($context) {
+                return $this->model->compareStringsByLanguage(
+                    $a->getSortKey(),
+                    $b->getSortKey(),
+                    $context['contentLang'],
+                    $context['uiLang'],
+                    $context['defaultLang']
+                );
+            });
         }
 
     }
