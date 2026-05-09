@@ -10,6 +10,7 @@
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix mads: <http://www.loc.gov/mads/rdf/v1#> .
+@prefix unknown: <http://www.skosmos.skos/unknown/> .
 
 test:ta112 a skos:Concept ;
     skos:notation "665" ;
@@ -44,4 +45,5 @@ test:conceptscheme a skos:ConceptScheme ;
     rdfs:label "Test conceptscheme"@en ;
     dct:modified "2014-10-01T16:29:03+00:00"^^xsd:dateTime ;
     owl:versionInfo "The latest and greatest version"^^xsd:string ;
+    unknown:vocabularyProperty "Overridden property value"^^xsd:string ;
     skos:hasTopConcept test:ta1 .

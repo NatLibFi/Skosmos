@@ -752,6 +752,8 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
                                     'description' => array( 'en' => 'Class Number') ),
           'skos:exactMatch' => array( 'label' => array( 'fi' => 'vastaava luokka', 'sv' => 'motsvarande klasser', 'en' => 'exactly matching classes' ),
                                       'description' => array( 'en' => 'exactly matching classes in another vocabulary.' ) ),
+          'unknown:vocabularyProperty' => array( 'label' => array( 'en' => 'Vocabulary Property' ),
+                                                 'description' => array( 'en' => 'Vocabulary Property description' ) )
         );
         $this->assertEquals($expected, $overrides);
     }

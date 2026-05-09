@@ -16,6 +16,7 @@
 @prefix my: <http://example.com/myns#> .
 @prefix mdrtype: <http://publications.europa.eu/resource/authority/dataset-type/> .
 @prefix test: <http://www.skosmos.skos/test/> .
+@prefix unknown: <http://www.skosmos.skos/unknown/> .
 @prefix : <http://base/#> .
 
 # Skosmos main configuration
@@ -415,7 +416,10 @@
           rdfs:comment "Class Number"@en ],
         [ skosmos:property skos:exactMatch ;
           rdfs:label "vastaava luokka"@fi, "motsvarande klasser"@sv, "exactly matching classes"@en ;
-          rdfs:comment "exactly matching classes in another vocabulary."@en ] ;
+          rdfs:comment "exactly matching classes in another vocabulary."@en ],
+				[ skosmos:property unknown:vocabularyProperty ;
+					rdfs:label "Vocabulary Property"@en ;
+					rdfs:comment "Vocabulary Property description"@en ] ;
         skosmos:sparqlGraph <http://www.skosmos.skos/conceptPropertyLabels/> .
 
 :cbd a skosmos:Vocabulary, void:Dataset ;

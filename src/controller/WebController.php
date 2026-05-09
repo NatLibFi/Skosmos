@@ -552,6 +552,8 @@ class WebController extends Controller
 
         $vocabTypes = $this->model->getTypes($request->getVocabid(), $request->getLang());
 
+        $customLabels = $vocab->getConfig()->getPropertyLabelOverrides();
+
         echo $template->render(
             array(
                 'languages' => $this->languages,
@@ -561,7 +563,8 @@ class WebController extends Controller
                 'active_tab' => $defaultView,
                 'request' => $request,
                 'types' => $vocabTypes,
-                'plugin_params' => $pluginParameters
+                'plugin_params' => $pluginParameters,
+                'custom_labels' => $customLabels
             )
         );
     }
