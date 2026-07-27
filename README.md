@@ -27,7 +27,7 @@ Twig templates and e.g. jQuery and jsTree used to build the web interface, and
 EasyRdf for SPARQL and RDF data access. 
 
 The code is open source under the MIT license. See 
-[Installation](https://github.com/NatLibFi/Skosmos/wiki/Installation) in the 
+[InstallTutorial](https://github.com/NatLibFi/Skosmos/wiki/InstallTutorial) in the 
 wiki for details on obtaining the source and running your own instance of Skosmos.
 
 For information about released versions, see 
