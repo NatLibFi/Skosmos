@@ -23,8 +23,12 @@
       <div class="main-content-section py-4{% if concept.deprecated %} concept-deprecated{% endif %}">
 
         {# Macro for rendering concept links with notation #}
-        {% macro concept_link(item, vocab, lang, contentLang) %}
-          <a href="{{ item.uri | link_url(vocab, lang, 'page', contentLang) }}">
+        {% macro concept_link(item, current_vocab, lang, contentLang) %}
+          {%- if current_vocab == item.vocab and item.isExternal %}
+            <a href="{{ item.uri }}">
+          {%- else -%}
+            <a href="{{ item.uri | link_url(item.vocab, lang, 'page', contentLang) }}">
+          {%- endif -%}
           {%- if item.notation -%}
             <span class="property-value-notation">{{ item.notation }} </span>
           {%- endif -%}
@@ -127,7 +131,7 @@
                   {# Display as an ordered list #}
                   <ol class="rdf-list">
                   {% for listItem in propval.rdfListItems %}
-                    <li>{{ _self.concept_link(listItem, listItem.vocab, request.lang, request.contentLang) }}</li>
+                    <li>{{ _self.concept_link(listItem, vocab, request.lang, request.contentLang) }}</li>
                   {% endfor %}
                   {% if propval.isRdfListTruncated %}
                     <li class="rdf-list-truncated">
@@ -138,11 +142,11 @@
                   
                 {% else %}
                   {# Regular resource display #}
-                  {{ _self.concept_link(propval, propval.vocab, request.lang, request.contentLang) }}
+                  {{ _self.concept_link(propval, vocab, request.lang, request.contentLang) }}
                   {% if propval.submembers %}
                   <ul class="property-value-submembers">
                   {% for submember in propval.submembers %}
-                    <li>{{ _self.concept_link(submember, propval.vocab, request.lang, request.contentLang) }}</li>
+                    <li>{{ _self.concept_link(submember, vocab, request.lang, request.contentLang) }}</li>
                   {% endfor %}
                   </ul>
                   {% endif %}
