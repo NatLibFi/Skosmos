@@ -268,6 +268,21 @@ describe('Concept page', () => {
     // check that we have the correct number of related concepts
     cy.get('.prop-skos_related .property-value').find('li').should('have.length', 3)
   })
+  it('contains external links', () => {
+    cy.visit('/test/en/page/ta126') // go to "Europa" concept page
+
+    // check the property name
+    cy.get('.prop-foaf_homepage .property-label h2').invoke('text').should('equal', 'Homepage')
+
+    // check that we have the correct number of related concepts
+    cy.get('.prop-foaf_homepage .property-value').find('li').should('have.length', 1)
+
+    // check that the link has the correct text (the URL itself)
+    cy.get('.prop-foaf_homepage .property-value a').invoke('text').should('equal', 'https://en.wikipedia.org/wiki/Europe')
+
+    // check that the link has the correct href URL
+    cy.get('.prop-foaf_homepage .property-value a').should('have.attr', 'href', 'https://en.wikipedia.org/wiki/Europe')
+  })
   it('contains altLabels (entry terms)', () => {
     cy.visit('/yso/en/page/p21685') // go to "music research" concept page
 
