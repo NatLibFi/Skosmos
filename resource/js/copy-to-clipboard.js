@@ -11,25 +11,19 @@ function copyToClipboard (id) {
     console.error('Failed to copy text to clipboard: ', err))
 }
 
-function registerCopyToClipboardEvents () {
-  const copyPrefElem = document.getElementById('copy-preflabel')
-  if (copyPrefElem) {
-    copyPrefElem.addEventListener('click', () => copyToClipboard('concept-preflabel'))
-  }
-
-  const copyNotationElem = document.getElementById('copy-notation')
-  if (copyNotationElem) {
-    copyNotationElem.addEventListener('click', () => copyToClipboard('concept-notation'))
-  }
-
-  const copyUriElem = document.getElementById('copy-uri')
-  if (copyUriElem) {
-    copyUriElem.addEventListener('click', () => copyToClipboard('concept-uri'))
-  }
+function registerCopyToClipboardEvent () {
+  const mainElement = document.getElementById('main-container')
+  mainElement.addEventListener('click', function(event) {
+    const target = event.target.closest('.copy-clipboard')
+    if (target) {
+      event.preventDefault()
+      const targetId = target.getAttribute('data-target-id')
+      if (targetId) {
+        copyToClipboard(targetId)
+      }
+    }
+  })
 }
 
 // register the copyToClipboard function as event an handler for the copy buttons
-registerCopyToClipboardEvents()
-
-// re-register the event handlers after partial page loads
-document.addEventListener('loadConceptPage', registerCopyToClipboardEvents)
+registerCopyToClipboardEvent()
