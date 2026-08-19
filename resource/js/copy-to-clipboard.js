@@ -17,7 +17,7 @@ function registerCopyToClipboardEvent () {
     const target = event.target.closest('.copy-clipboard')
     if (target) {
       event.preventDefault()
-      const targetId = target.getAttribute('data-target-id')
+      const targetId = target.dataset.targetId
       if (targetId) {
         copyToClipboard(targetId)
       }
