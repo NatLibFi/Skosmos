@@ -13,7 +13,7 @@ function copyToClipboard (id) {
 
 function registerCopyToClipboardEvent () {
   const mainElement = document.getElementById('main-container')
-  mainElement.addEventListener('click', function(event) {
+  mainElement.addEventListener('click', function (event) {
     const target = event.target.closest('.copy-clipboard')
     if (target) {
       event.preventDefault()
