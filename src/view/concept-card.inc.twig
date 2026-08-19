@@ -82,7 +82,7 @@
                 {% if descriptionId %}aria-describedby="{{ descriptionId }}"{% endif %}
                 class="mb-0">
               <span class="notation user-select-all" id="concept-notation">{{ concept.notation }}</span> {{ concept.label }}</h1><button
-                  class="btn btn-default copy-clipboard px-1" type="button" id="copy-notation"
+                  class="btn btn-default copy-clipboard px-1" type="button" id="copy-notation" data-target-id="concept-notation"
                   data-bs-toggle="tooltip" data-bs-placement="button" title="{{ 'Copy to clipboard' | trans }}">
                 <i class="fa-regular fa-copy"></i>
               </button>
@@ -90,7 +90,7 @@
             <h1 id="concept-preflabel" tabindex="-1"
                 {% if descriptionId %}aria-describedby="{{ descriptionId }}"{% endif %}
                 class="mb-0 user-select-all">{{ concept.label }}</h1><button
-                    class="btn btn-default copy-clipboard px-1" type="button" id="copy-preflabel"
+                    class="btn btn-default copy-clipboard px-1" type="button" id="copy-preflabel" data-target-id="concept-preflabel"
                     data-bs-toggle="tooltip" data-bs-placement="button" title="{{ 'Copy to clipboard' | trans }}">
               <i class="fa-regular fa-copy"></i>
             </button>
@@ -213,7 +213,7 @@
           <div class="col-lg-8 gx-0 gx-lg-4 property-value">
             <span id="concept-uri"
                   class="user-select-all">{{ concept.uri }}</span><button
-                    class="btn btn-default copy-clipboard px-1" type="button" id="copy-uri"
+                    class="btn btn-default copy-clipboard px-1" type="button" id="copy-uri" data-target-id="concept-uri"
                     data-bs-toggle="tooltip" data-bs-placement="button" title="{{ 'Copy to clipboard' | trans }}">
               <i class="fa-regular fa-copy"></i>
             </button>
