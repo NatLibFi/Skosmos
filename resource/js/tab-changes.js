@@ -286,7 +286,7 @@ function startChangesApp () {
                 <h2 class="pb-1">{{ month }}</h2>
               </li>
               <li v-for="concept in concepts" class="list-group-item py-1 px-2">
-                <template v-if="concept.replacedBy">
+                <template v-if="concept.deprecated">
                   <a :class="{ 'selected': selectedConcept === concept.uri }"
                     :href="getConceptURL(concept.uri)"
                     :tabindex="concept.index === conceptInFocus ? 0 : -1"
@@ -297,17 +297,19 @@ function startChangesApp () {
                     <s>{{ concept.prefLabel }}</s>
                     <span class="visually-hidden">{{ toConceptPageAriaMessage }}</span>
                   </a>
-                  <i class="fa-solid fa-arrow-right"></i>
-                  <a :class="{ 'selected': selectedConcept === concept.replacedBy }"
-                    :href="getConceptURL(concept.replacedBy)"
-                    :tabindex="concept.replacedByIndex === conceptInFocus ? 0 : -1"
-                    :ref="'concept' + concept.replacedByIndex"
-                    @click="loadConcept($event, concept.replacedBy, concept.replacedByIndex)"
-                    @keydown="handleKeydownEvent($event)"
-                  >
-                    {{ concept.replacingLabel }}
-                    <span class="visually-hidden">{{ toConceptPageAriaMessage }}</span>
-                  </a>
+                  <template v-if="concept.replacedBy">
+                    <i class="fa-solid fa-arrow-right"></i>
+                    <a :class="{ 'selected': selectedConcept === concept.replacedBy }"
+                      :href="getConceptURL(concept.replacedBy)"
+                      :tabindex="concept.replacedByIndex === conceptInFocus ? 0 : -1"
+                      :ref="'concept' + concept.replacedByIndex"
+                      @click="loadConcept($event, concept.replacedBy, concept.replacedByIndex)"
+                      @keydown="handleKeydownEvent($event)"
+                    >
+                      {{ concept.replacingLabel }}
+                      <span class="visually-hidden">{{ toConceptPageAriaMessage }}</span>
+                    </a>
+                  </template>
                 </template>
                 <template v-else>
                   <a :class="{ 'selected': selectedConcept === concept.uri }"

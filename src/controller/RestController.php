@@ -1153,7 +1153,8 @@ class RestController extends Controller
                 $concept = array(
                     'uri' => $conceptInfo['uri'],
                     'prefLabel' => $conceptInfo['prefLabel'],
-                    'date' => $conceptInfo['date']->format("Y-m-d\TH:i:sO") );
+                    'date' => $conceptInfo['date']->format("Y-m-d\TH:i:sO"),
+                    'deprecated' => $conceptInfo['deprecated'] );
                 if (array_key_exists('replacedBy', $conceptInfo)) {
                     $concept['replacedBy'] = $conceptInfo['replacedBy'];
                     if (array_key_exists('replacingLabel', $conceptInfo)) {
