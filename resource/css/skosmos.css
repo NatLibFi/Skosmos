@@ -1452,7 +1452,7 @@ h2#vocab-heading {
   background-color: var(--main-content-bg);
 }
 
-#search-results h1 {
+#search-results h1, #search-results h2 {
   font-size: 1.1rem;
   font-family: var(--font-family);
 }
