@@ -816,7 +816,8 @@ EOD;
          "@language": "en",
          "prefLabel": "skos:prefLabel",
          "xsd": "http://www.w3.org/2001/XMLSchema#",
-         "date": { "@id":"http://purl.org/dc/terms/date","@type":"http://www.w3.org/2001/XMLSchema#dateTime" }
+         "date": { "@id":"http://purl.org/dc/terms/date","@type":"http://www.w3.org/2001/XMLSchema#dateTime" },
+         "deprecated": { "@id":"http://www.w3.org/2002/07/owl#deprecated","@type":"http://www.w3.org/2001/XMLSchema#boolean" }
      },
     "changeList": [
               { 
@@ -884,7 +885,8 @@ EOD;
         "@language": "en",
         "prefLabel": "skos:prefLabel",
         "xsd": "http://www.w3.org/2001/XMLSchema#",
-        "date": { "@id":"http://purl.org/dc/terms/date","@type":"http://www.w3.org/2001/XMLSchema#dateTime" }
+        "date": { "@id":"http://purl.org/dc/terms/date","@type":"http://www.w3.org/2001/XMLSchema#dateTime" },
+        "deprecated": { "@id":"http://www.w3.org/2002/07/owl#deprecated","@type":"http://www.w3.org/2001/XMLSchema#boolean" }
     },
    "changeList": [ { "uri":"http://www.skosmos.skos/test/ta123", "prefLabel":"multiple broaders", "date":"2014-10-01T16:29:03+0000", "deprecated":false } ]
 }
@@ -920,7 +922,8 @@ EOD;
         "@language": "en",
         "prefLabel": "skos:prefLabel",
         "xsd": "http://www.w3.org/2001/XMLSchema#",
-        "date": { "@id":"http://purl.org/dc/terms/date","@type":"http://www.w3.org/2001/XMLSchema#dateTime" }
+        "date": { "@id":"http://purl.org/dc/terms/date","@type":"http://www.w3.org/2001/XMLSchema#dateTime" },
+        "deprecated": { "@id":"http://www.w3.org/2002/07/owl#deprecated","@type":"http://www.w3.org/2001/XMLSchema#boolean" }
     },
     "changeList": [
       { "date": "2021-02-04T12:46:33+0000", "deprecated": true, "prefLabel": "No replacement", "uri": "http://www.skosmos.skos/changes/d5" },

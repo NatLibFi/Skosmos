@@ -1167,10 +1167,12 @@ class RestController extends Controller
         return $this->returnJson(array_merge_recursive(
             $this->context,
             array('@context' => array( '@language' => $request->getLang(),
-                                                                                     'prefLabel' => 'skos:prefLabel',
-                                                                                     'xsd' => 'http://www.w3.org/2001/XMLSchema#',
-                                                                                     'date' => array( '@id' => 'http://purl.org/dc/terms/date', '@type' => 'http://www.w3.org/2001/XMLSchema#dateTime') )
-                                                        ),
+                                       'prefLabel' => 'skos:prefLabel',
+                                       'xsd' => 'http://www.w3.org/2001/XMLSchema#',
+                                       'date' => array( '@id' => 'http://purl.org/dc/terms/date', '@type' => 'http://www.w3.org/2001/XMLSchema#dateTime'),
+                                       'deprecated' => array( '@id' => 'http://www.w3.org/2002/07/owl#deprecated', '@type' => 'http://www.w3.org/2001/XMLSchema#boolean')
+                                )
+            ),
             array('changeList' => $simpleChangeList)
         ));
 
