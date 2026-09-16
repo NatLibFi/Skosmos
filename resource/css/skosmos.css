@@ -665,6 +665,7 @@ header .container-fluid .row {
 
 #vocabulary-list .vocab-category h3 {
   color: var(--landing-vocabulary-list-text);
+  font-weight: normal;
 }
 
 #vocabulary-list .list-group-item {
@@ -1165,7 +1166,7 @@ h2#vocab-heading {
 }
 
 .concept-deprecated #concept-breadcrumbs .breadcrumb-current,
-.concept-deprecated h1,
+.concept-deprecated h2,
 .concept-deprecated #copy-preflabel,
 .concept-deprecated .property-value,
 .concept-deprecated #concept-other-languages .altlabel,
