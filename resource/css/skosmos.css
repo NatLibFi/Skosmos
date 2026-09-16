@@ -180,10 +180,6 @@ header .container-fluid .row {
   display: inline-block;
 }
 
-#skosmos-logo-top h2 {
-  text-indent: -100%;
-}
-
 #global-search-toggle {
   transition: none;
   color: var(--topbar-text-1);
