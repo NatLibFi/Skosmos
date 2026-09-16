@@ -7,12 +7,14 @@ FROM composer:${COMPOSER_VERSION} AS composer-installer
 
 ARG BUILD_ENV
 WORKDIR /app
-COPY . /app/
+COPY composer.json /app/
+
 RUN composer install \
       --ignore-platform-req=ext-intl \
       --ignore-platform-req=ext-xsl \
       --ignore-platform-req=php \
-      $( [ "$BUILD_ENV" = "production" ] && echo "--no-dev" ) 
+      --no-autoloader \
+      $( [ "$BUILD_ENV" = "production" ] && echo "--no-dev" )
 
 # Stage 2: Install Node dependencies
 ARG NODE_VERSION
@@ -128,14 +130,18 @@ RUN apt-get update && apt-get install -y \
 COPY --from=composer-installer /app/vendor /var/www/html/vendor
 COPY --from=npm-installer /usr/src/app/node_modules /var/www/html/node_modules
 
+# install cypress before copying sources
+RUN npx cypress install
+
 # all source files including tests
 COPY . /var/www/html/
 
 # Configure Skosmos
 COPY dockerfiles/config/config-docker.ttl /var/www/html/config.ttl
 
-# install cypress
-RUN npx cypress install
+# Generate the Composer autoloader now that the sources are present
+COPY --from=composer-installer /usr/bin/composer /usr/bin/composer
+RUN composer dump-autoload --ignore-platform-req=php
 
 # Stage 4b: Finalize production runtime image
 FROM runtime AS production
@@ -157,5 +163,9 @@ COPY composer.json /var/www/html
 COPY config.ttl.dist /var/www/html
 COPY favicon.ico /var/www/html
 COPY swagger.json /var/www/html
+
+# Generate the Composer autoloader now that the sources are present
+COPY --from=composer-installer /usr/bin/composer /usr/bin/composer
+RUN composer dump-autoload --no-dev --ignore-platform-req=php
 
 HEALTHCHECK --interval=5s --timeout=3s --retries=3 CMD curl -f http://localhost || exit 1
