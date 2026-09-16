@@ -27,8 +27,12 @@ describe('New and removed view', () => {
   it('Shows deprecated concepts', () => {
     // Go to home page of vocab with changes view as default sidebar view
     cy.visit('/changesDefaultView/en/')
-    // Check that an s element exists and has the correct label
-    cy.get('#tab-changes').find('.sidebar-list li a s').invoke('text').should('contain', 'Fourth date')
+    // Check that <s> elements exist and contain both expected labels
+    cy.get('#tab-changes')
+      .find('.sidebar-list li a s')
+      .invoke('text')
+      .should('contain', 'No replacement') // no replacedBy
+      .and('contain', 'Fourth date') // has replacedBy
   })
   it('Displays concepts and headings in the correct language', () => {
     // Go to YSO home page with UI language set to English and content language set to Finnish

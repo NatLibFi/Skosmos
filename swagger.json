@@ -2435,12 +2435,17 @@
           "type": "string",
           "format": "date-time",
           "description": "Time stamp"
+        },
+        "deprecated": {
+          "type": "boolean",
+          "description": "Whether the concept is deprecated or not"
         }
       },
       "required": [
         "uri",
         "prefLabel",
-        "date"
+        "date",
+        "deprecated"
       ]
     }
   }
