@@ -419,10 +419,11 @@ header .container-fluid .row {
   overflow: auto;
 }
 
-#global-search-text h2 {
+#global-search-text {
   font-family: var(--font-family-heading);
   font-weight: bold;
   font-size: 2rem;
+  margin-bottom: 0.5rem;
 }
 
 #global-search-bar .dropdown {
