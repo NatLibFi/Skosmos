@@ -822,29 +822,34 @@ EOD;
               { 
                   "uri": "http://www.skosmos.skos/changes/d5",
                   "prefLabel": "No replacement",
-                  "date": "2021-02-04T12:46:33+0000"
+                  "date": "2021-02-04T12:46:33+0000",
+                  "deprecated": true
               },
               {
                   "uri": "http://www.skosmos.skos/changes/d4",
                   "prefLabel": "Fourth date",
                   "date": "2021-01-03T12:46:33+0000",
                   "replacedBy": "http://www.skosmos.skos/changes/d3",
-                  "replacingLabel": "Hurr Durr"
+                  "replacingLabel": "Hurr Durr",
+                  "deprecated": true
               },
               {
                   "uri": "http://www.skosmos.skos/changes/d3",
                   "prefLabel": "Hurr Durr",
-                  "date": "2010-02-12T10:26:39+0000"
+                  "date": "2010-02-12T10:26:39+0000",
+                  "deprecated": false
               },
               {
                   "uri": "http://www.skosmos.skos/changes/d2",
                   "prefLabel": "Second date",
-                  "date": "2010-02-12T15:26:39+0000"
+                  "date": "2010-02-12T15:26:39+0000",
+                  "deprecated": false
               },
               {
                   "uri": "http://www.skosmos.skos/changes/d1",
                   "prefLabel": "A date",
-                  "date": "2000-01-03T12:46:39+0000"
+                  "date": "2000-01-03T12:46:39+0000",
+                  "deprecated": false
               } 
       ]
  }
@@ -881,7 +886,7 @@ EOD;
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "date": { "@id":"http://purl.org/dc/terms/date","@type":"http://www.w3.org/2001/XMLSchema#dateTime" }
     },
-   "changeList": [ { "uri":"http://www.skosmos.skos/test/ta123", "prefLabel":"multiple broaders", "date":"2014-10-01T16:29:03+0000" } ]
+   "changeList": [ { "uri":"http://www.skosmos.skos/test/ta123", "prefLabel":"multiple broaders", "date":"2014-10-01T16:29:03+0000", "deprecated":false } ]
 }
 EOD;
         $this->assertJsonStringEqualsJsonString($changeList, $expected);
@@ -918,11 +923,11 @@ EOD;
         "date": { "@id":"http://purl.org/dc/terms/date","@type":"http://www.w3.org/2001/XMLSchema#dateTime" }
     },
     "changeList": [
-      { "date": "2021-02-04T12:46:33+0000", "prefLabel": "No replacement", "uri": "http://www.skosmos.skos/changes/d5" },
-      { "date": "2021-01-03T12:46:30+0000", "prefLabel": "A date", "uri": "http://www.skosmos.skos/changes/d1" },
-      { "date": "2021-01-03T12:46:33+0000", "prefLabel": "Fourth date", "replacedBy": "http://www.skosmos.skos/changes/d3", "replacingLabel": "Hurr Durr", "uri": "http://www.skosmos.skos/changes/d4" },
-      { "date": "2021-01-03T12:46:32+0000", "prefLabel": "Hurr Durr", "uri": "http://www.skosmos.skos/changes/d3" },
-      { "date": "2021-01-03T12:46:31+0000", "prefLabel": "Second date", "uri": "http://www.skosmos.skos/changes/d2" }
+      { "date": "2021-02-04T12:46:33+0000", "deprecated": true, "prefLabel": "No replacement", "uri": "http://www.skosmos.skos/changes/d5" },
+      { "date": "2021-01-03T12:46:30+0000", "deprecated": false, "prefLabel": "A date", "uri": "http://www.skosmos.skos/changes/d1" },
+      { "date": "2021-01-03T12:46:33+0000", "deprecated": true, "prefLabel": "Fourth date", "replacedBy": "http://www.skosmos.skos/changes/d3", "replacingLabel": "Hurr Durr", "uri": "http://www.skosmos.skos/changes/d4" },
+      { "date": "2021-01-03T12:46:32+0000", "deprecated": false, "prefLabel": "Hurr Durr", "uri": "http://www.skosmos.skos/changes/d3" },
+      { "date": "2021-01-03T12:46:31+0000", "deprecated": false, "prefLabel": "Second date", "uri": "http://www.skosmos.skos/changes/d2" }
     ]
 }
 EOD;
