@@ -111,6 +111,6 @@ describe('Groups tab', () => {
     cy.get('#groups-list .list-group-item a').eq(0).should('have.focus')
     // Check that pressing space opens concept page
     cy.press(Cypress.Keyboard.Keys.SPACE)
-    cy.get('#concept-heading h1', {'timeout': 15000}).invoke('text').should('equal', 'Fish')
+    cy.get('#concept-heading h2', {'timeout': 15000}).invoke('text').should('equal', 'Fish')
   })
 })

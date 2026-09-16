@@ -16,7 +16,7 @@ describe('Concept page, full vs. partial page loads', () => {
       cy.get('#vocab-title > a').invoke('text').should('contain', 'YSO - General Finnish ontology (archaeology)')
 
       // check the concept prefLabel
-      cy.get('#concept-heading h1').invoke('text').should('equal', 'burial mounds')
+      cy.get('#concept-heading h2').invoke('text').should('equal', 'burial mounds')
     })
     it('concept preflabel can be copied to clipboard / ' + pageLoadType, () => {
       if (pageLoadType == "full") {
@@ -77,7 +77,7 @@ describe('Concept page, full vs. partial page loads', () => {
         // click on the link to "Eel" to trigger partial page load
         cy.get('#tab-hierarchy').contains('a', 'Eel').click()
         // Wait for partial page load to complete
-        cy.get('#concept-heading h1', {timeout: 10000}).should('contain', 'Eel')
+        cy.get('#concept-heading h2', {timeout: 10000}).should('contain', 'Eel')
         // Wait for copy button to be ready
         cy.get('#copy-notation').should('be.visible')
       }
@@ -152,7 +152,7 @@ describe('Concept page, full vs. partial page loads', () => {
       cy.get('#concept-mappings i.fa-spinner', {'timeout': 15000}).should('not.exist')
 
       // check the first mapping property name
-      cy.get('.prop-mapping h2', {'timeout': 20000}).eq(0).invoke('text').should('contain', 'Closely matching concepts')
+      cy.get('.prop-mapping h3', {'timeout': 20000}).eq(0).invoke('text').should('contain', 'Closely matching concepts')
       
       // Wait for mapping labels to actually exist before checking them
       cy.get('.prop-mapping .prop-mapping-label', {'timeout': 20000}).should('exist')
@@ -165,7 +165,7 @@ describe('Concept page, full vs. partial page loads', () => {
       cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').should('have.length', 1)
 
       // check the second mapping property name
-      cy.get('.prop-mapping h2').eq(1).invoke('text').should('contain', 'Exactly matching concepts')
+      cy.get('.prop-mapping h3').eq(1).invoke('text').should('contain', 'Exactly matching concepts')
       // check the second mapping property values
       cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(0).invoke('text').should('contain', 'labyrinter (sv)')
       cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(0).find('a').invoke('text').should('equal', 'labyrinter')
@@ -188,7 +188,7 @@ describe('Concept page, full vs. partial page loads', () => {
         // click on the link to "hash mark" to trigger partial page load
         cy.get('#tab-hierarchy').contains('a', 'hash mark').click()
         // Wait for partial page load to complete by checking the concept heading updated
-        cy.get('#concept-heading h1', {timeout: 10000}).should('contain', 'hash mark')
+        cy.get('#concept-heading h2', {timeout: 10000}).should('contain', 'hash mark')
       }
 
       // check that we have some mappings
@@ -198,7 +198,7 @@ describe('Concept page, full vs. partial page loads', () => {
       cy.get('#concept-mappings i.fa-spinner', {'timeout': 15000}).should('not.exist')
 
       // check the first mapping property name
-      cy.get('.prop-mapping h2').eq(0).invoke('text').should('contain', 'Exactly matching concepts')
+      cy.get('.prop-mapping h3').eq(0).invoke('text').should('contain', 'Exactly matching concepts')
       
       // Check if mapping labels exist at all
       cy.get('.prop-mapping .prop-mapping-label', {'timeout': 20000}).should('exist').then(($labels) => {

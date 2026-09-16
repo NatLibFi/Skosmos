@@ -63,7 +63,7 @@ describe('New and removed view', () => {
     cy.get('#tab-changes').contains('a', 'Bell beaker culture').click()
 
     // check the concept prefLabel
-    cy.get('#concept-heading h1', {'timeout': 15000}).invoke('text').should('equal', 'Bell beaker culture')
+    cy.get('#concept-heading h2', {'timeout': 15000}).invoke('text').should('equal', 'Bell beaker culture')
 
     // check that the SKOSMOS object matches the newly loaded concept
     cy.window().then((win) => {
@@ -77,7 +77,7 @@ describe('New and removed view', () => {
     cy.get('#concept-mappings i.fa-spinner', {'timeout': 15000}).should('not.exist')
 
     // check mapping property name
-    cy.get('.prop-mapping h2', {'timeout': 20000}).eq(0).contains('Closely matching concepts')
+    cy.get('.prop-mapping h3', {'timeout': 20000}).eq(0).contains('Closely matching concepts')
     // check the mapping property values
     cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).find('a').invoke('text').should('equal', 'Bell beaker culture')
     cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).find('a').should('have.attr', 'href', 'http://id.loc.gov/authorities/subjects/sh87007797')
@@ -85,7 +85,7 @@ describe('New and removed view', () => {
     // check that mapping property has the right number of entries
     cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').should('have.length', 2)
     // check that mappings have the right number of properties
-    cy.get('.prop-mapping h2').should('have.length', 2)
+    cy.get('.prop-mapping h3').should('have.length', 2)
   })
   it('Has correct translations', () => {
     // go to YSO vocab front page in English
@@ -130,6 +130,6 @@ describe('New and removed view', () => {
     cy.get('#tab-changes').find('.sidebar-list a').eq(0).should('have.focus')
     // Check that pressing space opens concept page
     cy.press(Cypress.Keyboard.Keys.SPACE)
-    cy.get('#concept-heading h1', {'timeout': 15000}).invoke('text').should('equal', 'Bell beaker culture')
+    cy.get('#concept-heading h2', {'timeout': 15000}).invoke('text').should('equal', 'Bell beaker culture')
   })
 })

@@ -98,11 +98,11 @@ conceptMappingsApp.component('concept-mappings', {
     <div class="row property prop-mapping" v-for="(mapping, label) in mappings">
       <template v-if="customLabels">
         <div class="col-lg-4 ps-0 property-label" :title="customLabels[mapping[0].type[0]][1] || mapping[0].description">
-          <h2>{{ customLabels[mapping[0].type[0]][0] }}</h2>
+          <h3>{{ customLabels[mapping[0].type[0]][0] }}</h3>
         </div>
       </template>
       <template v-else>
-        <div class="col-lg-4 ps-0 property-label" :title="mapping[0].description"><h2>{{ label }}</h2></div>
+        <div class="col-lg-4 ps-0 property-label" :title="mapping[0].description"><h3>{{ label }}</h3></div>
       </template>
       <div class="col-lg-8 gx-0 gx-lg-4">
         <div class="row mb-2" v-for="m in mapping">

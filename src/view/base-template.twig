@@ -101,11 +101,11 @@
             <h1 class="visually-hidden">{{ GlobalConfig.serviceNameLong(request.lang) }}</h1>
           </div>
           {% else %}
-          <h2 class="fw-bold" id="vocab-title">
+          <h1 class="fw-bold" id="vocab-title">
             <a class="text-decoration-none" href="{{ 'home' | global_url(request.lang, request.contentLang, request.vocabid, request.queryParam('anylang') == 'on') }}">
               {{ request.vocab.title(request.contentLang) }}
             </a>
-          </h2>
+          </h1>
           <div class="ms-0 ms-xl-auto pt-3 pt-xl-0">
             <div id="search-vocab"></div>
           </div>
