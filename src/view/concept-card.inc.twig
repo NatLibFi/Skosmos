@@ -78,18 +78,18 @@
             {{ include('xl-label.inc.twig', {xlLabel: concept.xlLabel, xlDescriptionId: descriptionId}) }}
           {% endif %}
           {% if concept.notation %}
-            <h1 id="concept-preflabel" tabindex="-1"
+            <h2 id="concept-preflabel" tabindex="-1"
                 {% if descriptionId %}aria-describedby="{{ descriptionId }}"{% endif %}
                 class="mb-0">
-              <span class="notation user-select-all" id="concept-notation">{{ concept.notation }}</span> {{ concept.label }}</h1><button
+              <span class="notation user-select-all" id="concept-notation">{{ concept.notation }}</span> {{ concept.label }}</h2><button
                   class="btn btn-default copy-clipboard px-1" type="button" id="copy-notation" data-target-id="concept-notation"
                   data-bs-toggle="tooltip" data-bs-placement="button" title="{{ 'Copy to clipboard' | trans }}">
                 <i class="fa-regular fa-copy"></i>
               </button>
             {% else %}
-            <h1 id="concept-preflabel" tabindex="-1"
+            <h2 id="concept-preflabel" tabindex="-1"
                 {% if descriptionId %}aria-describedby="{{ descriptionId }}"{% endif %}
-                class="mb-0 user-select-all">{{ concept.label }}</h1><button
+                class="mb-0 user-select-all">{{ concept.label }}</h2><button
                     class="btn btn-default copy-clipboard px-1" type="button" id="copy-preflabel" data-target-id="concept-preflabel"
                     data-bs-toggle="tooltip" data-bs-placement="button" title="{{ 'Copy to clipboard' | trans }}">
               <i class="fa-regular fa-copy"></i>
@@ -114,9 +114,9 @@
           {%- endif -%}
 
           <div class="col-lg-4 ps-0 property-label">
-            <h2{{ _self.render_attrs(attrs) }}>
+            <h3{{ _self.render_attrs(attrs) }}>
               {{- label[:1]|upper ~ label[1:] -}} {#- Capitalizing labels -#}
-            </h2>
+            </h3>
             {% if tooltip is not empty %}
             <span id="prop-desc-{{property.ID}}" class="visually-hidden">{{ tooltip }}</span>
             {% endif %}
@@ -175,13 +175,13 @@
         {% if foreignLabels %}
         <div class="row property prop-foreignlabels">
           <div class="col-lg-4 ps-0 property-label">
-            <h2 class="tooltip-inline t-top" aria-describedby="prop-desc-foreignlabels" data-title="{{ 'foreign prefLabel help'|trans }}">{{ 'foreign prefLabels'|trans }}</h2>
+            <h3 class="tooltip-inline t-top" aria-describedby="prop-desc-foreignlabels" data-title="{{ 'foreign prefLabel help'|trans }}">{{ 'foreign prefLabels'|trans }}</h3>
             <span id="prop-desc-foreignlabels" class="visually-hidden">{{ 'foreign prefLabel help'|trans }}</span>
           </div>
           <div class="col-lg-8 gx-0 gx-lg-4" id="concept-other-languages">
             {% for language,labels in foreignLabels %}
             <div class="row mb-2">
-              <div class="col-7 order-last concept-other-languages-language"><h3>{{ language }}</h3></div>
+              <div class="col-7 order-last concept-other-languages-language"><h4>{{ language }}</h4></div>
               <div class="col-5">
                 <ul>
                   {% for value in labels.prefLabel|default([])|merge(labels.altLabel|default([])) %}
@@ -209,7 +209,7 @@
         </div>
         {% endif %}
         <div class="row property prop-uri">
-          <div class="col-lg-4 ps-0 property-label"><h2>URI</h2></div>
+          <div class="col-lg-4 ps-0 property-label"><h3>URI</h3></div>
           <div class="col-lg-8 gx-0 gx-lg-4 property-value">
             <span id="concept-uri"
                   class="user-select-all">{{ concept.uri }}</span><button
@@ -221,7 +221,7 @@
         </div>
         <div class="row property prop-download">
           <div class="col-lg-4 ps-0 property-label">
-            <h2><i class="fa-solid fa-download"></i> {{ "Download this concept" | trans }}</h2>
+            <h3><i class="fa-solid fa-download"></i> {{ "Download this concept" | trans }}</h3>
           </div>
           <div class="col-lg-8 gx-0 gx-lg-4" id="download-links">
             <ul>

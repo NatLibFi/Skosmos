@@ -7,7 +7,7 @@ describe('RDF List', () => {
     cy.get('.prop-http___www_skosmos_skos_hasRelatedConcept').should('exist')
 
     // Check the property label
-    cy.get('.prop-http___www_skosmos_skos_hasRelatedConcept .property-label h2').invoke('text').should('include', 'Has related concept')
+    cy.get('.prop-http___www_skosmos_skos_hasRelatedConcept .property-label h3').invoke('text').should('include', 'Has related concept')
 
     // Check that the list is an ordered list (ol)
     cy.get('.prop-http___www_skosmos_skos_hasRelatedConcept .property-value ol').should('exist')
