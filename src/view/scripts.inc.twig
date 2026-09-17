@@ -7,7 +7,7 @@ window.SKOSMOS = {
   "lang": "{{ request.lang }}",
   "vocab": "{{ request.vocabid }}",
   "pageType": "{{ pageType }}",
-  "vocab_list": { {% for key, vocabs in request.vocabList %}{% for key2, value in vocabs %}"{{ value.resource.localname }}": "{{ value.config.shortname }}"{% if not loop.last %}, {% endif %}
+  "vocab_list": { {% for key, vocabs in request.vocabList %}{% for key2, value in vocabs %}"{{ value.resource.localname }}": {"short": "{{ value.config.shortname }}", "title": "{{ value.config.title }}"}{% if not loop.last %}, {% endif %}
 {% endfor %}{% if not loop.last %}, {% endif %}
 {% endfor %}  },
   "vocab_id": [ {% for vocab in request.vocabid %} "{{ vocab }}"{% if not loop.last %},

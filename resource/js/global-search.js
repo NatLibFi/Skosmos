@@ -52,7 +52,7 @@ function startGlobalSearchApp () {
         return $t('Clear search field')
       },
       getSelectedVocabs () {
-        return this.selectedVocabs.map(key => ({ key, value: this.vocabStrings[key] }))
+        return this.selectedVocabs.map(key => ({ key, value: this.vocabStrings[key].short }))
       },
       selectedVocabsString () {
         return this.getSelectedVocabs.map(voc => voc.value).join(', ')
@@ -529,7 +529,7 @@ function startGlobalSearchApp () {
                     tabindex=-1
                     @click.stop>
                     <span class="checkmark" aria-hidden="true"></span>
-                  {{ value }}
+                  {{ value.short }}
                 </label>
               </li>
             </ul>
@@ -672,6 +672,7 @@ function startGlobalSearchApp () {
                           </span>
                         </div>
                         <div class="col-auto align-self-end pr-1" v-html="result.renderedType"></div>
+                        <div class="result-vocab-title">{{ vocabStrings[result.vocab].title }}</div>
                       </div>
                     </a>
                   </template>
