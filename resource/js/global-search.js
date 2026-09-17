@@ -493,7 +493,7 @@ function startGlobalSearchApp () {
       focusFirstResult () {
         const firstLink = this.$el?.querySelector('#search-autocomplete-results a')
         if (firstLink) firstLink.focus()
-      },
+      }
     },
     template: `
       <div id="search-wrapper" class="input-group ps-xl-2 flex-nowrap">
