@@ -300,6 +300,10 @@ header .container-fluid .row {
   color: var(--search-dropdown-hover-text);
 }
 
+#search-wrapper :focus-visible {
+  outline-offset: 0 !important;
+}
+
 #search-wrapper .dropdown-menu li:focus-visible {
   outline-offset: -3px !important;
 }
