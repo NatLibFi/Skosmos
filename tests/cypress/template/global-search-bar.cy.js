@@ -32,7 +32,7 @@ describe('Global search bar', () => {
 
   it('changing the search language changes the language selector dropdown header text', () => {
 
-    cy.get('#language-selector .dropdown-toggle').should('contain.text', 'kaikki kielet')
+    cy.get('#language-selector .dropdown-toggle').should('contain.text', 'suomi')
     cy.get('#language-selector .dropdown-toggle').click()
     cy.get('#language-list').should('be.visible')
 
@@ -47,7 +47,7 @@ describe('Global search bar', () => {
 
   it('Selecting "all languages" does not change content language', () => {
 
-    cy.get('#language-selector .dropdown-toggle').should('contain.text', 'kaikki kielet')
+    cy.get('#language-selector .dropdown-toggle').should('contain.text', 'suomi')
     cy.get('#language-list li label').find('input[type="radio"][value="en"]').check({ force: true })
     cy.url().should('include', 'clang=en')
 
@@ -316,7 +316,7 @@ describe('Global search bar', () => {
       // Check that vocabulary selector has correct label
       cy.get('#vocab-selector-label').should('contain', 'Choose vocabulary')
       // Check that search language selector has correct place holder text
-      cy.get('#language-selector button').should('have.text', 'all languages')
+      cy.get('#language-selector button').should('have.text', 'English')
       // Check that search language selector has correct label
       cy.get('#content-language-label').should('contain', 'Content language')
       // Check that search field has correct label

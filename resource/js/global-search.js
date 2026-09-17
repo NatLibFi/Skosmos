@@ -71,6 +71,9 @@ function startGlobalSearchApp () {
         const url = new URL(window.location.href)
         if (newLang === 'all') {
           url.searchParams.set('anylang', 'on')
+        } else if (newLang === window.SKOSMOS.lang) {
+          url.searchParams.delete('clang')
+          url.searchParams.delete('anylang')
         } else {
           url.searchParams.set('clang', newLang)
           url.searchParams.delete('anylang')
@@ -162,6 +165,10 @@ function startGlobalSearchApp () {
         // otherwise pick content lang from SKOSMOS object
         if (window.SKOSMOS.content_lang) {
           return window.SKOSMOS.content_lang
+        }
+        // fall back to UI lang from SKOSMOS object
+        if (window.SKOSMOS.lang) {
+          return window.SKOSMOS.lang
         }
         return null
       },

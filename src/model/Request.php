@@ -160,7 +160,7 @@ class Request
 
     public function getContentLang()
     {
-        return $this->clang;
+        return $this->clang ?: $this->lang;
     }
 
     /**
