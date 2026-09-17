@@ -5,7 +5,7 @@ function startVocabSearchApp () {
     data () {
       return {
         selectedLanguage: null,
-        searchTerm: null,
+        searchTerm: '',
         searchCounter: null,
         renderedResultsList: [],
         languageStrings: null,
@@ -58,8 +58,13 @@ function startVocabSearchApp () {
       window.removeEventListener('keydown', this.langMenuKeydownHandler, true)
     },
     methods: {
-      autoComplete () {
+      autoComplete (event) {
         const delayMs = 300
+
+        /* Reading search term from input element instead of relying on v-model
+           because mobile browsers don't always update the value correctly */
+        this.searchTerm = event.target.value
+        this.searchCounter += 1
 
         // when new autocomplete is fired, empty the previous result
         this.renderedResultsList = []
@@ -244,6 +249,9 @@ function startVocabSearchApp () {
         window.location.search = params.toString()
       },
       resetSearchTermAndHideDropdown () {
+        // cancel any pending autocomplete request
+        clearTimeout(this._timerId)
+        this.searchCounter += 1
         this.searchTerm = ''
         this.renderedResultsList = []
         this.hideAutoComplete()
@@ -380,7 +388,7 @@ function startVocabSearchApp () {
               data-bs-toggle=""
               v-click-outside="hideAutoComplete"
               v-model="searchTerm"
-              @input="autoComplete()"
+              @input="autoComplete($event)"
               @keyup.enter="gotoSearchPage()"
               @click="showAutoComplete()">
             <ul id="search-autocomplete-results"
