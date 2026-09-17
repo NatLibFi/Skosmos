@@ -401,6 +401,56 @@ function startGlobalSearchApp () {
           }
         }
       },
+      onResultsKeydown (e) {
+        const items = Array.from(e.currentTarget.querySelectorAll('a'))
+        if (!items.length) return
+
+        const currentIndex = items.indexOf(document.activeElement)
+
+        const focusAt = (newIndex) => {
+          const i = (newIndex + items.length) % items.length
+          items[i].focus()
+        }
+
+        switch (e.key) {
+          case 'ArrowDown':
+            e.preventDefault()
+            e.stopPropagation()
+            focusAt(currentIndex < 0 ? 0 : currentIndex + 1)
+            break
+
+          case 'ArrowUp':
+            e.preventDefault()
+            e.stopPropagation()
+            if (currentIndex <= 0) {
+              // move focus back to the search input
+              this.$refs.globalSearchInputField.focus()
+            } else {
+              focusAt(currentIndex - 1)
+            }
+            break
+
+          case 'Home':
+            e.preventDefault()
+            focusAt(0)
+            break
+
+          case 'End':
+            e.preventDefault()
+            focusAt(items.length - 1)
+            break
+
+          case 'Escape':
+            e.preventDefault()
+            this.hideAutoComplete()
+            this.$refs.globalSearchInputField.focus()
+            break
+
+          case 'Enter':
+            // let the browser follow the <a href> naturally
+            break
+        }
+      },
       dropdownKeyNav (event, dropdownBtn) {
         const dropDownList = dropdownBtn.parentNode
         const dropdown = bootstrap.Dropdown.getInstance(dropdownBtn)
@@ -439,7 +489,11 @@ function startGlobalSearchApp () {
       showAutoComplete () {
         this.showDropdown = true
         this.$forceUpdate()
-      }
+      },
+      focusFirstResult () {
+        const firstLink = this.$el?.querySelector('#search-autocomplete-results a')
+        if (firstLink) firstLink.focus()
+      },
     },
     template: `
       <div id="search-wrapper" class="input-group ps-xl-2 flex-nowrap">
@@ -538,17 +592,19 @@ function startGlobalSearchApp () {
                 v-click-outside="hideAutoComplete"
                 v-model="searchTerm"
                 @input="autoComplete($event)"
+                @keydown.down="focusFirstResult()"
                 @keyup.enter="gotoSearchPage()"
                 @click="showAutoComplete()">
               <ul id="search-autocomplete-results"
                   class="dropdown-menu w-100"
                   :class="{ 'show': showDropdown }"
-                  aria-labelledby="search-field">
+                  aria-labelledby="search-field"
+                  @keydown="onResultsKeydown">
                 <li class="autocomplete-result container" v-for="result in renderedResultsList"
                   :key="result.prefLabel" >
                   <template v-if="result.pageUrl">
                     <a :href=result.pageUrl>
-                      <div class="row pb-1">
+                      <div class="row py-1">
                         <div class="col" v-if="result.hitType == 'hidden'">
                           <span class="result">
                             <template v-if="result.showNotation && result.notation">

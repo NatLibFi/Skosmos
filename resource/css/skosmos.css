@@ -301,7 +301,7 @@ header .container-fluid .row {
 }
 
 #search-wrapper :focus-visible {
-  outline-offset: 0 !important;
+  outline-offset: -2px !important;
 }
 
 #search-wrapper .dropdown-menu li:focus-visible {
@@ -401,6 +401,7 @@ header .container-fluid .row {
 #search-wrapper .autocomplete-result {
   border-top: 1px solid var(--search-border);
   margin: auto;
+  padding: 0;
 }
 
 #search-wrapper .autocomplete-result * {
