@@ -64,6 +64,7 @@ function startVocabSearchApp () {
         /* Reading search term from input element instead of relying on v-model
            because mobile browsers don't always update the value correctly */
         this.searchTerm = event.target.value
+        this.searchCounter += 1
 
         // when new autocomplete is fired, empty the previous result
         this.renderedResultsList = []
