@@ -1,4 +1,4 @@
-/* global Vue, bootstrap, $t, onTranslationReady */
+/* global Vue, bootstrap, $t, onTranslationReady, getConceptURL */
 
 function startVocabSearchApp () {
   const vocabSearch = Vue.createApp({
@@ -193,12 +193,7 @@ function startVocabSearchApp () {
             }
           }
           if ('uri' in result) { // create relative Skosmos page URL from the search result URI
-            result.pageUrl = window.SKOSMOS.vocab + '/' + window.SKOSMOS.lang + '/page?'
-            const urlParams = new URLSearchParams({ uri: result.uri })
-            if (this.selectedLanguage !== window.SKOSMOS.lang) { // add content language parameter
-              urlParams.append('clang', this.selectedLanguage)
-            }
-            result.pageUrl += urlParams.toString()
+            result.pageUrl = getConceptURL(result.uri)
           }
           // render search result renderedTypes
           if (result.type.length > 1) { // remove the type for SKOS concepts if the result has more than one type
