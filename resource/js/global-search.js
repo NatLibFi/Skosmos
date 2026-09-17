@@ -320,8 +320,9 @@ function startGlobalSearchApp () {
             break
           case 'Enter': {
             e.preventDefault()
+            if (currentIndex < 0) break
             items[currentIndex].parentElement.click()
-            const btn = e.delegateTarget.parentElement.querySelector('.dropdown-toggle')
+            const btn = e.currentTarget.closest('.dropdown').querySelector('.dropdown-toggle')
             btn.focus()
             break
           }
@@ -337,7 +338,7 @@ function startGlobalSearchApp () {
             e.preventDefault()
             if (currentIndex < 0) return
             items[currentIndex].click()
-            const btn = e.currentTarget.closest('dropdown').querySelector('.dropdown-toggle')
+            const btn = e.currentTarget.closest('.dropdown').querySelector('.dropdown-toggle')
             bootstrap.Dropdown.getOrCreateInstance(btn).hide()
             btn.focus()
             break
@@ -392,7 +393,7 @@ function startGlobalSearchApp () {
             break
           case 'Escape': {
             e.preventDefault()
-            const btn = e.delegateTarget.parentElement.querySelector('.dropdown-toggle')
+            const btn = e.currentTarget.closest('.dropdown').querySelector('.dropdown-toggle')
             const dropdownBtn = bootstrap.Dropdown.getInstance(btn)
             dropdownBtn.toggle()
             btn.focus()
