@@ -417,9 +417,6 @@ header .container-fluid .row {
 
 #global-search-text {
   overflow: auto;
-}
-
-#global-search-text {
   font-family: var(--font-family-heading);
   font-weight: bold;
   font-size: 2rem;
