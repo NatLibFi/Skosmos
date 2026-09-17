@@ -251,6 +251,7 @@ function startVocabSearchApp () {
       resetSearchTermAndHideDropdown () {
         // cancel any pending autocomplete request
         clearTimeout(this._timerId)
+        this.searchCounter += 1
         this.searchTerm = ''
         this.renderedResultsList = []
         this.hideAutoComplete()
