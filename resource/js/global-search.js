@@ -64,6 +64,17 @@ function startGlobalSearchApp () {
       this.languageStrings = this.formatLanguages()
       this.uriPrefixes = {}
       this.vocabStrings = window.SKOSMOS.vocab_list
+      // Intercept keydowns on window (capture) so they are handled before
+      // Bootstrap's document-level delegated dropdown keydown handler,
+      // which would otherwise crash on the results list (no .dropdown-toggle).
+      this.resultsKeydownHandler = e => this.onResultsKeydown(e)
+      window.addEventListener('keydown', this.resultsKeydownHandler, true)
+    },
+    beforeUnmount () {
+      if (this.resultsKeydownHandler) {
+        window.removeEventListener('keydown', this.resultsKeydownHandler, true)
+        this.resultsKeydownHandler = null
+      }
     },
     watch: {
       selectedLanguage (newLang) {
@@ -288,7 +299,6 @@ function startGlobalSearchApp () {
       },
       onLangMenuKeydown (e) {
         const items = Array.from(e.currentTarget.querySelectorAll('input'))
-        console.log('Lang menu key')
         // prevent Bootstrap native radio button arrow left /arrow right behavior
         if (!items.length) return
         if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
@@ -404,7 +414,21 @@ function startGlobalSearchApp () {
         }
       },
       onResultsKeydown (e) {
-        const items = Array.from(e.currentTarget.querySelectorAll('a'))
+        // Runs on window (capture). Only act on keydowns that originate
+        // inside the autocomplete results list.
+        const target = e.target
+        if (!target || !target.closest) return
+        const resultsList = target.closest('#search-autocomplete-results')
+        if (!resultsList) return
+
+        const handledKeys = ['ArrowDown', 'ArrowUp', 'Home', 'End', 'Escape', 'Enter']
+        if (!handledKeys.includes(e.key)) return
+
+        const items = Array.from(resultsList.querySelectorAll('a'))
+        // Stop propagation regardless (even for the "No results" list, which
+        // has no <a>) so Bootstrap's dropdown data-API handler doesn't take over.
+        e.stopPropagation()
+
         if (!items.length) return
 
         const currentIndex = items.indexOf(document.activeElement)
@@ -417,13 +441,11 @@ function startGlobalSearchApp () {
         switch (e.key) {
           case 'ArrowDown':
             e.preventDefault()
-            e.stopPropagation()
             focusAt(currentIndex < 0 ? 0 : currentIndex + 1)
             break
 
           case 'ArrowUp':
             e.preventDefault()
-            e.stopPropagation()
             if (currentIndex <= 0) {
               // move focus back to the search input
               this.$refs.globalSearchInputField.focus()
@@ -449,7 +471,11 @@ function startGlobalSearchApp () {
             break
 
           case 'Enter':
-            // let the browser follow the <a href> naturally
+            // activate the focused result explicitly (also works when the
+            // event is synthesized by assistive technology or tests)
+            if (currentIndex < 0) break
+            e.preventDefault()
+            items[currentIndex].click()
             break
         }
       },
@@ -600,8 +626,7 @@ function startGlobalSearchApp () {
               <ul id="search-autocomplete-results"
                   class="dropdown-menu w-100"
                   :class="{ 'show': showDropdown }"
-                  aria-labelledby="search-field"
-                  @keydown="onResultsKeydown">
+                  aria-labelledby="search-field">
                 <li class="autocomplete-result container" v-for="result in renderedResultsList"
                   :key="result.prefLabel" >
                   <template v-if="result.pageUrl">
