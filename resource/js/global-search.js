@@ -675,7 +675,7 @@ function startGlobalSearchApp () {
                           </span>
                         </div>
                         <div class="col-auto align-self-end pr-1" v-html="result.renderedType"></div>
-                        <div class="result-vocab-title">{{ vocabStrings[result.vocab].title }}</div>
+                        <div class="result-vocab-title">{{ vocabStrings[result.vocab] ? vocabStrings[result.vocab].title : result.vocab }}</div>
                       </div>
                     </a>
                   </template>
