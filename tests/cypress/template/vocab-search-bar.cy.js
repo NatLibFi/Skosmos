@@ -326,5 +326,148 @@ describe('Vocab search bar', () => {
       cy.focused().type('{enter}')
       cy.url().should('include', 'clang=en')
     })
+
+    it('Arrow up on the first language item closes the dropdown without moving focus into the list', () => {
+      cy.visit('/yso/fi/')
+
+      cy.get('#language-selector button').focus()
+      cy.focused().type('{downarrow}')
+      cy.get('#language-list li').first().should('be.focused')
+
+      cy.focused().type('{uparrow}')
+      cy.get('#language-selector .dropdown-menu').should('not.have.class', 'show')
+      cy.get('#language-selector button').should('be.focused')
+    })
+
+    it('Escape closes the language dropdown without changing the language, and Arrow down after re-opening focuses the first item', () => {
+      cy.visit('/yso/fi/')
+
+      cy.get('#language-selector button').focus()
+      cy.focused().type('{downarrow}{downarrow}')
+      cy.focused().should('contain.text', 'englanti')
+
+      cy.focused().type('{esc}')
+      cy.get('#language-selector .dropdown-menu').should('not.have.class', 'show')
+      cy.get('#language-selector button').should('be.focused')
+      cy.url().should('not.include', 'clang=en')
+
+      // re-open: the first item must be focused again, not the one that was focused before Escape
+      cy.focused().type('{downarrow}')
+      cy.get('#language-list li').first().should('be.focused')
+    })
+  })
+
+  describe('Keyboard navigation of search results', () => {
+    // Populate the autocomplete with a known set of results:
+    // YSO + 'arkeolog' (Finnish) yields exactly 5 result links
+    const typeSearchAndOpenResults = () => {
+      cy.visit('/yso/fi/')
+      cy.get('#search-field').type('arkeolog')
+      cy.get('#search-autocomplete-results', { timeout: 20000 }).should('be.visible')
+      cy.get('#search-autocomplete-results a', { timeout: 20000 }).should('have.length', 5)
+    }
+
+    it('Arrow down in the search field moves focus to the first search result', () => {
+      typeSearchAndOpenResults()
+
+      cy.get('#search-field').type('{downarrow}')
+      cy.get('#search-autocomplete-results a').first().should('be.focused')
+    })
+
+    it('Arrow down and arrow up move focus between the search results', () => {
+      typeSearchAndOpenResults()
+
+      cy.get('#search-field').type('{downarrow}')
+      cy.get('#search-autocomplete-results a').first().should('be.focused')
+
+      cy.focused().type('{downarrow}')
+      cy.get('#search-autocomplete-results a').eq(1).should('be.focused')
+
+      cy.focused().type('{downarrow}')
+      cy.get('#search-autocomplete-results a').eq(2).should('be.focused')
+
+      cy.focused().type('{uparrow}')
+      cy.get('#search-autocomplete-results a').eq(1).should('be.focused')
+    })
+
+    it('Arrow down on the last search result wraps focus back to the first result', () => {
+      typeSearchAndOpenResults()
+
+      cy.get('#search-autocomplete-results a').last().focus()
+      cy.get('#search-autocomplete-results a').last().should('be.focused')
+
+      cy.focused().type('{downarrow}')
+      cy.get('#search-autocomplete-results a').first().should('be.focused')
+    })
+
+    it('Arrow up on the first search result returns focus to the search field', () => {
+      typeSearchAndOpenResults()
+
+      cy.get('#search-field').type('{downarrow}')
+      cy.get('#search-autocomplete-results a').first().should('be.focused')
+
+      cy.focused().type('{uparrow}')
+      cy.get('#search-field').should('be.focused')
+    })
+
+    it('Home key moves focus to the first search result', () => {
+      typeSearchAndOpenResults()
+
+      cy.get('#search-field').type('{downarrow}{downarrow}{downarrow}')
+      cy.get('#search-autocomplete-results a').eq(2).should('be.focused')
+
+      cy.focused().type('{home}')
+      cy.get('#search-autocomplete-results a').first().should('be.focused')
+    })
+
+    it('End key moves focus to the last search result', () => {
+      typeSearchAndOpenResults()
+
+      cy.get('#search-field').type('{downarrow}')
+      cy.get('#search-autocomplete-results a').first().should('be.focused')
+
+      cy.focused().type('{end}')
+      cy.get('#search-autocomplete-results a').last().should('be.focused')
+    })
+
+    it('Escape hides the search results and returns focus to the search field', () => {
+      typeSearchAndOpenResults()
+
+      cy.get('#search-field').type('{downarrow}')
+      cy.get('#search-autocomplete-results a').first().should('be.focused')
+
+      cy.focused().type('{esc}')
+      cy.get('#search-autocomplete-results').should('not.be.visible')
+      cy.get('#search-field').should('be.focused')
+    })
+
+    it('Enter on a focused search result navigates to the concept page', () => {
+      typeSearchAndOpenResults()
+
+      cy.get('#search-field').type('{downarrow}')
+      cy.get('#search-autocomplete-results a').first().should('be.focused').and('have.attr', 'href').should('include', 'p1265')
+
+      cy.focused().type('{enter}')
+      cy.url().should('include', 'yso/fi/page/p1265')
+    })
+
+    it('Key presses on a results list without links (no results) are ignored', () => {
+      cy.visit('/yso/en/')
+      cy.get('#search-field').type('kissa')
+      cy.get('#search-autocomplete-results', { timeout: 20000 }).should('be.visible')
+      cy.get('#search-autocomplete-results').within(() => {
+        cy.get('li').eq(0).should('contain', 'No results')
+        cy.get('a').should('not.exist')
+      })
+
+      // the handler returns early when there are no <a> items; it must not throw
+      cy.get('#search-autocomplete-results').trigger('keydown', { key: 'ArrowDown' })
+      cy.get('#search-autocomplete-results').trigger('keydown', { key: 'Home' })
+      cy.get('#search-autocomplete-results').trigger('keydown', { key: 'End' })
+      cy.get('#search-autocomplete-results').should('be.visible')
+
+      cy.get('#search-autocomplete-results').trigger('keydown', { key: 'Escape' })
+      cy.get('#search-autocomplete-results').should('be.visible')
+    })
   })
 })

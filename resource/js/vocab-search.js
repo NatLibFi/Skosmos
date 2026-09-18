@@ -1,4 +1,4 @@
-/* global Vue, bootstrap, $t, onTranslationReady */
+/* global Vue, bootstrap, $t, onTranslationReady, getConceptURL */
 
 function startVocabSearchApp () {
   const vocabSearch = Vue.createApp({
@@ -45,7 +45,7 @@ function startVocabSearchApp () {
 
       this.langMenuKeydownHandler = (e) => {
         // Bypass Bootstrap event listener on window level
-        if (e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+        if (e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') {
           if (e.target.closest('#language-selector') && e.target.className === 'dropdown-item') {
             e.stopImmediatePropagation()
             this.onLangMenuKeydown(e)
@@ -193,12 +193,7 @@ function startVocabSearchApp () {
             }
           }
           if ('uri' in result) { // create relative Skosmos page URL from the search result URI
-            result.pageUrl = window.SKOSMOS.vocab + '/' + window.SKOSMOS.lang + '/page?'
-            const urlParams = new URLSearchParams({ uri: result.uri })
-            if (this.selectedLanguage !== window.SKOSMOS.lang) { // add content language parameter
-              urlParams.append('clang', this.selectedLanguage)
-            }
-            result.pageUrl += urlParams.toString()
+            result.pageUrl = getConceptURL(result.uri)
           }
           // render search result renderedTypes
           if (result.type.length > 1) { // remove the type for SKOS concepts if the result has more than one type
@@ -267,6 +262,10 @@ function startVocabSearchApp () {
         this.showAutoCompleteDropdown = true
         this.$forceUpdate()
       },
+      focusFirstResult () {
+        const firstLink = this.$el?.querySelector('#search-autocomplete-results a')
+        if (firstLink) firstLink.focus()
+      },
       onLangMenuKeydown (event) {
         const items = this.$refs.langMenu.querySelectorAll('[role="radio"]')
         switch (event.key) {
@@ -285,6 +284,7 @@ function startVocabSearchApp () {
             event.preventDefault()
             if (this.focusedLangIndex === 0) {
               this.closeLangMenu()
+              break
             }
             this.focusedLangIndex =
               (this.focusedLangIndex - 1 + items.length) % items.length
@@ -305,6 +305,60 @@ function startVocabSearchApp () {
             this.closeLangMenu()
             break
           }
+        }
+      },
+      onResultsKeydown (e) {
+        const items = Array.from(e.currentTarget.querySelectorAll('a'))
+        if (!items.length) return
+
+        const currentIndex = items.indexOf(document.activeElement)
+
+        const focusAt = (newIndex) => {
+          const i = (newIndex + items.length) % items.length
+          items[i].focus()
+        }
+
+        switch (e.key) {
+          case 'ArrowDown':
+            e.preventDefault()
+            e.stopPropagation()
+            focusAt(currentIndex < 0 ? 0 : currentIndex + 1)
+            break
+
+          case 'ArrowUp':
+            e.preventDefault()
+            e.stopPropagation()
+            if (currentIndex <= 0) {
+              // move focus back to the search input
+              this.$refs.searchInputField.focus()
+            } else {
+              focusAt(currentIndex - 1)
+            }
+            break
+
+          case 'Home':
+            e.preventDefault()
+            focusAt(0)
+            break
+
+          case 'End':
+            e.preventDefault()
+            focusAt(items.length - 1)
+            break
+
+          case 'Escape':
+            e.preventDefault()
+            this.hideAutoComplete()
+            this.$refs.searchInputField.focus()
+            break
+
+          case 'Enter':
+            // activate the focused result explicitly (also works when the
+            // event is synthesized by assistive technology or tests)
+            if (currentIndex < 0) break
+            e.preventDefault()
+            items[currentIndex].click()
+            break
         }
       },
       openLangMenu () {
@@ -389,17 +443,19 @@ function startVocabSearchApp () {
               v-click-outside="hideAutoComplete"
               v-model="searchTerm"
               @input="autoComplete($event)"
+              @keyup.down="focusFirstResult()"
               @keyup.enter="gotoSearchPage()"
               @click="showAutoComplete()">
             <ul id="search-autocomplete-results"
-                class="dropdown-menu w-100"
+                class="w-100"
                 :class="{ 'show': showAutoCompleteDropdown }"
-                aria-labelledby="search-field">
+                aria-labelledby="search-field"
+                @keydown="onResultsKeydown">
               <li class="autocomplete-result container" v-for="result in renderedResultsList"
                 :key="result.prefLabel" >
                 <template v-if="result.pageUrl">
                   <a :href=result.pageUrl>
-                    <div class="row pb-1">
+                    <div class="row py-1">
                       <div class="col" v-if="result.hitType == 'hidden'">
                         <span class="result">
                           <template v-if="result.showNotation && result.notation">
