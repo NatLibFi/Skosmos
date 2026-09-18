@@ -297,6 +297,24 @@ describe('Global search bar', () => {
       cy.get('#language-selector .dropdown-menu').should('not.have.class', 'show')
     })
 
+    it('Escape does not change the language when a radio has focus', () => {
+      getLangButton().click()
+      cy.get('#language-selector .dropdown-menu').should('have.class', 'show')
+
+      // remember which language is currently selected
+      cy.get('#language-list input[type="radio"]:checked').then(($checked) => {
+        const checkedValue = $checked.val()
+
+        // move focus to another radio and dismiss with Escape
+        cy.get('#language-list input[type="radio"]').eq(1).focus().should('not.be.checked')
+        cy.focused().type('{esc}')
+
+        cy.get('#language-selector .dropdown-menu').should('not.have.class', 'show')
+        getLangButton().should('be.focused')
+        cy.get(`#language-list input[type="radio"][value="${checkedValue}"]`).should('be.checked')
+      })
+    })
+
     it('Enter selects a language in the language dropdown', () => {
       getLangButton().click()
       cy.get('#language-selector .dropdown-menu').should('have.class', 'show')

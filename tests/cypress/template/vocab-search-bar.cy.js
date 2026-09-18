@@ -326,6 +326,35 @@ describe('Vocab search bar', () => {
       cy.focused().type('{enter}')
       cy.url().should('include', 'clang=en')
     })
+
+    it('Arrow up on the first language item closes the dropdown without moving focus into the list', () => {
+      cy.visit('/yso/fi/')
+
+      cy.get('#language-selector button').focus()
+      cy.focused().type('{downarrow}')
+      cy.get('#language-list li').first().should('be.focused')
+
+      cy.focused().type('{uparrow}')
+      cy.get('#language-selector .dropdown-menu').should('not.have.class', 'show')
+      cy.get('#language-selector button').should('be.focused')
+    })
+
+    it('Escape closes the language dropdown without changing the language, and Arrow down after re-opening focuses the first item', () => {
+      cy.visit('/yso/fi/')
+
+      cy.get('#language-selector button').focus()
+      cy.focused().type('{downarrow}{downarrow}')
+      cy.focused().should('contain.text', 'englanti')
+
+      cy.focused().type('{esc}')
+      cy.get('#language-selector .dropdown-menu').should('not.have.class', 'show')
+      cy.get('#language-selector button').should('be.focused')
+      cy.url().should('not.include', 'clang=en')
+
+      // re-open: the first item must be focused again, not the one that was focused before Escape
+      cy.focused().type('{downarrow}')
+      cy.get('#language-list li').first().should('be.focused')
+    })
   })
 
   describe('Keyboard navigation of search results', () => {

@@ -45,7 +45,7 @@ function startVocabSearchApp () {
 
       this.langMenuKeydownHandler = (e) => {
         // Bypass Bootstrap event listener on window level
-        if (e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+        if (e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') {
           if (e.target.closest('#language-selector') && e.target.className === 'dropdown-item') {
             e.stopImmediatePropagation()
             this.onLangMenuKeydown(e)
@@ -284,6 +284,7 @@ function startVocabSearchApp () {
             event.preventDefault()
             if (this.focusedLangIndex === 0) {
               this.closeLangMenu()
+              break
             }
             this.focusedLangIndex =
               (this.focusedLangIndex - 1 + items.length) % items.length
