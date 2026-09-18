@@ -74,9 +74,11 @@ function startGlobalSearchApp () {
         } else if (newLang === window.SKOSMOS.lang) {
           url.searchParams.delete('clang')
           url.searchParams.delete('anylang')
+          window.SKOSMOS.content_lang = newLang
         } else {
           url.searchParams.set('clang', newLang)
           url.searchParams.delete('anylang')
+          window.SKOSMOS.content_lang = newLang
         }
         window.history.replaceState({}, '', url.toString())
       }
