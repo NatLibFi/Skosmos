@@ -55,6 +55,12 @@ describe('Global search bar', () => {
     cy.get('#language-list').should('be.visible')
     cy.get('#language-list li').contains('label', 'kaikki kielet').click()
     cy.url().should('include', 'clang=en')
+
+    // submitting the search must keep the previous content language in the URL
+    cy.get('#search-field').type('kissa{enter}')
+    cy.url().should('include', '/search')
+    cy.url().should('include', 'anylang=on')
+    cy.url().should('include', 'clang=en')
   })
 
   it('Dropdown search results are displayed for the selected vocabulary and search language', () => {

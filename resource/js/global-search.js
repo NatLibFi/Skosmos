@@ -129,6 +129,10 @@ function startGlobalSearchApp () {
         const params = new URLSearchParams({ q: this.searchTerm })
         if (this.selectedLanguage === 'all') {
           params.set('anylang', 'on')
+          // preserve the current content language so it is not lost when the URL is rebuilt
+          if (window.SKOSMOS.content_lang && window.SKOSMOS.content_lang !== window.SKOSMOS.lang) {
+            params.set('clang', window.SKOSMOS.content_lang)
+          }
         } else {
           if (this.selectedLanguage) {
             params.set('clang', this.selectedLanguage)
