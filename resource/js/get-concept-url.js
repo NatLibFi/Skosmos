@@ -4,8 +4,9 @@ const getConceptURL = (uri, vocab = window.SKOSMOS.vocab) => {
   let clangSeparator = '?'
   let page = ''
 
-  if (vocab === window.SKOSMOS.vocab && uri.indexOf(window.SKOSMOS.uriSpace) !== -1 && uri !== window.SKOSMOS.uriSpace) {
-    page = uri.substr(window.SKOSMOS.uriSpace.length)
+  const uriSpace = window.SKOSMOS.uriSpace
+  if (vocab === window.SKOSMOS.vocab && uriSpace && uri.startsWith(uriSpace) && uri.length > uriSpace.length) {
+    page = uri.substring(uriSpace.length)
 
     if (/[^a-zA-Z0-9-_.~]/.test(page) || page.indexOf('/') > -1) {
       // contains special characters or contains an additional '/' - fall back to full URI
