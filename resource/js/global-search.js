@@ -599,7 +599,7 @@ function startGlobalSearchApp () {
                 @keyup.enter="gotoSearchPage()"
                 @click="showAutoComplete()">
               <ul id="search-autocomplete-results"
-                  class="global-search-results w-100"
+                  class="w-100"
                   :class="{ 'show': showDropdown }"
                   aria-labelledby="search-field"
                   @keydown="onResultsKeydown">

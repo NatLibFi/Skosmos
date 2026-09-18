@@ -446,7 +446,7 @@ function startVocabSearchApp () {
               @keyup.enter="gotoSearchPage()"
               @click="showAutoComplete()">
             <ul id="search-autocomplete-results"
-                class="global-search-results w-100"
+                class="w-100"
                 :class="{ 'show': showAutoCompleteDropdown }"
                 aria-labelledby="search-field"
                 @keydown="onResultsKeydown">
