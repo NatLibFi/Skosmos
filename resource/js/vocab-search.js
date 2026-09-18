@@ -329,7 +329,7 @@ function startVocabSearchApp () {
             e.stopPropagation()
             if (currentIndex <= 0) {
               // move focus back to the search input
-              this.$refs.globalSearchInputField.focus()
+              this.$refs.searchInputField.focus()
             } else {
               focusAt(currentIndex - 1)
             }
@@ -348,11 +348,15 @@ function startVocabSearchApp () {
           case 'Escape':
             e.preventDefault()
             this.hideAutoComplete()
-            this.$refs.globalSearchInputField.focus()
+            this.$refs.searchInputField.focus()
             break
 
           case 'Enter':
-            // let the browser follow the <a href> naturally
+            // activate the focused result explicitly (also works when the
+            // event is synthesized by assistive technology or tests)
+            if (currentIndex < 0) break
+            e.preventDefault()
+            items[currentIndex].click()
             break
         }
       },
@@ -442,7 +446,7 @@ function startVocabSearchApp () {
               @keyup.enter="gotoSearchPage()"
               @click="showAutoComplete()">
             <ul id="search-autocomplete-results"
-                class="dropdown-menu w-100"
+                class="global-search-results w-100"
                 :class="{ 'show': showAutoCompleteDropdown }"
                 aria-labelledby="search-field"
                 @keydown="onResultsKeydown">
