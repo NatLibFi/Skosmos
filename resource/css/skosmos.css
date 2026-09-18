@@ -292,6 +292,28 @@ header .container-fluid .row {
   overflow-x: hidden; /* prevent horizontal scrollbar in chrome */
 }
 
+#search-autocomplete-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  list-style: none; /* .dropdown-menu removed this; keep the results list un-bulleted */
+  padding: 0; /* match .dropdown-menu in Bootstrap 5.3 (padding-x is 0; top/bottom zeroed by #search-wrapper ul) */
+  transform: translateY(-1px);
+  background-color: var(--search-dropdown-bg);
+  background-clip: padding-box;
+  color: var(--headerbar-text);
+  border: 1px solid var(--search-border);
+  border-radius: 0;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  overflow-x: hidden; /* prevent horizontal scrollbar in chrome */
+}
+
+#search-autocomplete-results.show {
+  display: block;
+}
+
 #search-wrapper .dropdown-menu label {
   color: var(--headerbar-text);
 }

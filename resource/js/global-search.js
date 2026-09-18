@@ -64,17 +64,6 @@ function startGlobalSearchApp () {
       this.languageStrings = this.formatLanguages()
       this.uriPrefixes = {}
       this.vocabStrings = window.SKOSMOS.vocab_list
-      // Intercept keydowns on window (capture) so they are handled before
-      // Bootstrap's document-level delegated dropdown keydown handler,
-      // which would otherwise crash on the results list (no .dropdown-toggle).
-      this.resultsKeydownHandler = e => this.onResultsKeydown(e)
-      window.addEventListener('keydown', this.resultsKeydownHandler, true)
-    },
-    beforeUnmount () {
-      if (this.resultsKeydownHandler) {
-        window.removeEventListener('keydown', this.resultsKeydownHandler, true)
-        this.resultsKeydownHandler = null
-      }
     },
     watch: {
       selectedLanguage (newLang) {
@@ -414,21 +403,7 @@ function startGlobalSearchApp () {
         }
       },
       onResultsKeydown (e) {
-        // Runs on window (capture). Only act on keydowns that originate
-        // inside the autocomplete results list.
-        const target = e.target
-        if (!target || !target.closest) return
-        const resultsList = target.closest('#search-autocomplete-results')
-        if (!resultsList) return
-
-        const handledKeys = ['ArrowDown', 'ArrowUp', 'Home', 'End', 'Escape', 'Enter']
-        if (!handledKeys.includes(e.key)) return
-
-        const items = Array.from(resultsList.querySelectorAll('a'))
-        // Stop propagation regardless (even for the "No results" list, which
-        // has no <a>) so Bootstrap's dropdown data-API handler doesn't take over.
-        e.stopPropagation()
-
+        const items = Array.from(e.currentTarget.querySelectorAll('a'))
         if (!items.length) return
 
         const currentIndex = items.indexOf(document.activeElement)
@@ -624,9 +599,10 @@ function startGlobalSearchApp () {
                 @keyup.enter="gotoSearchPage()"
                 @click="showAutoComplete()">
               <ul id="search-autocomplete-results"
-                  class="dropdown-menu w-100"
+                  class="global-search-results w-100"
                   :class="{ 'show': showDropdown }"
-                  aria-labelledby="search-field">
+                  aria-labelledby="search-field"
+                  @keydown="onResultsKeydown">
                 <li class="autocomplete-result container" v-for="result in renderedResultsList"
                   :key="result.prefLabel" >
                   <template v-if="result.pageUrl">
