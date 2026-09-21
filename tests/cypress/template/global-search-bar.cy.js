@@ -30,6 +30,18 @@ describe('Global search bar', () => {
     cy.get('#vocab-selector .vocab-dropdown-btn').should('contain.text', 'kaikki sanastot')
   })
 
+  it('Search term is restored from the URL without HTML-encoding', () => {
+    cy.visit('/fi/search?q=fish+%26+chips')
+    cy.window().its('SKOSMOS.search_query').should('equal', 'fish & chips')
+    cy.get('#search-field').should('have.value', 'fish & chips')
+  })
+
+  it('Zero-valued search term is not dropped', () => {
+    cy.visit('/fi/search?q=0')
+    cy.window().its('SKOSMOS.search_query').should('equal', '0')
+    cy.get('#search-field').should('have.value', '0')
+  })
+
   it('Vocabulary selection is restored from the search URL', () => {
     cy.visit('/fi/search?q=kissa&vocabs=yso+altlabel')
     // the search bar is expanded on the search results page

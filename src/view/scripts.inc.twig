@@ -15,7 +15,7 @@ window.SKOSMOS = {
   "search_vocabs": [ {% for vocab in search_vocabs|default([]) %}"{{ vocab.getId() }}"{% if not loop.last %}, {% endif %}{% endfor %} ],
   "waypoint_results": {{ parameters ? parameters.searchLimit : "null" }},
   "search_count": {{ search_count ? search_count : "null" }},
-  "search_query": {{ request.getQueryParam('q') ? request.getQueryParam('q')|json_encode|raw : "null" }},
+  "search_query": {{ request.getQueryParamRaw('q')|json_encode|raw }},
   "search_results_size": {{ GlobalConfig.searchResultsSize }},
   {% if request.page == "page" and concept -%}
   "prefLabels": [{"lang": "{{ concept.label.lang }}", "label": "{{ concept.label }}"}{% for data in concept.foreignLabels %}{% for literal in data.prefLabel %}, {"lang": "{{ literal.lang }}", "label": "{{ literal.label }}"}{% endfor %}{% endfor %}],
