@@ -95,16 +95,86 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
             $lang = $this->clang;
         }
 
-        if ($res->label($lang) !== null) { // current language
-            return $res->label($lang);
-        } elseif ($res->label() !== null) { // any language
+        // try the requested language, the languages configured for the
+        // vocabulary (including fallback and default languages) and the
+        // UI languages configured for the instance, in that priority order
+        $languages = $this->getLabelLanguages($lang);
+
+        foreach ($languages as $l) {
+            $label = $res->label($l); // configured language
+            if ($label !== null) {
+                return $label;
+            }
+        }
+        foreach ($languages as $l) {
+            $literal = $res->getLiteral('rdf:value', $l); // configured language
+            if ($literal !== null) {
+                return $literal;
+            }
+        }
+
+        // prefer language-neutral (no language tag) literals over labels in any language
+        foreach (self::LABEL_PROPERTIES as $prop) {
+            foreach ($res->allLiterals($prop) ?: array() as $literal) {
+                if ($literal->getLang() === null) {
+                    return $literal;
+                }
+            }
+        }
+        foreach ($res->allLiterals('rdf:value') ?: array() as $literal) {
+            if ($literal->getLang() === null) {
+                return $literal;
+            }
+        }
+
+        // as a last resort use a label in any language
+        if ($res->label() !== null) {
             return $res->label();
-        } elseif ($res->getLiteral('rdf:value', $lang) !== null) { // current language
-            return $res->getLiteral('rdf:value', $lang);
-        } elseif ($res->getLiteral('rdf:value') !== null) { // any language
+        } elseif ($res->getLiteral('rdf:value') !== null) {
             return $res->getLiteral('rdf:value');
         }
         return null;
+    }
+
+    /**
+     * Label properties checked by EasyRdf's label() method, in the same order.
+     */
+    private const LABEL_PROPERTIES = array(
+        'skos:prefLabel',
+        'rdfs:label',
+        'foaf:name',
+        'rss:title',
+        'dc:title',
+        'dc11:title',
+    );
+
+    /**
+     * Returns the languages in which a label should be looked up, in priority order:
+     * the requested language, the languages configured for the mapping's vocabulary
+     * (including skosmos:fallbackLanguages and the default language), and finally
+     * the UI languages configured for the instance (both the BCP47 locale and its
+     * base language).
+     * @param string $lang requested language
+     * @return array of language tag strings
+     */
+    private function getLabelLanguages($lang = '')
+    {
+        $languages = array();
+        $add = function ($l) use (&$languages) {
+            if (!empty($l) && !in_array($l, $languages, true)) {
+                $languages[] = (string) $l;
+            }
+        };
+
+        $add($lang);
+        foreach ($this->vocab->getConfig()->getLanguageOrder($lang) as $l) {
+            $add($l);
+        }
+        foreach ($this->model->getConfig()->getLanguages() as $uiLang) {
+            $add($uiLang);
+            $add(explode('-', $uiLang)[0]); // base language of the UI locale
+        }
+        return $languages;
     }
 
     public function getUri()
