@@ -115,7 +115,7 @@ describe('Alphabetical index', () => {
     cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(2).contains('hoitolaitokset (fi)')
     cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(2).find('a').invoke('text').should('equal', 'hoitolaitokset')
     cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(2).find('a').should('have.attr', 'href', 'http://www.yso.fi/onto/ysa/Y95404')
-    cy.get('.prop-mapping').eq(0).find('.prop-mapping-vocab').eq(2).contains('YSA - Yleinen suomalainen asiasanasto')
+    cy.get('.prop-mapping').eq(0).find('.prop-mapping-vocab').eq(2).contains('YSA - General Finnish thesaurus')
     // check that the second mapping property has the right number of entries
     cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').should('have.length', 3)
   })

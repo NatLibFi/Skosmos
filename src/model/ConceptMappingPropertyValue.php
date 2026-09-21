@@ -210,7 +210,7 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
         if ($scheme) {
             $schemeResource = $this->model->getResourceFromUri($scheme->getUri());
             if ($schemeResource) {
-                $schemaName = $this->getResourceLabel($schemeResource);
+                $schemaName = $this->getResourceLabel($schemeResource, $lang);
                 if ($schemaName) {
                     return $schemaName;
                 }
@@ -271,7 +271,7 @@ class ConceptMappingPropertyValue extends VocabularyDataObject
             // EXTRA
             'hrefLink' => $hrefLink, // link to resource as displayed in the UI
             'lang' => $propertyLang, // TBD: could it be part of the prefLabel?
-            'vocabName' => (string) $this->getVocabName(), // vocabulary as displayed in the UI
+            'vocabName' => (string) $this->getVocabName($lang), // vocabulary as displayed in the UI
             'typeLabel' => $this->model->getText($this->type), // a text used in the UI instead of, for example, skos:closeMatch
         ];
 

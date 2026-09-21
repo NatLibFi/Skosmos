@@ -175,7 +175,7 @@ describe('Concept page, full vs. partial page loads', () => {
       cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(2).contains('labyrintit (fi)')
       cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(2).find('a').invoke('text').should('equal', 'labyrintit')
       cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').eq(2).find('a').should('have.attr', 'href', 'http://www.yso.fi/onto/ysa/Y108389')
-      cy.get('.prop-mapping').eq(1).find('.prop-mapping-vocab').eq(2).contains('YSA - Yleinen suomalainen asiasanasto')
+      cy.get('.prop-mapping').eq(1).find('.prop-mapping-vocab').eq(2).contains('YSA - General Finnish thesaurus')
       // check that the second mapping property has the right number of entries
       cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').should('have.length', 3)
     })
