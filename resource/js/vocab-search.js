@@ -37,6 +37,7 @@ function startVocabSearchApp () {
     },
     mounted () {
       this.selectedLanguage = this.parseSearchLang()
+      this.searchTerm = window.SKOSMOS.search_query || ''
       this.searchCounter = 0 // used for matching the query and the response in case there are many responses
       this.languageStrings = this.formatLanguages()
       this.renderedResultsList = []

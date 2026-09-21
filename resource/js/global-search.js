@@ -61,6 +61,7 @@ function startGlobalSearchApp () {
     mounted () {
       this.languages = window.SKOSMOS.languageOrder
       this.selectedLanguage = this.getSearchLang()
+      this.searchTerm = window.SKOSMOS.search_query || ''
       this.languageStrings = this.formatLanguages()
       this.uriPrefixes = {}
       this.vocabStrings = window.SKOSMOS.vocab_list

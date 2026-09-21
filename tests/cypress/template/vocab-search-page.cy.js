@@ -26,6 +26,12 @@ describe('Vocabulary search page', () => {
     cy.get('link[rel="canonical"]').should('have.attr', 'href', expectedUrl);
     cy.get('head meta[property="og:url"]').should('have.attr', 'content', expectedUrl);
   })
+  it('Search field contains the search query', () => {
+      cy.visit(`/${vocab}/en/search?clang=en&q=${term}`)
+
+      // The search field should be pre-filled with the query from the URL
+      cy.get('#search-field').should('have.value', term)
+  })
   it('Contains correct amount of search results ', () => {
       const count = 1;
       const searchCountTitle = `${count} results for \'${term}\'`;
