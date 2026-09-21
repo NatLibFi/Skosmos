@@ -12,6 +12,7 @@ window.SKOSMOS = {
 {% endfor %}  },
   "vocab_id": [ {% for vocab in request.vocabid %} "{{ vocab }}"{% if not loop.last %},
   {% endif %}{% endfor %}],
+  "search_vocabs": [ {% for vocab in search_vocabs|default([]) %}"{{ vocab.getId() }}"{% if not loop.last %}, {% endif %}{% endfor %} ],
   "waypoint_results": {{ parameters ? parameters.searchLimit : "null" }},
   "search_count": {{ search_count ? search_count : "null" }},
   "search_query": {{ request.getQueryParam('q') ? request.getQueryParam('q')|json_encode|raw : "null" }},

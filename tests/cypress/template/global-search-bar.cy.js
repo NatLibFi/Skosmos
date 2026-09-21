@@ -30,6 +30,31 @@ describe('Global search bar', () => {
     cy.get('#vocab-selector .vocab-dropdown-btn').should('contain.text', 'kaikki sanastot')
   })
 
+  it('Vocabulary selection is restored from the search URL', () => {
+    cy.visit('/fi/search?q=kissa&vocabs=yso+altlabel')
+    // the search bar is expanded on the search results page
+    cy.get('#search-wrapper').should('exist')
+    // the selected vocabularies are passed to the frontend and shown in the dropdown button
+    cy.window().its('SKOSMOS.search_vocabs').should('deep.equal', ['yso', 'altlabel'])
+    cy.get('#vocab-selector .vocab-dropdown-btn').should('contain.text', 'YSO')
+    cy.get('#vocab-selector .vocab-dropdown-btn').should('contain.text', 'altlabel')
+    cy.get('#vocab-selector .vocab-dropdown-btn').should('not.contain.text', 'kaikki sanastot')
+    // the checkboxes of the selected vocabularies are checked
+    cy.get('#vocab-list').contains('label', 'YSO').find('input[type="checkbox"]').should('be.checked')
+    cy.get('#vocab-list').contains('label', 'altlabel').find('input[type="checkbox"]').should('be.checked')
+    // the search term is also restored
+    cy.get('#search-field').should('have.value', 'kissa')
+    // unselecting one vocabulary leaves the other one selected
+    cy.get('#vocab-list').contains('label', 'altlabel').find('input[type="checkbox"]').uncheck({ force: true })
+    cy.get('#vocab-selector .vocab-dropdown-btn').should('contain.text', 'YSO')
+    cy.get('#vocab-selector .vocab-dropdown-btn').should('not.contain.text', 'altlabel')
+  })
+
+  it('Landing page search bar defaults to all vocabularies', () => {
+    cy.window().its('SKOSMOS.search_vocabs').should('deep.equal', [])
+    cy.get('#vocab-selector .vocab-dropdown-btn').should('contain.text', 'kaikki sanastot')
+  })
+
   it('changing the search language changes the language selector dropdown header text', () => {
 
     cy.get('#language-selector .dropdown-toggle').should('contain.text', 'suomi')

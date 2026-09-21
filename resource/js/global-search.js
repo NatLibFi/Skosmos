@@ -65,6 +65,8 @@ function startGlobalSearchApp () {
       this.languageStrings = this.formatLanguages()
       this.uriPrefixes = {}
       this.vocabStrings = window.SKOSMOS.vocab_list
+      this.selectedVocabs = (window.SKOSMOS.search_vocabs || [])
+        .filter(vocabId => this.vocabStrings[vocabId] !== undefined)
     },
     watch: {
       selectedLanguage (newLang) {

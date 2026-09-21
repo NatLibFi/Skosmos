@@ -451,6 +451,7 @@ class WebController extends Controller
                 'term' => $request->getQueryParamRaw('q'),
                 'lang_list' => $langList,
                 'vocabs' => isset($vocabs) ? str_replace(' ', '+', $vocabs) : null,
+                'search_vocabs' => $vocabObjects,
                 'vocab_list' => $vocabList,
                 'sorted_vocabs' => $sortedVocabs,
                 'request' => $request,
