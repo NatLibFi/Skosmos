@@ -25,11 +25,21 @@ describe('Global search page', () => {
     cy.get('link[rel="canonical"]').should('have.attr', 'href', expectedUrl);
     cy.get('head meta[property="og:url"]').should('have.attr', 'content', expectedUrl);
   })
-  it('Search field contains the search query', () => {
+  it('Search bar is visible by default and the search field contains the search query', () => {
       cy.visit(`/en/search?clang=en&q=${term}`)
+
+      // The search bar should be expanded on the search results page
+      cy.get('#global-search-bar').should('have.class', 'show')
+      cy.get('#global-search-toggle').should('not.have.class', 'collapsed').and('have.attr', 'aria-expanded', 'true')
 
       // The search field should be pre-filled with the query from the URL
       cy.get('#search-field').should('have.value', term)
+  })
+  it('Search bar is hidden by default on the landing page', () => {
+      cy.visit('/en/')
+
+      cy.get('#global-search-bar').should('not.have.class', 'show')
+      cy.get('#global-search-toggle').should('have.class', 'collapsed').and('have.attr', 'aria-expanded', 'false')
   })
   it('Contains correct amount of search results ', () => {
       const count = 1;
