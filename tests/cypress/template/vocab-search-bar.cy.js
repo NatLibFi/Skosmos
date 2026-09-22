@@ -456,6 +456,19 @@ describe('Vocab search bar', () => {
       })
     })
 
+    it('Focused search result has a visible focus ring', () => {
+      typeSearchAndOpenResults()
+
+      cy.get('#search-field').type('{downarrow}')
+      cy.get('#search-autocomplete-results a').first().should('be.focused')
+
+      // Chrome does not apply :focus-visible to programmatically focused
+      // elements and does not paint outlines inside transformed ancestors,
+      // so the focus ring is an inset box-shadow
+      cy.get('#search-autocomplete-results a').first()
+        .should('have.css', 'box-shadow', 'rgb(13, 47, 196) 0px 0px 0px 3px inset')
+    })
+
     it('Escape hides the search results and returns focus to the search field', () => {
       typeSearchAndOpenResults()
 

@@ -402,6 +402,14 @@ header .container-fluid .row {
   z-index: 1001;
 }
 
+#search-autocomplete-results a {
+  display: block;
+}
+#search-autocomplete-results a:focus {
+  outline: none !important;
+  box-shadow: inset 0 0 0 3px var(--focus-color) !important;
+}
+
 #clear-button {
   position: absolute;
   color: var(--headerbar-text);
