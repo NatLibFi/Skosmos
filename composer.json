@@ -5,17 +5,17 @@
   "license": "MIT",
   "version": "3.5-dev",
   "require": {
-    "sweetrdf/easyrdf": "~1.18.2",
-    "twig/twig": "^3.26.0",
+    "sweetrdf/easyrdf": "~1.19.0",
+    "twig/twig": "^3.29.0",
     "willdurand/negotiation": "3.1.*",
     "punic/punic": "3.8.*",
-    "ml/json-ld": "1.*",
+    "sweetrdf/json-ld": "^1.4.3",
     "ext-intl": "*",
     "ext-mbstring": "*",
     "ext-xsl": "*",
-    "monolog/monolog": "3.9.*",
+    "monolog/monolog": "3.12.*",
     "symfony/translation": "6.4.*",
-    "symfony/translation-contracts": "3.6.*",
+    "symfony/translation-contracts": "3.7.*",
     "symfony/twig-bundle": "6.4.*"
   },
   "require-dev": {
@@ -29,7 +29,7 @@
     "symfony/lokalise-translation-provider": "6.4.*",
     "symfony/console": "6.4.*",
     "mockery/mockery": "1.6.*",
-    "friendsofphp/php-cs-fixer": "3.90.*"
+    "friendsofphp/php-cs-fixer": "3.95.*"
   },
   "autoload": {
     "classmap": ["src/", "src/controller/", "src/model/", "src/util", "src/model/sparql/"]
