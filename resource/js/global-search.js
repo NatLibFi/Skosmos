@@ -288,10 +288,19 @@ function startGlobalSearchApp () {
         this.searchTerm = ''
         this.renderedResultsList = []
         this.hideAutoComplete()
+        // prevent the input focus handler from immediately re-showing the list
+        this._skipShowOnFocus = true
 
         this.$nextTick(() => {
           this.$refs.globalSearchInputField.focus()
         })
+      },
+      onSearchFieldFocus () {
+        if (this._skipShowOnFocus) {
+          this._skipShowOnFocus = false
+          return
+        }
+        this.showAutoComplete()
       },
       onLangMenuKeydown (e) {
         const items = Array.from(e.currentTarget.querySelectorAll('input'))
@@ -447,8 +456,20 @@ function startGlobalSearchApp () {
           case 'Escape':
             e.preventDefault()
             this.hideAutoComplete()
+            // prevent the input focus handler from immediately re-showing the list
+            this._skipShowOnFocus = true
             this.$refs.globalSearchInputField.focus()
             break
+
+          case 'Tab': {
+            // leave the list entirely: jump to the previous/next top-level
+            // focusable element around the search field (skipping the result
+            // links and, for Shift-Tab, the search field itself)
+            e.preventDefault()
+            this.hideAutoComplete()
+            this.focusSearchFieldSibling(e.shiftKey ? -1 : 1)
+            break
+          }
 
           case 'Enter':
             // activate the focused result explicitly (also works when the
@@ -498,10 +519,43 @@ function startGlobalSearchApp () {
         this.showDropdown = true
         this.$forceUpdate()
       },
-      focusFirstResult (event) {
-        event.preventDefault()
+      focusFirstResult () {
         const firstLink = this.$el?.querySelector('#search-autocomplete-results a')
         if (firstLink) firstLink.focus()
+      },
+      /*
+      * Focus the top-level focusable element before (-1) or after (1) the
+      * search field, skipping the autocomplete result links
+      */
+      focusSearchFieldSibling (direction) {
+        const input = this.$refs.globalSearchInputField
+        const resultsList = this.$el?.querySelector('#search-autocomplete-results')
+        const focusables = Array.from(this.$el.querySelectorAll('input, button, a[href]'))
+          .filter(el => !el.disabled && el.offsetParent !== null && !(resultsList && resultsList.contains(el)))
+        const index = focusables.indexOf(input)
+        const target = focusables[index + direction]
+        if (target) target.focus()
+      },
+      onSearchFieldKeydown (event) {
+        switch (event.key) {
+          case 'ArrowDown':
+            event.preventDefault()
+            // re-open the list if it was hidden, then move focus to the first result
+            this.showAutoComplete()
+            this.$nextTick(() => this.focusFirstResult())
+            break
+          case 'ArrowUp':
+            this.hideAutoComplete()
+            break
+          case 'Escape':
+            event.preventDefault()
+            this.hideAutoComplete()
+            break
+          case 'Tab':
+            // close the list but let the focus move to the next element
+            this.hideAutoComplete()
+            break
+        }
       }
     },
     template: `
@@ -601,9 +655,9 @@ function startGlobalSearchApp () {
                 v-click-outside="hideAutoComplete"
                 v-model="searchTerm"
                 @input="autoComplete($event)"
-                @keydown.down="focusFirstResult($event)"
+                @keydown="onSearchFieldKeydown($event)"
                 @keyup.enter="gotoSearchPage()"
-                @focus="showAutoComplete()">
+                @focus="onSearchFieldFocus()">
               <ul id="search-autocomplete-results"
                   class="w-100"
                   :class="{ 'show': showDropdown }"

@@ -441,6 +441,81 @@ describe('Vocab search bar', () => {
       cy.get('#search-field').should('be.focused')
     })
 
+    it('Arrow up in the search field closes the autocomplete list', () => {
+      typeSearchAndOpenResults()
+
+      cy.get('#search-field').type('{uparrow}')
+      cy.get('#search-autocomplete-results').should('not.be.visible')
+      cy.get('#search-field').should('be.focused')
+    })
+
+    it('Escape in the search field closes the autocomplete list', () => {
+      typeSearchAndOpenResults()
+
+      cy.get('#search-field').type('{esc}')
+      cy.get('#search-autocomplete-results').should('not.be.visible')
+      cy.get('#search-field').should('be.focused')
+    })
+
+    it('Tab and Shift-Tab in the search field close the autocomplete list', () => {
+      typeSearchAndOpenResults()
+
+      // simulate a native Tab keydown on the focused input (no preventDefault in the handler,
+      // so focus would also move to the next element in a real browser)
+      cy.get('#search-field').trigger('keydown', { key: 'Tab', which: 9, shiftKey: false })
+      cy.get('#search-autocomplete-results').should('not.be.visible')
+
+      cy.get('#search-field').focus()
+      cy.get('#search-autocomplete-results').should('be.visible')
+
+      cy.get('#search-field').trigger('keydown', { key: 'Tab', which: 9, shiftKey: true })
+      cy.get('#search-autocomplete-results').should('not.be.visible')
+    })
+
+    it('Arrow down re-opens the autocomplete list after it was closed', () => {
+      typeSearchAndOpenResults()
+
+      cy.get('#search-field').type('{esc}')
+      cy.get('#search-autocomplete-results').should('not.be.visible')
+
+      cy.get('#search-field').type('{downarrow}')
+      cy.get('#search-autocomplete-results').should('be.visible')
+      cy.get('#search-autocomplete-results a').first().should('be.focused')
+    })
+
+    it('Focusing the search field again re-opens the autocomplete list', () => {
+      typeSearchAndOpenResults()
+
+      cy.get('#search-field').type('{uparrow}')
+      cy.get('#search-autocomplete-results').should('not.be.visible')
+
+      cy.get('#clear-button').focus()
+      cy.get('#search-field').focus()
+      cy.get('#search-autocomplete-results').should('be.visible')
+    })
+
+    it('Shift-Tab in the search results closes the list and moves focus to the language selector', () => {
+      typeSearchAndOpenResults()
+
+      cy.get('#search-field').type('{downarrow}')
+      cy.get('#search-autocomplete-results a').first().should('be.focused')
+
+      cy.focused().trigger('keydown', { key: 'Tab', which: 9, shiftKey: true })
+      cy.get('#search-autocomplete-results').should('not.be.visible')
+      cy.get('#language-selector .dropdown-toggle').should('be.focused')
+    })
+
+    it('Tab in the search results closes the list and moves focus past the search field', () => {
+      typeSearchAndOpenResults()
+
+      cy.get('#search-field').type('{downarrow}')
+      cy.get('#search-autocomplete-results a').first().should('be.focused')
+
+      cy.focused().trigger('keydown', { key: 'Tab', which: 9, shiftKey: false })
+      cy.get('#search-autocomplete-results').should('not.be.visible')
+      cy.get('#clear-button').should('be.focused')
+    })
+
     it('Enter on a focused search result navigates to the concept page', () => {
       typeSearchAndOpenResults()
 
