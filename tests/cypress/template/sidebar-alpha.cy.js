@@ -91,7 +91,7 @@ describe('Alphabetical index', () => {
     cy.get('#tab-alphabetical').contains('a', 'care institutions').click()
 
     // check the concept prefLabel
-    cy.get('#concept-heading h1', {'timeout': 15000}).invoke('text').should('equal', 'care institutions')
+    cy.get('#concept-heading h2', {'timeout': 15000}).invoke('text').should('equal', 'care institutions')
 
     // check that the SKOSMOS object matches the newly loaded concept
     cy.window().then((win) => {
@@ -105,7 +105,7 @@ describe('Alphabetical index', () => {
     cy.get('#concept-mappings i.fa-spinner', {'timeout': 15000}).should('not.exist')
 
     // check the second mapping property name
-    cy.get('.prop-mapping h2', {'timeout': 20000}).eq(0).contains('Exactly matching concepts')
+    cy.get('.prop-mapping h3', {'timeout': 20000}).eq(0).contains('Exactly matching concepts')
     // check the second mapping property values
     cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).contains('vårdinrättningar (sv)')
     cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).find('a').invoke('text').should('equal', 'vårdinrättningar')
@@ -159,6 +159,6 @@ describe('Alphabetical index', () => {
     cy.get('#tab-alphabetical').find('.sidebar-list li a').eq(0).should('have.focus')
     // Check that pressing space opens concept page
     cy.press(Cypress.Keyboard.Keys.SPACE)
-    cy.get('#concept-heading h1', {'timeout': 15000}).invoke('text').should('equal', 'birch bark manuscripts')
+    cy.get('#concept-heading h2', {'timeout': 15000}).invoke('text').should('equal', 'birch bark manuscripts')
   })
 })

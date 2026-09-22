@@ -140,7 +140,7 @@ describe('Concept page', () => {
     // Go to "Test concept" concept page in prefix vocab which uses a custom property
     cy.visit('/prefix/en/page/p1')
     // Check that "my property" property label is capitalized correctly
-    cy.get('.prop-my_property .property-label h2').invoke('text').should('include', 'My property')
+    cy.get('.prop-my_property .property-label h3').invoke('text').should('include', 'My property')
   })
   it('overrides concept property labels', () => {
     // Go to "Carp" concept page in vocab with property label overrides
@@ -148,10 +148,10 @@ describe('Concept page', () => {
     // Check that prefLabel property label is overridden correctly
     cy.get('#concept-property-label').invoke('text').should('include', 'Caption')
     // Check that notation property label is overridden correctly
-    cy.get('.prop-skos_notation .property-label h2').invoke('text').should('include', 'UDC number')
+    cy.get('.prop-skos_notation .property-label h3').invoke('text').should('include', 'UDC number')
     // Check that mapping property name is overridden correctly
     // NOTE: we need to increase the timeout as the mappings can take a long time to load
-    cy.get('.prop-mapping h2', {'timeout': 20000}).eq(0).invoke('text').should('contain', 'Exactly matching classes')
+    cy.get('.prop-mapping h3', {'timeout': 20000}).eq(0).invoke('text').should('contain', 'Exactly matching classes')
     // Check that mapping property title is overridden correctly
     cy.get('.prop-mapping .property-label').eq(0).should('have.attr', 'title').and('contain', 'Exactly matching classes in another vocabulary.')
   })
@@ -171,7 +171,7 @@ describe('Concept page', () => {
     cy.visit('/groups/en/page/fish') // go to "Fish" ConceptGroup page
 
     // check the linking from property name to aria description
-    cy.get('.prop-rdf_type .property-label h2').then($el => {
+    cy.get('.prop-rdf_type .property-label h3').then($el => {
       const id = $el.attr('aria-describedby')
       cy.get(`#${id}`).should('contain', 'Type of entity')
     })
@@ -180,7 +180,7 @@ describe('Concept page', () => {
     cy.visit('/groups/en/page/fish') // go to "Fish" ConceptGroup page
 
     // check the property name
-    cy.get('.prop-rdf_type .property-label h2').invoke('text').should('equal', 'Type')
+    cy.get('.prop-rdf_type .property-label h3').invoke('text').should('equal', 'Type')
 
     // check the concept type
     cy.get('.prop-rdf_type .property-value li').invoke('text').should('contain', 'Collection')
@@ -190,7 +190,7 @@ describe('Concept page', () => {
     cy.visit('/yso/en/page/p21685') // go to "music research" concept page
 
     // check the property name
-    cy.get('.prop-rdf_type .property-label h2').invoke('text').should('equal', 'Type')
+    cy.get('.prop-rdf_type .property-label h3').invoke('text').should('equal', 'Type')
 
     // check the concept type
     cy.get('.prop-rdf_type .property-value li').invoke('text').should('equal', 'General concept')
@@ -199,7 +199,7 @@ describe('Concept page', () => {
     cy.visit('/yso/en/page/p21685?clang=fi') // go to "music research" concept page (Finnish content language)
 
     // check the property name
-    cy.get('.prop-skos_definition .property-label h2').invoke('text').should('equal', 'Definition')
+    cy.get('.prop-skos_definition .property-label h3').invoke('text').should('equal', 'Definition')
 
     // check the definition text
     cy.get('.prop-skos_definition .property-value li').invoke('text').should('contain', 'Musiikin ja musiikin harjoittamisen systemaattinen tutkiminen niiden kaikissa ilmenemismuodoissa.')
@@ -214,7 +214,7 @@ describe('Concept page', () => {
     cy.visit('/test/en/page/ta122') // go to "Black sea bass" concept page
 
     // check the property name
-    cy.get('.prop-skos_definition .property-label').invoke('text').should('equal', 'Definition')
+    cy.get('.prop-skos_definition .property-label h3').invoke('text').should('equal', 'Definition')
 
     // check the definition text
     cy.get('.prop-skos_definition .reified-property-value').invoke('text').should('contain', 'The black sea bass')
@@ -223,7 +223,7 @@ describe('Concept page', () => {
     cy.visit('/yso/en/page/p21685') // go to "music research" concept page
 
     // check the property name
-    cy.get('.prop-skos_broader .property-label h2').invoke('text').should('equal', 'Broader concept')
+    cy.get('.prop-skos_broader .property-label h3').invoke('text').should('equal', 'Broader concept')
 
     // check the broader concept
     cy.get('.prop-skos_broader .property-value a').invoke('text').should('equal', 'research')
@@ -232,7 +232,7 @@ describe('Concept page', () => {
     cy.visit('/yso/en/page/p21685') // go to "music research" concept page
 
     // check the property name
-    cy.get('.prop-skos_narrower .property-label h2').invoke('text').should('equal', 'Narrower concepts')
+    cy.get('.prop-skos_narrower .property-label h3').invoke('text').should('equal', 'Narrower concepts')
 
     // check that we have the correct number of narrower concepts
     cy.get('.prop-skos_narrower .property-value').find('li').should('have.length', 8)
@@ -263,7 +263,7 @@ describe('Concept page', () => {
     cy.visit('/yso/en/page/p21685') // go to "music research" concept page
 
     // check the property name
-    cy.get('.prop-skos_related .property-label h2').invoke('text').should('equal', 'Related concepts')
+    cy.get('.prop-skos_related .property-label h3').invoke('text').should('equal', 'Related concepts')
 
     // check that we have the correct number of related concepts
     cy.get('.prop-skos_related .property-value').find('li').should('have.length', 3)
@@ -272,7 +272,7 @@ describe('Concept page', () => {
     cy.visit('/test/en/page/ta126') // go to "Europa" concept page
 
     // check the property name
-    cy.get('.prop-foaf_homepage .property-label h2').invoke('text').should('equal', 'Homepage')
+    cy.get('.prop-foaf_homepage .property-label h3').invoke('text').should('equal', 'Homepage')
 
     // check that we have the correct number of related concepts
     cy.get('.prop-foaf_homepage .property-value').find('li').should('have.length', 1)
@@ -287,7 +287,7 @@ describe('Concept page', () => {
     cy.visit('/yso/en/page/p21685') // go to "music research" concept page
 
     // check the property name
-    cy.get('.prop-skos_altLabel .property-label h2').invoke('text').should('equal', 'Entry terms')
+    cy.get('.prop-skos_altLabel .property-label h3').invoke('text').should('equal', 'Entry terms')
 
     // check that we have the correct number of altLabels
     cy.get('.prop-skos_altLabel .property-value').find('li').should('have.length', 1)
@@ -317,7 +317,7 @@ describe('Concept page', () => {
     cy.visit('/yso/fi/page/p39138') // go to "ukonvaajat" concept page (in Finnish)
 
     // check the property name
-    cy.get('.prop-skos_scopeNote .property-label h2').invoke('text').should('equal', 'Käyttöhuomautus')
+    cy.get('.prop-skos_scopeNote .property-label h3').invoke('text').should('equal', 'Käyttöhuomautus')
 
     // check that we have the correct number of scopeNotes
     cy.get('.prop-skos_scopeNote .property-value').find('li').should('have.length', 1)
@@ -332,7 +332,7 @@ describe('Concept page', () => {
     cy.visit('/yso/en/page/p38289') // go to "music archaeology" concept page
 
     // check the property name
-    cy.get('.prop-skosmos_memberOf .property-label h2').invoke('text').should('equal', 'Belongs to group')
+    cy.get('.prop-skosmos_memberOf .property-label h3').invoke('text').should('equal', 'Belongs to group')
 
     // check that we have the correct number of groups
     cy.get('.prop-skosmos_memberOf .property-value').find('li').should('have.length', 1)
@@ -351,7 +351,7 @@ describe('Concept page', () => {
     cy.visit('/yso/en/page/p21685') // go to "music research" concept page
 
     // check the property name
-    cy.get('.prop-foreignlabels .property-label h2').invoke('text').should('equal', 'In other languages')
+    cy.get('.prop-foreignlabels .property-label h3').invoke('text').should('equal', 'In other languages')
 
     // check that we have the correct number of languages
     cy.get('#concept-other-languages').find('.row').should('have.length', 3)
@@ -360,7 +360,7 @@ describe('Concept page', () => {
     cy.visit('/yso/en/page/p21685') // go to "music research" concept page
 
     // check the linking from property name to aria description
-    cy.get('.prop-foreignlabels .property-label h2').then($el => {
+    cy.get('.prop-foreignlabels .property-label h3').then($el => {
       const id = $el.attr('aria-describedby')
       cy.get(`#${id}`).should('contain', 'Terms for the concept in other languages.')
     })
@@ -436,21 +436,21 @@ describe('Concept page', () => {
     // Click on the link to "abstract objects" to trigger partial page load
     cy.get('#tab-alphabetical').contains('a', 'abstract objects').click()
     // Check that partial page load was successful
-    cy.get('#concept-heading h1', {timeout: 10000}).should('contain', 'abstract objects')
+    cy.get('#concept-heading h2', {timeout: 10000}).should('contain', 'abstract objects')
     // Click on the link to "acid" to trigger partial page load
     cy.get('#tab-alphabetical').contains('a', 'acids').click()
     // Check that partial page load was successful
-    cy.get('#concept-heading h1', {timeout: 10000}).should('contain', 'acids')
+    cy.get('#concept-heading h2', {timeout: 10000}).should('contain', 'acids')
     // Trigger browser's back button
     cy.go('back')
     // Check that partial page load was successful
-    cy.get('#concept-heading h1', {timeout: 10000}).should('contain', 'abstract objects')
+    cy.get('#concept-heading h2', {timeout: 10000}).should('contain', 'abstract objects')
     // Check that selected concept highlight is removed from alphabetical list
     cy.get('#tab-alphabetical .sidebar-list .selected').should('not.exist')
     // Trigger browser's forward button
     cy.go('forward')
     // Check that partial page load was successful
-    cy.get('#concept-heading h1', {timeout: 10000}).should('contain', 'acids')
+    cy.get('#concept-heading h2', {timeout: 10000}).should('contain', 'acids')
     // Go back two pages in history
     cy.go(-2)
     // Check that vocab home page is loaded

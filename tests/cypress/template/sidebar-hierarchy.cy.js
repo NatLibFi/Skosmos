@@ -65,7 +65,7 @@ describe('Hierarchy', () => {
     // Click on "Cuckoo" in alphabetical index
     cy.get('#tab-alphabetical .sidebar-list li a').last().click()
     // Check that new concept page has been loaded
-    cy.get('#concept-heading h1', {'timeout': 15000}).invoke('text').should('equal', 'Cuckoo')
+    cy.get('#concept-heading h2', {'timeout': 15000}).invoke('text').should('equal', 'Cuckoo')
     // Click hierarchy tab open
     cy.get('#hierarchy').click()
     // Check that selected element is "Cuckoo"
@@ -87,7 +87,7 @@ describe('Hierarchy', () => {
     // Click on "Cuckoo" in alphabetical index
     cy.get('#tab-alphabetical .sidebar-list li a').last().click()
     // Check that new concept page has been loaded
-    cy.get('#concept-heading h1', {'timeout': 20000}).invoke('text').should('equal', 'Cuckoo')
+    cy.get('#concept-heading h2', {'timeout': 20000}).invoke('text').should('equal', 'Cuckoo')
     // Check that hierarchy tab is not disabled
     cy.get('#hierarchy .nav-link').should('not.have.class', 'disabled')
     // Click hierarchy tab open
@@ -118,7 +118,7 @@ describe('Hierarchy', () => {
     cy.get('#alphabetical').click()
     cy.get('#tab-alphabetical .sidebar-list li a').first().click()
     // Check that new concept page has been loaded
-    cy.get('#concept-heading h1', {'timeout': 15000}).invoke('text').should('equal', 'concept 1')
+    cy.get('#concept-heading h2', {'timeout': 15000}).invoke('text').should('equal', 'concept 1')
     // Click hierarchy tab open again
     cy.get('#hierarchy').click()
     // Check that "concept 1" is selected
@@ -209,7 +209,7 @@ describe('Hierarchy', () => {
     cy.get('#hierarchy-list .list-group-item a').eq(0).should('have.focus')
     // Check that pressing space opens concept page
     cy.press(Cypress.Keyboard.Keys.SPACE)
-    cy.get('#concept-heading h1', {'timeout': 15000}).invoke('text').should('equal', 'Birds')
+    cy.get('#concept-heading h2', {'timeout': 15000}).invoke('text').should('equal', 'Birds')
   })
   it('Disables and enables the hierarchy tab correctly when opening group and concept pages', () => {
     // Go to test vocab home page

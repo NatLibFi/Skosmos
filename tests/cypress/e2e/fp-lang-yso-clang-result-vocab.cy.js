@@ -33,6 +33,6 @@ describe('Front page -> lang -> vocab -> cLang -> search -> concept page', () =>
     cy.url().should('include', '/yso/en/page/p14173?clang=fi');
 
     // Confirm that the prefLabel on the page is "kaivaukset"
-    cy.get('h1').should('have.text', 'kaivaukset');
+    cy.get('#concept-preflabel').should('have.text', 'kaivaukset');
   });
 });

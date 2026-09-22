@@ -180,10 +180,6 @@ header .container-fluid .row {
   display: inline-block;
 }
 
-#skosmos-logo-top h2 {
-  text-indent: -100%;
-}
-
 #global-search-toggle {
   transition: none;
   color: var(--topbar-text-1);
@@ -421,12 +417,10 @@ header .container-fluid .row {
 
 #global-search-text {
   overflow: auto;
-}
-
-#global-search-text h2 {
   font-family: var(--font-family-heading);
   font-weight: bold;
   font-size: 2rem;
+  margin-bottom: 0.5rem;
 }
 
 #global-search-bar .dropdown {
@@ -624,6 +618,10 @@ header .container-fluid .row {
   font-weight: bold;
 }
 
+#main-container h3 {
+  font-weight: bold;
+}
+
 #main-container-row {
   --bs-gutter-x: 2rem;
 }
@@ -665,6 +663,7 @@ header .container-fluid .row {
 
 #vocabulary-list .vocab-category h3 {
   color: var(--landing-vocabulary-list-text);
+  font-weight: normal;
 }
 
 #vocabulary-list .list-group-item {
@@ -1067,7 +1066,7 @@ header .container-fluid .row {
 /*  Vocab-home & concept pages
 -------------------------------------- */
 
-#main-content h1 {
+#main-content h2 {
   font-size: 1.7rem;
 }
 
@@ -1083,7 +1082,7 @@ header .container-fluid .row {
   padding-bottom: 2.5rem;
 }
 
-h1#vocab-heading {
+h2#vocab-heading {
   font-size: 2.5rem;
 }
 
@@ -1108,7 +1107,7 @@ h1#vocab-heading {
   border-top: none;
 }
 
-#main-container .property-label h2 {
+#main-container .property-label h3 {
   font-family: var(--font-family);
   font-size: 1.2rem;
   display: inline-block;
@@ -1165,7 +1164,7 @@ h1#vocab-heading {
 }
 
 .concept-deprecated #concept-breadcrumbs .breadcrumb-current,
-.concept-deprecated h1,
+.concept-deprecated h2,
 .concept-deprecated #copy-preflabel,
 .concept-deprecated .property-value,
 .concept-deprecated #concept-other-languages .altlabel,
@@ -1278,7 +1277,7 @@ h1#vocab-heading {
   font-style: italic;
 }
 
-.prop-foreignlabels h3 {
+.prop-foreignlabels h4 {
   font-size: 1rem;
   margin-bottom: 0;
 }
@@ -1452,7 +1451,7 @@ h1#vocab-heading {
   background-color: var(--main-content-bg);
 }
 
-#search-results h1 {
+#search-results h1, #search-results h2 {
   font-size: 1.1rem;
   font-family: var(--font-family);
 }
