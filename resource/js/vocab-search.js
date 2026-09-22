@@ -446,7 +446,7 @@ function startVocabSearchApp () {
               @input="autoComplete($event)"
               @keyup.down="focusFirstResult()"
               @keyup.enter="gotoSearchPage()"
-              @click="showAutoComplete()">
+              @focus="showAutoComplete()">
             <ul id="search-autocomplete-results"
                 class="w-100"
                 :class="{ 'show': showAutoCompleteDropdown }"

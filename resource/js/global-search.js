@@ -498,7 +498,8 @@ function startGlobalSearchApp () {
         this.showDropdown = true
         this.$forceUpdate()
       },
-      focusFirstResult () {
+      focusFirstResult (event) {
+        event.preventDefault()
         const firstLink = this.$el?.querySelector('#search-autocomplete-results a')
         if (firstLink) firstLink.focus()
       }
@@ -600,9 +601,9 @@ function startGlobalSearchApp () {
                 v-click-outside="hideAutoComplete"
                 v-model="searchTerm"
                 @input="autoComplete($event)"
-                @keydown.down="focusFirstResult()"
+                @keydown.down="focusFirstResult($event)"
                 @keyup.enter="gotoSearchPage()"
-                @click="showAutoComplete()">
+                @focus="showAutoComplete()">
               <ul id="search-autocomplete-results"
                   class="w-100"
                   :class="{ 'show': showDropdown }"
