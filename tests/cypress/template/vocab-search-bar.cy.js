@@ -430,6 +430,32 @@ describe('Vocab search bar', () => {
       cy.get('#search-autocomplete-results a').last().should('be.focused')
     })
 
+    it('Arrow down scrolls the list so the last result is fully visible', () => {
+      // small viewport so that 'mu' in YSO produces a long, scrollable list
+      cy.viewport(1200, 600)
+      cy.visit('/yso/fi/')
+      cy.get('#search-field').type('mu')
+      cy.get('#search-autocomplete-results', { timeout: 20000 }).should('be.visible')
+      cy.get('#search-autocomplete-results a', { timeout: 20000 }).should('have.length.greaterThan', 3)
+
+      cy.get('#search-field').type('{downarrow}')
+      // step down to the last result with arrow keys
+      cy.get('#search-autocomplete-results a').then(($links) => {
+        cy.focused().type(`{downarrow}`.repeat($links.length - 1))
+      })
+      cy.get('#search-autocomplete-results a').last().should('be.focused')
+
+      // the focused last result must not be clipped by the scroll container
+      cy.get('#search-autocomplete-results').then(($list) => {
+        const listRect = $list[0].getBoundingClientRect()
+        cy.get('#search-autocomplete-results a').last().then(($link) => {
+          const linkRect = $link[0].getBoundingClientRect()
+          expect(linkRect.bottom, 'last result bottom').to.be.at.most(listRect.bottom)
+          expect(linkRect.top, 'last result top').to.be.at.least(listRect.top)
+        })
+      })
+    })
+
     it('Escape hides the search results and returns focus to the search field', () => {
       typeSearchAndOpenResults()
 

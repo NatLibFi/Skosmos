@@ -424,6 +424,16 @@ function startGlobalSearchApp () {
         const focusAt = (newIndex) => {
           const i = (newIndex + items.length) % items.length
           items[i].focus()
+          // focus() alone does not scroll a partially visible item into full
+          // view, so scroll the list container as needed
+          const list = e.currentTarget
+          const itemRect = items[i].getBoundingClientRect()
+          const listRect = list.getBoundingClientRect()
+          if (itemRect.bottom > listRect.bottom) {
+            list.scrollTop += itemRect.bottom - listRect.bottom
+          } else if (itemRect.top < listRect.top) {
+            list.scrollTop += itemRect.top - listRect.top
+          }
         }
 
         switch (e.key) {
