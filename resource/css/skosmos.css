@@ -871,6 +871,18 @@ header .container-fluid .row {
   outline-offset: 0 !important;
 }
 
+#hierarchy-list .list-group-item:focus,
+#groups-list .list-group-item:focus {
+  outline: none !important;
+}
+
+#hierarchy-list .list-group-item:focus-visible > .concept-label a,
+#groups-list .list-group-item:focus-visible > .concept-label a {
+  outline: 3px solid var(--focus-color) !important;
+  outline-offset: 0 !important;
+  box-shadow: none !important;
+}
+
 /* --- Sidebar alphabetical tab --- */
 
 #alphabetical .nav-link {
