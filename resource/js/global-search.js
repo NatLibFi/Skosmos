@@ -8,12 +8,12 @@ function startGlobalSearchApp () {
         selectedLanguage: null,
         selectedVocabs: [],
         searchTerm: '',
-        searchCounter: null,
+        searchCounter: 0, // used for matching the query and the response in case there are many responses
         renderedResultsList: [],
         languageStrings: null,
         uriPrefixes: {},
         vocabStrings: null,
-        showDropdown: false,
+        showAutoCompleteDropdown: false,
         showNotation: null
       }
     },
@@ -267,8 +267,7 @@ function startGlobalSearchApp () {
         this.showAutoComplete()
       },
       hideAutoComplete () {
-        this.showDropdown = false
-        this.$forceUpdate()
+        this.showAutoCompleteDropdown = false
       },
       gotoSearchPage () {
         if (!this.searchTerm) return
@@ -456,7 +455,8 @@ function startGlobalSearchApp () {
           case 'Escape':
             e.preventDefault()
             this.hideAutoComplete()
-            // prevent the input focus handler from immediately re-showing the list
+            // Invariant: whenever the input is focused programmatically, set
+            // _skipShowOnFocus first so onSearchFieldFocus does not re-show the list
             this._skipShowOnFocus = true
             this.$refs.globalSearchInputField.focus()
             break
@@ -516,8 +516,7 @@ function startGlobalSearchApp () {
       * Show the existing autocomplete list if it was hidden by onClickOutside()
       */
       showAutoComplete () {
-        this.showDropdown = true
-        this.$forceUpdate()
+        this.showAutoCompleteDropdown = true
       },
       focusFirstResult () {
         const firstLink = this.$el?.querySelector('#search-autocomplete-results a')
@@ -525,12 +524,15 @@ function startGlobalSearchApp () {
       },
       /*
       * Focus the top-level focusable element before (-1) or after (1) the
-      * search field, skipping the autocomplete result links
+      * search field, skipping the autocomplete result links.
+      * Note: must stay in sync with the native tab order of the wrapper,
+      * since the Tab key on the search input itself relies on that order.
       */
       focusSearchFieldSibling (direction) {
         const input = this.$refs.globalSearchInputField
         const resultsList = this.$el?.querySelector('#search-autocomplete-results')
         const focusables = Array.from(this.$el.querySelectorAll('input, button, a[href]'))
+          // offsetParent excludes items in the hidden vocab/language dropdown menus
           .filter(el => !el.disabled && el.offsetParent !== null && !(resultsList && resultsList.contains(el)))
         const index = focusables.indexOf(input)
         const target = focusables[index + direction]
@@ -660,7 +662,7 @@ function startGlobalSearchApp () {
                 @focus="onSearchFieldFocus()">
               <ul id="search-autocomplete-results"
                   class="w-100"
-                  :class="{ 'show': showDropdown }"
+                  :class="{ 'show': showAutoCompleteDropdown }"
                   aria-labelledby="search-field"
                   @keydown="onResultsKeydown">
                 <li class="autocomplete-result container" v-for="result in renderedResultsList"

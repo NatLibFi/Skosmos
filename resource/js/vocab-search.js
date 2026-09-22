@@ -6,7 +6,7 @@ function startVocabSearchApp () {
       return {
         selectedLanguage: null,
         searchTerm: '',
-        searchCounter: null,
+        searchCounter: 0, // used for matching the query and the response in case there are many responses
         renderedResultsList: [],
         languageStrings: null,
         uriPrefixes: {},
@@ -38,7 +38,6 @@ function startVocabSearchApp () {
     mounted () {
       this.selectedLanguage = this.parseSearchLang()
       this.searchTerm = window.SKOSMOS.search_query || ''
-      this.searchCounter = 0 // used for matching the query and the response in case there are many responses
       this.languageStrings = this.formatLanguages()
       this.renderedResultsList = []
       this.uriPrefixes = {}
@@ -215,7 +214,6 @@ function startVocabSearchApp () {
       },
       hideAutoComplete () {
         this.showAutoCompleteDropdown = false
-        this.$forceUpdate()
       },
       gotoSearchPage () {
         if (!this.searchTerm) return
@@ -270,7 +268,6 @@ function startVocabSearchApp () {
       */
       showAutoComplete () {
         this.showAutoCompleteDropdown = true
-        this.$forceUpdate()
       },
       focusFirstResult () {
         const firstLink = this.$el?.querySelector('#search-autocomplete-results a')
@@ -278,12 +275,15 @@ function startVocabSearchApp () {
       },
       /*
       * Focus the top-level focusable element before (-1) or after (1) the
-      * search field, skipping the autocomplete result links
+      * search field, skipping the autocomplete result links.
+      * Note: must stay in sync with the native tab order of the wrapper,
+      * since the Tab key on the search input itself relies on that order.
       */
       focusSearchFieldSibling (direction) {
         const input = this.$refs.searchInputField
         const resultsList = this.$el?.querySelector('#search-autocomplete-results')
         const focusables = Array.from(this.$el.querySelectorAll('input, button, a[href]'))
+          // offsetParent excludes items in the hidden language dropdown menu
           .filter(el => !el.disabled && el.offsetParent !== null && !(resultsList && resultsList.contains(el)))
         const index = focusables.indexOf(input)
         const target = focusables[index + direction]
@@ -365,13 +365,11 @@ function startVocabSearchApp () {
         switch (e.key) {
           case 'ArrowDown':
             e.preventDefault()
-            e.stopPropagation()
             focusAt(currentIndex < 0 ? 0 : currentIndex + 1)
             break
 
           case 'ArrowUp':
             e.preventDefault()
-            e.stopPropagation()
             if (currentIndex <= 0) {
               // move focus back to the search input
               this.$refs.searchInputField.focus()
@@ -393,7 +391,8 @@ function startVocabSearchApp () {
           case 'Escape':
             e.preventDefault()
             this.hideAutoComplete()
-            // prevent the input focus handler from immediately re-showing the list
+            // Invariant: whenever the input is focused programmatically, set
+            // _skipShowOnFocus first so onSearchFieldFocus does not re-show the list
             this._skipShowOnFocus = true
             this.$refs.searchInputField.focus()
             break
