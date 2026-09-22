@@ -367,7 +367,7 @@ header .container-fluid .row {
   flex-direction: column;
 }
 
-.search-field-group > .dropdown .btn, .search-field-group input {
+.search-field-group > .dropdown .btn, #search-field {
   height: 2.8rem !important;
 }
 
