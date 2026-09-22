@@ -307,7 +307,7 @@ function startGroupsApp () {
         if (e.key === ' ' || e.key === 'Enter') {
           // Click on link currently in focus
           e.preventDefault()
-          document.querySelector('#groups-concept' + this.conceptInFocus +  '> a').click()
+          document.querySelector('#groups-concept' + this.conceptInFocus + '> a').click()
         } else if (e.key === 'ArrowDown') {
           // On last element move focus to first list item, otherwise next list item
           e.preventDefault()
