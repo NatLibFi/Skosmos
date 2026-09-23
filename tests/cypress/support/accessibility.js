@@ -23,7 +23,7 @@ function terminalLog (violations) {
   cy.task('table', violationData)
 }
 export function accessibilityTestRunner () {
-  const runForCLI = Cypress.env('cli') // true
+  const runForCLI = Cypress.expose('cli') // true
   if (runForCLI) {
     getConfigurationForCLITests()
   } else {

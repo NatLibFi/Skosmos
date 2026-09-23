@@ -12,16 +12,19 @@
     "test-accessibility-cli-vocab-search": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility/axe-vocab-search.cy.js'"
   },
   "dependencies": {
-    "@formatjs/intl-collator": "^0.2.2",
-    "@fortawesome/fontawesome-free": "^7.2.0",
+    "@formatjs/intl-collator": "^0.2.9",
+    "@fortawesome/fontawesome-free": "^7.3.1",
     "bootstrap": "^5.3.*",
-    "vue": "^3.5.25",
-    "vue-i18n": "^11.2.8"
+    "vue": "^3.5.43",
+    "vue-i18n": "^11.4.12"
   },
   "devDependencies": {
-    "axe-core": "^4.11.*",
-    "cypress": "^15.7.*",
+    "axe-core": "^4.13.*",
+    "cypress": "^15.21.1",
     "cypress-axe": "^1.7.*",
     "standard": "^17.1.*"
+  },
+  "allowScripts": {
+    "cypress@15.21.1": true
   }
 }

@@ -25,6 +25,7 @@ module.exports = defineConfig({
       'tests/cypress/e2e/**/*.cy.js'
     ],
     screenshotsFolder: 'tests/cypress/screenshots',
-    videosFolder: 'tests/cypress/videos'
+    videosFolder: 'tests/cypress/videos',
+    allowCypressEnv: false,
   }
 })
