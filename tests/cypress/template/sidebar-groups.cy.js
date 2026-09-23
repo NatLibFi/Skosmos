@@ -89,13 +89,20 @@ describe('Groups tab', () => {
     cy.get('#groups-list .list-group-item a')
     // Press tab key and check that first list item has focus
     cy.press(Cypress.Keyboard.Keys.TAB)
-    cy.get('#groups-list .list-group-item').eq(0).should('have.focus')
+    cy.get('#groups-list .list-group-item').eq(0)
+      .should('have.focus')
+      .and('have.attr', 'role', 'treeitem')
+      .and('have.attr', 'aria-expanded', 'false')
+    cy.get('#groups-list .list-group-item a').eq(0)
+      .and('not.have.attr', 'role', 'treeitem')
+      .and('not.have.attr', 'aria-expanded')
     // Press down arrow key and check that focus is moved
     cy.press(Cypress.Keyboard.Keys.DOWN)
     cy.get('#groups-list .list-group-item').eq(1).should('have.focus')
     // Press right arrow key and check that children are loaded
     cy.press(Cypress.Keyboard.Keys.RIGHT)
     cy.get('#groups-list li ul').eq(0).children().should('have.length', 1)
+    cy.get('#groups-list .list-group-item').eq(1).should('have.attr', 'aria-expanded', 'true')
     // Press right arrow key and check that focus is moved to first child
     cy.press(Cypress.Keyboard.Keys.RIGHT)
     cy.get('#groups-list .list-group-item').eq(2).should('have.focus')
@@ -105,7 +112,7 @@ describe('Groups tab', () => {
     // Press left arrow key and check that children are closed and focus is moved
     cy.press(Cypress.Keyboard.Keys.LEFT)
     cy.get('#groups-list .list-group-item').eq(1).find('ul').should('not.exist')
-    cy.get('#groups-list .list-group-item').eq(1).should('have.focus')
+    cy.get('#groups-list .list-group-item').eq(1).should('have.focus').and('have.attr', 'aria-expanded', 'false')
     // Press down up key and check that focus is moved
     cy.press(Cypress.Keyboard.Keys.UP)
     cy.get('#groups-list .list-group-item').eq(0).should('have.focus')
