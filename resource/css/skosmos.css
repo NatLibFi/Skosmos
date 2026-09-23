@@ -862,6 +862,10 @@ header .container-fluid .row {
   font-weight: normal;
 }
 
+#sidebar .sidebar-list a:hover {
+  text-decoration: underline;
+}
+
 #sidebar .sidebar-list a.selected {
   color: var(--sidebar-selected);
   font-weight: bold;
@@ -1076,6 +1080,10 @@ header .container-fluid .row {
   margin-bottom: .2rem;
   padding-left: 3.5rem;
   padding-right: 3.5rem;
+}
+
+.main-content-section a {
+  text-decoration: underline;
 }
 
 #concept-heading, #vocab-heading {
