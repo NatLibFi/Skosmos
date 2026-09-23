@@ -1536,7 +1536,10 @@ h2#vocab-heading {
   font-family: var(--font-family-heading);
   text-decoration: none;
   font-size: 1.5rem;
+}
 
+.search-result-term a:hover {
+  text-decoration: underline;
 }
 
 .search-result .list-group-item { /* bug in truncate-search-results.js (.list-group-item class is overwritten) */
