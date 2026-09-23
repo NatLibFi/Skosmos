@@ -304,10 +304,10 @@ function startGroupsApp () {
         this.$emit('selectGroup', group)
       },
       handleKeydownEvent (e) {
-        if (e.key === ' ') {
+        if (e.key === ' ' || e.key === 'Enter') {
           // Click on link currently in focus
           e.preventDefault()
-          document.getElementById('groups-concept' + this.conceptInFocus).click()
+          document.querySelector('#groups-concept' + this.conceptInFocus + ' a').click()
         } else if (e.key === 'ArrowDown') {
           // On last element move focus to first list item, otherwise next list item
           e.preventDefault()
@@ -368,6 +368,11 @@ function startGroupsApp () {
         this.partialPageLoad(event, this.getConceptURL(group.uri))
       },
       handleKeydownEvent (e, g) {
+        // Prevent event from bubbling up to ancestors
+        if (e.currentTarget !== e.target) {
+          return
+        }
+
         if (e.key === 'ArrowRight') {
           if (!g.isOpen && g.hasMembers) {
             // If right arrow key is pressed on a closed group, open it
@@ -409,7 +414,14 @@ function startGroupsApp () {
       }
     },
     template: `
-      <li class="list-group-item p-0" :class="{ 'top-concept': isTopGroup }">
+      <li class="list-group-item p-0" role="treeitem"
+        :class="{ 'top-concept': isTopGroup }"
+        :tabindex="group.index === conceptInFocus ? 0 : -1"
+        :id="'groups-concept' + group.index"
+        :aria-expanded="group.hasMembers ? group.isOpen : null"
+        :aria-selected="group.uri === selectedGroup || null"
+        @keydown="handleKeydownEvent($event, group)"
+      >
         <button type="button" class="hierarchy-button btn btn-primary" aria-hidden="true" tabindex="-1"
           :class="{ 'open': group.isOpen }"
           v-if="group.hasMembers"
@@ -424,22 +436,17 @@ function startGroupsApp () {
           </template>
         </button>
         <span class="concept-label" :class="{ 'last': isLast }">
-          <a role="treeitem"
+          <a tabindex="-1"
             :class="{ 'selected': selectedGroup === group.uri, 'group': group.isGroup }"
             :href="getConceptURL(group.uri)"
-            :tabindex="group.index === conceptInFocus ? 0 : -1"
-            :id="'groups-concept' + group.index"
-            :aria-expanded="group.hasMembers ? group.isOpen : null"
-            :aria-selected="group.uri === selectedGroup"
             @click="handleClickGroupEvent($event, group)"
-            @keydown="handleKeydownEvent($event, group)"
           >
             <span v-if="showNotation && group.notation" class="concept-notation">{{ group.notation }} </span>
             {{ group.prefLabel }}
             <span class="visually-hidden">{{ toConceptPageAriaMessage }}</span>
           </a>
         </span>
-        <ul class="list-group ps-3" role="group" v-if="group.childGroups.length !== 0 && group.isOpen">
+        <ul v-if="group.childGroups.length !== 0 && group.isOpen" class="list-group ps-3" role="group">
           <template v-for="(g, i) in group.childGroups">
             <tab-groups
               :group="g"

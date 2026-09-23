@@ -187,26 +187,33 @@ describe('Hierarchy', () => {
     cy.get('#hierarchy-list .list-group-item a')
     // Press tab key and check that first list item has focus
     cy.press(Cypress.Keyboard.Keys.TAB)
-    cy.get('#hierarchy-list .list-group-item a').eq(0).should('have.focus')
+    cy.get('#hierarchy-list .list-group-item').eq(0)
+    .should('have.focus')
+      .and('have.attr', 'role', 'treeitem')
+      .and('have.attr', 'aria-expanded', 'false')
+    cy.get('#hierarchy-list .list-group-item a').eq(0)
+      .and('not.have.attr', 'role', 'treeitem')
+      .and('not.have.attr', 'aria-expanded')
     // Press right arrow key and check that children are loaded
     cy.press(Cypress.Keyboard.Keys.RIGHT)
     cy.get('#hierarchy-list li ul').first().children().should('have.length', 9)
+    cy.get('#hierarchy-list .list-group-item').eq(0).should('have.attr', 'aria-expanded', 'true')
     // Press right arrow key and check that focus is moved to first child
     cy.press(Cypress.Keyboard.Keys.RIGHT)
-    cy.get('#hierarchy-list .list-group-item a').eq(1).should('have.focus')
+    cy.get('#hierarchy-list .list-group-item').eq(1).should('have.focus')
     // Press right arrow key again and check that nothing happens
     cy.press(Cypress.Keyboard.Keys.RIGHT)
-    cy.get('#hierarchy-list .list-group-item a').eq(1).should('have.focus')
+    cy.get('#hierarchy-list .list-group-item').eq(1).should('have.focus')
     // Press down arrow key and check that focus is moved
     cy.press(Cypress.Keyboard.Keys.DOWN)
-    cy.get('#hierarchy-list .list-group-item a').eq(2).should('have.focus')
+    cy.get('#hierarchy-list .list-group-item').eq(2).should('have.focus')
     // Press down up key and check that focus is moved
     cy.press(Cypress.Keyboard.Keys.UP)
-    cy.get('#hierarchy-list .list-group-item a').eq(1).should('have.focus')
+    cy.get('#hierarchy-list .list-group-item').eq(1).should('have.focus')
     // Press left arrow key and check that children are closed and focus is moved
     cy.press(Cypress.Keyboard.Keys.LEFT)
     cy.get('#hierarchy-list .list-group-item').eq(0).find('ul').should('not.exist')
-    cy.get('#hierarchy-list .list-group-item a').eq(0).should('have.focus')
+    cy.get('#hierarchy-list .list-group-item').eq(0).should('have.focus').and('have.attr', 'aria-expanded', 'false')
     // Check that pressing space opens concept page
     cy.press(Cypress.Keyboard.Keys.SPACE)
     cy.get('#concept-heading h2', {'timeout': 15000}).invoke('text').should('equal', 'Birds')

@@ -503,10 +503,10 @@ function startHierarchyApp () {
         this.$emit('selectConcept', concept)
       },
       handleKeydownEvent (e) {
-        if (e.key === ' ') {
+        if (e.key === ' ' || e.key === 'Enter') {
           // Click on link currently in focus
           e.preventDefault()
-          document.getElementById('hierarchy-concept' + this.conceptInFocus).click()
+          document.querySelector('#hierarchy-concept' + this.conceptInFocus + ' a').click()
         } else if (e.key === 'ArrowDown') {
           // On last element move focus to first list item, otherwise next list item
           e.preventDefault()
@@ -575,6 +575,11 @@ function startHierarchyApp () {
         this.partialPageLoad(event, this.getConceptURL(concept.uri))
       },
       handleKeydownEvent (e, c) {
+        // Prevent event from bubbling up to ancestors
+        if (e.currentTarget !== e.target) {
+          return
+        }
+
         if (e.key === 'ArrowRight') {
           if (!c.isOpen && c.hasChildren) {
             // If right arrow key is pressed on a closed concept, open it
@@ -616,7 +621,14 @@ function startHierarchyApp () {
       }
     },
     template: `
-      <li class="list-group-item p-0" :class="{ 'top-concept': isTopConcept }">
+      <li class="list-group-item p-0" role="treeitem"
+        :class="{ 'top-concept': isTopConcept }"
+        :tabindex="concept.index === conceptInFocus ? 0 : -1"
+        :id="'hierarchy-concept' + concept.index"
+        :aria-expanded="concept.hasChildren ? concept.isOpen : null"
+        :aria-selected="concept.uri === selectedConcept || null"
+        @keydown="handleKeydownEvent($event, concept)"
+      >
         <button type="button" class="hierarchy-button btn btn-primary" aria-hidden="true" tabindex="-1"
           :class="{ 'open': concept.isOpen }"
           v-if="concept.hasChildren"
@@ -631,22 +643,17 @@ function startHierarchyApp () {
           </template>
         </button>
         <span class="concept-label" :class="{ 'last': isLast }">
-          <a role="treeitem"
+          <a tabindex="-1"
             :class="{ 'selected': selectedConcept === concept.uri }" 
             :href="getConceptURL(concept.uri)"
-            :tabindex="concept.index === conceptInFocus ? 0 : -1"
-            :id="'hierarchy-concept' + concept.index"
-            :aria-expanded="concept.hasChildren ? concept.isOpen : null"
-            :aria-selected="concept.uri === selectedConcept"
             @click="handleClickConceptEvent($event, concept)"
-            @keydown="handleKeydownEvent($event, concept)"
           >
             <span v-if="showNotation && concept.notation" class="concept-notation">{{ concept.notation }} </span>
             {{ concept.label }}
             <span class="visually-hidden">{{ toConceptPageAriaMessage }}</span>
           </a>
         </span>
-        <ul class="list-group ps-3" role="group" v-if="concept.children.length !== 0 && concept.isOpen">
+        <ul v-if="concept.children.length !== 0 && concept.isOpen" class="list-group ps-3" role="group">
           <template v-for="(c, i) in concept.children">
             <tab-hier
               :concept="c"
