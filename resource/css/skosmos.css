@@ -1586,17 +1586,15 @@ h2#vocab-heading {
   padding: 0 8rem;
 }
 
-@media (max-width: 992px) { /* lg breakpoint */
-  .about .container, .feedback .container {
-    padding: 0 1rem;
-  }
-}
-
 .about h1, .feedback h1 {
   font-size: 2.5rem;
 }
 
 @media (max-width: 992px) { /* lg breakpoint */
+  .about .container, .feedback .container {
+    padding: 0 1rem;
+  }
+  
   .about h1, .feedback h1 {
     font-size: 2rem;
   }
