@@ -35,7 +35,7 @@ jobs:
         run: cd tests; ./init_containers.sh
 
       - name: Cache Composer dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v6
         with:
           path: |
             /tmp/composer-cache
