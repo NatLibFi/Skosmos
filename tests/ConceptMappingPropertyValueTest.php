@@ -331,6 +331,43 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
           'vocabName' => 'Test ontology',
           'typeLabel' => 'Exactly matching concepts',
         ], $propvals['test:ta115 http://www.skosmos.skos/test/ta115']->asJskos());
-    }
+   }
+
+   /**
+    * Mapping labels must be returned in the concept's content language,
+    * even when the mapping target comes from an external resource.
+    *
+    * @covers Concept::getMappingProperties
+    * @covers ConceptMappingPropertyValue::getLabel
+    */
+   public function testMappingPropertiesUseContentLanguageForExternalTarget()
+   {
+       $uri = 'http://www.wikidata.org/entity/Q6581072'; // not in any configured uri space
+
+       // the external resource has labels in multiple languages
+       $extGraph = new EasyRdf\Graph();
+       $ext = $extGraph->resource($uri);
+       $ext->addLiteral('skos:prefLabel', 'female', 'en');
+       $ext->addLiteral('skos:prefLabel', 'nainen', 'fi');
+       $ext->addLiteral('skos:prefLabel', 'kvinnlig', 'sv');
+
+       $model = $this->getMockBuilder('Model')->onlyMethods(['getResourceFromUri'])->getMock();
+       $model->method('getResourceFromUri')->with($uri)->willReturn($ext);
+
+       $graph = new EasyRdf\Graph();
+       $source = $graph->resource('http://www.skosmos.skos/mapping/m1');
+       $source->addResource('skos:exactMatch', $uri);
+
+       // content language is Finnish, UI language is English
+       $concept = new Concept($model, $this->vocab, $source, $graph, 'fi');
+       $props = $concept->getMappingProperties();
+       $values = $props['skos:exactMatch']->getValues();
+       $this->assertCount(1, $values);
+       $value = reset($values);
+
+       // the label must be in the content language (fi), not the requested/UI language (en)
+       $this->assertEquals('nainen', $value->getLabel('en'));
+       $this->assertEquals('nainen', $value->getLabel());
+   }
 
 }
