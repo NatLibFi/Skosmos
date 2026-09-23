@@ -1586,6 +1586,22 @@ h2#vocab-heading {
   padding: 0 8rem;
 }
 
+@media (max-width: 992px) { /* lg breakpoint */
+  .about .container, .feedback .container {
+    padding: 0 1rem;
+  }
+}
+
+.about h1, .feedback h1 {
+  font-size: 2.5rem;
+}
+
+@media (max-width: 992px) { /* lg breakpoint */
+  .about h1, .feedback h1 {
+    font-size: 2rem;
+  }
+}
+
 /* --- About page --- */
 
 .about {
@@ -1614,6 +1630,12 @@ h2#vocab-heading {
   color: var(--feedback-text);
   background-color: var(--feedback-bg);
   padding: 2.5rem 2rem 5rem;
+}
+
+@media (max-width: 768px) { /* md breakpoint */
+  #feedback-form {
+    padding: 1.5rem 1rem 3rem;
+  }
 }
 
 #feedback-form label {
@@ -1656,7 +1678,6 @@ h2#vocab-heading {
   border: none;
   border-radius: 0;
   font-weight: bold;
-  float: right;
 }
 
 /* Error page

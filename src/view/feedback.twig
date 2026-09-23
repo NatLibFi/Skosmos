@@ -14,7 +14,7 @@
   {% else %}
 
     <h1 class="mb-5">{{ 'Contact us!' | trans}}</h1>
-    <div class="fs-5 mb-5">
+    <div class="mb-5">
       <p>{{ 'feedback_enter_name_email' | trans }}</p>
       {{ include('custom-templates.inc.twig', {slotName: 'feedback'}) }}
     </div>
@@ -48,7 +48,7 @@
         <textarea class="form-control" id="message-input" rows="5" name="message" required></textarea>
       </div>
 
-      <div>
+      <div class="d-flex align-items-center justify-content-between">
         <span>* {{ 'Value is required and can not be empty' | trans }}</span>
         {{ honeypot.generate('item-description', 'user-captcha')|raw }}
         <button type="submit" class="btn btn-primary" id="submit-feedback">{{ 'Send feedback' | trans }}</button>
