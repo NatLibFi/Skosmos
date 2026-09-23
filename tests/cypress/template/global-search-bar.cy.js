@@ -30,9 +30,46 @@ describe('Global search bar', () => {
     cy.get('#vocab-selector .vocab-dropdown-btn').should('contain.text', 'kaikki sanastot')
   })
 
+  it('Search term is restored from the URL without HTML-encoding', () => {
+    cy.visit('/fi/search?q=fish+%26+chips')
+    cy.window().its('SKOSMOS.search_query').should('equal', 'fish & chips')
+    cy.get('#search-field').should('have.value', 'fish & chips')
+  })
+
+  it('Zero-valued search term is not dropped', () => {
+    cy.visit('/fi/search?q=0')
+    cy.window().its('SKOSMOS.search_query').should('equal', '0')
+    cy.get('#search-field').should('have.value', '0')
+  })
+
+  it('Vocabulary selection is restored from the search URL', () => {
+    cy.visit('/fi/search?q=kissa&vocabs=yso+altlabel')
+    // the search bar is expanded on the search results page
+    cy.get('#search-wrapper').should('exist')
+    // the selected vocabularies are passed to the frontend and shown in the dropdown button
+    cy.window().its('SKOSMOS.search_vocabs').should('deep.equal', ['yso', 'altlabel'])
+    cy.get('#vocab-selector .vocab-dropdown-btn').should('contain.text', 'YSO')
+    cy.get('#vocab-selector .vocab-dropdown-btn').should('contain.text', 'altlabel')
+    cy.get('#vocab-selector .vocab-dropdown-btn').should('not.contain.text', 'kaikki sanastot')
+    // the checkboxes of the selected vocabularies are checked
+    cy.get('#vocab-list').contains('label', 'YSO').find('input[type="checkbox"]').should('be.checked')
+    cy.get('#vocab-list').contains('label', 'altlabel').find('input[type="checkbox"]').should('be.checked')
+    // the search term is also restored
+    cy.get('#search-field').should('have.value', 'kissa')
+    // unselecting one vocabulary leaves the other one selected
+    cy.get('#vocab-list').contains('label', 'altlabel').find('input[type="checkbox"]').uncheck({ force: true })
+    cy.get('#vocab-selector .vocab-dropdown-btn').should('contain.text', 'YSO')
+    cy.get('#vocab-selector .vocab-dropdown-btn').should('not.contain.text', 'altlabel')
+  })
+
+  it('Landing page search bar defaults to all vocabularies', () => {
+    cy.window().its('SKOSMOS.search_vocabs').should('deep.equal', [])
+    cy.get('#vocab-selector .vocab-dropdown-btn').should('contain.text', 'kaikki sanastot')
+  })
+
   it('changing the search language changes the language selector dropdown header text', () => {
 
-    cy.get('#language-selector .dropdown-toggle').should('contain.text', 'kaikki kielet')
+    cy.get('#language-selector .dropdown-toggle').should('contain.text', 'suomi')
     cy.get('#language-selector .dropdown-toggle').click()
     cy.get('#language-list').should('be.visible')
 
@@ -47,13 +84,19 @@ describe('Global search bar', () => {
 
   it('Selecting "all languages" does not change content language', () => {
 
-    cy.get('#language-selector .dropdown-toggle').should('contain.text', 'kaikki kielet')
+    cy.get('#language-selector .dropdown-toggle').should('contain.text', 'suomi')
     cy.get('#language-list li label').find('input[type="radio"][value="en"]').check({ force: true })
     cy.url().should('include', 'clang=en')
 
     cy.get('#language-selector .dropdown-toggle').click()
     cy.get('#language-list').should('be.visible')
     cy.get('#language-list li').contains('label', 'kaikki kielet').click()
+    cy.url().should('include', 'clang=en')
+
+    // submitting the search must keep the previous content language in the URL
+    cy.get('#search-field').type('kissa{enter}')
+    cy.url().should('include', '/search')
+    cy.url().should('include', 'anylang=on')
     cy.url().should('include', 'clang=en')
   })
 
@@ -291,6 +334,24 @@ describe('Global search bar', () => {
       cy.get('#language-selector .dropdown-menu').should('not.have.class', 'show')
     })
 
+    it('Escape does not change the language when a radio has focus', () => {
+      getLangButton().click()
+      cy.get('#language-selector .dropdown-menu').should('have.class', 'show')
+
+      // remember which language is currently selected
+      cy.get('#language-list input[type="radio"]:checked').then(($checked) => {
+        const checkedValue = $checked.val()
+
+        // move focus to another radio and dismiss with Escape
+        cy.get('#language-list input[type="radio"]').eq(1).focus().should('not.be.checked')
+        cy.focused().type('{esc}')
+
+        cy.get('#language-selector .dropdown-menu').should('not.have.class', 'show')
+        getLangButton().should('be.focused')
+        cy.get(`#language-list input[type="radio"][value="${checkedValue}"]`).should('be.checked')
+      })
+    })
+
     it('Enter selects a language in the language dropdown', () => {
       getLangButton().click()
       cy.get('#language-selector .dropdown-menu').should('have.class', 'show')
@@ -299,6 +360,256 @@ describe('Global search bar', () => {
       cy.focused().type('{enter}')
 
       cy.get('#language-selector .dropdown-toggle').should('contain.text', 'englanti')
+    })
+  })
+
+  describe('Keyboard navigation of search results', () => {
+    // Populate the autocomplete with a known set of results:
+    // YSO + Finnish + 'arkeolog' yields exactly 5 result links
+    const typeSearchAndOpenResults = () => {
+      cy.visit('/fi/')
+      cy.get('#global-search-toggle').click()
+
+      cy.get('#vocab-list').contains('label', 'YSO').find('input[type="checkbox"]').check({ force: true })
+      cy.get('#language-selector .dropdown-toggle').click()
+      cy.get('#language-list li').contains('label', 'suomi').click()
+
+      cy.get('#search-field').type('arkeolog')
+      cy.get('#search-autocomplete-results', { timeout: 20000 }).should('be.visible')
+      cy.get('#search-autocomplete-results a', { timeout: 20000 }).should('have.length', 5)
+    }
+
+    it('Arrow down in the search field moves focus to the first search result', () => {
+      typeSearchAndOpenResults()
+
+      cy.get('#search-field').type('{downarrow}')
+      cy.get('#search-autocomplete-results a').first().should('be.focused')
+    })
+
+    it('Arrow down and arrow up move focus between the search results', () => {
+      typeSearchAndOpenResults()
+
+      cy.get('#search-field').type('{downarrow}')
+      cy.get('#search-autocomplete-results a').first().should('be.focused')
+
+      cy.focused().type('{downarrow}')
+      cy.get('#search-autocomplete-results a').eq(1).should('be.focused')
+
+      cy.focused().type('{downarrow}')
+      cy.get('#search-autocomplete-results a').eq(2).should('be.focused')
+
+      cy.focused().type('{uparrow}')
+      cy.get('#search-autocomplete-results a').eq(1).should('be.focused')
+    })
+
+    it('Arrow down on the last search result wraps focus back to the first result', () => {
+      typeSearchAndOpenResults()
+
+      cy.get('#search-autocomplete-results a').last().focus()
+      cy.get('#search-autocomplete-results a').last().should('be.focused')
+
+      cy.focused().type('{downarrow}')
+      cy.get('#search-autocomplete-results a').first().should('be.focused')
+    })
+
+    it('Arrow up on the first search result returns focus to the search field', () => {
+      typeSearchAndOpenResults()
+
+      cy.get('#search-field').type('{downarrow}')
+      cy.get('#search-autocomplete-results a').first().should('be.focused')
+
+      cy.focused().type('{uparrow}')
+      cy.get('#search-field').should('be.focused')
+    })
+
+    it('Home key moves focus to the first search result', () => {
+      typeSearchAndOpenResults()
+
+      cy.get('#search-field').type('{downarrow}{downarrow}{downarrow}')
+      cy.get('#search-autocomplete-results a').eq(2).should('be.focused')
+
+      cy.focused().type('{home}')
+      cy.get('#search-autocomplete-results a').first().should('be.focused')
+    })
+
+    it('End key moves focus to the last search result', () => {
+      typeSearchAndOpenResults()
+
+      cy.get('#search-field').type('{downarrow}')
+      cy.get('#search-autocomplete-results a').first().should('be.focused')
+
+      cy.focused().type('{end}')
+      cy.get('#search-autocomplete-results a').last().should('be.focused')
+    })
+
+    it('Arrow down scrolls the list so the last result is fully visible', () => {
+      // small viewport so the result list is scrollable
+      cy.viewport(1200, 600)
+      cy.visit('/fi/')
+      cy.get('#global-search-toggle').click()
+
+      cy.get('#vocab-list').contains('label', 'YSO').find('input[type="checkbox"]').check({ force: true })
+      cy.get('#search-field').type('mu')
+      cy.get('#search-autocomplete-results', { timeout: 20000 }).should('be.visible')
+      cy.get('#search-autocomplete-results a', { timeout: 20000 }).should('have.length.greaterThan', 3)
+
+      cy.get('#search-field').type('{downarrow}')
+      // step down to the last result with arrow keys
+      cy.get('#search-autocomplete-results a').then(($links) => {
+        cy.focused().type(`{downarrow}`.repeat($links.length - 1))
+      })
+      cy.get('#search-autocomplete-results a').last().should('be.focused')
+
+      // the focused last result must not be clipped by the scroll container
+      cy.get('#search-autocomplete-results').then(($list) => {
+        const listRect = $list[0].getBoundingClientRect()
+        cy.get('#search-autocomplete-results a').last().then(($link) => {
+          const linkRect = $link[0].getBoundingClientRect()
+          expect(linkRect.bottom, 'last result bottom').to.be.at.most(listRect.bottom)
+          expect(linkRect.top, 'last result top').to.be.at.least(listRect.top)
+        })
+      })
+    })
+
+    it('Focused search result has a visible focus ring', () => {
+      typeSearchAndOpenResults()
+
+      cy.get('#search-field').type('{downarrow}')
+      cy.get('#search-autocomplete-results a').first().should('be.focused')
+
+      // Chrome does not apply :focus-visible to programmatically focused
+      // elements and does not paint outlines inside transformed ancestors,
+      // so the focus ring is an inset box-shadow
+      cy.get('#search-autocomplete-results a').first()
+        .should('have.css', 'box-shadow', 'rgb(13, 47, 196) 0px 0px 0px 3px inset')
+    })
+
+    it('Escape hides the search results and returns focus to the search field', () => {
+      typeSearchAndOpenResults()
+
+      cy.get('#search-field').type('{downarrow}')
+      cy.get('#search-autocomplete-results a').first().should('be.focused')
+
+      cy.focused().type('{esc}')
+      cy.get('#search-autocomplete-results').should('not.be.visible')
+      cy.get('#search-field').should('be.focused')
+    })
+
+    it('Arrow up in the search field closes the autocomplete list', () => {
+      typeSearchAndOpenResults()
+
+      cy.get('#search-field').type('{uparrow}')
+      cy.get('#search-autocomplete-results').should('not.be.visible')
+      cy.get('#search-field').should('be.focused')
+    })
+
+    it('Escape in the search field closes the autocomplete list', () => {
+      typeSearchAndOpenResults()
+
+      cy.get('#search-field').type('{esc}')
+      cy.get('#search-autocomplete-results').should('not.be.visible')
+      cy.get('#search-field').should('be.focused')
+    })
+
+    it('Tab and Shift-Tab in the search field close the autocomplete list', () => {
+      typeSearchAndOpenResults()
+
+      // simulate a native Tab keydown on the focused input (no preventDefault in the handler,
+      // so focus would also move to the next element in a real browser)
+      cy.get('#search-field').trigger('keydown', { key: 'Tab', which: 9, shiftKey: false })
+      cy.get('#search-autocomplete-results').should('not.be.visible')
+
+      cy.get('#search-field').focus()
+      cy.get('#search-autocomplete-results').should('be.visible')
+
+      cy.get('#search-field').trigger('keydown', { key: 'Tab', which: 9, shiftKey: true })
+      cy.get('#search-autocomplete-results').should('not.be.visible')
+    })
+
+    it('Arrow down re-opens the autocomplete list after it was closed', () => {
+      typeSearchAndOpenResults()
+
+      cy.get('#search-field').type('{esc}')
+      cy.get('#search-autocomplete-results').should('not.be.visible')
+
+      cy.get('#search-field').type('{downarrow}')
+      cy.get('#search-autocomplete-results').should('be.visible')
+      cy.get('#search-autocomplete-results a').first().should('be.focused')
+    })
+
+    it('Focusing the search field again re-opens the autocomplete list', () => {
+      typeSearchAndOpenResults()
+
+      cy.get('#search-field').type('{uparrow}')
+      cy.get('#search-autocomplete-results').should('not.be.visible')
+
+      cy.get('#clear-button').focus()
+      cy.get('#search-field').focus()
+      cy.get('#search-autocomplete-results').should('be.visible')
+    })
+
+    it('Shift-Tab in the search results closes the list and moves focus to the language selector', () => {
+      typeSearchAndOpenResults()
+
+      cy.get('#search-field').type('{downarrow}')
+      cy.get('#search-autocomplete-results a').first().should('be.focused')
+
+      cy.focused().trigger('keydown', { key: 'Tab', which: 9, shiftKey: true })
+      cy.get('#search-autocomplete-results').should('not.be.visible')
+      cy.get('#language-selector .dropdown-toggle').should('be.focused')
+    })
+
+    it('Tab in the search results closes the list and moves focus past the search field', () => {
+      typeSearchAndOpenResults()
+
+      cy.get('#search-field').type('{downarrow}')
+      cy.get('#search-autocomplete-results a').first().should('be.focused')
+
+      cy.focused().trigger('keydown', { key: 'Tab', which: 9, shiftKey: false })
+      cy.get('#search-autocomplete-results').should('not.be.visible')
+      cy.get('#clear-button').should('be.focused')
+    })
+
+    it('Enter on a focused search result navigates to the concept page', () => {
+      // use the test-notation-sort fixture whose first 'Barra' result is deterministic
+      cy.visit('/en/')
+      cy.get('#global-search-toggle').click()
+
+      cy.contains('#vocab-list li label.vocab-select', 'test-notation-sort')
+        .parents('li').find('input[type="checkbox"]').check({ force: true })
+
+      cy.get('#language-selector .dropdown-toggle').click()
+      cy.get('#language-list .dropdown-item').contains('English').click()
+
+      cy.get('#search-field').type('Barra')
+      cy.get('#search-autocomplete-results', { timeout: 20000 }).should('be.visible')
+
+      cy.get('#search-field').type('{downarrow}')
+      cy.get('#search-autocomplete-results a').first().should('be.focused').and('have.attr', 'href').should('include', 'ta0116')
+
+      cy.focused().type('{enter}')
+      cy.url().should('include', 'uri=http%3A%2F%2Fwww.skosmos.skos%2Ftest%2Fta0116')
+    })
+
+    it('Key presses on a results list without links (no results) are ignored', () => {
+      cy.visit('/en/')
+      cy.get('#global-search-toggle').click()
+
+      cy.get('#search-field').type('Ei tuloksia')
+      cy.get('#search-autocomplete-results', { timeout: 20000 }).should('be.visible')
+      cy.get('#search-autocomplete-results').within(() => {
+        cy.get('li').eq(0).should('contain', 'No results')
+        cy.get('a').should('not.exist')
+      })
+
+      // the handler returns early when there are no <a> items; it must not throw
+      cy.get('#search-autocomplete-results').trigger('keydown', { key: 'ArrowDown' })
+      cy.get('#search-autocomplete-results').trigger('keydown', { key: 'Home' })
+      cy.get('#search-autocomplete-results').trigger('keydown', { key: 'End' })
+      cy.get('#search-autocomplete-results').should('be.visible')
+
+      cy.get('#search-autocomplete-results').trigger('keydown', { key: 'Escape' })
+      cy.get('#search-autocomplete-results').should('be.visible')
     })
   })
 
@@ -316,7 +627,7 @@ describe('Global search bar', () => {
       // Check that vocabulary selector has correct label
       cy.get('#vocab-selector-label').should('contain', 'Choose vocabulary')
       // Check that search language selector has correct place holder text
-      cy.get('#language-selector button').should('have.text', 'all languages')
+      cy.get('#language-selector button').should('have.text', 'English')
       // Check that search language selector has correct label
       cy.get('#content-language-label').should('contain', 'Content language')
       // Check that search field has correct label

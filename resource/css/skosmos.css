@@ -288,12 +288,38 @@ header .container-fluid .row {
   overflow-x: hidden; /* prevent horizontal scrollbar in chrome */
 }
 
+#search-autocomplete-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  list-style: none;
+  padding: 0;
+  transform: translateY(-1px);
+  background-color: var(--search-dropdown-bg);
+  background-clip: padding-box;
+  color: var(--headerbar-text);
+  border: 1px solid var(--search-border);
+  border-radius: 0;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  overflow-x: hidden; /* prevent horizontal scrollbar in chrome */
+}
+
+#search-autocomplete-results.show {
+  display: block;
+}
+
 #search-wrapper .dropdown-menu label {
   color: var(--headerbar-text);
 }
 
 #search-wrapper .dropdown-menu li label:hover, #search-wrapper .dropdown-menu #li:hover {
   color: var(--search-dropdown-hover-text);
+}
+
+#search-wrapper :focus-visible {
+  outline-offset: -2px !important;
 }
 
 #search-wrapper .dropdown-menu li:focus-visible {
@@ -337,7 +363,7 @@ header .container-fluid .row {
   flex-direction: column;
 }
 
-.search-field-group > .dropdown .btn, .search-field-group input {
+.search-field-group > .dropdown .btn, #search-field {
   height: 2.8rem !important;
 }
 
@@ -372,6 +398,14 @@ header .container-fluid .row {
   z-index: 1001;
 }
 
+#search-autocomplete-results a {
+  display: block;
+}
+#search-autocomplete-results a:focus {
+  outline: none !important;
+  box-shadow: inset 0 0 0 3px var(--focus-color) !important;
+}
+
 #clear-button {
   position: absolute;
   color: var(--headerbar-text);
@@ -393,6 +427,7 @@ header .container-fluid .row {
 #search-wrapper .autocomplete-result {
   border-top: 1px solid var(--search-border);
   margin: auto;
+  padding: 0;
 }
 
 #search-wrapper .autocomplete-result * {
@@ -494,6 +529,11 @@ header .container-fluid .row {
 
 #search-wrapper #language-selector .dropdown-item:active {
   color: var(--search-dropdown-selected-text);
+}
+
+#search-wrapper #language-selector li:focus-within {
+  outline: 2px solid var(--focus-color);
+  outline-offset: -2px;
 }
 
 /* Custom checkbox */

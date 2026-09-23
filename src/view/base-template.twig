@@ -39,8 +39,9 @@
     <a class="visually-hidden" id="skiptocontent" href="{{ request.langurl }}#maincontent">Skip to main</a>
     <div id="topbar" class="container-fluid d-flex my-auto py-3 px-4">
       {% if request.vocabid == '' and request.page != 'about' and request.page != 'feedback' %}
+        {% set searchBarExpanded = request.page == 'search' %}
         <div>
-          <button class="fs-6 py-3 collapsed" id="global-search-toggle" data-bs-toggle="collapse" data-bs-target="#global-search-bar" aria-expanded="false" aria-controls="global-search-bar">
+          <button class="fs-6 py-3{% if not searchBarExpanded %} collapsed{% endif %}" id="global-search-toggle" data-bs-toggle="collapse" data-bs-target="#global-search-bar" aria-expanded="{{ searchBarExpanded ? 'true' : 'false' }}" aria-controls="global-search-bar">
               {{ "Search across vocabularies"|trans }}
           </button>
         </div>
@@ -78,7 +79,7 @@
       </ul>
     </div>
     {% if request.vocabid == '' and request.page != 'about' and request.page != 'feedback' %}
-    <div class="collapse container-fluid mt-2 pe-0 py-3" id="global-search-bar">
+    <div class="collapse container-fluid mt-2 pe-0 py-3{% if request.page == 'search' %} show{% endif %}" id="global-search-bar">
       <div class="row">
         <div class="d-flex flex-column flex-xl-row align-items-start align-items-xl-center my-auto">
           <div id="global-search-text">

@@ -1,4 +1,4 @@
-/* global Vue, bootstrap, $t, onTranslationReady */
+/* global Vue, bootstrap, $t, onTranslationReady, getConceptURL */
 
 function startGlobalSearchApp () {
   const globalSearch = Vue.createApp({
@@ -8,12 +8,12 @@ function startGlobalSearchApp () {
         selectedLanguage: null,
         selectedVocabs: [],
         searchTerm: '',
-        searchCounter: null,
+        searchCounter: 0, // used for matching the query and the response in case there are many responses
         renderedResultsList: [],
         languageStrings: null,
         uriPrefixes: {},
         vocabStrings: null,
-        showDropdown: false,
+        showAutoCompleteDropdown: false,
         showNotation: null
       }
     },
@@ -52,7 +52,7 @@ function startGlobalSearchApp () {
         return $t('Clear search field')
       },
       getSelectedVocabs () {
-        return this.selectedVocabs.map(key => ({ key, value: this.vocabStrings[key] }))
+        return this.selectedVocabs.map(key => ({ key, value: this.vocabStrings[key].short }))
       },
       selectedVocabsString () {
         return this.getSelectedVocabs.map(voc => voc.value).join(', ')
@@ -61,9 +61,12 @@ function startGlobalSearchApp () {
     mounted () {
       this.languages = window.SKOSMOS.languageOrder
       this.selectedLanguage = this.getSearchLang()
+      this.searchTerm = window.SKOSMOS.search_query || ''
       this.languageStrings = this.formatLanguages()
       this.uriPrefixes = {}
       this.vocabStrings = window.SKOSMOS.vocab_list
+      this.selectedVocabs = (window.SKOSMOS.search_vocabs || [])
+        .filter(vocabId => this.vocabStrings[vocabId] !== undefined)
     },
     watch: {
       selectedLanguage (newLang) {
@@ -71,9 +74,14 @@ function startGlobalSearchApp () {
         const url = new URL(window.location.href)
         if (newLang === 'all') {
           url.searchParams.set('anylang', 'on')
+        } else if (newLang === window.SKOSMOS.lang) {
+          url.searchParams.delete('clang')
+          url.searchParams.delete('anylang')
+          window.SKOSMOS.content_lang = newLang
         } else {
           url.searchParams.set('clang', newLang)
           url.searchParams.delete('anylang')
+          window.SKOSMOS.content_lang = newLang
         }
         window.history.replaceState({}, '', url.toString())
       }
@@ -124,6 +132,10 @@ function startGlobalSearchApp () {
         const params = new URLSearchParams({ q: this.searchTerm })
         if (this.selectedLanguage === 'all') {
           params.set('anylang', 'on')
+          // preserve the current content language so it is not lost when the URL is rebuilt
+          if (window.SKOSMOS.content_lang && window.SKOSMOS.content_lang !== window.SKOSMOS.lang) {
+            params.set('clang', window.SKOSMOS.content_lang)
+          }
         } else {
           if (this.selectedLanguage) {
             params.set('clang', this.selectedLanguage)
@@ -162,6 +174,10 @@ function startGlobalSearchApp () {
         // otherwise pick content lang from SKOSMOS object
         if (window.SKOSMOS.content_lang) {
           return window.SKOSMOS.content_lang
+        }
+        // fall back to UI lang from SKOSMOS object
+        if (window.SKOSMOS.lang) {
+          return window.SKOSMOS.lang
         }
         return null
       },
@@ -231,12 +247,7 @@ function startGlobalSearchApp () {
           }
 
           if ('uri' in result) { // create relative Skosmos page URL from the search result URI
-            result.pageUrl = window.SKOSMOS.baseHref + result.vocab + '/' + window.SKOSMOS.lang + '/page/?'
-            const urlParams = new URLSearchParams({ uri: result.uri })
-            if (this.selectedLanguage) {
-              urlParams.set('clang', this.selectedLanguage)
-            }
-            result.pageUrl += urlParams.toString()
+            result.pageUrl = getConceptURL(result.uri, result.vocab)
           }
           // render search result renderedTypes
           if (result.type.length > 1) { // remove the type for SKOS concepts if the result has more than one type
@@ -256,8 +267,7 @@ function startGlobalSearchApp () {
         this.showAutoComplete()
       },
       hideAutoComplete () {
-        this.showDropdown = false
-        this.$forceUpdate()
+        this.showAutoCompleteDropdown = false
       },
       gotoSearchPage () {
         if (!this.searchTerm) return
@@ -277,14 +287,22 @@ function startGlobalSearchApp () {
         this.searchTerm = ''
         this.renderedResultsList = []
         this.hideAutoComplete()
+        // prevent the input focus handler from immediately re-showing the list
+        this._skipShowOnFocus = true
 
         this.$nextTick(() => {
           this.$refs.globalSearchInputField.focus()
         })
       },
+      onSearchFieldFocus () {
+        if (this._skipShowOnFocus) {
+          this._skipShowOnFocus = false
+          return
+        }
+        this.showAutoComplete()
+      },
       onLangMenuKeydown (e) {
         const items = Array.from(e.currentTarget.querySelectorAll('input'))
-        console.log('Lang menu key')
         // prevent Bootstrap native radio button arrow left /arrow right behavior
         if (!items.length) return
         if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
@@ -318,8 +336,9 @@ function startGlobalSearchApp () {
             break
           case 'Enter': {
             e.preventDefault()
+            if (currentIndex < 0) break
             items[currentIndex].parentElement.click()
-            const btn = e.delegateTarget.parentElement.querySelector('.dropdown-toggle')
+            const btn = e.currentTarget.closest('.dropdown').querySelector('.dropdown-toggle')
             btn.focus()
             break
           }
@@ -333,9 +352,7 @@ function startGlobalSearchApp () {
             break
           case 'Escape': {
             e.preventDefault()
-            if (currentIndex < 0) return
-            items[currentIndex].click()
-            const btn = e.currentTarget.closest('dropdown').querySelector('.dropdown-toggle')
+            const btn = e.currentTarget.closest('.dropdown').querySelector('.dropdown-toggle')
             bootstrap.Dropdown.getOrCreateInstance(btn).hide()
             btn.focus()
             break
@@ -390,12 +407,87 @@ function startGlobalSearchApp () {
             break
           case 'Escape': {
             e.preventDefault()
-            const btn = e.delegateTarget.parentElement.querySelector('.dropdown-toggle')
+            const btn = e.currentTarget.closest('.dropdown').querySelector('.dropdown-toggle')
             const dropdownBtn = bootstrap.Dropdown.getInstance(btn)
             dropdownBtn.toggle()
             btn.focus()
             break
           }
+        }
+      },
+      onResultsKeydown (e) {
+        const items = Array.from(e.currentTarget.querySelectorAll('a'))
+        if (!items.length) return
+
+        const currentIndex = items.indexOf(document.activeElement)
+
+        const focusAt = (newIndex) => {
+          const i = (newIndex + items.length) % items.length
+          items[i].focus()
+          // focus() alone does not scroll a partially visible item into full
+          // view, so scroll the list container as needed
+          const list = e.currentTarget
+          const itemRect = items[i].getBoundingClientRect()
+          const listRect = list.getBoundingClientRect()
+          if (itemRect.bottom > listRect.bottom) {
+            list.scrollTop += itemRect.bottom - listRect.bottom
+          } else if (itemRect.top < listRect.top) {
+            list.scrollTop += itemRect.top - listRect.top
+          }
+        }
+
+        switch (e.key) {
+          case 'ArrowDown':
+            e.preventDefault()
+            focusAt(currentIndex < 0 ? 0 : currentIndex + 1)
+            break
+
+          case 'ArrowUp':
+            e.preventDefault()
+            if (currentIndex <= 0) {
+              // move focus back to the search input
+              this.$refs.globalSearchInputField.focus()
+            } else {
+              focusAt(currentIndex - 1)
+            }
+            break
+
+          case 'Home':
+            e.preventDefault()
+            focusAt(0)
+            break
+
+          case 'End':
+            e.preventDefault()
+            focusAt(items.length - 1)
+            break
+
+          case 'Escape':
+            e.preventDefault()
+            this.hideAutoComplete()
+            // Invariant: whenever the input is focused programmatically, set
+            // _skipShowOnFocus first so onSearchFieldFocus does not re-show the list
+            this._skipShowOnFocus = true
+            this.$refs.globalSearchInputField.focus()
+            break
+
+          case 'Tab': {
+            // leave the list entirely: jump to the previous/next top-level
+            // focusable element around the search field (skipping the result
+            // links and, for Shift-Tab, the search field itself)
+            e.preventDefault()
+            this.hideAutoComplete()
+            this.focusSearchFieldSibling(e.shiftKey ? -1 : 1)
+            break
+          }
+
+          case 'Enter':
+            // activate the focused result explicitly (also works when the
+            // event is synthesized by assistive technology or tests)
+            if (currentIndex < 0) break
+            e.preventDefault()
+            items[currentIndex].click()
+            break
         }
       },
       dropdownKeyNav (event, dropdownBtn) {
@@ -434,8 +526,48 @@ function startGlobalSearchApp () {
       * Show the existing autocomplete list if it was hidden by onClickOutside()
       */
       showAutoComplete () {
-        this.showDropdown = true
-        this.$forceUpdate()
+        this.showAutoCompleteDropdown = true
+      },
+      focusFirstResult () {
+        const firstLink = this.$el?.querySelector('#search-autocomplete-results a')
+        if (firstLink) firstLink.focus()
+      },
+      /*
+      * Focus the top-level focusable element before (-1) or after (1) the
+      * search field, skipping the autocomplete result links.
+      * Note: must stay in sync with the native tab order of the wrapper,
+      * since the Tab key on the search input itself relies on that order.
+      */
+      focusSearchFieldSibling (direction) {
+        const input = this.$refs.globalSearchInputField
+        const resultsList = this.$el?.querySelector('#search-autocomplete-results')
+        const focusables = Array.from(this.$el.querySelectorAll('input, button, a[href]'))
+          // offsetParent excludes items in the hidden vocab/language dropdown menus
+          .filter(el => !el.disabled && el.offsetParent !== null && !(resultsList && resultsList.contains(el)))
+        const index = focusables.indexOf(input)
+        const target = focusables[index + direction]
+        if (target) target.focus()
+      },
+      onSearchFieldKeydown (event) {
+        switch (event.key) {
+          case 'ArrowDown':
+            event.preventDefault()
+            // re-open the list if it was hidden, then move focus to the first result
+            this.showAutoComplete()
+            this.$nextTick(() => this.focusFirstResult())
+            break
+          case 'ArrowUp':
+            this.hideAutoComplete()
+            break
+          case 'Escape':
+            event.preventDefault()
+            this.hideAutoComplete()
+            break
+          case 'Tab':
+            // close the list but let the focus move to the next element
+            this.hideAutoComplete()
+            break
+        }
       }
     },
     template: `
@@ -472,7 +604,7 @@ function startGlobalSearchApp () {
                     tabindex=-1
                     @click.stop>
                     <span class="checkmark" aria-hidden="true"></span>
-                  {{ value }}
+                  {{ value.short }}
                 </label>
               </li>
             </ul>
@@ -535,17 +667,19 @@ function startGlobalSearchApp () {
                 v-click-outside="hideAutoComplete"
                 v-model="searchTerm"
                 @input="autoComplete($event)"
+                @keydown="onSearchFieldKeydown($event)"
                 @keyup.enter="gotoSearchPage()"
-                @click="showAutoComplete()">
+                @focus="onSearchFieldFocus()">
               <ul id="search-autocomplete-results"
-                  class="dropdown-menu w-100"
-                  :class="{ 'show': showDropdown }"
-                  aria-labelledby="search-field">
+                  class="w-100"
+                  :class="{ 'show': showAutoCompleteDropdown }"
+                  aria-labelledby="search-field"
+                  @keydown="onResultsKeydown">
                 <li class="autocomplete-result container" v-for="result in renderedResultsList"
                   :key="result.prefLabel" >
                   <template v-if="result.pageUrl">
                     <a :href=result.pageUrl>
-                      <div class="row pb-1">
+                      <div class="row py-1">
                         <div class="col" v-if="result.hitType == 'hidden'">
                           <span class="result">
                             <template v-if="result.showNotation && result.notation">
@@ -613,6 +747,7 @@ function startGlobalSearchApp () {
                           </span>
                         </div>
                         <div class="col-auto align-self-end pr-1" v-html="result.renderedType"></div>
+                        <div class="result-vocab-title">{{ vocabStrings[result.vocab] ? vocabStrings[result.vocab].title : result.vocab }}</div>
                       </div>
                     </a>
                   </template>

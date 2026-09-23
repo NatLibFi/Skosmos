@@ -136,6 +136,16 @@ class RequestTest extends PHPUnit\Framework\TestCase
     }
 
     /**
+     * @covers Request::setLang
+     * @covers Request::getContentLang
+     */
+    public function testContentLangFallsBackToUiLanguageWhenClangNotSet()
+    {
+        $this->request->setLang('fi');
+        $this->assertEquals('fi', $this->request->getContentLang());
+    }
+
+    /**
      * @covers Request::getLetter
      */
     public function testGetLetterWhenNotSet()

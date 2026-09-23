@@ -7,13 +7,15 @@ window.SKOSMOS = {
   "lang": "{{ request.lang }}",
   "vocab": "{{ request.vocabid }}",
   "pageType": "{{ pageType }}",
-  "vocab_list": { {% for key, vocabs in request.vocabList %}{% for key2, value in vocabs %}"{{ value.resource.localname }}": "{{ value.config.shortname }}"{% if not loop.last %}, {% endif %}
+  "vocab_list": { {% for key, vocabs in request.vocabList %}{% for key2, value in vocabs %}{{ value.resource.localname|json_encode|raw }}: {"short": {{ value.config.shortname|json_encode|raw }}, "title": {{ value.config.title|json_encode|raw }}}{% if not loop.last %}, {% endif %}
 {% endfor %}{% if not loop.last %}, {% endif %}
 {% endfor %}  },
   "vocab_id": [ {% for vocab in request.vocabid %} "{{ vocab }}"{% if not loop.last %},
   {% endif %}{% endfor %}],
+  "search_vocabs": [ {% for vocab in search_vocabs|default([]) %}"{{ vocab.getId() }}"{% if not loop.last %}, {% endif %}{% endfor %} ],
   "waypoint_results": {{ parameters ? parameters.searchLimit : "null" }},
   "search_count": {{ search_count ? search_count : "null" }},
+  "search_query": {{ request.getQueryParamRaw('q')|json_encode|raw }},
   "search_results_size": {{ GlobalConfig.searchResultsSize }},
   {% if request.page == "page" and concept -%}
   "prefLabels": [{"lang": "{{ concept.label.lang }}", "label": "{{ concept.label }}"}{% for data in concept.foreignLabels %}{% for literal in data.prefLabel %}, {"lang": "{{ literal.lang }}", "label": "{{ literal.label }}"}{% endfor %}{% endfor %}],
