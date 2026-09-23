@@ -1594,7 +1594,9 @@ h2#vocab-heading {
   .about .container, .feedback .container {
     padding: 0 1rem;
   }
-  
+}
+
+@media (max-width: 768px) { /* md breakpoint */
   .about h1, .feedback h1 {
     font-size: 2rem;
   }
