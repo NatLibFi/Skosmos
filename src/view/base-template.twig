@@ -35,8 +35,8 @@
 {{ include('custom-templates.inc.twig', {slotName: 'html-head'}) -}}
 </head>
 <body class="{% if pageType =='landing' %}frontpage-logo{% else %}{% if pageType == 'concept' or pageType == 'vocab-home' or (request.vocabid != '' and request.page == 'page') %}vocab-{{ request.vocabid }}{% endif %}{% endif %}">
+  <a id="skiptocontent" href="{{ request.langurl }}{% if pageType in ['landing', 'about', 'feedback'] %}#main-container{% else %}#main-content{% endif %}">{{ "Skip to main"|trans }}</a>
   <header>
-    <a class="visually-hidden" id="skiptocontent" href="{{ request.langurl }}#maincontent">Skip to main</a>
     <div id="topbar" class="container-fluid d-flex my-auto py-3 px-4">
       {% if request.vocabid == '' and request.page != 'about' and request.page != 'feedback' %}
         {% set searchBarExpanded = request.page == 'search' %}
