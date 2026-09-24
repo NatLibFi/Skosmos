@@ -21,7 +21,7 @@
           {# disabled_class is used to disable hierarchy tab #}
           {# Hierarchy tab is disabled on vocab page if showTopConcepts is set to false and on group pages if groups tab exists #}
           {% set disabled_class = (view == 'hierarchy' and request.page == 'vocab' and not vocab.config.showTopConcepts) or (view == 'hierarchy' and request.page == 'page' and concept.isGroup and 'groups' in vocab.config.sidebarViews) %}
-          <li id="{{ view }}" class="nav-item{% if disabled_class %} disabled{% endif %}" {% if disabled_class %}data-title="{{ 'hierarchy-disabled-help' | trans }}"{% endif %}>
+          <li id="{{ view }}" class="nav-item{% if disabled_class %} disabled{% endif %}" {% if disabled_class %}data-title="{{ vocab.config.showTopConcepts ? 'hierarchy-disabled-group-page-help' : 'hierarchy-disabled-help' | trans }}"{% endif %}>
             <a class="nav-link p-2{% if view == active_view %} active{% elseif disabled_class %} disabled{% endif %}" 
               role="tab" data-bs-toggle="tab" href="#tab-{{ view }}" aria-controls="tab-{{ view }}">
               {{ view_trans_text | trans }}
