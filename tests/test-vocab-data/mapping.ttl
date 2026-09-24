@@ -20,3 +20,7 @@ mapping:m2 a skos:Concept ;
     skos:exactMatch <http://www.yso.fi/onto/yso/p19378> ;
     skos:prefLabel "This concept is mapped to a concept in a vocabulary that can not be found at the same endpoint"@en .
 
+mapping:m3 a skos:Concept ;
+    skos:related <http://www.yso.fi/onto/yso/p10849> ;
+    skos:prefLabel "This concept is related to a concept in another vocabulary"@en .
+

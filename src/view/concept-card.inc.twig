@@ -34,6 +34,9 @@
           {%- endif -%}
             {{- item.label(contentLang) -}}
           </a>
+          {%- if item.isExternal and current_vocab != item.vocab %}
+            ({{ item.exvocab.shortName }})
+          {%- endif -%}
         {% endmacro %}
 
         {# Macro for rendering HTML element attributes #}
