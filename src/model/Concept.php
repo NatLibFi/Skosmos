@@ -448,7 +448,7 @@ class Concept extends VocabularyDataObject implements Modifiable
                             }
 
                             if ($response) {
-                                $ret[$prop]->addValue(new ConceptMappingPropertyValue($this->model, $this->vocab, $response, $this->resource, $prop));
+                                $ret[$prop]->addValue(new ConceptMappingPropertyValue($this->model, $this->vocab, $response, $this->resource, $prop, $this->clang));
 
                                 $this->processExternalResource($response);
 

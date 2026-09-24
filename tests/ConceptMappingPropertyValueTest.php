@@ -88,7 +88,8 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
         $mockres->method('getUri')->will($this->returnValue('http://thisdoesntexistatalland.sefsf/2j2h4/'));
         $mapping = new ConceptMappingPropertyValue($this->model, $this->vocab, $mockres, $mocksource, 'skos:exactMatch');
         $this->assertEquals('english', $mapping->getLabel('en'));
-        $this->assertEquals('default', $mapping->getLabel());
+        // no language requested: the vocabulary's default language (en) is tried first
+        $this->assertEquals('english', $mapping->getLabel());
     }
 
     /**
@@ -112,8 +113,110 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
         $mockres->method('getUri')->will($this->returnValue('http://thisdoesntexistatalland.sefsf/2j2h4/'));
         $mapping = new ConceptMappingPropertyValue($this->model, $this->vocab, $mockres, $mocksource, 'skos:exactMatch');
         $this->assertEquals('english lit', $mapping->getLabel('en'));
-        $this->assertEquals('default lit', $mapping->getLabel());
-        $this->assertEquals('default lit', $mapping->getLabel()); // from labelcache
+        // no language requested: the vocabulary's default language (en) is tried first
+        $this->assertEquals('english lit', $mapping->getLabel());
+        $this->assertEquals('english lit', $mapping->getLabel()); // from labelcache
+    }
+
+    /**
+     * @covers ConceptMappingPropertyValue::getLabel
+     * @covers ConceptMappingPropertyValue::queryLabel
+     * @covers ConceptMappingPropertyValue::getResourceLabel
+     * @covers ConceptMappingPropertyValue::getLabelLanguages
+     */
+    public function testGetLabelPrefersConfiguredLanguageOverAnyOtherLanguage()
+    {
+        // Simulates a remote resource (e.g. from Wikidata) that has labels in many
+        // languages: the label in a configured language must be preferred over
+        // a label in an unrelated language.
+        $mocksource = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
+        $mockres = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
+        $labelmap = array(
+          array('ky', [], 'Аял'),
+          array('nds', [], 'weiblich Geschlecht'),
+          array('en', [], 'female'),
+          array(null, [], 'Аял')
+        );
+        $mockres->method('label')->will($this->returnValueMap($labelmap));
+        $mockres->method('getUri')->will($this->returnValue('http://www.wikidata.org/entity/Q6581072'));
+        $mapping = new ConceptMappingPropertyValue($this->model, $this->vocab, $mockres, $mocksource, 'skos:exactMatch');
+        $this->assertEquals('female', $mapping->getLabel('en'));
+        // no language requested: falls back to the vocabulary's default language (en)
+        $this->assertEquals('female', $mapping->getLabel());
+    }
+
+    /**
+     * @covers ConceptMappingPropertyValue::getLabel
+     * @covers ConceptMappingPropertyValue::queryLabel
+     * @covers ConceptMappingPropertyValue::getResourceLabel
+     * @covers ConceptMappingPropertyValue::getLabelLanguages
+     */
+    public function testGetLabelFallsBackToUiLanguage()
+    {
+        // The resource has no label in any of the vocabulary's configured
+        // languages (en) but has a label in a UI language (fi).
+        $mocksource = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
+        $mockres = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
+        $labelmap = array(
+          array('fi', [], 'nainen'),
+          array(null, [], 'nainen')
+        );
+        $mockres->method('label')->will($this->returnValueMap($labelmap));
+        $mockres->method('getUri')->will($this->returnValue('http://www.wikidata.org/entity/Q1243'));
+        $mapping = new ConceptMappingPropertyValue($this->model, $this->vocab, $mockres, $mocksource, 'skos:exactMatch');
+        $this->assertEquals('nainen', $mapping->getLabel('en'));
+    }
+
+    /**
+     * @covers ConceptMappingPropertyValue::getLabel
+     * @covers ConceptMappingPropertyValue::queryLabel
+     * @covers ConceptMappingPropertyValue::getResourceLabel
+     * @covers ConceptMappingPropertyValue::getLabelLanguages
+     */
+    public function testGetLabelPrefersUnlabeledLiteralOverAnyLanguageLabel()
+    {
+        // The resource has no label in any configured language; a language-neutral
+        // literal must be preferred over a label in an unrelated language.
+        $mocksource = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
+        $mockres = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
+        $labelmap = array(
+          array('ky', [], 'Аял'),
+          array(null, [], 'Аял')
+        );
+        $mockres->method('label')->will($this->returnValueMap($labelmap));
+        $literal = $this->getMockBuilder('EasyRdf\Literal')->disableOriginalConstructor()->getMock();
+        $literal->method('getLang')->will($this->returnValue(null));
+        $mockres->method('allLiterals')->willReturnCallback(function ($property) use ($literal) {
+            if ($property === 'rdfs:label') {
+                return array($literal);
+            }
+            return array();
+        });
+        $mockres->method('getUri')->will($this->returnValue('http://www.wikidata.org/entity/Q6581072'));
+        $mapping = new ConceptMappingPropertyValue($this->model, $this->vocab, $mockres, $mocksource, 'skos:exactMatch');
+        $this->assertEquals($literal, $mapping->getLabel('en'));
+    }
+
+    /**
+     * @covers ConceptMappingPropertyValue::getLabel
+     * @covers ConceptMappingPropertyValue::queryLabel
+     * @covers ConceptMappingPropertyValue::getResourceLabel
+     * @covers ConceptMappingPropertyValue::getLabelLanguages
+     */
+    public function testGetLabelAnyLanguageIsOnlyLastResort()
+    {
+        // The resource has no label in any configured language, only in an
+        // unrelated one: the any-language label is used as a last resort.
+        $mocksource = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
+        $mockres = $this->getMockBuilder('EasyRdf\Resource')->disableOriginalConstructor()->getMock();
+        $labelmap = array(
+          array('ky', [], 'Аял'),
+          array(null, [], 'Аял')
+        );
+        $mockres->method('label')->will($this->returnValueMap($labelmap));
+        $mockres->method('getUri')->will($this->returnValue('http://www.wikidata.org/entity/Q6581072'));
+        $mapping = new ConceptMappingPropertyValue($this->model, $this->vocab, $mockres, $mocksource, 'skos:exactMatch');
+        $this->assertEquals('Аял', $mapping->getLabel('en'));
     }
 
     /**
@@ -228,6 +331,43 @@ class ConceptMappingPropertyValueTest extends PHPUnit\Framework\TestCase
           'vocabName' => 'Test ontology',
           'typeLabel' => 'Exactly matching concepts',
         ], $propvals['test:ta115 http://www.skosmos.skos/test/ta115']->asJskos());
-    }
+   }
+
+   /**
+    * Mapping labels must be returned in the concept's content language,
+    * even when the mapping target comes from an external resource.
+    *
+    * @covers Concept::getMappingProperties
+    * @covers ConceptMappingPropertyValue::getLabel
+    */
+   public function testMappingPropertiesUseContentLanguageForExternalTarget()
+   {
+       $uri = 'http://www.wikidata.org/entity/Q6581072'; // not in any configured uri space
+
+       // the external resource has labels in multiple languages
+       $extGraph = new EasyRdf\Graph();
+       $ext = $extGraph->resource($uri);
+       $ext->addLiteral('skos:prefLabel', 'female', 'en');
+       $ext->addLiteral('skos:prefLabel', 'nainen', 'fi');
+       $ext->addLiteral('skos:prefLabel', 'kvinnlig', 'sv');
+
+       $model = $this->getMockBuilder('Model')->onlyMethods(['getResourceFromUri'])->getMock();
+       $model->method('getResourceFromUri')->with($uri)->willReturn($ext);
+
+       $graph = new EasyRdf\Graph();
+       $source = $graph->resource('http://www.skosmos.skos/mapping/m1');
+       $source->addResource('skos:exactMatch', $uri);
+
+       // content language is Finnish, UI language is English
+       $concept = new Concept($model, $this->vocab, $source, $graph, 'fi');
+       $props = $concept->getMappingProperties();
+       $values = $props['skos:exactMatch']->getValues();
+       $this->assertCount(1, $values);
+       $value = reset($values);
+
+       // the label must be in the content language (fi), not the requested/UI language (en)
+       $this->assertEquals('nainen', $value->getLabel('en'));
+       $this->assertEquals('nainen', $value->getLabel());
+   }
 
 }
