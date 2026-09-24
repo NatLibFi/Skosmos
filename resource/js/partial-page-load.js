@@ -120,10 +120,11 @@ const partialPageLoad = (event, pageUri) => {
           onTranslationReady(() => {
             // Prevent a race condition
             if (document.querySelector('#hierarchy').classList.contains('disabled')) {
-              document.querySelector('#hierarchy').dataset.title =
-                window.SKOSMOS.showTopConcepts
-                  ? $t('hierarchy-disabled-group-page-help')
-                  : $t('hierarchy-disabled-help')
+              if (window.SKOSMOS.showTopConcepts) {
+                document.querySelector('#hierarchy').dataset.title = $t('hierarchy-disabled-group-page-help')
+              } else {
+                document.querySelector('#hierarchy').dataset.title = $t('hierarchy-disabled-help')
+              }
             }
           })
         } else { // Otherwise remove disabled class and tooltip text
