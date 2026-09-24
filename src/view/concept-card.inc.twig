@@ -35,7 +35,7 @@
             {{- item.label(contentLang) -}}
           </a>
           {%- if item.isExternal and current_vocab != item.vocab %}
-            ({{ item.exvocab.shortName }})
+            ({{ item.vocab.shortName }})
           {%- endif -%}
         {% endmacro %}
 
