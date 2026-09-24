@@ -172,6 +172,10 @@ header .container-fluid .row {
   color: var(--topbar-text-2);
 }
 
+#topbar-nav .nav-item a:hover {
+  text-decoration: underline !important;
+}
+
 #skosmos-logo-top {
   background-image: url("../pics/skosmos-NEGA-RGB.svg");
   background-repeat: no-repeat;
@@ -253,6 +257,11 @@ header .container-fluid .row {
 #vocab-title a {
   color: var(--headerbar-text);
   font-family: var(--font-family-heading);
+}
+
+#vocab-title a:hover {
+  text-decoration: underline !important;
+  text-decoration-thickness: 2px !important;
 }
 
 /* --- Search bar --- */
@@ -790,6 +799,14 @@ header .container-fluid .row {
 
 #sidebar .nav-link.disabled {
   opacity: 0.65;
+}
+
+#sidebar .nav-link.active:hover {
+  text-decoration: none;
+}
+
+#sidebar .nav-link:hover {
+  text-decoration: underline;
 }
 
 /* In smaller screen sizes, the last sidebar tab overflows to the right */
