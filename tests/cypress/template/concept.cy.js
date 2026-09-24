@@ -500,13 +500,13 @@ describe('Concept page', () => {
     cy.get('.prop-skos_related .property-value li a').invoke('text').should('equal', 'archaeologists')
   })
   it('external link label follows the content language while the vocabulary name follows the UI language', () => {
-    // go to the same concept page with Finnish as the content language
-    cy.visit('/mapping/en/page/m3?clang=fi')
+    // go to the same concept page with the Swedish UI language and Finnish content language
+    cy.visit('/mapping/sv/page/m3?clang=fi')
 
-    // the link label should now be the Finnish prefLabel of the external concept,
-    // while the vocabulary specifier remains the English UI-language short name
+    // the link label should be the Finnish prefLabel of the external concept (content language),
+    // while the vocabulary specifier should be the Swedish short name of YSO, ALLFO (UI language)
     cy.get('.prop-skos_related .property-value li').invoke('text').then((text) => {
-      expect(text).to.match(/arkeologit\s+\(YSO\)/)
+      expect(text).to.match(/arkeologit\s+\(ALLFO\)/)
     })
   })
   it('external link points to the concept page of the external vocabulary', () => {
