@@ -101,6 +101,9 @@ const partialPageLoad = (event, pageUri) => {
       // updating url and history when clicking on concept links
       if (event.type !== 'popstate' && window.history.pushState) { window.history.pushState({ url: pageUri }, '', pageUri) }
 
+      // updating skip to main content link
+      document.getElementById('skiptocontent').setAttribute('href', pageUri + '#main-content')
+
       // concept page HTML
       const conceptHTML = document.createElement('div')
       conceptHTML.innerHTML = data.trim()

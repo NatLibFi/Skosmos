@@ -146,6 +146,23 @@ header .container-fluid .row {
 /* Topbar
 -------------------------------------- */
 
+#skiptocontent:not(:focus):not(:active) {
+  transform: translate(-100%);
+}
+
+#skiptocontent {
+  position: absolute;
+  padding: 0.25rem;
+  top: 0;
+  left: 0;
+  background: var(--topbar-text-1);
+  color: var(--topbar-bg-1);
+}
+
+#skiptocontent:focus-visible {
+  outline-color: var(--topbar-text-1) !important;
+}
+
 .frontpage-logo #topbar {
   color: var(--topbar-text-1);
   background-color: var(--topbar-bg-1);
