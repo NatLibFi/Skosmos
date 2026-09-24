@@ -49,6 +49,29 @@ describe('Concept page', () => {
     cy.get("#concept-deprecated-alert ul li a").first().should('have.attr', 'href', "changes/en/page/d3");
     cy.get("#main-content .main-content-section.concept-deprecated").should('exist')
   })
+  it("displays the external vocabulary name in parentheses for deprecated replacement links to another vocabulary", () => {
+    // Go to the deprecated concept page whose replacement is in the YSO vocabulary
+    cy.visit('/mapping/en/page/m4')
+
+    // the deprecated alert should be shown
+    cy.get("#concept-deprecated-alert").should('exist')
+
+    // there should be exactly one replacement link
+    cy.get("#concept-deprecated-alert ul").find('li').should('have.length', 1)
+
+    // the replacement link should show the label of the external concept followed
+    // by the external vocabulary's short name in parentheses (the li has template
+    // whitespace between the link and the specifier, so match with a regex)
+    cy.get("#concept-deprecated-alert ul li").invoke('text').then((text) => {
+      expect(text).to.match(/archaeologists\s+\(YSO\)/)
+    })
+
+    // the specifier must not be part of the link text itself
+    cy.get("#concept-deprecated-alert ul li a").invoke('text').should('equal', 'archaeologists')
+
+    // the link should point to the concept page of the external vocabulary
+    cy.get("#concept-deprecated-alert ul li a").should('have.attr', 'href', 'yso/en/page/p10849')
+  })
   it("doesn't contain breadcrumbs for top concepts", () => {
     cy.visit('/yso/en/page/p4762') // go to "objects" concept page
 

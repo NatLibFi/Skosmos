@@ -24,3 +24,8 @@ mapping:m3 a skos:Concept ;
     skos:related <http://www.yso.fi/onto/yso/p10849> ;
     skos:prefLabel "This concept is related to a concept in another vocabulary"@en .
 
+mapping:m4 a skos:Concept ;
+    owl:deprecated true ;
+    dct:isReplacedBy <http://www.yso.fi/onto/yso/p10849> ;
+    skos:prefLabel "This deprecated concept is replaced by a concept in another vocabulary"@en .
+
