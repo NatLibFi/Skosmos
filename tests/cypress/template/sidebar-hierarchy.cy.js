@@ -230,7 +230,7 @@ describe('Hierarchy', () => {
     cy.get('#groups-list li a').eq(0).click()
     // Check that hierarchy tab is disabled and tooltip is available
     cy.get('#hierarchy').should('have.class', 'disabled')
-    cy.get('#hierarchy').should('have.attr', 'data-title', 'The top level hierarchy can\'t be shown in this vocabulary.')
+    cy.get('#hierarchy').should('have.attr', 'data-title', 'Hierarchy can\'t be shown on this page')
     // Click first concept link
     cy.get('#groups-list li a').eq(1).click()
     // Check that hierarchy tab is not disabled and no tooltip is available

@@ -28,6 +28,7 @@ window.SKOSMOS = {
   "showConceptSchemesInHierarchy": {{ request.vocab.config.showConceptSchemesInHierarchy ? "true" : "false" }},
   "uriSpace": {% if request.vocab.uriSpace %}"{{ request.vocab.uriSpace }}"{% else %}null{% endif ~%},
   "vocShortName": "{{ request.vocab.config.shortname }}",
+  "showTopConcepts": {{ vocab.config.showTopConcepts ? "true" : "false" }},
   {%- endif %}
   {%- if plugin_params ~%}
   "pluginParameters": {{ plugin_params|raw }},
