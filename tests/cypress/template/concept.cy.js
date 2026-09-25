@@ -49,6 +49,29 @@ describe('Concept page', () => {
     cy.get("#concept-deprecated-alert ul li a").first().should('have.attr', 'href', "changes/en/page/d3");
     cy.get("#main-content .main-content-section.concept-deprecated").should('exist')
   })
+  it("displays the external vocabulary name in parentheses for deprecated replacement links to another vocabulary", () => {
+    // Go to the deprecated concept page whose replacement is in the YSO vocabulary
+    cy.visit('/mapping/en/page/m4')
+
+    // the deprecated alert should be shown
+    cy.get("#concept-deprecated-alert").should('exist')
+
+    // there should be exactly one replacement link
+    cy.get("#concept-deprecated-alert ul").find('li').should('have.length', 1)
+
+    // the replacement link should show the label of the external concept followed
+    // by the external vocabulary's short name in parentheses (the li has template
+    // whitespace between the link and the specifier, so match with a regex)
+    cy.get("#concept-deprecated-alert ul li").invoke('text').then((text) => {
+      expect(text).to.match(/archaeologists\s+\(YSO\)/)
+    })
+
+    // the specifier must not be part of the link text itself
+    cy.get("#concept-deprecated-alert ul li a").invoke('text').should('equal', 'archaeologists')
+
+    // the link should point to the concept page of the external vocabulary
+    cy.get("#concept-deprecated-alert ul li a").should('have.attr', 'href', 'yso/en/page/p10849')
+  })
   it("doesn't contain breadcrumbs for top concepts", () => {
     cy.visit('/yso/en/page/p4762') // go to "objects" concept page
 
@@ -455,5 +478,57 @@ describe('Concept page', () => {
     cy.go(-2)
     // Check that vocab home page is loaded
     cy.get('#vocab-heading', {timeout: 10000}).should('exist')
+  })
+  it('displays the external vocabulary name in parentheses for a related concept in another vocabulary', () => {
+    // Go to "This concept is related to a concept in another vocabulary" concept page in the mapping vocab
+    cy.visit('/mapping/en/page/m3')
+
+    // check the property name
+    cy.get('.prop-skos_related .property-label h3').invoke('text').should('equal', 'Related concepts')
+
+    // check that we have exactly one related concept
+    cy.get('.prop-skos_related .property-value').find('li').should('have.length', 1)
+
+    // the link label should be the external concept's prefLabel followed by the
+    // external vocabulary's short name in parentheses (the li has template whitespace
+    // between the link and the specifier, so match with a regex)
+    cy.get('.prop-skos_related .property-value li').invoke('text').then((text) => {
+      expect(text).to.match(/archaeologists\s+\(YSO\)/)
+    })
+
+    // the specifier must not be part of the link text itself, but follow the link
+    cy.get('.prop-skos_related .property-value li a').invoke('text').should('equal', 'archaeologists')
+  })
+  it('external link label follows the content language while the vocabulary name follows the UI language', () => {
+    // go to the same concept page with the Swedish UI language and Finnish content language
+    cy.visit('/mapping/sv/page/m3?clang=fi')
+
+    // the link label should be the Finnish prefLabel of the external concept (content language),
+    // while the vocabulary specifier should be the Swedish short name of YSO, ALLFO (UI language)
+    cy.get('.prop-skos_related .property-value li').invoke('text').then((text) => {
+      expect(text).to.match(/arkeologit\s+\(ALLFO\)/)
+    })
+  })
+  it('external link points to the concept page of the external vocabulary', () => {
+    cy.visit('/mapping/en/page/m3')
+
+    // the link should use the external vocabulary (yso) in its href, not the current one (mapping)
+    cy.get('.prop-skos_related .property-value li a').should('have.attr', 'href', 'yso/en/page/p10849')
+  })
+  it("does not display a vocabulary name in parentheses for links to the same vocabulary", () => {
+    // go to the "archaeologists" concept page in YSO; its broader concept is also in YSO
+    cy.visit('/yso/en/page/p10849')
+
+    // check the broader concept link
+    cy.get('.prop-skos_broader .property-value a').invoke('text').should('equal', 'occupations (professions)')
+
+    // no concept link on the page should be followed by a parenthesized vocabulary name
+    // (labels themselves may contain parentheses, e.g. "occupations (professions)",
+    // so only the text following the link text is checked)
+    cy.get('#main-content .property-value li a').each(($link) => {
+      const liText = Cypress.$($link).closest('li').text()
+      const textAfterLink = liText.replace(Cypress.$($link).text(), '')
+      expect(textAfterLink.trim()).to.not.match(/\(.*\)/)
+    })
   })
 })
