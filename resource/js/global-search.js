@@ -824,9 +824,9 @@ function startGlobalSearchApp () {
     }
   })
 
-  // initialize the collator needed for sorting the vocabulary list
+  // initialize the collator needed for sorting the vocabulary list by UI language
   globalSearch.config.globalProperties.$collator = new Intl.Collator(
-    window.SKOSMOS.content_lang || window.SKOSMOS.lang,
+    window.SKOSMOS.lang,
     { sensitivity: 'variant' }
   )
 
