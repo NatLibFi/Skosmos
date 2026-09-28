@@ -12,7 +12,8 @@ describe('Global search bar', () => {
   it('Vocab-list is sorted alphabetically by short name', () => {
     cy.get('#vocab-list label.vocab-select').then(labels => {
       const texts = Array.from(labels).map(el => el.textContent.trim())
-      const sorted = [...texts].sort((a, b) => a.localeCompare(b, 'fi', { sensitivity: 'base' }))
+      const collator = new Intl.Collator('fi', { sensitivity: 'variant' })
+      const sorted = [...texts].sort(collator.compare)
       expect(texts).to.deep.equal(sorted)
     })
   })

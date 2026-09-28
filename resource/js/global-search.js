@@ -56,7 +56,7 @@ function startGlobalSearchApp () {
           return []
         }
         return Object.entries(this.vocabStrings).sort((a, b) =>
-          String(a[1].short).localeCompare(String(b[1].short), window.SKOSMOS.lang, { sensitivity: 'base' })
+          this.$collator.compare(String(a[1].short), String(b[1].short))
         )
       },
       getSelectedVocabs () {
@@ -824,9 +824,27 @@ function startGlobalSearchApp () {
     }
   })
 
+  // initialize the collator needed for sorting the vocabulary list
+  globalSearch.config.globalProperties.$collator = new Intl.Collator(
+    window.SKOSMOS.content_lang || window.SKOSMOS.lang,
+    { sensitivity: 'variant' }
+  )
+
   if (document.getElementById('global-search-wrapper')) {
     globalSearch.mount('#global-search-wrapper')
   }
 }
 
-onTranslationReady(startGlobalSearchApp)
+async function initializeGlobalSearchApp () {
+  // load the collator polyfill (if needed) before the app sorts the vocabulary list
+  if (typeof window.getIntlCollatorReady === 'function') {
+    try {
+      await window.getIntlCollatorReady()
+    } catch (e) {
+      console.error('Intl.Collator polyfill failed to load, continuing with native collator:', e)
+    }
+  }
+  startGlobalSearchApp()
+}
+
+onTranslationReady(initializeGlobalSearchApp)
