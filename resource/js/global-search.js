@@ -51,6 +51,14 @@ function startGlobalSearchApp () {
       clearSearchAriaMessage () {
         return $t('Clear search field')
       },
+      sortedVocabStrings () {
+        if (!this.vocabStrings) {
+          return []
+        }
+        return Object.entries(this.vocabStrings).sort((a, b) =>
+          String(a[1].short).localeCompare(String(b[1].short), window.SKOSMOS.lang, { sensitivity: 'base' })
+        )
+      },
       getSelectedVocabs () {
         return this.selectedVocabs.map(key => ({ key, value: this.vocabStrings[key].short }))
       },
@@ -595,7 +603,7 @@ function startGlobalSearchApp () {
               @keydown="onVocabMenuKeydown"
               id="vocab-list"
               aria-labelledby="vocab-selector-label">
-              <li v-for="(value, key) in vocabStrings" :key="key" tabindex=-1>
+              <li v-for="[key, value] in sortedVocabStrings" :key="key" tabindex=-1>
                 <label class="dropdown-item vocab-select">
                   <input
                     type="checkbox"

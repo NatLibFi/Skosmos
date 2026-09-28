@@ -9,6 +9,14 @@ describe('Global search bar', () => {
     cy.get('#vocab-list li').should('have.length', 14)
   })
 
+  it('Vocab-list is sorted alphabetically by short name', () => {
+    cy.get('#vocab-list label.vocab-select').then(labels => {
+      const texts = Array.from(labels).map(el => el.textContent.trim())
+      const sorted = [...texts].sort((a, b) => a.localeCompare(b, 'fi', { sensitivity: 'base' }))
+      expect(texts).to.deep.equal(sorted)
+    })
+  })
+
   it('dropdown menu header text is updated according to the selected vocabularies', () => {
     cy.get('#vocab-selector .vocab-dropdown-btn').should('contain.text', 'kaikki sanastot')
     // select "altlabel"
@@ -116,7 +124,7 @@ describe('Global search bar', () => {
   it('No results message is displayed if no results are found', () => {
 
     cy.get('#global-search-toggle').click()
-    cy.get('#vocab-list li').eq(0).find('input[type="checkbox"]').check({ force: true })
+    cy.get('#vocab-list').contains('label', 'altlabel').find('input[type="checkbox"]').check({ force: true })
     cy.get('#language-selector .dropdown-toggle').click()
     cy.get('#language-list li').contains('label', 'ruotsi').click()
 
