@@ -836,16 +836,20 @@ function startGlobalSearchApp () {
 }
 
 async function initializeGlobalSearchApp () {
-  // load the collator polyfill (if needed) before the app sorts the vocabulary list
-  if (typeof window.getIntlCollatorReady === 'function') {
-    try {
-      // sort by the UI language, so request readiness for the UI locale
-      await window.getIntlCollatorReady(window.SKOSMOS.lang)
-    } catch (e) {
-      console.error('Intl.Collator polyfill failed to load, continuing with native collator:', e)
-    }
+  try {
+    // sort by the UI language, so request readiness for the UI locale
+    await window.getIntlCollatorReady(window.SKOSMOS.lang)
+  } catch (e) {
+    console.error('Intl.Collator polyfill failed to load, continuing with native collator:', e)
   }
   startGlobalSearchApp()
 }
 
-onTranslationReady(initializeGlobalSearchApp)
+onTranslationReady(function () {
+  if (typeof window.getIntlCollatorReady === 'function') {
+    initializeGlobalSearchApp()
+  } else {
+    // the deferred module hasn't run yet; wait for it to install the helper
+    document.addEventListener('intlCollatorPromiseReady', initializeGlobalSearchApp)
+  }
+})
