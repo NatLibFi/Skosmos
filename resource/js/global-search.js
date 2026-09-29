@@ -839,7 +839,8 @@ async function initializeGlobalSearchApp () {
   // load the collator polyfill (if needed) before the app sorts the vocabulary list
   if (typeof window.getIntlCollatorReady === 'function') {
     try {
-      await window.getIntlCollatorReady()
+      // sort by the UI language, so request readiness for the UI locale
+      await window.getIntlCollatorReady(window.SKOSMOS.lang)
     } catch (e) {
       console.error('Intl.Collator polyfill failed to load, continuing with native collator:', e)
     }

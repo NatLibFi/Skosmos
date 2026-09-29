@@ -83,19 +83,23 @@ window.SKOSMOS = {
     }
   }
 
-  async function ensureCollator(locale) {
-    if (needsCollatorPolyfill(locale)) {
-      await import('./node_modules/@formatjs/intl-collator/polyfill-force.js')
-    }
-  }
-
   // global Promise for loading the polyfill on-demand
-  let collatorPromise = null
+  let collatorPromise = Promise.resolve()
+  const checkedCollatorLocales = new Set()
 
-  window.getIntlCollatorReady = function () {
-    if (!collatorPromise) {
-      const locale = window.SKOSMOS.content_lang || window.SKOSMOS.lang
-      collatorPromise = ensureCollator(locale)
+  // Load the collator polyfill (if the browser lacks support for `locale`) and
+  // resolve once it is ready. Callers pass the locale they sort by.
+  window.getIntlCollatorReady = function (locale) {
+    if (!checkedCollatorLocales.has(locale)) {
+      checkedCollatorLocales.add(locale)
+      if (needsCollatorPolyfill(locale)) {
+        // polyfill-force.js is locale-complete and idempotent, so one shared
+        // promise covers every locale; we just chain the load if this locale
+        // is the first found to need it
+        collatorPromise = collatorPromise.then(() =>
+          import('./node_modules/@formatjs/intl-collator/polyfill-force.js')
+        )
+      }
     }
     return collatorPromise
   }
