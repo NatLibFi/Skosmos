@@ -696,7 +696,9 @@ function startHierarchyApp () {
 
 async function initializeHierarchyApp () {
   try {
-    await window.getIntlCollatorReady()
+    // concept labels are sorted in the content language, so request
+    // readiness for the content locale
+    await window.getIntlCollatorReady(window.SKOSMOS.content_lang || window.SKOSMOS.lang)
   } catch (e) {
     console.error('Intl.Collator polyfill failed to load, continuing with native collator:', e)
   }

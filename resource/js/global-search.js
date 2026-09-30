@@ -51,6 +51,14 @@ function startGlobalSearchApp () {
       clearSearchAriaMessage () {
         return $t('Clear search field')
       },
+      sortedVocabStrings () {
+        if (!this.vocabStrings) {
+          return []
+        }
+        return Object.entries(this.vocabStrings).sort((a, b) =>
+          this.$collator.compare(String(a[1].short), String(b[1].short))
+        )
+      },
       getSelectedVocabs () {
         return this.selectedVocabs.map(key => ({ key, value: this.vocabStrings[key].short }))
       },
@@ -595,7 +603,7 @@ function startGlobalSearchApp () {
               @keydown="onVocabMenuKeydown"
               id="vocab-list"
               aria-labelledby="vocab-selector-label">
-              <li v-for="(value, key) in vocabStrings" :key="key" tabindex=-1>
+              <li v-for="[key, value] in sortedVocabStrings" :key="key" tabindex=-1>
                 <label class="dropdown-item vocab-select">
                   <input
                     type="checkbox"
@@ -816,9 +824,32 @@ function startGlobalSearchApp () {
     }
   })
 
+  // initialize the collator needed for sorting the vocabulary list by UI language
+  globalSearch.config.globalProperties.$collator = new Intl.Collator(
+    window.SKOSMOS.lang,
+    { sensitivity: 'variant' }
+  )
+
   if (document.getElementById('global-search-wrapper')) {
     globalSearch.mount('#global-search-wrapper')
   }
 }
 
-onTranslationReady(startGlobalSearchApp)
+async function initializeGlobalSearchApp () {
+  try {
+    // sort by the UI language, so request readiness for the UI locale
+    await window.getIntlCollatorReady(window.SKOSMOS.lang)
+  } catch (e) {
+    console.error('Intl.Collator polyfill failed to load, continuing with native collator:', e)
+  }
+  startGlobalSearchApp()
+}
+
+onTranslationReady(function () {
+  if (typeof window.getIntlCollatorReady === 'function') {
+    initializeGlobalSearchApp()
+  } else {
+    // the deferred module hasn't run yet; wait for it to install the helper
+    document.addEventListener('intlCollatorPromiseReady', initializeGlobalSearchApp)
+  }
+})
