@@ -162,7 +162,7 @@
                 {% else %}
                   {% set descriptionId = '' %}
                 {% endif %}
-                <span{% if descriptionId %} aria-describedby="{{ descriptionId }}"{% endif %}>{% if propval.containsHtml %}{{ propval.label|raw }}{% else %}{{ propval.label }}{% endif %}</span>
+                <span class="literal"{% if descriptionId %} aria-describedby="{{ descriptionId }}"{% endif %}>{% if propval.containsHtml %}{{ propval.label|raw }}{% else %}{{ propval.label }}{% endif %}</span>
                 {% endapply -%}
               </li>
               {% endif %}
