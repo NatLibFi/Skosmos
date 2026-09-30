@@ -149,11 +149,16 @@ describe('Concept page', () => {
     cy.get('#concept-property-label').invoke('text').should('include', 'Caption')
     // Check that notation property label is overridden correctly
     cy.get('.prop-skos_notation .property-label h3').invoke('text').should('include', 'UDC number')
-    // Check that mapping property name is overridden correctly
+    // Mapping property WITH a label override shows the overridden label and tooltip
     // NOTE: we need to increase the timeout as the mappings can take a long time to load
-    cy.get('.prop-mapping h3', {'timeout': 20000}).eq(0).invoke('text').should('contain', 'Exactly matching classes')
-    // Check that mapping property title is overridden correctly
-    cy.get('.prop-mapping .property-label').eq(0).should('have.attr', 'title').and('contain', 'Exactly matching classes in another vocabulary.')
+    cy.get('.prop-mapping .property-label h3', {'timeout': 20000})
+      .contains('Exactly matching classes')
+      .parents('.property-label')
+      .should('have.attr', 'title', 'Exactly matching classes in another vocabulary.')
+    // Mapping property WITHOUT a label override falls back to the default label
+    // and description
+    cy.get('.prop-mapping .property-label[title="Closely matching concepts in another vocabulary."]')
+      .find('h3').should('contain.text', 'Closely matching concepts')
   })
   it('contains SKOS XL information for concept prefLabel', () => {
     cy.visit('/yso/en/page/p4625?clang=se') // go to "bronsaáigi" concept page ('Bronze Age' in Northern Sami)
