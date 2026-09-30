@@ -94,16 +94,21 @@ conceptMappingsApp.directive('load-concept-page', {
 conceptMappingsApp.component('concept-mappings', {
   props: ['mappings', 'customLabels'],
   inject: ['content_lang'],
+  methods: {
+    labelFor (label, mapping) {
+      const entry = this.customLabels ? this.customLabels[mapping[0].type[0]] : undefined
+      return (entry && entry[0]) || label
+    },
+    titleFor (label, mapping) {
+      const entry = this.customLabels ? this.customLabels[mapping[0].type[0]] : undefined
+      return (entry && entry[1]) || mapping[0].description
+    }
+  },
   template: `
     <div class="row property prop-mapping" v-for="(mapping, label) in mappings">
-      <template v-if="customLabels">
-        <div class="col-lg-4 ps-0 property-label" :title="customLabels[mapping[0].type[0]][1] || mapping[0].description">
-          <h3>{{ customLabels[mapping[0].type[0]][0] }}</h3>
-        </div>
-      </template>
-      <template v-else>
-        <div class="col-lg-4 ps-0 property-label" :title="mapping[0].description"><h3>{{ label }}</h3></div>
-      </template>
+      <div class="col-lg-4 ps-0 property-label" :title="titleFor(label, mapping)">
+        <h3>{{ labelFor(label, mapping) }}</h3>
+      </div>
       <div class="col-lg-8 gx-0 gx-lg-4">
         <div class="row mb-2" v-for="m in mapping">
           <div class="col-5 prop-mapping-label">

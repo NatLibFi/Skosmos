@@ -17,6 +17,7 @@ test:ta112 a skos:Concept ;
     skos:broader test:ta1 ;
     skos:narrower test:ta121 ;
     skos:exactMatch test:ta118 ;
+    skos:closeMatch test:ta121 ;
     skos:inScheme test:conceptscheme ;
     skos:prefLabel "Carp"@en,
         "Karppi"@fi ;
