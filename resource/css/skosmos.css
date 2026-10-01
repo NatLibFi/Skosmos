@@ -1643,7 +1643,8 @@ h2#vocab-heading {
 
 #search-results .search-result .list-group > li.list-group-item,
 #search-results .search-result .list-group > li.search-result-list,
-#search-results .search-result .list-group > li.search-result-hidden {
+#search-results .search-result .list-group > li.search-result-hidden,
+#search-results .search-result .list-group > li.search-result-showall {
   display: flex;
   align-items: baseline;
 }
