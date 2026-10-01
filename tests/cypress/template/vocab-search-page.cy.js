@@ -47,7 +47,7 @@ describe('Vocabulary search page', () => {
       cy.visit(`/${vocab}/en/search?clang=en&q=${term}`)
 
       //Check that there is a search result that contains a type icon
-      cy.get('div.search-result > ul > li > span > i.property-hover.fa-solid.fa-arrows-to-circle')
+      cy.get('div.search-result > ul > li > span > i.property-hover.fa-solid.fa-diamond')
 
       //Check that there is correct amount of different properties for the search result
       cy.get('div.search-result > ul > li').should('have.length', 3)
