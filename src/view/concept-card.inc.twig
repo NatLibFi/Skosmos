@@ -181,7 +181,7 @@
             <h3 class="tooltip-inline t-top" aria-describedby="prop-desc-foreignlabels" data-title="{{ 'foreign prefLabel help'|trans }}">{{ 'foreign prefLabels'|trans }}</h3>
             <span id="prop-desc-foreignlabels" class="visually-hidden">{{ 'foreign prefLabel help'|trans }}</span>
           </div>
-          <div class="col-lg-8 gx-0 gx-lg-4" id="concept-other-languages">
+          <div class="col-lg-8 gx-0 gx-lg-4 property-value" id="concept-other-languages">
             {% for language,labels in foreignLabels %}
             <div class="row mb-2">
               <div class="col-7 order-last concept-other-languages-language"><h4>{{ language }}</h4></div>
@@ -226,7 +226,7 @@
           <div class="col-lg-4 ps-0 property-label">
             <h3><i class="fa-solid fa-download"></i> {{ "Download this concept" | trans }}</h3>
           </div>
-          <div class="col-lg-8 gx-0 gx-lg-4" id="download-links">
+          <div class="col-lg-8 gx-0 gx-lg-4 property-value" id="download-links">
             <ul>
               <li>
                 <a class="me-3" href="rest/v1/{{ vocab.id }}/data?uri={{ concept.uri|url_encode }}&amp;format=application/rdf%2Bxml">RDF/XML</a>

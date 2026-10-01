@@ -1186,8 +1186,7 @@ h2#vocab-heading {
 }
 
 .property {
-  border-top: 1px solid var(--main-content-border);
-  padding: .5rem 0;
+  padding-bottom: .5rem;
 }
 
 .property ul, .property li {
@@ -1197,8 +1196,8 @@ h2#vocab-heading {
   margin-bottom: 0;
 }
 
-.property.prop-mapping {
-  border-top: none;
+.property-label {
+  padding-top: .5rem;
 }
 
 #main-container .property-label h3 {
@@ -1209,7 +1208,29 @@ h2#vocab-heading {
 
 .property-value {
   color: var(--main-content-text);
-  border: none;
+  padding-top: .5rem;
+}
+
+.property-value::before {
+  content: "";
+  display: block;
+  border-top: 1px solid var(--main-content-border);
+  margin-top: -.5rem;
+  margin-bottom: .5rem;
+}
+
+@media (max-width: 992px) {
+  .property {
+    border-top: 1px solid var(--main-content-border);
+    padding-top: .5rem;
+  }
+  .property-label,
+  .property-value {
+    padding-top: 0;
+  }
+  .property-value::before {
+    display: none;
+  }
 }
 
 /* --- Vocab statistics --- */
