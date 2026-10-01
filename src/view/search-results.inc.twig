@@ -4,6 +4,7 @@
   {%~ endif ~%}
 
 {%~ for concept in search_results ~%} {# loop through the hits #}
+{%- set resultIndex = loop.index0 -%}
 
 <div class="search-result pt-1">
   <div class="search-result-term">
@@ -31,7 +32,9 @@
   {%~ for property in conceptProperties ~%} {# loop through ConceptProperty objects #}
     {%~ if property.type != 'rdf:type' ~%}
     <li class="list-group-item px-0 py-1">
-      <span class="skosmos-tooltip" data-title="{{ property.description }}">
+      {%- set tooltip = property.description | default('') -%}
+      {%- set desc_id = 'sr-desc-' ~ resultIndex ~ '-main-' ~ loop.index0 -%}
+      <span class="tooltip-icon{% if tooltip != '' %} tooltip-inline t-top{% endif %}"{% if tooltip != '' %} data-title="{{ tooltip }}" aria-describedby="{{ desc_id }}"{% endif %}>
   {%- if property.type == 'skos:broader' -%}<i class="property-hover fa-solid fa-arrow-turn-up fa-rotate-270"></i>
   {%- elseif property.type == 'skos:narrower' -%}<i class="property-hover fa-solid fa-arrow-turn-up fa-rotate-90"></i>
   {%- elseif property.type == 'skos:altLabel' -%}<i class="property-hover fa-solid fa-ban"></i>
@@ -41,6 +44,7 @@
   {%- else -%}<i class="property-hover fa-solid fa-globe"></i>
   {%- endif -%}
       &nbsp;</span>
+      {%- if tooltip != '' %}<span id="{{ desc_id }}" class="visually-hidden">{{ tooltip }}</span>{% endif -%}
   {%- for propval in property.values -%} {# loop through ConceptPropertyValue objects #}
     {%~ set outerLast = loop.last ~%}
     {%- if propval.uri -%} {# resources with URI #}
@@ -59,7 +63,9 @@
   {%- set foreignLabels = concept.foreignLabels -%}
   {%~ if foreignLabels ~%}
   <li class="list-group-item px-0 py-1">
-    <span class="skosmos-tooltip" data-title="foreign prefLabel help"><i class="property-hover fa-solid fa-globe"></i>&nbsp;</span>
+    {%- set desc_id = 'sr-desc-' ~ resultIndex ~ '-foreign' -%}
+    <span class="tooltip-icon tooltip-inline t-top" data-title="{{ 'foreign prefLabel help' | trans }}" aria-describedby="{{ desc_id }}"><i class="property-hover fa-solid fa-globe"></i>&nbsp;</span>
+    <span id="{{ desc_id }}" class="visually-hidden">{{ 'foreign prefLabel help' | trans }}</span>
     {%-  for langstring, labels in foreignLabels -%}
       {%- for label in labels.prefLabel|default([])|merge(labels.altLabel|default([])) -%}
     <span class="{% if label.type == 'skos:prefLabel' %}prefLabel{% elseif label.type == 'skos:altLabel' %}altLabel{% endif %} proplabel">{{ label }}</span>
@@ -76,8 +82,11 @@
     {%~ for property in mappingProperties ~%} {# loop through ConceptProperty objects #}
       {%~ if property.type in concept.vocab.config.additionalSearchProperties ~%}
       <li class="list-group-item px-0 py-1">
-        <span class="skosmos-tooltip" data-title="{{ property.type }}">
+        {%- set tooltip = property.description | default(property.type | trans) -%}
+        {%- set desc_id = 'sr-desc-' ~ resultIndex ~ '-map-' ~ loop.index0 -%}
+        <span class="tooltip-icon tooltip-inline t-top" data-title="{{ tooltip }}" aria-describedby="{{ desc_id }}">
           <i class="property-hover fa-solid fa-globe"></i>&nbsp;</span>
+        <span id="{{ desc_id }}" class="visually-hidden">{{ tooltip }}</span>
           {%- for propval in property.values %}
             {#- loop through ConceptMappingPropertyValue objects -#}
             {%- if propval.exVocab -%}<span class="redirected-vocab-id prefLabel">{{ propval.exVocab.shortName }}: </span>{% endif %}{{ propval.label(request.contentLang) }}
@@ -92,8 +101,10 @@
   {#- loop through ConceptProperty objects -#}
   {%- if property.type == 'rdf:type' ~%}
   <li class="list-group-item px-0 py-1">
-    <span class="skosmos-tooltip" data-title="concept_types">
-      <i class="property-hover fa-solid fa-arrows-to-circle"></i>&nbsp;</span>
+    {%- set desc_id = 'sr-desc-' ~ resultIndex ~ '-type' -%}
+    <span class="tooltip-icon tooltip-inline t-top" data-title="{{ 'concept_types' | trans }}" aria-describedby="{{ desc_id }}">
+      <i class="property-hover fa-solid fa-shapes"></i>&nbsp;</span>
+    <span id="{{ desc_id }}" class="visually-hidden">{{ 'concept_types' | trans }}</span>
     {%- for propval in property.values %}{{ propval.label | trans }}{% if not loop.last %}, {% endif %}{% endfor -%}
   </li>
   {%~ endif -%}

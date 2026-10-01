@@ -1479,6 +1479,11 @@ h2#vocab-heading {
   transform: translate(0, calc(-100% - 15px));
 }
 
+.tooltip-icon.tooltip-inline {
+  text-decoration: none;
+  cursor: help;
+}
+
 /* Tooltips with HTML content */
 
 .tooltip-html {
