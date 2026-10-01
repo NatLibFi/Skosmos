@@ -39,7 +39,9 @@ function showAllResults (element) {
 }
 
 function renderShowAllText (element) {
-  const textArr = element.textContent.split(',')
+  const propval = element.querySelector('.search-result-propval')
+  const text = propval ? propval.textContent : element.textContent
+  const textArr = text.split(',')
   return '... (' + textArr.length + ')'
 }
 

@@ -72,6 +72,27 @@ describe('Vocabulary search page', () => {
       more.click()
       more.should('not.exist')
   })
+  it('Show-all count ignores tooltip descriptions that contain commas', () => {
+      cy.visit(`/yso/en/search?clang=en&q=euro`)
+
+      // For every row that received a "show all" link, the number shown must
+      // equal the number of comma-separated values in the .search-result-propval
+      // span. The visually-hidden tooltip description (a sibling span) must not
+      // be counted, even when it contains commas (e.g. the French
+      // skos:related_help translation "Concepts associés (TA, related)").
+      cy.get('ul.list-group li').each(($li) => {
+        const link = $li.find('a.search-result-hide')
+        if (link.length === 0) {
+          return
+        }
+        const propval = $li.find('.search-result-propval').text()
+        const expectedCount = propval.split(',').length
+        const linkText = link.text()
+        const match = linkText.match(/\((\d+)\)/)
+        expect(match, 'show-all link should include a count').to.not.be.null
+        expect(Number(match[1]), `show-all count for "${linkText}"`).to.equal(expectedCount)
+      })
+  })
   it('More results are loaded on scroll', () => {
     cy.visit(`/yso/en/search?clang=en&q=an`)
     // Check that there are 5 search results
