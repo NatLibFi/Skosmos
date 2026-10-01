@@ -3,6 +3,23 @@
     {{ include('custom-templates.inc.twig', {slotName: 'main-content-top'}) }}
   </div>
   <div id="main-content">
+      {# Macro for rendering concept links with notation #}
+      {% macro concept_link(item, current_vocab, lang, contentLang) %}
+        {%- if current_vocab == item.vocab and item.isExternal %}
+          <a href="{{ item.uri }}">
+        {%- else -%}
+          <a href="{{ item.uri | link_url(item.vocab, lang, 'page', contentLang) }}">
+        {%- endif -%}
+        {%- if item.notation -%}
+          <span class="property-value-notation">{{ item.notation }} </span>
+        {%- endif -%}
+          {{- item.label(contentLang) -}}
+        </a>
+        {%- if item.isExternal and current_vocab != item.vocab %}
+          ({{ item.vocab.shortName }})
+        {%- endif -%}
+      {% endmacro %}
+
       {% if concept.deprecated %}
       <div class="main-content-section py-5 alert" id="concept-deprecated-alert" role="alert">
         <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
@@ -13,7 +30,7 @@
           {{ "See" | trans }}:
           <ul class="list-inline d-inline">
           {% for val in replacedByValues %}
-            <li class="list-inline-item me-0"><a href="{{ val.uri | link_url(val.vocab, request.lang, 'page', request.contentLang) }}">{{ val.label }}</a></li>
+            <li class="list-inline-item me-0">{{ _self.concept_link(val, vocab, request.lang, request.contentLang) }}</li>
           {% endfor %}
           </ul>
         {% endif %}
@@ -21,20 +38,6 @@
       {% endif %}
 
       <div class="main-content-section py-4{% if concept.deprecated %} concept-deprecated{% endif %}">
-
-        {# Macro for rendering concept links with notation #}
-        {% macro concept_link(item, current_vocab, lang, contentLang) %}
-          {%- if current_vocab == item.vocab and item.isExternal %}
-            <a href="{{ item.uri }}">
-          {%- else -%}
-            <a href="{{ item.uri | link_url(item.vocab, lang, 'page', contentLang) }}">
-          {%- endif -%}
-          {%- if item.notation -%}
-            <span class="property-value-notation">{{ item.notation }} </span>
-          {%- endif -%}
-            {{- item.label(contentLang) -}}
-          </a>
-        {% endmacro %}
 
         {# Macro for rendering HTML element attributes #}
         {% macro render_attrs(map) -%}

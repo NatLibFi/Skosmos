@@ -333,8 +333,9 @@
 :mapping a skosmos:Vocabulary, void:Dataset ;
 	dc11:title "Vocabulary with mappings"@en ;
 	dc:subject :cat_general ;
-	void:uriSpace "http://www.skosmos.skos/onto/mapping/";
-	skosmos:language "en";
+	void:uriSpace "http://www.skosmos.skos/mapping/";
+	skosmos:language "en", "fi";
+	skosmos:defaultLanguage "en";
 	skosmos:sparqlGraph <http://www.skosmos.skos/mapping/> .
 
 :changes a skosmos:Vocabulary, void:Dataset ;
