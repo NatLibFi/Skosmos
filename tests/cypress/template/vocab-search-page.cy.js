@@ -73,24 +73,29 @@ describe('Vocabulary search page', () => {
       more.should('not.exist')
   })
   it('Show-all count ignores tooltip descriptions that contain commas', () => {
-      cy.visit(`/yso/en/search?clang=en&q=euro`)
+      // Build a search-result row in the shape rendered by
+      // search-results.inc.twig: an icon span, a visually-hidden tooltip
+      // description span, and a .search-result-propval span holding the actual
+      // comma-separated values. The tooltip (e.g. the French skos:related_help
+      // "Concepts associés (TA, related)") contains commas but must NOT be
+      // counted. renderShowAllText() is a global loaded via scripts.inc.twig.
+      cy.visit(`/test/en/search?clang=en&q=bass`)
 
-      // For every row that received a "show all" link, the number shown must
-      // equal the number of comma-separated values in the .search-result-propval
-      // span. The visually-hidden tooltip description (a sibling span) must not
-      // be counted, even when it contains commas (e.g. the French
-      // skos:related_help translation "Concepts associés (TA, related)").
-      cy.get('ul.list-group li').each(($li) => {
-        const link = $li.find('a.search-result-hide')
-        if (link.length === 0) {
-          return
-        }
-        const propval = $li.find('.search-result-propval').text()
-        const expectedCount = propval.split(',').length
-        const linkText = link.text()
-        const match = linkText.match(/\((\d+)\)/)
-        expect(match, 'show-all link should include a count').to.not.be.null
-        expect(Number(match[1]), `show-all count for "${linkText}"`).to.equal(expectedCount)
+      cy.window().then((win) => {
+        expect(win.renderShowAllText).to.be.a('function')
+
+        const row = win.document.createElement('li')
+        row.className = 'list-group-item px-0 py-1'
+        row.innerHTML =
+          '<span class="tooltip-icon tooltip-inline t-top"><i class="property-hover fa-solid fa-cloud"></i></span>' +
+          '<span id="sr-desc-test" class="visually-hidden">Concepts associated (TA, related), help text</span>' +
+          '<span class="search-result-propval">value one, value two, value three</span>'
+
+        win.document.body.appendChild(row)
+        // The propval span has 3 values, but the tooltip adds 2 extra commas.
+        // The correct count is 3, not 5.
+        expect(win.renderShowAllText(row)).to.equal('... (3)')
+        row.remove()
       })
   })
   it('More results are loaded on scroll', () => {
