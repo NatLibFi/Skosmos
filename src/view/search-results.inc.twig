@@ -108,7 +108,7 @@
   <li class="list-group-item px-0 py-1">
     {%- set desc_id = 'sr-desc-' ~ resultIndex ~ '-type' -%}
     <span class="tooltip-icon tooltip-inline t-top" data-title="{{ 'concept_types' | trans }}" aria-describedby="{{ desc_id }}">
-      <i class="property-hover fa-solid fa-shapes"></i></span>
+      <i class="property-hover fa-solid fa-diamond"></i></span>
     <span id="{{ desc_id }}" class="visually-hidden">{{ 'concept_types' | trans }}</span>
     <span class="search-result-propval">{%- for propval in property.values %}{{ propval.label | trans }}{% if not loop.last %}, {% endif %}{% endfor -%}</span>
   </li>
