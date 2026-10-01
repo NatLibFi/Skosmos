@@ -1589,7 +1589,7 @@ h2#vocab-heading {
 
 .search-result {
   border-top: 1px solid var(--main-content-border);
-  margin-top: 2.5rem;
+  margin-top: 0.75rem;
 }
 
 .search-result-term a {
@@ -1641,11 +1641,27 @@ h2#vocab-heading {
   overflow: visible;
 }
 
-.uri-icon {
-  display: inline-block;
-  width: 20px;
-  font-size: 0.75rem;
+#search-results .search-result .list-group > li.list-group-item,
+#search-results .search-result .list-group > li.search-result-list,
+#search-results .search-result .list-group > li.search-result-hidden {
+  display: flex;
+  align-items: baseline;
+}
+
+.search-result .tooltip-icon,
+.search-result .uri-icon {
+  flex: 0 0 2rem;
   text-align: center;
+}
+
+.uri-icon {
+  font-size: 0.75rem;
+}
+
+.search-result .search-result-propval,
+.search-result .search-result-uri {
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .prefLabel.proplabel {
