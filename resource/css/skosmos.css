@@ -1163,8 +1163,8 @@ header .container-fluid .row {
 .main-content-section {
   background-color: var(--main-content-bg);
   margin-bottom: .2rem;
-  padding-left: 3.5rem;
-  padding-right: 3.5rem;
+  padding-left: 3.0rem;
+  padding-right: 3.0rem;
 }
 
 .main-content-section a:hover, .main-content-section .literal a {

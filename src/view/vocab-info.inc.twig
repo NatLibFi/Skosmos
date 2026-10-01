@@ -3,7 +3,7 @@
     {{ include('custom-templates.inc.twig', {slotName: 'main-content-top'}) }}
   </div>
   <div id="main-content">
-    <div class="main-content-section py-4">
+    <div class="main-content-section py-3">
       <h2 id="vocab-heading">{{ "Vocabulary information" | trans }}</h2>
       {% set vocabInfo = vocab.info(request.contentLang) %}
       {% if not vocabInfo %}
