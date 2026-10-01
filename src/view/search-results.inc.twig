@@ -4,7 +4,7 @@
   {%~ endif ~%}
 
 {%~ for concept in search_results ~%} {# loop through the hits #}
-{%- set resultIndex = loop.index0 -%}
+{%- set resultIndex = parameters.offset + loop.index0 -%}
 
 <div class="search-result pt-1">
   <div class="search-result-term">
