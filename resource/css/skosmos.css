@@ -1167,7 +1167,7 @@ header .container-fluid .row {
   padding-right: 3.5rem;
 }
 
-.main-content-section a:hover, .main-content-section .literal a {
+.main-content-section a[href]:hover, .main-content-section .literal a[href] {
   text-decoration: underline;
 }
 
