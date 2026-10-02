@@ -47,7 +47,7 @@ describe('Vocabulary search page', () => {
       cy.visit(`/${vocab}/en/search?clang=en&q=${term}`)
 
       //Check that there is a search result that contains a type icon
-      cy.get('div.search-result > ul > li > span > i.property-hover.fa-solid.fa-arrows-to-circle')
+      cy.get('div.search-result > ul > li > span > i.property-hover.fa-solid.fa-diamond')
 
       //Check that there is correct amount of different properties for the search result
       cy.get('div.search-result > ul > li').should('have.length', 3)
@@ -71,6 +71,32 @@ describe('Vocabulary search page', () => {
       // When the said anchor tag is clicked, it disappears
       more.click()
       more.should('not.exist')
+  })
+  it('Show-all count ignores tooltip descriptions that contain commas', () => {
+      // Build a search-result row in the shape rendered by
+      // search-results.inc.twig: an icon span, a visually-hidden tooltip
+      // description span, and a .search-result-propval span holding the actual
+      // comma-separated values. The tooltip (e.g. the French skos:related_help
+      // "Concepts associés (TA, related)") contains commas but must NOT be
+      // counted. renderShowAllText() is a global loaded via scripts.inc.twig.
+      cy.visit(`/test/en/search?clang=en&q=bass`)
+
+      cy.window().then((win) => {
+        expect(win.renderShowAllText).to.be.a('function')
+
+        const row = win.document.createElement('li')
+        row.className = 'list-group-item px-0 py-1'
+        row.innerHTML =
+          '<span class="tooltip-icon tooltip-inline t-top"><i class="property-hover fa-solid fa-cloud"></i></span>' +
+          '<span id="sr-desc-test" class="visually-hidden">Concepts associated (TA, related), help text</span>' +
+          '<span class="search-result-propval">value one, value two, value three</span>'
+
+        win.document.body.appendChild(row)
+        // The propval span has 3 values, but the tooltip adds 2 extra commas.
+        // The correct count is 3, not 5.
+        expect(win.renderShowAllText(row)).to.equal('... (3)')
+        row.remove()
+      })
   })
   it('More results are loaded on scroll', () => {
     cy.visit(`/yso/en/search?clang=en&q=an`)

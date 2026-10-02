@@ -109,7 +109,7 @@ conceptMappingsApp.component('concept-mappings', {
       <div class="col-lg-4 ps-0 property-label" :title="titleFor(label, mapping)">
         <h3>{{ labelFor(label, mapping) }}</h3>
       </div>
-      <div class="col-lg-8 gx-0 gx-lg-4">
+      <div class="col-lg-8 gx-0 gx-lg-4 property-value">
         <div class="row mb-2" v-for="m in mapping">
           <div class="col-5 prop-mapping-label">
             <a :href="m.hrefLink">{{ m.prefLabel }}</a><span v-if="m.lang && m.lang !== this.content_lang"> ({{ m.lang }})</span>

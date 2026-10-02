@@ -1,12 +1,13 @@
 function truncateSearchResults () {
   const results = document.querySelectorAll('.search-result .list-group .list-group-item')
   results.forEach((result) => {
-    result.setAttribute('class', 'search-result-list')
-    const containerWidth = result.offsetWidth
-    const actualWidth = result.scrollWidth
+    setRowClass(result, 'search-result-list')
+    const valueSpan = result.querySelector('.search-result-propval, .search-result-uri')
+    const containerWidth = valueSpan ? valueSpan.clientWidth : result.clientWidth
+    const actualWidth = valueSpan ? valueSpan.scrollWidth : result.scrollWidth
 
     if (actualWidth > containerWidth) {
-      result.setAttribute('class', 'search-result-hidden')
+      setRowClass(result, 'search-result-hidden')
       // if the element does not have a show all -link, add one
       const lastElement = result.lastElementChild
       if (!lastElement || lastElement.tagName !== 'A') {
@@ -23,6 +24,11 @@ function truncateSearchResults () {
   })
 }
 
+function setRowClass (element, cls) {
+  element.classList.remove('search-result-list', 'search-result-hidden', 'search-result-showall')
+  element.classList.add(cls)
+}
+
 function removeShowAll (element) {
   const lastElement = element.lastElementChild
   if (lastElement && lastElement.tagName === 'A') {
@@ -31,7 +37,7 @@ function removeShowAll (element) {
 }
 
 function showAllResults (element) {
-  element.setAttribute('class', 'search-result-showall')
+  setRowClass(element, 'search-result-showall')
   const link = element.querySelector('A')
   if (link) {
     element.removeChild(link)
@@ -39,7 +45,9 @@ function showAllResults (element) {
 }
 
 function renderShowAllText (element) {
-  const textArr = element.textContent.split(',')
+  const propval = element.querySelector('.search-result-propval')
+  const text = propval ? propval.textContent : element.textContent
+  const textArr = text.split(',')
   return '... (' + textArr.length + ')'
 }
 

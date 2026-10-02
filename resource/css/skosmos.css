@@ -977,7 +977,7 @@ header .container-fluid .row {
   background-color: var(--sidebar-tab-active-bg);
   color: var(--sidebar-tab-active-text);
   margin: 0;
-  width: 35px;
+  width: 28px;
   cursor: pointer;
 }
 
@@ -988,7 +988,7 @@ header .container-fluid .row {
 #sidebar .form-check-label {
   display: flex;
   justify-content: center;
-  padding: 0.375rem 0.75rem;
+  padding: 0.375rem 0;
 }
 
 #sidebar .form-check-label.selected, #sidebar .form-check-label:hover, #sidebar .form-check-label:active {
@@ -1001,7 +1001,7 @@ header .container-fluid .row {
 }
 
 #sidebar .form-check-label.wide {
-  width: 50px;
+  width: 46px;
 }
 
 #sidebar .list-group-item span {
@@ -1163,8 +1163,8 @@ header .container-fluid .row {
 .main-content-section {
   background-color: var(--main-content-bg);
   margin-bottom: .2rem;
-  padding-left: 3.5rem;
-  padding-right: 3.5rem;
+  padding-left: 2.7rem;
+  padding-right: 2.7rem;
 }
 
 .main-content-section a[href]:hover, .main-content-section .literal a[href] {
@@ -1186,8 +1186,7 @@ h2#vocab-heading {
 }
 
 .property {
-  border-top: 1px solid var(--main-content-border);
-  padding: .5rem 0;
+  padding-bottom: .5rem;
 }
 
 .property ul, .property li {
@@ -1197,8 +1196,8 @@ h2#vocab-heading {
   margin-bottom: 0;
 }
 
-.property.prop-mapping {
-  border-top: none;
+.property-label {
+  padding-top: .5rem;
 }
 
 #main-container .property-label h3 {
@@ -1209,7 +1208,34 @@ h2#vocab-heading {
 
 .property-value {
   color: var(--main-content-text);
-  border: none;
+  padding-top: .5rem;
+  padding-right: 0;
+}
+
+.property-value::before {
+  content: "";
+  display: block;
+  border-top: 1px solid var(--main-content-border);
+  margin-top: -.5rem;
+  margin-bottom: .5rem;
+}
+
+#concept-mappings .property-value::before {
+  content: none;
+}
+
+@media (max-width: 992px) {
+  .property {
+    border-top: 1px solid var(--main-content-border);
+    padding-top: .5rem;
+  }
+  .property-label,
+  .property-value {
+    padding-top: 0;
+  }
+  .property-value::before {
+    display: none;
+  }
 }
 
 /* --- Vocab statistics --- */
@@ -1458,6 +1484,11 @@ h2#vocab-heading {
   transform: translate(0, calc(-100% - 15px));
 }
 
+.tooltip-icon.tooltip-inline {
+  text-decoration: none;
+  cursor: help;
+}
+
 /* Tooltips with HTML content */
 
 .tooltip-html {
@@ -1563,7 +1594,7 @@ h2#vocab-heading {
 
 .search-result {
   border-top: 1px solid var(--main-content-border);
-  margin-top: 2.5rem;
+  margin-top: 0.75rem;
 }
 
 .search-result-term a {
@@ -1576,17 +1607,18 @@ h2#vocab-heading {
   text-decoration: underline;
 }
 
-.search-result .list-group-item { /* bug in truncate-search-results.js (.list-group-item class is overwritten) */
+.search-result .list-group-item {
   color: var(--main-content-text);
   border: none;
   cursor: default;
+  padding: 0.125rem 0;
 }
 
-.search-result .list-group-item a { /* unused (remove?) */ /* bug in truncate-search-results.js (.list-group-item class is overwritten) */
+.search-result .list-group-item a {
   cursor: pointer;
 }
 
-.search-result-list { /* bug in truncate-search-results.js (.list-group-item class is overwritten) */
+.search-result-list {
   display: block;
   white-space: nowrap;
   position: relative;
@@ -1606,6 +1638,10 @@ h2#vocab-heading {
   display: block;
   white-space: nowrap;
   position: relative;
+}
+
+.search-result-hidden .search-result-propval,
+.search-result-hidden .search-result-uri {
   overflow: hidden;
 }
 
@@ -1615,11 +1651,29 @@ h2#vocab-heading {
   overflow: visible;
 }
 
-.uri-icon {
-  display: inline-block;
-  width: 20px;
-  font-size: 0.75rem;
+#search-results .search-result .list-group > li.list-group-item,
+#search-results .search-result .list-group > li.search-result-list,
+#search-results .search-result .list-group > li.search-result-hidden,
+#search-results .search-result .list-group > li.search-result-showall {
+  display: flex;
+  align-items: baseline;
+}
+
+.search-result .tooltip-icon,
+.search-result .uri-icon {
+  flex: 0 0 1.5rem;
   text-align: center;
+  margin-right: 0.25rem;
+}
+
+.uri-icon {
+  font-size: 0.75rem;
+}
+
+.search-result .search-result-propval,
+.search-result .search-result-uri {
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .prefLabel.proplabel {
