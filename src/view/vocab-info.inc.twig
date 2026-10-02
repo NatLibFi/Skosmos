@@ -65,7 +65,7 @@
     <div class="main-content-section py-4">
       <div class="row py-3" id="vocab-download-links">
         <div class="col-sm-12 px-0 property-label" id="download-links">
-          <h3><i class="fa-solid fa-download"></i> {{ "Download this vocabulary:" | trans }}</h3>
+          <h3><i class="fa-solid fa-download w-auto"></i> {{ "Download this vocabulary:" | trans }}</h3>
           <ul class="d-inline">
           {% if 'application/rdf+xml' in vocab.config.dataURLs|keys %}
             <li><a class="me-3" href="rest/v1/{{ request.vocabid }}/data?format=application/rdf%2Bxml">RDF/XML</a></li>
