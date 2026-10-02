@@ -95,8 +95,8 @@
                 {% if descriptionId %}aria-describedby="{{ descriptionId }}"{% endif %}
                 class="mb-0 user-select-all">{{ concept.label }}</h2><button
                     class="btn btn-default copy-clipboard px-1" type="button" id="copy-preflabel" data-target-id="concept-preflabel"
-                    data-bs-toggle="tooltip" data-bs-placement="button" title="{{ 'Copy %target% to clipboard' | trans({'%target%': 'skos:prefLabel' | trans}) }}"
-                    aria-label="{{ 'Copy %target% to clipboard' | trans({'%target%': 'skos:prefLabel' | trans}) }}">
+                    data-bs-toggle="tooltip" data-bs-placement="button" title="{{ 'Copy %target% to clipboard' | trans({'%target%': label}) }}"
+                    aria-label="{{ 'Copy %target% to clipboard' | trans({'%target%': label}) }}">
               <i class="fa-regular fa-copy"></i>
             </button>
             {% endif %}
