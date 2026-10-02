@@ -1209,6 +1209,7 @@ h2#vocab-heading {
 .property-value {
   color: var(--main-content-text);
   padding-top: .5rem;
+  padding-right: 0;
 }
 
 .property-value::before {
@@ -1217,6 +1218,10 @@ h2#vocab-heading {
   border-top: 1px solid var(--main-content-border);
   margin-top: -.5rem;
   margin-bottom: .5rem;
+}
+
+#concept-mappings .property-value::before {
+  content: none;
 }
 
 @media (max-width: 992px) {
