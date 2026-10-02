@@ -420,7 +420,10 @@
           rdfs:comment "exactly matching classes in another vocabulary."@en ],
         [ skosmos:property unknown:vocabularyProperty ;
           rdfs:label "Vocabulary Property"@en ;
-          rdfs:comment "Vocabulary Property description"@en ] ;
+          rdfs:comment "Vocabulary Property description"@en ],
+        [ skosmos:property skosmos:foreignLabels ;
+          rdfs:label "Foreign terms"@en ;
+          rdfs:comment "Terms of this concept in other languages."@en ] ;
         skosmos:sparqlGraph <http://www.skosmos.skos/conceptPropertyLabels/> .
 
 :cbd a skosmos:Vocabulary, void:Dataset ;

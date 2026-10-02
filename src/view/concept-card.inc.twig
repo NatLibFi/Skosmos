@@ -177,9 +177,11 @@
         {% set foreignLabels = concept.foreignLabels %}
         {% if foreignLabels %}
         <div class="row property prop-foreignlabels">
+          {%- set label = custom_labels['skosmos:foreignLabels']['label'][request.lang] | default('foreign prefLabels' | trans) -%}
+          {%- set tooltip = custom_labels['skosmos:foreignLabels']['description'][request.lang] | default('foreign prefLabel help' | trans) -%}
           <div class="col-lg-4 ps-0 property-label">
-            <h3 class="tooltip-inline t-top" aria-describedby="prop-desc-foreignlabels" data-title="{{ 'foreign prefLabel help'|trans }}">{{ 'foreign prefLabels'|trans }}</h3>
-            <span id="prop-desc-foreignlabels" class="visually-hidden">{{ 'foreign prefLabel help'|trans }}</span>
+            <h3 class="tooltip-inline t-top" aria-describedby="prop-desc-foreignlabels" data-title="{{ tooltip }}">{{ label[:1]|upper ~ label[1:] }}</h3>
+            <span id="prop-desc-foreignlabels" class="visually-hidden">{{ tooltip }}</span>
           </div>
           <div class="col-lg-8 gx-0 gx-lg-4 property-value" id="concept-other-languages">
             {% for language,labels in foreignLabels %}
