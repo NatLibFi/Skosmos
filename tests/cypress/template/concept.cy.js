@@ -165,6 +165,15 @@ describe('Concept page', () => {
     // Check that "my property" property label is capitalized correctly
     cy.get('.prop-my_property .property-label h3').invoke('text').should('include', 'My property')
   })
+  it('uses the custom prefLabel label in the copy-to-clipboard button accessible name', () => {
+    // Go to "Crucian carp" concept page in vocab with property label overrides
+    // (no notation, so the copy button next to the prefLabel is shown)
+    cy.visit('/conceptPropertyLabels/en/page/ta121')
+    // The custom label "Caption" (override of "Preferred term") should be used in the accessible name
+    cy.get('#copy-preflabel').should('have.attr', 'aria-label', 'Copy Caption to clipboard')
+    // and in the tooltip title
+    cy.get('#copy-preflabel').should('have.attr', 'title', 'Copy Caption to clipboard')
+  })
   it('overrides concept property labels', () => {
     // Go to "Carp" concept page in vocab with property label overrides
     cy.visit('/conceptPropertyLabels/en/page/ta112')

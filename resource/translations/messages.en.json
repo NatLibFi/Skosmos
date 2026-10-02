@@ -138,7 +138,6 @@
     "Concepts loaded for letter %letter%": "Concepts loaded for letter %letter%",
     "Concept %term% in vocabulary %vocab%": "Concept %term% in vocabulary %vocab%",
     "Contact us!": "Contact us!",
-    "Copy to clipboard": "Copy to clipboard",
     "Count": "Count",
     "Deprecated concept": "Deprecated concept",
     "Download this concept": "Download this concept",
@@ -184,5 +183,6 @@
     "Content language": "Content language",
     "all vocabularies": "all vocabularies",
     "all languages": "all languages",
-    "hierarchy-disabled-group-page-help": "Hierarchy can't be shown on this page"
+    "hierarchy-disabled-group-page-help": "Hierarchy can't be shown on this page",
+    "Copy %target% to clipboard": "Copy %target% to clipboard"
 }
