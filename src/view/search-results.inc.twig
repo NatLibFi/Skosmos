@@ -31,7 +31,7 @@
   {% set conceptProperties = concept.getProperties(allowedProperties) %}
   {%~ for property in conceptProperties ~%} {# loop through ConceptProperty objects #}
     {%~ if property.type != 'rdf:type' ~%}
-    <li class="list-group-item px-0 py-1">
+    <li class="list-group-item">
       {%- set tooltip = property.description | default('') -%}
       {%- set desc_id = 'sr-desc-' ~ resultIndex ~ '-main-' ~ loop.index0 -%}
       <span class="tooltip-icon{% if tooltip != '' %} tooltip-inline t-top{% endif %}"{% if tooltip != '' %} data-title="{{ tooltip }}" aria-describedby="{{ desc_id }}"{% endif %}>
@@ -63,7 +63,7 @@
   {%~ endfor ~%}
   {%- set foreignLabels = concept.foreignLabels -%}
   {%~ if foreignLabels ~%}
-  <li class="list-group-item px-0 py-1">
+  <li class="list-group-item">
     {%- set desc_id = 'sr-desc-' ~ resultIndex ~ '-foreign' -%}
     <span class="tooltip-icon tooltip-inline t-top" data-title="{{ 'foreign prefLabel help' | trans }}" aria-describedby="{{ desc_id }}"><i class="property-hover fa-solid fa-globe"></i></span>
     <span id="{{ desc_id }}" class="visually-hidden">{{ 'foreign prefLabel help' | trans }}</span>
@@ -84,7 +84,7 @@
   {%~ if mappingProperties ~%}
     {%~ for property in mappingProperties ~%} {# loop through ConceptProperty objects #}
       {%~ if property.type in concept.vocab.config.additionalSearchProperties ~%}
-      <li class="list-group-item px-0 py-1">
+      <li class="list-group-item">
         {%- set tooltip = property.description | default(property.type | trans) -%}
         {%- set desc_id = 'sr-desc-' ~ resultIndex ~ '-map-' ~ loop.index0 -%}
         <span class="tooltip-icon tooltip-inline t-top" data-title="{{ tooltip }}" aria-describedby="{{ desc_id }}">
@@ -105,7 +105,7 @@
 {%- for property in conceptProperties ~%}
   {#- loop through ConceptProperty objects -#}
   {%- if property.type == 'rdf:type' ~%}
-  <li class="list-group-item px-0 py-1">
+  <li class="list-group-item">
     {%- set desc_id = 'sr-desc-' ~ resultIndex ~ '-type' -%}
     <span class="tooltip-icon tooltip-inline t-top" data-title="{{ 'concept_types' | trans }}" aria-describedby="{{ desc_id }}">
       <i class="property-hover fa-solid fa-diamond"></i></span>
@@ -115,7 +115,7 @@
   {%~ endif -%}
 {%~ endfor -%}
 {%~ if concept.uri ~%}
-  <li class="list-group-item px-0 py-1">
+  <li class="list-group-item">
       <span class="uri-icon">URI</span>
       <span class="search-result-uri">{{ concept.uri }}</span>
   </li>
