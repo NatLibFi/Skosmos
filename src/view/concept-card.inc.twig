@@ -86,7 +86,8 @@
                 class="mb-0">
               <span class="notation user-select-all" id="concept-notation">{{ concept.notation }}</span> {{ concept.label }}</h2><button
                   class="btn btn-default copy-clipboard px-1" type="button" id="copy-notation" data-target-id="concept-notation"
-                  data-bs-toggle="tooltip" data-bs-placement="button" title="{{ 'Copy to clipboard' | trans }}">
+                  data-bs-toggle="tooltip" data-bs-placement="button" title="{{ 'Copy %target% to clipboard' | trans({'%target%': 'skos:notation' | trans}) }}"
+                  aria-label="{{ 'Copy %target% to clipboard' | trans({'%target%': 'skos:notation' | trans}) }}">
                 <i class="fa-regular fa-copy"></i>
               </button>
             {% else %}
@@ -94,7 +95,8 @@
                 {% if descriptionId %}aria-describedby="{{ descriptionId }}"{% endif %}
                 class="mb-0 user-select-all">{{ concept.label }}</h2><button
                     class="btn btn-default copy-clipboard px-1" type="button" id="copy-preflabel" data-target-id="concept-preflabel"
-                    data-bs-toggle="tooltip" data-bs-placement="button" title="{{ 'Copy to clipboard' | trans }}">
+                    data-bs-toggle="tooltip" data-bs-placement="button" title="{{ 'Copy %target% to clipboard' | trans({'%target%': 'skos:prefLabel' | trans}) }}"
+                    aria-label="{{ 'Copy %target% to clipboard' | trans({'%target%': 'skos:prefLabel' | trans}) }}">
               <i class="fa-regular fa-copy"></i>
             </button>
             {% endif %}
@@ -217,7 +219,8 @@
             <span id="concept-uri"
                   class="user-select-all">{{ concept.uri }}</span><button
                     class="btn btn-default copy-clipboard px-1" type="button" id="copy-uri" data-target-id="concept-uri"
-                    data-bs-toggle="tooltip" data-bs-placement="button" title="{{ 'Copy to clipboard' | trans }}">
+                    data-bs-toggle="tooltip" data-bs-placement="button" title="{{ 'Copy %target% to clipboard' | trans({'%target%': 'URI'}) }}"
+                    aria-label="{{ 'Copy %target% to clipboard' | trans({'%target%': 'URI'}) }}">
               <i class="fa-regular fa-copy"></i>
             </button>
           </div>

@@ -27,6 +27,9 @@ describe('Concept page, full vs. partial page loads', () => {
         cy.get('#tab-hierarchy').contains('a', 'burial mounds').click()
       }
 
+      // check the copy button has a distinct accessible name identifying what it copies
+      cy.get('#copy-preflabel').should('have.attr', 'aria-label', 'Copy Preferred term to clipboard')
+
       // click the copy to clipboard button next to the prefLabel
       cy.get('#copy-preflabel').click()
 
@@ -60,6 +63,9 @@ describe('Concept page, full vs. partial page loads', () => {
         cy.get('#tab-hierarchy').contains('a', 'burial mounds').click()
       }
 
+      // check the copy button has a distinct accessible name identifying what it copies
+      cy.get('#copy-uri').should('have.attr', 'aria-label', 'Copy URI to clipboard')
+
       // click the copy to clipboard button next to the URI
       cy.get('#copy-uri').click()
 
@@ -81,6 +87,9 @@ describe('Concept page, full vs. partial page loads', () => {
         // Wait for copy button to be ready
         cy.get('#copy-notation').should('be.visible')
       }
+
+      // check the copy button has a distinct accessible name identifying what it copies
+      cy.get('#copy-notation').should('have.attr', 'aria-label', 'Copy Notation to clipboard')
 
       // click the copy to clipboard button next to the URI
       cy.get('#copy-notation').click()
