@@ -249,6 +249,20 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @covers Vocabulary::getInfo
+     * @covers Vocabulary::parseVersionInfo
+     */
+    public function testGetInfoWithVersionInfoWithLanguage()
+    {
+        $vocab = $this->model->getVocabulary('test');
+        $info = $vocab->getInfo('fi');
+        $this->assertEqualsCanonicalizing([
+            new EasyRdf\Literal('5', 'fi'),
+            new EasyRdf\Literal('Version 5', 'fi'),
+        ], $info['owl:versionInfo']);
+    }
+
+    /**
+     * @covers Vocabulary::getInfo
      */
     public function testGetInfoWithDC11Label()
     {
