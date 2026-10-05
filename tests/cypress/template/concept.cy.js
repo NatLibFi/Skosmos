@@ -177,6 +177,10 @@ describe('Concept page', () => {
   it('overrides concept property labels', () => {
     // Go to "Carp" concept page in vocab with property label overrides
     cy.visit('/conceptPropertyLabels/en/page/ta112')
+    // Check that the foreign prefLabels section label and tooltip are overridden
+    cy.get('.prop-foreignlabels .property-label h3').invoke('text').should('equal', 'Foreign terms')
+    cy.get('.prop-foreignlabels .property-label h3').invoke('attr', 'data-title').should('equal', 'Terms of this concept in other languages.')
+    cy.get('#prop-desc-foreignlabels').invoke('text').should('equal', 'Terms of this concept in other languages.')
     // Check that prefLabel property label is overridden correctly
     cy.get('#concept-property-label').invoke('text').should('include', 'Caption')
     // Check that notation property label is overridden correctly
