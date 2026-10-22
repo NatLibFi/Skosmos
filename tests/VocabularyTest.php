@@ -222,7 +222,30 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
     {
         $vocab = $this->model->getVocabulary('test');
         $info = $vocab->getInfo();
-        $this->assertEquals(array("dc:title" => array('Test ontology'), 'dc:modified' => array('Wednesday 1 October 2014 at 16:29:03 Coordinated Universal Time'), "rdf:type" => array('http://www.w3.org/2004/02/skos/core#ConceptScheme' => 'http://www.w3.org/2004/02/skos/core#ConceptScheme'), "owl:versionInfo" => array('The latest and greatest version'), "dc:description" => array('Description of Test ontology')), $info);
+
+        /* test different date variants since the details depend on locale data */
+        $this->assertContains(
+            $info['dc:modified'][0],
+            array(
+                'Wednesday 1 October 2014 at 16:29:03 Coordinated Universal Time',
+                'Wednesday, 1 October 2014 at 16:29:03 Coordinated Universal Time',
+            )
+        );
+
+        /* check the remaining data */
+        unset($info['dc:modified']);
+        $this->assertEquals(
+            array(
+                "dc:title" => array('Test ontology'),
+                "rdf:type" => array(
+                    'http://www.w3.org/2004/02/skos/core#ConceptScheme' =>
+                        'http://www.w3.org/2004/02/skos/core#ConceptScheme'
+                ),
+                "owl:versionInfo" => array('The latest and greatest version'),
+                "dc:description" => array('Description of Test ontology')
+            ),
+            $info
+        );
     }
 
     /**
