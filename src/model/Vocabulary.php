@@ -222,6 +222,7 @@ class Vocabulary extends DataObject implements Modifiable
             }
         }
         if (isset($ret['owl:versionInfo'])) { // if version info available for vocabulary convert it to a more readable format
+            $ret['owl:versionInfo'] = array_values($ret['owl:versionInfo']);
             $ret['owl:versionInfo'][0] = $this->parseVersionInfo($ret['owl:versionInfo'][0]);
         }
         // remove duplicate values
