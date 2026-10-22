@@ -3,7 +3,7 @@
   "description": "Thesaurus and controlled vocabulary browser using SKOS and SPARQL",
   "type": "project",
   "license": "MIT",
-  "version": "3.5-dev",
+  "version": "3.5",
   "require": {
     "sweetrdf/easyrdf": "~1.19.0",
     "twig/twig": "^3.29.0",
