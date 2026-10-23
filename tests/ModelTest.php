@@ -225,7 +225,7 @@ class ModelTest extends PHPUnit\Framework\TestCase
     public function testGetTypesWithoutParams()
     {
         $result = $this->model->getTypes();
-        $this->assertEquals(array('http://www.w3.org/2004/02/skos/core#Concept', 'http://www.w3.org/2004/02/skos/core#Collection', 'http://purl.org/iso25964/skos-thes#ConceptGroup', 'http://purl.org/iso25964/skos-thes#ThesaurusArray', 'http://www.skosmos.skos/test-meta/TestClass'), array_keys($result));
+        $this->assertEqualsCanonicalizing(array('http://www.w3.org/2004/02/skos/core#Concept', 'http://www.w3.org/2004/02/skos/core#Collection', 'http://purl.org/iso25964/skos-thes#ConceptGroup', 'http://purl.org/iso25964/skos-thes#ThesaurusArray', 'http://www.skosmos.skos/test-meta/TestClass'), array_keys($result));
     }
 
     /**
