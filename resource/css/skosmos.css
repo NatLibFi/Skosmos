@@ -476,8 +476,7 @@ header .container-fluid .row {
 
 /* --- Global search bar --- */
 
-#global-search-text {
-  overflow: auto;
+#global-search-text, #global-search-text h1 {
   font-family: var(--font-family-heading);
   font-weight: bold;
   font-size: 2rem;
@@ -1595,6 +1594,10 @@ h2#vocab-heading {
 .search-result {
   border-top: 1px solid var(--main-content-border);
   margin-top: 0.75rem;
+}
+
+.search-result-term h3 {
+  all: unset;
 }
 
 .search-result-term a {
