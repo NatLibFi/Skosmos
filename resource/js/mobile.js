@@ -16,10 +16,12 @@ function initializeSidebarCollapse () {
       i.classList.toggle('fa-chevron-right')
       i.classList.toggle('fa-chevron-down')
 
-      // Toggle button text
+      // Toggle button text and aria expanded
       sidebarCollapseBtn.getElementsByTagName('span')[0].textContent = sidebar.classList.contains('d-none') ? $t('Browse concepts') : $t('Hide concepts')
-
       sidebarCollapseBtn.setAttribute('aria-expanded', sidebarCollapseBtn.getAttribute('aria-expanded') === 'true' ? 'false' : 'true')
+
+      // Custom event for sidebar visibility
+      sidebarCollapseBtn.dispatchEvent(new CustomEvent('sidebar-toggled'))
     })
   }
 }

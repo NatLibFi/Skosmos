@@ -156,7 +156,7 @@ function startAlphaApp () {
     template: `
       <div
         v-click-tab-alphabetical="handleClickAlphabeticalEvent"
-        v-click-collapse-btn="setListStyle"
+        v-toggle-sidebar="setListStyle"
         v-resize-window="setListStyle"
         v-window-popstate="() => selectedConcept = ''"
       >
@@ -195,15 +195,15 @@ function startAlphaApp () {
   })
 
   /* Custom directive used to add an event listener on clicks on the sidebar-collapse-btn element on mobile */
-  tabAlphaApp.directive('click-collapse-btn', {
+  tabAlphaApp.directive('toggle-sidebar', {
     beforeMount: (el, binding) => {
       el.clickTabEvent = event => {
         binding.value() // calling the method given as the attribute value (seListStyle)
       }
-      document.querySelector('#sidebar-collapse-btn').addEventListener('click', el.clickTabEvent) // registering an event listener on clicks on the sidebar-collapse-btn element on mobile
+      document.querySelector('#sidebar-collapse-btn').addEventListener('sidebar-toggled', el.clickTabEvent) // registering an event listener on toggling sidebar on mobile
     },
     unmounted: el => {
-      document.querySelector('#sidebar-collapse-btn').removeEventListener('click', el.clickTabEvent)
+      document.querySelector('#sidebar-collapse-btn').addEventListener('sidebar-toggled', el.clickTabEvent)
     }
   })
 
