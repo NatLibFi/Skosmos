@@ -23,7 +23,7 @@ The latest development version is also available at
 [dev.finto.fi](http://dev.finto.fi).
 
 Skosmos is implemented using PHP (supported versions: 8.1 to 8.4), with 
-Twig templates and e.g. jQuery and jsTree used to build the web interface, and 
+Twig templates, Vue and Bootstrap used to build the web interface, and 
 EasyRdf for SPARQL and RDF data access. 
 
 The code is open source under the MIT license. See 
