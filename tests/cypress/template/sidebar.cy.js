@@ -31,6 +31,8 @@ describe('Sidebar', () => {
     cy.get('#sidebar-collapse-btn').invoke('text').should('contain', 'Piilota käsitteet')
     // Check that sidebar is visible
     cy.get('#sidebar-col').should('be.visible')
+    // Check that alphabetical tab has correct width
+    cy.get('.sidebar-list').eq(0).invoke('css', 'width').should('not.equal', '0px')
     // Click button again and check that everything is toggled correctly
     cy.get('#sidebar-collapse-btn').click()
     cy.get('#sidebar-collapse-btn').invoke('text').should('contain', 'Selaa käsitteitä')
