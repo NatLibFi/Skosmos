@@ -75,6 +75,8 @@
     skosmos:feedbackHoneypotEnabled false ;
     # default time a user must wait before submitting a form
     skosmos:feedbackHoneypotTime 2 ;
+    # disable the change list cutoff so that test vocabularies with old dates are included
+    skosmos:changeListCutoffDays 0 ;
     # plugins to activate for the whole installation (including all vocabularies)
     skosmos:globalPlugins ("alpha" "Bravo" "charlie") .
 
@@ -345,6 +347,14 @@
 	skosmos:language "en";
 	skosmos:showDeprecatedChanges true ;
 	skosmos:sparqlGraph <http://www.skosmos.skos/changes/> .
+
+:changesCutoff a skosmos:Vocabulary, void:Dataset ;
+	dc11:title "A vocabulary for testing the change list cutoff"@en ;
+	dc:subject :cat_general ;
+	void:uriSpace "http://www.skosmos.skos/changesCutoff/";
+	skosmos:language "en";
+	skosmos:changeListCutoffDays 30 ;
+	skosmos:sparqlGraph <http://www.skosmos.skos/changesCutoff/> .
 
 :changesDefaultView a skosmos:Vocabulary, void:Dataset ;
 	dc11:title "A vocabulary for testing the change list creation with changes as default view"@en ;

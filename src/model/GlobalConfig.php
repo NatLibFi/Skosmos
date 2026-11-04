@@ -272,6 +272,18 @@ class GlobalConfig extends BaseConfig
     }
 
     /**
+     * Returns the number of days to look back for changes when creating the
+     * change list (Changes tab), or the default value of 365 days (1 year) if
+     * not specified in the configuration. A value of 0 disables the cutoff,
+     * i.e. all dated changes are considered regardless of age.
+     * @return integer
+     */
+    public function getChangeListCutoffDays()
+    {
+        return (int) $this->getLiteral('skosmos:changeListCutoffDays', 365);
+    }
+
+    /**
      * Returns the SPARQL HTTP request timeout in seconds or the default value
      * of 20 seconds if not specified in the configuration.
      * @return integer

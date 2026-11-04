@@ -1,0 +1,21 @@
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix changesCutoff: <http://www.skosmos.skos/changesCutoff/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+changesCutoff:c1 a skos:Concept ;
+    dc:created "2999-01-01T12:00:00"^^xsd:dateTime ;
+    skos:prefLabel "Future concept"@en .
+
+changesCutoff:c2 a skos:Concept ;
+    dc:created "2000-01-01T12:00:00"^^xsd:dateTime ;
+    skos:prefLabel "Ancient concept"@en .
+
+changesCutoff:c3 a skos:Concept ;
+    dc:created "2999-01-01"^^xsd:date ;
+    skos:prefLabel "Future date concept"@en .
+
+changesCutoff:c4 a skos:Concept ;
+    dc:created "2000-01-01"^^xsd:date ;
+    skos:prefLabel "Ancient date concept"@en .

@@ -67,6 +67,9 @@
     skosmos:feedbackHoneypotEnabled true ;
     # default time a user must wait before submitting a form
     skosmos:feedbackHoneypotTime 5 ;
+    # how many days to look back for changes on the Changes tab; 0 disables the cutoff
+    # can also be set per vocabulary on a skosmos:Vocabulary node
+    skosmos:changeListCutoffDays 365 ;
     # plugins to activate for the whole installation (including all vocabularies)
     skosmos:globalPlugins () .
 
