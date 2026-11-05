@@ -47,7 +47,7 @@ describe('Global search page', () => {
       cy.visit(`/en/search?clang=en&q=${term}`)
 
       //Check that the search count is correct
-      cy.get('#search-results > h1').invoke('text').should('contain', searchCountTitle);
+      cy.get('#search-results > h2').invoke('text').should('contain', searchCountTitle);
 
       //Check that search count matches the number of results
       cy.get('div.search-result').should('have.length', count)
