@@ -157,7 +157,11 @@ function startGlobalSearchApp () {
         const apiSearchTerm = this.searchTerm.includes('*') ? this.searchTerm : `${this.searchTerm}*`
         const params = new URLSearchParams({ query: apiSearchTerm, unique: true })
         const searchLang = this.getSearchLang() || window.SKOSMOS.lang
-        params.set('lang', searchLang)
+        if (searchLang === 'all') {
+          params.set('anylang', 'on')
+        } else {
+          params.set('lang', searchLang)
+        }
         params.set('vocab', this.formatVocabParam())
 
         return params

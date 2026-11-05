@@ -122,6 +122,21 @@ describe('Global search bar', () => {
     })
   })
 
+  it('Dropdown search results are displayed for the selected vocabulary and every language, when "all languages" is chosen', () => {
+
+    // Choose the vocabularies altLabel and YSO, select "all languages" for search
+    cy.get('#vocab-list').contains('label', 'YSO').find('input[type="checkbox"]').check({ force: true })
+    cy.get('#vocab-list').contains('label', 'altlabel').find('input[type="checkbox"]').check({ force: true })
+    cy.get('#language-selector .dropdown-toggle').click()
+    cy.get('#language-list li').contains('label', 'kaikki kielet').click()
+
+    cy.get('#search-field').type('ho')
+    cy.get('#search-autocomplete-results', { timeout: 20000 }).should('be.visible').children().should('have.length.greaterThan', 0)
+    cy.get('#search-autocomplete-results').within(() => {
+      cy.get('li').should('have.length', 5)
+    })
+  })
+
   it('No results message is displayed if no results are found', () => {
 
     cy.get('#global-search-toggle').click()
