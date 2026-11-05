@@ -1183,6 +1183,41 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
         $this->assertFalse($actual[2]['deprecated']); // 'Hurr Durr'
     }
 
+    /**
+     * @covers GenericSparql::queryChangeList
+     * @covers GenericSparql::generateChangeListQuery
+     * @covers GenericSparql::transFormChangeListResults
+     */
+    public function testQueryChangeListCutoffEnabled()
+    {
+        $voc = $this->model->getVocabulary('changesCutoff');
+        $graph = $voc->getGraph();
+        $sparql = new GenericSparql($this->endpoint, $graph, $this->model);
+        // with a 30 day cutoff, only the future-dated concepts should be returned,
+        // both xsd:dateTime and xsd:date literals must be taken into account
+        $actual = $sparql->queryChangeList('dc:created', 'en', 0, 10, false, 30);
+        $labels = array();
+        foreach ($actual as $concept) {
+            $labels[] = $concept['prefLabel'];
+        }
+        $this->assertEquals(array('Future concept', 'Future date concept'), $labels);
+    }
+
+    /**
+     * @covers GenericSparql::queryChangeList
+     * @covers GenericSparql::generateChangeListQuery
+     * @covers GenericSparql::transFormChangeListResults
+     */
+    public function testQueryChangeListCutoffDisabled()
+    {
+        $voc = $this->model->getVocabulary('changesCutoff');
+        $graph = $voc->getGraph();
+        $sparql = new GenericSparql($this->endpoint, $graph, $this->model);
+        // with the cutoff disabled (0 days), all four concepts should be returned
+        $actual = $sparql->queryChangeList('dc:created', 'en', 0, 10, false, 0);
+        $this->assertEquals(4, sizeof($actual));
+    }
+
 
     /**
      * @covers GenericSparql::queryChangeList

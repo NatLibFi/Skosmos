@@ -2349,12 +2349,28 @@ EOQ;
      * @param int $offset offset of results to retrieve; 0 for beginning of list
      * @param int $limit maximum number of results to return
      * @param boolean $showDeprecated whether to include deprecated concepts in the change list
+     * @param int|null $cutoffDays how many days to look back for changes; null to use the
+     *                             global configuration value, 0 to disable the cutoff
      * @return string sparql query
      */
-    private function generateChangeListQuery($prop, $lang, $offset, $limit = 200, $showDeprecated = false)
+    private function generateChangeListQuery($prop, $lang, $offset, $limit = 200, $showDeprecated = false, $cutoffDays = null)
     {
         $fcl = $this->generateFromClause();
         $offset = ($offset) ? 'OFFSET ' . $offset : '';
+
+        // resolve the cutoff window: an explicitly passed value takes precedence,
+        // otherwise fall back to the global configuration value
+        if ($cutoffDays === null) {
+            $cutoffDays = $this->model->getConfig()->getChangeListCutoffDays();
+        }
+        // only consider concepts changed within the cutoff window; 0 disables the cutoff
+        $cutoffFilter = '';
+        if ($cutoffDays > 0) {
+            $date = new DateTime();
+            $date->modify('-' . (int) $cutoffDays . ' days');
+            $cutoffDate = $date->format('Y-m-d');
+            $cutoffFilter = "FILTER (xsd:date(?date) >= \"$cutoffDate\"^^xsd:date)";
+        }
 
         //Additional clauses when deprecated concepts need to be included in the results
         $deprecatedOptions = '';
@@ -2363,16 +2379,17 @@ EOQ;
             $deprecatedVars = '?replacedBy ?deprecated ?replacingLabel';
             $deprecatedOptions = <<<EOQ
 UNION {
-    ?concept owl:deprecated True; dc:modified ?date2 .
-    BIND(True as ?deprecated)
-    BIND(COALESCE(?date2, ?date) AS ?date)
+  ?concept owl:deprecated True;
+           dc:modified ?date .
+  $cutoffFilter
+  BIND(True as ?deprecated)
+  OPTIONAL {
+    ?concept dc:isReplacedBy ?replacedBy .
     OPTIONAL {
-        ?concept dc:isReplacedBy ?replacedBy .
-        OPTIONAL {
-            ?replacedBy skos:prefLabel ?replacingLabel .
-            FILTER (langMatches(lang(?replacingLabel), '$lang'))
-        }
+      ?replacedBy skos:prefLabel ?replacingLabel .
+      FILTER (langMatches(lang(?replacingLabel), '$lang'))
     }
+  }
 }
 EOQ;
         }
@@ -2380,14 +2397,20 @@ EOQ;
         $query = <<<EOQ
 SELECT ?concept ?date ?label $deprecatedVars $fcl
 WHERE {
-    ?concept a skos:Concept ;
-    skos:prefLabel ?label .
-    FILTER (langMatches(lang(?label), '$lang'))
-    {
+  {
+    SELECT * WHERE {
+      {
         ?concept $prop ?date .
-        MINUS { ?concept owl:deprecated True . }
+        $cutoffFilter
+        FILTER NOT EXISTS {
+          ?concept owl:deprecated True .
+        }
+      } $deprecatedOptions
     }
-    $deprecatedOptions
+  }
+  ?concept a skos:Concept .
+  ?concept skos:prefLabel ?label .
+  FILTER (langMatches(lang(?label), '$lang'))
 }
 ORDER BY DESC(YEAR(?date)) DESC(MONTH(?date)) LCASE(?label) DESC(?concept)
 LIMIT $limit $offset
@@ -2443,11 +2466,13 @@ EOQ;
      * @param int $offset offset of results to retrieve; 0 for beginning of list
      * @param int $limit maximum number of results to return
      * @param boolean $showDeprecated whether to include deprecated concepts in the change list
+     * @param int|null $cutoffDays how many days to look back for changes; null to use the
+     *                             global configuration value, 0 to disable the cutoff
      * @return array Result array
      */
-    public function queryChangeList($prop, $lang, $offset, $limit, $showDeprecated = false)
+    public function queryChangeList($prop, $lang, $offset, $limit, $showDeprecated = false, $cutoffDays = null)
     {
-        $query = $this->generateChangeListQuery($prop, $lang, $offset, $limit, $showDeprecated);
+        $query = $this->generateChangeListQuery($prop, $lang, $offset, $limit, $showDeprecated, $cutoffDays);
 
         $result = $this->query($query);
         return $this->transformChangeListResults($result);

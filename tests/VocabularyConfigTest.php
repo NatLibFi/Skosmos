@@ -413,6 +413,24 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     }
 
     /**
+     * @covers VocabularyConfig::getChangeListCutoffDays
+     */
+    public function testGetChangeListCutoffDaysNotSet()
+    {
+        $vocab = $this->model->getVocabulary('changes');
+        $this->assertNull($vocab->getConfig()->getChangeListCutoffDays());
+    }
+
+    /**
+     * @covers VocabularyConfig::getChangeListCutoffDays
+     */
+    public function testGetChangeListCutoffDaysSet()
+    {
+        $vocab = $this->model->getVocabulary('changesCutoff');
+        $this->assertEquals(30, $vocab->getConfig()->getChangeListCutoffDays());
+    }
+
+    /**
      * @covers VocabularyConfig::getSortByNotation
      * @covers VocabularyConfig::getBoolean
      */

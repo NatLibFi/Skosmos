@@ -44,6 +44,16 @@ class GlobalConfigTest extends PHPUnit\Framework\TestCase
         $this->assertEquals(10, $this->config->getSparqlTimeout());
     }
 
+    public function testGetChangeListCutoffDays()
+    {
+        $this->assertEquals(0, $this->config->getChangeListCutoffDays());
+    }
+
+    public function testGetChangeListCutoffDaysDefault()
+    {
+        $this->assertEquals(365, $this->configWithDefaults->getChangeListCutoffDays());
+    }
+
     public function testGetHttpTimeout()
     {
         $this->assertEquals(20, $this->config->getHttpTimeout());
