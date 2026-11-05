@@ -211,16 +211,21 @@ describe('Concept page, full vs. partial page loads', () => {
       
       // Check if mapping labels exist at all
       cy.get('.prop-mapping .prop-mapping-label', {'timeout': 20000}).should('exist').then(($labels) => {
-        const text = $labels.first().text()
+        const text = $labels.eq(1).text()
         expect(text).to.contain('number sign')
       })
       
-      // check the first mapping property values
-      cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).find('a').invoke('text').should('equal', 'number sign')
-      cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).find('a').should('have.attr', 'href', 'http://www.wikidata.org/entity/Q175743')
-      cy.get('.prop-mapping').eq(0).find('.prop-mapping-vocab').eq(0).contains('www.wikidata.org')
-      // check that the second mapping property has the right number of entries
-      cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').should('have.length', 1)
+      // check the first mapping property values, which should contain notation code
+      cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).find('span').invoke('text').should('equal', '12.34')
+      cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).find('a').invoke('text').should('equal', 'test:ta126')
+      cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(0).find('a').should('have.attr', 'href', 'test/en/page/ta126')
+      cy.get('.prop-mapping').eq(0).find('.prop-mapping-vocab').eq(0).contains('Test ontology')
+      // check the second mapping property values
+      cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(1).find('a').invoke('text').should('equal', 'number sign')
+      cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').eq(1).find('a').should('have.attr', 'href', 'http://www.wikidata.org/entity/Q175743')
+      cy.get('.prop-mapping').eq(0).find('.prop-mapping-vocab').eq(1).contains('www.wikidata.org')
+      // check that mapping properties have the right number of entries
+      cy.get('.prop-mapping').eq(0).find('.prop-mapping-label').should('have.length', 2)
     })
 
   });

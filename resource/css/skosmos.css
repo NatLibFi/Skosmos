@@ -1311,6 +1311,10 @@ h2#vocab-heading {
   content: none;
 }
 
+#concept-mappings .prop-mapping-notation {
+  margin-right: 0.25em;
+}
+
 @media (max-width: 992px) {
   .property {
     border-top: 1px solid var(--main-content-border);
