@@ -281,6 +281,30 @@ header .container-fluid .row {
   text-decoration-thickness: 2px !important;
 }
 
+/* --- Mobile specific rules --- */
+
+@media only screen and (max-width: 768px) {
+  body:not(.frontpage-logo) #headerbar {
+    padding: 0 !important;
+  }
+
+  #vocab-title {
+    font-size: 1.3rem;
+    padding: 1rem 0.75rem;
+    width: 100%;
+    margin: 0;
+  }
+
+  div:has(> #vocab-title) {
+    padding: 0;
+  }
+
+  div:has(> #search-vocab) {
+    padding: 0.75rem 0.75rem 1rem !important;
+    width: 100%;
+  }
+}
+
 /* --- Search bar --- */
 
 /* Dropdowns */
@@ -417,6 +441,7 @@ header .container-fluid .row {
   background-color: var(--search-field-bg);
   border-color: var(--search-border);
   border-radius: 0;
+  padding-right: 2.5rem;
 }
 
 #search-field:focus-visible {
@@ -617,6 +642,48 @@ header .container-fluid .row {
   flex-wrap: nowrap;
 }
 
+/* --- Mobile specific rules --- */
+
+@media only screen and (max-width: 768px) {
+  #search-vocab .search-field-group:has(> #language-selector) {
+    flex: 0 0 33%;
+    min-width: 0;
+  }
+
+  #search-vocab .search-field-group:has(> #headerbar-search) {
+    flex: 1 1 auto;
+  }
+
+  #search-vocab #search-button {
+    flex: 0 0 2.8rem;
+  }
+
+  #search-vocab .search-field-label {
+    font-size: 0.85rem;
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+
+  #search-vocab #content-language-label {
+    margin-left: 0;
+  }
+
+  #search-vocab #language-selector button {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+  }
+
+  #search-vocab #headerbar-search {
+    width: unset;
+  }
+
+  #search-vocab #search-autocomplete-results {
+    width: calc(100% + 2.8rem) !important;
+  }
+}
+
 /* --- Browser specific rules --- */
 
 /* Setting scrollbar style separately in Firefox */
@@ -677,6 +744,20 @@ header .container-fluid .row {
 
 #main-container {
   padding-top: 2.4rem;
+}
+
+@media only screen and (max-width: 768px) {
+  #main-container.vocab-home, #main-container.concept {
+    padding-top: 0;
+  }
+
+  #main-container.vocab-search {
+    padding-top: 1rem;
+  }
+
+  .vocab-search #main-container-row {
+    --bs-gutter-x: unset;
+  }
 }
 
 #main-container h1, #main-container h2  {
