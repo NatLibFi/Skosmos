@@ -772,9 +772,16 @@ header .container-fluid .row {
 }
 
 @media only screen and (max-width: 768px) {
-  .vocab-home #sidebar-col {
+  .vocab-home #sidebar-col, .concept #sidebar-col {
     min-height: 0 !important;
-    height: 700px;
+    height: min(700px, 75vh);
+  }
+
+  /* Dynamic viewport height for compatible mobile browsers */
+  @supports (height: 75dvh) {
+    .vocab-home #sidebar-col, .concept #sidebar-col {
+      height: min(700px, 75dvh);
+    }
   }
 }
 
