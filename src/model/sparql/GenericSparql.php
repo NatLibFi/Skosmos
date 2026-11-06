@@ -596,6 +596,12 @@ EOQ;
 SELECT DISTINCT ?type ?label ?superclass $fcl
 WHERE {
   {
+    SELECT DISTINCT ?type WHERE {
+      ?s a ?type .
+      ?s skos:prefLabel ?prefLabel .
+    }
+  }
+  {
     { BIND( skos:Concept as ?type ) }
     UNION
     { BIND( skos:Collection as ?type ) }
@@ -614,10 +620,6 @@ WHERE {
   }
   OPTIONAL {
     ?type rdfs:subClassOf ?superclass .
-  }
-  FILTER EXISTS {
-    ?s a ?type .
-    ?s skos:prefLabel ?prefLabel .
   }
 }
 EOQ;
