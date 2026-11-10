@@ -68,3 +68,6 @@ Cypress AXE tests are used to improve and ensure accessibility. Detailed instruc
 Please add a concise commit message for your contributions. In addition to describing the changes made include references to related issue numbers eg. "Description of the changes in the commit, related to #22". Then the GitHub issue tracker automatically links the related commits to the issue page. This makes debugging persistent bugs easier.
 
 When you're happy with your finished contribution please send us a [pull request](https://help.github.com/articles/about-pull-requests/).
+
+>[!IMPORTANT]
+> Please indicate AI use in your contribution and disclose any tools that you have used. Our [pull request template](https://github.com/NatLibFi/Skosmos/blob/main/PULL_REQUEST_TEMPLATE.md) has instructions for this. We use [TLP:AI](https://nlkw.de/en/blog/ai-tlp/) categories for AI use indication.
