@@ -70,13 +70,6 @@ function startResourceCountsApp () {
       `
   })
 
-  resourceCountsApp.component('resource-counts', {
-    props: ['concepts', 'subTypes', 'conceptGroups', 'deprecatedConceptLabel'],
-    template: `
-        
-      `
-  })
-
   if (document.getElementById('resource-counts')) {
     resourceCountsApp.mount('#resource-counts')
   }
