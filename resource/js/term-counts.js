@@ -49,15 +49,15 @@ function startTermCountsApp () {
                 <td class="term-counts-lang">{{ l.literal }}</td>
                 <td>
                   <span class="d-inline d-md-none" aria-hidden="true">{{ preferredTermsLabel }}</span>
-                  {{ l.properties.find(a => a.property === 'skos:prefLabel').labels }}
+                  <span>{{ l.properties.find(a => a.property === 'skos:prefLabel').labels }}</span>
                 </td>
                 <td>
                   <span class="d-inline d-md-none" aria-hidden="true">{{ alternateTermsLabel }}</span>
-                  {{ l.properties.find(a => a.property === 'skos:altLabel').labels }}
+                  <span>{{ l.properties.find(a => a.property === 'skos:altLabel').labels }}</span>
                 </td>
                 <td>
                   <span class="d-inline d-md-none" aria-hidden="true">{{ hiddenTermsLabel }}</span>
-                  {{ l.properties.find(a => a.property === 'skos:hiddenLabel').labels }}
+                  <span>{{ l.properties.find(a => a.property === 'skos:hiddenLabel').labels }}</span>
                 </td>
               </tr>
             </template>

@@ -192,9 +192,9 @@ describe('Vocabulary home page', () => {
         cy.get('#term-stats')
           .contains('tr', language)
           .within(() => {
-            cy.get('td').eq(1).should('have.text', prefLabel)
-            cy.get('td').eq(2).should('have.text', altLabel)
-            cy.get('td').eq(3).should('have.text', hiddenLabel)
+            cy.get('td').eq(1).find('span').eq(1).should('have.text', prefLabel)
+            cy.get('td').eq(2).find('span').eq(1).should('have.text', altLabel)
+            cy.get('td').eq(3).find('span').eq(1).should('have.text', hiddenLabel)
           })
       })
       
@@ -236,9 +236,9 @@ describe('Vocabulary home page', () => {
         cy.get('#term-stats')
           .contains('tr', language)
           .within(() => {
-            cy.get('td').eq(1).should('have.text', prefLabel)
-            cy.get('td').eq(2).should('have.text', altLabel)
-            cy.get('td').eq(3).should('have.text', hiddenLabel)
+            cy.get('td').eq(1).find('span').eq(1).should('have.text', prefLabel)
+            cy.get('td').eq(2).find('span').eq(1).should('have.text', altLabel)
+            cy.get('td').eq(3).find('span').eq(1).should('have.text', hiddenLabel)
           })
       })
       
