@@ -39,6 +39,16 @@ describe('Vocabulary home page', () => {
     // check that the vocabulary title is correct
     cy.get('#vocab-title > a').invoke('text').should('contain', 'Test ontology')
   })
+  it('Contains URI from default concept scheme', () => {
+    cy.visit('/test/en') // go to the "Test ontology" home page
+    const expectedUri = 'http://www.skosmos.skos/test/conceptscheme'
+    cy.contains('#main-content .property-label h3', /^URI$/)
+      .should('have.length', 1)
+      .closest('.row.property')
+      .find('.property-value ul li')
+      .should('have.length', 1)
+      .and('have.text', expectedUri)
+  })
   it('Vocabulary property label is overridden', () => {
     cy.visit('/conceptPropertyLabels/en/')
     // Loop through all .row.property and if the element has a .property-value ul li with text "Overridden property value", check the label and title of the .property-label for this row
