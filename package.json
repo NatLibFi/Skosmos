@@ -1,15 +1,17 @@
 {
   "scripts": {
-    "test-accessibility-gui-all": "npx cypress open",
-    "test-accessibility-cli-all": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility/*'",
-    "test-accessibility-cli-about": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility/axe-about.cy.js'",
-    "test-accessibility-cli-concept": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility/axe-concept.cy.js'",
-    "test-accessibility-cli-feedback": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility/axe-feedback.cy.js'",
-    "test-accessibility-cli-global-search": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility/axe-global-search.cy.js'",
-    "test-accessibility-cli-landing": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility/axe-landing.cy.js'",
-    "test-accessibility-cli-vocab": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility/axe-vocab.cy.js'",
-    "test-accessibility-cli-vocab-home": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility/axe-vocab-home.cy.js'",
-    "test-accessibility-cli-vocab-search": "npx cypress run --env cli=true --spec 'tests/cypress/accessibility/axe-vocab-search.cy.js'"
+    "cy:run": "env -u ELECTRON_RUN_AS_NODE npx cypress run",
+    "cy:verify": "env -u ELECTRON_RUN_AS_NODE npx cypress verify",
+    "test-accessibility-gui-all": "env -u ELECTRON_RUN_AS_NODE npx cypress open",
+    "test-accessibility-cli-all": "env -u ELECTRON_RUN_AS_NODE npx cypress run --env cli=true --spec 'tests/cypress/accessibility/*'",
+    "test-accessibility-cli-about": "env -u ELECTRON_RUN_AS_NODE npx cypress run --env cli=true --spec 'tests/cypress/accessibility/axe-about.cy.js'",
+    "test-accessibility-cli-concept": "env -u ELECTRON_RUN_AS_NODE npx cypress run --env cli=true --spec 'tests/cypress/accessibility/axe-concept.cy.js'",
+    "test-accessibility-cli-feedback": "env -u ELECTRON_RUN_AS_NODE npx cypress run --env cli=true --spec 'tests/cypress/accessibility/axe-feedback.cy.js'",
+    "test-accessibility-cli-global-search": "env -u ELECTRON_RUN_AS_NODE npx cypress run --env cli=true --spec 'tests/cypress/accessibility/axe-global-search.cy.js'",
+    "test-accessibility-cli-landing": "env -u ELECTRON_RUN_AS_NODE npx cypress run --env cli=true --spec 'tests/cypress/accessibility/axe-landing.cy.js'",
+    "test-accessibility-cli-vocab": "env -u ELECTRON_RUN_AS_NODE npx cypress run --env cli=true --spec 'tests/cypress/accessibility/axe-vocab.cy.js'",
+    "test-accessibility-cli-vocab-home": "env -u ELECTRON_RUN_AS_NODE npx cypress run --env cli=true --spec 'tests/cypress/accessibility/axe-vocab-home.cy.js'",
+    "test-accessibility-cli-vocab-search": "env -u ELECTRON_RUN_AS_NODE npx cypress run --env cli=true --spec 'tests/cypress/accessibility/axe-vocab-search.cy.js'"
   },
   "dependencies": {
     "@formatjs/intl-collator": "^0.2.9",
