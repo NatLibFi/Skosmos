@@ -549,6 +549,26 @@ class VocabularyTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * @covers Vocabulary::getChangeList
+     */
+    public function testGetChangeListWithCutoff()
+    {
+        // the changesCutoff vocabulary overrides the global cutoff (0 = disabled)
+        // with a 30 day window, so only the future-dated concepts should be included,
+        // regardless of whether their dates are xsd:date or xsd:dateTime literals
+        $vocab = $this->model->getVocabulary('changesCutoff');
+        $changeList = $vocab->getChangeList('dc:created', 'en', 0, 10);
+        $uris = array();
+        foreach ($changeList as $concept) {
+            $uris[] = $concept['uri'];
+        }
+        $this->assertEquals(
+            array('http://www.skosmos.skos/changesCutoff/c1', 'http://www.skosmos.skos/changesCutoff/c3'),
+            $uris
+        );
+    }
+
+    /**
      * @covers Vocabulary::verifyVocabularyLanguage
      */
     public function testVerifyVocabularyLanguage()

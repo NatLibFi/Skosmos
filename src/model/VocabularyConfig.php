@@ -677,6 +677,18 @@ class VocabularyConfig extends BaseConfig
     }
 
     /**
+     * Returns the vocabulary-specific number of days to look back for changes
+     * when creating the change list (Changes tab), overriding the global
+     * skosmos:changeListCutoffDays value. A value of 0 disables the cutoff.
+     * @return int|null the configured value, or null if not set for this vocabulary
+     */
+    public function getChangeListCutoffDays()
+    {
+        $value = $this->getLiteral('skosmos:changeListCutoffDays', null);
+        return isset($value) ? (int) $value : null;
+    }
+
+    /**
      * Returns the vocabulary dc:type value(s) with their labels and uris, if set in the vocabulary configuration.
      * @return array of objects or an empty array
      */
