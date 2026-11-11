@@ -171,8 +171,10 @@ function startVocabSearchApp () {
       */
       renderResults () {
         const renderedSearchTerm = this.searchTerm // save the search term in case it changes while rendering
-
         this.renderedResultsList.forEach(result => {
+          if (result.distinguisherLabels) {
+            result.distinguisherLabels = result.distinguisherLabels.join(', ')
+          }
           if ('hiddenLabel' in result) {
             result.hitType = 'hidden'
             result.hit = this.renderMatchingPart(renderedSearchTerm, result.prefLabel, result.lang)
@@ -589,6 +591,9 @@ function startVocabSearchApp () {
                       </div>
                       <div class="col-auto align-self-end pr-1" v-html="result.renderedType"></div>
                     </div>
+                    <template v-if="result.distinguisherLabels">
+                    <div class="row py-1">{{ result.distinguisherLabels }}</div>
+                    </template>
                   </a>
                 </template>
                 <template v-else>
