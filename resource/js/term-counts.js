@@ -38,32 +38,34 @@ function startTermCountsApp () {
         <h3 class="fw-bold py-3">{{ termCountsTitle }}</h3>
         <table class="table" id="term-stats">
           <tbody>
-            <tr>
+            <tr class="term-counts-header">
               <th>{{ conceptLanguageLabel }}</th>
               <th>{{ preferredTermsLabel }}</th>
               <th>{{ alternateTermsLabel }}</th>
               <th>{{ hiddenTermsLabel }}</th>
             </tr>
             <template v-if="languages.length">
-              <term-counts :languages="languages"></term-counts>
+              <tr v-for="l in languages" :key="l.literal">
+                <td class="term-counts-lang">{{ l.literal }}</td>
+                <td>
+                  <span class="d-inline d-md-none" aria-hidden="true">{{ preferredTermsLabel }}</span>
+                  <span>{{ l.properties.find(a => a.property === 'skos:prefLabel').labels }}</span>
+                </td>
+                <td>
+                  <span class="d-inline d-md-none" aria-hidden="true">{{ alternateTermsLabel }}</span>
+                  <span>{{ l.properties.find(a => a.property === 'skos:altLabel').labels }}</span>
+                </td>
+                <td>
+                  <span class="d-inline d-md-none" aria-hidden="true">{{ hiddenTermsLabel }}</span>
+                  <span>{{ l.properties.find(a => a.property === 'skos:hiddenLabel').labels }}</span>
+                </td>
+              </tr>
             </template>
             <template v-else>
-              <i class="fa-solid fa-spinner fa-spin-pulse"></i>
+              <tr><td colspan="4"><i class="fa-solid fa-spinner fa-spin-pulse"></i></td></tr>
             </template>
           </tbody>
         </table>
-      `
-  })
-
-  termCountsApp.component('term-counts', {
-    props: ['languages'],
-    template: `
-        <tr v-for="l in languages" :key="l.literal">
-          <td>{{ l.literal }}</td>
-          <td>{{ l.properties.find(a => a.property === 'skos:prefLabel').labels }}</td>
-          <td>{{ l.properties.find(a => a.property === 'skos:altLabel').labels }}</td>
-          <td>{{ l.properties.find(a => a.property === 'skos:hiddenLabel').labels }}</td>
-        </tr>
       `
   })
 

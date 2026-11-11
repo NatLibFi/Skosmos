@@ -45,35 +45,28 @@ function startResourceCountsApp () {
               <th>{{ countLabel }}</th>
             </tr>
             <template v-if="hasCounts">
-              <resource-counts :concepts :subTypes :conceptGroups :deprecatedConceptLabel></resource-counts>
+              <tr>
+                <td>{{ concepts.label }}</td>
+                <td>{{ concepts.count }}</td>
+              </tr>
+              <tr v-for="st in subTypes" :key="st.label">
+                <td class="ps-md-4 ps-3 d-flex"><span class="me-1">&#x2022;</span>{{ st.label }}</td>
+                <td>{{ st.count }}</td>
+              </tr>
+              <tr>
+                <td class="ps-md-4 ps-3 d-flex"><span class="me-1">&#x2022;</span>{{ deprecatedConceptLabel }}</td>
+                <td>{{ concepts.deprecatedCount }}</td>
+              </tr>
+              <tr v-if="conceptGroups">
+                <td>{{ conceptGroups.label }}</td>
+                <td>{{ conceptGroups.count }}</td>
+              </tr>
             </template>
             <template v-else>
-              <i class="fa-solid fa-spinner fa-spin-pulse"></i>
+              <tr><td colspan="2"><i class="fa-solid fa-spinner fa-spin-pulse"></i></td></tr>
             </template>
           </tbody>
         </table>
-      `
-  })
-
-  resourceCountsApp.component('resource-counts', {
-    props: ['concepts', 'subTypes', 'conceptGroups', 'deprecatedConceptLabel'],
-    template: `
-        <tr>
-          <td>{{ concepts.label }}</td>
-          <td>{{ concepts.count }}</td>
-        </tr>
-        <tr v-for="st in subTypes" :key="st.label">
-          <td class="ps-4">&#x2022; {{ st.label }}</td>
-          <td>{{ st.count }}</td>
-        </tr>
-        <tr>
-          <td class="ps-4">&#x2022; {{ deprecatedConceptLabel }}</td>
-          <td>{{ concepts.deprecatedCount }}</td>
-        </tr>
-        <tr v-if="conceptGroups">
-          <td>{{ conceptGroups.label }}</td>
-          <td>{{ conceptGroups.count }}</td>
-        </tr>
       `
   })
 

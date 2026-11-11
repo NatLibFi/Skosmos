@@ -1353,6 +1353,67 @@ h2#vocab-heading {
   border: none;
 }
 
+/* Mobile specific rules */
+
+@media only screen and (max-width: 768px) {
+  #term-stats,
+  #term-stats tbody,
+  #term-stats tr,
+  #term-stats td {
+    display: block;
+    width: 100%;
+  }
+
+  #term-stats tr {
+    border-bottom: 1px solid var(--main-content-border);
+    padding: 0 0 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  #term-stats tr:last-of-type {
+    border-bottom: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* same rules as bootstrap's visually-hidden class so table header row is still accessible to screen readers */
+  #term-stats tr.term-counts-header {
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0,0,0,0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
+  #term-stats .term-counts-lang {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+    padding: 0;
+  }
+
+  #term-stats tr:not(.term-counts-header) td:not(.term-counts-lang) {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 0.25rem 0 0.25rem 0.5rem;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  #term-stats {
+    table-layout: auto;
+  }
+
+  #resource-stats tr th:last-of-type,
+  #resource-stats tr td:last-of-type {
+    width: 33%;
+  }
+}
+
 /* --- Concept page --- */
 
 #concept-deprecated-alert {
