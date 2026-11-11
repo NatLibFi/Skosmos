@@ -1252,6 +1252,10 @@ EOQ;
             $hit['notation'] = $row->notation->getValue();
         }
 
+        if (isset($row->distLabels)) {
+            $hit['distinguisherLabels'] = explode("|||", $row->distLabels->getValue());
+        }
+
         if (isset($row->plabel)) {
             $hit['matchedPrefLabel'] = $row->plabel->getValue();
             $hit['lang'] = $row->plabel->getLang();
