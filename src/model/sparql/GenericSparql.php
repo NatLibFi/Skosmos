@@ -982,6 +982,8 @@ EOF;
      * @param string $searchLang language code used for matching labels (null means any language)
      * @param string[] $props properties to target e.g. array('skos:prefLabel','skos:altLabel')
      * @param boolean $unique restrict results to unique concepts (default: false)
+     * @param string $filterGraph SPARQL filter clause for limiting the targeted graphs
+     * @param string|null $distinguisher optional SPARQL path expression for displaying context information to distinguish duplicate labels
      * @return string sparql query
      */
     protected function generateConceptSearchQueryInner($term, $lang, $searchLang, $props, $unique, $filterGraph, $distinguisher=null)
