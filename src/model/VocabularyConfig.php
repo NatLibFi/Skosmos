@@ -776,4 +776,14 @@ class VocabularyConfig extends BaseConfig
         trigger_error("Property order for vocabulary '{$this->getShortName()}' unknown, using default order", E_USER_WARNING);
         return self::DEFAULT_PROPERTY_ORDER;
     }
+
+    /**
+     * Returns the result distinguisher property path in case of a shared prefLabel for this vocabulary,
+     * or null if not set.
+     * @return string Result distinguisher property path or null
+     */
+    public function getResultDistinguisher()
+    {
+        return $this->getLiteral("skosmos:resultDistinguisher");
+    }
 }

@@ -984,7 +984,7 @@ EOF;
      * @param boolean $unique restrict results to unique concepts (default: false)
      * @return string sparql query
      */
-    protected function generateConceptSearchQueryInner($term, $lang, $searchLang, $props, $unique, $filterGraph)
+    protected function generateConceptSearchQueryInner($term, $lang, $searchLang, $props, $unique, $filterGraph, $distinguisher=null)
     {
         $valuesProp = $this->formatValues('?prop', $props);
         $textcond = $this->generateConceptSearchQueryCondition($term, $searchLang);
@@ -1007,6 +1007,23 @@ EOF;
             $labelClause = ($lang) ? $labelClause . " FILTER (LANGMATCHES(LANG(?label), '$lang'))" : $labelClause . "";
             return $labelClause . " BIND(?label AS ?match)";
         }
+
+        // If the distinguisher parameter was passed, add further distinguisher labels in case of ambiguous preflabels
+        $distinguisherFilter = "FILTER (LANG(?distLabel) = LANG(?label))";
+        $distinguisherClause = $distinguisher ?
+            "OPTIONAL {\n" .
+            "  ?s skos:prefLabel ?label . ?s2 skos:prefLabel ?label . FILTER(?s2 != ?s)\n" .
+            "  ?s $distinguisher ?distinguisher.\n" .
+            "  FILTER (!isLiteral(?distinguisher) || (LANG(?distinguisher) = LANG(?label)))" .
+            "  OPTIONAL {\n" .
+            "    ?distinguisher skos:prefLabel ?distLabel .\n" .
+            "    $distinguisherFilter\n" .
+            "  }\n" .
+            "  OPTIONAL {\n" .
+            "    ?distinguisher rdfs:label ?distLabel .\n" .
+            "    $distinguisherFilter\n" .
+            "  }\n" .
+            "} BIND(COALESCE(?distLabel,STR(?distinguisher)) AS ?distcoal) " : "";
 
         /*
          * This query does some tricks to obtain a list of unique concepts.
@@ -1038,6 +1055,7 @@ EOF;
      BIND(IF(langMatches(LANG(?match),'$lang'), ?pri, ?pri+1) AS ?npri)
      BIND(CONCAT(STR(?npri), LANG(?match), '@', STR(?match)) AS ?matchstr)
      OPTIONAL { ?s skos:notation ?notation }
+     $distinguisherClause
     }
     $filterGraph
    }
@@ -1098,6 +1116,9 @@ EOQ;
         # make VALUES clauses
         $props = array('skos:prefLabel', 'skos:altLabel');
 
+        # If at vocabulary search and result distinguisher is configured for a vocabulary, add extra distinguisher labels
+        $distinguisher = (is_array($vocabs) && count($vocabs) === 1) ? $vocabs[0]->getConfig()->getResultDistinguisher() : '';
+
         //add notation into searchable data for the vocabularies which have been configured for it
         if ($vocabs) {
             $searchByNotation = false;
@@ -1130,12 +1151,12 @@ EOQ;
   BIND(IF((?pri = "3" || ?pri = "4"), ?match, ?unbound) as ?alabel)
   BIND(IF((?pri = "7" || ?pri = "8"), ?match, ?unbound) as ?hlabel)
 EOQ;
-        $innerquery = $this->generateConceptSearchQueryInner($params->getSearchTerm(), $params->getLang(), $params->getSearchLang(), $props, $unique, $filterGraph);
+        $innerquery = $this->generateConceptSearchQueryInner($params->getSearchTerm(), $params->getLang(), $params->getSearchLang(), $props, $unique, $filterGraph, $distinguisher);
         if ($params->getSearchTerm() === '*' || $params->getSearchTerm() === '') {
             $labelpriority = '';
         }
         $query = <<<EOQ
-SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph ?notation (GROUP_CONCAT(DISTINCT STR(?type);separator=' ') as ?types) $extravars 
+SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph ?notation (GROUP_CONCAT(DISTINCT STR(?distcoal);separator='|||') as ?distLabels) (GROUP_CONCAT(DISTINCT STR(?type);separator=' ') as ?types) $extravars
 $fcl
 WHERE {
  $gcl {
