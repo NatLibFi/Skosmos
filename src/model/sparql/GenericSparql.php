@@ -1037,10 +1037,12 @@ EOF;
         $hitvar = $unique ? '(MIN(?matchstr) AS ?hit)' : '(?matchstr AS ?hit)';
         $hitgroup = $unique ? 'GROUP BY ?s ?label ?notation' : '';
 
+        $distinguisherVar = $distinguisher ? "(GROUP_CONCAT(DISTINCT STR(?distcoal);separator='|||') as ?distLabels)" : "";
+
         $langClause = $this->generateLangClause($searchLang);
 
         $query = <<<EOQ
-   SELECT DISTINCT ?s ?label ?notation $hitvar
+   SELECT DISTINCT ?s ?label ?notation $distinguisherVar $hitvar
    WHERE {
     $graphClause {
      { 
@@ -1118,6 +1120,7 @@ EOQ;
 
         # If at vocabulary search and result distinguisher is configured for a vocabulary, add extra distinguisher labels
         $distinguisher = (is_array($vocabs) && count($vocabs) === 1) ? $vocabs[0]->getConfig()->getResultDistinguisher() : '';
+        $distinguisherVar = $distinguisher ? '?distLabels' : '';
 
         //add notation into searchable data for the vocabularies which have been configured for it
         if ($vocabs) {
@@ -1156,7 +1159,7 @@ EOQ;
             $labelpriority = '';
         }
         $query = <<<EOQ
-SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph ?notation (GROUP_CONCAT(DISTINCT STR(?distcoal);separator='|||') as ?distLabels) (GROUP_CONCAT(DISTINCT STR(?type);separator=' ') as ?types) $extravars
+SELECT DISTINCT ?s ?label ?plabel ?alabel ?hlabel ?graph ?notation $distinguisherVar (GROUP_CONCAT(DISTINCT STR(?type);separator=' ') as ?types) $extravars
 $fcl
 WHERE {
  $gcl {
@@ -1173,7 +1176,7 @@ WHERE {
  }
  $filterGraph
 }
-GROUP BY ?s ?match ?label ?plabel ?alabel ?hlabel ?notation ?graph
+GROUP BY ?s ?match ?label ?plabel $distinguisherVar ?alabel ?hlabel ?notation ?graph
 ORDER BY LCASE(STR(?match)) LANG(?match) $orderextra
 EOQ;
         return $query;
