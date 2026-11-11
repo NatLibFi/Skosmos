@@ -41,6 +41,7 @@ describe('Vocabulary home page', () => {
   })
   it('Contains URI from default concept scheme', () => {
     cy.visit('/test/en') // go to the "Test ontology" home page
+    // expected URI should be the same as Test ontology's skosmos:mainConceptScheme
     const expectedUri = 'http://www.skosmos.skos/test/conceptscheme'
     cy.contains('#main-content .property-label h3', /^URI$/)
       .should('have.length', 1)
