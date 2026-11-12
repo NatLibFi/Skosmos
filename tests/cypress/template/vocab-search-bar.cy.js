@@ -225,6 +225,29 @@ describe('Vocab search bar', () => {
 	cy.get('li').first().find('div.col-auto.align-self-end.pr-1').should('have.text', 'Collection')
       })
     })
+    it ('Identical search results are distinguished by additional info, if resultDistinguisher is configured', () => {
+
+      // go to test vocab
+      cy.visit('/dup/en/')
+
+      // Choose English from the language dropdown
+      cy.get('#language-selector .dropdown-toggle').click()
+      cy.get('#language-list .dropdown-item').contains('English').click()
+
+      // Enter a search term
+      cy.get('#search-wrapper input').type('Identical label')
+
+      // Autocomplete should appear
+      cy.get('#search-autocomplete-results', { timeout: 20000 }).should('be.visible')
+
+      // Autocomplete dropdown should have two results with same label text
+      cy.get('#search-autocomplete-results li').should('have.length', 2).each(($result) => {
+        cy.wrap($result).find('.result').should('contain.text', 'Identical label') })
+
+      // Result list should have two distinguisher labels, "Authored term" and "Broad label"
+      cy.get('#search-autocomplete-results').contains('Authored term')
+      cy.get('#search-autocomplete-results').contains('Broad label')
+    })
   });
 
   describe('Search Result Rendering', () => {
