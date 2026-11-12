@@ -592,7 +592,7 @@ function startVocabSearchApp () {
                       <div class="col-auto align-self-end pr-1" v-html="result.renderedType"></div>
                     </div>
                     <template v-if="result.distinguisherLabels">
-                    <div class="row py-1">{{ result.distinguisherLabels }}</div>
+                    <div class="row py-1"><div class="col">{{ result.distinguisherLabels }}</div></div>
                     </template>
                   </a>
                 </template>
