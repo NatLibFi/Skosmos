@@ -110,12 +110,12 @@ conceptMappingsApp.component('concept-mappings', {
       </div>
       <div class="col-lg-8 gx-0 gx-lg-4 property-value">
         <div class="row mb-2" v-for="m in mapping">
-          <div class="col-5 prop-mapping-label">
+          <div class="col-sm-5 prop-mapping-label">
             <span v-if="m.notation" class="prop-mapping-notation">{{ m.notation }}</span>
             <a :href="m.hrefLink">{{ m.prefLabel }}</a>
             <span v-if="m.lang && m.lang !== this.content_lang"> ({{ m.lang }})</span>
           </div>
-          <div class="col-7 prop-mapping-vocab">{{ m.vocabName }}</div>
+          <div class="col-sm-7 prop-mapping-vocab">{{ m.vocabName }}</div>
         </div>
       </div>
     </div>
