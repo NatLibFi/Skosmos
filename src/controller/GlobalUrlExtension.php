@@ -35,6 +35,8 @@ class GlobalUrlExtension extends AbstractExtension
         // Add page suffix for non-home pages
         if ($page !== 'home') {
             $url .= '/' . $page;
+        } else {
+            $url .= '/';
         }
 
         // Build query parameters
