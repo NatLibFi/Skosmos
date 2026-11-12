@@ -1637,7 +1637,8 @@ h2#vocab-heading {
   z-index: 9002 !important;
 }
 
-.tooltip-inline:hover::before, .tooltip-inline:hover::after {
+.tooltip-inline:hover::before, .tooltip-inline:hover::after,
+.tooltip-inline:focus::before, .tooltip-inline:focus::after {
   opacity: 1;
 }
 
@@ -1653,11 +1654,13 @@ h2#vocab-heading {
   transform: translate(0, 0);
 }
 
-.tooltip-inline.t-top:hover::before {
+.tooltip-inline.t-top:hover::before,
+.tooltip-inline.t-top:focus::before {
   transform: translate(0, calc(-50% - 5px)) rotate(45deg);
 }
 
-.tooltip-inline.t-top:hover::after {
+.tooltip-inline.t-top:hover::after,
+.tooltip-inline.t-top:focus::after {
   transform: translate(0, calc(-100% - 15px));
 }
 

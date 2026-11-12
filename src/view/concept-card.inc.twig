@@ -115,7 +115,7 @@
 
           {%- set attrs = {'class': classes|join(' ')} -%}
           {%- if tooltip is not empty -%}
-            {%- set attrs = attrs|merge({'data-title': tooltip, 'aria-describedby': 'prop-desc-' ~ property.ID}) -%}
+            {%- set attrs = attrs|merge({'data-title': tooltip, 'aria-describedby': 'prop-desc-' ~ property.ID, 'tabindex': '0'}) -%}
           {%- endif -%}
 
           <div class="col-lg-4 ps-0 property-label">
@@ -182,7 +182,7 @@
           {%- set label = custom_labels['skosmos:foreignLabels']['label'][request.lang] | default('foreign prefLabels' | trans) -%}
           {%- set tooltip = custom_labels['skosmos:foreignLabels']['description'][request.lang] | default('foreign prefLabel help' | trans) -%}
           <div class="col-lg-4 ps-0 property-label">
-            <h3 class="tooltip-inline t-top" aria-describedby="prop-desc-foreignlabels" data-title="{{ tooltip }}">{{ label[:1]|upper ~ label[1:] }}</h3>
+            <h3 class="tooltip-inline t-top" aria-describedby="prop-desc-foreignlabels" data-title="{{ tooltip }}" tabindex="0">{{ label[:1]|upper ~ label[1:] }}</h3>
             <span id="prop-desc-foreignlabels" class="visually-hidden">{{ tooltip }}</span>
           </div>
           <div class="col-lg-8 gx-0 gx-lg-4 property-value" id="concept-other-languages">
