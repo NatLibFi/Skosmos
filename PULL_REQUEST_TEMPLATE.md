@@ -6,6 +6,8 @@
 
 ## Description of the changes in this PR
 
+## Instructions how to test this PR
+
 ## Known problems or uncertainties in this PR
 
 ## Checklist
@@ -16,7 +18,7 @@
 - [ ] The PR doesn't introduce unintended code changes (e.g. empty lines or useless reindentation)
 
 ## Disclosure of AI Tool Usage
- Please indicate AI use by choosing the most suitable [TLP:AI](https://nlkw.de/en/blog/ai-tlp/) category below and removing the irrelevant categories from the list. AI:ORANGE is the minimum level for merging.
+ Please indicate AI use by choosing the most suitable [TLP:AI](https://nlkw.de/en/blog/ai-tlp/) category below and removing the irrelevant categories from the list. AI:AMBER is the minimum level for merging.
 - ⚪ AI:WHITE	Written independently, no significant AI involvement.
 - 🟢 AI:GREEN	AI-assisted. Author drove the process, AI used as a tool (autocomplete, partial generation, refactoring help).
 - 🟡 AI:AMBER	AI-generated, fully reviewed line by line. Author can explain every part.
