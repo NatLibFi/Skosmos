@@ -1315,7 +1315,8 @@ h2#vocab-heading {
   margin-right: 0.25em;
 }
 
-#concept-mappings .prop-mapping-label {
+#concept-mappings .prop-mapping-label,
+#concept-mappings .prop-mapping-vocab {
   overflow-wrap: break-word;
 }
 
