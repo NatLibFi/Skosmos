@@ -5,8 +5,8 @@ describe('Global search bar', () => {
     cy.get('#global-search-toggle').click()
   })
 
-  it('Vocab-list has 14 vocabularies', () => {
-    cy.get('#vocab-list li').should('have.length', 14)
+  it('Vocab-list has 15 vocabularies', () => {
+    cy.get('#vocab-list li').should('have.length', 15)
   })
 
   it('Vocab-list is sorted alphabetically by short name', () => {
