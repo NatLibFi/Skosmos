@@ -10,11 +10,21 @@
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
+dup: a skos:ConceptScheme ;
+    rdfs:label "Concept scheme for duplicate labels"@en ;
+    skos:hasTopConcept dup:b1 .
+
+dup:b1 a skos:Concept ;
+    skos:narrower dup:d1 ;
+    skos:prefLabel "Broad label"@en .
+
 dup:d1 a skos:Concept ;
+    skos:broader dup:b1 ;
     skos:prefLabel "Identical label"@en .
 
 dup:d2 a skos:Concept ;
     skos:prefLabel "Identical label"@en ;
+    dct:source "Authored term"@en ;
     skos:altLabel "Not so identical label"@en .
 
 dup:d3 a skos:Concept ;

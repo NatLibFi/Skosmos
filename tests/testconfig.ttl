@@ -126,6 +126,15 @@
     skosmos:alphabeticalListQualifier skos:broader ;
     skosmos:sparqlGraph <http://www.skosmos.skos/test-qualified-broader/> .
 
+:dup a skosmos:Vocabulary, void:Dataset ;
+    dc:title "Concept scheme for duplicate labels"@en ;
+	dc:subject :cat_science ;
+	skosmos:language "en";
+	void:uriSpace "http://www.skosmos.skos/dup/" ;
+	void:dataDump <http://skosmos.skos/dump/test/dup/> ;
+	skosmos:resultDistinguisher "<http://www.w3.org/2004/02/skos/core#broader>|<http://purl.org/dc/terms/source>";
+	skosmos:sparqlGraph <http://www.skosmos.skos/dup/> .
+
 :yso a skosmos:Vocabulary, void:Dataset ;
     dc:title "YSO - Yleinen suomalainen ontologia (arkeologia)"@fi,
             "ALLFO - Allmän finländsk ontologi (arkeologi)"@sv,

@@ -514,6 +514,27 @@ class GenericSparqlTest extends PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $actual);
     }
 
+  /**
+     * @covers GenericSparql::queryConcepts
+     * @covers GenericSparql::generateConceptSearchQueryInner
+     * @covers GenericSparql::generateConceptSearchQuery
+     */
+    public function testQueryConceptsResultDistinguisher()
+    {
+        $voc = $this->model->getVocabulary('dup');
+        $this->params->method('getSearchTerm')->will($this->returnValue('Identical label*'));
+        $this->params->method('getVocabs')->will($this->returnValue(array($voc)));
+        $this->params->method('getUnique')->willReturn(true);
+
+        $sparql = new GenericSparql($this->endpoint, '?graph', $this->model);
+        $actual = $sparql->queryConcepts(array($voc), null, $this->params->getUnique(), $this->params);
+
+        $distinguisherLabels = array_column($actual, 'distinguisherLabels');
+
+        $this->assertTrue(in_array('Authored term', $distinguisherLabels[0]));
+        $this->assertTrue(in_array('Broad label', $distinguisherLabels[1]));
+    }
+
     /**
      * @covers GenericSparql::queryConceptScheme
      * @covers GenericSparql::generateQueryConceptSchemeQuery

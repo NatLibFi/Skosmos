@@ -17,6 +17,17 @@ class VocabularyConfigTest extends PHPUnit\Framework\TestCase
     }
 
     /**
+     * @covers VocabularyConfig::getResultDistinguisher
+     */
+    public function testGetResultDistinguisher()
+    {
+        $vocab = $this->model->getVocabulary('dup');
+        $actual = $vocab->getConfig()->getResultDistinguisher();
+        $expected = "<http://www.w3.org/2004/02/skos/core#broader>|<http://purl.org/dc/terms/source>";
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
      * @covers VocabularyConfig::getIndexClasses
      */
     public function testGetIndexClassesNotSet()
