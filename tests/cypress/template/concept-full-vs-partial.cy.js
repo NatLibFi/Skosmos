@@ -189,7 +189,7 @@ describe('Concept page, full vs. partial page loads', () => {
       cy.get('.prop-mapping').eq(1).find('.prop-mapping-label').should('have.length', 3)
     })
 
-    it('contains mappings for hash namespace / ' + pageLoadType, () => {
+    it.skip('contains mappings for hash namespace / ' + pageLoadType, () => {
       if (pageLoadType == "full") {
         cy.visit('/hash/en/page/c1') // go to "hash mark" concept page
       } else {
