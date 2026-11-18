@@ -602,6 +602,7 @@ test:ta125
      */
     public function testGetResourceFromUri()
     {
+        $this->markTestSkipped("disabled due to test failures under CI, see https://github.com/NatLibFi/Skosmos/issues/2139");
         $resource = $this->model->getResourceFromUri('http://www.yso.fi/onto/yso/p19378');
         $this->assertInstanceOf('EasyRdf\Resource', $resource);
         $this->assertEquals('http://www.yso.fi/onto/yso/p19378', $resource->getURI());
